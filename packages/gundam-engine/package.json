@@ -1,0 +1,40 @@
+{
+  "name": "@tcg/gundam",
+  "version": "0.1.0",
+  "description": "Gundam Card Game engine implementation using @tcg/core framework",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.d.ts",
+  "files": [
+    "src/"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "bun x oxlint --fix ./src",
+    "test": "AGENT=1 bun test --silent",
+    "test:watch": "bun test --watch",
+    "test:coverage": "bun test --coverage",
+    "check": "turbo format lint check-types test"
+  },
+  "dependencies": {
+    "@tcg/core": "workspace:*",
+    "@tcg/gundam-types": "workspace:*",
+    "immer": "11.0.1"
+  },
+  "devDependencies": {
+    "@types/bun": "1.3.4",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "typescript": "5.9.3"
+  }
+}

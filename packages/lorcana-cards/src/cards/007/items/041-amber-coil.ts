@@ -1,0 +1,43 @@
+import type { ItemCard } from "@tcg/lorcana-types";
+
+export const amberCoil: ItemCard = {
+  abilities: [
+    {
+      effect: {
+        chooser: "CONTROLLER",
+        effect: {
+          amount: 2,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+          type: "remove-damage",
+          upTo: true,
+        },
+        type: "optional",
+      },
+      id: "7an-1",
+      name: "HEALING AURA",
+      text: "HEALING AURA During your turn, whenever a card is put into your inkwell, you may remove up to 2 damage from chosen character.",
+      trigger: { event: "play", on: "SELF", timing: "when" },
+      type: "triggered",
+    },
+  ],
+  cardNumber: 41,
+  cardType: "item",
+  cost: 1,
+  externalIds: {
+    ravensburger: "1a4b8495891072543683523882d11f76e3883842",
+  },
+  franchise: "Lorcana",
+  id: "7an",
+  inkType: ["amber"],
+  inkable: true,
+  missingTests: true,
+  name: "Amber Coil",
+  set: "007",
+  text: "HEALING AURA During your turn, whenever a card is put into your inkwell, you may remove up to 2 damage from chosen character.",
+};

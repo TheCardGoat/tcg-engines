@@ -1,0 +1,4730 @@
+{
+  "pdf_info": [
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 72, 539, 97],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 72, 539, 97],
+              "spans": [
+                {
+                  "bbox": [70, 72, 539, 97],
+                  "type": "text",
+                  "content": "Archazia's Island Unofficial Set Notes"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 32,
+          "level": 1
+        },
+        {
+          "bbox": [69, 148, 235, 162],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 148, 235, 162],
+              "spans": [
+                {
+                  "bbox": [69, 148, 235, 162],
+                  "type": "text",
+                  "content": "Presented by LorcanaJudges.com"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [403, 148, 443, 159],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [403, 148, 443, 159],
+              "spans": [
+                {
+                  "bbox": [403, 148, 443, 159],
+                  "type": "text",
+                  "content": "Author:"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "type": "image",
+          "bbox": [447, 133, 561, 178],
+          "blocks": [
+            {
+              "bbox": [447, 133, 561, 178],
+              "lines": [
+                {
+                  "bbox": [447, 133, 561, 178],
+                  "spans": [
+                    {
+                      "bbox": [447, 133, 561, 178],
+                      "type": "image",
+                      "image_path": "8146160dd74a03efd2b495202bf050cee5b3bb35674de17bb00b664991fba157.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 3,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [85, 194, 523, 213],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [85, 194, 523, 213],
+              "spans": [
+                {
+                  "bbox": [85, 194, 523, 213],
+                  "type": "text",
+                  "content": "(Updated 3/17/25 to reflect CRD changes on 2/28/25 & more)"
+                }
+              ]
+            }
+          ],
+          "index": 4,
+          "line_avg_height": 25,
+          "level": 0
+        },
+        {
+          "bbox": [67, 225, 529, 278],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 225, 529, 278],
+              "spans": [
+                {
+                  "bbox": [67, 225, 529, 278],
+                  "type": "text",
+                  "content": "Disclaimer: These set notes are assembled as a volunteer effort based on common questions from the community and clarifying information from the Disney Lorcana TCG rules team. They do not reflect any possible upcoming rule changes, and are not official in any sense of the word. They are meant as a general, community-driven play aid only."
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [67, 290, 533, 356],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 290, 533, 356],
+              "spans": [
+                {
+                  "bbox": [67, 290, 533, 356],
+                  "type": "text",
+                  "content": "These Unofficial Set Notes use trademarks and/or copyrights associated with Disney Lorca, TCG, used under Ravensburger's Community Code Policy (here). We are expressly prohibited from charging you to use or access this content. These Set Notes are not published, endorsed, or specifically approved by Disney or Ravensburger. For more information about Disney Lorca, visit DisneyLorca.com."
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [67, 371, 541, 402],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 371, 541, 402],
+              "spans": [
+                {
+                  "bbox": [67, 371, 541, 402],
+                  "type": "text",
+                  "content": "As always, a huge thank you to the Rules Advisors on the Lorcana Rulebook Hub Discord for helping to collate questions and proofread the Set Notes!"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [230, 417, 381, 435],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [230, 417, 381, 435],
+              "spans": [
+                {
+                  "bbox": [230, 417, 381, 435],
+                  "type": "text",
+                  "content": "Table of Contents"
+                }
+              ]
+            }
+          ],
+          "index": 8,
+          "line_avg_height": 26,
+          "level": 0
+        },
+        {
+          "bbox": [167, 458, 444, 476],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [167, 458, 444, 476],
+              "spans": [
+                {
+                  "bbox": [167, 458, 444, 476],
+                  "type": "text",
+                  "content": "General Rules Updates/Clarifications"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [252, 495, 358, 512],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [252, 495, 358, 512],
+              "spans": [
+                {
+                  "bbox": [252, 495, 358, 512],
+                  "type": "text",
+                  "content": "New Keywords"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [214, 531, 396, 547],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [214, 531, 396, 547],
+              "spans": [
+                {
+                  "bbox": [214, 531, 396, 547],
+                  "type": "text",
+                  "content": "General Rules Questions"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "bbox": [301, 554, 309, 559],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [301, 554, 309, 559],
+              "spans": [
+                {
+                  "bbox": [301, 554, 309, 559],
+                  "type": "text",
+                  "content": "#"
+                }
+              ]
+            }
+          ],
+          "index": 12
+        },
+        {
+          "bbox": [195, 567, 414, 582],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [195, 567, 414, 582],
+              "spans": [
+                {
+                  "bbox": [195, 567, 414, 582],
+                  "type": "text",
+                  "content": "Specific Character Questions"
+                }
+              ]
+            }
+          ],
+          "index": 13
+        },
+        {
+          "bbox": [301, 589, 309, 595],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [301, 589, 309, 595],
+              "spans": [
+                {
+                  "bbox": [301, 589, 309, 595],
+                  "type": "text",
+                  "content": "#"
+                }
+              ]
+            }
+          ],
+          "index": 14
+        },
+        {
+          "bbox": [217, 602, 394, 619],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 602, 394, 619],
+              "spans": [
+                {
+                  "bbox": [217, 602, 394, 619],
+                  "type": "text",
+                  "content": "Specific Item Questions"
+                }
+              ]
+            }
+          ],
+          "index": 15
+        },
+        {
+          "bbox": [301, 626, 309, 632],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [301, 626, 309, 632],
+              "spans": [
+                {
+                  "bbox": [301, 626, 309, 632],
+                  "type": "text",
+                  "content": "#"
+                }
+              ]
+            }
+          ],
+          "index": 16
+        },
+        {
+          "bbox": [187, 638, 422, 654],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [187, 638, 422, 654],
+              "spans": [
+                {
+                  "bbox": [187, 638, 422, 654],
+                  "type": "text",
+                  "content": "Specific Action/Song Questions"
+                }
+              ]
+            }
+          ],
+          "index": 17
+        },
+        {
+          "bbox": [301, 662, 309, 668],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [301, 662, 309, 668],
+              "spans": [
+                {
+                  "bbox": [301, 662, 309, 668],
+                  "type": "text",
+                  "content": "#"
+                }
+              ]
+            }
+          ],
+          "index": 18
+        },
+        {
+          "bbox": [263, 674, 347, 690],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [263, 674, 347, 690],
+              "spans": [
+                {
+                  "bbox": [263, 674, 347, 690],
+                  "type": "text",
+                  "content": "References"
+                }
+              ]
+            }
+          ],
+          "index": 19
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 0
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 70, 384, 90],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 70, 384, 90],
+              "spans": [
+                {
+                  "bbox": [69, 70, 384, 90],
+                  "type": "text",
+                  "content": "General Rules Updates/Clarifications"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 23,
+          "level": 2
+        },
+        {
+          "bbox": [68, 106, 414, 138],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 106, 414, 138],
+              "spans": [
+                {
+                  "bbox": [68, 106, 414, 138],
+                  "type": "text",
+                  "content": "Q: How do “if you do” effect clauses know if they should resolve? (Ref. 1.1.)"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [104, 152, 404, 277],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 152, 404, 277],
+              "spans": [
+                {
+                  "bbox": [104, 152, 404, 277],
+                  "type": "text",
+                  "content": "A: Effects that start with \"if you do\" look to see if the effect in the previous clause was completed exactly as described. If that first effect was not done or was replaced by something else, the \"if you do\" check fails and the following effect cannot be done. The current rules do not cover this conditional, so expect it to be added in a future update."
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "type": "image",
+          "bbox": [421, 93, 565, 292],
+          "blocks": [
+            {
+              "bbox": [421, 93, 565, 292],
+              "lines": [
+                {
+                  "bbox": [421, 93, 565, 292],
+                  "spans": [
+                    {
+                      "bbox": [421, 93, 565, 292],
+                      "type": "image",
+                      "image_path": "5542e519914d2870e7dfd35f20edb9981ff91a3931a5633ba8e8214a3ca25193.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 3,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 296, 212, 494],
+          "blocks": [
+            {
+              "bbox": [70, 296, 212, 494],
+              "lines": [
+                {
+                  "bbox": [70, 296, 212, 494],
+                  "spans": [
+                    {
+                      "bbox": [70, 296, 212, 494],
+                      "type": "image",
+                      "image_path": "0e1a9a584348524cd58198c5f1e66b7fc59ac05d3cabeb1078893dfbd00d7962.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [217, 292, 537, 354],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 292, 537, 354],
+              "spans": [
+                {
+                  "bbox": [217, 292, 537, 354],
+                  "type": "text",
+                  "content": "Q: How do \"once during your turn\" abilities work with \"may\" effects? Do I lose the chance to resolve an effect if I don't do it the first time? (Ref. 1.2.)"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [217, 369, 539, 492],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 369, 539, 492],
+              "spans": [
+                {
+                  "bbox": [217, 369, 539, 492],
+                  "type": "text",
+                  "content": "A: \"Once during your turn\" abilities will continue to trigger and go in the bag until all the effects are resolved. For mandatory abilities this will always be the first time the ability triggers, but for \"may\" abilities you will continue to get the opportunity to resolve the effect until you actually choose to do so. The current rules do not cover this conditional, so expect it to be added in a future update."
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [69, 506, 378, 539],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 506, 378, 539],
+              "spans": [
+                {
+                  "bbox": [69, 506, 378, 539],
+                  "type": "text",
+                  "content": "Q: How do Belle/Scrooge's \"play for free\" abilities really work? (Ref. 1.3.)"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [104, 553, 414, 647],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 553, 414, 647],
+              "spans": [
+                {
+                  "bbox": [104, 553, 414, 647],
+                  "type": "text",
+                  "content": "A: Belle and Scrooge both have activated abilities that can be used on your turn while they are still in your hand. The rules do not currently allow for activated abilities that can be used from hand, so expect this to be added in a future update."
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "type": "image",
+          "bbox": [421, 502, 564, 700],
+          "blocks": [
+            {
+              "bbox": [421, 502, 564, 700],
+              "lines": [
+                {
+                  "bbox": [421, 502, 564, 700],
+                  "spans": [
+                    {
+                      "bbox": [421, 502, 564, 700],
+                      "type": "image",
+                      "image_path": "eb7e9f0b1f33151dab70689f067295f35c87b8ad6372fe75b0da474c691e6d69.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 9,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 9
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 1
+    },
+    {
+      "para_blocks": [
+        {
+          "type": "image",
+          "bbox": [70, 79, 212, 277],
+          "blocks": [
+            {
+              "bbox": [70, 79, 212, 277],
+              "lines": [
+                {
+                  "bbox": [70, 79, 212, 277],
+                  "spans": [
+                    {
+                      "bbox": [70, 79, 212, 277],
+                      "type": "image",
+                      "image_path": "821e479d1e9cb28b0212957ab0cf620e2c3859dc4212e7a3cabcaa33dd320768.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 0,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [219, 70, 536, 117],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [219, 70, 536, 117],
+              "spans": [
+                {
+                  "bbox": [219, 70, 536, 117],
+                  "type": "text",
+                  "content": "Q: Can I arrange my inkwell to help me remember which cards I have inked, and where they are? (Ref. 1.4.)"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [219, 131, 521, 193],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [219, 131, 521, 193],
+              "spans": [
+                {
+                  "bbox": [219, 131, 521, 193],
+                  "type": "text",
+                  "content": "A: Yes. You are allowed to arrange your inkwell in any manner you choose, as long as the status (ready or exerted) of all the cards is clear to all players."
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [71, 285, 520, 316],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 285, 520, 316],
+              "spans": [
+                {
+                  "bbox": [71, 285, 520, 316],
+                  "type": "text",
+                  "content": "Q: What is “a stack” in Lorcana? How can cards be “under” or “on top of” other cards? (Ref. 1.5.)"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [106, 331, 531, 409],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [106, 331, 531, 409],
+              "spans": [
+                {
+                  "bbox": [106, 331, 531, 409],
+                  "type": "text",
+                  "content": "A: The 2/28/25 update to the Comprehensive Rules Document (CRD) added new definitions for these terms, although some were previously defined in the glossary. Currently, the only mechanic that uses \"stacks\" of cards is the Shift mechanic, so these terms only apply to characters played by Shifting."
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [71, 423, 513, 455],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 423, 513, 455],
+              "spans": [
+                {
+                  "bbox": [71, 423, 513, 455],
+                  "type": "text",
+                  "content": "Q: Are characters with strength values reduced below zero counted as having zero strength? (Ref. 1.6.)"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [106, 470, 529, 594],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [106, 470, 529, 594],
+              "spans": [
+                {
+                  "bbox": [106, 470, 529, 594],
+                  "type": "text",
+                  "content": "A: Yes. The 2/28/25 update to the Comprehensive Rules Document (CRD) corrected an oversight in the previous CRD. Until this revision, characters with negative strength only counted as having zero strength for the purposes of determining damage. That has now been correctly expanded to all circumstances with the exception of applying new modifiers. Negative strength values are now always counted as zero unless you're changing the strength again. Yokai now works as intended with his stolen Microbots."
+                }
+              ]
+            }
+          ],
+          "index": 6
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 2
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 71, 189, 90],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 71, 189, 90],
+              "spans": [
+                {
+                  "bbox": [70, 71, 189, 90],
+                  "type": "text",
+                  "content": "New Keywords"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 24,
+          "level": 2
+        },
+        {
+          "type": "image",
+          "bbox": [70, 108, 212, 306],
+          "blocks": [
+            {
+              "bbox": [70, 108, 212, 306],
+              "lines": [
+                {
+                  "bbox": [70, 108, 212, 306],
+                  "spans": [
+                    {
+                      "bbox": [70, 108, 212, 306],
+                      "type": "image",
+                      "image_path": "54899083e36bffd5f487b861fddd5cdc2048b5f49e79977551241db82d7ad9cf.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [219, 106, 397, 122],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [219, 106, 397, 122],
+              "spans": [
+                {
+                  "bbox": [219, 106, 397, 122],
+                  "type": "text",
+                  "content": "Q: What is \"Vanish\"? (Ref. 2.1.)"
+                }
+              ]
+            }
+          ],
+          "index": 2,
+          "line_avg_height": 21,
+          "level": 3
+        },
+        {
+          "bbox": [217, 137, 539, 230],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 137, 539, 230],
+              "spans": [
+                {
+                  "bbox": [217, 137, 539, 230],
+                  "type": "text",
+                  "content": "A: \"Vanish\" is a new keyword on characters that acts to balance particularly strong character stats. When a character with \"Vanish\" is chosen by an opponent's action card effect, that character is banished. It is a triggered ability and uses the bag like any other triggered ability."
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [217, 244, 514, 277],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 244, 514, 277],
+              "spans": [
+                {
+                  "bbox": [217, 244, 514, 277],
+                  "type": "text",
+                  "content": "Q: What if a character with \"Vanish\" leaves play before the trigger is resolved? (Ref. 2.2.)"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [217, 290, 537, 322],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 290, 537, 322],
+              "spans": [
+                {
+                  "bbox": [217, 290, 537, 322],
+                  "type": "text",
+                  "content": "A: If the character with \"Vanish\" leaves play after being chosen by an action card effect, such as Let"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [105, 323, 509, 338],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [105, 323, 509, 338],
+              "spans": [
+                {
+                  "bbox": [105, 323, 509, 338],
+                  "type": "text",
+                  "content": "It Go or Mother Knows Best, then \"Vanish\" will resolve to no effect."
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [67, 354, 394, 401],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 354, 394, 401],
+              "spans": [
+                {
+                  "bbox": [67, 354, 394, 401],
+                  "type": "text",
+                  "content": "Q: Do “Universal Shift” and “Puppy Shift” trigger abilities that occur when something is played using “Shift”? (Ref. 2.3.)"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [104, 415, 407, 462],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 415, 407, 462],
+              "spans": [
+                {
+                  "bbox": [104, 415, 407, 462],
+                  "type": "text",
+                  "content": "A: Yes! “Universal Shift” and “Puppy Shift” are just special kinds of Shift, so they still trigger any ability that refers to “Shift” in its text."
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [67, 477, 414, 540],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 477, 414, 540],
+              "spans": [
+                {
+                  "bbox": [67, 477, 414, 540],
+                  "type": "text",
+                  "content": "Q: If I shift Baymax - Giant Robot onto a character with a triggered ability, like Bucky - Squirrel Squeak Tutor, can that triggered ability go into the bag before it is covered up? (Ref. 2.4.)"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [104, 555, 414, 650],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 555, 414, 650],
+              "spans": [
+                {
+                  "bbox": [104, 555, 414, 650],
+                  "type": "text",
+                  "content": "A: Yes! Baymax would be considered played as soon as his cost is paid, and just before he is put into the Play Zone on top of Bucky. Bucky's ability, Squeak, would trigger right then and go into the bag to be resolved after playing Baymax is completed."
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "type": "image",
+          "bbox": [421, 350, 565, 533],
+          "blocks": [
+            {
+              "bbox": [421, 350, 565, 533],
+              "lines": [
+                {
+                  "bbox": [421, 350, 565, 533],
+                  "spans": [
+                    {
+                      "bbox": [421, 350, 565, 533],
+                      "type": "image",
+                      "image_path": "44aeb484c2047093c5b3186d75cdd2646eea73f034188c890627111eef8b44b3.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 11,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 11
+        },
+        {
+          "type": "image",
+          "bbox": [421, 537, 564, 736],
+          "blocks": [
+            {
+              "bbox": [421, 537, 564, 736],
+              "lines": [
+                {
+                  "bbox": [421, 537, 564, 736],
+                  "spans": [
+                    {
+                      "bbox": [421, 537, 564, 736],
+                      "type": "image",
+                      "image_path": "673be1d1b07e81cdd9c1ea1b7384c527ea5073f5324588040e714878e797c430.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 12,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 12
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 3
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 71, 279, 89],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 71, 279, 89],
+              "spans": [
+                {
+                  "bbox": [69, 71, 279, 89],
+                  "type": "text",
+                  "content": "General Rules Questions"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 25,
+          "level": 2
+        },
+        {
+          "bbox": [68, 110, 526, 143],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 110, 526, 143],
+              "spans": [
+                {
+                  "bbox": [68, 110, 526, 143],
+                  "type": "text",
+                  "content": "Q: Does paying for a song with ink mean it's not being played as a song? (Ref. 3.1.)"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [104, 157, 533, 219],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 157, 533, 219],
+              "spans": [
+                {
+                  "bbox": [104, 157, 533, 219],
+                  "type": "text",
+                  "content": "A: No. No matter how you pay to play a song card, it is still a song. The characters in this set that refer to playing an \"action that isn't a song\" only mean actions that do not also have song in their classifications."
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "type": "image",
+          "bbox": [91, 236, 232, 434],
+          "blocks": [
+            {
+              "bbox": [91, 236, 232, 434],
+              "lines": [
+                {
+                  "bbox": [91, 236, 232, 434],
+                  "spans": [
+                    {
+                      "bbox": [91, 236, 232, 434],
+                      "type": "image",
+                      "image_path": "065eda4562a2c1cc1f77d20833b522cfb32b05ffbf4a92d474c3e3083d682340.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 3,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 3
+        },
+        {
+          "type": "image",
+          "bbox": [235, 236, 376, 434],
+          "blocks": [
+            {
+              "bbox": [235, 236, 376, 434],
+              "lines": [
+                {
+                  "bbox": [235, 236, 376, 434],
+                  "spans": [
+                    {
+                      "bbox": [235, 236, 376, 434],
+                      "type": "image",
+                      "image_path": "f9ca369232f1d936dda56d01796e46c007b6bd20e925715a492700ea1b2fa737.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 4
+        },
+        {
+          "type": "image",
+          "bbox": [377, 236, 520, 434],
+          "blocks": [
+            {
+              "bbox": [377, 236, 520, 434],
+              "lines": [
+                {
+                  "bbox": [377, 236, 520, 434],
+                  "spans": [
+                    {
+                      "bbox": [377, 236, 520, 434],
+                      "type": "image",
+                      "image_path": "1387d73e3adbecd3ada2e588f1b6b12df1905499a0ef8ad2a7b7897c6e7b4905.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 5,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 5
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 4
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 70, 320, 90],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 70, 320, 90],
+              "spans": [
+                {
+                  "bbox": [69, 70, 320, 90],
+                  "type": "text",
+                  "content": "Specific Character Questions"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 24,
+          "level": 2
+        },
+        {
+          "bbox": [69, 106, 231, 122],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 106, 231, 122],
+              "spans": [
+                {
+                  "bbox": [69, 106, 231, 122],
+                  "type": "text",
+                  "content": "Baymax - Giant Robot"
+                }
+              ]
+            }
+          ],
+          "index": 1,
+          "line_avg_height": 20,
+          "level": 3
+        },
+        {
+          "bbox": [69, 124, 387, 171],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 124, 387, 171],
+              "spans": [
+                {
+                  "bbox": [69, 124, 387, 171],
+                  "type": "text",
+                  "content": "Q: If I use Universal Shift to play Baymax on top of a character that has 5 damage, will Baymax be banished? (Ref. 4.1.)"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [104, 185, 391, 293],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 185, 391, 293],
+              "spans": [
+                {
+                  "bbox": [104, 185, 391, 293],
+                  "type": "text",
+                  "content": "A: Yes. There is a Game State Check (GSC) that will occur after playing Baymax and before the Bag is checked to resolve his triggered ability, Functionality Improved. This means he will be banished by that GSC before you can remove any damage counters from him."
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "type": "image",
+          "bbox": [399, 79, 541, 277],
+          "blocks": [
+            {
+              "bbox": [399, 79, 541, 277],
+              "lines": [
+                {
+                  "bbox": [399, 79, 541, 277],
+                  "spans": [
+                    {
+                      "bbox": [399, 79, 541, 277],
+                      "type": "image",
+                      "image_path": "77ef4e3604a0c518280c1474911a843e7414ba961105b88b9b33b6283d3c2626.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 310, 268, 327],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 310, 268, 327],
+              "spans": [
+                {
+                  "bbox": [69, 310, 268, 327],
+                  "type": "text",
+                  "content": "Belle - Apprentice Inventor"
+                }
+              ]
+            }
+          ],
+          "index": 5,
+          "line_avg_height": 23,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 334, 212, 534],
+          "blocks": [
+            {
+              "bbox": [70, 334, 212, 534],
+              "lines": [
+                {
+                  "bbox": [70, 334, 212, 534],
+                  "spans": [
+                    {
+                      "bbox": [70, 334, 212, 534],
+                      "type": "image",
+                      "image_path": "5f58b17c542a8fa34de7990eb761286393057062c87f123ee4b4e80bb5c2fe1b.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 6,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [218, 329, 526, 361],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [218, 329, 526, 361],
+              "spans": [
+                {
+                  "bbox": [218, 329, 526, 361],
+                  "type": "text",
+                  "content": "Q: Does the Item banished for What a Mess need to have a banish ability? (Ref. 4.2.a.)"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [217, 374, 539, 469],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 374, 539, 469],
+              "spans": [
+                {
+                  "bbox": [217, 374, 539, 469],
+                  "type": "text",
+                  "content": "A: No. The ability on the item does not matter for What a Mess. In fact, if the banished Item did have an activated ability, that ability could not be used since the item was not banished for the purpose of paying the cost of that ability. It was only banished to pay for What a Mess."
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [217, 486, 533, 549],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 486, 533, 549],
+              "spans": [
+                {
+                  "bbox": [217, 486, 533, 549],
+                  "type": "text",
+                  "content": "A2: Note that items with abilities that trigger when they are banished, such as Unconventional Tool, would still have their triggered abilities go in the bag if banished to pay for What a Mess."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [67, 564, 539, 596],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 564, 539, 596],
+              "spans": [
+                {
+                  "bbox": [67, 564, 539, 596],
+                  "type": "text",
+                  "content": "Q: When I banish an Item to play Belle for free, can I play all the Belles that are in my hand? (Ref. 4.2.b.)"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [104, 611, 535, 658],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 611, 535, 658],
+              "spans": [
+                {
+                  "bbox": [104, 611, 535, 658],
+                  "type": "text",
+                  "content": "A: No. Because What a Mess is an activated ability, you must pay the cost for each copy of the ability you wish to activate by taking the \"Use Activated Abilities\" turn action for each one individually."
+                }
+              ]
+            }
+          ],
+          "index": 11
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 5
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [67, 71, 504, 103],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 71, 504, 103],
+              "spans": [
+                {
+                  "bbox": [67, 71, 504, 103],
+                  "type": "text",
+                  "content": "Q: Can I use Belle's ability What a Mess to banish on item while she is already in play? (Ref. 4.2.c.)"
+                }
+              ]
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [104, 118, 535, 180],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 118, 535, 180],
+              "spans": [
+                {
+                  "bbox": [104, 118, 535, 180],
+                  "type": "text",
+                  "content": "A: No. While using Belle's ability while she is in play is not specifically prohibited by the rules, it is not intended. We have a special ruling to clarify that What a Mess may only be activated while Belle is in your hand."
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [69, 198, 188, 216],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 198, 188, 216],
+              "spans": [
+                {
+                  "bbox": [69, 198, 188, 216],
+                  "type": "text",
+                  "content": "Bolt - Superdog"
+                }
+              ]
+            }
+          ],
+          "index": 2,
+          "line_avg_height": 24,
+          "level": 3
+        },
+        {
+          "bbox": [68, 217, 381, 263],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 217, 381, 263],
+              "spans": [
+                {
+                  "bbox": [68, 217, 381, 263],
+                  "type": "text",
+                  "content": "Q: Can I play Lilo - Escape Artist during my Set Step to gain an additional lore when Bolt readies at the start of my turn? (Ref. 4.3.)"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [104, 278, 382, 389],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 278, 382, 389],
+              "spans": [
+                {
+                  "bbox": [104, 278, 382, 389],
+                  "type": "text",
+                  "content": "A: Yes! While Bolt's ability, Mark of Power, is triggered during the Ready Step, it is not resolved until the Set Step. This is the same timing as Lilo's triggered ability, so they can be resolved in the order that allows you to have Lilo in play before counting your undamaged characters for Mark of Power."
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "type": "image",
+          "bbox": [399, 207, 541, 406],
+          "blocks": [
+            {
+              "bbox": [399, 207, 541, 406],
+              "lines": [
+                {
+                  "bbox": [399, 207, 541, 406],
+                  "spans": [
+                    {
+                      "bbox": [399, 207, 541, 406],
+                      "type": "image",
+                      "image_path": "e55268918ca747623d93070c31a7ce8767b7a822f6b4c1c6f26c44351c3a6c33.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 5,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [69, 403, 319, 419],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 403, 319, 419],
+              "spans": [
+                {
+                  "bbox": [69, 403, 319, 419],
+                  "type": "text",
+                  "content": "Donald Duck - Flustered Sorcerer"
+                }
+              ]
+            }
+          ],
+          "index": 6,
+          "line_avg_height": 23,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 428, 212, 628],
+          "blocks": [
+            {
+              "bbox": [70, 428, 212, 628],
+              "lines": [
+                {
+                  "bbox": [70, 428, 212, 628],
+                  "spans": [
+                    {
+                      "bbox": [70, 428, 212, 628],
+                      "type": "image",
+                      "image_path": "0602a5e898939a593006967121f9bdaa9f4d1e219dd93343e0911e02aeef09ad.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 7,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [218, 422, 533, 454],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [218, 422, 533, 454],
+              "spans": [
+                {
+                  "bbox": [218, 422, 533, 454],
+                  "type": "text",
+                  "content": "Q: Does my opponent need exactly 25 lore to win? (Ref. 4.4.a.)"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [217, 469, 529, 518],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 469, 529, 518],
+              "spans": [
+                {
+                  "bbox": [217, 469, 529, 518],
+                  "type": "text",
+                  "content": "A: No, Obfuscate! is intended to change the opponent's win condition to 25 lore or more while Donald Duck remains in play."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [217, 532, 531, 564],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 532, 531, 564],
+              "spans": [
+                {
+                  "bbox": [217, 532, 531, 564],
+                  "type": "text",
+                  "content": "Q: What happens if Donald is banished when my opponent has between 20 and 25 lore? (Ref. 4.4.b.)"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [217, 578, 533, 641],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 578, 533, 641],
+              "spans": [
+                {
+                  "bbox": [217, 578, 533, 641],
+                  "type": "text",
+                  "content": "A: Your opponent would win during the next game state check. If multiple opponents meet the criteria, whichever is first in turn order starting from the active player would be the winner."
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "bbox": [69, 655, 400, 672],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 655, 400, 672],
+              "spans": [
+                {
+                  "bbox": [69, 655, 400, 672],
+                  "type": "text",
+                  "content": "Q: Do multiple Donalds stack their effect? (Ref. 4.4.c.)"
+                }
+              ]
+            }
+          ],
+          "index": 12
+        },
+        {
+          "bbox": [104, 686, 254, 702],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 686, 254, 702],
+              "spans": [
+                {
+                  "bbox": [104, 686, 254, 702],
+                  "type": "text",
+                  "content": "A: No. Thank goodness."
+                }
+              ]
+            }
+          ],
+          "index": 13
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 6
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 70, 189, 86],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 70, 189, 86],
+              "spans": [
+                {
+                  "bbox": [69, 70, 189, 86],
+                  "type": "text",
+                  "content": "Elsa - Ice Maker"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 22,
+          "level": 3
+        },
+        {
+          "bbox": [69, 87, 379, 120],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 87, 379, 120],
+              "spans": [
+                {
+                  "bbox": [69, 87, 379, 120],
+                  "type": "text",
+                  "content": "Q: Can I choose an already exerted character for this Elsa's ability? (Ref. 4.5.)"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [104, 137, 391, 276],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 137, 391, 276],
+              "spans": [
+                {
+                  "bbox": [104, 137, 391, 276],
+                  "type": "text",
+                  "content": "A: Yes, you can. However, doing so means the character did not become exerted with this ability, and the second effect of making them unable to ready at the start of their next turn will not resolve even if you have a character named Anna in play. The words \"if you do\" on the second effect require the first effect to be resolved exactly as the effect describes in order for the second effect to resolve at all."
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "type": "image",
+          "bbox": [399, 79, 541, 277],
+          "blocks": [
+            {
+              "bbox": [399, 79, 541, 277],
+              "lines": [
+                {
+                  "bbox": [399, 79, 541, 277],
+                  "spans": [
+                    {
+                      "bbox": [399, 79, 541, 277],
+                      "type": "image",
+                      "image_path": "58c38c72a709a156a1f8f54121217db191e2443a30f700c86942d5cd82fdd22b.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 3,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 292, 217, 308],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 292, 217, 308],
+              "spans": [
+                {
+                  "bbox": [69, 292, 217, 308],
+                  "type": "text",
+                  "content": "Fa Zhou - War Hero"
+                }
+              ]
+            }
+          ],
+          "index": 4,
+          "line_avg_height": 22,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 316, 212, 518],
+          "blocks": [
+            {
+              "bbox": [70, 316, 212, 518],
+              "lines": [
+                {
+                  "bbox": [70, 316, 212, 518],
+                  "spans": [
+                    {
+                      "bbox": [70, 316, 212, 518],
+                      "type": "image",
+                      "image_path": "61e572e6d99fecff5c12a2b0cf1de8e4deaf1f2e687d296e74970cf47eec7b1c.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 5,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [218, 310, 520, 359],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [218, 310, 520, 359],
+              "spans": [
+                {
+                  "bbox": [218, 310, 520, 359],
+                  "type": "text",
+                  "content": "Q: Does Fa Zhou have to be in play during both challenges in order for Training Exercises to trigger? (Ref. 4.6.a.)"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [217, 373, 529, 420],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 373, 529, 420],
+              "spans": [
+                {
+                  "bbox": [217, 373, 529, 420],
+                  "type": "text",
+                  "content": "A: No. Training Exercises will trigger when the second challenge of your turn is declared, even if he was not in play to see the first one."
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [217, 434, 539, 481],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 434, 539, 481],
+              "spans": [
+                {
+                  "bbox": [217, 434, 539, 481],
+                  "type": "text",
+                  "content": "Q: Will Fa Zhou's ability trigger if he is played after the second challenge has already occurred that turn? (Ref. 4.6.b.)"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [217, 496, 531, 526],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 496, 531, 526],
+              "spans": [
+                {
+                  "bbox": [217, 496, 531, 526],
+                  "type": "text",
+                  "content": "A: No. Fa Zhou must be in play when the second challenge occurs. If he misses that one, he misses"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [104, 527, 527, 544],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 527, 527, 544],
+              "spans": [
+                {
+                  "bbox": [104, 527, 527, 544],
+                  "type": "text",
+                  "content": "his opportunity, even if other challenges happen while he is in play."
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [67, 558, 537, 590],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 558, 537, 590],
+              "spans": [
+                {
+                  "bbox": [67, 558, 537, 590],
+                  "type": "text",
+                  "content": "Q: Do the challenges both need to be from/against the same character or location? (Ref. 4.6.c.)"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "bbox": [104, 604, 502, 635],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 604, 502, 635],
+              "spans": [
+                {
+                  "bbox": [104, 604, 502, 635],
+                  "type": "text",
+                  "content": "A: No. Fa Zhou does not care who challenged or what was challenged. Only that the second challenge has been declared."
+                }
+              ]
+            }
+          ],
+          "index": 12
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 7
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 70, 291, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 70, 291, 87],
+              "spans": [
+                {
+                  "bbox": [69, 70, 291, 87],
+                  "type": "text",
+                  "content": "Gantu - Experienced Enforcer"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 21,
+          "level": 3
+        },
+        {
+          "bbox": [69, 87, 379, 105],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 87, 379, 105],
+              "spans": [
+                {
+                  "bbox": [69, 87, 379, 105],
+                  "type": "text",
+                  "content": "Q: Does Gantu affect cards that I play? (Ref. 4.7.a.)"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [104, 118, 370, 150],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 118, 370, 150],
+              "spans": [
+                {
+                  "bbox": [104, 118, 370, 150],
+                  "type": "text",
+                  "content": "A: Yes. Both of Gantu's abilities apply their effects to all players."
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 164, 379, 198],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 164, 379, 198],
+              "spans": [
+                {
+                  "bbox": [69, 164, 379, 198],
+                  "type": "text",
+                  "content": "Q: If an action or item is played “for free”, is the 2 ink from Don’t Get Any Ideas included? (Ref. 4.7.b.)"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [104, 212, 369, 289],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 212, 369, 289],
+              "spans": [
+                {
+                  "bbox": [104, 212, 369, 289],
+                  "type": "text",
+                  "content": "A: Playing a card \"for free\" means that you don't pay any ink costs at all. Even ones added by other abilities or effects. Gantu does not affect how much you pay for something played \"for free\"."
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "type": "image",
+          "bbox": [398, 79, 541, 278],
+          "blocks": [
+            {
+              "bbox": [398, 79, 541, 278],
+              "lines": [
+                {
+                  "bbox": [398, 79, 541, 278],
+                  "spans": [
+                    {
+                      "bbox": [398, 79, 541, 278],
+                      "type": "image",
+                      "image_path": "1799a6a220095714fab24a49afecc61a966fa883c94efd88ea4c2539ec34619c.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 5,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 5
+        },
+        {
+          "type": "image",
+          "bbox": [70, 301, 212, 500],
+          "blocks": [
+            {
+              "bbox": [70, 301, 212, 500],
+              "lines": [
+                {
+                  "bbox": [70, 301, 212, 500],
+                  "spans": [
+                    {
+                      "bbox": [70, 301, 212, 500],
+                      "type": "image",
+                      "image_path": "68ca0e80f955da4a5efb9326de3b65e05d52a641e9376a07d0a216a8e9f65642.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 6,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [218, 304, 517, 354],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [218, 304, 517, 354],
+              "spans": [
+                {
+                  "bbox": [218, 304, 517, 354],
+                  "type": "text",
+                  "content": "Heihei - Expanded Consciousness Q: Is this the greatest Lorcona card of all time? (Ref. 4.8.)"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [219, 369, 259, 383],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [219, 369, 259, 383],
+              "spans": [
+                {
+                  "bbox": [219, 369, 259, 383],
+                  "type": "text",
+                  "content": "A: Yes."
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [69, 508, 202, 523],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 508, 202, 523],
+              "spans": [
+                {
+                  "bbox": [69, 508, 202, 523],
+                  "type": "text",
+                  "content": "Kronk - Laid Back"
+                }
+              ]
+            }
+          ],
+          "index": 9,
+          "line_avg_height": 20,
+          "level": 3
+        },
+        {
+          "bbox": [69, 525, 382, 572],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 525, 382, 572],
+              "spans": [
+                {
+                  "bbox": [69, 525, 382, 572],
+                  "type": "text",
+                  "content": "Q: Can I still pay for abilities that require me to discard cards as part of the cost while Kronk is in play? (Ref. 4.9.a.)"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [104, 587, 389, 712],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 587, 389, 712],
+              "spans": [
+                {
+                  "bbox": [104, 587, 389, 712],
+                  "type": "text",
+                  "content": "A: Yes! I'm Lovin' This only applies to the effect portion of an ability. If the ability has a cost that includes discarding, you must still discard, such as for Madam Mim - Truly Marvelous or to resolve Twin Fire's second effect. Cards such as Sudden Chill would have their effect prevented if it was attempting to make you discard."
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "type": "image",
+          "bbox": [398, 519, 541, 718],
+          "blocks": [
+            {
+              "bbox": [398, 519, 541, 718],
+              "lines": [
+                {
+                  "bbox": [398, 519, 541, 718],
+                  "spans": [
+                    {
+                      "bbox": [398, 519, 541, 718],
+                      "type": "image",
+                      "image_path": "6b2cb07a77cf91d8764bb03d0fdccacbd4a973d14a34bfc6b4020e0e142d8477.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 12,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 12
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 8
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [68, 85, 388, 118],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 85, 388, 118],
+              "spans": [
+                {
+                  "bbox": [68, 85, 388, 118],
+                  "type": "text",
+                  "content": "Q: What about if I play Megara - Captivating Cynic while Kronk is in play? (Ref. 4.9.b.)"
+                }
+              ]
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [104, 132, 388, 179],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 132, 388, 179],
+              "spans": [
+                {
+                  "bbox": [104, 132, 388, 179],
+                  "type": "text",
+                  "content": "A: Megara is banished. Kronk prevents you from being able to discard a card in order to keep her in play."
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "type": "image",
+          "bbox": [399, 79, 541, 277],
+          "blocks": [
+            {
+              "bbox": [399, 79, 541, 277],
+              "lines": [
+                {
+                  "bbox": [399, 79, 541, 277],
+                  "spans": [
+                    {
+                      "bbox": [399, 79, 541, 277],
+                      "type": "image",
+                      "image_path": "2509f6e5d17f0089c9a50fe1df635a855909d61453d382936ff66e40ec42807e.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 2,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 300, 308, 318],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 300, 308, 318],
+              "spans": [
+                {
+                  "bbox": [69, 300, 308, 318],
+                  "type": "text",
+                  "content": "Lady Tremaine - Bitterly Jealous"
+                }
+              ]
+            }
+          ],
+          "index": 3,
+          "line_avg_height": 22,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 327, 212, 525],
+          "blocks": [
+            {
+              "bbox": [70, 327, 212, 525],
+              "lines": [
+                {
+                  "bbox": [70, 327, 212, 525],
+                  "spans": [
+                    {
+                      "bbox": [70, 327, 212, 525],
+                      "type": "image",
+                      "image_path": "53197631b9c8d8cc347b4a8acceaae06522ccee4c057a4578851f2a75517427c.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [217, 320, 539, 367],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 320, 539, 367],
+              "spans": [
+                {
+                  "bbox": [217, 320, 539, 367],
+                  "type": "text",
+                  "content": "Q: Can I activate That's Quite Enough if there are no damaged characters in play? What happens if I do? (Ref. 4.10.)"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [217, 382, 537, 460],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 382, 537, 460],
+              "spans": [
+                {
+                  "bbox": [217, 382, 537, 460],
+                  "type": "text",
+                  "content": "A: You can activate the ability when there are no damaged characters in play, as the only cost is to exert Lady Tremaine. If you do so, no characters will return to any player's hand, but each of your opponents will still have to discard a random card."
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [217, 475, 541, 522],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 475, 541, 522],
+              "spans": [
+                {
+                  "bbox": [217, 475, 541, 522],
+                  "type": "text",
+                  "content": "A2: Remember, though - if there is a valid choice, you must choose it. Even if it is your own character! That part of the ability is not optional."
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [69, 537, 293, 552],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 537, 293, 552],
+              "spans": [
+                {
+                  "bbox": [69, 537, 293, 552],
+                  "type": "text",
+                  "content": "Maid Marian - Badminton Ace"
+                }
+              ]
+            }
+          ],
+          "index": 8,
+          "line_avg_height": 20,
+          "level": 3
+        },
+        {
+          "bbox": [68, 555, 376, 604],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 555, 376, 604],
+              "spans": [
+                {
+                  "bbox": [68, 555, 376, 604],
+                  "type": "text",
+                  "content": "Q: If one of my Ally characters is dealt damage, but has Resist that reduces it to 0 damage dealt, does Good Shot still trigger? (Ref. 4.11.)"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [104, 617, 373, 681],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 617, 373, 681],
+              "spans": [
+                {
+                  "bbox": [104, 617, 373, 681],
+                  "type": "text",
+                  "content": "A: No. If Resist reduces an instance of damage to zero, then no damage is considered to have been dealt. Good Shot will not trigger if no damage is dealt."
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "type": "image",
+          "bbox": [399, 533, 541, 732],
+          "blocks": [
+            {
+              "bbox": [399, 533, 541, 732],
+              "lines": [
+                {
+                  "bbox": [399, 533, 541, 732],
+                  "spans": [
+                    {
+                      "bbox": [399, 533, 541, 732],
+                      "type": "image",
+                      "image_path": "becd68affad7ecaa6bd339fc6103455a0d1b4b95f61ef44dc3dd046d12b80e3b.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 11,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 11
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 9
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [104, 70, 539, 117],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 70, 539, 117],
+              "spans": [
+                {
+                  "bbox": [104, 70, 539, 117],
+                  "type": "text",
+                  "content": "A2: Note that this also includes moving damage and putting damage counters - neither of those effects \"deal\" damage, and do not trigger Good Shot."
+                }
+              ]
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [69, 133, 343, 150],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 133, 343, 150],
+              "spans": [
+                {
+                  "bbox": [69, 133, 343, 150],
+                  "type": "text",
+                  "content": "Mickey Mouse - Inspirational Warrior"
+                }
+              ]
+            }
+          ],
+          "index": 1,
+          "line_avg_height": 20,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 158, 212, 357],
+          "blocks": [
+            {
+              "bbox": [70, 158, 212, 357],
+              "lines": [
+                {
+                  "bbox": [70, 158, 212, 357],
+                  "spans": [
+                    {
+                      "bbox": [70, 158, 212, 357],
+                      "type": "image",
+                      "image_path": "1419e9f4a7b39910c0a05769059ea675532e8692ebd2183afc7df604e750dcfc.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 2,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [217, 151, 520, 182],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 151, 520, 182],
+              "spans": [
+                {
+                  "bbox": [217, 151, 520, 182],
+                  "type": "text",
+                  "content": "Q: Does Mickey need to survive the challenge in order to play a character for free? (Ref. 4.12.)"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [217, 197, 539, 261],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 197, 539, 261],
+              "spans": [
+                {
+                  "bbox": [217, 197, 539, 261],
+                  "type": "text",
+                  "content": "A: No. Even if Mickey is banished in the challenge, if he banishes the opposing character then Stirring Spirit will trigger and get to resolve. Mickey does not need to remain in play."
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 365, 301, 380],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 365, 301, 380],
+              "spans": [
+                {
+                  "bbox": [69, 365, 301, 380],
+                  "type": "text",
+                  "content": "Mother Gothel - Vain Sorceress"
+                }
+              ]
+            }
+          ],
+          "index": 5,
+          "line_avg_height": 23,
+          "level": 3
+        },
+        {
+          "bbox": [69, 384, 354, 431],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 384, 354, 431],
+              "spans": [
+                {
+                  "bbox": [69, 384, 354, 431],
+                  "type": "text",
+                  "content": "Q: Can Now You've Upset Me move a damage counter that was dealt in the challenge that triggered the ability? (Ref. 4.13.a.)"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [104, 445, 384, 509],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 445, 384, 509],
+              "spans": [
+                {
+                  "bbox": [104, 445, 384, 509],
+                  "type": "text",
+                  "content": "A: No. Mother Gothel's ability resolves after the challenge has been declared, but before the Challenge Damage Step has dealt any damage to characters."
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [68, 523, 376, 571],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 523, 376, 571],
+              "spans": [
+                {
+                  "bbox": [68, 523, 376, 571],
+                  "type": "text",
+                  "content": "Q: What happens if the moved damage counter causes one of the characters in the challenge to be banished? (Ref. 4.13.b.)"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "type": "image",
+          "bbox": [398, 359, 541, 558],
+          "blocks": [
+            {
+              "bbox": [398, 359, 541, 558],
+              "lines": [
+                {
+                  "bbox": [398, 359, 541, 558],
+                  "spans": [
+                    {
+                      "bbox": [398, 359, 541, 558],
+                      "type": "image",
+                      "image_path": "c881f3170105ef788e9b241daacc59ccd1f69b90ea2bdfff15d90851efe83486.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 9,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [104, 585, 520, 632],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 585, 520, 632],
+              "spans": [
+                {
+                  "bbox": [104, 585, 520, 632],
+                  "type": "text",
+                  "content": "A: Remaining abilities are resolved from the bag, and then the challenge ends. It is an open question whether Gothel \"gets credit\" for banishing the character - stay tuned for updates!"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 10
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 70, 307, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 70, 307, 87],
+              "spans": [
+                {
+                  "bbox": [69, 70, 307, 87],
+                  "type": "text",
+                  "content": "Pepa Madrigal - Sensitive Sister"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 22,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 95, 212, 293],
+          "blocks": [
+            {
+              "bbox": [70, 95, 212, 293],
+              "lines": [
+                {
+                  "bbox": [70, 95, 212, 293],
+                  "spans": [
+                    {
+                      "bbox": [70, 95, 212, 293],
+                      "type": "image",
+                      "image_path": "723c7a0a7ae10cd6db2abb605ca3f6beb65aff83b999011d1ef1cc216c2fd219.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [217, 88, 514, 120],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 88, 514, 120],
+              "spans": [
+                {
+                  "bbox": [217, 88, 514, 120],
+                  "type": "text",
+                  "content": "Q: If I sing a song with Sing Together, do I get a lore for each character that song? (Ref. 4.14.)"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [217, 135, 534, 182],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 135, 534, 182],
+              "spans": [
+                {
+                  "bbox": [217, 135, 534, 182],
+                  "type": "text",
+                  "content": "A: No. Because Clear Skies, Clear Skies specifies \"one or more\" characters, singing a song with Sing Together would only ever grant one lore."
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 304, 371, 353],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 304, 371, 353],
+              "spans": [
+                {
+                  "bbox": [69, 304, 371, 353],
+                  "type": "text",
+                  "content": "Pepper - Quick-Thinking Puppy  \nQ: Can Pepper's ability put herself in the inkwell when she is banished? (Ref. 4.15.)"
+                }
+              ]
+            }
+          ],
+          "index": 4,
+          "line_avg_height": 20,
+          "level": 3
+        },
+        {
+          "bbox": [104, 369, 384, 415],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 369, 384, 415],
+              "spans": [
+                {
+                  "bbox": [104, 369, 384, 415],
+                  "type": "text",
+                  "content": "A: Yes! Pepper is a puppy character, and her ability would trigger when she is banished. If you wish, you can put her into the inkwell."
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "type": "image",
+          "bbox": [398, 264, 541, 463],
+          "blocks": [
+            {
+              "bbox": [398, 264, 541, 463],
+              "lines": [
+                {
+                  "bbox": [398, 264, 541, 463],
+                  "spans": [
+                    {
+                      "bbox": [398, 264, 541, 463],
+                      "type": "image",
+                      "image_path": "0948777c7ace254b53e1337367228f795897121f4eba10caed6b7c27979876c6.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 6,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [69, 484, 211, 502],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 484, 211, 502],
+              "spans": [
+                {
+                  "bbox": [69, 484, 211, 502],
+                  "type": "text",
+                  "content": "Pete - Space Pirate"
+                }
+              ]
+            }
+          ],
+          "index": 7,
+          "line_avg_height": 22,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 509, 212, 708],
+          "blocks": [
+            {
+              "bbox": [70, 509, 212, 708],
+              "lines": [
+                {
+                  "bbox": [70, 509, 212, 708],
+                  "spans": [
+                    {
+                      "bbox": [70, 509, 212, 708],
+                      "type": "image",
+                      "image_path": "f808c792ca9f801ce2a272dc77be624543125752fd1bd17473ed479b41a17951.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 8,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [217, 503, 523, 534],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 503, 523, 534],
+              "spans": [
+                {
+                  "bbox": [217, 503, 523, 534],
+                  "type": "text",
+                  "content": "Q: Does Pete get Resist +1 from Frightful Scheme when he challenges? (Ref. 4.16.)"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [217, 549, 535, 612],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 549, 535, 612],
+              "spans": [
+                {
+                  "bbox": [217, 549, 535, 612],
+                  "type": "text",
+                  "content": "A: Yes! Pete is exerted before the challenge occurs, so he would immediately gain Resist +1 at that point and have it for the entirety of the challenge (and beyond)."
+                }
+              ]
+            }
+          ],
+          "index": 10
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 11
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 70, 233, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 70, 233, 87],
+              "spans": [
+                {
+                  "bbox": [69, 70, 233, 87],
+                  "type": "text",
+                  "content": "Pongo - Dear Old Dad"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 21,
+          "level": 3
+        },
+        {
+          "bbox": [69, 87, 388, 119],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 87, 388, 119],
+              "spans": [
+                {
+                  "bbox": [69, 87, 388, 119],
+                  "type": "text",
+                  "content": "Q: What happens if some of my ink is exerted when I resolve Pongo's ability? (Ref. 4.17.)"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [104, 134, 389, 196],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 134, 389, 196],
+              "spans": [
+                {
+                  "bbox": [104, 134, 389, 196],
+                  "type": "text",
+                  "content": "A: If you look at your inkwell and find that a Puppy was one of the cards you exerted, you can play that character for free and keep the same amount of ready ink - congratulations!"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [104, 211, 373, 274],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 211, 373, 274],
+              "spans": [
+                {
+                  "bbox": [104, 211, 373, 274],
+                  "type": "text",
+                  "content": "A2: If you are playing with ink tokens, you must select which cards from your real ink pile are the exerted ones before looking at your inkwell."
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "type": "image",
+          "bbox": [399, 79, 541, 281],
+          "blocks": [
+            {
+              "bbox": [399, 79, 541, 281],
+              "lines": [
+                {
+                  "bbox": [399, 79, 541, 281],
+                  "spans": [
+                    {
+                      "bbox": [399, 79, 541, 281],
+                      "type": "image",
+                      "image_path": "539f8f15520bc6ccdae6c6e10838b749634961a18487b38b8edf85864ed30490.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 289, 354, 308],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 289, 354, 308],
+              "spans": [
+                {
+                  "bbox": [69, 289, 354, 308],
+                  "type": "text",
+                  "content": "Queen of Hearts - Unpredictable Bully"
+                }
+              ]
+            }
+          ],
+          "index": 5,
+          "line_avg_height": 26,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 315, 212, 514],
+          "blocks": [
+            {
+              "bbox": [70, 315, 212, 514],
+              "lines": [
+                {
+                  "bbox": [70, 315, 212, 514],
+                  "spans": [
+                    {
+                      "bbox": [70, 315, 212, 514],
+                      "type": "image",
+                      "image_path": "871d40153152b72b7a74a28e20f4c53e5d31896ff203a0644fce00fe59daf051.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 6,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [218, 308, 530, 338],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [218, 308, 530, 338],
+              "spans": [
+                {
+                  "bbox": [218, 308, 530, 338],
+                  "type": "text",
+                  "content": "Q: If I shift a character onto Queen of Hearts, will it get a damage counter put on it? (Ref. 4.18.a.)"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [217, 354, 533, 416],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 354, 533, 416],
+              "spans": [
+                {
+                  "bbox": [217, 354, 533, 416],
+                  "type": "text",
+                  "content": "A: Yes. Playing a character onto Queen of Hearts with Shift counts as \"playing another character\". It doesn't matter that she will herself be covered up by that character when the ability resolves."
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [218, 431, 509, 479],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [218, 431, 509, 479],
+              "spans": [
+                {
+                  "bbox": [218, 431, 509, 479],
+                  "type": "text",
+                  "content": "Q: Does Resist or Ward prevent If I Lose My Temper... from putting a damage counter on a character? (Ref. 4.18.b.)"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [217, 495, 525, 526],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 495, 525, 526],
+              "spans": [
+                {
+                  "bbox": [217, 495, 525, 526],
+                  "type": "text",
+                  "content": "A: No. Resist does not reduce placed damage counters, as they are not \"dealt\", and If I Lose My"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [105, 527, 511, 557],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [105, 527, 511, 557],
+              "spans": [
+                {
+                  "bbox": [105, 527, 511, 557],
+                  "type": "text",
+                  "content": "Temper... does not \"choose\" a character so does not interact with Ward."
+                }
+              ]
+            }
+          ],
+          "index": 11
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 12
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 70, 282, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 70, 282, 87],
+              "spans": [
+                {
+                  "bbox": [69, 70, 282, 87],
+                  "type": "text",
+                  "content": "Ratigan - Nefarious Criminal"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 20,
+          "level": 3
+        },
+        {
+          "bbox": [68, 88, 376, 136],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 88, 376, 136],
+              "spans": [
+                {
+                  "bbox": [68, 88, 376, 136],
+                  "type": "text",
+                  "content": "Q: If I sing Try Everything with Ratigan and ready him, does A Marvelous Performance give me any lore? (Ref. 4.19.)"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [104, 152, 387, 291],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 152, 387, 291],
+              "spans": [
+                {
+                  "bbox": [104, 152, 387, 291],
+                  "type": "text",
+                  "content": "A: Yes! A Marvelous Performance triggers and goes in the bag whenever an action is played while Ratigan is exerted. Since you have to exert him to pay the cost of the song before it is played, this condition is met. Resolving the effect of Try Everything does ready Ratigan after that, but the ability does not care if he remains exerted until it resolves. You get the lore!"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "type": "image",
+          "bbox": [398, 79, 541, 278],
+          "blocks": [
+            {
+              "bbox": [398, 79, 541, 278],
+              "lines": [
+                {
+                  "bbox": [398, 79, 541, 278],
+                  "spans": [
+                    {
+                      "bbox": [398, 79, 541, 278],
+                      "type": "image",
+                      "image_path": "0a1193437e75d26930197b5e87319080317f7f6bebc8d09e165edf78b3433663.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 3,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 306, 343, 323],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 306, 343, 323],
+              "spans": [
+                {
+                  "bbox": [69, 306, 343, 323],
+                  "type": "text",
+                  "content": "Scrooge McDuck - Resourceful Miser"
+                }
+              ]
+            }
+          ],
+          "index": 4,
+          "line_avg_height": 21,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 331, 212, 529],
+          "blocks": [
+            {
+              "bbox": [70, 331, 212, 529],
+              "lines": [
+                {
+                  "bbox": [70, 331, 212, 529],
+                  "spans": [
+                    {
+                      "bbox": [70, 331, 212, 529],
+                      "type": "image",
+                      "image_path": "83db6c4273830febc05ce80881b28c8fde2c65e1b493bd8ec58a64babf7802d7.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 5,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [218, 325, 508, 357],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [218, 325, 508, 357],
+              "spans": [
+                {
+                  "bbox": [218, 325, 508, 357],
+                  "type": "text",
+                  "content": "Q: Do the items exerted for Put It To Good Use need to have an exert ability? (Ref. 4.20.a.)"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [217, 371, 528, 498],
+          "type": "list",
+          "angle": 0,
+          "index": 9,
+          "blocks": [
+            {
+              "bbox": [217, 371, 528, 451],
+              "type": "text",
+              "angle": 0,
+              "lines": [
+                {
+                  "bbox": [217, 371, 528, 451],
+                  "spans": [
+                    {
+                      "bbox": [217, 371, 528, 451],
+                      "type": "text",
+                      "content": "A: No. The abilities on the items do not matter for Put It To Good Use. In fact, if any of the items exerted did have an exert ability, it would not be used since they were not exerted for the purpose of paying the cost of that ability - only Scrooge's."
+                    }
+                  ]
+                }
+              ],
+              "index": 7
+            },
+            {
+              "bbox": [217, 465, 522, 498],
+              "type": "text",
+              "angle": 0,
+              "lines": [
+                {
+                  "bbox": [217, 465, 522, 498],
+                  "spans": [
+                    {
+                      "bbox": [217, 465, 522, 498],
+                      "type": "text",
+                      "content": "Q: Can I \"exert\" items that are already exerted to pay the cost of Put It To Good Use? (Ref. 4.20.a.)"
+                    }
+                  ]
+                }
+              ],
+              "index": 8
+            }
+          ],
+          "sub_type": "text"
+        },
+        {
+          "bbox": [217, 513, 539, 559],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 513, 539, 559],
+              "spans": [
+                {
+                  "bbox": [217, 513, 539, 559],
+                  "type": "text",
+                  "content": "A: No. If you are not able to do what a cost requires you to do, then you cannot pay that cost. And you em that is already exerted."
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [68, 575, 530, 608],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 575, 530, 608],
+              "spans": [
+                {
+                  "bbox": [68, 575, 530, 608],
+                  "type": "text",
+                  "content": "Q: Can I use Scrooge's ability Put It To Good Use to exert items while he is already in play? (Ref. 4.20.b.)"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "bbox": [104, 622, 539, 686],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 622, 539, 686],
+              "spans": [
+                {
+                  "bbox": [104, 622, 539, 686],
+                  "type": "text",
+                  "content": "A: No. While using Scrooge's ability while he is in play is not specifically prohibited by the rules, it is not intended. We have a special ruling to clarify that Put It To Good Use may only be activated while Scrooge is in your hand."
+                }
+              ]
+            }
+          ],
+          "index": 12
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 13
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 70, 308, 86],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 70, 308, 86],
+              "spans": [
+                {
+                  "bbox": [69, 70, 308, 86],
+                  "type": "text",
+                  "content": "Snow White - Fairest in the Land"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 21,
+          "level": 3
+        },
+        {
+          "bbox": [69, 87, 383, 104],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 87, 383, 104],
+              "spans": [
+                {
+                  "bbox": [69, 87, 383, 104],
+                  "type": "text",
+                  "content": "Q: What happens if I give Snow White Bodyguard?"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [69, 105, 129, 118],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 105, 129, 118],
+              "spans": [
+                {
+                  "bbox": [69, 105, 129, 118],
+                  "type": "text",
+                  "content": "(Ref. 4.21.)"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [104, 134, 376, 210],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 134, 376, 210],
+              "spans": [
+                {
+                  "bbox": [104, 134, 376, 210],
+                  "type": "text",
+                  "content": "A: Bodyguard only affects opposing characters that are able to challenge the character with the keyword - no characters can challenge Snow White, so Bodyguard would not have any effect."
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "type": "image",
+          "bbox": [399, 79, 541, 277],
+          "blocks": [
+            {
+              "bbox": [399, 79, 541, 277],
+              "lines": [
+                {
+                  "bbox": [399, 79, 541, 277],
+                  "spans": [
+                    {
+                      "bbox": [399, 79, 541, 277],
+                      "type": "image",
+                      "image_path": "788ef02168c439d40d2d9cb591ab89aa8f8d6f0f0073f47d85b342fb494540c3.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 262, 246, 278],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 262, 246, 278],
+              "spans": [
+                {
+                  "bbox": [69, 262, 246, 278],
+                  "type": "text",
+                  "content": "Te Kā - Elemental Terror"
+                }
+              ]
+            }
+          ],
+          "index": 5,
+          "line_avg_height": 21,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 288, 212, 487],
+          "blocks": [
+            {
+              "bbox": [70, 288, 212, 487],
+              "lines": [
+                {
+                  "bbox": [70, 288, 212, 487],
+                  "spans": [
+                    {
+                      "bbox": [70, 288, 212, 487],
+                      "type": "image",
+                      "image_path": "2d660127625f61e6f0ddfac8a95399fab61bf55e1cab739896d94de87b32cbff.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 6,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [218, 281, 357, 297],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [218, 281, 357, 297],
+              "spans": [
+                {
+                  "bbox": [218, 281, 357, 297],
+                  "type": "text",
+                  "content": "Q: Does Ancient Rage"
+                }
+              ]
+            }
+          ],
+          "index": 7,
+          "line_avg_height": 21,
+          "level": 3
+        },
+        {
+          "bbox": [218, 298, 529, 328],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [218, 298, 529, 328],
+              "spans": [
+                {
+                  "bbox": [218, 298, 529, 328],
+                  "type": "text",
+                  "content": "banish characters that are already exerted when she is played (or when my turn begins)? (Ref. 4.22.)"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [217, 343, 533, 406],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 343, 533, 406],
+              "spans": [
+                {
+                  "bbox": [217, 343, 533, 406],
+                  "type": "text",
+                  "content": "A: No. \"Is exerted\" in the text of Ancient Rage refers to the event of going from the Ready position to the Exerted position. You also cannot \"re-exert\" an already exerted character."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [217, 422, 533, 499],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 422, 533, 499],
+              "spans": [
+                {
+                  "bbox": [217, 422, 533, 499],
+                  "type": "text",
+                  "content": "A2: Notably, this also excludes characters that enter play exerted (if they happen to be played on your turn). Cards like Sleepy - Nodding Off do not go from Ready to Exerted, they simply enter play already sideways."
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [67, 514, 279, 531],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 514, 279, 531],
+              "spans": [
+                {
+                  "bbox": [67, 514, 279, 531],
+                  "type": "text",
+                  "content": "The Queen - Jealous Beauty"
+                }
+              ]
+            }
+          ],
+          "index": 11,
+          "line_avg_height": 26,
+          "level": 3
+        },
+        {
+          "bbox": [67, 532, 362, 578],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 532, 362, 578],
+              "spans": [
+                {
+                  "bbox": [67, 532, 362, 578],
+                  "type": "text",
+                  "content": "Q: Can I move fewer than three cards from my opponent's discard if that's all they have? (Ref. 4.23.)"
+                }
+              ]
+            }
+          ],
+          "index": 12
+        },
+        {
+          "bbox": [104, 594, 382, 671],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 594, 382, 671],
+              "spans": [
+                {
+                  "bbox": [104, 594, 382, 671],
+                  "type": "text",
+                  "content": "A: No. In order to resolve No Ordinary Apple fully, you must move exactly three cards to the bottom of the deck. If you cannot move three cards, you cannot move any (and, of course, you won't gain any lore)."
+                }
+              ]
+            }
+          ],
+          "index": 13
+        },
+        {
+          "bbox": [104, 672, 356, 716],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 672, 356, 716],
+              "spans": [
+                {
+                  "bbox": [104, 672, 356, 716],
+                  "type": "text",
+                  "content": "You can still exert The Queen to use the ability if desired, but it will resolve to no effect."
+                }
+              ]
+            }
+          ],
+          "index": 14
+        },
+        {
+          "type": "image",
+          "bbox": [398, 519, 541, 718],
+          "blocks": [
+            {
+              "bbox": [398, 519, 541, 718],
+              "lines": [
+                {
+                  "bbox": [398, 519, 541, 718],
+                  "spans": [
+                    {
+                      "bbox": [398, 519, 541, 718],
+                      "type": "image",
+                      "image_path": "1dc7b97a4132e2f2f53622714161eba4c6fdaf461c51e6d350c05f126593a474.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 15,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 15
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 14
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 70, 270, 90],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 70, 270, 90],
+              "spans": [
+                {
+                  "bbox": [69, 70, 270, 90],
+                  "type": "text",
+                  "content": "Specific Item Questions"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 24,
+          "level": 2
+        },
+        {
+          "bbox": [70, 106, 218, 122],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 106, 218, 122],
+              "spans": [
+                {
+                  "bbox": [70, 106, 218, 122],
+                  "type": "text",
+                  "content": "Devil's Eye Diamond"
+                }
+              ]
+            }
+          ],
+          "index": 1,
+          "line_avg_height": 22,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [74, 130, 217, 333],
+          "blocks": [
+            {
+              "bbox": [74, 130, 217, 333],
+              "lines": [
+                {
+                  "bbox": [74, 130, 217, 333],
+                  "spans": [
+                    {
+                      "bbox": [74, 130, 217, 333],
+                      "type": "image",
+                      "image_path": "f82c04152ec6003abdbc81484bf9d624d2dc12ba546b43a3cca31715d34bb355.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 2,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [221, 124, 537, 172],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [221, 124, 537, 172],
+              "spans": [
+                {
+                  "bbox": [221, 124, 537, 172],
+                  "type": "text",
+                  "content": "Q: Does Devil's Eye Diamond need to have been in play when one of my characters was damaged? (Ref. 5.1.a.)"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [220, 186, 538, 248],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [220, 186, 538, 248],
+              "spans": [
+                {
+                  "bbox": [220, 186, 538, 248],
+                  "type": "text",
+                  "content": "A: No. The Price of Power will resolve successfully if one of your characters was dealt damage at any time during this turn, even before Diamond was played."
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [221, 263, 535, 311],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [221, 263, 535, 311],
+              "spans": [
+                {
+                  "bbox": [221, 263, 535, 311],
+                  "type": "text",
+                  "content": "Q: Does the character that was damaged need to still be in play when Devil's Eye Diamond's ability is activated? (Ref. 5.1.b.)"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [221, 326, 526, 357],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [221, 326, 526, 357],
+              "spans": [
+                {
+                  "bbox": [221, 326, 526, 357],
+                  "type": "text",
+                  "content": "A: No. The Price of Power will resolve successfully after that was damaged has been banished."
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [67, 372, 530, 437],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 372, 530, 437],
+              "spans": [
+                {
+                  "bbox": [67, 372, 530, 437],
+                  "type": "text",
+                  "content": "Q: Does moving damage counters to or putting damage counters on one of my characters make The Price of Power able to resolve and give me lore? What about characters that enter play with damage counters? (Ref. 5.1.c.)"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [104, 451, 539, 529],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 451, 539, 529],
+              "spans": [
+                {
+                  "bbox": [104, 451, 539, 529],
+                  "type": "text",
+                  "content": "A: No. Only damage having been \"dealt\" will allow The Price of Power to resolve successfully. Moving damage counters and putting damage counters do not count as \"dealing\" damage. Characters that enter play with damage counters also do not count as having been dealt damage."
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [69, 544, 212, 559],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 544, 212, 559],
+              "spans": [
+                {
+                  "bbox": [69, 544, 212, 559],
+                  "type": "text",
+                  "content": "Maurice's Machine"
+                }
+              ]
+            }
+          ],
+          "index": 9,
+          "line_avg_height": 21,
+          "level": 3
+        },
+        {
+          "bbox": [69, 562, 371, 594],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 562, 371, 594],
+              "spans": [
+                {
+                  "bbox": [69, 562, 371, 594],
+                  "type": "text",
+                  "content": "Q: Can I banish Maurice's Machine at any time? (Ref. 5.2.)"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [104, 609, 380, 656],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 609, 380, 656],
+              "spans": [
+                {
+                  "bbox": [104, 609, 380, 656],
+                  "type": "text",
+                  "content": "A: No. Maurice's Machine must be banished by another ability, like Hiram Flaversham - Toymaker's Artificer."
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "type": "image",
+          "bbox": [398, 534, 541, 737],
+          "blocks": [
+            {
+              "bbox": [398, 534, 541, 737],
+              "lines": [
+                {
+                  "bbox": [398, 534, 541, 737],
+                  "spans": [
+                    {
+                      "bbox": [398, 534, 541, 737],
+                      "type": "image",
+                      "image_path": "f1355950feb633cfbb42027ea445549de4450a788b0f29a7c2ae06e249384806.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 12,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 12
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 15
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 70, 202, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 70, 202, 87],
+              "spans": [
+                {
+                  "bbox": [69, 70, 202, 87],
+                  "type": "text",
+                  "content": "The Glass Slipper"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 23,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 95, 212, 297],
+          "blocks": [
+            {
+              "bbox": [70, 95, 212, 297],
+              "lines": [
+                {
+                  "bbox": [70, 95, 212, 297],
+                  "spans": [
+                    {
+                      "bbox": [70, 95, 212, 297],
+                      "type": "image",
+                      "image_path": "2f8b47aea065757f059b8fa2b11ff045e4ea30333d3d57a444fb7868bfc62494.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [218, 87, 512, 119],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [218, 87, 512, 119],
+              "spans": [
+                {
+                  "bbox": [218, 87, 512, 119],
+                  "type": "text",
+                  "content": "Q: How many copies of The Glass Slipper can I play in Draft/Sealed? (Ref. 5.3.a.)"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [218, 134, 350, 148],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [218, 134, 350, 148],
+              "spans": [
+                {
+                  "bbox": [218, 134, 350, 148],
+                  "type": "text",
+                  "content": "A: No more than two."
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [217, 166, 526, 229],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 166, 526, 229],
+              "spans": [
+                {
+                  "bbox": [217, 166, 526, 229],
+                  "type": "text",
+                  "content": "Q: Can I banish The Glass Slipper to use Search the Kingdom if I don't have a Prince character to exert? Or if my Prince character is drying? (Ref. 5.3.b.)"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [217, 243, 533, 308],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 243, 533, 308],
+              "spans": [
+                {
+                  "bbox": [217, 243, 533, 308],
+                  "type": "text",
+                  "content": "A: No. Banishing the slipper and exerting a Prince character is the cost to activate Search the Kingdom. You cannot only pay part of a cost - you must pay costs in their entirety."
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [104, 323, 537, 354],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 323, 537, 354],
+              "spans": [
+                {
+                  "bbox": [104, 323, 537, 354],
+                  "type": "text",
+                  "content": "Remember that drying characters cannot exert to pay costs that use the exert symbol."
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [69, 390, 224, 406],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 390, 224, 406],
+              "spans": [
+                {
+                  "bbox": [69, 390, 224, 406],
+                  "type": "text",
+                  "content": "Unconventional Tool"
+                }
+              ]
+            }
+          ],
+          "index": 7,
+          "line_avg_height": 21,
+          "level": 3
+        },
+        {
+          "bbox": [69, 407, 381, 423],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 407, 381, 423],
+              "spans": [
+                {
+                  "bbox": [69, 407, 381, 423],
+                  "type": "text",
+                  "content": "Q: Can I banish Unconventional Tool at any time?"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [69, 423, 125, 439],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 423, 125, 439],
+              "spans": [
+                {
+                  "bbox": [69, 423, 125, 439],
+                  "type": "text",
+                  "content": "(Ref. 5.4.)"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [104, 454, 390, 501],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 454, 390, 501],
+              "spans": [
+                {
+                  "bbox": [104, 454, 390, 501],
+                  "type": "text",
+                  "content": "A: No. Unconventional Tool must be banished by another ability, like Hiram Flaversham - Toymaker's Artificer."
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "type": "image",
+          "bbox": [398, 378, 541, 578],
+          "blocks": [
+            {
+              "bbox": [398, 378, 541, 578],
+              "lines": [
+                {
+                  "bbox": [398, 378, 541, 578],
+                  "spans": [
+                    {
+                      "bbox": [398, 378, 541, 578],
+                      "type": "image",
+                      "image_path": "44c9951367b5b2c9f82fbbc10d481443a454cb703476ea042ff0a769b6181763.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 11,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 11
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 16
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 70, 338, 90],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 70, 338, 90],
+              "spans": [
+                {
+                  "bbox": [69, 70, 338, 90],
+                  "type": "text",
+                  "content": "Specific Action/Song Questions"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 26,
+          "level": 2
+        },
+        {
+          "bbox": [69, 106, 158, 121],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 106, 158, 121],
+              "spans": [
+                {
+                  "bbox": [69, 106, 158, 121],
+                  "type": "text",
+                  "content": "All Is Found"
+                }
+              ]
+            }
+          ],
+          "index": 1,
+          "line_avg_height": 19,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 130, 212, 330],
+          "blocks": [
+            {
+              "bbox": [70, 130, 212, 330],
+              "lines": [
+                {
+                  "bbox": [70, 130, 212, 330],
+                  "spans": [
+                    {
+                      "bbox": [70, 130, 212, 330],
+                      "type": "image",
+                      "image_path": "d1cea469045860c628e153fe74c5e035a7c8c774904588c44fdc6129ecc8c789.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 2,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [218, 124, 522, 170],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [218, 124, 522, 170],
+              "spans": [
+                {
+                  "bbox": [218, 124, 522, 170],
+                  "type": "text",
+                  "content": "Q: Can I place the copy of All Is Found that I just played into the inkwell when I resolve its effect? (Ref. 6.1.)"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [217, 185, 539, 262],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 185, 539, 262],
+              "spans": [
+                {
+                  "bbox": [217, 185, 539, 262],
+                  "type": "text",
+                  "content": "A: No. While a played action card is resolving, it is not in any zone, and does not enter the discard pile until its effect is completely resolved. When you are choosing cards from the discard to put into the inkwell, All Is Found is not there to be chosen."
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 353, 147, 369],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 353, 147, 369],
+              "spans": [
+                {
+                  "bbox": [69, 353, 147, 369],
+                  "type": "text",
+                  "content": "Ink Geyser"
+                }
+              ]
+            }
+          ],
+          "index": 5,
+          "line_avg_height": 22,
+          "level": 3
+        },
+        {
+          "bbox": [69, 370, 380, 417],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 370, 380, 417],
+              "spans": [
+                {
+                  "bbox": [69, 370, 380, 417],
+                  "type": "text",
+                  "content": "Q: How do I determine which cards stay in the inkwell? Do the inkwell cards have to be shuffled? (Ref. 6.2.)"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [104, 432, 389, 572],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 432, 389, 572],
+              "spans": [
+                {
+                  "bbox": [104, 432, 389, 572],
+                  "type": "text",
+                  "content": "A: Which cards stay in the inkwell must be determined randomly, but shuffling is not necessarily required. Dice can be used to determine which cards to move to the hand without shuffling their order, for example, but any method that is acceptable to both players can be used. If players cannot agree on a method to determine the random cards, a judge can be called in tournament settings"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "type": "image",
+          "bbox": [398, 349, 541, 548],
+          "blocks": [
+            {
+              "bbox": [398, 349, 541, 548],
+              "lines": [
+                {
+                  "bbox": [398, 349, 541, 548],
+                  "spans": [
+                    {
+                      "bbox": [398, 349, 541, 548],
+                      "type": "image",
+                      "image_path": "31815b2418bb36695720051c638b988fe5b09249e6728a3a769a222b538e3c5a.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 8,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 8
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 17
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 71, 203, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 71, 203, 87],
+              "spans": [
+                {
+                  "bbox": [70, 71, 203, 87],
+                  "type": "text",
+                  "content": "Restoring Atlantis"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 21,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 95, 212, 293],
+          "blocks": [
+            {
+              "bbox": [70, 95, 212, 293],
+              "lines": [
+                {
+                  "bbox": [70, 95, 212, 293],
+                  "spans": [
+                    {
+                      "bbox": [70, 95, 212, 293],
+                      "type": "image",
+                      "image_path": "f4a953ef14404e9d5597d1ff5050a1896078d55fe0027efec54d5b504268191f.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [217, 88, 530, 119],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 88, 530, 119],
+              "spans": [
+                {
+                  "bbox": [217, 88, 530, 119],
+                  "type": "text",
+                  "content": "Q: Are characters that are played after Restoring Atlantis able to be challenged? (Ref. 6.3.)"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [217, 134, 539, 197],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 134, 539, 197],
+              "spans": [
+                {
+                  "bbox": [217, 134, 539, 197],
+                  "type": "text",
+                  "content": "A: No. Restoring Atlantis essentially applies an effect to the player, which protects all characters they have in play. The characters do not need to have been in play when Restoring Atlantis resolved."
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 301, 194, 316],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 301, 194, 316],
+              "spans": [
+                {
+                  "bbox": [69, 301, 194, 316],
+                  "type": "text",
+                  "content": "So Much To Give"
+                }
+              ]
+            }
+          ],
+          "index": 4,
+          "line_avg_height": 23,
+          "level": 3
+        },
+        {
+          "bbox": [69, 319, 377, 350],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 319, 377, 350],
+              "spans": [
+                {
+                  "bbox": [69, 319, 377, 350],
+                  "type": "text",
+                  "content": "Q: If I give a drying character Bodyguard with So Much To Give, can I exert them? (Ref. 6.4.)"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [104, 365, 384, 443],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 365, 384, 443],
+              "spans": [
+                {
+                  "bbox": [104, 365, 384, 443],
+                  "type": "text",
+                  "content": "A: No. The character gaining Bodyguard must already be in play to be chosen for the effect of So Much To Give - it is too late to use the \"enter play exerted\" effect that Bodyguard usually has."
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "type": "image",
+          "bbox": [399, 259, 541, 459],
+          "blocks": [
+            {
+              "bbox": [399, 259, 541, 459],
+              "lines": [
+                {
+                  "bbox": [399, 259, 541, 459],
+                  "spans": [
+                    {
+                      "bbox": [399, 259, 541, 459],
+                      "type": "image",
+                      "image_path": "a7c8ed5797590713c95f0881ffb755acdbd4c8c3d4d3e754ee19a56ded24e97a.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 7,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [69, 457, 241, 473],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 457, 241, 473],
+              "spans": [
+                {
+                  "bbox": [69, 457, 241, 473],
+                  "type": "text",
+                  "content": "The Return of Hercules"
+                }
+              ]
+            }
+          ],
+          "index": 8,
+          "line_avg_height": 22,
+          "level": 3
+        },
+        {
+          "type": "image",
+          "bbox": [70, 483, 212, 682],
+          "blocks": [
+            {
+              "bbox": [70, 483, 212, 682],
+              "lines": [
+                {
+                  "bbox": [70, 483, 212, 682],
+                  "spans": [
+                    {
+                      "bbox": [70, 483, 212, 682],
+                      "type": "image",
+                      "image_path": "33f123e82ed7b105859cade53fb532c3b86e3e2e7498a7578b1e63c10144129f.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 9,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [218, 475, 531, 507],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [218, 475, 531, 507],
+              "spans": [
+                {
+                  "bbox": [218, 475, 531, 507],
+                  "type": "text",
+                  "content": "Q: How do my opponent and I resolve this card in the correct order? (Ref. 6.5.)"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [217, 521, 533, 598],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 521, 533, 598],
+              "spans": [
+                {
+                  "bbox": [217, 521, 533, 598],
+                  "type": "text",
+                  "content": "A: Starting with the active player, each player chooses and reveals a character card that they wish to play (if any - it is optional). Yes, that means your opponent will see what you're choosing to play before they make their choice."
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "bbox": [217, 599, 533, 675],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [217, 599, 533, 675],
+              "spans": [
+                {
+                  "bbox": [217, 599, 533, 675],
+                  "type": "text",
+                  "content": "Then all revealed characters will be played in turn order, before finally resolving any triggered abilities as is usually done - in turn order, with each player choosing the order of resolution of their own abilities."
+                }
+              ]
+            }
+          ],
+          "index": 12
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 18
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 70, 379, 102],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 70, 379, 102],
+              "spans": [
+                {
+                  "bbox": [69, 70, 379, 102],
+                  "type": "text",
+                  "content": "Q: What if we both play Maleficent - Dragon? (Ref. 6.5.)"
+                }
+              ]
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [104, 117, 390, 224],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [104, 117, 390, 224],
+              "spans": [
+                {
+                  "bbox": [104, 117, 390, 224],
+                  "type": "text",
+                  "content": "A: Both Dragons would enter play and trigger when they do so, adding their abilities to the bag. Then each player would get to resolve the banish effect even if the active player chose to banish the opposing Maleficent, since her ability doesn't care if she remains in play and will still resolve."
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "type": "image",
+          "bbox": [399, 80, 541, 277],
+          "blocks": [
+            {
+              "bbox": [399, 80, 541, 277],
+              "lines": [
+                {
+                  "bbox": [399, 80, 541, 277],
+                  "spans": [
+                    {
+                      "bbox": [399, 80, 541, 277],
+                      "type": "image",
+                      "image_path": "addc2492d180f8f627363021ef94afaaa34e9a055944da0d22b2cae4f0b2ae42.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 2,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 2
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [612, 792],
+      "page_idx": 19
+    }
+  ],
+  "_backend": "vlm",
+  "_version_name": "2.5.4"
+}

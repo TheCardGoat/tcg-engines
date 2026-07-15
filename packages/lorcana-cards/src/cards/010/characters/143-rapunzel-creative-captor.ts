@@ -1,0 +1,44 @@
+import type { CharacterCard } from "@tcg/lorcana-types";
+
+export const rapunzelCreativeCaptor: CharacterCard = {
+  abilities: [
+    {
+      effect: {
+        duration: "this-turn",
+        modifier: -3,
+        stat: "strength",
+        target: "CHOSEN_CHARACTER",
+        type: "modify-stat",
+      },
+      id: "1gl-1",
+      name: "ENSNARL",
+      text: "ENSNARL When you play this character, chosen opposing character gets -3 {S} this turn.",
+      trigger: {
+        event: "play",
+        on: "SELF",
+        timing: "when",
+      },
+      type: "triggered",
+    },
+  ],
+  cardNumber: 143,
+  cardType: "character",
+  classifications: ["Storyborn", "Hero", "Princess"],
+  cost: 5,
+  externalIds: {
+    ravensburger: "bd851b8f1a2e26ff38337ab860a646858284a865",
+  },
+  franchise: "Tangled",
+  fullName: "Rapunzel - Creative Captor",
+  id: "1gl",
+  inkType: ["sapphire"],
+  inkable: true,
+  lore: 2,
+  missingTests: true,
+  name: "Rapunzel",
+  set: "010",
+  strength: 3,
+  text: "ENSNARL When you play this character, chosen opposing character gets -3 {S} this turn.",
+  version: "Creative Captor",
+  willpower: 6,
+};

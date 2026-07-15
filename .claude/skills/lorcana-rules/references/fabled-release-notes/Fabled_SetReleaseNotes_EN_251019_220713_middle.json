@@ -1,0 +1,5434 @@
+{
+  "pdf_info": [
+    {
+      "para_blocks": [
+        {
+          "type": "image",
+          "bbox": [268, 97, 340, 129],
+          "blocks": [
+            {
+              "bbox": [268, 97, 340, 129],
+              "lines": [
+                {
+                  "bbox": [268, 97, 340, 129],
+                  "spans": [
+                    {
+                      "bbox": [268, 97, 340, 129],
+                      "type": "image",
+                      "image_path": "51829077e75028ba465a6586b83ccec2b7fdbc6435403fe2cab89f8113cb134f.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 0,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [200, 127, 412, 178],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [200, 127, 412, 178],
+              "spans": [
+                {
+                  "bbox": [200, 127, 412, 178],
+                  "type": "text",
+                  "content": "LORCANA"
+                }
+              ]
+            }
+          ],
+          "index": 1,
+          "line_avg_height": 67,
+          "level": 1
+        },
+        {
+          "bbox": [235, 178, 373, 191],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [235, 178, 373, 191],
+              "spans": [
+                {
+                  "bbox": [235, 178, 373, 191],
+                  "type": "text",
+                  "content": "TRADING CARD GAME"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [179, 248, 438, 313],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [179, 248, 438, 313],
+              "spans": [
+                {
+                  "bbox": [179, 248, 438, 313],
+                  "type": "text",
+                  "content": "FABLED"
+                }
+              ]
+            }
+          ],
+          "index": 3,
+          "line_avg_height": 88,
+          "level": 1
+        },
+        {
+          "bbox": [69, 357, 477, 378],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 357, 477, 378],
+              "spans": [
+                {
+                  "bbox": [69, 357, 477, 378],
+                  "type": "text",
+                  "content": "Disney Lorcana TCG Set Release Notes: Fabled"
+                }
+              ]
+            }
+          ],
+          "index": 4,
+          "line_avg_height": 23,
+          "level": 2
+        },
+        {
+          "bbox": [68, 385, 539, 449],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 385, 539, 449],
+              "spans": [
+                {
+                  "bbox": [68, 385, 539, 449],
+                  "type": "text",
+                  "content": "Hello, Illumineers, far and wide! Welcome to our first set release notes, where we'll explain the latest updates to the game and answer questions about the new cards. These release notes go over any rules changes, new mechanics, and features of the game introduced with Fabled and offer context for why the adjustments are necessary."
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [68, 457, 405, 472],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 457, 405, 472],
+              "spans": [
+                {
+                  "bbox": [68, 457, 405, 472],
+                  "type": "text",
+                  "content": "For more detailed game information beyond these release notes, visit"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [68, 474, 499, 502],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 474, 499, 502],
+              "spans": [
+                {
+                  "bbox": [68, 474, 499, 502],
+                  "type": "text",
+                  "content": "DisneyLorcana.com/Resources to check out the Comprehensive Rules, tournament rules, and more."
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [69, 514, 162, 530],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 514, 162, 530],
+              "spans": [
+                {
+                  "bbox": [69, 514, 162, 530],
+                  "type": "text",
+                  "content": "Game Updates"
+                }
+              ]
+            }
+          ],
+          "index": 8,
+          "line_avg_height": 19,
+          "level": 2
+        },
+        {
+          "bbox": [68, 536, 514, 567],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 536, 514, 567],
+              "spans": [
+                {
+                  "bbox": [68, 536, 514, 567],
+                  "type": "text",
+                  "content": "We're excited to announce that we're introducing two bigger updates to the Disney Lorcana TCG. Here's how those will work and what that means for you, the player."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [69, 577, 143, 591],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 577, 143, 591],
+              "spans": [
+                {
+                  "bbox": [69, 577, 143, 591],
+                  "type": "text",
+                  "content": "Set Rotation"
+                }
+              ]
+            }
+          ],
+          "index": 10,
+          "line_avg_height": 17,
+          "level": 3
+        },
+        {
+          "bbox": [68, 599, 536, 647],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 599, 536, 647],
+              "spans": [
+                {
+                  "bbox": [68, 599, 536, 647],
+                  "type": "text",
+                  "content": "In August 2023, we launched the Disney Lorcana TCG with 204 cards in The First Chapter set. Two years later, we're ready to announce a new milestone, to ensure the stability of the game for many years to come. Fabled brings a new concept to the Disney Lorcana TCG: set rotation!"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "bbox": [68, 654, 530, 685],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 654, 530, 685],
+              "spans": [
+                {
+                  "bbox": [68, 654, 530, 685],
+                  "type": "text",
+                  "content": "Currently, you can use all eight existing sets in the Core Constructed format. When Fabled releases on September 5, 2025, the first four sets will rotate out of that tournament format. This"
+                }
+              ]
+            }
+          ],
+          "index": 12
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 113, 757],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 113, 757],
+              "spans": [
+                {
+                  "bbox": [70, 742, 113, 757],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 13
+        },
+        {
+          "bbox": [494, 708, 541, 754],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [494, 708, 541, 754],
+              "spans": [
+                {
+                  "bbox": [494, 708, 541, 754],
+                  "type": "text",
+                  "content": "Ravensburger"
+                }
+              ]
+            }
+          ],
+          "index": 14
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 0
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [71, 72, 536, 102],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 72, 536, 102],
+              "spans": [
+                {
+                  "bbox": [71, 72, 536, 102],
+                  "type": "text",
+                  "content": "means that cards from the following sets will no longer be legal in Core Constructed events: The First Chapter, Rise of the Floodborn, Into the Inklands, and Ursula's Return."
+                }
+              ]
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [71, 112, 536, 142],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 112, 536, 142],
+              "spans": [
+                {
+                  "bbox": [71, 112, 536, 142],
+                  "type": "text",
+                  "content": "It's worth repeating that this applies only to Core Constructed tournament play. You can continue to enjoy all the cards however you like at home with your friends and family!"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [71, 152, 534, 213],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 152, 534, 213],
+              "spans": [
+                {
+                  "bbox": [71, 152, 534, 213],
+                  "type": "text",
+                  "content": "Let's say you like Limited format events, where you get sealed booster packs and build new decks on the spot. Would you be able to have a Limited event where players opened one booster pack each from every Disney Lorcana TCG set so far? Absolutely! (Actually, that sounds like a lot of fun.)"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [71, 224, 506, 253],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 224, 506, 253],
+              "spans": [
+                {
+                  "bbox": [71, 224, 506, 253],
+                  "type": "text",
+                  "content": "Likewise, you can still use cards from any sets in Infinity Constructed. Just remember that Infinity Constructed will have its own banned card list."
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [71, 263, 529, 325],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 263, 529, 325],
+              "spans": [
+                {
+                  "bbox": [71, 263, 529, 325],
+                  "type": "text",
+                  "content": "Future set rotations will happen once a year. The next one will be in the summer of 2026, when Shimmering Skies, Azurite Sea, Archazia's Island, and Reign of Jafar will rotate out of Core Constructed. Generally, you'll be able to play cards from between five and eight sets in Core Constructed at any given time."
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [71, 335, 414, 350],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 335, 414, 350],
+              "spans": [
+                {
+                  "bbox": [71, 335, 414, 350],
+                  "type": "text",
+                  "content": "You can learn more about set rotation at Twitch.tv/DisneyLorcana.com."
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [71, 360, 183, 375],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 360, 183, 375],
+              "spans": [
+                {
+                  "bbox": [71, 360, 183, 375],
+                  "type": "text",
+                  "content": "Reprinted Favorites"
+                }
+              ]
+            }
+          ],
+          "index": 6,
+          "line_avg_height": 18,
+          "level": 3
+        },
+        {
+          "bbox": [71, 382, 536, 444],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 382, 536, 444],
+              "spans": [
+                {
+                  "bbox": [71, 382, 536, 444],
+                  "type": "text",
+                  "content": "We've reprinted cards in the past, but with the release of Fabled, you'll see many of your (and our) favorite cards returning to the spotlight! This means that even with set rotation, some powerful staple cards will remain in the Core Constructed tournament format for at least another year, giving you more chances to play the cards you love."
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [71, 453, 496, 484],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 453, 496, 484],
+              "spans": [
+                {
+                  "bbox": [71, 453, 496, 484],
+                  "type": "text",
+                  "content": "A card is considered a reprint if it has all the same characteristics as a previous card. For example, take a look at these two printings of *Stitch* – Rock Star:"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [71, 742, 113, 756],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 742, 113, 756],
+              "spans": [
+                {
+                  "bbox": [71, 742, 113, 756],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [495, 708, 541, 753],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 541, 753],
+              "spans": [
+                {
+                  "bbox": [495, 708, 541, 753],
+                  "type": "text",
+                  "content": "Petersburg"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 1
+    },
+    {
+      "para_blocks": [
+        {
+          "type": "image",
+          "bbox": [70, 69, 241, 306],
+          "blocks": [
+            {
+              "bbox": [70, 69, 241, 306],
+              "lines": [
+                {
+                  "bbox": [70, 69, 241, 306],
+                  "spans": [
+                    {
+                      "bbox": [70, 69, 241, 306],
+                      "type": "image",
+                      "image_path": "893d83dc0c64c4b549cdf0a6c1059208906cbf1c850d984a05589064879eda75.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 0,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 0
+        },
+        {
+          "type": "image",
+          "bbox": [285, 69, 457, 306],
+          "blocks": [
+            {
+              "bbox": [285, 69, 457, 306],
+              "lines": [
+                {
+                  "bbox": [285, 69, 457, 306],
+                  "spans": [
+                    {
+                      "bbox": [285, 69, 457, 306],
+                      "type": "image",
+                      "image_path": "0ac163eb14c4daefc42c605fba21642d384d5bf5fa9cb820d9c5727055cc7d85.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [69, 316, 186, 327],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 316, 186, 327],
+              "spans": [
+                {
+                  "bbox": [69, 316, 186, 327],
+                  "type": "text",
+                  "content": "Stitch - Rock Star"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 334, 167, 344],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 334, 167, 344],
+              "spans": [
+                {
+                  "bbox": [69, 334, 167, 344],
+                  "type": "text",
+                  "content": "Amber character"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 351, 223, 361],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 351, 223, 361],
+              "spans": [
+                {
+                  "bbox": [69, 351, 223, 361],
+                  "type": "text",
+                  "content": "Floodborn · Hero · Alien"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [70, 369, 167, 380],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 369, 167, 380],
+              "spans": [
+                {
+                  "bbox": [70, 369, 167, 380],
+                  "type": "text",
+                  "content": "6 cost, inkable"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [70, 387, 104, 397],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 387, 104, 397],
+              "spans": [
+                {
+                  "bbox": [70, 387, 104, 397],
+                  "type": "text",
+                  "content": "3/5/3"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [69, 404, 483, 434],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 404, 483, 434],
+              "spans": [
+                {
+                  "bbox": [69, 404, 483, 434],
+                  "type": "text",
+                  "content": "Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Stitch.)"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [69, 440, 533, 469],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 440, 533, 469],
+              "spans": [
+                {
+                  "bbox": [69, 440, 533, 469],
+                  "type": "text",
+                  "content": "\\Adoring Fans\\ Whenever you play a character with cost 2 or less, you may exert them to draw a card."
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [67, 490, 535, 554],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 490, 535, 554],
+              "spans": [
+                {
+                  "bbox": [67, 490, 535, 554],
+                  "type": "text",
+                  "content": "The first is from The First Chapter, and the other is from Fabled. However, every mechanical part of the card is the same, so the new version in Fabled is a reprint. (Some eagle-eyed viewers will spot one tiny difference between these two cards. See the Card Readability Updates section below for more info on that.)"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [67, 562, 530, 641],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 562, 530, 641],
+              "spans": [
+                {
+                  "bbox": [67, 562, 530, 641],
+                  "type": "text",
+                  "content": "Various printings of a card (including promo card versions) are still copies of the same card, since they have the same full name. This means they can be used interchangeably with each other. So, if you want to have the maximum of 4 copies of Stitch - Rock Star in your deck, you could put in 2 from The First Chapter and 2 from Fabled. You couldn't put 4 from The First Chapter and 4 from Fabled in your deck, however, because they're the same card."
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [67, 651, 536, 698],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 651, 536, 698],
+              "spans": [
+                {
+                  "bbox": [67, 651, 536, 698],
+                  "type": "text",
+                  "content": "By the same token, this also allows you to put The First Chapter versions in your Core Constructed deck and Fabled versions in your Infinity Constructed deck. Basically, if the card is legal for the format, any printing of it is allowed."
+                }
+              ]
+            }
+          ],
+          "index": 11
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 113, 757],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 113, 757],
+              "spans": [
+                {
+                  "bbox": [70, 742, 113, 757],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 12
+        },
+        {
+          "bbox": [495, 708, 541, 753],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 541, 753],
+              "spans": [
+                {
+                  "bbox": [495, 708, 541, 753],
+                  "type": "text",
+                  "content": "Reverburgy"
+                }
+              ]
+            }
+          ],
+          "index": 13
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 2
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 72, 193, 88],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 72, 193, 88],
+              "spans": [
+                {
+                  "bbox": [69, 72, 193, 88],
+                  "type": "text",
+                  "content": "Minor Rules Updates"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 19,
+          "level": 3
+        },
+        {
+          "bbox": [68, 94, 483, 108],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 94, 483, 108],
+              "spans": [
+                {
+                  "bbox": [68, 94, 483, 108],
+                  "type": "text",
+                  "content": "With the release of Fabled, we made a few small updates to the Disney Lorcana TCG"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [68, 110, 411, 125],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 110, 411, 125],
+              "spans": [
+                {
+                  "bbox": [68, 110, 411, 125],
+                  "type": "text",
+                  "content": "Comprehensive Rules. The sections of the rules that were affected are:"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [68, 135, 527, 247],
+          "type": "list",
+          "angle": 0,
+          "index": 7,
+          "blocks": [
+            {
+              "bbox": [68, 135, 490, 164],
+              "type": "text",
+              "angle": 0,
+              "lines": [
+                {
+                  "bbox": [68, 135, 490, 164],
+                  "spans": [
+                    {
+                      "bbox": [68, 135, 490, 164],
+                      "type": "text",
+                      "content": "1.6.1.5. Updated the definition of replacement effects to align with the definition in section 7.7.1."
+                    }
+                  ]
+                }
+              ],
+              "index": 3
+            },
+            {
+              "bbox": [69, 168, 527, 198],
+              "type": "text",
+              "angle": 0,
+              "lines": [
+                {
+                  "bbox": [69, 168, 527, 198],
+                  "spans": [
+                    {
+                      "bbox": [69, 168, 527, 198],
+                      "type": "text",
+                      "content": "- 1.9.1.3. Added language to clarify when a character is considered to have banished another character or location."
+                    }
+                  ]
+                }
+              ],
+              "index": 4
+            },
+            {
+              "bbox": [69, 201, 347, 215],
+              "type": "text",
+              "angle": 0,
+              "lines": [
+                {
+                  "bbox": [69, 201, 347, 215],
+                  "spans": [
+                    {
+                      "bbox": [69, 201, 347, 215],
+                      "type": "text",
+                      "content": "7.7.6. Added a definition for self-replacement effects."
+                    }
+                  ]
+                }
+              ],
+              "index": 5
+            },
+            {
+              "bbox": [69, 218, 498, 247],
+              "type": "text",
+              "angle": 0,
+              "lines": [
+                {
+                  "bbox": [69, 218, 498, 247],
+                  "spans": [
+                    {
+                      "bbox": [69, 218, 498, 247],
+                      "type": "text",
+                      "content": "- 7.7.7. Added the steps for applying replacement effects to make it clear how to apply multiple replacement effects at the same time."
+                    }
+                  ]
+                }
+              ],
+              "index": 6
+            }
+          ],
+          "sub_type": "text"
+        },
+        {
+          "bbox": [69, 258, 217, 274],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 258, 217, 274],
+              "spans": [
+                {
+                  "bbox": [69, 258, 217, 274],
+                  "type": "text",
+                  "content": "Card Readability Updates"
+                }
+              ]
+            }
+          ],
+          "index": 8,
+          "line_avg_height": 19,
+          "level": 3
+        },
+        {
+          "bbox": [68, 281, 517, 296],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 281, 517, 296],
+              "spans": [
+                {
+                  "bbox": [68, 281, 517, 296],
+                  "type": "text",
+                  "content": "We made the following minor change to existing card text to improve readability and clarity."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [68, 305, 525, 336],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 305, 525, 336],
+              "spans": [
+                {
+                  "bbox": [68, 305, 525, 336],
+                  "type": "text",
+                  "content": "- New Shift Construction: Shift abilities now include the "
+                },
+                {
+                  "bbox": [68, 305, 525, 336],
+                  "type": "inline_equation",
+                  "content": "\\{\\mathrm{I}\\}"
+                },
+                {
+                  "bbox": [68, 305, 525, 336],
+                  "type": "text",
+                  "content": " symbol for added clarity. For example, Shift 4 became Shift 4 "
+                },
+                {
+                  "bbox": [68, 305, 525, 336],
+                  "type": "inline_equation",
+                  "content": "\\{\\mathrm{I}\\}"
+                },
+                {
+                  "bbox": [68, 305, 525, 336],
+                  "type": "text",
+                  "content": "."
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [69, 346, 208, 361],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 346, 208, 361],
+              "spans": [
+                {
+                  "bbox": [69, 346, 208, 361],
+                  "type": "text",
+                  "content": "Rules Glossary Updates"
+                }
+              ]
+            }
+          ],
+          "index": 11,
+          "line_avg_height": 18,
+          "level": 3
+        },
+        {
+          "bbox": [68, 368, 506, 398],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 368, 506, 398],
+              "spans": [
+                {
+                  "bbox": [68, 368, 506, 398],
+                  "type": "text",
+                  "content": "Glossary updates may include newly introduced terms or clarifications of past entries. For Fabled, we edited the definition for replacement effect to remove \"static\" before abilities."
+                }
+              ]
+            }
+          ],
+          "index": 12
+        },
+        {
+          "bbox": [69, 409, 485, 438],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 409, 485, 438],
+              "spans": [
+                {
+                  "bbox": [69, 409, 485, 438],
+                  "type": "text",
+                  "content": "- replacement effect: An effect generated by some abilities that replaces one effect with another."
+                }
+              ]
+            }
+          ],
+          "index": 13
+        },
+        {
+          "bbox": [69, 449, 192, 465],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 449, 192, 465],
+              "spans": [
+                {
+                  "bbox": [69, 449, 192, 465],
+                  "type": "text",
+                  "content": "Card-Specific Notes"
+                }
+              ]
+            }
+          ],
+          "index": 14,
+          "line_avg_height": 18,
+          "level": 3
+        },
+        {
+          "bbox": [68, 472, 533, 518],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 472, 533, 518],
+              "spans": [
+                {
+                  "bbox": [68, 472, 533, 518],
+                  "type": "text",
+                  "content": "The following are answers to a few questions that might come up when playing specific Fabled cards. This isn't meant to be an exhaustive list, but we hope it's a helpful guide for some of the more complex cards in the set."
+                }
+              ]
+            }
+          ],
+          "index": 15
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 113, 756],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 113, 756],
+              "spans": [
+                {
+                  "bbox": [70, 742, 113, 756],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 16
+        },
+        {
+          "bbox": [495, 708, 541, 754],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 541, 754],
+              "spans": [
+                {
+                  "bbox": [495, 708, 541, 754],
+                  "type": "text",
+                  "content": "Ravenburg"
+                }
+              ]
+            }
+          ],
+          "index": 17
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 3
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 72, 229, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 72, 229, 87],
+              "spans": [
+                {
+                  "bbox": [70, 72, 229, 87],
+                  "type": "text",
+                  "content": "Stitch - Rock Star / Lantern"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 18,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 92, 241, 329],
+          "blocks": [
+            {
+              "bbox": [70, 92, 241, 329],
+              "lines": [
+                {
+                  "bbox": [70, 92, 241, 329],
+                  "spans": [
+                    {
+                      "bbox": [70, 92, 241, 329],
+                      "type": "image",
+                      "image_path": "2497edb0c9b2f9f5a165d43c41c41ca953e74d08a8e34d79c7479ae198a7402b.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "type": "image",
+          "bbox": [286, 91, 457, 329],
+          "blocks": [
+            {
+              "bbox": [286, 91, 457, 329],
+              "lines": [
+                {
+                  "bbox": [286, 91, 457, 329],
+                  "spans": [
+                    {
+                      "bbox": [286, 91, 457, 329],
+                      "type": "image",
+                      "image_path": "3a977924d22c34fc1a09a820c7224d99f3b040d4d69fc1175ebc00ee2e9c1a58.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 2,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 338, 186, 349],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 338, 186, 349],
+              "spans": [
+                {
+                  "bbox": [69, 338, 186, 349],
+                  "type": "text",
+                  "content": "Stitch - Rock Star"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 356, 167, 366],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 356, 167, 366],
+              "spans": [
+                {
+                  "bbox": [69, 356, 167, 366],
+                  "type": "text",
+                  "content": "Amber character"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 373, 223, 385],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 373, 223, 385],
+              "spans": [
+                {
+                  "bbox": [69, 373, 223, 385],
+                  "type": "text",
+                  "content": "Floodborn · Hero · Alien"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [70, 392, 167, 402],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 392, 167, 402],
+              "spans": [
+                {
+                  "bbox": [70, 392, 167, 402],
+                  "type": "text",
+                  "content": "6 cost, inkable"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [70, 408, 104, 420],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 408, 104, 420],
+              "spans": [
+                {
+                  "bbox": [70, 408, 104, 420],
+                  "type": "text",
+                  "content": "3/5/3"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [69, 426, 483, 456],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 426, 483, 456],
+              "spans": [
+                {
+                  "bbox": [69, 426, 483, 456],
+                  "type": "text",
+                  "content": "Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Stitch.)"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [69, 463, 533, 492],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 463, 533, 492],
+              "spans": [
+                {
+                  "bbox": [69, 463, 533, 492],
+                  "type": "text",
+                  "content": "\\Adoring Fans\\ Whenever you play a character with cost 2 or less, you may exert them to draw a card."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [69, 498, 116, 509],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 498, 116, 509],
+              "spans": [
+                {
+                  "bbox": [69, 498, 116, 509],
+                  "type": "text",
+                  "content": "Lantern"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [69, 517, 135, 527],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 517, 135, 527],
+              "spans": [
+                {
+                  "bbox": [69, 517, 135, 527],
+                  "type": "text",
+                  "content": "Amber item"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "bbox": [69, 534, 179, 545],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 534, 179, 545],
+              "spans": [
+                {
+                  "bbox": [69, 534, 179, 545],
+                  "type": "text",
+                  "content": "2 cost, uninkable"
+                }
+              ]
+            }
+          ],
+          "index": 12
+        },
+        {
+          "bbox": [69, 552, 539, 581],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 552, 539, 581],
+              "spans": [
+                {
+                  "bbox": [69, 552, 539, 581],
+                  "type": "text",
+                  "content": "\\Birthday Lights\\ {E} - You pay 1 {I} less for the next character you play this turn."
+                }
+              ]
+            }
+          ],
+          "index": 13
+        },
+        {
+          "bbox": [67, 601, 530, 632],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 601, 530, 632],
+              "spans": [
+                {
+                  "bbox": [67, 601, 530, 632],
+                  "type": "text",
+                  "content": "Q: Say I have Stitch - Rock Star in play and a cost 3 character in my hand. If I use Lantern so I can pay 1 "
+                },
+                {
+                  "bbox": [67, 601, 530, 632],
+                  "type": "inline_equation",
+                  "content": "\\{\\mathrm{I}\\}"
+                },
+                {
+                  "bbox": [67, 601, 530, 632],
+                  "type": "text",
+                  "content": " less to play that character, can I then exert the character to draw a card?"
+                }
+              ]
+            }
+          ],
+          "index": 14
+        },
+        {
+          "bbox": [67, 633, 535, 681],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 633, 535, 681],
+              "spans": [
+                {
+                  "bbox": [67, 633, 535, 681],
+                  "type": "text",
+                  "content": "A: No. It's not the character's cost that's reduced by Lantern but rather the amount of ink you need to pay in order to play it. The character's cost would still be 3, so they wouldn't qualify for the \"cost 2 or less\" part of the Adoring Fans ability."
+                }
+              ]
+            }
+          ],
+          "index": 15
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 113, 756],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 113, 756],
+              "spans": [
+                {
+                  "bbox": [70, 742, 113, 756],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 16
+        },
+        {
+          "bbox": [495, 708, 541, 753],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 541, 753],
+              "spans": [
+                {
+                  "bbox": [495, 708, 541, 753],
+                  "type": "text",
+                  "content": "Reverburgy"
+                }
+              ]
+            }
+          ],
+          "index": 17
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 4
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 72, 228, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 72, 228, 87],
+              "spans": [
+                {
+                  "bbox": [70, 72, 228, 87],
+                  "type": "text",
+                  "content": "Pongo – Determined Father"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 16,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 92, 239, 327],
+          "blocks": [
+            {
+              "bbox": [70, 92, 239, 327],
+              "lines": [
+                {
+                  "bbox": [70, 92, 239, 327],
+                  "spans": [
+                    {
+                      "bbox": [70, 92, 239, 327],
+                      "type": "image",
+                      "image_path": "f130b17fe5310bd72ef35d1b8348d07aed254a0b012a74d7b169df066c91c759.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [69, 332, 229, 344],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 332, 229, 344],
+              "spans": [
+                {
+                  "bbox": [69, 332, 229, 344],
+                  "type": "text",
+                  "content": "Pongo - Determined Father"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 350, 167, 361],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 350, 167, 361],
+              "spans": [
+                {
+                  "bbox": [69, 350, 167, 361],
+                  "type": "text",
+                  "content": "Amber character"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 368, 173, 379],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 368, 173, 379],
+              "spans": [
+                {
+                  "bbox": [69, 368, 173, 379],
+                  "type": "text",
+                  "content": "Storyborn · Hero"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 385, 167, 396],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 385, 167, 396],
+              "spans": [
+                {
+                  "bbox": [69, 385, 167, 396],
+                  "type": "text",
+                  "content": "3 cost, inkable"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [69, 403, 102, 414],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 403, 102, 414],
+              "spans": [
+                {
+                  "bbox": [69, 403, 102, 414],
+                  "type": "text",
+                  "content": "3/2/1"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [69, 421, 538, 468],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 421, 538, 468],
+              "spans": [
+                {
+                  "bbox": [69, 421, 538, 468],
+                  "type": "text",
+                  "content": "Twilight Bark\\ Once during your turn, you may pay 2 {I} to reveal the top card of your deck. If it's a character card, put it into your hand. Otherwise, put it on the bottom of your deck."
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [68, 490, 503, 519],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 490, 503, 519],
+              "spans": [
+                {
+                  "bbox": [68, 490, 503, 519],
+                  "type": "text",
+                  "content": "Q: If I have 3 copies of Pongo – Determined Father in play, how many times can I use his Twilight Bark ability per turn?"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [68, 521, 523, 567],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 521, 523, 567],
+              "spans": [
+                {
+                  "bbox": [68, 521, 523, 567],
+                  "type": "text",
+                  "content": "A: 3 times. You can use it once for each copy of Pongo – Determined Father you have in play. Note that if you return Pongo to your hand and then play him again, you can use his Twilight Bark ability again because the card resets when it leaves play."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 113, 756],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 113, 756],
+              "spans": [
+                {
+                  "bbox": [70, 742, 113, 756],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [495, 708, 542, 753],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 542, 753],
+              "spans": [
+                {
+                  "bbox": [495, 708, 542, 753],
+                  "type": "text",
+                  "content": "Ravenburger"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 5
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 72, 243, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 72, 243, 87],
+              "spans": [
+                {
+                  "bbox": [70, 72, 243, 87],
+                  "type": "text",
+                  "content": "The Queen – Wicked and Vain"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 17,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 92, 241, 329],
+          "blocks": [
+            {
+              "bbox": [70, 92, 241, 329],
+              "lines": [
+                {
+                  "bbox": [70, 92, 241, 329],
+                  "spans": [
+                    {
+                      "bbox": [70, 92, 241, 329],
+                      "type": "image",
+                      "image_path": "27a08edb6f3d0afe83c7cdd0d3969e71bbeb05e3a06804b05aa9782cb24b7364.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [69, 334, 242, 346],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 334, 242, 346],
+              "spans": [
+                {
+                  "bbox": [69, 334, 242, 346],
+                  "type": "text",
+                  "content": "The Queen - Wicked and Vain"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 352, 186, 363],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 352, 186, 363],
+              "spans": [
+                {
+                  "bbox": [69, 352, 186, 363],
+                  "type": "text",
+                  "content": "Amethyst character"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 369, 242, 381],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 369, 242, 381],
+              "spans": [
+                {
+                  "bbox": [69, 369, 242, 381],
+                  "type": "text",
+                  "content": "Storyborn • Villain • Queen"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 387, 166, 398],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 387, 166, 398],
+              "spans": [
+                {
+                  "bbox": [69, 387, 166, 398],
+                  "type": "text",
+                  "content": "5 cost, inkable"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [69, 404, 102, 415],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 404, 102, 415],
+              "spans": [
+                {
+                  "bbox": [69, 404, 102, 415],
+                  "type": "text",
+                  "content": "4/5/1"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [69, 422, 285, 434],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 422, 285, 434],
+              "spans": [
+                {
+                  "bbox": [69, 422, 285, 434],
+                  "type": "text",
+                  "content": "\\I Summon Thee\\{E\\} - Draw a card."
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [67, 455, 530, 485],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 455, 530, 485],
+              "spans": [
+                {
+                  "bbox": [67, 455, 530, 485],
+                  "type": "text",
+                  "content": "Q: If I have The Queen – Wicked and Vain in play and an effect makes me exert her, do I get to draw a card with her I Summon Thee ability?"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [67, 487, 533, 548],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 487, 533, 548],
+              "spans": [
+                {
+                  "bbox": [67, 487, 533, 548],
+                  "type": "text",
+                  "content": "A: No. When an ability has a cost, the card's player must pay that cost to use the ability. If another effect exerts The Queen, you haven't paid the cost for I Summon Thee, so you don't get to draw the card. Additionally, you won't be able to use I Summon Thee until The Queen is readied."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 113, 756],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 113, 756],
+              "spans": [
+                {
+                  "bbox": [70, 742, 113, 756],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [495, 708, 541, 753],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 541, 753],
+              "spans": [
+                {
+                  "bbox": [495, 708, 541, 753],
+                  "type": "text",
+                  "content": "Ravenbutter"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 6
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 72, 180, 86],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 72, 180, 86],
+              "spans": [
+                {
+                  "bbox": [70, 72, 180, 86],
+                  "type": "text",
+                  "content": "Ursula - Sea Witch"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 17,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 92, 239, 328],
+          "blocks": [
+            {
+              "bbox": [70, 92, 239, 328],
+              "lines": [
+                {
+                  "bbox": [70, 92, 239, 328],
+                  "spans": [
+                    {
+                      "bbox": [70, 92, 239, 328],
+                      "type": "image",
+                      "image_path": "6f1d0d5b13c219c11dae1b776dd738c4a71d07a2ea8d65e367a3f742d14d2631.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [69, 334, 186, 345],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 334, 186, 345],
+              "spans": [
+                {
+                  "bbox": [69, 334, 186, 345],
+                  "type": "text",
+                  "content": "Ursula - Sea Witch"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 352, 186, 363],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 352, 186, 363],
+              "spans": [
+                {
+                  "bbox": [69, 352, 186, 363],
+                  "type": "text",
+                  "content": "Amethyst character"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 370, 261, 380],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 370, 261, 380],
+              "spans": [
+                {
+                  "bbox": [69, 370, 261, 380],
+                  "type": "text",
+                  "content": "Dreamborn · Villain · Sorcerer"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [70, 388, 179, 398],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 388, 179, 398],
+              "spans": [
+                {
+                  "bbox": [70, 388, 179, 398],
+                  "type": "text",
+                  "content": "3 cost, uninkable"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [70, 405, 102, 415],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 405, 102, 415],
+              "spans": [
+                {
+                  "bbox": [70, 405, 102, 415],
+                  "type": "text",
+                  "content": "3/3/1"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [69, 422, 481, 453],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 422, 481, 453],
+              "spans": [
+                {
+                  "bbox": [69, 422, 481, 453],
+                  "type": "text",
+                  "content": "\\You're Too Late\\ Whenever this character quests, chosen opposing character can't ready at the start of their next turn."
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [68, 473, 517, 487],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 473, 517, 487],
+              "spans": [
+                {
+                  "bbox": [68, 473, 517, 487],
+                  "type": "text",
+                  "content": "Q: When I use Ursula – Sea Witch's ability You're Too Late, can I choose a ready character?"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [68, 490, 525, 520],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 490, 525, 520],
+              "spans": [
+                {
+                  "bbox": [68, 490, 525, 520],
+                  "type": "text",
+                  "content": "A: Yes. Note, however, that You're Too Late doesn't exert the character you've chosen. It only prevents them from being readied if they're exerted."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 113, 756],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 113, 756],
+              "spans": [
+                {
+                  "bbox": [70, 742, 113, 756],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [495, 708, 541, 753],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 541, 753],
+              "spans": [
+                {
+                  "bbox": [495, 708, 541, 753],
+                  "type": "text",
+                  "content": "Petersburg"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 7
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 72, 402, 89],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 72, 402, 89],
+              "spans": [
+                {
+                  "bbox": [69, 72, 402, 89],
+                  "type": "text",
+                  "content": "Jafar – Keeper of Secrets / Flynn Rider – Charming Rogue"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 23,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 92, 241, 329],
+          "blocks": [
+            {
+              "bbox": [70, 92, 241, 329],
+              "lines": [
+                {
+                  "bbox": [70, 92, 241, 329],
+                  "spans": [
+                    {
+                      "bbox": [70, 92, 241, 329],
+                      "type": "image",
+                      "image_path": "13e97b4a8da9160182a774989cb017d24428b210ba78232ba0b9f89a5280725f.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "type": "image",
+          "bbox": [286, 99, 453, 329],
+          "blocks": [
+            {
+              "bbox": [286, 99, 453, 329],
+              "lines": [
+                {
+                  "bbox": [286, 99, 453, 329],
+                  "spans": [
+                    {
+                      "bbox": [286, 99, 453, 329],
+                      "type": "image",
+                      "image_path": "1ae838b42b3a818f4d3cb8b255eaad951a904d72d5be3f8dd5896559b9ba32c8.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 2,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 334, 229, 346],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 334, 229, 346],
+              "spans": [
+                {
+                  "bbox": [69, 334, 229, 346],
+                  "type": "text",
+                  "content": "Jafar - Keeper of Secrets"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 352, 186, 363],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 352, 186, 363],
+              "spans": [
+                {
+                  "bbox": [69, 352, 186, 363],
+                  "type": "text",
+                  "content": "Amethyst character"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 370, 261, 381],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 370, 261, 381],
+              "spans": [
+                {
+                  "bbox": [69, 370, 261, 381],
+                  "type": "text",
+                  "content": "Dreamborn · Villain · Sorcerer"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [70, 387, 167, 398],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 387, 167, 398],
+              "spans": [
+                {
+                  "bbox": [70, 387, 167, 398],
+                  "type": "text",
+                  "content": "4 cost, inkable"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [70, 404, 104, 416],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 404, 104, 416],
+              "spans": [
+                {
+                  "bbox": [70, 404, 104, 416],
+                  "type": "text",
+                  "content": "0/5/2"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [69, 422, 451, 453],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 422, 451, 453],
+              "spans": [
+                {
+                  "bbox": [69, 422, 451, 453],
+                  "type": "text",
+                  "content": "\\Hidden Wonders\\ This character gets +1 \\{S\\} for each card in your hand."
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [69, 476, 249, 488],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 476, 249, 488],
+              "spans": [
+                {
+                  "bbox": [69, 476, 249, 488],
+                  "type": "text",
+                  "content": "Flynn Rider - Charming Rogue"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [69, 495, 179, 506],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 495, 179, 506],
+              "spans": [
+                {
+                  "bbox": [69, 495, 179, 506],
+                  "type": "text",
+                  "content": "Emerald character"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [69, 512, 230, 524],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 512, 230, 524],
+              "spans": [
+                {
+                  "bbox": [69, 512, 230, 524],
+                  "type": "text",
+                  "content": "Storyborn • Hero • Prince"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "bbox": [69, 530, 167, 541],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 530, 167, 541],
+              "spans": [
+                {
+                  "bbox": [69, 530, 167, 541],
+                  "type": "text",
+                  "content": "2 cost, inkable"
+                }
+              ]
+            }
+          ],
+          "index": 12
+        },
+        {
+          "bbox": [70, 548, 104, 559],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 548, 104, 559],
+              "spans": [
+                {
+                  "bbox": [70, 548, 104, 559],
+                  "type": "text",
+                  "content": "1/2/2"
+                }
+              ]
+            }
+          ],
+          "index": 13
+        },
+        {
+          "bbox": [69, 566, 494, 596],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 566, 494, 596],
+              "spans": [
+                {
+                  "bbox": [69, 566, 494, 596],
+                  "type": "text",
+                  "content": "\\Here Comes the Smolder\\ Whenever this character is challenged, the challenging player chooses and discards a card."
+                }
+              ]
+            }
+          ],
+          "index": 14
+        },
+        {
+          "bbox": [67, 616, 523, 677],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 616, 523, 677],
+              "spans": [
+                {
+                  "bbox": [67, 616, 523, 677],
+                  "type": "text",
+                  "content": "Q: I have 2 cards in my hand plus a Jafar – Keeper of Secrets in play, and my Jafar challenges Flynn Rider – Charming Rogue. When does Flynn Rider's ability Here Comes the Smolder happen? How much damage will he take from the challenge, considering Jafar's Hidden Wonders ability?"
+                }
+              ]
+            }
+          ],
+          "index": 15
+        },
+        {
+          "bbox": [68, 680, 518, 694],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 680, 518, 694],
+              "spans": [
+                {
+                  "bbox": [68, 680, 518, 694],
+                  "type": "text",
+                  "content": "A: Here Comes the Smolder happens as soon as Flynn Rider is chosen to be challenged. This"
+                }
+              ]
+            }
+          ],
+          "index": 16
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 113, 757],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 113, 757],
+              "spans": [
+                {
+                  "bbox": [70, 742, 113, 757],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 17
+        },
+        {
+          "bbox": [504, 738, 531, 749],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [504, 738, 531, 749],
+              "spans": [
+                {
+                  "bbox": [504, 738, 531, 749],
+                  "type": "text",
+                  "content": "REVEA"
+                }
+              ]
+            }
+          ],
+          "index": 18
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 8
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [67, 72, 534, 138],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 72, 534, 138],
+              "spans": [
+                {
+                  "bbox": [67, 72, 534, 138],
+                  "type": "text",
+                  "content": "means the challenging player must discard a card before any damage from the challenge is dealt to either character. In this case, you'll have to discard 1 of your 2 cards, so you'll have 1 card left. Hidden Wonders increases Jafar's Strength by an amount equal to the number of cards in your hand, so he'll have "
+                },
+                {
+                  "bbox": [67, 72, 534, 138],
+                  "type": "inline_equation",
+                  "content": "+1"
+                },
+                {
+                  "bbox": [67, 72, 534, 138],
+                  "type": "text",
+                  "content": " Strength when he deals damage to Flynn Rider in the challenge."
+                }
+              ]
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [69, 144, 295, 159],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 144, 295, 159],
+              "spans": [
+                {
+                  "bbox": [69, 144, 295, 159],
+                  "type": "text",
+                  "content": "Elsa – Spirit of Winter / Fan the Flames"
+                }
+              ]
+            }
+          ],
+          "index": 1,
+          "line_avg_height": 16,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 164, 242, 401],
+          "blocks": [
+            {
+              "bbox": [70, 164, 242, 401],
+              "lines": [
+                {
+                  "bbox": [70, 164, 242, 401],
+                  "spans": [
+                    {
+                      "bbox": [70, 164, 242, 401],
+                      "type": "image",
+                      "image_path": "9391a7833317baeb7db12ff598ccef50c4f8cb11b4cff2bdb1eda528fa6f2091.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 2,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 2
+        },
+        {
+          "type": "image",
+          "bbox": [285, 164, 457, 402],
+          "blocks": [
+            {
+              "bbox": [285, 164, 457, 402],
+              "lines": [
+                {
+                  "bbox": [285, 164, 457, 402],
+                  "spans": [
+                    {
+                      "bbox": [285, 164, 457, 402],
+                      "type": "image",
+                      "image_path": "8de67b283eddf1d95a9117469a974f25f80ec858ad33945aad78ce59740f7bff.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 3,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 410, 217, 421],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 410, 217, 421],
+              "spans": [
+                {
+                  "bbox": [69, 410, 217, 421],
+                  "type": "text",
+                  "content": "Elsa - Spirit of Winter"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 428, 186, 439],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 428, 186, 439],
+              "spans": [
+                {
+                  "bbox": [69, 428, 186, 439],
+                  "type": "text",
+                  "content": "Amethyst character"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [69, 445, 292, 456],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 445, 292, 456],
+              "spans": [
+                {
+                  "bbox": [69, 445, 292, 456],
+                  "type": "text",
+                  "content": "Floodborn • Hero • Queen • Sorcerer"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [69, 464, 178, 474],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 464, 178, 474],
+              "spans": [
+                {
+                  "bbox": [69, 464, 178, 474],
+                  "type": "text",
+                  "content": "8 cost, uninkable"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [69, 481, 104, 491],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 481, 104, 491],
+              "spans": [
+                {
+                  "bbox": [69, 481, 104, 491],
+                  "type": "text",
+                  "content": "4/6/3"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [69, 499, 481, 529],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 499, 481, 529],
+              "spans": [
+                {
+                  "bbox": [69, 499, 481, 529],
+                  "type": "text",
+                  "content": "Shift 6 {I} (You may pay 6 {I} to play this on top of one of your characters named Elsa.)"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [69, 535, 475, 564],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 535, 475, 564],
+              "spans": [
+                {
+                  "bbox": [69, 535, 475, 564],
+                  "type": "text",
+                  "content": "\\Deep Freeze\\ When you play this character, exert up to 2 chosen characters. They can't ready at the start of their next turn."
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [69, 589, 160, 599],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 589, 160, 599],
+              "spans": [
+                {
+                  "bbox": [69, 589, 160, 599],
+                  "type": "text",
+                  "content": "Fan the Flames"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "bbox": [69, 606, 141, 617],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 606, 141, 617],
+              "spans": [
+                {
+                  "bbox": [69, 606, 141, 617],
+                  "type": "text",
+                  "content": "Ruby action"
+                }
+              ]
+            }
+          ],
+          "index": 12
+        },
+        {
+          "bbox": [69, 624, 166, 635],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 624, 166, 635],
+              "spans": [
+                {
+                  "bbox": [69, 624, 166, 635],
+                  "type": "text",
+                  "content": "1 cost, inkable"
+                }
+              ]
+            }
+          ],
+          "index": 13
+        },
+        {
+          "bbox": [69, 642, 492, 653],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 642, 492, 653],
+              "spans": [
+                {
+                  "bbox": [69, 642, 492, 653],
+                  "type": "text",
+                  "content": "Ready chosen character. They can't quest for the rest of this turn."
+                }
+              ]
+            }
+          ],
+          "index": 14
+        },
+        {
+          "bbox": [67, 673, 537, 703],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 673, 537, 703],
+              "spans": [
+                {
+                  "bbox": [67, 673, 537, 703],
+                  "type": "text",
+                  "content": "Q: If I use Elsa – Spirit of Winter's ability Deep Freeze to exert 2 characters, can they be readied with Fan the Flames on their next turn?"
+                }
+              ]
+            }
+          ],
+          "index": 15
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 113, 757],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 113, 757],
+              "spans": [
+                {
+                  "bbox": [70, 742, 113, 757],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 16
+        },
+        {
+          "bbox": [495, 708, 541, 754],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 541, 754],
+              "spans": [
+                {
+                  "bbox": [495, 708, 541, 754],
+                  "type": "text",
+                  "content": "Ravenburg"
+                }
+              ]
+            }
+          ],
+          "index": 17
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 9
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [71, 72, 518, 102],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 72, 518, 102],
+              "spans": [
+                {
+                  "bbox": [71, 72, 518, 102],
+                  "type": "text",
+                  "content": "A: Yes. Deep Freeze only keeps characters from readying during the Ready step of their next turn. It doesn't keep them from being readied by Fan the Flames and similar abilities."
+                }
+              ]
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [70, 112, 229, 129],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 112, 229, 129],
+              "spans": [
+                {
+                  "bbox": [70, 112, 229, 129],
+                  "type": "text",
+                  "content": "Mickey Mouse – Trumpeter"
+                }
+              ]
+            }
+          ],
+          "index": 1,
+          "line_avg_height": 17,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 133, 239, 369],
+          "blocks": [
+            {
+              "bbox": [70, 133, 239, 369],
+              "lines": [
+                {
+                  "bbox": [70, 133, 239, 369],
+                  "spans": [
+                    {
+                      "bbox": [70, 133, 239, 369],
+                      "type": "image",
+                      "image_path": "8cae828b1281ab97e03ed5b9f26e06c328a15067848e800af0207bf8d2a39c8c.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 2,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 378, 223, 390],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 378, 223, 390],
+              "spans": [
+                {
+                  "bbox": [69, 378, 223, 390],
+                  "type": "text",
+                  "content": "Mickey Mouse - Trumpeter"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [70, 396, 167, 407],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 396, 167, 407],
+              "spans": [
+                {
+                  "bbox": [70, 396, 167, 407],
+                  "type": "text",
+                  "content": "Steel character"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [70, 414, 172, 423],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 414, 172, 423],
+              "spans": [
+                {
+                  "bbox": [70, 414, 172, 423],
+                  "type": "text",
+                  "content": "Dreamborn • Hero"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [70, 431, 179, 442],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 431, 179, 442],
+              "spans": [
+                {
+                  "bbox": [70, 431, 179, 442],
+                  "type": "text",
+                  "content": "4 cost, uninkable"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [70, 449, 102, 460],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 449, 102, 460],
+              "spans": [
+                {
+                  "bbox": [70, 449, 102, 460],
+                  "type": "text",
+                  "content": "0/1/1"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [71, 467, 423, 479],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 467, 423, 479],
+              "spans": [
+                {
+                  "bbox": [71, 467, 423, 479],
+                  "type": "text",
+                  "content": "\\Sound the Call\\ {E}, 2 {I} - Play a character for free."
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [71, 498, 537, 529],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 498, 537, 529],
+              "spans": [
+                {
+                  "bbox": [71, 498, 537, 529],
+                  "type": "text",
+                  "content": "Q: If I use Mickey Mouse – Trumpeter's Sound the Call ability, can I play a character using their Shift ability for free?"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [70, 531, 535, 594],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 531, 535, 594],
+              "spans": [
+                {
+                  "bbox": [70, 531, 535, 594],
+                  "type": "text",
+                  "content": "A: It depends. \"For free\" applies only to the ink cost of playing a card, not to any other costs of playing it. If the Shift cost of the character you want to play is just ink, you can play them using their Shift ability for free. However, if their Shift cost includes other costs, those would still need to be paid."
+                }
+              ]
+            }
+          ],
+          "index": 10
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [71, 742, 113, 756],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [71, 742, 113, 756],
+              "spans": [
+                {
+                  "bbox": [71, 742, 113, 756],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "bbox": [495, 708, 541, 753],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 541, 753],
+              "spans": [
+                {
+                  "bbox": [495, 708, 541, 753],
+                  "type": "text",
+                  "content": "Petersburg"
+                }
+              ]
+            }
+          ],
+          "index": 12
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 10
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 72, 267, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 72, 267, 87],
+              "spans": [
+                {
+                  "bbox": [70, 72, 267, 87],
+                  "type": "text",
+                  "content": "Donald Duck – Perfect Gentleman"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 18,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 92, 241, 329],
+          "blocks": [
+            {
+              "bbox": [70, 92, 241, 329],
+              "lines": [
+                {
+                  "bbox": [70, 92, 241, 329],
+                  "spans": [
+                    {
+                      "bbox": [70, 92, 241, 329],
+                      "type": "image",
+                      "image_path": "0d03d6feb2fd3f6acc05a4919a345f7a6ce91acb3b4f787d7746eec64916a37b.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [69, 338, 268, 350],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 338, 268, 350],
+              "spans": [
+                {
+                  "bbox": [69, 338, 268, 350],
+                  "type": "text",
+                  "content": "Donald Duck - Perfect Gentleman"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 356, 180, 367],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 356, 180, 367],
+              "spans": [
+                {
+                  "bbox": [69, 356, 180, 367],
+                  "type": "text",
+                  "content": "Emerald character"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [70, 373, 173, 385],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 373, 173, 385],
+              "spans": [
+                {
+                  "bbox": [70, 373, 173, 385],
+                  "type": "text",
+                  "content": "Floodborn • Ally"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [70, 392, 167, 403],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 392, 167, 403],
+              "spans": [
+                {
+                  "bbox": [70, 392, 167, 403],
+                  "type": "text",
+                  "content": "4 cost, inkable"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [70, 408, 104, 420],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 408, 104, 420],
+              "spans": [
+                {
+                  "bbox": [70, 408, 104, 420],
+                  "type": "text",
+                  "content": "2/5/2"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [69, 426, 484, 458],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 426, 484, 458],
+              "spans": [
+                {
+                  "bbox": [69, 426, 484, 458],
+                  "type": "text",
+                  "content": "Shift 3 {I} (You may pay 3 {I} to play this on top of one of your characters named Donald Duck.)"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [69, 463, 487, 475],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 463, 487, 475],
+              "spans": [
+                {
+                  "bbox": [69, 463, 487, 475],
+                  "type": "text",
+                  "content": "\\Allow Me\\ At the start of your turn, each player may draw a card."
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [67, 495, 530, 525],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 495, 530, 525],
+              "spans": [
+                {
+                  "bbox": [67, 495, 530, 525],
+                  "type": "text",
+                  "content": "Q: If I choose not to draw a card for Donald Duck – Perfect Gentleman's Allow Me ability, can my opponent still draw a card?"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [67, 526, 499, 557],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 526, 499, 557],
+              "spans": [
+                {
+                  "bbox": [67, 526, 499, 557],
+                  "type": "text",
+                  "content": "A: Yes. Each player decides individually whether they want to draw a card at the start of your turn."
+                }
+              ]
+            }
+          ],
+          "index": 10
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 113, 757],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 113, 757],
+              "spans": [
+                {
+                  "bbox": [70, 742, 113, 757],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "bbox": [496, 707, 541, 754],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [496, 707, 541, 754],
+              "spans": [
+                {
+                  "bbox": [496, 707, 541, 754],
+                  "type": "text",
+                  "content": "Ravensburg"
+                }
+              ]
+            }
+          ],
+          "index": 12
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 11
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 72, 264, 86],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 72, 264, 86],
+              "spans": [
+                {
+                  "bbox": [70, 72, 264, 86],
+                  "type": "text",
+                  "content": "Grand Pabbie – Oldest and Wisest"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 17,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 92, 239, 327],
+          "blocks": [
+            {
+              "bbox": [70, 92, 239, 327],
+              "lines": [
+                {
+                  "bbox": [70, 92, 239, 327],
+                  "spans": [
+                    {
+                      "bbox": [70, 92, 239, 327],
+                      "type": "image",
+                      "image_path": "35dbb538f01184160caaedda41fee15616d509ec54d8157ada2735b553be660a.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [69, 338, 273, 349],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 338, 273, 349],
+              "spans": [
+                {
+                  "bbox": [69, 338, 273, 349],
+                  "type": "text",
+                  "content": "Grand Pabbie - Oldest and Wisest"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 356, 185, 367],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 356, 185, 367],
+              "spans": [
+                {
+                  "bbox": [69, 356, 185, 367],
+                  "type": "text",
+                  "content": "Sapphire character"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 373, 185, 385],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 373, 185, 385],
+              "spans": [
+                {
+                  "bbox": [69, 373, 185, 385],
+                  "type": "text",
+                  "content": "Storyborn · Mentor"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 392, 179, 402],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 392, 179, 402],
+              "spans": [
+                {
+                  "bbox": [69, 392, 179, 402],
+                  "type": "text",
+                  "content": "7 cost, uninkable"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [69, 408, 104, 420],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 408, 104, 420],
+              "spans": [
+                {
+                  "bbox": [69, 408, 104, 420],
+                  "type": "text",
+                  "content": "3/6/3"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [69, 427, 518, 456],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 427, 518, 456],
+              "spans": [
+                {
+                  "bbox": [69, 427, 518, 456],
+                  "type": "text",
+                  "content": "\\Ancient Insight\\ Whenever you remove 1 or more damage from one of your characters, gain 2 lore."
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [67, 483, 518, 528],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 483, 518, 528],
+              "spans": [
+                {
+                  "bbox": [67, 483, 518, 528],
+                  "type": "text",
+                  "content": "Q: If I have 3 damaged characters in play, including Grand Pabbie – Oldest and Wisest, and I play a card that removes damage from all my characters, how much lore do I gain from his Ancient Insight ability?"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [68, 531, 516, 562],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 531, 516, 562],
+              "spans": [
+                {
+                  "bbox": [68, 531, 516, 562],
+                  "type": "text",
+                  "content": "A: 6 lore. Ancient Insight triggers for each character that has damage removed, even if those characters have damage removed simultaneously."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 113, 756],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 113, 756],
+              "spans": [
+                {
+                  "bbox": [70, 742, 113, 756],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [495, 708, 541, 753],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 541, 753],
+              "spans": [
+                {
+                  "bbox": [495, 708, 541, 753],
+                  "type": "text",
+                  "content": "Reverburgy"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 12
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 72, 239, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 72, 239, 87],
+              "spans": [
+                {
+                  "bbox": [70, 72, 239, 87],
+                  "type": "text",
+                  "content": "Pluto - Determined Defender"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 17,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [71, 92, 239, 328],
+          "blocks": [
+            {
+              "bbox": [71, 92, 239, 328],
+              "lines": [
+                {
+                  "bbox": [71, 92, 239, 328],
+                  "spans": [
+                    {
+                      "bbox": [71, 92, 239, 328],
+                      "type": "image",
+                      "image_path": "c55cae8ab98d2759c9dbc9775082078c64d5bb756e3daf296e2357567a6f1c36.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [69, 338, 242, 349],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 338, 242, 349],
+              "spans": [
+                {
+                  "bbox": [69, 338, 242, 349],
+                  "type": "text",
+                  "content": "Pluto - Determined Defender"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 356, 167, 366],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 356, 167, 366],
+              "spans": [
+                {
+                  "bbox": [69, 356, 167, 366],
+                  "type": "text",
+                  "content": "Amber character"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 373, 173, 385],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 373, 173, 385],
+              "spans": [
+                {
+                  "bbox": [69, 373, 173, 385],
+                  "type": "text",
+                  "content": "Floodborn • Ally"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [70, 392, 167, 402],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 392, 167, 402],
+              "spans": [
+                {
+                  "bbox": [70, 392, 167, 402],
+                  "type": "text",
+                  "content": "7 cost, inkable"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [70, 409, 104, 419],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 409, 104, 419],
+              "spans": [
+                {
+                  "bbox": [70, 409, 104, 419],
+                  "type": "text",
+                  "content": "3/8/2"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [69, 427, 483, 456],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 427, 483, 456],
+              "spans": [
+                {
+                  "bbox": [69, 427, 483, 456],
+                  "type": "text",
+                  "content": "Shift 5 {I} (You may pay 5 {I} to play this on top of one of your characters named Pluto.)"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [69, 463, 520, 510],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 463, 520, 510],
+              "spans": [
+                {
+                  "bbox": [69, 463, 520, 510],
+                  "type": "text",
+                  "content": "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [69, 516, 483, 545],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 516, 483, 545],
+              "spans": [
+                {
+                  "bbox": [69, 516, 483, 545],
+                  "type": "text",
+                  "content": "\\Guard Dog\\ At the start of your turn, remove up to 3 damage from this character."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [68, 566, 518, 594],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 566, 518, 594],
+              "spans": [
+                {
+                  "bbox": [68, 566, 518, 594],
+                  "type": "text",
+                  "content": "Q: Can I choose not to remove any damage from Pluto – Determined Defender at the start of my turn?"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [68, 598, 523, 626],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 598, 523, 626],
+              "spans": [
+                {
+                  "bbox": [68, 598, 523, 626],
+                  "type": "text",
+                  "content": "A: Yes. The Guard Dog ability lets you remove up to 3 damage from Pluto, so you can choose any amount from 0 to 3."
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "bbox": [68, 638, 524, 666],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 638, 524, 666],
+              "spans": [
+                {
+                  "bbox": [68, 638, 524, 666],
+                  "type": "text",
+                  "content": "Q: If I play Pluto – Determined Defender using his Shift ability, can I also use his Bodyguard ability to have him enter play exerted?"
+                }
+              ]
+            }
+          ],
+          "index": 12
+        },
+        {
+          "bbox": [69, 670, 189, 682],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 670, 189, 682],
+              "spans": [
+                {
+                  "bbox": [69, 670, 189, 682],
+                  "type": "text",
+                  "content": "A: Yes, you can do both."
+                }
+              ]
+            }
+          ],
+          "index": 13
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [69, 742, 113, 756],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 742, 113, 756],
+              "spans": [
+                {
+                  "bbox": [69, 742, 113, 756],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 14
+        },
+        {
+          "bbox": [495, 708, 541, 754],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 541, 754],
+              "spans": [
+                {
+                  "bbox": [495, 708, 541, 754],
+                  "type": "text",
+                  "content": "Ravensburger"
+                }
+              ]
+            }
+          ],
+          "index": 15
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 13
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 72, 208, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 72, 208, 87],
+              "spans": [
+                {
+                  "bbox": [70, 72, 208, 87],
+                  "type": "text",
+                  "content": "Ursula's Shell Necklace"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 17,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 92, 241, 330],
+          "blocks": [
+            {
+              "bbox": [70, 92, 241, 330],
+              "lines": [
+                {
+                  "bbox": [70, 92, 241, 330],
+                  "spans": [
+                    {
+                      "bbox": [70, 92, 241, 330],
+                      "type": "image",
+                      "image_path": "2656919ffef8b1d7faf4b63dda4fbff00629fb73527358163f9601a4f444351c.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [69, 338, 217, 350],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 338, 217, 350],
+              "spans": [
+                {
+                  "bbox": [69, 338, 217, 350],
+                  "type": "text",
+                  "content": "Ursula's Shell Necklace"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 356, 136, 366],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 356, 136, 366],
+              "spans": [
+                {
+                  "bbox": [69, 356, 136, 366],
+                  "type": "text",
+                  "content": "Amber item"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 373, 180, 384],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 373, 180, 384],
+              "spans": [
+                {
+                  "bbox": [69, 373, 180, 384],
+                  "type": "text",
+                  "content": "3 cost, uninkable"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 392, 523, 403],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 392, 523, 403],
+              "spans": [
+                {
+                  "bbox": [69, 392, 523, 403],
+                  "type": "text",
+                  "content": "\\Now, Sing! \\ Whenever you play a song, you may pay 1 {I} to draw a card."
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [68, 423, 538, 453],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 423, 538, 453],
+              "spans": [
+                {
+                  "bbox": [68, 423, 538, 453],
+                  "type": "text",
+                  "content": "Q: If I have Ursula's Shell Necklace in play and exert a cost 3 character to sing a cost 2 song, can I use the difference of 1 ink to use its Now, Sing! ability to draw a card?"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [68, 455, 537, 501],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 455, 537, 501],
+              "spans": [
+                {
+                  "bbox": [68, 455, 537, 501],
+                  "type": "text",
+                  "content": "A: No. Ink costs, including the cost to use an ability like Now, Sing!, must be paid with ink from your inkwell. Using a character with a higher cost than necessary to sing a song doesn't generate ink."
+                }
+              ]
+            }
+          ],
+          "index": 7
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 114, 756],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 114, 756],
+              "spans": [
+                {
+                  "bbox": [70, 742, 114, 756],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [495, 708, 542, 754],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 542, 754],
+              "spans": [
+                {
+                  "bbox": [495, 708, 542, 754],
+                  "type": "text",
+                  "content": "Ravenburg"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 14
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 72, 434, 89],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 72, 434, 89],
+              "spans": [
+                {
+                  "bbox": [69, 72, 434, 89],
+                  "type": "text",
+                  "content": "Queen of Hearts – Sensing Weakness / Jafar – Keeper of Secrets"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 19,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 92, 241, 329],
+          "blocks": [
+            {
+              "bbox": [70, 92, 241, 329],
+              "lines": [
+                {
+                  "bbox": [70, 92, 241, 329],
+                  "spans": [
+                    {
+                      "bbox": [70, 92, 241, 329],
+                      "type": "image",
+                      "image_path": "9766d6084a3fbe012e28c653859fce65f45eb53b0f28627720319a8c8a92217a.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "type": "image",
+          "bbox": [286, 92, 457, 329],
+          "blocks": [
+            {
+              "bbox": [286, 92, 457, 329],
+              "lines": [
+                {
+                  "bbox": [286, 92, 457, 329],
+                  "spans": [
+                    {
+                      "bbox": [286, 92, 457, 329],
+                      "type": "image",
+                      "image_path": "a3744dbcfe835984e7340474f8f34a993cb44cbea9bd4717a3250d0152b95003.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 2,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 338, 287, 350],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 338, 287, 350],
+              "spans": [
+                {
+                  "bbox": [69, 338, 287, 350],
+                  "type": "text",
+                  "content": "Queen of Hearts - Sensing Weakness"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 356, 161, 367],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 356, 161, 367],
+              "spans": [
+                {
+                  "bbox": [69, 356, 161, 367],
+                  "type": "text",
+                  "content": "Ruby character"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 373, 242, 385],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 373, 242, 385],
+              "spans": [
+                {
+                  "bbox": [69, 373, 242, 385],
+                  "type": "text",
+                  "content": "Floodborn • Villain • Queen"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [70, 392, 167, 402],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 392, 167, 402],
+              "spans": [
+                {
+                  "bbox": [70, 392, 167, 402],
+                  "type": "text",
+                  "content": "5 cost, inkable"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [70, 409, 104, 419],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 409, 104, 419],
+              "spans": [
+                {
+                  "bbox": [70, 409, 104, 419],
+                  "type": "text",
+                  "content": "4/3/1"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [69, 427, 483, 456],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 427, 483, 456],
+              "spans": [
+                {
+                  "bbox": [69, 427, 483, 456],
+                  "type": "text",
+                  "content": "Shift 2 {I} (You may pay 2 {I} to play this on top of one of your characters named Queen of Hearts.)"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [69, 463, 518, 493],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 463, 518, 493],
+              "spans": [
+                {
+                  "bbox": [69, 463, 518, 493],
+                  "type": "text",
+                  "content": "\\Let the Game Begin\\ Whenever one of your characters challenges another character, you may draw a card."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [69, 517, 229, 528],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 517, 229, 528],
+              "spans": [
+                {
+                  "bbox": [69, 517, 229, 528],
+                  "type": "text",
+                  "content": "Jafar - Keeper of Secrets"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [69, 535, 186, 546],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 535, 186, 546],
+              "spans": [
+                {
+                  "bbox": [69, 535, 186, 546],
+                  "type": "text",
+                  "content": "Amethyst character"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "bbox": [69, 552, 261, 563],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 552, 261, 563],
+              "spans": [
+                {
+                  "bbox": [69, 552, 261, 563],
+                  "type": "text",
+                  "content": "Dreamborn · Villain · Sorcerer"
+                }
+              ]
+            }
+          ],
+          "index": 12
+        },
+        {
+          "bbox": [70, 570, 166, 581],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 570, 166, 581],
+              "spans": [
+                {
+                  "bbox": [70, 570, 166, 581],
+                  "type": "text",
+                  "content": "4 cost, inkable"
+                }
+              ]
+            }
+          ],
+          "index": 13
+        },
+        {
+          "bbox": [70, 587, 103, 598],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 587, 103, 598],
+              "spans": [
+                {
+                  "bbox": [70, 587, 103, 598],
+                  "type": "text",
+                  "content": "0/5/2"
+                }
+              ]
+            }
+          ],
+          "index": 14
+        },
+        {
+          "bbox": [69, 605, 517, 617],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 605, 517, 617],
+              "spans": [
+                {
+                  "bbox": [69, 605, 517, 617],
+                  "type": "text",
+                  "content": "\\Hidden Wonderss\\ This character gets "
+                },
+                {
+                  "bbox": [69, 605, 517, 617],
+                  "type": "inline_equation",
+                  "content": "+1"
+                },
+                {
+                  "bbox": [69, 605, 517, 617],
+                  "type": "text",
+                  "content": " {S} for each card in your hand."
+                }
+              ]
+            }
+          ],
+          "index": 15
+        },
+        {
+          "bbox": [67, 637, 526, 681],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 637, 526, 681],
+              "spans": [
+                {
+                  "bbox": [67, 637, 526, 681],
+                  "type": "text",
+                  "content": "Q: I have a Queen of Hearts – Sensing Weakness and a Jafar – Keeper of Secrets in play and 1 card in my hand. If I challenge my opponent's Flounder – Voice of Reason, how much damage does Flounder take?"
+                }
+              ]
+            }
+          ],
+          "index": 16
+        },
+        {
+          "bbox": [68, 685, 533, 700],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 685, 533, 700],
+              "spans": [
+                {
+                  "bbox": [68, 685, 533, 700],
+                  "type": "text",
+                  "content": "A: 2 damage. Let the Game Begin applies as soon as a challenge is declared, so you draw a card"
+                }
+              ]
+            }
+          ],
+          "index": 17
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 113, 756],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 113, 756],
+              "spans": [
+                {
+                  "bbox": [70, 742, 113, 756],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 18
+        },
+        {
+          "bbox": [495, 708, 541, 753],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 541, 753],
+              "spans": [
+                {
+                  "bbox": [495, 708, 541, 753],
+                  "type": "text",
+                  "content": "Reverburgy"
+                }
+              ]
+            }
+          ],
+          "index": 19
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 15
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 72, 519, 103],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 72, 519, 103],
+              "spans": [
+                {
+                  "bbox": [69, 72, 519, 103],
+                  "type": "text",
+                  "content": "before the challenge itself has happened. With his Hidden Wonderss ability, Jafar then gains 2 Strength for the total of 2 cards you now have in your hand."
+                }
+              ]
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [70, 112, 138, 126],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 112, 138, 126],
+              "spans": [
+                {
+                  "bbox": [70, 112, 138, 126],
+                  "type": "text",
+                  "content": "Dinner Bell"
+                }
+              ]
+            }
+          ],
+          "index": 1,
+          "line_avg_height": 15,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 132, 241, 370],
+          "blocks": [
+            {
+              "bbox": [70, 132, 241, 370],
+              "lines": [
+                {
+                  "bbox": [70, 132, 241, 370],
+                  "spans": [
+                    {
+                      "bbox": [70, 132, 241, 370],
+                      "type": "image",
+                      "image_path": "f3633fc24bbe3bf3e2613bd48dfefb7644ab81773da64c7fd90ea3d66c3cc818.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 2,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 378, 141, 389],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 378, 141, 389],
+              "spans": [
+                {
+                  "bbox": [69, 378, 141, 389],
+                  "type": "text",
+                  "content": "Dinner Bell"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 396, 130, 408],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 396, 130, 408],
+              "spans": [
+                {
+                  "bbox": [69, 396, 130, 408],
+                  "type": "text",
+                  "content": "Ruby item"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 414, 180, 425],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 414, 180, 425],
+              "spans": [
+                {
+                  "bbox": [69, 414, 180, 425],
+                  "type": "text",
+                  "content": "4 cost, uninkable"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [69, 431, 514, 462],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 431, 514, 462],
+              "spans": [
+                {
+                  "bbox": [69, 431, 514, 462],
+                  "type": "text",
+                  "content": "\\You Know What Happens\\ {E}, 2 {I} - Draw cards equal to the damage on chosen character of yours, then banish them."
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [67, 487, 541, 517],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 487, 541, 517],
+              "spans": [
+                {
+                  "bbox": [67, 487, 541, 517],
+                  "type": "text",
+                  "content": "Q: If I use Dinner Bell's You Know What Happens ability, can I choose one of my characters that doesn't have any damage?"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [68, 519, 537, 550],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 519, 537, 550],
+              "spans": [
+                {
+                  "bbox": [68, 519, 537, 550],
+                  "type": "text",
+                  "content": "A: Yes. If you did, you wouldn't draw any cards because there's no damage on the character you chose, but you'd still banish that character. It certainly is a bold choice, but hey, you do you!"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 114, 756],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 114, 756],
+              "spans": [
+                {
+                  "bbox": [70, 742, 114, 756],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [495, 708, 542, 754],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 542, 754],
+              "spans": [
+                {
+                  "bbox": [495, 708, 542, 754],
+                  "type": "text",
+                  "content": "Ravenburg"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 16
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 72, 170, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 72, 170, 87],
+              "spans": [
+                {
+                  "bbox": [70, 72, 170, 87],
+                  "type": "text",
+                  "content": "Last-Ditch Effort"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 14,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 92, 241, 330],
+          "blocks": [
+            {
+              "bbox": [70, 92, 241, 330],
+              "lines": [
+                {
+                  "bbox": [70, 92, 241, 330],
+                  "spans": [
+                    {
+                      "bbox": [70, 92, 241, 330],
+                      "type": "image",
+                      "image_path": "511a1b94efbc0b499bd7b79bb1218414bbc0c8ce2e37fd173df27ac9a04dd745.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [69, 338, 180, 350],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 338, 180, 350],
+              "spans": [
+                {
+                  "bbox": [69, 338, 180, 350],
+                  "type": "text",
+                  "content": "Last-Ditch Effort"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 356, 167, 367],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 356, 167, 367],
+              "spans": [
+                {
+                  "bbox": [69, 356, 167, 367],
+                  "type": "text",
+                  "content": "Amethyst action"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 373, 180, 385],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 373, 180, 385],
+              "spans": [
+                {
+                  "bbox": [69, 373, 180, 385],
+                  "type": "text",
+                  "content": "3 cost, uninkable"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 392, 476, 423],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 392, 476, 423],
+              "spans": [
+                {
+                  "bbox": [69, 392, 476, 423],
+                  "type": "text",
+                  "content": "Exert chosen opposing character. Chosen character of yours gains Challenger +2 this turn. (They get +2 "
+                },
+                {
+                  "bbox": [69, 392, 476, 423],
+                  "type": "inline_equation",
+                  "content": "\\{S\\}"
+                },
+                {
+                  "bbox": [69, 392, 476, 423],
+                  "type": "text",
+                  "content": " while challenging.)"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [67, 441, 533, 472],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 441, 533, 472],
+              "spans": [
+                {
+                  "bbox": [67, 441, 533, 472],
+                  "type": "text",
+                  "content": "Q: The only character my opponent has in play has Ward. Can I still play Last-Ditch Effort and give my character Challenger +2 even though I can't choose an opposing character?"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [68, 473, 523, 536],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 473, 523, 536],
+              "spans": [
+                {
+                  "bbox": [68, 473, 523, 536],
+                  "type": "text",
+                  "content": "A: Yes. When there aren't any eligible opposing characters to choose for the first part of Last-Ditch Effort, that part of its effect simply finishes without exerting a character. However, the second part of its effect still happens, so you still choose a character of yours to get Challenger +2 until the end of the turn."
+                }
+              ]
+            }
+          ],
+          "index": 7
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 114, 757],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 114, 757],
+              "spans": [
+                {
+                  "bbox": [70, 742, 114, 757],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [495, 708, 542, 754],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 542, 754],
+              "spans": [
+                {
+                  "bbox": [495, 708, 542, 754],
+                  "type": "text",
+                  "content": "Ravenburg"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 17
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 72, 253, 87],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 72, 253, 87],
+              "spans": [
+                {
+                  "bbox": [70, 72, 253, 87],
+                  "type": "text",
+                  "content": "Moana – Of Motunui (new text)"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 20,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 92, 241, 329],
+          "blocks": [
+            {
+              "bbox": [70, 92, 241, 329],
+              "lines": [
+                {
+                  "bbox": [70, 92, 241, 329],
+                  "spans": [
+                    {
+                      "bbox": [70, 92, 241, 329],
+                      "type": "image",
+                      "image_path": "36b47a42f198c402ad8cfae96f38fcd2a2c2e17cdd23bc6264b6ce0b73a67e72.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [69, 338, 186, 349],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 338, 186, 349],
+              "spans": [
+                {
+                  "bbox": [69, 338, 186, 349],
+                  "type": "text",
+                  "content": "Moana - Of Motunui"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 356, 167, 366],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 356, 167, 366],
+              "spans": [
+                {
+                  "bbox": [69, 356, 167, 366],
+                  "type": "text",
+                  "content": "Amber character"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 373, 241, 385],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 373, 241, 385],
+              "spans": [
+                {
+                  "bbox": [69, 373, 241, 385],
+                  "type": "text",
+                  "content": "Storyborn • Hero • Princess"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 392, 167, 402],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 392, 167, 402],
+              "spans": [
+                {
+                  "bbox": [69, 392, 167, 402],
+                  "type": "text",
+                  "content": "5 cost, inkable"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [70, 408, 104, 419],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 408, 104, 419],
+              "spans": [
+                {
+                  "bbox": [70, 408, 104, 419],
+                  "type": "text",
+                  "content": "1/6/3"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [69, 427, 526, 474],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 427, 526, 474],
+              "spans": [
+                {
+                  "bbox": [69, 427, 526, 474],
+                  "type": "text",
+                  "content": "\\We Can Fix It\\ Whenever this character quests, you may ready your other exerted Princess characters. If you do, they can't quest for the rest of this turn."
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [68, 495, 526, 540],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 495, 526, 540],
+              "spans": [
+                {
+                  "bbox": [68, 495, 526, 540],
+                  "type": "text",
+                  "content": "Q: If I quest with Moana – Of Motunui and use her We Can Fix It ability, can I choose which Princess characters I ready? If I instead ready them with other effects later in the turn, can they quest that turn?"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [68, 543, 535, 604],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [68, 543, 535, 604],
+              "spans": [
+                {
+                  "bbox": [68, 543, 535, 604],
+                  "type": "text",
+                  "content": "A: No, you can't choose only some of your Princess characters for We Can Fix It. When you use the ability, you must ready all of your Princess characters. If you don't use We Can Fix It, your other Princess characters can quest as normal and you can ready them with other abilities and effects later in the turn."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 113, 756],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 113, 756],
+              "spans": [
+                {
+                  "bbox": [70, 742, 113, 756],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [495, 708, 541, 753],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [495, 708, 541, 753],
+              "spans": [
+                {
+                  "bbox": [495, 708, 541, 753],
+                  "type": "text",
+                  "content": "Reverburgy"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 18
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [70, 72, 203, 88],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 72, 203, 88],
+              "spans": [
+                {
+                  "bbox": [70, 72, 203, 88],
+                  "type": "text",
+                  "content": "Pluto - Friendly Pooch"
+                }
+              ]
+            }
+          ],
+          "index": 0,
+          "line_avg_height": 18,
+          "level": 4
+        },
+        {
+          "type": "image",
+          "bbox": [70, 92, 241, 330],
+          "blocks": [
+            {
+              "bbox": [70, 92, 241, 330],
+              "lines": [
+                {
+                  "bbox": [70, 92, 241, 330],
+                  "spans": [
+                    {
+                      "bbox": [70, 92, 241, 330],
+                      "type": "image",
+                      "image_path": "811e00d4582ae2a3197064fc9e66857466b203c231678607a0983f027677cfd1.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [69, 338, 212, 350],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 338, 212, 350],
+              "spans": [
+                {
+                  "bbox": [69, 338, 212, 350],
+                  "type": "text",
+                  "content": "Pluto - Friendly Pooch"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [69, 356, 167, 367],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 356, 167, 367],
+              "spans": [
+                {
+                  "bbox": [69, 356, 167, 367],
+                  "type": "text",
+                  "content": "Amber character"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [69, 373, 173, 386],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 373, 173, 386],
+              "spans": [
+                {
+                  "bbox": [69, 373, 173, 386],
+                  "type": "text",
+                  "content": "Storyborn • Ally"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [69, 392, 179, 403],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 392, 179, 403],
+              "spans": [
+                {
+                  "bbox": [69, 392, 179, 403],
+                  "type": "text",
+                  "content": "1 cost, uninkable"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [69, 408, 104, 420],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 408, 104, 420],
+              "spans": [
+                {
+                  "bbox": [69, 408, 104, 420],
+                  "type": "text",
+                  "content": "0/2/1"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [69, 426, 495, 456],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [69, 426, 495, 456],
+              "spans": [
+                {
+                  "bbox": [69, 426, 495, 456],
+                  "type": "text",
+                  "content": "\\Good Dog\\ {E} - You pay 1 {I} less for the next character you play this turn."
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [67, 476, 526, 506],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 476, 526, 506],
+              "spans": [
+                {
+                  "bbox": [67, 476, 526, 506],
+                  "type": "text",
+                  "content": "Q: Can I use Pluto – Friendly Pooch’s Good Dog ability to reduce the ink I need to pay for the Shift cost of a character?"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [67, 509, 541, 539],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 509, 541, 539],
+              "spans": [
+                {
+                  "bbox": [67, 509, 541, 539],
+                  "type": "text",
+                  "content": "A: Yes. The Good Dog ability reduces the amount of ink you have to pay for the character, which includes the ink needed for an alternate cost like Shift."
+                }
+              ]
+            }
+          ],
+          "index": 9
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [70, 742, 114, 757],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [70, 742, 114, 757],
+              "spans": [
+                {
+                  "bbox": [70, 742, 114, 757],
+                  "type": "text",
+                  "content": "©Disney"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [496, 707, 542, 754],
+          "type": "footer",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [496, 707, 542, 754],
+              "spans": [
+                {
+                  "bbox": [496, 707, 542, 754],
+                  "type": "text",
+                  "content": "Ravensburg"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        }
+      ],
+      "page_size": [612, 792],
+      "page_idx": 19
+    }
+  ],
+  "_backend": "vlm",
+  "_version_name": "2.5.4"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tags": ["game-engine"],
+  "tasks": {
+    "topo": {
+      "dependsOn": []
+    },
+    "build": {
+      "dependsOn": []
+    }
+  }
+}

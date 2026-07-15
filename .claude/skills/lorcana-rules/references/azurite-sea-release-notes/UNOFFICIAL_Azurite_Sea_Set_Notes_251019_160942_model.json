@@ -1,0 +1,816 @@
+[
+  [
+    {
+      "type": "title",
+      "bbox": [0.162, 0.04, 0.817, 0.072],
+      "angle": 0,
+      "content": "Azurite Sea Unofficial Set Notes"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.128, 0.383, 0.145],
+      "angle": 0,
+      "content": "Presented by LorcanaJudges.com"
+    },
+    {
+      "type": "text",
+      "bbox": [0.659, 0.128, 0.724, 0.143],
+      "angle": 0,
+      "content": "Author:"
+    },
+    {
+      "type": "image",
+      "bbox": [0.73, 0.109, 0.917, 0.166],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.111, 0.176, 0.858, 0.243],
+      "angle": 0,
+      "content": "Disclaimer: These set notes are assembled as a volunteer effort based on common questions from the community and clarifying information from the rules team. They do not reflect any possible upcoming rule changes, and are not official in any sense of the word. They are meant as a general play aid only."
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.262, 0.306, 0.284],
+      "angle": 0,
+      "content": "General Rules"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.307, 0.782, 0.327],
+      "angle": 0,
+      "content": "Q: Can I use an activated ability more than once during my turn?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.346, 0.869, 0.385],
+      "angle": 0,
+      "content": "A: Yes, provided you can pay the cost associated with that ability. Remember, an exert cost can only be paid by a dry, ready character!"
+    },
+    {
+      "type": "image",
+      "bbox": [0.206, 0.406, 0.4, 0.615],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.403, 0.406, 0.596, 0.615],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.598, 0.406, 0.793, 0.615],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.111, 0.638, 0.669, 0.695],
+      "angle": 0,
+      "content": "Q: Can characters banished at the same time as each other have their abilities trigger from other banishments?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.716, 0.627, 0.775],
+      "angle": 0,
+      "content": "A: Yes, characters that are banished will first check to see if their abilities trigger from themselves or other characters leaving play."
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.793, 0.668, 0.854],
+      "angle": 0,
+      "content": "Example: Hades - Lord of the Dead's ability will trigger for each other of your characters in play if a Be Prepared is played by your opponent."
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.641, 0.884, 0.851],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "image",
+      "bbox": [0.115, 0.108, 0.31, 0.317],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.32, 0.109, 0.8, 0.149],
+      "angle": 0,
+      "content": "Q: Does putting damage counters on a character/location count as dealing damage?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.319, 0.167, 0.861, 0.265],
+      "angle": 0,
+      "content": "A: No, putting damage counters onto something in play is mechanically distinct from dealing damage. Putting damage counters on a character is not affected by Resist, and does not trigger abilities that rely on dealing damage."
+    },
+    {
+      "type": "text",
+      "bbox": [0.32, 0.284, 0.832, 0.343],
+      "angle": 0,
+      "content": "Example: Using Mosquito Bite to put a damage counter on an opposing character will not trigger Beast - Relentless."
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.382, 0.661, 0.422],
+      "angle": 0,
+      "content": "Q: Can an exert (symbol) cost on an item, location, or action be paid by exerting a drying character?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.44, 0.666, 0.499],
+      "angle": 0,
+      "content": "A: No. When the exert symbol is used in a cost, the character you choose to exert must be dry. Even though the ability is not on that character."
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.518, 0.655, 0.575],
+      "angle": 0,
+      "content": "Example: Scrimp's cost of exerting one of your characters can only be paid by exerting a dry character."
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.385, 0.885, 0.595],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.114, 0.089, 0.391, 0.114],
+      "angle": 0,
+      "content": "Specific Characters"
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.134, 0.656, 0.218],
+      "angle": 0,
+      "content": "Captain Amelia - Commander of the Legacy Q: Does Everything Shipshape apply when Captain Amelia is challenged, or when your other characters are challenged?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.238, 0.674, 0.336],
+      "angle": 0,
+      "content": "A: Everything Shipshape is a static ability that applies to your other characters. When another character of yours is challenged, that character gains Resist +1 for the duration of that challenge. They lose that Resist when the challenge is over."
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.124, 0.885, 0.334],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.129, 0.362, 0.323, 0.571],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.332, 0.358, 0.655, 0.38],
+      "angle": 0,
+      "content": "Dale - Mischievous Ranger"
+    },
+    {
+      "type": "text",
+      "bbox": [0.332, 0.382, 0.838, 0.422],
+      "angle": 0,
+      "content": "Q: Can I use Nuts About Pranks with fewer than 3 cards left in my deck? What happens if I do that?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.331, 0.441, 0.88, 0.598],
+      "angle": 0,
+      "content": "No. Nuts About Pranks is a triggered ability that uses the word \"to\" to join a cost with its effect. You cannot partially pay this cost (by, for example, putting the only two cards remaining in your deck into the discard). If you cannot put three cards into the discard, you cannot put any, and since you have not paid the cost you do not get to reduce a chosen character's Strength."
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.616, 0.442, 0.637],
+      "angle": 0,
+      "content": "Genie - Wonderful Trickster"
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.64, 0.676, 0.68],
+      "angle": 0,
+      "content": "Q: Does Genie's first ability, Your Reward Awaits trigger when he is played?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.7, 0.651, 0.779],
+      "angle": 0,
+      "content": "A: No. Your Reward Awaits cannot trigger when Genie is played, because at that point Genie is not in play to be able to see the trigger condition being met."
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.6, 0.885, 0.81],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "image",
+      "bbox": [0.115, 0.056, 0.31, 0.264],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.319, 0.089, 0.684, 0.109],
+      "angle": 0,
+      "content": "John Silver - Ferocious Friend"
+    },
+    {
+      "type": "text",
+      "bbox": [0.319, 0.112, 0.852, 0.171],
+      "angle": 0,
+      "content": "Q: If I choose to damage a character with Resist +1 using Chart Your Own Course so that no damage is dealt, can I still ready that character?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.318, 0.19, 0.867, 0.248],
+      "angle": 0,
+      "content": "A: No. The \"if you do\" in John Silver's second effect is only satisfied if one damage was actually dealt to the chosen character."
+    },
+    {
+      "type": "title",
+      "bbox": [0.122, 0.282, 0.32, 0.298],
+      "angle": 0,
+      "content": "IMPORTANT NOTE:"
+    },
+    {
+      "type": "text",
+      "bbox": [0.12, 0.3, 0.851, 0.386],
+      "angle": 0,
+      "content": "John Silver's interaction with Resist is a departure from a similar circumstance with the action Teeth and Ambitions. In that case, Resist reducing the damage does not prevent the second effect from taking place. That is because the first effect in T&A is a cost, which John Silver does not have."
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.419, 0.345, 0.438],
+      "angle": 0,
+      "content": "Lilo - Escape Artist"
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.441, 0.669, 0.48],
+      "angle": 0,
+      "content": "Q: Do I have to have another copy of Lilo - Escape Artist in play to be able to use No Place I'd Rather Be?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.5, 0.671, 0.596],
+      "angle": 0,
+      "content": "A: No. Lilo - Escape Artist has a special triggered ability that works from the discard pile. If you have a copy of her in your discard, she can be played during the Set Step of the Beginning Phase."
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.617, 0.641, 0.656],
+      "angle": 0,
+      "content": "Q: When I play Lilo - Escape Artist from the discard pile, do I have to pay her ink cost?"
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.43, 0.884, 0.638],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.675, 0.841, 0.714],
+      "angle": 0,
+      "content": "A: Yes. Her ability does not allow her to be played \"for free\", so her normal ink cost applies."
+    },
+    {
+      "type": "image",
+      "bbox": [0.077, 0.728, 0.273, 0.939],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.279, 0.733, 0.857, 0.79],
+      "angle": 0,
+      "content": "Q: Can I exert Lilo with Stitch - Rock Star in order to use his ability to draw a card when I play her from the discard?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.279, 0.812, 0.854, 0.871],
+      "angle": 0,
+      "content": "A: No. Lilo enters play from the discard already exerted. She cannot be exerted again in order to pay the cost of Stitch's ability."
+    }
+  ],
+  [
+    {
+      "type": "image",
+      "bbox": [0.117, 0.088, 0.313, 0.298],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.321, 0.089, 0.609, 0.111],
+      "angle": 0,
+      "content": "Mr. Big - Shrewd Tycoon"
+    },
+    {
+      "type": "text",
+      "bbox": [0.321, 0.111, 0.877, 0.151],
+      "angle": 0,
+      "content": "Q: Can Mr. Big be challenged by a 0 {S} character with Challenger +3?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.32, 0.171, 0.839, 0.25],
+      "angle": 0,
+      "content": "A: Yes. Challenging restrictions like Reputation are checked before the challenge actually begins, and Challenger only begins affecting a character's strength after that point. The two do not interact."
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.327, 0.502, 0.347],
+      "angle": 0,
+      "content": "Peter Pan - Neverland Prankster"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.349, 0.672, 0.391],
+      "angle": 0,
+      "content": "Q: If I challenge my opponent's Peter Pan with Goofy - Super Goof, will I gain lore from Super Peanut Powers?"
+    },
+    {
+      "type": "image",
+      "bbox": [0.118, 0.401, 0.315, 0.613],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.321, 0.409, 0.677, 0.53],
+      "angle": 0,
+      "content": "A: Yes. Goofy is considered to \"have challenged\" as soon as the challenge begins (4.3.6.9. in CRD 8/9/24), so Peter Pan's Can't Take a Joke is no longer in effect when Super Peanut Powers resolves."
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.316, 0.885, 0.525],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.64, 0.434, 0.663],
+      "angle": 0,
+      "content": "Pleakley - Scientific Expert"
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.663, 0.679, 0.703],
+      "angle": 0,
+      "content": "Q: If I play Pleakley with no other characters in play, do I have to put him into the inkwell?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.726, 0.67, 0.803],
+      "angle": 0,
+      "content": "A: Yes. Reporting for Duty is a mandatory ability. If there is no other valid choice when you resolve it, you must choose Pleakley himself and place him facedown in the inkwell."
+    },
+    {
+      "type": "image",
+      "bbox": [0.69, 0.629, 0.886, 0.84],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.113, 0.09, 0.404, 0.109],
+      "angle": 0,
+      "content": "Scar - Heartless Hunter"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.112, 0.677, 0.171],
+      "angle": 0,
+      "content": "Q: If I play Scar - Heartless Hunter when there are no other characters in play, do I have to damage him with Teeth and Ambitions?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.192, 0.684, 0.271],
+      "angle": 0,
+      "content": "A: Yes. Teeth and Ambitions is a mandatory ability, and Scar is a valid choice for the first part of his ability even if there are no other characters to damage with the second part."
+    },
+    {
+      "type": "image",
+      "bbox": [0.696, 0.101, 0.891, 0.31],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.309, 0.4, 0.329],
+      "angle": 0,
+      "content": "Simba - Pride Protector"
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.333, 0.882, 0.373],
+      "angle": 0,
+      "content": "Q: Does Understand the Balance ready all of my other characters, or can I pick and choose which to ready?"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.4, 0.31, 0.611],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.318, 0.392, 0.879, 0.45],
+      "angle": 0,
+      "content": "A: If you choose to use the effect, you must ready all of your other characters. You do not get to pick and choose which characters ready."
+    },
+    {
+      "type": "text",
+      "bbox": [0.319, 0.469, 0.88, 0.51],
+      "angle": 0,
+      "content": "Q: If I use another effect to ready Simba, can I still ready other characters with Understand the Balance?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.318, 0.529, 0.848, 0.628],
+      "angle": 0,
+      "content": "A: No. If Simba is not exerted when you resolve Understand the Balance, it will resolve to no effect. This is because the secondary condition \"if this character is exerted\" must be true when you trigger the ability and when you resolve the ability."
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.647, 0.378, 0.669],
+      "angle": 0,
+      "content": "Sisu - Uniting Dragon"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.67, 0.586, 0.69],
+      "angle": 0,
+      "content": "Q: How many times can I repeat Sisu's ability?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.709, 0.665, 0.807],
+      "angle": 0,
+      "content": "A: You must repeat Sisu's ability as long as you continue to reveal Dragons from the top of your deck. It is a mandatory ability, so you will continue to reveal cards until you reveal something that is not a Dragon."
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.649, 0.885, 0.859],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.113, 0.089, 0.428, 0.109],
+      "angle": 0,
+      "content": "Tiana - Restaurant Owner"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.111, 0.655, 0.152],
+      "angle": 0,
+      "content": "Q: Does Tiana's ability stock when there are multiple copies in play?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.17, 0.674, 0.268],
+      "angle": 0,
+      "content": "A: Yes, the opponent would have to choose whether or not to pay 3 \\(\\{\\mathsf{l}\\}\\) for the triggered ability from each copy of Tiana. If they chose not to do so, the -3 \\(\\{\\mathsf{S}\\}\\) would stack on the challenging character."
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.286, 0.585, 0.325],
+      "angle": 0,
+      "content": "Q: Does Tiana's -3 \\(\\{S\\}\\) stay on the challenging character?"
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.101, 0.885, 0.31],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.345, 0.846, 0.385],
+      "angle": 0,
+      "content": "A: Yes, the strength reduction on a challenging character lasts for the whole turn, until the active player's End of Turn Phase."
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.399, 0.311, 0.61],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.319, 0.403, 0.751, 0.424],
+      "angle": 0,
+      "content": "Tadashi Hamada - Gifted Robotictist"
+    },
+    {
+      "type": "text",
+      "bbox": [0.319, 0.426, 0.808, 0.465],
+      "angle": 0,
+      "content": "Q: When banished on an opponent's turn, does Tadashi always go to the inkwell?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.318, 0.484, 0.885, 0.6],
+      "angle": 0,
+      "content": "A: Yes. While putting a card from the top of the deck into the inkwell uses \"may\" and is an optional effect, the second clause of Tadashi's ability is mandatory. He is always placed in the inkwell by his ability if his trigger condition is met, even if you don't put a card from the deck in also."
+    },
+    {
+      "type": "title",
+      "bbox": [0.112, 0.621, 0.456, 0.642],
+      "angle": 0,
+      "content": "Wreck-It Ralph - Ham Hands"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.644, 0.661, 0.684],
+      "angle": 0,
+      "content": "Q: Can I banish an opponent's item or location with / Wreck Things?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.704, 0.658, 0.763],
+      "angle": 0,
+      "content": "A: Yes. The ability text does not specify \"your\" item or location, so any item or location in play can be chosen."
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.618, 0.885, 0.826],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.114, 0.089, 0.437, 0.116],
+      "angle": 0,
+      "content": "Specific Actions/Songs"
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.135, 0.353, 0.155],
+      "angle": 0,
+      "content": "Sail the Azurite Sea"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.158, 0.657, 0.197],
+      "angle": 0,
+      "content": "Q: Does the card placed into the inkwell with Sail the Azurite Sea's effect have to be an inkable card?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.218, 0.668, 0.339],
+      "angle": 0,
+      "content": "A: Yes. Like Belle - Strange But Special in The First Chapter, Sail the Azurite Sea allows you to take an additional turn action to place an inkable card into the inkwell. You must follow the normal procedure for doing so, including revealing the card to your opponent."
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.135, 0.885, 0.344],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.355, 0.631, 0.376],
+      "angle": 0,
+      "content": "Q: Can I draw a card before choosing what to ink?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.395, 0.875, 0.477],
+      "angle": 0,
+      "content": "A: Yes. In fact, you have to! Because Sail the Azurite Sea allows you to use an additional turn action to place a card into the inkwell, you must complete resolving Sail the Azurite Sea before you can choose to take that turn action at any time later in your turn."
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.495, 0.225, 0.515],
+      "angle": 0,
+      "content": "Twin Fire"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.517, 0.631, 0.556],
+      "angle": 0,
+      "content": "Q: Can I deal both instances of two damage to the same character?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.577, 0.661, 0.655],
+      "angle": 0,
+      "content": "A: No. Twin Fire's effect uses the word \"another\", which has a specifically defined meaning in Lorca's rules - it refers to a card that was not already selected by the effect."
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.491, 0.885, 0.7],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.114, 0.09, 0.31, 0.114],
+      "angle": 0,
+      "content": "Specific Items"
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.134, 0.327, 0.155],
+      "angle": 0,
+      "content": "Maleficent's Staff"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.158, 0.668, 0.199],
+      "angle": 0,
+      "content": "Q: Does Back, Fools! trigger when a character is returned to their player's hand after being banished?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.218, 0.668, 0.296],
+      "angle": 0,
+      "content": "A: No. Back, Fools! only triggers when a character is returned directly from in play to the hand. A character returned to the hand after being banished does so from the discard pile,"
+    },
+    {
+      "type": "text",
+      "bbox": [0.321, 0.297, 0.506, 0.316],
+      "angle": 0,
+      "content": "not the play zone."
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.101, 0.885, 0.31],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.306, 0.31, 0.516],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.32, 0.335, 0.447, 0.355],
+      "angle": 0,
+      "content": "Microbots"
+    },
+    {
+      "type": "text",
+      "bbox": [0.319, 0.357, 0.865, 0.398],
+      "angle": 0,
+      "content": "Q: Does Microbots count the copy that you played to trigger Inspired Tech?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.318, 0.418, 0.832, 0.476],
+      "angle": 0,
+      "content": "A: Yes. When Inspired Tech resolves, the copy of Microbots that triggered the ability is in play, and should be counted."
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.535, 0.289, 0.557],
+      "angle": 0,
+      "content": "Transport Pod"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.557, 0.676, 0.618],
+      "angle": 0,
+      "content": "Q: Can I use Transport Pod to move a character to The Queen's Castle in order to draw an extra card with Using the Mirror?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.638, 0.663, 0.738],
+      "angle": 0,
+      "content": "A: Yes. Using the Mirror triggers at the start of the turn, as does Transport Pod. By resolving Transport Pod's ability first, you can have that character present at The Queen's Castle before resolving Using the Mirror."
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.756, 0.625, 0.797],
+      "angle": 0,
+      "content": "Q: Can I use Transport Pod to move a Pirate to an empty Skull Rock in order to gain 1 lore?"
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.553, 0.885, 0.763],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.816, 0.875, 0.895],
+      "angle": 0,
+      "content": "A: No. Safe Haven has a secondary condition (\"if you have a Pirate character here\") that must be true at the start of the turn in order to trigger. By the time Transport Pod can resolve and move a Pirate there, it is too late."
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.117, 0.09, 0.37, 0.113],
+      "angle": 0,
+      "content": "Specific Locations"
+    },
+    {
+      "type": "title",
+      "bbox": [0.117, 0.134, 0.494, 0.155],
+      "angle": 0,
+      "content": "Owl Island - Secluded Entrance"
+    },
+    {
+      "type": "text",
+      "bbox": [0.116, 0.158, 0.838, 0.197],
+      "angle": 0,
+      "content": "Q: If I play Owl Island after playing an action, does Teamwork make the next action I play use less ink?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.176, 0.218, 0.593, 0.336],
+      "angle": 0,
+      "content": "A: No. Teamwork is a static ability, so it does not need to be in play to \"know\" you played your first action of the turn. If you play Owl Island after an action, you have missed out on taking advantage of the Teamwork ability."
+    },
+    {
+      "type": "image",
+      "bbox": [0.609, 0.193, 0.88, 0.343],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.117, 0.357, 0.868, 0.394],
+      "angle": 0,
+      "content": "Q: If I sing a song while Owl Island is in play, do I still get to use Teamwork on another action?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.176, 0.415, 0.866, 0.455],
+      "angle": 0,
+      "content": "A: No. Singing a song is still playing an action. Doing so will \"use up\" the discount from Teamwork even though you get no benefit from it."
+    },
+    {
+      "type": "title",
+      "bbox": [0.117, 0.493, 0.735, 0.517],
+      "angle": 0,
+      "content": "Sugar Rush Speedway - Finish Line (& Starting Line)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.116, 0.519, 0.874, 0.579],
+      "angle": 0,
+      "content": "Q: If the damage I deal to a character using Starting Line's On Your Marks! ability would banish that character, do they still move to the Finish Line? Do I still get to use Bring It Home, Kid?!"
+    },
+    {
+      "type": "text",
+      "bbox": [0.176, 0.598, 0.875, 0.74],
+      "angle": 0,
+      "content": "A: Yes. Even if a character has damage equal to its willpower, it will not be banished until the next Game State Check. In this case, that GSC will not occur until On Your Marks! is completely resolved so the character is able to move to the Finish Line and trigger Bring It Home, Kid!. Additionally, Bring It Home, Kid! does not require the character to still be at the location when it resolves, so the banishment does not prevent it from resolving."
+    },
+    {
+      "type": "image",
+      "bbox": [0.231, 0.76, 0.77, 0.91],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "text",
+      "bbox": [0.117, 0.089, 0.587, 0.17],
+      "angle": 0,
+      "content": "Treasure Mountain - Azurite Sea Island Q: Do I have to deal damage to one of my own characters or locations if my opponent has nothing I can choose?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.176, 0.192, 0.582, 0.269],
+      "angle": 0,
+      "content": "A: Yes. Secret Weapon is a mandatory ability. If there is no opposing choice to deal damage to, you must deal damage to something you have in play."
+    },
+    {
+      "type": "image",
+      "bbox": [0.609, 0.102, 0.88, 0.251],
+      "angle": 0,
+      "content": null
+    }
+  ]
+]

@@ -1,0 +1,48 @@
+import type { CharacterCard } from "@tcg/lorcana-types";
+
+export const bernardOverprepared: CharacterCard = {
+  abilities: [
+    {
+      effect: {
+        condition: {
+          expression: "you have an Ally character in play",
+          type: "if",
+        },
+        then: {
+          amount: 1,
+          target: "CONTROLLER",
+          type: "draw",
+        },
+        type: "conditional",
+      },
+      id: "wn2-1",
+      name: "GO DOWN THERE AND INVESTIGATE",
+      text: "GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.",
+      trigger: {
+        event: "play",
+        on: "SELF",
+        timing: "when",
+      },
+      type: "triggered",
+    },
+  ],
+  cardNumber: 169,
+  cardType: "character",
+  classifications: ["Storyborn", "Hero"],
+  cost: 2,
+  externalIds: {
+    ravensburger: "75a38e9bf91e99d60dc0c4257bda349a11ad414d",
+  },
+  franchise: "Rescuers",
+  fullName: "Bernard - Over-Prepared",
+  id: "wn2",
+  inkType: ["sapphire", "steel"],
+  inkable: false,
+  lore: 1,
+  name: "Bernard",
+  set: "008",
+  strength: 2,
+  text: "GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.",
+  version: "Over-Prepared",
+  willpower: 2,
+};

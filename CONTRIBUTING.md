@@ -25,3 +25,24 @@ observability, and infrastructure.
 The private repository remains canonical for production integration. Accepted
 public changes are imported into private and later exported back out during the
 weekly public sync.
+
+## Quick Reference
+
+```bash
+pnpm run ci:cyberpunk:check
+pnpm run ci:gundam:check
+pnpm run ci:lorcana:check
+pnpm run ci:one-piece:check
+pnpm run ci:agnostic:check
+pnpm run ci:public
+```
+
+## Commit Convention
+
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+<type>(<scope>): <description>
+
+Types: feat, fix, docs, style, refactor, test, chore
+```

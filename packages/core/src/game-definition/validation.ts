@@ -1,0 +1,170 @@
+import { z } from "zod";
+import type { GameDefinition } from "./game-definition";
+
+/**
+ * Game Definition Validation Result
+ *
+ * Result of validating a GameDefinition.
+ */
+export type GameDefinitionValidationResult =
+  | { success: true }
+  | { success: false; error: string; errors?: string[] };
+
+/**
+ * Zod schema for GameDefinition validation
+ *
+ * Task 10.14: Implement Zod schema for GameDefinition validation
+ *
+ * Runtime validation to ensure GameDefinition is well-formed.
+ * Checks:
+ * - Required fields are present
+ * - Types are correct (functions, numbers, strings)
+ * - Constraints are met (minPlayers <= maxPlayers, etc.)
+ */
+const GameDefinitionSchema = z.object({
+  // Name validation
+  name: z.string().min(1),
+
+  // Setup function validation
+  setup: z.any(),
+
+  // Moves validation
+  moves: z.record(
+    z.string(),
+    z.object({
+      condition: z.any().optional(),
+      metadata: z.record(z.string(), z.any()).optional(),
+      reducer: z.any(),
+    }),
+  ),
+
+  // Optional flow validation
+  flow: z
+    .object({
+      hooks: z
+        .object({
+          onBegin: z.any().optional(),
+          onEnd: z.any().optional(),
+        })
+        .optional(),
+      initial: z.string(),
+      states: z.record(z.string(), z.any()),
+    })
+    .optional(),
+
+  // Optional endIf validation
+  endIf: z.any().optional(),
+
+  // Optional playerView validation
+  playerView: z.any().optional(),
+});
+
+/**
+ * Validate GameDefinition
+ *
+ * Task 10.13, 10.14: Validate GameDefinition using Zod schema
+ *
+ * Performs comprehensive validation:
+ * 1. Schema validation (types, required fields)
+ * 3. Move definition validation (each move has reducer)
+ * 4. Function signature validation
+ *
+ * @param definition - GameDefinition to validate
+ * @returns GameDefinitionValidationResult with success flag and error details
+ */
+export function validateGameDefinition<TState, TMoves extends Record<string, any>>(
+  definition: GameDefinition<TState, TMoves>,
+): GameDefinitionValidationResult {
+  const errors: string[] = [];
+
+  try {
+    // Run Zod schema validation
+    GameDefinitionSchema.parse(definition);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      // Collect all Zod validation errors
+      for (const issue of error.issues) {
+        const path = issue.path.join(".");
+        errors.push(`${path}: ${issue.message}`);
+      }
+    } else {
+      errors.push("Unknown validation error");
+    }
+  }
+
+  // Validate that setup is a function
+  if (typeof definition.setup !== "function") {
+    errors.push("setup must be a function");
+  }
+
+  // Validate that moves exist and have reducers
+  if (!definition.moves || typeof definition.moves !== "object") {
+    errors.push("moves must be an object");
+  } else {
+    for (const [moveName, moveDef] of Object.entries(definition.moves)) {
+      if (!moveDef || typeof moveDef !== "object") {
+        errors.push(`Move "${moveName}" must be an object`);
+        continue;
+      }
+
+      if (typeof moveDef.reducer !== "function") {
+        errors.push(`Move "${moveName}" must have a reducer function`);
+      }
+
+      if (moveDef.condition && typeof moveDef.condition !== "function") {
+        errors.push(`Move "${moveName}" condition must be a function`);
+      }
+    }
+  }
+
+  // Validate optional endIf
+  if (definition.endIf && typeof definition.endIf !== "function") {
+    errors.push("endIf must be a function");
+  }
+
+  // Validate optional playerView
+  if (definition.playerView && typeof definition.playerView !== "function") {
+    errors.push("playerView must be a function");
+  }
+
+  // Validate optional flow
+  if (definition.flow) {
+    if (typeof definition.flow !== "object") {
+      errors.push("flow must be an object");
+    } else {
+      // Flow validation - supports both simplified (turn) and full (gameSegments) syntax
+      const flow = definition.flow as any;
+
+      // Check for simplified syntax (turn property)
+      const hasSimplifiedSyntax = "turn" in flow && flow.turn;
+
+      // Check for full syntax (gameSegments property)
+      const hasFullSyntax = "gameSegments" in flow && flow.gameSegments;
+
+      if (!(hasSimplifiedSyntax || hasFullSyntax)) {
+        errors.push(
+          "flow must have either 'turn' property (simplified) or 'gameSegments' property (full syntax)",
+        );
+      } else if (hasSimplifiedSyntax) {
+        // Validate simplified syntax
+        if (typeof flow.turn !== "object") {
+          errors.push("flow.turn must be an object");
+        } else if (!flow.turn.phases || typeof flow.turn.phases !== "object") {
+          errors.push("flow.turn must have phases object");
+        }
+      }
+      // Full syntax validation could be added here if needed
+    }
+  }
+
+  // Return result
+  if (errors.length > 0) {
+    return {
+      error: errors.join("; "),
+      errors,
+      success: false,
+    };
+  }
+
+  return { success: true };
+}

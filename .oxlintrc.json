@@ -1,0 +1,34 @@
+{
+  "categories": {
+    "correctness": "warn",
+    "suspicious": "warn",
+    "perf": "warn",
+    "style": "warn"
+  },
+  "plugins": ["typescript", "react", "unicorn", "jsx-a11y"],
+  "env": {
+    "jest": true,
+    "vitest": true
+  },
+  "overrides": [
+    {
+      "files": ["**/*.svelte"],
+      "rules": {
+        "prefer-const": "off",
+        "no-unused-vars": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/build/**",
+    "**/node_modules/**",
+    "**/.turbo/**",
+    "**/.next/**",
+    "**/public/**",
+    "**/.svelte-kit/**",
+    "**/storybook-static/**",
+    "**/src/lib/paraglide/**",
+    "**/.claude/**"
+  ]
+}

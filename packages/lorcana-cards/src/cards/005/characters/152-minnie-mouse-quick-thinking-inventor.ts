@@ -1,0 +1,49 @@
+import type { CharacterCard } from "@tcg/lorcana-types";
+
+export const minnieMouseQuickthinkingInventor: CharacterCard = {
+  abilities: [
+    {
+      effect: {
+        duration: "this-turn",
+        modifier: -2,
+        stat: "strength",
+        target: {
+          cardTypes: ["character"],
+          count: 1,
+          owner: "any",
+          selector: "chosen",
+          zones: ["play"],
+        },
+        type: "modify-stat",
+      },
+      id: "1h2-1",
+      name: "CAKE CATAPULT",
+      text: "CAKE CATAPULT When you play this character, chosen character gets -2 {S} this turn.",
+      trigger: {
+        event: "play",
+        on: "SELF",
+        timing: "when",
+      },
+      type: "triggered",
+    },
+  ],
+  cardNumber: 152,
+  cardType: "character",
+  classifications: ["Dreamborn", "Hero", "Inventor"],
+  cost: 1,
+  externalIds: {
+    ravensburger: "c0b4aae2229dabf0c8d5b00e3aeb6187d965ef0c",
+  },
+  fullName: "Minnie Mouse - Quick-Thinking Inventor",
+  id: "1h2",
+  inkType: ["sapphire"],
+  inkable: false,
+  lore: 1,
+  missingTests: true,
+  name: "Minnie Mouse",
+  set: "005",
+  strength: 1,
+  text: "CAKE CATAPULT When you play this character, chosen character gets -2 {S} this turn.",
+  version: "Quick-Thinking Inventor",
+  willpower: 2,
+};

@@ -1,0 +1,42 @@
+task_assignments:
+  - task_group: "Task Group 1: Setup Infrastructure"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 2: Foundation Tests"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 3: Effect Registry & Atomic Effects"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 4: Atomic Effect Tests"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 5: Composite Effect Parsers"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 6: Composite Effect Tests"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 7: Target & Condition Parsing"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 8: Target & Condition Tests"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 9: Complete Effect Coverage"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 10: Remaining Effect Tests"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 11: Wire v2 Parser"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 12: Integration Tests"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 13: Remove v1 Parser"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 14: Final Validation"
+    assigned_subagent: "testing-engineer"

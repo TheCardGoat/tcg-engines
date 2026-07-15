@@ -1,0 +1,10 @@
+---
+alwaysApply: false
+---
+
+# React
+
+React best practices and patterns for modern web applications
+
+Refer to the guidelines located in this file:
+@.agent-os/standards/code-style/react.md 

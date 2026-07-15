@@ -1,0 +1,115 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["NODE_ENV", "CI", "AGENT"],
+  "globalDependencies": [".oxlintrc.json", ".oxfmt.json", "tsconfig.json", "turbo.json"],
+  "tasks": {
+    "topo": {
+      "dependsOn": ["^topo"],
+      "outputLogs": "errors-only"
+    },
+    "check-types": {
+      "dependsOn": ["topo"],
+      "cache": true,
+      "outputLogs": "errors-only",
+      "inputs": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.svelte",
+        "tsconfig.json",
+        "tsconfig.*.json"
+      ]
+    },
+    "format": {
+      "outputs": [],
+      "outputLogs": "errors-only"
+    },
+    "lint": {
+      "outputs": [],
+      "outputLogs": "errors-only"
+    },
+    "test": {
+      "outputs": [],
+      "outputLogs": "errors-only",
+      "env": ["AGENT"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputLogs": "errors-only",
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "build/**",
+        ".svelte-kit/output/**",
+        "!.next/cache/**"
+      ],
+      "inputs": [
+        "src/**",
+        "public/**",
+        "package.json",
+        "tsconfig.json",
+        "next.config.js",
+        "next.config.mjs",
+        "postcss.config.js",
+        "postcss.config.mjs",
+        "tailwind.config.js",
+        "tailwind.config.ts",
+        "vite.config.js",
+        "vite.config.ts",
+        "babel.config.json",
+        "../../packages/typescript-config/**"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "outputLogs": "full"
+    }
+  },
+  "boundaries": {
+    "tags": {
+      "independent": {
+        "dependents": {
+          "allow": [
+            "types",
+            "foundation",
+            "game-engine",
+            "card-data",
+            "independent"
+          ]
+        }
+      },
+      "types": {
+        "dependencies": {
+          "allow": ["types", "independent"]
+        },
+        "dependents": {
+          "allow": ["foundation", "game-engine", "card-data", "types"]
+        }
+      },
+      "foundation": {
+        "dependencies": {
+          "allow": ["types", "independent"],
+          "deny": ["game-engine", "card-data"]
+        },
+        "dependents": {
+          "allow": ["game-engine", "card-data", "foundation"]
+        }
+      },
+      "game-engine": {
+        "dependencies": {
+          "allow": ["foundation", "types", "independent"],
+          "deny": ["card-data"]
+        },
+        "dependents": {
+          "allow": ["card-data", "game-engine"]
+        }
+      },
+      "card-data": {
+        "dependencies": {
+          "allow": ["types", "game-engine", "independent"],
+          "deny": ["foundation", "card-data"]
+        }
+      }
+    }
+  }
+}

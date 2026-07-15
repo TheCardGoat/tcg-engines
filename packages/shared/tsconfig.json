@@ -1,0 +1,8 @@
+{
+  "extends": "@lorcanito/typescript-config/node.json",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

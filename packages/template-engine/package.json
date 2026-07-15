@@ -1,0 +1,23 @@
+{
+  "name": "@tcg/template",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "test": "bun test",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "bun x oxlint --fix ./src",
+    "lint:fix": "bun x oxlint --fix ./src",
+    "check-types": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tcg/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/bun": "1.2.14",
+    "bun-types": "1.2.18",
+    "typescript": "5.8.3"
+  }
+}

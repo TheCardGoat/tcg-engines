@@ -1,0 +1,36 @@
+{
+  "name": "@tcg/content-mgmt",
+  "version": "1.0.50",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "bun x oxlint --fix ./src",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:migrate": "drizzle-kit migrate",
+    "test": "bun test",
+    "test:watch": "bun test --watch"
+  },
+  "dependencies": {
+    "elysia": "^1.2.25",
+    "@elysiajs/cors": "^1.2.0",
+    "@bogeychan/elysia-logger": "^0.1.10",
+    "elysia-rate-limit": "^4.1.0",
+    "drizzle-orm": "^0.44.2",
+    "postgres": "^3.4.7",
+    "jose": "^5.2.0",
+    "zod": "^4.3.5",
+    "@t3-oss/env-core": "^0.11.1"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "drizzle-kit": "^0.31.1",
+    "@lorcanito/typescript-config": "workspace:*",
+    "typescript": "^5.8.3"
+  }
+}

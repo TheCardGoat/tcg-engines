@@ -1,0 +1,34 @@
+pre-commit:
+  parallel: true
+  commands:
+    oxlint:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: bun x oxlint --fix --quiet {staged_files}
+      stage_fixed: true
+
+pre-push:
+  commands:
+    ci-check:
+      run: |
+        if [ "$AI" = "true" ]; then
+          bun run ci-check
+        fi
+
+prepare-commit-msg:
+  commands:
+    commitzen:
+      interactive: true
+      run: |
+        if [ "$AI" = "true" ]; then
+          bunx cz --hook
+        fi
+      env:
+        LEFTHOOK: 0
+
+commit-msg:
+  commands:
+    "lint commit message":
+      run: |
+        if [ "$AI" = "true" ]; then
+          bunx commitlint --edit {1}
+        fi
