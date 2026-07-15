@@ -1,16 +1,20 @@
 import type { MatchState } from "../types/match-state.ts";
 import type { PlayerId } from "../types/branded.ts";
 import type { CardInstance } from "../types/card-instance.ts";
-import type { CardType, CardZone, CardClassification } from "@tcg/cyberpunk-types";
+import type { CardType, CardZone, CardClassification, EventTrigger } from "@tcg/cyberpunk-types";
 import type { GigDie } from "../types/gig-die.ts";
 import { getStreetCred } from "../types/gig-die.ts";
 import { getEffectivePower, getEffectiveRules } from "../active-effects/index.ts";
 import { buildPlayerPrompt, type PlayerPrompt } from "./player-prompt.ts";
 import { defOf } from "../state/lookups.ts";
+import { availableEddies } from "../moves/eddie-resources.ts";
+import { getAbilityHints, type FilteredAbilityHint } from "./ability-hints.ts";
 
 export interface FilteredCardView {
   instanceId: string;
   definitionId: string;
+  /** Printed card name. `null` when the card is face-down to this viewer. */
+  cardName: string | null;
   zone: CardZone;
   faceDown: boolean;
   spent: boolean;
@@ -27,15 +31,23 @@ export interface FilteredCardView {
   hasSellTag: boolean;
   attachedGearIds: string[];
   attachedToId: string | null;
-  playedThisTurn: boolean;
+  hasLag: boolean;
   hasAttackedThisTurn: boolean;
   grantedRules: string[];
   keywords: string[];
+  /**
+   * Public timing/event hooks present on this visible card. This intentionally
+   * exposes only coarse trigger names, not effect payloads or hidden card text.
+   */
+  triggerHints: string[];
+  /** Coarse ability semantics derived only for cards visible to this player. */
+  abilityHints: FilteredAbilityHint[];
 }
 
 export interface FilteredPlayerView {
   zones: Record<string, FilteredCardView[] | number>;
   eddies: number;
+  availableEddies: number;
   gigCount: number;
   fixerCount: number;
   streetCred: number;
@@ -46,6 +58,7 @@ export interface FilteredMatchView {
   gamePhase: string;
   turnNumber: number;
   activePlayerId: string;
+  playedCardTypesThisTurn: Record<string, CardType[]>;
   attackState: {
     attackerId: string | null;
     defenderId: string | null;
@@ -64,11 +77,30 @@ function getBasePower(card: CardInstance): number {
   return defOf(card).power ?? 0;
 }
 
+function triggerHintForEvent(event: EventTrigger["event"]): string {
+  return event.event;
+}
+
+function getTriggerHints(def: ReturnType<typeof defOf>): string[] {
+  const hints = new Set<string>();
+  for (const trigger of def.timingTriggers ?? []) {
+    hints.add(trigger);
+  }
+  for (const ability of def.abilities) {
+    const trigger = ability.trigger;
+    if (!trigger) continue;
+    if (trigger.trigger === "event") hints.add(triggerHintForEvent(trigger.event));
+    else hints.add(trigger.trigger);
+  }
+  return [...hints].sort();
+}
+
 function toCardView(card: CardInstance, state: MatchState): FilteredCardView {
   const def = defOf(card);
   return {
     instanceId: card.instanceId as string,
     definitionId: card.definitionId,
+    cardName: def.name,
     zone: card.zone,
     faceDown: card.meta.faceDown,
     spent: card.meta.spent,
@@ -82,10 +114,12 @@ function toCardView(card: CardInstance, state: MatchState): FilteredCardView {
     hasSellTag: def.hasSellTag === true,
     attachedGearIds: card.meta.attachedGearIds as string[],
     attachedToId: card.meta.attachedToId as string | null,
-    playedThisTurn: card.meta.playedThisTurn,
+    hasLag: card.meta.hasLag,
     hasAttackedThisTurn: card.meta.hasAttackedThisTurn,
     grantedRules: getEffectiveRules(state, card.instanceId as string) as string[],
     keywords: def.keywords ?? [],
+    triggerHints: getTriggerHints(def),
+    abilityHints: card.meta.faceDown ? [] : getAbilityHints(def),
   };
 }
 
@@ -93,6 +127,7 @@ function toFaceDownCardView(card: CardInstance, _state: MatchState): FilteredCar
   return {
     instanceId: card.instanceId as string,
     definitionId: "",
+    cardName: null,
     zone: card.zone,
     faceDown: true,
     spent: false,
@@ -105,10 +140,12 @@ function toFaceDownCardView(card: CardInstance, _state: MatchState): FilteredCar
     hasSellTag: false,
     attachedGearIds: [],
     attachedToId: null,
-    playedThisTurn: false,
+    hasLag: false,
     hasAttackedThisTurn: false,
     grantedRules: [],
     keywords: [],
+    triggerHints: [],
+    abilityHints: [],
   };
 }
 
@@ -181,6 +218,7 @@ export function filterMatchView(state: MatchState, playerId: PlayerId): Filtered
     zones["gigArea"] = gigDice.map((die) => ({
       instanceId: die.id as string,
       definitionId: die.dieType,
+      cardName: null,
       zone: "gigArea" as CardZone,
       faceDown: false,
       spent: false,
@@ -193,15 +231,18 @@ export function filterMatchView(state: MatchState, playerId: PlayerId): Filtered
       hasSellTag: false,
       attachedGearIds: [],
       attachedToId: null,
-      playedThisTurn: false,
+      hasLag: false,
       hasAttackedThisTurn: false,
       grantedRules: [],
       keywords: [],
+      triggerHints: [],
+      abilityHints: [],
     }));
 
     zones["fixerArea"] = fixerDice.map((die) => ({
       instanceId: die.id as string,
       definitionId: die.dieType,
+      cardName: null,
       zone: "fixerArea" as CardZone,
       faceDown: false,
       spent: false,
@@ -214,15 +255,18 @@ export function filterMatchView(state: MatchState, playerId: PlayerId): Filtered
       hasSellTag: false,
       attachedGearIds: [],
       attachedToId: null,
-      playedThisTurn: false,
+      hasLag: false,
       hasAttackedThisTurn: false,
       grantedRules: [],
       keywords: [],
+      triggerHints: [],
+      abilityHints: [],
     }));
 
     playerViews[pid] = {
       zones,
       eddies: playerState.eddies,
+      availableEddies: availableEddies(state, pid as PlayerId),
       gigCount: gigDice.length,
       fixerCount: fixerDice.length,
       streetCred: getStreetCred(gigDice),
@@ -244,6 +288,12 @@ export function filterMatchView(state: MatchState, playerId: PlayerId): Filtered
     gamePhase: state.G.gamePhase,
     turnNumber: state.G.turnMetadata.turnNumber,
     activePlayerId: state.G.turnMetadata.activePlayerId as string,
+    playedCardTypesThisTurn: Object.fromEntries(
+      Object.entries(state.G.turnMetadata.playedCardTypesThisTurn).map(([pid, types]) => [
+        pid,
+        [...(types ?? [])],
+      ]),
+    ),
     attackState,
     gameEnded: state.G.gameEnded,
     winnerId: state.G.winnerId as string | null,

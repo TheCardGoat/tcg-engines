@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
+import { welcomeToNightCityRetailPanamPalmerNomadCavalry } from "@tcg/cyberpunk-cards";
 import { PLAYER_SIDE_TO_ID } from "../engine/index.js";
 import type {
   CardAttachStep,
@@ -6,6 +7,7 @@ import type {
   CardExitStep,
   CardLandStep,
   CardMoveStep,
+  CardRevealStep,
   CombatRedirectStep,
   CombatStep,
   EffectTargetStep,
@@ -20,7 +22,11 @@ import {
   isCyberpunkAnimationStepSharedSupported,
   type CyberpunkSharedAnimationContext,
 } from "./sharedEvents.js";
-import { cyberpunkImmediateSystemAudioCues } from "./CyberpunkSharedAnimationLayer.js";
+import {
+  cyberpunkImmediateSystemAudioCues,
+  stagedEffectSourceLabelsFromEntry,
+} from "./CyberpunkSharedAnimationLayer.js";
+import { getScenario } from "../engine/fixtures/scenarios/index.js";
 
 const context: CyberpunkSharedAnimationContext = {
   viewerSeatId: String(PLAYER_SIDE_TO_ID.player),
@@ -54,6 +60,112 @@ describe("cyberpunkImmediateSystemAudioCues", () => {
         String(PLAYER_SIDE_TO_ID.player),
       ),
     ).toEqual(["turn.change", "game.loss"]);
+  });
+});
+
+describe("stagedEffectSourceLabelsFromEntry", () => {
+  test("uses the current effect trigger type instead of the card fallback label", () => {
+    const sourceCardId = "dexter-deshawn" as EffectTargetStep["sourceCardId"];
+    const labels = stagedEffectSourceLabelsFromEntry(
+      cyberpunkRawEntry({
+        events: [
+          {
+            type: "effectTriggered",
+            sourceCardId,
+            effectType: "attack",
+            playerId: PLAYER_SIDE_TO_ID.player,
+          },
+        ],
+        animationScript: {
+          totalDurationMs: 380,
+          steps: [
+            {
+              id: "effect-step",
+              kind: "effectTarget",
+              startMs: 0,
+              durationMs: 380,
+              reason: "effectTargeted",
+              sourceCardId,
+              targets: [
+                {
+                  kind: "gig",
+                  dieId: "gig-1" as Extract<
+                    EffectTargetStep["targets"][number],
+                    { kind: "gig" }
+                  >["dieId"],
+                },
+              ],
+              playerId: PLAYER_SIDE_TO_ID.player,
+            },
+          ],
+        },
+      }),
+      { G: { cardIndex: {} } } as Parameters<typeof stagedEffectSourceLabelsFromEntry>[1],
+    );
+
+    expect(labels.get(sourceCardId)).toBe("ATTACK TRIGGER");
+  });
+
+  test("labels active Legend effects separately from Call a Legend reveals", () => {
+    const engine = getScenario("legendQaGearTempo").build();
+    const matchState = engine.getState();
+    const panam = engine
+      .getCardsInZone("legendArea", PLAYER_SIDE_TO_ID.player)
+      .find((card) => card.definitionId === welcomeToNightCityRetailPanamPalmerNomadCavalry.id);
+    if (!panam) {
+      throw new Error("Expected Panam Palmer in legendQaGearTempo.");
+    }
+
+    const effect: EffectTargetStep = {
+      id: "effect-step",
+      kind: "effectTarget",
+      startMs: 0,
+      durationMs: 380,
+      reason: "effectTargeted",
+      sourceCardId: panam.instanceId,
+      targets: [{ kind: "card", cardId: "gear-1" as EffectTargetStep["sourceCardId"] }],
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+
+    const labels = stagedEffectSourceLabelsFromEntry(
+      cyberpunkRawEntry({
+        animationScript: {
+          totalDurationMs: 380,
+          steps: [effect],
+        },
+      }),
+      matchState,
+    );
+
+    expect(labels.get(panam.instanceId)).toBe("Legend ability");
+    expect(
+      cyberpunkAnimationStepToAnimationPlan(effect, {
+        ...context,
+        stagedEffectSourceLabels: labels,
+      }),
+    ).toMatchObject({
+      steps: [
+        {
+          type: "spotlightEntity",
+        },
+        {
+          type: "effect",
+        },
+      ],
+    });
+
+    const reveal: LegendRevealStep = {
+      id: "reveal-step",
+      kind: "legendReveal",
+      startMs: 0,
+      durationMs: 300,
+      reason: "legendCalled",
+      cardId: panam.instanceId,
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+    const revealPlan = cyberpunkAnimationStepToAnimationPlan(reveal, context);
+    expect(revealPlan.steps[0]).toMatchObject({ label: "CALL" });
+    expect(revealPlan.steps[1]).toMatchObject({ label: "CALL" });
   });
 });
 
@@ -195,7 +307,7 @@ describe("cyberpunkAnimationStepToAnimationPlan", () => {
     });
   });
 
-  test("maps attach, reveal, land, and targeted effects to shared Motion primitives", () => {
+  test("maps attach, legend reveal, card reveal, land, and targeted effects to shared Motion primitives", () => {
     const attach: CardAttachStep = {
       id: "attach-step",
       kind: "cardAttach",
@@ -213,6 +325,17 @@ describe("cyberpunkAnimationStepToAnimationPlan", () => {
       durationMs: 300,
       reason: "legendCalled",
       cardId: "legend-1" as LegendRevealStep["cardId"],
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+    const cardReveal: CardRevealStep = {
+      id: "card-reveal-step",
+      kind: "cardReveal",
+      startMs: 5,
+      durationMs: 1600,
+      reason: "cardsRevealed",
+      cardId: "top-card-1" as CardRevealStep["cardId"],
+      fromZone: "deck",
+      toZone: "hand",
       playerId: PLAYER_SIDE_TO_ID.player,
     };
     const land: CardLandStep = {
@@ -263,7 +386,7 @@ describe("cyberpunkAnimationStepToAnimationPlan", () => {
           type: "spotlightEntity",
           entity: { kind: "entity", id: "legend-1" },
           at: { kind: "anchor", id: "resolving-program:legend-1" },
-          label: "REVEAL",
+          label: "CALL",
           sourceFace: "hidden",
           destinationFace: "public",
           audioCue: "effect.trigger",
@@ -280,19 +403,79 @@ describe("cyberpunkAnimationStepToAnimationPlan", () => {
         },
       ],
     });
-    expect(cyberpunkAnimationStepToAnimationPlan(land, context)).toMatchObject({
-      steps: [{ type: "effect", source: { id: "program-1" }, label: "PLAYED" }],
+    expect(cyberpunkAnimationStepToAnimationPlan(cardReveal, context)).toMatchObject({
+      actorId: String(PLAYER_SIDE_TO_ID.player),
+      steps: [
+        {
+          id: "card-reveal-step:to-resolution",
+          type: "moveEntity",
+          entity: { kind: "entity", id: "top-card-1" },
+          from: { kind: "zone", id: "p-deck", ownerId: String(PLAYER_SIDE_TO_ID.player) },
+          to: { kind: "anchor", id: "resolving-program:top-card-1" },
+          sourceFace: "hidden",
+          destinationFace: "public",
+          audioCue: "card.move",
+        },
+        {
+          id: "card-reveal-step:hold",
+          type: "spotlightEntity",
+          entity: { kind: "entity", id: "top-card-1" },
+          at: { kind: "anchor", id: "resolving-program:top-card-1" },
+          label: "REVEAL",
+          sourceFace: "public",
+          destinationFace: "public",
+          audioCue: "effect.trigger",
+        },
+        {
+          id: "card-reveal-step:settle",
+          type: "moveEntity",
+          entity: { kind: "entity", id: "top-card-1" },
+          from: { kind: "anchor", id: "resolving-program:top-card-1" },
+          to: { kind: "zone", id: "p-hand", ownerId: String(PLAYER_SIDE_TO_ID.player) },
+          sourceFace: "public",
+          destinationFace: "public",
+          audioCue: "card.move",
+        },
+      ],
     });
+    expect(
+      cyberpunkAnimationStepToAnimationPlan(
+        { ...cardReveal, id: "card-trash-reveal", toZone: "trash" },
+        context,
+      ),
+    ).toMatchObject({
+      steps: [
+        {},
+        {},
+        {
+          id: "card-trash-reveal:settle",
+          type: "moveEntity",
+          from: { kind: "anchor", id: "resolving-program:top-card-1" },
+          to: { kind: "zone", id: "p-trash", ownerId: String(PLAYER_SIDE_TO_ID.player) },
+          sourceFace: "public",
+          destinationFace: "public",
+          audioCue: "card.discard",
+        },
+      ],
+    });
+    expect(cyberpunkAnimationStepToAnimationPlan(land, context)).toMatchObject({
+      steps: [{ type: "effect", source: { id: "program-1" } }],
+    });
+    expect(cyberpunkAnimationStepToAnimationPlan(land, context)?.steps[0]).not.toHaveProperty(
+      "label",
+    );
     expect(cyberpunkAnimationStepToAnimationPlan(effect, context)).toMatchObject({
       steps: [
         {
           type: "effect",
           source: { kind: "entity", id: "program-1" },
           targets: [{ kind: "entity", id: "unit-1" }],
-          label: "RESOLVED",
         },
       ],
     });
+    expect(cyberpunkAnimationStepToAnimationPlan(effect, context)?.steps[0]).not.toHaveProperty(
+      "label",
+    );
   });
 
   test("stages non-program effect sources in the resolving area before targeting", () => {
@@ -320,13 +503,11 @@ describe("cyberpunkAnimationStepToAnimationPlan", () => {
           type: "spotlightEntity",
           entity: { kind: "entity", id: "gear-1" },
           at: { kind: "anchor", id: "resolving-program:gear-1" },
-          label: "TRIGGER",
         },
         {
           type: "effect",
           source: { kind: "anchor", id: "resolving-program:gear-1" },
           targets: [{ kind: "entity", id: "unit-1" }],
-          label: "RESOLVED",
         },
       ],
     });
@@ -357,13 +538,11 @@ describe("cyberpunkAnimationStepToAnimationPlan", () => {
           type: "spotlightEntity",
           entity: { kind: "entity", id: "unit-1" },
           at: { kind: "anchor", id: "resolving-program:unit-1" },
-          label: "PLAY TRIGGER",
         },
         {
           type: "effect",
           source: { kind: "anchor", id: "resolving-program:unit-1" },
           targets: [{ kind: "entity", id: "gear-1" }],
-          label: "RESOLVED",
         },
       ],
     });
@@ -390,7 +569,6 @@ describe("cyberpunkAnimationStepToAnimationPlan", () => {
           type: "resourceDelta",
           anchor: { kind: "entity", id: "gig-1" },
           delta: -2,
-          label: "GIG",
           fromValue: 10,
           toValue: 8,
         },
@@ -508,8 +686,6 @@ describe("cyberpunkAnimationStepToAnimationPlan", () => {
             type: "combat",
             reason: "resolved",
             attackKind: "direct",
-            label: "IMPACT",
-            detailLabel: "STEALS 2 GIGS",
             source: { kind: "entity", id: "kusanagi" },
             target: { kind: "anchor", id: "opp-street-cred" },
             audioCue: "combat.hit",
@@ -522,16 +698,99 @@ describe("cyberpunkAnimationStepToAnimationPlan", () => {
           {
             id: "steal-d6",
             type: "moveEntity",
-            durationMs: 900,
+            durationMs: 420,
             entity: { kind: "entity", id: "gig-d6" },
             from: { kind: "zone", id: "opp-gigArea", ownerId: String(PLAYER_SIDE_TO_ID.opponent) },
             to: { kind: "zone", id: "p-gigArea", ownerId: String(PLAYER_SIDE_TO_ID.player) },
-            label: "GIG STOLEN",
             audioCue: "resource.steal",
           },
         ],
       },
     ]);
+    expect(plans[2]?.steps[0]).not.toHaveProperty("label");
+  });
+
+  test("maps gained Gigs as plain fixer-to-Gig moves", () => {
+    const gained: GigMoveStep = {
+      id: "gain-d8",
+      kind: "gigMove",
+      startMs: 0,
+      durationMs: 420,
+      reason: "gigDieMoved",
+      dieId: "gig-d8" as GigMoveStep["dieId"],
+      from: "fixerArea",
+      to: "gigArea",
+      fromPlayerId: PLAYER_SIDE_TO_ID.player,
+      toPlayerId: PLAYER_SIDE_TO_ID.player,
+      moveKind: "gain",
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+
+    const plan = cyberpunkAnimationStepToAnimationPlan(gained, context);
+
+    expect(plan).toMatchObject({
+      steps: [
+        {
+          id: "gain-d8",
+          type: "moveEntity",
+          durationMs: 420,
+          entity: { kind: "entity", id: "gig-d8" },
+          from: { kind: "zone", id: "p-fixer", ownerId: String(PLAYER_SIDE_TO_ID.player) },
+          to: { kind: "zone", id: "p-gigArea", ownerId: String(PLAYER_SIDE_TO_ID.player) },
+          audioCue: "card.move",
+        },
+      ],
+    });
+    expect(plan?.steps[0]).not.toHaveProperty("label");
+  });
+
+  test("keeps gain-Gig scripts to the die movement only", () => {
+    const gained: GigMoveStep = {
+      id: "gain-d12",
+      kind: "gigMove",
+      startMs: 0,
+      durationMs: 420,
+      reason: "gigDieMoved",
+      dieId: "gig-d12" as GigMoveStep["dieId"],
+      from: "fixerArea",
+      to: "gigArea",
+      fromPlayerId: PLAYER_SIDE_TO_ID.player,
+      toPlayerId: PLAYER_SIDE_TO_ID.player,
+      moveKind: "gain",
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+    const phase: PhaseChangeStep = {
+      id: "start-to-main",
+      kind: "phaseChange",
+      startMs: 420,
+      durationMs: 500,
+      reason: "phaseChanged",
+      from: "start",
+      to: "main",
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+
+    const plans = cyberpunkAnimationScriptToAnimationPlans(
+      { steps: [gained, phase], totalDurationMs: 920 },
+      { ...context, idPrefix: "entry-gain" },
+    );
+
+    expect(plans).toMatchObject([
+      {
+        id: "entry-gain:gain-d12",
+        steps: [
+          {
+            id: "gain-d12",
+            type: "moveEntity",
+            entity: { kind: "entity", id: "gig-d12" },
+            from: { kind: "zone", id: "p-fixer", ownerId: String(PLAYER_SIDE_TO_ID.player) },
+            to: { kind: "zone", id: "p-gigArea", ownerId: String(PLAYER_SIDE_TO_ID.player) },
+          },
+        ],
+      },
+    ]);
+    expect(plans).toHaveLength(1);
+    expect(plans.flatMap((plan) => plan.steps).map((step) => step.type)).toEqual(["moveEntity"]);
   });
 
   test("maps blocker redirects as blocked combat cues", () => {
@@ -562,7 +821,6 @@ describe("cyberpunkAnimationStepToAnimationPlan", () => {
             durationMs: 900,
             reason: "blocked",
             attackKind: "fight",
-            label: "BLOCK",
             source: { kind: "entity", id: "corpo-security" },
             target: { kind: "entity", id: "kusanagi" },
             audioCue: "effect.trigger",
@@ -644,8 +902,9 @@ describe("cyberpunkAnimationScriptToAnimationPlans", () => {
 
     expect(plans).toHaveLength(2);
     expect(plans[0]).toMatchObject({
-      steps: [{ type: "effect", label: "DEFEATED", durationMs: 1_580 }],
+      steps: [{ type: "effect", durationMs: 1_580 }],
     });
+    expect(plans[0]?.steps[0]).not.toHaveProperty("label");
     expect(plans[1]).toMatchObject({
       steps: [
         {
@@ -688,8 +947,9 @@ describe("cyberpunkAnimationScriptToAnimationPlans", () => {
     );
 
     expect(plans[0]).toMatchObject({
-      steps: [{ type: "effect", label: "DEFEATED", targets: [{ id: "unit-1" }] }],
+      steps: [{ type: "effect", targets: [{ id: "unit-1" }] }],
     });
+    expect(plans[0]?.steps[0]).not.toHaveProperty("label");
     expect(plans[1]).toMatchObject({
       steps: [
         {
@@ -741,11 +1001,11 @@ describe("cyberpunkAnimationScriptToAnimationPlans", () => {
         {
           type: "effect",
           source: { kind: "anchor", id: "resolving-program:program-1" },
-          label: "DEFEATED",
           durationMs: 1_580,
         },
       ],
     });
+    expect(plans[0]?.steps[0]).not.toHaveProperty("label");
     expect(plans[1]).toMatchObject({
       steps: [
         {

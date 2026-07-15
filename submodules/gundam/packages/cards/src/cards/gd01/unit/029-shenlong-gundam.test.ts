@@ -1,59 +1,88 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  expectSuccess,
+  activeResources,
+  createMockPilot,
   createMockUnit,
-  getDamageCounter,
-  seedShieldsFromDeck,
+  expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd01ShenlongGundam029 } from "./029-shenlong-gundam.ts";
+import {
+  passTurnThroughPublicMoves,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 
 describe("Shenlong Gundam (GD01-029)", () => {
-  it("<Breach 4> deals 4 damage to a shield when the attacker destroys a Unit", () => {
-    const defender = createMockUnit({ ap: 1, hp: 1 });
-    const shieldSeed = createMockUnit({ ap: 1, hp: 10 });
+  it("Breach removes one Shield after Shenlong destroys an enemy Unit with battle damage", () => {
+    const defender = createMockUnit({ ap: 0, hp: 1 });
     const engine = GundamTestEngine.create(
-      { play: [gd01ShenlongGundam029] },
-      { play: [defender], deck: [shieldSeed] },
+      { play: [gd01ShenlongGundam029], shieldArea: [createMockUnit()], deck: 5 },
+      { play: [defender], shieldArea: [createMockUnit()], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
     );
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const shenlongId = p1.getCardsInZone("battleArea")[0]!;
     const defenderId = p2.getCardsInZone("battleArea")[0]!;
+    const shieldsBefore = p2.getBoardView().players[PLAYER_TWO]!.shieldCount;
 
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [defenderId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
     expectSuccess(p1.enterBattle(shenlongId, defenderId));
     expectSuccess(p2.passBlock());
     expectSuccess(p2.passBattleAction());
     expectSuccess(p1.passBattleAction());
 
-    // Shenlong (AP 4) destroys defender (HP 1) -> Breach 4 lands on the shield.
-    expect(getDamageCounter(engine, shieldId!)).toBe(4);
+    expect(p2.getCardZone(defenderId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getBoardView().players[PLAYER_TWO]!.shieldCount).toBe(shieldsBefore - 1);
   });
 
-  it("【Attack】 destroys an enemy <Blocker> with Lv.3 or lower", () => {
-    const blocker = createMockUnit({
-      ap: 1,
-      hp: 5,
+  it("can attack on its deploy turn with Chang Wufei and offers only enemy Blockers at Lv.3 or lower", () => {
+    const chang = createMockPilot({ name: "Chang Wufei", level: 1, cost: 1 });
+    const defender = createMockUnit({ level: 5, ap: 0, hp: 10 });
+    const legalBlocker = createMockUnit({
       level: 3,
+      hp: 5,
       keywordEffects: [{ keyword: "Blocker" }],
     });
-    const sturdy = createMockUnit({ ap: 1, hp: 10, level: 5 });
+    const highBlocker = createMockUnit({
+      level: 4,
+      hp: 5,
+      keywordEffects: [{ keyword: "Blocker" }],
+    });
+    const nonBlocker = createMockUnit({ level: 2, hp: 5 });
     const engine = GundamTestEngine.create(
-      { play: [gd01ShenlongGundam029] },
-      { play: [sturdy, blocker] },
+      {
+        hand: [gd01ShenlongGundam029, chang],
+        resourceArea: activeResources(5),
+        shieldArea: [createMockUnit()],
+        deck: 5,
+      },
+      {
+        play: [defender, legalBlocker, highBlocker, nonBlocker],
+        deck: 5,
+      },
+      { initialActivePlayer: PLAYER_TWO },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const shenlongId = p1.getCardsInZone("battleArea")[0]!;
-    const [sturdyId, blockerId] = p2.getCardsInZone("battleArea");
+    const [defenderId, legalBlockerId] = p2.getCardsInZone("battleArea");
 
-    engine.resolveCombat({ attackerId: shenlongId, target: sturdyId! });
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [defenderId!]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+    expectSuccess(p1.deployUnit(gd01ShenlongGundam029));
+    expectSuccess(p1.assignPilot(chang, gd01ShenlongGundam029));
+    expectSuccess(p1.enterBattle(gd01ShenlongGundam029, defenderId!));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [legalBlockerId],
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [legalBlockerId!] }));
 
-    // The Blocker should be destroyed (moved to trash).
-    const blockerZone = engine.getState().ctx.zones.private.cardIndex[blockerId!]?.zoneKey;
-    expect(blockerZone).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getCardZone(legalBlockerId!)).toBe(`trash:${PLAYER_TWO}`);
   });
 });

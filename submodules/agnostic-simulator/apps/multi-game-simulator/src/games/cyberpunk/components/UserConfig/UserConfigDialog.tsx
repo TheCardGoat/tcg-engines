@@ -7,6 +7,7 @@ import {
   type DiceDisplayMode,
   type DiceImageColor,
   type DicierStyle,
+  type FieldCardSize,
 } from "../../engine";
 import { useSimulatorSettings } from "../../../../simulator/settings";
 import classes from "./UserConfigDialog.module.css";
@@ -46,6 +47,16 @@ const ANIMATION_PACING: ReadonlyArray<{ value: AnimationPacing; label: string; d
   { value: "fast", label: "Fast", desc: "Short result pause for faster repeated plays." },
   { value: "standard", label: "Standard", desc: "Balanced result pause before cleanup." },
   { value: "cinematic", label: "Cinematic", desc: "Longer result pause for maximum clarity." },
+];
+
+const FIELD_CARD_SIZES: ReadonlyArray<{ value: FieldCardSize; label: string; desc: string }> = [
+  { value: "compact", label: "Compact", desc: "Smaller field cards for more board context." },
+  {
+    value: "standard",
+    label: "Standard",
+    desc: "Balanced size. Fits three field cards on phones.",
+  },
+  { value: "large", label: "Large", desc: "Larger field cards when readability matters most." },
 ];
 
 // ── dialog ──────────────────────────────────────────────────────────────────
@@ -147,6 +158,29 @@ function UserConfigDialogContent({ onClose }: { onClose: () => void }) {
               onChange={(e) => setSoundVolume(e.currentTarget.valueAsNumber)}
             />
             <span className={classes.sliderValue}>{soundVolume}%</span>
+          </div>
+        </fieldset>
+
+        <fieldset className={classes.fieldset}>
+          <legend className={classes.legend}>Field Card Size</legend>
+          <div className={classes.segmentedGroup}>
+            {FIELD_CARD_SIZES.map(({ value, label, desc }) => (
+              <label
+                key={value}
+                className={`${classes.segmentedOption} ${config.fieldCardSize === value ? classes.segmentedOptionActive : ""}`}
+                title={desc}
+              >
+                <input
+                  type="radio"
+                  className={classes.segmentedInput}
+                  name="fieldCardSize"
+                  value={value}
+                  checked={config.fieldCardSize === value}
+                  onChange={() => setConfig({ fieldCardSize: value })}
+                />
+                <span>{label}</span>
+              </label>
+            ))}
           </div>
         </fieldset>
 

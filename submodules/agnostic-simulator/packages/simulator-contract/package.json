@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@tcg/typescript-config": "link:../typescript-config",
-    "@types/node": "catalog:"
+    "@types/node": "catalog:",
+    "@typescript/native": "catalog:"
   }
 }

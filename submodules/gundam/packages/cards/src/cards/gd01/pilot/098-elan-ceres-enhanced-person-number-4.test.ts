@@ -3,67 +3,129 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  asPlayerId,
-  seedShieldsFromDeck,
-  createMockUnit,
-  expectSuccess,
-  getDamageCounter,
   activeResources,
+  createMockUnit,
+  expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
+import { gd01ZeonRemnantForces115 } from "../command/115-zeon-remnant-forces.ts";
 import { gd01ElanCeresEnhancedPersonNumber4098 } from "./098-elan-ceres-enhanced-person-number-4.ts";
 
+function passToPlayerTwoMain(
+  p1: ReturnType<GundamTestEngine["asPlayer"]>,
+  p2: ReturnType<GundamTestEngine["asPlayer"]>,
+) {
+  expectSuccess(p1.passPhase());
+  expectSuccess(p2.passActionStep());
+  expectSuccess(p1.passActionStep());
+}
+
 describe("Elan Ceres (Enhanced Person Number 4) (GD01-098)", () => {
-  it("【Burst】 Add this card to your hand", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd01ElanCeresEnhancedPersonNumber4098] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
-    engine
-      .getRuntime()
-      .registerCardInstance(
-        shieldId,
-        gd01ElanCeresEnhancedPersonNumber4098.cardNumber,
-        asPlayerId(PLAYER_TWO),
-      );
+  it("【Burst】 adds the revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd01ElanCeresEnhancedPersonNumber4098] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({ kind: "optional", directiveIndex: -1 });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    const zone = engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey;
-    expect(zone).toBe(`hand:${PLAYER_TWO}`);
+    expect(p2.getCardZone(gd01ElanCeresEnhancedPersonNumber4098)).toBe(`hand:${PLAYER_TWO}`);
   });
 
-  it("【Activate·Action】【Once per Turn】this Unit recovers 1 HP when an enemy unit is in play", () => {
-    // Place Elan Ceres as a pilot on a friendly unit. The unit starts damaged.
-    // An enemy unit with low AP is on the board to satisfy the condition gate.
-    const friendlyUnit = createMockUnit({ ap: 3, hp: 5, level: 4, cost: 1 });
-    const enemyUnit = createMockUnit({ ap: 1, hp: 3 });
+  it("【Activate･Action】 recovers 1 HP when an enemy Unit has 1 or less AP", () => {
+    const host = createMockUnit({ ap: 3, hp: 6 });
+    const lowApEnemy = createMockUnit({ ap: 1, hp: 5 });
     const engine = GundamTestEngine.create(
       {
         hand: [gd01ElanCeresEnhancedPersonNumber4098],
-        play: [friendlyUnit],
+        play: [host],
         resourceArea: activeResources(4),
         deck: 5,
       },
-      { play: [enemyUnit] },
+      {
+        hand: [gd01ZeonRemnantForces115, gd01ZeonRemnantForces115],
+        play: [lowApEnemy],
+        resourceArea: activeResources(4),
+        deck: 5,
+      },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const [firstDamageCommandId, secondDamageCommandId] = p2.getHand();
 
-    // Assign pilot to unit
-    expectSuccess(p1.assignPilot(gd01ElanCeresEnhancedPersonNumber4098, friendlyUnit));
+    expectSuccess(p1.assignPilot(gd01ElanCeresEnhancedPersonNumber4098, hostId));
+    const pilotId = p1.getPilotId(hostId)!;
+    passToPlayerTwoMain(p1, p2);
+    expectSuccess(p2.playCommand(firstDamageCommandId!));
+    const damageChoice = p2.getBoardView().pendingChoice;
+    if (damageChoice?.kind !== "targetSelection") {
+      throw new Error("Expected Zeon Remnant Forces to ask which enemy Unit receives damage");
+    }
+    expect(damageChoice.legalTargetIds).toEqual([hostId]);
+    expectSuccess(p2.resolveEffect({ targets: [hostId] }));
+    expect(p1.getDamage(hostId)).toBe(1);
+    expectSuccess(p2.passPhase());
+    expectSuccess(p1.activateAbility(pilotId, 0));
 
-    // Damage the paired unit so recovery is observable
-    const unitId = p1.getCardsInZone("battleArea")[0]!;
-    engine.getG().damage[unitId] = 2;
-    expect(getDamageCounter(engine, unitId)).toBe(2);
+    expect(p1.getDamage(hostId)).toBe(0);
 
-    // Set phase for action activation
-    engine.setPhase("end-phase");
-    engine.setStep("action-step");
+    expectSuccess(p2.playCommand(secondDamageCommandId!));
+    const secondDamageChoice = p2.getBoardView().pendingChoice;
+    if (secondDamageChoice?.kind !== "targetSelection") {
+      throw new Error("Expected the second damage Command to ask which enemy Unit receives damage");
+    }
+    expect(secondDamageChoice.legalTargetIds).toEqual([hostId]);
+    expectSuccess(p2.resolveEffect({ targets: [hostId] }));
+    expect(p1.getDamage(hostId)).toBe(1);
 
-    // Activate the pilot's ability (effect index 0 = the only activated effect
-    // in getActivatedEffects, which filters out the burst/triggered effect)
-    expectSuccess(p1.activateAbility(gd01ElanCeresEnhancedPersonNumber4098, 0, {}));
+    expectFailure(p1.activateAbility(pilotId, 0), "ABILITY_LIMIT_REACHED");
+    expect(p1.getDamage(hostId)).toBe(1);
+  });
 
-    // The paired unit should have recovered 1 HP (damage reduced by 1)
-    expect(getDamageCounter(engine, unitId)).toBe(1);
+  it("cannot activate when every enemy Unit has more than 1 AP", () => {
+    const host = createMockUnit({ ap: 3, hp: 6 });
+    const enemy = createMockUnit({ ap: 2, hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd01ElanCeresEnhancedPersonNumber4098],
+        play: [host],
+        resourceArea: activeResources(4),
+        deck: 5,
+      },
+      {
+        hand: [gd01ZeonRemnantForces115],
+        play: [enemy],
+        resourceArea: activeResources(4),
+        deck: 5,
+      },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(gd01ElanCeresEnhancedPersonNumber4098, hostId));
+    const pilotId = p1.getPilotId(hostId)!;
+    passToPlayerTwoMain(p1, p2);
+    expectSuccess(p2.playCommand(gd01ZeonRemnantForces115));
+    const damageChoice = p2.getBoardView().pendingChoice;
+    if (damageChoice?.kind !== "targetSelection") {
+      throw new Error("Expected Zeon Remnant Forces to ask which enemy Unit receives damage");
+    }
+    expect(damageChoice.legalTargetIds).toEqual([hostId]);
+    expectSuccess(p2.resolveEffect({ targets: [hostId] }));
+    expectSuccess(p2.passPhase());
+
+    expectFailure(p1.activateAbility(pilotId, 0), "CONDITIONS_NOT_MET");
+    expect(p1.getDamage(hostId)).toBe(1);
   });
 });

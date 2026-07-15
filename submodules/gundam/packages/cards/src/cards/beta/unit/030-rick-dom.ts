@@ -4,6 +4,7 @@ export const betaRickDom030: UnitCard = {
   cardNumber: "GD01-030",
   name: "Rick Dom",
   type: "unit",
+  battlefieldZones: ["space"],
   color: "green",
   traits: ["zeon"],
   id: "GD01-030_p1",

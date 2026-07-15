@@ -74,12 +74,20 @@ export function interactionSubmissionToEngineAction(
         cardIds: requireStringArray(submission, "cardIds"),
         as,
       };
-    case "resolveSearchDeck":
+    case "resolveScry":
       return {
-        type: "resolveSearchDeck",
-        selectedCardIds: requireStringArray(submission, "selectedCardIds"),
+        type: "resolveScry",
+        destinations: requireScryDestinations(submission),
         as,
       };
+    case "resolveRevealDestination":
+      return {
+        type: "resolveRevealDestination",
+        destination: requireRevealDestination(submission),
+        as,
+      };
+    case "resolveCardTypeChoice":
+      return { type: "resolveCardTypeChoice", cardType: requireCardType(submission), as };
     case "passPhase":
     case "mulligan":
     case "keepHand":
@@ -110,6 +118,24 @@ function requireString(submission: InteractionSubmission, key: string): string {
   return value;
 }
 
+function requireRevealDestination(submission: InteractionSubmission): "hand" | "trash" {
+  const value = requireString(submission, "destination");
+  if (value !== "hand" && value !== "trash") {
+    throw new Error("Expected reveal destination to be 'hand' or 'trash'");
+  }
+  return value;
+}
+
+function requireCardType(
+  submission: InteractionSubmission,
+): "legend" | "unit" | "gear" | "program" {
+  const value = requireString(submission, "cardType");
+  if (value !== "legend" && value !== "unit" && value !== "gear" && value !== "program") {
+    throw new Error("Expected card type to be 'legend', 'unit', 'gear', or 'program'");
+  }
+  return value;
+}
+
 function optionalString(submission: InteractionSubmission, key: string): string | undefined {
   const value = submission.values[key];
   return typeof value === "string" ? value : undefined;
@@ -134,4 +160,34 @@ function requireStringArray(submission: InteractionSubmission, key: string): str
     throw new Error(`Expected string-array interaction value '${key}'`);
   }
   return value;
+}
+
+function requireScryDestinations(
+  submission: InteractionSubmission,
+): Array<{ zone: string; cardIds: string[] }> {
+  const value = submission.values.destinations;
+  if (Array.isArray(value)) {
+    return value.map((entry, index) => {
+      if (!entry || typeof entry !== "object") {
+        throw new Error(`Expected object interaction value 'destinations[${index}]'`);
+      }
+      const destination = entry as { zone?: unknown; cardIds?: unknown };
+      if (typeof destination.zone !== "string") {
+        throw new Error(`Expected string interaction value 'destinations[${index}].zone'`);
+      }
+      if (
+        !Array.isArray(destination.cardIds) ||
+        !destination.cardIds.every((cardId) => typeof cardId === "string")
+      ) {
+        throw new Error(`Expected string-array interaction value 'destinations[${index}].cardIds'`);
+      }
+      return { zone: destination.zone, cardIds: destination.cardIds };
+    });
+  }
+  return [
+    {
+      zone: optionalString(submission, "destinationZone") ?? "hand",
+      cardIds: requireStringArray(submission, "selectedCardIds"),
+    },
+  ];
 }

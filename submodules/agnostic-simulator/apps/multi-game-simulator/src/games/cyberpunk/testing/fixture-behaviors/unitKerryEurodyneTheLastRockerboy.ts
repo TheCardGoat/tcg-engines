@@ -7,7 +7,7 @@ export const unitKerryEurodyneTheLastRockerboyBehavior: CyberpunkFixtureBehavior
   scenarioId: "unitKerryEurodyneTheLastRockerboy",
   label: "Kerry Eurodyne - max-value gig ability draws two",
   references: [
-    "packages/engine/src/cards/spoiler/units/kerry-eurodyne-the-last-rockerboy.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/kerry-eurodyne-the-last-rockerboy.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

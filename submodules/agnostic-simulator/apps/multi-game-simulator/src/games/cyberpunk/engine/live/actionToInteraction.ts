@@ -52,8 +52,18 @@ function valuesForAction(
       return action.pass ? { pass: true } : { targetIds: action.targetIds ?? [] };
     case "resolveDiscardFromHand":
       return action.pass ? { pass: true } : { cardIds: action.cardIds ?? [] };
-    case "resolveSearchDeck":
-      return { selectedCardIds: action.selectedCardIds };
+    case "resolveScry": {
+      const destination =
+        action.destinations.find((entry) => entry.cardIds.length > 0) ?? action.destinations[0];
+      return {
+        destinationZone: destination?.zone ?? "hand",
+        selectedCardIds: destination?.cardIds ?? [],
+      };
+    }
+    case "resolveRevealDestination":
+      return { destination: action.destination };
+    case "resolveCardTypeChoice":
+      return { cardType: action.cardType };
     case "passPhase":
     case "mulligan":
     case "keepHand":

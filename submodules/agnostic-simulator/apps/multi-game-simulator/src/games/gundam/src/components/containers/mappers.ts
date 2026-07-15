@@ -10,6 +10,15 @@ import type {
 } from "../ui/types.ts";
 
 const CARD_COLORS: ReadonlySet<CardColor> = new Set(["blue", "green", "red", "white", "purple"]);
+const KEYWORD_EFFECTS: ReadonlySet<KeywordEffectEntry["keyword"]> = new Set([
+  "Repair",
+  "Breach",
+  "Support",
+  "Blocker",
+  "FirstStrike",
+  "HighManeuver",
+  "Suppression",
+]);
 
 /**
  * Narrow an arbitrary string to a `CardColor`, returning `undefined` for
@@ -93,10 +102,16 @@ export function toGameCardData(view: BoardProjection, card: FilteredCardView): G
   });
 
   const grantedKeywords = (meta as { grantedKeywords?: string[] } | null)?.grantedKeywords;
+  const effectiveKeywordEffects = effectiveKeywordEffectsFromMeta(meta);
 
   const activeEffects = extractActiveEffects(view, g, card.instanceId);
   const deployedThisTurn =
     (meta as { deployedThisTurn?: boolean } | null)?.deployedThisTurn === true;
+  const imageUrl = cardImageUrlOf(def);
+  // Synthetic tokens have no real printing. Suppress the ordinary
+  // set/card-number CDN fallback so the simulator renders its usable card
+  // fallback instead of requesting a guaranteed-nonexistent token URL.
+  const tokenWithoutPrintedArt = isUnprintedTokenMeta(meta);
 
   const restrictions = collectRestrictions(g, card.instanceId);
   const linkCondition = (def as { linkCondition?: string }).linkCondition;
@@ -129,12 +144,14 @@ export function toGameCardData(view: BoardProjection, card: FilteredCardView): G
     baseHp: defHp,
     damage,
     effect: def.effect,
-    keywords: (def.keywordEffects ?? []) as readonly KeywordEffectEntry[],
+    keywords:
+      effectiveKeywordEffects ?? ((def.keywordEffects ?? []) as readonly KeywordEffectEntry[]),
     grantedKeywords,
     traits: def.traits ?? [],
-    set: setOf(def),
+    battlefieldZones: def.type === "unit" || def.type === "base" ? def.battlefieldZones : undefined,
+    set: tokenWithoutPrintedArt ? undefined : setOf(def),
     cardNumber: def.cardNumber,
-    img: cardImageUrlOf(def),
+    img: tokenWithoutPrintedArt ? undefined : imageUrl,
     linkRequirement: linkCondition,
     rarity: def.rarity,
     exerted: exhausted,
@@ -146,6 +163,52 @@ export function toGameCardData(view: BoardProjection, card: FilteredCardView): G
     isLinkUnit,
     zoneId: card.zoneId,
   };
+}
+
+function effectiveKeywordEffectsFromMeta(meta: unknown): readonly KeywordEffectEntry[] | undefined {
+  if (typeof meta !== "object" || meta === null || !("effectiveKeywordEffects" in meta)) {
+    return undefined;
+  }
+  const value = meta.effectiveKeywordEffects;
+  if (!Array.isArray(value)) return undefined;
+
+  const entries: KeywordEffectEntry[] = [];
+  for (const candidate of value) {
+    if (typeof candidate !== "object" || candidate === null || !("keyword" in candidate)) {
+      return undefined;
+    }
+    if (
+      typeof candidate.keyword !== "string" ||
+      !KEYWORD_EFFECTS.has(candidate.keyword as KeywordEffectEntry["keyword"])
+    ) {
+      return undefined;
+    }
+    if (
+      "value" in candidate &&
+      candidate.value !== undefined &&
+      (typeof candidate.value !== "number" || !Number.isFinite(candidate.value))
+    ) {
+      return undefined;
+    }
+    entries.push({
+      keyword: candidate.keyword as KeywordEffectEntry["keyword"],
+      ...("value" in candidate && candidate.value !== undefined
+        ? { value: candidate.value as number }
+        : {}),
+    });
+  }
+  return entries;
+}
+
+function isUnprintedTokenMeta(value: unknown): boolean {
+  if (typeof value !== "object" || value === null || !("isToken" in value)) return false;
+  if (value.isToken !== true || !("tokenSpec" in value)) return false;
+  const tokenSpec = value.tokenSpec;
+  return (
+    typeof tokenSpec === "object" &&
+    tokenSpec !== null &&
+    (!("printedCardNumber" in tokenSpec) || typeof tokenSpec.printedCardNumber !== "string")
+  );
 }
 
 function computeEffectiveStatsForCard({
@@ -268,7 +331,7 @@ function extractActiveEffects(
 
 function setOf(def: Card): string | undefined {
   const selectedPrinting = selectedPrintingOf(def);
-  const selectedSet = selectedPrinting?.set.code ?? def.set?.code;
+  const selectedSet = selectedPrinting?.set?.code ?? def.set?.code;
   if (selectedSet) return selectedSet.toLowerCase();
 
   const prefix = def.cardNumber.split("-")[0];
@@ -290,7 +353,7 @@ function selectedPrintingOf(def: Card) {
     const selected = def.printings?.find((printing) => printingIdOf(printing) === selectedId);
     if (selected) return selected;
   }
-  return undefined;
+  return def.printings?.[0];
 }
 
 function printingIdOf(printing: unknown): string | undefined {

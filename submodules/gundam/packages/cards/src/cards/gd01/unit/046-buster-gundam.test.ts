@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
@@ -6,77 +6,97 @@ import {
   createMockPilot,
   createMockUnit,
   expectSuccess,
-  findStatModifier,
 } from "@tcg/gundam-engine";
 import { gd01BusterGundam046 } from "./046-buster-gundam.ts";
 
 describe("Buster Gundam (GD01-046)", () => {
-  it("uses Support 3 to buff another friendly Unit", () => {
-    const ally = createMockUnit({ traits: ["zaft"], ap: 2, hp: 4 });
+  it("rests to give another friendly Unit AP+3 with Support", () => {
+    const ally = createMockUnit({ ap: 2, hp: 5 });
     const engine = GundamTestEngine.create({ play: [gd01BusterGundam046, ally] });
     const p1 = engine.asPlayer(PLAYER_ONE);
     const [busterId, allyId] = p1.getCardsInZone("battleArea");
 
     expectSuccess(p1.useSupport(busterId!, allyId!));
 
-    expect(findStatModifier(engine, allyId!, "ap")?.modifier).toBe(3);
+    expect(p1.isExhausted(busterId!)).toBe(true);
+    expect(p1.getVisibleCard(allyId!)?.effectiveAp).toBe(5);
   });
 
-  describe("【During Pair･(Coordinator) Pilot】【Once per Turn】When you use this Unit's <Support> to increase a (ZAFT) Unit's AP, set this Unit as active.", () => {
-    it("readies Buster after its Support increases a friendly ZAFT Unit's AP while paired with a Coordinator Pilot", () => {
-      const coordinator = createMockPilot({ traits: ["coordinator"], level: 1, cost: 1 });
-      const zaftAlly = createMockUnit({ traits: ["zaft"], ap: 2, hp: 4 });
-      const engine = GundamTestEngine.create({
-        hand: [coordinator],
-        play: [gd01BusterGundam046, zaftAlly],
-        resourceArea: activeResources(1),
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [busterId, allyId] = p1.getCardsInZone("battleArea");
-
-      expectSuccess(p1.assignPilot(coordinator, busterId!));
-      expectSuccess(p1.useSupport(busterId!, allyId!));
-
-      expect(findStatModifier(engine, allyId!, "ap")?.modifier).toBe(3);
-      expect(engine.getG().exhausted[busterId!] ?? false).toBe(false);
+  it("sets itself active after its Support increases a ZAFT Unit while paired with a Coordinator", () => {
+    const dearka = createMockPilot({
+      name: "Dearka Elthman",
+      traits: ["coordinator"],
+      level: 1,
+      cost: 1,
     });
-
-    it("does not ready Buster when Support increases a non-ZAFT Unit's AP", () => {
-      const coordinator = createMockPilot({ traits: ["coordinator"], level: 1, cost: 1 });
-      const nonZaftAlly = createMockUnit({ traits: ["earth federation"], ap: 2, hp: 4 });
-      const engine = GundamTestEngine.create({
-        hand: [coordinator],
-        play: [gd01BusterGundam046, nonZaftAlly],
-        resourceArea: activeResources(1),
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [busterId, allyId] = p1.getCardsInZone("battleArea");
-
-      expectSuccess(p1.assignPilot(coordinator, busterId!));
-      expectSuccess(p1.useSupport(busterId!, allyId!));
-
-      expect(engine.getG().exhausted[busterId!]).toBe(true);
+    const zaftAlly = createMockUnit({ traits: ["zaft"], ap: 2, hp: 5 });
+    const engine = GundamTestEngine.create({
+      hand: [dearka],
+      play: [gd01BusterGundam046, zaftAlly],
+      resourceArea: activeResources(1),
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [busterId, allyId] = p1.getCardsInZone("battleArea");
 
-    it("only readies Buster once per turn", () => {
-      const coordinator = createMockPilot({ traits: ["coordinator"], level: 1, cost: 1 });
-      const zaftAlly = createMockUnit({ traits: ["zaft"], ap: 2, hp: 4 });
-      const secondZaftAlly = createMockUnit({ traits: ["zaft"], ap: 1, hp: 3 });
-      const engine = GundamTestEngine.create({
-        hand: [coordinator],
-        play: [gd01BusterGundam046, zaftAlly, secondZaftAlly],
-        resourceArea: activeResources(1),
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [busterId, allyId, secondAllyId] = p1.getCardsInZone("battleArea");
+    expectSuccess(p1.assignPilot(dearka, busterId!));
+    expectSuccess(p1.useSupport(busterId!, allyId!));
 
-      expectSuccess(p1.assignPilot(coordinator, busterId!));
-      expectSuccess(p1.useSupport(busterId!, allyId!));
-      expect(engine.getG().exhausted[busterId!] ?? false).toBe(false);
+    expect(p1.getVisibleCard(allyId!)?.effectiveAp).toBe(5);
+    expect(p1.isExhausted(busterId!)).toBe(false);
+  });
 
-      expectSuccess(p1.useSupport(busterId!, secondAllyId!));
-
-      expect(engine.getG().exhausted[busterId!]).toBe(true);
+  it("stays rested when the supported Unit is not ZAFT", () => {
+    const coordinator = createMockPilot({ traits: ["coordinator"], level: 1, cost: 1 });
+    const academyAlly = createMockUnit({ traits: ["academy"], ap: 2, hp: 5 });
+    const engine = GundamTestEngine.create({
+      hand: [coordinator],
+      play: [gd01BusterGundam046, academyAlly],
+      resourceArea: activeResources(1),
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [busterId, allyId] = p1.getCardsInZone("battleArea");
+
+    expectSuccess(p1.assignPilot(coordinator, busterId!));
+    expectSuccess(p1.useSupport(busterId!, allyId!));
+
+    expect(p1.getVisibleCard(allyId!)?.effectiveAp).toBe(5);
+    expect(p1.isExhausted(busterId!)).toBe(true);
+  });
+
+  it("stays rested when its paired Pilot is not a Coordinator", () => {
+    const unrelatedPilot = createMockPilot({ traits: ["newtype"], level: 1, cost: 1 });
+    const zaftAlly = createMockUnit({ traits: ["zaft"], ap: 2, hp: 5 });
+    const engine = GundamTestEngine.create({
+      hand: [unrelatedPilot],
+      play: [gd01BusterGundam046, zaftAlly],
+      resourceArea: activeResources(1),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [busterId, allyId] = p1.getCardsInZone("battleArea");
+
+    expectSuccess(p1.assignPilot(unrelatedPilot, busterId!));
+    expectSuccess(p1.useSupport(busterId!, allyId!));
+
+    expect(p1.isExhausted(busterId!)).toBe(true);
+  });
+
+  it("sets itself active only once per turn", () => {
+    const coordinator = createMockPilot({ traits: ["coordinator"], level: 1, cost: 1 });
+    const firstZaft = createMockUnit({ traits: ["zaft"], ap: 2, hp: 5 });
+    const secondZaft = createMockUnit({ traits: ["zaft"], ap: 1, hp: 5 });
+    const engine = GundamTestEngine.create({
+      hand: [coordinator],
+      play: [gd01BusterGundam046, firstZaft, secondZaft],
+      resourceArea: activeResources(1),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [busterId, firstZaftId, secondZaftId] = p1.getCardsInZone("battleArea");
+
+    expectSuccess(p1.assignPilot(coordinator, busterId!));
+    expectSuccess(p1.useSupport(busterId!, firstZaftId!));
+    expect(p1.isExhausted(busterId!)).toBe(false);
+    expectSuccess(p1.useSupport(busterId!, secondZaftId!));
+
+    expect(p1.isExhausted(busterId!)).toBe(true);
   });
 });

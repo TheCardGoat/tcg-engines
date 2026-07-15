@@ -1,5 +1,6 @@
 import { test } from "@playwright/test";
 import {
+  embracingPowerRetailStarterDeckMinotaur,
   welcomeToNightCityRetailFloorIt,
   welcomeToNightCityRetailMoxInciters,
 } from "@tcg/cyberpunk-cards";
@@ -47,7 +48,7 @@ test("openingMain first player sells Floor It from hand for one eddie", async ({
   );
 });
 
-test("openingMain first player sells a card, plays Ruthless Lowlife, then passes the turn", async ({
+test("openingMain first player sells a card, plays Mox Inciters, then passes the turn", async ({
   page,
 }) => {
   await page.goto("/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off");
@@ -74,7 +75,16 @@ test("openingMain first player sells a card, plays Ruthless Lowlife, then passes
     CYBERPUNK_P1,
     welcomeToNightCityRetailMoxInciters.id,
   );
-  await pom.expectEddies(CYBERPUNK_P1, 4);
+  await pom.expectEddies(CYBERPUNK_P1, 3);
+
+  await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+  const minotaur = await pom.getCardInZoneByDefinitionId(
+    "field",
+    CYBERPUNK_P2,
+    embracingPowerRetailStarterDeckMinotaur.id,
+  );
+  await pom.resolveEffectTarget([minotaur.instanceId], CYBERPUNK_P1);
+  await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
 
   await pom.passPhase(CYBERPUNK_P1);
 

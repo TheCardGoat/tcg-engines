@@ -23,17 +23,21 @@ import type { PlayerId } from "../../types/branded.ts";
 import type { MatchState } from "../../types/match-state.ts";
 import type { FilteredMatchView, ViewRoleContext } from "../../types/projection.ts";
 import type { ZoneRef } from "../../types/zone-types.ts";
+import type { MoveStepOption } from "../../types/move-types.ts";
 import type { Card } from "@tcg/gundam-types";
-import type { GundamG, GundamCardMeta } from "../types.ts";
+import type { GundamG, GundamCardMeta, GundamBoardView, GundamRuntimeCard } from "../types.ts";
 import { createMockUnit, createMockResource } from "./card-mocks.ts";
 import { getActivatedEffects, isSupportActivatedEffect } from "../rules/derived-state.ts";
 import { enqueueOwnCardTriggers } from "../effects/pending-effects.ts";
+import { listLegalAttackTargets } from "../moves/core/enter-battle.ts";
 
 import { MatchRuntime } from "../../runtime/match-runtime.ts";
 import { createStaticResources } from "../../runtime/static-resources.ts";
 import type { Player } from "../../runtime/static-resources.ts";
 import { serializeState } from "../../runtime/match-runtime.serialization.ts";
+import { getMoveProcedure } from "../../runtime/match-runtime.procedure.ts";
 import { createPlayerId, asPlayerId } from "../../types/branded.ts";
+import type { GundamMoveName } from "../moves/move-name.ts";
 
 export const PLAYER_ONE = "player_one" as const;
 export const PLAYER_TWO = "player_two" as const;
@@ -47,6 +51,8 @@ export interface TestCardEntry {
   card: Card;
   exhausted?: boolean;
   damage?: number;
+  /** Mark this fixture card as a token without mutating engine state after setup. */
+  isToken?: boolean;
 }
 
 export interface TestPlayerState {
@@ -58,6 +64,8 @@ export interface TestPlayerState {
   play?: Array<Card | TestCardEntry>;
   /** Cards to pre-place in the baseSection (bases already "deployed"). */
   baseSection?: Array<Card | TestCardEntry>;
+  /** Cards to pre-place face-down in the Shield Area for combat/Burst fixtures. */
+  shieldArea?: Array<Card | TestCardEntry>;
   trash?: Array<Card | TestCardEntry>;
 }
 
@@ -76,6 +84,7 @@ export interface PlayerTestProxy {
   doMove(moveName: string, args?: unknown): CommandResult;
   expectMoveToFail(moveName: string, args?: unknown, expectedError?: string): void;
   getView(): FilteredMatchView;
+  getBoardView(): GundamBoardView;
   getHand(): string[];
   getAvailableMoves(): string[];
 }
@@ -195,7 +204,7 @@ export class GundamTestEngine {
   private placeCards(playerId: GundamPlayerId, cards: CardWithZone[]): void {
     const state = this.runtime.getState();
 
-    for (const { instanceId, card, zone, meta } of cards) {
+    for (const { instanceId, card, zone, meta, damage } of cards) {
       const zoneKey = zone === "removalArea" ? zone : `${zone}:${playerId}`;
 
       // Register in card instance map so framework.cards.getDefinition() can resolve it
@@ -226,6 +235,7 @@ export class GundamTestEngine {
       // Apply exhausted/damage state to GundamG
       const g = state.G;
       if (meta.exhausted) g.exhausted[instanceId] = true;
+      if (damage > 0) g.damage[instanceId] = damage;
     }
   }
 
@@ -566,15 +576,33 @@ export class GundamTestEngine {
       );
     });
 
-    if (options.targets && options.targets.length > 0) {
-      // Only drive resolveEffect when the engine actually halted on a
-      // pending choice — simple bursts with a single eligible target
-      // auto-resolve during the inline drain, in which case the queue
-      // is already empty and the caller-provided targets were either
-      // moot (unique match) or redundant.
-      const pending = this.runtime.getState().ctx.status.pendingDecision ?? [];
-      if (pending.length > 0) {
-        const result = this.runtime.executeCommand(
+    // This legacy harness shortcut means "activate the Burst". The real
+    // combat path halts on a simulator-visible optional prompt; answer it
+    // explicitly here so older non-card engine tests retain that meaning.
+    const hasPendingBurst = this.runtime.getState().G.pendingEffects.length > 0;
+    if (hasPendingBurst) {
+      const result = this.runtime.executeCommand(
+        {
+          commandID: `test-cmd-${this.cmdCounter++}`,
+          move: "resolveEffect",
+          prevStateID: this.runtime.state.ctx._stateID,
+          actorRole: "player",
+          args: { optionalAnswers: { [-1]: true } },
+        },
+        entry.ownerID,
+      );
+      if (!result.success) {
+        throw new Error(
+          `fireShieldBurst: resolveEffect failed for shield "${shieldInstanceId}": ${result.error} (${result.errorCode})`,
+        );
+      }
+
+      if (
+        options.targets &&
+        options.targets.length > 0 &&
+        this.runtime.getState().G.pendingEffects.length > 0
+      ) {
+        const targetResult = this.runtime.executeCommand(
           {
             commandID: `test-cmd-${this.cmdCounter++}`,
             move: "resolveEffect",
@@ -584,9 +612,9 @@ export class GundamTestEngine {
           },
           entry.ownerID,
         );
-        if (!result.success) {
+        if (!targetResult.success) {
           throw new Error(
-            `fireShieldBurst: resolveEffect failed for shield "${shieldInstanceId}": ${result.error} (${result.errorCode})`,
+            `fireShieldBurst: target resolution failed for shield "${shieldInstanceId}": ${targetResult.error} (${targetResult.errorCode})`,
           );
         }
       }
@@ -653,7 +681,7 @@ export class GundamTestEngine {
    * Issues `passTurn` for the current `turnPlayer`, then both players'
    * `passActionStep` — that's enough to drive the flow through
    * end-phase action-step → end-step → hand-step → cleanup-step → the
-   * turn's `onEnd` hook (`turnCycleOnEnd`, where `<Repair>` fires) →
+   * turn's end step (where `<Repair>` fires) →
    * back into the next turn's start/draw/resource/main.
    *
    * If the flow halts before the new main-phase (e.g. an unresolved
@@ -951,7 +979,10 @@ export class GundamPlayerActions {
 
   // ── Moves ─────────────────────────────────────────────────────────────────
 
-  deployUnit(card: Card | string, opts: { targets?: string[] } = {}): CommandResult {
+  deployUnit(
+    card: Card | string,
+    opts: { mode?: "normal" | "alternate"; targets?: string[] } = {},
+  ): CommandResult {
     return this.execute("deployUnit", { cardId: this.resolveId(card), ...opts });
   }
 
@@ -1142,8 +1173,60 @@ export class GundamPlayerActions {
     return this.runtime.getAvailableMoves(this.playerId as PlayerId);
   }
 
+  /**
+   * Read the same game-agnostic move procedure consumed by the simulator.
+   * Card tests use this instead of reaching into runtime state so cost,
+   * mode, and target prompts are verified as player-facing interactions.
+   */
+  getMoveProcedure(
+    moveName: GundamMoveName,
+    partialInput: Readonly<Record<string, unknown>> = {},
+  ): readonly MoveStepOption[] {
+    return (
+      getMoveProcedure(
+        this.runtime.getState(),
+        this.runtime.getStaticResources(),
+        this.playerId as PlayerId,
+        moveName,
+        partialInput,
+      ) ?? []
+    );
+  }
+
   getView(): FilteredMatchView {
     return this.runtime.getFilteredView({ role: "player", playerId: this.playerId as PlayerId });
+  }
+
+  /** Simulator-facing, role-filtered Gundam board projection for this player. */
+  getBoardView(): GundamBoardView {
+    return this.runtime.getBoardView({ role: "player", playerId: this.playerId as PlayerId });
+  }
+
+  /** Find a card in the simulator-visible board projection. */
+  getVisibleCard(card: Card | string): GundamRuntimeCard | undefined {
+    const id = this.resolveId(card);
+    const view = this.getBoardView();
+    for (const player of Object.values(view.players)) {
+      const visible = [
+        ...player.battlefield,
+        ...player.baseSection,
+        ...player.resourceArea,
+        ...(player.hand ?? []),
+      ];
+      const found = visible.find((candidate) => candidate.instanceId === id);
+      if (found) return found;
+    }
+    return undefined;
+  }
+
+  /** Legal targets the UI may offer for this attack, including `"direct"`. */
+  getLegalAttackTargets(attacker: Card | string): string[] {
+    return listLegalAttackTargets(
+      this.resolveId(attacker),
+      this.playerId,
+      this.runtime.getState().G,
+      this.runtime.getFrameworkReadAPI(),
+    );
   }
 
   getHand(): string[] {
@@ -1209,6 +1292,7 @@ interface CardWithZone {
   card: Card;
   zone: string;
   meta: GundamCardMeta;
+  damage: number;
 }
 
 function collectCards(playerId: string, state: TestPlayerState): CardWithZone[] {
@@ -1218,12 +1302,14 @@ function collectCards(playerId: string, state: TestPlayerState): CardWithZone[] 
     const card = isCardEntry(entry) ? entry.card : entry;
     const meta: GundamCardMeta = {
       exhausted: isCardEntry(entry) ? entry.exhausted : false,
+      isToken: isCardEntry(entry) ? entry.isToken : false,
     };
     cards.push({
       instanceId: `${playerId}_${card.cardNumber}_${++instanceCounter}`,
       card,
       zone,
       meta,
+      damage: isCardEntry(entry) ? (entry.damage ?? 0) : 0,
     });
   }
 
@@ -1233,6 +1319,7 @@ function collectCards(playerId: string, state: TestPlayerState): CardWithZone[] 
   for (const entry of asArray(state.resourceArea)) add(entry, "resourceArea");
   for (const entry of asArray(state.play)) add(entry, "battleArea");
   for (const entry of asArray(state.baseSection)) add(entry, "baseSection");
+  for (const entry of asArray(state.shieldArea)) add(entry, "shieldArea");
   for (const entry of asArray(state.trash)) add(entry, "trash");
 
   return cards;

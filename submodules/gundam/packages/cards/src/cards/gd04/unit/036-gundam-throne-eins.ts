@@ -74,12 +74,13 @@ export const gd04GundamThroneEins036: UnitCard = {
             target: {
               owner: "friendly",
               cardType: "unit",
-              count: 2,
+              count: { min: 1, max: 2 },
               excludeSource: true,
               state: "active",
               attributeFilters: [{ attribute: "trait", comparison: "includes", value: "cb" }],
             },
           },
+          optional: true,
         },
         {
           action: {
@@ -91,6 +92,7 @@ export const gd04GundamThroneEins036: UnitCard = {
               state: "rested",
               attributeFilters: [{ attribute: "trait", comparison: "includes", value: "cb" }],
             },
+            countPreviousResolvedTargets: true,
             target: {
               owner: "opponent",
               cardType: "unit",
@@ -98,6 +100,7 @@ export const gd04GundamThroneEins036: UnitCard = {
               attributeFilters: [{ attribute: "level", comparison: "lte", value: 6 }],
             },
           },
+          dependsOnPrevious: true,
         },
       ],
       sourceText:

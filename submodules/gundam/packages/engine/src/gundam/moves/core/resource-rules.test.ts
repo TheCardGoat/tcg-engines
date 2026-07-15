@@ -9,13 +9,14 @@
  */
 
 import { describe, it, expect } from "vite-plus/test";
-import type { ResourceCard } from "@tcg/gundam-types";
+import type { CardEffect, ResourceCard } from "@tcg/gundam-types";
 import type { FrameworkReadAPI } from "../../../types/move-types.ts";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   expectSuccess,
+  createMockCommand,
   createMockUnit,
   createMockResource,
 } from "../../../index.ts";
@@ -29,6 +30,17 @@ function active(card: ResourceCard): TestCardEntry {
 
 function exhausted(card: ResourceCard): TestCardEntry {
   return { card, exhausted: true };
+}
+
+const placeExResource: CardEffect = {
+  type: "command",
+  activation: { timing: ["main"] },
+  directives: [{ action: { action: "placeExResource", state: "active" } }],
+  sourceText: "【Main】Place 1 active EX Resource.",
+};
+
+function exResourceCommand() {
+  return createMockCommand({ level: 0, cost: 0, effects: [placeExResource] });
 }
 
 /**
@@ -138,95 +150,65 @@ describe("Rule 5-17-3-2-3 — EX resource tokens removed from game when spent", 
     expect(removalIds).toHaveLength(0);
   });
 
-  it("EX resource tokens are moved to removalArea when spent", () => {
+  it("a spent EX Resource ceases to exist instead of becoming a Removal Area ghost", () => {
     const unit = createMockUnit({ level: 1, cost: 1 });
-    const res = createMockResource();
-
-    const engine = GundamTestEngine.create({ hand: [unit], resourceArea: [active(res)] }, {});
-
-    // Manually mark the resource card as an EX token
-    const state = engine.getState();
-    const resourceIds = engine.getCardsInZone({ zone: "resourceArea", playerId: PLAYER_ONE });
-    const tokenId = resourceIds[0]!;
-    state.ctx.zones.private.cardMeta[tokenId] = { isToken: true };
-
+    const setup = exResourceCommand();
+    const engine = GundamTestEngine.create({ hand: [setup, unit] }, {});
     const p1 = engine.asPlayer(PLAYER_ONE);
+    expectSuccess(p1.playCommand(setup));
+    const tokenId = p1.getCardsInZone("resourceArea")[0]!;
+
     expectSuccess(p1.deployUnit(unit));
 
-    // EX token should have been removed from resourceArea
-    const afterResourceIds = engine.getCardsInZone({ zone: "resourceArea", playerId: PLAYER_ONE });
-    expect(afterResourceIds).toHaveLength(0);
-
-    // EX token should be in removalArea
-    const removalIds = engine.getCardsInZone({ zone: "removalArea" });
-    expect(removalIds).toHaveLength(1);
-    expect(removalIds[0]).toBe(tokenId);
-
-    // EX token should NOT be marked exhausted — it was removed, not rested
-    expect(engine.getState().G.exhausted[tokenId]).toBeFalsy();
+    expect(p1.getCardsInZone("resourceArea")).not.toContain(tokenId);
+    expect(p1.getCardsInZone("removalArea")).not.toContain(tokenId);
+    expect(p1.getCardZone(tokenId)).toBeUndefined();
   });
 
   it("prefers exhausting regular resources over consuming EX tokens", () => {
     const unit = createMockUnit({ level: 2, cost: 1 });
     const regularRes = createMockResource();
-    const exRes = createMockResource();
+    const setup = exResourceCommand();
 
     const engine = GundamTestEngine.create(
-      { hand: [unit], resourceArea: [active(regularRes), active(exRes)] },
+      { hand: [setup, unit], resourceArea: [active(regularRes)] },
       {},
     );
-
-    // Mark exRes (second card) as EX token
-    const state = engine.getState();
-    const resourceIds = engine.getCardsInZone({ zone: "resourceArea", playerId: PLAYER_ONE });
-    const regularId = resourceIds[0]!;
-    const exId = resourceIds[1]!;
-    state.ctx.zones.private.cardMeta[exId] = { isToken: true };
-
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const regularId = p1.getCardsInZone("resourceArea")[0]!;
+    expectSuccess(p1.playCommand(setup));
+    const exId = p1.getCardsInZone("resourceArea").find((id) => id !== regularId)!;
+
     expectSuccess(p1.deployUnit(unit));
 
-    // Regular resource should be exhausted
-    expect(engine.getState().G.exhausted[regularId]).toBe(true);
-
-    // EX token should still be in resource area (not consumed)
-    const afterResourceIds = engine.getCardsInZone({ zone: "resourceArea", playerId: PLAYER_ONE });
-    expect(afterResourceIds).toContain(exId);
-
-    // EX token should NOT be in removalArea
-    const removalIds = engine.getCardsInZone({ zone: "removalArea" });
-    expect(removalIds).toHaveLength(0);
+    expect(p1.isExhausted(regularId)).toBe(true);
+    expect(p1.getCardsInZone("resourceArea")).toContain(exId);
+    expect(p1.isExhausted(exId)).toBe(false);
+    expect(p1.getCardsInZone("removalArea")).toHaveLength(0);
   });
 
   it("uses EX tokens only after all regular resources are exhausted (cost 3: 2 regular + 1 EX)", () => {
     const unit = createMockUnit({ level: 3, cost: 3 });
     const reg1 = createMockResource();
     const reg2 = createMockResource();
-    const exRes = createMockResource();
+    const setup = exResourceCommand();
 
     const engine = GundamTestEngine.create(
-      { hand: [unit], resourceArea: [active(reg1), active(reg2), active(exRes)] },
+      { hand: [setup, unit], resourceArea: [active(reg1), active(reg2)] },
       {},
     );
-
-    // Mark exRes (third card) as EX token
-    const state = engine.getState();
-    const resourceIds = engine.getCardsInZone({ zone: "resourceArea", playerId: PLAYER_ONE });
-    const exId = resourceIds[2]!;
-    state.ctx.zones.private.cardMeta[exId] = { isToken: true };
-
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const [reg1Id, reg2Id] = p1.getCardsInZone("resourceArea");
+    expectSuccess(p1.playCommand(setup));
+    const exId = p1.getCardsInZone("resourceArea").find((id) => id !== reg1Id && id !== reg2Id)!;
+
     expectSuccess(p1.deployUnit(unit));
 
-    // Both regular resources should be exhausted
-    const reg1Id = resourceIds[0]!;
-    const reg2Id = resourceIds[1]!;
-    expect(engine.getState().G.exhausted[reg1Id]).toBe(true);
-    expect(engine.getState().G.exhausted[reg2Id]).toBe(true);
-
-    // EX token should be in removalArea
-    const removalIds = engine.getCardsInZone({ zone: "removalArea" });
-    expect(removalIds).toContain(exId);
+    expect(p1.isExhausted(reg1Id!)).toBe(true);
+    expect(p1.isExhausted(reg2Id!)).toBe(true);
+    expect(p1.getCardsInZone("resourceArea")).not.toContain(exId);
+    expect(p1.getCardsInZone("removalArea")).not.toContain(exId);
+    expect(p1.getCardZone(exId)).toBeUndefined();
   });
 });
 

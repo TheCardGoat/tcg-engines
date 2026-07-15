@@ -12,7 +12,7 @@ describe("Psycho Squad", () => {
     engine.playCard(welcomeToNightCityRetailPsychoSquad, { as: P1 });
 
     const squad = engine.getCard(welcomeToNightCityRetailPsychoSquad, "field", P1);
-    expect(squad.meta.playedThisTurn).toBe(true);
+    expect(squad.meta.hasLag).toBe(true);
     expect(engine.getEddies(P1)).toBe(0);
     expectNotAttackCandidate(engine, welcomeToNightCityRetailPsychoSquad, { as: P1 });
   });
@@ -20,7 +20,7 @@ describe("Psycho Squad", () => {
   it("can make a normal direct attack after lag clears", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [{ card: welcomeToNightCityRetailPsychoSquad, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailPsychoSquad, spent: false, hasLag: false }],
       },
       {
         gigArea: [{ dieType: "d4", faceValue: 1 }],

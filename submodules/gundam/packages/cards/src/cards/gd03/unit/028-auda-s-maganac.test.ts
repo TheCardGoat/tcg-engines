@@ -5,8 +5,6 @@ import {
   PLAYER_TWO,
   createMockUnit,
   expectSuccess,
-  findStatModifier,
-  getEffectiveStats,
 } from "@tcg/gundam-engine";
 import { gd03AudaSMaganac028 } from "./028-auda-s-maganac.ts";
 
@@ -20,8 +18,13 @@ describe("Auda's Maganac (GD03-028)", () => {
 
     expectSuccess(p1.enterBattle(attackerId, defenderId));
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    expect(getEffectiveStats(attackerId, engine.getG(), framework.cards, framework).ap).toBe(4);
+    expect(p1.getVisibleCard(attackerId)?.effectiveAp).toBe(4);
+
+    expectSuccess(engine.asPlayer(PLAYER_TWO).passBlock());
+    expectSuccess(engine.asPlayer(PLAYER_TWO).passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p1.getVisibleCard(attackerId)?.effectiveAp).toBe(2);
   });
 
   it("does not get AP+2 when attacking the enemy player directly", () => {
@@ -31,8 +34,6 @@ describe("Auda's Maganac (GD03-028)", () => {
 
     expectSuccess(p1.enterBattle(attackerId, "direct"));
 
-    expect(findStatModifier(engine, attackerId, "ap")).toBeUndefined();
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    expect(getEffectiveStats(attackerId, engine.getG(), framework.cards, framework).ap).toBe(2);
+    expect(p1.getVisibleCard(attackerId)?.effectiveAp).toBe(2);
   });
 });

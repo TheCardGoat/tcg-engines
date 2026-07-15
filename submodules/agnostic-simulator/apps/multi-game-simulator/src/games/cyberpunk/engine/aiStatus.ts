@@ -26,6 +26,15 @@ export const AI_SPEED_MS: Readonly<Record<AiSpeed, number>> = {
   slow: 1400,
 };
 
+/** Fast mode may drain moves immediately; readable speeds wait for visual resolution. */
+export function shouldWaitForAiAnimations(
+  speed: AiSpeed,
+  hasPendingAnimations: boolean,
+  animationWaitExpired: boolean,
+): boolean {
+  return hasPendingAnimations && !animationWaitExpired && speed !== "fast";
+}
+
 export interface ResolveAiStatusInput {
   /** Whether the engine signalled gameEnded. */
   gameEnded: boolean;

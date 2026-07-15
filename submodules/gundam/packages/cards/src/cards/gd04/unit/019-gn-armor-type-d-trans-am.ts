@@ -52,14 +52,11 @@ export const gd04GnArmorTypeDTransAm019: UnitCard = {
       },
       directives: [
         {
-          // NOTE: Printed text says "You may reveal 1 (CB) Unit card
-          // that is Lv.5 or lower". The engine's `lookAtTopDeck` handler
-          // always tutors `matches[0]` when the filter matches — see
-          // Encounter (GD04-105) for the same trade-off.
           action: {
             action: "lookAtTopDeck",
             count: 3,
             return: "chooseTop",
+            randomizeRemainingToBottom: true,
             tutorFilter: {
               owner: "friendly",
               cardType: "unit",

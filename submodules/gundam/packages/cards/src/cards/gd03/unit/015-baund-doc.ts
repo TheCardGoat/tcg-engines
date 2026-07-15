@@ -54,40 +54,22 @@ export const gd03BaundDoc015: UnitCard = {
             type: "oncePerTurn",
           },
         ],
-        // Gate activation on having 3 legal exile candidates in the
-        // trash. Without this, the activated ability is selectable even
-        // when only 1–2 (Titans) cards exist in trash — the exile target
-        // would clamp to whatever's available, and `dependsOnPrevious`
-        // would still let the Breach grant fire on partial cost payment.
-        conditions: [
-          {
-            type: "cardInZone",
-            owner: "friendly",
-            zone: "trash",
-            comparison: "gte",
-            count: 3,
-            hasTrait: "titans",
-          },
-        ],
+      },
+      cost: {
+        exileFromTrash: {
+          owner: "friendly",
+          zone: "trash",
+          count: 3,
+          attributeFilters: [
+            {
+              attribute: "trait",
+              comparison: "includes",
+              value: "titans",
+            },
+          ],
+        },
       },
       directives: [
-        {
-          action: {
-            action: "exile",
-            target: {
-              owner: "friendly",
-              zone: "trash",
-              count: 3,
-              attributeFilters: [
-                {
-                  attribute: "trait",
-                  comparison: "includes",
-                  value: "titans",
-                },
-              ],
-            },
-          },
-        },
         {
           action: {
             action: "grantKeyword",
@@ -99,7 +81,6 @@ export const gd03BaundDoc015: UnitCard = {
               cardType: "unit",
             },
           },
-          dependsOnPrevious: true,
         },
       ],
       sourceText:

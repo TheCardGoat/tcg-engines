@@ -1,6 +1,7 @@
 import {
   LocalEngine,
   asPlayerId,
+  buildTokenUnitDefinition,
   createStaticResources,
   type CardCatalog,
   type MatchRuntime,
@@ -8,7 +9,35 @@ import {
   type Player,
 } from "@tcg/gundam-engine";
 import * as gundamCards from "@tcg/gundam-cards";
-import type { Card as GundamCard } from "@tcg/gundam-types";
+import type {
+  Card as GundamCard,
+  KeywordEffect,
+  KeywordEffectEntry,
+  TokenSpec,
+} from "@tcg/gundam-types";
+
+type TokenRestriction = NonNullable<TokenSpec["restrictions"]>[number];
+
+const TOKEN_KEYWORD_ALLOWLIST = {
+  Repair: true,
+  Breach: true,
+  Support: true,
+  Blocker: true,
+  FirstStrike: true,
+  HighManeuver: true,
+  Suppression: true,
+} satisfies Record<KeywordEffect, true>;
+const TOKEN_RESTRICTION_ALLOWLIST = {
+  cannotSetActive: true,
+  cannotPairPilot: true,
+} satisfies Record<TokenRestriction, true>;
+
+const TOKEN_KEYWORDS: ReadonlySet<KeywordEffect> = new Set(
+  Object.keys(TOKEN_KEYWORD_ALLOWLIST) as KeywordEffect[],
+);
+const TOKEN_RESTRICTIONS: ReadonlySet<TokenRestriction> = new Set(
+  Object.keys(TOKEN_RESTRICTION_ALLOWLIST) as TokenRestriction[],
+);
 
 /**
  * Build a live-match viewer engine from a server-authored state snapshot.
@@ -24,13 +53,12 @@ import type { Card as GundamCard } from "@tcg/gundam-types";
  *      `createStaticResources` to mint initial instance ids and by
  *      `engine.initialize` to seed zones; we throw all of that away
  *      via `loadState` so empty is fine.
- *   3) cardsMaps: prime `instances` by parsing every instance id we
- *      see in `state.ctx.zones.{private,public}.cardIndex`. Gundam
- *      instance ids follow `${playerId}_${prefix}_${definitionId}_${i}`
- *      (see `static-resources.ts::registerCards`), so we can recover
- *      `{ definitionId, ownerID }` deterministically from the id
- *      alone. Without this prime, render-time card lookups would
- *      return `undefined` for every card on the table.
+ *   3) cardsMaps: prime `instances` from every entry in the serialized
+ *      card index. Ordinary cards encode their definition id in the
+ *      instance id. Printed tokens carry a stable `tokenDefinitionId`;
+ *      dynamically-created Unit tokens instead carry a public `tokenSpec`,
+ *      so we rebuild their runtime definition from that spec and enrich it
+ *      with any printed token card named by `printedCardNumber`.
  */
 export function createLiveMatchViewerEngine(serverState: Record<string, unknown>): {
   readonly runtime: MatchRuntime;
@@ -100,9 +128,9 @@ function getCatalog(): CardCatalog {
 
 /**
  * Walk every cardIndex entry in the state and register the underlying
- * `{ definitionId, ownerID }` on the staticResources. Parses the
- * instance id to recover the definitionId — it's structurally encoded
- * in the id by `createStaticResources::registerCards`.
+ * `{ definitionId, ownerID }` on the staticResources. Ordinary card
+ * instances encode their definition id in the id. Generated tokens use
+ * their serialized public token metadata instead.
  */
 function primeInstancesFromState(
   staticResources: MatchStaticResources,
@@ -114,22 +142,138 @@ function primeInstancesFromState(
   const zones = ctx.zones as { private?: Record<string, unknown> } | undefined;
   if (!zones?.private) return;
   const cardIndex = zones.private.cardIndex as Record<string, { ownerID?: string }> | undefined;
+  const cardMeta = zones.private.cardMeta as Record<string, unknown> | undefined;
   if (!cardIndex) return;
 
   for (const [instanceId, meta] of Object.entries(cardIndex)) {
     if (staticResources.cardsMaps.instances.get(instanceId)) continue;
     const parsed = parseInstanceId(instanceId);
-    if (!parsed) continue;
-    const ownerID = meta.ownerID ?? parsed.ownerId;
-    staticResources.cardsMaps.instances.register(instanceId, {
-      definitionId: parsed.definitionId,
-      ownerID,
-    });
-    if (!staticResources.cardsMaps.definitions.has(parsed.definitionId)) {
-      const def = catalog.get(parsed.definitionId);
-      if (def) staticResources.cardsMaps.definitions.set(parsed.definitionId, def);
+    if (parsed) {
+      const ownerID = meta.ownerID ?? parsed.ownerId;
+      staticResources.cardsMaps.instances.register(instanceId, {
+        definitionId: parsed.definitionId,
+        ownerID,
+      });
+      if (!staticResources.cardsMaps.definitions.has(parsed.definitionId)) {
+        const def = catalog.get(parsed.definitionId);
+        if (def) staticResources.cardsMaps.definitions.set(parsed.definitionId, def);
+      }
+      continue;
     }
+
+    const tokenDefinitionId = tokenDefinitionIdFromMeta(cardMeta?.[instanceId]);
+    if (tokenDefinitionId && typeof meta.ownerID === "string") {
+      const definition = catalog.get(tokenDefinitionId);
+      if (definition) {
+        staticResources.cardsMaps.instances.register(instanceId, {
+          definitionId: tokenDefinitionId,
+          ownerID: meta.ownerID,
+        });
+        if (!staticResources.cardsMaps.definitions.has(tokenDefinitionId)) {
+          staticResources.cardsMaps.definitions.set(tokenDefinitionId, definition);
+        }
+        continue;
+      }
+    }
+
+    const tokenSpec = tokenSpecFromMeta(cardMeta?.[instanceId]);
+    if (!tokenSpec || typeof meta.ownerID !== "string") continue;
+    const catalogCard = tokenSpec.printedCardNumber
+      ? catalog.get(tokenSpec.printedCardNumber)
+      : undefined;
+    const printed = catalogCard?.type === "unit" ? catalogCard : undefined;
+    const definition = buildTokenUnitDefinition(tokenSpec, instanceId, printed);
+    staticResources.cardsMaps.instances.register(instanceId, {
+      definitionId: instanceId,
+      ownerID: meta.ownerID,
+    });
+    staticResources.cardsMaps.definitions.set(instanceId, definition);
   }
+}
+
+function tokenDefinitionIdFromMeta(meta: unknown): string | null {
+  if (!isRecord(meta) || meta.isToken !== true || typeof meta.tokenDefinitionId !== "string") {
+    return null;
+  }
+  return meta.tokenDefinitionId;
+}
+
+function tokenSpecFromMeta(meta: unknown): TokenSpec | null {
+  if (!isRecord(meta) || meta.isToken !== true || !isRecord(meta.tokenSpec)) return null;
+  const raw = meta.tokenSpec;
+  if (
+    typeof raw.name !== "string" ||
+    !Array.isArray(raw.traits) ||
+    !raw.traits.every((trait): trait is string => typeof trait === "string") ||
+    typeof raw.ap !== "number" ||
+    !Number.isFinite(raw.ap) ||
+    typeof raw.hp !== "number" ||
+    !Number.isFinite(raw.hp) ||
+    (raw.deployState !== "active" && raw.deployState !== "rested")
+  ) {
+    return null;
+  }
+
+  const keywordEffects = keywordEffectsFromUnknown(raw.keywordEffects);
+  const restrictions = restrictionsFromUnknown(raw.restrictions);
+  if (keywordEffects === null || restrictions === null) return null;
+  if (raw.cantTargetPlayer !== undefined && typeof raw.cantTargetPlayer !== "boolean") return null;
+  if (raw.printedCardNumber !== undefined && typeof raw.printedCardNumber !== "string") return null;
+
+  return {
+    name: raw.name,
+    traits: [...raw.traits],
+    ap: raw.ap,
+    hp: raw.hp,
+    deployState: raw.deployState,
+    ...(keywordEffects === undefined ? {} : { keywordEffects }),
+    ...(raw.cantTargetPlayer === undefined ? {} : { cantTargetPlayer: raw.cantTargetPlayer }),
+    ...(restrictions === undefined ? {} : { restrictions }),
+    ...(raw.printedCardNumber === undefined ? {} : { printedCardNumber: raw.printedCardNumber }),
+  };
+}
+
+function keywordEffectsFromUnknown(value: unknown): KeywordEffectEntry[] | undefined | null {
+  if (value === undefined) return undefined;
+  if (!Array.isArray(value)) return null;
+  const entries: KeywordEffectEntry[] = [];
+  for (const candidate of value) {
+    if (!isRecord(candidate) || !isKeywordEffect(candidate.keyword)) return null;
+    if (
+      candidate.value !== undefined &&
+      (typeof candidate.value !== "number" || !Number.isFinite(candidate.value))
+    ) {
+      return null;
+    }
+    entries.push({
+      keyword: candidate.keyword,
+      ...(candidate.value === undefined ? {} : { value: candidate.value }),
+    });
+  }
+  return entries;
+}
+
+function restrictionsFromUnknown(value: unknown): TokenRestriction[] | undefined | null {
+  if (value === undefined) return undefined;
+  if (!Array.isArray(value)) return null;
+  const restrictions: TokenRestriction[] = [];
+  for (const candidate of value) {
+    if (typeof candidate !== "string" || !isUnitRestriction(candidate)) return null;
+    restrictions.push(candidate);
+  }
+  return restrictions;
+}
+
+function isKeywordEffect(value: unknown): value is KeywordEffect {
+  return typeof value === "string" && TOKEN_KEYWORDS.has(value as KeywordEffect);
+}
+
+function isUnitRestriction(value: string): value is TokenRestriction {
+  return TOKEN_RESTRICTIONS.has(value as TokenRestriction);
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 /**

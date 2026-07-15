@@ -46,7 +46,10 @@ describe("Ξ Gundam (GD04-035)", () => {
 
     expectSuccess(p1.deployUnit(gd04Gundam035, { targets: [chosenId] }));
     expect(p1.getHand()).toHaveLength(0);
-    expectSuccess(engine.resolveCombat({ attackerId: chosenId, target: defenderId }));
+    expectSuccess(p1.enterBattle(chosenId, defenderId));
+    expectSuccess(engine.asPlayer(PLAYER_TWO).passBlock());
+    expectSuccess(engine.asPlayer(PLAYER_TWO).passBattleAction());
+    expectSuccess(p1.passBattleAction());
 
     expect(p1.getHand()).toHaveLength(1);
   });
@@ -55,7 +58,10 @@ describe("Ξ Gundam (GD04-035)", () => {
     const { engine, p1, chosenId, otherMaftyId, defenderId } = setup();
 
     expectSuccess(p1.deployUnit(gd04Gundam035, { targets: [chosenId] }));
-    expectSuccess(engine.resolveCombat({ attackerId: otherMaftyId, target: defenderId }));
+    expectSuccess(p1.enterBattle(otherMaftyId, defenderId));
+    expectSuccess(engine.asPlayer(PLAYER_TWO).passBlock());
+    expectSuccess(engine.asPlayer(PLAYER_TWO).passBattleAction());
+    expectSuccess(p1.passBattleAction());
 
     expect(p1.getHand()).toHaveLength(0);
   });
@@ -65,7 +71,10 @@ describe("Ξ Gundam (GD04-035)", () => {
 
     expectSuccess(p1.deployUnit(gd04Gundam035, { targets: [chosenId] }));
     expect(p1.getHand()).toHaveLength(4);
-    expectSuccess(engine.resolveCombat({ attackerId: chosenId, target: defenderId }));
+    expectSuccess(p1.enterBattle(chosenId, defenderId));
+    expectSuccess(engine.asPlayer(PLAYER_TWO).passBlock());
+    expectSuccess(engine.asPlayer(PLAYER_TWO).passBattleAction());
+    expectSuccess(p1.passBattleAction());
 
     expect(p1.getHand()).toHaveLength(4);
   });

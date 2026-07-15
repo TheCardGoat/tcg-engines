@@ -7,7 +7,7 @@ import type { SimulatorSettings } from "./simulator-settings";
 
 describe("SimulatorSettingsProvider", () => {
   beforeEach(() => {
-    vi.useFakeTimers();
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
     window.localStorage.clear();
   });
 

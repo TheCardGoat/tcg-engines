@@ -1,9 +1,10 @@
-import type { CardEffect, UnitCard } from "@tcg/gundam-types";
+import type { UnitCard } from "@tcg/gundam-types";
 
 export const gd01UnicornGundamUnicornMode005: UnitCard = {
   cardNumber: "GD01-005",
   name: "Unicorn Gundam (Unicorn Mode)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["civilian"],
   id: "GD01-005",
@@ -92,6 +93,7 @@ export const gd01UnicornGundamUnicornMode005: UnitCard = {
   cost: 4,
   ap: 4,
   hp: 3,
+  linkCondition: "[Banagher Links]",
   effect:
     "【During Link】【Destroyed】Return this Unit's paired Pilot to its owner's hand. Then, discard 1.<br>",
   effects: [
@@ -104,15 +106,21 @@ export const gd01UnicornGundamUnicornMode005: UnitCard = {
       directives: [
         {
           action: {
-            action: "discard",
-            count: 1,
+            action: "resolveThenQueue",
+            first: { action: "returnPairedPilotToHand" },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [{ action: { action: "discard", count: 1 } }],
+              sourceText: "Then, discard 1.",
+            },
           },
         },
       ],
       sourceText:
         "【During Link】【Destroyed】Return this Unit's paired Pilot to its owner's hand. Then, discard 1.",
     },
-  ] as CardEffect[],
+  ],
   keywordEffects: [],
   rarity: "rare",
 };

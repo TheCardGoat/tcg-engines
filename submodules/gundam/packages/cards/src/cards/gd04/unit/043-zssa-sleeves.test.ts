@@ -6,7 +6,6 @@ import {
   activeResources,
   createMockBase,
   expectSuccess,
-  getDamageCounter,
 } from "@tcg/gundam-engine";
 import { gd04ZssaSleeves043 } from "./043-zssa-sleeves.ts";
 
@@ -27,6 +26,6 @@ describe("Zssa (Sleeves) (GD04-043)", () => {
 
     expectSuccess(p1.deployUnit(gd04ZssaSleeves043, { targets: [baseId] }));
 
-    expect(getDamageCounter(engine, baseId)).toBe(1);
+    expect(p2.getDamage(baseId)).toBe(1);
   });
 });

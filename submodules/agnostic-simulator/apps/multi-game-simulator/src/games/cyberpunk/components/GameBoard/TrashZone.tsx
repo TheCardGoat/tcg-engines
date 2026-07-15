@@ -14,7 +14,7 @@ interface TrashZoneCard {
   cardType?: "legend" | "unit" | "gear" | "program";
   color?: "blue" | "green" | "red" | "yellow";
   spent?: boolean;
-  playedThisTurn?: boolean;
+  hasLag?: boolean;
   faceDown?: boolean;
 }
 
@@ -129,12 +129,14 @@ export function TrashZone({
             data-card-type={card.cardType}
             data-card-color={card.color}
             data-face-down={card.faceDown ? "true" : undefined}
-            data-played-this-turn={card.playedThisTurn ? "true" : "false"}
+            data-has-lag={card.hasLag ? "true" : "false"}
             data-spent={card.spent ? "true" : "false"}
           />
         ))}
       </div>
-      <ZoneBadge position={opponent ? "top" : "bottom"}>Trash</ZoneBadge>
+      <ZoneBadge position={opponent ? "top" : "bottom"} label="Trash">
+        Trash
+      </ZoneBadge>
     </div>
   );
 }

@@ -155,9 +155,9 @@ function matchingGigValueCondition(target: TargetDSL, controller: "friendly" | "
   };
 }
 
-function playedThisTurnCondition(target: TargetDSL): Condition {
+function hasLagCondition(target: TargetDSL): Condition {
   return {
-    condition: "playedThisTurn",
+    condition: "hasLag",
     target,
   };
 }
@@ -998,7 +998,7 @@ function parseSpecialAbilities(card: CardDefinition, text: string): Ability[] | 
             target: SELF_TARGET,
             rule: "canAttackOnPlayedTurnAgainstUnits",
             duration: "continuous",
-            conditions: [playedThisTurnCondition(SELF_TARGET)],
+            conditions: [hasLagCondition(SELF_TARGET)],
           },
         ],
       }),
@@ -1195,7 +1195,7 @@ function parseSpecialAbilities(card: CardDefinition, text: string): Ability[] | 
             target: SELF_TARGET,
             rule: "canAttackOnPlayedTurnAgainstUnits",
             duration: "continuous",
-            conditions: [playedThisTurnCondition(SELF_TARGET)],
+            conditions: [hasLagCondition(SELF_TARGET)],
           },
         ],
       }),
@@ -1707,10 +1707,14 @@ function parseTriggeredByPrefix(
             effect: "discardFromHand",
             player: "rival",
             amount: 1,
+            logReason: "costMatchedFriendlyGig",
             conditions: [
               {
                 condition: "costMatchesGig",
-                target: SELF_TARGET,
+                target: {
+                  selector: "context",
+                  key: "discardedCards",
+                },
                 controller: "friendly",
               },
             ],

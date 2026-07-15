@@ -14,6 +14,9 @@
      them). Declaring it here makes the hands resolve the offset correctly and
      keeps a single source of truth for overlays anchored above the hand. */
   --hand-arc-bleed: 32px;
+  --self-hand-bottom: clamp(4px, 1cqh, 12px);
+  --self-hand-zone-h: clamp(140px, 15.625cqh, 200px);
+  --opponent-hand-zone-h: 13.5cqh;
   position: absolute;
   inset: 0;
   min-width: 0;
@@ -23,6 +26,7 @@
 .boardShell {
   --hand-board-gap: clamp(18px, 3cqh, 32px);
   --hand-arc-bleed: 32px;
+  --board-shift-up: 12px;
   --side-col-w: clamp(92px, calc(8.7cqh + 14px), 118px);
   --zone-gutter: 4px;
   --zone-pad: 6px;
@@ -32,7 +36,10 @@
   --center-row-h: minmax(58px, 5.4%);
 
   position: absolute;
-  inset: var(--hand-board-gap) 0;
+  top: calc(var(--hand-board-gap) - var(--board-shift-up));
+  right: 0;
+  bottom: calc(var(--hand-board-gap) + var(--board-shift-up));
+  left: 0;
   border: 1px solid rgb(245 230 66 / 82%);
   border-right-color: rgb(74 217 255 / 18%);
   background: #07090c;
@@ -41,6 +48,16 @@
   grid-template-rows:
     var(--board-edge-gutter) minmax(0, 1fr) var(--center-row-h) minmax(0, 1fr)
     var(--board-edge-gutter);
+}
+
+.root[data-field-card-size="compact"] .boardShell {
+  --unit-card-h: clamp(112px, 13.5cqh, 132px);
+  --field-unit-card-h-low-count: clamp(112px, 14.2cqh, 136px);
+}
+
+.root[data-field-card-size="large"] .boardShell {
+  --unit-card-h: clamp(132px, 17cqh, 168px);
+  --field-unit-card-h-low-count: clamp(140px, 18.5cqh, 176px);
 }
 
 .opponentSide {
@@ -84,6 +101,7 @@
   position: relative;
   min-height: 0;
   isolation: isolate;
+  overflow: hidden;
   transition:
     filter 0.18s ease,
     box-shadow 0.18s ease;
@@ -109,43 +127,50 @@
 
 .opponentSide::before,
 .playerSide::before {
-  z-index: 0;
+  z-index: 2;
   background:
     linear-gradient(
       90deg,
-      rgb(var(--priority-rgb) / 9%),
-      rgb(var(--priority-rgb) / 3%) 34%,
-      transparent 68%
+      rgb(var(--priority-rgb) / 7%),
+      rgb(var(--priority-rgb) / 2%) 18%,
+      transparent 78%
     ),
-    radial-gradient(ellipse at 18% 50%, rgb(var(--priority-rgb) / 7%), transparent 54%);
+    radial-gradient(ellipse at 18% 50%, rgb(var(--priority-rgb) / 5%), transparent 58%);
   box-shadow:
-    inset 0 0 0 1px rgb(var(--priority-rgb) / 20%),
-    inset 0 0 30px rgb(var(--priority-rgb) / 8%);
+    inset 0 0 0 1px rgb(var(--priority-rgb) / 24%),
+    inset 3px 0 0 rgb(var(--priority-rgb) / 64%),
+    inset 0 0 24px rgb(var(--priority-rgb) / 7%);
 }
 
 .opponentSide::before {
   background:
     linear-gradient(
       270deg,
-      rgb(var(--priority-rgb) / 10%),
-      rgb(var(--priority-rgb) / 3%) 36%,
-      transparent 70%
+      rgb(var(--priority-rgb) / 8%),
+      rgb(var(--priority-rgb) / 2%) 18%,
+      transparent 78%
     ),
-    radial-gradient(ellipse at 82% 50%, rgb(var(--priority-rgb) / 8%), transparent 54%);
+    radial-gradient(ellipse at 82% 50%, rgb(var(--priority-rgb) / 6%), transparent 58%);
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--priority-rgb) / 24%),
+    inset 0 3px 0 rgb(var(--priority-rgb) / 64%),
+    inset 0 0 26px rgb(var(--priority-rgb) / 8%);
 }
 
 .opponentSide::after,
 .playerSide::after {
   inset: -3px 0 auto;
-  z-index: 2;
-  height: 3px;
+  z-index: 3;
+  height: 4px;
   background: linear-gradient(
     90deg,
     transparent 6%,
     rgb(var(--priority-rgb) / 68%),
     transparent 94%
   );
-  box-shadow: 0 0 12px rgb(var(--priority-rgb) / 24%);
+  box-shadow:
+    0 0 9px rgb(var(--priority-rgb) / 28%),
+    0 0 18px rgb(var(--priority-rgb) / 10%);
 }
 
 .playerSide::after {
@@ -154,8 +179,10 @@
 
 .opponentSide[data-priority="true"],
 .playerSide[data-priority="true"] {
-  filter: saturate(1.08);
-  box-shadow: 0 0 18px rgb(var(--priority-rgb) / 7%);
+  filter: saturate(1.04);
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--priority-rgb) / 22%),
+    0 0 14px rgb(var(--priority-rgb) / 8%);
 }
 
 .opponentSide[data-priority="true"]::before,
@@ -170,17 +197,17 @@
   top: var(--hand-arc-bleed);
   left: 0;
   right: 0;
-  height: 18cqh;
+  height: var(--opponent-hand-zone-h);
   z-index: 50;
   pointer-events: none;
 }
 
 .handBottom {
   position: absolute;
-  bottom: var(--hand-arc-bleed);
+  bottom: var(--self-hand-bottom);
   left: 0;
   right: 0;
-  height: 17cqh;
+  height: var(--self-hand-zone-h);
   z-index: 180;
   pointer-events: none;
 }
@@ -189,24 +216,33 @@
   Floating action panel re-homed from MobileShell's right-hand interactions
   column. Anchored just above the self hand (.handBottom): hand bottom offset
   + hand height + a small gap. Centered horizontally over the self hand with a
-  capped width so it never spans the whole board. cqh matches .handBottom so
-  the offset tracks the hand at every viewport; --hand-arc-bleed is declared
-  on .boardWrap so it resolves here too.
+  capped width so it never spans the whole board. The self-hand variables live
+  on .boardWrap so the hand, prompt, and staged-program anchor move together.
 */
 .actionPanelFloating {
   position: absolute;
-  bottom: calc(var(--hand-arc-bleed) + 17cqh + 10px);
+  bottom: calc(var(--self-hand-bottom) + var(--self-hand-zone-h) + 10px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 190;
   width: min(560px, calc(100% - 32px));
   pointer-events: auto;
+  transition:
+    top 180ms ease-out,
+    bottom 180ms ease-out,
+    transform 180ms ease-out;
+}
+
+.actionPanelFloating[data-prompt-placement="rival"] {
+  top: calc(var(--hand-arc-bleed) + var(--opponent-hand-zone-h) + 10px);
+  bottom: auto;
+  z-index: 195;
 }
 
 .pendingProgramAnchor {
   position: absolute;
   right: clamp(10px, 1.7cqw, 22px);
-  bottom: calc(var(--hand-arc-bleed) + 17cqh + 20px);
+  bottom: calc(var(--self-hand-bottom) + var(--self-hand-zone-h) + 20px);
   z-index: 170;
   width: clamp(70px, 7cqh, 96px);
   pointer-events: auto;
@@ -242,7 +278,8 @@
   .opponentSide::before,
   .playerSide::before,
   .opponentSide::after,
-  .playerSide::after {
+  .playerSide::after,
+  .actionPanelFloating {
     transition: none;
   }
 }

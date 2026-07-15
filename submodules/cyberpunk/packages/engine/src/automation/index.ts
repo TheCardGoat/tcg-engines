@@ -3,6 +3,7 @@ export type {
   ChoiceResolver,
   ChoiceResolverMap,
   DecisionContext,
+  DecisionDiagnostics,
   MoveDecision,
   StepResult,
   StepResultActed,
@@ -23,7 +24,8 @@ export {
 
 export {
   defaultChoiceResolvers,
-  searchDeckResolver,
+  scryResolver,
+  revealDestinationResolver,
   chooseTargetResolver,
   chooseEffectResolver,
   chooseGigsToStealResolver,
@@ -37,6 +39,7 @@ export {
   randomStrategy,
   passOnlyStrategy,
   attackUnitOnlyStrategy,
+  attackRivalOnlyStrategy,
   callLegendOnlyStrategy,
   greedyStrategy,
   createGreedyStrategy,
@@ -48,9 +51,12 @@ export {
 
 export {
   AUTOMATED_ACTION_STRATEGIES,
+  CYBERPUNK_AUTOMATION_REVISION,
   DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
+  buildAutomatedActionStrategyOptions,
   getAutomatedActionStrategyOption,
   getSafeAutomatedActionStrategyOption,
+  isGreedyWeights,
   type AutomatedActionStrategyOption,
 } from "./strategy-registry.ts";
 
@@ -67,5 +73,20 @@ export {
   createMctsStrategy,
   type MctsOptions,
 } from "./search/mcts.ts";
+
+export {
+  abilityAwareTacticalStrategy,
+  tacticalStrategy,
+  createTacticalStrategy,
+  type TacticalStrategyOptions,
+} from "./search/tactical.ts";
+
+export {
+  evaluateBoard,
+  extractBoardFeatures,
+  DEFAULT_BOARD_EVALUATION_WEIGHTS,
+  type BoardEvaluationWeights,
+  type BoardFeatures,
+} from "./search/evaluate-board.ts";
 
 export { assertNever } from "./util/assert-never.ts";

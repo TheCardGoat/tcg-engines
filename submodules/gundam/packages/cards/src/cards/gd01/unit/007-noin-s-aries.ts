@@ -4,6 +4,7 @@ export const gd01NoinSAries007: UnitCard = {
   cardNumber: "GD01-007",
   name: "Noin's Aries",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "blue",
   traits: ["oz"],
   id: "GD01-007",
@@ -41,6 +42,7 @@ export const gd01NoinSAries007: UnitCard = {
   cost: 3,
   ap: 2,
   hp: 3,
+  linkCondition: "[Lucrezia Noin]",
   effect: "【Destroyed】If you have another (OZ) Unit in play, draw 1.<br>",
   effects: [
     {

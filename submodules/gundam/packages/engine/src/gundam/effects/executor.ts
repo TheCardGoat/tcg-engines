@@ -27,16 +27,26 @@ import type {
 import { exbpExBase001, exrpExResource003 } from "@tcg/gundam-token-data";
 import type { CardInstanceId, PlayerId } from "../../types/branded.ts";
 import type { FrameworkWriteAPI } from "../../types/move-types.ts";
-import type { GundamG, ContinuousEffectEntry, ContinuousEffectPayload } from "../types.ts";
+import type {
+  GundamG,
+  ContinuousEffectEntry,
+  ContinuousEffectPayload,
+  PostResolveAction,
+} from "../types.ts";
 import {
   buildTargetResolutionContext,
   getAvailableResources,
   getEffectiveStats,
+  hasKeyword,
   isSupportActivatedEffect,
 } from "../rules/derived-state.ts";
 import { evaluateCondition, evaluateTargetFilter } from "../../runtime/target-dsl.ts";
 import { emitGundamLog } from "../logging.ts";
-import { handleDrawAction, handleDiscardAction, handleMillDeckAction } from "./handlers/draw.ts";
+import {
+  handleChosenDiscardAction,
+  handleDrawAction,
+  handleMillDeckAction,
+} from "./handlers/draw.ts";
 import {
   handleDealDamageAction,
   handleRecoverHPAction,
@@ -47,6 +57,7 @@ import {
 } from "./handlers/combat.ts";
 import {
   handleReturnToHandAction,
+  handlePlaceInTrashAction,
   handleReturnPairedPilotToHandAction,
   handleReturnToDeckAction,
   handleDeployAction,
@@ -60,18 +71,19 @@ import {
   mapDuration,
 } from "./handlers/modifiers.ts";
 import { handleLookAtTopDeckAction, handleDeployFromTrashAction } from "./handlers/deck.ts";
-import {
-  canPlaceResource,
-  isExResourceToken,
-  payCost as payEffectCost,
-} from "../moves/core/play-card-shared.ts";
+import { canPlaceResource, payCost as payEffectCost } from "../moves/core/play-card-shared.ts";
 import { emitGundamEvent } from "../events.ts";
 import {
+  evaluateLegalTargets,
+  enqueuePendingEffect,
   enqueueMoveCompletionFence,
   enqueueObserverTriggers,
   enqueueOwnCardTriggers,
+  nextPendingEffectId,
+  requiredTargetAssignmentExists,
 } from "./pending-effects.ts";
 import { getFilterCountBounds } from "./target-legality.ts";
+import { enqueueBaseSectionExcessManagement } from "../rules/base-section-excess.ts";
 
 let exResourceTokenCounter = 0;
 let exBaseTokenCounter = 0;
@@ -125,6 +137,19 @@ export interface EffectExecutionContext {
   chooseOneAnswers?: Record<number, number>;
   /** Answers to `lookAtTopDeck` routing prompts, keyed by top-level directive index. */
   deckLookAnswers?: Record<number, import("../types.ts").DeckLookAnswer>;
+  /**
+   * Cleanup inherited from the pending effect currently being executed.
+   * `resolveThenQueue` transfers this onto its queued continuation so Command
+   * cleanup waits until the whole "Then" chain has ended.
+   */
+  postActions?: readonly PostResolveAction[];
+  postActionState?: { deferredToFollowUp?: boolean };
+  /**
+   * Breach value captured while both battle participants are still in play.
+   * Battle-context constant effects may stop matching after the defeated
+   * Unit leaves, but the already-triggered keyword still resolves.
+   */
+  battleDestroyBreachValue?: number;
   /**
    * Injected when this effect fires as an observer of a game event (rule 10-1-6-1).
    * Carries context about the triggering event for future use.
@@ -406,7 +431,7 @@ export function executeDirectives(
       // otherwise default to running the directive (pre-PR-F.2 behaviour).
       if (effDirective.optional) {
         const answer = ctx.optionalAnswers?.[idx];
-        if (answer === false) {
+        if (answer === false || !dependentDirectiveChainCanResolve(directives, i, ctx)) {
           prevResolved = false;
           continue;
         }
@@ -422,6 +447,7 @@ export function executeDirectives(
         } finally {
           ctx.currentDirectiveIndex = undefined;
         }
+        if (ctx.framework.state.status.gameEnded) return false;
         prevResolved = resolved;
         continue;
       }
@@ -433,6 +459,7 @@ export function executeDirectives(
       } finally {
         ctx.currentDirectiveIndex = undefined;
       }
+      if (ctx.framework.state.status.gameEnded) return false;
       prevResolved = resolved;
     }
   }
@@ -440,6 +467,21 @@ export function executeDirectives(
   // list) and `"conditional"` (final was a conditional branch) both map
   // to `true` — neither warrants skipping a dependent directive.
   return prevResolved !== false;
+}
+
+function dependentDirectiveChainCanResolve(
+  directives: readonly Directive[],
+  optionalIndex: number,
+  ctx: EffectExecutionContext,
+): boolean {
+  for (let i = optionalIndex + 1; i < directives.length; i++) {
+    const directive = directives[i]!;
+    if (isConditionalDirective(directive) || isChooseOneDirective(directive)) break;
+    const effectDirective = directive as EffectDirective;
+    if (!effectDirective.dependsOnPrevious) break;
+    if (!preflightResolved(effectDirective.action, ctx)) return false;
+  }
+  return true;
 }
 
 /**
@@ -472,12 +514,14 @@ function preflightResolved(action: EffectAction, ctx: EffectExecutionContext): b
     case "payResources":
       return getAvailableResources(ctx.sourcePlayerId, ctx.G, ctx.framework) >= action.count;
     case "dealDamage":
+    case "dealDamageByTargetKeyword":
     case "dealDamageThenDrawIfDestroyed":
     case "dealDamageByCount":
     case "dealDamageBySourceStat":
-    case "dealDamageByChosenUnitLevel":
+    case "restThenDamageByChosenUnitLevel":
     case "dealDamageAll":
     case "drawIfTargetMatches":
+    case "discardChosen":
     case "copyKeywordEffects":
     case "recoverHP":
     case "rest":
@@ -486,24 +530,22 @@ function preflightResolved(action: EffectAction, ctx: EffectExecutionContext): b
     case "exile":
     case "returnToHand":
     case "returnToDeck":
+    case "placeInTrash":
     case "deploy":
     case "changeAttackTarget":
     case "addFromTrash":
-    case "millDeckThenDamageIfTrait":
-    case "millDeckThenDamageByTraitCount":
-    case "millDeckThenStatModifierIfTrait":
+    case "addFromTrashThenDiscard":
     case "statModifierByCount":
     case "statModifierByUniqueNameCount": {
       const target =
-        action.action === "addFromTrash"
-          ? { ...action.target, zone: "trash" as const }
-          : action.action === "copyKeywordEffects"
-            ? action.source
-            : action.target;
-      const targets =
-        action.action === "dealDamageByChosenUnitLevel"
-          ? resolveChosenUnitLevelDamageTargets(action, ctx, tgtCtx)
-          : resolveActionTargets(target, ctx, tgtCtx);
+        action.action === "restThenDamageByChosenUnitLevel"
+          ? action.referenceTarget
+          : action.action === "addFromTrash" || action.action === "addFromTrashThenDiscard"
+            ? { ...action.target, zone: "trash" as const }
+            : action.action === "copyKeywordEffects"
+              ? action.source
+              : action.target;
+      const targets = resolveActionTargets(target, ctx, tgtCtx);
       const min = requiredResolvedTargetCount(target);
       if (action.action === "changeAttackTarget") {
         const combat = ctx.G.turnMetadata.pendingCombat;
@@ -574,6 +616,12 @@ function preflightResolved(action: EffectAction, ctx: EffectExecutionContext): b
       );
       return eligibleCards.length >= action.count;
     }
+    case "millDeckThenDamageIfTrait":
+    case "millDeckThenDamageByTraitCount":
+    case "millDeckThenStatModifierIfTrait":
+      // The mill itself always resolves. Any conditional target choice is
+      // published only after the milled cards are visible in trash.
+      return true;
     // Non-targeted / always-resolve actions.
     default:
       return true;
@@ -648,6 +696,59 @@ function clampToFilterCount<T>(
   return candidates.slice(0, count.max);
 }
 
+function enqueueFollowUpEffect(
+  ctx: EffectExecutionContext,
+  effect: CardEffect,
+  opts: { resolutionOrderSelected?: boolean } = {},
+): void {
+  const pendingEffect = {
+    id: nextPendingEffectId(ctx.G),
+    controllerId: ctx.sourcePlayerId,
+    sourceCardId: ctx.sourceCardId ?? "__effect__",
+    effect,
+    effectIndex: -1,
+    kind: "triggered" as const,
+    resolutionOrderSelected: opts.resolutionOrderSelected,
+    postActions: ctx.postActions,
+  };
+  const resolution = evaluateLegalTargets(pendingEffect, ctx.G, ctx.framework);
+  if (resolution && !requiredTargetAssignmentExists(resolution.groups)) return;
+
+  enqueuePendingEffect(ctx.G, pendingEffect, ctx.framework, { preempt: true });
+  if (ctx.postActions && ctx.postActions.length > 0) {
+    ctx.postActionState ??= {};
+    ctx.postActionState.deferredToFollowUp = true;
+  }
+}
+
+function enqueueTargetedFollowUp(
+  ctx: EffectExecutionContext,
+  action: EffectAction,
+  prompt: string,
+): void {
+  enqueueFollowUpEffect(ctx, {
+    type: "triggered",
+    activation: { timing: [] },
+    directives: [{ action }],
+    sourceText: prompt,
+  });
+}
+
+function enqueueDiscardChoice(ctx: EffectExecutionContext, count: number): void {
+  const discardTarget: TargetFilter = {
+    owner: "friendly",
+    zone: "hand",
+    count,
+  };
+  enqueueTargetedFollowUp(
+    ctx,
+    { action: "discardChosen", target: discardTarget },
+    count === 1
+      ? "Choose a card from your hand to discard."
+      : `Choose ${count} cards from your hand to discard.`,
+  );
+}
+
 function executeAction(action: EffectAction, ctx: EffectExecutionContext): void {
   const tgtCtx = buildTargetResolutionContext(
     ctx.G,
@@ -680,8 +781,32 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     case "drawAll":
       for (const playerId of Object.keys(ctx.G.players)) {
         drawByEffect(action.count, playerId, ctx);
+        if (ctx.framework.state.status.gameEnded) break;
       }
       break;
+
+    case "drawThenDiscard": {
+      drawByEffect(action.drawCount, ctx.sourcePlayerId, ctx);
+      if (ctx.framework.state.status.gameEnded) break;
+      enqueueDiscardChoice(ctx, action.discardCount);
+      break;
+    }
+
+    case "resolveThenQueue": {
+      executeAction(action.first, ctx);
+      if (ctx.framework.state.status.gameEnded) break;
+      if (action.condition) {
+        const updatedTargetContext = buildTargetResolutionContext(
+          ctx.G,
+          ctx.sourcePlayerId,
+          ctx.framework,
+          targetResolutionOptions(ctx),
+        );
+        if (!evaluateCondition(action.condition, updatedTargetContext)) break;
+      }
+      enqueueFollowUpEffect(ctx, action.followUp, { resolutionOrderSelected: true });
+      break;
+    }
 
     case "createDelayedTrigger":
       {
@@ -718,9 +843,23 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       }
       break;
 
-    case "discard":
-      handleDiscardAction(action.count, ctx.sourcePlayerId, ctx.framework, action.filter, tgtCtx);
+    case "discard": {
+      const discardTarget: TargetFilter = {
+        ...action.filter,
+        owner: "friendly",
+        zone: "hand",
+        count: action.count,
+      };
+      const targets = resolveActionTargets(discardTarget, ctx, tgtCtx) as readonly string[];
+      handleChosenDiscardAction(targets, ctx.sourcePlayerId, ctx.framework);
       break;
+    }
+
+    case "discardChosen": {
+      const targets = resolveActionTargets(action.target, ctx, tgtCtx) as readonly string[];
+      handleChosenDiscardAction(targets, ctx.sourcePlayerId, ctx.framework);
+      break;
+    }
 
     case "millDeck": {
       // Resolve which player's deck to mill. `self`/`friendly` → source
@@ -733,17 +872,15 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     }
 
     case "millDeckThenDrawIfTrait": {
-      const deckCards = ctx.framework.zones
-        .getCards({ zone: "deck", playerId: ctx.sourcePlayerId })
-        .slice(0, action.count);
+      const milledIds = handleMillDeckAction(action.count, ctx.sourcePlayerId, ctx.framework);
       let matchedTrait = false;
-      for (const cardId of deckCards) {
+      for (const cardId of milledIds) {
         const def = ctx.framework.cards.getDefinition(cardId) as Card | undefined;
         if (def?.traits.some((trait) => trait.toLowerCase() === action.trait.toLowerCase())) {
           matchedTrait = true;
         }
-        ctx.framework.zones.moveCard(cardId, { zone: "trash", playerId: ctx.sourcePlayerId });
       }
+      if (ctx.framework.state.status.gameEnded) break;
       if (matchedTrait) {
         drawByEffect(action.drawCount, ctx.sourcePlayerId, ctx);
       }
@@ -754,6 +891,7 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       const millPlayerId =
         action.owner === "opponent" ? (tgtCtx.opponentPlayerId as string) : ctx.sourcePlayerId;
       const milledIds = handleMillDeckAction(action.count, millPlayerId, ctx.framework);
+      if (ctx.framework.state.status.gameEnded) break;
       const traits = Array.isArray(action.traits) ? action.traits : [action.traits];
       const matchedTrait = milledIds.some((cardId) => {
         const def = ctx.framework.cards.getDefinition(cardId) as Card | undefined;
@@ -762,8 +900,11 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
         );
       });
       if (matchedTrait) {
-        const targets = resolveActionTargets(action.target, ctx, tgtCtx);
-        handleDealDamageAction(targets, action.damage, ctx);
+        enqueueTargetedFollowUp(
+          ctx,
+          { action: "dealDamage", amount: action.damage, target: action.target },
+          ctx.currentEffect?.sourceText ?? "Choose a Unit to receive damage.",
+        );
       }
       break;
     }
@@ -772,6 +913,7 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       const millPlayerId =
         action.owner === "opponent" ? (tgtCtx.opponentPlayerId as string) : ctx.sourcePlayerId;
       const milledIds = handleMillDeckAction(action.count, millPlayerId, ctx.framework);
+      if (ctx.framework.state.status.gameEnded) break;
       const traits = Array.isArray(action.traits) ? action.traits : [action.traits];
       const matchedCount = milledIds.filter((cardId) => {
         const def = ctx.framework.cards.getDefinition(cardId) as Card | undefined;
@@ -780,8 +922,11 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
         );
       }).length;
       if (matchedCount > 0) {
-        const targets = resolveActionTargets(action.target, ctx, tgtCtx);
-        handleDealDamageAction(targets, matchedCount, ctx);
+        enqueueTargetedFollowUp(
+          ctx,
+          { action: "dealDamage", amount: matchedCount, target: action.target },
+          ctx.currentEffect?.sourceText ?? "Choose a Unit to receive damage.",
+        );
       }
       break;
     }
@@ -790,6 +935,7 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       const millPlayerId =
         action.owner === "opponent" ? (tgtCtx.opponentPlayerId as string) : ctx.sourcePlayerId;
       const milledIds = handleMillDeckAction(action.count, millPlayerId, ctx.framework);
+      if (ctx.framework.state.status.gameEnded) break;
       const traits = Array.isArray(action.traits) ? action.traits : [action.traits];
       const matchedTrait = milledIds.some((cardId) => {
         const def = ctx.framework.cards.getDefinition(cardId) as Card | undefined;
@@ -798,8 +944,17 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
         );
       });
       if (matchedTrait) {
-        const targets = resolveActionTargets(action.target, ctx, tgtCtx);
-        handleStatModifierAction(targets, action.stat, action.amount, action.duration, ctx);
+        enqueueTargetedFollowUp(
+          ctx,
+          {
+            action: "statModifier",
+            stat: action.stat,
+            amount: action.amount,
+            duration: action.duration,
+            target: action.target,
+          },
+          ctx.currentEffect?.sourceText ?? "Choose a Unit for this modifier.",
+        );
       }
       break;
     }
@@ -813,7 +968,9 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       const targets = resolveActionTargets(action.target, ctx, tgtCtx);
       const amount =
         action.action === "dealDamageByCount"
-          ? evaluateTargetFilter(action.countFilter, gatherAllCards(tgtCtx), tgtCtx).length
+          ? action.countPreviousResolvedTargets
+            ? (ctx.previousResolvedTargets?.length ?? 0)
+            : evaluateTargetFilter(action.countFilter, gatherAllCards(tgtCtx), tgtCtx).length
           : action.action === "dealDamageBySourceStat"
             ? sourceStatDamageAmount(action, ctx)
             : action.amount;
@@ -840,9 +997,49 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       break;
     }
 
-    case "dealDamageByChosenUnitLevel": {
-      const targets = resolveChosenUnitLevelDamageTargets(action, ctx, tgtCtx);
-      handleDealDamageAction(targets, action.amount, ctx);
+    case "dealDamageByTargetKeyword": {
+      const targets = resolveActionTargets(action.target, ctx, tgtCtx);
+      for (const targetId of targets) {
+        const amount = hasKeyword(
+          targetId as string,
+          action.keyword,
+          ctx.G,
+          ctx.framework.cards,
+          ctx.framework,
+        )
+          ? action.keywordAmount
+          : action.amount;
+        handleDealDamageAction([targetId], amount, ctx);
+      }
+      break;
+    }
+
+    case "restThenDamageByChosenUnitLevel": {
+      const referenceIds = resolveActionTargets(action.referenceTarget, ctx, tgtCtx);
+      ctx.previousResolvedTargets = referenceIds;
+      const referenceCard = referenceIds[0]
+        ? tgtCtx.getCardById(referenceIds[0] as CardInstanceId)
+        : undefined;
+      if (!referenceCard) break;
+
+      handleRestAction(referenceIds, ctx);
+      const referenceLevel = tgtCtx.getCardLevel(referenceCard);
+      enqueueTargetedFollowUp(
+        ctx,
+        {
+          action: "dealDamage",
+          amount: action.amount,
+          target: {
+            ...action.target,
+            attributeFilters: [
+              ...(action.target.attributeFilters ?? []),
+              { attribute: "level", comparison: "lte", value: referenceLevel },
+            ],
+          },
+        },
+        ctx.currentEffect?.sourceText ??
+          "Choose an enemy Unit whose level is no higher than the rested Unit.",
+      );
       break;
     }
 
@@ -872,9 +1069,15 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
 
     case "rest": {
       const targets = resolveActionTargets(action.target, ctx, tgtCtx);
-      handleRestAction(targets, ctx);
+      ctx.previousResolvedTargets = targets;
+      handleRestAction(targets, ctx, { allowSubstitution: action.allowSubstitution });
       break;
     }
+
+    case "substituteBaseRestWithSelf":
+      // Declarative marker consumed by handleRestAction. Substitution
+      // effects are not independently executable.
+      break;
 
     case "setActive": {
       const targets = resolveActionTargets(action.target, ctx, tgtCtx);
@@ -940,6 +1143,12 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       break;
     }
 
+    case "placeInTrash": {
+      const targets = resolveActionTargets(action.target, ctx, tgtCtx);
+      handlePlaceInTrashAction(targets, ctx);
+      break;
+    }
+
     case "deploy": {
       const targets = resolveActionTargets(action.target, ctx, tgtCtx);
       handleDeployAction(targets, ctx);
@@ -959,12 +1168,6 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     case "deployExBase": {
       const count = action.count ?? 1;
       for (let i = 0; i < count; i++) {
-        const existingBases = ctx.framework.zones.getCards({
-          zone: "baseSection",
-          playerId: ctx.sourcePlayerId,
-        });
-        if (existingBases.length >= 1) break;
-
         const tokenId = `ex_base_token_${++exBaseTokenCounter}`;
         ctx.framework.cards.registerDefinition(
           tokenId,
@@ -975,7 +1178,7 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
           tokenId,
           { zone: "baseSection", playerId: ctx.sourcePlayerId },
           ctx.sourcePlayerId as PlayerId,
-          { isToken: true },
+          { isToken: true, tokenDefinitionId: exbpExBase001.cardNumber },
         );
         ctx.G.turnMetadata.deployedThisTurn.push(tokenId);
         ctx.framework.cards.patchMeta(tokenId, { deployedThisTurn: true, exhausted: false });
@@ -990,6 +1193,7 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
           visibility: { mode: "PUBLIC" },
           category: "action",
         });
+        enqueueBaseSectionExcessManagement(ctx.G, ctx.sourcePlayerId, tokenId, ctx.framework);
         enqueueMoveCompletionFence(ctx.G, ctx.sourcePlayerId, ctx.framework, [
           {
             kind: "emitEvent",
@@ -1044,53 +1248,49 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       break;
     }
 
-    case "placeResource": {
-      // Place the source card as a resource. Enforces caps (Rules 4-4-2, 4-4-2-1).
-      // Honours `action.state` — `"rested"` marks the placed resource as
-      // exhausted, so "Place 1 rested Resource." doesn't yield a free
-      // on-play resource that can be tapped the same turn.
-      if (ctx.sourceCardId) {
-        const isEX = isExResourceToken(ctx.sourceCardId, ctx.framework);
-        if (canPlaceResource(ctx.sourcePlayerId, isEX, ctx.framework)) {
-          ctx.framework.zones.moveCard(ctx.sourceCardId, {
-            zone: "resourceArea",
-            playerId: ctx.sourcePlayerId,
-          });
-          if (action.state === "rested") {
-            ctx.G.exhausted[ctx.sourceCardId] = true;
-            ctx.framework.cards.patchMeta(ctx.sourceCardId, { exhausted: true });
-          }
-          emitGundamLog(ctx.framework, {
-            type: "gundam.effect.resourcePlaced",
-            values: {
-              playerId: ctx.sourcePlayerId,
-              cardId: ctx.sourceCardId,
-              state: action.state === "rested" ? "rested" : "active",
-            },
-            visibility: { mode: "PUBLIC" },
-            category: "action",
-          });
-
-          // Reactive trigger: "When you place an EX Resource"
-          if (isEX) {
-            const exEvent = {
-              type: "exResourcePlaced" as const,
-              cardId: ctx.sourceCardId,
-              playerId: ctx.sourcePlayerId,
-              ownerId: ctx.sourcePlayerId,
-            };
-            enqueueObserverTriggers(ctx.G, exEvent, ctx.framework, undefined);
-
-            emitGundamEvent(ctx.framework.events, {
-              kind: "EX_RESOURCE_PLACED",
-              payload: {
-                playerId: ctx.sourcePlayerId,
-                cardId: ctx.sourceCardId,
-              },
-            });
-          }
-        }
+    case "addFromTrashThenDiscard": {
+      if (action.target.zone && action.target.zone !== "trash") {
+        throw new Error(
+          `Invalid addFromTrashThenDiscard target zone: ${String(action.target.zone)} (must be "trash")`,
+        );
       }
+      const targets = resolveActionTargets({ ...action.target, zone: "trash" }, ctx, tgtCtx);
+      ctx.previousResolvedTargets = targets;
+      for (const cardId of targets) {
+        ctx.framework.zones.moveCard(cardId as string, {
+          zone: "hand",
+          playerId: ctx.sourcePlayerId,
+        });
+      }
+      if (targets.length > 0) enqueueDiscardChoice(ctx, action.discardCount);
+      break;
+    }
+
+    case "placeResource": {
+      // Rules 3-6-1 and 4-4-1: a normal Resource is placed from the
+      // controller's resource deck. The source card remains where its own
+      // lifecycle puts it (for a Command, trash after the effect ends).
+      if (!canPlaceResource(ctx.sourcePlayerId, false, ctx.framework)) break;
+      const [placedCardId] = ctx.framework.zones.drawCards({
+        from: { zone: "resourceDeck", playerId: ctx.sourcePlayerId },
+        to: { zone: "resourceArea", playerId: ctx.sourcePlayerId },
+        count: 1,
+      });
+      if (!placedCardId) break;
+      if (action.state === "rested") {
+        ctx.G.exhausted[placedCardId] = true;
+        ctx.framework.cards.patchMeta(placedCardId, { exhausted: true });
+      }
+      emitGundamLog(ctx.framework, {
+        type: "gundam.effect.resourcePlaced",
+        values: {
+          playerId: ctx.sourcePlayerId,
+          cardId: placedCardId,
+          state: action.state === "rested" ? "rested" : "active",
+        },
+        visibility: { mode: "PUBLIC" },
+        category: "action",
+      });
       break;
     }
 
@@ -1108,7 +1308,7 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
           tokenId,
           { zone: "resourceArea", playerId: ctx.sourcePlayerId },
           ctx.sourcePlayerId as PlayerId,
-          { isToken: true },
+          { isToken: true, tokenDefinitionId: exrpExResource003.cardNumber },
         );
         if (action.state === "rested") {
           ctx.G.exhausted[tokenId] = true;
@@ -1149,6 +1349,7 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
         action.count,
         action.return,
         action.remainingDestination,
+        action.randomizeRemainingToBottom === true,
         action.tutorFilter,
         action.tutorDestination,
         ctx,
@@ -1164,7 +1365,13 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       // buff every matching friendly instead of the chosen one.
       const targets = resolveActionTargets(action.target, ctx, tgtCtx);
       ctx.previousResolvedTargets = targets;
-      handleGrantKeywordAction(targets, action.keyword, action.duration, ctx);
+      handleGrantKeywordAction(
+        targets,
+        action.keyword,
+        action.keywordValue ?? 1,
+        action.duration,
+        ctx,
+      );
       break;
     }
 
@@ -1176,7 +1383,13 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
         ? (ctx.framework.cards.getDefinition(sources[0] as string) as Card | undefined)
         : undefined;
       for (const keyword of sourceDef?.keywordEffects ?? []) {
-        handleGrantKeywordAction(targets, keyword.keyword, action.duration, ctx);
+        handleGrantKeywordAction(
+          targets,
+          keyword.keyword,
+          keyword.value ?? 1,
+          action.duration,
+          ctx,
+        );
       }
       break;
     }
@@ -1301,14 +1514,30 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     case "activateTiming": {
       // "Activate this card's 【Main】/【Action】" — re-trigger effects
       // at the given timing. Used by Burst effects that replay a command.
-      // Targets flow through ctx.chosenTargets from fireShieldBurst.
+      // Enqueue the replay instead of executing it inline so bounded target
+      // choices halt through the same simulator protocol as every other
+      // effect. The outer Burst has already been accepted, so this nested
+      // effect is mandatory but retains Burst priority.
       if (ctx.sourceCardId) {
         const def = ctx.framework.cards.getDefinition(ctx.sourceCardId) as Card | undefined;
         if (def?.effects?.length) {
-          for (const effect of def.effects as CardEffect[]) {
+          for (const [effectIndex, effect] of (def.effects as CardEffect[]).entries()) {
             const effectTimings = (effect.activation.timing ?? []) as string[];
             if (effectTimings.includes(action.timing)) {
-              executeCardEffect(effect, ctx);
+              enqueuePendingEffect(
+                ctx.G,
+                {
+                  id: nextPendingEffectId(ctx.G),
+                  controllerId: ctx.sourcePlayerId,
+                  sourceCardId: ctx.sourceCardId,
+                  effect,
+                  effectIndex,
+                  kind: "burst",
+                  chosenTargets: ctx.chosenTargets,
+                },
+                ctx.framework,
+                { preempt: true },
+              );
             }
           }
         }
@@ -1343,27 +1572,9 @@ function sourceStatDamageAmount(
   return Math.floor(stats[action.stat] / divisor) * action.damagePerStep;
 }
 
-function resolveChosenUnitLevelDamageTargets(
-  action: Extract<EffectAction, { action: "dealDamageByChosenUnitLevel" }>,
-  ctx: EffectExecutionContext,
-  tgtCtx: ReturnType<typeof buildTargetResolutionContext>,
-): ReturnType<typeof evaluateTargetFilter> {
-  const referenceIds = resolveActionTargets(action.referenceTarget, ctx, tgtCtx);
-  const referenceCard = referenceIds
-    .map((id) => tgtCtx.getCardById(id as CardInstanceId))
-    .find((card) => card !== undefined);
-  if (!referenceCard) return [];
-
-  const referenceLevel = tgtCtx.getCardLevel(referenceCard);
-  return resolveActionTargets(action.target, ctx, tgtCtx).filter((targetId) => {
-    const targetCard = tgtCtx.getCardById(targetId as CardInstanceId);
-    return targetCard !== undefined && tgtCtx.getCardLevel(targetCard) <= referenceLevel;
-  }) as ReturnType<typeof evaluateTargetFilter>;
-}
-
 function drawByEffect(count: number, playerId: string, ctx: EffectExecutionContext): string[] {
   const drawnIds = handleDrawAction(count, playerId, ctx.framework);
-  if (drawnIds.length === 0) return drawnIds;
+  if (drawnIds.length === 0 || ctx.framework.state.status.gameEnded) return drawnIds;
   enqueueObserverTriggers(
     ctx.G,
     {
@@ -1609,6 +1820,19 @@ function handlePreventiveAction(
           { kind: "restriction", restriction: "cannot-attack" },
           cardId as string,
           mapDuration(action.duration),
+          ctx,
+        );
+      }
+      break;
+    }
+
+    case "cantTargetPlayer": {
+      const sourceId = sourceIdentityCardId(ctx);
+      if (sourceId) {
+        pushPreventiveEffect(
+          { kind: "restriction", restriction: "cannot-target-player" },
+          sourceId,
+          "this-turn",
           ctx,
         );
       }

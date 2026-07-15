@@ -12,12 +12,27 @@ export const gearScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [],
+          hand: [c.welcomeToNightCityRetailMandibularUpgrade],
           field: [
             {
               card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
               spent: false,
               attachedGears: [c.welcomeToNightCityRetailDyingNightVSPistol],
+            },
+            {
+              card: c.welcomeToNightCityRetailSwordwiseHuscle,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailSatoriSwordOfSaburo],
+            },
+            {
+              card: c.welcomeToNightCityRetailLaLloronaGhostOfThePast,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailZetatechFaceplate],
+            },
+            {
+              card: c.welcomeToNightCityRetailRidingNomad,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailGorillaArms],
             },
           ],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
@@ -25,6 +40,7 @@ export const gearScenarios: Scenario[] = [
           gigArea: [
             { dieType: "d4", faceValue: 3 },
             { dieType: "d6", faceValue: 5 },
+            { dieType: "d12", faceValue: 10 },
           ],
         },
         {
@@ -38,7 +54,12 @@ export const gearScenarios: Scenario[] = [
           ],
           legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
-          gigArea: [{ dieType: "d4", faceValue: 2 }],
+          gigArea: [
+            { dieType: "d4", faceValue: 2 },
+            { dieType: "d12", faceValue: 9 },
+
+            { dieType: "d6", faceValue: 5 },
+          ],
         },
         { seed: scenarioSeed("gearDyingNightHighCred"), autoGainGig: false },
       ),
@@ -510,6 +531,39 @@ export const gearScenarios: Scenario[] = [
           gigArea: [{ dieType: "d10", faceValue: 4 }],
         },
         { seed: scenarioSeed("gearZetatechFaceplateRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "gearOverwatchPanamsGiftRetail",
+    group: "gear-spent-trigger",
+    label: "Overwatch · Panam's Gift · Quick discard defeat",
+    description:
+      "P1 has Overwatch attached to a ready Unit, discard fodder in hand, and a spent rival Unit whose cost is covered by the discarded card.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailScrewLovelornFool],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailNadiaFightingThroughGrief,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailOverwatchPanamSGift],
+            },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 3,
+          gigArea: [{ dieType: "d8", faceValue: 5 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("gearOverwatchPanamsGiftRetail"), autoGainGig: false },
       ),
   },
 ];

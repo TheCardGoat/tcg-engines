@@ -13,11 +13,18 @@ export interface ChatMessage {
 export interface ChatPanelProps {
   messages: ReadonlyArray<ChatMessage>;
   presets: ReadonlyArray<{ id: string; label: string }>;
+  canSend?: boolean;
+  freeTextEnabled?: boolean;
+  freeTextProposalPending?: boolean;
+  canRequestFreeText?: boolean;
   maxLength?: number;
   placeholder?: string;
   onSendText?: (text: string) => void;
   onSendPreset?: (presetId: string) => void;
+  onRequestFreeText?: () => void;
   compact?: boolean;
+  showMessages?: boolean;
+  layout?: "default" | "mobile-drawer";
 }
 
 const TIME_FMT = new Intl.DateTimeFormat(undefined, {
@@ -29,20 +36,30 @@ const TIME_FMT = new Intl.DateTimeFormat(undefined, {
 export function ChatPanel({
   messages,
   presets,
+  canSend = true,
+  freeTextEnabled = false,
+  freeTextProposalPending = false,
+  canRequestFreeText = false,
   maxLength = 280,
   placeholder = "Type a message…",
   onSendText,
   onSendPreset,
+  onRequestFreeText,
   compact = false,
+  showMessages = true,
+  layout = "default",
 }: ChatPanelProps) {
   const { scrollRef, onScroll } = useStickToBottom<HTMLDivElement>([messages.length]);
   const [draft, setDraft] = useState("");
+  const mobileDrawerLayout = layout === "mobile-drawer";
 
   const trimmed = draft.trim();
-  const canSend = trimmed.length > 0 && trimmed.length <= maxLength;
+  const canSendText =
+    canSend && freeTextEnabled && trimmed.length > 0 && trimmed.length <= maxLength;
+  const canRequest = canSend && canRequestFreeText && !freeTextProposalPending && onRequestFreeText;
 
   const handleSend = () => {
-    if (!canSend) return;
+    if (!canSendText) return;
     onSendText?.(trimmed);
     setDraft("");
   };
@@ -59,25 +76,33 @@ export function ChatPanel({
   };
 
   return (
-    <div className={`${classes.panel} ${compact ? classes.panelCompact : ""}`} data-testid="chat">
-      <div
-        ref={scrollRef}
-        onScroll={onScroll}
-        className={classes.scroll}
-        role="log"
-        aria-live="polite"
-        data-testid="chat-messages"
-      >
-        {messages.length === 0 ? (
-          <div className={classes.empty}>No messages yet.</div>
-        ) : (
-          messages.map((m, i) => {
-            const prev = messages[i - 1];
-            const grouped = prev !== undefined && speakerKey(prev) === speakerKey(m);
-            return <ChatBubble key={m.id} message={m} grouped={grouped} />;
-          })
-        )}
-      </div>
+    <div
+      className={`${classes.panel} ${compact ? classes.panelCompact : ""} ${
+        mobileDrawerLayout ? classes.panelMobileDrawer : ""
+      }`}
+      data-testid="chat"
+      data-layout={layout}
+    >
+      {showMessages ? (
+        <div
+          ref={scrollRef}
+          onScroll={onScroll}
+          className={classes.scroll}
+          role="log"
+          aria-live="polite"
+          data-testid="chat-messages"
+        >
+          {messages.length === 0 ? (
+            <div className={classes.empty}>No messages yet.</div>
+          ) : (
+            messages.map((m, i) => {
+              const prev = messages[i - 1];
+              const grouped = prev !== undefined && speakerKey(prev) === speakerKey(m);
+              return <ChatBubble key={m.id} message={m} grouped={grouped} />;
+            })
+          )}
+        </div>
+      ) : null}
 
       <div className={classes.presets} data-testid="chat-presets">
         {presets.map((preset) => (
@@ -88,34 +113,58 @@ export function ChatPanel({
             data-testid="chat-quick"
             data-quick-id={preset.id}
             onClick={() => onSendPreset?.(preset.id)}
+            disabled={!canSend}
           >
             {preset.label}
           </button>
         ))}
       </div>
 
-      <div className={classes.inputRow}>
-        <input
-          type="text"
-          className={classes.input}
-          data-testid="chat-input"
-          value={draft}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          maxLength={maxLength}
-          aria-label="Chat message"
-        />
-        <button
-          type="button"
-          className={classes.sendBtn}
-          data-testid="chat-send"
-          onClick={handleSend}
-          disabled={!canSend}
-        >
-          Send
-        </button>
-      </div>
+      {freeTextEnabled ? (
+        <div className={classes.inputRow}>
+          <input
+            type="text"
+            className={classes.input}
+            data-testid="chat-input"
+            value={draft}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            placeholder={placeholder}
+            maxLength={maxLength}
+            aria-label="Chat message"
+          />
+          <button
+            type="button"
+            className={classes.sendBtn}
+            data-testid="chat-send"
+            onClick={handleSend}
+            disabled={!canSendText}
+          >
+            Send
+          </button>
+        </div>
+      ) : (
+        <div className={classes.freeTextGate} data-testid="chat-free-text-gate">
+          <span className={classes.freeTextGateText}>
+            {!canSend
+              ? "Spectators cannot send messages."
+              : canRequestFreeText
+                ? "Free text requires opponent approval."
+                : "Preset messages only in this match."}
+          </span>
+          {canSend && canRequestFreeText ? (
+            <button
+              type="button"
+              className={classes.requestBtn}
+              data-testid="chat-request-free-text"
+              onClick={() => onRequestFreeText?.()}
+              disabled={!canRequest}
+            >
+              {freeTextProposalPending ? "Waiting for opponent..." : "Request free text"}
+            </button>
+          ) : null}
+        </div>
+      )}
     </div>
   );
 }

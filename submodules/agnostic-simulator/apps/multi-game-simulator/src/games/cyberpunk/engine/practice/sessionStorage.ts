@@ -1,8 +1,5 @@
-import {
-  DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
-  getAutomatedActionStrategyOption,
-} from "@tcg/cyberpunk-engine";
-import type { StrategyDescriptor } from "../index";
+import { getAutomatedActionStrategyOption } from "@tcg/cyberpunk-engine";
+import { DEFAULT_AUTOMATED_ACTION_STRATEGY_ID, type StrategyDescriptor } from "../index";
 import type { DeckList } from "@tcg/cyberpunk-engine";
 import { DEFAULT_BOT_PRACTICE_DECK_ID, DEFAULT_PLAYER_PRACTICE_DECK_ID } from "./deckFixtures";
 

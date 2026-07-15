@@ -18,7 +18,7 @@ describe("T-Bug — Amateur Philosopher", () => {
           {
             card: welcomeToNightCityRetailTBugAmateurPhilosopher,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         legendArea: [
@@ -87,7 +87,7 @@ describe("T-Bug — Amateur Philosopher", () => {
           {
             card: welcomeToNightCityRetailTBugAmateurPhilosopher,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         legendArea: [

@@ -1,63 +1,86 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
   createMockUnit,
+  expectFailure,
   expectSuccess,
-  getEffectiveStats,
-  seedBaseAsShield,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd03JachinDue127 } from "./127-jachin-due.ts";
 
 describe("Jachin Due (GD03-127)", () => {
-  it("【Burst】Deploy this card — flips into baseSection on shield destruction", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd03JachinDue127] });
-    const shieldId = seedBaseAsShield(engine, PLAYER_TWO, gd03JachinDue127);
-
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `baseSection:${PLAYER_TWO}`,
+  it("lets its owner deploy it when its Burst is revealed by a direct attack", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd03JachinDue127] },
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      controllerId: PLAYER_TWO,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+
+    expect(p2.getCardZone(gd03JachinDue127)).toBe(`baseSection:${PLAYER_TWO}`);
   });
 
-  it("【Deploy】 adds a shield to hand and gives a friendly ZAFT Unit AP+3 this turn", () => {
-    const zaft = createMockUnit({ ap: 2, traits: ["zaft"] });
-    const nonZaft = createMockUnit({ ap: 2, traits: ["earth alliance"] });
-    const engine = GundamTestEngine.create(
-      {
-        hand: [gd03JachinDue127],
-        play: [zaft, nonZaft],
-        resourceArea: activeResources(6),
-        deck: 6,
-      },
-      {},
-    );
-    const shieldIds = seedShieldsFromDeck(engine, PLAYER_ONE, 2);
+  it("adds a shield to hand and gives only the chosen ZAFT Unit AP+3 for the turn", () => {
+    const zaft = createMockUnit({ cardNumber: "TEST-ZAFT", ap: 2, traits: ["zaft"] });
+    const nonZaft = createMockUnit({
+      cardNumber: "TEST-NON-ZAFT",
+      ap: 2,
+      traits: ["earth alliance"],
+    });
+    const returnedShield = createMockUnit({
+      cardNumber: "TEST-RETURNED-SHIELD",
+      name: "Returned Shield",
+    });
+    const engine = GundamTestEngine.create({
+      hand: [gd03JachinDue127],
+      play: [zaft, nonZaft],
+      resourceArea: activeResources(6),
+      shieldArea: [returnedShield],
+    });
     const p1 = engine.asPlayer(PLAYER_ONE);
     const [zaftId, nonZaftId] = p1.getCardsInZone("battleArea");
 
     expectSuccess(p1.deployBase(gd03JachinDue127, { targets: [zaftId!] }));
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    expect(p1.getHand()).toContain(shieldIds[0]);
-    expect(getEffectiveStats(zaftId!, engine.getG(), framework.cards, framework).ap).toBe(5);
-    expect(getEffectiveStats(nonZaftId!, engine.getG(), framework.cards, framework).ap).toBe(2);
+    expect(p1.getCardZone(returnedShield)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getCardZone(gd03JachinDue127)).toBe(`baseSection:${PLAYER_ONE}`);
+    expect(p1.getVisibleCard(zaftId!)?.effectiveAp).toBe(5);
+    expect(p1.getVisibleCard(nonZaftId!)?.effectiveAp).toBe(2);
+
+    expectSuccess(p1.passPhase());
+    expectSuccess(engine.asPlayer(PLAYER_TWO).passActionStep());
+    expectSuccess(p1.passActionStep());
+
+    expect(p1.getVisibleCard(zaftId!)?.effectiveAp).toBe(2);
   });
 
-  it("【Deploy】 rejects a non-ZAFT target for the AP bonus", () => {
+  it("rejects a non-ZAFT Unit as the AP bonus target", () => {
     const nonZaft = createMockUnit({ traits: ["earth alliance"] });
-    const engine = GundamTestEngine.create(
-      { hand: [gd03JachinDue127], play: [nonZaft], resourceArea: activeResources(6), deck: 6 },
-      {},
-    );
-    seedShieldsFromDeck(engine, PLAYER_ONE, 2);
+    const engine = GundamTestEngine.create({
+      hand: [gd03JachinDue127],
+      play: [nonZaft],
+      resourceArea: activeResources(6),
+      shieldArea: [createMockUnit({ name: "Shield" })],
+    });
     const p1 = engine.asPlayer(PLAYER_ONE);
     const nonZaftId = p1.getCardsInZone("battleArea")[0]!;
 
-    expect(p1.deployBase(gd03JachinDue127, { targets: [nonZaftId] }).success).toBe(false);
+    expectFailure(p1.deployBase(gd03JachinDue127, { targets: [nonZaftId] }), "INVALID_TARGET");
+    expect(p1.getCardZone(gd03JachinDue127)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getVisibleCard(nonZaftId)?.effectiveAp).toBe(2);
   });
 });

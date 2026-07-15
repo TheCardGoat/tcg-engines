@@ -9,7 +9,7 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const gearMantisBladesBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "gearMantisBlades",
   label: "Mantis Blades - host power boost",
-  references: ["packages/engine/src/cards/alpha/gear/mantis-blades.test.ts"],
+  references: ["packages/engine/src/cards/welcometonightcityretail/gear/mantis-blades.test.ts"],
   async run(pom) {
     const host = await pom.getCardInZoneByDefinitionId(
       "field",

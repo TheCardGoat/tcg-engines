@@ -18,6 +18,16 @@ interface PresencePlayer {
   disconnectedAt?: string;
 }
 
+interface PresenceDiagnostic {
+  playerId?: string;
+  status?: string;
+  connected?: boolean;
+  disconnectedAt?: string;
+  lastPingAt?: string;
+  latencyMs?: number;
+  disconnectCount?: number;
+}
+
 const INTERRUPTED_STATUSES = new Set<PlayerConnectionUiStatus>(["reconnecting", "disconnected"]);
 
 export function connectionUiStatus(
@@ -168,6 +178,24 @@ export function applyPresenceChange(
   return applyPresenceForSide(current, side, record.status === "connected", disconnectedAt);
 }
 
+export function applyPresenceDiagnostics(
+  current: PlayerConnectionBySide,
+  actorIds: ActorIdsBySide | undefined,
+  presence: ReadonlyArray<PresenceDiagnostic>,
+): PlayerConnectionBySide {
+  if (!actorIds) {
+    return current;
+  }
+  let next = current;
+  for (const record of presence) {
+    if (!record.playerId) continue;
+    const side = sideForActorId(actorIds, record.playerId);
+    if (!side) continue;
+    next = applyPresenceDiagnosticForSide(next, side, record);
+  }
+  return next;
+}
+
 function applyPresenceForSide(
   current: PlayerConnectionBySide,
   side: Side,
@@ -187,6 +215,41 @@ function applyPresenceForSide(
         !connected && !wasDisconnected
           ? (previous?.disconnectCount ?? 0) + 1
           : (previous?.disconnectCount ?? 0),
+    },
+  };
+}
+
+function applyPresenceDiagnosticForSide(
+  current: PlayerConnectionBySide,
+  side: Side,
+  record: PresenceDiagnostic,
+): PlayerConnectionBySide {
+  const connected =
+    record.status === "connected"
+      ? true
+      : record.status === "disconnected"
+        ? false
+        : record.connected;
+  if (typeof connected !== "boolean") {
+    return current;
+  }
+  const next = applyPresenceForSide(current, side, connected, record.disconnectedAt);
+  const patched = next[side];
+  const parsedLastPingAt =
+    typeof record.lastPingAt === "string" ? Date.parse(record.lastPingAt) : undefined;
+  return {
+    ...next,
+    [side]: {
+      ...patched,
+      lastPingAt:
+        typeof parsedLastPingAt === "number" && Number.isFinite(parsedLastPingAt)
+          ? parsedLastPingAt
+          : patched?.lastPingAt,
+      latencyMs: typeof record.latencyMs === "number" ? record.latencyMs : patched?.latencyMs,
+      disconnectCount:
+        typeof record.disconnectCount === "number"
+          ? Math.max(record.disconnectCount, patched?.disconnectCount ?? 0)
+          : patched?.disconnectCount,
     },
   };
 }

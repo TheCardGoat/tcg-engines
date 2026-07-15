@@ -28,7 +28,7 @@ describe("Modded Kusanagi (Retail) jsdom happy path", () => {
         CYBERPUNK_P1,
         welcomeToNightCityRetailModdedKusanagi.id,
       );
-      expectEqual("Modded Kusanagi played this turn", kusanagiOnField.playedThisTurn, true);
+      expectEqual("Modded Kusanagi has Lag", kusanagiOnField.hasLag, true);
 
       const directCandidates = await pom.getMoveCandidateIds(CYBERPUNK_P1, "attackRival");
       if (!directCandidates.includes(kusanagiOnField.instanceId)) {

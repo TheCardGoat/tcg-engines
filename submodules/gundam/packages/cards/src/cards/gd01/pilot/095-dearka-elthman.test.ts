@@ -4,56 +4,75 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  asPlayerId,
   createMockUnit,
   expectSuccess,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd01DearkaElthman095 } from "./095-dearka-elthman.ts";
 
 describe("Dearka Elthman (GD01-095)", () => {
-  it("【Burst】 Add this card to your hand", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd01DearkaElthman095] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, gd01DearkaElthman095.cardNumber, asPlayerId(PLAYER_TWO));
-
-    engine.fireShieldBurst(shieldId);
-
-    const zone = engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey;
-    expect(zone).toBe(`hand:${PLAYER_TWO}`);
-  });
-
-  it("【When Linked】Discard 1. If you do, draw 1.", () => {
-    // dependsOnPrevious: draw fires only if discard resolved.
-    // Extra hand card so the discard has a valid target after deploy+assign.
-    const linkUnit = createMockUnit({
-      level: 3,
-      cost: 1,
-      linkCondition: "[Dearka Elthman]",
-    });
-    const fodder = createMockUnit({ ap: 1, hp: 1 });
+  it("【Burst】 adds the revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 4 });
     const engine = GundamTestEngine.create(
-      {
-        hand: [linkUnit, gd01DearkaElthman095, fodder],
-        resourceArea: activeResources(6),
-        deck: 10,
-      },
-      {},
+      { play: [attacker] },
+      { shieldArea: [gd01DearkaElthman095] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(p1.deployUnit(linkUnit));
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({ kind: "optional", directiveIndex: -1 });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
-    const trashBefore = p1.getCardsInZone("trash").length;
+    expect(p2.getCardZone(gd01DearkaElthman095)).toBe(`hand:${PLAYER_TWO}`);
+  });
 
-    expectSuccess(p1.assignPilot(gd01DearkaElthman095, linkUnit));
+  it("【When Linked】 asks which card to discard, then draws only after the chosen discard", () => {
+    const host = createMockUnit({ linkCondition: "[Dearka Elthman]", ap: 2, hp: 4 });
+    const firstFodder = createMockUnit({ name: "First Fodder" });
+    const secondFodder = createMockUnit({ name: "Second Fodder" });
+    const engine = GundamTestEngine.create({
+      hand: [gd01DearkaElthman095, firstFodder, secondFodder],
+      play: [host],
+      resourceArea: activeResources(3),
+      deck: 5,
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
 
-    // Discard 1 then draw 1: deck -1 (draw), trash +1 (discard).
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore - 1);
-    expect(p1.getCardsInZone("trash").length).toBe(trashBefore + 1);
+    expectSuccess(p1.assignPilot(gd01DearkaElthman095, hostId));
+    const [firstFodderId, secondFodderId] = p1.getHand();
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [firstFodderId, secondFodderId],
+    });
+    const deckBefore = p1.getBoardView().players[PLAYER_ONE]!.deckCount;
+    expectSuccess(p1.resolveEffect({ targets: [secondFodderId!] }));
+
+    expect(p1.getCardZone(secondFodderId!)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(firstFodderId!)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(deckBefore - 1);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+  });
+
+  it("does not draw when no card can be discarded after Dearka becomes linked", () => {
+    const host = createMockUnit({ linkCondition: "[Dearka Elthman]", ap: 2, hp: 4 });
+    const engine = GundamTestEngine.create({
+      hand: [gd01DearkaElthman095],
+      play: [host],
+      resourceArea: activeResources(3),
+      deck: 5,
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const deckBefore = p1.getBoardView().players[PLAYER_ONE]!.deckCount;
+
+    expectSuccess(p1.assignPilot(gd01DearkaElthman095, hostId));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(deckBefore);
   });
 });

@@ -34,6 +34,14 @@ export { greedyLegalStrategy } from "./greedy-legal-strategy.ts";
 export { passOnlyStrategy } from "./pass-only-strategy.ts";
 export { valueRankedStrategy, rankByDamage, rankByStatTotal } from "./value-ranked-strategy.ts";
 export { tempoStrategy } from "./tempo-strategy.ts";
+export {
+  DEFAULT_GUNDAM_AUTOMATED_ACTION_STRATEGY_ID,
+  GUNDAM_AUTOMATED_ACTION_STRATEGIES,
+  getGundamAutomatedActionStrategyOption,
+  getSafeGundamAutomatedActionStrategyOption,
+  type GundamAutomatedActionStrategyId,
+  type GundamAutomatedActionStrategyOption,
+} from "./strategy-registry.ts";
 
 export type {
   FamilyPolicy,
@@ -48,11 +56,17 @@ export {
   vetoFamily,
 } from "./shared-policies.ts";
 
-export type { MoveBinding, SelectTargetBinding, SelectTargetStep } from "./move-binding.ts";
+export type {
+  MoveBinding,
+  SelectModeBinding,
+  SelectTargetBinding,
+  SelectTargetStep,
+} from "./move-binding.ts";
 export {
   MOVE_BINDINGS,
   getMoveBinding,
   seedPrimaryCardInput,
+  selectModeInputBinding,
   selectTargetInputBinding,
 } from "./move-binding.ts";
 

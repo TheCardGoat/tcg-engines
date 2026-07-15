@@ -5,6 +5,12 @@ import type { CardOverlayState, Rect } from "./motionTypes";
 const DEFAULT_CARD_WIDTH = 118;
 const DEFAULT_CARD_HEIGHT = 156;
 const STAGE_SELECTOR = ".motion-animation-stage";
+const ENTITY_CARD_VISUAL_SELECTOR = [
+  ".sim-card-face",
+  ".sim-card-image",
+  '[data-testid="resolving-program-card"]',
+  '[data-testid="card"]',
+].join(",");
 
 export interface RectCache {
   byEntityId: Map<string, Rect>;
@@ -27,7 +33,7 @@ export function readRectCache(): RectCache {
       cache.byZoneId.set(zoneId, zoneRect);
       zone.querySelectorAll<HTMLElement>("[data-sim-entity-id]").forEach((entity) => {
         const entityId = entity.dataset.simEntityId;
-        const rect = usableRect(entity);
+        const rect = entityVisualRect(entity);
         if (entityId && rect) {
           cache.byZoneEntityId.set(zoneEntityKey(zoneId, entityId), rect);
         }
@@ -36,7 +42,7 @@ export function readRectCache(): RectCache {
   });
   root.querySelectorAll<HTMLElement>("[data-sim-entity-id]").forEach((entity) => {
     const entityId = entity.dataset.simEntityId;
-    const rect = usableRect(entity);
+    const rect = entityVisualRect(entity);
     if (entityId && rect && !cache.byEntityId.has(entityId)) {
       cache.byEntityId.set(entityId, rect);
     }
@@ -198,7 +204,10 @@ function liveEntityRect(entityId: string): Rect | undefined {
   if (!canReadDom()) {
     return undefined;
   }
-  return liveDataRect("sim-entity-id", entityId);
+  const element = simulationRoot().querySelector<HTMLElement>(
+    dataSelector("sim-entity-id", entityId),
+  );
+  return element ? entityVisualRect(element) : undefined;
 }
 
 function liveZoneEntityRect(zoneId: string, entityId: string): Rect | undefined {
@@ -208,7 +217,7 @@ function liveZoneEntityRect(zoneId: string, entityId: string): Rect | undefined 
   const zone = simulationRoot().querySelector<HTMLElement>(dataSelector("sim-zone-id", zoneId));
   if (!zone) return undefined;
   const entity = zone.querySelector<HTMLElement>(dataSelector("sim-entity-id", entityId));
-  return entity ? usableRect(entity) : undefined;
+  return entity ? entityVisualRect(entity) : undefined;
 }
 
 function cachedEntityRect(cache: RectCache, entityId: string): Rect | undefined {
@@ -245,6 +254,18 @@ function usableRect(element: HTMLElement): Rect | undefined {
     return undefined;
   }
   return { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
+}
+
+function entityVisualRect(element: HTMLElement): Rect | undefined {
+  const visual = preferredEntityVisualElement(element);
+  return usableRect(visual) ?? usableRect(element);
+}
+
+function preferredEntityVisualElement(element: HTMLElement): HTMLElement {
+  if (element.matches(ENTITY_CARD_VISUAL_SELECTOR)) {
+    return element;
+  }
+  return element.querySelector<HTMLElement>(ENTITY_CARD_VISUAL_SELECTOR) ?? element;
 }
 
 function dataSelector(name: string, value: string): string {

@@ -10,15 +10,11 @@ describe("MT0D12 Flathead (The Heist retail starter)", () => {
     // P1 has 1 Street Cred (d4 faceValue 1). P2 has 7 (d8 faceValue 7).
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [
-          { card: theHeistRetailStarterDeckMt0d12Flathead, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: theHeistRetailStarterDeckMt0d12Flathead, spent: false, hasLag: false }],
         gigArea: [{ dieType: "d4", faceValue: 1 }],
       },
       {
-        field: [
-          { card: welcomeToNightCityRetailCorpoSecurity, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: false, hasLag: false }],
         gigArea: [{ dieType: "d8", faceValue: 7 }],
       },
     );
@@ -36,15 +32,11 @@ describe("MT0D12 Flathead (The Heist retail starter)", () => {
     // P1 has 7 Street Cred (d8 faceValue 7). P2 has 1 (d4 faceValue 1).
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [
-          { card: theHeistRetailStarterDeckMt0d12Flathead, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: theHeistRetailStarterDeckMt0d12Flathead, spent: false, hasLag: false }],
         gigArea: [{ dieType: "d8", faceValue: 7 }],
       },
       {
-        field: [
-          { card: welcomeToNightCityRetailCorpoSecurity, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: false, hasLag: false }],
         gigArea: [{ dieType: "d4", faceValue: 1 }],
       },
     );
@@ -63,15 +55,11 @@ describe("MT0D12 Flathead (The Heist retail starter)", () => {
     // boundary, so BLOCKER is allowed. Proves the rule uses `<` not `<=`.
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [
-          { card: theHeistRetailStarterDeckMt0d12Flathead, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: theHeistRetailStarterDeckMt0d12Flathead, spent: false, hasLag: false }],
         gigArea: [{ dieType: "d8", faceValue: 5 }],
       },
       {
-        field: [
-          { card: welcomeToNightCityRetailCorpoSecurity, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: false, hasLag: false }],
         gigArea: [{ dieType: "d8", faceValue: 5 }],
       },
     );

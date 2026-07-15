@@ -20,7 +20,6 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
     "paths": {
       "@tcg/shared/*": ["../../shared/src/*"]
     }

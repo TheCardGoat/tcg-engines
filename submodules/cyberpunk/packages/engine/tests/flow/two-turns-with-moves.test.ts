@@ -126,13 +126,13 @@ describe("Flow — two turns per player with moves", () => {
     expect(engine.getCardsInZone("eddieArea", first)).toHaveLength(1);
     expect(engine.getCardsInZone("hand", first)).toHaveLength(2);
 
-    // PLAY CARDS: spend 1 eddie, place unit on field, summoning-sick.
+    // PLAY CARDS: spend 1 eddie, place unit on field, Lagged.
     engine.playCard(cheap, { as: first });
     expect(engine.getEddies(first)).toBe(5);
     expect(engine.getCardsInZone("field", first)).toHaveLength(1);
     expect(engine.getCardsInZone("hand", first)).toHaveLength(1);
     const playedUnit = engine.getCard(cheap, "field", first);
-    expect(playedUnit.meta.playedThisTurn).toBe(true);
+    expect(playedUnit.meta.hasLag).toBe(true);
 
     // CALL A LEGEND: spend 1 eddie, flip one face-down legend face-up.
     // All 3 legends start face-down (spent and face-down are independent).
@@ -166,10 +166,10 @@ describe("Flow — two turns per player with moves", () => {
     // ── TURN 2 (first player) — START PHASE (full, all 3 steps) ──────────
     expect(engine.getActivePlayerId()).toBe(first);
     expect(engine.getPhase()).toBe("start");
-    // Step 1: READY → playedThisTurn cleared on the played unit, the two
+    // Step 1: READY → hasLag cleared on the played unit, the two
     // pre-spent legends finally ready up.
     const firstUnit = engine.getCard(cheap, "field", first);
-    expect(firstUnit.meta.playedThisTurn).toBe(false);
+    expect(firstUnit.meta.hasLag).toBe(false);
     expect(firstUnit).toBeReady();
     expect(engine.getSpentLegends(first)).toHaveLength(0);
     // Step 2: DRAW → 1 + 1 = 2.
@@ -187,10 +187,10 @@ describe("Flow — two turns per player with moves", () => {
     // ── TURN 2 (second player) — START PHASE ─────────────────────────────
     expect(engine.getActivePlayerId()).toBe(second);
     expect(engine.getPhase()).toBe("start");
-    // Step 1: READY → playedThisTurn cleared.
+    // Step 1: READY → hasLag cleared.
     const secondUnit = engine.getCard(rivalCheap, "field", second);
     expect(secondUnit).toBeReady();
-    expect(secondUnit.meta.playedThisTurn).toBe(false);
+    expect(secondUnit.meta.hasLag).toBe(false);
     // Step 2: DRAW → 1 + 1 = 2 (P2 entered with 1 after sell + play in T1).
     expect(engine.getCardsInZone("hand", second)).toHaveLength(2);
     // Step 3: GAIN A GIG.

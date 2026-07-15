@@ -53,8 +53,12 @@ function targetOwnerOf(action: EffectAction): "self" | "friendly" | "opponent" |
  */
 export function classifyDirectiveIntent(action: EffectAction): DirectiveIntent {
   switch (action.action) {
+    case "resolveThenQueue":
+      return classifyDirectiveIntent(action.first);
+
     // Always-good for self.
     case "draw":
+    case "drawThenDiscard":
     case "drawIfTargetMatches":
     case "drawAll":
     case "createDelayedTrigger":
@@ -67,6 +71,7 @@ export function classifyDirectiveIntent(action: EffectAction): DirectiveIntent {
     case "returnPairedPilotToHand":
     case "addShieldToHand":
     case "addFromTrash":
+    case "addFromTrashThenDiscard":
     case "millDeckThenDrawIfTrait":
     case "millDeckThenDamageIfTrait":
     case "millDeckThenDamageByTraitCount":
@@ -83,21 +88,24 @@ export function classifyDirectiveIntent(action: EffectAction): DirectiveIntent {
 
     // Always-bad for self.
     case "discard":
+    case "discardChosen":
       return "decline";
 
     // Owner-dependent: good when targeting opponent, bad when self/
     // friendly. `any` is treated as accept on the bet that the bot can
     // pick the opponent's card.
     case "dealDamage":
+    case "dealDamageByTargetKeyword":
     case "dealDamageThenDrawIfDestroyed":
     case "dealDamageEventSource":
     case "dealDamageByCount":
     case "dealDamageBySourceStat":
-    case "dealDamageByChosenUnitLevel":
+    case "restThenDamageByChosenUnitLevel":
     case "dealDamageAll":
     case "rest":
     case "returnToHand":
     case "returnToDeck":
+    case "placeInTrash":
     case "destroy":
     case "destroyEventCard":
     case "exile": {
@@ -207,6 +215,9 @@ export function classifyDirectiveIntent(action: EffectAction): DirectiveIntent {
     case "unparsedText":
     case "deployRested":
     case "returnEventCardToHand":
+    case "substituteBaseRestWithSelf":
+    case "pairingCostOverride":
+    case "deployCostSubstitution":
       return "neutral";
 
     default:

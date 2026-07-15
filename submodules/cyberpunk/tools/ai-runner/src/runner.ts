@@ -1,14 +1,16 @@
 import { Worker } from "node:worker_threads";
 import { fileURLToPath } from "node:url";
 import {
+  attackRivalOnlyStrategy,
   createMonteCarloStrategy,
-  defaultStrategy,
   firstLegalStrategy,
+  getSafeAutomatedActionStrategyOption,
   greedyStrategy,
   mctsGreedyStrategy,
   mctsStrategy,
   randomStrategy,
   runAutoMatch,
+  tacticalStrategy,
   type AIStrategy,
   type AutoMatchResult,
 } from "@tcg/cyberpunk-engine";
@@ -28,16 +30,19 @@ import {
 export type StrategyName =
   | "default"
   | "first-legal"
+  | "attack-rival-only"
   | "random"
   | "greedy"
   | "monte-carlo"
   | "monte-carlo-greedy"
   | "mcts"
-  | "mcts-greedy";
+  | "mcts-greedy"
+  | "tactical";
 
 const STRATEGIES: Record<StrategyName, AIStrategy> = {
-  default: defaultStrategy,
+  default: getSafeAutomatedActionStrategyOption().strategy,
   "first-legal": firstLegalStrategy,
+  "attack-rival-only": attackRivalOnlyStrategy,
   random: randomStrategy,
   greedy: greedyStrategy,
   "monte-carlo": createMonteCarloStrategy({
@@ -51,6 +56,7 @@ const STRATEGIES: Record<StrategyName, AIStrategy> = {
   }),
   mcts: mctsStrategy,
   "mcts-greedy": mctsGreedyStrategy,
+  tactical: tacticalStrategy,
 };
 
 export interface SearchStrategyOptions {
@@ -154,6 +160,7 @@ export function runBatch(opts: BatchOptions): BatchSummary {
       deckOut: 0,
       stuck: 0,
       illegal: 0,
+      repeatedState: 0,
       maxSteps: 0,
     },
     illegalCount: 0,
@@ -208,7 +215,10 @@ export function runBatch(opts: BatchOptions): BatchSummary {
 
       if (
         !summary.firstFailingMatch &&
-        (matchHadIllegal || result.reason === "stuck" || result.reason === "maxSteps")
+        (matchHadIllegal ||
+          result.reason === "stuck" ||
+          result.reason === "repeatedState" ||
+          result.reason === "maxSteps")
       ) {
         summary.firstFailingMatch = { ...result, seed: matchSeed, failure };
       }
@@ -295,6 +305,7 @@ export function runTournament(opts: TournamentOptions): TournamentSummary {
     deckOut: 0,
     stuck: 0,
     illegal: 0,
+    repeatedState: 0,
     maxSteps: 0,
   };
 
@@ -420,6 +431,7 @@ function mergeBatchSummaries(opts: BatchOptions, parts: BatchSummary[]): BatchSu
       deckOut: 0,
       stuck: 0,
       illegal: 0,
+      repeatedState: 0,
       maxSteps: 0,
     },
     illegalCount: 0,

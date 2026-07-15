@@ -5,7 +5,6 @@ import {
   PLAYER_TWO,
   expectSuccess,
   createMockUnit,
-  getDamageCounter,
   seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd02GundamAge1Titus027 } from "./027-gundam-age-1-titus.ts";
@@ -16,7 +15,7 @@ describe("Gundam AGE-1 Titus (GD02-027)", () => {
     const shieldSeed = createMockUnit({ ap: 1, hp: 5 });
     const engine = GundamTestEngine.create(
       { play: [gd02GundamAge1Titus027] },
-      { play: [defender], deck: [shieldSeed] },
+      { play: [{ card: defender, exhausted: true }], deck: [shieldSeed] },
     );
     const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
     const p1 = engine.asPlayer(PLAYER_ONE);
@@ -29,7 +28,6 @@ describe("Gundam AGE-1 Titus (GD02-027)", () => {
     expectSuccess(p2.passBattleAction());
     expectSuccess(p1.passBattleAction());
 
-    // AGE-1 Titus (AP 5) destroys defender (HP 1) -> Breach 3 lands on the shield.
-    expect(getDamageCounter(engine, shieldId!)).toBe(3);
+    expect(p2.getCardZone(shieldId!)).toBe(`trash:${PLAYER_TWO}`);
   });
 });

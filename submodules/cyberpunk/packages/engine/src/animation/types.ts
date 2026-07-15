@@ -7,6 +7,7 @@ export type AnimationStepKind =
   | "cardEnter"
   | "cardAttach"
   | "cardLand"
+  | "cardReveal"
   | "legendReveal"
   | "effectTarget"
   | "resourceFloat"
@@ -75,6 +76,19 @@ export interface CardAttachStep extends BaseStep {
 export interface CardLandStep extends BaseStep {
   kind: "cardLand";
   cardId: CardInstanceId;
+  playerId: PlayerId;
+}
+
+/**
+ * A public reveal of one or more cards from a hidden zone. The revealed card
+ * becomes public during the animation and can optionally settle into its
+ * resulting destination zone.
+ */
+export interface CardRevealStep extends BaseStep {
+  kind: "cardReveal";
+  cardId: CardInstanceId;
+  fromZone: CardZone;
+  toZone?: CardZone;
   playerId: PlayerId;
 }
 
@@ -160,6 +174,7 @@ export type AnimationStep =
   | CardEnterStep
   | CardAttachStep
   | CardLandStep
+  | CardRevealStep
   | LegendRevealStep
   | EffectTargetStep
   | ResourceFloatStep

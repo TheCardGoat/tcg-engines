@@ -1,35 +1,38 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
-  activeResources,
   createMockUnit,
+  expectFailure,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd01Zuoot061 } from "./061-zuoot.ts";
 
 describe("ZuOOT (GD01-061)", () => {
-  it("【Activate·Main】<Support 1> buffs only the chosen friendly Unit by AP+1", () => {
-    const ally1 = createMockUnit({ ap: 2, hp: 3 });
-    const ally2 = createMockUnit({ ap: 2, hp: 3 });
-    const engine = GundamTestEngine.create(
-      { play: [gd01Zuoot061, ally1, ally2], resourceArea: activeResources(3) },
-      {},
-    );
+  it("rests to give one other friendly Unit AP+1 with Support", () => {
+    const firstAlly = createMockUnit({ ap: 2, hp: 4 });
+    const secondAlly = createMockUnit({ ap: 2, hp: 4 });
+    const engine = GundamTestEngine.create({ play: [gd01Zuoot061, firstAlly, secondAlly] });
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const [supporterId, ally1Id, ally2Id] = p1.getCardsInZone("battleArea");
-    if (!supporterId || !ally1Id || !ally2Id) throw new Error("setup failed");
+    const [zuootId, firstAllyId, secondAllyId] = p1.getCardsInZone("battleArea");
 
-    expectSuccess(p1.useSupport(supporterId, ally1Id));
+    expectSuccess(p1.useSupport(zuootId!, firstAllyId!));
 
-    expect(engine.getG().exhausted[supporterId]).toBe(true);
-    const apBuffs = engine
-      .getG()
-      .continuousEffects.filter(
-        (e) => e.payload.kind === "stat-modifier" && e.payload.stat === "ap",
-      );
-    expect(apBuffs).toHaveLength(1);
-    expect(apBuffs[0]!.targetId).toBe(ally1Id);
-    expect(apBuffs.find((e) => e.targetId === ally2Id)).toBeUndefined();
+    expect(p1.isExhausted(zuootId!)).toBe(true);
+    expect(p1.getVisibleCard(firstAllyId!)?.effectiveAp).toBe(3);
+    expect(p1.getVisibleCard(secondAllyId!)?.effectiveAp).toBe(2);
+  });
+
+  it("cannot use Support on itself", () => {
+    const legalAlly = createMockUnit({ ap: 2, hp: 4 });
+    const engine = GundamTestEngine.create({ play: [gd01Zuoot061, legalAlly] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [zuootId, legalAllyId] = p1.getCardsInZone("battleArea");
+
+    expectFailure(p1.useSupport(zuootId!, zuootId!), "ILLEGAL_TARGET");
+
+    expect(p1.isExhausted(zuootId!)).toBe(false);
+    expect(p1.getVisibleCard(zuootId!)?.effectiveAp).toBe(0);
+    expect(p1.getVisibleCard(legalAllyId!)?.effectiveAp).toBe(2);
   });
 });

@@ -25,7 +25,7 @@ export function getMustAttackCardIds(state: MatchState, playerId: PlayerId): Car
       return false;
     }
     const def = defOf(card);
-    if (card.meta.playedThisTurn && !rules.includes("adrenaline")) return false;
+    if (card.meta.hasLag && !rules.includes("adrenaline")) return false;
     return def.type === "unit" || def.keywords.includes("goSolo");
   });
 }

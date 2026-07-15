@@ -6,7 +6,9 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const legendViktorOpponentPrivateSearchBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendViktorOpponentPrivateSearch",
   label: "Viktor Vektor - opponent private search",
-  references: ["packages/engine/src/cards/alpha/legends/viktor-vektor-sit-down-and-relax.test.ts"],
+  references: [
+    "packages/engine/src/cards/theheistretailstarterdeck/legends/viktor-vektor-sit-down-and-relax.test.ts",
+  ],
   async run(pom) {
     expectEqual(
       "P1 prompt status during opponent search",
@@ -20,7 +22,7 @@ export const legendViktorOpponentPrivateSearchBehavior: CyberpunkFixtureBehavior
       0,
     );
 
-    await pom.expectPendingChoiceType(CYBERPUNK_P2, "searchDeck");
+    await pom.expectPendingChoiceType(CYBERPUNK_P2, "scry");
     const revealed = await pom.getSearchDeckRevealedCardIds(CYBERPUNK_P2);
     expectEqual("P2 revealed search card count", revealed.length, 5);
 

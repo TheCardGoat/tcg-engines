@@ -81,7 +81,7 @@ const keywordCards = [
 ] as const;
 
 describe("Attack of the Vine! simple keyword characters", () => {
-  it.each(keywordCards)(
+  it.each([...keywordCards])(
     "$name has $keyword",
     ({ card, keyword, value }: (typeof keywordCards)[number]) => {
       const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({

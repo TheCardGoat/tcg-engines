@@ -18,7 +18,7 @@ describe("Evelyn Parker — Scheming Siren (retail)", () => {
           {
             card: welcomeToNightCityRetailEvelynParkerSchemingSiren,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         gigArea: [{ dieType: "d8", faceValue: 7 }],
@@ -52,7 +52,7 @@ describe("Evelyn Parker — Scheming Siren (retail)", () => {
           {
             card: welcomeToNightCityRetailEvelynParkerSchemingSiren,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         gigArea: [{ dieType: "d4", faceValue: 1 }],
@@ -82,7 +82,7 @@ describe("Evelyn Parker — Scheming Siren (retail)", () => {
           {
             card: welcomeToNightCityRetailEvelynParkerSchemingSiren,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         gigArea: [{ dieType: "d4", faceValue: 1 }],

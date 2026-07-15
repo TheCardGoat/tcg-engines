@@ -5,7 +5,6 @@ import {
   PLAYER_TWO,
   createMockUnit,
   expectSuccess,
-  findStatModifier,
 } from "@tcg/gundam-engine";
 import { gd03ZedasR059 } from "./059-zedas-r.ts";
 
@@ -19,8 +18,9 @@ describe("Zedas R (GD03-059)", () => {
       {
         play: [gd03ZedasR059, friendlyVagan],
         trash: [vaganTrashCard],
+        deck: 5,
       },
-      { play: [{ card: defender, exhausted: true }] },
+      { play: [{ card: defender, exhausted: true }], deck: 5 },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
@@ -29,23 +29,48 @@ describe("Zedas R (GD03-059)", () => {
     const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.enterBattle(zedasId!, defenderId));
-    // Auto-fire the optional, then resolve the chained target picks.
-    while (engine.getPendingChoice()) {
-      expectSuccess(
-        p1.resolveEffect({
-          optionalAnswers: { 0: true },
-          targets: [vaganTrashId!, friendlyVaganId!],
-        }),
-      );
-    }
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([vaganTrashId, zedasId, friendlyVaganId]),
+      minTargets: 2,
+      maxTargets: 2,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [vaganTrashId!, friendlyVaganId!] }));
 
-    // The Vagan trash card was exiled — `exile` moves the card to the
-    // shared `removalArea` (no per-player namespace).
-    expect(engine.getState().ctx.zones.private.cardIndex[vaganTrashId!]?.zoneKey).toBe(
-      "removalArea",
+    expect(p1.getCardsInZone("trash")).not.toContain(vaganTrashId);
+    expect(p1.getVisibleCard(friendlyVaganId!)?.effectiveAp).toBe(4);
+
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
+
+    expect(p1.getVisibleCard(friendlyVaganId!)?.effectiveAp).toBe(2);
+  });
+
+  it("may decline to exile a card and does not grant AP", () => {
+    const vaganTrashCard = createMockUnit({ traits: ["vagan"] });
+    const friendlyVagan = createMockUnit({ ap: 2, hp: 3, traits: ["vagan"] });
+    const defender = createMockUnit({ ap: 1, hp: 5 });
+    const engine = GundamTestEngine.create(
+      { play: [gd03ZedasR059, friendlyVagan], trash: [vaganTrashCard] },
+      { play: [{ card: defender, exhausted: true }] },
     );
-    // A +2 AP modifier was applied to a friendly Vagan unit.
-    const mod = findStatModifier(engine, friendlyVaganId!, "ap");
-    expect(mod?.modifier).toBe(2);
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [zedasId, friendlyVaganId] = p1.getCardsInZone("battleArea");
+    const trashId = p1.getCardsInZone("trash")[0]!;
+    const defenderId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.enterBattle(zedasId!, defenderId));
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: false } }));
+
+    expect(p1.getCardsInZone("trash")).toContain(trashId);
+    expect(p1.getVisibleCard(friendlyVaganId!)?.effectiveAp).toBe(2);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
   });
 });

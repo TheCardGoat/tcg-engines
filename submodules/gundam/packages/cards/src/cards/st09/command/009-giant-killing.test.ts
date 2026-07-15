@@ -5,7 +5,6 @@ import {
   PLAYER_TWO,
   activeResources,
   createMockUnit,
-  expectCardInTrash,
   expectFailure,
   expectSuccess,
 } from "@tcg/gundam-engine";
@@ -13,24 +12,6 @@ import { st09GiantKilling009 } from "./009-giant-killing.ts";
 
 describe("Giant Killing (ST09-009)", () => {
   describe("【Main】/【Action】Choose 1 active enemy Unit with 4 or less AP. Destroy it.", () => {
-    it("data targets one active enemy Unit with AP <= 4", () => {
-      const effect = st09GiantKilling009.effects?.[0];
-      const directive = effect?.directives[0];
-
-      expect(effect?.type).toBe("command");
-      expect(effect?.activation.timing).toEqual(["main", "action"]);
-      if (!directive || !("action" in directive) || directive.action.action !== "destroy") {
-        throw new Error("Unexpected directive shape");
-      }
-      expect(directive.action.target).toEqual({
-        owner: "opponent",
-        cardType: "unit",
-        state: "active",
-        attributeFilters: [{ attribute: "ap", comparison: "lte", value: 4 }],
-        count: 1,
-      });
-    });
-
     it("destroys an active enemy unit with 4 AP", () => {
       const enemy = createMockUnit({ ap: 4, hp: 5 });
       const engine = GundamTestEngine.create(
@@ -44,25 +25,33 @@ describe("Giant Killing (ST09-009)", () => {
 
       expectSuccess(p1.playCommand(st09GiantKilling009, { targets: [enemyId!] }));
 
-      expectCardInTrash(engine, enemyId!, p2.playerId);
-      expectCardInTrash(engine, cmdId, p1.playerId);
+      expect(p2.getCardZone(enemyId!)).toBe(`trash:${PLAYER_TWO}`);
+      expect(p1.getCardZone(cmdId)).toBe(`trash:${PLAYER_ONE}`);
     });
 
     it("is also playable at action timing", () => {
+      const attacker = createMockUnit({ ap: 1, hp: 5 });
+      const battleDefender = createMockUnit({ ap: 1, hp: 5 });
       const enemy = createMockUnit({ ap: 3, hp: 5 });
       const engine = GundamTestEngine.create(
-        { hand: [st09GiantKilling009], resourceArea: activeResources(4) },
-        { play: [enemy] },
+        {
+          hand: [st09GiantKilling009],
+          play: [attacker],
+          resourceArea: activeResources(4),
+        },
+        { play: [{ card: battleDefender, exhausted: true }, enemy] },
       );
-      engine.setPhase("end-phase");
-      engine.setStep("action-step");
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
-      const [enemyId] = p2.getCardsInZone("battleArea");
+      const [attackerId] = p1.getCardsInZone("battleArea");
+      const [battleDefenderId, enemyId] = p2.getCardsInZone("battleArea");
+      expectSuccess(p1.enterBattle(attackerId!, battleDefenderId!));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
 
       expectSuccess(p1.playCommand(st09GiantKilling009, { targets: [enemyId!] }));
 
-      expectCardInTrash(engine, enemyId!, p2.playerId);
+      expect(p2.getCardZone(enemyId!)).toBe(`trash:${PLAYER_TWO}`);
     });
 
     it("cannot target an enemy unit with more than 4 AP", () => {

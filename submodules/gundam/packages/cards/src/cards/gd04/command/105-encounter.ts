@@ -66,17 +66,11 @@ export const gd04Encounter105: CommandCard = {
       },
       directives: [
         {
-          // NOTE: Printed text reads "You **may** reveal 1 Pilot ... and
-          // add it to your hand". The current engine `lookAtTopDeck`
-          // handler auto-tutors `matches[0]` whenever the filter has a
-          // candidate — there is no in-action "may" prompt for the
-          // tutor sub-step. This encoding is the closest representable
-          // shape: the player's choice to *not* tutor is collapsed into
-          // an unconditional fire when a Pilot is in the top 5.
           action: {
             action: "lookAtTopDeck",
             count: 5,
             return: "chooseTop",
+            randomizeRemainingToBottom: true,
             tutorFilter: {
               owner: "friendly",
               cardType: "pilot",

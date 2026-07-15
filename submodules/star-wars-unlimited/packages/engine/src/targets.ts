@@ -75,7 +75,7 @@ export function resolveTarget(target: SwuTarget, context: ResolutionContext): Ru
             (!target.ids || target.ids.includes(definition.id)) &&
             (!target.cardTypes || target.cardTypes.includes(definition.cardType)) &&
             (!target.aspects ||
-              target.aspects.some((aspect) => definition.aspects.includes(aspect))) &&
+              target.aspects.some((aspect) => definition.aspects?.includes(aspect))) &&
             (!target.arena || definition.arena === target.arena) &&
             (!target.traits || target.traits.some((trait) => hasTrait(state, card, trait))) &&
             (!target.withoutTraits ||

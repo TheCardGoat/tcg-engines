@@ -1,8 +1,6 @@
 ---
 name: implement-card
 description: Step-by-step playbook for implementing any Cyberpunk TCG card (Legend, Unit, Program, Gear) in the engine. Covers loading rules context, understanding the card definition, verifying engine support, writing tests, running them, and opening a PR. Always loaded when implementing or testing any card. Self-updates after each PR via the retrospective step.
-user-invocable: true
-argument-hint: "CARD_FILE=<card-file-stem>"
 ---
 
 ## MANDATORY PREPARATION

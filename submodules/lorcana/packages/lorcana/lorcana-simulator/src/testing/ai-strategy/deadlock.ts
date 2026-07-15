@@ -14,6 +14,7 @@ export type StrategyMatchEndReason =
   | "winner"
   | "turn-limit"
   | "action-limit"
+  | "automation-concession"
   | "repeated-state-deadlock";
 
 export function resolveStrategyMatchEndReason(args: {

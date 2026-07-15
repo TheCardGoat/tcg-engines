@@ -19,13 +19,11 @@ export default defineConfig({
     tasks: {
       "ci:check": {
         command: "vp fmt --check && vp lint && pnpm exec turbo run test",
-        untrackedEnv: ["TURBO_TOKEN", "TURBO_TEAM", "TURBO_REMOTE_CACHE_SIGNATURE_KEY"],
-        input: [{ auto: true }, "!**/*.tsbuildinfo", "!**/dist/**", "!**/build/**", "!**/.vite/**"],
+        cache: false,
       },
       "ci:full": {
-        command: "vp fmt --check && vp lint && pnpm exec turbo run test build",
-        untrackedEnv: ["TURBO_TOKEN", "TURBO_TEAM", "TURBO_REMOTE_CACHE_SIGNATURE_KEY"],
-        input: [{ auto: true }, "!**/*.tsbuildinfo", "!**/dist/**", "!**/build/**", "!**/.vite/**"],
+        command: "vp run ci:check && pnpm exec turbo run build",
+        cache: false,
       },
       pack: {
         command: "pnpm exec turbo run build --filter='./packages/*' --filter='./tools/*'",

@@ -6,146 +6,115 @@ import {
   activeResources,
   createMockBase,
   createMockUnit,
-  expectCardInTrash,
   expectSuccess,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd03EmmaSheen099 } from "./099-emma-sheen.ts";
 
 describe("Emma Sheen (GD03-099)", () => {
-  it("【Burst】Add this card to your hand.", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd03EmmaSheen099] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
+  it("【Burst】 adds this revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd03EmmaSheen099] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    expect(engine.asPlayer(PLAYER_TWO).getHand()).toContain(shieldId);
+    expect(p2.getCardZone(gd03EmmaSheen099)).toBe(`hand:${PLAYER_TWO}`);
   });
 
   describe("【During Link】【Destroyed】If a friendly white Base is in play, choose 1 enemy Unit whose Lv. is equal to or lower than this Unit. Return it to its owner's hand.", () => {
-    const linkedHost = createMockUnit({
-      name: "Emma Linked Host",
-      level: 4,
-      hp: 4,
-      linkCondition: "[Emma Sheen]",
-    });
-    const unlinkedHost = createMockUnit({
-      name: "Emma Unlinked Host",
-      level: 4,
-      hp: 4,
-      linkCondition: "[Kamille Bidan]",
-    });
-    const whiteBase = createMockBase({ name: "Friendly White Base", color: "white" });
-    const blueBase = createMockBase({ name: "Friendly Blue Base", color: "blue" });
-    const levelFourEnemy = createMockUnit({ name: "Lv.4 Enemy", level: 4, hp: 4 });
-    const levelFiveEnemy = createMockUnit({ name: "Lv.5 Enemy", level: 5, hp: 4 });
-
-    function setup({
-      host = linkedHost,
-      base = whiteBase,
-      enemy = levelFourEnemy,
-    }: {
-      host?: typeof linkedHost;
-      base?: typeof whiteBase | null;
-      enemy?: typeof levelFourEnemy;
+    function destroyPairedHost({
+      linkCondition = "[Emma Sheen]",
+      baseColor = "white" as "white" | "blue" | null,
+      enemyLevel = 4,
     } = {}) {
+      const host = createMockUnit({
+        name: "Emma Host",
+        level: 4,
+        hp: 4,
+        linkCondition,
+      });
+      const base = baseColor === null ? null : createMockBase({ color: baseColor });
+      const attacker = createMockUnit({ name: "Destroying Attacker", level: 6, ap: 8, hp: 10 });
+      const returnTarget = createMockUnit({ name: "Return Target", level: enemyLevel, hp: 6 });
       const engine = GundamTestEngine.create(
         {
           hand: [gd03EmmaSheen099],
-          play: [host],
-          ...(base === null ? {} : { baseSection: [base] }),
+          play: [{ card: host, exhausted: true }],
+          ...(base ? { baseSection: [base] } : {}),
           resourceArea: activeResources(4),
+          deck: 3,
         },
-        { play: [enemy] },
+        { play: [attacker, returnTarget], deck: 3 },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
       const hostId = p1.getCardsInZone("battleArea")[0]!;
-      const enemyId = p2.getCardsInZone("battleArea")[0]!;
+      const [attackerId, returnTargetId] = p2.getCardsInZone("battleArea");
 
       expectSuccess(p1.assignPilot(gd03EmmaSheen099, hostId));
+      const pilotId = p1.getPilotId(hostId)!;
+      expectSuccess(p1.passPhase());
+      expectSuccess(p2.passActionStep());
+      expectSuccess(p1.passActionStep());
+      expectSuccess(p2.enterBattle(attackerId!, hostId));
+      expectSuccess(p1.passBlock());
+      expectSuccess(p1.passBattleAction());
+      expectSuccess(p2.passBattleAction());
 
-      return { engine, p1, p2, hostId, enemyId };
+      return { p1, p2, hostId, pilotId, returnTargetId: returnTargetId! };
     }
 
-    it("returns an enemy Unit whose Lv. is equal to the linked Unit's Lv.", () => {
-      const { engine, p2, hostId, enemyId } = setup();
+    it("returns an eligible enemy Unit and visibly trashes the destroyed linked pair", () => {
+      const { p1, p2, hostId, pilotId, returnTargetId } = destroyPairedHost();
 
-      engine.destroyUnit(hostId);
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [returnTargetId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [returnTargetId] }));
 
-      expect(p2.getHand()).toContain(enemyId);
+      expect(p1.getCardZone(hostId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardZone(pilotId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p2.getCardZone(returnTargetId)).toBe(`hand:${PLAYER_TWO}`);
     });
 
-    it("uses the linked Unit's Lv. for the target cap, not Emma's Pilot Lv.", () => {
-      const { engine, p2, hostId, enemyId } = setup();
+    it("does not offer an enemy Unit above the destroyed linked Unit's Lv.", () => {
+      const { p1, p2, returnTargetId } = destroyPairedHost({ enemyLevel: 5 });
 
-      engine.destroyUnit(hostId);
-
-      expect(gd03EmmaSheen099.level).toBeLessThan(linkedHost.level);
-      expect(p2.getHand()).toContain(enemyId);
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+      expect(p2.getCardsInZone("battleArea")).toContain(returnTargetId);
     });
 
-    it("moves the destroyed linked Unit and paired Emma to trash", () => {
-      const { engine, p1, hostId } = setup();
-      const pilotId = p1.getPilotId(hostId)!;
+    it("does not trigger without a friendly Base", () => {
+      const { p1, p2, returnTargetId } = destroyPairedHost({ baseColor: null });
 
-      engine.destroyUnit(hostId);
-
-      expectCardInTrash(engine, hostId, PLAYER_ONE);
-      expectCardInTrash(engine, pilotId, PLAYER_ONE);
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+      expect(p2.getCardsInZone("battleArea")).toContain(returnTargetId);
     });
 
-    it("does not return an enemy Unit whose Lv. is higher than the linked Unit's Lv.", () => {
-      const { engine, p2, hostId, enemyId } = setup({ enemy: levelFiveEnemy });
+    it("does not trigger when the friendly Base is not white", () => {
+      const { p1, p2, returnTargetId } = destroyPairedHost({ baseColor: "blue" });
 
-      engine.destroyUnit(hostId);
-
-      expect(p2.getCardsInZone("battleArea")).toContain(enemyId);
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+      expect(p2.getCardsInZone("battleArea")).toContain(returnTargetId);
     });
 
-    it("does not return an enemy Unit without a friendly Base in play", () => {
-      const { engine, p2, hostId, enemyId } = setup({ base: null });
+    it("does not trigger when Emma's paired Unit is not linked", () => {
+      const { p1, p2, returnTargetId } = destroyPairedHost({
+        linkCondition: "[Kamille Bidan]",
+      });
 
-      engine.destroyUnit(hostId);
-
-      expect(p2.getCardsInZone("battleArea")).toContain(enemyId);
-    });
-
-    it("does not return an enemy Unit when the friendly Base is not white", () => {
-      const { engine, p2, hostId, enemyId } = setup({ base: blueBase });
-
-      engine.destroyUnit(hostId);
-
-      expect(p2.getCardsInZone("battleArea")).toContain(enemyId);
-    });
-
-    it("does not return an enemy Unit when Emma is paired but not linked", () => {
-      const { engine, p2, hostId, enemyId } = setup({ host: unlinkedHost });
-
-      engine.destroyUnit(hostId);
-
-      expect(p2.getCardsInZone("battleArea")).toContain(enemyId);
-    });
-
-    it("does not return a friendly Unit", () => {
-      const friendlyBystander = createMockUnit({ name: "Friendly Bystander", level: 1, hp: 4 });
-      const engine = GundamTestEngine.create(
-        {
-          hand: [gd03EmmaSheen099],
-          play: [linkedHost, friendlyBystander],
-          baseSection: [whiteBase],
-          resourceArea: activeResources(4),
-        },
-        {},
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [hostId, friendlyId] = p1.getCardsInZone("battleArea");
-
-      expectSuccess(p1.assignPilot(gd03EmmaSheen099, hostId!));
-      engine.destroyUnit(hostId!);
-
-      expect(p1.getCardsInZone("battleArea")).toContain(friendlyId);
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+      expect(p2.getCardsInZone("battleArea")).toContain(returnTargetId);
     });
   });
 });

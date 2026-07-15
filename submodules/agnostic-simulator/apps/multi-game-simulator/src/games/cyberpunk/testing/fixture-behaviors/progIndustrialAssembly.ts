@@ -8,7 +8,9 @@ import {
 export const progIndustrialAssemblyBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "progIndustrialAssembly",
   label: "Industrial Assembly - low Street Cred",
-  references: ["packages/engine/src/cards/alpha/programs/industrial-assembly.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/programs/industrial-assembly.test.ts",
+  ],
   async run(pom) {
     const targetGig = expectDefined(
       "Industrial Assembly friendly gig",

@@ -86,12 +86,18 @@ export function parseSingleAction(clause: string): EffectAction | undefined {
 
   // ── Place resource ──
   const exResourceM = t.match(/[Pp]lace (\d+) EX [Rr]esource/);
-  if (exResourceM) return { action: "placeResource", resourceType: "EX", state: "active" };
+  if (exResourceM) {
+    const count = parseInt(exResourceM[1]);
+    return {
+      action: "placeExResource",
+      ...(count > 1 ? { count } : {}),
+      state: "active",
+    };
+  }
   const restedResourceM = t.match(/[Pp]lace (\d+) rested [Rr]esource/);
   if (restedResourceM)
     return {
       action: "placeResource",
-      resourceType: "normal",
       state: "rested",
     };
   const activeResourceM = t.match(/[Ss]et (?:this|1 of your) [Rr]esource(?:s)? as active/);
@@ -483,6 +489,7 @@ export function patchActionTarget(action: EffectAction, target: TargetFilter): E
     case "destroy":
     case "exile":
     case "dealDamage":
+    case "dealDamageByTargetKeyword":
     case "deploy":
     case "grantKeyword":
     case "statModifier":

@@ -4,6 +4,7 @@ export const gd01BlitzGundam049: UnitCard = {
   cardNumber: "GD01-049",
   name: "Blitz Gundam",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["zaft"],
   id: "GD01-049",
@@ -58,6 +59,7 @@ export const gd01BlitzGundam049: UnitCard = {
   cost: 3,
   ap: 3,
   hp: 3,
+  linkCondition: "[Nicol Amarfi]",
   effect:
     "【Deploy】Choose 1 of your (ZAFT) Units with 5 or more AP. It gains &lt;First Strike&gt; during this turn.<br>\n(While this Unit is attacking, it deals damage before the enemy Unit.)<br>",
   effects: [

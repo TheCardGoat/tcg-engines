@@ -4,6 +4,7 @@ export const gd01GundamAerialRebuild067: UnitCard = {
   cardNumber: "GD01-067",
   name: "Gundam Aerial Rebuild",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["academy"],
   id: "GD01-067",

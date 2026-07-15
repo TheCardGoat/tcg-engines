@@ -1,13 +1,15 @@
 import { writeFileSync, readFileSync } from "node:fs";
 import {
-  defaultStrategy,
+  attackRivalOnlyStrategy,
   createMonteCarloStrategy,
   monteCarloStrategy,
   monteCarloGreedyStrategy,
   firstLegalStrategy,
   greedyStrategy,
+  getSafeAutomatedActionStrategyOption,
   randomStrategy,
   runAutoMatch,
+  tacticalStrategy,
   type AIStrategy,
   type AutoMatchResult,
 } from "@tcg/cyberpunk-engine";
@@ -59,10 +61,12 @@ export interface ReplayStep {
 }
 
 const REPLAY_STRATEGIES: Record<string, AIStrategy> = {
-  default: defaultStrategy,
+  default: getSafeAutomatedActionStrategyOption().strategy,
+  "attack-rival-only": attackRivalOnlyStrategy,
   "first-legal": firstLegalStrategy,
   random: randomStrategy,
   greedy: greedyStrategy,
+  tactical: tacticalStrategy,
   "monte-carlo:random": monteCarloStrategy,
   "monte-carlo:greedy": monteCarloGreedyStrategy,
   // Convenience aliases for the canonical strategy names.

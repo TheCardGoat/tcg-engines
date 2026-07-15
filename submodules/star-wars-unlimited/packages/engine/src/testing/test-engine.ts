@@ -383,7 +383,7 @@ export class SwuTestEngine {
   expectLogEntry(type: string): MoveLogEntry {
     const entry = this.state.moveLog.find((candidate) => candidate.type === type);
     assertFixture(!!entry, `Expected move log entry ${type}.`);
-    return entry;
+    return entry!;
   }
 
   expectPendingChoice(prompt?: string): NonNullable<SwuTestEngine["pendingChoice"]> {

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { buildCyberpunkInteractionView } from "@tcg/cyberpunk-server-adapter/interaction-protocol";
 import { INTERACTION_PROTOCOL_VERSION, type EngineInteractionView } from "@tcg/protocol";
+import { defOf, type ActiveEffect } from "@tcg/cyberpunk-engine";
 
 import { DEFAULT_SCENARIO, getScenario, P1, P2 } from "./fixtures/scenarios.js";
 import {
@@ -141,6 +142,84 @@ describe("projectSimulator", () => {
 
     expect(projection.table.seats.map((seat) => seat.id).sort()).toEqual([P1, P2].sort());
     expect(projection.table.zones.find((zone) => zone.id === "p-hand")?.ownerId).toBe(P1);
+  });
+
+  it("projects source-aware mustAttack effects onto the target entity", () => {
+    const engine = getScenario("unitWelcomeToNightCityRetailMoxIncitersMustAttack").build();
+    const source = engine.getCardsInZone("hand", P1)[0]!;
+    const target = engine.getCardsInZone("field", P2)[0]!;
+    const matchState = engine.getState();
+    matchState.G.activeEffects.push({
+      id: "test-must-attack",
+      sourceCardId: source.instanceId,
+      targetCardId: target.instanceId,
+      kind: "grantRule",
+      rule: "mustAttack",
+      duration: "untilSourceNextTurn",
+      expiresAtStartOfTurnForPlayerId: P1,
+      origin: "imperative",
+      abilityIndex: 1,
+    } satisfies ActiveEffect);
+
+    const projection = projectSimulator({
+      matchState,
+      viewerSide: "player" as Side,
+      interactionViews: {},
+      humanSide: "player" as Side,
+    });
+
+    const entity = projection.entities.find((candidate) => candidate.id === target.instanceId);
+    expect(entity?.overlayBadges?.some((badge) => badge.label === "mustAttack")).toBe(true);
+    expect(entity?.activeEffects).toContainEqual(
+      expect.objectContaining({
+        id: "test-must-attack",
+        targetKind: "entity",
+        targetId: target.instanceId,
+        sourceEntityId: source.instanceId,
+        sourceLabel: "Mox Inciters",
+        rule: "mustAttack",
+      }),
+    );
+  });
+
+  it("projects player-scoped active effects onto seats", () => {
+    const { matchState } = buildOpeningFixture();
+    const source = Object.values(matchState.G.cardIndex)[0]!;
+    matchState.G.activeEffects.push({
+      id: "test-player-effect",
+      sourceCardId: source.instanceId,
+      targetCardId: source.instanceId,
+      kind: "costModifier",
+      playerId: P1,
+      duration: "turn",
+      origin: "imperative",
+      abilityIndex: 0,
+    } satisfies ActiveEffect);
+
+    const projection = projectSimulator({
+      matchState,
+      viewerSide: "player" as Side,
+      interactionViews: {},
+      humanSide: "player" as Side,
+    });
+
+    const playerSeat = projection.table.seats.find((seat) => seat.id === P1);
+    const sourceDefinition = defOf(source);
+    expect(playerSeat?.activeEffects).toContainEqual(
+      expect.objectContaining({
+        id: "test-player-effect",
+        targetKind: "seat",
+        targetId: P1,
+        sourceEntityId: source.instanceId,
+        sourceLabel: sourceDefinition.displayName ?? sourceDefinition.name,
+        kind: "costModifier",
+      }),
+    );
+
+    const sourceEntity = projection.entities.find((entity) => entity.id === source.instanceId);
+    expect(
+      (sourceEntity?.activeEffects ?? []).some((effect) => effect.id === "test-player-effect"),
+    ).toBe(false);
   });
 
   it("keeps animation zone descriptors aligned with projected zone roles", () => {

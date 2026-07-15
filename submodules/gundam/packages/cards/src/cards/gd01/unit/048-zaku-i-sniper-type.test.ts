@@ -1,92 +1,136 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
+  PLAYER_TWO,
   activeResources,
+  createMockPilot,
   createMockUnit,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd01ZakuISniperType048 } from "./048-zaku-i-sniper-type.ts";
+import { passTurnThroughPublicMoves } from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 
 describe("Zaku I Sniper Type (GD01-048)", () => {
-  it("【Activate·Main】<Support 1> buffs only the chosen friendly Unit by AP+1", () => {
-    const ally1 = createMockUnit({ ap: 2, hp: 3 });
-    const ally2 = createMockUnit({ ap: 2, hp: 3 });
-    const engine = GundamTestEngine.create(
-      { play: [gd01ZakuISniperType048, ally1, ally2], resourceArea: activeResources(3) },
-      {},
-    );
+  it("rests to give one other friendly Unit AP+1 with Support", () => {
+    const firstAlly = createMockUnit({ ap: 2, hp: 4 });
+    const secondAlly = createMockUnit({ ap: 2, hp: 4 });
+    const engine = GundamTestEngine.create({
+      play: [gd01ZakuISniperType048, firstAlly, secondAlly],
+    });
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const [supporterId, ally1Id, ally2Id] = p1.getCardsInZone("battleArea");
-    if (!supporterId || !ally1Id || !ally2Id) throw new Error("setup failed");
+    const [sniperId, firstAllyId, secondAllyId] = p1.getCardsInZone("battleArea");
 
-    expectSuccess(p1.useSupport(supporterId, ally1Id));
+    expectSuccess(p1.useSupport(sniperId!, firstAllyId!));
 
-    expect(engine.getG().exhausted[supporterId]).toBe(true);
-    const apBuffs = engine
-      .getG()
-      .continuousEffects.filter(
-        (e) => e.payload.kind === "stat-modifier" && e.payload.stat === "ap",
-      );
-    expect(apBuffs).toHaveLength(1);
-    expect(apBuffs[0]!.targetId).toBe(ally1Id);
-    expect(apBuffs.find((e) => e.targetId === ally2Id)).toBeUndefined();
-    expect(apBuffs[0]!.payload.kind === "stat-modifier" && apBuffs[0]!.payload.modifier).toBe(1);
+    expect(p1.isExhausted(sniperId!)).toBe(true);
+    expect(p1.getVisibleCard(firstAllyId!)?.effectiveAp).toBe(3);
+    expect(p1.getVisibleCard(secondAllyId!)?.effectiveAp).toBe(2);
   });
 
-  describe("【Deploy】Look at the top — tutor a (Zeon) OR (Neo Zeon) Unit", () => {
-    it("tutors a Zeon Unit on top of the deck into hand (first OR branch)", () => {
-      const zeonUnit = createMockUnit({ name: "Zaku", traits: ["zeon"] });
-      const engine = GundamTestEngine.create({
+  it.each([
+    ["Zeon", ["zeon"]],
+    ["Neo Zeon", ["neo zeon"]],
+  ])("reveals and adds a %s Unit from the top of the deck", (_label, traits) => {
+    const eligible = createMockUnit({ name: `${_label} Unit`, traits });
+    const engine = GundamTestEngine.create({
+      hand: [gd01ZakuISniperType048],
+      resourceArea: activeResources(2),
+      deck: [eligible],
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+
+    expectSuccess(p1.deployUnit(gd01ZakuISniperType048));
+
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice).toMatchObject({ kind: "deckLook" });
+    if (choice?.kind !== "deckLook") throw new Error("Expected a visible deck-look choice");
+    expect(choice.revealedCardIds).toHaveLength(1);
+    expect(choice.legalTutorCardIds).toEqual(choice.revealedCardIds);
+    const revealedId = choice.revealedCardIds[0]!;
+    expectSuccess(
+      p1.resolveEffect({
+        deckLookAnswers: { [choice.directiveIndex]: { tutorCardId: revealedId } },
+      }),
+    );
+
+    expect(p1.getCardZone(revealedId)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.handCount).toBe(1);
+  });
+
+  it("shows no add-to-hand option for a non-Zeon Unit and returns the revealed card to the deck", () => {
+    const academyUnit = createMockUnit({ traits: ["academy"] });
+    const sentinel = createMockUnit({ name: "Untouched Sentinel" });
+    const engine = GundamTestEngine.create(
+      {
         hand: [gd01ZakuISniperType048],
         resourceArea: activeResources(2),
-        deck: [zeonUnit],
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const handSizeBefore = p1.getHand().length;
-      const deckBefore = p1.getCardsInZone("deck").length;
+        deck: [sentinel, academyUnit],
+      },
+      { deck: 2 },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
 
-      expectSuccess(p1.deployUnit(gd01ZakuISniperType048));
+    expectSuccess(p1.deployUnit(gd01ZakuISniperType048));
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice).toMatchObject({ kind: "deckLook", legalTutorCardIds: [] });
+    if (choice?.kind !== "deckLook") throw new Error("Expected a visible deck-look choice");
+    const revealedId = choice.revealedCardIds[0]!;
+    expectSuccess(
+      p1.resolveEffect({
+        deckLookAnswers: { [choice.directiveIndex]: { toBottom: [revealedId] } },
+      }),
+    );
 
-      // Zaku played (-1 from hand) and tutor adds Zeon Unit (+1) — net 0.
-      expect(p1.getHand().length).toBe(handSizeBefore);
-      // Tutor removes the card from deck.
-      expect(p1.getCardsInZone("deck").length).toBe(deckBefore - 1);
-    });
+    expect(p1.getBoardView().players[PLAYER_ONE]?.handCount).toBe(0);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(2);
 
-    it("tutors a Neo Zeon Unit on top of the deck into hand (second OR branch)", () => {
-      const neoZeonUnit = createMockUnit({ name: "Sazabi", traits: ["neo zeon"] });
-      const engine = GundamTestEngine.create({
-        hand: [gd01ZakuISniperType048],
-        resourceArea: activeResources(2),
-        deck: [neoZeonUnit],
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const handSizeBefore = p1.getHand().length;
-      const deckBefore = p1.getCardsInZone("deck").length;
+    passTurnThroughPublicMoves(engine, PLAYER_ONE);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
 
-      expectSuccess(p1.deployUnit(gd01ZakuISniperType048));
+    expect(p1.getBoardView().players[PLAYER_ONE]?.hand?.map((card) => card.definitionId)).toContain(
+      sentinel.cardNumber,
+    );
+  });
 
-      expect(p1.getHand().length).toBe(handSizeBefore);
-      expect(p1.getCardsInZone("deck").length).toBe(deckBefore - 1);
-    });
+  it("links with a Zeon Pilot and can attack on the turn it was deployed", () => {
+    const zeonPilot = createMockPilot({ traits: ["zeon"], level: 1, cost: 1 });
+    const enemy = createMockUnit({ hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd01ZakuISniperType048, zeonPilot],
+        deck: 2,
+        resourceArea: activeResources(3),
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
+      { play: [enemy] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
-    it("does NOT tutor a non-Zeon/Neo-Zeon Unit — OR predicate fails", () => {
-      const efsfUnit = createMockUnit({ name: "GM", traits: ["earth federation"] });
-      const engine = GundamTestEngine.create({
-        hand: [gd01ZakuISniperType048],
-        resourceArea: activeResources(2),
-        deck: [efsfUnit],
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const handSizeBefore = p1.getHand().length;
-      const deckBefore = p1.getCardsInZone("deck").length;
+    expectSuccess(p2.enterBattle(enemyId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p2.passPhase());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.passActionStep());
 
-      expectSuccess(p1.deployUnit(gd01ZakuISniperType048));
+    expectSuccess(p1.deployUnit(gd01ZakuISniperType048));
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "deckLook") throw new Error("Expected a visible deck-look choice");
+    expectSuccess(
+      p1.resolveEffect({
+        deckLookAnswers: {
+          [choice.directiveIndex]: { toBottom: choice.revealedCardIds },
+        },
+      }),
+    );
+    const sniperId = p1.getCardsInZone("battleArea")[0]!;
+    expectSuccess(p1.assignPilot(zeonPilot, sniperId));
 
-      // No tutor — Zaku leaves hand, nothing added: -1. Deck returns unchanged.
-      expect(p1.getHand().length).toBe(handSizeBefore - 1);
-      expect(p1.getCardsInZone("deck").length).toBe(deckBefore);
-    });
+    expectSuccess(p1.enterBattle(sniperId, enemyId));
   });
 });

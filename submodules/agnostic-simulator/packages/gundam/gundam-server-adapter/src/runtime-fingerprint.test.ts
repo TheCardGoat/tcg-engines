@@ -50,6 +50,37 @@ describe("gundamServerAdapter.validateDeckForFormat", () => {
     expect(rule(result, "resource-deck-size")?.passed).toBe(false);
     expect(rule(result, "copy-limit")?.passed).toBe(false);
   });
+
+  it("rejects a main deck with more than two colors", () => {
+    const deck = validDeck();
+    const mainCards = deck.slice(0, -1);
+    const baseColor = cardByNumber(mainCards[0]!.cardId).color;
+    const replacementCards = nonResourceCards().filter(
+      (card) => card.color && card.color !== baseColor,
+    );
+    const firstReplacement = replacementCards[0];
+    const secondReplacement = replacementCards.find(
+      (card) => card.color !== firstReplacement?.color,
+    );
+    if (!firstReplacement || !secondReplacement) {
+      throw new Error("Expected Gundam cards in at least three colors.");
+    }
+    const threeColorDeck = mainCards.map((entry, index) =>
+      index === 0
+        ? { cardId: firstReplacement.cardNumber, quantity: entry.quantity }
+        : index === 1
+          ? { cardId: secondReplacement.cardNumber, quantity: entry.quantity }
+          : entry,
+    );
+    threeColorDeck.push(deck.at(-1)!);
+
+    const result = gundamServerAdapter.validateDeckForFormat("standard", threeColorDeck);
+
+    expect(result.valid).toBe(false);
+    expect(rule(result, "deck-colors")?.passed).toBe(false);
+    expect(rule(result, "main-deck-size")?.passed).toBe(true);
+    expect(rule(result, "resource-deck-size")?.passed).toBe(true);
+  });
 });
 
 function rule(result: ReturnType<typeof gundamServerAdapter.validateDeckForFormat>, kind: string) {
@@ -57,16 +88,41 @@ function rule(result: ReturnType<typeof gundamServerAdapter.validateDeckForForma
 }
 
 function validDeck() {
-  const main = nonResourceCards()
-    .slice(0, 50)
-    .map((card) => ({ cardId: card.cardNumber, quantity: 1 }));
+  const cards = sameColorCards(13);
+  const main = cards.map((card, index) => ({
+    cardId: card.cardNumber,
+    quantity: index === cards.length - 1 ? 2 : 4,
+  }));
   return [...main, { cardId: resourceCard().cardNumber, quantity: 10 }];
 }
 
+function sameColorCards(minimum: number): Card[] {
+  const cardsByColor = new Map<string, Card[]>();
+  for (const card of nonResourceCards()) {
+    if (!card.color) continue;
+    const cards = cardsByColor.get(card.color) ?? [];
+    cards.push(card);
+    cardsByColor.set(card.color, cards);
+  }
+  const cards = [...cardsByColor.values()].find((entries) => entries.length >= minimum);
+  if (!cards) throw new Error(`Expected at least ${minimum} Gundam cards in one color.`);
+  return cards.slice(0, minimum);
+}
+
+function cardByNumber(cardNumber: string): Card {
+  const card = allCards().find((candidate) => candidate.cardNumber === cardNumber);
+  if (!card) throw new Error(`Unknown Gundam test card ${cardNumber}.`);
+  return card;
+}
+
 function nonResourceCards(): Card[] {
-  return allCards()
-    .filter((card) => card.type !== "resource" && !isDeckListToken(card.cardNumber))
-    .sort((a, b) => a.cardNumber.localeCompare(b.cardNumber));
+  return [
+    ...new Map(
+      allCards()
+        .filter((card) => card.type !== "resource" && !isDeckListToken(card.cardNumber))
+        .map((card) => [card.cardNumber, card]),
+    ).values(),
+  ].sort((a, b) => a.cardNumber.localeCompare(b.cardNumber));
 }
 
 function resourceCard(): Card {

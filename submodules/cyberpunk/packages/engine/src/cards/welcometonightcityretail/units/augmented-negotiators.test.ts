@@ -13,9 +13,7 @@ describe("Augmented Negotiators", () => {
       },
       {
         hand: [welcomeToNightCityRetailFieldOperator],
-        field: [
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
       },
     );
 

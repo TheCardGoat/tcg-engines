@@ -4,6 +4,7 @@ export const ANIMATION_DURATIONS_MS = {
   cardEnter: 280,
   cardAttach: 320,
   cardLand: 280,
+  cardReveal: 1600,
   legendReveal: 460,
   effectTarget: 380,
   resourceFloat: 700,

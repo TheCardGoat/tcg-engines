@@ -66,7 +66,7 @@ describe("Mandibular Upgrade", () => {
           {
             card: embracingPowerRetailStarterDeckMinotaur,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
       },

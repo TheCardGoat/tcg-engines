@@ -1,6 +1,9 @@
 import { test } from "@playwright/test";
 
-import { welcomeToNightCityRetailMoxInciters } from "@tcg/cyberpunk-cards";
+import {
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailMoxInciters,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -28,6 +31,14 @@ test("Choice - pick a card to play", async ({ page }) => {
   await pom.expectHandCardChoiceEligible(CYBERPUNK_P1, cardToPlay.instanceId, true);
 
   await pom.resolveCardToPlay(cardToPlay.instanceId, CYBERPUNK_P1);
+
+  await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+  const minotaur = await pom.getCardInZoneByDefinitionId(
+    "field",
+    CYBERPUNK_P2,
+    embracingPowerRetailStarterDeckMinotaur.id,
+  );
+  await pom.resolveEffectTarget([minotaur.instanceId], CYBERPUNK_P1);
 
   await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectBoardMode(CYBERPUNK_P1, "select-action");

@@ -88,14 +88,9 @@ export const gd02ANewSign117: CommandCard = {
       directives: [
         {
           action: {
-            action: "draw",
-            count: 3,
-          },
-        },
-        {
-          action: {
-            action: "discard",
-            count: 2,
+            action: "drawThenDiscard",
+            drawCount: 3,
+            discardCount: 2,
           },
         },
       ],

@@ -4,6 +4,7 @@ export const betaJegan016: UnitCard = {
   cardNumber: "GD01-016",
   name: "Jegan",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-016_p1",

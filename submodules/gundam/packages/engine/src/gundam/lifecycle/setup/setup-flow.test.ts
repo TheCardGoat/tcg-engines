@@ -19,8 +19,9 @@ import "../../testing/register-matchers.ts";
 import { GundamTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../../index.ts";
 import { asPlayerId } from "../../../index.ts";
 
-// Each player needs at least 12 main deck cards (5 for hand + 6 for shields + 1 for first turn draw)
-const MAIN_DECK_SIZE = 12;
+// The first player's opening draw must leave at least one card in deck;
+// an empty deck is an immediate loss (rules 1-2-2-2 and 11-2-1-2).
+const MAIN_DECK_SIZE = 13;
 const RESOURCE_DECK_SIZE = 10;
 const INITIAL_HAND_SIZE = 5;
 const SHIELD_SIZE = 6;

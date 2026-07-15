@@ -5,7 +5,6 @@ import {
   PLAYER_TWO,
   expectSuccess,
   createMockUnit,
-  getDamageCounter,
 } from "@tcg/gundam-engine";
 import { betaBall015 } from "./015-ball.ts";
 
@@ -13,25 +12,31 @@ describe("Ball (GD01-015)", () => {
   it("【Attack】Choose 1 of your Units. It recovers 1 HP.", () => {
     const friendly = createMockUnit({ ap: 1, hp: 5 });
     const enemy = createMockUnit({ ap: 1, hp: 5 });
-    const engine = GundamTestEngine.create({ play: [betaBall015, friendly] }, { play: [enemy] });
+    const engine = GundamTestEngine.create(
+      {
+        play: [
+          { card: betaBall015, damage: 2 },
+          { card: friendly, damage: 2 },
+        ],
+      },
+      { play: [{ card: enemy, exhausted: true }] },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const ballId = p1.getCardsInZone("battleArea")[0]!;
     const friendlyId = p1.getCardsInZone("battleArea")[1]!;
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
-    // Pre-damage both friendlies; the auto-picked target gets healed first.
-    engine.getG().damage[friendlyId] = 2;
-    engine.getG().damage[ballId] = 2;
-    const totalDamageBefore =
-      getDamageCounter(engine, friendlyId) + getDamageCounter(engine, ballId);
-    expect(totalDamageBefore).toBe(4);
+    expect(p1.getDamage(friendlyId)).toBe(2);
 
     expectSuccess(p1.enterBattle(ballId, enemyId));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      sourceCardId: ballId,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [friendlyId] }));
 
-    // 【Attack】 trigger auto-drained and healed 1 HP off exactly one friendly Unit.
-    const totalDamageAfter =
-      getDamageCounter(engine, friendlyId) + getDamageCounter(engine, ballId);
-    expect(totalDamageAfter).toBe(totalDamageBefore - 1);
+    expect(p1.getDamage(friendlyId)).toBe(1);
+    expect(p1.getDamage(ballId)).toBe(2);
   });
 });

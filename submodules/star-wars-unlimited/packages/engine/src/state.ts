@@ -383,7 +383,7 @@ function constantConditionMet(
 }
 
 function isSelfEffect(effect: SwuEffect): boolean {
-  return "target" in effect && effect.target.type === "self";
+  return "target" in effect && effect.target?.type === "self";
 }
 
 function isConstantSourceActive(card: RuntimeCard): boolean {

@@ -6,21 +6,32 @@ import {
   activeResources,
   createMockUnit,
   expectSuccess,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { st07AllelujahHaptism012 } from "./012-allelujah-haptism.ts";
 
 describe("Allelujah Haptism (ST07-012)", () => {
   it("【Burst】Add this card to your hand.", () => {
-    const engine = GundamTestEngine.create({}, { deck: [st07AllelujahHaptism012] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
-
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `hand:${PLAYER_TWO}`,
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [st07AllelujahHaptism012] },
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+
+    expect(p2.getHand()).toContain(shieldId);
   });
 
   it("during your turn with a CB Link Unit in play, prevents battle damage from enemy Units with 3 or less AP", () => {
@@ -33,7 +44,7 @@ describe("Allelujah Haptism (ST07-012)", () => {
     const enemy = createMockUnit({ ap: 3, hp: 5 });
     const engine = GundamTestEngine.create(
       { hand: [st07AllelujahHaptism012], play: [linkUnit], resourceArea: activeResources(3) },
-      { play: [enemy], deck: 5 },
+      { play: [{ card: enemy, exhausted: true }], deck: 5 },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
@@ -41,7 +52,10 @@ describe("Allelujah Haptism (ST07-012)", () => {
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.assignPilot(st07AllelujahHaptism012, linkUnitId));
-    expectSuccess(engine.resolveCombat({ attackerId: linkUnitId, target: enemyId }));
+    expectSuccess(p1.enterBattle(linkUnitId, enemyId));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
 
     expect(p1.getDamage(linkUnitId)).toBe(0);
   });
@@ -51,7 +65,7 @@ describe("Allelujah Haptism (ST07-012)", () => {
     const enemy = createMockUnit({ ap: 3, hp: 5 });
     const engine = GundamTestEngine.create(
       { hand: [st07AllelujahHaptism012], play: [unlinkedUnit], resourceArea: activeResources(3) },
-      { play: [enemy], deck: 5 },
+      { play: [{ card: enemy, exhausted: true }], deck: 5 },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
@@ -59,7 +73,10 @@ describe("Allelujah Haptism (ST07-012)", () => {
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.assignPilot(st07AllelujahHaptism012, unitId));
-    expectSuccess(engine.resolveCombat({ attackerId: unitId, target: enemyId }));
+    expectSuccess(p1.enterBattle(unitId, enemyId));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
 
     expect(p1.getDamage(unitId)).toBe(3);
   });

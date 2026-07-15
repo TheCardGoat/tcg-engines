@@ -14,7 +14,7 @@ describe("Screw - Lovelorn Fool", () => {
           {
             card: welcomeToNightCityRetailScrewLovelornFool,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         trash: [welcomeToNightCityRetailMoxInciters],
@@ -49,7 +49,7 @@ describe("Screw - Lovelorn Fool", () => {
           {
             card: welcomeToNightCityRetailScrewLovelornFool,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
       },

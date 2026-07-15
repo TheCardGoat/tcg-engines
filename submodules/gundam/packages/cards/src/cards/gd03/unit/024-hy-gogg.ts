@@ -70,6 +70,7 @@ export const gd03HyGogg024: UnitCard = {
                   ap: 2,
                   hp: 1,
                   deployState: "rested",
+                  printedCardNumber: "T-013",
                 },
               },
             },

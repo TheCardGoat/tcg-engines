@@ -7,6 +7,7 @@ export interface GameState {
   prioritySide: Side;
   phase: Phase;
   gameEnded: boolean;
+  overtimeActive: boolean;
   /** Engine-reported winner side, mapped to "player" | "opponent". Null when the game is still running or ended in a draw. */
   winnerSide: Side | null;
   /** Free-form reason string from the engine (e.g. "gig_victory"). */

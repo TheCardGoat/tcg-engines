@@ -5,6 +5,7 @@ import {
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 import { createMockUnit } from "../../../testing/card-mocks.ts";
+import { getProjectedDirectAttackGigStealCount } from "../../../moves/resolve-attack.ts";
 
 describe("Take Control", () => {
   it("grants stealsOneFewerGig to the attacker and conditionally draws for AI/Drone/Vehicle", () => {
@@ -65,7 +66,7 @@ describe("Take Control", () => {
         eddies: 5,
       },
       {
-        field: [{ card: attacker, spent: false, playedThisTurn: false }],
+        field: [{ card: attacker, spent: false, hasLag: false }],
         eddies: 5,
       },
     );
@@ -74,11 +75,13 @@ describe("Take Control", () => {
     engine.judgeSetTurnMetadata({ activePlayerId: P2 }, { as: P1 });
     engine.attackRival(attacker, { as: P2 });
     engine.resolveAttack({ as: P2 }); // attack → react
+    expect(getProjectedDirectAttackGigStealCount(engine.getState())).toBe(2);
 
     // P1 plays Take Control as a QUICK reaction during the React step.
     expect(engine.playCard(welcomeToNightCityRetailTakeControl, { as: P1 })).toMatchObject({
       success: true,
     });
+    expect(getProjectedDirectAttackGigStealCount(engine.getState())).toBe(1);
 
     engine.resolveAttack({ as: P1, pass: true }); // react → steal
     engine.resolveAttack({
@@ -115,7 +118,7 @@ describe("Take Control", () => {
         eddies: 5,
       },
       {
-        field: [{ card: attacker, spent: false, playedThisTurn: false }],
+        field: [{ card: attacker, spent: false, hasLag: false }],
         eddies: 5,
       },
     );
@@ -124,6 +127,7 @@ describe("Take Control", () => {
     engine.attackRival(attacker, { as: P2 });
     engine.resolveAttack({ as: P2 }); // attack → react
     engine.playCard(welcomeToNightCityRetailTakeControl, { as: P1 });
+    expect(getProjectedDirectAttackGigStealCount(engine.getState())).toBe(0);
     engine.resolveAttack({ as: P1, pass: true }); // react → steal
     engine.resolveAttack({ as: P2, gigIdsToSteal: [] }); // steal resolves
 
@@ -159,7 +163,7 @@ describe("Take Control", () => {
         eddies: 5,
       },
       {
-        field: [{ card: attacker, spent: false, playedThisTurn: false }],
+        field: [{ card: attacker, spent: false, hasLag: false }],
         eddies: 5,
       },
     );
@@ -201,7 +205,7 @@ describe("Take Control", () => {
         eddies: 5,
       },
       {
-        field: [{ card: attacker, spent: false, playedThisTurn: false }],
+        field: [{ card: attacker, spent: false, hasLag: false }],
         eddies: 5,
       },
     );
@@ -241,7 +245,7 @@ describe("Take Control", () => {
         eddies: 5,
       },
       {
-        field: [{ card: attacker, spent: false, playedThisTurn: false }],
+        field: [{ card: attacker, spent: false, hasLag: false }],
         eddies: 5,
       },
     );

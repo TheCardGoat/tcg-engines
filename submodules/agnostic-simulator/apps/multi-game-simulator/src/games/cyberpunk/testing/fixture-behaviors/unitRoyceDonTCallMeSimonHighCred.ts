@@ -18,7 +18,7 @@ export const unitRoyceDonTCallMeSimonHighCredBehavior: CyberpunkFixtureBehavior 
   scenarioId: "unitRoyceDonTCallMeSimonHighCred",
   label: "Royce - high Street Cred targets power three units",
   references: [
-    "packages/engine/src/cards/spoiler/units/royce-don-t-call-me-simon.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/royce-don-t-call-me-simon.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

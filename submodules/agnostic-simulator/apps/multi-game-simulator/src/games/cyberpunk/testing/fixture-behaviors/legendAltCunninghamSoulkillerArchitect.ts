@@ -1,5 +1,4 @@
 import {
-  welcomeToNightCityRetailCorporateSurveillance,
   welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailAltCunninghamSoulkillerArchitect,
 } from "@tcg/cyberpunk-cards";
@@ -11,7 +10,7 @@ export const legendAltCunninghamSoulkillerArchitectBehavior: CyberpunkFixtureBeh
   scenarioId: "legendAltCunninghamSoulkillerArchitect",
   label: "Alt Cunningham - steal gig and replay a program",
   references: [
-    "packages/engine/src/cards/spoiler/legends/alt-cunningham-soulkiller-architect.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/legends/alt-cunningham-soulkiller-architect.test.ts",
   ],
   async run(pom) {
     const alt = await pom.getCardInZoneByDefinitionId(
@@ -37,17 +36,6 @@ export const legendAltCunninghamSoulkillerArchitectBehavior: CyberpunkFixtureBeh
     );
     await pom.expectGigCount(CYBERPUNK_P1, 3);
     await pom.expectGigCount(CYBERPUNK_P2, 0);
-    await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToPlay");
-
-    const choices = await pom.getChoiceCardIds(CYBERPUNK_P1);
-    expectEqual("Alt program choice count", choices.length, 1);
-    expectEqual(
-      "Alt program choice",
-      await pom.getCardDefinitionId(choices[0]!),
-      welcomeToNightCityRetailCorporateSurveillance.id,
-    );
-
-    await pom.resolveCardToPlay(choices[0]!, CYBERPUNK_P1);
     await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
 
     const targets = await pom.getEligibleTargetIds(CYBERPUNK_P1);

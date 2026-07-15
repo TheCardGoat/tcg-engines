@@ -97,6 +97,11 @@ describe("Ξ Gundam (ST08-001)", () => {
       const [lowLevelId, highLevelId] = p2.getCardsInZone("battleArea");
 
       expectSuccess(p1.assignPilot(hathaway, st08Gundam001));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [highLevelId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [highLevelId!] }));
 
       expect(p2.getDamage(highLevelId!)).toBe(3);
       expect(p2.getDamage(lowLevelId!)).toBe(0);
@@ -113,7 +118,7 @@ describe("Ξ Gundam (ST08-001)", () => {
 
       expectSuccess(p1.assignPilot(hathaway, st08Gundam001));
 
-      expect(engine.getPendingChoice()).toBeUndefined();
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
       expect(p1.getPilotId(p1.getCardsInZone("battleArea")[0]!)).toBeDefined();
     });
   });

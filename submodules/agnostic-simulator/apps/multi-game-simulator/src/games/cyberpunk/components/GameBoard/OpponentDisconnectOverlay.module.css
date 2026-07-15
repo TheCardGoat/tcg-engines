@@ -48,6 +48,15 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
+.overlayTimeout .content {
+  border-color: rgba(245, 230, 66, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.55),
+    0 0 18px rgba(245, 230, 66, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
 .minimize {
   position: absolute;
   top: 0.4rem;
@@ -210,6 +219,21 @@
   animation: reconnect-pulse 2.5s ease-in-out infinite;
 }
 
+.timeoutIcon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(245, 230, 66, 0.12);
+  border: 1px solid rgba(245, 230, 66, 0.34);
+  color: rgba(245, 230, 66, 0.95);
+  box-shadow:
+    0 0 18px rgba(245, 230, 66, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
 @keyframes reconnect-pulse {
   0%,
   100% {
@@ -235,6 +259,10 @@
 
 .overlayCanDrop .label {
   color: rgba(255, 158, 191, 0.95);
+}
+
+.overlayTimeout .label {
+  color: rgba(245, 230, 66, 0.95);
 }
 
 .sublabel {
@@ -315,6 +343,9 @@
     animation: none;
   }
   .selfIcon {
+    animation: none;
+  }
+  .timeoutIcon {
     animation: none;
   }
   .claimButton {

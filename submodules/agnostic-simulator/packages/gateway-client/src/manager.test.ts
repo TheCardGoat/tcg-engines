@@ -98,6 +98,23 @@ interface AuthOpts {
   auth: (cb: (data: unknown) => void) => void;
 }
 
+function installLocalStorageStub(): Map<string, string> {
+  const store = new Map<string, string>();
+  Object.defineProperty(globalThis, "localStorage", {
+    configurable: true,
+    value: {
+      getItem: vi.fn((key: string) => store.get(key) ?? null),
+      setItem: vi.fn((key: string, value: string) => {
+        store.set(key, value);
+      }),
+      removeItem: vi.fn((key: string) => {
+        store.delete(key);
+      }),
+    },
+  });
+  return store;
+}
+
 function authOpts(): AuthOpts {
   const opts = ioMock.mock.calls[0]?.[1];
   return opts as AuthOpts;
@@ -270,6 +287,50 @@ describe("gateway-client manager", () => {
       expect.objectContaining({ reason: "missing_credentials", namespace: "/lorcana" }),
     );
     expect(mgr.getState("lorcana").status).toBe("disconnected");
+    expect(mgr.getState("lorcana").authFailureReason).toBe("missing_credentials");
+  });
+
+  it("fresh required credentials reconnect an already-open anonymous socket", () => {
+    const mgr = createGatewayConnectionManager({
+      gatewayOrigin: "wss://gateway.tcg.online",
+    });
+    const h = mgr.acquire("lorcana");
+    fakes[0].__emit("connect");
+    fakes[0].__emit("welcome", {
+      authenticated: false,
+      authenticationMethod: "anonymous",
+      connectionId: "anon-1",
+    });
+    expect(mgr.getState("lorcana")).toMatchObject({
+      status: "connected",
+      authenticated: false,
+      authMethod: "anonymous",
+    });
+
+    fakes[0].connect.mockClear();
+    fakes[0].disconnect.mockClear();
+    mgr.setCredentials("lorcana", {
+      ticket: "fresh_ticket",
+      token: "fresh_jwt",
+      requireAuth: true,
+    });
+
+    expect(fakes[0].disconnect).toHaveBeenCalledTimes(1);
+    expect(fakes[0].connect).toHaveBeenCalledTimes(1);
+    expect(mgr.getState("lorcana")).toMatchObject({
+      status: "connecting",
+      authFailureReason: null,
+    });
+
+    const received: unknown[] = [];
+    authOpts().auth((d) => received.push(d));
+    expect(received[0]).toEqual({
+      ticket: "fresh_ticket",
+      token: "fresh_jwt",
+      requireAuth: true,
+    });
+
+    h.release();
   });
 
   it("updates state on connect/welcome and resets auth on disconnect", () => {
@@ -417,6 +478,7 @@ describe("gateway-client manager", () => {
       reconnectAttempt: 0,
       error: null,
       authStatus: "ok",
+      authFailureReason: null,
     });
 
     const seen: string[] = [];
@@ -649,6 +711,7 @@ describe("gateway-client manager", () => {
       expect(mgr.getState("lorcana")).toMatchObject({
         status: "disconnected",
         authStatus: "failed",
+        authFailureReason: "refresh_exhausted",
       });
       expect(onAnalytics).toHaveBeenCalledWith(
         "ws_auth_terminal_failure",
@@ -748,6 +811,36 @@ describe("gateway-client manager", () => {
         "ws_credentials_refresh_attempt",
         expect.objectContaining({ namespace: "/lorcana" }),
       );
+      expect(mgr.getState("lorcana").authFailureReason).toBe("missing_credentials");
+
+      h.release();
+    });
+
+    it("transitions to terminal failure when refresh returns no required-auth credentials", async () => {
+      const { controller, refresh } = refreshableController({
+        initial: { requireAuth: true },
+        refreshed: { requireAuth: true },
+      });
+      const onAnalytics = vi.fn();
+      const mgr = createGatewayConnectionManager({
+        gatewayOrigin: "wss://gateway.tcg.online",
+        onAnalytics,
+      });
+      const h = mgr.acquire("lorcana", { credentials: controller });
+      await flushPromises();
+
+      expect(refresh).toHaveBeenCalledTimes(1);
+      expect(fakes[0].connect).not.toHaveBeenCalled();
+      expect(mgr.getState("lorcana")).toMatchObject({
+        status: "disconnected",
+        authStatus: "failed",
+        authFailureReason: "refresh_exhausted",
+        error: "Credential refresh did not restore authenticated access.",
+      });
+      expect(onAnalytics).toHaveBeenCalledWith(
+        "ws_auth_terminal_failure",
+        expect.objectContaining({ namespace: "/lorcana", reason: "refresh_exhausted" }),
+      );
 
       h.release();
     });
@@ -770,6 +863,7 @@ describe("gateway-client manager", () => {
       expect(mgr.getState("lorcana")).toMatchObject({
         status: "disconnected",
         authStatus: "failed",
+        authFailureReason: "refresh_failed",
         error: "Credential refresh failed.",
       });
       expect(onAnalytics).toHaveBeenCalledWith(
@@ -937,6 +1031,68 @@ describe("gateway-client manager", () => {
       // connected+authenticated, so onAuthenticated must not refire.
       fakes[0].__emit("pong", { serverTime: "x", t: Date.now() - 50 });
       expect(cb).toHaveBeenCalledTimes(1);
+
+      h.release();
+    });
+  });
+
+  describe("packet logging", () => {
+    afterEach(() => {
+      Reflect.deleteProperty(globalThis, "localStorage");
+      vi.restoreAllMocks();
+    });
+
+    it("logs handshake, incoming packets, outgoing packets, and lifecycle when enabled", () => {
+      const store = installLocalStorageStub();
+      store.set("tcg:gateway-packet-log", "1");
+      const consoleLog = vi.spyOn(console, "log").mockImplementation(() => {});
+      const mgr = createGatewayConnectionManager({
+        gatewayOrigin: "wss://gateway.tcg.online",
+      });
+      mgr.setCredentials("lorcana", { ticket: "ticket-secret", token: "jwt-secret" });
+      const h = mgr.acquire("lorcana");
+
+      let authPayload: unknown;
+      authOpts().auth((data) => {
+        authPayload = data;
+      });
+      fakes[0].__emit("connect");
+      fakes[0].__emit("welcome", {
+        authenticated: true,
+        authenticationMethod: "ticket",
+        connectionId: "conn_1",
+      });
+      h.emit("heartbeat", { game: { gameId: "game_1", matchId: "match_1" } });
+
+      expect(authPayload).toEqual({ ticket: "ticket-secret", token: "jwt-secret" });
+      expect(consoleLog).toHaveBeenCalledWith(
+        "[gateway:handshake] /lorcana auth",
+        expect.objectContaining({
+          payload: { hasTicket: true, hasToken: true, requireAuth: false },
+        }),
+      );
+      expect(consoleLog).toHaveBeenCalledWith(
+        "[gateway:lifecycle] /lorcana connect",
+        expect.objectContaining({ event: "connect", namespace: "/lorcana" }),
+      );
+      expect(consoleLog).toHaveBeenCalledWith(
+        "[gateway:receive] /lorcana welcome",
+        expect.objectContaining({
+          payload: expect.objectContaining({ authenticated: true }),
+        }),
+      );
+      expect(consoleLog).toHaveBeenCalledWith(
+        "[gateway:send] /lorcana heartbeat",
+        expect.objectContaining({
+          payload: { game: { gameId: "game_1", matchId: "match_1" } },
+        }),
+      );
+      expect(
+        consoleLog.mock.calls.some((call) => JSON.stringify(call).includes("ticket-secret")),
+      ).toBe(false);
+      expect(
+        consoleLog.mock.calls.some((call) => JSON.stringify(call).includes("jwt-secret")),
+      ).toBe(false);
 
       h.release();
     });

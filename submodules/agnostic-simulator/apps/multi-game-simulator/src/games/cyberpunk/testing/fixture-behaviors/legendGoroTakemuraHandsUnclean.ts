@@ -13,7 +13,9 @@ import {
 export const legendGoroTakemuraHandsUncleanBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendGoroTakemuraHandsUnclean",
   label: "Goro Takemura - Hands Unclean - GO SOLO + BLOCKER",
-  references: ["packages/engine/src/cards/alpha/legends/goro-takemura-hands-unclean.test.ts"],
+  references: [
+    "packages/engine/src/cards/embracingpowerretailstarterdeck/legends/goro-takemura-hands-unclean.test.ts",
+  ],
   async run(pom) {
     const goro = await pom.getCardInZoneByDefinitionId(
       "legendArea",

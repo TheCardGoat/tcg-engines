@@ -10,6 +10,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
+    "types": ["bun-types"],
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,

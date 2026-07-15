@@ -8,20 +8,24 @@ import {
   createMockUnit,
   expectCardInTrash,
   expectSuccess,
-  getDamageCounter,
-  getEffectiveStats,
 } from "@tcg/gundam-engine";
 import { gd03GundamNt1001 } from "./001-gundam-nt-1.ts";
 
 describe("Gundam NT-1 (GD03-001)", () => {
-  it("has printed Repair 2 in effective stats", () => {
-    const engine = GundamTestEngine.create({ play: [gd03GundamNt1001] }, {});
-    const unitId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
-    const framework = engine.getRuntime().getFrameworkReadAPI();
+  it("<Repair 2> recovers 2 HP at the end of its controller's turn", () => {
+    const engine = GundamTestEngine.create({
+      play: [{ card: gd03GundamNt1001, damage: 3 }],
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
 
-    const stats = getEffectiveStats(unitId, engine.getG(), framework.cards, framework);
+    expect(p1.getDamage(unitId)).toBe(3);
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
 
-    expect(stats.keywords).toContain("Repair");
+    expect(p1.getDamage(unitId)).toBe(1);
   });
 
   describe("【When Paired】Choose 1 rested enemy Unit. Deal 1 damage to it. When this effect destroys an enemy Unit, draw 1.", () => {
@@ -44,6 +48,12 @@ describe("Gundam NT-1 (GD03-001)", () => {
       const deckBefore = p1.getCardsInZone("deck").length;
 
       expectSuccess(p1.assignPilot(pilot, nt1Id));
+
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [enemyId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
 
       expectCardInTrash(engine, enemyId, PLAYER_TWO);
       expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore - 1);
@@ -70,7 +80,13 @@ describe("Gundam NT-1 (GD03-001)", () => {
 
       expectSuccess(p1.assignPilot(pilot, nt1Id));
 
-      expect(getDamageCounter(engine, enemyId)).toBe(1);
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [enemyId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+
+      expect(p2.getDamage(enemyId)).toBe(1);
       expect(p2.getCardsInZone("battleArea")).toContain(enemyId);
       expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore);
       expect(p1.getCardsInZone("hand")).toHaveLength(0);
@@ -95,7 +111,7 @@ describe("Gundam NT-1 (GD03-001)", () => {
 
       expectSuccess(p1.assignPilot(pilot, nt1Id));
 
-      expect(getDamageCounter(engine, enemyId)).toBe(0);
+      expect(p2.getDamage(enemyId)).toBe(0);
       expect(p2.getCardsInZone("battleArea")).toContain(enemyId);
       expect(p1.getCardsInZone("hand")).toHaveLength(0);
     });

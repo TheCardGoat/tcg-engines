@@ -4,6 +4,7 @@ export const gd01Guncannon004: UnitCard = {
   cardNumber: "GD01-004",
   name: "Guncannon",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD01-004",
@@ -75,6 +76,7 @@ export const gd01Guncannon004: UnitCard = {
   cost: 2,
   ap: 2,
   hp: 3,
+  linkCondition: "(White Base Team) Trait",
   effect:
     "&lt;Repair 1&gt; (At the end of your turn, this Unit recovers the specified number of HP.)<br>【When Paired】Choose 1 enemy Unit with 2 or less HP. Rest it.<br>",
   effects: [

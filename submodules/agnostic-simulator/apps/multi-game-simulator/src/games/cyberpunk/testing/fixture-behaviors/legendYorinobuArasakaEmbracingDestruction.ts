@@ -10,7 +10,7 @@ export const legendYorinobuArasakaEmbracingDestructionBehavior: CyberpunkFixture
   scenarioId: "legendYorinobuArasakaEmbracingDestruction",
   label: "Yorinobu - first Arasaka attack draw/discard",
   references: [
-    "packages/engine/src/cards/alpha/legends/yorinobu-arasaka-embracing-destruction.test.ts",
+    "packages/engine/src/cards/embracingpowerretailstarterdeck/legends/yorinobu-arasaka-embracing-destruction.test.ts",
   ],
   async run(pom) {
     const minotaur = await pom.getCardInZoneByDefinitionId(

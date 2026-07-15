@@ -22,7 +22,7 @@ describe("Daughtress Command (GD02-044)", () => {
     } as unknown as Parameters<typeof createMockUnit>[0]);
     const engine = GundamTestEngine.create(
       { play: [attacker] },
-      { play: [gd02DaughtressCommand044, friendlyNewUne] },
+      { play: [{ card: gd02DaughtressCommand044, exhausted: true }, friendlyNewUne] },
     );
     const p1Id = asPlayerId(PLAYER_ONE);
     const p2Id = asPlayerId(PLAYER_TWO);

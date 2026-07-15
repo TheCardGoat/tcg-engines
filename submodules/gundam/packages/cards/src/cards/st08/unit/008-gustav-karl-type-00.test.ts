@@ -4,44 +4,23 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   createMockUnit,
-  expectAttackRedirectedTo,
   expectSuccess,
-  getEffectiveStats,
 } from "@tcg/gundam-engine";
 import { st08GustavKarlType00008 } from "./008-gustav-karl-type-00.ts";
 
 describe("Gustav Karl Type-00 (ST08-008)", () => {
   describe("While 3 or more enemy Units are in play, this Unit gains <Blocker>.", () => {
-    function keywordsWithEnemyCount(count: number): string[] {
+    function keywordsWithEnemyCount(count: number): readonly string[] {
       const enemies = Array.from({ length: count }, () => createMockUnit({ ap: 1, hp: 3 }));
       const engine = GundamTestEngine.create(
         { play: [st08GustavKarlType00008] },
         { play: enemies },
       );
-      const [gustavId] = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea");
-      const fw = engine.getRuntime().getFrameworkReadAPI();
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const [gustavId] = p1.getCardsInZone("battleArea");
 
-      return getEffectiveStats(gustavId!, engine.getG(), fw.cards, fw).keywords;
+      return p1.getVisibleCard(gustavId!)?.keywords ?? [];
     }
-
-    it("data encodes the enemy Unit count condition and self Blocker grant", () => {
-      const effect = st08GustavKarlType00008.effects?.[0];
-
-      expect(effect?.type).toBe("constant");
-      expect(effect?.activation).toEqual({
-        conditions: [{ type: "unitCount", owner: "opponent", comparison: "gte", count: 3 }],
-      });
-      expect(effect?.directives).toEqual([
-        {
-          action: {
-            action: "grantKeyword",
-            keyword: "Blocker",
-            duration: "permanent",
-            target: { owner: "self", cardType: "unit" },
-          },
-        },
-      ]);
-    });
 
     it("gains Blocker while 3 enemy Units are in play", () => {
       expect(keywordsWithEnemyCount(3)).toContain("Blocker");
@@ -57,7 +36,7 @@ describe("Gustav Karl Type-00 (ST08-008)", () => {
       const otherEnemies = Array.from({ length: 3 }, () => createMockUnit({ ap: 1, hp: 3 }));
       const engine = GundamTestEngine.create(
         { play: [attacker, ...otherEnemies] },
-        { play: [defender, st08GustavKarlType00008] },
+        { play: [{ card: defender, exhausted: true }, st08GustavKarlType00008] },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
@@ -67,8 +46,14 @@ describe("Gustav Karl Type-00 (ST08-008)", () => {
 
       expectSuccess(p1.enterBattle(attackerId, defenderId));
       expectSuccess(p2.declareBlock(blockerId));
+      expect(p1.getBoardView().pendingCombat).toMatchObject({
+        stage: "blocker-declared",
+        blockerId,
+      });
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
 
-      expectAttackRedirectedTo(engine, blockerId);
+      expect(p2.getDamage(blockerId)).toBe(3);
     });
   });
 });

@@ -10,7 +10,7 @@ export const unitRuthlessLowlifeBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitRuthlessLowlife",
   label: "Ruthless Lowlife - spent unit changes stolen gig to 1",
   references: [
-    "packages/engine/src/cards/alpha/units/ruthless-lowlife.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/sketchy-ripper.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

@@ -16,12 +16,33 @@
     "dist"
   ],
   "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "exports": {
-    ".": "./dist/index.mjs",
-    "./practice-st01": "./dist/practice-st01.mjs",
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./practice-st01": {
+      "types": "./src/practice-st01.ts",
+      "default": "./dist/practice-st01.mjs"
+    },
     "./package.json": "./package.json"
   },
   "publishConfig": {
+    "main": "./dist/index.mjs",
+    "types": "./dist/index.d.mts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "./practice-st01": {
+        "types": "./dist/practice-st01.d.mts",
+        "default": "./dist/practice-st01.mjs"
+      },
+      "./package.json": "./package.json"
+    },
     "access": "public"
   },
   "scripts": {
@@ -32,6 +53,7 @@
     "prepublishOnly": "vp run build"
   },
   "dependencies": {
+    "@tcg/bot-core": "link:../../../agnostic-simulator/packages/bot-core",
     "@tcg/engine-core": "link:../../../agnostic-simulator/packages/engine-core",
     "@tcg/op-cards": "workspace:*",
     "@tcg/op-types": "workspace:*",

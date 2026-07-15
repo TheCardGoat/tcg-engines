@@ -57,6 +57,6 @@ export {
   expectCardToMoveCount,
   expectTargetChoice,
   expectAdjustGigChoice,
-  expectSearchDeckChoice,
+  expectScryChoice,
   expectCardToMoveDestination,
 } from "./ui-assertions.ts";

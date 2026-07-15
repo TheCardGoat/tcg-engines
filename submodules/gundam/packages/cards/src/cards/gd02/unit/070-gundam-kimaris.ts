@@ -80,16 +80,10 @@ export const gd02GundamKimaris070: UnitCard = {
       directives: [
         {
           action: {
-            action: "draw",
-            count: 2,
+            action: "drawThenDiscard",
+            drawCount: 2,
+            discardCount: 2,
           },
-        },
-        {
-          action: {
-            action: "discard",
-            count: 2,
-          },
-          dependsOnPrevious: true,
         },
       ],
       sourceText:

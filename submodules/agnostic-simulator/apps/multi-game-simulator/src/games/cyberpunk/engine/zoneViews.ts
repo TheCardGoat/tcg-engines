@@ -4,6 +4,7 @@ import {
   computeEffectiveCostDetails,
   getEffectivePower,
   getEffectiveRules,
+  type ActiveEffect,
   type CardInstance,
   type DieType,
   type GigDie,
@@ -14,24 +15,30 @@ export type CardColor = "blue" | "green" | "red" | "yellow";
 export type EffectiveRule =
   | "blocker"
   | "goSolo"
+  | "adrenaline"
   | "cantAttack"
+  | "mustAttack"
   | "cantBeBlocked"
   | "canAttackOnPlayedTurnAgainstUnits";
 import { useEngine } from "./engineContext";
 import { PLAYER_SIDE_TO_ID, type Side } from "./sides";
 
-/** Win condition: holding 6 Gigs at the start of your turn (cyberpunk-tcg-rules). */
-export const WIN_GIG_THRESHOLD = 6;
+/** Win condition: holding 7 Gigs at the start of your turn (cyberpunk-tcg-rules). */
+export const WIN_GIG_THRESHOLD = 7;
 
 export type EngineCardType = "legend" | "unit" | "gear" | "program";
 
 export interface CardActiveEffectView {
   id: string;
+  targetKind: "card" | "player";
+  targetId: string;
   sourceCardId?: string;
   sourceName: string;
   label: string;
   detail: string;
   modifierLabel?: string;
+  effectKind: string;
+  rule?: string;
   tone: "buff" | "debuff" | "neutral";
   durationLabel?: string;
   defeatsAtEndOfTurn: boolean;
@@ -70,8 +77,8 @@ export interface ZoneCardView {
   activeEffects: CardActiveEffectView[];
   /** Visual state derived from engine. */
   spent: boolean;
-  /** True while this unit is still under the played-this-turn attack restriction. */
-  playedThisTurn: boolean;
+  /** True while this unit is still under the has-lag attack restriction. */
+  hasLag: boolean;
   faceDown: boolean;
   /** Effective printed, granted, and gear-provided rules for compact UI badges. */
   effectiveRules: EffectiveRule[];
@@ -115,6 +122,8 @@ export interface SideZoneViews {
   streetCred: number;
   /** Number of dice in the gig area. Counts toward {@link WIN_GIG_THRESHOLD}. */
   gigCount: number;
+  /** Active effects targeting this player rather than a specific card. */
+  activeEffects: CardActiveEffectView[];
 }
 
 function gearViews(
@@ -159,7 +168,7 @@ function toView(
     keywords: def.keywords ?? [],
     cost: printedCost,
     effectiveCost: effectiveCostDetails?.effectiveCost ?? null,
-    costEffects: costEffectViews(effectiveCostDetails),
+    costEffects: costEffectViews(effectiveCostDetails, instance.instanceId as unknown as string),
     power: printedPower,
     effectivePower:
       printedPower !== null
@@ -167,7 +176,7 @@ function toView(
         : null,
     activeEffects: activeEffectViews(instance, state),
     spent: instance.meta.spent ?? false,
-    playedThisTurn: instance.meta.playedThisTurn ?? false,
+    hasLag: instance.meta.hasLag ?? false,
     faceDown: instance.meta.faceDown ?? false,
     effectiveRules,
     attachedGear: gearViews(instance.meta, cardIndex, state),
@@ -176,15 +185,19 @@ function toView(
 
 function costEffectViews(
   details: ReturnType<typeof computeEffectiveCostDetails> | null,
+  targetId: string,
 ): CardActiveEffectView[] {
   if (!details) return [];
   return details.modifiers.map((modifier) => ({
     id: modifier.id,
+    targetKind: "card" as const,
+    targetId,
     sourceCardId: modifier.sourceCardId as unknown as string,
     sourceName: modifier.sourceName,
     label: modifier.label,
     detail: modifier.detail,
     modifierLabel: modifier.modifierLabel,
+    effectKind: "costModifier",
     tone: modifier.delta <= 0 ? ("buff" as const) : ("debuff" as const),
     durationLabel: "while active",
     defeatsAtEndOfTurn: false,
@@ -194,7 +207,7 @@ function costEffectViews(
 function activeEffectViews(instance: CardInstance, state: MatchState): CardActiveEffectView[] {
   const targetId = instance.instanceId as unknown as string;
   const views: CardActiveEffectView[] = state.G.activeEffects
-    .filter((effect) => String(effect.targetCardId) === targetId)
+    .filter((effect) => effect.playerId === undefined && String(effect.targetCardId) === targetId)
     .map((effect) => {
       const sourceName = sourceCardName(effect.sourceCardId as unknown as string, state);
       const defeatsAtEndOfTurn = hasEndOfTurnDefeatFromSource(
@@ -202,48 +215,51 @@ function activeEffectViews(instance: CardInstance, state: MatchState): CardActiv
         effect.sourceCardId as unknown as string,
         targetId,
       );
-      const durationLabel = effect.duration === "turn" ? "this turn" : "while active";
+      const durationLabel = durationLabelForEffect(effect);
+      const base = {
+        id: effect.id,
+        targetKind: "card" as const,
+        targetId,
+        sourceCardId: effect.sourceCardId as unknown as string,
+        sourceName,
+        effectKind: effect.kind,
+        durationLabel,
+        defeatsAtEndOfTurn,
+      };
 
       if (effect.kind === "powerModifier") {
         const modifier = effect.powerModifier ?? 0;
         const modifierLabel = signedNumber(modifier);
         return {
-          id: effect.id,
-          sourceCardId: effect.sourceCardId as unknown as string,
-          sourceName,
+          ...base,
           label: `${modifierLabel} PWR`,
           detail: `${sourceName}: ${modifierLabel} power ${durationLabel}${defeatsAtEndOfTurn ? "; defeated at end of turn" : ""}.`,
           modifierLabel,
           tone: modifier >= 0 ? ("buff" as const) : ("debuff" as const),
-          durationLabel,
-          defeatsAtEndOfTurn,
         };
       }
 
       if (effect.kind === "powerMultiplier") {
         const multiplier = effect.powerMultiplier ?? 1;
         return {
-          id: effect.id,
-          sourceCardId: effect.sourceCardId as unknown as string,
-          sourceName,
+          ...base,
           label: `x${multiplier} PWR`,
           detail: `${sourceName}: power x${multiplier} ${durationLabel}${defeatsAtEndOfTurn ? "; defeated at end of turn" : ""}.`,
           modifierLabel: `x${multiplier}`,
           tone: multiplier >= 1 ? ("buff" as const) : ("debuff" as const),
-          durationLabel,
-          defeatsAtEndOfTurn,
         };
       }
 
+      const ruleLabel = formatRuleLabel(effect.rule);
       return {
-        id: effect.id,
-        sourceCardId: effect.sourceCardId as unknown as string,
-        sourceName,
-        label: formatRuleLabel(effect.rule),
-        detail: `${sourceName}: ${formatRuleLabel(effect.rule)} ${durationLabel}${defeatsAtEndOfTurn ? "; defeated at end of turn" : ""}.`,
+        ...base,
+        label: ruleLabel,
+        detail:
+          effect.rule === "mustAttack"
+            ? `Must attack next turn if able. Source: ${sourceName}.`
+            : `${sourceName}: ${ruleLabel} ${durationLabel}${defeatsAtEndOfTurn ? "; defeated at end of turn" : ""}.`,
+        rule: effect.rule,
         tone: "neutral" as const,
-        durationLabel,
-        defeatsAtEndOfTurn,
       };
     });
 
@@ -262,10 +278,13 @@ function activeEffectViews(instance: CardInstance, state: MatchState): CardActiv
       return [
         {
           id: entry.id,
+          targetKind: "card" as const,
+          targetId,
           sourceCardId: entry.sourceCardId as unknown as string,
           sourceName,
           label: "End defeat",
           detail: `${sourceName}: defeated at end of turn.`,
+          effectKind: "delayedDefeat",
           tone: "debuff" as const,
           durationLabel: "end of turn",
           defeatsAtEndOfTurn: true,
@@ -274,6 +293,30 @@ function activeEffectViews(instance: CardInstance, state: MatchState): CardActiv
     });
 
   return [...views, ...delayedDefeatViews];
+}
+
+function playerActiveEffectViews(playerId: string, state: MatchState): CardActiveEffectView[] {
+  return state.G.activeEffects
+    .filter((effect) => effect.playerId !== undefined && String(effect.playerId) === playerId)
+    .map((effect) => {
+      const sourceName = sourceCardName(effect.sourceCardId as unknown as string, state);
+      const durationLabel = durationLabelForEffect(effect);
+      const label = activeEffectLabel(effect);
+
+      return {
+        id: effect.id,
+        targetKind: "player" as const,
+        targetId: playerId,
+        sourceCardId: effect.sourceCardId as unknown as string,
+        sourceName,
+        label,
+        detail: `${sourceName}: ${label} ${durationLabel}.`,
+        effectKind: effect.kind,
+        tone: activeEffectTone(effect),
+        durationLabel,
+        defeatsAtEndOfTurn: false,
+      };
+    });
 }
 
 function sourceCardName(cardId: string, state: MatchState): string {
@@ -306,12 +349,35 @@ function signedNumber(value: number): string {
   return value > 0 ? `+${value}` : `${value}`;
 }
 
+function durationLabelForEffect(effect: Pick<ActiveEffect, "duration">): string {
+  if (effect.duration === "turn") return "this turn";
+  if (effect.duration === "untilSourceNextTurn") return "until source's next turn";
+  return "while active";
+}
+
 function formatRuleLabel(rule: string | undefined): string {
   if (!rule) return "Rule";
   return rule
     .replace(/[A-Z]/g, (letter) => ` ${letter}`)
     .trim()
     .toUpperCase();
+}
+
+function activeEffectLabel(effect: ActiveEffect): string {
+  if (effect.kind === "powerModifier") return `${signedNumber(effect.powerModifier ?? 0)} PWR`;
+  if (effect.kind === "powerMultiplier") return `x${effect.powerMultiplier ?? 1} PWR`;
+  if (effect.kind === "costModifier") return "Cost modifier";
+  return formatRuleLabel(effect.rule);
+}
+
+function activeEffectTone(effect: ActiveEffect): CardActiveEffectView["tone"] {
+  if (effect.kind === "powerModifier") return (effect.powerModifier ?? 0) >= 0 ? "buff" : "debuff";
+  if (effect.kind === "powerMultiplier") {
+    return (effect.powerMultiplier ?? 1) >= 1 ? "buff" : "debuff";
+  }
+  if (effect.kind === "costModifier") return "buff";
+  if (effect.rule === "cantAttack" || effect.rule === "mustAttack") return "debuff";
+  return "neutral";
 }
 
 function collectSelfStaticRules(instance: CardInstance): EffectiveRule[] {
@@ -338,7 +404,9 @@ function isEffectiveRule(rule: string | undefined): rule is EffectiveRule {
   return (
     rule === "blocker" ||
     rule === "goSolo" ||
+    rule === "adrenaline" ||
     rule === "cantAttack" ||
+    rule === "mustAttack" ||
     rule === "cantBeBlocked" ||
     rule === "canAttackOnPlayedTurnAgainstUnits"
   );
@@ -370,6 +438,7 @@ const EMPTY_VIEW: SideZoneViews = {
   soldThisTurn: false,
   streetCred: 0,
   gigCount: 0,
+  activeEffects: [],
 };
 
 /**
@@ -468,6 +537,7 @@ export function useSideZones(side: Side): SideZoneViews {
       soldThisTurn: player.soldThisTurn,
       streetCred,
       gigCount: player.gigArea.length,
+      activeEffects: playerActiveEffectViews(playerId, matchState),
     };
   }, [matchState.ctx.stateID, side]);
 }

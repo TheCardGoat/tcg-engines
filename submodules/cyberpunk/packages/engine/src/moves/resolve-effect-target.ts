@@ -12,7 +12,7 @@ import { buildEffectTargetActionLogDetails } from "../logging/effect-target.ts";
 import { defOf } from "../state/lookups.ts";
 import type { MatchState } from "../types/match-state.ts";
 import type { CardInstanceId, GigDieId, PlayerId } from "../types/branded.ts";
-import type { EffectTarget } from "../types/game-events.ts";
+import type { EffectTarget, GameEvent, GigDieRolledEvent } from "../types/game-events.ts";
 import { resumeSuspendedEndTurn } from "./pass-phase.ts";
 
 export interface ResolveEffectTargetInput extends MoveInput {
@@ -44,7 +44,7 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
       return { valid: false, error: "Not your choice to resolve", errorCode: "NOT_YOUR_CHOICE" };
     }
     if (input.args.pass) {
-      return choice.payload.canDecline
+      return choice.payload.canDecline || (choice.payload.min ?? 1) === 0
         ? { valid: true }
         : { valid: false, error: "Cannot pass this target choice", errorCode: "CANNOT_PASS" };
     }
@@ -83,7 +83,10 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
     operations.game.setPendingChoice(undefined);
 
     const targetIds = input.args.targetIds ?? [];
-    if (input.args.pass || (payload.canDecline && targetIds.length === 0)) {
+    if (
+      input.args.pass ||
+      ((payload.canDecline || (payload.min ?? 1) === 0) && targetIds.length === 0)
+    ) {
       if (payload.selectedBindingId) {
         const current = state.G.turnMetadata.currentTrigger;
         if (current) {
@@ -188,6 +191,7 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
         emitted.type === "gigDieRolled" ||
         emitted.type === "legendFlipped" ||
         emitted.type === "legendCalled" ||
+        emitted.type === "gigStolen" ||
         emitted.type === "cardPlayed" ||
         emitted.type === "cardSpent"
       ) {
@@ -203,10 +207,16 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
     }
 
     if (!skipGenericTargetLog) {
+      const targetLog = buildTargetResolvedActionLog(
+        effect,
+        actionLog,
+        eventsAfter.slice(eventsBefore),
+        targetIds,
+      );
       operations.event.emit({
         type: "actionLog",
-        messageKey: targetResolvedMessageKey(effect),
-        params: actionLog.params,
+        messageKey: targetLog.messageKey,
+        params: targetLog.params,
         playerId,
         category: "trigger",
         cardIds: actionLog.cardIds,
@@ -230,11 +240,52 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
 
 function targetResolvedMessageKey(
   effect: Effect | undefined,
-): "trigger.targetResolved" | "trigger.targetResolved.deckBottom" {
+):
+  | "trigger.targetResolved"
+  | "trigger.targetResolved.deckBottom"
+  | "trigger.targetResolved.rerollGig" {
   if (effect?.effect === "moveCard" && effect.destination === "deckBottom") {
     return "trigger.targetResolved.deckBottom";
   }
+  if (effect?.effect === "rerollGig") {
+    return "trigger.targetResolved.rerollGig";
+  }
   return "trigger.targetResolved";
+}
+
+function buildTargetResolvedActionLog(
+  effect: Effect | undefined,
+  actionLog: ReturnType<typeof buildEffectTargetActionLogDetails>,
+  emittedEvents: readonly GameEvent[],
+  targetIds: readonly string[],
+): {
+  messageKey: ReturnType<typeof targetResolvedMessageKey>;
+  params: typeof actionLog.params;
+} {
+  const messageKey = targetResolvedMessageKey(effect);
+  if (messageKey !== "trigger.targetResolved.rerollGig") {
+    return { messageKey, params: actionLog.params };
+  }
+
+  const targetId = targetIds[0];
+  const rollEvent = emittedEvents.find(
+    (event): event is GigDieRolledEvent =>
+      event.type === "gigDieRolled" &&
+      (event.dieId as string) === targetId &&
+      event.origin === "reroll",
+  );
+  if (!rollEvent || rollEvent.previousValue === undefined) {
+    return { messageKey: "trigger.targetResolved", params: actionLog.params };
+  }
+
+  return {
+    messageKey,
+    params: {
+      ...actionLog.params,
+      previousValue: rollEvent.previousValue,
+      newValue: rollEvent.result,
+    },
+  };
 }
 
 function classifyTargets(state: MatchState, targetIds: ReadonlyArray<string>): EffectTarget[] {

@@ -23,6 +23,7 @@
     "@tcg/op-types": "link:../../../one-piece/packages/types",
     "@tcg/star-wars-unlimited-types": "link:../../../star-wars-unlimited/packages/types",
     "@tcg/typescript-config": "link:../typescript-config",
-    "@types/node": "^22.13.4"
+    "@types/node": "^22.13.4",
+    "@typescript/native": "catalog:"
   }
 }

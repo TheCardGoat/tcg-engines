@@ -38,29 +38,28 @@ export const welcomeToNightCityRetailSketchyRipper = defineCyberpunkCard({
       },
       effects: [
         {
-          effect: "searchDeck",
+          effect: "scry",
           player: "friendly",
-          lookCount: 3,
-          target: {
-            selector: "card",
-            controller: "friendly",
-            zones: ["deck"],
-            cardTypes: ["gear"],
-            selection: {
-              mode: "choose",
+          amount: 3,
+          destinations: [
+            {
+              zone: "hand",
               min: 0,
               max: 1,
+              reveal: true,
+              target: {
+                selector: "card",
+                controller: "friendly",
+                zones: ["deck"],
+                cardTypes: ["gear"],
+              },
             },
-          },
-          select: {
-            kind: "upTo",
-            max: 1,
-          },
-          reveal: true,
-          destination: "hand",
-          remainder: {
-            zone: "deckBottom",
-          },
+            {
+              zone: "deckBottom",
+              remainder: true,
+              order: "original",
+            },
+          ],
         },
       ],
     },

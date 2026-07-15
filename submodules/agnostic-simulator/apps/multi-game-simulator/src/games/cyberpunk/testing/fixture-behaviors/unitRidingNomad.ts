@@ -1,7 +1,7 @@
 import {
   embracingPowerRetailStarterDeckMinotaur,
-  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailRidingNomad,
+  welcomeToNightCityRetailCorpoSecurity,
 } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
@@ -11,7 +11,7 @@ export const unitRidingNomadBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitRidingNomad",
   label: "Riding Nomad - can attack spent units on played turn",
   references: [
-    "packages/engine/src/cards/spoiler/units/riding-nomad.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/riding-nomad.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {
@@ -37,7 +37,7 @@ export const unitRidingNomadBehavior: CyberpunkFixtureBehavior = {
       CYBERPUNK_P1,
       welcomeToNightCityRetailRidingNomad.id,
     );
-    expectEqual("Riding Nomad played this turn", nomad.playedThisTurn, true);
+    expectEqual("Riding Nomad has Lag", nomad.hasLag, true);
     await pom.expectFieldCardGrantedRule(
       CYBERPUNK_P1,
       nomad.instanceId,

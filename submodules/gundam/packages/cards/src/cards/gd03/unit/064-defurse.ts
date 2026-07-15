@@ -52,7 +52,7 @@ export const gd03Defurse064: UnitCard = {
       directives: [
         {
           action: {
-            action: "addFromTrash",
+            action: "addFromTrashThenDiscard",
             target: {
               owner: "friendly",
               zone: "trash",
@@ -65,15 +65,9 @@ export const gd03Defurse064: UnitCard = {
                 },
               ],
             },
+            discardCount: 1,
           },
           optional: true,
-        },
-        {
-          action: {
-            action: "discard",
-            count: 1,
-          },
-          dependsOnPrevious: true,
         },
       ],
       sourceText:

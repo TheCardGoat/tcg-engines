@@ -24,6 +24,7 @@ let effectIdCounter = 0;
 export function handleGrantKeywordAction(
   targetIds: readonly CardInstanceId[],
   keyword: KeywordEffect,
+  value: number,
   duration: EffectDuration,
   ctx: EffectExecutionContext,
 ): void {
@@ -31,18 +32,18 @@ export function handleGrantKeywordAction(
     if (duration === "permanent") {
       const meta = ctx.framework.cards.getMeta(cardId as string) ?? {};
       const granted = (meta.grantedKeywords as string[] | undefined) ?? [];
-      if (!granted.includes(keyword)) {
-        ctx.framework.cards.patchMeta(cardId as string, {
-          grantedKeywords: [...granted, keyword],
-        });
-      }
+      const values = (meta.grantedKeywordValues as Record<string, number> | undefined) ?? {};
+      ctx.framework.cards.patchMeta(cardId as string, {
+        grantedKeywords: granted.includes(keyword) ? granted : [...granted, keyword],
+        grantedKeywordValues: { ...values, [keyword]: (values[keyword] ?? 0) + value },
+      });
     } else {
       pushContinuousEffect(
         {
           id: `eff_${++effectIdCounter}`,
           sourceId: ctx.sourceCardId ?? "",
           targetId: cardId as string,
-          payload: { kind: "keyword-grant", keyword },
+          payload: { kind: "keyword-grant", keyword, value },
           duration: mapDuration(duration),
           createdAtTurn: ctx.framework.state.status.turn,
         },

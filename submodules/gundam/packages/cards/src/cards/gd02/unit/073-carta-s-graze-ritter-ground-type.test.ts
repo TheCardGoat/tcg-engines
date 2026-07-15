@@ -1,148 +1,88 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
+  createMockUnit,
+  expectSuccess,
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  createMockUnit,
-  getEffectiveStats,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
 import { gd02CartaSGrazeRitterGroundType073 } from "./073-carta-s-graze-ritter-ground-type.ts";
 
 describe("Carta's Graze Ritter (Ground Type) (GD02-073)", () => {
-  // During your opponent's turn, the enemy Unit BATTLING this Unit gains
-  // <First Strike>. Both gates must hold — `isTurn: opponent` AND the
-  // opponent in question is the one currently in combat with Carta.
-  // Narrowing is modelled via `TargetFilter.isBattling: true` on the
-  // grantKeyword target (opponent unit + battling the source).
-
-  it("positive: during opponent's turn + opponent is battling Carta → grant applies", () => {
-    const enemyUnit = createMockUnit({ name: "Enemy", ap: 2, hp: 3 });
-    const engine = GundamTestEngine.create(
-      { play: [gd02CartaSGrazeRitterGroundType073] },
-      { play: [enemyUnit] },
-    );
-    const state = engine.getState();
-    state.ctx.status.activePlayer = PLAYER_TWO as PlayerId;
-
-    const rt = engine.getRuntime();
-    const fw = rt.getFrameworkReadAPI();
-    const cartaId = rt.getInstanceIdByDefinition(
-      PLAYER_ONE as PlayerId,
-      gd02CartaSGrazeRitterGroundType073.cardNumber,
-    )!;
-    const enemyId = rt.getInstanceIdByDefinition(PLAYER_TWO as PlayerId, enemyUnit.cardNumber)!;
-
-    // Enemy is attacking Carta during their (PLAYER_TWO's) turn.
-    engine.getG().turnMetadata.pendingCombat = {
-      stage: "attack-step",
-      attackerId: enemyId,
-      attackerPlayerId: PLAYER_TWO,
-      target: cartaId,
-    };
-
-    const stats = getEffectiveStats(enemyId, engine.getG(), fw.cards, fw);
-    expect(stats.keywords).toContain("FirstStrike");
+  const firstStrikeAttacker = createMockUnit({
+    name: "First Strike Attacker",
+    ap: 4,
+    hp: 5,
+  });
+  const alternateTarget = createMockUnit({
+    name: "Alternate Target",
+    ap: 5,
+    hp: 4,
   });
 
-  it("narrowed: during opponent's turn, non-battling enemy Unit does NOT gain FirstStrike", () => {
-    const battler = createMockUnit({ name: "Battler", ap: 2, hp: 3 });
-    const bystander = createMockUnit({ name: "Bystander", ap: 2, hp: 3 });
+  function finishBattle(
+    attacker: ReturnType<GundamTestEngine["asPlayer"]>,
+    defender: ReturnType<GundamTestEngine["asPlayer"]>,
+    attackerId: string,
+    targetId: string,
+  ) {
+    expectSuccess(attacker.enterBattle(attackerId, targetId));
+    expectSuccess(defender.passBlock());
+    expectSuccess(defender.passBattleAction());
+    expectSuccess(attacker.passBattleAction());
+  }
+
+  it("lets the opponent's attacker strike first while battling Carta on their turn", () => {
     const engine = GundamTestEngine.create(
-      { play: [gd02CartaSGrazeRitterGroundType073] },
-      { play: [battler, bystander] },
+      { play: [{ card: gd02CartaSGrazeRitterGroundType073, exhausted: true }], deck: 5 },
+      { play: [firstStrikeAttacker], deck: 5 },
     );
-    const state = engine.getState();
-    state.ctx.status.activePlayer = PLAYER_TWO as PlayerId;
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const cartaId = p1.getCardsInZone("battleArea")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    const rt = engine.getRuntime();
-    const fw = rt.getFrameworkReadAPI();
-    const cartaId = rt.getInstanceIdByDefinition(
-      PLAYER_ONE as PlayerId,
-      gd02CartaSGrazeRitterGroundType073.cardNumber,
-    )!;
-    const battlerId = rt.getInstanceIdByDefinition(PLAYER_TWO as PlayerId, battler.cardNumber)!;
-    const bystanderId = rt.getInstanceIdByDefinition(PLAYER_TWO as PlayerId, bystander.cardNumber)!;
+    engine.endTurn();
+    finishBattle(p2, p1, attackerId, cartaId);
 
-    engine.getG().turnMetadata.pendingCombat = {
-      stage: "attack-step",
-      attackerId: battlerId,
-      attackerPlayerId: PLAYER_TWO,
-      target: cartaId,
-    };
-
-    expect(getEffectiveStats(battlerId, engine.getG(), fw.cards, fw).keywords).toContain(
-      "FirstStrike",
-    );
-    expect(getEffectiveStats(bystanderId, engine.getG(), fw.cards, fw).keywords).not.toContain(
-      "FirstStrike",
-    );
+    expect(p1.getCardsInZone("trash")).toContain(cartaId);
+    expect(p2.getCardsInZone("battleArea")).toContain(attackerId);
+    expect(p2.getDamage(attackerId)).toBe(0);
   });
 
-  it("no active combat → even during opponent's turn, nobody gets the grant", () => {
-    const enemyUnit = createMockUnit({ name: "Enemy", ap: 2, hp: 3 });
+  it("does not give First Strike to an attacker battling a different Unit", () => {
     const engine = GundamTestEngine.create(
-      { play: [gd02CartaSGrazeRitterGroundType073] },
-      { play: [enemyUnit] },
+      {
+        play: [gd02CartaSGrazeRitterGroundType073, { card: alternateTarget, exhausted: true }],
+        deck: 5,
+      },
+      { play: [firstStrikeAttacker], deck: 5 },
     );
-    const state = engine.getState();
-    state.ctx.status.activePlayer = PLAYER_TWO as PlayerId;
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const targetId = p1.getCardsInZone("battleArea")[1]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    const rt = engine.getRuntime();
-    const fw = rt.getFrameworkReadAPI();
-    const enemyId = rt.getInstanceIdByDefinition(PLAYER_TWO as PlayerId, enemyUnit.cardNumber)!;
-    expect(engine.getG().turnMetadata.pendingCombat).toBeUndefined();
+    engine.endTurn();
+    finishBattle(p2, p1, attackerId, targetId);
 
-    const stats = getEffectiveStats(enemyId, engine.getG(), fw.cards, fw);
-    expect(stats.keywords).not.toContain("FirstStrike");
+    expect(p1.getCardsInZone("trash")).toContain(targetId);
+    expect(p2.getCardsInZone("trash")).toContain(attackerId);
   });
 
-  it("negative: during Carta-controller's own turn, isTurn gate fails → no grant", () => {
-    const enemyUnit = createMockUnit({ name: "Enemy", ap: 2, hp: 3 });
+  it("does not give the enemy First Strike when Carta attacks on its controller's turn", () => {
     const engine = GundamTestEngine.create(
       { play: [gd02CartaSGrazeRitterGroundType073] },
-      { play: [enemyUnit] },
+      { play: [{ card: firstStrikeAttacker, exhausted: true }] },
     );
-    const state = engine.getState();
-    state.ctx.status.activePlayer = PLAYER_ONE as PlayerId;
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const cartaId = p1.getCardsInZone("battleArea")[0]!;
+    const targetId = p2.getCardsInZone("battleArea")[0]!;
 
-    const rt = engine.getRuntime();
-    const fw = rt.getFrameworkReadAPI();
-    const enemyId = rt.getInstanceIdByDefinition(PLAYER_TWO as PlayerId, enemyUnit.cardNumber)!;
-    const stats = getEffectiveStats(enemyId, engine.getG(), fw.cards, fw);
-    expect(stats.keywords).not.toContain("FirstStrike");
-  });
+    finishBattle(p1, p2, cartaId, targetId);
 
-  it("transition: active-player switch flips the grant on without cache (with active combat)", () => {
-    const enemyUnit = createMockUnit({ name: "Enemy", ap: 2, hp: 3 });
-    const engine = GundamTestEngine.create(
-      { play: [gd02CartaSGrazeRitterGroundType073] },
-      { play: [enemyUnit] },
-    );
-    const state = engine.getState();
-    const rt = engine.getRuntime();
-    const fw = rt.getFrameworkReadAPI();
-    const cartaId = rt.getInstanceIdByDefinition(
-      PLAYER_ONE as PlayerId,
-      gd02CartaSGrazeRitterGroundType073.cardNumber,
-    )!;
-    const enemyId = rt.getInstanceIdByDefinition(PLAYER_TWO as PlayerId, enemyUnit.cardNumber)!;
-
-    engine.getG().turnMetadata.pendingCombat = {
-      stage: "attack-step",
-      attackerId: enemyId,
-      attackerPlayerId: PLAYER_TWO,
-      target: cartaId,
-    };
-
-    state.ctx.status.activePlayer = PLAYER_ONE as PlayerId;
-    expect(getEffectiveStats(enemyId, engine.getG(), fw.cards, fw).keywords).not.toContain(
-      "FirstStrike",
-    );
-
-    state.ctx.status.activePlayer = PLAYER_TWO as PlayerId;
-    expect(getEffectiveStats(enemyId, engine.getG(), fw.cards, fw).keywords).toContain(
-      "FirstStrike",
-    );
+    expect(p1.getCardsInZone("trash")).toContain(cartaId);
+    expect(p2.getCardsInZone("trash")).toContain(targetId);
   });
 });

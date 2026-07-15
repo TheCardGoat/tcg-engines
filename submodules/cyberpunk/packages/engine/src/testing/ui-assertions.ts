@@ -598,53 +598,50 @@ export function expectAdjustGigChoice(
 }
 
 /**
- * Assert that the current `searchDeck` pending choice has the expected
- * properties (lookCount, reveal, select spec, etc.).
+ * Assert that the current `scry` pending choice has the expected amount and
+ * destination constraints.
  */
-export function expectSearchDeckChoice(
+export function expectScryChoice(
   engine: CyberpunkTestEngine,
   expected: {
-    lookCount?: number;
-    reveal?: boolean;
-    select?: { kind: "upTo"; max: number } | { kind: "exact"; amount: number } | { kind: "all" };
+    amount?: number;
+    destination?: {
+      zone: "hand" | "trash" | "deckTop" | "deckBottom";
+      min?: number;
+      max?: number;
+      reveal?: boolean;
+    };
   },
 ): void {
   const choice = getPendingChoice(engine);
-  if (!choice || choice.type !== "searchDeck") {
-    throw new Error(`Expected a searchDeck pending choice, but got: ${choice?.type ?? "none"}`);
+  if (!choice || choice.type !== "scry") {
+    throw new Error(`Expected a scry pending choice, but got: ${choice?.type ?? "none"}`);
   }
   const payload = choice.payload;
-  if (expected.lookCount !== undefined && payload.lookCount !== expected.lookCount) {
-    throw new Error(
-      `Expected searchDeck lookCount ${expected.lookCount}, but got ${payload.lookCount}`,
+  if (expected.amount !== undefined && payload.amount !== expected.amount) {
+    throw new Error(`Expected scry amount ${expected.amount}, but got ${payload.amount}`);
+  }
+  if (expected.destination !== undefined) {
+    const actual = payload.destinations.find(
+      (destination) => destination.zone === expected.destination?.zone && !destination.remainder,
     );
-  }
-  if (expected.reveal !== undefined && payload.reveal !== expected.reveal) {
-    throw new Error(`Expected searchDeck reveal ${expected.reveal}, but got ${payload.reveal}`);
-  }
-  if (expected.select !== undefined) {
-    const actual = payload.select;
-    if (actual.kind !== expected.select.kind) {
+    if (!actual) throw new Error(`Expected scry destination ${expected.destination.zone}`);
+    if (expected.destination.min !== undefined && actual.min !== expected.destination.min) {
       throw new Error(
-        `Expected searchDeck select kind "${expected.select.kind}", but got "${actual.kind}"`,
+        `Expected scry destination min ${expected.destination.min}, got ${actual.min}`,
+      );
+    }
+    if (expected.destination.max !== undefined && actual.max !== expected.destination.max) {
+      throw new Error(
+        `Expected scry destination max ${expected.destination.max}, got ${actual.max}`,
       );
     }
     if (
-      expected.select.kind === "upTo" &&
-      actual.kind === "upTo" &&
-      actual.max !== expected.select.max
+      expected.destination.reveal !== undefined &&
+      actual.reveal !== expected.destination.reveal
     ) {
       throw new Error(
-        `Expected searchDeck select upTo max ${expected.select.max}, but got ${actual.max}`,
-      );
-    }
-    if (
-      expected.select.kind === "exact" &&
-      actual.kind === "exact" &&
-      actual.amount !== expected.select.amount
-    ) {
-      throw new Error(
-        `Expected searchDeck select exact amount ${expected.select.amount}, but got ${actual.amount}`,
+        `Expected scry destination reveal ${expected.destination.reveal}, got ${actual.reveal}`,
       );
     }
   }

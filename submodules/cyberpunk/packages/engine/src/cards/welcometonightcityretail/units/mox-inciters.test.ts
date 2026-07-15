@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
+  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailMoxInciters,
   welcomeToNightCityRetailRidingNomad,
 } from "@tcg/cyberpunk-cards";
@@ -14,7 +14,7 @@ describe("Mox Inciters", () => {
         eddies: 3,
       },
       {
-        field: [{ card: welcomeToNightCityRetailRidingNomad, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailRidingNomad, spent: false, hasLag: false }],
       },
     );
 
@@ -22,7 +22,18 @@ describe("Mox Inciters", () => {
     engine.resolveEffectTarget(welcomeToNightCityRetailRidingNomad, { as: P1 });
     engine.skipToNextPlayerTurn(P1);
 
-    const failure = engine.expectFailure(() => engine.completeTurn({ as: P2 }));
+    const prompt = engine.getPrompt(P2);
+    const moveIds = prompt.availableMoves.map((move) => move.moveId);
+    const incitedUnitId = engine.findCardId(welcomeToNightCityRetailRidingNomad, "field", P2);
+    const directAttack = prompt.availableMoves.find((move) => move.moveId === "attackRival");
+
+    expect(moveIds).not.toContain("passPhase");
+    expect(directAttack).toMatchObject({ inputSpec: { type: "selectCard" } });
+    if (directAttack?.inputSpec.type === "selectCard") {
+      expect(directAttack.inputSpec.candidates).toContain(incitedUnitId);
+    }
+
+    const failure = engine.expectFailure(() => engine.passPhase({ as: P2 }));
     expect(failure.errorCode).toBe("MUST_ATTACK");
   });
 
@@ -33,12 +44,12 @@ describe("Mox Inciters", () => {
         eddies: 3,
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: false, hasLag: false }],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailMoxInciters, { as: P1 });
-    engine.resolveEffectTarget(alphaCorpoSecurity, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailCorpoSecurity, { as: P1 });
     engine.skipToNextPlayerTurn(P1);
 
     expect(engine.completeTurn({ as: P2 })).toMatchObject({ success: true });

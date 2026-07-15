@@ -4,6 +4,7 @@ export const gd01BigZam027: UnitCard = {
   cardNumber: "GD01-027",
   name: "Big Zam",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "green",
   traits: ["zeon"],
   id: "GD01-027",
@@ -58,6 +59,7 @@ export const gd01BigZam027: UnitCard = {
   cost: 5,
   ap: 5,
   hp: 6,
+  linkCondition: "[Dozle Zabi]",
   effect:
     "&lt;Breach 4&gt; (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)<br>【Deploy】If there are 10 or more (Zeon)/(Neo Zeon) Unit cards in your trash, deal 4 damage to all Units with &lt;Blocker&gt;.<br>",
   effects: [

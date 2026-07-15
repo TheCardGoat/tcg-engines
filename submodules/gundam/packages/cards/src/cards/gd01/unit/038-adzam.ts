@@ -4,6 +4,7 @@ export const gd01Adzam038: UnitCard = {
   cardNumber: "GD01-038",
   name: "Adzam",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "green",
   traits: ["zeon"],
   id: "GD01-038",
@@ -41,6 +42,7 @@ export const gd01Adzam038: UnitCard = {
   cost: 4,
   ap: 2,
   hp: 5,
+  linkCondition: "(Zeon) Trait",
   effect: "【Deploy】If 5 or more enemy Units are in play, deal 1 damage to all enemy Units.<br>",
   effects: [
     {

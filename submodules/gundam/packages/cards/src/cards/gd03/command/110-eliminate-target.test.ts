@@ -11,43 +11,65 @@ import {
 } from "@tcg/gundam-engine";
 import { gd03EliminateTarget110 } from "./110-eliminate-target.ts";
 
+function setupPairedEnemy(level: number) {
+  const enemyUnit = createMockUnit({ level, ap: 3, hp: 5 });
+  const enemyPilot = createMockPilot({ name: "Enemy Pilot", cost: 1 });
+  const engine = GundamTestEngine.create(
+    { hand: [gd03EliminateTarget110], resourceArea: activeResources(6), deck: 3 },
+    {
+      hand: [enemyPilot],
+      play: [enemyUnit],
+      resourceArea: activeResources(2),
+      deck: 3,
+    },
+    { initialActivePlayer: PLAYER_TWO },
+  );
+  const p1 = engine.asPlayer(PLAYER_ONE);
+  const p2 = engine.asPlayer(PLAYER_TWO);
+  const commandId = p1.getHand()[0]!;
+  const pilotId = p2.getHand()[0]!;
+  const unitId = p2.getCardsInZone("battleArea")[0]!;
+
+  expectSuccess(p2.assignPilot(pilotId, unitId));
+
+  return { p1, p2, commandId, pilotId, unitId };
+}
+
 describe("Eliminate Target (GD03-110)", () => {
-  it("【Main】/【Action】destroys a Pilot paired with an enemy Lv.5-or-lower Unit", () => {
-    const enemyUnit = createMockUnit({ level: 5, cost: 1, linkCondition: "[Enemy Pilot]" });
-    const enemyPilot = createMockPilot({ name: "Enemy Pilot", level: 1, cost: 1 });
-    const engine = GundamTestEngine.create(
-      { hand: [gd03EliminateTarget110], resourceArea: activeResources(7) },
-      { play: [enemyUnit, enemyPilot] },
-    );
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const p2 = engine.asPlayer(PLAYER_TWO);
+  it("【Main】 destroys a Pilot paired with an enemy Lv.5 Unit", () => {
+    const { p1, p2, commandId, pilotId, unitId } = setupPairedEnemy(5);
+    expectSuccess(p2.passPhase());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.passActionStep());
 
-    const [enemyUnitId, enemyPilotId] = p2.getCardsInZone("battleArea");
-    engine.getG().pilotAssignments[enemyUnitId!] = enemyPilotId!;
+    expectSuccess(p1.playCommand(commandId, { targets: [pilotId] }));
 
-    expectSuccess(p1.playCommand(gd03EliminateTarget110, { targets: [enemyPilotId!] }));
+    expect(p2.getCardZone(pilotId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getPilotId(unitId)).toBeUndefined();
+    expect(p2.getCardsInZone("battleArea")).toContain(unitId);
+  });
 
-    expect(engine.getState().ctx.zones.private.cardIndex[enemyPilotId!]?.zoneKey).toBe(
-      `trash:${PLAYER_TWO}`,
-    );
-    expect(engine.getG().pilotAssignments[enemyUnitId!]).toBeUndefined();
+  it("【Action】 destroys the paired Pilot during battle", () => {
+    const { p1, p2, commandId, pilotId, unitId } = setupPairedEnemy(5);
+
+    expectSuccess(p2.enterBattle(unitId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.playCommand(commandId, { targets: [pilotId] }));
+
+    expect(p2.getCardZone(pilotId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getPilotId(unitId)).toBeUndefined();
   });
 
   it("rejects a Pilot paired with an enemy Lv.6 Unit", () => {
-    const enemyUnit = createMockUnit({ level: 6, cost: 1, linkCondition: "[Enemy Pilot]" });
-    const enemyPilot = createMockPilot({ name: "Enemy Pilot", level: 1, cost: 1 });
-    const engine = GundamTestEngine.create(
-      { hand: [gd03EliminateTarget110], resourceArea: activeResources(7) },
-      { play: [enemyUnit, enemyPilot] },
-    );
-    const p2 = engine.asPlayer(PLAYER_TWO);
+    const { p1, p2, commandId, pilotId, unitId } = setupPairedEnemy(6);
+    expectSuccess(p2.passPhase());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.passActionStep());
 
-    const [enemyUnitId, enemyPilotId] = p2.getCardsInZone("battleArea");
-    engine.getG().pilotAssignments[enemyUnitId!] = enemyPilotId!;
+    expectFailure(p1.playCommand(commandId, { targets: [pilotId] }), "INVALID_TARGET");
 
-    expectFailure(
-      engine.asPlayer(PLAYER_ONE).playCommand(gd03EliminateTarget110, { targets: [enemyPilotId!] }),
-      "INVALID_TARGET",
-    );
+    expect(p2.getPilotId(unitId)).toBe(pilotId);
+    expect(p2.getCardZone(pilotId)).toBe(`battleArea:${PLAYER_TWO}`);
+    expect(p1.getCardZone(commandId)).toBe(`hand:${PLAYER_ONE}`);
   });
 });

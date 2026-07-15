@@ -60,6 +60,13 @@ export const resolveCardTypeChoiceMove: MoveDefinition<ResolveCardTypeChoiceInpu
         card.meta = createDefaultMetaForZone("hand");
       }
       player.zones.hand.push(cardId);
+      operations.event.emit({
+        type: "cardMoved",
+        cardId,
+        fromZone: "deck",
+        toZone: "hand",
+        playerId,
+      });
       if (player.spentEddies > 0) {
         player.spentEddies -= 1;
         player.eddies += 1;
@@ -71,6 +78,13 @@ export const resolveCardTypeChoiceMove: MoveDefinition<ResolveCardTypeChoiceInpu
         card.meta = createDefaultMetaForZone("trash");
       }
       player.zones.trash.push(cardId);
+      operations.event.emit({
+        type: "cardMoved",
+        cardId,
+        fromZone: "deck",
+        toZone: "trash",
+        playerId,
+      });
     }
 
     operations.event.emit({
@@ -78,6 +92,7 @@ export const resolveCardTypeChoiceMove: MoveDefinition<ResolveCardTypeChoiceInpu
       messageKey: hit ? "trigger.revealTopCardType.hit" : "trigger.revealTopCardType.miss",
       params: {
         chosenType: input.args.cardType,
+        revealedCardName: card ? defOf(card).displayName : "Unknown card",
         revealedType: card ? defOf(card).type : "unknown",
         sourceCardName: state.G.cardIndex[choice.payload.sourceCardId as string]
           ? defOf(state.G.cardIndex[choice.payload.sourceCardId as string]!).displayName

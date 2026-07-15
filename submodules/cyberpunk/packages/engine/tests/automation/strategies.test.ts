@@ -3,6 +3,7 @@ import { createMatchState } from "../../src/state/initial-state.ts";
 import { LocalEngine } from "../../src/transport/local-engine.ts";
 import {
   buildDecisionContext,
+  attackRivalOnlyStrategy,
   createGreedyStrategy,
   DEFAULT_GREEDY_WEIGHTS,
   firstLegalStrategy,
@@ -29,6 +30,7 @@ function makeHandCard(id: string, cost: number, hasSellTag = false): FilteredCar
   return {
     instanceId: id,
     definitionId: `def-${id}`,
+    cardName: id,
     zone: "hand",
     faceDown: false,
     spent: false,
@@ -41,10 +43,12 @@ function makeHandCard(id: string, cost: number, hasSellTag = false): FilteredCar
     hasSellTag,
     attachedGearIds: [],
     attachedToId: null,
-    playedThisTurn: false,
+    hasLag: false,
     hasAttackedThisTurn: false,
     grantedRules: [],
     keywords: [],
+    triggerHints: [],
+    abilityHints: [],
   };
 }
 
@@ -197,6 +201,51 @@ describe("randomStrategy.decideAction", () => {
     const b = makeEngineAndContext("random-strategy-determinism").ctx;
     if (a.prompt.availableMoves.length === 0) return;
     expect(randomStrategy.decideAction(a)).toEqual(randomStrategy.decideAction(b));
+  });
+});
+
+describe("attackRivalOnlyStrategy.decideAction", () => {
+  test("direct-attacks the rival when available", () => {
+    const ctx = makeFakeCtx([
+      {
+        moveId: "attackUnit",
+        inputSpec: {
+          type: "selectPair",
+          fromCandidates: ["attacker"],
+          toCandidates: ["defender"],
+        },
+      },
+      {
+        moveId: "attackRival",
+        inputSpec: { type: "selectCard", candidates: ["attacker"] },
+      },
+      { moveId: "passPhase", inputSpec: { type: "none" } },
+    ]);
+
+    expect(attackRivalOnlyStrategy.decideAction(ctx)).toEqual({
+      kind: "command",
+      move: "attackRival",
+      args: { attackerId: "attacker" },
+    });
+  });
+
+  test("passes instead of attacking Units when no rival attack is available", () => {
+    const ctx = makeFakeCtx([
+      {
+        moveId: "attackUnit",
+        inputSpec: {
+          type: "selectPair",
+          fromCandidates: ["attacker"],
+          toCandidates: ["defender"],
+        },
+      },
+      { moveId: "passPhase", inputSpec: { type: "none" } },
+    ]);
+
+    expect(attackRivalOnlyStrategy.decideAction(ctx)).toEqual({
+      kind: "command",
+      move: "passPhase",
+    });
   });
 });
 
@@ -361,7 +410,13 @@ describe("greedyStrategy.decideAction", () => {
     });
   });
 
-  test("blocks during the defensive step instead of passing the attack through", () => {
+  test("blocks urgent multi-gig direct attacks during the defensive step", () => {
+    const attacker: FilteredCardView = {
+      ...makeHandCard("attacker", 4),
+      zone: "field",
+      power: 10,
+      effectivePower: 10,
+    };
     const ctx: DecisionContext = {
       view: {
         players: {
@@ -377,12 +432,12 @@ describe("greedyStrategy.decideAction", () => {
               ],
             },
             eddies: 0,
-            gigCount: 0,
+            gigCount: 3,
             fixerCount: 6,
             streetCred: 0,
           },
           p2: {
-            zones: { field: [] },
+            zones: { field: [attacker] },
             eddies: 0,
             gigCount: 3,
             fixerCount: 3,
@@ -391,15 +446,13 @@ describe("greedyStrategy.decideAction", () => {
         },
         attackState: {
           attackerId: "attacker",
-          defenderId: "original-target",
-          kind: "fight",
+          defenderId: null,
+          kind: "direct",
           step: "react",
           redirectedByBlocker: false,
         },
       } as unknown as DecisionContext["view"],
       playerId: "p1" as PlayerId,
-      // Defensive step: useBlocker AND resolveAttack are both available; the
-      // strategy must pick useBlocker rather than passing.
       prompt: {
         status: "action",
         availableMoves: [
@@ -415,6 +468,70 @@ describe("greedyStrategy.decideAction", () => {
       kind: "command",
       move: "useBlocker",
       args: { blockerId: "blocker" },
+    });
+  });
+
+  test("preserves a sacrificial blocker against an early one-gig direct attack", () => {
+    const attacker: FilteredCardView = {
+      ...makeHandCard("attacker", 3),
+      zone: "field",
+      power: 6,
+      effectivePower: 6,
+    };
+    const ctx: DecisionContext = {
+      view: {
+        players: {
+          p1: {
+            zones: {
+              field: [
+                {
+                  ...makeHandCard("zero-blocker", 1),
+                  zone: "field",
+                  power: 0,
+                  effectivePower: 0,
+                },
+              ],
+            },
+            eddies: 0,
+            gigCount: 2,
+            fixerCount: 4,
+            streetCred: 0,
+          },
+          p2: {
+            zones: { field: [attacker] },
+            eddies: 0,
+            gigCount: 2,
+            fixerCount: 4,
+            streetCred: 0,
+          },
+        },
+        attackState: {
+          attackerId: "attacker",
+          defenderId: null,
+          kind: "direct",
+          step: "react",
+          redirectedByBlocker: false,
+        },
+      } as unknown as DecisionContext["view"],
+      playerId: "p1" as PlayerId,
+      prompt: {
+        status: "action",
+        availableMoves: [
+          {
+            moveId: "useBlocker",
+            inputSpec: { type: "selectCard", candidates: ["zero-blocker"] },
+          },
+          { moveId: "resolveAttack", inputSpec: { type: "none" } },
+        ],
+        choice: null,
+      },
+      rng: () => 0,
+    };
+
+    expect(greedyStrategy.decideAction(ctx)).toEqual({
+      kind: "command",
+      move: "resolveAttack",
+      args: { pass: true },
     });
   });
 
@@ -441,7 +558,7 @@ describe("greedyStrategy.decideAction", () => {
               ],
             },
             eddies: 0,
-            gigCount: 0,
+            gigCount: 3,
             fixerCount: 6,
             streetCred: 0,
           },
@@ -593,7 +710,13 @@ describe("greedyStrategy.decideAction", () => {
     });
   });
 
-  test("useBlocker picks the lowest-power friendly blocker", () => {
+  test("useBlocker picks the weakest acceptable blocker for an urgent attack", () => {
+    const attacker: FilteredCardView = {
+      ...makeHandCard("attacker", 4),
+      zone: "field",
+      power: 10,
+      effectivePower: 10,
+    };
     const ctx: DecisionContext = {
       view: {
         players: {
@@ -615,10 +738,24 @@ describe("greedyStrategy.decideAction", () => {
               ],
             },
             eddies: 0,
-            gigCount: 0,
+            gigCount: 3,
             fixerCount: 6,
             streetCred: 0,
           },
+          p2: {
+            zones: { field: [attacker] },
+            eddies: 0,
+            gigCount: 3,
+            fixerCount: 3,
+            streetCred: 0,
+          },
+        },
+        attackState: {
+          attackerId: "attacker",
+          defenderId: null,
+          kind: "direct",
+          step: "react",
+          redirectedByBlocker: false,
         },
       } as unknown as DecisionContext["view"],
       playerId: "p1" as PlayerId,
@@ -652,8 +789,20 @@ describe("greedyStrategy.decideAction", () => {
         inputSpec: {
           type: "selectAbility",
           candidates: [
-            { cardId: "c1", abilityIndex: 0 },
-            { cardId: "c2", abilityIndex: 1 },
+            {
+              cardId: "c1",
+              abilityIndex: 0,
+              effectHints: ["scry"],
+              eddieCost: 1,
+              spendsCard: true,
+            },
+            {
+              cardId: "c2",
+              abilityIndex: 1,
+              effectHints: ["draw"],
+              eddieCost: 0,
+              spendsCard: false,
+            },
           ],
         },
       },
@@ -663,7 +812,7 @@ describe("greedyStrategy.decideAction", () => {
     expect(decision).toEqual({
       kind: "command",
       move: "activateAbility",
-      args: { cardId: "c1", abilityIndex: 0 },
+      args: { cardId: "c2", abilityIndex: 1 },
     });
   });
 });
@@ -684,7 +833,15 @@ describe("activateAbility inputSpec wiring", () => {
         moveId: "activateAbility",
         inputSpec: {
           type: "selectAbility",
-          candidates: [{ cardId: "c1", abilityIndex: 0 }],
+          candidates: [
+            {
+              cardId: "c1",
+              abilityIndex: 0,
+              effectHints: ["draw"],
+              eddieCost: 0,
+              spendsCard: false,
+            },
+          ],
         },
       },
       { moveId: "passPhase", inputSpec: { type: "none" } },

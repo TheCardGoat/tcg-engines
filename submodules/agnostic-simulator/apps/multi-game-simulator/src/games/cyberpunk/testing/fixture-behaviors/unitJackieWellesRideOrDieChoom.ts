@@ -10,7 +10,7 @@ export const unitJackieWellesRideOrDieChoomBehavior: CyberpunkFixtureBehavior = 
   scenarioId: "unitJackieWellesRideOrDieChoom",
   label: "Jackie Welles - power scales with friendly gigs",
   references: [
-    "packages/engine/src/cards/alpha/units/jackie-welles-ride-or-die-choom.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/jackie-welles-ride-or-die-choom.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

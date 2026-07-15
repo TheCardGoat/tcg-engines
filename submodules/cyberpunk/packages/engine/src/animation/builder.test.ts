@@ -9,6 +9,7 @@ import type {
   CardExitStep,
   CardLandStep,
   CardMoveStep,
+  CardRevealStep,
   CombatRedirectStep,
   CombatStep,
   EffectTargetStep,
@@ -388,6 +389,121 @@ describe("buildAnimationScript", () => {
     expect(reveal.playerId).toBe("p1");
     expect(reveal.durationMs).toBe(ANIMATION_DURATIONS_MS.legendReveal);
     expect(script.totalDurationMs).toBe(ANIMATION_DURATIONS_MS.legendReveal);
+  });
+
+  it("emits staggered cardReveal steps for public revealed cards", () => {
+    const events: GameEvent[] = [
+      {
+        type: "cardsRevealed",
+        playerId: pid("p1"),
+        cardIds: [cid("top-1"), cid("top-2")],
+      },
+    ];
+
+    const script = buildAnimationScript(events);
+
+    expect(script.steps).toHaveLength(2);
+    const stagger = ANIMATION_DURATIONS_MS.drawStaggerMs;
+    script.steps.forEach((step, idx) => {
+      const reveal = step as CardRevealStep;
+      expect(reveal.kind).toBe("cardReveal");
+      expect(reveal.reason).toBe("cardsRevealed");
+      expect(reveal.cardId).toBe(idx === 0 ? "top-1" : "top-2");
+      expect(reveal.fromZone).toBe("deck");
+      expect(reveal.toZone).toBeUndefined();
+      expect(reveal.playerId).toBe("p1");
+      expect(reveal.startMs).toBe(idx * stagger);
+      expect(reveal.durationMs).toBe(ANIMATION_DURATIONS_MS.cardReveal);
+    });
+    expect(script.totalDurationMs).toBe(stagger + ANIMATION_DURATIONS_MS.cardReveal);
+  });
+
+  it("folds revealed card destination moves into the reveal steps", () => {
+    const events: GameEvent[] = [
+      {
+        type: "cardsRevealed",
+        playerId: pid("p1"),
+        cardIds: [cid("top-1"), cid("top-2")],
+      },
+      {
+        type: "cardMoved",
+        cardId: cid("top-1"),
+        fromZone: "deck",
+        toZone: "hand",
+        playerId: pid("p1"),
+      },
+      {
+        type: "cardMoved",
+        cardId: cid("top-2"),
+        fromZone: "deck",
+        toZone: "trash",
+        playerId: pid("p1"),
+      },
+    ];
+
+    const script = buildAnimationScript(events);
+
+    expect(script.steps.map((step) => step.kind)).toEqual(["cardReveal", "cardReveal"]);
+    const firstReveal = script.steps[0] as CardRevealStep;
+    const secondReveal = script.steps[1] as CardRevealStep;
+    expect(firstReveal.cardId).toBe("top-1");
+    expect(firstReveal.toZone).toBe("hand");
+    expect(secondReveal.cardId).toBe("top-2");
+    expect(secondReveal.toZone).toBe("trash");
+  });
+
+  it("folds Hanako-style searched matches into reveal-to-hand steps", () => {
+    const events: GameEvent[] = [
+      {
+        type: "cardsRevealed",
+        playerId: pid("p1"),
+        cardIds: [cid("match-1"), cid("match-2")],
+      },
+      {
+        type: "cardMoved",
+        cardId: cid("match-1"),
+        fromZone: "deck",
+        toZone: "hand",
+        playerId: pid("p1"),
+      },
+      {
+        type: "cardMoved",
+        cardId: cid("match-2"),
+        fromZone: "deck",
+        toZone: "hand",
+        playerId: pid("p1"),
+      },
+    ];
+
+    const script = buildAnimationScript(events);
+
+    expect(script.steps.map((step) => step.kind)).toEqual(["cardReveal", "cardReveal"]);
+    expect(script.steps.map((step) => (step as CardRevealStep).toZone)).toEqual(["hand", "hand"]);
+  });
+
+  it("does not fold unrelated moves after a reveal", () => {
+    const events: GameEvent[] = [
+      {
+        type: "cardsRevealed",
+        playerId: pid("p1"),
+        cardIds: [cid("top-1")],
+      },
+      {
+        type: "cardMoved",
+        cardId: cid("other-card"),
+        fromZone: "hand",
+        toZone: "field",
+        playerId: pid("p1"),
+      },
+    ];
+
+    const script = buildAnimationScript(events);
+
+    expect(script.steps.map((step) => step.kind)).toEqual(["cardReveal", "cardMove"]);
+    const reveal = script.steps[0] as CardRevealStep;
+    const move = script.steps[1] as CardMoveStep;
+    expect(reveal.toZone).toBeUndefined();
+    expect(move.cardId).toBe("other-card");
   });
 
   it("emits staggered cardEnter steps for cardsDrawn", () => {

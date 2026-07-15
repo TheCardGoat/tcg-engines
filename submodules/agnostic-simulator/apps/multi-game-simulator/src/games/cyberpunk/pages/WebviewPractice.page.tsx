@@ -25,6 +25,7 @@ import { CYBERPUNK_GAME_SLUG } from "../engine/live/apiOrigin";
 import { playUrl } from "../../../runtime/gameRuntimeApi";
 import { BoardSharedPage } from "./BoardShared.page";
 import classes from "./Practice.module.css";
+import { buildMountedHref } from "../../../routes/router-paths";
 
 interface ActiveImport {
   requestId: string;
@@ -425,7 +426,11 @@ function deckToHistoricDeck(deck: DeckList): Array<{ cardPublicId: string; quant
   return [...counts].map(([cardPublicId, quantity]) => ({ cardPublicId, quantity }));
 }
 
-function liveMatchHref(response: QuickMatchResponse, botStrategyId: string): string {
+export function liveMatchHref(
+  response: QuickMatchResponse,
+  botStrategyId: string,
+  basename = currentSimulatorBasename(),
+): string {
   // quick-match issues the gateway credential for the guest/authenticated
   // player it just created. Carry it into the live route so existing clients do
   // not need a second auth round trip before opening the gateway socket.
@@ -439,13 +444,27 @@ function liveMatchHref(response: QuickMatchResponse, botStrategyId: string): str
   if (response.authToken) {
     params.set("authToken", response.authToken);
   }
-  return `/matches/${encodeURIComponent(response.matchId)}/games/${encodeURIComponent(
+  const path = `/matches/${encodeURIComponent(response.matchId)}/games/${encodeURIComponent(
     response.gameId,
-  )}?${params.toString()}`;
+  )}`;
+  return `${buildMountedHref(path, basename)}?${params.toString()}`;
 }
 
 function matchmakingReturnUrl(): string {
   return (
     import.meta.env.VITE_MATCHMAKING_URL || `https://tcg.online/${CYBERPUNK_GAME_SLUG}/matchmaking`
   );
+}
+
+function currentSimulatorBasename(): string {
+  const productionMount = `/${CYBERPUNK_GAME_SLUG}/simulator`;
+  if (typeof window !== "undefined") {
+    const pathname = window.location.pathname;
+    if (pathname === productionMount || pathname.startsWith(`${productionMount}/`)) {
+      return productionMount;
+    }
+  }
+
+  const configuredBase = import.meta.env.BASE_URL;
+  return configuredBase && configuredBase !== "/" ? configuredBase : productionMount;
 }

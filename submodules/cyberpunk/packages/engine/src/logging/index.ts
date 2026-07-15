@@ -29,6 +29,7 @@ export {
   type ActivateAbilityLog,
   type SearchDeckLog,
   type ResolveSearchDeckLog,
+  type ResolveRevealDestinationLog,
   type TurnStartedLog,
   type TurnEndedLog,
   type GameEndedLog,
@@ -110,11 +111,23 @@ export const enMessages: Record<ActionLogMessageKey, string> = {
   "move.turnEnded": "Turn {turnNumber} ended.",
   "move.concede": "Player {playerId} conceded the game.",
   "move.activateAbility": "{cardName} activated its ability.",
+  "move.activateAbility.attached": "{attachedToName} activated {cardName}.",
   "move.searchDeck.reveal": "Revealed the top {count} cards of the deck.",
+  "move.searchDeck.revealNamed": "Revealed the top {count} cards of the deck: {revealedCardNames}.",
+  "move.searchDeck.revealSelected": "Revealed {count} searched card(s): {revealedCardNames}.",
   "move.resolveSearchDeck": "Searched the top {looked} cards and found {count}.",
+  "move.resolveSearchDeckNamed":
+    "Searched the top {looked} cards and added {selectedCardNames} to {destination}. Bottom-decked {remainderCount}.",
+  "move.resolveRevealDestination":
+    "{chooserLabel} chose {destination}: moved {count} revealed card(s) to {destination}.",
   "move.resolveAdjustGig": "Adjusted {dieLabel} gig die from {previousValue} to {value}.",
+  "effect.discard.resolved":
+    "{sourceCardName} discarded {discardedCardName} (cost {discardedCost}).",
   "effect.draw.resolved": "{sourceCardName} drew {drawnCount} card(s).",
   "effect.draw.skipped": "{sourceCardName} did not draw: {reason}.",
+  "effect.trashFromDeck.resolved":
+    "{sourceCardName} trashed {trashedCount} card(s) from the top of the deck: {trashedCardNames}.",
+  "effect.sellFromDeck.resolved": "{sourceCardName} sold {soldCardNames} from the top of the deck.",
   "trigger.autoResolved": "Auto-resolved {cardName}: {abilityText}",
   "trigger.resolved": "Resolved {cardName}: {abilityText}",
   "trigger.noValidTargets": "{cardName} had no valid targets.",
@@ -122,19 +135,23 @@ export const enMessages: Record<ActionLogMessageKey, string> = {
   "trigger.targetResolved": "Selected {targetNames} for {sourceCardName}.",
   "trigger.targetResolved.deckBottom":
     "Selected {targetNames} for {sourceCardName} to move to the bottom of the deck.",
+  "trigger.targetResolved.rerollGig":
+    "Selected {targetNames} for {sourceCardName}: {previousValue} -> {newValue}.",
   "trigger.grantRule.cantAttack":
     "{sourceCardName} made {targetNames} unable to attack until your next turn.",
   "trigger.defeatedTarget": "{sourceCardName} defeated {targetNames}.",
   "effect.callLegend.free": "{sourceCardName} called {legendName} for free.",
+  "effect.callLegend.skippedAlreadyCalled":
+    "{sourceCardName} skipped calling a Legend because a Legend was already called this turn.",
   "trigger.copyGigValue":
     "{sourceCardName} copied {sourceDieType}'s {sourceValue} to {targetDieType} ({previousValue} -> {newValue}).",
   "trigger.copyGigValueCapped":
     "{sourceCardName} could not copy {sourceDieType}'s {sourceValue} to {targetDieType}; {targetDieType} can show at most {targetMax}, so it {resultText}.",
   "trigger.delayedDefeat": "{sourceCardName} defeated {targetNames} at the end of the turn.",
   "trigger.revealTopCardType.hit":
-    "{sourceCardName} revealed a {revealedType} after choosing {chosenType} and added it to hand.",
+    "{sourceCardName} selected {chosenType}, revealed {revealedCardName} ({revealedType}), and because it matched, added it to hand.",
   "trigger.revealTopCardType.miss":
-    "{sourceCardName} revealed a {revealedType} after choosing {chosenType} and trashed it.",
+    "{sourceCardName} selected {chosenType}, revealed {revealedCardName} ({revealedType}), and because it did not match, trashed it.",
 };
 
 /**

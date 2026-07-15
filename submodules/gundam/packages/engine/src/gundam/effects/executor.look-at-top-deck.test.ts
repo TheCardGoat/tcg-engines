@@ -9,7 +9,6 @@
 import { describe, it, expect } from "vite-plus/test";
 import type { CardEffect } from "@tcg/gundam-types";
 import { GundamTestEngine, PLAYER_ONE, createMockUnit, expectSuccess } from "../../index.ts";
-import type { PendingEffect } from "../types.ts";
 
 function lookAtTopDeckEffect(
   remainingDestination: "bottom" | "trash" | undefined,
@@ -40,60 +39,61 @@ function lookAtTopDeckEffect(
   };
 }
 
-let peIdCounter = 0;
-function makePending(effect: CardEffect): PendingEffect {
-  return {
-    id: `look_top_${++peIdCounter}`,
-    sourceCardId: "unused",
-    effectIndex: 0,
-    kind: "activated",
-    controllerId: PLAYER_ONE,
-    effect,
-  };
-}
-
 describe("executor — lookAtTopDeck remainingDestination", () => {
-  it("bottom keeps one revealed card on top and moves the rest to bottom", () => {
+  it("lets the player reorder the actual top cards and reveals the chosen top card next", () => {
+    const source = createMockUnit({ effects: [lookAtTopDeckEffect("bottom")] });
+    const bottom = createMockUnit({ name: "Bottom sentinel" });
     const top = createMockUnit({ name: "Top" });
     const second = createMockUnit({ name: "Second" });
     const third = createMockUnit({ name: "Third" });
-    const fourth = createMockUnit({ name: "Fourth" });
-    const engine = GundamTestEngine.create({ deck: [top, second, third, fourth] }, {});
+    const engine = GundamTestEngine.create(
+      { play: [source], deck: [bottom, third, second, top] },
+      {},
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const [topId, secondId, thirdId] = p1.getCardsInZone("deck");
+    const sourceId = p1.getCardsInZone("battleArea")[0]!;
 
-    engine.getG().pendingEffects.push(makePending(lookAtTopDeckEffect("bottom")));
+    expectSuccess(p1.activateAbility(sourceId, 0));
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "deckLook") throw new Error("Expected a deck-look choice");
+    const [topId, secondId, thirdId] = choice.revealedCardIds;
     expectSuccess(
       p1.resolveEffect({
         deckLookAnswers: {
-          0: { toTop: [topId], toBottom: [secondId, thirdId] },
+          0: { toTop: [secondId!], toBottom: [topId!, thirdId!] },
         },
       }),
     );
 
-    const deckAfter = p1.getCardsInZone("deck");
-    expect(deckAfter[0]).toBe(topId);
-    expect(deckAfter.slice(-2)).toEqual([secondId, thirdId]);
+    expectSuccess(p1.activateAbility(sourceId, 0));
+    const nextChoice = p1.getBoardView().pendingChoice;
+    if (nextChoice?.kind !== "deckLook") throw new Error("Expected a second deck-look choice");
+    expect(nextChoice.revealedCardIds[0]).toBe(secondId);
+    expect(nextChoice.revealedCardIds).not.toContain(topId);
   });
 
   it("trash applies even when a tutorFilter is present and no card is tutored", () => {
+    const source = createMockUnit({ effects: [lookAtTopDeckEffect("trash", true)] });
     const top = createMockUnit({ name: "Top" });
     const second = createMockUnit({ name: "Second" });
     const third = createMockUnit({ name: "Third" });
-    const engine = GundamTestEngine.create({ deck: [top, second, third] }, {});
+    const engine = GundamTestEngine.create({ play: [source], deck: [third, second, top] }, {});
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const [topId, secondId, thirdId] = p1.getCardsInZone("deck");
+    const sourceId = p1.getCardsInZone("battleArea")[0]!;
 
-    engine.getG().pendingEffects.push(makePending(lookAtTopDeckEffect("trash", true)));
+    expectSuccess(p1.activateAbility(sourceId, 0));
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "deckLook") throw new Error("Expected a deck-look choice");
+    const [topId, secondId, thirdId] = choice.revealedCardIds;
     expectSuccess(
       p1.resolveEffect({
         deckLookAnswers: {
-          0: { toTop: [topId], toTrash: [secondId, thirdId] },
+          0: { toTop: [topId!], toTrash: [secondId!, thirdId!] },
         },
       }),
     );
 
-    expect(p1.getCardsInZone("deck")).toEqual([topId]);
-    expect(p1.getCardsInZone("trash")).toEqual([secondId, thirdId]);
+    expect(p1.getCardsInZone("deck")).toHaveLength(1);
+    expect(p1.getCardsInZone("trash")).toEqual(expect.arrayContaining([secondId, thirdId]));
   });
 });

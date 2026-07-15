@@ -2,6 +2,7 @@ import { expect, test } from "vite-plus/test";
 
 import {
   cards,
+  createCardCatalog,
   getStructuredCardBySlug,
   getCardBySlug,
   getStructuredPromoCardBySlug,
@@ -10,6 +11,7 @@ import {
   pickCanonicalAndMergePrintings,
   promoCards,
   rawCards,
+  SET_PRIORITY,
   structuredCards,
 } from "../src/index.ts";
 
@@ -56,11 +58,15 @@ test("structured set exports expose parsed abilities", () => {
     },
   });
   expect(viktor?.abilities[0]?.effects[0]).toMatchObject({
-    effect: "searchDeck",
-    lookCount: 5,
-    select: {
-      max: 2,
-    },
+    effect: "scry",
+    amount: 5,
+    destinations: expect.arrayContaining([
+      expect.objectContaining({
+        zone: "hand",
+        min: 0,
+        max: 2,
+      }),
+    ]),
   });
   expect(currentGoro?.keywords).toContain("quick");
   expect(
@@ -89,6 +95,26 @@ test("structured set exports expose parsed abilities", () => {
     effect: "grantRule",
     rule: "requiresProgramPlayedThisTurn",
   });
+});
+
+test("every generated runtime-set card is available as a structured card", () => {
+  const runtimeSetCodes = new Set(Object.keys(SET_PRIORITY));
+  const catalog = createCardCatalog();
+  const catalogKeys = new Set(
+    Array.from(catalog.entries()).map(([, card]) => `${card.set.code}:${card.slug}`),
+  );
+  const structuredKeys = new Set(structuredCards.map((card) => `${card.set.code}:${card.slug}`));
+  const missing = cards
+    .filter((card) => runtimeSetCodes.has(card.set.code))
+    .filter((card) => !structuredKeys.has(`${card.set.code}:${card.slug}`))
+    .map((card) => `${card.set.code}:${card.slug}`);
+  const missingFromCatalog = cards
+    .filter((card) => runtimeSetCodes.has(card.set.code))
+    .filter((card) => !catalogKeys.has(`${card.set.code}:${card.slug}`))
+    .map((card) => `${card.set.code}:${card.slug}`);
+
+  expect(missing).toEqual([]);
+  expect(missingFromCatalog).toEqual([]);
 });
 
 test("retail starter deck printings win over lower-priority previews when merging canonical cards", () => {

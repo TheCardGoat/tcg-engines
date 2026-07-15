@@ -1,103 +1,105 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
   createMockUnit,
+  expectFailure,
   expectSuccess,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd0113thTacticalTestingSector130 } from "./130-13th-tactical-testing-sector.ts";
 
 describe("13th Tactical Testing Sector (GD01-130)", () => {
-  it("【Deploy】Add 1 of your Shields to your hand.", () => {
+  it("【Burst】 deploys the revealed Shield into its owner's Base section", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
     const engine = GundamTestEngine.create(
-      {
-        hand: [gd0113thTacticalTestingSector130],
-        resourceArea: activeResources(3),
-        deck: 4,
-      },
-      {},
+      { play: [attacker] },
+      { shieldArea: [gd0113thTacticalTestingSector130] },
     );
-    const shieldIds = seedShieldsFromDeck(engine, PLAYER_ONE, 2);
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const handBefore = p1.getHand().length;
-
-    expectSuccess(p1.deployBase(gd0113thTacticalTestingSector130));
-
-    expect(p1.getHand().length).toBe(handBefore);
-    expect(p1.getHand()).toContain(shieldIds[0]);
-  });
-
-  it("【Activate･Main】 AP-1 lands only on the chosen enemy Unit", () => {
-    // Two enemy units eligible; only the chosen one should get AP-1. Needs
-    // a friendly (Academy) unit in play for the effect's precondition.
-    const academyUnit = createMockUnit({ ap: 2, hp: 5, traits: ["academy"] });
-    const enemy1 = createMockUnit({ ap: 4, hp: 4 });
-    const enemy2 = createMockUnit({ ap: 4, hp: 4 });
-
-    const engine = GundamTestEngine.create(
-      {
-        hand: [gd0113thTacticalTestingSector130],
-        resourceArea: activeResources(3),
-        play: [academyUnit],
-        deck: 4,
-      },
-      { play: [enemy1, enemy2] },
-    );
-    seedShieldsFromDeck(engine, PLAYER_ONE, 1);
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    expectSuccess(p1.deployBase(gd0113thTacticalTestingSector130));
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    const baseId = p1.getCardsInZone("baseSection")[0]!;
-    const [enemy1Id, enemy2Id] = p2.getCardsInZone("battleArea");
-    if (!enemy1Id || !enemy2Id) throw new Error("setup failed");
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({ kind: "optional", directiveIndex: -1 });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    expectSuccess(p1.activateAbility(baseId, 0, { targets: [enemy1Id] }));
-
-    expect(engine.getG().exhausted[baseId]).toBe(true);
-
-    const apMods = engine
-      .getG()
-      .continuousEffects.filter(
-        (e) => e.payload.kind === "stat-modifier" && e.payload.stat === "ap",
-      );
-    expect(apMods).toHaveLength(1);
-    expect(apMods[0]!.targetId).toBe(enemy1Id);
-    expect(apMods.find((e) => e.targetId === enemy2Id)).toBeUndefined();
+    expect(p2.getCardZone(gd0113thTacticalTestingSector130)).toBe(`baseSection:${PLAYER_TWO}`);
   });
 
-  it("【Activate･Main】 precondition: no friendly (Academy) Unit → effect fires but no buff lands", () => {
-    // When precondition fails the whole effect is skipped (evaluateCardEffect
-    // returns false). Verify the cost isn't paid either.
-    const enemy = createMockUnit({ ap: 4, hp: 4 });
+  it("【Deploy】 adds one Shield to hand", () => {
+    const returnedShield = createMockUnit({ name: "Returned Shield" });
+    const engine = GundamTestEngine.create({
+      hand: [gd0113thTacticalTestingSector130],
+      shieldArea: [returnedShield],
+      resourceArea: activeResources(3),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+
+    expectSuccess(p1.deployBase(gd0113thTacticalTestingSector130));
+
+    expect(p1.getCardZone(returnedShield)).toBe(`hand:${PLAYER_ONE}`);
+  });
+
+  it("【Activate･Main】 asks for an enemy Unit, applies AP-1, and rests the Base", () => {
+    const academy = createMockUnit({ traits: ["academy"] });
+    const firstEnemy = createMockUnit({ ap: 4 });
+    const secondEnemy = createMockUnit({ ap: 5 });
     const engine = GundamTestEngine.create(
-      {
-        hand: [gd0113thTacticalTestingSector130],
-        resourceArea: activeResources(3),
-        deck: 4,
-      },
+      { play: [academy], baseSection: [gd0113thTacticalTestingSector130] },
+      { play: [firstEnemy, secondEnemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const academyId = p1.getCardsInZone("battleArea")[0]!;
+    const baseId = p1.getCardsInZone("baseSection")[0]!;
+    const [firstEnemyId, secondEnemyId] = p2.getCardsInZone("battleArea");
+
+    expectSuccess(p1.activateAbility(baseId, 0));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([firstEnemyId, secondEnemyId]),
+    });
+    expectFailure(p1.resolveEffect({ targets: [academyId] }), "ILLEGAL_TARGET");
+    expectSuccess(p1.resolveEffect({ targets: [firstEnemyId!] }));
+
+    expect(p2.getVisibleCard(firstEnemyId!)?.effectiveAp).toBe(3);
+    expect(p2.getVisibleCard(secondEnemyId!)?.effectiveAp).toBe(5);
+    expect(p1.isExhausted(baseId)).toBe(true);
+  });
+
+  it("cannot activate without a friendly Academy Unit", () => {
+    const enemy = createMockUnit({ ap: 4 });
+    const engine = GundamTestEngine.create(
+      { baseSection: [gd0113thTacticalTestingSector130] },
       { play: [enemy] },
     );
-    seedShieldsFromDeck(engine, PLAYER_ONE, 1);
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const baseId = p1.getCardsInZone("baseSection")[0]!;
+
+    expectFailure(p1.activateAbility(baseId, 0), "CONDITIONS_NOT_MET");
+
+    expect(p1.isExhausted(baseId)).toBe(false);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+  });
+
+  it("cannot activate in a legally reached Action step", () => {
+    const academy = createMockUnit({ traits: ["academy"] });
+    const engine = GundamTestEngine.create({
+      play: [academy],
+      baseSection: [gd0113thTacticalTestingSector130],
+    });
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    expectSuccess(p1.deployBase(gd0113thTacticalTestingSector130));
-
     const baseId = p1.getCardsInZone("baseSection")[0]!;
-    const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
-    // Activate succeeds mechanically (cost paid, effect enqueued), but
-    // the directive's condition evaluation skips the statModifier body.
-    p1.activateAbility(baseId, 0, { targets: [enemyId] });
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
 
-    const apMods = engine
-      .getG()
-      .continuousEffects.filter(
-        (e) => e.payload.kind === "stat-modifier" && e.payload.stat === "ap",
-      );
-    expect(apMods).toHaveLength(0);
+    expectFailure(p1.activateAbility(baseId, 0), "WRONG_PHASE");
   });
 });

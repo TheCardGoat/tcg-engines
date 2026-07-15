@@ -68,14 +68,21 @@ export const gd04UnicornGundam02BansheeNornDestroyMode065: UnitCard = {
         timing: ["activate:main"],
         conditions: [{ type: "duringLink" }],
       },
+      cost: {
+        exileFromTrash: {
+          owner: "friendly",
+          zone: "trash",
+          count: 3,
+          attributeFilters: [{ attribute: "color", comparison: "eq", value: "blue" }],
+        },
+      },
       directives: [
         {
           action: {
             action: "setActive",
             target: {
-              owner: "friendly",
+              owner: "self",
               cardType: "unit",
-              state: "active",
             },
           },
         },

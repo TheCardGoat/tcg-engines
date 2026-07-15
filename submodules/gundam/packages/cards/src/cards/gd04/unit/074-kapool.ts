@@ -59,15 +59,9 @@ export const gd04Kapool074: UnitCard = {
         },
         {
           action: {
-            action: "draw",
-            count: 1,
-          },
-          dependsOnPrevious: true,
-        },
-        {
-          action: {
-            action: "discard",
-            count: 1,
+            action: "drawThenDiscard",
+            drawCount: 1,
+            discardCount: 1,
           },
           dependsOnPrevious: true,
         },

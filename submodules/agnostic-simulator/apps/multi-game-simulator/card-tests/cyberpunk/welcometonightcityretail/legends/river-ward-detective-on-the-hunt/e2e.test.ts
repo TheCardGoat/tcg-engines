@@ -29,6 +29,11 @@ test("River Ward (Retail) - spend plays gear from hand for free", async ({ page 
   await pom.activateAbility(river.instanceId, 1, CYBERPUNK_P1);
 
   await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+  const gearChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
+  expectEqual("River Ward eligible gear count", gearChoices.length, 1);
+  await pom.resolveEffectTarget([gearChoices[0]!], CYBERPUNK_P1);
+
+  await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
   const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
   const host = await pom.getCardInZoneByDefinitionId(
     "field",
@@ -39,16 +44,6 @@ test("River Ward (Retail) - spend plays gear from hand for free", async ({ page 
     throw new Error("Expected River Ward to offer the friendly Unit as an attachment host.");
   }
   await pom.resolveEffectTarget([host.instanceId], CYBERPUNK_P1);
-
-  await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
-  const gearChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
-  expectEqual("River Ward eligible gear count", gearChoices.length, 1);
-  await pom.resolveEffectTarget([gearChoices[0]!], CYBERPUNK_P1);
-
-  await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToPlay");
-  const playChoices = await pom.getChoiceCardIds(CYBERPUNK_P1);
-  expectEqual("River Ward play choices count", playChoices.length, 1);
-  await pom.resolveCardToPlay(playChoices[0]!, CYBERPUNK_P1);
 
   await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectLegendCardSpent(CYBERPUNK_P1, river.instanceId, true);

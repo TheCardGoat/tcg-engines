@@ -1,4 +1,7 @@
 import { createContext } from "react-router";
-import type { SessionResult } from "@tcg/shared/auth";
+import type { PlatformAuthSessionResult } from "./auth-session.js";
 
-export const platformAuthSessionContext = createContext<SessionResult | null>(null);
+export const platformAuthSessionContext = createContext<PlatformAuthSessionResult>({
+  status: "session_missing",
+  reason: "no_cookie",
+});

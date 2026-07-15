@@ -28,6 +28,7 @@ import type { DeepReadonly } from "../../../types/move-types.ts";
 import type { GundamMoveDefinition, PendingEffect } from "../../types.ts";
 import { executeCardEffect } from "../../effects/executor.ts";
 import {
+  assignTargetsToGroups,
   buildExecCtx,
   evaluateLegalTargets,
   findChoiceDirective,
@@ -79,7 +80,8 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
       };
     }
 
-    const activePlayerId = framework.state.status.activePlayer as unknown as string;
+    const turnPlayerId = (framework.state.status.turnPlayer ??
+      framework.state.status.activePlayer) as unknown as string;
     const requestedId = args?.pendingEffectId;
 
     let target: DeepReadonly<PendingEffect> | undefined;
@@ -108,7 +110,7 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
       //    within triggered effects).
       // Restrict to `peersAtHead` — same-tier, same-controller-as-head
       // entries. That's exactly the set surfaced by the `ordering` prompt.
-      const peerIds = new Set(peersAtHead(g, activePlayerId).map((pe) => pe.id));
+      const peerIds = new Set(peersAtHead(g, turnPlayerId).map((pe) => pe.id));
       if (!peerIds.has(target.id)) {
         return {
           valid: false,
@@ -118,7 +120,7 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
       }
     } else {
       // Non-mutating head lookup so validate honours DeepReadonly<G>.
-      target = priorityHead(g, activePlayerId);
+      target = priorityHead(g, turnPlayerId);
       if (!target) {
         return {
           valid: false,
@@ -134,6 +136,18 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
         };
       }
     }
+
+    const head = priorityHead(g, turnPlayerId);
+    const orderingPeers = peersAtHead(g, turnPlayerId);
+    const isStagedOrderingSelection =
+      requestedId !== undefined &&
+      !head?.resolutionOrderSelected &&
+      orderingPeers.length >= 2 &&
+      args?.targets === undefined &&
+      args?.optionalAnswers === undefined &&
+      args?.chooseOneAnswers === undefined &&
+      args?.deckLookAnswers === undefined;
+    if (isStagedOrderingSelection) return { valid: true };
 
     // Rule 10-1-8-1-1: targets pre-committed by the triggering move (e.g.
     // play-command / activate-ability validating at play time) are
@@ -157,6 +171,26 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
     // a pre-committed effect still reports its directive kind correctly.
     const committedTargets = suppliedTargets ?? target.chosenTargets;
     const choice = findChoiceDirective({ ...target, chosenTargets: undefined }, { g, framework });
+    if (
+      choice?.kind === "activationOptional" &&
+      typeof args?.optionalAnswers?.[choice.directiveIndex] !== "boolean"
+    ) {
+      return {
+        valid: false,
+        error: "Pending effect requires an explicit accept or decline answer",
+        errorCode: "MISSING_OPTIONAL_ANSWER",
+      };
+    }
+    if (
+      choice?.kind === "optional" &&
+      typeof args?.optionalAnswers?.[choice.directiveIndex] !== "boolean"
+    ) {
+      return {
+        valid: false,
+        error: "Pending optional directive requires an explicit accept or decline answer",
+        errorCode: "MISSING_OPTIONAL_ANSWER",
+      };
+    }
     if (committedTargets === undefined && choice?.kind === "targetSelection") {
       return {
         valid: false,
@@ -280,16 +314,12 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
             errorCode: "WRONG_TARGET_COUNT",
           };
         }
-        for (const group of resolution.groups) {
-          const groupLegalSet = new Set<string>(group.legalTargetIds);
-          const groupCount = suppliedTargets.filter((id) => groupLegalSet.has(id)).length;
-          if (groupCount < group.minTargets || groupCount > group.maxTargets) {
-            return {
-              valid: false,
-              error: `Expected between ${group.minTargets} and ${group.maxTargets} targets for one target group, got ${groupCount}`,
-              errorCode: "WRONG_TARGET_COUNT",
-            };
-          }
+        if (!assignTargetsToGroups(suppliedTargets, resolution.groups)) {
+          return {
+            valid: false,
+            error: "Targets cannot be assigned to the required target groups",
+            errorCode: "WRONG_TARGET_COUNT",
+          };
         }
       }
     }
@@ -301,7 +331,8 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
     const g = G;
     if (g.pendingEffects.length === 0) return [{ kind: "confirm" as const }];
 
-    const activePlayerId = framework.state.status.activePlayer as unknown as string;
+    const turnPlayerId = (framework.state.status.turnPlayer ??
+      framework.state.status.activePlayer) as unknown as string;
     const requestedId = (partialInput as DeepReadonly<Record<string, unknown>>).pendingEffectId as
       | string
       | undefined;
@@ -310,7 +341,7 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
     if (requestedId !== undefined) {
       target = g.pendingEffects.find((pe) => pe.id === requestedId);
     } else {
-      target = priorityHead(g, activePlayerId);
+      target = priorityHead(g, turnPlayerId);
     }
 
     if (!target || target.controllerId !== playerId) {
@@ -348,19 +379,76 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
 
   execute({ G, playerId, args, framework, cards }) {
     const g = G;
-    const activePlayerId = framework.state.status.activePlayer as unknown as string;
+    const turnPlayerId = (framework.state.status.turnPlayer ??
+      framework.state.status.activePlayer) as unknown as string;
     const requestedId = args?.pendingEffectId;
 
     let idx: number;
     if (requestedId !== undefined) {
       idx = g.pendingEffects.findIndex((pe) => pe.id === requestedId);
     } else {
-      idx = priorityHeadIndex(g, activePlayerId);
+      idx = priorityHeadIndex(g, turnPlayerId);
     }
     if (idx < 0) return;
 
-    const [pending] = g.pendingEffects.splice(idx, 1);
+    const pending = g.pendingEffects[idx];
     if (!pending) return;
+
+    const head = priorityHead(g, turnPlayerId);
+    const isStagedOrderingSelection =
+      requestedId !== undefined &&
+      !head?.resolutionOrderSelected &&
+      peersAtHead(g, turnPlayerId).length >= 2 &&
+      args?.targets === undefined &&
+      args?.optionalAnswers === undefined &&
+      args?.chooseOneAnswers === undefined &&
+      args?.deckLookAnswers === undefined;
+    if (isStagedOrderingSelection) {
+      const [selected] = g.pendingEffects.splice(idx, 1);
+      if (!selected) return;
+      selected.resolutionOrderSelected = true;
+      const currentHeadIndex = priorityHeadIndex(g, turnPlayerId);
+      g.pendingEffects.splice(currentHeadIndex < 0 ? 0 : currentHeadIndex, 0, selected);
+      return;
+    }
+
+    if (pending.optionalActivation) {
+      const accepted = args?.optionalAnswers?.[-1] === true;
+      if (accepted) {
+        // Keep the effect queued, but expose its next printed interaction
+        // (target selection, deck routing, or an inner optional directive)
+        // on the following projection cycle. If it has no further input,
+        // the normal post-move drain resolves it immediately.
+        pending.optionalActivation = false;
+        return;
+      }
+
+      g.pendingEffects.splice(idx, 1);
+      const lifecycleCtx = { G: g, framework, cards };
+      runPostActions(pending.postActions, lifecycleCtx);
+      emitGundamLog(framework, {
+        type: "gundam.pending.resolved",
+        values: {
+          effectId: pending.id,
+          sourceCardId: pending.sourceCardId,
+          moveGroupId: pending.originatingMoveId,
+        },
+        visibility: { mode: "PUBLIC" },
+        category: "system",
+      });
+      return;
+    }
+
+    const currentChoice = findChoiceDirective(pending, { g, framework });
+    if (currentChoice?.kind === "optional") {
+      const answer = args?.optionalAnswers?.[currentChoice.directiveIndex];
+      if (typeof answer !== "boolean") return;
+      pending.committedOptionalAnswers = {
+        ...pending.committedOptionalAnswers,
+        [currentChoice.directiveIndex]: answer,
+      };
+      return;
+    }
 
     // Prefer `pending.chosenTargets` over `args.targets` when both
     // are present — the triggering move pre-committed these at play time
@@ -368,7 +456,19 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
     // to overwrite them with `TARGETS_ALREADY_COMMITTED`. This is
     // defensive: if a caller somehow bypasses validate, honour the
     // committed set rather than the user override.
-    const committed = pending.chosenTargets ?? args?.targets;
+    let committed = pending.chosenTargets ?? args?.targets;
+    if (committed !== undefined) {
+      const resolution = evaluateLegalTargets(
+        { ...pending, chosenTargets: undefined },
+        g,
+        framework,
+      );
+      const assigned = resolution ? assignTargetsToGroups(committed, resolution.groups) : null;
+      if (assigned) committed = assigned.flat();
+    }
+
+    g.pendingEffects.splice(idx, 1);
+
     const optionalAnswers = args?.optionalAnswers;
     const chooseOneAnswers = args?.chooseOneAnswers;
     const deckLookAnswers = args?.deckLookAnswers;
@@ -384,23 +484,27 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
     // while the auto-drain path would keep it. Restored in a finally
     // block so peer heads don't leak the id.
     const prevMoveId = g.pendingEffectCurrentMoveId;
+    const prevGeneration = g.pendingEffectCurrentPriorityGeneration;
+    const childGeneration = (g.eventCounters.pendingEffectPriorityGeneration ?? 0) + 1;
+    g.eventCounters.pendingEffectPriorityGeneration = childGeneration;
     g.pendingEffectCurrentMoveId = pending.originatingMoveId;
+    g.pendingEffectCurrentPriorityGeneration = childGeneration;
     try {
-      executeCardEffect(
-        pending.effect,
-        {
-          ...buildExecCtx(
-            lifecycleCtx,
-            { ...pending, chosenTargets: committed },
-            { optionalAnswers, chooseOneAnswers, deckLookAnswers },
-          ),
-          sourcePlayerId: playerId,
-        },
-        { skipPairLinkRecheck: true },
-      );
-      runPostActions(pending.postActions, lifecycleCtx);
+      const execCtx = {
+        ...buildExecCtx(
+          lifecycleCtx,
+          { ...pending, chosenTargets: committed },
+          { optionalAnswers, chooseOneAnswers, deckLookAnswers },
+        ),
+        sourcePlayerId: playerId,
+      };
+      executeCardEffect(pending.effect, execCtx, { skipPairLinkRecheck: true });
+      if (!execCtx.postActionState?.deferredToFollowUp) {
+        runPostActions(pending.postActions, lifecycleCtx);
+      }
     } finally {
       g.pendingEffectCurrentMoveId = prevMoveId;
+      g.pendingEffectCurrentPriorityGeneration = prevGeneration;
     }
 
     emitGundamLog(framework, {

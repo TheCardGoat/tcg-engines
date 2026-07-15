@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "game": "one-piece",
+  "promotedStrategyId": "value-ranked",
+  "previousStrategyId": "value-ranked",
+  "informationPolicy": "oracle",
+  "manifestHash": "bootstrap:existing-production-default",
+  "scheduleHash": "bootstrap:unevaluated",
+  "engineRevision": "bootstrap",
+  "cardCatalogHash": "bootstrap",
+  "strategyConfig": {},
+  "blocks": 1,
+  "matches": 1,
+  "meanPairedImprovement": 0,
+  "confidenceInterval": { "level": 0.95, "lower": 0, "upper": 0 }
+}

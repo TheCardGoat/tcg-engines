@@ -16,6 +16,7 @@
  */
 
 import type { PlayerId } from "@tcg/cyberpunk-engine";
+import type { CardType } from "@tcg/cyberpunk-types";
 
 /**
  * Identifier for one of the demo scenarios bootstrapped by
@@ -49,6 +50,7 @@ export type ScenarioGroup =
   | "legend-attack-trigger"
   | "legend-call-trigger"
   | "legend-defeated"
+  | "legend-qa"
   | "unit-blocker"
   | "unit-gig-stolen"
   | "unit-power-scaling"
@@ -67,6 +69,12 @@ export type ScenarioId =
   | "retailProgramTargetBench"
   | "retailCombatGigBench"
   | "retailGearLegendBench"
+  | "mobileLedgerZeroLegends"
+  | "mobileLedgerOneLegend"
+  | "mobileLedgerTwoLegends"
+  | "mobileLedgerThreeLegends"
+  | "mobileLedgerFriendlyOneRivalThree"
+  | "mobileLedgerFriendlyZeroRivalTwo"
   | "retailPr2295Cards"
   | "retailNewCardAbilities"
   | "openingMain"
@@ -85,6 +93,7 @@ export type ScenarioId =
   | "progRebootOptics"
   | "progRebootOpticsEmptyField"
   | "progAfterpartyAtLizzies"
+  | "progFoolOnTheHill"
   | "progCyberpsychosis"
   | "progChromeReverie"
   | "gearDyingNightHighCred"
@@ -136,6 +145,7 @@ export type ScenarioId =
   | "unitSwordwiseHuscle"
   | "unitTBugAmateurPhilosopher"
   | "unitRuthlessLowlife"
+  | "unitWelcomeToNightCityRetailMoxIncitersMustAttack"
   | "unitEvelynParkerSchemingSiren"
   | "unitJackieWellesRideOrDieChoom"
   | "unitGoroTakemuraLosingHisWay"
@@ -187,7 +197,38 @@ export type ScenarioId =
   | "unitEmbracingMinotaur"
   | "progPeaceOffering"
   | "progCarnageAtTheColosseum"
-  | "progCarnageAtTheColosseumCostReduction";
+  | "progCarnageAtTheColosseumCostReduction"
+  | "legendAdamSmasherEnderOfLegendsRetail"
+  | "legendKerryEurodyneAxeAttitudeAudienceRetail"
+  | "legendSashaYakovlevaWonTLetYouDownRetail"
+  | "legendQaPromosAndV"
+  | "legendQaArasakaPressure"
+  | "legendQaBlueSetup"
+  | "legendQaReactionTools"
+  | "legendQaGearTempo"
+  | "legendQaLateGameThreats"
+  | "legendQaVStreetkidAndPrintParity"
+  | "legendQaEmbracingPowerPrints"
+  | "unit6thStreetRecruitsRetail"
+  | "unitAugmentedNegotiatorsRetail"
+  | "unitJackedInVoodooBoyRetail"
+  | "unitLaLloronaGhostOfThePastRetail"
+  | "unitLizzyWizzyDelicateWeaponRetail"
+  | "unitMistyOlszewskiMenderOfBrokenSpiritsRetail"
+  | "unitNadiaFightingThroughGriefRetail"
+  | "unitOffdutyMalfiniRetail"
+  | "unitSaulBrightStormriderRetail"
+  | "unitScrewLovelornFoolRetail"
+  | "unitSketchyRipperRetail"
+  | "unitYorinobuArasakaSteelDragonRetail"
+  | "gearOverwatchPanamsGiftRetail"
+  | "progAllIsLostRetail"
+  | "progOverTheEdgeRetail"
+  | "progTakeControlRetail"
+  | "unitFieldOperatorRetail"
+  | "unitMoxIncitersRetail"
+  | "unitPsychoSquadRetail"
+  | "unitViktorVektorYouMightFeelALittlePinchRetail";
 
 /**
  * Discriminated union of UI-driven engine actions. Each maps 1:1 onto a method
@@ -218,7 +259,9 @@ export type EngineAction =
   | { type: "resolveAdjustGig"; value: number; as?: PlayerId }
   | { type: "resolveEffectTarget"; targetIds?: string[]; pass?: boolean; as?: PlayerId }
   | { type: "resolveDiscardFromHand"; cardIds?: string[]; pass?: boolean; as?: PlayerId }
-  | { type: "resolveSearchDeck"; selectedCardIds: string[]; as?: PlayerId }
+  | { type: "resolveScry"; destinations: Array<{ zone: string; cardIds: string[] }>; as?: PlayerId }
+  | { type: "resolveRevealDestination"; destination: "hand" | "trash"; as?: PlayerId }
+  | { type: "resolveCardTypeChoice"; cardType: CardType; as?: PlayerId }
   | { type: "passPhase"; as?: PlayerId }
   | { type: "mulligan"; as?: PlayerId }
   | { type: "keepHand"; as?: PlayerId }

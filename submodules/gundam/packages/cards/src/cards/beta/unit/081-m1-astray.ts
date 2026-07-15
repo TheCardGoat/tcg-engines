@@ -4,6 +4,7 @@ export const betaM1Astray081: UnitCard = {
   cardNumber: "GD01-081",
   name: "M1 Astray",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["triple ship alliance"],
   id: "GD01-081_p1",

@@ -129,7 +129,3 @@ Provocative questions that might unlock better solutions:
 - Give concrete suggestions, not just "consider exploring..."
 - Prioritize ruthlessly—if everything is important, nothing is
 - Don't soften criticism—developers need honest feedback to ship great design
-
-## MANUAL MIGRATION REQUIRED
-
-Review unsupported Claude skill fields manually: `args`, `required`, `user-invokable`.

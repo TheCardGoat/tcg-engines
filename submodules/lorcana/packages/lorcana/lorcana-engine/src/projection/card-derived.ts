@@ -6,6 +6,7 @@ export type { ProjectedLorcanaCardDerived } from "../types/projected-board";
 import {
   getFullName,
   getPrintedKeywordTitles,
+  getPrintedKeywordValues,
   isParameterizedKeywordAbility,
   isValueKeywordAbility,
 } from "../card-utils";
@@ -258,6 +259,14 @@ export function projectLorcanaCardDerived(args: {
           arr.push(val);
           keywordValueSources.set(ability.keyword, arr);
         }
+      }
+    }
+
+    for (const [kw, val] of Object.entries(getPrintedKeywordValues(definition))) {
+      if (val > 0 && !keywordValueSources.has(kw)) {
+        const arr = keywordValueSources.get(kw) ?? [];
+        arr.push(val);
+        keywordValueSources.set(kw, arr);
       }
     }
   }

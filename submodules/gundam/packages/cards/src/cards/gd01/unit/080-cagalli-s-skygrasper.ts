@@ -4,6 +4,7 @@ export const gd01CagalliSSkygrasper080: UnitCard = {
   cardNumber: "GD01-080",
   name: "Cagalli's Skygrasper",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "white",
   traits: ["earth alliance"],
   id: "GD01-080",
@@ -41,6 +42,7 @@ export const gd01CagalliSSkygrasper080: UnitCard = {
   cost: 2,
   ap: 2,
   hp: 1,
+  linkCondition: "[Cagalli Yula Athha]",
   effect:
     "【Destroyed】Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner's hand.<br>",
   effects: [

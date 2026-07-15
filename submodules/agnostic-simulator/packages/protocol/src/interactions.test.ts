@@ -401,6 +401,61 @@ describe("engine interaction protocol", () => {
     );
   });
 
+  test("requires a dependent input only when its selected branch is active", () => {
+    const view = EngineInteractionView.parse(
+      buildView([
+        {
+          id: "deploy",
+          requestId: "deploy",
+          intent: "play-card",
+          text: { key: "test.deploy" },
+          enabled: true,
+          inputs: [
+            {
+              kind: "option-selection",
+              id: "mode",
+              text: { key: "test.deploy.mode" },
+              min: 1,
+              max: 1,
+              options: [
+                { id: "ordinary", text: { key: "test.deploy.ordinary" }, enabled: true },
+                { id: "alternate", text: { key: "test.deploy.alternate" }, enabled: true },
+              ],
+            },
+            {
+              ...baseEntitySelectionInput(),
+              required: false,
+              requiredWhen: [{ all: [{ inputId: "mode", value: "alternate" }] }],
+            },
+          ],
+        },
+      ]),
+    );
+    const action = view.actions[0]!;
+
+    expect(
+      validateInteractionSubmission(
+        view,
+        buildInteractionSubmission({ view, action, values: { mode: ["ordinary"] } }),
+      ).ok,
+    ).toBe(true);
+    expectInvalidCodes(
+      view,
+      buildInteractionSubmission({ view, action, values: { mode: ["alternate"] } }),
+      ["missing_value"],
+    );
+    expect(
+      validateInteractionSubmission(
+        view,
+        buildInteractionSubmission({
+          view,
+          action,
+          values: { mode: ["alternate"], targets: ["target_1"] },
+        }),
+      ).ok,
+    ).toBe(true);
+  });
+
   test("rejects invalid entity selections", () => {
     const view = EngineInteractionView.parse(
       buildView([

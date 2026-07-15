@@ -4,6 +4,7 @@ export const gd01GFighter009: UnitCard = {
   cardNumber: "GD01-009",
   name: "G-Fighter",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD01-009",
@@ -58,6 +59,7 @@ export const gd01GFighter009: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 2,
+  linkCondition: "(White Base Team) Trait",
   effect:
     "【Deploy】Choose 1 of your (white Base Team) Units. It gains &lt;High-Maneuver&gt; during this turn.<br>\n (This Unit can't be blocked.)<br>",
   effects: [

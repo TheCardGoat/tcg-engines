@@ -4,6 +4,8 @@ export const gd01Zanzibar125: BaseCard = {
   cardNumber: "GD01-125",
   name: "Zanzibar",
   type: "base",
+  battlefieldZones: ["space", "earth"],
+  color: "green",
   traits: ["zeon", "warship"],
   id: "GD01-125",
   canonicalId: "GD01-125",
@@ -64,28 +66,44 @@ export const gd01Zanzibar125: BaseCard = {
       directives: [
         {
           action: {
-            action: "addShieldToHand",
-            count: 1,
-          },
-        },
-        {
-          action: {
-            action: "deploy",
-            target: {
-              owner: "friendly",
-              cardType: "unit",
-              attributeFilters: [
+            action: "resolveThenQueue",
+            first: { action: "addShieldToHand", count: 1 },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
                 {
-                  attribute: "trait",
-                  comparison: "includes",
-                  value: "zeon",
-                },
-                {
-                  attribute: "level",
-                  comparison: "lte",
-                  value: 4,
+                  condition: { type: "isTurn", whose: "friendly" },
+                  thenDirectives: [
+                    {
+                      optional: true,
+                      action: {
+                        action: "deploy",
+                        target: {
+                          owner: "friendly",
+                          zone: "hand",
+                          cardType: "unit",
+                          count: 1,
+                          attributeFilters: [
+                            {
+                              attribute: "trait",
+                              comparison: "includes",
+                              value: "zeon",
+                            },
+                            {
+                              attribute: "level",
+                              comparison: "lte",
+                              value: 4,
+                            },
+                          ],
+                        },
+                      },
+                    },
+                  ],
                 },
               ],
+              sourceText:
+                "Then, if it is your turn, you may deploy 1 (Zeon) Unit card that is Lv.4 or lower from your hand.",
             },
           },
         },

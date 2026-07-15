@@ -12,6 +12,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "..",
+    "types": ["bun-types", "node"],
     "strict": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,

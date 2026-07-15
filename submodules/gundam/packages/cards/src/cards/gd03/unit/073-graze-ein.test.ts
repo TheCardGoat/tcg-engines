@@ -6,26 +6,15 @@ import {
   activeResources,
   createMockPilot,
   createMockUnit,
+  expectFailure,
   expectSuccess,
-  findStatModifier,
-  getEffectiveStats,
 } from "@tcg/gundam-engine";
 import { gd03GrazeEin073 } from "./073-graze-ein.ts";
 
 describe("Graze Ein (GD03-073)", () => {
-  it("has Blocker", () => {
-    const engine = GundamTestEngine.create({ play: [gd03GrazeEin073] });
-    const unitId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-
-    expect(getEffectiveStats(unitId, engine.getG(), framework.cards, framework).keywords).toContain(
-      "Blocker",
-    );
-  });
-
-  it("【During Link】【Activate･Action】with 6+ Gjallarhorn cards in trash gives an enemy Unit battling this Unit AP-3 this battle", () => {
+  it("cannot use its Activate·Action ability during the Main Phase", () => {
     const ein = createMockPilot({ name: "Ein Dalton" });
-    const enemy = createMockUnit({ ap: 5, hp: 5 });
+    const enemy = createMockUnit({ ap: 5, hp: 10 });
     const trash = Array.from({ length: 6 }, () => createMockUnit({ traits: ["gjallarhorn"] }));
     const engine = GundamTestEngine.create(
       {
@@ -37,21 +26,112 @@ describe("Graze Ein (GD03-073)", () => {
       { play: [enemy] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
     const unitId = p1.getCardsInZone("battleArea")[0]!;
-    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.assignPilot(ein, unitId));
-    engine.getG().turnMetadata.pendingCombat = {
-      stage: "action-step",
-      attackerId: enemyId,
-      attackerPlayerId: PLAYER_TWO,
-      target: unitId,
-    };
-    engine.setPhase("end-phase");
-    engine.setStep("action-step");
+
+    expectFailure(p1.activateAbility(unitId, 0, { targets: [enemyId] }), "WRONG_PHASE");
+  });
+
+  it("blocks, reduces its battling enemy's AP by 3 once per turn, and expires after battle", () => {
+    const ein = createMockPilot({ name: "Ein Dalton" });
+    const enemy = createMockUnit({ ap: 5, hp: 10 });
+    const trash = Array.from({ length: 6 }, () => createMockUnit({ traits: ["gjallarhorn"] }));
+    const engine = GundamTestEngine.create(
+      {
+        hand: [ein],
+        play: [gd03GrazeEin073],
+        trash,
+        resourceArea: activeResources(7),
+        deck: 5,
+      },
+      { play: [enemy], shieldArea: [createMockUnit({ name: "Shield" })], deck: 5 },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(ein, unitId));
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.enterBattle(enemyId, "direct"));
+    expectSuccess(p1.declareBlock(unitId));
 
     expectSuccess(p1.activateAbility(unitId, 0, { targets: [enemyId] }));
+    expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(2);
 
-    expect(findStatModifier(engine, enemyId, "ap")?.modifier).toBe(-3);
+    expectSuccess(p2.passBattleAction());
+    expectFailure(p1.activateAbility(unitId, 0, { targets: [enemyId] }), "ABILITY_LIMIT_REACHED");
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(5);
+  });
+
+  it("cannot use the AP reduction while paired but not linked", () => {
+    const wrongPilot = createMockPilot({ name: "Gaelio Bauduin" });
+    const enemy = createMockUnit({ ap: 5, hp: 10 });
+    const trash = Array.from({ length: 6 }, () => createMockUnit({ traits: ["gjallarhorn"] }));
+    const engine = GundamTestEngine.create(
+      {
+        hand: [wrongPilot],
+        play: [gd03GrazeEin073],
+        trash,
+        resourceArea: activeResources(7),
+        deck: 3,
+      },
+      { play: [enemy], deck: 3 },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(wrongPilot, unitId));
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.enterBattle(enemyId, "direct"));
+    expectSuccess(p1.declareBlock(unitId));
+
+    expectFailure(p1.activateAbility(unitId, 0, { targets: [enemyId] }));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(5);
+  });
+
+  it("cannot use the AP reduction with fewer than 6 Gjallarhorn cards in trash", () => {
+    const ein = createMockPilot({ name: "Ein Dalton" });
+    const enemy = createMockUnit({ ap: 5, hp: 10 });
+    const trash = Array.from({ length: 5 }, () => createMockUnit({ traits: ["gjallarhorn"] }));
+    const engine = GundamTestEngine.create(
+      {
+        hand: [ein],
+        play: [gd03GrazeEin073],
+        trash,
+        resourceArea: activeResources(7),
+        deck: 3,
+      },
+      { play: [enemy], deck: 3 },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(ein, unitId));
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.enterBattle(enemyId, "direct"));
+    expectSuccess(p1.declareBlock(unitId));
+
+    expectFailure(p1.activateAbility(unitId, 0, { targets: [enemyId] }));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(5);
   });
 });

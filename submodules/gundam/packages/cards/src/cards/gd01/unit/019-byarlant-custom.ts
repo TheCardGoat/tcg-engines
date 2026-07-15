@@ -4,6 +4,7 @@ export const gd01ByarlantCustom019: UnitCard = {
   cardNumber: "GD01-019",
   name: "Byarlant Custom",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-019",

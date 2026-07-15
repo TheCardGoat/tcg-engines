@@ -106,6 +106,7 @@ export interface GigDieRolledEvent {
   result: number;
   previousValue?: number;
   playerId: PlayerId;
+  origin: "gainGig" | "reroll";
 }
 
 export interface GigDieMovedEvent {
@@ -291,20 +292,30 @@ export type ActionLogMessageKey =
   | "move.turnEnded"
   | "move.concede"
   | "move.activateAbility"
+  | "move.activateAbility.attached"
   | "move.searchDeck.reveal"
+  | "move.searchDeck.revealNamed"
+  | "move.searchDeck.revealSelected"
   | "move.resolveSearchDeck"
+  | "move.resolveSearchDeckNamed"
+  | "move.resolveRevealDestination"
   | "move.resolveAdjustGig"
+  | "effect.discard.resolved"
   | "effect.draw.resolved"
   | "effect.draw.skipped"
+  | "effect.trashFromDeck.resolved"
+  | "effect.sellFromDeck.resolved"
   | "trigger.autoResolved"
   | "trigger.resolved"
   | "trigger.noValidTargets"
   | "trigger.stealGig"
   | "trigger.targetResolved"
   | "trigger.targetResolved.deckBottom"
+  | "trigger.targetResolved.rerollGig"
   | "trigger.grantRule.cantAttack"
   | "trigger.defeatedTarget"
   | "effect.callLegend.free"
+  | "effect.callLegend.skippedAlreadyCalled"
   | "trigger.copyGigValue"
   | "trigger.copyGigValueCapped"
   | "trigger.delayedDefeat"

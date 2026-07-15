@@ -74,7 +74,3 @@ Synthesize your findings and the user's answers into a `## Design Context` secti
 Write this section to AGENTS.md in the project root. If the file exists, append or update the Design Context section.
 
 Confirm completion and summarize the key design principles that will now guide all future work.
-
-## MANUAL MIGRATION REQUIRED
-
-Review unsupported Claude skill fields manually: `user-invokable`.

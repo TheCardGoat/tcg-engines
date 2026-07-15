@@ -67,7 +67,7 @@ export const welcomeToNightCityRetailOverwatchPanamSGift = defineCyberpunkCard({
         {
           cost: "spend",
           target: {
-            selector: "self",
+            selector: "host",
           },
         },
       ],

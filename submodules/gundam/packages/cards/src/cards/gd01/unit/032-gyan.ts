@@ -4,6 +4,7 @@ export const gd01Gyan032: UnitCard = {
   cardNumber: "GD01-032",
   name: "Gyan",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "green",
   traits: ["zeon"],
   id: "GD01-032",
@@ -41,6 +42,7 @@ export const gd01Gyan032: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 3,
+  linkCondition: "[M'Quve]",
   effect:
     "【When Paired･(Zeon) Pilot】Choose 1 enemy Unit with &lt;Blocker&gt; that is Lv.2 or lower. Destroy it.<br>",
   effects: [

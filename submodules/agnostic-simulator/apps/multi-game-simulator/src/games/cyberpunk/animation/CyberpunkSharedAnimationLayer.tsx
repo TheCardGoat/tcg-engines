@@ -14,8 +14,8 @@ import type {
   AnimationZoneRef,
   SimulatorAudioCueId,
 } from "@tcg/protocol";
-import type { SimulatorZone } from "@tcg/simulator-contract";
-import type { CardZone } from "@tcg/cyberpunk-types";
+import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
+import type { Ability, CardZone } from "@tcg/cyberpunk-types";
 import { defOf } from "@tcg/cyberpunk-engine";
 import {
   isSimulatorAnimationDebugEnabled,
@@ -26,6 +26,8 @@ import {
 import { EFFECT_RESULT_HOLD_MS_BY_PACING } from "../../../simulator/gameConfig";
 import { useSimulatorAudio } from "../../../simulator/audio";
 import { PLAYER_SIDE_TO_ID, useEngine, useUserConfig } from "../engine";
+import { Card } from "../components/GameBoard/Card";
+import { CyberpunkAnimationVisualStateProvider } from "./AnimationVisualStateContext";
 import {
   cyberpunkCardZoneToSimulatorZone,
   projectEntityForAnimationEntity,
@@ -36,11 +38,14 @@ import type { Side } from "../engine";
 
 type CyberpunkMatchState = ReturnType<typeof useEngine>["matchState"];
 type CyberpunkRawEngineEventEntry = ReturnType<typeof useEngine>["rawEngineEvents"][number];
+type CyberpunkCardType = "legend" | "unit" | "gear" | "program";
+type CyberpunkCardColor = "blue" | "green" | "red" | "yellow";
 
 export interface ResolvingProgramVisual {
   cardId: string;
   side: Side;
   face: "hidden" | "public";
+  label?: string;
 }
 
 const ResolvingProgramVisualsContext = createContext<readonly ResolvingProgramVisual[]>([]);
@@ -49,7 +54,13 @@ export function useResolvingProgramVisuals(): readonly ResolvingProgramVisual[] 
   return useContext(ResolvingProgramVisualsContext);
 }
 
-export function CyberpunkSharedAnimationLayer({ children }: { children: ReactNode }) {
+export function CyberpunkSharedAnimationLayer({
+  children,
+  onAnimationPendingChange,
+}: {
+  children: ReactNode;
+  onAnimationPendingChange?: (hasPendingAnimations: boolean) => void;
+}) {
   const { humanSide, matchState, rawEngineEvents } = useEngine();
   const { animationPacing } = useUserConfig();
   const [plans, setPlans] = useState<AnimationPlanV1[]>([]);
@@ -63,6 +74,21 @@ export function CyberpunkSharedAnimationLayer({ children }: { children: ReactNod
   const resultHoldMs = EFFECT_RESULT_HOLD_MS_BY_PACING[animationPacing];
   const resolveZone = useMemo(() => cyberpunkAnimationZoneResolver, []);
   const { cancelScheduledCues, playCue, scheduleAnimationSteps } = useSimulatorAudio();
+  const renderMotionEntity = useCallback(
+    (entity: SimulatorEntity) => <CyberpunkMotionCard entity={entity} />,
+    [],
+  );
+
+  useEffect(() => {
+    onAnimationPendingChange?.(plans.length > 0);
+  }, [onAnimationPendingChange, plans.length]);
+
+  useEffect(
+    () => () => {
+      onAnimationPendingChange?.(false);
+    },
+    [onAnimationPendingChange],
+  );
 
   useEffect(() => {
     const rawEntryIds = new Set(rawEngineEvents.map((entry) => entry.id));
@@ -219,21 +245,94 @@ export function CyberpunkSharedAnimationLayer({ children }: { children: ReactNod
 
   return (
     <ResolvingProgramVisualsContext.Provider value={resolvingProgramVisuals}>
-      <MotionAnimationSurface
-        animationPlans={plans}
-        viewerSeatId={viewerSeatId}
-        resolveEntity={(entityId) =>
-          projectEntityForAnimationEntity(entityId, matchState, humanSide)
-        }
-        resolveZone={resolveZone}
-        getCardSuppressionDelayMs={cyberpunkCardSuppressionDelayMs}
-        onAnimationStepsScheduled={scheduleAnimationSteps}
-        onPlanComplete={handlePlanComplete}
-      >
-        {children}
-      </MotionAnimationSurface>
+      <CyberpunkAnimationVisualStateProvider hasPendingAnimations={plans.length > 0}>
+        <MotionAnimationSurface
+          animationPlans={plans}
+          viewerSeatId={viewerSeatId}
+          resolveEntity={(entityId) =>
+            projectEntityForAnimationEntity(entityId, matchState, humanSide)
+          }
+          resolveZone={resolveZone}
+          renderEntity={renderMotionEntity}
+          getCardSuppressionDelayMs={cyberpunkCardSuppressionDelayMs}
+          onAnimationStepsScheduled={scheduleAnimationSteps}
+          onPlanComplete={handlePlanComplete}
+        >
+          {children}
+        </MotionAnimationSurface>
+      </CyberpunkAnimationVisualStateProvider>
     </ResolvingProgramVisualsContext.Provider>
   );
+}
+
+function CyberpunkMotionCard({ entity }: { entity: SimulatorEntity }) {
+  const faceDown = entity.face === "hidden";
+  const cardType = cyberpunkCardTypeFromEntity(entity);
+  const overlayRuleLabels = new Set(entity.overlayBadges?.map((badge) => badge.label) ?? []);
+  const effectiveRules = (["blocker", "goSolo", "cantAttack", "mustAttack"] as const).filter(
+    (rule) => overlayRuleLabels.has(rule),
+  );
+
+  return (
+    <Card
+      imageUrl={entity.imageUrl}
+      name={entity.title}
+      cardId={entity.id}
+      cardType={cardType}
+      color={cyberpunkCardColorFromFrame(entity.frameStyle?.color)}
+      faceDown={faceDown}
+      tapped={entity.states.includes("rested")}
+      rotateWhenTapped={false}
+      effectiveRules={effectiveRules}
+      keywords={entity.traits}
+      hasSellTag={Boolean(entity.overlayBadges?.some((badge) => badge.label === "€$"))}
+      cost={numberStat(entity, "Cost")}
+      effectiveCost={numberStat(entity, "Cost")}
+      power={numberStat(entity, "Power")}
+      effectivePower={numberStat(entity, "Power")}
+      disablePreview
+      disableActionMenu
+    />
+  );
+}
+
+function cyberpunkCardTypeFromEntity(entity: SimulatorEntity): CyberpunkCardType | undefined {
+  if (entity.face === "hidden") {
+    return entity.backImageUrl?.includes("legend") ? "legend" : undefined;
+  }
+
+  if (entity.subtitle === "legend" || entity.kind === "leader") return "legend";
+  if (entity.subtitle === "unit" || entity.kind === "unit") return "unit";
+  if (entity.subtitle === "gear") return "gear";
+  if (entity.subtitle === "program") return "program";
+
+  const trait = entity.traits.find(
+    (value): value is CyberpunkCardType =>
+      value === "legend" || value === "unit" || value === "gear" || value === "program",
+  );
+  return trait;
+}
+
+function cyberpunkCardColorFromFrame(color: string | undefined): CyberpunkCardColor | undefined {
+  switch (color?.toLowerCase()) {
+    case "#3b82f6":
+      return "blue";
+    case "#22c55e":
+      return "green";
+    case "#ef4444":
+      return "red";
+    case "#eab308":
+      return "yellow";
+    default:
+      return undefined;
+  }
+}
+
+function numberStat(entity: SimulatorEntity, label: string): number | null {
+  const value = entity.stats.find((stat) => stat.label === label)?.value;
+  if (value === undefined) return null;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
 }
 
 export function cyberpunkImmediateSystemAudioCues(
@@ -286,7 +385,14 @@ function resolvingProgramCleanupVisualFromPlan(
   const step = plan.steps.find(isResolvingProgramCleanupStep);
   if (step) {
     const side = sideFromCyberpunkAnchorId(step.to.id);
-    return side ? { cardId: step.entity.id, side, face: step.destinationFace ?? "public" } : null;
+    return side
+      ? {
+          cardId: step.entity.id,
+          side,
+          face: step.destinationFace ?? "public",
+          label: step.label,
+        }
+      : null;
   }
   const spotlight = plan.steps.find(isResolvingSpotlightStep);
   if (!spotlight) {
@@ -294,7 +400,12 @@ function resolvingProgramCleanupVisualFromPlan(
   }
   const side = plan.actorId ? sideForPlayerId(plan.actorId) : null;
   return side
-    ? { cardId: spotlight.entity.id, side, face: spotlight.sourceFace ?? "public" }
+    ? {
+        cardId: spotlight.entity.id,
+        side,
+        face: spotlight.sourceFace ?? "public",
+        label: spotlight.label,
+      }
     : null;
 }
 
@@ -304,11 +415,25 @@ function resolvingProgramEntryVisualFromStep(
 ): ResolvingProgramVisual | null {
   if (isResolvingProgramEntryStep(step)) {
     const side = sideFromCyberpunkAnchorId(step.from.id);
-    return side ? { cardId: step.entity.id, side, face: step.destinationFace ?? "public" } : null;
+    return side
+      ? {
+          cardId: step.entity.id,
+          side,
+          face: step.destinationFace ?? "public",
+          label: step.label,
+        }
+      : null;
   }
   if (isResolvingSpotlightStep(step)) {
     const side = plan.actorId ? sideForPlayerId(plan.actorId) : null;
-    return side ? { cardId: step.entity.id, side, face: step.sourceFace ?? "public" } : null;
+    return side
+      ? {
+          cardId: step.entity.id,
+          side,
+          face: step.sourceFace ?? "public",
+          label: step.label,
+        }
+      : null;
   }
   return null;
 }
@@ -393,16 +518,22 @@ function stagedEffectSourceCardIdsFromEntry(
   return staged;
 }
 
-function stagedEffectSourceLabelsFromEntry(
+export function stagedEffectSourceLabelsFromEntry(
   entry: CyberpunkRawEngineEventEntry,
   matchState: CyberpunkMatchState,
 ): ReadonlyMap<string, string> {
   const labels = new Map<string, string>();
+  const triggeredLabels = triggeredEffectLabelsFromEntry(entry);
   for (const step of entry.animationScript.steps) {
     if (step.kind !== "effectTarget") {
       continue;
     }
     const sourceCardId = String(step.sourceCardId);
+    const triggeredLabel = triggeredLabels.get(sourceCardId);
+    if (triggeredLabel) {
+      labels.set(sourceCardId, triggeredLabel);
+      continue;
+    }
     const sourceCard = matchState.G.cardIndex[sourceCardId];
     if (!sourceCard) {
       continue;
@@ -410,6 +541,42 @@ function stagedEffectSourceLabelsFromEntry(
     const triggerLabel = triggerLabelForCard(sourceCard);
     if (triggerLabel) {
       labels.set(sourceCardId, triggerLabel.toUpperCase());
+      continue;
+    }
+    const stagedLabel = stagedEffectSourceLabelForCard(sourceCard);
+    if (stagedLabel) {
+      labels.set(sourceCardId, stagedLabel);
+    }
+  }
+  return labels;
+}
+
+function stagedEffectSourceLabelForCard(
+  card: NonNullable<CyberpunkMatchState["G"]["cardIndex"][string]>,
+): string | null {
+  switch (defOf(card).type) {
+    case "gear":
+      return "Gear ability";
+    case "legend":
+      return "Legend ability";
+    case "unit":
+      return "Unit ability";
+    default:
+      return null;
+  }
+}
+
+function triggeredEffectLabelsFromEntry(
+  entry: CyberpunkRawEngineEventEntry,
+): ReadonlyMap<string, string> {
+  const labels = new Map<string, string>();
+  for (const event of entry.events) {
+    if (event.type !== "effectTriggered") {
+      continue;
+    }
+    const label = triggerLabelForEffectType(event.effectType);
+    if (label) {
+      labels.set(String(event.sourceCardId), label.toUpperCase());
     }
   }
   return labels;
@@ -418,8 +585,12 @@ function stagedEffectSourceLabelsFromEntry(
 function triggerLabelForCard(
   card: NonNullable<CyberpunkMatchState["G"]["cardIndex"][string]>,
 ): string | null {
-  const trigger = defOf(card).abilities.find((ability) => ability.kind === "triggered")?.trigger
-    ?.trigger;
+  const trigger = defOf(card).abilities.find((ability: Ability) => ability.kind === "triggered")
+    ?.trigger?.trigger;
+  return triggerLabelForEffectType(trigger);
+}
+
+function triggerLabelForEffectType(trigger: string | undefined): string | null {
   switch (trigger) {
     case "play":
       return "Play trigger";

@@ -162,8 +162,9 @@ function pickBestChooseOneOption(
   optionCount: number,
 ): number {
   const g = parent.state.G as unknown as GundamG;
-  const activePlayerId = parent.state.ctx.status.activePlayer as unknown as string;
-  const head = priorityHead(g, activePlayerId);
+  const turnPlayerId = (parent.state.ctx.status.turnPlayer ??
+    parent.state.ctx.status.activePlayer) as unknown as string;
+  const head = priorityHead(g, turnPlayerId);
   const pe = head?.id === effectId ? head : g.pendingEffects.find((p) => p.id === effectId);
   if (!pe) return 0;
   const choice = findChoiceDirective(pe);
@@ -235,10 +236,11 @@ function classifyOptionalIntent(
   directiveIndex: number,
 ): ReturnType<typeof classifyDirectiveIntent> {
   const g = parent.state.G as unknown as GundamG;
-  const activePlayerId = parent.state.ctx.status.activePlayer as unknown as string;
+  const turnPlayerId = (parent.state.ctx.status.turnPlayer ??
+    parent.state.ctx.status.activePlayer) as unknown as string;
   // Prefer the priority head when the prompt's effectId matches it
   // (saves a linear scan); fall back to the full queue otherwise.
-  const head = priorityHead(g, activePlayerId);
+  const head = priorityHead(g, turnPlayerId);
   const pe = head?.id === effectId ? head : g.pendingEffects.find((p) => p.id === effectId);
   if (!pe) return "neutral";
   // Use `findChoiceDirective` to locate the directive at the index —

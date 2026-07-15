@@ -79,10 +79,6 @@ export const declareBlock: GundamMoveDefinition<"declareBlock"> = {
       return { valid: false, error: "Only units can block", errorCode: "NOT_A_UNIT" };
     }
 
-    if (!canBlock(blockerId, g, framework.cards)) {
-      return { valid: false, error: "This unit cannot block", errorCode: "CANNOT_BLOCK" };
-    }
-
     // Rule 8-3-3: a Unit originally targeted for attack cannot activate
     // its own <Blocker> effect.
     if (combat.target !== "direct" && blockerId === combat.target) {
@@ -91,6 +87,10 @@ export const declareBlock: GundamMoveDefinition<"declareBlock"> = {
         error: "The targeted unit cannot block its own attacker",
         errorCode: "BLOCKER_IS_TARGET",
       };
+    }
+
+    if (!canBlock(blockerId, g, framework.cards)) {
+      return { valid: false, error: "This unit cannot block", errorCode: "CANNOT_BLOCK" };
     }
 
     // Rule 13-1-6: <High-Maneuver> cannot be blocked.
@@ -142,6 +142,11 @@ export const declareBlock: GundamMoveDefinition<"declareBlock"> = {
     // validate() rejects the move unless pendingCombat is populated, so
     // the non-null assertion below is safe.
     const combat = g.turnMetadata.pendingCombat!;
+    // Rule 13-1-4-1: activating <Blocker> rests the blocking Unit as part
+    // of changing the attack target. Keep both Gundam state and the runtime
+    // card projection in sync so the simulator immediately shows the rest.
+    g.exhausted[blockerId] = true;
+    framework.cards.patchMeta(blockerId, { exhausted: true });
     combat.blockerId = blockerId;
     combat.blockerPlayerId = playerId;
     // Leaving stage !== "block-step" lets block-step.endIf fire so the

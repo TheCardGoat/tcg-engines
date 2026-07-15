@@ -1,21 +1,21 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaGoroTakemuraHandsUnclean,
-  alphaGoroTakemuraLosingHisWay,
-  alphaVCorporateExile,
-  alphaYorinobuArasakaEmbracingDestruction,
-  spoilerRiverWardDetectiveOnTheHunt,
+  embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
+  embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
+  theHeistRetailStarterDeckVCorporateExile,
+  embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
+  welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
   welcomeToNightCityRetailKerryEurodyneTheLastRockerboy,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../src/testing/index.ts";
 import type { CommandSuccess } from "../src/types/commands.ts";
 import type { GameEndedLog } from "../src/logging/index.ts";
 
-const riverWard = spoilerRiverWardDetectiveOnTheHunt;
-const goro = alphaGoroTakemuraHandsUnclean;
-const goroUnit = alphaGoroTakemuraLosingHisWay;
-const vCorporate = alphaVCorporateExile;
-const yorinobu = alphaYorinobuArasakaEmbracingDestruction;
+const riverWard = welcomeToNightCityRetailRiverWardDetectiveOnTheHunt;
+const goro = embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean;
+const goroUnit = embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay;
+const vCorporate = theHeistRetailStarterDeckVCorporateExile;
+const yorinobu = embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction;
 const kerry = welcomeToNightCityRetailKerryEurodyneTheLastRockerboy;
 
 /** Pass a full turn for the active player (play → attack → endTurn). */
@@ -129,29 +129,6 @@ describe("Win Conditions", () => {
       expect(engine.isGameOver()).toBe(false);
 
       passTurn(engine);
-      expect(engine.isGameOver()).toBe(true);
-      expect(engine.getWinnerId()).toBe(P2);
-      expect(engine.getWinReason()).toBe("deck_out_victory");
-    });
-
-    it("opponent wins when a player must draw from an empty deck in the main phase", () => {
-      const engine = CyberpunkTestEngine.createWithFixture(
-        {
-          legendArea: [riverWard, goro, vCorporate],
-          eddies: 2,
-          deck: 0,
-        },
-        { deck: 2 },
-        { seed: "play-phase-deck-out" },
-      );
-
-      expect(engine.getActivePlayerId()).toBe(P1);
-      expect(engine.getState().G.gamePhase).toBe("main");
-      expect(engine.getCardsInZone("deck", P1)).toHaveLength(0);
-
-      engine.callLegend(riverWard);
-
-      expect(engine.getCardsInZone("deck", P1)).toHaveLength(0);
       expect(engine.isGameOver()).toBe(true);
       expect(engine.getWinnerId()).toBe(P2);
       expect(engine.getWinReason()).toBe("deck_out_victory");

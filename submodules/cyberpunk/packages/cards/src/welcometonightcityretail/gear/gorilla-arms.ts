@@ -59,6 +59,11 @@ export const welcomeToNightCityRetailGorillaArms = defineCyberpunkCard({
               controller: "friendly",
               amount: "all",
             },
+            selection: {
+              mode: "choose",
+              min: 1,
+              max: 1,
+            },
           },
         },
       ],

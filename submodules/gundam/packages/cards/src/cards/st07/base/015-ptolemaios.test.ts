@@ -6,7 +6,6 @@ import {
   activeResources,
   createMockUnit,
   expectSuccess,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { st07Ptolemaios015 } from "./015-ptolemaios.ts";
 
@@ -15,10 +14,10 @@ describe("Ptolemaios (ST07-015)", () => {
     const engine = GundamTestEngine.create({
       hand: [st07Ptolemaios015],
       resourceArea: activeResources(2),
-      deck: 4,
+      shieldArea: [createMockUnit({ name: "Shield" })],
     });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
 
     expectSuccess(p1.deployBase(st07Ptolemaios015));
 
@@ -27,13 +26,27 @@ describe("Ptolemaios (ST07-015)", () => {
   });
 
   it("【Burst】Deploy this card.", () => {
-    const engine = GundamTestEngine.create({}, { deck: [st07Ptolemaios015] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [st07Ptolemaios015] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    expect(engine.asPlayer(PLAYER_TWO).getCardsInZone("baseSection")).toContain(shieldId);
+    expect(p2.getCardsInZone("baseSection")).toContain(shieldId);
   });
 
   it("while a rested friendly CB Unit is in play, prevents Base battle damage from enemy Lv.3 or lower non-token Units", () => {
@@ -42,14 +55,17 @@ describe("Ptolemaios (ST07-015)", () => {
     const engine = GundamTestEngine.create(
       { baseSection: [st07Ptolemaios015], play: [{ card: cbUnit, exhausted: true }], deck: 5 },
       { play: [attacker], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    engine.endTurn();
     const baseId = p1.getCardsInZone("baseSection")[0]!;
     const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(engine.resolveCombat({ attackerId, target: "direct" }));
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
 
     expect(p1.getDamage(baseId)).toBe(0);
   });
@@ -60,14 +76,17 @@ describe("Ptolemaios (ST07-015)", () => {
     const engine = GundamTestEngine.create(
       { baseSection: [st07Ptolemaios015], play: [cbUnit], deck: 5 },
       { play: [attacker], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    engine.endTurn();
     const baseId = p1.getCardsInZone("baseSection")[0]!;
     const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(engine.resolveCombat({ attackerId, target: "direct" }));
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
 
     expect(p1.getDamage(baseId)).toBe(3);
   });
@@ -77,16 +96,18 @@ describe("Ptolemaios (ST07-015)", () => {
     const tokenAttacker = createMockUnit({ level: 3, ap: 3 });
     const engine = GundamTestEngine.create(
       { baseSection: [st07Ptolemaios015], play: [{ card: cbUnit, exhausted: true }], deck: 5 },
-      { play: [tokenAttacker], deck: 5 },
+      { play: [{ card: tokenAttacker, isToken: true }], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    engine.endTurn();
     const baseId = p1.getCardsInZone("baseSection")[0]!;
     const attackerId = p2.getCardsInZone("battleArea")[0]!;
-    engine.markAsToken(attackerId);
 
-    expectSuccess(engine.resolveCombat({ attackerId, target: "direct" }));
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
 
     expect(p1.getDamage(baseId)).toBe(3);
   });

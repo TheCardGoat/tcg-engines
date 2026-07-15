@@ -6,6 +6,7 @@ import {
   welcomeToNightCityRetailVStreetkid,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, expectAttackCandidate } from "../../../testing/index.ts";
+import { enMessages, formatActionLog, stripPrivateFields } from "../../../logging/index.ts";
 
 describe("V - Streetkid", () => {
   it("goes solo as a ready Unit that can attack this turn", () => {
@@ -37,8 +38,56 @@ describe("V - Streetkid", () => {
       { preserveDeckOrder: true },
     );
 
-    engine.callLegend(welcomeToNightCityRetailVStreetkid, { as: P1 });
-    engine.resolveEffectTarget(welcomeToNightCityRetailPeaceOffering, { as: P1 });
+    const callResult = engine.callLegend(welcomeToNightCityRetailVStreetkid, { as: P1 });
+    const trashLog = callResult.moveLogs.find(
+      (log) => log.type === "action" && log.messageKey === "effect.trashFromDeck.resolved",
+    );
+    if (!trashLog || trashLog.type !== "action") {
+      throw new Error("Expected a trash-from-deck action log from V StreetKid.");
+    }
+    expect(trashLog.params).toMatchObject({
+      sourceCardName: "V — StreetKid",
+      trashedCount: 3,
+    });
+    const visibleTrashLog = stripPrivateFields(trashLog, P1);
+    expect(
+      visibleTrashLog
+        ? formatActionLog(
+            {
+              type: "actionLog",
+              messageKey: visibleTrashLog.messageKey,
+              params: visibleTrashLog.params,
+              playerId: visibleTrashLog.playerId,
+            },
+            enMessages,
+          )
+        : "",
+    ).toBe(
+      "V — StreetKid trashed 3 card(s) from the top of the deck: Corpo Security, Delamain Cab, Corpo Security.",
+    );
+
+    const targetResult = engine.resolveEffectTarget(welcomeToNightCityRetailPeaceOffering, {
+      as: P1,
+    });
+    const selectedLog = targetResult.moveLogs.find(
+      (log) => log.type === "action" && log.messageKey === "trigger.targetResolved",
+    );
+    if (!selectedLog || selectedLog.type !== "action") {
+      throw new Error("Expected a target resolved action log from V StreetKid.");
+    }
+    expect(
+      selectedLog
+        ? formatActionLog(
+            {
+              type: "actionLog",
+              messageKey: selectedLog.messageKey,
+              params: selectedLog.params,
+              playerId: selectedLog.playerId,
+            },
+            enMessages,
+          )
+        : "",
+    ).toBe("Selected Peace Offering for V — StreetKid.");
 
     expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toContain(
       welcomeToNightCityRetailPeaceOffering.id,

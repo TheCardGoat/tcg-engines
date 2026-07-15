@@ -4,11 +4,8 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  seedBaseAsShield,
-  seedShieldsFromDeck,
   expectSuccess,
   createMockUnit,
-  getDamageCounter,
 } from "@tcg/gundam-engine";
 import { gd04IzumaColony126 } from "./126-izuma-colony.ts";
 
@@ -17,25 +14,67 @@ describe("Izuma Colony (GD04-126)", () => {
     const engine = GundamTestEngine.create({
       hand: [gd04IzumaColony126],
       resourceArea: activeResources(1),
+      shieldArea: [createMockUnit({ name: "Shield" })],
       deck: 4,
     });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
 
     expectSuccess(p1.deployBase(gd04IzumaColony126));
 
     expect(p1.getHand()).toContain(shieldId);
   });
 
-  it("【Burst】 deploys this card from shield area", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd04IzumaColony126] });
-    const shieldId = seedBaseAsShield(engine, PLAYER_TWO, gd04IzumaColony126);
-
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `baseSection:${PLAYER_TWO}`,
+  it("【Burst】 offers its owner the choice to deploy this card after a direct attack", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd04IzumaColony126] },
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      controllerId: PLAYER_TWO,
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+
+    expect(p2.getCardZone(shieldId)).toBe(`baseSection:${PLAYER_TWO}`);
+  });
+
+  it("【Burst】 leaves this card in trash when its owner declines", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd04IzumaColony126] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      controllerId: PLAYER_TWO,
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: false } }));
+
+    expect(p2.getCardZone(shieldId)).toBe(`trash:${PLAYER_TWO}`);
   });
 
   describe("When this Base receives battle damage from an enemy Unit with 3 or less AP, deal 1 damage to that Unit.", () => {
@@ -45,13 +84,18 @@ describe("Izuma Colony (GD04-126)", () => {
         { play: [attacker] },
         { baseSection: [gd04IzumaColony126], deck: 5 },
       );
-      const attackerId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
-      const baseId = engine.asPlayer(PLAYER_TWO).getCardsInZone("baseSection")[0]!;
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const attackerId = p1.getCardsInZone("battleArea")[0]!;
+      const baseId = p2.getCardsInZone("baseSection")[0]!;
 
-      expectSuccess(engine.resolveCombat({ attackerId, target: "direct" }));
+      expectSuccess(p1.enterBattle(attackerId, "direct"));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
 
-      expect(getDamageCounter(engine, baseId)).toBe(3);
-      expect(getDamageCounter(engine, attackerId)).toBe(1);
+      expect(p2.getDamage(baseId)).toBe(3);
+      expect(p1.getDamage(attackerId)).toBe(1);
     });
 
     it("does not deal damage back when battle damage came from a 4 AP Unit", () => {
@@ -60,11 +104,18 @@ describe("Izuma Colony (GD04-126)", () => {
         { play: [attacker] },
         { baseSection: [gd04IzumaColony126], deck: 5 },
       );
-      const attackerId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const attackerId = p1.getCardsInZone("battleArea")[0]!;
+      const baseId = p2.getCardsInZone("baseSection")[0]!;
 
-      expectSuccess(engine.resolveCombat({ attackerId, target: "direct" }));
+      expectSuccess(p1.enterBattle(attackerId, "direct"));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
 
-      expect(getDamageCounter(engine, attackerId)).toBe(0);
+      expect(p2.getCardZone(baseId)).toBe(`trash:${PLAYER_TWO}`);
+      expect(p1.getDamage(attackerId)).toBe(0);
     });
   });
 });

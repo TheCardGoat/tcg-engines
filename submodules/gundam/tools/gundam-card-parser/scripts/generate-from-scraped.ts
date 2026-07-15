@@ -90,11 +90,11 @@ function renderUnit(card: UnitCard): string {
   lines.splice(insertAt, 0, `  ap: ${card.ap},`, `  hp: ${card.hp},`);
   if (card.linkCondition !== undefined)
     lines.splice(insertAt + 2, 0, `  linkCondition: ${JSON.stringify(card.linkCondition)},`);
-  if (card.zone !== undefined)
+  if (card.battlefieldZones !== undefined)
     lines.splice(
       insertAt + (card.linkCondition !== undefined ? 3 : 2),
       0,
-      `  zone: ${JSON.stringify(card.zone)},`,
+      `  battlefieldZones: ${JSON.stringify(card.battlefieldZones)},`,
     );
   if (card.effect !== undefined)
     lines.splice(
@@ -143,6 +143,13 @@ function renderBase(card: BaseCard): string {
   const lines = baseLines(card);
   const insertAt = lines.findIndex((line) => line.startsWith("  effects:"));
   lines.splice(insertAt, 0, `  hp: ${card.hp},`);
+  if (card.battlefieldZones !== undefined) {
+    lines.splice(
+      lines.findIndex((line) => line.startsWith("  effects:")),
+      0,
+      `  battlefieldZones: ${JSON.stringify(card.battlefieldZones)},`,
+    );
+  }
   if (card.effect !== undefined)
     lines.splice(
       lines.findIndex((line) => line.startsWith("  effects:")),

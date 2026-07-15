@@ -1,109 +1,78 @@
-import { describe, it, expect } from "vite-plus/test";
-import type { UnitCard, ResourceCard } from "@tcg/gundam-types";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  expectSuccess,
+  activeResources,
+  createMockUnit,
   expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
-import type { TestCardEntry } from "@tcg/gundam-engine";
 import { gd01GearaZuluGuardsType052 } from "./052-geara-zulu-guards-type.ts";
 
-let counter = 0;
-function uid(prefix: string): string {
-  return `${prefix}-${++counter}`;
-}
-
-function makeResource(): ResourceCard {
-  return {
-    cardNumber: uid("GZ-R"),
-    name: "Test Resource",
-    type: "resource",
-    canonicalId: "mock",
-    slug: "mock",
-    printings: [],
-    traits: [],
-    level: 0,
-    cost: 0,
-    keywordEffects: [],
-    rarity: "common",
-  };
-}
-
-function makeUnit(hp: number): UnitCard {
-  return {
-    cardNumber: uid("GZ-U"),
-    name: "Test Unit",
-    type: "unit",
-    canonicalId: "mock",
-    slug: "mock",
-    printings: [],
-    traits: [],
-    level: 1,
-    cost: 1,
-    keywordEffects: [],
-    rarity: "common",
-    ap: 1,
-    hp,
-  };
-}
-
-function active(card: ResourceCard): TestCardEntry {
-  return { card, exhausted: false };
-}
-
-function resources(count: number): TestCardEntry[] {
-  return Array.from({ length: count }, () => active(makeResource()));
-}
-
 describe("Geara Zulu (Guards Type) (GD01-052)", () => {
-  describe("【Deploy】Choose 1 enemy Unit. Deal 1 damage to it.", () => {
-    it("deals 1 damage to a chosen enemy unit on deploy", () => {
-      const enemy = makeUnit(4);
-      const engine = GundamTestEngine.create(
-        { hand: [gd01GearaZuluGuardsType052], resourceArea: resources(4) },
-        { play: [enemy] },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const p2 = engine.asPlayer(PLAYER_TWO);
-      const [enemyId] = p2.getCardsInZone("battleArea");
+  it("offers enemy Units and deals 1 damage only to the chosen target on deploy", () => {
+    const firstEnemy = createMockUnit({ hp: 4 });
+    const secondEnemy = createMockUnit({ hp: 4 });
+    const engine = GundamTestEngine.create(
+      { hand: [gd01GearaZuluGuardsType052], resourceArea: activeResources(4) },
+      { play: [firstEnemy, secondEnemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [firstEnemyId, secondEnemyId] = p2.getCardsInZone("battleArea");
 
-      expectSuccess(p1.deployUnit(gd01GearaZuluGuardsType052, { targets: [enemyId!] }));
-      expect(p1.getDamage(enemyId!)).toBe(1);
+    expectSuccess(p1.deployUnit(gd01GearaZuluGuardsType052));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([firstEnemyId, secondEnemyId]),
+      minTargets: 1,
+      maxTargets: 1,
     });
+    expectSuccess(p1.resolveEffect({ targets: [secondEnemyId!] }));
 
-    it("cannot target a friendly unit", () => {
-      const friendly = makeUnit(3);
-      const engine = GundamTestEngine.create(
-        {
-          hand: [gd01GearaZuluGuardsType052],
-          resourceArea: resources(4),
-          play: [friendly],
-        },
-        {},
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [friendlyId] = p1.getCardsInZone("battleArea");
+    expect(p2.getDamage(firstEnemyId!)).toBe(0);
+    expect(p2.getDamage(secondEnemyId!)).toBe(1);
+  });
 
-      const result = p1.deployUnit(gd01GearaZuluGuardsType052, { targets: [friendlyId!] });
-      expectFailure(result, "INVALID_TARGET");
+  it("rejects a friendly Unit submitted to the visible enemy-only prompt", () => {
+    const friendly = createMockUnit({ hp: 4 });
+    const enemy = createMockUnit({ hp: 4 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd01GearaZuluGuardsType052],
+        play: [friendly],
+        resourceArea: activeResources(4),
+      },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const friendlyId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.deployUnit(gd01GearaZuluGuardsType052));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
     });
+    expectFailure(p1.resolveEffect({ targets: [friendlyId] }), "ILLEGAL_TARGET");
 
-    it("deals damage only to the chosen enemy when multiple exist", () => {
-      const e1 = makeUnit(3);
-      const e2 = makeUnit(4);
-      const engine = GundamTestEngine.create(
-        { hand: [gd01GearaZuluGuardsType052], resourceArea: resources(4) },
-        { play: [e1, e2] },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const p2 = engine.asPlayer(PLAYER_TWO);
-      const [e1Id, e2Id] = p2.getCardsInZone("battleArea");
+    expect(p1.getDamage(friendlyId)).toBe(0);
+    expect(p2.getDamage(enemyId)).toBe(0);
+  });
 
-      expectSuccess(p1.deployUnit(gd01GearaZuluGuardsType052, { targets: [e1Id!] }));
-      expect(p1.getDamage(e1Id!)).toBe(1);
-      expect(p1.getDamage(e2Id!)).toBe(0);
+  it("deploys cleanly without opening a prompt when no enemy Unit exists", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd01GearaZuluGuardsType052],
+      resourceArea: activeResources(4),
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+
+    expectSuccess(p1.deployUnit(gd01GearaZuluGuardsType052));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    expect(p1.getCardZone(unitId)).toBe(`battleArea:${PLAYER_ONE}`);
   });
 });

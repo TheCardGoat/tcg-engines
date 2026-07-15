@@ -4,6 +4,8 @@ export const betaSide7124: BaseCard = {
   cardNumber: "GD01-124",
   name: "Side 7",
   type: "base",
+  battlefieldZones: ["space"],
+  color: "blue",
   traits: ["earth federation", "stronghold"],
   id: "GD01-124_p1",
   canonicalId: "GD01-124",

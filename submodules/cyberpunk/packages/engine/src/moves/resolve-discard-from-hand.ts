@@ -96,6 +96,7 @@ export const resolveDiscardFromHandMove: MoveDefinition<ResolveDiscardFromHandIn
         turnNumber: state.G.turnMetadata.turnNumber,
         discardedCount: 0,
         passed: true,
+        reason: payload.logReason,
       });
       if (payload.elseEffects?.length && payload.sourceCardId && payload.sourcePlayerId) {
         const ctx: ResolutionContext = {
@@ -130,6 +131,7 @@ export const resolveDiscardFromHandMove: MoveDefinition<ResolveDiscardFromHandIn
       timestamp: Date.now(),
       turnNumber: state.G.turnMetadata.turnNumber,
       discardedCount: cardIds.length,
+      reason: payload.logReason,
     });
     if (payload.ifEffects?.length && payload.sourceCardId && payload.sourcePlayerId) {
       const ctx: ResolutionContext = {

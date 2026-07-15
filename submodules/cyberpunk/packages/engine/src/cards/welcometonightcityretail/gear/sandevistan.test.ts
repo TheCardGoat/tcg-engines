@@ -13,7 +13,7 @@ describe("Sandevistan (retail)", () => {
         {
           card: welcomeToNightCityRetailSwordwiseHuscle,
           spent: true,
-          playedThisTurn: false,
+          hasLag: false,
           attachedGears: [welcomeToNightCityRetailSandevistan],
         },
       ],

@@ -65,6 +65,17 @@ export interface GatewayConnectionState {
   error: string | null;
   /** Observability for the library-owned credential-refresh loop. */
   authStatus: "ok" | "refreshing" | "failed";
+  /**
+   * Machine-readable auth failure reason for UI diagnostics and analytics.
+   * Null means there is no active auth-specific failure.
+   */
+  authFailureReason:
+    | null
+    | "missing_credentials"
+    | "anonymous_welcome"
+    | "connect_error"
+    | "refresh_failed"
+    | "refresh_exhausted";
 }
 
 /** Payload type of a single server→client event. */

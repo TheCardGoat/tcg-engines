@@ -9,10 +9,10 @@
  * This file is test-only — it is not imported from any runtime code path.
  */
 
-import type { Card } from "@tcg/gundam-types";
+import type { Card, UnitCard } from "@tcg/gundam-types";
 import type { ContinuousEffectEntry } from "../types.ts";
 import { createMockResource } from "./card-mocks.ts";
-import type { GundamTestEngine, TestCardEntry } from "./test-engine.ts";
+import { GundamTestEngine, PLAYER_ONE, type TestCardEntry } from "./test-engine.ts";
 
 // =============================================================================
 // Resource helpers
@@ -38,6 +38,29 @@ export function restedResources(count: number): TestCardEntry[] {
     card: createMockResource(),
     exhausted: true,
   }));
+}
+
+/**
+ * Prove a Unit can be deployed through the same public move a player uses.
+ * This replaces generated metadata tests that only compared printed JSON.
+ */
+export function expectUnitCanDeploy(card: UnitCard): void {
+  const engine = GundamTestEngine.create({
+    hand: [card],
+    resourceArea: activeResources(Math.max(card.level, card.cost)),
+  });
+  const player = engine.asPlayer(PLAYER_ONE);
+  const result = player.deployUnit(card);
+  if (!result.success) {
+    throw new Error(`Expected ${card.cardNumber} to deploy: ${result.errorCode} ${result.error}`);
+  }
+  const deployedId = player.getCardsInZone("battleArea")[0];
+  if (!deployedId || player.getCardZone(deployedId) !== `battleArea:${PLAYER_ONE}`) {
+    throw new Error(`Expected ${card.cardNumber} to be visible in the battle area after deploy`);
+  }
+  if (player.getHand().length !== 0) {
+    throw new Error(`Expected ${card.cardNumber} to leave the player's hand after deploy`);
+  }
 }
 
 // =============================================================================
@@ -202,7 +225,7 @@ export function getContinuousEffects(engine: GundamTestEngine): ContinuousEffect
  *   expectAttackRedirectedTo(engine, blocker);
  */
 export function expectAttackRedirectedTo(engine: GundamTestEngine, blockerId: string): void {
-  const combat = engine.getG().turnMetadata.pendingCombat;
+  const combat = engine.asPlayer(PLAYER_ONE).getBoardView().pendingCombat;
   if (!combat) {
     throw new Error(`expectAttackRedirectedTo: no pendingCombat present (blocker="${blockerId}")`);
   }
@@ -270,7 +293,7 @@ export function getDamageCounter(engine: GundamTestEngine, cardId: string): numb
  * Get the exhausted state of a card.
  */
 export function isCardExhausted(engine: GundamTestEngine, cardId: string): boolean {
-  return engine.getG().exhausted[cardId] ?? false;
+  return engine.asPlayer(PLAYER_ONE).getVisibleCard(cardId)?.exhausted ?? false;
 }
 
 // =============================================================================

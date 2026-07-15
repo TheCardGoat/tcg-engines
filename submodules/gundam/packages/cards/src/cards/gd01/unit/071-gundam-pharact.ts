@@ -4,6 +4,7 @@ export const gd01GundamPharact071: UnitCard = {
   cardNumber: "GD01-071",
   name: "Gundam Pharact",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["academy"],
   id: "GD01-071",
@@ -58,6 +59,7 @@ export const gd01GundamPharact071: UnitCard = {
   cost: 3,
   ap: 3,
   hp: 4,
+  linkCondition: "(Academy) Trait",
   effect: "【During Link】【Attack】Choose 1 enemy Unit. It gets AP-2 during this battle.<br>",
   effects: [
     {

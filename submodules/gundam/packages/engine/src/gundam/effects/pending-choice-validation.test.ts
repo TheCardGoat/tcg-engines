@@ -5,8 +5,8 @@
  *  - Submitted `targets` are checked against the effect's target filter
  *    (ILLEGAL_TARGET / WRONG_TARGET_COUNT) using the same DSL evaluation
  *    that buildPendingChoicePrompt uses to emit legalTargetIds.
- *  - `optionalAnswers` lets the controller answer "you may" directives
- *    (rule 10-1-3); default-yes preserves pre-F.2 behaviour.
+ *  - `optionalAnswers` requires the controller to explicitly accept or
+ *    decline "you may" directives (rule 10-1-3).
  */
 
 import { describe, it, expect } from "vite-plus/test";
@@ -57,6 +57,22 @@ const deckLookTopAndBottomEffect: CardEffect = {
   sourceText: "Look at the top 2 and return them to the top or bottom.",
 };
 
+const deckLookRandomBottomEffect: CardEffect = {
+  type: "activated",
+  activation: { timing: ["activate:main"] },
+  directives: [
+    {
+      action: {
+        action: "lookAtTopDeck",
+        count: 2,
+        return: "chooseTop",
+        randomizeRemainingToBottom: true,
+      },
+    },
+  ],
+  sourceText: "Look at the top 2 cards. Return the remaining cards randomly to bottom.",
+};
+
 const optionalDeckLookEffect: CardEffect = {
   type: "activated",
   activation: { timing: ["activate:main"] },
@@ -73,6 +89,28 @@ const optionalDeckLookEffect: CardEffect = {
     },
   ],
   sourceText: "You may discard 1. If you do, look at the top 2.",
+};
+
+const conditionalDeckLookEffect: CardEffect = {
+  type: "activated",
+  activation: { timing: ["activate:main"] },
+  directives: [
+    { action: { action: "draw", count: 0 } },
+    {
+      condition: { type: "isTurn", whose: "friendly" },
+      thenDirectives: [
+        {
+          action: {
+            action: "lookAtTopDeck",
+            count: 2,
+            return: "chooseTop",
+            remainingDestination: "trash",
+          },
+        },
+      ],
+    },
+  ],
+  sourceText: "If it is your turn, look at the top 2 cards.",
 };
 
 let peIdCounter = 0;
@@ -193,7 +231,7 @@ describe("resolveEffect — optional answers (PR F.2)", () => {
     expect(engine.getG().pendingEffects).toHaveLength(0);
   });
 
-  it("defaults to running the directive when no answer is supplied (backwards-compat)", () => {
+  it("rejects a missing optional answer and leaves the choice pending", () => {
     const engine = GundamTestEngine.create({ deck: 5 }, {});
     const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
 
@@ -205,15 +243,47 @@ describe("resolveEffect — optional answers (PR F.2)", () => {
       }),
     );
 
-    // No optionalAnswers supplied — the optional prompt still halts the
-    // queue (requiresPlayerChoice), so the controller must explicitly
-    // call resolveEffect with no args to acknowledge; the directive runs.
-    expectSuccess(engine.asPlayer(PLAYER_ONE).resolveEffect({}));
+    expectFailure(engine.asPlayer(PLAYER_ONE).resolveEffect({}), "MISSING_OPTIONAL_ANSWER");
+    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore);
+    expect(engine.asPlayer(PLAYER_ONE).getBoardView().pendingChoice?.kind).toBe("optional");
+
+    expectSuccess(engine.asPlayer(PLAYER_ONE).resolveEffect({ optionalAnswers: { 0: true } }));
     expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore - 1);
   });
 });
 
 describe("resolveEffect — deck-look answers", () => {
+  it("accepts the visible enclosing index for a deck-look inside a conditional", () => {
+    const first = createMockUnit({ name: "First" });
+    const second = createMockUnit({ name: "Second" });
+    const engine = GundamTestEngine.create({ deck: [first, second] }, {});
+    const p1 = engine.asPlayer(PLAYER_ONE);
+
+    engine.getG().pendingEffects.push(
+      makePending({
+        effect: conditionalDeckLookEffect,
+        controllerId: PLAYER_ONE,
+        kind: "activated",
+      }),
+    );
+
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice).toMatchObject({ kind: "deckLook", directiveIndex: 1 });
+    if (choice?.kind !== "deckLook") throw new Error("Expected a deck-look choice");
+    const [chosenTop, trashed] = choice.revealedCardIds;
+
+    expectSuccess(
+      p1.resolveEffect({
+        deckLookAnswers: {
+          [choice.directiveIndex]: { toTop: [chosenTop!], toTrash: [trashed!] },
+        },
+      }),
+    );
+
+    expect(p1.getCardZone(chosenTop!)).toBe(`deck:${PLAYER_ONE}`);
+    expect(p1.getCardZone(trashed!)).toBe(`trash:${PLAYER_ONE}`);
+  });
+
   it("rejects routing to an illegal destination for the return mode", () => {
     const top = createMockUnit({ name: "Top" });
     const second = createMockUnit({ name: "Second" });
@@ -235,6 +305,28 @@ describe("resolveEffect — deck-look answers", () => {
       "INVALID_DECK_LOOK_ROUTING",
     );
     expect(engine.getG().pendingEffects).toHaveLength(1);
+  });
+
+  it("accepts empty route arrays for random-bottom deck-look effects", () => {
+    const top = createMockUnit({ name: "Top" });
+    const second = createMockUnit({ name: "Second" });
+    const engine = GundamTestEngine.create({ deck: [top, second] }, {});
+
+    engine.getG().pendingEffects.push(
+      makePending({
+        effect: deckLookRandomBottomEffect,
+        controllerId: PLAYER_ONE,
+        kind: "activated",
+      }),
+    );
+
+    expectSuccess(
+      engine.asPlayer(PLAYER_ONE).resolveEffect({
+        deckLookAnswers: { 0: { toTop: [], toBottom: [], toTrash: [] } },
+      }),
+    );
+    expect(engine.getG().pendingEffects).toHaveLength(0);
+    expect(engine.asPlayer(PLAYER_ONE).getCardsInZone("deck")).toHaveLength(2);
   });
 
   it("lets an optional prerequisite be declined without a deck-look answer", () => {

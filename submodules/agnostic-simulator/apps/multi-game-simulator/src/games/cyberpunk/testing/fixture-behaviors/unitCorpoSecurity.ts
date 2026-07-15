@@ -10,7 +10,7 @@ export const unitCorpoSecurityBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitCorpoSecurity",
   label: "Corpo Security - blocker redirects from opposing side",
   references: [
-    "packages/engine/src/cards/alpha/units/corpo-security.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/corpo-security.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

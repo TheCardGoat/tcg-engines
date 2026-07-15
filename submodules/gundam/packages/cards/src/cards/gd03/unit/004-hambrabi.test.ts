@@ -29,18 +29,20 @@ describe("Hambrabi (GD03-004)", () => {
     const hambrabiId = p1.getCardsInZone("battleArea")[0]!;
     const [battleTargetId, lowHpId, highHpId] = p2.getCardsInZone("battleArea");
 
-    expect(engine.getG().exhausted[lowHpId!]).toBeFalsy();
-    expect(engine.getG().exhausted[highHpId!]).toBeFalsy();
+    expect(p2.isExhausted(lowHpId!)).toBe(false);
+    expect(p2.isExhausted(highHpId!)).toBe(false);
 
     expectSuccess(p1.enterBattle(hambrabiId, battleTargetId!));
-    while (engine.getPendingChoice()) {
-      expectSuccess(p1.resolveEffect({ targets: [lowHpId!] }));
-    }
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [lowHpId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [lowHpId!] }));
 
     // The directive rested the 4-HP candidate.
-    expect(engine.getG().exhausted[lowHpId!]).toBe(true);
+    expect(p2.isExhausted(lowHpId!)).toBe(true);
     // The 6-HP enemy is outside the HP ≤ 5 filter — stays active.
-    expect(engine.getG().exhausted[highHpId!]).toBeFalsy();
+    expect(p2.isExhausted(highHpId!)).toBe(false);
   });
 
   it("【Attack】 does NOT fire when fewer than 2 other (Titans) Units are in play", () => {
@@ -58,13 +60,13 @@ describe("Hambrabi (GD03-004)", () => {
     const hambrabiId = p1.getCardsInZone("battleArea")[0]!;
     const [battleTargetId, enemyId] = p2.getCardsInZone("battleArea");
 
-    expect(engine.getG().exhausted[enemyId!]).toBeFalsy();
+    expect(p2.isExhausted(enemyId!)).toBe(false);
 
     expectSuccess(p1.enterBattle(hambrabiId, battleTargetId!));
 
     // unitCount gate fails (only 1 other Titans Unit), so the rest directive
     // never fires — the candidate stays active.
-    expect(engine.getG().exhausted[enemyId!]).toBeFalsy();
-    expect(engine.getPendingChoice()).toBeFalsy();
+    expect(p2.isExhausted(enemyId!)).toBe(false);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
   });
 });

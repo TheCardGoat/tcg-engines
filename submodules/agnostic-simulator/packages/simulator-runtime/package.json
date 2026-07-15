@@ -51,6 +51,7 @@
     "@tcg/typescript-config": "link:../typescript-config",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
+    "@typescript/native": "catalog:",
     "react": "catalog:",
     "vitest": "catalog:"
   },

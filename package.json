@@ -14,7 +14,9 @@
     "ci:lorcana": "pnpm --dir submodules/lorcana run ci-check-full",
     "ci:one-piece:check": "pnpm --dir submodules/one-piece run ci-check",
     "ci:one-piece": "pnpm --dir submodules/one-piece run ci-check-full",
-    "ci:public": "pnpm run ci:cyberpunk:check && pnpm run ci:gundam:check && pnpm run ci:lorcana:check && pnpm run ci:one-piece:check && pnpm run ci:agnostic:check"
+    "ci:star-wars-unlimited:check": "pnpm --dir submodules/star-wars-unlimited run ci-check",
+    "ci:star-wars-unlimited": "pnpm --dir submodules/star-wars-unlimited run ci-check-full",
+    "ci:public": "pnpm run ci:cyberpunk:check && pnpm run ci:gundam:check && pnpm run ci:lorcana:check && pnpm run ci:one-piece:check && pnpm run ci:star-wars-unlimited:check && pnpm run ci:agnostic:check"
   },
   "volta": {
     "node": "24.12.0",

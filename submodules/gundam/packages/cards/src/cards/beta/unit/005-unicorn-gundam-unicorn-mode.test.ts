@@ -1,47 +1,79 @@
-import { describe, it, expect } from "vite-plus/test";
-import { GundamTestEngine, PLAYER_ONE, createMockUnit } from "@tcg/gundam-engine";
+import { describe, expect, it } from "vite-plus/test";
+import {
+  GundamTestEngine,
+  PLAYER_ONE,
+  PLAYER_TWO,
+  activeResources,
+  createMockPilot,
+  createMockUnit,
+  expectSuccess,
+} from "@tcg/gundam-engine";
 import { betaUnicornGundamUnicornMode005 } from "./005-unicorn-gundam-unicorn-mode.ts";
 
-describe("Unicorn Gundam (Unicorn Mode) (GD01-005)", () => {
-  // Card data encodes only the `discard 1` directive for this effect
-  // (the printed "return paired pilot" clause is not structured yet —
-  // sibling card-data agent owns that expansion). The effect is a
-  // `destroyed` trigger gated by `duringPair`.
-  it("【During Pair】【Destroyed】 discards 1 when destroyed while paired", () => {
-    const filler = createMockUnit({ ap: 1, hp: 1 });
-    const engine = GundamTestEngine.create(
-      { play: [betaUnicornGundamUnicornMode005], hand: [filler] },
-      {},
-    );
+function destroyUnicornAfterPairing(pilotName: string) {
+  const pilot = createMockPilot({ name: pilotName, level: 1, cost: 1 });
+  const keep = createMockUnit({ name: "Keep" });
+  const discard = createMockUnit({ name: "Discard" });
+  const attacker = createMockUnit({ ap: 5, hp: 10 });
+  const transitionDefender = createMockUnit({ ap: 0, hp: 10 });
+  const engine = GundamTestEngine.create(
+    {
+      hand: [pilot, keep, discard],
+      play: [betaUnicornGundamUnicornMode005],
+      resourceArea: activeResources(5),
+      deck: 5,
+    },
+    { play: [attacker, { card: transitionDefender, exhausted: true }], deck: 5 },
+  );
+  const p1 = engine.asPlayer(PLAYER_ONE);
+  const p2 = engine.asPlayer(PLAYER_TWO);
+  const unitId = p1.getCardsInZone("battleArea")[0]!;
+  const [attackerId, transitionDefenderId] = p2.getCardsInZone("battleArea");
+  const [pilotId, keepId, discardId] = p1.getHand();
+
+  expectSuccess(p1.assignPilot(pilot, unitId));
+  expectSuccess(p1.enterBattle(unitId, transitionDefenderId!));
+  expectSuccess(p2.passBlock());
+  expectSuccess(p2.passBattleAction());
+  expectSuccess(p1.passBattleAction());
+  expectSuccess(p1.passPhase());
+  expectSuccess(p2.passActionStep());
+  expectSuccess(p1.passActionStep());
+  expectSuccess(p2.enterBattle(attackerId!, unitId));
+  expectSuccess(p1.passBlock());
+  expectSuccess(p1.passBattleAction());
+  expectSuccess(p2.passBattleAction());
+
+  return { engine, unitId, pilotId: pilotId!, keepId: keepId!, discardId: discardId! };
+}
+
+describe("Unicorn Gundam (Unicorn Mode) (GD01-005 Beta printing)", () => {
+  it("returns its linked Pilot before asking which visible hand card to discard", () => {
+    const { engine, unitId, pilotId, keepId, discardId } =
+      destroyUnicornAfterPairing("Banagher Links");
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const unicornId = p1.getCardsInZone("battleArea")[0]!;
 
-    // Pair a pilot without satisfying any linkCondition (duringPair only
-    // requires *something* paired, not a link match).
-    // biome-ignore lint/suspicious/noExplicitAny: test-only access
-    (engine.getG() as any).pilotAssignments[unicornId] = `pilot-for-${unicornId}`;
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([pilotId, keepId, discardId]),
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [discardId] }));
 
-    const handBefore = engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE });
-
-    engine.destroyUnit(unicornId);
-
-    expect(engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE })).toBe(handBefore - 1);
+    expect(p1.getCardZone(unitId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(pilotId)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getCardZone(keepId)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getCardZone(discardId)).toBe(`trash:${PLAYER_ONE}`);
   });
 
-  it("does NOT discard when destroyed while unpaired", () => {
-    const filler = createMockUnit({ ap: 1, hp: 1 });
-    const engine = GundamTestEngine.create(
-      { play: [betaUnicornGundamUnicornMode005], hand: [filler] },
-      {},
-    );
+  it("trashes a non-link Pilot without opening a discard choice", () => {
+    const { engine, pilotId, keepId, discardId } = destroyUnicornAfterPairing("Wrong Pilot");
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const unicornId = p1.getCardsInZone("battleArea")[0]!;
 
-    const handBefore = engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE });
-
-    engine.destroyUnit(unicornId);
-
-    // duringPair gate fails → discard not enqueued.
-    expect(engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE })).toBe(handBefore);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getCardZone(pilotId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(keepId)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getCardZone(discardId)).toBe(`hand:${PLAYER_ONE}`);
   });
 });

@@ -17,29 +17,11 @@ export default defineConfig({
     tasks: {
       "ci:check": {
         command: "pnpm exec turbo run check test --concurrency=1",
-        untrackedEnv: ["TURBO_TOKEN", "TURBO_TEAM", "TURBO_REMOTE_CACHE_SIGNATURE_KEY"],
-        input: [
-          { auto: true },
-          "!node_modules/.vite/task-cache/**",
-          "!**/node_modules/.vite-temp/**",
-          "!**/.turbo/**",
-          "!**/dist/**",
-          "!**/coverage/**",
-          "!**/*.tsbuildinfo",
-        ],
+        cache: false,
       },
       "ci:full": {
-        command: "pnpm exec turbo run check test build --concurrency=1",
-        untrackedEnv: ["TURBO_TOKEN", "TURBO_TEAM", "TURBO_REMOTE_CACHE_SIGNATURE_KEY"],
-        input: [
-          { auto: true },
-          "!node_modules/.vite/task-cache/**",
-          "!**/node_modules/.vite-temp/**",
-          "!**/.turbo/**",
-          "!**/dist/**",
-          "!**/coverage/**",
-          "!**/*.tsbuildinfo",
-        ],
+        command: "vp run ci:check && pnpm exec turbo run build --concurrency=1",
+        cache: false,
       },
       "full-ready": {
         command: "vp fmt && vp lint && pnpm exec turbo run test build",

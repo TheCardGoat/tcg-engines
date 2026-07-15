@@ -10,7 +10,7 @@ export const unitEvelynParkerSchemingSirenBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitEvelynParkerSchemingSiren",
   label: "Evelyn Parker - spent unit draws when rival steals a gig",
   references: [
-    "packages/engine/src/cards/alpha/units/evelyn-parker-scheming-siren.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/evelyn-parker-scheming-siren.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

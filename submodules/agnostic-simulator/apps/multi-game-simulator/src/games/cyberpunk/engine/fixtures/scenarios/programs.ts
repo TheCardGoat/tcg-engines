@@ -12,11 +12,20 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.welcomeToNightCityRetailCorporateSurveillance],
+          hand: [
+            c.welcomeToNightCityRetailCorporateSurveillance,
+            c.welcomeToNightCityRetailCorporateSurveillance,
+            c.welcomeToNightCityRetailAllIsLost,
+            c.welcomeToNightCityRetailIndustrialAssembly,
+            c.welcomeToNightCityRetailOverTheEdge,
+          ],
           field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
-          gigArea: [{ dieType: "d4", faceValue: 2 }],
+          gigArea: [
+            { dieType: "d4", faceValue: 2 },
+            { dieType: "d20", faceValue: 8 },
+          ],
         },
         {
           field: [
@@ -26,7 +35,10 @@ export const programScenarios: Scenario[] = [
           ],
           legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
-          gigArea: [{ dieType: "d6", faceValue: 3 }],
+          gigArea: [
+            { dieType: "d6", faceValue: 3 },
+            { dieType: "d20", faceValue: 7 },
+          ],
         },
         { seed: scenarioSeed("progCorporateSurveillance"), autoGainGig: false },
       ),
@@ -252,6 +264,36 @@ export const programScenarios: Scenario[] = [
           ],
         },
         { seed: scenarioSeed("progAfterpartyAtLizzies"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "progFoolOnTheHill",
+    group: "program-gig-manipulation",
+    label: "Fool on the Hill · rival reveal destination choice",
+    description:
+      "P1 holds Fool on the Hill with two known cards on top of deck. Rival chooses whether the revealed cards go to hand or trash; trashing them draws 2.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailFoolOnTheHill],
+          deck: [
+            c.welcomeToNightCityRetailFieldOperator,
+            c.welcomeToNightCityRetailDelamainCab,
+            c.welcomeToNightCityRetailCorpoSecurity,
+            c.welcomeToNightCityRetailSecondhandBombus,
+          ],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("progFoolOnTheHill"), preserveDeckOrder: true, autoGainGig: false },
       ),
   },
 
@@ -560,6 +602,94 @@ export const programScenarios: Scenario[] = [
           autoGainGig: false,
           preserveDeckOrder: true,
         },
+      ),
+  },
+  {
+    id: "progAllIsLostRetail",
+    group: "program-spend",
+    label: "All is Lost · trash 3 and recover Unit",
+    description:
+      "P1 holds All is Lost with an ordered top deck containing Units and non-Units so the trash-3 recovery choice is visible.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailAllIsLost],
+          deck: [
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailRebootOptics,
+            c.welcomeToNightCityRetailMantisBlades,
+            c.welcomeToNightCityRetailSwordwiseHuscle,
+          ],
+          field: [{ card: c.welcomeToNightCityRetailSecondhandBombus, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 2,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        {
+          seed: scenarioSeed("progAllIsLostRetail"),
+          autoGainGig: false,
+          preserveDeckOrder: true,
+        },
+      ),
+  },
+  {
+    id: "progOverTheEdgeRetail",
+    group: "program-spend",
+    label: "Over the Edge · friendly d20 power threshold",
+    description:
+      "P1 holds Over the Edge and controls a d20 showing 7. Field has Units above and below that power threshold for the defeat target picker.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailOverTheEdge],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 4,
+          gigArea: [{ dieType: "d20", faceValue: 7 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("progOverTheEdgeRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "progTakeControlRetail",
+    group: "program-spend",
+    label: "Take Control · Quick attacker mitigation",
+    description:
+      "P1 holds Take Control while rival has Vehicle/Drone-style attackers. Use this board to validate the quick play reaction, steals-one-fewer-Gig rule, and AI/Drone/Vehicle draw condition.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailTakeControl],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailDelamainCab, spent: false },
+            { card: c.welcomeToNightCityRetailEmergencyAtlus, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("progTakeControlRetail"), autoGainGig: false },
       ),
   },
 ];

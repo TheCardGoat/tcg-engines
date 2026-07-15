@@ -25,7 +25,7 @@ describe("Jacked-In Voodoo Boy", () => {
           {
             card: welcomeToNightCityRetailJackedInVoodooBoy,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         eddies: 2,
@@ -69,7 +69,7 @@ describe("Jacked-In Voodoo Boy", () => {
           {
             card: welcomeToNightCityRetailJackedInVoodooBoy,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         eddies: 5,
@@ -82,12 +82,7 @@ describe("Jacked-In Voodoo Boy", () => {
     expectNotAttackCandidate(engine, welcomeToNightCityRetailJackedInVoodooBoy, { as: P1 });
 
     engine.playCard(welcomeToNightCityRetailLizzyWizzyDelicateWeapon, { as: P1 });
-    engine.resolveEffectTarget(welcomeToNightCityRetailRebootOptics, {
-      as: P1,
-      allowPendingChoice: true,
-      reason: "Lizzy Wizzy still needs the chosen Program to be confirmed for free play",
-    });
-    engine.resolveCardToPlay(welcomeToNightCityRetailRebootOptics, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailRebootOptics, { as: P1 });
 
     expectAttackCandidate(engine, welcomeToNightCityRetailJackedInVoodooBoy, { as: P1 });
     expectAttackPair(
@@ -103,9 +98,7 @@ describe("Jacked-In Voodoo Boy", () => {
   it("does not carry a defensive QUICK Program into the defender's next turn", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
       },
       {
         hand: [welcomeToNightCityRetailRebootOptics],
@@ -113,7 +106,7 @@ describe("Jacked-In Voodoo Boy", () => {
           {
             card: welcomeToNightCityRetailJackedInVoodooBoy,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         gigArea: [{ dieType: "d4", faceValue: 1 }],

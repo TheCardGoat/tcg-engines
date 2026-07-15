@@ -3,6 +3,7 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
+  createMockBase,
   createMockUnit,
   expectFailure,
   expectSuccess,
@@ -10,8 +11,25 @@ import {
 import { gd04VDashGundam006 } from "./006-v-dash-gundam.ts";
 
 describe("V-Dash Gundam (GD04-006)", () => {
-  it("has its printed keyword effects", () => {
-    expect(gd04VDashGundam006.keywordEffects.map((effect) => effect.keyword)).toEqual(["Breach"]);
+  it("<Breach 3> deals 3 damage to the enemy Base after destroying a Unit in battle", () => {
+    const defender = createMockUnit({ ap: 0, hp: 1 });
+    const base = createMockBase({ hp: 5 });
+    const engine = GundamTestEngine.create(
+      { play: [gd04VDashGundam006] },
+      { play: [{ card: defender, exhausted: true }], baseSection: [base] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const vDashId = p1.getCardsInZone("battleArea")[0]!;
+    const defenderId = p2.getCardsInZone("battleArea")[0]!;
+    const baseId = p2.getCardsInZone("baseSection")[0]!;
+
+    expectSuccess(p1.enterBattle(vDashId, defenderId));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getDamage(baseId)).toBe(3);
   });
 
   it("【Activate･Main】 rests another friendly (League Militaire) Unit as cost and rests an enemy Unit with 4 or less HP", () => {
@@ -25,9 +43,9 @@ describe("V-Dash Gundam (GD04-006)", () => {
 
     expectSuccess(p1.activateAbility(vDashId!, 0, { targets: [enemyId!] }));
 
-    expect(engine.getG().exhausted[allyId!]).toBe(true);
-    expect(engine.getG().exhausted[enemyId!]).toBe(true);
-    expect(engine.getG().exhausted[vDashId!] ?? false).toBe(false);
+    expect(p1.isExhausted(allyId!)).toBe(true);
+    expect(p2.isExhausted(enemyId!)).toBe(true);
+    expect(p1.isExhausted(vDashId!)).toBe(false);
   });
 
   it("cannot activate without another active friendly (League Militaire) Unit to rest for cost", () => {

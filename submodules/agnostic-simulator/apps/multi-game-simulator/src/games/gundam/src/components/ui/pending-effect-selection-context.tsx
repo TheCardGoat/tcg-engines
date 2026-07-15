@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import type { ReactNode } from "react";
 
 import { protocolTargetSelection, useInteractionView } from "../../game/index.ts";
+import { assignInteractionTargets } from "../../game/selectors/interactionTargetAssignment.ts";
 
 export interface PendingEffectSelectionContextValue {
   readonly activeEffectId?: string;
@@ -29,6 +30,18 @@ const PendingEffectSelectionContext = createContext<PendingEffectSelectionContex
 export function PendingEffectSelectionProvider({ children }: { readonly children: ReactNode }) {
   const interactionView = useInteractionView();
   const selection = protocolTargetSelection(interactionView);
+  const value = usePendingEffectSelectionModel(selection);
+
+  return (
+    <PendingEffectSelectionContext.Provider value={value}>
+      {children}
+    </PendingEffectSelectionContext.Provider>
+  );
+}
+
+export function usePendingEffectSelectionModel(
+  selection: ReturnType<typeof protocolTargetSelection>,
+): PendingEffectSelectionContextValue {
   const [selectedTargetIds, setSelectedTargetIds] = useState<readonly string[]>([]);
 
   const activeEffectId = selection?.pendingEffectId;
@@ -59,7 +72,11 @@ export function PendingEffectSelectionProvider({ children }: { readonly children
       if (!legalTargetSet.has(cardId)) return;
 
       setSelectedTargetIds((current) => {
-        if (maxTargets === 1) {
+        if (
+          selection.targetGroups.length === 1 &&
+          selection.targetGroups[0]?.inputId === "targets" &&
+          maxTargets === 1
+        ) {
           return current[0] === cardId ? [] : [cardId];
         }
 
@@ -67,11 +84,8 @@ export function PendingEffectSelectionProvider({ children }: { readonly children
           return current.filter((id) => id !== cardId);
         }
 
-        if (current.length >= maxTargets) {
-          return current;
-        }
-
-        return [...current, cardId];
+        const next = [...current, cardId];
+        return isWithinTargetMaximums(selection, next) ? next : current;
       });
     },
     [legalTargetSet, maxTargets, selection],
@@ -89,10 +103,7 @@ export function PendingEffectSelectionProvider({ children }: { readonly children
     [selectedLegalTargetIds],
   );
 
-  const isComplete =
-    Boolean(selection) &&
-    selectedLegalTargetIds.length >= minTargets &&
-    selectedLegalTargetIds.length <= maxTargets;
+  const isComplete = isTargetSelectionComplete(selection, selectedLegalTargetIds);
 
   const canSkip = Boolean(selection && minTargets === 0);
 
@@ -117,13 +128,35 @@ export function PendingEffectSelectionProvider({ children }: { readonly children
     ],
   );
 
-  return (
-    <PendingEffectSelectionContext.Provider value={value}>
-      {children}
-    </PendingEffectSelectionContext.Provider>
-  );
+  return value;
 }
 
 export function usePendingEffectSelection(): PendingEffectSelectionContextValue {
   return useContext(PendingEffectSelectionContext);
+}
+
+function isWithinTargetMaximums(
+  selection: NonNullable<ReturnType<typeof protocolTargetSelection>>,
+  selectedTargetIds: readonly string[],
+): boolean {
+  if (selectedTargetIds.length > selection.maxTargets) return false;
+  return Boolean(
+    assignInteractionTargets(selectedTargetIds, selection.targetGroups, {
+      requireMinimums: false,
+    }),
+  );
+}
+
+function isTargetSelectionComplete(
+  selection: ReturnType<typeof protocolTargetSelection>,
+  selectedTargetIds: readonly string[],
+): boolean {
+  if (!selection) return false;
+  if (
+    selectedTargetIds.length < selection.minTargets ||
+    selectedTargetIds.length > selection.maxTargets
+  ) {
+    return false;
+  }
+  return Boolean(assignInteractionTargets(selectedTargetIds, selection.targetGroups));
 }

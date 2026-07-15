@@ -57,13 +57,20 @@ describe("Orga, Crot, and Shani (GD02-087)", () => {
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
+    const [blueUnitId, pilotId] = p1.getHand();
     const [blockerId] = p2.getCardsInZone("battleArea");
 
-    expectSuccess(p1.deployUnit(blueUnit));
-    expectSuccess(p1.assignPilot(gd02OrgaCrotAndShani087, blueUnit));
+    expectSuccess(p1.deployUnit(blueUnitId!));
+    expectSuccess(p1.assignPilot(pilotId!, blueUnitId!));
+
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("targetSelection");
+    if (choice?.kind !== "targetSelection") return;
+    expect(choice.legalTargetIds).toEqual([blockerId]);
+    expectSuccess(p1.resolveEffect({ targets: [blockerId!] }));
 
     // The enemy Blocker should now be rested.
-    expect(engine.getG().exhausted[blockerId!]).toBe(true);
+    expect(p2.isExhausted(blockerId!)).toBe(true);
   });
 
   it("【When Linked】on non-blue Unit → does nothing", () => {

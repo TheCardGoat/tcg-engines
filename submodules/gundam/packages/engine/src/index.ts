@@ -105,6 +105,14 @@ export {
   rankByStatTotal,
 } from "./automation/value-ranked-strategy.ts";
 export { tempoStrategy } from "./automation/tempo-strategy.ts";
+export {
+  DEFAULT_GUNDAM_AUTOMATED_ACTION_STRATEGY_ID,
+  GUNDAM_AUTOMATED_ACTION_STRATEGIES,
+  getGundamAutomatedActionStrategyOption,
+  getSafeGundamAutomatedActionStrategyOption,
+  type GundamAutomatedActionStrategyId,
+  type GundamAutomatedActionStrategyOption,
+} from "./automation/strategy-registry.ts";
 export { createDeadlockDetector, fingerprint } from "./automation/deadlock.ts";
 export type { DeadlockDetector } from "./automation/deadlock.ts";
 export type {
@@ -136,6 +144,7 @@ export type {
   MoveValidationResult,
 } from "./types/move-types.ts";
 export type { CommandErrorCode } from "./types/command.ts";
+export { buildTokenUnitDefinition } from "./gundam/effects/token-definition.ts";
 export { GUNDAM_ENGINE_RUNTIME } from "./runtime-fingerprint.ts";
 export type { GundamEngineRuntimeFingerprint } from "./runtime-fingerprint.ts";
 export type { GundamMoveName } from "./gundam/moves/move-name.ts";
@@ -151,6 +160,7 @@ export { assertNever } from "./utils/assert-never.ts";
 // has to dig into `@tcg/gundam-engine/automation/...` for the helpers.
 export type {
   MoveBinding,
+  SelectModeBinding,
   SelectTargetBinding,
   SelectTargetStep,
 } from "./automation/move-binding.ts";
@@ -158,6 +168,7 @@ export {
   MOVE_BINDINGS,
   getMoveBinding,
   seedPrimaryCardInput,
+  selectModeInputBinding,
   selectTargetInputBinding,
 } from "./automation/move-binding.ts";
 

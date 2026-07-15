@@ -1,0 +1,353 @@
+.root {
+  --mobile-portrait-rail-h: clamp(44px, 6dvh, 48px);
+  --mobile-portrait-top-rail-h: var(--mobile-portrait-rail-h);
+  --mobile-portrait-bottom-rail-h: var(--mobile-portrait-rail-h);
+  --mobile-portrait-opponent-hand-h: clamp(38px, 7dvh, 58px);
+  --mobile-portrait-hand-h: clamp(92px, 15dvh, 128px);
+  --mobile-portrait-ledger-h: clamp(112px, 17dvh, 144px);
+  --mobile-portrait-border: rgb(245 230 66 / 42%);
+  --mobile-portrait-surface: rgb(7 9 12 / 96%);
+  --mobile-portrait-surface-soft: rgb(9 13 18 / 92%);
+  --mobile-portrait-text: rgb(244 249 235 / 94%);
+  --mobile-portrait-muted: rgb(207 232 246 / 68%);
+  --mobile-portrait-accent: rgb(245 230 66 / 88%);
+  --mobile-portrait-rival: rgb(255 61 138 / 84%);
+  --mobile-portrait-friendly: rgb(74 217 255 / 88%);
+
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-rows:
+    var(--mobile-portrait-top-rail-h)
+    var(--mobile-portrait-opponent-hand-h)
+    minmax(0, 1fr)
+    var(--mobile-portrait-ledger-h)
+    minmax(0, 1fr)
+    var(--mobile-portrait-hand-h)
+    var(--mobile-portrait-bottom-rail-h);
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  touch-action: manipulation;
+  background: var(--mobile-portrait-surface);
+  color: var(--mobile-portrait-text);
+}
+
+.root[data-zone-summaries="true"] {
+  grid-template-rows:
+    var(--mobile-portrait-top-rail-h)
+    var(--mobile-portrait-opponent-hand-h)
+    var(--mobile-zone-summary-bar-h, 24px)
+    minmax(0, 1fr)
+    var(--mobile-portrait-ledger-h)
+    minmax(0, 1fr)
+    var(--mobile-zone-summary-bar-h, 24px)
+    var(--mobile-portrait-hand-h)
+    var(--mobile-portrait-bottom-rail-h);
+}
+
+.topRail,
+.opponentHand,
+.opponentZoneSummary,
+.opponentBattlefield,
+.ledger,
+.playerBattlefield,
+.playerZoneSummary,
+.playerHand,
+.bottomRail {
+  min-width: 0;
+  min-height: 0;
+}
+
+.topRail {
+  grid-row: 1;
+}
+
+.opponentHand {
+  grid-row: 2;
+}
+
+.opponentBattlefield {
+  grid-row: 3;
+}
+
+.opponentZoneSummary {
+  display: none;
+}
+
+.ledger {
+  grid-row: 4;
+}
+
+.playerBattlefield {
+  grid-row: 5;
+}
+
+.playerHand {
+  grid-row: 6;
+}
+
+.bottomRail {
+  grid-row: 7;
+}
+
+.root[data-zone-summaries="true"] .opponentZoneSummary {
+  display: block;
+  grid-row: 3;
+}
+
+.root[data-zone-summaries="true"] .opponentBattlefield {
+  grid-row: 4;
+}
+
+.root[data-zone-summaries="true"] .ledger {
+  grid-row: 5;
+}
+
+.root[data-zone-summaries="true"] .playerBattlefield {
+  grid-row: 6;
+}
+
+.playerZoneSummary {
+  display: none;
+}
+
+.root[data-zone-summaries="true"] .playerZoneSummary {
+  display: block;
+  grid-row: 7;
+}
+
+.root[data-zone-summaries="true"] .playerHand {
+  grid-row: 8;
+}
+
+.root[data-zone-summaries="true"] .bottomRail {
+  grid-row: 9;
+}
+
+.rail {
+  display: grid;
+  grid-template-columns: minmax(92px, 0.9fr) minmax(74px, auto) minmax(96px, 1fr);
+  align-items: stretch;
+  min-width: 0;
+  min-height: 0;
+  border-block: 1px solid var(--mobile-portrait-border);
+  background:
+    linear-gradient(90deg, rgb(255 61 138 / 8%), transparent 36%),
+    linear-gradient(270deg, rgb(74 217 255 / 9%), transparent 38%), var(--mobile-portrait-surface);
+}
+
+.rail[data-side="player"] {
+  border-top-color: rgb(74 217 255 / 36%);
+}
+
+.rail[data-side="opponent"] {
+  border-bottom-color: rgb(255 61 138 / 32%);
+}
+
+.railLeft,
+.railCenter,
+.railRight {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  min-height: 0;
+}
+
+.railLeft {
+  justify-content: flex-start;
+}
+
+.railCenter {
+  justify-content: center;
+}
+
+.railRight {
+  justify-content: flex-end;
+}
+
+.lane {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.lane[data-priority="true"] {
+  background:
+    linear-gradient(
+      90deg,
+      rgb(var(--mobile-portrait-priority-rgb, 74 217 255) / 8%),
+      transparent 68%
+    ),
+    var(--mobile-portrait-surface-soft);
+}
+
+.laneScrollCue {
+  appearance: none;
+  position: absolute;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  min-height: 56px;
+  padding: 6px 12px;
+  border: 1px solid rgb(var(--mobile-portrait-cue-rgb, 245 230 66) / 70%);
+  border-radius: 4px;
+  background:
+    linear-gradient(90deg, rgb(var(--mobile-portrait-cue-rgb, 245 230 66) / 16%), transparent),
+    rgb(7 9 12 / 92%);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 74%),
+    0 0 16px rgb(var(--mobile-portrait-cue-rgb, 245 230 66) / 22%);
+  color: var(--mobile-portrait-accent);
+  font: inherit;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  pointer-events: auto;
+}
+
+.lane[data-scroll-axis="vertical"] .laneScrollCue {
+  left: 50%;
+  min-width: 72px;
+  min-height: 32px;
+  padding: 4px 10px;
+  font-size: 10px;
+  transform: translateX(-50%);
+}
+
+.laneScrollCueTop {
+  top: 4px;
+}
+
+.laneScrollCueBottom {
+  bottom: 4px;
+}
+
+.laneScrollCueStart,
+.laneScrollCueEnd {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.laneScrollCueStart {
+  left: 6px;
+}
+
+.laneScrollCueEnd {
+  right: 6px;
+}
+
+.handDock {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  overflow: visible;
+  border-top: 1px solid rgb(74 217 255 / 28%);
+  background:
+    linear-gradient(90deg, rgb(74 217 255 / 9%), transparent 40%),
+    var(--mobile-portrait-surface-soft);
+}
+
+.mirrorLedger {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(74px, 0.52fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 4px;
+  min-width: 0;
+  min-height: 0;
+  padding: 4px;
+  border-block: 1px solid var(--mobile-portrait-border);
+  background:
+    linear-gradient(90deg, rgb(255 61 138 / 11%), transparent 34%),
+    linear-gradient(270deg, rgb(74 217 255 / 12%), transparent 34%),
+    linear-gradient(180deg, rgb(245 230 66 / 5%), transparent 46%), var(--mobile-portrait-surface);
+}
+
+.mirrorLedger[data-has-center="false"] {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.mirrorLedgerSide,
+.mirrorLedgerCenter {
+  min-width: 0;
+  min-height: 0;
+}
+
+.mirrorLedgerSide {
+  display: grid;
+  align-content: stretch;
+}
+
+.mirrorLedgerCenter {
+  display: grid;
+  place-items: center;
+}
+
+.zonePopover {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.zonePopoverButton {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  min-height: 28px;
+  padding: 4px 8px;
+  border: 1px solid rgb(245 230 66 / 42%);
+  border-radius: 4px;
+  background: rgb(7 9 12 / 72%);
+  color: var(--mobile-portrait-accent);
+  font: inherit;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.zonePopoverButton[aria-expanded="true"] {
+  border-color: rgb(245 230 66 / 78%);
+  background: rgb(245 230 66 / 12%);
+}
+
+.zonePopoverPanel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 100;
+  width: min(240px, 74vw);
+  max-height: min(340px, 70dvh);
+  overflow: auto;
+  border: 1px solid rgb(245 230 66 / 44%);
+  border-radius: 6px;
+  background: rgb(5 8 13 / 98%);
+  color: var(--mobile-portrait-text);
+  box-shadow: 0 18px 42px rgb(0 0 0 / 48%);
+}
+
+.zonePopoverPanel[data-placement="bottom-start"] {
+  right: auto;
+  left: 0;
+}
+
+.zonePopoverPanel[data-placement="top-end"],
+.zonePopoverPanel[data-placement="top-start"] {
+  top: auto;
+  bottom: calc(100% + 6px);
+}
+
+.zonePopoverPanel[data-placement="top-start"] {
+  right: auto;
+  left: 0;
+}

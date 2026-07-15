@@ -14,9 +14,9 @@ describe("Wing Gundam (Bird Mode) (ST02-002)", () => {
 
     expectSuccess(p1.deployUnit(st02WingGundamBirdMode002));
 
-    // `placeResource` moves the source card into the resource area; the
-    // `resourceType: "EX"` field doesn't conjure a new card, it just tags
-    // the placement mode. Net result: resourceArea gains one entry.
-    expect(p1.getCardsInZone("resourceArea").length).toBe(resourcesBefore + 1);
+    const resources = p1.getCardsInZone("resourceArea");
+    expect(resources).toHaveLength(resourcesBefore + 1);
+    const exResourceId = resources.at(-1)!;
+    expect(p1.isExhausted(exResourceId)).toBe(false);
   });
 });

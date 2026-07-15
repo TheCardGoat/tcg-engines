@@ -10,7 +10,7 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const gearSandevistanBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "gearSandevistan",
   label: "Sandevistan - played unit can attack spent units",
-  references: ["packages/engine/src/cards/alpha/gear/sandevistan.test.ts"],
+  references: ["packages/engine/src/cards/welcometonightcityretail/gear/sandevistan.test.ts"],
   async run(pom) {
     const unitInHand = await pom.getCardInZoneByDefinitionId(
       "hand",

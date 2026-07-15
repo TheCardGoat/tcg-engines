@@ -4,7 +4,6 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  asPlayerId,
   createMockUnit,
   expectFailure,
   expectSuccess,
@@ -26,14 +25,12 @@ describe("Gundam Sandrock Custom (GD03-025)", () => {
         resourceArea: activeResources(6),
       },
       { play: [attacker] },
+      { initialActivePlayer: PLAYER_TWO },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const [, maganacId, otherTargetId] = p1.getCardsInZone("battleArea");
     const attackerId = p2.getCardsInZone("battleArea")[0]!;
-    engine.getState().ctx.status.activePlayer = asPlayerId(PLAYER_TWO);
-    engine.getState().ctx.status.turnPlayer = asPlayerId(PLAYER_TWO);
-
     return {
       p2,
       maganacId: maganacId!,

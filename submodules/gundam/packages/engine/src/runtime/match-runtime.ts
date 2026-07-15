@@ -56,6 +56,7 @@ import { createRandomAPI } from "./random.ts";
 
 import type { GundamBoardView, GundamG, PendingChoicePrompt } from "../gundam/types.ts";
 import { projectGundamBoardView } from "../gundam/projection/project-board.ts";
+import { getEffectiveKeywordEffects } from "../gundam/rules/derived-state.ts";
 import { gundamZones } from "../gundam/zones.ts";
 import { gundamFlow } from "../gundam/flow.ts";
 import { getGundamMoveDefinition, isGundamMoveName } from "../gundam/moves/move-name.ts";
@@ -437,11 +438,32 @@ export class MatchRuntime {
   // ── View ───────────────────────────────────────────────────────────────
 
   getFilteredView(roleCtx: ViewRoleContext): FilteredMatchView<GundamG> {
-    return filterMatchView(this.state, roleCtx, gundamZones, {
+    const view = filterMatchView(this.state, roleCtx, gundamZones, {
       getDefinitionId: (instanceId: string) =>
         this.staticResources.cardsMaps.instances.get(instanceId)?.definitionId,
       getDefinition: (definitionId: string) => this.staticResources.getDefinition(definitionId),
     });
+    const framework = this.buildFrameworkReadAPI(this.state as Draft<MatchState<GundamG>>);
+
+    // `FilteredCardView.meta` is deliberately game-agnostic and extensible.
+    // Project Gundam's structured effective keywords there so generic live
+    // transports carry the data without teaching shared protocols Gundam nouns.
+    for (const zone of Object.values(view.zones.zones)) {
+      for (const card of zone.cards) {
+        if (card.definition?.type !== "unit") continue;
+        card.meta = {
+          ...card.meta,
+          effectiveKeywordEffects: getEffectiveKeywordEffects(
+            card.instanceId,
+            this.state.G,
+            framework.cards,
+            framework,
+          ),
+        };
+      }
+    }
+
+    return view;
   }
 
   // ── Available moves ────────────────────────────────────────────────────

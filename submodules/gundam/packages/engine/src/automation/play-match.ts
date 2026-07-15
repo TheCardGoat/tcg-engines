@@ -45,6 +45,7 @@ import {
   takeAutomatedActionWithFallback,
   type TakeAutomatedActionWithFallbackOptions,
 } from "./planner.ts";
+import { createDeadlockDetector, fingerprint } from "./deadlock.ts";
 
 /** One step of a self-play match — useful for replay and trace UIs. */
 export interface PlayMatchAction {
@@ -55,7 +56,12 @@ export interface PlayMatchAction {
   readonly stateIdAfter: number;
 }
 
-export type PlayMatchTermination = "game-won" | "max-actions-exceeded" | "concede-failed";
+export type PlayMatchTermination =
+  | "game-won"
+  | "automation-concession"
+  | "repeated-state"
+  | "max-actions-exceeded"
+  | "concede-failed";
 
 export interface PlayMatchOutcome {
   readonly termination: PlayMatchTermination;
@@ -115,6 +121,7 @@ export function playMatch(
   const maxActions = options.maxActions ?? 1000;
   const traceOn = options.trace ?? true;
   const trace: PlayMatchAction[] = [];
+  const deadlockDetector = createDeadlockDetector();
 
   let actionCount = 0;
   let termination: PlayMatchTermination = "max-actions-exceeded";
@@ -124,6 +131,12 @@ export function playMatch(
 
     if (stateBefore.ctx.status.gameEnded) {
       termination = "game-won";
+      break;
+    }
+
+    deadlockDetector.recordState(fingerprint(stateBefore));
+    if (deadlockDetector.isDeadlocked()) {
+      termination = "repeated-state";
       break;
     }
 
@@ -163,6 +176,14 @@ export function playMatch(
     // it on the next pass.
     if (result.outcome === "game-ended") {
       termination = "game-won";
+      break;
+    }
+
+    if (
+      result.outcome === "candidate-failed-pass-failed-conceded" ||
+      result.outcome === "no-candidates-pass-failed-conceded"
+    ) {
+      termination = "automation-concession";
       break;
     }
 

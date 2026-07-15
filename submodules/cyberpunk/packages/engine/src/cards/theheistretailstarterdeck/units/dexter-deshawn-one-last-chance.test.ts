@@ -32,7 +32,7 @@ describe("Dexter DeShawn - One Last Chance", () => {
           {
             card: theHeistRetailStarterDeckDexterDeshawnOneLastChance,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
       },
@@ -60,7 +60,7 @@ describe("Dexter DeShawn - One Last Chance", () => {
           {
             card: theHeistRetailStarterDeckDexterDeshawnOneLastChance,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         gigArea: [

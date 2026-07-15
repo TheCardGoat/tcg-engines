@@ -10,7 +10,7 @@ import {
 export const progRebootOpticsBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "progRebootOptics",
   label: "Reboot Optics - friendly units on field",
-  references: ["packages/engine/src/cards/alpha/programs/reboot-optics.test.ts"],
+  references: ["packages/engine/src/cards/welcometonightcityretail/programs/reboot-optics.test.ts"],
   async run(pom) {
     const target = await pom.getCardInZoneByDefinitionId(
       "field",

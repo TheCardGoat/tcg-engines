@@ -63,21 +63,23 @@ export const betaChangWufei091: PilotCard = {
   effects: [
     {
       type: "triggered",
+      activation: { timing: ["burst"] },
+      directives: [{ action: { action: "addSelfToHand" } }],
+      sourceText: "【Burst】Add this card to your hand.",
+    },
+    {
+      type: "constant",
       activation: {
-        timing: ["burst"],
+        conditions: [
+          { type: "isTurn", whose: "friendly" },
+          { type: "selfHasKeyword", keyword: "Breach" },
+        ],
       },
       directives: [
         {
           action: {
-            action: "addSelfToHand",
-          },
-        },
-        {
-          action: {
             action: "preventDamage",
-            target: {
-              owner: "self",
-            },
+            target: { owner: "self" },
             damageType: "battle",
             unitFilter: {
               owner: "opponent",
@@ -88,7 +90,7 @@ export const betaChangWufei091: PilotCard = {
         },
       ],
       sourceText:
-        "【Burst】Add this card to your hand. During your turn, if this Unit has <Breach>, it can't receive battle damage from enemy Units with 3 or less AP.",
+        "During your turn, while this Unit has <Breach>, it can't receive battle damage from enemy Units with 3 or less AP.",
     },
   ] as CardEffect[],
   keywordEffects: [],

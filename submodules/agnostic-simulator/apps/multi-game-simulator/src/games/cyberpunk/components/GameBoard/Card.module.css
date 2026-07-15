@@ -13,6 +13,14 @@
     transform 120ms;
 }
 
+.stack[data-draggable="true"] {
+  touch-action: none;
+}
+
+.stack[data-draggable="true"][data-zone="p-hand"] {
+  touch-action: pan-x;
+}
+
 .stack:active {
   cursor: grabbing;
 }
@@ -66,13 +74,15 @@
   box-shadow: 0 0 18px rgb(245 230 66 / 70%);
 }
 
-.selectable {
+.selectable,
+.activeTriggerSource {
   cursor: pointer;
   filter: brightness(1.28) saturate(1.22) contrast(1.06);
   z-index: 260;
 }
 
-.selectable .unit::after {
+.selectable .unit::after,
+.activeTriggerSource .unit::after {
   content: "";
   position: absolute;
   inset: -6px;
@@ -96,7 +106,8 @@
   animation: none;
 }
 
-.selectable[data-choice-type="chooseTrigger"]::before {
+.selectable[data-choice-type="chooseTrigger"]::before,
+.activeTriggerSource::before {
   content: "REACT";
   position: absolute;
   inset: -16px auto auto 50%;
@@ -117,7 +128,8 @@
   text-shadow: 0 0 10px rgb(245 230 66 / 64%);
 }
 
-.stack:has(.tappedUnit).selectable[data-choice-type="chooseTrigger"]::before {
+.stack:has(.tappedUnit).selectable[data-choice-type="chooseTrigger"]::before,
+.stack:has(.tappedUnit).activeTriggerSource::before {
   transform: translateX(-50%) rotate(90deg);
 }
 
@@ -429,16 +441,21 @@
 
 .gear.selectable {
   filter: brightness(1.22) saturate(1.18) contrast(1.06);
+  box-shadow:
+    0 0 0 2px rgb(245 230 66 / 88%),
+    0 0 18px rgb(245 230 66 / 78%),
+    0 0 36px rgb(245 230 66 / 38%);
 }
 
 .gear.selectable .gearHitTarget {
   right: -5px;
   bottom: -5px;
   left: -5px;
-  height: calc(26% + 10px);
+  top: -5px;
+  height: auto;
   border: 2px solid #f5e642;
   background:
-    linear-gradient(180deg, rgb(245 230 66 / 8%), rgb(245 230 66 / 22%)), rgb(7 9 12 / 18%);
+    linear-gradient(180deg, rgb(245 230 66 / 7%), rgb(245 230 66 / 18%)), rgb(7 9 12 / 10%);
   box-shadow:
     0 0 16px rgb(245 230 66 / 90%),
     0 0 34px rgb(245 230 66 / 42%),
@@ -447,7 +464,7 @@
 }
 
 .gear.selectable .gearHitTarget::after {
-  content: "TRASH";
+  content: attr(data-choice-label);
   position: absolute;
   right: 4px;
   bottom: 4px;
@@ -469,6 +486,7 @@
   right: 0;
   bottom: 0;
   left: 0;
+  top: 0;
   height: 26%;
   padding: 0;
   border: 0;
@@ -650,45 +668,6 @@
   color: #fff;
 }
 
-/* Inspect button: small magnifier in the bottom-left corner. Fixed sizing keeps
-   it visually consistent across hand, field, and legend strip cards. */
-.inspectBtn {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background: rgb(7 9 12 / 78%);
-  color: #f5e642;
-  border: 1px solid rgb(245 230 66 / 65%);
-  border-radius: 3px;
-  cursor: pointer;
-  padding: 0;
-  z-index: 150;
-  transition:
-    background 0.15s ease,
-    transform 0.12s ease,
-    border-color 0.15s ease;
-}
-
-.inspectBtn:hover {
-  background: rgb(245 230 66 / 22%);
-  border-color: #f5e642;
-}
-
-.inspectBtn:active {
-  transform: scale(0.92);
-}
-
-@media (width <= 768px) {
-  .inspectBtn {
-    display: flex;
-  }
-}
-
 .abilityRail {
   position: absolute;
   top: 6%;
@@ -794,7 +773,11 @@
   --ability-accent: #ff3d5e;
 }
 
-.abilityBadge[data-rule="playedThisTurnCantAttack"] {
+.abilityBadge[data-rule="mustAttack"] {
+  --ability-accent: #ff6a3d;
+}
+
+.abilityBadge[data-rule="lagCantAttack"] {
   --ability-accent: #ff9f1a;
 }
 
@@ -1145,4 +1128,31 @@
 
 .actionMenuItem:active {
   transform: translateY(1px);
+}
+
+@media (hover: none), (pointer: coarse), (max-width: 768px) {
+  .actionMenu {
+    padding: 8px;
+    min-width: 170px;
+    max-width: min(260px, calc(100vw - 18px));
+    gap: 6px;
+  }
+
+  .actionMenuItem {
+    min-height: 44px;
+    padding: 10px 12px;
+    gap: 12px;
+    border-radius: 4px;
+    touch-action: manipulation;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+  }
+
+  .actionMenuHotkey {
+    min-width: 22px;
+    height: 22px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 11px;
+  }
 }

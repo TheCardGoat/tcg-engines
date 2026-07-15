@@ -17,7 +17,11 @@
 }
 
 .panelEmbedded {
-  gap: 5px;
+  gap: 7px;
+}
+
+.panelEmbedded.panelCompact {
+  gap: 4px;
 }
 
 .section {
@@ -26,11 +30,17 @@
   gap: 6px;
 }
 
-.panelCompact .section {
+.panelCompact .section,
+.panelEmbedded.panelCompact .section {
   display: grid;
-  grid-template-columns: 62px minmax(0, 1fr);
+  grid-template-columns: 56px minmax(0, 1fr);
   gap: 6px;
   align-items: center;
+}
+
+.panelEmbedded.panelCompact .section {
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 4px;
 }
 
 .label {
@@ -46,6 +56,10 @@
 .panelCompact .label {
   font-size: 9px;
   letter-spacing: 0.11em;
+}
+
+.panelEmbedded .label {
+  opacity: 0.72;
 }
 
 .statusRow {
@@ -64,7 +78,12 @@
 .panelCompact .statusRow {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 6px;
-  padding: 7px 8px;
+  padding: 8px 9px;
+}
+
+.panelEmbedded.panelCompact .statusRow {
+  gap: 4px;
+  padding: 5px 7px;
 }
 
 .statusIcon {
@@ -86,6 +105,20 @@
   min-width: 0;
 }
 
+.statusKicker {
+  color: rgb(var(--simulator-cyan-rgb, 74 217 255) / 76%);
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.panelCompact .statusKicker {
+  display: none;
+}
+
 .statusName {
   color: rgb(255 249 168 / 92%);
   font-size: 12px;
@@ -97,6 +130,17 @@
   font-size: 11px;
 }
 
+.panelEmbedded.panelCompact .statusName {
+  color: rgb(255 249 168 / 94%);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.panelEmbedded.panelCompact .statusSub {
+  display: none;
+}
+
 .statusSub {
   font-size: 10px;
   opacity: 0.6;
@@ -104,6 +148,10 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.panelEmbedded.panelCompact .statusSub {
+  display: none;
 }
 
 /* Status pill */
@@ -117,7 +165,7 @@
 }
 
 .panelCompact .pill {
-  padding: 3px 6px;
+  padding: 3px 6px 2px;
   font-size: 8px;
 }
 
@@ -183,8 +231,24 @@
 }
 
 .panelCompact .btn {
-  padding: 7px 8px;
+  min-height: 32px;
+  padding: 6px 8px;
   font-size: 10px;
+}
+
+.panelEmbedded.panelCompact .actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  gap: 4px;
+  padding-top: 3px;
+  background:
+    linear-gradient(180deg, rgb(10 13 18 / 0%), rgb(10 13 18 / 92%) 38%), rgb(10 13 18 / 92%);
+}
+
+.panelEmbedded.panelCompact .btn {
+  min-height: 28px;
+  padding: 4px 7px;
 }
 
 .btn:hover:not(:disabled) {
@@ -248,9 +312,14 @@
 }
 
 .panelCompact .segmentBtn {
-  min-height: 36px;
-  padding: 6px 3px;
+  min-height: 32px;
+  padding: 5px 3px;
   font-size: 9px;
+}
+
+.panelEmbedded.panelCompact .segmentBtn {
+  min-height: 26px;
+  padding: 3px 2px;
 }
 
 .segmentBtn:last-child {
@@ -286,8 +355,19 @@
 }
 
 .panelCompact .select {
-  padding: 6px 7px;
+  min-height: 30px;
+  padding: 5px 7px;
   font-size: 10px;
+}
+
+.panelEmbedded.panelCompact .select {
+  min-height: 26px;
+  padding: 3px 6px;
+}
+
+.panelEmbedded.panelCompact .select,
+.panelEmbedded.panelCompact .segmented {
+  border-color: rgb(var(--simulator-accent-rgb, 245 230 66) / 16%);
 }
 
 .select:focus-visible {

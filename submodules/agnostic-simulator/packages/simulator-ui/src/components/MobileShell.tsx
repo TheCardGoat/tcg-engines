@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { cx } from "../class-names";
 import { useActiveLayout } from "../hooks/useActiveLayout";
@@ -44,6 +44,17 @@ export interface MobileShellProps {
    * Optional bottom bar rendered in mobile drawer-rail mode.
    */
   mobileBottomBar?: React.ReactNode;
+  /**
+   * Mobile tab navigation mode. Use `"none"` when the embedded board owns its
+   * own mobile controls and needs the full viewport for play.
+   */
+  mobileNavigation?: "tabs" | "none";
+  /**
+   * Optional viewport width where `"none"` navigation starts applying. This
+   * lets an embedded board keep shell tabs available until its own mobile
+   * replacement controls are active.
+   */
+  mobileNavigationBreakpoint?: number;
 }
 
 export function MobileShell({
@@ -58,15 +69,33 @@ export function MobileShell({
   railCollapsedContent,
   mobileTopBar,
   mobileBottomBar,
+  mobileNavigation = "tabs",
+  mobileNavigationBreakpoint,
 }: MobileShellProps) {
   const [activeTab, setActiveTab] = useState<"board" | "log" | "interactions">("board");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [railExpanded, setRailExpanded] = useState(defaultSidebarOpen);
   const activeLayout = useActiveLayout(layoutBreakpoint);
+  const activeNavigationLayout = useActiveLayout(mobileNavigationBreakpoint);
+  const hasInteractions = Boolean(interactions);
+  const mobileColumnCount = hasLog && hasInteractions ? 3 : hasLog || hasInteractions ? 2 : 1;
+  const effectiveMobileNavigation =
+    mobileNavigation === "none" && activeNavigationLayout === "mobile" ? "none" : "tabs";
+
+  useEffect(() => {
+    if (activeTab === "log" && !hasLog) {
+      setActiveTab("board");
+      return;
+    }
+    if (activeTab === "interactions" && !hasInteractions) {
+      setActiveTab("board");
+    }
+  }, [activeTab, hasInteractions, hasLog]);
 
   const tabButtonClass = (isActive: boolean) =>
     cx(
-      "flex flex-1 flex-col items-center gap-1 py-2.5 text-[10px] font-black uppercase tracking-wide transition-colors",
+      classes.mobileTabButton,
+      "flex flex-1 flex-col items-center gap-0.5 py-1.5 text-[9px] font-black uppercase tracking-wide transition-colors",
       isActive
         ? "text-[var(--game-accent)]"
         : "text-[var(--board-muted)] hover:text-[var(--board-text)]",
@@ -74,6 +103,7 @@ export function MobileShell({
 
   const tabIndicatorClass = (isActive: boolean) =>
     cx(
+      classes.mobileTabIndicator,
       "h-0.5 w-6 rounded-full transition-colors",
       isActive ? "bg-[var(--game-accent)]" : "bg-transparent",
     );
@@ -177,21 +207,56 @@ export function MobileShell({
     );
   }
 
+  if (effectiveMobileNavigation === "none") {
+    return (
+      <div
+        className={cx("mobile-shell-mobile flex min-h-0", classes.mobileTabbed)}
+        data-active-shell="true"
+        data-layout="tabbed"
+        data-mobile-navigation="none"
+      >
+        <div
+          className={cx(
+            "mobile-main-content min-h-0 flex-1 overflow-hidden rounded-lg border border-[var(--board-border)] bg-[var(--board-surface-soft)]",
+            classes.mobileMainContent,
+          )}
+        >
+          {board}
+        </div>
+      </div>
+    );
+  }
+
   // Mobile tabbed layout (default).
   return (
     <div
-      className="mobile-shell-mobile flex flex-col gap-3"
+      className={cx("mobile-shell-mobile flex flex-col gap-3", classes.mobileTabbed)}
       data-active-shell="true"
       data-layout="tabbed"
     >
-      <div className="mobile-main-content min-h-0 flex-1 overflow-hidden rounded-lg border border-[var(--board-border)] bg-[var(--board-surface-soft)]">
+      <div
+        className={cx(
+          "mobile-main-content min-h-0 flex-1 overflow-hidden rounded-lg border border-[var(--board-border)] bg-[var(--board-surface-soft)]",
+          classes.mobileMainContent,
+        )}
+      >
         {activeTab === "board" && board}
-        {activeTab === "interactions" && <div className="p-3">{interactions}</div>}
+        {activeTab === "interactions" && hasInteractions && (
+          <div className="p-3">{interactions}</div>
+        )}
         {activeTab === "log" && log && <div className="h-[60vh]">{log}</div>}
       </div>
 
       <nav
-        className="mobile-action-rail sticky bottom-0 z-20 grid grid-cols-3 rounded-t-xl border-t border-[var(--board-border)] bg-[var(--board-surface)]/95 backdrop-blur-md"
+        className={cx(
+          classes.mobileActionRail,
+          "mobile-action-rail sticky bottom-0 z-20 grid rounded-t-xl border-t border-[var(--board-border)] bg-[var(--board-surface)]/95 backdrop-blur-md",
+          mobileColumnCount === 3
+            ? "grid-cols-3"
+            : mobileColumnCount === 2
+              ? "grid-cols-2"
+              : "grid-cols-1",
+        )}
         aria-label="Mobile navigation"
       >
         <button
@@ -199,7 +264,7 @@ export function MobileShell({
           onClick={() => setActiveTab("board")}
         >
           <BoardIcon />
-          <span>Board</span>
+          <span className={classes.mobileTabLabel}>Board</span>
           <div className={tabIndicatorClass(activeTab === "board")}></div>
         </button>
 
@@ -209,19 +274,21 @@ export function MobileShell({
             onClick={() => setActiveTab("log")}
           >
             <LogIcon />
-            <span>Log</span>
+            <span className={classes.mobileTabLabel}>Log</span>
             <div className={tabIndicatorClass(activeTab === "log")}></div>
           </button>
         )}
 
-        <button
-          className={tabButtonClass(activeTab === "interactions")}
-          onClick={() => setActiveTab("interactions")}
-        >
-          <ActionsIcon />
-          <span>Actions</span>
-          <div className={tabIndicatorClass(activeTab === "interactions")}></div>
-        </button>
+        {hasInteractions && (
+          <button
+            className={tabButtonClass(activeTab === "interactions")}
+            onClick={() => setActiveTab("interactions")}
+          >
+            <ActionsIcon />
+            <span className={classes.mobileTabLabel}>Actions</span>
+            <div className={tabIndicatorClass(activeTab === "interactions")}></div>
+          </button>
+        )}
       </nav>
     </div>
   );

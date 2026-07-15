@@ -256,14 +256,14 @@ describe("playCard", () => {
       ]);
     });
 
-    it("stamps a played unit with playedThisTurn", () => {
+    it("stamps a played unit with hasLag", () => {
       const unit = createMockUnit({ cost: 0 });
       const engine = CyberpunkTestEngine.createWithFixture({ hand: [unit], eddies: 5 });
 
       engine.playCard(unit);
 
       const inst = engine.getCard(unit, "field", P1);
-      expect(inst.meta.playedThisTurn).toBe(true);
+      expect(inst.meta.hasLag).toBe(true);
     });
 
     it("sends a played program to trash (one-shot)", () => {

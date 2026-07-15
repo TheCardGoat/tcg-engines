@@ -1,10 +1,8 @@
 import {
   expandDeck,
-  greedyLegalStrategy,
-  passOnlyStrategy,
-  tempoStrategy,
-  valueRankedStrategy,
+  getSafeGundamAutomatedActionStrategyOption,
   type CandidateStrategy,
+  type GundamAutomatedActionStrategyId,
 } from "@tcg/gundam-engine";
 
 import {
@@ -20,13 +18,13 @@ import {
   type DevRuntime,
 } from "../dev-runtime.ts";
 
-export type BotStrategyId = "greedy-legal" | "pass-only" | "tempo" | "value-ranked";
+export type BotStrategyId = GundamAutomatedActionStrategyId;
 
 export const BOT_VS_BOT_STRATEGIES: Readonly<Record<BotStrategyId, CandidateStrategy>> = {
-  "greedy-legal": greedyLegalStrategy,
-  "pass-only": passOnlyStrategy,
-  tempo: tempoStrategy,
-  "value-ranked": valueRankedStrategy,
+  "greedy-legal": getSafeGundamAutomatedActionStrategyOption("greedy-legal").strategy,
+  "pass-only": getSafeGundamAutomatedActionStrategyOption("pass-only").strategy,
+  tempo: getSafeGundamAutomatedActionStrategyOption("tempo").strategy,
+  "value-ranked": getSafeGundamAutomatedActionStrategyOption("value-ranked").strategy,
 };
 
 export interface BotVsBotArgs {

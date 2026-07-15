@@ -70,7 +70,7 @@ export interface EffectCost {
   restFriendlyUnits?: number;
   /** Rest the first matching friendly card as an activation cost. */
   restTarget?: TargetFilter;
-  /** Exile the first matching card from your trash as an activation cost. */
+  /** Choose and exile matching cards from your trash as an activation cost. */
   exileFromTrash?: TargetFilter;
   /**
    * Destroy the card that owns this effect as part of paying the cost
@@ -181,6 +181,12 @@ export type AttributeFilter =
       value: string;
     }
   | {
+      /** Match a printed or currently effective keyword. */
+      attribute: "keyword";
+      comparison: "includes" | "excludes";
+      value: KeywordEffect;
+    }
+  | {
       /**
        * Match cards that carry an effect with the given activation timing,
        * e.g. "enemy Unit with a 【Destroyed】 effect".
@@ -239,6 +245,13 @@ export type AttributeFilter =
 
 export interface TargetFilter {
   owner: TargetOwner;
+  /**
+   * Restrict a runtime-synthesised interaction to this exact public set.
+   * Card definitions normally use printed attributes instead; queued
+   * replacement choices use IDs so the simulator can highlight each
+   * eligible board object, including duplicate card names.
+   */
+  instanceIds?: readonly string[];
   cardType?: CardType | CardType[];
   /** "Choose 1" → count: 1 | "Choose 1 to 2" → count: { min: 1, max: 2 } | "All" → count: "all" */
   count?: number | "all" | { min: number; max: number };
@@ -306,6 +319,8 @@ export interface TargetFilter {
 // Inline token definition found in card text:
 // [Gundam]((White Base Team)·AP3·HP3) → { name:"Gundam", traits:["white base team"], ap:3, hp:3 }
 
+export type UnitRestriction = "cannotSetActive" | "cannotPairPilot";
+
 export interface TokenSpec {
   name: string;
   traits: string[];
@@ -314,6 +329,8 @@ export interface TokenSpec {
   keywordEffects?: KeywordEffectEntry[];
   /** Static token text: "This Unit can't choose the enemy player as its attack target." */
   cantTargetPlayer?: boolean;
+  /** Static restrictions printed on the generated Unit token. */
+  restrictions?: UnitRestriction[];
   deployState: "active" | "rested";
   /**
    * Card number of the printed token card backing this token (e.g.
@@ -594,6 +611,25 @@ export type EffectCondition =
 
 export type EffectAction =
   | { action: "draw"; count: number }
+  | {
+      /** Draw first, then open a player choice over the updated hand. */
+      action: "drawThenDiscard";
+      drawCount: number;
+      discardCount: number;
+    }
+  | {
+      /**
+       * Resolve an action, evaluate an optional condition against the
+       * resulting public state, then enqueue a normal follow-up effect.
+       * This is the generic sequencing primitive for printed "Do A. Then,
+       * if ..., choose ..." text whose later targets are not legal until A
+       * has finished.
+       */
+      action: "resolveThenQueue";
+      first: EffectAction;
+      condition?: EffectCondition;
+      followUp: CardEffect;
+    }
   | { action: "drawIfTargetMatches"; count: number; target: TargetFilter }
   | { action: "drawAll"; count: number }
   | {
@@ -609,7 +645,7 @@ export type EffectAction =
        */
       action: "createDelayedTrigger";
       duration: EffectDuration;
-      eventType: "attackerDestroyedDefender" | "battleDamageDealtToUnit";
+      eventType: "attackerDestroyedDefender" | "battleDamageDealtToUnit" | "turnEnded";
       eventCardFilter: TargetFilter;
       eventSourceFilter?: TargetFilter;
       effect: CardEffect;
@@ -624,6 +660,21 @@ export type EffectAction =
       count: number;
       /** Optional hand-card restriction for text like "discard 1 red card". */
       filter?: TargetFilter;
+    }
+  | {
+      /** Discard cards explicitly selected through the pending-choice protocol. */
+      action: "discardChosen";
+      target: TargetFilter;
+    }
+  | {
+      /**
+       * Add the chosen trash card(s) to hand, then open a new discard
+       * choice over the updated hand. The follow-up is intentionally
+       * staged so a recovered card can itself be selected for discard.
+       */
+      action: "addFromTrashThenDiscard";
+      target: TargetFilter;
+      discardCount: number;
     }
   | { action: "millDeckThenDrawIfTrait"; count: number; trait: string; drawCount: number }
   | {
@@ -679,6 +730,17 @@ export type EffectAction =
   | { action: "dealDamage"; amount: number; target: TargetFilter }
   | {
       /**
+       * Deal one amount to the chosen target, or a replacement amount when
+       * that same target has the specified effective keyword.
+       */
+      action: "dealDamageByTargetKeyword";
+      amount: number;
+      keyword: KeywordEffect;
+      keywordAmount: number;
+      target: TargetFilter;
+    }
+  | {
+      /**
        * Deal damage, then draw only if a Unit damaged by this action is
        * destroyed by that damage.
        */
@@ -720,6 +782,8 @@ export type EffectAction =
        */
       action: "dealDamageByCount";
       countFilter: TargetFilter;
+      /** Use the immediately preceding action's affected IDs as the count. */
+      countPreviousResolvedTargets?: boolean;
       target: TargetFilter;
     }
   | {
@@ -738,7 +802,7 @@ export type EffectAction =
        * Deal damage to a target whose level is equal to or lower than the
        * Unit selected by an earlier directive in the same effect.
        */
-      action: "dealDamageByChosenUnitLevel";
+      action: "restThenDamageByChosenUnitLevel";
       amount: number;
       referenceTarget: TargetFilter;
       target: TargetFilter;
@@ -755,11 +819,20 @@ export type EffectAction =
       amount: number;
       sourceFilter?: TargetFilter;
     }
-  | { action: "rest"; target: TargetFilter }
+  | { action: "rest"; target: TargetFilter; allowSubstitution?: boolean }
+  | {
+      /** Typed marker consumed by the generic Base-rest substitution path. */
+      action: "substituteBaseRestWithSelf";
+    }
   | { action: "setActive"; target: TargetFilter }
   /** "Change the attack target of the battling enemy Unit to it." */
   | { action: "changeAttackTarget"; target: TargetFilter }
   | { action: "returnToHand"; target: TargetFilter }
+  /**
+   * Place a chosen public card into its owner's trash without treating the
+   * move as destruction. Used by rules management for field-limit excess.
+   */
+  | { action: "placeInTrash"; target: TargetFilter }
   /** Return the Pilot that was paired with the triggering Unit to its owner's hand. */
   | { action: "returnPairedPilotToHand" }
   | {
@@ -802,8 +875,8 @@ export type EffectAction =
   | { action: "addShieldToHand"; count: number }
   | { action: "addFromTrash"; target: TargetFilter }
   | {
+      /** Place the top normal Resource from the controller's resource deck. */
       action: "placeResource";
-      resourceType: "EX" | "normal";
       state: "active" | "rested";
     }
   | {
@@ -834,6 +907,13 @@ export type EffectAction =
        * the deck bottom.
        */
       remainingDestination?: "bottom" | "trash";
+      /**
+       * The effect, rather than the player, randomizes every non-tutored
+       * revealed card before placing that group on the deck bottom. Printed
+       * text uses this for "return the remaining cards randomly to the bottom".
+       * When true, clients must not ask the player to order those cards.
+       */
+      randomizeRemainingToBottom?: boolean;
       /** If present, player may reveal a matching card and add it to hand */
       tutorFilter?: TargetFilter;
       /** Where a tutored matching card goes. Defaults to hand. */
@@ -980,7 +1060,7 @@ export type EffectAction =
   | {
       action: "restrictUnit";
       target: TargetFilter;
-      restrictions: ("cannotSetActive" | "cannotPairPilot")[];
+      restrictions: UnitRestriction[];
       duration?: EffectDuration;
     }
   /**
@@ -1023,6 +1103,18 @@ export type EffectAction =
    *   - "While …, this card in your hand gets cost -1"
    */
   | { action: "costReduction"; amount: number; target: TargetFilter }
+  /**
+   * Exact play cost when this Pilot is paired with a Unit matching `unit`.
+   * Evaluated by the assign-pilot move after the human chooses the host.
+   */
+  | { action: "pairingCostOverride"; cost: number; unit: TargetFilter }
+  | {
+      /** Optional play substitution paid by destroying a public board target. */
+      action: "deployCostSubstitution";
+      level: number;
+      cost: number;
+      destroyTarget: TargetFilter;
+    }
   | {
       action: "costReductionByCount";
       amountPerMatch: number;

@@ -5,6 +5,7 @@ import {
   PLAYER_TWO,
   activeResources,
   createMockUnit,
+  expectFailure,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd03PalaceAthene009 } from "./009-palace-athene.ts";
@@ -33,18 +34,91 @@ describe("Palace Athene (GD03-009)", () => {
         targets: [titans1Id!, titans2Id!, enemyId],
       }),
     );
-    while (engine.getPendingChoice()) {
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
-    }
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
 
     // Both Titans cards left the trash via exile.
-    expect(engine.getState().ctx.zones.private.cardIndex[titans1Id!]?.zoneKey).not.toBe(
-      `trash:${PLAYER_ONE}`,
-    );
-    expect(engine.getState().ctx.zones.private.cardIndex[titans2Id!]?.zoneKey).not.toBe(
-      `trash:${PLAYER_ONE}`,
-    );
+    expect(p1.getCardsInZone("trash")).not.toContain(titans1Id);
+    expect(p1.getCardsInZone("trash")).not.toContain(titans2Id);
     // The Lv.3 enemy was rested via the dependent directive.
-    expect(engine.getG().exhausted[enemyId]).toBe(true);
+    expect(p2.isExhausted(enemyId)).toBe(true);
+  });
+
+  it("may decline to exile the Titans cards and leaves the enemy Unit active", () => {
+    const titans1 = createMockUnit({ traits: ["titans"] });
+    const titans2 = createMockUnit({ traits: ["titans"] });
+    const enemy = createMockUnit({ level: 4, hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd03PalaceAthene009],
+        trash: [titans1, titans2],
+        resourceArea: activeResources(5),
+      },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const trashIds = p1.getCardsInZone("trash");
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.deployUnit(gd03PalaceAthene009));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: false } }));
+
+    expect(p1.getCardsInZone("trash")).toEqual(trashIds);
+    expect(p2.isExhausted(enemyId)).toBe(false);
+  });
+
+  it("does not offer the Deploy effect with fewer than 2 Titans cards in trash", () => {
+    const loneTitans = createMockUnit({ traits: ["titans"] });
+    const enemy = createMockUnit({ level: 4, hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd03PalaceAthene009],
+        trash: [loneTitans],
+        resourceArea: activeResources(5),
+      },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const trashId = p1.getCardsInZone("trash")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.deployUnit(gd03PalaceAthene009));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getCardsInZone("trash")).toContain(trashId);
+    expect(p2.isExhausted(enemyId)).toBe(false);
+  });
+
+  it("does not allow a non-Titans trash card to pay either exile", () => {
+    const firstTitans = createMockUnit({ traits: ["titans"] });
+    const secondTitans = createMockUnit({ traits: ["titans"] });
+    const wrongTrait = createMockUnit({ traits: ["aeug"] });
+    const enemy = createMockUnit({ level: 4, hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd03PalaceAthene009],
+        trash: [firstTitans, secondTitans, wrongTrait],
+        resourceArea: activeResources(5),
+      },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [firstTitansId, , wrongTraitId] = p1.getCardsInZone("trash");
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectFailure(
+      p1.deployUnit(gd03PalaceAthene009, {
+        targets: [firstTitansId!, wrongTraitId!, enemyId],
+      }),
+      "INVALID_TARGET",
+    );
+
+    expect(p1.getHand()).toHaveLength(1);
+    expect(p1.getCardsInZone("trash")).toContain(wrongTraitId);
+    expect(p2.isExhausted(enemyId)).toBe(false);
   });
 });

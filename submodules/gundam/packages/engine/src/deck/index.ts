@@ -2,6 +2,7 @@ export {
   GUNDAM_MAIN_DECK_SIZE,
   GUNDAM_RESOURCE_DECK_SIZE,
   GUNDAM_MAX_COPIES_PER_CARD,
+  GUNDAM_MAX_DECK_COLORS,
   validateDeckList,
   isDeckListToken,
 } from "./deck-list.ts";

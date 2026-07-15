@@ -6,7 +6,9 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const legendRoycePsychoOnTheEdgeBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendRoycePsychoOnTheEdge",
   label: "Royce - Psycho on the Edge - gear-scaled GO SOLO",
-  references: ["packages/engine/src/cards/spoiler/legends/royce-psycho-on-the-edge.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/legends/royce-psycho-on-the-edge.test.ts",
+  ],
   async run(pom) {
     const royce = await pom.getCardInZoneByDefinitionId(
       "legendArea",

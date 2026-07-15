@@ -1,125 +1,110 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
+  activeResources,
+  createMockPilot,
   createMockUnit,
-  getEffectiveStats,
+  expectSuccess,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
 import { gd01Zno063 } from "./063-zno.ts";
+import {
+  passTurnThroughPublicMoves,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
+
+function completeBattle(
+  attacker: ReturnType<GundamTestEngine["asPlayer"]>,
+  defender: ReturnType<GundamTestEngine["asPlayer"]>,
+) {
+  expectSuccess(defender.passBlock());
+  expectSuccess(defender.passBattleAction());
+  expectSuccess(attacker.passBattleAction());
+}
 
 describe("ZnO (GD01-063)", () => {
-  // During your turn, while this Unit is battling an enemy Unit that is
-  // Lv.2 or lower, it gains <First Strike>.
-  //
-  // Three gates modelled in card data:
-  //   - `isTurn: friendly` — active-turn check on the grantKeyword effect.
-  //   - `isBattling.opponentMatches: { owner: "opponent", level<=2 }` on
-  //     the `owner: "self"` target — ZnO must be battling AND the other
-  //     combatant must be an enemy Unit at Lv.≤2.
-
-  it("positive: during friendly turn, while ZnO is battling Lv.≤2 enemy → gains <First Strike>", () => {
-    const enemy = createMockUnit({ name: "Enemy", ap: 2, hp: 3, level: 2 });
-    const engine = GundamTestEngine.create({ play: [gd01Zno063] }, { play: [enemy] });
-    const state = engine.getState();
-    state.ctx.status.activePlayer = PLAYER_ONE as PlayerId;
-
-    const rt = engine.getRuntime();
-    const uid = rt.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, gd01Zno063.cardNumber)!;
-    const enemyId = rt.getInstanceIdByDefinition(PLAYER_TWO as PlayerId, enemy.cardNumber)!;
-
-    engine.getG().turnMetadata.pendingCombat = {
-      stage: "attack-step",
-      attackerId: uid,
-      attackerPlayerId: PLAYER_ONE,
-      target: enemyId,
-    };
-
-    const fw = rt.getFrameworkReadAPI();
-    const stats = getEffectiveStats(uid, engine.getG(), fw.cards, fw);
-    expect(stats.keywords).toContain("FirstStrike");
-  });
-
-  it("narrow: battling Lv.>2 enemy → grant does NOT apply", () => {
-    const enemy = createMockUnit({ name: "Beefy Enemy", ap: 3, hp: 4, level: 4 });
-    const engine = GundamTestEngine.create({ play: [gd01Zno063] }, { play: [enemy] });
-    const state = engine.getState();
-    state.ctx.status.activePlayer = PLAYER_ONE as PlayerId;
-
-    const rt = engine.getRuntime();
-    const uid = rt.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, gd01Zno063.cardNumber)!;
-    const enemyId = rt.getInstanceIdByDefinition(PLAYER_TWO as PlayerId, enemy.cardNumber)!;
-
-    engine.getG().turnMetadata.pendingCombat = {
-      stage: "attack-step",
-      attackerId: uid,
-      attackerPlayerId: PLAYER_ONE,
-      target: enemyId,
-    };
-
-    const fw = rt.getFrameworkReadAPI();
-    const stats = getEffectiveStats(uid, engine.getG(), fw.cards, fw);
-    expect(stats.keywords).not.toContain("FirstStrike");
-  });
-
-  it("no active combat: during friendly turn → isBattling gate fails → no grant", () => {
-    const engine = GundamTestEngine.create({ play: [gd01Zno063] }, { deck: 5 });
-    const state = engine.getState();
-    state.ctx.status.activePlayer = PLAYER_ONE as PlayerId;
-    expect(engine.getG().turnMetadata.pendingCombat).toBeUndefined();
-
-    const rt = engine.getRuntime();
-    const uid = rt.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, gd01Zno063.cardNumber)!;
-    const fw = rt.getFrameworkReadAPI();
-    const stats = getEffectiveStats(uid, engine.getG(), fw.cards, fw);
-    expect(stats.keywords).not.toContain("FirstStrike");
-  });
-
-  it("negative: during opponent's turn → isTurn gate fails → no grant", () => {
-    const enemy = createMockUnit({ name: "Enemy", ap: 2, hp: 3 });
-    const engine = GundamTestEngine.create({ play: [gd01Zno063] }, { play: [enemy] });
-    const state = engine.getState();
-    state.ctx.status.activePlayer = PLAYER_TWO as PlayerId;
-
-    const rt = engine.getRuntime();
-    const uid = rt.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, gd01Zno063.cardNumber)!;
-    const enemyId = rt.getInstanceIdByDefinition(PLAYER_TWO as PlayerId, enemy.cardNumber)!;
-    // Even with ZnO in combat, the isTurn gate blocks.
-    engine.getG().turnMetadata.pendingCombat = {
-      stage: "attack-step",
-      attackerId: enemyId,
-      attackerPlayerId: PLAYER_TWO,
-      target: uid,
-    };
-
-    const fw = rt.getFrameworkReadAPI();
-    const stats = getEffectiveStats(uid, engine.getG(), fw.cards, fw);
-    expect(stats.keywords).not.toContain("FirstStrike");
-  });
-
-  it("transition: switching active player between reads flips the grant", () => {
-    const enemy = createMockUnit({ name: "Enemy", ap: 2, hp: 3 });
-    const engine = GundamTestEngine.create({ play: [gd01Zno063] }, { play: [enemy] });
-    const state = engine.getState();
-    const rt = engine.getRuntime();
-    const uid = rt.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, gd01Zno063.cardNumber)!;
-    const enemyId = rt.getInstanceIdByDefinition(PLAYER_TWO as PlayerId, enemy.cardNumber)!;
-    const fw = rt.getFrameworkReadAPI();
-
-    engine.getG().turnMetadata.pendingCombat = {
-      stage: "attack-step",
-      attackerId: uid,
-      attackerPlayerId: PLAYER_ONE,
-      target: enemyId,
-    };
-
-    state.ctx.status.activePlayer = PLAYER_TWO as PlayerId;
-    expect(getEffectiveStats(uid, engine.getG(), fw.cards, fw).keywords).not.toContain(
-      "FirstStrike",
+  it("links with a ZAFT Pilot and gains First Strike while battling a Lv.2 enemy on its turn", () => {
+    const zaftPilot = createMockPilot({ traits: ["zaft"], level: 1, cost: 1 });
+    const enemy = createMockUnit({ ap: 1, hp: 2, level: 2 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd01Zno063, zaftPilot],
+        deck: 2,
+        resourceArea: activeResources(3),
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
+      { play: [enemy] },
+      { initialActivePlayer: PLAYER_TWO },
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
-    state.ctx.status.activePlayer = PLAYER_ONE as PlayerId;
-    expect(getEffectiveStats(uid, engine.getG(), fw.cards, fw).keywords).toContain("FirstStrike");
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [enemyId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+
+    expectSuccess(p1.deployUnit(gd01Zno063));
+    const znoId = p1.getCardsInZone("battleArea")[0]!;
+    expectSuccess(p1.assignPilot(zaftPilot, znoId));
+    expectSuccess(p1.enterBattle(znoId, enemyId));
+
+    expect(p1.getVisibleCard(znoId)?.keywords).toContain("FirstStrike");
+    completeBattle(p1, p2);
+    expect(p2.getCardZone(enemyId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p1.getCardZone(znoId)).toBe(`battleArea:${PLAYER_ONE}`);
+    expect(p1.getDamage(znoId)).toBe(0);
+  });
+
+  it("does not gain First Strike while battling an enemy above Lv.2", () => {
+    const enemy = createMockUnit({ ap: 1, hp: 2, level: 3 });
+    const engine = GundamTestEngine.create(
+      {
+        deck: 2,
+        play: [gd01Zno063],
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
+      { play: [enemy] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const znoId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [enemyId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+
+    expectSuccess(p1.enterBattle(znoId, enemyId));
+    expect(p1.getVisibleCard(znoId)?.keywords).not.toContain("FirstStrike");
+    completeBattle(p1, p2);
+
+    expect(p1.getCardZone(znoId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p2.getCardZone(enemyId)).toBe(`trash:${PLAYER_TWO}`);
+  });
+
+  it("does not gain First Strike while being attacked on the opponent's turn", () => {
+    const enemy = createMockUnit({ ap: 1, hp: 2, level: 2 });
+    const engine = GundamTestEngine.create(
+      { play: [gd01Zno063], deck: 5 },
+      {
+        play: [enemy],
+        deck: 5,
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const znoId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    restUnitsByAttackingDirectly(engine, PLAYER_ONE, [znoId]);
+    passTurnThroughPublicMoves(engine, PLAYER_ONE);
+    expectSuccess(p2.enterBattle(enemyId, znoId));
+
+    expect(p1.getVisibleCard(znoId)?.keywords).not.toContain("FirstStrike");
+    completeBattle(p2, p1);
+    expect(p1.getCardZone(znoId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p2.getCardZone(enemyId)).toBe(`trash:${PLAYER_TWO}`);
   });
 });

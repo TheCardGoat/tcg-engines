@@ -22,7 +22,7 @@
     opacity 0.18s ease,
     transform 0.18s ease;
   pointer-events: none;
-  z-index: 2000;
+  z-index: 4300;
 }
 
 .preview.visible {

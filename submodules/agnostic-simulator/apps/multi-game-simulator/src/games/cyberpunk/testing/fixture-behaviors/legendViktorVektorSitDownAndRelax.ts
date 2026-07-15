@@ -15,7 +15,7 @@ export const legendViktorVektorSitDownAndRelaxBehavior: CyberpunkFixtureBehavior
   scenarioId: "legendViktorVektorSitDownAndRelax",
   label: "Viktor Vektor - call searches top deck for gear and retail unit equips trash Gear",
   references: [
-    "packages/engine/src/cards/alpha/legends/viktor-vektor-sit-down-and-relax.test.ts",
+    "packages/engine/src/cards/theheistretailstarterdeck/legends/viktor-vektor-sit-down-and-relax.test.ts",
     "packages/engine/src/cards/welcometonightcityretail/units/viktor-vektor-you-might-feel-a-little-pinch.test.ts",
   ],
   async run(pom) {
@@ -55,7 +55,7 @@ export const legendViktorVektorSitDownAndRelaxBehavior: CyberpunkFixtureBehavior
       theHeistRetailStarterDeckViktorVektorSitDownAndRelax.id,
     );
     await pom.expectEddies(CYBERPUNK_P1, 3);
-    await pom.expectPendingChoiceType(CYBERPUNK_P1, "searchDeck");
+    await pom.expectPendingChoiceType(CYBERPUNK_P1, "scry");
 
     const revealed = await pom.getSearchDeckRevealedCardIds(CYBERPUNK_P1);
     expectEqual("Viktor reveal count", revealed.length, 5);

@@ -7,15 +7,22 @@ import { useEngineInteractionView, useEngineOptional } from "../../engine";
 import { interactionViewCanAttackRival } from "../../engine/interactionViewHelpers";
 import { useGameState } from "./gameStateContext";
 import type { Phase } from "./gameStateTypes";
+import type { CardActiveEffectView } from "../../engine";
 import classes from "./PInfoZone.module.css";
 
 interface PInfoZoneProps {
   opponent?: boolean;
   children?: ReactNode;
   phase?: Phase;
+  activeEffects?: readonly CardActiveEffectView[];
 }
 
-export function PInfoZone({ opponent = false, children, phase }: PInfoZoneProps) {
+export function PInfoZone({
+  opponent = false,
+  children,
+  phase,
+  activeEffects = [],
+}: PInfoZoneProps) {
   const drop = useZoneDroppable(opponent ? "opp-pinfo" : "p-pinfo");
   const { activeSource } = useDragDrop();
   const engine = useEngineOptional();
@@ -60,6 +67,22 @@ export function PInfoZone({ opponent = false, children, phase }: PInfoZoneProps)
       }}
     >
       {children ? <div className={classes.dockTarget}>{children}</div> : children}
+      {activeEffects.length > 0 ? (
+        <div className={classes.effectChips} aria-label="Player active effects">
+          {activeEffects.map((effect) => (
+            <span
+              key={effect.id}
+              className={classes.effectChip}
+              data-effect-kind={effect.effectKind}
+              data-source-card-id={effect.sourceCardId}
+              title={effect.detail}
+            >
+              <span>{effect.label}</span>
+              <strong>{effect.sourceName}</strong>
+            </span>
+          ))}
+        </div>
+      ) : null}
       {directStealTarget ? (
         <div className={classes.attackDropCue} aria-hidden="true">
           <span className={classes.dropKicker}>{attackSelection.selection ? "Click" : "Drop"}</span>

@@ -67,10 +67,7 @@ export const gd02RyuseiGoGrazeCustom058: UnitCard = {
         timing: ["deploy"],
       },
       // "Deal 1 damage" is mandatory (not optional) but still gates the
-      // following "draw 1" via the generic `dependsOnPrevious` primitive —
-      // if no friendly Unit is available to damage (targeted action with
-      // zero candidates), the draw is skipped. The trailing discard is
-      // unconditional per the printed "Then, ..." connective.
+      // following draw-then-discard through `dependsOnPrevious`.
       directives: [
         {
           action: {
@@ -86,16 +83,11 @@ export const gd02RyuseiGoGrazeCustom058: UnitCard = {
         },
         {
           action: {
-            action: "draw",
-            count: 1,
+            action: "drawThenDiscard",
+            drawCount: 1,
+            discardCount: 1,
           },
           dependsOnPrevious: true,
-        },
-        {
-          action: {
-            action: "discard",
-            count: 1,
-          },
         },
       ],
       sourceText:

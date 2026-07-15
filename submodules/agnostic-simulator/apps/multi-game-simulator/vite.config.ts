@@ -2,10 +2,14 @@ import tailwindcss from "@tailwindcss/vite";
 import { reactRouter } from "@react-router/dev/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite-plus";
-import { dirname, resolve } from "node:path";
+import { dirname, parse, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const configDir = dirname(fileURLToPath(import.meta.url));
+const repoRoot = resolve(configDir, "../../../..");
+if (repoRoot === parse(repoRoot).root) {
+  throw new Error(`Refusing to expose filesystem root through Vite server.fs.allow: ${repoRoot}`);
+}
 const isVitest = process.env.VITEST === "true";
 const immerEntry = fileURLToPath(import.meta.resolve("immer"));
 const mantineCoreEntry = fileURLToPath(import.meta.resolve("@mantine/core"));
@@ -44,6 +48,11 @@ export default defineConfig({
           input: "./server/app.ts",
         },
       },
+    },
+  },
+  server: {
+    fs: {
+      allow: [repoRoot],
     },
   },
   plugins: [tailwindcss(), isVitest ? react() : reactRouter()],

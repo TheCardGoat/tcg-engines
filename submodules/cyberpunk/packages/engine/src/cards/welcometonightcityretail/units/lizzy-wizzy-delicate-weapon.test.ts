@@ -26,12 +26,8 @@ describe("Lizzy Wizzy - Delicate Weapon", () => {
       as: P1,
       zone: "hand",
     });
-    engine.resolveEffectTarget(welcomeToNightCityRetailRebootOptics, {
-      as: P1,
-      allowPendingChoice: true,
-      reason: "Lizzy Wizzy still needs the chosen Program to be confirmed for free play",
-    });
-    engine.resolveCardToPlay(welcomeToNightCityRetailRebootOptics, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailRebootOptics, { as: P1 });
+    expectNoPendingChoice(engine);
 
     expect(engine.getEddies(P1)).toBe(0);
     expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(

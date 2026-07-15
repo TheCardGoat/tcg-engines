@@ -4,6 +4,7 @@ export const gd01GearaDogaSleeves056: UnitCard = {
   cardNumber: "GD01-056",
   name: "Geara Doga (Sleeves)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["neo zeon"],
   id: "GD01-056",

@@ -20,13 +20,27 @@ export interface EngineHandle {
   fork(): EngineHandle;
 }
 
+export interface DecisionDiagnostics {
+  strategy: "tactical";
+  candidateCount: number;
+  nodesEvaluated: number;
+  depthReached: number;
+  scoreGap: number | null;
+  cutoffReason: "complete" | "depth" | "node-budget" | "hidden-information";
+}
+
 /**
  * The output of a strategy or resolver. Either an executable command or a
  * deliberate "I cannot decide" signal that the driver surfaces upward without
  * crashing the match loop.
  */
 export type MoveDecision =
-  | { kind: "command"; move: MoveId; args?: Record<string, unknown> }
+  | {
+      kind: "command";
+      move: MoveId;
+      args?: Record<string, unknown>;
+      diagnostics?: DecisionDiagnostics;
+    }
   | { kind: "stuck"; reason: string };
 
 /**
@@ -81,6 +95,7 @@ export interface AIStrategy {
 export interface StepResultActed {
   kind: "acted";
   decision: MoveDecision & { kind: "command" };
+  decisionDurationMs: number;
   result: CommandResult;
   stateID: number;
 }
@@ -94,11 +109,13 @@ export interface StepResultStuck {
   kind: "stuck";
   reason: string;
   pendingType?: PendingChoiceType;
+  decisionDurationMs: number;
 }
 
 export interface StepResultIllegal {
   kind: "illegal";
   decision: MoveDecision & { kind: "command" };
+  decisionDurationMs: number;
   error: string;
   errorCode: string;
 }

@@ -1,86 +1,48 @@
 ---
-name: "improve-card-generator"
-description: 'Diagnose and fix Lorcana parser/generator gaps in `packages/lorcana/lorcana-cards` when card implementations are blocked by missing parsing coverage, manual-override mismatches, or generation stubs. Use for requests like "fix parser", "improve generator", "unblock missingImplementation cards", or "why is this card unparseable".'
+name: improve-card-generator
+description: Diagnose and repair Lorcana card parser or generation gaps in packages/lorcana/lorcana-cards. Use when generation marks cards missingImplementation, parser validation fails, or generated card output is incorrect.
 ---
 
 # Improve Card Generator
 
-Repair parser and generation coverage in `packages/lorcana/lorcana-cards`.
-
-## Boundary
-
-- Own parser/generator diagnosis and fixes.
-- Do not implement final gameplay behavior here unless the change is strictly parser/generator-owned.
-- Hand card behavior work back to `lorcana-cards` after unblocking parsing.
-
-## Required Memory Step
-
-1. Read `memory/schema.md`.
-2. Read the latest 5 entries in `memory/bank.md`.
-3. Reuse existing guardrails before making changes.
+Own parser and generator behavior in `packages/lorcana/lorcana-cards`. Hand
+gameplay behavior back to `lorcana-cards` once generation is unblocked.
 
 ## Workflow
 
-1. Resolve the target card/context.
+1. Resolve the exact card or failing generation output. Use
+   `lorcana-find-card` when identity is unclear.
+2. Read the current implementation before choosing an architecture:
+   - `scripts/generate-cards.ts`
+   - `scripts/generators/parser-validator.ts`
+   - `scripts/generators/file-generator.ts`
+   - `src/parser/`
+3. Reproduce the smallest failing parser, validator, or generator case. Prefer
+   an existing nearby test over a full regeneration.
+4. Add a failing test for the missing text pattern or output invariant.
+5. Make the smallest type-safe parser/generator change. Do not move gameplay
+   semantics into generation code.
+6. Run the focused test and package typecheck.
+7. Regenerate only when the fix changes generated output, then inspect every
+   generated diff for unrelated churn.
 
-- If card identity is unclear, call `lorcana-find-card` first.
+## Commands
 
-2. Diagnose current blockage with repository-valid checks.
-
-```bash
-rg -n "missingImplementation: true|missingTests: true" packages/lorcana/lorcana-cards/src/cards
-bun --cwd packages/lorcana/lorcana-cards scripts/diagnose-manual-overrides.ts
-bun --cwd packages/lorcana/lorcana-cards scripts/check-manual-override-coverage.ts
-```
-
-3. Reproduce parsing failure with minimal direct parser input.
-
-```bash
-bun --cwd packages/lorcana/lorcana-cards -e 'import { parseAbilityText } from "./src/parser"; const text = process.argv[1]; console.log(parseAbilityText(text));' "<ABILITY_TEXT>"
-```
-
-4. Apply minimal fix in parser/generator code.
-
-- Typical files:
-  - `packages/lorcana/lorcana-cards/src/parser/v2/**`
-  - `packages/lorcana/lorcana-cards/scripts/generators/parser-validator.ts`
-  - `packages/lorcana/lorcana-cards/src/parser/v2/manual-overrides.ts`
-
-5. Verify before handoff.
+From the Lorcana workspace:
 
 ```bash
+rg -n "missingImplementation: true" packages/lorcana/lorcana-cards/src/cards
+bun test --cwd packages/lorcana/lorcana-cards <focused-test-file>
 bun run --cwd packages/lorcana/lorcana-cards check-types
-bun test --cwd packages/lorcana/lorcana-cards
+bun run --cwd packages/lorcana/lorcana-cards generate-cards:all --skip-fetch
 ```
 
-6. Return unblock report for `lorcana-cards`.
+The generation command is repository-wide for this package. The current script
+does not promise per-set, per-card, `--dry-run`, or `--force` modes. Do not
+invent those flags.
 
-- Include:
-  - Parser/generator root cause
-  - What changed
-  - Which cards/patterns are now unblocked
-  - Any remaining blocked patterns
+## Handoff
 
-## Handoff Contract
-
-When done, provide this structure:
-
-```json
-{
-  "rootCause": "string",
-  "changes": ["string"],
-  "unblockedCards": ["set-number-card-id"],
-  "remainingBlocks": ["string"],
-  "verification": {
-    "checkTypes": "pass|fail",
-    "tests": "pass|fail"
-  }
-}
-```
-
-## Post-Execution Memory Update
-
-Append one entry to `memory/bank.md` using the schema in `memory/schema.md`.
-
-- Always record failures or near-failures.
-- Promote repeated failure modes into guardrails.
+Report the root cause, changed parser/generator files, affected cards, exact
+checks run, and any remaining unsupported pattern. A generated card still
+marked `missingImplementation` remains blocked.

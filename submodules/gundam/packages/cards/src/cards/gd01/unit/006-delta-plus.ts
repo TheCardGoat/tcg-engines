@@ -4,6 +4,7 @@ export const gd01DeltaPlus006: UnitCard = {
   cardNumber: "GD01-006",
   name: "Delta Plus",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-006",
@@ -58,7 +59,7 @@ export const gd01DeltaPlus006: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 3,
-  linkCondition: "[Riddhe Marcenas]",
+  linkCondition: "(Earth Federation) Trait",
   effect:
     "&lt;Repair 1&gt; (At the end of your turn, this Unit recovers the specified number of HP.)<br>【During Link】This Unit gets HP+1.<br>",
   effects: [

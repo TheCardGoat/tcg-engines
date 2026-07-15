@@ -1,201 +1,168 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  asPlayerId,
-  expectSuccess,
-  expectFailure,
-  createMockUnit,
   activeResources,
-  expectCardInTrash,
-  hasContinuousRestriction,
-  seedShieldsFromDeck,
+  createMockCommand,
+  createMockUnit,
+  expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
+import { gd01TheStubbornCog103 } from "./103-the-stubborn-cog.ts";
 import { gd01MidairModifications121 } from "./121-midair-modifications.ts";
 
+function blocker(name: string) {
+  return createMockUnit({ name, ap: 2, hp: 4, keywordEffects: [{ keyword: "Blocker" }] });
+}
+
 describe("Midair Modifications (GD01-121)", () => {
-  it("burstActivatesMain — burst fires the Main effect with target selection", () => {
-    const chosen = createMockUnit({
-      ap: 2,
-      hp: 3,
-      keywordEffects: [{ keyword: "Blocker" }],
-    });
-    const otherBlocker = createMockUnit({
-      ap: 2,
-      hp: 3,
-      keywordEffects: [{ keyword: "Blocker" }],
-    });
+  it("【Burst】 activates Main, readies the attacking Blocker, and prevents another attack", () => {
+    const attacker = blocker("Enemy Blocker");
     const engine = GundamTestEngine.create(
-      { deck: [gd01MidairModifications121] },
-      {
-        play: [
-          { card: chosen, exhausted: true },
-          { card: otherBlocker, exhausted: true },
-        ],
-      },
+      { shieldArea: [gd01MidairModifications121] },
+      { play: [attacker], shieldArea: [createMockUnit({ name: "Remaining Shield" })] },
+      { initialActivePlayer: PLAYER_TWO },
     );
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
-    engine
-      .getRuntime()
-      .registerCardInstance(
-        shieldId,
-        gd01MidairModifications121.cardNumber,
-        asPlayerId(PLAYER_ONE),
-      );
-
+    const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const [chosenId, otherId] = p2.getCardsInZone("battleArea");
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    // Burst fires → Main effect enqueued → engine halts for target selection
-    engine.fireShieldBurst(shieldId, { targets: [chosenId!] });
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional", directiveIndex: -1 });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [attackerId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [attackerId] }));
 
-    // Chosen unit: set active AND cannot-attack.
-    expect(engine.getG().exhausted[chosenId!]).toBeFalsy();
-    expect(hasContinuousRestriction(engine, chosenId!, "cannot-attack")).toBe(true);
-    // Non-chosen Blocker: untouched (still rested, no restriction).
-    expect(engine.getG().exhausted[otherId!]).toBe(true);
-    expect(hasContinuousRestriction(engine, otherId!, "cannot-attack")).toBe(false);
+    expect(p2.isExhausted(attackerId)).toBe(false);
+    expectFailure(p2.enterBattle(attackerId, "direct"), "CANNOT_ATTACK");
   });
 
-  describe("【Main】Choose 1 rested Unit with <Blocker>. Set it as active.", () => {
-    it("sets the chosen rested friendly <Blocker> to active AND applies cannot-attack — other Blockers untouched", () => {
-      const chosen = createMockUnit({
-        ap: 2,
-        hp: 3,
-        keywordEffects: [{ keyword: "Blocker" }],
-      });
-      const otherBlocker = createMockUnit({
-        ap: 2,
-        hp: 3,
-        keywordEffects: [{ keyword: "Blocker" }],
-      });
-      const engine = GundamTestEngine.create({
-        hand: [gd01MidairModifications121],
-        play: [
-          { card: chosen, exhausted: true },
-          { card: otherBlocker, exhausted: true },
-        ],
-        resourceArea: activeResources(3),
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [chosenId, otherId] = p1.getCardsInZone("battleArea");
-      const cmdId = p1.getHand()[0]!;
-
-      expectSuccess(p1.playCommand(gd01MidairModifications121, { targets: [chosenId!] }));
-
-      // Chosen unit: set active AND cannot-attack.
-      expect(engine.getG().exhausted[chosenId!]).toBeFalsy();
-      expect(hasContinuousRestriction(engine, chosenId!, "cannot-attack")).toBe(true);
-      // Non-chosen Blocker: untouched (still rested, no restriction).
-      expect(engine.getG().exhausted[otherId!]).toBe(true);
-      expect(hasContinuousRestriction(engine, otherId!, "cannot-attack")).toBe(false);
-      expectCardInTrash(engine, cmdId, p1.playerId);
+  it("【Main】 can ready either player's chosen rested Blocker and applies cannot-attack", () => {
+    const friendly = createMockUnit({
+      name: "Friendly Blocker",
+      traits: ["earth federation"],
+      ap: 2,
+      hp: 4,
+      keywordEffects: [{ keyword: "Blocker" }],
     });
+    const enemy = blocker("Enemy Blocker");
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd01TheStubbornCog103, gd01MidairModifications121],
+        play: [friendly],
+        resourceArea: activeResources(3),
+      },
+      { play: [enemy], shieldArea: [createMockUnit()] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const friendlyId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+    const [stubbornCogId, midairId] = p1.getHand();
 
-    it("also accepts a rested enemy <Blocker> (target owner: any)", () => {
-      const enemyBlocker = createMockUnit({
-        ap: 2,
-        hp: 4,
-        keywordEffects: [{ keyword: "Blocker" }],
-      });
-      const engine = GundamTestEngine.create(
+    expectSuccess(p1.playCommand(stubbornCogId!));
+    const restChoice = p1.getBoardView().pendingChoice;
+    if (restChoice?.kind !== "targetSelection") {
+      throw new Error("Expected The Stubborn Cog to ask for its two target groups");
+    }
+    expectSuccess(p1.resolveEffect({ targets: [friendlyId, enemyId] }));
+    expectSuccess(p1.playCommand(midairId!));
+    const readyChoice = p1.getBoardView().pendingChoice;
+    if (readyChoice?.kind !== "targetSelection") {
+      throw new Error("Expected Midair Modifications to ask which rested Blocker to ready");
+    }
+    expect(readyChoice.legalTargetIds).toEqual(expect.arrayContaining([friendlyId, enemyId]));
+    expectSuccess(p1.resolveEffect({ targets: [friendlyId] }));
+
+    expect(p1.isExhausted(friendlyId)).toBe(false);
+    expect(p2.isExhausted(enemyId)).toBe(true);
+    expectFailure(p1.enterBattle(friendlyId, "direct"), "CANNOT_ATTACK");
+  });
+
+  it("rejects an active Blocker and a rested Unit without Blocker", () => {
+    const activeBlocker = blocker("Active Blocker");
+    const restedPlain = createMockUnit({ keywordEffects: [{ keyword: "Support", value: 1 }] });
+    const engine = GundamTestEngine.create({
+      hand: [gd01MidairModifications121],
+      play: [activeBlocker, restedPlain],
+      resourceArea: activeResources(3),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [activeBlockerId, restedPlainId] = p1.getCardsInZone("battleArea");
+
+    expectSuccess(p1.useSupport(restedPlainId!, activeBlockerId!));
+    expectFailure(
+      p1.playCommand(gd01MidairModifications121, { targets: [activeBlockerId!] }),
+      "INVALID_TARGET",
+    );
+    expectFailure(
+      p1.playCommand(gd01MidairModifications121, { targets: [restedPlainId!] }),
+      "INVALID_TARGET",
+    );
+  });
+
+  it("cannot use its Main effect in a legally reached Action step", () => {
+    const target = blocker("Blocker");
+    const engine = GundamTestEngine.create({
+      hand: [gd01MidairModifications121],
+      play: [target],
+      resourceArea: activeResources(3),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const targetId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+
+    expectFailure(
+      p1.playCommand(gd01MidairModifications121, { targets: [targetId] }),
+      "WRONG_TIMING",
+    );
+  });
+
+  it("cannot be played below its printed Lv.3 requirement", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd01MidairModifications121],
+      resourceArea: activeResources(2),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+
+    expectFailure(p1.playCommand(gd01MidairModifications121), "INSUFFICIENT_RESOURCE_LEVEL");
+    expect(p1.getCardZone(gd01MidairModifications121)).toBe(`hand:${PLAYER_ONE}`);
+  });
+
+  it("cannot pay its printed cost after a legal setup leaves only 1 active Resource", () => {
+    const setup = createMockCommand({
+      name: "Resource Setup",
+      level: 0,
+      cost: 2,
+      effects: [
         {
-          hand: [gd01MidairModifications121],
-          resourceArea: activeResources(3),
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [],
+          sourceText: "【Main】Do nothing.",
         },
-        { play: [{ card: enemyBlocker, exhausted: true }] },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const p2 = engine.asPlayer(PLAYER_TWO);
-      const [enemyId] = p2.getCardsInZone("battleArea");
-
-      expectSuccess(p1.playCommand(gd01MidairModifications121, { targets: [enemyId!] }));
-
-      expect(engine.getG().exhausted[enemyId!]).toBeFalsy();
-      expect(hasContinuousRestriction(engine, enemyId!, "cannot-attack")).toBe(true);
+      ],
     });
-
-    it("cannot target an active (non-rested) unit", () => {
-      const blocker = createMockUnit({
-        ap: 2,
-        hp: 3,
-        keywordEffects: [{ keyword: "Blocker" }],
-      });
-      const engine = GundamTestEngine.create({
-        hand: [gd01MidairModifications121],
-        play: [blocker],
-        resourceArea: activeResources(3),
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [blockerId] = p1.getCardsInZone("battleArea");
-
-      expectFailure(
-        p1.playCommand(gd01MidairModifications121, { targets: [blockerId!] }),
-        "INVALID_TARGET",
-      );
+    const engine = GundamTestEngine.create({
+      hand: [setup, gd01MidairModifications121],
+      resourceArea: activeResources(3),
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [setupId, commandId] = p1.getHand();
 
-    it("cannot target a unit without the Blocker keyword", () => {
-      const nonBlocker = createMockUnit({
-        ap: 2,
-        hp: 3,
-        keywordEffects: [],
-      });
-      const engine = GundamTestEngine.create({
-        hand: [gd01MidairModifications121],
-        play: [{ card: nonBlocker, exhausted: true }],
-        resourceArea: activeResources(3),
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [nonBlockerId] = p1.getCardsInZone("battleArea");
-
-      expectFailure(
-        p1.playCommand(gd01MidairModifications121, { targets: [nonBlockerId!] }),
-        "INVALID_TARGET",
-      );
-    });
-
-    it("cannot be played during action-phase (main-only timing)", () => {
-      const blocker = createMockUnit({
-        ap: 2,
-        hp: 3,
-        keywordEffects: [{ keyword: "Blocker" }],
-      });
-      const engine = GundamTestEngine.create({
-        hand: [gd01MidairModifications121],
-        play: [{ card: blocker, exhausted: true }],
-        resourceArea: activeResources(3),
-      });
-      engine.setPhase("end-phase");
-      engine.setStep("action-step");
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [blockerId] = p1.getCardsInZone("battleArea");
-
-      expectFailure(
-        p1.playCommand(gd01MidairModifications121, { targets: [blockerId!] }),
-        "WRONG_TIMING",
-      );
-    });
-
-    it("applies cannot-attack restriction to the target unit for this turn", () => {
-      const blocker = createMockUnit({
-        ap: 2,
-        hp: 3,
-        keywordEffects: [{ keyword: "Blocker" }],
-      });
-      const engine = GundamTestEngine.create({
-        hand: [gd01MidairModifications121],
-        play: [{ card: blocker, exhausted: true }],
-        resourceArea: activeResources(3),
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [blockerId] = p1.getCardsInZone("battleArea");
-
-      expectSuccess(p1.playCommand(gd01MidairModifications121, { targets: [blockerId!] }));
-
-      expect(hasContinuousRestriction(engine, blockerId!, "cannot-attack")).toBe(true);
-    });
+    expectSuccess(p1.playCommand(setupId!));
+    expect(p1.getCardsInZone("resourceArea").filter((id) => !p1.isExhausted(id))).toHaveLength(1);
+    expectFailure(p1.playCommand(commandId!), "INSUFFICIENT_RESOURCES");
+    expect(p1.getCardZone(commandId!)).toBe(`hand:${PLAYER_ONE}`);
   });
 });

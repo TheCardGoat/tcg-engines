@@ -4,6 +4,7 @@ export const gd01GundamDeathscythe033: UnitCard = {
   cardNumber: "GD01-033",
   name: "Gundam Deathscythe",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-033",
@@ -41,6 +42,7 @@ export const gd01GundamDeathscythe033: UnitCard = {
   cost: 2,
   ap: 4,
   hp: 3,
+  linkCondition: "[Duo Maxwell]",
   effect:
     "&lt;Repair 1&gt; (At the end of your turn, this Unit recovers the specified number of HP.)<br>",
   keywordEffects: [{ keyword: "Repair", value: 1 }],

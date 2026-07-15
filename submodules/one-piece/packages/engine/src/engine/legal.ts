@@ -124,6 +124,9 @@ export function getLegalCommands(
     if (player.activeDon < cost || card.cardType === "leader") {
       continue;
     }
+    if (card.cardType === "event" && effectBlocksFor(card, "main").length === 0) {
+      continue;
+    }
     legal.push({
       type: "playCard",
       seat: viewer,
@@ -174,7 +177,17 @@ export function getLegalCommands(
     ...(player.stageArea ? [player.stageArea] : []),
   ]) {
     const card = getCardForInstance(state, instanceId);
-    if (effectBlocksFor(card, "activateMain").length > 0) {
+    const instance = state.cards[instanceId];
+    const hasUnsupportedActivationCost = state.capabilityHistory.some(
+      (issue) =>
+        issue.sourceInstanceId === instanceId &&
+        issue.kind === "unsupportedCost" &&
+        issue.code.startsWith("cost:activateMain:"),
+    );
+    const hasUnusedActivation = effectBlocksFor(card, "activateMain").some(
+      (_block, index) => !instance?.usedEffectKeys.includes(`activateMain:${index}`),
+    );
+    if (hasUnusedActivation && !hasUnsupportedActivationCost) {
       legal.push({
         type: "activateEffect",
         seat: viewer,

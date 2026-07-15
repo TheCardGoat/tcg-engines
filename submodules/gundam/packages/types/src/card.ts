@@ -7,6 +7,9 @@ export type { CardEffect } from "./effects.ts";
 
 export type CardColor = "blue" | "green" | "red" | "white" | "purple";
 
+/** Printed deployment characteristic shown as Space and/or Earth on Units and Bases. */
+export type BattlefieldZone = "space" | "earth";
+
 export type CardType = "unit" | "pilot" | "command" | "base" | "resource";
 
 export type CardRarity =
@@ -215,8 +218,8 @@ export interface UnitCard extends CardBase {
   hp: number;
   /** Requirements for linking a pilot to this unit */
   linkCondition?: string;
-  /** Zone reference printed on the card, if any */
-  zone?: Zone;
+  /** Printed battlefield compatibility, independent of the card's runtime location. */
+  battlefieldZones?: readonly BattlefieldZone[];
 }
 
 // ── Pilot Card ────────────────────────────────────────────────────────────────
@@ -246,6 +249,8 @@ export interface CommandCard extends CardBase {
 export interface BaseCard extends CardBase {
   type: "base";
   hp: number;
+  /** Printed battlefield compatibility, independent of the card's runtime location. */
+  battlefieldZones?: readonly BattlefieldZone[];
 }
 
 // ── Resource Card ─────────────────────────────────────────────────────────────

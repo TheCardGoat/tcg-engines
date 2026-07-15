@@ -7,21 +7,34 @@ import {
   createMockResource,
   createMockUnit,
   expectSuccess,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { st01SulettaMercury011 } from "./011-suletta-mercury.ts";
 
 describe("Suletta Mercury (ST01-011)", () => {
   it("【Burst】 Add this card to your hand — moves shield into hand", () => {
-    const engine = GundamTestEngine.create({}, { deck: [st01SulettaMercury011] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
-
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `hand:${PLAYER_TWO}`,
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 3 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [st01SulettaMercury011] },
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+
+    expect(p2.getHand()).toContain(shieldId);
+    expect(p2.getCardZone(shieldId)).toBe(`hand:${PLAYER_TWO}`);
   });
 
   it("【Attack】【Once per Turn】 — set a resource active", () => {
@@ -46,17 +59,24 @@ describe("Suletta Mercury (ST01-011)", () => {
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     expectSuccess(p1.deployUnit(linkUnit));
-    expectSuccess(p1.assignPilot(st01SulettaMercury011, linkUnit));
+    const linkUnitId = p1.getCardsInZone("battleArea")[0]!;
+    const pilotId = p1.getHand()[0]!;
+    expectSuccess(p1.assignPilot(pilotId, linkUnitId));
 
-    const restedId = p1
-      .getCardsInZone("resourceArea")
-      .find((id) => engine.getG().exhausted[id] === true);
+    const restedId = p1.getCardsInZone("resourceArea").find((id) => p1.isExhausted(id));
     if (!restedId) throw new Error("setup: no rested resource");
 
     const defenderId = p2.getCardsInZone("battleArea")[0]!;
-    expectSuccess(p1.enterBattle(linkUnit, defenderId));
+    expectSuccess(p1.enterBattle(linkUnitId, defenderId));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      sourceCardId: pilotId,
+    });
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "targetSelection") throw new Error("Expected a target choice");
+    expect(choice.legalTargetIds).toContain(restedId);
+    expectSuccess(p1.resolveEffect({ targets: [restedId] }));
 
-    // Suletta's 【Attack】 setActive fired → rested resource is now active.
-    expect(engine.getG().exhausted[restedId]).toBe(false);
+    expect(p1.isExhausted(restedId)).toBe(false);
   });
 });

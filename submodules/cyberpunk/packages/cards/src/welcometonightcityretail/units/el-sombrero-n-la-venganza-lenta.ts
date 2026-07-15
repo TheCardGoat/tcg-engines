@@ -36,6 +36,21 @@ export const welcomeToNightCityRetailElSombreroNLaVenganzaLenta = defineCyberpun
       source: {
         selector: "self",
       },
+      bindings: [
+        {
+          id: "maxGig",
+          target: {
+            selector: "gig",
+            controller: "friendly",
+            atMax: true,
+            selection: {
+              mode: "choose",
+              min: 1,
+              max: 1,
+            },
+          },
+        },
+      ],
       costs: [
         {
           cost: "payEddies",
@@ -49,8 +64,11 @@ export const welcomeToNightCityRetailElSombreroNLaVenganzaLenta = defineCyberpun
             selector: "self",
           },
           value: {
-            type: "maxGigValue",
-            controller: "friendly",
+            type: "gigValue",
+            target: {
+              selector: "bound",
+              id: "maxGig",
+            },
           },
           duration: "turn",
         },

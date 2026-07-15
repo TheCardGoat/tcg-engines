@@ -5,18 +5,12 @@ import {
   activeResources,
   createMockUnit,
   expectSuccess,
-  getDamageCounter,
   getEffectiveStats,
 } from "@tcg/gundam-engine";
 import { st05GundamBarbatos4thForm001 } from "./001-gundam-barbatos-4th-form.ts";
 
 describe("Gundam Barbatos 4th Form (ST05-001)", () => {
   describe("【Deploy】Choose 1 of your other Units. Deal 1 damage to it. It gets AP+1 during this turn.", () => {
-    function stats(engine: GundamTestEngine, cardId: string) {
-      const fw = engine.getRuntime().getFrameworkReadAPI();
-      return getEffectiveStats(cardId, engine.getG(), fw.cards, fw);
-    }
-
     it("data encodes other-friendly target for both damage and AP+1", () => {
       const effect = st05GundamBarbatos4thForm001.effects?.[0];
       const target = { owner: "friendly", cardType: "unit", excludeSource: true, count: 1 };
@@ -49,8 +43,8 @@ describe("Gundam Barbatos 4th Form (ST05-001)", () => {
 
       expectSuccess(p1.deployUnit(st05GundamBarbatos4thForm001, { targets: [allyId!] }));
 
-      expect(getDamageCounter(engine, allyId!)).toBe(1);
-      expect(stats(engine, allyId!).ap).toBe(3);
+      expect(p1.getDamage(allyId!)).toBe(1);
+      expect(p1.getVisibleCard(allyId!)).toMatchObject({ effectiveAp: 3 });
     });
   });
 

@@ -14,7 +14,7 @@ describe("Police Zaku (Armored RRU Type) (GD02-035)", () => {
     const enemy = createMockUnit({ ap: 1, hp: 2 });
     const engine = GundamTestEngine.create(
       { play: [gd02PoliceZakuArmoredRruType035] },
-      { play: [enemy] },
+      { play: [{ card: enemy, exhausted: true }] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const [policeZakuId] = p1.getCardsInZone("battleArea");

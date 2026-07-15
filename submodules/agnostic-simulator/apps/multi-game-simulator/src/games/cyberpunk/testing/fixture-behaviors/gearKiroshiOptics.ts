@@ -6,7 +6,7 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const gearKiroshiOpticsBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "gearKiroshiOptics",
   label: "Kiroshi Optics - peek at a face-down legend",
-  references: ["packages/engine/src/cards/alpha/gear/kiroshi-optics.test.ts"],
+  references: ["packages/engine/src/cards/welcometonightcityretail/gear/kiroshi-optics.test.ts"],
   async run(pom) {
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",

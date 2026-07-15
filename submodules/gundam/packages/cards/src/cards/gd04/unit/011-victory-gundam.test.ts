@@ -1,42 +1,72 @@
-import { describe, it, expect } from "vite-plus/test";
-import { GundamTestEngine, PLAYER_ONE, createMockUnit } from "@tcg/gundam-engine";
+import { describe, expect, it } from "vite-plus/test";
+import {
+  GundamTestEngine,
+  PLAYER_ONE,
+  PLAYER_TWO,
+  createMockUnit,
+  expectSuccess,
+} from "@tcg/gundam-engine";
 import { gd04VictoryGundam011 } from "./011-victory-gundam.ts";
 
-function partsTokenCount(engine: GundamTestEngine): number {
-  const framework = engine.getRuntime().getFrameworkReadAPI();
-  return engine
-    .asPlayer(PLAYER_ONE)
-    .getCardsInZone("battleArea")
-    .filter((id) => {
-      const def = framework.cards.getDefinition(id) as { name?: string } | undefined;
-      return def?.name === "Parts";
-    }).length;
-}
-
 describe("Victory Gundam (GD04-011)", () => {
-  it("【Destroyed】 deploys 1 Parts token when another (League Militaire) Unit is in play", () => {
-    const otherLm = createMockUnit({ ap: 1, hp: 3, traits: ["league militaire"] });
+  describe("【Destroyed】If another friendly (League Militaire) Unit is in play, deploy 1 [Parts]((League Militaire)･AP1･HP1･This Unit can't choose the enemy player as its attack target) Unit token.", () => {
+    it("deploys an active Parts token when battle destroys it beside another League Militaire Unit", () => {
+      const otherLeagueMilitaire = createMockUnit({
+        name: "Other League Militaire Unit",
+        traits: ["league militaire"],
+      });
+      const attacker = createMockUnit({ name: "Enemy Attacker", ap: 2, hp: 6 });
+      const engine = GundamTestEngine.create(
+        {
+          play: [{ card: gd04VictoryGundam011, exhausted: true }, otherLeagueMilitaire],
+        },
+        { play: [attacker] },
+        { initialActivePlayer: PLAYER_TWO },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const battleAreaBefore = p1.getCardsInZone("battleArea");
+      const [victoryGundamId] = battleAreaBefore;
+      const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    const engine = GundamTestEngine.create({
-      play: [gd04VictoryGundam011, otherLm],
+      expectSuccess(p2.enterBattle(attackerId, victoryGundamId!));
+      expectSuccess(p1.passBlock());
+      expectSuccess(p1.passBattleAction());
+      expectSuccess(p2.passBattleAction());
+
+      const partsId = p1
+        .getCardsInZone("battleArea")
+        .find((cardId) => !battleAreaBefore.includes(cardId));
+      expect(p1.getCardsInZone("trash")).toContain(victoryGundamId);
+      expect(partsId).toBeDefined();
+      expect(p1.isExhausted(partsId!)).toBe(false);
+      expect(p1.getVisibleCard(partsId!)).toMatchObject({
+        effectiveAp: 1,
+        effectiveHp: 1,
+        restrictions: ["cannot-target-player"],
+      });
+      expect(p1.getLegalAttackTargets(partsId!)).not.toContain("direct");
     });
-    const [vgId] = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea");
 
-    expect(partsTokenCount(engine)).toBe(0);
+    it("does not deploy a Parts token without another League Militaire Unit", () => {
+      const attacker = createMockUnit({ name: "Enemy Attacker", ap: 2, hp: 6 });
+      const engine = GundamTestEngine.create(
+        { play: [{ card: gd04VictoryGundam011, exhausted: true }] },
+        { play: [attacker] },
+        { initialActivePlayer: PLAYER_TWO },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const victoryGundamId = p1.getCardsInZone("battleArea")[0]!;
+      const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.destroyUnit(vgId!);
+      expectSuccess(p2.enterBattle(attackerId, victoryGundamId));
+      expectSuccess(p1.passBlock());
+      expectSuccess(p1.passBattleAction());
+      expectSuccess(p2.passBattleAction());
 
-    expect(partsTokenCount(engine)).toBe(1);
-  });
-
-  it("【Destroyed】 does NOT deploy a Parts token when no other (League Militaire) Unit is in play", () => {
-    const engine = GundamTestEngine.create({
-      play: [gd04VictoryGundam011],
+      expect(p1.getCardsInZone("trash")).toContain(victoryGundamId);
+      expect(p1.getCardsInZone("battleArea")).toHaveLength(0);
     });
-    const [vgId] = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea");
-
-    engine.destroyUnit(vgId!);
-
-    expect(partsTokenCount(engine)).toBe(0);
   });
 });

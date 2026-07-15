@@ -4,6 +4,7 @@ export const gd01GallussK058: UnitCard = {
   cardNumber: "GD01-058",
   name: "Galluss-K",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["zeon"],
   id: "GD01-058",

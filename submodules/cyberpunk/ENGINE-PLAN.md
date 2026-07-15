@@ -88,7 +88,7 @@ interface CardMeta {
   counters: Record<string, number>;
   attachedGearIds: string[];
   attachedToId?: string;
-  playedThisTurn: boolean;
+  hasLag: boolean;
   hasAttackedThisTurn: boolean;
   grantedRules: RuleModifier[];
 }

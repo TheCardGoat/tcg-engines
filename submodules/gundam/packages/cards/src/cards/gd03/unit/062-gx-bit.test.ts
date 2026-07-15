@@ -6,7 +6,6 @@ import {
   activeResources,
   createMockUnit,
   expectSuccess,
-  getDamageCounter,
 } from "@tcg/gundam-engine";
 import { gd02AwakenedPower110 } from "../../gd02/command/110-awakened-power.ts";
 import { gd03GxBit062 } from "./062-gx-bit.ts";
@@ -29,8 +28,14 @@ describe("GX-Bit (GD03-062)", () => {
 
     expectSuccess(p1.playCommand(gd02AwakenedPower110));
 
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+
     expect(p1.getCardsInZone("battleArea")).toContain(gxBitId);
-    expect(getDamageCounter(engine, enemyId)).toBe(2);
+    expect(engine.asPlayer(PLAYER_TWO).getDamage(enemyId)).toBe(2);
   });
 
   it("does not deal damage when deployed from hand", () => {
@@ -42,8 +47,9 @@ describe("GX-Bit (GD03-062)", () => {
     const p1 = engine.asPlayer(PLAYER_ONE);
     const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(p1.deployUnit(gd03GxBit062, { targets: [enemyId] }));
+    expectSuccess(p1.deployUnit(gd03GxBit062));
 
-    expect(getDamageCounter(engine, enemyId)).toBe(0);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(engine.asPlayer(PLAYER_TWO).getDamage(enemyId)).toBe(0);
   });
 });

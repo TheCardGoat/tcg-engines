@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSwordwiseHuscle } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../src/testing/index.ts";
 import type { CardInstanceId, GigDieId, PlayerId } from "../src/types/branded.ts";
 
@@ -69,7 +69,7 @@ describe("gainGig pending choice", () => {
 
 describe("chooseGigsToSteal pending choice", () => {
   function injectStealChoice(engine: CyberpunkTestEngine) {
-    const attackerCard = engine.getCard(alphaSwordwiseHuscle, "field", P1);
+    const attackerCard = engine.getCard(welcomeToNightCityRetailSwordwiseHuscle, "field", P1);
     const p2Gigs = engine.getGigDice(P2);
 
     engine.judgeSetAttackState({
@@ -94,7 +94,7 @@ describe("chooseGigsToSteal pending choice", () => {
 
   it("passPhase is rejected while chooseGigsToSteal choice is pending", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
-      { field: [alphaSwordwiseHuscle] },
+      { field: [welcomeToNightCityRetailSwordwiseHuscle] },
       {
         gigArea: [
           { dieType: "d6", faceValue: 3 },
@@ -111,7 +111,7 @@ describe("chooseGigsToSteal pending choice", () => {
 
   it("resolveAttack is rejected while chooseGigsToSteal choice is pending", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
-      { field: [alphaSwordwiseHuscle] },
+      { field: [welcomeToNightCityRetailSwordwiseHuscle] },
       {
         gigArea: [
           { dieType: "d6", faceValue: 3 },
@@ -128,7 +128,7 @@ describe("chooseGigsToSteal pending choice", () => {
 
   it("no gig is moved when passPhase is attempted with chooseGigsToSteal pending", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
-      { field: [alphaSwordwiseHuscle] },
+      { field: [welcomeToNightCityRetailSwordwiseHuscle] },
       {
         gigArea: [
           { dieType: "d6", faceValue: 3 },

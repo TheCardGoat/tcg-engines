@@ -75,7 +75,7 @@ export const goSoloMove: MoveDefinition<GoSoloInput> = {
     operations.zone.moveCard(cardId as CardInstanceId, "field", playerId);
     operations.card.moveAttachedGear(cardId as CardInstanceId, "field");
     operations.card.ready(cardId as CardInstanceId);
-    operations.card.setPlayedThisTurn(cardId as CardInstanceId, false);
+    operations.card.setHasLag(cardId as CardInstanceId, false);
 
     const cardPlayedEvent = {
       type: "cardPlayed",

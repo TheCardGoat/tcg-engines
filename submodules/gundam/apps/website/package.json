@@ -9,7 +9,8 @@
     "preview": "vp preview"
   },
   "devDependencies": {
-    "typescript": "~5.9.3",
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   }

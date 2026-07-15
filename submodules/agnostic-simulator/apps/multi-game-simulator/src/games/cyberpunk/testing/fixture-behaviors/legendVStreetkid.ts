@@ -10,7 +10,7 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const legendVStreetkidBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendVStreetkid",
   label: "V - Streetkid - GO SOLO defeated trigger",
-  references: ["packages/engine/src/cards/spoiler/legends/v-streetkid.test.ts"],
+  references: ["packages/engine/src/cards/welcometonightcityretail/legends/v-streetkid.test.ts"],
   async run(pom) {
     const v = await pom.getCardInZoneByDefinitionId(
       "legendArea",

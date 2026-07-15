@@ -3,46 +3,51 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   activeResources,
-  createMockPilot,
   createMockUnit,
-  enqueueOwnCardTriggers,
   expectSuccess,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
+import { gd03MikhailKaminsky090 } from "../pilot/090-mikhail-kaminsky.ts";
 import { gd03HyGogg024 } from "./024-hy-gogg.ts";
 
 describe("Hy-Gogg (GD03-024)", () => {
   it("【When Linked】 deploys a rested Hy-Gogg token when another Cyclops Team Unit is in play", () => {
-    const pilot = createMockPilot({ traits: ["cyclops team"] });
     const ally = createMockUnit({ traits: ["cyclops team"] });
     const engine = GundamTestEngine.create(
       {
-        hand: [pilot],
+        hand: [gd03MikhailKaminsky090],
         play: [gd03HyGogg024, ally],
-        resourceArea: activeResources(3),
+        resourceArea: activeResources(4),
       },
       {},
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const hyGoggId = p1.getCardsInZone("battleArea")[0]!;
+    const before = new Set(p1.getCardsInZone("battleArea"));
 
-    expectSuccess(p1.assignPilot(pilot, hyGoggId));
-    const pilotId = p1
-      .getCardsInZone("battleArea")
-      .find((id) => id !== hyGoggId && id !== p1.getCardsInZone("battleArea")[1]);
-    engine.getRuntime().runTestMutation(PLAYER_ONE as PlayerId, ({ G, framework }) => {
-      enqueueOwnCardTriggers(
-        G,
-        { type: "pilotPaired", pilotId, unitId: hyGoggId, playerId: PLAYER_ONE, isLink: true },
-        hyGoggId,
-        PLAYER_ONE,
-        framework,
-      );
+    expectSuccess(p1.assignPilot(gd03MikhailKaminsky090, hyGoggId));
+
+    const newIds = p1.getCardsInZone("battleArea").filter((id) => !before.has(id));
+    const pilotId = p1.getPilotId(hyGoggId);
+    const tokenId = newIds.find((id) => id !== pilotId);
+    expect(tokenId).toBeDefined();
+    expect(p1.getVisibleCard(tokenId!)).toMatchObject({
+      effectiveAp: 2,
+      effectiveHp: 1,
+      exhausted: true,
     });
+  });
 
-    const tokenId = p1.getCardsInZone("battleArea").at(-1)!;
-    const token = engine.getRuntime().getFrameworkReadAPI().cards.getDefinition(tokenId);
-    expect(token?.name).toBe("Hy-Gogg");
-    expect(engine.getG().exhausted[tokenId]).toBe(true);
+  it("does not deploy a token without another Cyclops Team Unit", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd03MikhailKaminsky090],
+      play: [gd03HyGogg024],
+      resourceArea: activeResources(4),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hyGoggId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(gd03MikhailKaminsky090, hyGoggId));
+
+    expect(p1.getCardsInZone("battleArea")).toHaveLength(2);
   });
 });

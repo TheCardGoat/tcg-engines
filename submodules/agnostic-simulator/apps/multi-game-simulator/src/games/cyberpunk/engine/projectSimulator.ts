@@ -3,6 +3,7 @@ import {
   computeEffectiveCostDetails,
   getEffectivePower,
   getEffectiveRules,
+  type ActiveEffect,
   type CardInstance,
   type GigDie,
   type MatchState,
@@ -16,6 +17,8 @@ import type {
   HarnessFixture,
   InteractionInputKind,
   InteractionOption,
+  SimulatorActiveEffect,
+  SimulatorDeckReveal,
   SimulatorEntity,
   SimulatorEventLogEntry,
   SimulatorInteraction,
@@ -26,6 +29,7 @@ import type {
   ZoneRole,
 } from "@tcg/simulator-contract";
 
+import { buildCyberpunkDeckReveal, cardFrameColor } from "./deckRevealProjection";
 import { PLAYER_SIDE_TO_ID, type Side } from "./sides";
 
 export type { Side };
@@ -100,6 +104,7 @@ export function projectSimulator({
         { label: "Street Cred", value: String(streetCred) },
         { label: "Hand", value: String(player.zones.hand.length) },
       ],
+      activeEffects: projectPlayerActiveEffects(matchState, playerId),
       connectionStatus: isViewer ? "online" : undefined,
     });
 
@@ -140,6 +145,17 @@ export function projectSimulator({
     viewerSide,
     entities,
   });
+  const deckReveals = projectDeckReveals({
+    interactionViews,
+    matchState,
+    viewerSide,
+  });
+  if (deckReveals.size > 0) {
+    table.zones = table.zones.map((zone) => ({
+      ...zone,
+      ...(deckReveals.get(zone.id) ? { deckReveal: deckReveals.get(zone.id) } : {}),
+    }));
+  }
 
   const eventLog = projectEventLog(matchState, viewerSide);
   const targetingIntents = projectTargetingIntents(matchState, viewerSide);
@@ -335,6 +351,113 @@ function projectSideZones(input: ProjectSideZonesInput): SimulatorZone[] {
   return zones;
 }
 
+function projectDeckReveals(input: {
+  interactionViews: Readonly<Partial<Record<Side, EngineInteractionView>>>;
+  matchState: MatchState;
+  viewerSide: Side;
+}): Map<string, SimulatorDeckReveal> {
+  const reveals = new Map<string, SimulatorDeckReveal>();
+
+  for (const side of ["player", "opponent"] as const) {
+    const view = input.interactionViews[side];
+    const searchAction = view?.actions.find((action) => action.id === "resolveScry");
+    if (!searchAction) {
+      continue;
+    }
+    const cardIds = entityInputById(searchAction, "selectedCardIds")?.candidates.flatMap(
+      (candidate) =>
+        candidate.entity.kind === "card" ? [String(candidate.entity.instanceId)] : [],
+    );
+    const identityVisible = side === input.viewerSide;
+    const count = cardIds?.length ?? numberParam(searchAction, "lookCount") ?? 0;
+    if (count <= 0) {
+      continue;
+    }
+    const zoneId = deckZoneIdForSide(side);
+    const reveal = buildCyberpunkDeckReveal({
+      id: `${zoneId}:search:${searchAction.requestId}`,
+      zoneId,
+      ownerId: String(PLAYER_SIDE_TO_ID[side]),
+      visibility: identityVisible ? "public" : "private",
+      cardIds: identityVisible ? (cardIds ?? []) : [],
+      count,
+      turnNumber: input.matchState.G.turnMetadata.turnNumber,
+      matchState: input.matchState,
+      requireDeckPosition: true,
+    });
+    if (reveal) {
+      reveals.set(zoneId, reveal);
+    }
+  }
+
+  for (const view of Object.values(input.interactionViews)) {
+    const revealAction = view?.actions.find((action) => action.id === "resolveRevealDestination");
+    if (!revealAction) {
+      continue;
+    }
+    const ownerId = textParam(revealAction, "destinationOwnerId");
+    const ownerSide = sideForPlayerId(ownerId);
+    if (!ownerId || !ownerSide) {
+      continue;
+    }
+    const cardIds = delimitedTextParam(revealAction, "revealedCardIds");
+    const count = cardIds.length || numberParam(revealAction, "revealedCount") || 0;
+    if (count <= 0) {
+      continue;
+    }
+    const zoneId = deckZoneIdForSide(ownerSide);
+    const reveal = buildCyberpunkDeckReveal({
+      id: `${zoneId}:reveal:${revealAction.requestId}`,
+      zoneId,
+      ownerId,
+      visibility: cardIds.length > 0 ? "public" : "private",
+      cardIds,
+      count,
+      turnNumber: input.matchState.G.turnMetadata.turnNumber,
+      matchState: input.matchState,
+      requireDeckPosition: true,
+    });
+    if (reveal) {
+      reveals.set(zoneId, reveal);
+    }
+  }
+
+  return reveals;
+}
+
+function deckZoneIdForSide(side: Side): string {
+  return side === "opponent" ? "opp-deck" : "p-deck";
+}
+
+function entityInputById(
+  action: InteractionAction,
+  id: string,
+): Extract<InteractionInput, { kind: "entity-selection" }> | undefined {
+  return action.inputs.find(
+    (input): input is Extract<InteractionInput, { kind: "entity-selection" }> =>
+      input.kind === "entity-selection" && input.id === id,
+  );
+}
+
+function textParam(action: InteractionAction, key: string): string | undefined {
+  const value = action.text.params?.[key];
+  return typeof value === "string" ? value : undefined;
+}
+
+function numberParam(action: InteractionAction, key: string): number | undefined {
+  const value = action.text.params?.[key];
+  return typeof value === "number" ? value : undefined;
+}
+
+function delimitedTextParam(action: InteractionAction, key: string): string[] {
+  return (
+    textParam(action, key)
+      ?.split(",")
+      .map((value) => value.trim())
+      .filter((value) => value.length > 0) ?? []
+  );
+}
+
 function projectCardEntity(
   instance: CardInstance,
   matchState: MatchState,
@@ -390,9 +513,13 @@ function projectCardEntity(
     overlayBadges.push({ label: "€$", color: "#fbbf24", position: "br" });
   }
   const ruleBadges = getEffectiveRules(matchState, String(instance.instanceId))
-    .filter((rule) => rule === "blocker" || rule === "goSolo" || rule === "cantAttack")
+    .filter(
+      (rule) =>
+        rule === "blocker" || rule === "goSolo" || rule === "cantAttack" || rule === "mustAttack",
+    )
     .map((rule) => ({ label: rule, color: "#22d3ee", position: "tr" as const }));
   overlayBadges.push(...ruleBadges);
+  const activeEffects = projectCardActiveEffects(matchState, cardId);
 
   const states: EntityState[] = [];
   if (instance.meta.spent) states.push("rested");
@@ -425,13 +552,109 @@ function projectCardEntity(
     traits: hiddenFromViewer ? [] : traits,
     imageUrl: hiddenFromViewer ? undefined : definition.imageUrl,
     backImageUrl: definition.type === "legend" ? CARD_BACK_URLS.legend : CARD_BACK_URLS.default,
-    frameStyle: { color: colorForCardColor(definition.color as string | undefined) },
+    frameStyle: { color: cardFrameColor(definition.color as string | undefined) ?? "#6b7280" },
     overlayBadges,
+    activeEffects: hiddenFromViewer ? [] : activeEffects,
     dataAttributes,
   };
 
   entities.push(entity);
   return entity;
+}
+
+function projectCardActiveEffects(
+  matchState: MatchState,
+  targetId: string,
+): SimulatorActiveEffect[] {
+  return matchState.G.activeEffects
+    .filter((effect) => effect.playerId === undefined && String(effect.targetCardId) === targetId)
+    .map((effect) => {
+      const sourceLabel = sourceCardLabel(matchState, String(effect.sourceCardId));
+      const label = effectLabel(effect);
+      return {
+        id: effect.id,
+        targetKind: "entity" as const,
+        targetId,
+        sourceEntityId: String(effect.sourceCardId),
+        sourceLabel,
+        label,
+        detail:
+          effect.kind === "grantRule" && effect.rule === "mustAttack"
+            ? `Must attack next turn if able. Source: ${sourceLabel}.`
+            : `${sourceLabel}: ${label} ${durationLabelForEffect(effect)}.`,
+        tone: effectTone(effect),
+        durationLabel: durationLabelForEffect(effect),
+        kind: effect.kind,
+        rule: effect.rule,
+      };
+    });
+}
+
+function projectPlayerActiveEffects(
+  matchState: MatchState,
+  playerId: string,
+): SimulatorActiveEffect[] {
+  return matchState.G.activeEffects
+    .filter((effect) => effect.playerId !== undefined && String(effect.playerId) === playerId)
+    .map((effect) => {
+      const sourceLabel = sourceCardLabel(matchState, String(effect.sourceCardId));
+      const label = effectLabel(effect);
+      return {
+        id: effect.id,
+        targetKind: "seat" as const,
+        targetId: playerId,
+        sourceEntityId: String(effect.sourceCardId),
+        sourceLabel,
+        label,
+        detail: `${sourceLabel}: ${label} ${durationLabelForEffect(effect)}.`,
+        tone: effectTone(effect),
+        durationLabel: durationLabelForEffect(effect),
+        kind: effect.kind,
+        rule: effect.rule,
+      };
+    });
+}
+
+function sourceCardLabel(matchState: MatchState, cardId: string): string {
+  const source = matchState.G.cardIndex[cardId];
+  if (!source) return "Effect";
+  const definition = defOf(source);
+  return definition.displayName ?? definition.name;
+}
+
+function effectLabel(effect: ActiveEffect): string {
+  if (effect.kind === "powerModifier") return `${signedNumber(effect.powerModifier ?? 0)} PWR`;
+  if (effect.kind === "powerMultiplier") return `x${effect.powerMultiplier ?? 1} PWR`;
+  if (effect.kind === "costModifier") return "Cost modifier";
+  return formatRuleLabel(effect.rule);
+}
+
+function effectTone(effect: ActiveEffect): SimulatorActiveEffect["tone"] {
+  if (effect.kind === "powerModifier") return (effect.powerModifier ?? 0) >= 0 ? "buff" : "debuff";
+  if (effect.kind === "powerMultiplier") {
+    return (effect.powerMultiplier ?? 1) >= 1 ? "buff" : "debuff";
+  }
+  if (effect.kind === "costModifier") return "buff";
+  if (effect.rule === "cantAttack" || effect.rule === "mustAttack") return "debuff";
+  return "neutral";
+}
+
+function durationLabelForEffect(effect: Pick<ActiveEffect, "duration">): string {
+  if (effect.duration === "turn") return "this turn";
+  if (effect.duration === "untilSourceNextTurn") return "until source's next turn";
+  return "while active";
+}
+
+function signedNumber(value: number): string {
+  return value > 0 ? `+${value}` : `${value}`;
+}
+
+function formatRuleLabel(rule: string | undefined): string {
+  if (!rule) return "Rule";
+  return rule
+    .replace(/[A-Z]/g, (letter) => ` ${letter}`)
+    .trim()
+    .toUpperCase();
 }
 
 function isPrivateCardZone(zone: CyberpunkCardZone | null): boolean {
@@ -513,21 +736,6 @@ function entityKindForCardType(type: string): EntityKind {
       return "card";
     default:
       return "card";
-  }
-}
-
-function colorForCardColor(color: string | undefined): string {
-  switch (color) {
-    case "blue":
-      return "#3b82f6";
-    case "green":
-      return "#22c55e";
-    case "red":
-      return "#ef4444";
-    case "yellow":
-      return "#eab308";
-    default:
-      return "#6b7280";
   }
 }
 
@@ -860,6 +1068,18 @@ function localizeText(text: {
   // Minimal localization fallback: use the key and any label param.
   const label = text.params?.label;
   if (typeof label === "string") return label;
+  switch (text.key) {
+    case "cyberpunk.choice.chooseCardType":
+      return "Choose a card type";
+    case "cyberpunk.cardType.gear":
+      return "Gear";
+    case "cyberpunk.cardType.legend":
+      return "Legend";
+    case "cyberpunk.cardType.program":
+      return "Program";
+    case "cyberpunk.cardType.unit":
+      return "Unit";
+  }
   return text.key;
 }
 

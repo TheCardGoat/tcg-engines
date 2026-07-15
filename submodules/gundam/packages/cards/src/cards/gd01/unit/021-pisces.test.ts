@@ -1,17 +1,18 @@
-import { describe, it, expect } from "vite-plus/test";
-import { GundamTestEngine, PLAYER_ONE } from "@tcg/gundam-engine";
+import { describe, expect, it } from "vite-plus/test";
+import { GundamTestEngine, PLAYER_ONE, activeResources, expectSuccess } from "@tcg/gundam-engine";
 import { gd01Pisces021 } from "./021-pisces.ts";
 
 describe("Pisces (GD01-021)", () => {
-  it("can be placed in the battle area with its printed stats", () => {
-    const engine = GundamTestEngine.create({ play: [gd01Pisces021] });
+  it("deploys from hand with its visible AP and HP", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd01Pisces021],
+      resourceArea: activeResources(1),
+    });
     const p1 = engine.asPlayer(PLAYER_ONE);
 
-    expect(p1.getCardsInZone("battleArea")).toHaveLength(1);
-    expect(gd01Pisces021.type).toBe("unit");
-    expect(gd01Pisces021.level).toBe(1);
-    expect(gd01Pisces021.cost).toBe(1);
-    expect(gd01Pisces021.ap).toBe(1);
-    expect(gd01Pisces021.hp).toBe(2);
+    expectSuccess(p1.deployUnit(gd01Pisces021));
+
+    expect(p1.getCardZone(gd01Pisces021)).toBe(`battleArea:${PLAYER_ONE}`);
+    expect(p1.getVisibleCard(gd01Pisces021)).toMatchObject({ effectiveAp: 1, effectiveHp: 2 });
   });
 });

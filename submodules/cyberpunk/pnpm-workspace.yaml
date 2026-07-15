@@ -4,6 +4,8 @@ packages:
   - tools/*
 
 catalog:
+  "@typescript/native": "npm:typescript@7.0.2"
+  "@typescript/native-preview": "npm:typescript@7.0.2"
   "@discord/embedded-app-sdk": ^2.5.0
   "@dnd-kit/core": ^6.3.1
   "@mantine/dropzone": ^9.0.0
@@ -19,16 +21,17 @@ catalog:
   mutative: ^1.3.0
   socket.io-client: ^4.8.3
   socket.io-msgpack-parser: ^3.0.2
-  typescript: ^5
-  vite: npm:@voidzero-dev/vite-plus-core@latest
-  vite-plus: latest
-  vitest: npm:@voidzero-dev/vite-plus-test@latest
+  typescript: "npm:@typescript/typescript6@6.0.2"
+  vite: "npm:@voidzero-dev/vite-plus-core@0.2.4"
+  vite-plus: 0.2.4
+  vitest: "npm:@voidzero-dev/vite-plus-test@0.1.24"
   zod: ^4.4.3
 
 catalogMode: prefer
 onlyBuiltDependencies:
   - esbuild
 overrides:
+  "@voidzero-dev/vite-plus-core": 0.2.4
   vite: "catalog:"
   vitest: "catalog:"
 peerDependencyRules:
@@ -38,3 +41,6 @@ peerDependencyRules:
   allowedVersions:
     vite: "*"
     vitest: "*"
+
+patchedDependencies:
+  '@voidzero-dev/vite-plus-test': patches/@voidzero-dev__vite-plus-test.patch

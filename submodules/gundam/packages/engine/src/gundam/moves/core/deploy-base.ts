@@ -4,7 +4,9 @@
  * Plays a Base card from hand into the base section of the shield area.
  * Rules 7-5-2-1: deploy a Base by paying its cost.
  * Rules 3-5-1: Base cards are deployed into the base section of the shield area.
- * Rules 4-6-3: You may have up to one Base placed face up in your base section.
+ * Rules 4-6-3, 11-5-2: The Base section holds one Base; when a new Base
+ *              enters an occupied section, its controller chooses one Base
+ *              there to place into trash through rules management.
  * Rules 3-5-3: While a Base is present, damage dealt to the shield area is
  *              preferentially dealt to that base.
  */
@@ -23,14 +25,13 @@ import {
 } from "../../effects/pending-effects.ts";
 import { emitGundamEvent } from "../../events.ts";
 import { emitGundamLog } from "../../logging.ts";
+import { enqueueBaseSectionExcessManagement } from "../../rules/base-section-excess.ts";
 
 export const deployBase: GundamMoveDefinition<"deployBase"> = {
   gatedByPendingEffects: true,
 
   enumerateCandidates({ G, playerId, framework }) {
     if (framework.state.status.phase !== "main-phase") return [];
-    const existingBases = framework.zones.getCards({ zone: "baseSection", playerId });
-    if (existingBases.length >= 1) return [];
     const g = G;
     const handIds = framework.zones.getCards({ zone: "hand", playerId });
     const out: string[] = [];
@@ -65,15 +66,6 @@ export const deployBase: GundamMoveDefinition<"deployBase"> = {
       };
     }
 
-    const existingBases = framework.zones.getCards({ zone: "baseSection", playerId });
-    if (existingBases.length >= 1) {
-      return {
-        valid: false,
-        error: "Can only have one Base in play at a time (Rule 4-6-3)",
-        errorCode: "BASE_LIMIT_REACHED",
-      };
-    }
-
     const commonResult = validatePlayFromHand(cardId, playerId, g, framework);
     if (!commonResult.valid) return commonResult;
 
@@ -103,6 +95,11 @@ export const deployBase: GundamMoveDefinition<"deployBase"> = {
       visibility: { mode: "PUBLIC" },
       category: "action",
     });
+
+    // Rule 11-5-2 rules management is immediate (11-1-2): the new Base is
+    // visible first, then its controller chooses which Base remains before
+    // any 【Deploy】 or observer trigger continues.
+    enqueueBaseSectionExcessManagement(g, playerId, cardId, framework, moveId);
 
     // Enqueue 【Deploy】 effects onto g.pendingEffects; the flow engine's
     // onTransitionCheck drains auto-resolvable heads and halts for any

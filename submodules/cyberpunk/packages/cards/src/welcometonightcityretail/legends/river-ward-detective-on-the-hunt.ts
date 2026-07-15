@@ -40,6 +40,21 @@ export const welcomeToNightCityRetailRiverWardDetectiveOnTheHunt = defineCyberpu
       },
       bindings: [
         {
+          id: "selectedGear",
+          target: {
+            selector: "card",
+            controller: "friendly",
+            zones: ["hand"],
+            cardTypes: ["gear"],
+            maxCost: 2,
+            selection: {
+              mode: "choose",
+              min: 1,
+              max: 1,
+            },
+          },
+        },
+        {
           id: "selectedUnit",
           target: {
             selector: "card",
@@ -67,16 +82,8 @@ export const welcomeToNightCityRetailRiverWardDetectiveOnTheHunt = defineCyberpu
         {
           effect: "attachCard",
           target: {
-            selector: "card",
-            controller: "friendly",
-            zones: ["hand"],
-            cardTypes: ["gear"],
-            maxCost: 2,
-            selection: {
-              mode: "choose",
-              min: 1,
-              max: 1,
-            },
+            selector: "bound",
+            id: "selectedGear",
           },
           attachTo: {
             selector: "bound",
@@ -107,23 +114,27 @@ export const welcomeToNightCityRetailRiverWardDetectiveOnTheHunt = defineCyberpu
       },
       effects: [
         {
-          effect: "searchDeck",
+          effect: "scry",
           player: "friendly",
-          lookCount: 2,
-          target: {
-            selector: "card",
-            controller: "friendly",
-            zones: ["deck"],
-          },
-          select: {
-            kind: "exact",
-            amount: 1,
-          },
-          reveal: false,
-          destination: "trash",
-          remainder: {
-            zone: "deckBottom",
-          },
+          amount: 2,
+          destinations: [
+            {
+              zone: "trash",
+              min: 1,
+              max: 1,
+              reveal: false,
+              target: {
+                selector: "card",
+                controller: "friendly",
+                zones: ["deck"],
+              },
+            },
+            {
+              zone: "deckBottom",
+              remainder: true,
+              order: "original",
+            },
+          ],
         },
       ],
     },

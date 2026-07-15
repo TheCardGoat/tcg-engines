@@ -131,6 +131,7 @@ function finishEndTurn(
   // Process delayed effects from the effectBag before cleanup
   const bagEntries = [...state.G.effectBag];
   for (const entry of bagEntries) {
+    if (entry.delayedTiming !== "endOfTurn") continue;
     if (entry.delayedEffects) {
       const ctx: ResolutionContext = {
         state,

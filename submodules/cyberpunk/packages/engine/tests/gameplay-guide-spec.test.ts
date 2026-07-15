@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaVCorporateExile,
+  theHeistRetailStarterDeckVCorporateExile,
   welcomeToNightCityRetailKerryEurodyneTheLastRockerboy,
   welcomeToNightCityRetailYorinobuArasakaSteelDragon,
 } from "@tcg/cyberpunk-cards";
@@ -524,14 +524,9 @@ describe("Gameplay guide specification coverage", () => {
     });
 
     engine.playCard(welcomeToNightCityRetailYorinobuArasakaSteelDragon, { as: P1 });
-    engine.resolveEffectTarget(effectPlayedUnit, {
-      as: P1,
-      allowPendingChoice: true,
-      reason: "Yorinobu still needs the chosen Unit to be confirmed for free play",
-    });
-    engine.resolveCardToPlay(effectPlayedUnit, { as: P1 });
+    engine.resolveEffectTarget(effectPlayedUnit, { as: P1 });
 
-    expect(engine.getCard(effectPlayedUnit, "field", P1).meta.playedThisTurn).toBe(true);
+    expect(engine.getCard(effectPlayedUnit, "field", P1).meta.hasLag).toBe(true);
     const failure = engine.expectFailure(() =>
       engine.activateAbility(effectPlayedUnit, 0, { as: P1 }),
     );
@@ -662,21 +657,27 @@ describe("Gameplay guide specification coverage", () => {
     });
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        legendArea: [{ card: alphaVCorporateExile, faceDown: false, attachedGears: [gear] }],
+        legendArea: [
+          {
+            card: theHeistRetailStarterDeckVCorporateExile,
+            faceDown: false,
+            attachedGears: [gear],
+          },
+        ],
         eddies: 5,
       },
       {
         field: [{ card: defender, spent: true }],
       },
     );
-    const vId = engine.findCardId(alphaVCorporateExile, "legendArea", P1);
+    const vId = engine.findCardId(theHeistRetailStarterDeckVCorporateExile, "legendArea", P1);
 
     engine.executeMove("goSolo", { args: { cardId: vId } }, P1);
-    engine.attackUnit(alphaVCorporateExile, defender, { as: P1 });
+    engine.attackUnit(theHeistRetailStarterDeckVCorporateExile, defender, { as: P1 });
     engine.resolveFullFight({ as: P1 });
 
     expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).not.toContain(
-      alphaVCorporateExile.id,
+      theHeistRetailStarterDeckVCorporateExile.id,
     );
     expect(engine.getState().G.cardIndex[vId as string]).toBeUndefined();
     expect(engine.getCard(gear, "trash", P1).meta.attachedToId).toBeNull();
@@ -684,21 +685,23 @@ describe("Gameplay guide specification coverage", () => {
 
   it("plays GO SOLO Legends as ready Units that can attack that turn", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
-      legendArea: [{ card: alphaVCorporateExile, faceDown: false }],
+      legendArea: [{ card: theHeistRetailStarterDeckVCorporateExile, faceDown: false }],
       eddies: 5,
     });
-    const vId = engine.findCardId(alphaVCorporateExile, "legendArea", P1);
+    const vId = engine.findCardId(theHeistRetailStarterDeckVCorporateExile, "legendArea", P1);
     const eddiesBefore = engine.getEddies(P1);
 
     expect(engine.executeMove("goSolo", { args: { cardId: vId } }, P1)).toMatchObject({
       success: true,
     });
 
-    const v = engine.getCard(alphaVCorporateExile, "field", P1);
+    const v = engine.getCard(theHeistRetailStarterDeckVCorporateExile, "field", P1);
     expect(engine.getEddies(P1)).toBeLessThan(eddiesBefore);
     expect(v.meta.spent).toBe(false);
-    expect(v.meta.playedThisTurn).toBe(false);
-    expect(engine.attackRival(alphaVCorporateExile, { as: P1 })).toBeSuccessfulCommand();
+    expect(v.meta.hasLag).toBe(false);
+    expect(
+      engine.attackRival(theHeistRetailStarterDeckVCorporateExile, { as: P1 }),
+    ).toBeSuccessfulCommand();
   });
 
   it("allows QUICK Programs and activated effects as reactions to a rival attack", () => {

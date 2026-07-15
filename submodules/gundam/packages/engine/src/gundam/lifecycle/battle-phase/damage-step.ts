@@ -29,9 +29,9 @@ export function battlePhaseDamageStepOnEnter(ctx: LifecycleContext): void {
     framework: ctx.framework,
   };
 
-  if (target === "direct" || (!blockerId && target !== "direct")) {
-    resolveDirectBattle(g, attackerId, attackerPlayerId, target, effCtx);
-  } else if (blockerId && blockerPlayerId) {
+  if (blockerId && blockerPlayerId) {
     resolveBlockedBattle(g, attackerId, attackerPlayerId, blockerId, blockerPlayerId, effCtx);
+  } else {
+    resolveDirectBattle(g, attackerId, attackerPlayerId, target, effCtx);
   }
 }

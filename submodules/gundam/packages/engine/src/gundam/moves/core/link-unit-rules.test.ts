@@ -99,7 +99,7 @@ describe("Link-Unit attack-on-deploy gating (rule 3-2-6-3)", () => {
 
     const engine = GundamTestEngine.create(
       { hand: [unit, pilot], resourceArea: resources(5) },
-      { play: [enemy] },
+      { play: [{ card: enemy, exhausted: true }] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
@@ -121,7 +121,7 @@ describe("Link-Unit attack-on-deploy gating (rule 3-2-6-3)", () => {
 
     const engine = GundamTestEngine.create(
       { hand: [unit, pilot], resourceArea: resources(5) },
-      { play: [enemy] },
+      { play: [{ card: enemy, exhausted: true }] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);

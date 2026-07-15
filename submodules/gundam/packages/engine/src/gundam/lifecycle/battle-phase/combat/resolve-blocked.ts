@@ -1,5 +1,10 @@
 import type { GundamG } from "../../../types.ts";
-import { getEffectiveStats, hasKeyword, isDefeated } from "../../../rules/derived-state.ts";
+import {
+  getEffectiveStats,
+  getKeywordValue,
+  hasKeyword,
+  isDefeated,
+} from "../../../rules/derived-state.ts";
 import { handleUnitDefeated } from "../../../effects/handlers/combat.ts";
 import type { BattleEffCtx } from "./types.ts";
 import { hasDamagePreventionFor } from "./damage-prevention.ts";
@@ -15,8 +20,20 @@ export function resolveBlockedBattle(
 ): void {
   const attackerStats = getEffectiveStats(attackerId, g, ctx.framework.cards, ctx.framework);
   const blockerStats = getEffectiveStats(blockerId, g, ctx.framework.cards, ctx.framework);
-  const attackerFirstStrike = hasKeyword(attackerId, "FirstStrike", g, ctx.framework.cards);
-  const blockerFirstStrike = hasKeyword(blockerId, "FirstStrike", g, ctx.framework.cards);
+  const attackerFirstStrike = hasKeyword(
+    attackerId,
+    "FirstStrike",
+    g,
+    ctx.framework.cards,
+    ctx.framework,
+  );
+  const blockerFirstStrike = hasKeyword(
+    blockerId,
+    "FirstStrike",
+    g,
+    ctx.framework.cards,
+    ctx.framework,
+  );
   const attackerDamagePrevented = hasDamagePreventionFor(attackerId, blockerId, g, ctx.framework);
   const blockerDamagePrevented = hasDamagePreventionFor(blockerId, attackerId, g, ctx.framework);
 
@@ -25,6 +42,16 @@ export function resolveBlockedBattle(
     sourcePlayerId: blockerPlayerId,
     sourceCardId: blockerId,
   };
+  const attackerDestroyCtx: BattleEffCtx = {
+    ...ctx,
+    battleDestroyBreachValue: getKeywordValue(
+      attackerId,
+      "Breach",
+      g,
+      ctx.framework.cards,
+      ctx.framework,
+    ),
+  };
 
   if (attackerFirstStrike && !blockerFirstStrike) {
     if (!blockerDamagePrevented) {
@@ -32,7 +59,7 @@ export function resolveBlockedBattle(
     }
 
     if (isDefeated(blockerId, g, ctx.framework.cards)) {
-      handleUnitDefeated(blockerId, ctx);
+      handleUnitDefeated(blockerId, attackerDestroyCtx);
       return;
     }
 
@@ -61,7 +88,7 @@ export function resolveBlockedBattle(
     }
 
     if (isDefeated(blockerId, g, ctx.framework.cards)) {
-      handleUnitDefeated(blockerId, ctx);
+      handleUnitDefeated(blockerId, attackerDestroyCtx);
     }
     return;
   }
@@ -77,6 +104,6 @@ export function resolveBlockedBattle(
     handleUnitDefeated(attackerId, blockerCtx);
   }
   if (isDefeated(blockerId, g, ctx.framework.cards)) {
-    handleUnitDefeated(blockerId, ctx);
+    handleUnitDefeated(blockerId, attackerDestroyCtx);
   }
 }

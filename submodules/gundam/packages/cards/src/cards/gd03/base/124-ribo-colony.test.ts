@@ -1,49 +1,62 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  asPlayerId,
   createMockPilot,
   createMockUnit,
-  enqueueOwnCardTriggers,
   expectSuccess,
-  seedBaseAsShield,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd03RiboColony124 } from "./124-ribo-colony.ts";
 
 describe("Ribo Colony (GD03-124)", () => {
-  it("【Burst】Deploy this card — flips into baseSection on shield destruction", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd03RiboColony124] });
-    const shieldId = seedBaseAsShield(engine, PLAYER_TWO, gd03RiboColony124);
-
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `baseSection:${PLAYER_TWO}`,
+  it("lets its owner deploy it when its Burst is revealed by a direct attack", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd03RiboColony124] },
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      controllerId: PLAYER_TWO,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+
+    expect(p2.getCardZone(gd03RiboColony124)).toBe(`baseSection:${PLAYER_TWO}`);
   });
 
-  it("【Deploy】 adds 1 shield to hand when deployed", () => {
-    const engine = GundamTestEngine.create(
-      { hand: [gd03RiboColony124], resourceArea: activeResources(3), deck: 6 },
-      {},
-    );
-    const shieldIds = seedShieldsFromDeck(engine, PLAYER_ONE, 2);
+  it("adds one shield to its owner's hand when deployed", () => {
+    const returnedShield = createMockUnit({
+      cardNumber: "TEST-RETURNED-SHIELD",
+      name: "Returned Shield",
+    });
+    const engine = GundamTestEngine.create({
+      hand: [gd03RiboColony124],
+      resourceArea: activeResources(3),
+      shieldArea: [returnedShield],
+    });
     const p1 = engine.asPlayer(PLAYER_ONE);
 
     expectSuccess(p1.deployBase(gd03RiboColony124));
 
-    expect(p1.getHand()).toContain(shieldIds[0]);
-    expect(p1.getCardsInZone("baseSection").length).toBe(1);
+    expect(p1.getCardZone(returnedShield)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getCardZone(gd03RiboColony124)).toBe(`baseSection:${PLAYER_ONE}`);
   });
 
-  it("【Once per Turn】 rests an enemy Unit with 3 or less HP for a Lv.3 or lower Pilot pair event", () => {
+  it("offers only enemy Units with 3 or less HP after pairing a Lv.3 Pilot", () => {
     const pilot = createMockPilot({ level: 3 });
     const unit = createMockUnit();
-    const enemy = createMockUnit({ hp: 3 });
+    const eligibleEnemy = createMockUnit({ hp: 3 });
+    const ineligibleEnemy = createMockUnit({ hp: 4 });
     const engine = GundamTestEngine.create(
       {
         hand: [pilot],
@@ -51,31 +64,30 @@ describe("Ribo Colony (GD03-124)", () => {
         baseSection: [gd03RiboColony124],
         resourceArea: activeResources(3),
       },
-      { play: [enemy] },
+      { play: [eligibleEnemy, ineligibleEnemy] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
     const unitId = p1.getCardsInZone("battleArea")[0]!;
-    const baseId = p1.getCardsInZone("baseSection")[0]!;
-    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+    const [eligibleEnemyId, ineligibleEnemyId] = p2.getCardsInZone("battleArea");
 
     expectSuccess(p1.assignPilot(pilot, unitId));
-    const pilotId = engine
-      .getRuntime()
-      .getInstanceIdByDefinition(asPlayerId(PLAYER_ONE), pilot.cardNumber)!;
-    engine.getRuntime().runTestMutation(asPlayerId(PLAYER_ONE), ({ G, framework }) => {
-      enqueueOwnCardTriggers(
-        G,
-        { type: "pilotPaired", pilotId, unitId, playerId: PLAYER_ONE, isLink: false },
-        baseId,
-        PLAYER_ONE,
-        framework,
-      );
-    });
 
-    expect(engine.getG().exhausted[enemyId]).toBe(true);
+    const prompt = p1.getBoardView().pendingChoice;
+    expect(prompt).toMatchObject({
+      kind: "targetSelection",
+      controllerId: PLAYER_ONE,
+      legalTargetIds: [eligibleEnemyId],
+    });
+    expect(prompt?.kind === "targetSelection" ? prompt.legalTargetIds : []).not.toContain(
+      ineligibleEnemyId,
+    );
+    expectSuccess(p1.resolveEffect({ targets: [eligibleEnemyId!] }));
+    expect(p2.isExhausted(eligibleEnemyId!)).toBe(true);
+    expect(p2.isExhausted(ineligibleEnemyId!)).toBe(false);
   });
 
-  it("【Once per Turn】 does not enqueue for a Lv.4 Pilot", () => {
+  it("does not trigger after pairing a Lv.4 Pilot", () => {
     const pilot = createMockPilot({ level: 4 });
     const unit = createMockUnit();
     const enemy = createMockUnit({ hp: 3 });
@@ -89,25 +101,43 @@ describe("Ribo Colony (GD03-124)", () => {
       { play: [enemy] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
     const unitId = p1.getCardsInZone("battleArea")[0]!;
-    const baseId = p1.getCardsInZone("baseSection")[0]!;
-    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.assignPilot(pilot, unitId));
-    const pilotId = engine
-      .getRuntime()
-      .getInstanceIdByDefinition(asPlayerId(PLAYER_ONE), pilot.cardNumber)!;
-    engine.getRuntime().runTestMutation(asPlayerId(PLAYER_ONE), ({ G, framework }) => {
-      enqueueOwnCardTriggers(
-        G,
-        { type: "pilotPaired", pilotId, unitId, playerId: PLAYER_ONE, isLink: false },
-        baseId,
-        PLAYER_ONE,
-        framework,
-      );
-    });
 
-    expect(engine.getPendingChoice()).toBeUndefined();
-    expect(engine.getG().exhausted[enemyId]).not.toBe(true);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.isExhausted(enemyId)).toBe(false);
+  });
+
+  it("triggers only once when two eligible Pilots are paired in the same turn", () => {
+    const firstPilot = createMockPilot({ cardNumber: "TEST-PILOT-A", level: 3 });
+    const secondPilot = createMockPilot({ cardNumber: "TEST-PILOT-B", level: 3 });
+    const firstUnit = createMockUnit({ cardNumber: "TEST-UNIT-A" });
+    const secondUnit = createMockUnit({ cardNumber: "TEST-UNIT-B" });
+    const firstEnemy = createMockUnit({ cardNumber: "TEST-ENEMY-A", hp: 3 });
+    const secondEnemy = createMockUnit({ cardNumber: "TEST-ENEMY-B", hp: 3 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [firstPilot, secondPilot],
+        play: [firstUnit, secondUnit],
+        baseSection: [gd03RiboColony124],
+        resourceArea: activeResources(6),
+      },
+      { play: [firstEnemy, secondEnemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [firstUnitId, secondUnitId] = p1.getCardsInZone("battleArea");
+    const [firstEnemyId, secondEnemyId] = p2.getCardsInZone("battleArea");
+
+    expectSuccess(p1.assignPilot(firstPilot, firstUnitId!));
+    expectSuccess(p1.resolveEffect({ targets: [firstEnemyId!] }));
+    expectSuccess(p1.assignPilot(secondPilot, secondUnitId!));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.isExhausted(firstEnemyId!)).toBe(true);
+    expect(p2.isExhausted(secondEnemyId!)).toBe(false);
   });
 });

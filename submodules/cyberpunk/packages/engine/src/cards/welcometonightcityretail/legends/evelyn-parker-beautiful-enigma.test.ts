@@ -12,9 +12,7 @@ describe("Evelyn Parker - Beautiful Enigma", () => {
   it("readies 1 Eddie when a friendly Corpo Unit steals a Gig", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
         legendArea: [
           { card: welcomeToNightCityRetailEvelynParkerBeautifulEnigma, faceDown: false },
         ],
@@ -38,7 +36,7 @@ describe("Evelyn Parker - Beautiful Enigma", () => {
   it("does not ready an Eddie when a non-Corpo non-Ganger Unit steals", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, hasLag: false }],
         legendArea: [
           { card: welcomeToNightCityRetailEvelynParkerBeautifulEnigma, faceDown: false },
         ],
@@ -72,9 +70,7 @@ describe("Evelyn Parker - Beautiful Enigma", () => {
         eddies: 1,
       },
       {
-        field: [
-          { card: welcomeToNightCityRetailSwordwiseHuscle, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailSwordwiseHuscle, spent: false, hasLag: false }],
       },
     );
 

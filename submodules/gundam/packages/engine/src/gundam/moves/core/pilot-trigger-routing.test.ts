@@ -175,14 +175,19 @@ describe("Pilot-resident trigger routing (rule 3-3-9-1)", () => {
 
     // Locate the rested resource after the pair has been set up.
     const resourceIds = p1.getCardsInZone("resourceArea");
-    const restedId = resourceIds.find((id) => engine.getG().exhausted[id] === true);
+    const restedId = resourceIds.find((id) => p1.isExhausted(id));
     if (!restedId) throw new Error("setup: no rested resource");
 
     const defenderId = p2.getCardsInZone("battleArea")[0]!;
     expectSuccess(p1.enterBattle(unit, defenderId));
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("targetSelection");
+    if (choice?.kind !== "targetSelection") throw new Error("expected resource target choice");
+    expect(choice.legalTargetIds).toContain(restedId);
+    expectSuccess(p1.resolveEffect({ targets: [restedId] }));
 
-    // setActive drained on the attack observer scan → resource is active.
-    expect(engine.getG().exhausted[restedId]).toBe(false);
+    // The simulator-selected resource is now active.
+    expect(p1.isExhausted(restedId)).toBe(false);
   });
 
   it("fires a pilot's own 【Attack】 trigger when the paired unit attacks", () => {

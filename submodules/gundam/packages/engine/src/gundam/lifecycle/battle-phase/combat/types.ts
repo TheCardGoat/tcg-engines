@@ -6,4 +6,5 @@ export type BattleEffCtx = {
   sourcePlayerId: string;
   sourceCardId: string;
   framework: FrameworkWriteAPI;
+  battleDestroyBreachValue?: number;
 };

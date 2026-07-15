@@ -7,7 +7,7 @@ export const unitGoroTakemuraLosingHisWayBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitGoroTakemuraLosingHisWay",
   label: "Goro Takemura - power scales with face-up legends",
   references: [
-    "packages/engine/src/cards/alpha/units/goro-takemura-losing-his-way.test.ts",
+    "packages/engine/src/cards/embracingpowerretailstarterdeck/units/goro-takemura-losing-his-way.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

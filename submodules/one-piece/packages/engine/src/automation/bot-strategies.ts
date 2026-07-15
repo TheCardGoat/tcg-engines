@@ -5,23 +5,30 @@ export type OnePieceBotStrategy = (
   state: MatchState,
   seat: MatchSeat,
   legalCommands: LegalCommandDescriptor[],
+  context?: OnePieceBotDecisionContext,
 ) => EngineCommand | null;
 
-function randomItem<T>(items: T[]): T {
-  return items[Math.floor(Math.random() * items.length)];
+export interface OnePieceBotDecisionContext {
+  readonly random: () => number;
+}
+
+function randomItem<T>(items: T[], random: () => number): T {
+  return items[Math.floor(random() * items.length)];
 }
 
 export function commandFromDescriptor(
   state: MatchState,
   seat: MatchSeat,
   descriptor: LegalCommandDescriptor,
+  context?: OnePieceBotDecisionContext,
 ): EngineCommand | null {
   switch (descriptor.type) {
     case "chooseJoKenPo": {
-      const choice = descriptor.options?.[0]?.value;
-      if (choice !== "rock" && choice !== "paper" && choice !== "scissors") {
-        return null;
-      }
+      // Avoid deterministic mirror bots selecting the same first descriptor
+      // forever. North advances one choice ahead of South for the same round.
+      const choices = ["rock", "paper", "scissors"] as const;
+      const seatOffset = seat === "north" ? 1 : 0;
+      const choice = choices[(state.setup.joKenPo.round - 1 + seatOffset) % choices.length]!;
       return { type: "chooseJoKenPo", seat, choice };
     }
     case "chooseFirstPlayer": {
@@ -37,7 +44,7 @@ export function commandFromDescriptor(
       return {
         type: "resolveJoKenPoTimeout",
         seat,
-        winner: otherChose ? other : randomItem(["south", "north"]),
+        winner: otherChose ? other : randomItem(["south", "north"], context?.random ?? (() => 0)),
         reason: otherChose ? "onePlayerTimedOut" : "bothPlayersTimedOut",
         elapsedMs: 30000,
         timedOutSeats: otherChose ? [seat] : ["south", "north"],
@@ -112,13 +119,13 @@ export const firstLegalStrategy: OnePieceBotStrategy = (state, seat, legalComman
   return commandFromDescriptor(state, seat, fallback);
 };
 
-export const randomStrategy: OnePieceBotStrategy = (state, seat, legalCommands) => {
+export const randomStrategy: OnePieceBotStrategy = (state, seat, legalCommands, context) => {
   const myCommands = legalCommands
     .filter((c) => c.seat === seat)
-    .map((c) => commandFromDescriptor(state, seat, c))
+    .map((c) => commandFromDescriptor(state, seat, c, context))
     .filter((c): c is NonNullable<typeof c> => c !== null);
   if (myCommands.length === 0) return null;
-  return randomItem(myCommands);
+  return randomItem(myCommands, context?.random ?? (() => 0));
 };
 
 export const passOnlyStrategy: OnePieceBotStrategy = (state, seat, legalCommands) => {

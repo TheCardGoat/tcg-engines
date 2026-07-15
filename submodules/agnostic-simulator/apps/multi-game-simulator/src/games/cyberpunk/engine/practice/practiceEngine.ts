@@ -2,6 +2,7 @@ import {
   CyberpunkTestEngine,
   createMatchState,
   createPlayerId,
+  DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
   getSafeAutomatedActionStrategyOption,
   type AIStrategy,
   type DeckList,
@@ -66,5 +67,5 @@ function resolveBotDeck(config: PracticeMatchConfig): { deck: DeckList; name: st
 }
 
 function strategyForId(id: PracticeMatchConfig["botStrategyId"]): AIStrategy {
-  return getSafeAutomatedActionStrategyOption(id).strategy;
+  return getSafeAutomatedActionStrategyOption(id ?? DEFAULT_AUTOMATED_ACTION_STRATEGY_ID).strategy;
 }

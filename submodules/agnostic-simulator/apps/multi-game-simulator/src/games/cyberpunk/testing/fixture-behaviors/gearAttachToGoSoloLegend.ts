@@ -9,7 +9,7 @@ import { type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
 export const gearAttachToGoSoloLegendBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "gearAttachToGoSoloLegend",
   label: "Mantis Blades - attach to a GO SOLO legend on field",
-  references: ["packages/engine/src/cards/alpha/gear/mantis-blades.test.ts"],
+  references: ["packages/engine/src/cards/welcometonightcityretail/gear/mantis-blades.test.ts"],
   async run(pom) {
     const gear = await pom.getCardInZoneByDefinitionId(
       "hand",

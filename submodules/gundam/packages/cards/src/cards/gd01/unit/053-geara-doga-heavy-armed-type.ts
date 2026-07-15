@@ -4,6 +4,7 @@ export const gd01GearaDogaHeavyArmedType053: UnitCard = {
   cardNumber: "GD01-053",
   name: "Geara Doga (Heavy Armed Type)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["neo zeon"],
   id: "GD01-053",

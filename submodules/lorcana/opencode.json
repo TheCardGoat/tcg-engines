@@ -20,12 +20,5 @@
     "prune": true,
     "reserved": 10000
   },
-  "default_agent": "lead",
-  "mcp": {
-    "nx-mcp": {
-      "type": "local",
-      "command": ["npx", "nx", "mcp"],
-      "enabled": true
-    }
-  }
+  "default_agent": "lead"
 }

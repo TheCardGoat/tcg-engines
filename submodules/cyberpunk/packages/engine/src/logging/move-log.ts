@@ -11,6 +11,7 @@
  */
 
 import type { CardInstanceId, GigDieId, PlayerId } from "../types/branded.ts";
+import type { CardZone } from "@tcg/cyberpunk-types";
 import type { ActionLogMessageKey } from "../types/game-events.ts";
 import type { PrivateField } from "./private-field.ts";
 
@@ -120,6 +121,7 @@ export interface ResolveDiscardFromHandLog extends MoveLogBase {
   type: "resolveDiscardFromHand";
   discardedCount: number;
   passed?: boolean;
+  reason?: "costMatchedFriendlyGig";
 }
 
 export interface ResolveStealGigsLog extends MoveLogBase {
@@ -152,10 +154,24 @@ export interface SearchDeckLog extends MoveLogBase {
   revealed?: PrivateField<CardInstanceId[]>;
 }
 
+export interface LookAtCardsLog extends MoveLogBase {
+  type: "lookAtCards";
+  sourceCardId: CardInstanceId;
+  ownerId: PlayerId;
+  zone: CardZone;
+  cardIds?: PrivateField<CardInstanceId[]>;
+}
+
 export interface ResolveSearchDeckLog extends MoveLogBase {
   type: "resolveSearchDeck";
   lookedAt: number;
   found: number;
+}
+
+export interface ResolveRevealDestinationLog extends MoveLogBase {
+  type: "resolveRevealDestination";
+  count: number;
+  destination: "hand" | "trash";
 }
 
 // ── System (non-player-driven) ──────────────────────────────────────────────
@@ -218,7 +234,9 @@ export type MoveLog =
   | UndoLog
   | ActivateAbilityLog
   | SearchDeckLog
+  | LookAtCardsLog
   | ResolveSearchDeckLog
+  | ResolveRevealDestinationLog
   | TurnStartedLog
   | TurnEndedLog
   | GameEndedLog

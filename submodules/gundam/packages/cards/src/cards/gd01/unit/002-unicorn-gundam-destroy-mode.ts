@@ -4,6 +4,7 @@ export const gd01UnicornGundamDestroyMode002: UnitCard = {
   cardNumber: "GD01-002",
   name: "Unicorn Gundam (Destroy Mode)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["civilian"],
   id: "GD01-002",
@@ -79,6 +80,33 @@ export const gd01UnicornGundamDestroyMode002: UnitCard = {
   effect:
     'When playing this card from your hand, you may destroy 1 of your Link Units with "Unicorn Mode" in its card name that is Lv.5. If you do, play this card as if it has 0 Lv. and cost.\n【Attack】Choose 1 enemy Unit. Rest it.',
   effects: [
+    {
+      type: "substitution",
+      activation: {},
+      directives: [
+        {
+          action: {
+            action: "deployCostSubstitution",
+            level: 0,
+            cost: 0,
+            destroyTarget: {
+              owner: "friendly",
+              zone: "battleArea",
+              cardType: "unit",
+              count: 1,
+              isLinkUnit: true,
+              attributeFilters: [
+                { attribute: "name", comparison: "includes", value: "Unicorn Mode" },
+                { attribute: "level", comparison: "eq", value: 5 },
+              ],
+            },
+          },
+          optional: true,
+        },
+      ],
+      sourceText:
+        'When playing this card from your hand, you may destroy 1 of your Link Units with "Unicorn Mode" in its card name that is Lv.5. If you do, play this card as if it has 0 Lv. and cost.',
+    },
     {
       type: "triggered",
       activation: {

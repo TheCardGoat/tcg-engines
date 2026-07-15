@@ -4,6 +4,7 @@ export const betaUnicornGundamUnicornMode005: UnitCard = {
   cardNumber: "GD01-005",
   name: "Unicorn Gundam (Unicorn Mode)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["civilian"],
   id: "GD01-005_p2",
@@ -92,6 +93,7 @@ export const betaUnicornGundamUnicornMode005: UnitCard = {
   cost: 4,
   ap: 4,
   hp: 3,
+  linkCondition: "[Banagher Links]",
   effect:
     "【During Pair】【Destroyed】If this is a Link Unit, return its paired Pilot to its owner's hand. Then, discard 1.<br>",
   effects: [
@@ -99,13 +101,19 @@ export const betaUnicornGundamUnicornMode005: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["destroyed"],
-        conditions: [{ type: "duringPair" }],
+        conditions: [{ type: "duringLink" }],
       },
       directives: [
         {
           action: {
-            action: "discard",
-            count: 1,
+            action: "resolveThenQueue",
+            first: { action: "returnPairedPilotToHand" },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [{ action: { action: "discard", count: 1 } }],
+              sourceText: "Then, discard 1.",
+            },
           },
         },
       ],

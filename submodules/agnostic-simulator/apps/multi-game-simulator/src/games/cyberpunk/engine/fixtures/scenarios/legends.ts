@@ -147,7 +147,7 @@ export const legendScenarios: Scenario[] = [
           hand: [],
           field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
           legendArea: [
-            { card: c.welcomeToNightCityRetailVStreetkid, faceDown: false },
+            { card: c.welcomeToNightCityRetailVStreetkid, faceDown: true },
             { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
           ],
           trash: [
@@ -371,6 +371,13 @@ export const legendScenarios: Scenario[] = [
             { card: c.welcomeToNightCityRetailSecondhandBombus, spent: false },
           ],
           trash: [c.welcomeToNightCityRetailMandibularUpgrade],
+          deck: [
+            c.welcomeToNightCityRetailKiroshiOptics,
+            c.welcomeToNightCityRetailMantisBlades,
+            c.welcomeToNightCityRetailSandevistan,
+            c.welcomeToNightCityRetailFloorIt,
+            c.welcomeToNightCityRetailDyingNightVSPistol,
+          ],
           legendArea: [
             { card: c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax, faceDown: true },
             { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
@@ -413,6 +420,13 @@ export const legendScenarios: Scenario[] = [
         },
         {
           hand: [c.welcomeToNightCityRetailCorpoSecurity],
+          deck: [
+            c.welcomeToNightCityRetailKiroshiOptics,
+            c.welcomeToNightCityRetailMantisBlades,
+            c.welcomeToNightCityRetailSandevistan,
+            c.welcomeToNightCityRetailFloorIt,
+            c.welcomeToNightCityRetailDyingNightVSPistol,
+          ],
           field: [{ card: c.embracingPowerRetailStarterDeckMinotaur, spent: false }],
           legendArea: [
             { card: c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax, faceDown: true },
@@ -450,6 +464,11 @@ export const legendScenarios: Scenario[] = [
       const engine = CyberpunkTestEngine.createWithFixture(
         {
           hand: [c.welcomeToNightCityRetailMoxInciters],
+          deck: [
+            c.welcomeToNightCityRetailAfterpartyAtLizzieS,
+            c.welcomeToNightCityRetailFloorIt,
+            c.welcomeToNightCityRetailDyingNightVSPistol,
+          ],
           field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
           legendArea: [
             { card: c.welcomeToNightCityRetailEvelynParkerBeautifulEnigma, faceDown: false },
@@ -1078,6 +1097,13 @@ export const legendScenarios: Scenario[] = [
       const engine = CyberpunkTestEngine.createWithFixture(
         {
           hand: [c.welcomeToNightCityRetailMoxInciters],
+          deck: [
+            c.welcomeToNightCityRetailKiroshiOptics,
+            c.welcomeToNightCityRetailMantisBlades,
+            c.welcomeToNightCityRetailSandevistan,
+            c.welcomeToNightCityRetailFloorIt,
+            c.welcomeToNightCityRetailDyingNightVSPistol,
+          ],
           field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
           legendArea: [
             { card: c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax, faceDown: true },
@@ -1092,15 +1118,12 @@ export const legendScenarios: Scenario[] = [
           eddies: 5,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
-        { seed: scenarioSeed("legendViktorVektorSitDownAndRelaxRetail"), autoGainGig: false },
+        {
+          seed: scenarioSeed("legendViktorVektorSitDownAndRelaxRetail"),
+          autoGainGig: false,
+          preserveDeckOrder: true,
+        },
       );
-      setPlayerDeckToDefinitions(engine, P1, [
-        c.welcomeToNightCityRetailKiroshiOptics,
-        c.welcomeToNightCityRetailMantisBlades,
-        c.welcomeToNightCityRetailSandevistan,
-        c.welcomeToNightCityRetailFloorIt,
-        c.welcomeToNightCityRetailDyingNightVSPistol,
-      ]);
       return engine;
     },
   },
@@ -1255,6 +1278,519 @@ export const legendScenarios: Scenario[] = [
           seed: scenarioSeed("legendEmbracingYorinobuArasakaEmbracingDestruction"),
           autoGainGig: false,
         },
+      ),
+  },
+  {
+    id: "legendAdamSmasherEnderOfLegendsRetail",
+    group: "legend-go-solo",
+    label: "Adam Smasher · Ender of Legends · GO SOLO play trigger",
+    description:
+      "P1 has Adam Smasher revealed with enough eddies to Go Solo. Rival has two Units on field so the PLAY trigger can defeat a rival Unit.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          legendArea: [
+            { card: c.welcomeToNightCityRetailAdamSmasherEnderOfLegends, faceDown: false },
+            { card: c.welcomeToNightCityRetailVStreetkid, faceDown: false },
+          ],
+          eddies: 10,
+          gigArea: [
+            { dieType: "d10", faceValue: 8 },
+            { dieType: "d6", faceValue: 4 },
+          ],
+        },
+        {
+          hand: [c.welcomeToNightCityRetailMoxInciters],
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendAdamSmasherEnderOfLegendsRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "legendKerryEurodyneAxeAttitudeAudienceRetail",
+    group: "legend-passive",
+    label: "Kerry Eurodyne · Axe, Attitude, Audience · Gig roll triggers",
+    description:
+      "P1 has Kerry revealed with min and max value Gigs staged. Use this board to validate reroll/draw trigger visibility when a Gig rolls in.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          deck: [
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailFloorIt,
+            c.welcomeToNightCityRetailSwordwiseHuscle,
+          ],
+          field: [{ card: c.welcomeToNightCityRetailTBugAmateurPhilosopher, spent: false }],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience, faceDown: false },
+            { card: c.welcomeToNightCityRetailVStreetkid, faceDown: false },
+          ],
+          eddies: 4,
+          gigArea: [
+            { dieType: "d4", faceValue: 1 },
+            { dieType: "d20", faceValue: 20 },
+          ],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendKerryEurodyneAxeAttitudeAudienceRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "legendSashaYakovlevaWonTLetYouDownRetail",
+    group: "legend-attack-trigger",
+    label: "Sasha Yakovleva · Won't Let You Down · attack reveal",
+    description:
+      "P1 has Sasha on field as a GO SOLO Unit, with a known top-deck card for her ATTACK power boost and rival hand cards for her DEFEATED discard trigger.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          deck: [
+            c.welcomeToNightCityRetailOverwatchPanamSGift,
+            c.welcomeToNightCityRetailMoxInciters,
+          ],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailSashaYakovlevaWonTLetYouDown,
+              spent: false,
+              hasLag: false,
+            },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailSashaYakovlevaWonTLetYouDown, faceDown: false },
+            { card: c.welcomeToNightCityRetailVStreetkid, faceDown: false },
+          ],
+          eddies: 6,
+          gigArea: [{ dieType: "d8", faceValue: 5 }],
+        },
+        {
+          hand: [c.welcomeToNightCityRetailCorpoSecurity, c.welcomeToNightCityRetailRebootOptics],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        {
+          seed: scenarioSeed("legendSashaYakovlevaWonTLetYouDownRetail"),
+          autoGainGig: false,
+          preserveDeckOrder: true,
+        },
+      ),
+  },
+  {
+    id: "legendQaPromosAndV",
+    group: "legend-qa",
+    label: "Legend QA 1 · Lucyna, Rebecca, V",
+    description:
+      "Three-Legend QA board. Happy path: call Lucyna or Rebecca as no-text promo Legends, then Go Solo with V - Corporate Exile and attack a spent rival Unit. Edge case: the uncalled face-down promo should stay hidden and should not expose any ability prompt.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailFloorIt,
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailFloorIt,
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailFloorIt,
+          ],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.promoLucynaKushinada, faceDown: true },
+            { card: c.prm01RebeccaHavingAMoment, faceDown: true },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+          ],
+          eddies: 7,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true },
+          ],
+          legendArea: [
+            { card: c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: false },
+            { card: c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax, faceDown: true },
+            {
+              card: c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+              faceDown: false,
+            },
+          ],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendQaPromosAndV"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "legendQaArasakaPressure",
+    group: "legend-qa",
+    label: "Legend QA 2 · box-topper Goro, Saburo, Yorinobu",
+    description:
+      "Three-Legend QA board. Happy path: attack with Armored Minotaur to validate Saburo's Arasaka power boost and Yorinobu's first-Arasaka-attack draw/discard trigger; Go Solo with Goro as a ready BLOCKER threat. Edge case: attack with Mox Inciters second to confirm non-Arasaka units do not retrigger Yorinobu.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailMoxInciters, c.welcomeToNightCityRetailFloorIt],
+          field: [
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+            { card: c.welcomeToNightCityRetailMoxInciters, spent: false },
+          ],
+          legendArea: [
+            { card: c.boxTopperRetailGoroTakemuraHandsUnclean, faceDown: false },
+            {
+              card: c.boxTopperRetailSaburoArasakaStubbornPatriarch,
+              faceDown: false,
+            },
+            {
+              card: c.boxTopperRetailYorinobuArasakaEmbracingDestruction,
+              faceDown: false,
+            },
+          ],
+          eddies: 7,
+          gigArea: [
+            { dieType: "d4", faceValue: 4 },
+            { dieType: "d8", faceValue: 6 },
+          ],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.welcomeToNightCityRetailSecondhandBombus, spent: true },
+          ],
+          legendArea: [
+            { card: c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: false },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+            { card: c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax, faceDown: true },
+          ],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendQaArasakaPressure"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "legendQaBlueSetup",
+    group: "legend-qa",
+    label: "Legend QA 3 · Jackie, Viktor, Alt",
+    description:
+      "Three-Legend QA board. Happy path: play Dying Night to trigger Jackie, call Viktor to search top-deck low-cost Gear, and spend Alt to replay Corporate Surveillance from trash. Edge case: Floor It is a blue Program, so it should not satisfy Jackie's Unit/Gear trigger.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [
+            c.welcomeToNightCityRetailEvelynParkerSchemingSiren,
+            c.welcomeToNightCityRetailFloorIt,
+            c.welcomeToNightCityRetailDyingNightVSPistol,
+            c.welcomeToNightCityRetailRebootOptics,
+          ],
+          deck: [
+            c.welcomeToNightCityRetailKiroshiOptics,
+            c.welcomeToNightCityRetailMantisBlades,
+            c.welcomeToNightCityRetailSandevistan,
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailSwordwiseHuscle,
+          ],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          trash: [
+            c.welcomeToNightCityRetailCorporateSurveillance,
+            c.welcomeToNightCityRetailChromeReverie,
+          ],
+          legendArea: [
+            { card: c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: false },
+            { card: c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax, faceDown: true },
+            { card: c.welcomeToNightCityRetailAltCunninghamSoulkillerArchitect, faceDown: false },
+          ],
+          eddies: 8,
+          gigArea: [
+            { dieType: "d4", faceValue: 2 },
+            { dieType: "d6", faceValue: 1 },
+          ],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [
+            { card: c.embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: false },
+            {
+              card: c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+              faceDown: false,
+            },
+            {
+              card: c.embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
+              faceDown: false,
+            },
+          ],
+          eddies: 5,
+          gigArea: [{ dieType: "d8", faceValue: 4 }],
+        },
+        {
+          seed: scenarioSeed("legendQaBlueSetup"),
+          autoGainGig: false,
+          preserveDeckOrder: true,
+        },
+      ),
+  },
+  {
+    id: "legendQaReactionTools",
+    group: "legend-qa",
+    label: "Legend QA 4 · Dum Dum, Evelyn, Goro",
+    description:
+      "Three-Legend QA board. Happy path: call Dum Dum and choose whether to defeat Kiroshi Optics, spend Evelyn to force a rival Unit to attack, and use Goro to grant BLOCKER with a value-pair bonus. Edge case: Goro's +1 power should rely on the paired 3-value Gigs; without that pair, only BLOCKER should matter.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailMoxInciters, c.welcomeToNightCityRetailRebootOptics],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailKiroshiOptics],
+            },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            c.welcomeToNightCityRetailMoxInciters,
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailDumDumMaelstromTriggerman, faceDown: true },
+            { card: c.welcomeToNightCityRetailEvelynParkerBeautifulEnigma, faceDown: false },
+            { card: c.welcomeToNightCityRetailGoroTakemuraVengefulBodyguard, faceDown: false },
+          ],
+          eddies: 6,
+          gigArea: [
+            { dieType: "d6", faceValue: 3 },
+            { dieType: "d8", faceValue: 3 },
+          ],
+        },
+        {
+          field: [
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+            { card: c.welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: true },
+          ],
+          legendArea: [
+            { card: c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: false },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+            { card: c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax, faceDown: true },
+          ],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 5 }],
+        },
+        { seed: scenarioSeed("legendQaReactionTools"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "legendQaGearTempo",
+    group: "legend-qa",
+    label: "Legend QA 5 · Panam, River, Royce",
+    description:
+      "Three-Legend QA board. Happy path: move Panam's attached Gear to a friendly Unit and ready it, use River to equip a low-cost Gear from hand for free, and Go Solo with Royce after checking gear-scaled power. Edge case: the already-equipped T-Bug should not be the clean River target when Swordwise Huscle is unequipped.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailKiroshiOptics, c.welcomeToNightCityRetailMantisBlades],
+          field: [
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: true },
+            {
+              card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailSandevistan],
+            },
+          ],
+          legendArea: [
+            {
+              card: c.welcomeToNightCityRetailPanamPalmerNomadCavalry,
+              faceDown: false,
+              attachedGears: [c.welcomeToNightCityRetailOverwatchPanamSGift],
+            },
+            { card: c.welcomeToNightCityRetailRiverWardDetectiveOnTheHunt, faceDown: false },
+            {
+              card: c.welcomeToNightCityRetailRoycePsychoOnTheEdge,
+              faceDown: false,
+              attachedGears: [c.welcomeToNightCityRetailGorillaArms],
+            },
+          ],
+          eddies: 9,
+          gigArea: [{ dieType: "d8", faceValue: 5 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true },
+          ],
+          legendArea: [
+            { card: c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: false },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+            { card: c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax, faceDown: true },
+          ],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 4 }],
+        },
+        { seed: scenarioSeed("legendQaGearTempo"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "legendQaLateGameThreats",
+    group: "legend-qa",
+    label: "Legend QA 6 · Adam, Sasha, Kerry",
+    description:
+      "Three-Legend QA board. Happy path: Go Solo with Adam to defeat a rival Unit, attack with Sasha to reveal Overwatch for a power boost, and use Kerry's min/max Gig setup to validate roll-trigger visibility. Edge case: Sasha's known top-deck reveal should stay deterministic for repeat QA runs.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          deck: [
+            c.welcomeToNightCityRetailOverwatchPanamSGift,
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailFloorIt,
+          ],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailSashaYakovlevaWonTLetYouDown,
+              spent: false,
+              hasLag: false,
+            },
+            { card: c.welcomeToNightCityRetailMoxInciters, spent: false },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailAdamSmasherEnderOfLegends, faceDown: false },
+            { card: c.welcomeToNightCityRetailSashaYakovlevaWonTLetYouDown, faceDown: false },
+            { card: c.welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience, faceDown: false },
+          ],
+          eddies: 11,
+          gigArea: [
+            { dieType: "d4", faceValue: 1 },
+            { dieType: "d20", faceValue: 20 },
+          ],
+        },
+        {
+          hand: [c.welcomeToNightCityRetailCorpoSecurity, c.welcomeToNightCityRetailRebootOptics],
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+          ],
+          legendArea: [
+            { card: c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: false },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+            { card: c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax, faceDown: true },
+          ],
+          eddies: 6,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        {
+          seed: scenarioSeed("legendQaLateGameThreats"),
+          autoGainGig: false,
+          preserveDeckOrder: true,
+        },
+      ),
+  },
+  {
+    id: "legendQaVStreetkidAndPrintParity",
+    group: "legend-qa",
+    label: "Legend QA 7 · V StreetKid, box-topper V, box-topper Jackie",
+    description:
+      "Three-Legend QA board for the remaining V StreetKid line plus alternate-print parity. Happy path: call V StreetKid to trash 3 and recover Afterparty at Lizzie's, Go Solo with box-topper V, and play Dying Night to validate box-topper Jackie. Edge case: the two V Legends are different names and should remain distinct cards in the Legend area.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailDyingNightVSPistol, c.welcomeToNightCityRetailFloorIt],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          trash: [
+            c.welcomeToNightCityRetailAfterpartyAtLizzieS,
+            c.welcomeToNightCityRetailCorporateSurveillance,
+            c.welcomeToNightCityRetailIndustrialAssembly,
+          ],
+          deck: [
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailSwordwiseHuscle,
+            c.welcomeToNightCityRetailRebootOptics,
+            c.welcomeToNightCityRetailKiroshiOptics,
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailVStreetkid, faceDown: true },
+            { card: c.boxTopperRetailVCorporateExile, faceDown: false },
+            { card: c.boxTopperRetailJackieWellesPourOneOutForMe, faceDown: false },
+          ],
+          eddies: 8,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true },
+          ],
+          legendArea: [
+            { card: c.embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: false },
+            {
+              card: c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+              faceDown: false,
+            },
+            {
+              card: c.embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
+              faceDown: false,
+            },
+          ],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        {
+          seed: scenarioSeed("legendQaVStreetkidAndPrintParity"),
+          autoGainGig: false,
+          preserveDeckOrder: true,
+        },
+      ),
+  },
+  {
+    id: "legendQaEmbracingPowerPrints",
+    group: "legend-qa",
+    label: "Legend QA 8 · Embracing Power Goro, Saburo, Yorinobu",
+    description:
+      "Three-Legend QA board for the Embracing Power print trio. Happy path: Go Solo with Goro as a ready BLOCKER, attack with Armored Minotaur to validate Saburo's Arasaka power boost, and confirm Yorinobu only triggers on the first friendly Arasaka attack. Edge case: Mox Inciters is not Arasaka and should not receive the Arasaka-only benefits.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailMoxInciters, c.welcomeToNightCityRetailFloorIt],
+          field: [
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+            { card: c.welcomeToNightCityRetailMoxInciters, spent: false },
+          ],
+          legendArea: [
+            { card: c.embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: false },
+            {
+              card: c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+              faceDown: false,
+            },
+            {
+              card: c.embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
+              faceDown: false,
+            },
+          ],
+          eddies: 7,
+          gigArea: [
+            { dieType: "d4", faceValue: 4 },
+            { dieType: "d8", faceValue: 6 },
+          ],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.welcomeToNightCityRetailSecondhandBombus, spent: true },
+          ],
+          legendArea: [
+            { card: c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: false },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+            { card: c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax, faceDown: true },
+          ],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendQaEmbracingPowerPrints"), autoGainGig: false },
       ),
   },
 ];

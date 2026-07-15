@@ -12,9 +12,7 @@ describe("Saburo Arasaka - Stubborn Patriarch (box topper retail)", () => {
   it("gives a friendly Arasaka Unit +1 power while it attacks", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
         legendArea: [{ card: boxTopperRetailSaburoArasakaStubbornPatriarch, faceDown: false }],
       },
       {
@@ -43,7 +41,7 @@ describe("Saburo Arasaka - Stubborn Patriarch (box topper retail)", () => {
   it("does not boost a non-Arasaka Unit while it attacks", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, hasLag: false }],
         legendArea: [{ card: boxTopperRetailSaburoArasakaStubbornPatriarch, faceDown: false }],
       },
       {

@@ -2,12 +2,11 @@ import { describe, it, expect } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
+  PLAYER_TWO,
   activeResources,
   createMockUnit,
   createMockResource,
   expectSuccess,
-  hasGrantAttackTargetOption,
-  expectCardInTrash,
 } from "@tcg/gundam-engine";
 import { gd02ComradesComeFirst116 } from "./116-comrades-come-first.ts";
 
@@ -27,14 +26,15 @@ describe("Comrades Come First (GD02-116)", () => {
       { play: [enemyUnit] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
     const [unitId] = p1.getCardsInZone("battleArea");
+    const [enemyId] = p2.getCardsInZone("battleArea");
     const cmdId = p1.getHand()[0]!;
 
-    // chooseAttackTarget auto-targets the matching friendly unit
-    expectSuccess(p1.playCommand(gd02ComradesComeFirst116));
+    expectSuccess(p1.playCommand(cmdId, { targets: [unitId!] }));
 
-    expect(hasGrantAttackTargetOption(engine, unitId!)).toBe(true);
-    expectCardInTrash(engine, cmdId, p1.playerId);
+    expect(p1.getLegalAttackTargets(unitId!)).toContain(enemyId);
+    expect(p1.getCardZone(cmdId)).toBe(`trash:${PLAYER_ONE}`);
   });
 
   it("cannot play when trash has fewer than 7 cards", () => {

@@ -3,10 +3,10 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   activeResources,
+  createMockUnit,
   expectFailure,
   expectSuccess,
   restedResources,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd03Downes130 } from "../base/130-downes.ts";
 import { gd03Farsia058 } from "./058-farsia.ts";
@@ -18,14 +18,18 @@ describe("Farsia (GD03-058)", () => {
         hand: [gd03Downes130],
         trash: [gd03Farsia058],
         resourceArea: [...restedResources(2), ...activeResources(3)],
-        deck: 6,
+        shieldArea: [createMockUnit({ name: "Shield" })],
       });
-      seedShieldsFromDeck(engine, PLAYER_ONE, 1);
       const p1 = engine.asPlayer(PLAYER_ONE);
       const farsiaId = p1.getCardsInZone("trash")[0]!;
 
-      expectSuccess(p1.deployBase(gd03Downes130, { targets: [farsiaId] }));
+      expectSuccess(p1.deployBase(gd03Downes130));
       expectSuccess(p1.resolveEffect({ optionalAnswers: { 1: true } }));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [farsiaId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [farsiaId] }));
 
       expect(p1.getCardsInZone("battleArea")).toContain(farsiaId);
       expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(5);

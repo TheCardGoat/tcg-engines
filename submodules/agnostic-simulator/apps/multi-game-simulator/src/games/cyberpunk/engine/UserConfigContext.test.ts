@@ -8,6 +8,18 @@ describe("parseUserConfig", () => {
     expect(DEFAULT_USER_CONFIG.animationPacing).toBe("standard");
   });
 
+  test("defaults field card size to standard", () => {
+    expect(parseUserConfig(null).fieldCardSize).toBe("standard");
+    expect(DEFAULT_USER_CONFIG.fieldCardSize).toBe("standard");
+  });
+
+  test("preserves valid field card size values", () => {
+    expect(parseUserConfig(JSON.stringify({ fieldCardSize: "compact" })).fieldCardSize).toBe(
+      "compact",
+    );
+    expect(parseUserConfig(JSON.stringify({ fieldCardSize: "large" })).fieldCardSize).toBe("large");
+  });
+
   test("preserves valid animation pacing values", () => {
     expect(parseUserConfig(JSON.stringify({ animationPacing: "fast" })).animationPacing).toBe(
       "fast",
@@ -24,5 +36,14 @@ describe("parseUserConfig", () => {
 
     expect(config.animationPacing).toBe("standard");
     expect(config.soundVolume).toBe(100);
+  });
+
+  test("rejects invalid field card size values while preserving other settings", () => {
+    const config = parseUserConfig(
+      JSON.stringify({ fieldCardSize: "huge", diceDisplayMode: "image" }),
+    );
+
+    expect(config.fieldCardSize).toBe("standard");
+    expect(config.diceDisplayMode).toBe("image");
   });
 });

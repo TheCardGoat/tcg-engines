@@ -3,6 +3,7 @@ import {
   welcomeToNightCityRetailCorporateSurveillance,
   welcomeToNightCityRetailAltCunninghamSoulkillerArchitect,
 } from "@tcg/cyberpunk-cards";
+import { fireEvent, waitFor } from "@testing-library/react";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 import { ensureJsdomAnimationSupport } from "@cyberpunk/testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
@@ -12,6 +13,49 @@ import {
 } from "@cyberpunk/testing/render-cyberpunk-simulator";
 
 describe("Alt Cunningham - Soulkiller Architect (Retail) jsdom happy path", () => {
+  test("shows both activated abilities in the Contacts menu", async () => {
+    ensureJsdomAnimationSupport();
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "legendAltCunninghamSoulkillerArchitectRetail",
+    });
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+      await pom.waitForReady();
+      await pom.expectStructuralState();
+
+      const alt = await pom.getCardInZoneByDefinitionId(
+        "legendArea",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailAltCunninghamSoulkillerArchitect.id,
+      );
+      const altCard = view.container.querySelector<HTMLElement>(
+        `[data-testid="card"][data-instance-id="${alt.instanceId}"]`,
+      );
+      if (!altCard) {
+        throw new Error("Expected Alt Cunningham to be rendered on the board.");
+      }
+      fireEvent.click(altCard);
+
+      let actions: HTMLButtonElement[] = [];
+      await waitFor(() => {
+        actions = [
+          ...document.querySelectorAll<HTMLButtonElement>(
+            '[data-testid="card-action-activateAbility"]',
+          ),
+        ];
+        expectEqual("Alt Cunningham Contacts ability count", actions.length, 2);
+      });
+      expectEqual("Alt Cunningham Contacts ability count", actions.length, 2);
+      expectEqual(
+        "Alt Cunningham Contacts ability indexes",
+        actions.map((action) => action.dataset.abilityIndex).join(","),
+        "0,1",
+      );
+    } finally {
+      view.unmount();
+    }
+  });
+
   test("spends to play a Program from trash", async () => {
     ensureJsdomAnimationSupport();
     const view = renderCyberpunkSimulatorScenario({
@@ -30,12 +74,6 @@ describe("Alt Cunningham - Soulkiller Architect (Retail) jsdom happy path", () =
 
       await pom.activateAbility(alt.instanceId, 1, CYBERPUNK_P1);
 
-      await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToPlay");
-      const playChoices = await pom.getChoiceCardIds(CYBERPUNK_P1);
-      expectEqual("Alt Cunningham play choices count", playChoices.length, 1);
-      await pom.resolveCardToPlay(playChoices[0]!, CYBERPUNK_P1);
-
-      // Corporate Surveillance PLAY trigger: spend a rival unit with cost 3 or less
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
       const spendEligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
       expectEqual("Corporate Surveillance eligible spend targets", spendEligible.length, 1);

@@ -4,6 +4,7 @@ export const gd01Lagowe050: UnitCard = {
   cardNumber: "GD01-050",
   name: "LaGOWE",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "red",
   traits: ["zaft"],
   id: "GD01-050",
@@ -58,6 +59,7 @@ export const gd01Lagowe050: UnitCard = {
   cost: 2,
   ap: 2,
   hp: 3,
+  linkCondition: "(ZAFT) Trait",
   effect:
     "【Attack】If this Unit has 5 or more AP and it is attacking an enemy Unit, choose 1 enemy Unit. Deal 2 damage to it.<br>",
   effects: [
@@ -78,7 +80,7 @@ export const gd01Lagowe050: UnitCard = {
                 value: 5,
               },
               {
-                type: "selfIsAttacking",
+                type: "isAttackingUnit",
               },
             ],
           },

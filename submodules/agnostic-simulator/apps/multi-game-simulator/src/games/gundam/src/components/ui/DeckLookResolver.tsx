@@ -47,12 +47,18 @@ export function DeckLookResolver({ effect, onConfirm, onCancel }: DeckLookResolv
   ]);
   const toTop = initial.filter((c) => !routedIds.has(c._uid));
   const legalTutorIds = new Set(config.legalTutorIds);
-  const canUseTrash = config.returnMode === "topOrTrash" || config.remainingDestination === "trash";
+  const randomBottom = config.randomizeRemainingToBottom;
+  const canUseTrash =
+    !randomBottom &&
+    (config.returnMode === "topOrTrash" || config.remainingDestination === "trash");
   const canUseBottom =
-    config.returnMode !== "topOrTrash" && config.remainingDestination !== "trash";
-  const legacyChooseTop = config.returnMode === "chooseTop" && !config.remainingDestination;
-  const chooseSingleTop = config.returnMode === "chooseTop" && Boolean(config.remainingDestination);
+    !randomBottom && config.returnMode !== "topOrTrash" && config.remainingDestination !== "trash";
+  const legacyChooseTop =
+    !randomBottom && config.returnMode === "chooseTop" && !config.remainingDestination;
+  const chooseSingleTop =
+    !randomBottom && config.returnMode === "chooseTop" && Boolean(config.remainingDestination);
   const topLimit = legacyChooseTop ? 0 : chooseSingleTop ? 1 : initial.length;
+  const automaticBottom = randomBottom ? initial.filter((card) => card._uid !== tutor?._uid) : [];
   const tint = "#4cc3ff";
 
   function route(card: DeckLookCard, destination: "top" | "bottom" | "trash" | "tutor") {
@@ -75,21 +81,24 @@ export function DeckLookResolver({ effect, onConfirm, onCancel }: DeckLookResolv
     setToBottom(canUseTrash ? [] : others);
   }
 
-  const topIsValid =
-    config.returnMode === "topAndBottom"
+  const topIsValid = randomBottom
+    ? true
+    : config.returnMode === "topAndBottom"
       ? toBottom.length > 0 || initial.filter((c) => c._uid !== tutor?._uid).length <= 1
       : config.returnMode === "topOrTrash"
         ? true
         : legacyChooseTop
           ? toTop.length === 0
           : toTop.length === Math.min(1, initial.filter((c) => c._uid !== tutor?._uid).length);
-  const readinessText = topIsValid
-    ? "READY"
-    : legacyChooseTop
-      ? "ROUTE REMAINING CARDS TO BOTTOM"
-      : config.returnMode === "topAndBottom"
-        ? "ROUTE AT LEAST ONE CARD TO BOTTOM"
-        : "KEEP EXACTLY ONE CARD ON TOP";
+  const readinessText = randomBottom
+    ? "REMAINING CARDS WILL BE RANDOMIZED TO THE BOTTOM"
+    : topIsValid
+      ? "READY"
+      : legacyChooseTop
+        ? "ROUTE REMAINING CARDS TO BOTTOM"
+        : config.returnMode === "topAndBottom"
+          ? "ROUTE AT LEAST ONE CARD TO BOTTOM"
+          : "KEEP EXACTLY ONE CARD ON TOP";
 
   return (
     <div className="font-body fixed inset-0 z-[210] flex items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(30,73,199,.2),rgba(12,18,32,.86)_70%)] px-2 backdrop-blur-[3px] [animation:gd-fade-in_.2s_ease]">
@@ -121,11 +130,13 @@ export function DeckLookResolver({ effect, onConfirm, onCancel }: DeckLookResolv
                   muted={routedIds.has(card._uid)}
                   tutorLegal={card.id ? legalTutorIds.has(card.id) : false}
                   actions={[
-                    ...(config.returnMode === "chooseTop"
+                    ...(!randomBottom && config.returnMode === "chooseTop"
                       ? legacyChooseTop
                         ? []
                         : [{ label: "TOP", onClick: () => keepAsOnlyTop(card), primary: true }]
-                      : [{ label: "TOP", onClick: () => route(card, "top") }]),
+                      : randomBottom
+                        ? []
+                        : [{ label: "TOP", onClick: () => route(card, "top") }]),
                     ...(canUseBottom
                       ? [{ label: "BOTTOM", onClick: () => route(card, "bottom") }]
                       : []),
@@ -148,9 +159,11 @@ export function DeckLookResolver({ effect, onConfirm, onCancel }: DeckLookResolv
           </Zone>
 
           <div className="grid gap-3">
-            <Zone title="TOP OF DECK" count={`${toTop.length}/${topLimit}`} tint="#36ff8a">
-              <CardStrip cards={toTop} empty="Choose card(s) to keep on top" />
-            </Zone>
+            {!randomBottom && (
+              <Zone title="TOP OF DECK" count={`${toTop.length}/${topLimit}`} tint="#36ff8a">
+                <CardStrip cards={toTop} empty="Choose card(s) to keep on top" />
+              </Zone>
+            )}
             {tutor && (
               <Zone
                 title={config.tutorDestination === "battleArea" ? "DEPLOY" : "ADD TO HAND"}
@@ -163,6 +176,11 @@ export function DeckLookResolver({ effect, onConfirm, onCancel }: DeckLookResolv
             {canUseBottom && (
               <Zone title="BOTTOM OF DECK" count={toBottom.length} tint="#c38af5">
                 <CardStrip cards={toBottom} empty="Cards routed to bottom" />
+              </Zone>
+            )}
+            {randomBottom && (
+              <Zone title="RANDOMIZED TO BOTTOM" count={automaticBottom.length} tint="#c38af5">
+                <CardStrip cards={automaticBottom} empty="No remaining cards" />
               </Zone>
             )}
             {canUseTrash && (
@@ -185,9 +203,9 @@ export function DeckLookResolver({ effect, onConfirm, onCancel }: DeckLookResolv
               onConfirm({
                 directiveIndex: config.directiveIndex,
                 tutorCardId: tutor?.id,
-                toTop,
-                toBottom,
-                toTrash,
+                toTop: randomBottom ? [] : toTop,
+                toBottom: randomBottom ? [] : toBottom,
+                toTrash: randomBottom ? [] : toTrash,
               })
             }
             disabled={!topIsValid}

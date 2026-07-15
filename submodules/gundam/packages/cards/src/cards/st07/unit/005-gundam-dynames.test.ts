@@ -6,7 +6,6 @@ import {
   activeResources,
   createMockUnit,
   createMockPilot,
-  getEffectiveStats,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { st07GundamDynames005 } from "./005-gundam-dynames.ts";
@@ -24,23 +23,23 @@ describe("Gundam Dynames (ST07-005)", () => {
 
     expectSuccess(p1.assignPilot(lockon, st07GundamDynames005));
 
-    const fw = engine.getRuntime().getFrameworkReadAPI();
-    expect(getEffectiveStats(dynamesId!, engine.getG(), fw.cards, fw).ap).toBe(5);
+    expect(p1.getVisibleCard(dynamesId!)?.effectiveAp).toBe(5);
   });
 
   it("recovers 2 HP when it destroys an enemy Unit with battle damage during your turn", () => {
     const fragileEnemy = createMockUnit({ ap: 0, hp: 1 });
     const engine = GundamTestEngine.create(
-      { play: [st07GundamDynames005] },
+      { play: [{ card: st07GundamDynames005, damage: 3 }] },
       { play: [{ card: fragileEnemy, exhausted: true }] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const dynamesId = p1.getCardsInZone("battleArea")[0]!;
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
-    engine.getG().damage[dynamesId] = 3;
-
-    expectSuccess(engine.resolveCombat({ attackerId: dynamesId, target: enemyId }));
+    expectSuccess(p1.enterBattle(dynamesId, enemyId));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
 
     expect(p1.getDamage(dynamesId)).toBe(1);
     expect(p2.getCardsInZone("trash")).toContain(enemyId);
@@ -49,16 +48,17 @@ describe("Gundam Dynames (ST07-005)", () => {
   it("does not recover when the enemy Unit survives the battle damage", () => {
     const sturdyEnemy = createMockUnit({ ap: 0, hp: 5 });
     const engine = GundamTestEngine.create(
-      { play: [st07GundamDynames005] },
+      { play: [{ card: st07GundamDynames005, damage: 3 }] },
       { play: [{ card: sturdyEnemy, exhausted: true }] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const dynamesId = p1.getCardsInZone("battleArea")[0]!;
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
-    engine.getG().damage[dynamesId] = 3;
-
-    expectSuccess(engine.resolveCombat({ attackerId: dynamesId, target: enemyId }));
+    expectSuccess(p1.enterBattle(dynamesId, enemyId));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
 
     expect(p1.getDamage(dynamesId)).toBe(3);
   });

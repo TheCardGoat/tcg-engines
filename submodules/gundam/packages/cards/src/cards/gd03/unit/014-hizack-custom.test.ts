@@ -4,6 +4,7 @@ import {
   PLAYER_ONE,
   activeResources,
   createMockUnit,
+  expectFailure,
   expectSuccess,
   restedResources,
 } from "@tcg/gundam-engine";
@@ -23,7 +24,7 @@ describe("Hizack Custom (GD03-014)", () => {
 
     expectSuccess(p1.deployUnit(gd03HizackCustom014));
 
-    expect(engine.getG().exhausted[activeResource]).toBe(true);
+    expect(p1.isExhausted(activeResource)).toBe(true);
     expect(p1.getCardsInZone("battleArea").length).toBe(3);
   });
 
@@ -36,6 +37,6 @@ describe("Hizack Custom (GD03-014)", () => {
     });
     const p1 = engine.asPlayer(PLAYER_ONE);
 
-    expect(p1.deployUnit(gd03HizackCustom014).success).toBe(false);
+    expectFailure(p1.deployUnit(gd03HizackCustom014), "INSUFFICIENT_RESOURCES");
   });
 });

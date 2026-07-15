@@ -14,9 +14,7 @@ describe("Secondhand Bombus (retail)", () => {
         field: [{ card: welcomeToNightCityRetailSecondhandBombus, spent: false }],
       },
       {
-        field: [
-          { card: embracingPowerRetailStarterDeckMinotaur, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: false, hasLag: false }],
       },
     );
 
@@ -45,7 +43,7 @@ describe("Secondhand Bombus (retail)", () => {
           {
             card: welcomeToNightCityRetailSecondhandBombus,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
       },

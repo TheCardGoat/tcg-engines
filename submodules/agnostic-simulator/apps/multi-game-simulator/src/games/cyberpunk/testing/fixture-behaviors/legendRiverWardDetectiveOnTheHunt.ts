@@ -12,7 +12,7 @@ export const legendRiverWardDetectiveOnTheHuntBehavior: CyberpunkFixtureBehavior
   scenarioId: "legendRiverWardDetectiveOnTheHunt",
   label: "River Ward - attack trigger equips free gear",
   references: [
-    "packages/engine/src/cards/spoiler/legends/river-ward-detective-on-the-hunt.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/legends/river-ward-detective-on-the-hunt.test.ts",
   ],
   async run(pom) {
     const river = await pom.getCardInZoneByDefinitionId(
@@ -39,14 +39,6 @@ export const legendRiverWardDetectiveOnTheHuntBehavior: CyberpunkFixtureBehavior
     await pom.attackRival(attacker.instanceId, CYBERPUNK_P1);
 
     await pom.expectLegendCardSpent(CYBERPUNK_P1, river.instanceId, true);
-    await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToPlay");
-    const choices = await pom.getChoiceCardIds(CYBERPUNK_P1);
-    if (!choices.includes(kiroshi.instanceId)) {
-      throw new Error("Expected River Ward to offer Kiroshi Optics as the free gear.");
-    }
-
-    await pom.resolveCardToPlay(kiroshi.instanceId, CYBERPUNK_P1);
-
     await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
     await pom.expectEddies(CYBERPUNK_P1, 4);
     await pom.expectHandSize(CYBERPUNK_P1, 1);

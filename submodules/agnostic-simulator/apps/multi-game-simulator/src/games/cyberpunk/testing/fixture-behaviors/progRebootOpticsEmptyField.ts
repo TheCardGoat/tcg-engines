@@ -8,7 +8,7 @@ import {
 export const progRebootOpticsEmptyFieldBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "progRebootOpticsEmptyField",
   label: "Reboot Optics - no friendly units",
-  references: ["packages/engine/src/cards/alpha/programs/reboot-optics.test.ts"],
+  references: ["packages/engine/src/cards/welcometonightcityretail/programs/reboot-optics.test.ts"],
   async run(pom) {
     await pom.expectFieldSize(CYBERPUNK_P1, 0);
     const program = expectDefined(

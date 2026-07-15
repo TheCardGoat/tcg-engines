@@ -7,7 +7,7 @@ export const gearMandibularUpgradeBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "gearMandibularUpgrade",
   label: "Mandibular Upgrade - gear grants blocker",
   references: [
-    "packages/engine/src/cards/alpha/gear/mandibular-upgrade.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/gear/mandibular-upgrade.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/__tests__/scenarios.test.ts",
   ],
   async run(pom) {

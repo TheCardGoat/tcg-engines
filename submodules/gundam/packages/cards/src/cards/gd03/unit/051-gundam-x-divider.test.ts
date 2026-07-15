@@ -28,7 +28,16 @@ describe("Gundam X Divider (GD03-051)", () => {
       const trashUnitId = p1.getCardsInZone("trash")[0]!;
 
       expectSuccess(p1.assignPilot(pilot, gd03GundamXDivider051));
-      expectSuccess(p1.resolveEffect({ targets: [trashUnitId], optionalAnswers: { 0: true } }));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "optional",
+        directiveIndex: 0,
+      });
+      expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [trashUnitId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [trashUnitId] }));
 
       expect(p1.getCardsInZone("battleArea")).toContain(trashUnitId);
       expect(p1.getCardsInZone("trash")).not.toContain(trashUnitId);
@@ -81,7 +90,12 @@ describe("Gundam X Divider (GD03-051)", () => {
       const [tooHighLevelId, validUnitId] = p1.getCardsInZone("trash");
 
       expectSuccess(p1.assignPilot(pilot, gd03GundamXDivider051));
-      expectSuccess(p1.resolveEffect({ targets: [validUnitId!], optionalAnswers: { 0: true } }));
+      expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [validUnitId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [validUnitId!] }));
 
       expect(p1.getCardsInZone("battleArea")).toContain(validUnitId);
       expect(p1.getCardsInZone("trash")).toEqual([tooHighLevelId]);
@@ -104,7 +118,7 @@ describe("Gundam X Divider (GD03-051)", () => {
       const trashUnitId = p1.getCardsInZone("trash")[0]!;
 
       expectSuccess(p1.assignPilot(pilot, gd03GundamXDivider051));
-      expectSuccess(p1.resolveEffect({ targets: [trashUnitId], optionalAnswers: { 0: true } }));
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
 
       expect(p1.getCardsInZone("trash")).toContain(trashUnitId);
       expect(p1.getCardsInZone("battleArea")).not.toContain(trashUnitId);

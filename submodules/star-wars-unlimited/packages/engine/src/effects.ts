@@ -56,7 +56,7 @@ export function conditionMet(condition: SwuCondition, context: ResolutionContext
         return (
           card.controller === controller &&
           card.zone.endsWith("Arena") &&
-          definition?.aspects.includes(condition.aspect)
+          definition?.aspects?.includes(condition.aspect)
         );
       });
     case "controlsTrait":

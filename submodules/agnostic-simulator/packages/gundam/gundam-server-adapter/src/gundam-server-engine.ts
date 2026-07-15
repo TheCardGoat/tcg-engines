@@ -2,10 +2,7 @@ import {
   LocalEngine,
   candidateToCommand,
   enumerateGundamBotCandidates,
-  greedyLegalStrategy,
-  passOnlyStrategy,
-  valueRankedStrategy,
-  type CandidateStrategy,
+  getSafeGundamAutomatedActionStrategyOption,
   type CandidateStrategyContext,
   type CommandResult,
   type GundamMoveLog,
@@ -49,14 +46,6 @@ import { buildGundamInteractionView, gundamSubmissionToPayload } from "./interac
  * `staticResources` is captured at adapter construction so the planner can
  * call `enumerateGundamBotCandidates` without re-deriving deck metadata.
  */
-const STRATEGY_REGISTRY: Readonly<Record<string, CandidateStrategy>> = {
-  "value-ranked": valueRankedStrategy,
-  "greedy-legal": greedyLegalStrategy,
-  "pass-only": passOnlyStrategy,
-};
-
-const DEFAULT_STRATEGY_ID = "value-ranked";
-
 export class GundamServerEngine implements ServerGameEngine {
   constructor(
     public readonly engine: LocalEngine,
@@ -202,18 +191,7 @@ export class GundamServerEngine implements ServerGameEngine {
       };
     }
 
-    const strategyId = options.strategyId ?? DEFAULT_STRATEGY_ID;
-    const strategy = STRATEGY_REGISTRY[strategyId] ?? STRATEGY_REGISTRY[DEFAULT_STRATEGY_ID];
-    if (!strategy) {
-      return {
-        finalResult: {
-          success: false,
-          error: `Strategy "${strategyId}" not found and default "${DEFAULT_STRATEGY_ID}" is also unavailable.`,
-          errorCode: "strategy_not_found",
-        },
-        blocked: { reason: "strategy-not-found" },
-      };
-    }
+    const strategy = getSafeGundamAutomatedActionStrategyOption(options.strategyId).strategy;
 
     const runtime = this.engine.getRuntime();
     const state = this.engine.getState();

@@ -57,6 +57,11 @@ describe("Gundam AGE-1 Normal (GD02-021)", () => {
       const { engine, p1, age1Id, discardId, deckBefore, resourcesBefore } = deployWith();
 
       expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [discardId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [discardId!] }));
 
       const resourcesAfter = p1.getCardsInZone("resourceArea");
       const newResourceId = resourcesAfter.find((id) => !resourcesBefore.includes(id));
@@ -65,10 +70,7 @@ describe("Gundam AGE-1 Normal (GD02-021)", () => {
       expect(p1.getCardsInZone("trash")).toContain(discardId);
       expect(resourcesAfter).toHaveLength(resourcesBefore.length + 1);
       expect(newResourceId).toBeDefined();
-      expect(
-        engine.getRuntime().getFrameworkReadAPI().cards.getDefinition(newResourceId!)?.name,
-      ).toBe("EX Resource");
-      expect(engine.getG().exhausted[newResourceId!] ?? false).toBe(false);
+      expect(p1.isExhausted(newResourceId!)).toBe(false);
       expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore - 1);
     });
 
@@ -98,6 +100,9 @@ describe("Gundam AGE-1 Normal (GD02-021)", () => {
       const { engine, p1, deckBefore } = deployWith({ resources: activeResources(5) });
 
       expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
+      const choice = p1.getBoardView().pendingChoice;
+      if (choice?.kind !== "targetSelection") throw new Error("Expected a discard choice");
+      expectSuccess(p1.resolveEffect({ targets: [choice.legalTargetIds[0]!] }));
 
       expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore);
     });
@@ -107,8 +112,7 @@ describe("Gundam AGE-1 Normal (GD02-021)", () => {
         hand: [greenNonEarthFederationUnit],
       });
 
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
-
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
       expect(p1.getCardsInZone("hand")).toContain(discardId);
       expect(p1.getCardsInZone("resourceArea")).toHaveLength(resourcesBefore.length);
     });
@@ -116,8 +120,7 @@ describe("Gundam AGE-1 Normal (GD02-021)", () => {
     it("rejects the EX Resource branch when the only Earth Federation Unit in hand is not green", () => {
       const { p1, discardId, resourcesBefore } = deployWith({ hand: [blueEarthFederationUnit] });
 
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
-
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
       expect(p1.getCardsInZone("hand")).toContain(discardId);
       expect(p1.getCardsInZone("resourceArea")).toHaveLength(resourcesBefore.length);
     });

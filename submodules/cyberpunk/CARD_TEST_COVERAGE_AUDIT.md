@@ -150,7 +150,7 @@ This document proves that every concrete card source currently has a matching ca
 - Timing triggers: _None_
 - Coverage note: Has named happy-path coverage (spend, ready, block, attack, play).
 - Test cases:
-  - enters the field as a ready unit with no summoning sickness
+  - enters the field as a ready unit with no Lag
   - spends Goro when he attacks
   - cannot attack when spent
   - emits a localised action log for the direct attack
@@ -214,7 +214,7 @@ This document proves that every concrete card source currently has a matching ca
 - Coverage note: Has named happy-path coverage (ready, attack).
 - Test cases:
   - can be paid from the legend area to enter the field ready
-  - enters the field as a ready unit with no summoning sickness
+  - enters the field as a ready unit with no Lag
   - spends V when he attacks
   - cannot attack when spent
   - emits a localised action log for the direct attack
@@ -634,7 +634,7 @@ This document proves that every concrete card source currently has a matching ca
 - Timing triggers: _None_
 - Coverage note: Has named happy-path coverage (steal, play, trash).
 - Test cases:
-  - enters the field as a ready unit with no summoning sickness
+  - enters the field as a ready unit with no Lag
   - spends Alt when she attacks
   - cannot attack when spent
   - emits a localised action log for the direct attack
@@ -807,7 +807,7 @@ This document proves that every concrete card source currently has a matching ca
 - Timing triggers: _None_
 - Coverage note: Has named happy-path coverage (defeat, trash).
 - Test cases:
-  - enters the field as a ready unit with no summoning sickness
+  - enters the field as a ready unit with no Lag
   - spends V when she attacks
   - cannot attack when spent
   - emits a localised action log for the direct attack
@@ -1016,10 +1016,10 @@ This document proves that every concrete card source currently has a matching ca
   - can attack a spent rival unit on the turn played
   - CANNOT attack the rival player directly on the turn played
   - CANNOT attack a ready rival unit on the turn played
-  - normal summoning sickness applies on subsequent turns (needs to wait a turn)
+  - normal Lag applies on subsequent turns (needs to wait a turn)
   - after surviving a turn, can attack normally (units and rival)
   - becomes spent after attacking
   - effective power during attack equals base power (6)
   - multiple Riding Nomads can each attack on play turn
-  - rule only applies to self (other units still have summoning sickness)
+  - rule only applies to self (other units still have Lag)
   - defeats a weaker rival unit in combat on the turn played

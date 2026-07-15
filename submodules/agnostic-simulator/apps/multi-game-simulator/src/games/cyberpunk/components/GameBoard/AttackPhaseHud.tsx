@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { getProjectedDirectAttackGigStealCount } from "@tcg/cyberpunk-engine";
 import { useAttackSelection } from "./useAttackSelection";
 import { useCardPreview } from "../CardPreview/CardPreviewContext";
 import { useCardView, type ZoneCardView } from "../../engine/zoneViews";
@@ -43,6 +44,7 @@ export function AttackPhaseHud({ compact = false }: AttackPhaseHudProps) {
   const isHumanAttack = activeSide === humanSide;
   const kind = attack?.kind as VisibleAttackKind | undefined;
   const step = getVisibleAttackStep(attack, moveLogs);
+  const directStealCount = getProjectedDirectAttackGigStealCount(matchState);
   const attackTriggers = getVisibleAttackTriggers(matchState);
   const cue = pending
     ? {
@@ -52,10 +54,10 @@ export function AttackPhaseHud({ compact = false }: AttackPhaseHudProps) {
     : getAttackCue({
         attackActive: Boolean(attack),
         attackerName: attacker?.name ?? "Attacker",
-        attackerPower: attacker?.effectivePower ?? null,
         attackTriggers,
         kind,
         step,
+        directStealCount,
         isHumanAttack,
         activeSide,
         humanSide,
@@ -68,6 +70,7 @@ export function AttackPhaseHud({ compact = false }: AttackPhaseHudProps) {
     fallbackText: cue.now,
     kind,
     pendingActive: Boolean(pending),
+    directStealCount,
   });
 
   return (
@@ -172,6 +175,7 @@ function renderCombatLine({
   fallbackText,
   kind,
   pendingActive,
+  directStealCount,
 }: {
   attackActive: boolean;
   attacker: ZoneCardView | null;
@@ -179,6 +183,7 @@ function renderCombatLine({
   fallbackText: string;
   kind: string | undefined;
   pendingActive: boolean;
+  directStealCount: number | null;
 }): ReactNode {
   if (!attackActive && !pendingActive) {
     return null;
@@ -191,7 +196,7 @@ function renderCombatLine({
         <span className={classes.versus} aria-hidden="true">
           →
         </span>
-        <CombatTarget label="TARGET" value="Rival Gigs" />
+        <CombatTarget label="TARGET" value="Rival Gigs" stealCount={directStealCount} />
       </span>
     );
   }
@@ -217,20 +222,20 @@ function renderCombatLine({
 function getAttackCue({
   attackActive,
   attackerName,
-  attackerPower,
   attackTriggers,
   kind,
   step,
+  directStealCount,
   isHumanAttack,
   activeSide,
   humanSide,
 }: {
   attackActive: boolean;
   attackerName: string;
-  attackerPower: number | null;
   attackTriggers: readonly PendingAttackTriggerSummary[];
   kind: VisibleAttackKind | undefined;
   step: VisibleAttackStep | undefined;
+  directStealCount: number | null;
   isHumanAttack: boolean;
   activeSide: string;
   humanSide: string;
@@ -253,7 +258,7 @@ function getAttackCue({
         now: `Attack: ${attackerName} has no ATTACK trigger.`,
         next:
           kind === "direct"
-            ? "Go to React; rival may call a Legend or block."
+            ? `If unblocked: steal ${formatGigCount(directStealCount)}.`
             : "Go to React; rival may call a Legend or respond.",
       };
     }
@@ -271,7 +276,7 @@ function getAttackCue({
         now: "React: waiting on rival.",
         next:
           kind === "direct"
-            ? "If they do not block, you steal Gigs."
+            ? `If unblocked: steal ${formatGigCount(directStealCount)}.`
             : "If they do not respond, compare power.",
       };
     }
@@ -279,7 +284,7 @@ function getAttackCue({
       now: "React: choose a response.",
       next:
         kind === "direct"
-          ? "Block or call a Legend, or let them steal."
+          ? `Block or call a Legend, or let them steal ${formatGigCount(directStealCount)}.`
           : "Call a Legend, or let the fight happen.",
     };
   }
@@ -292,10 +297,8 @@ function getAttackCue({
   }
 
   if (step === "steal") {
-    const power = attackerPower ?? 0;
-    const gigs = power <= 0 ? 0 : 1 + Math.floor(power / 10);
     return {
-      now: `Steal: take ${gigs} Gig${gigs === 1 ? "" : "s"}.`,
+      now: `Steal: take ${formatGigCount(directStealCount)}.`,
       next: "Choose which rival Gig die moves to you.",
     };
   }
@@ -376,11 +379,29 @@ function Combatant({
   );
 }
 
-function CombatTarget({ label, value }: { label: string; value: string }) {
+function CombatTarget({
+  label,
+  value,
+  stealCount,
+}: {
+  label: string;
+  value: string;
+  stealCount?: number | null;
+}) {
   return (
     <span className={classes.combatTarget}>
       <span className={classes.combatRole}>{label}</span>
       <span className={classes.targetName}>{value}</span>
+      {stealCount !== undefined && stealCount !== null ? (
+        <span
+          className={classes.stealBadge}
+          data-testid="direct-attack-steal-cue"
+          aria-label={`If unblocked, steal ${formatGigCount(stealCount)}`}
+        >
+          <span>Steal</span>
+          <strong data-testid="direct-attack-steal-count">{stealCount}</strong>
+        </span>
+      ) : null}
     </span>
   );
 }
@@ -462,6 +483,11 @@ function AttackTriggerRow({
 
 function formatAttackTriggerCount(triggers: readonly PendingAttackTriggerSummary[]): string {
   return `${triggers.length} ATTACK trigger${triggers.length === 1 ? "" : "s"}`;
+}
+
+function formatGigCount(count: number | null): string {
+  const gigs = count ?? 0;
+  return `${gigs} Gig${gigs === 1 ? "" : "s"}`;
 }
 
 function stripAttackPrefix(text: string): string {

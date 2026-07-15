@@ -6,7 +6,6 @@ import {
   activeResources,
   createMockUnit,
   expectSuccess,
-  getDamageCounter,
 } from "@tcg/gundam-engine";
 import { gd04GundamExia038 } from "./038-gundam-exia.ts";
 
@@ -28,8 +27,8 @@ describe("Gundam Exia (GD04-038)", () => {
 
     expectSuccess(p1.deployUnit(gd04GundamExia038, { targets: [enemyAId!] }));
 
-    expect(getDamageCounter(engine, enemyAId!)).toBe(2);
-    expect(getDamageCounter(engine, enemyBId!)).toBe(0);
+    expect(p2.getDamage(enemyAId!)).toBe(2);
+    expect(p2.getDamage(enemyBId!)).toBe(0);
   });
 
   it("【Deploy】 does NOT damage anyone when fewer than 2 enemy Units are in play", () => {
@@ -48,6 +47,6 @@ describe("Gundam Exia (GD04-038)", () => {
 
     expectSuccess(p1.deployUnit(gd04GundamExia038));
 
-    expect(getDamageCounter(engine, enemyId)).toBe(0);
+    expect(p2.getDamage(enemyId)).toBe(0);
   });
 });

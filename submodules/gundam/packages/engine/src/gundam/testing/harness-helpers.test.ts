@@ -85,6 +85,47 @@ describe("GundamTestEngine.fireShieldBurst", () => {
   });
 });
 
+describe("public 【Burst】 interaction", () => {
+  function destroyBurstShield() {
+    const attacker = createMockUnit({ ap: 2, hp: 3 });
+    const burstPilot = makeBurstPilot();
+    const engine = GundamTestEngine.create({ play: [attacker] }, { shieldArea: [burstPilot] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [attackerId] = p1.getCardsInZone("battleArea");
+    const [shieldId] = p2.getCardsInZone("shieldArea");
+
+    expect(p1.enterBattle(attackerId!, "direct").success).toBe(true);
+    expect(p2.passBlock().success).toBe(true);
+    expect(p2.passBattleAction().success).toBe(true);
+    expect(p1.passBattleAction().success).toBe(true);
+
+    return { engine, p2, shieldId: shieldId! };
+  }
+
+  it("offers the Shield owner a simulator-visible choice and activates on accept", () => {
+    const { p2, shieldId } = destroyBurstShield();
+
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      controllerId: PLAYER_TWO,
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expect(p2.resolveEffect({ optionalAnswers: { [-1]: true } }).success).toBe(true);
+
+    expect(p2.getCardZone(shieldId)).toBe(`hand:${PLAYER_TWO}`);
+  });
+
+  it("leaves the destroyed Shield in trash when the owner declines", () => {
+    const { p2, shieldId } = destroyBurstShield();
+
+    expect(p2.resolveEffect({ optionalAnswers: { [-1]: false } }).success).toBe(true);
+
+    expect(p2.getCardZone(shieldId)).toBe(`trash:${PLAYER_TWO}`);
+  });
+});
+
 describe("GundamTestEngine.endTurn", () => {
   it("advances to the next turn and fires <Repair> at end-of-turn", () => {
     const unit = createMockUnit({
@@ -123,7 +164,10 @@ describe("GundamTestEngine.resolveCombat", () => {
   it("runs a unit-vs-unit fight to completion with simultaneous damage", () => {
     const attacker = createMockUnit({ ap: 3, hp: 4 });
     const defender = createMockUnit({ ap: 2, hp: 3 });
-    const engine = GundamTestEngine.create({ play: [attacker] }, { play: [defender] });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { play: [{ card: defender, exhausted: true }] },
+    );
     const p1Id = asPlayerId(PLAYER_ONE);
     const p2Id = asPlayerId(PLAYER_TWO);
     const attackerId = engine.getCardsInZone({ zone: "battleArea", playerId: p1Id })[0]!;
@@ -229,7 +273,10 @@ describe("expectAttackRedirectedTo", () => {
       hp: 5,
       keywordEffects: [{ keyword: "Blocker" }],
     });
-    const engine = GundamTestEngine.create({ play: [attacker] }, { play: [defender, blocker] });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { play: [{ card: defender, exhausted: true }, blocker] },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
@@ -244,7 +291,10 @@ describe("expectAttackRedirectedTo", () => {
   it("throws when no blocker is recorded", () => {
     const attacker = createMockUnit({ ap: 3, hp: 5 });
     const defender = createMockUnit({ ap: 1, hp: 5 });
-    const engine = GundamTestEngine.create({ play: [attacker] }, { play: [defender] });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { play: [{ card: defender, exhausted: true }] },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
     const defenderId = engine.getCardsInZone({

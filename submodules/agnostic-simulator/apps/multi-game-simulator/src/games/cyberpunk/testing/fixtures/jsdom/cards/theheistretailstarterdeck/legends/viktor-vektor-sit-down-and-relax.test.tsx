@@ -37,7 +37,7 @@ describe("Viktor Vektor - Sit Down and Relax (Retail) jsdom happy path", () => {
       );
       expectEqual("Viktor is face-up", calledViktor.faceDown, false);
       await pom.expectEddies(CYBERPUNK_P1, 2);
-      await pom.expectPendingChoiceType(CYBERPUNK_P1, "searchDeck");
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, "scry");
 
       const revealed = await pom.getSearchDeckRevealedCardIds(CYBERPUNK_P1);
       expectEqual("Viktor reveal count", revealed.length, 5);

@@ -22,62 +22,22 @@ describe("Impulse Gundam (ST09-001)", () => {
       ...overrides,
     });
 
-  it("can be placed in the battle area with its printed stats", () => {
-    const engine = GundamTestEngine.create({ play: [st09ImpulseGundam001] }, {});
+  it("can be deployed with 3 resources by paying 2", () => {
+    const engine = GundamTestEngine.create({
+      hand: [st09ImpulseGundam001],
+      resourceArea: activeResources(3),
+    });
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const unitId = p1.getHand()[0]!;
 
-    expect(p1.getCardsInZone("battleArea")).toHaveLength(1);
-    expect(st09ImpulseGundam001.type).toBe("unit");
-    expect(st09ImpulseGundam001.level).toBe(3);
-    expect(st09ImpulseGundam001.cost).toBe(2);
-    expect(st09ImpulseGundam001.ap).toBe(3);
-    expect(st09ImpulseGundam001.hp).toBe(3);
+    expectSuccess(p1.deployUnit(unitId));
+
+    expect(p1.getCardsInZone("battleArea")).toContain(unitId);
+    expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(2);
+    expect(p1.getVisibleCard(unitId)).toMatchObject({ effectiveAp: 3, effectiveHp: 3 });
   });
 
   describe('【Activate･Main】②, return this Unit to the bottom of its owner\'s deck：Choose 1 Unit card with "Impulse Gundam" in its card name that is Lv.4 or higher from your trash. Deploy it.', () => {
-    it("data encodes the 2-resource activated main ability and both movement directives", () => {
-      const effect = st09ImpulseGundam001.effects?.[0];
-
-      expect(effect?.type).toBe("activated");
-      expect(effect?.activation.timing).toEqual(["activate:main"]);
-      expect(effect?.cost).toEqual({ payResources: 2 });
-      expect(effect?.directives).toEqual([
-        {
-          action: {
-            action: "returnToDeck",
-            position: "bottom",
-            target: {
-              owner: "self",
-              cardType: "unit",
-            },
-          },
-        },
-        {
-          action: {
-            action: "deploy",
-            target: {
-              owner: "friendly",
-              cardType: "unit",
-              zone: "trash",
-              count: 1,
-              attributeFilters: [
-                {
-                  attribute: "name",
-                  comparison: "includes",
-                  value: "Impulse Gundam",
-                },
-                {
-                  attribute: "level",
-                  comparison: "gte",
-                  value: 4,
-                },
-              ],
-            },
-          },
-        },
-      ]);
-    });
-
     it("pays 2 resources, returns itself to deck bottom, and deploys a Lv.4+ Impulse from trash", () => {
       const target = createTrashImpulse();
       const engine = GundamTestEngine.create(
@@ -92,12 +52,18 @@ describe("Impulse Gundam (ST09-001)", () => {
       const p1 = engine.asPlayer(PLAYER_ONE);
       const selfId = p1.getCardsInZone("battleArea")[0]!;
       const targetId = p1.getCardsInZone("trash")[0]!;
+      const deckBefore = p1.getCardsInZone("deck").length;
 
-      expectSuccess(p1.activateAbility(selfId, 0, { targets: [targetId] }));
+      expectSuccess(p1.activateAbility(selfId, 0));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [targetId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [targetId] }));
 
       expect(p1.getCardsInZone("battleArea")).toEqual([targetId]);
       expect(p1.getCardsInZone("trash")).toHaveLength(0);
-      expect(p1.getCardsInZone("deck").at(0)).toBe(selfId);
+      expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore + 1);
       expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(2);
     });
 
@@ -115,7 +81,12 @@ describe("Impulse Gundam (ST09-001)", () => {
       const selfId = p1.getCardsInZone("battleArea")[0]!;
       const targetId = p1.getCardsInZone("trash")[0]!;
 
-      expectSuccess(p1.activateAbility(selfId, 0, { targets: [targetId] }));
+      expectSuccess(p1.activateAbility(selfId, 0));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [targetId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [targetId] }));
 
       expect(p1.getCardsInZone("battleArea")).toEqual([targetId]);
     });
@@ -135,7 +106,12 @@ describe("Impulse Gundam (ST09-001)", () => {
       const selfId = p1.getCardsInZone("battleArea")[0]!;
       const [firstId, secondId] = p1.getCardsInZone("trash");
 
-      expectSuccess(p1.activateAbility(selfId, 0, { targets: [secondId!] }));
+      expectSuccess(p1.activateAbility(selfId, 0));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: expect.arrayContaining([firstId, secondId]),
+      });
+      expectSuccess(p1.resolveEffect({ targets: [secondId!] }));
 
       expect(p1.getCardsInZone("battleArea")).toEqual([secondId]);
       expect(p1.getCardsInZone("trash")).toEqual([firstId]);
@@ -156,7 +132,7 @@ describe("Impulse Gundam (ST09-001)", () => {
 
       expectSuccess(p1.activateAbility(selfId, 0));
 
-      const pending = engine.getPendingChoice();
+      const pending = p1.getBoardView().pendingChoice;
       expect(pending?.kind).toBe("targetSelection");
       expect(p1.getCardsInZone("battleArea")).toEqual([selfId]);
     });

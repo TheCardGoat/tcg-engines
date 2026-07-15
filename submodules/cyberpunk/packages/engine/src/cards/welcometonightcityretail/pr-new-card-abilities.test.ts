@@ -40,7 +40,7 @@ describe("new Cyberpunk card abilities", () => {
           {
             card: theHeistRetailStarterDeckDexterDeshawnOneLastChance,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
       },
@@ -68,7 +68,7 @@ describe("new Cyberpunk card abilities", () => {
           {
             card: theHeistRetailStarterDeckDexterDeshawnOneLastChance,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         gigArea: [
@@ -134,7 +134,7 @@ describe("new Cyberpunk card abilities", () => {
           {
             card: embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         legendArea: [{ card: boxTopperRetailVCorporateExile, faceDown: false }],
@@ -189,7 +189,7 @@ describe("new Cyberpunk card abilities", () => {
           {
             card: welcomeToNightCityRetailDelamainCab,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         eddies: 4,

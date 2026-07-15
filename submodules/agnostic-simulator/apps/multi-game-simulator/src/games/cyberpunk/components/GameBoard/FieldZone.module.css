@@ -155,7 +155,7 @@
   --field-unit-card-h: var(--unit-card-h, clamp(104px, 16dvh, 142px));
   --field-card-w: calc(var(--field-unit-card-h) * 0.7143);
   --field-slot-w: var(--field-unit-card-h);
-  --field-card-gap: 12px;
+  --field-card-gap: clamp(7px, 1.8dvw, 12px);
 
   position: absolute;
   z-index: 2;
@@ -174,9 +174,52 @@
   scrollbar-width: thin;
 }
 
+.cards[data-scrollable="true"] {
+  overflow-y: scroll;
+}
+
+.cards[data-scroll-axis="horizontal"] {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  justify-content: safe center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-padding-inline: clamp(10px, 2.5dvw, 16px);
+  scrollbar-gutter: auto;
+}
+
+.cards[data-scroll-axis="horizontal"][data-scrollable="true"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.cards[data-scrollable="true"]::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 3px;
+  bottom: 10px;
+  z-index: 5;
+  width: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgb(var(--side-accent-rgb, 245 230 66) / 72%),
+    rgb(var(--side-accent-rgb, 245 230 66) / 22%)
+  );
+  box-shadow: 0 0 8px rgb(var(--side-accent-rgb, 245 230 66) / 28%);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.cards[data-scroll-axis="horizontal"][data-scrollable="true"]::after {
+  content: none;
+}
+
 .zone[data-count="1"] .cards,
 .zone[data-count="2"] .cards {
-  --field-unit-card-h: clamp(112px, 16.8dvh, 152px);
+  --field-unit-card-h: var(--field-unit-card-h-low-count, clamp(112px, 16.8dvh, 152px));
 }
 
 .cards:has(.abilityBadge:hover),
@@ -192,8 +235,13 @@
   align-items: flex-end;
 }
 
+.opp .cards[data-scroll-axis="horizontal"] {
+  align-items: flex-end;
+}
+
 .cards::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 .cards::-webkit-scrollbar-track {
@@ -203,6 +251,16 @@
     rgb(var(--side-accent-rgb, 245 230 66) / 5%)
   );
   border-left: 1px solid rgb(var(--side-accent-rgb, 245 230 66) / 28%);
+}
+
+.cards[data-scroll-axis="horizontal"]::-webkit-scrollbar-track {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--side-accent-rgb, 245 230 66) / 16%),
+    rgb(var(--side-accent-rgb, 245 230 66) / 5%)
+  );
+  border-top: 1px solid rgb(var(--side-accent-rgb, 245 230 66) / 28%);
+  border-left: 0;
 }
 
 .cards::-webkit-scrollbar-thumb {
@@ -226,6 +284,7 @@
   border-radius: 3px;
   margin-block-end: var(--attached-gear-space);
   justify-self: center;
+  scroll-snap-align: center;
 
   /* overflow visible so attached gear can peek out beneath the unit. */
   position: relative;
@@ -237,6 +296,10 @@
 .card:hover {
   box-shadow: 0 4px 14px rgb(245 230 66 / 50%);
   z-index: 2000;
+}
+
+.cards[data-scroll-axis="horizontal"] .card {
+  flex: 0 0 auto;
 }
 
 .card:focus-within {

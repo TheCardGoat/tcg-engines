@@ -2,6 +2,7 @@ import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
 
 import { cx } from "../class-names";
 import { CardFace } from "./CardFace";
+import { DeckRevealShelf } from "./DeckRevealShelf";
 import { EmptyZone } from "./EmptyZone";
 
 export interface DeckStackZoneProps {
@@ -63,6 +64,11 @@ export function DeckStackZone({
         <EmptyZone label={resolvedEmptyLabel} count="0" />
       )}
       <StackCount value={entityCount} />
+      <DeckRevealShelf
+        reveal={zone?.deckReveal}
+        compact
+        className="absolute left-1/2 top-[calc(100%+6px)] z-20 -translate-x-1/2"
+      />
       <StackLabel label={resolvedLabel} />
     </div>
   );

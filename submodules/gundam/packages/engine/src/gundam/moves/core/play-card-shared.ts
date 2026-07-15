@@ -14,7 +14,6 @@
 
 import type {
   Card,
-  EffectAction,
   EffectCondition,
   EffectCost,
   EffectDirective,
@@ -34,7 +33,11 @@ import {
   getAvailableResources,
   getResourceLevel,
 } from "../../rules/derived-state.ts";
-import { gatherAllCardsForTargeting, getFilterCountBounds } from "../../effects/target-legality.ts";
+import {
+  extractActionFilters,
+  gatherAllCardsForTargeting,
+  getFilterCountBounds,
+} from "../../effects/target-legality.ts";
 import { evaluateCondition, evaluateTargetFilter } from "../../../runtime/target-dsl.ts";
 import { emitGundamLog } from "../../logging.ts";
 import { rejectWithKey } from "./validation-error.ts";
@@ -91,6 +94,7 @@ export function validatePlayFromHand(
   playerId: string,
   G: ReadonlyGundamG,
   framework: FrameworkReadAPI,
+  options: { costOverride?: number; levelOverride?: number } = {},
 ): MoveValidationResult {
   const handCards = framework.zones.getCards({ zone: "hand", playerId });
   if (!handCards.includes(cardId)) {
@@ -103,7 +107,8 @@ export function validatePlayFromHand(
   }
 
   const resourceLevel = getResourceLevel(playerId, framework);
-  const effectiveLevel = computeEffectiveLevelInHand(cardId, playerId, G, framework);
+  const effectiveLevel =
+    options.levelOverride ?? computeEffectiveLevelInHand(cardId, playerId, G, framework);
   if (effectiveLevel > resourceLevel) {
     return rejectWithKey(
       "gundam.error.play.insufficientResourceLevel",
@@ -113,7 +118,8 @@ export function validatePlayFromHand(
   }
 
   const available = getAvailableResources(playerId, G, framework);
-  const effectiveCost = computeEffectiveCostInHand(cardId, playerId, G, framework);
+  const effectiveCost =
+    options.costOverride ?? computeEffectiveCostInHand(cardId, playerId, G, framework);
   if (available < effectiveCost) {
     return rejectWithKey(
       "gundam.error.play.insufficientResources",
@@ -142,8 +148,9 @@ export function payCardCost(
   playerId: string,
   G: GundamG,
   framework: FrameworkWriteAPI,
+  options: { costOverride?: number } = {},
 ): number {
-  return payCardCostWithDetails(cardId, playerId, G, framework).total;
+  return payCardCostWithDetails(cardId, playerId, G, framework, options).total;
 }
 
 export function payCardCostWithDetails(
@@ -151,8 +158,10 @@ export function payCardCostWithDetails(
   playerId: string,
   G: GundamG,
   framework: FrameworkWriteAPI,
+  options: { costOverride?: number } = {},
 ): { total: number; regularCount: number; exRemovedCount: number } {
-  const effectiveCost = computeEffectiveCostInHand(cardId, playerId, G, framework);
+  const effectiveCost =
+    options.costOverride ?? computeEffectiveCostInHand(cardId, playerId, G, framework);
   const paid = payCost({ payResources: effectiveCost }, cardId, playerId, G, framework);
   return {
     total: effectiveCost,
@@ -186,6 +195,7 @@ export function payCost(
   playerId: string,
   G: GundamG,
   framework: FrameworkWriteAPI,
+  chosenCostIds: readonly string[] = [],
 ): { regularCount: number; exRemovedCount: number } {
   let paidResources = { regularCount: 0, exRemovedCount: 0 };
   if (!cost) return paidResources;
@@ -210,16 +220,11 @@ export function payCost(
   }
 
   if (cost.discardCount) {
-    const handCards = framework.zones.getCards({ zone: "hand", playerId });
-    const toDiscard = selectDiscardCostCards(
-      handCards,
-      cost.discardCount,
-      cost.discardFilter,
-      playerId,
-      sourceCardId,
-      G,
-      framework,
-    );
+    const candidates = listPayableDiscardCostCards(cost, playerId, sourceCardId, G, framework);
+    const candidateSet = new Set(candidates);
+    const toDiscard = chosenCostIds
+      .filter((cardId) => candidateSet.has(cardId))
+      .slice(0, cost.discardCount);
     for (const cid of toDiscard) {
       framework.zones.moveCard(cid, { zone: "trash", playerId });
     }
@@ -282,9 +287,18 @@ export function payCost(
       sourceCardId,
     });
     const filter: TargetFilter = { ...cost.exileFromTrash, zone: "trash" };
-    const candidates = evaluateTargetFilter(filter, gatherAllCardsForTargeting(tgtCtx), tgtCtx);
-    const [cardId] = candidates;
-    if (cardId) {
+    const candidates = evaluateTargetFilter(
+      filter,
+      gatherAllCardsForTargeting(tgtCtx),
+      tgtCtx,
+    ) as string[];
+    const { min, max } = getFilterCountBounds(filter);
+    const selected = chosenCostIds.filter((id) => candidates.includes(id));
+    const toExile = (selected.length > 0 ? selected : candidates).slice(
+      0,
+      Number.isFinite(max) ? max : Math.max(min, candidates.length),
+    );
+    for (const cardId of toExile) {
       framework.zones.moveCard(cardId as string, { zone: "removalArea" });
       emitGundamLog(framework, {
         type: "gundam.effect.movedToZone",
@@ -324,43 +338,32 @@ export function countPayableDiscardCostCards(
   G: GundamG | ReadonlyGundamG,
   framework: FrameworkReadAPI,
 ): number {
-  if (!cost?.discardCount) return 0;
-  const handCards = framework.zones.getCards({ zone: "hand", playerId });
-  return selectDiscardCostCards(
-    handCards,
-    cost.discardCount,
-    cost.discardFilter,
-    playerId,
-    sourceCardId,
-    G,
-    framework,
-  ).length;
+  return listPayableDiscardCostCards(cost, playerId, sourceCardId, G, framework).length;
 }
 
-function selectDiscardCostCards(
-  handCards: readonly string[],
-  count: number,
-  filter: TargetFilter | undefined,
+export function listPayableDiscardCostCards(
+  cost: EffectCost | undefined,
   playerId: string,
   sourceCardId: string,
   G: GundamG | ReadonlyGundamG,
   framework: FrameworkReadAPI,
 ): string[] {
-  if (!filter) return handCards.slice(0, count);
+  if (!cost?.discardCount) return [];
+  const handCards = framework.zones.getCards({ zone: "hand", playerId });
+  if (!cost.discardFilter) return [...handCards];
   const tgtCtx = buildTargetResolutionContext(G, playerId, framework, {
     sourceCardId,
   });
   const discardFilter: TargetFilter = {
-    ...filter,
-    owner: filter.owner ?? "friendly",
-    zone: filter.zone ?? "hand",
+    ...cost.discardFilter,
+    owner: cost.discardFilter.owner ?? "friendly",
+    zone: cost.discardFilter.zone ?? "hand",
   };
-  const eligibleCards = evaluateTargetFilter(
+  return evaluateTargetFilter(
     discardFilter,
     tgtCtx.getCardsInZone(playerId as PlayerId, "hand"),
     tgtCtx,
-  );
-  return eligibleCards.slice(0, count);
+  ) as string[];
 }
 
 /**
@@ -412,7 +415,12 @@ function exhaustResources(
   // Pass 2: remove EX resource tokens from the game
   for (const resId of exActive) {
     if (remaining <= 0) break;
-    framework.zones.moveCard(resId, { zone: "removalArea" });
+    // Rules 5-17-3-2-3 and 5-17-4: spending an EX Resource removes it
+    // from the game. Because it is a token, it then ceases to exist rather
+    // than becoming a visible card in the Removal Area (rule 5-17-2-5).
+    delete G.exhausted[resId];
+    framework.zones.removeCard(resId);
+    framework.cards.deregisterDefinition(resId);
     remaining--;
     exRemovedCount++;
   }
@@ -444,7 +452,21 @@ export function validateDeployTriggerTargets(
   framework: FrameworkReadAPI,
 ): MoveValidationResult {
   const def = framework.cards.getDefinition(cardId) as Card | undefined;
-  if (!def?.effects?.length) return { valid: true };
+  if (!def?.effects?.length) {
+    return chosenTargets.length === 0
+      ? { valid: true }
+      : {
+          valid: false,
+          error: "This deployment does not accept effect targets",
+          errorCode: "INVALID_TARGET",
+        };
+  }
+  // Deploy triggers now use the same pending-choice protocol as every
+  // other triggered effect. Omitting targets means "ask me after deploy",
+  // not "auto-pick" or "reject the deployment". Supplied targets are
+  // still validated and pre-committed for clients that collect them as
+  // part of the deploy procedure.
+  if (chosenTargets.length === 0) return { valid: true };
 
   const tgtCtx = buildTargetResolutionContext(G, playerId, framework, {
     sourceCardId: cardId,
@@ -472,41 +494,40 @@ export function validateDeployTriggerTargets(
     for (const directive of effect.directives) {
       if (!isEffectDirective(directive)) continue;
       const action = directive.action;
-      if (!hasTarget(action)) continue;
+      for (const filter of extractActionFilters(action)) {
+        const gather = gatherAllCardsForTargeting(tgtCtx);
+        const candidates = evaluateTargetFilter(filter, gather, tgtCtx) as string[];
+        const candidateSet = new Set(candidates);
+        const picked = chosenTargets.filter((id) => candidateSet.has(id));
 
-      const filter: TargetFilter = action.target;
-      const gather = gatherAllCardsForTargeting(tgtCtx);
-      const candidates = evaluateTargetFilter(filter, gather, tgtCtx) as string[];
-      const candidateSet = new Set(candidates);
-      const picked = chosenTargets.filter((id) => candidateSet.has(id));
+        // Optional directives ("you may") — skip target validation when no
+        // candidates exist and no targets were supplied. The player chose
+        // not to (or cannot) exercise the option.
+        if (directive.optional && picked.length === 0 && candidates.length === 0) {
+          continue;
+        }
 
-      // Optional directives ("you may") — skip target validation when no
-      // candidates exist and no targets were supplied. The player chose
-      // not to (or cannot) exercise the option.
-      if (directive.optional && picked.length === 0 && candidates.length === 0) {
-        continue;
-      }
+        hasTargetedDeployAction = true;
 
-      hasTargetedDeployAction = true;
+        for (const id of picked) {
+          matchedChosenTargetIds.add(id);
+        }
 
-      for (const id of picked) {
-        matchedChosenTargetIds.add(id);
-      }
-
-      const { min, max } = getFilterCountBounds(filter);
-      if (picked.length < min) {
-        return {
-          valid: false,
-          error: `Too few targets: need at least ${min}, got ${picked.length}`,
-          errorCode: "INVALID_TARGET",
-        };
-      }
-      if (picked.length > max) {
-        return {
-          valid: false,
-          error: `Too many targets: max ${max}, got ${picked.length}`,
-          errorCode: "INVALID_TARGET",
-        };
+        const { min, max } = getFilterCountBounds(filter);
+        if (picked.length < min) {
+          return {
+            valid: false,
+            error: `Too few targets: need at least ${min}, got ${picked.length}`,
+            errorCode: "INVALID_TARGET",
+          };
+        }
+        if (picked.length > max) {
+          return {
+            valid: false,
+            error: `Too many targets: max ${max}, got ${picked.length}`,
+            errorCode: "INVALID_TARGET",
+          };
+        }
       }
     }
   }
@@ -521,6 +542,12 @@ export function validateDeployTriggerTargets(
         };
       }
     }
+  } else if (chosenTargets.length > 0) {
+    return {
+      valid: false,
+      error: "This deployment does not accept effect targets",
+      errorCode: "INVALID_TARGET",
+    };
   }
 
   return { valid: true };
@@ -528,8 +555,4 @@ export function validateDeployTriggerTargets(
 
 function isEffectDirective(directive: unknown): directive is EffectDirective {
   return typeof directive === "object" && directive !== null && "action" in (directive as object);
-}
-
-function hasTarget(action: EffectAction): action is EffectAction & { target: TargetFilter } {
-  return "target" in (action as object) && (action as { target?: unknown }).target !== undefined;
 }

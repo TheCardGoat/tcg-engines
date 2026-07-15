@@ -298,6 +298,10 @@ export function evaluateAttributeFilter(
       if (filter.comparison === "includes") return has;
       return !has;
     }
+    case "keyword": {
+      const has = ctx.getCardKeywords(card).includes(filter.value);
+      return filter.comparison === "includes" ? has : !has;
+    }
     case "effectTiming": {
       const timings = ctx.getCardEffectTimings?.(card) ?? [];
       const has = timings.includes(filter.value);
@@ -381,6 +385,10 @@ function cardMatchesFilter(
   ownerResolved: PlayerId | "any" | "self",
   ctx: TargetResolutionContext,
 ): boolean {
+  if (filter.instanceIds !== undefined && !filter.instanceIds.includes(card.instanceId)) {
+    return false;
+  }
+
   // Owner check
   if (ownerResolved === "self") {
     // Rule 3-3-9-1: on a pilot source, "this Unit" means the paired unit;

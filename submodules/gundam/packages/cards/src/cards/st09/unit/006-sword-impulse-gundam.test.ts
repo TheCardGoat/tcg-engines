@@ -29,7 +29,17 @@ describe("Sword Impulse Gundam (ST09-006)", () => {
       const swordId = p1.getCardsInZone("trash")[0]!;
       const [lowLevelEnemyId, highLevelEnemyId] = p2.getCardsInZone("battleArea");
 
-      expectSuccess(p1.activateAbility(impulseId, 0, { targets: [swordId] }));
+      expectSuccess(p1.activateAbility(impulseId, 0));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [swordId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [swordId] }));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [lowLevelEnemyId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [lowLevelEnemyId!] }));
 
       expect(p1.getCardsInZone("battleArea")).toEqual([swordId]);
       expect(p2.getCardsInZone("trash")).toContain(lowLevelEnemyId);
@@ -49,6 +59,7 @@ describe("Sword Impulse Gundam (ST09-006)", () => {
 
       expectSuccess(p1.deployUnit(swordId));
 
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
       expect(p1.getCardsInZone("battleArea")).toEqual([swordId]);
       expect(p2.getCardsInZone("battleArea")).toEqual([enemyId]);
       expect(p2.getCardsInZone("trash")).toHaveLength(0);

@@ -35,7 +35,7 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
         return false;
       }
       if (
-        card.meta.playedThisTurn &&
+        card.meta.hasLag &&
         !rules.includes("adrenaline") &&
         !rules.includes("canAttackRivalOnPlayedTurn")
       )
@@ -62,7 +62,7 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
     }
     if (attacker.meta.spent)
       return { valid: false, error: "Attacker is spent", errorCode: "CARD_SPENT" };
-    if (attacker.meta.playedThisTurn) {
+    if (attacker.meta.hasLag) {
       const attackerRules = getEffectiveRules(
         state as import("../types/match-state.ts").MatchState,
         attackerId,
@@ -73,8 +73,8 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
       ) {
         return {
           valid: false,
-          error: "Can't attack on turn played",
-          errorCode: "SUMMONING_SICKNESS",
+          error: "Can't attack while this Unit has Lag",
+          errorCode: "LAG",
         };
       }
     }

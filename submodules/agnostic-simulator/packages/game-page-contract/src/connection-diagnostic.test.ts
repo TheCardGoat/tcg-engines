@@ -28,7 +28,10 @@ describe("simulator connection diagnostics", () => {
         socketId: "sock_1",
         authModeLabel: "Authenticated (ticket)",
         authenticated: true,
+        authStatus: "ok",
         latencyMs: 42,
+        lastHeartbeatSentAt: "2026-05-28T12:00:00.500Z",
+        lastHeartbeatAckAt: "2026-05-28T12:00:00.700Z",
         lastPongAt: "2026-05-28T12:00:01.000Z",
       },
       presence: [
@@ -58,6 +61,7 @@ describe("simulator connection diagnostics", () => {
     expect(diagnostic.schemaVersion).toBe(1);
     expect(diagnostic.endpoint.origin).toBe("wss://gateway.example.test");
     expect(diagnostic.connection.authModeLabel).toBe("Authenticated (ticket)");
+    expect(diagnostic.connection.lastHeartbeatAckAt).toBe("2026-05-28T12:00:00.700Z");
 
     const json = stringifySimulatorConnectionDiagnostic(diagnostic);
     expect(json).toContain('"matchId": "match_1"');

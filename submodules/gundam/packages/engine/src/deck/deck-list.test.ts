@@ -4,6 +4,7 @@ import type { Card, ResourceCard, UnitCard } from "@tcg/gundam-types";
 
 import {
   GUNDAM_MAIN_DECK_SIZE,
+  GUNDAM_MAX_DECK_COLORS,
   GUNDAM_RESOURCE_DECK_SIZE,
   isDeckListToken,
   validateDeckList,
@@ -16,7 +17,7 @@ import {
  * Uses only public `Card`-shape fields so it's isolated from engine
  * mock helpers.
  */
-function unit(cardNumber: string, cost: number): UnitCard {
+function unit(cardNumber: string, cost: number, color: UnitCard["color"] = "blue"): UnitCard {
   return {
     cardNumber,
     name: `Test Unit ${cardNumber}`,
@@ -24,7 +25,7 @@ function unit(cardNumber: string, cost: number): UnitCard {
     canonicalId: "mock",
     slug: "mock",
     printings: [],
-    color: "blue",
+    color,
     traits: ["earth federation"],
     level: cost,
     cost,
@@ -187,6 +188,23 @@ describe("validateDeckList: copy rule", () => {
   });
 });
 
+describe("validateDeckList: color rules", () => {
+  it("rejects a main deck with more than two colors", () => {
+    const { catalog, list } = fiftyCardLegal();
+    const greenEntry = list.cards[0];
+    const redEntry = list.cards[1];
+    if (!greenEntry || !redEntry) throw new Error("Expected legal deck entries");
+    catalog[greenEntry.cardNumber] = unit(greenEntry.cardNumber, 1, "green");
+    catalog[redEntry.cardNumber] = unit(redEntry.cardNumber, 1, "red");
+
+    const result = validateDeckList(list, { catalog });
+
+    expect(result.ok).toBe(false);
+    if (result.ok) return;
+    expect(result.errors.some((error) => error.includes("one or two colors"))).toBe(true);
+  });
+});
+
 describe("validateDeckList: catalog resolution", () => {
   it("rejects an unknown cardNumber", () => {
     const list: DeckList = {
@@ -340,5 +358,6 @@ describe("validateDeckList: constants", () => {
   it("exposes official Gundam TCG sizes", () => {
     expect(GUNDAM_MAIN_DECK_SIZE).toBe(50);
     expect(GUNDAM_RESOURCE_DECK_SIZE).toBe(10);
+    expect(GUNDAM_MAX_DECK_COLORS).toBe(2);
   });
 });

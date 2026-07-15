@@ -3,23 +3,18 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  expectAttackRedirectedTo,
   expectSuccess,
   createMockUnit,
 } from "@tcg/gundam-engine";
 import { st04Moebius004 } from "./004-moebius.ts";
 
 describe("Moebius (ST04-004)", () => {
-  it("declares the <Blocker> keyword in card data", () => {
-    expect(st04Moebius004.keywordEffects?.some((k) => k.keyword === "Blocker")).toBe(true);
-  });
-
   it("<Blocker> lets Moebius intercept an attack targeted at another friendly Unit", () => {
-    const attacker = createMockUnit({ ap: 3, hp: 5 });
+    const attacker = createMockUnit({ ap: 1, hp: 5 });
     const defender = createMockUnit({ ap: 1, hp: 5 });
     const engine = GundamTestEngine.create(
       { play: [attacker] },
-      { play: [defender, st04Moebius004] },
+      { play: [{ card: defender, exhausted: true }, st04Moebius004] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
@@ -29,6 +24,10 @@ describe("Moebius (ST04-004)", () => {
 
     expectSuccess(p1.enterBattle(attackerId, defenderId));
     expectSuccess(p2.declareBlock(blockerId));
-    expectAttackRedirectedTo(engine, blockerId);
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getCardZone(blockerId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getDamage(defenderId)).toBe(0);
   });
 });

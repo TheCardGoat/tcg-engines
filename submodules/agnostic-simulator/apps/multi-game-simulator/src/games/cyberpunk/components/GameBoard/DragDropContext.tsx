@@ -289,6 +289,7 @@ export function DragDropProvider({ children }: { children: ReactNode }) {
   return (
     <Ctx.Provider value={value}>
       <DndContext
+        id="cyberpunk-board-dnd"
         collisionDetection={collisionDetection}
         sensors={sensors}
         onDragStart={onDragStart}

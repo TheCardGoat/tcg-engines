@@ -7,7 +7,6 @@ import {
   createMockPilot,
   createMockUnit,
   expectSuccess,
-  getDamageCounter,
 } from "@tcg/gundam-engine";
 import { gd03GundamFlightForm036 } from "./036-gundam-flight-form.ts";
 
@@ -30,7 +29,29 @@ describe("Ξ Gundam (Flight Form) (GD03-036)", () => {
 
     expectSuccess(p1.assignPilot(hathaway, unitId));
 
-    expect(getDamageCounter(engine, enemyAId!)).toBe(1);
-    expect(getDamageCounter(engine, enemyBId!)).toBe(1);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    expect(p2.getDamage(enemyAId!)).toBe(1);
+    expect(p2.getDamage(enemyBId!)).toBe(1);
+  });
+
+  it("does not deal damage when the paired Pilot does not satisfy the link condition", () => {
+    const pilot = createMockPilot({ name: "Lane Aim" });
+    const enemy = createMockUnit({ hp: 4 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [pilot],
+        play: [gd03GundamFlightForm036],
+        resourceArea: activeResources(5),
+      },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(pilot, unitId));
+
+    expect(p2.getDamage(enemyId)).toBe(0);
   });
 });

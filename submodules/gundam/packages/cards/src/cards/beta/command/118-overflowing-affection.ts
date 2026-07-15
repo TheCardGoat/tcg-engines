@@ -159,14 +159,9 @@ export const betaOverflowingAffection118: CommandCard = {
       directives: [
         {
           action: {
-            action: "draw",
-            count: 2,
-          },
-        },
-        {
-          action: {
-            action: "discard",
-            count: 1,
+            action: "drawThenDiscard",
+            drawCount: 2,
+            discardCount: 1,
           },
         },
       ],

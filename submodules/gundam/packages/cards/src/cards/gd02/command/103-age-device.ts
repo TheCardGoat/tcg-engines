@@ -100,8 +100,7 @@ export const gd02AgeDevice103: CommandCard = {
           thenDirectives: [
             {
               action: {
-                action: "placeResource",
-                resourceType: "EX",
+                action: "placeExResource",
                 state: "active",
               },
             },

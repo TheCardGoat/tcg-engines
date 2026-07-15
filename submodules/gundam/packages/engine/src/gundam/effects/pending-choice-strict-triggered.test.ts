@@ -1,22 +1,22 @@
 /**
- * PR F.4 — rule 10-3-3 deterministic count-clamping for triggered / burst.
+ * PR F.4 — rule 10-3-3 bounded target choices for triggered / burst effects.
  *
- * Pre-F.4, triggered and burst effects with a counted target filter
- * (e.g. "Choose 1 enemy Unit") silently applied to *every* matching
- * candidate when the executor was given no chosenTargets. F.4 honours
- * the filter's `count` by slicing the candidate list to the first N
- * candidates in enumeration order.
- *
- * Activated / command continue to halt for player input via
- * requiresPlayerChoice (F.1+F.2). The halt path is exercised in
- * pending-choice-validation.test.ts; this file covers the trigger /
- * burst auto-pick path.
+ * Triggered and Burst effects with a bounded "choose" filter halt for the
+ * controller instead of silently choosing the first matching candidates.
+ * Unbounded `count: "all"` effects still resolve without a prompt.
  */
 
 import { describe, it, expect } from "vite-plus/test";
 import type { CardEffect } from "@tcg/gundam-types";
-import { GundamTestEngine, PLAYER_ONE, PLAYER_TWO, createMockUnit } from "../../index.ts";
-import type { PendingEffect } from "../types.ts";
+import {
+  GundamTestEngine,
+  PLAYER_ONE,
+  PLAYER_TWO,
+  activeResources,
+  createMockUnit,
+  expectSuccess,
+} from "../../index.ts";
+
 const restOneEnemyEffect: CardEffect = {
   type: "triggered",
   activation: { timing: ["deploy"] },
@@ -31,37 +31,43 @@ const restOneEnemyEffect: CardEffect = {
   sourceText: "【Deploy】 Rest 1 enemy unit.",
 };
 
-let peIdCounter = 0;
-function makeTrigger(controllerId: string): PendingEffect {
-  return {
-    id: `pe_strict_${++peIdCounter}`,
-    sourceCardId: "src",
-    effectIndex: 0,
-    kind: "triggered",
-    controllerId,
-    effect: restOneEnemyEffect,
-  };
+function triggerUnit(effect: CardEffect) {
+  return createMockUnit({ name: "Rest Trigger", cost: 0, effects: [effect] });
 }
 
-describe("Pending effects — count-clamping for triggered effects (PR F.4)", () => {
-  it("rests exactly 1 enemy unit (not all) when count: 1 and 3 enemies exist", () => {
+describe("Pending effects — bounded choices for triggered effects (PR F.4)", () => {
+  it("lets the controller choose exactly 1 of 3 enemy Units", () => {
     const a = createMockUnit({ ap: 1, hp: 1 });
     const b = createMockUnit({ ap: 1, hp: 1 });
     const c = createMockUnit({ ap: 1, hp: 1 });
-    const engine = GundamTestEngine.create({}, { play: [a, b, c] });
-    engine.getG().pendingEffects.push(makeTrigger(PLAYER_ONE));
+    const source = triggerUnit(restOneEnemyEffect);
+    const engine = GundamTestEngine.create(
+      { hand: [source], resourceArea: activeResources(1) },
+      { play: [a, b, c] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const sourceId = p1.getHand()[0]!;
+    const enemyIds = p2.getCardsInZone("battleArea");
 
-    // Drain via a real flow tick — runs resolveFlowTransitions which
-    // hits onTransitionCheck = drainPendingEffects.
-    engine.tickFlow(PLAYER_ONE);
+    expectSuccess(p1.deployUnit(sourceId));
 
-    const enemyIds = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea");
-    const exhaustedCount = enemyIds.filter((id) => engine.getG().exhausted[id]).length;
-    expect(exhaustedCount).toBe(1);
-    expect(engine.getG().pendingEffects).toHaveLength(0);
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("targetSelection");
+    if (choice?.kind !== "targetSelection") return;
+    expect(choice.minTargets).toBe(1);
+    expect(choice.maxTargets).toBe(1);
+    expect(choice.legalTargetIds).toEqual(enemyIds);
+
+    expectSuccess(p1.resolveEffect({ targets: [enemyIds[2]!] }));
+
+    expect(p2.isExhausted(enemyIds[0]!)).toBe(false);
+    expect(p2.isExhausted(enemyIds[1]!)).toBe(false);
+    expect(p2.isExhausted(enemyIds[2]!)).toBe(true);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
   });
 
-  it("respects count: 2 — rests exactly 2 of 3 enemies", () => {
+  it("lets the controller choose exactly 2 of 3 enemy Units", () => {
     const restTwo: CardEffect = {
       ...restOneEnemyEffect,
       directives: [
@@ -76,16 +82,32 @@ describe("Pending effects — count-clamping for triggered effects (PR F.4)", ()
     const a = createMockUnit({ ap: 1, hp: 1 });
     const b = createMockUnit({ ap: 1, hp: 1 });
     const c = createMockUnit({ ap: 1, hp: 1 });
-    const engine = GundamTestEngine.create({}, { play: [a, b, c] });
-    engine.getG().pendingEffects.push({ ...makeTrigger(PLAYER_ONE), effect: restTwo });
-    engine.tickFlow(PLAYER_ONE);
+    const source = triggerUnit(restTwo);
+    const engine = GundamTestEngine.create(
+      { hand: [source], resourceArea: activeResources(1) },
+      { play: [a, b, c] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const sourceId = p1.getHand()[0]!;
+    const enemyIds = p2.getCardsInZone("battleArea");
 
-    const enemyIds = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea");
-    const exhaustedCount = enemyIds.filter((id) => engine.getG().exhausted[id]).length;
-    expect(exhaustedCount).toBe(2);
+    expectSuccess(p1.deployUnit(sourceId));
+
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("targetSelection");
+    if (choice?.kind !== "targetSelection") return;
+    expect(choice.minTargets).toBe(2);
+    expect(choice.maxTargets).toBe(2);
+
+    expectSuccess(p1.resolveEffect({ targets: [enemyIds[0]!, enemyIds[2]!] }));
+
+    expect(p2.isExhausted(enemyIds[0]!)).toBe(true);
+    expect(p2.isExhausted(enemyIds[1]!)).toBe(false);
+    expect(p2.isExhausted(enemyIds[2]!)).toBe(true);
   });
 
-  it("respects ranged count: { min:1, max:2 } — clamps to max", () => {
+  it("lets the controller choose within a ranged count", () => {
     const restRange: CardEffect = {
       ...restOneEnemyEffect,
       directives: [
@@ -100,13 +122,29 @@ describe("Pending effects — count-clamping for triggered effects (PR F.4)", ()
     const a = createMockUnit({ ap: 1, hp: 1 });
     const b = createMockUnit({ ap: 1, hp: 1 });
     const c = createMockUnit({ ap: 1, hp: 1 });
-    const engine = GundamTestEngine.create({}, { play: [a, b, c] });
-    engine.getG().pendingEffects.push({ ...makeTrigger(PLAYER_ONE), effect: restRange });
-    engine.tickFlow(PLAYER_ONE);
+    const source = triggerUnit(restRange);
+    const engine = GundamTestEngine.create(
+      { hand: [source], resourceArea: activeResources(1) },
+      { play: [a, b, c] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const sourceId = p1.getHand()[0]!;
+    const enemyIds = p2.getCardsInZone("battleArea");
 
-    const enemyIds = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea");
-    const exhaustedCount = enemyIds.filter((id) => engine.getG().exhausted[id]).length;
-    expect(exhaustedCount).toBe(2);
+    expectSuccess(p1.deployUnit(sourceId));
+
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("targetSelection");
+    if (choice?.kind !== "targetSelection") return;
+    expect(choice.minTargets).toBe(1);
+    expect(choice.maxTargets).toBe(2);
+
+    expectSuccess(p1.resolveEffect({ targets: [enemyIds[1]!] }));
+
+    expect(p2.isExhausted(enemyIds[0]!)).toBe(false);
+    expect(p2.isExhausted(enemyIds[1]!)).toBe(true);
+    expect(p2.isExhausted(enemyIds[2]!)).toBe(false);
   });
 
   it("count: 'all' still rests every matching candidate", () => {
@@ -123,12 +161,20 @@ describe("Pending effects — count-clamping for triggered effects (PR F.4)", ()
     };
     const a = createMockUnit({ ap: 1, hp: 1 });
     const b = createMockUnit({ ap: 1, hp: 1 });
-    const engine = GundamTestEngine.create({}, { play: [a, b] });
-    engine.getG().pendingEffects.push({ ...makeTrigger(PLAYER_ONE), effect: restAll });
-    engine.tickFlow(PLAYER_ONE);
+    const source = triggerUnit(restAll);
+    const engine = GundamTestEngine.create(
+      { hand: [source], resourceArea: activeResources(1) },
+      { play: [a, b] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const sourceId = p1.getHand()[0]!;
+    const enemyIds = p2.getCardsInZone("battleArea");
 
-    const enemyIds = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea");
-    const exhaustedCount = enemyIds.filter((id) => engine.getG().exhausted[id]).length;
-    expect(exhaustedCount).toBe(2);
+    expectSuccess(p1.deployUnit(sourceId));
+
+    expect(p2.isExhausted(enemyIds[0]!)).toBe(true);
+    expect(p2.isExhausted(enemyIds[1]!)).toBe(true);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
   });
 });

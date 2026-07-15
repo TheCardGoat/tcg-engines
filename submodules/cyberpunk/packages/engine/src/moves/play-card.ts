@@ -105,7 +105,7 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
     } else if (def.type === "unit") {
       operations.zone.moveCard(cardId as CardInstanceId, "field", playerId);
       operations.card.moveAttachedGear(cardId as CardInstanceId, "field");
-      operations.card.setPlayedThisTurn(cardId as CardInstanceId, true);
+      operations.card.setHasLag(cardId as CardInstanceId, true);
     }
 
     const cardPlayedEvent = {

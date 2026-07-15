@@ -31,6 +31,7 @@ function defaultConnectionState(): GatewayConnectionState {
     reconnectAttempt: 0,
     error: null,
     authStatus: "ok",
+    authFailureReason: null,
   };
 }
 
@@ -128,9 +129,11 @@ describe("createLiveMatchSession", () => {
   });
 
   it("start calls handle.join with resolved role and gameProfileId", () => {
+    const onDiagnostic = vi.fn();
     const { config, handle } = createConfig({
       resolveRole: () => "spectator",
       resolveGameProfileId: () => "profile_7",
+      onDiagnostic,
     });
     const session = createLiveMatchSession(config);
     session.start();
@@ -140,6 +143,12 @@ describe("createLiveMatchSession", () => {
       role: "spectator",
       gameProfileId: "profile_7",
     });
+    expect(onDiagnostic).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: "join_game_emit",
+        details: { gameId: "game_1", role: "spectator", gameProfileId: "profile_7" },
+      }),
+    );
   });
 
   it("start wires onAny and forwards all events to onGameEvent", () => {
@@ -182,6 +191,47 @@ describe("createLiveMatchSession", () => {
         disconnectedAt: "2026-01-01T00:00:00.000Z",
       }),
     );
+  });
+
+  it("clears joined on disconnect until the next game_joined acknowledgement", () => {
+    const { config, handle } = createConfig();
+    const session = createLiveMatchSession(config);
+    session.start();
+
+    handle.dispatch("game_joined", {
+      gameId: "game_1",
+      role: "player",
+      stateVersion: 1,
+      state: {},
+      players: [{ id: "p1", connected: true }],
+    });
+    expect(session.getState().joined).toBe(true);
+
+    handle.pushState({
+      ...defaultConnectionState(),
+      status: "disconnected",
+      authenticated: false,
+      connectionId: null,
+      error: "transport close",
+    });
+    expect(session.getState().joined).toBe(false);
+
+    handle.pushState({
+      ...defaultConnectionState(),
+      status: "connected",
+      authenticated: true,
+      connectionId: "conn_2",
+    });
+    expect(session.getState().joined).toBe(false);
+
+    handle.dispatch("game_joined", {
+      gameId: "game_1",
+      role: "player",
+      stateVersion: 2,
+      state: {},
+      players: [{ id: "p1", connected: true }],
+    });
+    expect(session.getState().joined).toBe(true);
   });
 
   it("presence_change updates the presence map and fires onPresenceChange", () => {
@@ -300,7 +350,9 @@ describe("createLiveMatchSession", () => {
     expect(cb).toHaveBeenCalledTimes(2);
   });
 
-  it("onLatency updates latencyMs in state and records a diagnostic", () => {
+  it("onLatency updates latencyMs and ping/pong timestamps in state and records a diagnostic", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-06-01T12:00:00.000Z"));
     const onDiagnostic = vi.fn();
     const { config, handle } = createConfig({ onDiagnostic });
     const session = createLiveMatchSession(config);
@@ -308,13 +360,17 @@ describe("createLiveMatchSession", () => {
 
     handle.tickLatency(123);
 
-    expect(session.getState().latencyMs).toBe(123);
+    expect(session.getState()).toMatchObject({
+      latencyMs: 123,
+      lastPingAt: "2026-06-01T11:59:59.877Z",
+      lastPongAt: "2026-06-01T12:00:00.000Z",
+    });
     expect(onDiagnostic).toHaveBeenCalledWith(
       expect.objectContaining({ type: "latency", details: { latencyMs: 123 } }),
     );
   });
 
-  it("session state mirrors error and reconnectAttempt from the handle", () => {
+  it("session state mirrors error, reconnectAttempt, and authFailureReason from the handle", () => {
     const { config, handle } = createConfig();
     const session = createLiveMatchSession(config);
     session.start();
@@ -322,6 +378,7 @@ describe("createLiveMatchSession", () => {
     // Initial state — no error, zero reconnect attempts.
     expect(session.getState().error).toBeNull();
     expect(session.getState().reconnectAttempt).toBe(0);
+    expect(session.getState().authFailureReason).toBeNull();
 
     const cb = vi.fn();
     session.subscribeState(cb);
@@ -331,6 +388,8 @@ describe("createLiveMatchSession", () => {
       status: "reconnecting",
       error: "transport: auth timeout",
       reconnectAttempt: 3,
+      authStatus: "failed",
+      authFailureReason: "refresh_exhausted",
     });
 
     const last = cb.mock.calls.at(-1)?.[0];
@@ -338,9 +397,12 @@ describe("createLiveMatchSession", () => {
       status: "reconnecting",
       error: "transport: auth timeout",
       reconnectAttempt: 3,
+      authStatus: "failed",
+      authFailureReason: "refresh_exhausted",
     });
     expect(session.getState().error).toBe("transport: auth timeout");
     expect(session.getState().reconnectAttempt).toBe(3);
+    expect(session.getState().authFailureReason).toBe("refresh_exhausted");
 
     // A subsequent state push that clears the error mirrors null back.
     handle.pushState({
@@ -352,6 +414,7 @@ describe("createLiveMatchSession", () => {
     });
     expect(session.getState().error).toBeNull();
     expect(session.getState().reconnectAttempt).toBe(0);
+    expect(session.getState().authFailureReason).toBeNull();
   });
 
   it("stop calls handle.leave and unwires all listeners", () => {
@@ -396,7 +459,7 @@ describe("createLiveMatchSession", () => {
     for (let i = 0; i < 25; i++) handle.tickLatency(i);
 
     // onDiagnostic surfaces every event; the retained store is capped.
-    expect(onDiagnostic).toHaveBeenCalledTimes(25);
+    expect(onDiagnostic).toHaveBeenCalledTimes(26);
 
     const events = session.getState().events;
     expect(events).toHaveLength(20);
@@ -407,6 +470,7 @@ describe("createLiveMatchSession", () => {
 
   it("heartbeat emits at the configured interval when authenticated", () => {
     vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-06-01T12:00:00.000Z"));
     const buildHeartbeatPayload = vi.fn(() => ({ activity: { idle: false } }));
     const { config, handle } = createConfig({
       buildHeartbeatPayload,
@@ -429,11 +493,36 @@ describe("createLiveMatchSession", () => {
     vi.advanceTimersByTime(100);
     expect(handle.emit).toHaveBeenCalledWith("heartbeat", { activity: { idle: false } });
     expect(buildHeartbeatPayload).toHaveBeenCalledTimes(1);
+    expect(session.getState().lastHeartbeatSentAt).toBe("2026-06-01T12:00:00.100Z");
 
     // Subsequent intervals continue to emit.
     vi.advanceTimersByTime(100);
     expect(handle.emit).toHaveBeenCalledTimes(2);
     expect(buildHeartbeatPayload).toHaveBeenCalledTimes(2);
+    expect(session.getState().lastHeartbeatSentAt).toBe("2026-06-01T12:00:00.200Z");
+  });
+
+  it("heartbeat_ack updates lastHeartbeatAckAt and records a diagnostic", () => {
+    const onDiagnostic = vi.fn();
+    const { config, handle } = createConfig({ onDiagnostic });
+    const session = createLiveMatchSession(config);
+    session.start();
+
+    handle.heartbeatAck({
+      serverTime: "2026-06-01T12:00:01.000Z",
+      stateVersions: { game_1: 7 },
+    });
+
+    expect(session.getState().lastHeartbeatAckAt).toBe("2026-06-01T12:00:01.000Z");
+    expect(onDiagnostic).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: "heartbeat_ack",
+        details: expect.objectContaining({
+          serverTime: "2026-06-01T12:00:01.000Z",
+          stateVersions: { game_1: 7 },
+        }),
+      }),
+    );
   });
 
   it("heartbeat does not emit when not authenticated", () => {

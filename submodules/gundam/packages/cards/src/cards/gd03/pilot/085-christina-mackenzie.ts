@@ -56,8 +56,28 @@ export const gd03ChristinaMackenzie085: PilotCard = {
           },
         },
       ],
+      sourceText: "【Burst】Add this card to your hand.",
+    },
+    {
+      type: "constant",
+      activation: {},
+      directives: [
+        {
+          action: {
+            action: "pairingCostOverride",
+            cost: 0,
+            unit: {
+              owner: "friendly",
+              cardType: "unit",
+              attributeFilters: [
+                { attribute: "name", comparison: "includes", value: "Gundam NT-1" },
+              ],
+            },
+          },
+        },
+      ],
       sourceText:
-        '【Burst】Add this card to your hand. When playing this card from your hand and pairing it with a Unit with "Gundam NT-1" in its card name, play this card as if it has 0 cost.',
+        'When playing this card from your hand and pairing it with a Unit with "Gundam NT-1" in its card name, play this card as if it has 0 cost.',
     },
   ] as CardEffect[],
   keywordEffects: [],

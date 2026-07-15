@@ -1,19 +1,25 @@
 import { normalizeAuthBaseUrl as normalizeSharedAuthBaseUrl } from "@tcg/simulator-runtime/auth";
-import { gameApiBaseUrl } from "../../../runtime/gameRuntimeApi";
-import { CYBERPUNK_GAME_SLUG } from "../engine/live/apiOrigin";
 
-export function normalizeAuthBaseUrl(apiUrl: string | undefined): string {
-  if (!apiUrl?.trim() && import.meta.env.PROD) {
-    throw new Error(
-      "VITE_AUTH_BASE_URL, VITE_GAME_RUNTIME_API_URLS, or VITE_API_URL must be configured in production.",
-    );
-  }
+export type AuthBaseEnv = Record<string, string | boolean | undefined>;
 
-  return normalizeSharedAuthBaseUrl(apiUrl, "http://localhost:3000");
+const PRODUCTION_AUTH_BASE_URL = "https://api.tcg.online";
+const LOCAL_AUTH_BASE_URL = "http://localhost:3000";
+
+export function normalizeAuthBaseUrl(
+  apiUrl: string | undefined,
+  fallback = LOCAL_AUTH_BASE_URL,
+): string {
+  return normalizeSharedAuthBaseUrl(apiUrl, fallback);
+}
+
+export function resolveAuthBaseUrl(env: AuthBaseEnv): string {
+  const fallback = env.PROD ? PRODUCTION_AUTH_BASE_URL : LOCAL_AUTH_BASE_URL;
+  return normalizeSharedAuthBaseUrl(
+    typeof env.VITE_AUTH_BASE_URL === "string" ? env.VITE_AUTH_BASE_URL : undefined,
+    fallback,
+  );
 }
 
 export function getAuthBaseUrl(): string {
-  return normalizeAuthBaseUrl(
-    import.meta.env.VITE_AUTH_BASE_URL ?? gameApiBaseUrl(CYBERPUNK_GAME_SLUG),
-  );
+  return resolveAuthBaseUrl(import.meta.env as AuthBaseEnv);
 }

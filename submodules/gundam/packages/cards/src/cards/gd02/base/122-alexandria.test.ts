@@ -23,6 +23,8 @@ describe("Alexandria (GD02-122)", () => {
     const handBefore = p1.getHand().length;
 
     expectSuccess(p1.deployBase(gd02Alexandria122));
+    expect(p1.getBoardView().pendingChoice?.kind).toBe("targetSelection");
+    expectSuccess(p1.resolveEffect({ targets: [] }));
 
     // Top shield enters hand; hand count unchanged (base out, shield in).
     expect(p1.getHand()).toContain(shieldIds[0]);

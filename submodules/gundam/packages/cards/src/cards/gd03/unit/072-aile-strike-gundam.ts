@@ -97,14 +97,9 @@ export const gd03AileStrikeGundam072: UnitCard = {
           thenDirectives: [
             {
               action: {
-                action: "draw",
-                count: 1,
-              },
-            },
-            {
-              action: {
-                action: "discard",
-                count: 1,
+                action: "drawThenDiscard",
+                drawCount: 1,
+                discardCount: 1,
               },
             },
           ],

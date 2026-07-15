@@ -14,7 +14,7 @@ describe("Gundam Lfrith Ur (GD04-020)", () => {
   it("draws once when you activate a Dawn of Fold Command using an EX Resource", () => {
     const resources = [
       ...activeResources(4).map((entry) => ({ ...entry, exhausted: true })),
-      { card: createMockResource({ name: "EX Resource" }), exhausted: false },
+      { card: createMockResource({ name: "EX Resource" }), exhausted: false, isToken: true },
     ];
     const engine = GundamTestEngine.create({
       hand: [gd04IndiscriminateViolence106],
@@ -24,8 +24,6 @@ describe("Gundam Lfrith Ur (GD04-020)", () => {
     });
     const p1 = engine.asPlayer(PLAYER_ONE);
     const lfrithId = p1.getCardsInZone("battleArea")[0]!;
-    const exResourceId = p1.getCardsInZone("resourceArea").at(-1)!;
-    engine.markAsToken(exResourceId);
 
     expectSuccess(p1.playCommand(gd04IndiscriminateViolence106, { targets: [lfrithId] }));
 

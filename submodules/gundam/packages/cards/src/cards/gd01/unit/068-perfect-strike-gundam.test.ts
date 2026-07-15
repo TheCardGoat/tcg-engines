@@ -1,114 +1,110 @@
-import { describe, it, expect } from "vite-plus/test";
-import type { UnitCard, ResourceCard } from "@tcg/gundam-types";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  expectAttackRedirectedTo,
-  expectSuccess,
-  expectFailure,
+  activeResources,
+  createMockPilot,
   createMockUnit,
+  expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
-import type { TestCardEntry } from "@tcg/gundam-engine";
 import { gd01PerfectStrikeGundam068 } from "./068-perfect-strike-gundam.ts";
-
-let counter = 0;
-function uid(prefix: string): string {
-  return `${prefix}-${++counter}`;
-}
-
-function makeResource(): ResourceCard {
-  return {
-    cardNumber: uid("PSG-R"),
-    name: "Test Resource",
-    type: "resource",
-    canonicalId: "mock",
-    slug: "mock",
-    printings: [],
-    traits: [],
-    level: 0,
-    cost: 0,
-    keywordEffects: [],
-    rarity: "common",
-  };
-}
-
-function makeUnit(hp: number): UnitCard {
-  return {
-    cardNumber: uid("PSG-U"),
-    name: "Test Unit",
-    type: "unit",
-    canonicalId: "mock",
-    slug: "mock",
-    printings: [],
-    traits: [],
-    level: 1,
-    cost: 1,
-    keywordEffects: [],
-    rarity: "common",
-    ap: 1,
-    hp,
-  };
-}
-
-function active(card: ResourceCard): TestCardEntry {
-  return { card, exhausted: false };
-}
-
-function resources(count: number): TestCardEntry[] {
-  return Array.from({ length: count }, () => active(makeResource()));
-}
+import {
+  passTurnThroughPublicMoves,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 
 describe("Perfect Strike Gundam (GD01-068)", () => {
-  it("<Blocker> lets Perfect Strike Gundam intercept an attack targeted at another friendly Unit", () => {
+  it("uses Blocker to visibly intercept an attack", () => {
     const attacker = createMockUnit({ ap: 3, hp: 5 });
-    const defender = createMockUnit({ ap: 1, hp: 5 });
+    const defender = createMockUnit({ hp: 5 });
     const engine = GundamTestEngine.create(
-      { play: [attacker] },
+      {
+        deck: 2,
+        play: [attacker],
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
       { play: [defender, gd01PerfectStrikeGundam068] },
+      { initialActivePlayer: PLAYER_TWO },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
-    const defenderId = p2.getCardsInZone("battleArea")[0]!;
-    const blockerId = p2.getCardsInZone("battleArea")[1]!;
+    const [defenderId, blockerId] = p2.getCardsInZone("battleArea");
 
-    expectSuccess(p1.enterBattle(attackerId, defenderId));
-    expectSuccess(p2.declareBlock(blockerId));
-    expectAttackRedirectedTo(engine, blockerId);
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [defenderId!]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+
+    expectSuccess(p1.enterBattle(attackerId, defenderId!));
+    expectSuccess(p2.declareBlock(blockerId!));
+
+    expect(p1.getBoardView().pendingCombat?.blockerId).toBe(blockerId);
   });
 
-  describe("【Deploy】Choose 1 enemy Unit. Return it to its owner's hand.", () => {
-    it("returns a chosen enemy unit to its owner's hand on deploy", () => {
-      const enemy = makeUnit(3);
-      const engine = GundamTestEngine.create(
-        { hand: [gd01PerfectStrikeGundam068], resourceArea: resources(5) },
-        { play: [enemy] },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const p2 = engine.asPlayer(PLAYER_TWO);
-      const [enemyId] = p2.getCardsInZone("battleArea");
-
-      expectSuccess(p1.deployUnit(gd01PerfectStrikeGundam068, { targets: [enemyId!] }));
-      expect(p2.getCardsInZone("battleArea")).not.toContain(enemyId);
-      expect(p2.getCardsInZone("hand")).toContain(enemyId);
+  it("offers only an enemy Unit with 1 HP, returns it to hand, and links with an Earth Alliance Pilot", () => {
+    const earthAlliancePilot = createMockPilot({
+      traits: ["earth alliance"],
+      level: 1,
+      cost: 1,
     });
+    const eligibleEnemy = createMockUnit({ hp: 1 });
+    const secondEligibleEnemy = createMockUnit({ hp: 1 });
+    const tooMuchHp = createMockUnit({ hp: 2 });
+    const friendlyOneHp = createMockUnit({ hp: 1 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd01PerfectStrikeGundam068, earthAlliancePilot],
+        deck: 2,
+        play: [friendlyOneHp],
+        resourceArea: activeResources(5),
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
+      { play: [eligibleEnemy, secondEligibleEnemy, tooMuchHp] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const friendlyId = p1.getCardsInZone("battleArea")[0]!;
+    const [eligibleEnemyId, secondEligibleEnemyId, tooMuchHpId] = p2.getCardsInZone("battleArea");
 
-    it("cannot target a friendly unit", () => {
-      const friendly = makeUnit(3);
-      const engine = GundamTestEngine.create(
-        {
-          hand: [gd01PerfectStrikeGundam068],
-          resourceArea: resources(5),
-          play: [friendly],
-        },
-        {},
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [friendlyId] = p1.getCardsInZone("battleArea");
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [tooMuchHpId!]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
 
-      const result = p1.deployUnit(gd01PerfectStrikeGundam068, { targets: [friendlyId!] });
-      expectFailure(result, "INVALID_TARGET");
+    expectSuccess(p1.deployUnit(gd01PerfectStrikeGundam068));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([eligibleEnemyId, secondEligibleEnemyId]),
+      minTargets: 1,
+      maxTargets: 1,
     });
+    expectSuccess(p1.resolveEffect({ targets: [eligibleEnemyId!] }));
+
+    expect(p2.getCardZone(eligibleEnemyId!)).toBe(`hand:${PLAYER_TWO}`);
+    expect(p2.getCardZone(secondEligibleEnemyId!)).toBe(`battleArea:${PLAYER_TWO}`);
+    expect(p2.getCardZone(tooMuchHpId!)).toBe(`battleArea:${PLAYER_TWO}`);
+    expect(p1.getCardZone(friendlyId)).toBe(`battleArea:${PLAYER_ONE}`);
+    const perfectStrikeId = p1.getCardsInZone("battleArea").find((id) => id !== friendlyId)!;
+    expectSuccess(p1.assignPilot(earthAlliancePilot, perfectStrikeId));
+    expectSuccess(p1.enterBattle(perfectStrikeId, tooMuchHpId!));
+  });
+
+  it("does not open a return prompt when the enemy Unit has more than 1 HP", () => {
+    const enemy = createMockUnit({ hp: 2 });
+    const engine = GundamTestEngine.create(
+      { hand: [gd01PerfectStrikeGundam068], resourceArea: activeResources(5) },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectFailure(
+      p1.deployUnit(gd01PerfectStrikeGundam068, { targets: [enemyId] }),
+      "INVALID_TARGET",
+    );
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.getCardZone(enemyId)).toBe(`battleArea:${PLAYER_TWO}`);
   });
 });

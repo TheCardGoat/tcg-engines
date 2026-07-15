@@ -3,8 +3,7 @@
  */
 
 import type { CardInstanceId, PlayerId } from "../../../types/branded.ts";
-import type { Card, TokenSpec, UnitCard } from "@tcg/gundam-types";
-import type { CardEffect } from "@tcg/gundam-types";
+import type { Card, TokenSpec } from "@tcg/gundam-types";
 import type { EffectExecutionContext } from "../executor.ts";
 import { emitGundamEvent } from "../../events.ts";
 import { emitGundamLog } from "../../logging.ts";
@@ -14,6 +13,8 @@ import {
   enqueueOwnCardTriggers,
 } from "../pending-effects.ts";
 import { TOKEN_PRINTINGS } from "@tcg/gundam-token-data";
+import { buildTokenUnitDefinition } from "../token-definition.ts";
+import { enqueueBaseSectionExcessManagement } from "../../rules/base-section-excess.ts";
 
 let tokenCounter = 0;
 
@@ -25,17 +26,60 @@ export function handleReturnToHandAction(
   targetIds: readonly CardInstanceId[],
   ctx: EffectExecutionContext,
 ): void {
+  const moved = new Set<string>();
   for (const cardId of targetIds) {
-    const ownerId = ctx.framework.cards.getOwner(cardId as string) as string | undefined;
-    if (!ownerId) continue;
-    ctx.framework.zones.moveCard(cardId as string, { zone: "hand", playerId: ownerId });
-    // Reset damage/exhaustion
-    ctx.G.damage[cardId as string] = 0;
-    ctx.G.exhausted[cardId as string] = false;
-    clearPilotAssignmentReferences(cardId as string, ctx);
+    const id = cardId as string;
+    if (moved.has(id)) continue;
+    for (const returningId of cardAndPairedPilot(id, ctx)) {
+      if (moved.has(returningId)) continue;
+      const ownerId = ctx.framework.cards.getOwner(returningId) as string | undefined;
+      if (!ownerId) continue;
+      ctx.framework.zones.moveCard(returningId, { zone: "hand", playerId: ownerId });
+      cleanupReturnedCard(returningId, ctx);
+      moved.add(returningId);
+      emitGundamLog(ctx.framework, {
+        type: "gundam.effect.returnedToHand",
+        values: { cardId: returningId, playerId: ownerId },
+        visibility: { mode: "PUBLIC" },
+        category: "action",
+      });
+    }
+  }
+}
+
+/**
+ * Move cards to their owners' trash without creating a destruction event.
+ * Rules-management excess uses this path because rules 5-10-4 and 11-5-2-1
+ * explicitly say the chosen Base is not destroyed.
+ */
+export function handlePlaceInTrashAction(
+  targetIds: readonly CardInstanceId[],
+  ctx: EffectExecutionContext,
+): void {
+  for (const cardId of targetIds) {
+    const id = cardId as string;
+    const ownerId = ctx.framework.cards.getOwner(id) as string | undefined;
+    const fromZone = ctx.framework.cards.getZone(id)?.split(":")[0];
+    if (!ownerId || !fromZone) continue;
+
+    ctx.framework.zones.moveCard(id, { zone: "trash", playerId: ownerId });
+    delete ctx.G.damage[id];
+    delete ctx.G.exhausted[id];
+    ctx.G.continuousEffects = ctx.G.continuousEffects.filter(
+      (entry) => entry.sourceId !== id && entry.targetId !== id,
+    );
+
+    // Tokens momentarily enter trash, then cease to exist (rule 5-17-2-5).
+    // Remove both the zone/index entry and its dynamic definition so no
+    // visible trash count or unknown ghost card survives the transition.
+    if (ctx.framework.cards.getMeta(id)?.isToken === true) {
+      ctx.framework.zones.removeCard(id);
+      ctx.framework.cards.deregisterDefinition(id);
+    }
+
     emitGundamLog(ctx.framework, {
-      type: "gundam.effect.returnedToHand",
-      values: { cardId: cardId as string, playerId: ownerId },
+      type: "gundam.effect.movedToZone",
+      values: { cardId: id, from: fromZone, to: "trash" },
       visibility: { mode: "PUBLIC" },
       category: "action",
     });
@@ -76,27 +120,56 @@ export function handleReturnToDeckAction(
   shuffle = false,
 ): void {
   const affectedOwners = new Set<string>();
+  const moved = new Set<string>();
   for (const cardId of targetIds) {
-    const ownerId = ctx.framework.cards.getOwner(cardId as string) as string | undefined;
-    if (!ownerId) continue;
-    affectedOwners.add(ownerId);
-    const options = position === "bottom" ? { index: 0 } : undefined;
-    ctx.framework.zones.moveCard(cardId as string, { zone: "deck", playerId: ownerId }, options);
-    // Reset unit state when it leaves the battle area.
-    ctx.G.damage[cardId as string] = 0;
-    ctx.G.exhausted[cardId as string] = false;
-    clearPilotAssignmentReferences(cardId as string, ctx);
-    emitGundamLog(ctx.framework, {
-      type: "gundam.effect.movedToZone",
-      values: { cardId: cardId as string, from: "battleArea", to: "deck" },
-      visibility: { mode: "PUBLIC" },
-      category: "action",
-    });
+    const id = cardId as string;
+    if (moved.has(id)) continue;
+    for (const returningId of cardAndPairedPilot(id, ctx)) {
+      if (moved.has(returningId)) continue;
+      const ownerId = ctx.framework.cards.getOwner(returningId) as string | undefined;
+      if (!ownerId) continue;
+      affectedOwners.add(ownerId);
+      const from = ctx.framework.cards.getZone(returningId)?.split(":")[0] ?? "battleArea";
+      const options = position === "bottom" ? { index: 0 } : undefined;
+      ctx.framework.zones.moveCard(returningId, { zone: "deck", playerId: ownerId }, options);
+      cleanupReturnedCard(returningId, ctx);
+      moved.add(returningId);
+      emitGundamLog(ctx.framework, {
+        type: "gundam.effect.movedToZone",
+        values: { cardId: returningId, from, to: "deck" },
+        visibility: { mode: "PUBLIC" },
+        category: "action",
+      });
+    }
   }
   if (shuffle) {
     for (const ownerId of affectedOwners) {
       ctx.framework.zones.shuffle({ zone: "deck", playerId: ownerId });
     }
+  }
+}
+
+/** Rule 3-3-6: a paired Pilot follows its Unit to the same destination. */
+function cardAndPairedPilot(cardId: string, ctx: EffectExecutionContext): string[] {
+  const pairedPilotId = ctx.G.pilotAssignments[cardId];
+  clearPilotAssignmentReferences(cardId, ctx);
+  if (pairedPilotId) clearPilotAssignmentReferences(pairedPilotId, ctx);
+  return pairedPilotId ? [cardId, pairedPilotId] : [cardId];
+}
+
+function cleanupReturnedCard(cardId: string, ctx: EffectExecutionContext): void {
+  delete ctx.G.damage[cardId];
+  delete ctx.G.exhausted[cardId];
+  ctx.framework.cards.patchMeta(cardId, { exhausted: false, deployedThisTurn: false });
+  ctx.G.continuousEffects = ctx.G.continuousEffects.filter(
+    (entry) => entry.sourceId !== cardId && entry.targetId !== cardId,
+  );
+
+  // A token reaches the destination momentarily, then ceases to exist. A
+  // paired real Pilot has already followed it and remains there.
+  if (ctx.framework.cards.getMeta(cardId)?.isToken === true) {
+    ctx.framework.zones.removeCard(cardId);
+    ctx.framework.cards.deregisterDefinition(cardId);
   }
 }
 
@@ -143,6 +216,9 @@ export function handleDeployAction(
       visibility: { mode: "PUBLIC" },
       category: "action",
     });
+    if (isBase) {
+      enqueueBaseSectionExcessManagement(ctx.G, ownerId, cardId as string, ctx.framework);
+    }
     const event = {
       type: isBase ? "baseDeployed" : "unitDeployed",
       cardId: cardId as string,
@@ -191,6 +267,9 @@ export function handleDeploySelfAction(sourceCardId: string, ctx: EffectExecutio
     kind: isBase ? "BASE_PLACED" : "UNIT_PLACED",
     payload: { cardId: sourceCardId, playerId: ownerId },
   });
+  if (isBase) {
+    enqueueBaseSectionExcessManagement(ctx.G, ownerId, sourceCardId, ctx.framework);
+  }
   // Queue this card's own 【Deploy】 triggered effects so burst-deployed
   // Units / Bases still fire their on-deploy clauses (rule 10-1-6 — the
   // trigger fires from the deploy event regardless of how deployment
@@ -240,61 +319,14 @@ export function handleDeployTokenAction(
     // gameplay-relevant fields (ap/hp/traits/keywordEffects) always come
     // from the source card's TokenSpec, not silently from a substituted
     // catalog entry. When the TokenSpec names a printed token card, we
-    // *only* inherit `cardNumber` (so the simulator's CDN image pipeline
-    // resolves real artwork at `/cards/t/<T-NNN>.webp`) and `color` (so
-    // the card frame tints to the printed faction colour). Everything
-    // else stays derived from TokenSpec — keeps token semantics intact
-    // even if a printed def's other fields drift.
+    // inherit `cardNumber` (so the simulator's CDN image pipeline resolves
+    // real artwork at `/cards/t/<T-NNN>.webp`), `color` (for its frame), and
+    // printed `effect` as display-only inspect text. Gameplay fields still
+    // come from TokenSpec, so a catalog drift cannot alter token semantics.
     const printed = tokenSpec.printedCardNumber
       ? TOKEN_PRINTINGS[tokenSpec.printedCardNumber]
       : undefined;
-    const effects: CardEffect[] = tokenSpec.cantTargetPlayer
-      ? [
-          {
-            type: "constant",
-            activation: {},
-            directives: [
-              {
-                action: {
-                  action: "cantTargetPlayer",
-                  whose: "opponent",
-                },
-              },
-            ],
-            sourceText: "This Unit can't choose the enemy player as its attack target.",
-          },
-        ]
-      : [];
-    const tokenCardNumber = printed?.cardNumber ?? tokenId;
-    const definition: UnitCard = {
-      cardNumber: tokenCardNumber,
-      canonicalId: tokenCardNumber.replace(/[-_]p\d+$/i, ""),
-      slug: `token-${tokenCardNumber.toLowerCase()}`,
-      printings: [
-        {
-          id: tokenCardNumber,
-          artId: tokenCardNumber.replace(/[-_]p\d+$/i, ""),
-          setCode: printed?.set?.code ?? "TOKEN",
-          collectorNumber: tokenCardNumber,
-          cardNumber: tokenCardNumber,
-          set: printed?.set ?? { code: "TOKEN", name: "Token" },
-          rarity: "common",
-          finish: "standard",
-          imageUrl: printed?.imageUrl ?? "",
-        },
-      ],
-      color: printed?.color,
-      name: tokenSpec.name,
-      type: "unit",
-      cost: 0,
-      traits: tokenSpec.traits,
-      level: 0,
-      keywordEffects: tokenSpec.keywordEffects ?? [],
-      rarity: "common",
-      ap: tokenSpec.ap,
-      hp: tokenSpec.hp,
-      effects,
-    };
+    const definition = buildTokenUnitDefinition(tokenSpec, tokenId, printed);
 
     ctx.framework.cards.registerDefinition(tokenId, definition, ctx.sourcePlayerId as PlayerId);
 
@@ -352,6 +384,7 @@ function cloneTokenSpec(token: TokenSpec): TokenSpec {
       ? { keywordEffects: token.keywordEffects.map((entry) => ({ ...entry })) }
       : {}),
     ...(token.cantTargetPlayer !== undefined ? { cantTargetPlayer: token.cantTargetPlayer } : {}),
+    ...(token.restrictions ? { restrictions: [...token.restrictions] } : {}),
     deployState: token.deployState,
     ...(token.printedCardNumber ? { printedCardNumber: token.printedCardNumber } : {}),
   };

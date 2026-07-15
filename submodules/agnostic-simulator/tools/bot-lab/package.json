@@ -1,0 +1,25 @@
+{
+  "name": "@tcg/bot-lab",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Unified deterministic self-improvement CLI for TCG bots.",
+  "type": "module",
+  "scripts": {
+    "bot-lab": "bun ./src/cli.ts",
+    "test": "vp test run",
+    "check-types": "vp check --no-fmt src"
+  },
+  "dependencies": {
+    "@tcg/bot-core": "workspace:*",
+    "@tcg/cyberpunk-engine": "link:../../../cyberpunk/packages/engine",
+    "@tcg/gundam-engine": "link:../../../gundam/packages/engine",
+    "@tcg/lorcana-engine": "link:../../../lorcana/packages/lorcana/lorcana-engine",
+    "@tcg/op-engine": "link:../../../one-piece/packages/engine"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

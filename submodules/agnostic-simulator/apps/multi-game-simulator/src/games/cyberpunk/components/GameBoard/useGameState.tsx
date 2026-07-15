@@ -29,6 +29,7 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
         prioritySide: "player",
         phase: "MAIN",
         gameEnded: false,
+        overtimeActive: false,
         winnerSide: null,
         winReason: null,
         turnNumber: 1,
@@ -47,6 +48,8 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
       prioritySide,
       phase,
       gameEnded: matchState.G.gameEnded,
+      overtimeActive:
+        matchState.G.overtime === true || matchState.G.turnMetadata.overtimeActive === true,
       winnerSide,
       winReason: matchState.G.winReason,
       turnNumber,

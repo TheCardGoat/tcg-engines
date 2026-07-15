@@ -15,6 +15,7 @@ import {
   AiControlPanel as SharedAiControlPanel,
   type AiControlPanelProps as SharedAiControlPanelProps,
 } from "@tcg/simulator-ui";
+import { useEffect, useState } from "react";
 import classes from "./AiControlPanel.module.css";
 
 function formatTime(timestamp: number): string {
@@ -53,13 +54,14 @@ export function AiControlPanel({
   compact = false,
   embedded: embeddedProp = false,
   hideDecisionLog = false,
-  hideScenarioActions = false,
+  scenarioActionsVariant = "inline",
 }: {
   compact?: boolean;
   embedded?: boolean;
   hideDecisionLog?: boolean;
-  hideScenarioActions?: boolean;
+  scenarioActionsVariant?: "inline" | "details" | "hidden";
 }) {
+  const [mounted, setMounted] = useState(false);
   const engine = useEngine();
   const playerProjection = useSideZones("player");
   const opponentProjection = useSideZones("opponent");
@@ -96,6 +98,10 @@ export function AiControlPanel({
 
   const canStep = engine.aiMode === "step" && (status === "paused" || status === "thinking");
   const isTerminal = status === "done";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const takeOrRelease = () => {
     if (isTerminal) {
@@ -160,6 +166,17 @@ export function AiControlPanel({
     kind: entryKind(entry),
   }));
 
+  const scenarioActions =
+    scenarioActionsVariant === "hidden" ? null : (
+      <ScenarioActions
+        clearDisabled={mounted && engine.eventLog.length === 0}
+        canResetScenario={engine.canResetScenario}
+        onCopySnapshot={copySnapshot}
+        onClear={engine.clearLog}
+        onResetScenario={engine.resetScenario}
+      />
+    );
+
   return (
     <div className={classes.wrapper} data-embedded={embeddedProp ? "true" : "false"}>
       <SharedAiControlPanel
@@ -186,38 +203,61 @@ export function AiControlPanel({
         hideDecisionLog={hideDecisionLog}
         embedded={embeddedProp}
       />
-      {!hideScenarioActions ? (
-        <div className={classes.wrapperActions}>
-          <button
-            type="button"
-            data-testid="ai-log-snapshot"
-            className={classes.wrapperBtn}
-            onClick={() => void copySnapshot()}
-            title="Copy board projection, game state, logs, decisions, and engine events"
-          >
-            Snapshot
-          </button>
-          <button
-            type="button"
-            data-testid="ai-log-clear"
-            className={classes.wrapperBtn}
-            onClick={engine.clearLog}
-            disabled={engine.eventLog.length === 0}
-          >
-            Clear
-          </button>
-          <button
-            type="button"
-            data-testid="ai-reset-scenario"
-            className={classes.wrapperBtn}
-            onClick={engine.resetScenario}
-            aria-label="Restart scenario"
-            disabled={!engine.canResetScenario}
-          >
-            Restart scenario
-          </button>
-        </div>
-      ) : null}
+      {scenarioActionsVariant === "details" && scenarioActions ? (
+        <details className={classes.tools} data-testid="ai-tools">
+          <summary className={classes.toolsSummary}>Tools</summary>
+          {scenarioActions}
+        </details>
+      ) : (
+        scenarioActions
+      )}
+    </div>
+  );
+}
+
+function ScenarioActions({
+  clearDisabled,
+  canResetScenario,
+  onCopySnapshot,
+  onClear,
+  onResetScenario,
+}: {
+  clearDisabled: boolean;
+  canResetScenario: boolean;
+  onCopySnapshot: () => Promise<void>;
+  onClear: () => void;
+  onResetScenario: () => void;
+}) {
+  return (
+    <div className={classes.wrapperActions}>
+      <button
+        type="button"
+        data-testid="ai-log-snapshot"
+        className={classes.wrapperBtn}
+        onClick={() => void onCopySnapshot()}
+        title="Copy board projection, game state, logs, decisions, and engine events"
+      >
+        Snapshot
+      </button>
+      <button
+        type="button"
+        data-testid="ai-log-clear"
+        className={classes.wrapperBtn}
+        onClick={onClear}
+        disabled={clearDisabled}
+      >
+        Clear
+      </button>
+      <button
+        type="button"
+        data-testid="ai-reset-scenario"
+        className={classes.wrapperBtn}
+        onClick={onResetScenario}
+        aria-label="Restart scenario"
+        disabled={!canResetScenario}
+      >
+        Restart scenario
+      </button>
     </div>
   );
 }

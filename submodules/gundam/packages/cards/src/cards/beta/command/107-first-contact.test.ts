@@ -2,51 +2,54 @@ import { describe, it, expect } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
+  PLAYER_TWO,
   activeResources,
-  asPlayerId,
+  createMockUnit,
   expectSuccess,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { betaFirstContact107 } from "./107-first-contact.ts";
 describe("First Contact (GD01-107, beta reprint)", () => {
   it("【Burst】Place 1 EX Resource.", () => {
-    const engine = GundamTestEngine.create({ deck: [betaFirstContact107] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, betaFirstContact107.cardNumber, asPlayerId(PLAYER_ONE));
-
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { shieldArea: [betaFirstContact107], deck: 5 },
+      { play: [attacker], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const resourcesBefore = p1.getCardsInZone("resourceArea").length;
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional", directiveIndex: -1 });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    // `placeResource` moves the command card itself from its current zone
-    // (trash, after shield-destruction) into the resource area.
-    expect(p1.getCardsInZone("resourceArea").length).toBe(resourcesBefore + 1);
-    expect(p1.getCardsInZone("resourceArea")).toContain(shieldId);
+    const [exResourceId] = p1.getCardsInZone("resourceArea");
+    expect(p1.isExhausted(exResourceId!)).toBe(false);
   });
 
-  it("【Main】places the command card as a rested Resource", () => {
+  it("【Main】places the top Resource from the resource deck rested and trashes the Command", () => {
     const engine = GundamTestEngine.create({
       hand: [betaFirstContact107],
       resourceArea: activeResources(3),
+      resourceDeck: 2,
     });
     const p1 = engine.asPlayer(PLAYER_ONE);
     const cmdId = p1.getHand()[0]!;
-    const resourcesBefore = p1.getCardsInZone("resourceArea").length;
+    const existingResources = new Set(p1.getCardsInZone("resourceArea"));
+    const resourceDeckBefore = p1.getCardsInZone("resourceDeck").length;
 
     expectSuccess(p1.playCommand(betaFirstContact107));
 
-    // The command card is now a resource (placeResource moved it), the
-    // move-to-trash postAction was suppressed, and `state: "rested"`
-    // flagged the new resource as exhausted.
-    const after = p1.getCardsInZone("resourceArea");
-    expect(after.length).toBe(resourcesBefore + 1);
-    expect(after).toContain(cmdId);
-    expect(engine.getG().exhausted[cmdId]).toBe(true);
-    // Card is not in trash.
-    expect(p1.getCardsInZone("trash")).not.toContain(cmdId);
+    const placedResourceId = p1
+      .getCardsInZone("resourceArea")
+      .find((cardId) => !existingResources.has(cardId));
+    expect(placedResourceId).toBeDefined();
+    expect(p1.isExhausted(placedResourceId!)).toBe(true);
+    expect(p1.getCardsInZone("resourceDeck")).toHaveLength(resourceDeckBefore - 1);
+    expect(p1.getCardZone(cmdId)).toBe(`trash:${PLAYER_ONE}`);
   });
 });

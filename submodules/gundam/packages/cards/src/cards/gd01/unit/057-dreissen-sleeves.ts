@@ -4,6 +4,7 @@ export const gd01DreissenSleeves057: UnitCard = {
   cardNumber: "GD01-057",
   name: "Dreissen (Sleeves)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["neo zeon"],
   id: "GD01-057",

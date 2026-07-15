@@ -1,18 +1,18 @@
 import { describe, expect, it } from "vite-plus/test";
 import type { CardTargetDSL } from "@tcg/cyberpunk-types";
 import {
-  alphaKiroshiOptics,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailSketchyRipper,
+  welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../testing/index.ts";
 import type { CardInstanceId } from "../types/branded.ts";
 import type { ResolutionContext } from "./target-resolver.ts";
 import { evaluateCondition, resolveTarget } from "./target-resolver.ts";
 
-const hostUnit = alphaSwordwiseHuscle;
-const unequippedUnit = alphaRuthlessLowlife;
-const gear = alphaKiroshiOptics;
+const hostUnit = welcomeToNightCityRetailSwordwiseHuscle;
+const unequippedUnit = welcomeToNightCityRetailSketchyRipper;
+const gear = welcomeToNightCityRetailKiroshiOptics;
 
 function createContext(engine: CyberpunkTestEngine, sourceCardId?: CardInstanceId) {
   const fallbackSource = engine.getCardsInZone("field", P1)[0]!;

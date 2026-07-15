@@ -215,6 +215,14 @@ export function createZoneOperations(
 
   // ── Mutation methods ──────────────────────────────────────────────────────
 
+  function removeCard(cardId: string): void {
+    const oldKey = removeCardFromCurrentZone(zones, cardId);
+    if (oldKey === undefined) return;
+    delete zones.private.cardIndex[cardId];
+    delete zones.private.cardMeta[cardId];
+    if (oldKey) syncSummary(zones, oldKey, zoneConfigs);
+  }
+
   function moveCard(
     cardId: string,
     toZone: ZoneRef,
@@ -409,6 +417,7 @@ export function createZoneOperations(
     getVisibility,
 
     // Mutation
+    removeCard,
     moveCard,
     moveCards,
     drawCards,

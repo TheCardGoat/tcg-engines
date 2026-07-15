@@ -30,7 +30,7 @@ describe("resolveCombat — destroy zone commit with markAsLinkUnit attacker", (
     const defender = createMockUnit({ ap: 1, hp: 1 });
     const engine = GundamTestEngine.create(
       { play: [attacker], deck: 5 },
-      { play: [defender], deck: 5 },
+      { play: [{ card: defender, exhausted: true }], deck: 5 },
     );
     const attackerId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
     const defenderId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
@@ -60,7 +60,7 @@ describe("resolveCombat — destroy zone commit with markAsLinkUnit attacker", (
     const defender = createMockUnit({ ap: 1, hp: 5 }); // survives the attack
     const engine = GundamTestEngine.create(
       { play: [attacker], deck: 3 },
-      { play: [defender], deck: 3 },
+      { play: [{ card: defender, exhausted: true }], deck: 3 },
     );
     const attackerId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
     const defenderId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;

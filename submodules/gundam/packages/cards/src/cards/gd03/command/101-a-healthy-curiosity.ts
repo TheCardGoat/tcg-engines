@@ -67,39 +67,36 @@ export const gd03AHealthyCuriosity101: CommandCard = {
       directives: [
         {
           action: {
-            action: "draw",
-            count: 1,
-          },
-        },
-        {
-          condition: {
-            type: "cardInZone",
-            owner: "friendly",
-            zone: "trash",
-            cardType: "command",
-            comparison: "gte",
-            count: 2,
-            hasName: "A Healthy Curiosity",
-          },
-          thenDirectives: [
-            {
-              action: {
-                action: "rest",
-                target: {
-                  owner: "opponent",
-                  cardType: "unit",
-                  count: 1,
-                  attributeFilters: [
-                    {
-                      attribute: "hp",
-                      comparison: "lte",
-                      value: 4,
-                    },
-                  ],
-                },
-              },
+            action: "resolveThenQueue",
+            first: { action: "draw", count: 1 },
+            condition: {
+              type: "cardInZone",
+              owner: "friendly",
+              zone: "trash",
+              cardType: "command",
+              comparison: "gte",
+              count: 2,
+              hasName: "A Healthy Curiosity",
             },
-          ],
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
+                {
+                  action: {
+                    action: "rest",
+                    target: {
+                      owner: "opponent",
+                      cardType: "unit",
+                      count: 1,
+                      attributeFilters: [{ attribute: "hp", comparison: "lte", value: 4 }],
+                    },
+                  },
+                },
+              ],
+              sourceText: "Choose 1 enemy Unit with 4 or less HP. Rest it.",
+            },
+          },
         },
       ],
       sourceText:

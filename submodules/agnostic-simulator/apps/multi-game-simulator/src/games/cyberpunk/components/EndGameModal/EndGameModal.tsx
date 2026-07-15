@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   IconAlertTriangle,
   IconArrowRight,
@@ -17,6 +17,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { PostGameModal } from "@tcg/simulator-ui";
+import { useSimulatorAudio } from "../../../../simulator/audio";
 import { useEngine } from "../../engine";
 import { PLAYER_SIDE_TO_ID } from "../../engine/sides";
 import { useGameState } from "../GameBoard/gameStateContext";
@@ -99,6 +100,8 @@ export function EndGameModal() {
   const [replaySaving, setReplaySaving] = useState(false);
   const [replaySaved, setReplaySaved] = useState(false);
   const [replayStatus, setReplayStatus] = useState<string | null>(null);
+  const celebratedAudioKeyRef = useRef<string | null>(null);
+  const { playCue } = useSimulatorAudio();
   const isDeckBuilderPractice = postGameSurface === "deck-builder-practice";
   const canUseReplayStore = isReplayStoreAvailable();
   const canUseReplayActions = !isDeckBuilderPractice && Boolean(postGameContext?.gameId);
@@ -112,6 +115,17 @@ export function EndGameModal() {
   useEffect(() => {
     setModalState((current) => syncPostGameModalState(current, finishedGameKey));
   }, [finishedGameKey]);
+
+  useEffect(() => {
+    if (!finishedGameKey) {
+      celebratedAudioKeyRef.current = null;
+      return;
+    }
+    if (finishedGameKey === celebratedAudioKeyRef.current) return;
+    celebratedAudioKeyRef.current = finishedGameKey;
+    if (outcome === "draw") return;
+    playCue(outcome === "win" ? "game.win" : "game.loss");
+  }, [finishedGameKey, outcome, playCue]);
 
   useEffect(() => {
     if (postGameContext?.analytics) {

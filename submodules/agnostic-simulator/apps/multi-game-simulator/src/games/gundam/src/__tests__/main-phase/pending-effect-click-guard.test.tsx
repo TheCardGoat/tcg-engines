@@ -1,236 +1,130 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from "vite-plus/test";
-import { fireEvent, screen, waitFor } from "@testing-library/react";
-import type { CardEffect } from "@tcg/gundam-types";
-import { asPlayerId, type GundamG, type PendingEffect } from "@tcg/gundam-engine";
+import { screen, waitFor, within } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 
 import { renderSimulator } from "../../test/renderSimulator.tsx";
 import { findCardsByName } from "../../test/queries.ts";
-import { loadPendingEffectClickGuardDemo } from "../../game/fixtures/pending-effect-click-guard-demo.ts";
+import {
+  loadPendingEffectClickGuardDemo,
+  loadStrikerPackChoiceDemo,
+} from "../../game/fixtures/pending-effect-click-guard-demo.ts";
 import { loadCommandMultiTargetDemo } from "../../game/fixtures/command-multi-target-demo.ts";
 
-/**
- * Rule 5-2 — while a pending effect from rule 10-1-6 awaits resolution,
- * no other player-initiated action is legal. The engine gate in
- * `packages/engine/src/gundam/moves/core/pending-guards.ts` removes
- * `enterBattle` (and other player-action moves) from
- * `enumerateAvailableMovesDetailed` while `g.pendingEffects.length > 0`,
- * so the simulator's `pickMoveForCard` returns null and clicking the
- * viewer's own Unit on the battle area is a no-op.
- *
- * Reproduces the screenshot bug: with a Hawk-of-Endymion-style prompt
- * open ("CHOOSE 1 ENEMY UNIT…"), clicking the viewer's own Unit must
- * NOT initiate the attack-targeting flow ("Challenge with …").
- */
-describe("Main-phase · click-during-pending-choice gate · rule 5-2", () => {
-  it("clicking the viewer's own unit while a target prompt is open is a no-op", async () => {
+describe("Main-phase pending-effect interactions", () => {
+  it("keeps the target prompt open when the player clicks their own attacker", async () => {
+    const user = userEvent.setup();
     const { dev } = renderSimulator(loadPendingEffectClickGuardDemo);
+    const viewerUnit = findCardsByName(dev, /Viewer Mock/i)[0]!;
+    const hand = screen.getByRole("list", { name: /your hand/i });
 
-    // Sanity: no attack-targeting overlay at boot.
-    expect(screen.queryByText(/select target/i)).toBeNull();
-
-    // Seed a `targetSelection`-shaped pending effect via the test-only
-    // mutation hook. The shape mirrors what a Hawk-of-Endymion main
-    // effect would enqueue at resolution time: choose 1 opponent Unit
-    // (count: 1 filter → engine surfaces a `targetSelection` prompt).
-    const restEnemyUnitEffect: CardEffect = {
-      type: "activated",
-      activation: { timing: ["activate:main"] },
-      directives: [
-        {
-          action: {
-            action: "rest",
-            target: { owner: "opponent", cardType: "unit", count: 1 },
-          },
-        },
-      ],
-      sourceText: "Choose 1 enemy Unit. Rest it.",
-    };
-    const viewerCardOnBoard = findCardsByName(dev, /Viewer Mock/i)[0]!;
-    const viewerCardId = viewerCardOnBoard.dataset.cardId!;
-    const p1Id = asPlayerId(dev.p1Id as unknown as string);
-    dev.runtime.runTestMutation(p1Id, ({ G }) => {
-      const entry: PendingEffect = {
-        id: "test-pe",
-        sourceCardId: viewerCardId,
-        effectIndex: 0,
-        kind: "activated",
-        controllerId: p1Id as unknown as string,
-        effect: restEnemyUnitEffect,
-      };
-      (G as GundamG).pendingEffects.push(entry);
-    });
-
+    await user.click(within(hand).getByRole("listitem", { name: /Overwhelming Pressure/i }));
     await waitFor(() => {
-      expect(screen.queryByText(/Choose 1 enemy Unit\. Rest it\./i)).not.toBeNull();
+      expect(screen.queryByText(/Choose 1 enemy Unit that is Lv\.6 or lower/i)).not.toBeNull();
     });
 
-    // Click the viewer's own Unit on the battle area.
-    fireEvent.click(viewerCardOnBoard);
+    await user.click(viewerUnit);
 
-    // Flush microtasks to rule out a deferred overlay opening.
-    await Promise.resolve();
-    await Promise.resolve();
-
-    // No attack-targeting overlay opened (no "SELECT TARGET" banner,
-    // no "Challenge with …" prompt). The engine gate dropped
-    // `enterBattle` from the move list, so `pickMoveForCard` was a no-op.
     expect(screen.queryByText(/challenge with/i)).toBeNull();
-
-    // Pending-choice interaction is still open — the click did not advance
-    // or dismiss the resolution.
-    expect(screen.queryByText(/Choose 1 enemy Unit\. Rest it\./i)).not.toBeNull();
+    expect(screen.queryByText(/Choose 1 enemy Unit that is Lv\.6 or lower/i)).not.toBeNull();
   });
 
-  it.skip("stages a legal target and resolves only after Confirm", async () => {
+  it("stages the chosen enemy and deals damage only after Confirm", async () => {
+    const user = userEvent.setup();
     const { dev } = renderSimulator(loadPendingEffectClickGuardDemo);
+    const hand = screen.getByRole("list", { name: /your hand/i });
 
-    const setActiveEnemyUnitEffect: CardEffect = {
-      type: "activated",
-      activation: { timing: ["activate:main"] },
-      directives: [
-        {
-          action: {
-            action: "setActive",
-            target: { owner: "opponent", cardType: "unit", count: 1 },
-          },
-        },
-      ],
-      sourceText: "Choose 1 enemy Unit. Set it as active.",
-    };
-    const viewerCardOnBoard = findCardsByName(dev, /Viewer Mock/i)[0]!;
-    const viewerCardId = viewerCardOnBoard.dataset.cardId!;
-    const p1Id = asPlayerId(dev.p1Id as unknown as string);
-    dev.runtime.runTestMutation(p1Id, ({ G }) => {
-      const entry: PendingEffect = {
-        id: "test-pe",
-        sourceCardId: viewerCardId,
-        effectIndex: 0,
-        kind: "activated",
-        controllerId: p1Id as unknown as string,
-        effect: setActiveEnemyUnitEffect,
-      };
-      (G as GundamG).pendingEffects.push(entry);
-    });
-
+    await user.click(within(hand).getByRole("listitem", { name: /Overwhelming Pressure/i }));
     await waitFor(() => {
-      expect(screen.queryByText(/Choose 1 enemy Unit\. Set it as active\./i)).not.toBeNull();
+      expect(screen.queryByText(/Choose 1 enemy Unit that is Lv\.6 or lower/i)).not.toBeNull();
     });
 
     const confirm = screen.getByRole("button", { name: /^confirm$/i }) as HTMLButtonElement;
-    expect(confirm.disabled).toBe(true);
-
     const enemyCard = findCardsByName(dev, /Rested Mock/i)[0]!;
-    const enemyCardId = enemyCard.dataset.cardId!;
-    fireEvent.click(enemyCard);
+    expect(confirm.disabled).toBe(true);
+    expect(enemyCard.querySelector("[data-testid='damage-counter-overlay']")).toBeNull();
 
-    expect(screen.queryByText(/Choose 1 enemy Unit\. Set it as active\./i)).not.toBeNull();
+    await user.click(enemyCard);
+
+    expect(screen.queryByText(/Choose 1 enemy Unit that is Lv\.6 or lower/i)).not.toBeNull();
     expect(confirm.disabled).toBe(false);
-    expect((dev.runtime.getState().G as GundamG).exhausted[enemyCardId]).toBe(true);
+    expect(enemyCard.querySelector("[data-testid='damage-counter-overlay']")).toBeNull();
 
-    fireEvent.click(confirm);
+    await user.click(confirm);
 
     await waitFor(() => {
-      expect(screen.queryByText(/Choose 1 enemy Unit\. Set it as active\./i)).toBeNull();
+      expect(screen.queryByText(/Choose 1 enemy Unit that is Lv\.6 or lower/i)).toBeNull();
+      const damage = findCardsByName(dev, /Rested Mock/i)[0]?.querySelector(
+        "[data-testid='damage-counter-overlay']",
+      );
+      expect(damage?.getAttribute("aria-label")).toBe("This card has taken 4 damage.");
     });
-    expect((dev.runtime.getState().G as GundamG).exhausted[enemyCardId]).not.toBe(true);
   });
 
-  it.skip("visually marks every staged play-zone target for multi-target effects", async () => {
+  it("resolves Extreme Hatred's friendly cost before asking for its enemy target", async () => {
+    const user = userEvent.setup();
     const { dev } = renderSimulator(loadCommandMultiTargetDemo);
+    const hand = screen.getByRole("list", { name: /your hand/i });
 
-    const restTwoEnemyUnitsEffect: CardEffect = {
-      type: "activated",
-      activation: { timing: ["activate:main"] },
-      directives: [
-        {
-          action: {
-            action: "rest",
-            target: { owner: "opponent", cardType: "unit", count: 2 },
-          },
-        },
-      ],
-      sourceText: "Choose 2 enemy Units. Rest them.",
-    };
-    const sourceCardId = screen
-      .getByRole("list", { name: /your hand/i })
-      .querySelector<HTMLElement>("[data-card-id]")!.dataset.cardId!;
-    const p1Id = asPlayerId(dev.p1Id as unknown as string);
-    dev.runtime.runTestMutation(p1Id, ({ G }) => {
-      const entry: PendingEffect = {
-        id: "test-pe-multi",
-        sourceCardId,
-        effectIndex: 0,
-        kind: "activated",
-        controllerId: p1Id as unknown as string,
-        effect: restTwoEnemyUnitsEffect,
-      };
-      (G as GundamG).pendingEffects.push(entry);
-    });
-
+    await user.click(within(hand).getByRole("listitem", { name: /Extreme Hatred/i }));
+    await user.click(screen.getByTestId("dual-mode-command"));
     await waitFor(() => {
-      expect(screen.queryByText(/Choose 2 enemy Units\. Rest them\./i)).not.toBeNull();
+      expect(screen.queryByText(/Choose 2 of your active Units/i)).not.toBeNull();
     });
 
+    const confirm = screen.getByRole("button", { name: /^confirm$/i }) as HTMLButtonElement;
     const zaku = findCardsByName(dev, /Zaku II/i)[0]!;
     const dom = findCardsByName(dev, /Dom/i)[0]!;
-    fireEvent.click(zaku);
-    fireEvent.click(dom);
+    const enemy = findCardsByName(dev, /Enemy Gundam/i)[0]!;
+    expect(confirm.disabled).toBe(true);
+
+    await user.click(zaku);
+    await user.click(dom);
 
     expect(zaku.className).toContain("gd-target-selected");
     expect(dom.className).toContain("gd-target-selected");
-  });
+    expect(confirm.disabled).toBe(false);
 
-  it.skip("surfaces chooseOne prompts as selectable token option cards", async () => {
-    const { dev } = renderSimulator(loadPendingEffectClickGuardDemo);
-
-    const strikerPackChoiceEffect: CardEffect = {
-      type: "command",
-      activation: { timing: ["main"] },
-      directives: [
-        {
-          kind: "chooseOne",
-          options: [
-            {
-              label: "Sword Strike Gundam",
-              directives: [{ action: { action: "draw", count: 0 } }],
-            },
-            {
-              label: "Launcher Strike Gundam",
-              directives: [{ action: { action: "draw", count: 0 } }],
-            },
-          ],
-        },
-      ],
-      sourceText: "Deploy 1 [Sword Strike Gundam] or 1 [Launcher Strike Gundam] Unit token.",
-    };
-    const viewerCardOnBoard = findCardsByName(dev, /Viewer Mock/i)[0]!;
-    const viewerCardId = viewerCardOnBoard.dataset.cardId!;
-    const p1Id = asPlayerId(dev.p1Id as unknown as string);
-    dev.runtime.runTestMutation(p1Id, ({ G }) => {
-      const entry: PendingEffect = {
-        id: "test-pe-choose-one",
-        sourceCardId: viewerCardId,
-        effectIndex: 0,
-        kind: "command",
-        controllerId: p1Id as unknown as string,
-        effect: strikerPackChoiceEffect,
-      };
-      (G as GundamG).pendingEffects.push(entry);
+    await user.click(confirm);
+    await waitFor(() => {
+      expect(screen.queryByText(/Then, choose 1 enemy Unit/i)).not.toBeNull();
     });
 
+    await user.click(enemy);
+    expect(enemy.className).toContain("gd-target-selected");
+    const damageConfirm = screen.getByRole("button", {
+      name: /^confirm$/i,
+    }) as HTMLButtonElement;
+    expect(damageConfirm.disabled).toBe(false);
+
+    await user.click(damageConfirm);
+
+    await waitFor(() => {
+      expect(screen.queryByText(/Choose 2 of your active Units/i)).toBeNull();
+      const damage = findCardsByName(dev, /Enemy Gundam/i)[0]?.querySelector(
+        "[data-testid='damage-counter-overlay']",
+      );
+      expect(damage?.getAttribute("aria-label")).toBe("This card has taken 3 damage.");
+    });
+  });
+
+  it("lets the player choose which printed Striker Pack token to deploy", async () => {
+    const user = userEvent.setup();
+    const { dev } = renderSimulator(loadStrikerPackChoiceDemo);
+    const hand = screen.getByRole("list", { name: /your hand/i });
+
+    await user.click(within(hand).getByRole("listitem", { name: /Striker Pack/i }));
     await waitFor(() => {
       expect(screen.queryByRole("dialog", { name: /Deploy 1 \[Sword Strike/i })).not.toBeNull();
     });
 
-    expect(screen.getByRole("button", { name: /choose sword strike gundam/i })).not.toBeNull();
-    expect(screen.getByAltText("Sword Strike Gundam")).not.toBeNull();
-    expect(screen.getByAltText("Launcher Strike Gundam")).not.toBeNull();
-
-    fireEvent.click(screen.getByRole("button", { name: /choose launcher strike gundam/i }));
+    expect(screen.getByRole("button", { name: /choose sword strike gundam/i })).toBeDefined();
+    await user.click(screen.getByRole("button", { name: /choose launcher strike gundam/i }));
 
     await waitFor(() => {
       expect(screen.queryByRole("dialog", { name: /Deploy 1 \[Sword Strike/i })).toBeNull();
+      expect(findCardsByName(dev, /Launcher Strike Gundam/i)).not.toHaveLength(0);
+      expect(findCardsByName(dev, /Sword Strike Gundam/i)).toHaveLength(0);
     });
   });
 });

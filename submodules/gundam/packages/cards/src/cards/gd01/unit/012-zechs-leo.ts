@@ -4,6 +4,7 @@ export const gd01ZechsLeo012: UnitCard = {
   cardNumber: "GD01-012",
   name: "Zechs' Leo",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["oz"],
   id: "GD01-012",
@@ -41,6 +42,7 @@ export const gd01ZechsLeo012: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 2,
+  linkCondition: "(OZ) Trait",
   effect: "【When Paired】Choose 1 enemy Unit with 3 or less HP. Rest it.<br>",
   effects: [
     {

@@ -4,6 +4,7 @@ export const gd01StrikeRouge069: UnitCard = {
   cardNumber: "GD01-069",
   name: "Strike Rouge",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["triple ship alliance"],
   id: "GD01-069",
@@ -58,6 +59,7 @@ export const gd01StrikeRouge069: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 2,
+  linkCondition: "(Orb) Trait",
   effect:
     "【Activate･Main】【Once per Turn】①：Choose 1 of your rested white Units with &lt;Blocker&gt;. Set it as active. It can't attack during this turn.<br>",
   effects: [
@@ -80,6 +82,7 @@ export const gd01StrikeRouge069: UnitCard = {
               state: "rested",
               hasKeyword: "Blocker",
               count: 1,
+              attributeFilters: [{ attribute: "color", comparison: "eq", value: "white" }],
             },
           },
         },

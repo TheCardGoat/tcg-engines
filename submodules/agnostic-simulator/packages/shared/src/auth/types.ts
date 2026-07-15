@@ -15,8 +15,8 @@ export type UserRole = "user" | "donor" | "moderator" | "admin";
  *
  * `"free"` is the implicit default for users with no Stripe subscription
  * (new signups, and anyone who has cancelled). It is intentionally distinct
- * from `"tier1"`, which is preserved for legacy paid tier-1 customers
- * migrated from lorcanito and ranks just above "free" in tier ordering.
+ * from `"tier1"`, which is a contribution-only paid tier that ranks just
+ * above "free" in tier ordering without implying functional perks.
  */
 export type SubscriptionTier = "free" | "tier1" | "tier2" | "tier3" | "tier4" | "tier5" | "tier6";
 

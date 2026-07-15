@@ -1,5 +1,9 @@
 import type { AIStrategy, DecisionContext, MoveDecision } from "../types.ts";
-import type { AvailableMove, PlayCardCandidate } from "../../view/player-prompt.ts";
+import type {
+  AbilityCandidate,
+  AvailableMove,
+  PlayCardCandidate,
+} from "../../view/player-prompt.ts";
 import type { FilteredCardView, FilteredMatchView } from "../../view/filter.ts";
 import type { MoveId } from "../../moves/index.ts";
 import { decisionFromMove, type PlayCardPick } from "./move-args.ts";
@@ -237,7 +241,7 @@ function pickArgsFor(
     case "sellCard":
       if (inputSpec.type !== "selectCard") break;
       return decisionFromMove(available, {
-        pickFromCandidates: (cands) => pickLowestCost(cands, ctx.view, ctx.playerId as string),
+        pickFromCandidates: (cands) => pickCardToSell(cands, ctx.view, ctx.playerId as string),
         pickPair: () => null,
       });
     case "attackUnit":
@@ -259,10 +263,9 @@ function pickArgsFor(
       if (ctx.view.attackState?.redirectedByBlocker) {
         return { kind: "stuck", reason: "useBlocker: attack already redirected by blocker" };
       }
-      // Pick the cheapest, lowest-power ready blocker so we don't waste a
-      // strong unit on a redirect. Ties broken by id for determinism.
       return decisionFromMove(available, {
-        pickFromCandidates: (cands) => pickWeakestBlocker(cands, ctx.view, ctx.playerId as string),
+        pickFromCandidates: (cands) =>
+          pickBlockerForAttack(cands, ctx.view, ctx.playerId as string, weights),
         pickPair: () => null,
       });
     case "callLegend":
@@ -275,12 +278,10 @@ function pickArgsFor(
       });
     case "activateAbility":
       if (inputSpec.type !== "selectAbility") break;
-      // Greedy default: take the first activatable ability. Real cost/effect
-      // weighting can replace this once specific ability ids matter.
       return decisionFromMove(available, {
         pickFromCandidates: () => null,
         pickPair: () => null,
-        pickAbility: (cands) => cands[0] ?? null,
+        pickAbility: (cands) => pickBestAbility(cands, ctx),
       });
     case "passPhase":
     case "concede":
@@ -289,7 +290,8 @@ function pickArgsFor(
     case "gainGig":
     case "resolveAttack":
     case "resolveCardToMove":
-    case "resolveSearchDeck":
+    case "resolveScry":
+    case "resolveRevealDestination":
     case "resolveDiscardFromHand":
     case "resolveAdjustGig":
     case "resolveStealGigs":
@@ -319,45 +321,85 @@ function findCard(view: FilteredMatchView, instanceId: string): FilteredCardView
   return null;
 }
 
-function pickHighestCost(
-  candidates: string[],
-  view: FilteredMatchView,
-  _playerId: string,
-): string | null {
-  if (candidates.length === 0) return null;
-  let best: { id: string; cost: number } | null = null;
-  for (const id of candidates) {
-    const card = findCard(view, id);
-    const cost = card?.cost ?? -1;
-    if (!best || cost > best.cost || (cost === best.cost && id < best.id)) {
-      best = { id, cost };
-    }
-  }
-  return best?.id ?? candidates[0]!;
+function cardStrategicValue(card: FilteredCardView | null): number {
+  if (!card) return 0;
+  const power = card.effectivePower ?? 0;
+  const blocker =
+    card.keywords.includes("blocker") || card.grantedRules.includes("blocker") ? 18 : 0;
+  const immediateAttack =
+    card.keywords.includes("adrenaline") || card.keywords.includes("goSolo") ? 8 : 0;
+  const typeValue = card.type === "unit" ? 10 : card.type === "gear" ? 6 : 4;
+  return power * 3 + blocker + immediateAttack + typeValue + card.triggerHints.length * 5;
 }
 
-function pickLowestCost(
+function pickCardToSell(
   candidates: string[],
   view: FilteredMatchView,
-  _playerId: string,
+  playerId: string,
 ): string | null {
-  if (candidates.length === 0) return null;
-  let best: { id: string; cost: number } | null = null;
-  for (const id of candidates) {
-    const card = findCard(view, id);
-    const cost = card?.cost ?? Number.POSITIVE_INFINITY;
-    if (!best || cost < best.cost || (cost === best.cost && id < best.id)) {
-      best = { id, cost };
-    }
-  }
-  return best?.id ?? candidates[0]!;
+  const available = view.players[playerId]?.availableEddies ?? 0;
+  return (
+    [...candidates].sort((a, b) => {
+      const ac = findCard(view, a);
+      const bc = findCard(view, b);
+      const aPlayable = (ac?.cost ?? Number.POSITIVE_INFINITY) <= available ? 8 : 0;
+      const bPlayable = (bc?.cost ?? Number.POSITIVE_INFINITY) <= available ? 8 : 0;
+      const av = cardStrategicValue(ac) + aPlayable;
+      const bv = cardStrategicValue(bc) + bPlayable;
+      if (av !== bv) return av - bv;
+      const aCost = ac?.cost ?? Number.POSITIVE_INFINITY;
+      const bCost = bc?.cost ?? Number.POSITIVE_INFINITY;
+      if (aCost !== bCost) return bCost - aCost;
+      return a.localeCompare(b);
+    })[0] ?? null
+  );
 }
 
-function pickWeakestBlocker(
-  candidates: string[],
-  view: FilteredMatchView,
-  _playerId: string,
-): string | null {
+const ABILITY_EFFECT_VALUES: Readonly<Record<string, number>> = {
+  stealGig: 40,
+  defeat: 30,
+  playCard: 24,
+  ready: 20,
+  readyEddies: 18,
+  draw: 16,
+  discardFromHand: 15,
+  attachCard: 14,
+  modifyPower: 12,
+  grantRule: 12,
+  adjustGig: 10,
+  moveCard: 10,
+  scry: 8,
+};
+
+function pickBestAbility(candidates: AbilityCandidate[], ctx: DecisionContext) {
+  const { ownGigCount, rivalGigCount } = getGigCounts(ctx);
+  return (
+    [...candidates].sort((a, b) => {
+      const score = (candidate: AbilityCandidate) => {
+        let value = candidate.effectHints.reduce(
+          (total, effect) => total + (ABILITY_EFFECT_VALUES[effect] ?? 5),
+          0,
+        );
+        if (ownGigCount >= 5 && candidate.effectHints.includes("stealGig")) value += 30;
+        if (
+          rivalGigCount >= 5 &&
+          candidate.effectHints.some((e) => e === "defeat" || e === "ready")
+        )
+          value += 15;
+        value -= candidate.eddieCost * 5;
+        if (candidate.spendsCard) value -= 3;
+        return value;
+      };
+      const av = score(a);
+      const bv = score(b);
+      if (av !== bv) return bv - av;
+      if (a.cardId !== b.cardId) return a.cardId.localeCompare(b.cardId);
+      return a.abilityIndex - b.abilityIndex;
+    })[0] ?? null
+  );
+}
+
+function pickWeakestCard(candidates: string[], view: FilteredMatchView): string | null {
   if (candidates.length === 0) return null;
   let best: { id: string; power: number; cost: number } | null = null;
   for (const id of candidates) {
@@ -426,6 +468,248 @@ function getRivalGigCount(view: FilteredMatchView, playerId: string): number {
   return 0;
 }
 
+function getOwnGigCount(view: FilteredMatchView, playerId: string): number {
+  return view.players[playerId]?.gigCount ?? 0;
+}
+
+function getRivalPlayerId(view: FilteredMatchView, playerId: string): string | null {
+  for (const pid of Object.keys(view.players)) {
+    if (pid !== playerId) return pid;
+  }
+  return null;
+}
+
+function directStealAmountForAttacker(card: FilteredCardView, availableGigs: number): number {
+  const power = card.effectivePower ?? 0;
+  if (power <= 0 || availableGigs <= 0) return 0;
+  const base = 1 + Math.floor(power / 10);
+  const reduction = card.grantedRules.includes("stealsOneFewerGig") ? 1 : 0;
+  return Math.min(Math.max(0, base - reduction), availableGigs);
+}
+
+function canDirectAttackRivalThisTurn(
+  card: FilteredCardView,
+  hasPlayedProgramThisTurn: boolean,
+): boolean {
+  if (card.spent || card.faceDown) return false;
+  if (card.grantedRules.includes("cantAttack")) return false;
+  if (card.grantedRules.includes("requiresProgramPlayedThisTurn") && !hasPlayedProgramThisTurn) {
+    return false;
+  }
+  if (card.hasLag) {
+    return (
+      card.grantedRules.includes("adrenaline") ||
+      card.grantedRules.includes("canAttackRivalOnPlayedTurn")
+    );
+  }
+  return card.type === "unit" || card.keywords.includes("goSolo");
+}
+
+type BlockerOutcome = "survive" | "trade" | "chump";
+
+interface BlockerCandidateScore {
+  id: string;
+  outcome: BlockerOutcome;
+  power: number;
+  cost: number;
+  blockerTrigger: boolean;
+}
+
+function blockerOutcome(blockerPower: number, attackerPower: number): BlockerOutcome {
+  if (blockerPower > attackerPower) return "survive";
+  if (blockerPower === attackerPower) return "trade";
+  return "chump";
+}
+
+function outcomeRank(outcome: BlockerOutcome): number {
+  switch (outcome) {
+    case "survive":
+      return 0;
+    case "trade":
+      return 1;
+    case "chump":
+      return 2;
+    default:
+      return assertNever(outcome, "BlockerOutcome in outcomeRank");
+  }
+}
+
+function attackerHasDirectStealTrigger(card: FilteredCardView, view: FilteredMatchView): boolean {
+  if (card.triggerHints.includes("gigStolen")) return true;
+  return card.attachedGearIds.some((gearId) => {
+    const gear = findCard(view, gearId);
+    return gear?.triggerHints.includes("gigStolen") === true;
+  });
+}
+
+function blockerHasUseTrigger(card: FilteredCardView): boolean {
+  return card.triggerHints.includes("blockerActivated");
+}
+
+function directAttackIsUrgent(
+  attacker: FilteredCardView,
+  view: FilteredMatchView,
+  playerId: string,
+  weights: GreedyWeights,
+): boolean {
+  const ownGigCount = getOwnGigCount(view, playerId);
+  const rivalGigCount = getRivalGigCount(view, playerId);
+  const stolen = directStealAmountForAttacker(attacker, ownGigCount);
+  if (stolen <= 0) return false;
+  if (stolen >= 2) return true;
+  if (ownGigCount >= weights.ownNearWinThreshold) return true;
+  if (rivalGigCount + stolen >= weights.rivalNearWinThreshold) return true;
+  return attackerHasDirectStealTrigger(attacker, view);
+}
+
+function scoreBlockerCandidate(
+  id: string,
+  view: FilteredMatchView,
+  attackerPower: number,
+): BlockerCandidateScore | null {
+  const card = findCard(view, id);
+  if (!card) return null;
+  return {
+    id,
+    outcome: blockerOutcome(card.effectivePower ?? 0, attackerPower),
+    power: card.effectivePower ?? 0,
+    cost: card.cost ?? Number.POSITIVE_INFINITY,
+    blockerTrigger: blockerHasUseTrigger(card),
+  };
+}
+
+function compareBlockerScores(a: BlockerCandidateScore, b: BlockerCandidateScore): number {
+  const ar = outcomeRank(a.outcome);
+  const br = outcomeRank(b.outcome);
+  if (ar !== br) return ar - br;
+  if (a.blockerTrigger !== b.blockerTrigger) return a.blockerTrigger ? -1 : 1;
+  if (a.power !== b.power) return a.power - b.power;
+  if (a.cost !== b.cost) return a.cost - b.cost;
+  return a.id.localeCompare(b.id);
+}
+
+function pickDirectAttackBlocker(
+  candidates: string[],
+  view: FilteredMatchView,
+  attacker: FilteredCardView,
+  playerId: string,
+  weights: GreedyWeights,
+): string | null {
+  const attackerPower = attacker.effectivePower ?? 0;
+  const urgent = directAttackIsUrgent(attacker, view, playerId, weights);
+  const scores = candidates
+    .map((id) => scoreBlockerCandidate(id, view, attackerPower))
+    .filter((score): score is BlockerCandidateScore => score !== null)
+    .filter((score) => {
+      if (score.outcome !== "chump") return true;
+      if (!urgent) return false;
+      return !shouldPreserveBlockerForLaterAttacker(
+        score,
+        view,
+        playerId,
+        attacker.instanceId,
+        weights,
+      );
+    })
+    .sort(compareBlockerScores);
+
+  return scores[0]?.id ?? null;
+}
+
+function shouldPreserveBlockerForLaterAttacker(
+  blocker: BlockerCandidateScore,
+  view: FilteredMatchView,
+  playerId: string,
+  currentAttackerId: string,
+  weights: GreedyWeights,
+): boolean {
+  const ownGigCount = getOwnGigCount(view, playerId);
+  const rivalGigCount = getRivalGigCount(view, playerId);
+  if (
+    ownGigCount >= weights.ownNearWinThreshold ||
+    rivalGigCount >= weights.rivalNearWinThreshold
+  ) {
+    return false;
+  }
+
+  const currentAttacker = findCard(view, currentAttackerId);
+  const currentStolen = currentAttacker
+    ? directStealAmountForAttacker(currentAttacker, ownGigCount)
+    : 0;
+  if (currentAttacker && attackerHasDirectStealTrigger(currentAttacker, view)) {
+    return false;
+  }
+  const rivalPlayerId = getRivalPlayerId(view, playerId);
+  if (!rivalPlayerId) return false;
+  const rivalPlayedProgram =
+    view.playedCardTypesThisTurn?.[rivalPlayerId]?.includes("program") === true;
+  const laterAttackers = getRivalReadyUnits(view, playerId).filter((unit) => {
+    return (
+      unit.instanceId !== currentAttackerId &&
+      canDirectAttackRivalThisTurn(unit, rivalPlayedProgram)
+    );
+  });
+  const mustAttackers = laterAttackers.filter((unit) => unit.grantedRules.includes("mustAttack"));
+  const eligibleAttackers = mustAttackers.length > 0 ? mustAttackers : laterAttackers;
+  const laterAvailableGigs = Math.max(0, ownGigCount - currentStolen);
+
+  return eligibleAttackers.some((unit) => {
+    const unitPower = unit.effectivePower ?? 0;
+    const laterStolen = directStealAmountForAttacker(unit, laterAvailableGigs);
+    return blocker.power > unitPower && laterStolen > 0 && laterStolen >= currentStolen;
+  });
+}
+
+function pickFightBlocker(
+  candidates: string[],
+  view: FilteredMatchView,
+  attacker: FilteredCardView,
+  defender: FilteredCardView,
+): string | null {
+  const attackerPower = attacker.effectivePower ?? 0;
+  const defenderPower = defender.effectivePower ?? 0;
+  if (defenderPower > attackerPower) return null;
+
+  const defenderValue = defenderPower + (defender.cost ?? 0);
+  const scores = candidates
+    .map((id) => scoreBlockerCandidate(id, view, attackerPower))
+    .filter((score): score is BlockerCandidateScore => {
+      if (!score) return false;
+      if (score.outcome !== "chump") return true;
+      const blockerValue = score.power + (Number.isFinite(score.cost) ? score.cost : 0);
+      return defenderValue > blockerValue;
+    })
+    .sort(compareBlockerScores);
+
+  return scores[0]?.id ?? null;
+}
+
+function pickBlockerForAttack(
+  candidates: string[],
+  view: FilteredMatchView,
+  playerId: string,
+  weights: GreedyWeights,
+): string | null {
+  if (candidates.length === 0) return null;
+  const attack = view.attackState;
+  if (!attack || !attack.attackerId) return pickWeakestCard(candidates, view);
+
+  const attacker = findCard(view, attack.attackerId);
+  if (!attacker) return null;
+
+  if (attack.kind === "direct") {
+    return pickDirectAttackBlocker(candidates, view, attacker, playerId, weights);
+  }
+
+  if (attack.kind === "fight" && attack.defenderId) {
+    const defender = findCard(view, attack.defenderId);
+    if (!defender) return null;
+    return pickFightBlocker(candidates, view, attacker, defender);
+  }
+
+  return null;
+}
+
 function pickFavourableFight(
   fromCandidates: string[],
   toCandidates: string[],
@@ -436,18 +720,26 @@ function pickFavourableFight(
   if (fromCandidates.length === 0 || toCandidates.length === 0) return null;
   const requiredAttackers = mustAttackCandidates(fromCandidates, view);
   const attackers = requiredAttackers.length > 0 ? requiredAttackers : fromCandidates;
-  let best: { from: string; to: string; margin: number } | null = null;
+  let best: { from: string; to: string; margin: number; score: number } | null = null;
   for (const from of attackers) {
     for (const to of toCandidates) {
       const fromCard = findCard(view, from);
       const toCard = findCard(view, to);
       const margin = (fromCard?.effectivePower ?? 0) - (toCard?.effectivePower ?? 0);
-      if (!best || margin > best.margin) {
-        best = { from, to, margin };
+      if (requiredAttackers.length === 0 && margin < minMargin) continue;
+      const targetValue = cardStrategicValue(toCard) + (toCard?.attachedGearIds.length ?? 0) * 8;
+      const attackerCommitment = cardStrategicValue(fromCard);
+      const score = targetValue * 10 - attackerCommitment + Math.min(margin, 5);
+      if (
+        !best ||
+        score > best.score ||
+        (score === best.score && `${from}:${to}` < `${best.from}:${best.to}`)
+      ) {
+        best = { from, to, margin, score };
       }
     }
   }
-  if (!best || (requiredAttackers.length === 0 && best.margin < minMargin)) return null;
+  if (!best) return null;
   return { from: best.from, to: best.to };
 }
 
@@ -483,7 +775,40 @@ function pickPlayCardForBoard(
     if (blockerCard) return resolveCandidate(blockerCard, view, candidates);
   }
 
-  return pickHighestCostPlayable(candidates, view, playerId);
+  return pickHighestBoardValuePlayable(candidates, view, playerId);
+}
+
+function pickHighestBoardValuePlayable(
+  candidates: PlayCardCandidate[],
+  view: FilteredMatchView,
+  playerId: string,
+): PlayCardPick | null {
+  const ownNearWin = getOwnGigCount(view, playerId) >= 5;
+  const ranked = [...candidates].sort((a, b) => {
+    const score = (candidate: PlayCardCandidate) => {
+      const card = findCard(view, candidate.cardId);
+      let value = cardStrategicValue(card) + (card?.cost ?? 0);
+      if (
+        ownNearWin &&
+        (card?.keywords.includes("adrenaline") || card?.keywords.includes("goSolo"))
+      ) {
+        value += 20;
+      }
+      if (candidate.attachTargets?.length) {
+        value += Math.max(
+          ...candidate.attachTargets.map(
+            (targetId) => findCard(view, targetId)?.effectivePower ?? 0,
+          ),
+        );
+      }
+      return value;
+    };
+    const av = score(a);
+    const bv = score(b);
+    if (av !== bv) return bv - av;
+    return a.cardId.localeCompare(b.cardId);
+  });
+  return ranked[0] ? resolveCandidate(ranked[0], view, candidates) : null;
 }
 
 function rivalHasUnansweredThreats(view: FilteredMatchView, playerId: string): boolean {
@@ -501,7 +826,7 @@ function getRivalReadyUnits(view: FilteredMatchView, playerId: string): Filtered
     if (!Array.isArray(field)) continue;
     for (const card of field) {
       if (card.spent || card.faceDown) continue;
-      if (card.type !== "unit") continue;
+      if (card.type !== "unit" && !card.keywords.includes("goSolo")) continue;
       result.push(card);
     }
   }
@@ -573,17 +898,4 @@ function resolveCandidate(
     }
   }
   return { cardId: candidate.cardId, attachToId: bestTarget };
-}
-
-function pickHighestCostPlayable(
-  candidates: PlayCardCandidate[],
-  view: FilteredMatchView,
-  _playerId: string,
-): PlayCardPick | null {
-  const cardIds = candidates.map((c) => c.cardId);
-  const cardId = pickHighestCost(cardIds, view, _playerId);
-  if (!cardId) return null;
-  const candidate = candidates.find((c) => c.cardId === cardId);
-  if (!candidate) return null;
-  return resolveCandidate(candidate, view, candidates);
 }

@@ -20,7 +20,7 @@ describe("Nadia - Fighting Through Grief", () => {
           {
             card: welcomeToNightCityRetailNadiaFightingThroughGrief,
             spent: false,
-            playedThisTurn: true,
+            hasLag: true,
           },
         ],
         gigArea: [{ dieType: "d4", faceValue: 2 }],
@@ -57,7 +57,7 @@ describe("Nadia - Fighting Through Grief", () => {
           {
             card: welcomeToNightCityRetailNadiaFightingThroughGrief,
             spent: false,
-            playedThisTurn: true,
+            hasLag: true,
           },
         ],
         gigArea: [{ dieType: "d4", faceValue: 2 }],
@@ -82,7 +82,7 @@ describe("Nadia - Fighting Through Grief", () => {
           {
             card: welcomeToNightCityRetailNadiaFightingThroughGrief,
             spent: false,
-            playedThisTurn: true,
+            hasLag: true,
           },
         ],
         gigArea: [{ dieType: "d4", faceValue: 2 }],
@@ -117,7 +117,7 @@ describe("Nadia - Fighting Through Grief", () => {
           {
             card: welcomeToNightCityRetailNadiaFightingThroughGrief,
             spent: false,
-            playedThisTurn: true,
+            hasLag: true,
           },
         ],
         gigArea: [{ dieType: "d4", faceValue: 2 }],

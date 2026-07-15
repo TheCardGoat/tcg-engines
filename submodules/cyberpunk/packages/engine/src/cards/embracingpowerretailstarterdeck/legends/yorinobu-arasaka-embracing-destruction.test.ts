@@ -14,9 +14,7 @@ describe("Yorinobu Arasaka - Embracing Destruction (Embracing Power retail start
       {
         hand: [welcomeToNightCityRetailDyingNightVSPistol],
         deck: [welcomeToNightCityRetailCorpoSecurity],
-        field: [
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
         legendArea: [
           {
             card: embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
@@ -45,7 +43,7 @@ describe("Yorinobu Arasaka - Embracing Destruction (Embracing Power retail start
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         deck: [welcomeToNightCityRetailCorpoSecurity],
-        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, hasLag: false }],
         legendArea: [
           {
             card: embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
@@ -71,9 +69,7 @@ describe("Yorinobu Arasaka - Embracing Destruction (Embracing Power retail start
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         deck: [welcomeToNightCityRetailCorpoSecurity],
-        field: [
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
         legendArea: [
           {
             card: embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,

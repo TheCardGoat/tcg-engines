@@ -13,9 +13,7 @@ describe("Offduty Malfini (retail)", () => {
         eddies: 6,
       },
       {
-        field: [
-          { card: welcomeToNightCityRetailCorpoSecurity, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: false, hasLag: false }],
       },
     );
 

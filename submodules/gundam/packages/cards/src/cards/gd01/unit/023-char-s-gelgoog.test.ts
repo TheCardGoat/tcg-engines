@@ -1,7 +1,8 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
+  activeResources,
   createMockPilot,
   createMockUnit,
   expectFailure,
@@ -10,109 +11,101 @@ import {
 import { gd01CharSGelgoog023 } from "./023-char-s-gelgoog.ts";
 
 describe("Char's Gelgoog (GD01-023)", () => {
-  describe("【Activate･Main】Discard 1 (Zeon)/(Neo Zeon) Unit card：If a Pilot is not paired with this Unit, choose 1 (Newtype) Pilot card that is Lv.3 or lower from your trash. Pair it with this Unit.", () => {
-    it("discards a Zeon Unit cost and pairs a Lv.3 Newtype Pilot from trash", () => {
-      const costUnit = createMockUnit({ traits: ["zeon"], name: "Zeon Cost" });
-      const pilot = createMockPilot({ traits: ["newtype"], level: 3 });
-      const engine = GundamTestEngine.create({
-        play: [gd01CharSGelgoog023],
-        hand: [costUnit],
-        trash: [pilot],
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const unitId = p1.getCardsInZone("battleArea")[0]!;
-      const pilotId = p1.getCardsInZone("trash")[0]!;
-      const costId = p1.getHand()[0]!;
-
-      expectSuccess(p1.activateAbility(gd01CharSGelgoog023, 0, { targets: [pilotId] }));
-
-      expect(engine.getG().pilotAssignments[unitId]).toBe(pilotId);
-      expect(p1.getCardsInZone("battleArea")).toContain(pilotId);
-      expect(p1.getCardsInZone("trash")).toContain(costId);
+  it("asks which Zeon or Neo Zeon Unit pays the cost, then which valid Newtype Pilot to pair", () => {
+    const zeonCost = createMockUnit({ name: "Zeon Cost", traits: ["zeon"] });
+    const neoZeonCost = createMockUnit({ name: "Neo Zeon Cost", traits: ["neo zeon"] });
+    const wrongCost = createMockUnit({ name: "Wrong Cost", traits: ["earth federation"] });
+    const validPilot = createMockPilot({ name: "Valid Newtype", traits: ["newtype"], level: 3 });
+    const wrongTrait = createMockPilot({ name: "Wrong Trait", traits: ["civilian"], level: 2 });
+    const tooHigh = createMockPilot({ name: "Too High", traits: ["newtype"], level: 4 });
+    const engine = GundamTestEngine.create({
+      play: [gd01CharSGelgoog023],
+      hand: [zeonCost, neoZeonCost, wrongCost],
+      trash: [validPilot, wrongTrait, tooHigh],
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const [zeonCostId, neoZeonCostId, wrongCostId] = p1.getHand();
+    const [validPilotId] = p1.getCardsInZone("trash");
 
-    it("accepts a Neo Zeon Unit as the discard cost", () => {
-      const costUnit = createMockUnit({ traits: ["neo zeon"], name: "Neo Zeon Cost" });
-      const pilot = createMockPilot({ traits: ["newtype"], level: 2 });
-      const engine = GundamTestEngine.create({
-        play: [gd01CharSGelgoog023],
-        hand: [costUnit],
-        trash: [pilot],
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const pilotId = p1.getCardsInZone("trash")[0]!;
-
-      expectSuccess(p1.activateAbility(gd01CharSGelgoog023, 0, { targets: [pilotId] }));
+    expect(p1.getMoveProcedure("activateAbility", { cardId: unitId, effectIndex: 0 })).toEqual([
+      expect.objectContaining({
+        kind: "selectTarget",
+        role: "cost",
+        candidateIds: [zeonCostId, neoZeonCostId],
+        minTargets: 1,
+        maxTargets: 1,
+      }),
+    ]);
+    expectSuccess(p1.activateAbility(unitId, 0, { targets: [neoZeonCostId!] }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [validPilotId],
+      minTargets: 1,
+      maxTargets: 1,
     });
+    expectSuccess(p1.resolveEffect({ targets: [validPilotId!] }));
 
-    it("cannot pay the cost with a Unit outside Zeon and Neo Zeon", () => {
-      const costUnit = createMockUnit({ traits: ["earth federation"], name: "Wrong Cost" });
-      const pilot = createMockPilot({ traits: ["newtype"], level: 2 });
-      const engine = GundamTestEngine.create({
-        play: [gd01CharSGelgoog023],
-        hand: [costUnit],
-        trash: [pilot],
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const pilotId = p1.getCardsInZone("trash")[0]!;
+    expect(p1.getCardZone(zeonCostId!)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getCardZone(neoZeonCostId!)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(wrongCostId!)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getPilotId(unitId)).toBe(validPilotId);
+    expect(p1.getCardZone(validPilotId!)).toBe(`battleArea:${PLAYER_ONE}`);
+  });
 
-      expectFailure(
-        p1.activateAbility(gd01CharSGelgoog023, 0, { targets: [pilotId] }),
-        "COST_NOT_PAYABLE",
-      );
+  it("rejects activation when no Zeon or Neo Zeon Unit can pay the discard cost", () => {
+    const wrongCost = createMockUnit({ traits: ["earth federation"] });
+    const pilot = createMockPilot({ traits: ["newtype"], level: 2 });
+    const engine = GundamTestEngine.create({
+      play: [gd01CharSGelgoog023],
+      hand: [wrongCost],
+      trash: [pilot],
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const wrongCostId = p1.getHand()[0]!;
 
-    it("cannot pair a non-Newtype Pilot from trash", () => {
-      const costUnit = createMockUnit({ traits: ["zeon"] });
-      const pilot = createMockPilot({ traits: ["civilian"], level: 2 });
-      const engine = GundamTestEngine.create({
-        play: [gd01CharSGelgoog023],
-        hand: [costUnit],
-        trash: [pilot],
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const pilotId = p1.getCardsInZone("trash")[0]!;
+    expectFailure(p1.activateAbility(unitId, 0, { targets: [wrongCostId] }), "COST_NOT_PAYABLE");
 
-      expectFailure(
-        p1.activateAbility(gd01CharSGelgoog023, 0, { targets: [pilotId] }),
-        "ILLEGAL_TARGET",
-      );
+    expect(p1.getCardZone(wrongCostId)).toBe(`hand:${PLAYER_ONE}`);
+  });
+
+  it("does not offer activation when the cost is payable but no legal Newtype Pilot is in trash", () => {
+    const zeonCost = createMockUnit({ traits: ["zeon"] });
+    const wrongTrait = createMockPilot({ traits: ["civilian"], level: 2 });
+    const tooHigh = createMockPilot({ traits: ["newtype"], level: 4 });
+    const engine = GundamTestEngine.create({
+      play: [gd01CharSGelgoog023],
+      hand: [zeonCost],
+      trash: [wrongTrait, tooHigh],
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const costId = p1.getHand()[0]!;
 
-    it("cannot pair a Lv.4 Newtype Pilot from trash", () => {
-      const costUnit = createMockUnit({ traits: ["zeon"] });
-      const pilot = createMockPilot({ traits: ["newtype"], level: 4 });
-      const engine = GundamTestEngine.create({
-        play: [gd01CharSGelgoog023],
-        hand: [costUnit],
-        trash: [pilot],
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const pilotId = p1.getCardsInZone("trash")[0]!;
+    expect(p1.getMoveProcedure("activateAbility", { cardId: unitId, effectIndex: 0 })).toEqual([]);
+    expectFailure(p1.activateAbility(unitId, 0, { targets: [costId] }), "NO_LEGAL_TARGETS");
 
-      expectFailure(
-        p1.activateAbility(gd01CharSGelgoog023, 0, { targets: [pilotId] }),
-        "ILLEGAL_TARGET",
-      );
+    expect(p1.getCardZone(costId)).toBe(`hand:${PLAYER_ONE}`);
+  });
+
+  it("rejects activation after a Pilot has already been paired through the public move", () => {
+    const existingPilot = createMockPilot({ level: 1, cost: 1 });
+    const cost = createMockUnit({ traits: ["zeon"] });
+    const candidate = createMockPilot({ traits: ["newtype"], level: 2 });
+    const engine = GundamTestEngine.create({
+      play: [gd01CharSGelgoog023],
+      hand: [existingPilot, cost],
+      trash: [candidate],
+      resourceArea: activeResources(4),
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const costId = p1.getHand()[1]!;
 
-    it("cannot activate while this Unit already has a paired Pilot", () => {
-      const costUnit = createMockUnit({ traits: ["zeon"] });
-      const pilot = createMockPilot({ traits: ["newtype"], level: 2 });
-      const engine = GundamTestEngine.create({
-        play: [gd01CharSGelgoog023],
-        hand: [costUnit],
-        trash: [pilot],
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const unitId = p1.getCardsInZone("battleArea")[0]!;
-      const pilotId = p1.getCardsInZone("trash")[0]!;
-      engine.getG().pilotAssignments[unitId] = "already-paired";
+    expectSuccess(p1.assignPilot(existingPilot, unitId));
+    expectFailure(p1.activateAbility(unitId, 0, { targets: [costId] }), "CONDITIONS_NOT_MET");
 
-      expectFailure(
-        p1.activateAbility(gd01CharSGelgoog023, 0, { targets: [pilotId] }),
-        "CONDITIONS_NOT_MET",
-      );
-    });
+    expect(p1.getCardZone(costId)).toBe(`hand:${PLAYER_ONE}`);
   });
 });

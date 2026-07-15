@@ -5,6 +5,7 @@ import {
   PLAYER_TWO,
   markAsLinkUnit,
   createMockUnit,
+  expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd02Tallgeese005 } from "./005-tallgeese.ts";
 
@@ -15,7 +16,10 @@ describe("Tallgeese (GD02-005)", () => {
     // that the attack-trigger can rest without interference.
     const frail = createMockUnit({ ap: 1, hp: 2 });
     const sturdy = createMockUnit({ ap: 2, hp: 6 });
-    const engine = GundamTestEngine.create({ play: [gd02Tallgeese005] }, { play: [sturdy, frail] });
+    const engine = GundamTestEngine.create(
+      { play: [gd02Tallgeese005] },
+      { play: [{ card: sturdy, exhausted: true }, frail] },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
@@ -28,9 +32,14 @@ describe("Tallgeese (GD02-005)", () => {
 
     expect(engine.getG().exhausted[frailId]).toBe(false);
 
-    engine.resolveCombat({ attackerId, target: sturdyId });
+    expectSuccess(p1.enterBattle(attackerId, sturdyId));
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("targetSelection");
+    if (choice?.kind !== "targetSelection") return;
+    expect(choice.legalTargetIds).toEqual([frailId]);
+    expectSuccess(p1.resolveEffect({ targets: [frailId] }));
 
     // Attack trigger rested the 2-HP enemy.
-    expect(engine.getG().exhausted[frailId]).toBe(true);
+    expect(p2.isExhausted(frailId)).toBe(true);
   });
 });

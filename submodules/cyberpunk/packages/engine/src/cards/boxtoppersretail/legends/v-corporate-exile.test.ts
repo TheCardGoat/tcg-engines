@@ -15,7 +15,7 @@ describe("V - Corporate Exile (box topper retail)", () => {
     expect(result.success).toBe(true);
     const v = engine.getCard(boxTopperRetailVCorporateExile, "field", P1);
     expect(v.meta.spent).toBe(false);
-    expect(v.meta.playedThisTurn).toBe(false);
+    expect(v.meta.hasLag).toBe(false);
     expectAttackCandidate(engine, boxTopperRetailVCorporateExile, { as: P1 });
   });
 

@@ -1,17 +1,18 @@
-import { describe, it, expect } from "vite-plus/test";
-import { GundamTestEngine, PLAYER_ONE } from "@tcg/gundam-engine";
+import { describe, expect, it } from "vite-plus/test";
+import { GundamTestEngine, PLAYER_ONE, activeResources, expectSuccess } from "@tcg/gundam-engine";
 import { gd01Zaku035 } from "./035-zaku.ts";
 
-describe("Zaku Ⅱ (GD01-035)", () => {
-  it("can be placed in the battle area with its printed stats", () => {
-    const engine = GundamTestEngine.create({ play: [gd01Zaku035] });
+describe("Zaku II (GD01-035)", () => {
+  it("deploys from hand with its visible AP and HP", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd01Zaku035],
+      resourceArea: activeResources(2),
+    });
     const p1 = engine.asPlayer(PLAYER_ONE);
 
-    expect(p1.getCardsInZone("battleArea")).toHaveLength(1);
-    expect(gd01Zaku035.type).toBe("unit");
-    expect(gd01Zaku035.level).toBe(2);
-    expect(gd01Zaku035.cost).toBe(1);
-    expect(gd01Zaku035.ap).toBe(2);
-    expect(gd01Zaku035.hp).toBe(2);
+    expectSuccess(p1.deployUnit(gd01Zaku035));
+
+    expect(p1.getCardZone(gd01Zaku035)).toBe(`battleArea:${PLAYER_ONE}`);
+    expect(p1.getVisibleCard(gd01Zaku035)).toMatchObject({ effectiveAp: 2, effectiveHp: 2 });
   });
 });

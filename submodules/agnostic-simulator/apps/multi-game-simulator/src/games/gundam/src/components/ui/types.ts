@@ -56,6 +56,7 @@ export interface GameCardData {
   readonly keywords?: readonly KeywordEffectEntry[];
   readonly grantedKeywords?: readonly string[];
   readonly traits?: readonly string[];
+  readonly battlefieldZones?: readonly ("space" | "earth")[];
   readonly set?: string;
   readonly cardNumber?: string;
   readonly linkRequirement?: string;
@@ -181,6 +182,7 @@ export interface DeckLookEffect {
   readonly directiveIndex: number;
   readonly returnMode: "topAndBottom" | "chooseTop" | "topOrTrash";
   readonly remainingDestination?: "bottom" | "trash";
+  readonly randomizeRemainingToBottom: boolean;
   readonly tutorDestination: "hand" | "battleArea";
   readonly revealed: readonly GameCardData[];
   readonly legalTutorIds: readonly string[];

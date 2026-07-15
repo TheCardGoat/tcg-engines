@@ -13,6 +13,7 @@ import { StatCurrentBadges } from "./StatCurrentBadges.tsx";
 import { useDualMode } from "../dual-mode-context.tsx";
 import { DualModeOverlay } from "./DualModeOverlay.tsx";
 import { DamageCounterOverlay } from "./DamageCounterOverlay.tsx";
+import { toSimulatorEntity } from "./to-simulator-entity.ts";
 
 export const CARD_COLORS: Record<CardColor, string> = {
   blue: "#1e49c7",
@@ -74,6 +75,7 @@ export function CardFace({
   const hasImage = Boolean(imageSrc || (card.set && card.cardNumber)) && !imageError;
   const tags = getCardTags(card);
   const damage = card.damage ?? 0;
+  const simulatorEntity = toSimulatorEntity(card);
 
   useEffect(() => {
     setImageLoaded(false);
@@ -131,6 +133,7 @@ export function CardFace({
 
   return (
     <div
+      aria-label={cardAriaLabel(card, simulatorEntity.states)}
       onClick={onClick}
       onMouseEnter={hasHover ? () => setHovered(true) : undefined}
       onMouseLeave={hasHover ? () => setHovered(false) : undefined}
@@ -269,6 +272,30 @@ export function CardFace({
       )}
     </div>
   );
+}
+
+function cardAriaLabel(card: GameCardData, states: readonly string[]): string {
+  const parts = [card.name];
+  if (card.cardType) parts.push(card.cardType);
+  if (card.color) parts.push(card.color);
+  if (card.ap != null) parts.push(`AP ${card.ap}`);
+  if (card.hp != null) parts.push(`HP ${card.hp}`);
+  const readiness = states.find((state) => state === "ready" || state === "rested");
+  if (readiness) parts.push(readiness);
+  if (card.keywords?.length) {
+    parts.push(
+      ...card.keywords.map((entry) =>
+        entry.value == null ? entry.keyword : `${entry.keyword} ${entry.value}`,
+      ),
+    );
+  }
+  if (card.traits?.length) parts.push(...card.traits);
+  if (card.battlefieldZones?.length) {
+    parts.push(
+      card.battlefieldZones.map((zone) => zone[0]!.toUpperCase() + zone.slice(1)).join(" / "),
+    );
+  }
+  return parts.join(", ");
 }
 
 function ArtFallback({

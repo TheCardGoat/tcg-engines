@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
@@ -11,64 +11,59 @@ import {
 import { gd01Gyan032 } from "./032-gyan.ts";
 
 describe("Gyan (GD01-032)", () => {
-  it("【When Paired·(Zeon) Pilot】destroys enemy <Blocker> Lv.2 or lower", () => {
-    const zeonPilot = createMockPilot({ traits: ["zeon"] });
-    const enemyBlocker = createMockUnit({
-      ap: 1,
-      hp: 3,
+  it("can attack on its deploy turn with M'Quve and offers only enemy Blockers at Lv.2 or lower", () => {
+    const mQuve = createMockPilot({ name: "M'Quve", traits: ["zeon"], level: 1, cost: 1 });
+    const legalBlocker = createMockUnit({
       level: 2,
+      hp: 5,
       keywordEffects: [{ keyword: "Blocker" }],
     });
-
+    const highBlocker = createMockUnit({
+      level: 3,
+      hp: 5,
+      keywordEffects: [{ keyword: "Blocker" }],
+    });
+    const directShield = createMockUnit();
     const engine = GundamTestEngine.create(
-      {
-        hand: [zeonPilot],
-        play: [gd01Gyan032],
-        resourceArea: activeResources(4),
-        deck: 5,
-      },
-      { play: [enemyBlocker] },
+      { hand: [gd01Gyan032, mQuve], resourceArea: activeResources(4) },
+      { play: [legalBlocker, highBlocker], shieldArea: [directShield] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const gyanId = p1.getCardsInZone("battleArea")[0]!;
-    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+    const [legalBlockerId] = p2.getCardsInZone("battleArea");
 
-    expectSuccess(p1.assignPilot(zeonPilot, gyanId));
+    expectSuccess(p1.deployUnit(gd01Gyan032));
+    expectSuccess(p1.assignPilot(mQuve, gd01Gyan032));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [legalBlockerId],
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [legalBlockerId!] }));
+    expectSuccess(p1.enterBattle(gd01Gyan032, "direct"));
 
-    if (engine.getPendingChoice()) {
-      expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
-    }
-
-    expect(p2.getCardsInZone("trash")).toContain(enemyId);
+    expect(p2.getCardZone(legalBlockerId!)).toBe(`trash:${PLAYER_TWO}`);
   });
 
-  it("【When Paired·(Zeon) Pilot】does NOT fire with a non-Zeon pilot", () => {
-    const nonZeonPilot = createMockPilot({ traits: ["earth federation"] });
-    const enemyBlocker = createMockUnit({
-      ap: 1,
-      hp: 3,
+  it("does not trigger when paired with a Pilot outside the Zeon trait", () => {
+    const pilot = createMockPilot({ traits: ["earth federation"], level: 1, cost: 1 });
+    const blocker = createMockUnit({
       level: 2,
+      hp: 5,
       keywordEffects: [{ keyword: "Blocker" }],
     });
-
     const engine = GundamTestEngine.create(
-      {
-        hand: [nonZeonPilot],
-        play: [gd01Gyan032],
-        resourceArea: activeResources(4),
-        deck: 5,
-      },
-      { play: [enemyBlocker] },
+      { hand: [pilot], play: [gd01Gyan032], resourceArea: activeResources(4) },
+      { play: [blocker] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const gyanId = p1.getCardsInZone("battleArea")[0]!;
-    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+    const blockerId = p2.getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(p1.assignPilot(nonZeonPilot, gyanId));
+    expectSuccess(p1.assignPilot(pilot, gd01Gyan032));
 
-    expect(engine.getPendingChoice()).toBeFalsy();
-    expect(p2.getCardsInZone("trash")).not.toContain(enemyId);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.getCardZone(blockerId)).toBe(`battleArea:${PLAYER_TWO}`);
   });
 });

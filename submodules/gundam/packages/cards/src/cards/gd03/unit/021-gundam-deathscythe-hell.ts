@@ -115,6 +115,7 @@ export const gd03GundamDeathscytheHell021: UnitCard = {
               cardType: "unit",
               state: "active",
             },
+            duration: "thisTurn",
           },
         },
       ],

@@ -1,44 +1,81 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
   createMockUnit,
+  expectFailure,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd01GallussK058 } from "./058-galluss-k.ts";
+import {
+  passTurnThroughPublicMoves,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 
 describe("Galluss-K (GD01-058)", () => {
-  it("【Activate·Action】①：AP+1 on the chosen Lv.4+ Unit (targets honoured)", () => {
-    const highLv1 = createMockUnit({ ap: 4, hp: 4, level: 4 });
-    const highLv2 = createMockUnit({ ap: 4, hp: 4, level: 5 });
+  it("offers any Lv.4 or higher Unit during an Action Step and gives the chosen Unit AP+1 for the battle", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 6, level: 3 });
+    const eligibleEnemy = createMockUnit({ ap: 4, hp: 8, level: 4 });
+    const lowLevelEnemy = createMockUnit({ ap: 4, hp: 8, level: 3 });
     const engine = GundamTestEngine.create(
       {
-        play: [gd01GallussK058, highLv1],
-        resourceArea: activeResources(3),
+        deck: 2,
+        play: [gd01GallussK058, attacker],
+        resourceArea: activeResources(2),
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
       },
-      { play: [highLv2] },
+      { play: [eligibleEnemy, lowLevelEnemy] },
+      { initialActivePlayer: PLAYER_TWO },
     );
-    engine.setPhase("end-phase");
-    engine.setStep("action-step");
-
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const [_gallussId, friendlyId] = p1.getCardsInZone("battleArea");
+    const [gallussId, attackerId] = p1.getCardsInZone("battleArea");
+    const [eligibleEnemyId, lowLevelEnemyId] = p2.getCardsInZone("battleArea");
+
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [eligibleEnemyId!]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+
+    expectSuccess(p1.enterBattle(attackerId!, eligibleEnemyId!));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expect(p1.getCardsInZone("resourceArea").filter((id) => !p1.isExhausted(id))).toHaveLength(2);
+    expectSuccess(p1.activateAbility(gallussId!, 0));
+
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([eligibleEnemyId]),
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "targetSelection") throw new Error("Expected a visible target choice");
+    expect(choice.legalTargetIds).not.toContain(lowLevelEnemyId);
+    expectSuccess(p1.resolveEffect({ targets: [eligibleEnemyId!] }));
+
+    expect(p1.getCardsInZone("resourceArea").filter((id) => !p1.isExhausted(id))).toHaveLength(1);
+    expect(p2.getVisibleCard(eligibleEnemyId!)?.effectiveAp).toBe(5);
+    expectSuccess(p2.passBattleAction());
+    expectFailure(p1.activateAbility(gallussId!, 0), "ABILITY_LIMIT_REACHED");
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getVisibleCard(eligibleEnemyId!)?.effectiveAp).toBe(4);
+  });
+
+  it("cannot activate during the Main Phase", () => {
+    const eligibleEnemy = createMockUnit({ level: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [gd01GallussK058], resourceArea: activeResources(1) },
+      { play: [eligibleEnemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const gallussId = p1.getCardsInZone("battleArea")[0]!;
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
-    if (!friendlyId || !enemyId) throw new Error("setup failed");
 
-    // Buff the enemy high-level unit (target `owner: "any"` so either side works).
-    expectSuccess(p1.activateAbility(gd01GallussK058, 0, { targets: [enemyId] }));
+    expectFailure(p1.activateAbility(gallussId, 0, { targets: [enemyId] }), "WRONG_PHASE");
 
-    const apMods = engine
-      .getG()
-      .continuousEffects.filter(
-        (e) => e.payload.kind === "stat-modifier" && e.payload.stat === "ap",
-      );
-    expect(apMods).toHaveLength(1);
-    expect(apMods[0]!.targetId).toBe(enemyId);
-    expect(apMods.find((e) => e.targetId === friendlyId)).toBeUndefined();
+    expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(2);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
   });
 });

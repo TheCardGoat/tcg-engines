@@ -4,6 +4,7 @@ export const gd01GearaZuluGuardsType052: UnitCard = {
   cardNumber: "GD01-052",
   name: "Geara Zulu (Guards Type)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["neo zeon"],
   id: "GD01-052",

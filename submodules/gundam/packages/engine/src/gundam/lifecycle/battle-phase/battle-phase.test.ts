@@ -288,20 +288,64 @@ describe("Battle Phase — Damage resolution", () => {
   });
 });
 
-// =============================================================================
-// TODO: Complex scenarios (to be implemented incrementally)
-// =============================================================================
+describe("Battle Phase — <Breach>", () => {
+  it("destroys the first Shield after the attacker destroys an enemy Unit", () => {
+    const attacker = createMockUnit({
+      ap: 3,
+      hp: 5,
+      keywordEffects: [{ keyword: "Breach", value: 3 }],
+    });
+    const defender = createMockUnit({ ap: 1, hp: 3 });
+    const shield = createMockResource();
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { play: [rested(defender)], shieldArea: [shield] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [defenderId] = p2.getCardsInZone("battleArea");
+    const [shieldId] = p2.getCardsInZone("shieldArea");
 
-describe("Battle Phase — TODO: Complex scenarios", () => {
-  it.todo("Blocker keyword — standby player declares block with <Blocker> unit");
-  it.todo("Direct attack on player — damage to shields/base");
-  it.todo("Shield removal on direct attack (no base)");
-  it.todo("Base damage on direct attack (base present)");
-  it.todo("Burst effect trigger when shield is destroyed");
-  it.todo("<Breach> — bonus damage to shield/base after destroying a unit");
-  // <High-Maneuver> has its own dedicated describe block below.
-  it.todo("<Repair> — heal at end of turn");
-  it.todo("Player defeat when no shields/base and direct attack lands");
+    expectSuccess(p1.enterBattle(attacker, defenderId!));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getCardZone(defenderId!)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getCardZone(shieldId!)).toBe(`trash:${PLAYER_TWO}`);
+  });
+
+  it("destroys the first Shield after the attacker destroys a blocking Unit", () => {
+    const attacker = createMockUnit({
+      ap: 3,
+      hp: 5,
+      keywordEffects: [{ keyword: "Breach", value: 3 }],
+    });
+    const defender = createMockUnit({ ap: 1, hp: 5 });
+    const blocker = createMockUnit({
+      ap: 1,
+      hp: 3,
+      keywordEffects: [{ keyword: "Blocker" }],
+    });
+    const shield = createMockResource();
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { play: [rested(defender), blocker], shieldArea: [shield] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const defenderId = p2.getCardsInZone("battleArea")[0]!;
+    const blockerId = p2.getCardsInZone("battleArea")[1]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attacker, defenderId));
+    expectSuccess(p2.declareBlock(blockerId));
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getCardZone(blockerId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getCardZone(shieldId)).toBe(`trash:${PLAYER_TWO}`);
+  });
 });
 
 // =============================================================================
@@ -522,6 +566,11 @@ describe("Battle Phase — 【Attack】 triggers fire in attack step (rule 8-2-2
     const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.enterBattle(attacker, defenderId));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [defenderId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [defenderId] }));
 
     // Target was destroyed by the 【Attack】 trigger → rule 8-2-4 skips
     // block/action/damage steps, battle-phase never entered.
@@ -792,6 +841,12 @@ describe("Battle Phase — <Suppression> (rules 13-1-7)", () => {
     expectSuccess(engine.asPlayer(PLAYER_TWO).passBlock());
     expectSuccess(engine.asPlayer(PLAYER_TWO).passBattleAction());
     expectSuccess(p1.passBattleAction());
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const ordering = p2.getBoardView().pendingChoice;
+    if (ordering?.kind !== "ordering") throw new Error("Expected simultaneous Burst choice");
+    expectSuccess(p2.resolveEffect({ pendingEffectId: ordering.candidateEffectIds[0]! }));
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
     // Both Burst effects fired → deck decreased by 2 (one per Burst draw).
     expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_TWO })).toBe(deckBefore - 2);
@@ -813,7 +868,7 @@ describe("Battle Phase — 8-3-3: targeted unit cannot block itself", () => {
       keywordEffects: [{ keyword: "Blocker" }],
     });
 
-    const engine = GundamTestEngine.create({ play: [attacker] }, { play: [defender] });
+    const engine = GundamTestEngine.create({ play: [attacker] }, { play: [rested(defender)] });
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
@@ -835,7 +890,10 @@ describe("Battle Phase — 8-3-3: targeted unit cannot block itself", () => {
       keywordEffects: [{ keyword: "Blocker" }],
     });
 
-    const engine = GundamTestEngine.create({ play: [attacker] }, { play: [defender, guardian] });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { play: [rested(defender), guardian] },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
@@ -845,6 +903,7 @@ describe("Battle Phase — 8-3-3: targeted unit cannot block itself", () => {
     expectSuccess(p1.enterBattle(attackerId, defenderId));
     // Guardian (not the target) blocking the attack is legal.
     expectSuccess(p2.declareBlock(guardianId));
+    expect(p2.isExhausted(guardianId)).toBe(true);
   });
 
   it("8-4-1: after declareBlock, both players get to act in the action step", () => {
@@ -860,7 +919,10 @@ describe("Battle Phase — 8-3-3: targeted unit cannot block itself", () => {
       keywordEffects: [{ keyword: "Blocker" }],
     });
 
-    const engine = GundamTestEngine.create({ play: [attacker] }, { play: [defender, guardian] });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { play: [rested(defender), guardian] },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
@@ -1101,7 +1163,10 @@ describe("Battle Phase — <Blocker> keyword required on the blocker (rule 13-1-
     // Guardian is a plain unit — no <Blocker> keyword.
     const guardian = createMockUnit({ ap: 2, hp: 5 });
 
-    const engine = GundamTestEngine.create({ play: [attacker] }, { play: [defender, guardian] });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { play: [rested(defender), guardian] },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
@@ -1122,7 +1187,10 @@ describe("Battle Phase — <Blocker> keyword required on the blocker (rule 13-1-
       keywordEffects: [{ keyword: "Blocker" }],
     });
 
-    const engine = GundamTestEngine.create({ play: [attacker] }, { play: [defender, guardian] });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { play: [rested(defender), guardian] },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
@@ -1140,7 +1208,10 @@ describe("Battle Phase — <Blocker> keyword required on the blocker (rule 13-1-
     // continuous effect (e.g. "While X, this unit gains <Blocker>").
     const guardian = createMockUnit({ ap: 2, hp: 5 });
 
-    const engine = GundamTestEngine.create({ play: [attacker] }, { play: [defender, guardian] });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { play: [rested(defender), guardian] },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;

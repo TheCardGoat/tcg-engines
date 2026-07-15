@@ -45,6 +45,7 @@ export function mulliganOnExit(ctx: LifecycleContext): void {
     ctx.framework.cards.registerDefinition(tokenId, EX_BASE_TOKEN_DEF, pid);
     ctx.framework.zones.placeToken(tokenId, { zone: "baseSection", playerId: pid as string }, pid, {
       isToken: true,
+      tokenDefinitionId: EX_BASE_TOKEN_DEF.cardNumber,
     });
   }
 
@@ -57,7 +58,7 @@ export function mulliganOnExit(ctx: LifecycleContext): void {
         resourceTokenId,
         { zone: "resourceArea", playerId: secondPlayerStr },
         secondPlayer,
-        { isToken: true },
+        { isToken: true, tokenDefinitionId: EX_RESOURCE_TOKEN_DEF.cardNumber },
       );
     }
   }

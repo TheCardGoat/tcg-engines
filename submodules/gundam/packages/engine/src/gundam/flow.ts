@@ -40,7 +40,7 @@
  * Flags:
  *   nextTurnPlayer — set by passTurn, drives main-phase→end-phase and turn cycling
  *   pendingDecision — used by mulligan and action-step for multi-player decisions
- * turn.onEnd:   Repair, clear turn metadata, clear this-turn continuous effects
+ * turn.onEnd:   clear turn metadata and any remaining this-turn effects
  */
 
 import type { FlowDefinition } from "../types/index.ts";

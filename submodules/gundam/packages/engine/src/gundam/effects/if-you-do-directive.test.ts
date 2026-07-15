@@ -22,6 +22,7 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
+  activeResources,
   createMockUnit,
   expectSuccess,
 } from "../../index.ts";
@@ -60,10 +61,7 @@ const mandatoryNonTargetedDependentEffect: CardEffect = {
 };
 
 // Mandatory TARGETED predecessor — "If you do" gating on whether the
-// targeted action actually found a legal target. `type: "triggered"`
-// so the executor auto-picks candidates instead of halting for a
-// `targetSelection` prompt (which would otherwise block the "no legal
-// target" path behind a `MISSING_TARGETS` validation error).
+// triggered effect can legally choose and affect its target.
 const mandatoryTargetedDependentEffect: CardEffect = {
   type: "triggered",
   activation: { timing: ["deploy"] },
@@ -167,39 +165,47 @@ describe("executeDirectives — dependsOnPrevious", () => {
 
   it("runs the dependent after a mandatory targeted predecessor that hit", () => {
     const enemy = createMockUnit({ ap: 1, hp: 3, level: 1 });
-    const engine = GundamTestEngine.create({ deck: 10 }, { play: [enemy] });
-    const before = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
-    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
-
-    engine.getG().pendingEffects.push(
-      makePending({
-        effect: mandatoryTargetedDependentEffect,
-        controllerId: PLAYER_ONE,
-        kind: "triggered",
-      }),
+    const triggerUnit = createMockUnit({
+      name: "Targeted Trigger",
+      cost: 0,
+      effects: [mandatoryTargetedDependentEffect],
+    });
+    const engine = GundamTestEngine.create(
+      { hand: [triggerUnit], deck: 10, resourceArea: activeResources(1) },
+      { play: [enemy] },
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const before = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
+    const triggerUnitId = p1.getHand()[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(engine.asPlayer(PLAYER_ONE).resolveEffect({}));
-    // Damage landed (triggered auto-picks the lone enemy) + draw fired.
-    expect(engine.getG().damage[enemyId]).toBe(1);
+    expectSuccess(p1.deployUnit(triggerUnitId));
+    expect(p1.getBoardView().pendingChoice?.kind).toBe("targetSelection");
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+
+    expect(p2.getDamage(enemyId)).toBe(1);
     expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(before - 1);
   });
 
-  it("skips the dependent after a mandatory targeted predecessor that found no target", () => {
-    // No enemy units → dealDamage finds no target → dependent skipped.
-    const engine = GundamTestEngine.create({ deck: 10 }, {});
+  it("does not activate the targeted trigger when no legal target exists", () => {
+    const triggerUnit = createMockUnit({
+      name: "Targetless Trigger",
+      cost: 0,
+      effects: [mandatoryTargetedDependentEffect],
+    });
+    const engine = GundamTestEngine.create({
+      hand: [triggerUnit],
+      deck: 10,
+      resourceArea: activeResources(1),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
     const before = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
+    const triggerUnitId = p1.getHand()[0]!;
 
-    engine.getG().pendingEffects.push(
-      makePending({
-        effect: mandatoryTargetedDependentEffect,
-        controllerId: PLAYER_ONE,
-        kind: "triggered",
-      }),
-    );
+    expectSuccess(p1.deployUnit(triggerUnitId));
 
-    expectSuccess(engine.asPlayer(PLAYER_ONE).resolveEffect({}));
-    // No draw — predecessor had no legal target, dependent gated off.
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
     expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(before);
   });
 });

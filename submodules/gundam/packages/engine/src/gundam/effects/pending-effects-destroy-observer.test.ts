@@ -1,43 +1,29 @@
-/**
- * Destroy-event observer-scan + qualification-actor coverage
- * (rule 10-1-6 triggered-effect enqueue on `unitDestroyed`).
- *
- * Two gaps closed in this PR:
- *
- *  (1) `handleUnitDefeated` previously enqueued only the dying card's
- *      own 【Destroyed】 triggers. Observer triggers on other in-play
- *      cards (e.g. ST02-003 Heavyarms: "when this Unit destroys an
- *      enemy Unit …") must also enqueue for the same event — mirror of
- *      the `attackDeclared` pattern in `lifecycle/battle-phase/attack-step.ts`.
- *
- *  (2) `resolveQualificationActorId` learns a `unitDestroyed` →
- *      `event.cardId` mapping so cards like GD02-003 Gundam Mk-II
- *      (Titans), which print `activation.qualification` on a
- *      【Destroyed】 trigger, stop failing closed.
- */
+/** Player-visible coverage for Destroyed ownership and qualification. */
 
 import { describe, it, expect } from "vite-plus/test";
 import type { CardEffect, UnitCard } from "@tcg/gundam-types";
-import type { PlayerId } from "../../types/branded.ts";
-import { GundamTestEngine, PLAYER_ONE, PLAYER_TWO } from "../../index.ts";
-import { enqueueObserverTriggers, enqueueOwnCardTriggers } from "./pending-effects.ts";
+import {
+  createMockUnit,
+  expectSuccess,
+  GundamTestEngine,
+  PLAYER_ONE,
+  PLAYER_TWO,
+} from "../../index.ts";
 
 // -----------------------------------------------------------------------------
 // Fixtures
 // -----------------------------------------------------------------------------
 
 /**
- * Observer unit with a plain triggered 【Destroyed】 effect. The
- * directive is a harmless `draw 1` so we can observe enqueue without
- * additional plumbing. Fires on *any* unitDestroyed event — i.e. this
- * card is an observer of the dying card.
+ * Unit with a plain 【Destroyed】 effect. Its harmless draw makes it easy
+ * to prove that another card's destruction does not activate it.
  */
-function makeObserverOnDestroyUnit(): UnitCard {
+function makeDestroyedAbilityUnit(): UnitCard {
   const effect: CardEffect = {
     type: "triggered",
     activation: { timing: ["destroyed"] },
     directives: [{ action: { action: "draw", count: 1 } }],
-    sourceText: "【Destroyed (observer)】Draw 1.",
+    sourceText: "【Destroyed】Draw 1.",
   };
   return {
     cardNumber: `TEST-OBS-DESTROY-${Math.random().toString(36).slice(2, 8)}`,
@@ -91,142 +77,79 @@ function makeQualifiedOnDestroyUnit(maxLevel: number, ownLevel: number): UnitCar
   };
 }
 
-// -----------------------------------------------------------------------------
-// Gap 1 — observer scan for unitDestroyed
-// -----------------------------------------------------------------------------
-
-describe("enqueueObserverTriggers — unitDestroyed", () => {
-  it("enqueues an in-play observer's 【Destroyed】 trigger when another unit is destroyed", () => {
-    const observer = makeObserverOnDestroyUnit();
-    const victim = makeObserverOnDestroyUnit(); // any unit will do as the dying card
-    const engine = GundamTestEngine.create({ play: [observer, victim] }, {});
-    const observerId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
-    const victimId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[1]!;
-
-    let observerEnqueued = false;
-    engine.getRuntime().runTestMutation(PLAYER_ONE as PlayerId, ({ G, framework }) => {
-      enqueueObserverTriggers(
-        G,
-        { type: "unitDestroyed", cardId: victimId, playerId: PLAYER_ONE },
-        framework,
-        victimId,
-      );
-      // The observer (not the dying card) must appear in the queue.
-      observerEnqueued = G.pendingEffects.some((pe) => pe.sourceCardId === observerId);
-    });
-
-    expect(observerEnqueued).toBe(true);
-  });
-
-  it("skips the dying card itself — the own-triggers enqueue path handles that", () => {
-    const victim = makeObserverOnDestroyUnit();
-    const engine = GundamTestEngine.create({ play: [victim] }, {});
-    const victimId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
-
-    let victimInQueue = false;
-    engine.getRuntime().runTestMutation(PLAYER_ONE as PlayerId, ({ G, framework }) => {
-      enqueueObserverTriggers(
-        G,
-        { type: "unitDestroyed", cardId: victimId, playerId: PLAYER_ONE },
-        framework,
-        victimId,
-      );
-      victimInQueue = G.pendingEffects.some((pe) => pe.sourceCardId === victimId);
-    });
-
-    expect(victimInQueue).toBe(false);
-  });
-});
-
-// -----------------------------------------------------------------------------
-// Gap 2 — unitDestroyed qualification-actor mapping
-// -----------------------------------------------------------------------------
-
-describe("resolveQualificationActorId — unitDestroyed → event.cardId", () => {
-  it("enqueues when the destroyed card itself satisfies the qualification", () => {
-    // ownLevel 2 ≤ maxLevel 3 → qualification holds.
+describe("Destroyed qualification", () => {
+  it("draws when the destroyed Unit itself satisfies the printed qualification", () => {
     const unitDef = makeQualifiedOnDestroyUnit(3, 2);
-    const engine = GundamTestEngine.create({ play: [unitDef] }, {});
-    const unitId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
+    const attacker = createMockUnit({ ap: 5, hp: 5 });
+    const engine = GundamTestEngine.create(
+      { play: [{ card: unitDef, exhausted: true }], deck: 5 },
+      { play: [attacker] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    let qLen = 0;
-    engine.getRuntime().runTestMutation(PLAYER_ONE as PlayerId, ({ G, framework }) => {
-      enqueueOwnCardTriggers(
-        G,
-        { type: "unitDestroyed", cardId: unitId, ownerId: PLAYER_ONE },
-        unitId,
-        PLAYER_ONE,
-        framework,
-      );
-      qLen = G.pendingEffects.length;
-    });
+    expectSuccess(p2.enterBattle(attackerId, unitId));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
 
-    expect(qLen).toBe(1);
+    expect(p1.getCardsInZone("trash")).toContain(unitId);
+    expect(p1.getCardsInZone("deck")).toHaveLength(4);
+    expect(p1.getHand()).toHaveLength(1);
   });
 
-  it("fails closed when the destroyed card does not satisfy the qualification", () => {
-    // ownLevel 5 > maxLevel 3 → qualification fails → no enqueue.
+  it("does not draw when the destroyed Unit fails the printed qualification", () => {
     const unitDef = makeQualifiedOnDestroyUnit(3, 5);
-    const engine = GundamTestEngine.create({ play: [unitDef] }, {});
-    const unitId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
+    const attacker = createMockUnit({ ap: 5, hp: 5 });
+    const engine = GundamTestEngine.create(
+      { play: [{ card: unitDef, exhausted: true }], deck: 5 },
+      { play: [attacker] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    let qLen = 0;
-    engine.getRuntime().runTestMutation(PLAYER_ONE as PlayerId, ({ G, framework }) => {
-      enqueueOwnCardTriggers(
-        G,
-        { type: "unitDestroyed", cardId: unitId, ownerId: PLAYER_ONE },
-        unitId,
-        PLAYER_ONE,
-        framework,
-      );
-      qLen = G.pendingEffects.length;
-    });
+    expectSuccess(p2.enterBattle(attackerId, unitId));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
 
-    expect(qLen).toBe(0);
+    expect(p1.getCardsInZone("trash")).toContain(unitId);
+    expect(p1.getCardsInZone("deck")).toHaveLength(5);
+    expect(p1.getHand()).toHaveLength(0);
   });
 });
 
 // -----------------------------------------------------------------------------
-// End-to-end: observer scan wired through `handleUnitDefeated`
+// End-to-end: a Destroyed keyword belongs only to the destroyed card
 // -----------------------------------------------------------------------------
 
-describe("handleUnitDefeated — observer scan end-to-end", () => {
-  it("enqueues an opposing-side observer's 【Destroyed】 trigger via combat", () => {
-    // Observer lives on P1; P2 has a frail unit that dies to P1 attack.
-    // P1's observer should enqueue its draw trigger on the P2-unit destruction.
-    const observer = makeObserverOnDestroyUnit();
-    // Force observer to be ready and stronger so it kills the defender.
-    const attacker = {
-      ...makeObserverOnDestroyUnit(),
-      ap: 5,
-      hp: 5,
-      effects: undefined,
-      cardNumber: `TEST-ATT-${Math.random().toString(36).slice(2, 8)}`,
-    } as UnitCard;
-    const defender = {
-      ...makeObserverOnDestroyUnit(),
-      ap: 1,
-      hp: 1,
-      effects: undefined,
-      cardNumber: `TEST-DEF-${Math.random().toString(36).slice(2, 8)}`,
-    } as UnitCard;
+describe("Destroyed keyword ownership", () => {
+  it("does not activate an in-play card's 【Destroyed】 ability when another Unit dies", () => {
+    const survivor = makeDestroyedAbilityUnit();
+    const attacker = createMockUnit({ ap: 5, hp: 5 });
+    const defender = createMockUnit({ ap: 1, hp: 1 });
 
     const engine = GundamTestEngine.create(
-      { play: [attacker, observer], deck: 5 },
-      { play: [defender] },
+      { play: [attacker, survivor], deck: 5 },
+      { play: [{ card: defender, exhausted: true }] },
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [attackerId] = p1.getCardsInZone("battleArea");
+    const defenderId = p2.getCardsInZone("battleArea")[0]!;
+    expectSuccess(p1.enterBattle(attackerId!, defenderId));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
 
-    const p1Cards = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea");
-    const attackerId = p1Cards[0]!;
-    const defenderId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
-    engine.getG().exhausted[attackerId] = false;
-
-    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
-
-    engine.resolveCombat({ attackerId, target: defenderId });
-
-    // Observer's draw fires: deck shrank by exactly 1.
-    const deckAfter = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
-    expect(deckAfter).toBe(deckBefore - 1);
+    expect(p2.getCardsInZone("trash")).toContain(defenderId);
+    expect(p1.getCardsInZone("deck")).toHaveLength(5);
+    expect(p1.getHand()).toHaveLength(0);
   });
 });

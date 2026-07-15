@@ -19,7 +19,7 @@ describe("Dum Dum - Maelstrom Triggerman", () => {
           {
             card: welcomeToNightCityRetailSwordwiseHuscle,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
             attachedGears: [welcomeToNightCityRetailKiroshiOptics],
           },
         ],
@@ -69,7 +69,7 @@ describe("Dum Dum - Maelstrom Triggerman", () => {
         {
           card: welcomeToNightCityRetailSwordwiseHuscle,
           spent: false,
-          playedThisTurn: false,
+          hasLag: false,
           attachedGears: [
             welcomeToNightCityRetailKiroshiOptics,
             welcomeToNightCityRetailMantisBlades,

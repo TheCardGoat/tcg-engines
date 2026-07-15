@@ -2,7 +2,8 @@
 
 Self-play harness, benchmark CLI, and diff tools for iterating on the Gundam bot's candidate-strategy heuristics.
 
-See `.claude/skills/improve-bot-heuristics.md` for the full playbook. This package supplies the executables the skill drives.
+See `.agents/skills/gundam-bot-bench/SKILL.md` for the agent workflow. This
+package supplies the deterministic executables that workflow drives.
 
 ## CLIs
 

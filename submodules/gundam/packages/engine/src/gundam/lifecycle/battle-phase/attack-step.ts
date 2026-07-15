@@ -44,8 +44,25 @@ export function attackStepOnEnter(ctx: LifecycleContext): void {
     playerId: attackerPlayerId,
   };
   enqueueOwnCardTriggers(g, event, attackerId, attackerPlayerId, ctx.framework);
-  enqueueObserverTriggers(g, event, ctx.framework, attackerId);
-  drainPendingEffects(ctx);
+  const pairedPilotId = g.pilotAssignments[attackerId];
+  if (pairedPilotId) {
+    // Rule 3-3-9-2: the paired Unit gains the Pilot's lower card text,
+    // so its 【Attack】 effects belong to this attack too.
+    enqueueOwnCardTriggers(g, event, pairedPilotId, attackerPlayerId, ctx.framework);
+  }
+  enqueueObserverTriggers(
+    g,
+    event,
+    ctx.framework,
+    pairedPilotId ? [attackerId, pairedPilotId] : attackerId,
+  );
+  if (drainPendingEffects(ctx) === "halt") {
+    // Keep the attack step open while the controller answers a triggered
+    // effect. The normal flow runner will advance only after the queue is
+    // resolved, letting the next step's 8-2-4 safety check observe cards
+    // that left battle during that interaction.
+    return;
+  }
 
   // Rule 8-2-4: if combat was broken by attack-step effects, skip block/
   // action/damage steps and clean up via battle-end-step.

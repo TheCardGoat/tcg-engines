@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 import { motion } from "motion/react";
 
@@ -14,16 +15,24 @@ import { refKey } from "./motionTypes";
 import { rectCenter } from "./rectRegistry";
 
 const CARD_EASE = [0.25, 0.1, 0.25, 1] as const;
+const MAX_CARD_OVERLAY_WIDTH = 240;
+const MAX_CARD_OVERLAY_HEIGHT = 336;
+const MAX_CARD_VIEWPORT_WIDTH_RATIO = 0.45;
+const MAX_CARD_VIEWPORT_HEIGHT_RATIO = 0.65;
+const FALLBACK_CARD_WIDTH = 118;
+const FALLBACK_CARD_HEIGHT = 156;
 
 export function CardMotionOverlay({
   overlay,
   reduced,
   visible,
+  renderEntity,
   onComplete,
 }: {
   overlay: CardOverlayState;
   reduced: boolean;
   visible: boolean;
+  renderEntity?: MotionEntityRenderer;
   onComplete: (overlay: CardOverlayState) => void;
 }) {
   const duration = reduced ? 0.03 : overlay.durationMs / 1000;
@@ -34,6 +43,8 @@ export function CardMotionOverlay({
     overlay.destinationFace,
     "motion-destination",
   );
+  const from = safeCardMotionRect(overlay.from);
+  const to = safeCardMotionRect(overlay.to);
   const faceChanges = overlay.sourceFace !== overlay.destinationFace;
   const isSpotlight = overlay.kind === "spotlight";
 
@@ -51,10 +62,10 @@ export function CardMotionOverlay({
       data-source-face={overlay.sourceFace}
       data-destination-face={overlay.destinationFace}
       style={{
-        left: overlay.to.left,
-        top: overlay.to.top,
-        width: overlay.to.width,
-        height: overlay.to.height,
+        left: to.left,
+        top: to.top,
+        width: to.width,
+        height: to.height,
         transformOrigin: "top left",
         visibility: visible ? undefined : "hidden",
       }}
@@ -64,10 +75,10 @@ export function CardMotionOverlay({
           : isSpotlight
             ? { opacity: 0, scale: 0.96 }
             : {
-                x: overlay.from.left - overlay.to.left,
-                y: overlay.from.top - overlay.to.top,
-                scaleX: overlay.from.width / overlay.to.width,
-                scaleY: overlay.from.height / overlay.to.height,
+                x: from.left - to.left,
+                y: from.top - to.top,
+                scaleX: from.width / to.width,
+                scaleY: from.height / to.height,
                 opacity: overlay.kind === "enter" ? 0 : 1,
               }
       }
@@ -99,36 +110,18 @@ export function CardMotionOverlay({
               animate={reduced ? { opacity: 0 } : { opacity: [1, 1, 0, 0] }}
               transition={{ duration, delay, ease: "easeInOut", times: [0, 0.28, 0.38, 1] }}
             >
-              <CardFace
-                entity={sourceEntity}
-                density="normal"
-                fill
-                fullImageChrome="edge-to-edge"
-                fullImageFit="cover"
-              />
+              <MotionEntityFace entity={sourceEntity} renderEntity={renderEntity} />
             </motion.div>
             <motion.div
               className="absolute inset-0"
               animate={reduced ? { opacity: 1 } : { opacity: [0, 0, 1, 1] }}
               transition={{ duration, delay, ease: "easeInOut", times: [0, 0.3, 0.42, 1] }}
             >
-              <CardFace
-                entity={destinationEntity}
-                density="normal"
-                fill
-                fullImageChrome="edge-to-edge"
-                fullImageFit="cover"
-              />
+              <MotionEntityFace entity={destinationEntity} renderEntity={renderEntity} />
             </motion.div>
           </>
         ) : (
-          <CardFace
-            entity={destinationEntity}
-            density="normal"
-            fill
-            fullImageChrome="edge-to-edge"
-            fullImageFit="cover"
-          />
+          <MotionEntityFace entity={destinationEntity} renderEntity={renderEntity} />
         )}
         {overlay.label ? (
           <motion.div
@@ -155,6 +148,110 @@ export function CardMotionOverlay({
       </div>
     </motion.div>
   );
+}
+
+function safeCardMotionRect(rect: CardOverlayState["from"]): CardOverlayState["from"] {
+  const finite =
+    Number.isFinite(rect.left) &&
+    Number.isFinite(rect.top) &&
+    Number.isFinite(rect.width) &&
+    Number.isFinite(rect.height);
+  if (!finite || rect.width <= 0 || rect.height <= 0) {
+    return {
+      left: viewportWidth() / 2 - FALLBACK_CARD_WIDTH / 2,
+      top: viewportHeight() / 2 - FALLBACK_CARD_HEIGHT / 2,
+      width: FALLBACK_CARD_WIDTH,
+      height: FALLBACK_CARD_HEIGHT,
+    };
+  }
+
+  const maxWidth = Math.min(
+    MAX_CARD_OVERLAY_WIDTH,
+    viewportWidth() * MAX_CARD_VIEWPORT_WIDTH_RATIO,
+  );
+  const maxHeight = Math.min(
+    MAX_CARD_OVERLAY_HEIGHT,
+    viewportHeight() * MAX_CARD_VIEWPORT_HEIGHT_RATIO,
+  );
+  const scale = Math.min(1, maxWidth / rect.width, maxHeight / rect.height);
+  if (scale >= 1) {
+    return rect;
+  }
+
+  const width = Math.max(1, rect.width * scale);
+  const height = Math.max(1, rect.height * scale);
+  return {
+    left: rect.left + (rect.width - width) / 2,
+    top: rect.top + (rect.height - height) / 2,
+    width,
+    height,
+  };
+}
+
+function viewportWidth(): number {
+  return typeof window === "undefined" ? 1024 : window.innerWidth;
+}
+
+function viewportHeight(): number {
+  return typeof window === "undefined" ? 768 : window.innerHeight;
+}
+
+export type MotionEntityRenderer = (entity: SimulatorEntity) => ReactNode;
+
+function MotionEntityFace({
+  entity,
+  renderEntity,
+}: {
+  entity: SimulatorEntity;
+  renderEntity?: MotionEntityRenderer;
+}) {
+  if (entity.kind === "die" && entity.face !== "hidden") {
+    return <MotionDieFace entity={entity} />;
+  }
+
+  if (renderEntity) {
+    return renderEntity(entity);
+  }
+
+  return (
+    <CardFace
+      entity={entity}
+      density="normal"
+      fill
+      fullImageChrome="edge-to-edge"
+      fullImageFit="cover"
+    />
+  );
+}
+
+function MotionDieFace({ entity }: { entity: SimulatorEntity }) {
+  const dieLabel = entity.title || entity.traits[0]?.toUpperCase() || "DIE";
+  const faceValue =
+    stringValue(entity.dataAttributes?.["data-face"]) ??
+    entity.stats.find((stat) => stat.label.toLowerCase() === "face")?.value;
+
+  return (
+    <div
+      className="grid h-full w-full place-items-center"
+      data-testid="motion-die-face"
+      data-card-kind="die"
+      data-entity-id={entity.id}
+      data-sim-entity-id={entity.id}
+      data-face={faceValue}
+      aria-label={faceValue ? `${dieLabel}, showing ${faceValue}` : dieLabel}
+    >
+      <span className="relative grid aspect-square h-full max-h-full min-h-6 min-w-6 place-items-center rounded-full border border-[#2bf3be]/70 bg-[#101821] text-[clamp(0.7rem,42%,1.4rem)] font-black leading-none text-[#2bf3be] shadow-[0_0_14px_rgba(43,243,190,0.42)]">
+        {faceValue ?? dieLabel}
+      </span>
+    </div>
+  );
+}
+
+function stringValue(value: string | number | boolean | undefined): string | undefined {
+  if (value === undefined || value === false) {
+    return undefined;
+  }
+  return String(value);
 }
 
 export function BeamMotionOverlay({

@@ -4,6 +4,8 @@ packages:
   - tools/*
 
 catalog:
+  "@typescript/native": "npm:typescript@7.0.2"
+  "@typescript/native-preview": "npm:typescript@7.0.2"
   "@discord/embedded-app-sdk": ^2.5.0
   "@inlang/paraglide-js": ^2.16.0
   "@playwright/test": ^1.48.0
@@ -27,14 +29,15 @@ catalog:
   react-router: ^7.14.2
   socket.io-client: ^4.8.1
   tailwind-merge: ^3.5.0
-  typescript: ^5
-  vite: npm:@voidzero-dev/vite-plus-core@0.1.21
+  typescript: "npm:@typescript/typescript6@6.0.2"
+  vite: "npm:@voidzero-dev/vite-plus-core@0.2.4"
   vite-native: npm:vite@^8.0.5
-  vite-plus: 0.1.21
-  vitest: npm:@voidzero-dev/vite-plus-test@0.1.21
+  vite-plus: 0.2.4
+  vitest: "npm:@voidzero-dev/vite-plus-test@0.1.24"
 
 catalogMode: prefer
 overrides:
+  "@voidzero-dev/vite-plus-core": 0.2.4
   vite: "catalog:"
   vitest: "catalog:"
 peerDependencyRules:
@@ -44,3 +47,6 @@ peerDependencyRules:
   allowedVersions:
     vite: "*"
     vitest: "*"
+
+patchedDependencies:
+  "@voidzero-dev/vite-plus-test": patches/@voidzero-dev__vite-plus-test.patch

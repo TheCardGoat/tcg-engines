@@ -17,7 +17,7 @@ export function buildCyberpunkInteractionView(input: {
 }): EngineInteractionView {
   const actions =
     input.prompt.choice === null
-      ? input.prompt.availableMoves.map((move) => actionFromAvailableMove(move, input.stateVersion))
+      ? actionsFromAvailableMoves(input.prompt, input.stateVersion)
       : [actionFromChoice(input.prompt.choice, input.stateVersion)];
 
   return {
@@ -29,6 +29,11 @@ export function buildCyberpunkInteractionView(input: {
     actions,
   };
 }
+
+const MUST_ATTACK_PASS_DISABLED_TEXT = {
+  key: "cyberpunk.move.passPhase.disabled.mustAttack",
+  params: { label: "A Unit must attack before you can pass." },
+} as const satisfies InteractionAction["disabledText"];
 
 export function cyberpunkSubmissionToPayload(submission: InteractionSubmission): {
   moveType: string;
@@ -105,10 +110,15 @@ export function cyberpunkSubmissionToPayload(submission: InteractionSubmission):
         payload: pass ? { pass } : { cardIds: requireStringArray(submission, "cardIds") },
       };
     }
-    case "resolveSearchDeck":
+    case "resolveScry":
       return {
         moveType: submission.actionId,
-        payload: { selectedCardIds: requireStringArray(submission, "selectedCardIds") },
+        payload: { destinations: requireScryDestinations(submission) },
+      };
+    case "resolveRevealDestination":
+      return {
+        moveType: submission.actionId,
+        payload: { destination: requireString(submission, "destination") },
       };
     case "resolveTrigger": {
       const triggerId = optionalString(submission, "triggerId");
@@ -170,20 +180,52 @@ function actionFromAvailableMove(move: AvailableMove, stateVersion: number): Int
   };
 }
 
+function actionsFromAvailableMoves(
+  prompt: PlayerPrompt,
+  stateVersion: number,
+): InteractionAction[] {
+  const actions = prompt.availableMoves.map((move) => actionFromAvailableMove(move, stateVersion));
+  if (shouldExposeMustAttackBlockedPass(prompt)) {
+    actions.push({
+      id: "passPhase",
+      requestId: requestId(stateVersion, "passPhase"),
+      intent: "pass",
+      text: { key: "cyberpunk.move.passPhase" },
+      enabled: false,
+      disabledText: MUST_ATTACK_PASS_DISABLED_TEXT,
+      inputs: [],
+    });
+  }
+  return actions;
+}
+
+function shouldExposeMustAttackBlockedPass(prompt: PlayerPrompt): boolean {
+  if (prompt.status !== "action" || prompt.choice !== null) return false;
+
+  const moveIds = new Set(prompt.availableMoves.map((move) => move.moveId));
+  if (moveIds.has("passPhase")) return false;
+  if (moveIds.has("resolveAttack") || moveIds.has("useBlocker")) return false;
+
+  return moveIds.has("attackRival") || moveIds.has("attackUnit");
+}
+
 function actionFromChoice(choice: ChoicePrompt, stateVersion: number): InteractionAction {
   switch (choice.type) {
-    case "searchDeck":
+    case "scry": {
+      const destination =
+        choice.payload.destinations.find((entry) => !entry.remainder) ??
+        choice.payload.destinations[0];
       const revealedCardCandidates = choice.payload.revealedCards.map((card) => ({
         entity: { kind: "card" as const, instanceId: card.instanceId },
-        enabled: searchCardMatchesTarget(card, choice.payload.target),
+        enabled: scryCardMatchesTarget(card, destination?.target ?? null),
       }));
       return choiceAction({
         stateVersion,
-        id: "resolveSearchDeck",
+        id: "resolveScry",
         intent: "order-cards",
         textParams: {
-          lookCount: choice.payload.lookCount,
-          canSkip: choice.payload.select.kind === "upTo",
+          lookCount: choice.payload.amount,
+          canSkip: (destination?.min ?? 0) === 0,
           ...(choice.payload.source
             ? {
                 sourceCardId: choice.payload.source.cardId,
@@ -199,13 +241,74 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
             }
           : undefined,
         inputs: [
+          {
+            kind: "option-selection",
+            id: "destinationZone",
+            text: { key: "cyberpunk.choice.scry.destination" },
+            min: 0,
+            max: 1,
+            options: [
+              {
+                id: destination?.zone ?? "hand",
+                text: {
+                  key: "cyberpunk.choice.scry.destinationZone",
+                  params: { destinationZone: destination?.zone ?? "hand" },
+                },
+                enabled: true,
+              },
+            ],
+          },
           entityInputFromCandidates(
             "selectedCardIds",
             "source",
             "card",
-            boundsForSearch(choice),
+            boundsForScryDestination(destination),
             revealedCardCandidates,
           ),
+        ],
+      });
+    }
+    case "revealDestination":
+      return choiceAction({
+        stateVersion,
+        id: "resolveRevealDestination",
+        intent: "choose-option",
+        textParams: {
+          destinationOwnerId: choice.payload.player,
+          revealedCount: choice.payload.revealedCards.length,
+          revealedCardIds: choice.payload.revealedCards.map((card) => card.instanceId).join(","),
+          drawAmount: choice.payload.drawIfDestination?.amount ?? 0,
+          drawDestination: choice.payload.drawIfDestination?.destination ?? "",
+          ...(choice.payload.source
+            ? {
+                sourceCardId: choice.payload.source.cardId,
+                sourceDisplayName: choice.payload.source.displayName,
+                sourceRulesText: choice.payload.source.rulesText ?? "",
+              }
+            : {}),
+        },
+        source: choice.payload.source
+          ? {
+              kind: "card",
+              instanceId: choice.payload.source.cardId,
+            }
+          : undefined,
+        inputs: [
+          {
+            kind: "option-selection",
+            id: "destination",
+            text: { key: "cyberpunk.choice.revealDestination.destination" },
+            min: 1,
+            max: 1,
+            options: choice.payload.destinations.map((destination) => ({
+              id: destination,
+              text: {
+                key: `cyberpunk.choice.revealDestination.${destination}`,
+                params: { destination },
+              },
+              enabled: true,
+            })),
+          },
         ],
       });
     case "chooseTarget": {
@@ -320,7 +423,11 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
               id: option.triggerId,
               text: {
                 key: "cyberpunk.choice.trigger",
-                params: { cardName: option.cardName, sourceCardId: option.sourceCardId },
+                params: {
+                  abilityText: option.abilityText,
+                  cardName: option.cardName,
+                  sourceCardId: option.sourceCardId,
+                },
               },
               enabled: true,
             })),
@@ -422,7 +529,10 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
             max: 1,
             options: choice.payload.cardTypes.map((cardType) => ({
               id: cardType,
-              text: { key: `cyberpunk.cardType.${cardType}` },
+              text: {
+                key: `cyberpunk.cardType.${cardType}`,
+                params: { label: cardTypeLabel(cardType) },
+              },
               enabled: true,
             })),
           },
@@ -460,6 +570,21 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
           },
         ],
       });
+  }
+}
+
+function cardTypeLabel(cardType: string): string {
+  switch (cardType) {
+    case "gear":
+      return "Gear";
+    case "legend":
+      return "Legend";
+    case "program":
+      return "Program";
+    case "unit":
+      return "Unit";
+    default:
+      return cardType;
   }
 }
 
@@ -705,27 +830,20 @@ function bounds(min: number | undefined, max: number | undefined): { min: number
   return { min: min ?? 1, max: max ?? min ?? 1 };
 }
 
-function boundsForSearch(choice: Extract<ChoicePrompt, { type: "searchDeck" }>): {
+function boundsForScryDestination(
+  destination:
+    | Extract<ChoicePrompt, { type: "scry" }>["payload"]["destinations"][number]
+    | undefined,
+): {
   min: number;
   max: number;
 } {
-  const select = choice.payload.select;
-  switch (select.kind) {
-    case "all":
-      return {
-        min: choice.payload.revealedCardIds.length,
-        max: choice.payload.revealedCardIds.length,
-      };
-    case "exact":
-      return { min: select.amount, max: select.amount };
-    case "upTo":
-      return { min: 0, max: select.max };
-  }
+  return { min: destination?.min ?? 0, max: destination?.max ?? Number.MAX_SAFE_INTEGER };
 }
 
-function searchCardMatchesTarget(
-  card: Extract<ChoicePrompt, { type: "searchDeck" }>["payload"]["revealedCards"][number],
-  target: Extract<ChoicePrompt, { type: "searchDeck" }>["payload"]["target"],
+function scryCardMatchesTarget(
+  card: Extract<ChoicePrompt, { type: "scry" }>["payload"]["revealedCards"][number],
+  target: Extract<ChoicePrompt, { type: "scry" }>["payload"]["destinations"][number]["target"],
 ): boolean {
   return (
     (!target?.cardTypes || (card.type !== null && target.cardTypes.includes(card.type))) &&
@@ -737,6 +855,38 @@ function searchCardMatchesTarget(
     (target?.minPower === undefined || card.effectivePower >= target.minPower) &&
     (target?.maxPower === undefined || card.effectivePower <= target.maxPower)
   );
+}
+
+function requireScryDestinations(
+  submission: InteractionSubmission,
+): Array<{ zone: string; cardIds: string[] }> {
+  const raw = submission.values.destinations;
+  if (Array.isArray(raw)) {
+    return raw.map((entry, index) => {
+      if (!entry || typeof entry !== "object") {
+        throw new Error(`Interaction value "destinations[${index}]" must be an object.`);
+      }
+      const destination = entry as { zone?: unknown; cardIds?: unknown };
+      if (typeof destination.zone !== "string") {
+        throw new Error(`Interaction value "destinations[${index}].zone" must be a string.`);
+      }
+      if (
+        !Array.isArray(destination.cardIds) ||
+        destination.cardIds.some((item) => typeof item !== "string")
+      ) {
+        throw new Error(
+          `Interaction value "destinations[${index}].cardIds" must be a string array.`,
+        );
+      }
+      return { zone: destination.zone, cardIds: destination.cardIds };
+    });
+  }
+  return [
+    {
+      zone: optionalString(submission, "destinationZone") ?? "hand",
+      cardIds: requireStringArray(submission, "selectedCardIds"),
+    },
+  ];
 }
 
 function intentForMove(moveId: string): InteractionAction["intent"] {

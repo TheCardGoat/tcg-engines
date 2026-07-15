@@ -12,9 +12,7 @@ describe("Saburo Arasaka - Stubborn Patriarch (Embracing Power retail starter)",
   it("gives a friendly Arasaka Unit +1 power while it attacks", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
         legendArea: [
           {
             card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
@@ -48,7 +46,7 @@ describe("Saburo Arasaka - Stubborn Patriarch (Embracing Power retail starter)",
   it("does not boost a non-Arasaka Unit while it attacks", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, hasLag: false }],
         legendArea: [
           {
             card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,

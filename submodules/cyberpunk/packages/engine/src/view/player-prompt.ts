@@ -6,9 +6,16 @@ import type {
 } from "../types/match-state.ts";
 import type { PlayerId } from "../types/branded.ts";
 import { MOVE_IDS, type MoveId } from "../moves/index.ts";
-import type { CardClassification, CardType, Effect } from "@tcg/cyberpunk-types";
+import type {
+  CardColor,
+  CardClassification,
+  CardType,
+  Effect,
+  ScryDestination,
+  ScryDestinationZone,
+} from "@tcg/cyberpunk-types";
 import { enumerateMoves } from "../command/processor.ts";
-import { getEffectiveRules } from "../active-effects/index.ts";
+import { getEffectiveRules, isReadyFieldBlocker } from "../active-effects/index.ts";
 import { getMustAttackCardIds, hasPlayedProgramThisTurn } from "../moves/attack-requirements.ts";
 import { getOpponentId } from "../state/initial-state.ts";
 import { defOf } from "../state/lookups.ts";
@@ -54,6 +61,9 @@ export interface AvailableMove {
 export interface AbilityCandidate {
   cardId: string;
   abilityIndex: number;
+  effectHints: string[];
+  eddieCost: number;
+  spendsCard: boolean;
 }
 
 /**
@@ -79,7 +89,8 @@ export type MoveInputSpec =
  * so consumers (UI, AI harness) can use exhaustive switches.
  */
 export type ChoicePrompt =
-  | SearchDeckChoicePrompt
+  | ScryChoicePrompt
+  | RevealDestinationChoicePrompt
   | ChooseTargetChoicePrompt
   | ChooseEffectChoicePrompt
   | ChooseTriggerChoicePrompt
@@ -91,13 +102,13 @@ export type ChoicePrompt =
 
 /**
  * Subset of {@link import("@tcg/cyberpunk-types").CardTargetDSL} surfaced for
- * search-deck resolution. Includes every numeric / categorical field a
+ * scry resolution. Includes every numeric / categorical field a
  * revealed deck card can be filtered on. The resolver enforces all of these;
- * the engine's `resolveSearchDeck.validate` enforces the subset it can verify
+ * the engine's `resolveScry.validate` enforces the subset it can verify
  * against the card definition. If either side grows, the other should follow
  * — see the cross-reference in `automation/resolvers/search-deck.ts`.
  */
-export interface SearchDeckTargetFilter {
+export interface ScryTargetFilter {
   cardTypes?: CardType[];
   classifications?: CardClassification[];
   minCost?: number;
@@ -106,22 +117,23 @@ export interface SearchDeckTargetFilter {
   maxPower?: number;
 }
 
-export type SearchDeckSelectSpec =
-  | { kind: "upTo"; max: number }
-  | { kind: "exact"; amount: number }
-  | { kind: "all" };
+export interface ScryDestinationPrompt {
+  zone: ScryDestinationZone;
+  min?: number;
+  max?: number;
+  reveal?: boolean;
+  remainder?: boolean;
+  order?: ScryDestination["order"];
+  target: ScryTargetFilter | null;
+}
 
-export interface SearchDeckChoicePrompt {
-  type: "searchDeck";
+export interface ScryChoicePrompt {
+  type: "scry";
   chooserId: string;
   payload: {
     player: string;
-    lookCount: number;
-    reveal: boolean;
-    destination: string;
-    target: SearchDeckTargetFilter | null;
-    select: SearchDeckSelectSpec;
-    remainder: unknown;
+    amount: number;
+    destinations: ScryDestinationPrompt[];
     revealedCardIds: string[];
     /**
      * Player-safe projections of the revealed cards. Lets resolvers evaluate
@@ -129,6 +141,23 @@ export interface SearchDeckChoicePrompt {
      */
     revealedCards: FilteredCardView[];
     source?: EffectSourcePrompt;
+  };
+}
+
+export interface RevealDestinationChoicePrompt {
+  type: "revealDestination";
+  chooserId: string;
+  payload: {
+    player: string;
+    destinations: ["hand", "trash"];
+    revealedCardIds: string[];
+    revealedCards: FilteredCardView[];
+    source?: EffectSourcePrompt;
+    drawIfDestination?: {
+      destination: "hand" | "trash";
+      player: string;
+      amount: number;
+    };
   };
 }
 
@@ -159,9 +188,12 @@ export interface ChooseTargetChoicePrompt {
     min?: number;
     max?: number;
     canDecline?: boolean;
+    effect?: Effect;
     cards?: FilteredCardView[];
     source?: EffectSourcePrompt;
-    targetPurpose?: "attachHost";
+    targetPurpose?: "attachHost" | "playCard";
+    availableEddiesAfterCosts?: number;
+    effectiveCostsByCardId?: Record<string, number>;
   };
 }
 
@@ -171,6 +203,8 @@ export interface EffectSourcePrompt {
   displayName: string;
   rulesText?: string | null;
   cardType: CardType;
+  /** Printed color, surfaced so AI choices can follow the source color's game plan. */
+  color: CardColor;
 }
 
 /**
@@ -426,7 +460,8 @@ function toAvailableMove(moveId: MoveId, state: MatchState, playerId: PlayerId):
     case "gainGig":
     case "resolveAttack":
     case "resolveCardToMove":
-    case "resolveSearchDeck":
+    case "resolveScry":
+    case "resolveRevealDestination":
     case "resolveDiscardFromHand":
     case "resolveAdjustGig":
     case "resolveStealGigs":
@@ -532,7 +567,7 @@ function getReadyAttackers(
       ) {
         return false;
       }
-      if (card.meta.playedThisTurn) {
+      if (card.meta.hasLag) {
         if (rules.includes("adrenaline")) {
           // Adrenaline units can attack both units and the rival on the played turn
           return true;
@@ -576,10 +611,7 @@ function getReadyBlockers(state: MatchState, playerId: PlayerId): string[] {
   const player = state.G.players[playerId as string];
   if (!player) return [];
   return player.zones.field
-    .filter((id) => {
-      const card = state.G.cardIndex[id as string];
-      return card && !card.meta.spent && getEffectiveRules(state, id as string).includes("blocker");
-    })
+    .filter((id) => isReadyFieldBlocker(state, id as string))
     .map((id) => id as string);
 }
 
@@ -611,10 +643,7 @@ function getChoiceCardCandidates(state: MatchState): string[] {
  * full cost check via the engine's shared `canPayCosts` helper — so the
  * prompt never advertises an ability that the engine would then reject.
  */
-function getActivatableAbilities(
-  state: MatchState,
-  playerId: PlayerId,
-): { cardId: string; abilityIndex: number }[] {
+function getActivatableAbilities(state: MatchState, playerId: PlayerId): AbilityCandidate[] {
   if (state.G.gamePhase !== "main") return [];
 
   const isDefending = isReactStep(state, playerId);
@@ -625,7 +654,7 @@ function getActivatableAbilities(
   const player = state.G.players[playerId as string];
   if (!player) return [];
 
-  const out: { cardId: string; abilityIndex: number }[] = [];
+  const out: AbilityCandidate[] = [];
   for (const zone of ["field", "legendArea"] as const) {
     for (const cardId of player.zones[zone]) {
       const card = state.G.cardIndex[cardId as string];
@@ -643,7 +672,17 @@ function getActivatableAbilities(
           if (!isQuick) continue;
         }
         if (!canActivateAbility(ability, state, cardId, playerId)) continue;
-        out.push({ cardId: cardId as string, abilityIndex: i });
+        out.push({
+          cardId: cardId as string,
+          abilityIndex: i,
+          effectHints: ability.effects.map((effect) => effect.effect),
+          eddieCost: (ability.costs ?? []).reduce((total, cost) => {
+            if (cost.cost === "payEddies") return total + cost.amount;
+            if (cost.cost === "payCardCost") return total + (def.cost ?? 0);
+            return total;
+          }, 0),
+          spendsCard: (ability.costs ?? []).some((cost) => cost.cost === "spend"),
+        });
       }
     }
   }
@@ -702,11 +741,14 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
           min: choice.payload.min,
           max: choice.payload.max,
           canDecline: choice.payload.canDecline,
+          effect: choice.payload.effect,
           cards: (eligibleIds ?? [])
             .map((id) => projectRevealedCardView(state, id))
             .filter((c): c is FilteredCardView => c !== null),
           source,
           targetPurpose: choice.payload.targetPurpose,
+          availableEddiesAfterCosts: choice.payload.availableEddiesAfterCosts,
+          effectiveCostsByCardId: choice.payload.effectiveCostsByCardId,
         },
       };
     }
@@ -752,24 +794,51 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
             .filter((d): d is EligibleGigDie => d !== null),
         },
       };
-    case "searchDeck": {
+    case "scry": {
       const revealedIds = choice.payload.revealedCardIds.map((id) => id as string);
       return {
-        type: "searchDeck",
+        type: "scry",
         chooserId,
         payload: {
           player: choice.payload.player,
-          lookCount: choice.payload.lookCount,
-          reveal: choice.payload.reveal,
-          destination: choice.payload.destination,
-          target: projectSearchTarget(choice.payload.target),
-          select: (choice.payload.select ?? {}) as SearchDeckSelectSpec,
-          remainder: choice.payload.remainder,
+          amount: choice.payload.amount,
+          destinations: choice.payload.destinations.map((destination) => ({
+            zone: destination.zone,
+            min: destination.min,
+            max: destination.max,
+            reveal: destination.reveal,
+            remainder: destination.remainder,
+            order: destination.order,
+            target: projectScryTarget(destination.target),
+          })),
           revealedCardIds: revealedIds,
           revealedCards: revealedIds
             .map((id) => projectRevealedCardView(state, id))
             .filter((c): c is FilteredCardView => c !== null),
           source: projectEffectSource(state, choice.payload.sourceCardId as string | undefined),
+        },
+      };
+    }
+    case "revealDestination": {
+      const revealedIds = choice.payload.revealedCardIds.map((id) => id as string);
+      return {
+        type: "revealDestination",
+        chooserId,
+        payload: {
+          player: choice.payload.player as string,
+          destinations: choice.payload.destinations,
+          revealedCardIds: revealedIds,
+          revealedCards: revealedIds
+            .map((id) => projectRevealedCardView(state, id))
+            .filter((c): c is FilteredCardView => c !== null),
+          source: projectEffectSource(state, choice.payload.sourceCardId as string | undefined),
+          drawIfDestination: choice.payload.drawIfDestination
+            ? {
+                destination: choice.payload.drawIfDestination.destination,
+                player: choice.payload.drawIfDestination.player as string,
+                amount: choice.payload.drawIfDestination.amount,
+              }
+            : undefined,
         },
       };
     }
@@ -826,16 +895,17 @@ function projectEffectSource(
     displayName: def.displayName,
     rulesText: def.rulesText,
     cardType: def.type,
+    color: def.color,
   };
 }
 
 /**
  * Narrow the engine's full {@link import("@tcg/cyberpunk-types").CardTargetDSL}
- * down to the {@link SearchDeckTargetFilter} subset surfaced for resolvers.
+ * down to the {@link ScryTargetFilter} subset surfaced for resolvers.
  * Returning `null` signals "no filter" so the resolver/UI can skip filtering
  * work entirely.
  */
-function projectSearchTarget(raw: unknown): SearchDeckTargetFilter | null {
+function projectScryTarget(raw: unknown): ScryTargetFilter | null {
   if (!raw || typeof raw !== "object") return null;
   const t = raw as {
     cardTypes?: CardType[];
@@ -845,7 +915,7 @@ function projectSearchTarget(raw: unknown): SearchDeckTargetFilter | null {
     minPower?: number;
     maxPower?: number;
   };
-  const filter: SearchDeckTargetFilter = {};
+  const filter: ScryTargetFilter = {};
   if (Array.isArray(t.cardTypes) && t.cardTypes.length > 0) filter.cardTypes = t.cardTypes;
   if (Array.isArray(t.classifications) && t.classifications.length > 0) {
     filter.classifications = t.classifications;

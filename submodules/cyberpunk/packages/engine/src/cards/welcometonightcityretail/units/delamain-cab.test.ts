@@ -10,7 +10,7 @@ describe("Delamain Cab", () => {
           {
             card: welcomeToNightCityRetailDelamainCab,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         eddies: 4,
@@ -41,7 +41,7 @@ describe("Delamain Cab", () => {
         {
           card: welcomeToNightCityRetailDelamainCab,
           spent: false,
-          playedThisTurn: false,
+          hasLag: false,
         },
       ],
       eddies: 4,

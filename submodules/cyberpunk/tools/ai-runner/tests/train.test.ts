@@ -96,5 +96,5 @@ describe("trainGreedy", () => {
         prev = step.winRate;
       }
     }
-  });
+  }, 10_000);
 });

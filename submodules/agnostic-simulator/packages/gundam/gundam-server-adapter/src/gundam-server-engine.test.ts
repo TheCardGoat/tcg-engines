@@ -21,6 +21,7 @@ describe("GundamServerEngine interaction submission", () => {
       minTargets: 1,
       maxTargets: 1,
       legalTargetIds: ["target-1"],
+      groups: [{ minTargets: 1, maxTargets: 1, legalTargetIds: ["target-1"] }],
       prompt: "Choose a target.",
     };
     const engine = new GundamServerEngine(

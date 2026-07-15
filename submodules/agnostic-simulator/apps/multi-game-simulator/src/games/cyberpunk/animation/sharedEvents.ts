@@ -39,18 +39,24 @@ const PLAYER_ID_TO_SIDE = new Map<string, Side>([
 const TARGETED_PROGRAM_CLEANUP_DURATION_MS = 420;
 const EFFECT_TARGET_CLEANUP_MATCH_WINDOW_MS = 250;
 const COMBAT_REDIRECT_READABLE_DURATION_MS = 900;
-const GIG_STEAL_READABLE_DURATION_MS = 900;
 const LEGEND_REVEAL_TRANSFER_DURATION_MS = 240;
+const CARD_REVEAL_TRANSFER_DURATION_MS = 320;
 
 export function cyberpunkAnimationScriptToAnimationPlans(
   script: AnimationScript,
   context: CyberpunkSharedAnimationContext,
 ): AnimationPlanV1[] {
   const effectInfo = effectTargetResolutionInfo(script);
+  const hasGainedGig = script.steps.some(
+    (step) => step.kind === "gigMove" && step.moveKind === "gain",
+  );
   const stepPlans: AnimationPlanV1[] = [];
   const sourceCleanupPlans: AnimationPlanV1[] = [];
 
   for (const step of script.steps) {
+    if (hasGainedGig && step.kind === "phaseChange") {
+      continue;
+    }
     const cleanupStep = effectInfo.cleanupStepIds.has(step.id);
     const delayOffsetMs =
       (effectInfo.cleanupDelayOffsetMsByStepId.get(step.id) ?? 0) +
@@ -187,7 +193,7 @@ export function cyberpunkAnimationStepToAnimationPlan(
             type: "spotlightEntity",
             entity: entityRef(String(step.cardId)),
             at: resolvingProgramRef(String(step.cardId)),
-            label: "REVEAL",
+            label: "CALL",
             sourceFace: "hidden",
             destinationFace: "public",
             audioCue: "effect.trigger",
@@ -207,9 +213,62 @@ export function cyberpunkAnimationStepToAnimationPlan(
           },
         ],
       };
+    case "cardReveal": {
+      const settleSteps: AnimationPlanStepV1[] = step.toZone
+        ? [
+            {
+              ...base,
+              id: `${step.id}:settle`,
+              delayMs: base.delayMs + CARD_REVEAL_TRANSFER_DURATION_MS + base.durationMs,
+              durationMs: CARD_REVEAL_TRANSFER_DURATION_MS,
+              type: "moveEntity",
+              entity: entityRef(String(step.cardId)),
+              from: resolvingProgramRef(String(step.cardId)),
+              to: zoneRef(step.toZone, side),
+              sourceFace: "public",
+              destinationFace: "public",
+              audioCue: step.toZone === "trash" ? "card.discard" : "card.move",
+            },
+          ]
+        : [];
+
+      return {
+        id,
+        version: 1,
+        actorId: String(step.playerId),
+        anchors: [],
+        steps: [
+          {
+            ...base,
+            id: `${step.id}:to-resolution`,
+            durationMs: CARD_REVEAL_TRANSFER_DURATION_MS,
+            type: "moveEntity",
+            entity: entityRef(String(step.cardId)),
+            from: zoneRef(step.fromZone, side),
+            to: resolvingProgramRef(String(step.cardId)),
+            label: "REVEAL",
+            sourceFace: "hidden",
+            destinationFace: "public",
+            audioCue: "card.move",
+          },
+          {
+            ...base,
+            id: `${step.id}:hold`,
+            delayMs: base.delayMs + CARD_REVEAL_TRANSFER_DURATION_MS,
+            type: "spotlightEntity",
+            entity: entityRef(String(step.cardId)),
+            at: resolvingProgramRef(String(step.cardId)),
+            label: "REVEAL",
+            sourceFace: "public",
+            destinationFace: "public",
+            audioCue: "effect.trigger",
+          },
+          ...settleSteps,
+        ],
+      };
+    }
     case "effectTarget": {
       const source = effectSourceRef(step, context);
-      const resultLabel = effectTargetResultLabel(step, context);
       const effectStep: AnimationPlanStepV1 = {
         ...base,
         type: "effect",
@@ -224,7 +283,6 @@ export function cyberpunkAnimationStepToAnimationPlan(
               return { kind: "player", id: String(target.playerId) };
           }
         }),
-        ...(resultLabel ? { label: resultLabel } : {}),
         durationMs: step.durationMs + (context.resultHoldMs ?? 0),
         audioCue: "effect.trigger",
       };
@@ -243,7 +301,6 @@ export function cyberpunkAnimationStepToAnimationPlan(
             type: "spotlightEntity",
             entity: entityRef(String(step.sourceCardId)),
             at: source,
-            label: stagedEffectSourceLabel(step, context),
             durationMs: effectStep.durationMs,
           },
           effectStep,
@@ -256,7 +313,6 @@ export function cyberpunkAnimationStepToAnimationPlan(
         type: "effect",
         source: entityRef(String(step.cardId)),
         targets: [entityRef(String(step.cardId))],
-        label: "PLAYED",
         audioCue: "card.play",
       });
     case "combat":
@@ -267,9 +323,6 @@ export function cyberpunkAnimationStepToAnimationPlan(
         target: step.defenderId ? entityRef(String(step.defenderId)) : playerTargetRef(step, side),
         reason: step.reason === "attackResolved" ? "resolved" : "declared",
         attackKind: step.attackKind,
-        label:
-          step.attackKind === "direct" && step.reason === "attackResolved" ? "IMPACT" : undefined,
-        detailLabel: directAttackGigStealLabel(step),
         audioCue: step.reason === "attackResolved" ? "combat.hit" : "combat.start",
       });
     case "combatRedirect":
@@ -281,7 +334,6 @@ export function cyberpunkAnimationStepToAnimationPlan(
         target: entityRef(String(step.attackerId)),
         reason: "blocked",
         attackKind: "fight",
-        label: "BLOCK",
         audioCue: "effect.trigger",
       });
     case "gigMove": {
@@ -291,15 +343,11 @@ export function cyberpunkAnimationStepToAnimationPlan(
       const isGigSteal = step.reason === "gigStolen";
       return plan(id, {
         ...base,
-        durationMs: isGigSteal
-          ? Math.max(base.durationMs, GIG_STEAL_READABLE_DURATION_MS)
-          : base.durationMs,
         type: "moveEntity",
         entity: entityRef(String(step.dieId)),
         from: gigZoneRef(step.from, fromSide),
         to: gigZoneRef(step.to, toSide),
         audioCue: isGigSteal ? "resource.steal" : "card.move",
-        label: isGigSteal ? "GIG STOLEN" : undefined,
       });
     }
     case "phaseChange":
@@ -325,7 +373,6 @@ export function cyberpunkAnimationStepToAnimationPlan(
             ? entityRef(String(step.dieId))
             : { kind: "anchor", id: `${side === "player" ? "p" : "opp"}-eddies` },
         delta: step.delta,
-        label: step.resource.toUpperCase(),
         fromValue: step.previousValue,
         toValue: step.newValue,
         audioCue: step.delta >= 0 ? "resource.gain" : "resource.spend",
@@ -391,13 +438,6 @@ function isStagedEffectSource(
     context.stagedEffectSourceCardIds?.has(sourceCardId) === true ||
     context.stagedEffectSourceLabels?.has(sourceCardId) === true
   );
-}
-
-function stagedEffectSourceLabel(
-  step: EffectTargetStep,
-  context: CyberpunkSharedAnimationContext,
-): string {
-  return context.stagedEffectSourceLabels?.get(String(step.sourceCardId)) ?? "TRIGGER";
 }
 
 function isFinalResolvingProgramEffect(
@@ -525,30 +565,6 @@ function animationPlanDebugSummary(plan: AnimationPlanV1): Record<string, unknow
       durationMs: step.durationMs,
     })),
   };
-}
-
-function effectTargetResultLabel(
-  step: EffectTargetStep,
-  context: CyberpunkSharedAnimationContext,
-): "DEFEATED" | "RESOLVED" | undefined {
-  const defeatedTargetIds = context.defeatedTargetIdsForStep?.(step.id);
-  if (!defeatedTargetIds || defeatedTargetIds.size === 0) {
-    return step.targets.some((target) => target.kind === "gig") ? undefined : "RESOLVED";
-  }
-  return step.targets.some(
-    (target) => target.kind === "card" && defeatedTargetIds.has(String(target.cardId)),
-  )
-    ? "DEFEATED"
-    : "RESOLVED";
-}
-
-function directAttackGigStealLabel(
-  step: Extract<AnimationStep, { kind: "combat" }>,
-): string | undefined {
-  if (step.attackKind !== "direct" || step.reason !== "attackResolved" || !step.gigsStolen) {
-    return undefined;
-  }
-  return `STEALS ${step.gigsStolen} ${step.gigsStolen === 1 ? "GIG" : "GIGS"}`;
 }
 
 function effectTargetResolutionInfo(script: AnimationScript): EffectTargetResolutionInfo {

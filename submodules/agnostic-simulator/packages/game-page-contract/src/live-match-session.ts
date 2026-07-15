@@ -67,6 +67,11 @@ export interface LiveMatchSessionState {
   connectionId: string | null;
   latencyMs: number | null;
   authStatus: "ok" | "refreshing" | "failed";
+  authFailureReason: GatewayConnectionState["authFailureReason"];
+  lastPingAt: string | null;
+  lastPongAt: string | null;
+  lastHeartbeatSentAt: string | null;
+  lastHeartbeatAckAt: string | null;
   joined: boolean;
   presence: PlayerPresenceDiagnostic[];
   /** Capped diagnostic event log (FIFO, last 20). */
@@ -123,10 +128,18 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
     connectionId: null,
     latencyMs: null,
     authStatus: "ok",
+    authFailureReason: null,
+    lastPingAt: null,
+    lastPongAt: null,
+    lastHeartbeatSentAt: null,
+    lastHeartbeatAckAt: null,
     joined: false,
     error: null,
     reconnectAttempt: 0,
   };
+  let previousStatus = baseState.status;
+  let previousAuthenticated = baseState.authenticated;
+  let previousAuthStatus = baseState.authStatus;
 
   function recordDiagnostic(type: string, details?: unknown): void {
     const event: ConnectionDiagnosticEvent = {
@@ -155,13 +168,49 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
   }
 
   function updateConnectionState(s: GatewayConnectionState): void {
+    const becameConnected = s.status === "connected" && previousStatus !== "connected";
+    const becameDisconnected = s.status === "disconnected" && previousStatus !== "disconnected";
+    const becameReconnecting = s.status === "reconnecting" && previousStatus !== "reconnecting";
+    const becameAuthenticated = s.authenticated && !previousAuthenticated;
+    const authStatusChanged = s.authStatus !== previousAuthStatus;
+
     baseState.status = s.status;
     baseState.authenticated = s.authenticated;
     baseState.connectionId = s.connectionId;
     baseState.latencyMs = s.latencyMs;
     baseState.authStatus = s.authStatus;
+    baseState.authFailureReason = s.authFailureReason;
     baseState.error = s.error;
     baseState.reconnectAttempt = s.reconnectAttempt;
+    if (s.status === "disconnected" || s.status === "reconnecting" || !s.authenticated) {
+      baseState.joined = false;
+    }
+
+    if (becameConnected) {
+      recordDiagnostic("connect", { connectionId: s.connectionId });
+    }
+    if (becameReconnecting) {
+      recordDiagnostic("reconnecting", { reconnectAttempt: s.reconnectAttempt, error: s.error });
+    }
+    if (becameDisconnected) {
+      recordDiagnostic("disconnected", { error: s.error });
+    }
+    if (becameAuthenticated) {
+      recordDiagnostic("authenticated", {
+        authMethod: s.authMethod,
+        connectionId: s.connectionId,
+      });
+    }
+    if (authStatusChanged && s.authStatus !== "ok") {
+      recordDiagnostic(`auth_${s.authStatus}`, {
+        reason: s.authFailureReason,
+        error: s.error,
+      });
+    }
+
+    previousStatus = s.status;
+    previousAuthenticated = s.authenticated;
+    previousAuthStatus = s.authStatus;
     fireSubscribers();
   }
 
@@ -228,6 +277,7 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
     lastSyncRequestAt = now;
     const emitPayload: { gameId: string; stateVersion?: number } = { gameId: config.gameId };
     if (version) emitPayload.stateVersion = version;
+    recordDiagnostic("state_sync_request", emitPayload);
     handle.emit("request_game_state_sync", emitPayload);
   }
 
@@ -235,10 +285,17 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
     if (started || stopped) return;
     started = true;
 
+    const role = config.resolveRole();
+    const gameProfileId = config.resolveGameProfileId();
+    recordDiagnostic("join_game_emit", {
+      gameId: config.gameId,
+      role,
+      gameProfileId,
+    });
     handle.join({
       gameId: config.gameId,
-      role: config.resolveRole(),
-      gameProfileId: config.resolveGameProfileId(),
+      role,
+      gameProfileId,
     });
 
     const offAny = handle.onAny((event, payload) => {
@@ -251,14 +308,25 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
     cleanups.push(offState);
 
     const offLatency = handle.onLatency((ms) => {
+      const pongAt = Date.now();
       baseState.latencyMs = ms;
+      baseState.lastPingAt = new Date(Math.max(0, pongAt - Math.max(0, ms))).toISOString();
+      baseState.lastPongAt = new Date(pongAt).toISOString();
       recordDiagnostic("latency", { latencyMs: ms });
       fireSubscribers();
     });
     cleanups.push(offLatency);
 
     const offHeartbeatAck = handle.onHeartbeatAck((payload) => {
-      recordDiagnostic("heartbeat_ack", { stateVersions: payload.stateVersions });
+      baseState.lastHeartbeatAckAt =
+        typeof payload.serverTime === "string" && payload.serverTime.length > 0
+          ? payload.serverTime
+          : new Date().toISOString();
+      recordDiagnostic("heartbeat_ack", {
+        serverTime: payload.serverTime,
+        stateVersions: payload.stateVersions,
+      });
+      fireSubscribers();
     });
     cleanups.push(offHeartbeatAck);
 
@@ -271,7 +339,9 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
       const intervalMs = config.heartbeatIntervalMs;
       const timer: ReturnType<typeof setInterval> = setInterval(() => {
         if (!handle.getState().authenticated) return;
+        baseState.lastHeartbeatSentAt = new Date().toISOString();
         handle.emit("heartbeat", buildPayload());
+        fireSubscribers();
       }, intervalMs);
       cleanups.push(() => clearInterval(timer));
     }

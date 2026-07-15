@@ -6,6 +6,17 @@
 #
 # The host serves multiple mounted simulator paths, so Vite assets are built
 # from /assets and routed through the same reverse-proxied service.
+#
+# Browser SigNoz telemetry is build-time Vite config. Set these variables in
+# the Railway build environment to enable frontend error/warn, trace, document
+# load, and Web Vitals export:
+#   VITE_OTEL_EXPORTER_OTLP_ENDPOINT = https://tcg.online/otel
+#   VITE_OTEL_SERVICE_NAME = tcg-multi-game-simulator
+#   VITE_OTEL_SERVICE_VERSION = ${{RAILWAY_GIT_COMMIT_SHA}}
+#   VITE_OTEL_DEPLOYMENT_ENVIRONMENT = ${{RAILWAY_ENVIRONMENT_NAME}}
+#   VITE_OTEL_TRACE_SAMPLE_RATIO = 0.1
+#   VITE_OTEL_WEB_VITALS_ENABLED = true
+#   VITE_OTEL_PROPAGATE_TRACE_URLS = https://tcg.online,https://api.tcg.online
 
 [build]
 builder = "DOCKERFILE"
@@ -60,7 +71,7 @@ healthcheckTimeout = 60
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3
 numReplicas = 1
-sleepApplication = true
+sleepApplication = false
 
 [deploy.teardown]
 overlapSeconds = 30

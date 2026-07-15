@@ -2,30 +2,43 @@
  * Combat / damage effect handlers
  */
 
+import type { CardEffect } from "@tcg/gundam-types";
 import type { CardInstanceId } from "../../../types/branded.ts";
-import type { FrameworkWriteAPI } from "../../../types/move-types.ts";
+import type { FrameworkReadAPI, FrameworkWriteAPI } from "../../../types/move-types.ts";
 import type { EffectExecutionContext } from "../executor.ts";
-import {
-  getEffectiveStats,
-  hasKeyword,
-  getKeywordValue,
-  isLinkUnit,
-} from "../../rules/derived-state.ts";
+import type { ReadonlyGundamG } from "../../types.ts";
+import { getEffectiveStats, isLinkUnit } from "../../rules/derived-state.ts";
 import { emitGundamEvent } from "../../events.ts";
-import { emitGundamLog, logCombatDamage, logUnitDefeated } from "../../logging.ts";
-import { enqueueObserverTriggers, enqueueOwnCardTriggers } from "../pending-effects.ts";
+import {
+  emitGundamLog,
+  logCombatDamage,
+  logShieldRemoved,
+  logUnitDefeated,
+} from "../../logging.ts";
+import {
+  enqueueObserverTriggers,
+  enqueueOwnCardTriggers,
+  enqueuePendingEffect,
+  nextPendingEffectId,
+} from "../pending-effects.ts";
 import {
   applyDamageReduction,
   hasDamagePreventionFor,
 } from "../../lifecycle/battle-phase/combat/damage-prevention.ts";
+import { enqueueShieldAreaCardDestroyedByUnitDamageTrigger } from "../../lifecycle/battle-phase/combat/shield-area-destroy-event.ts";
 
-function hasDestroyPreventionFor(cardId: string, ctx: EffectExecutionContext): boolean {
-  const ownerId = ctx.framework.cards.getOwner(cardId) as string | undefined;
-  return ctx.G.continuousEffects.some((entry) => {
+export function isDestructionPreventedFor(
+  cardId: string,
+  sourcePlayerId: string,
+  G: ReadonlyGundamG,
+  framework: FrameworkReadAPI,
+): boolean {
+  const ownerId = framework.cards.getOwner(cardId) as string | undefined;
+  return G.continuousEffects.some((entry) => {
     if (entry.targetId !== cardId) return false;
     if (entry.payload.kind !== "prevent-destroy") return false;
     if (entry.payload.source === "enemy") {
-      return ownerId !== undefined && ctx.sourcePlayerId !== ownerId;
+      return ownerId !== undefined && sourcePlayerId !== ownerId;
     }
     return true;
   });
@@ -129,11 +142,11 @@ export function handleUnitDefeated(cardId: string, ctx: EffectExecutionContext):
 
   // Rule 10-1-6-1 / 10-1-6-4: 【Destroyed】 triggers enqueue before the
   // card moves to trash (their effects still resolve once it leaves).
-  // Both the dying card's own 【Destroyed】 triggers and any in-play
-  // observer triggers (e.g. "when another friendly unit is destroyed,
-  // do X") must be enqueued for the same event — mirrors the
-  // attackDeclared pattern in attack-step. Dedup is handled inside
-  // `enqueueObserverTriggers` via its `seen` set.
+  // The dying card's own 【Destroyed】 triggers and its paired Pilot's
+  // resident 【Destroyed】 triggers are enqueued explicitly. The observer
+  // pass remains for delayed/future unitDestroyed watchers, but plain
+  // `destroyed` keyword effects are deliberately excluded there by rule
+  // 13-2-8. Battle-destruction observers use onDestroyByBattle instead.
   const pairedPilotId = ctx.G.pilotAssignments[cardId];
   const destroyEvent = {
     type: "unitDestroyed" as const,
@@ -147,7 +160,12 @@ export function handleUnitDefeated(cardId: string, ctx: EffectExecutionContext):
   if (pairedPilotId) {
     enqueueOwnCardTriggers(ctx.G, destroyEvent, pairedPilotId, ownerId, ctx.framework);
   }
-  enqueueObserverTriggers(ctx.G, destroyEvent, ctx.framework, cardId);
+  enqueueObserverTriggers(
+    ctx.G,
+    destroyEvent,
+    ctx.framework,
+    pairedPilotId ? [cardId, pairedPilotId] : cardId,
+  );
 
   // Fire onEnemyLinkUnitDestroyed observers when the destroyed unit is
   // a link unit. The event targets observers on the OPPONENT's side —
@@ -180,8 +198,8 @@ export function handleUnitDefeated(cardId: string, ctx: EffectExecutionContext):
   // Rule 13-1-2-1: deals (value) damage to the first card in shield area
   // Rule 13-1-2-2: if Base present, damage goes to Base; otherwise topmost Shield
   // Rule 13-1-2-4: if no base/shields, effect does not activate
-  if (ctx.sourceCardId && hasKeyword(ctx.sourceCardId, "Breach", ctx.G, ctx.framework.cards)) {
-    const breachValue = getKeywordValue(ctx.sourceCardId, "Breach", ctx.G, ctx.framework.cards);
+  if (ctx.sourceCardId && (ctx.battleDestroyBreachValue ?? 0) > 0) {
+    const breachValue = ctx.battleDestroyBreachValue!;
     // Rule 5-5-5: skip Breach when its value is 0 — no damage is dealt.
     if (breachValue <= 0) return;
 
@@ -203,6 +221,14 @@ export function handleUnitDefeated(cardId: string, ctx: EffectExecutionContext):
       const baseStats = getEffectiveStats(baseId, ctx.G, ctx.framework.cards, ctx.framework);
       if (ctx.G.damage[baseId]! >= baseStats.hp) {
         handleBaseDestroyed(baseId, ownerId!, ctx);
+        enqueueShieldAreaCardDestroyedByUnitDamageTrigger(
+          ctx.G,
+          ctx.sourceCardId,
+          baseId,
+          ctx.sourcePlayerId,
+          ownerId,
+          ctx.framework,
+        );
       }
     } else {
       const shields = ctx.framework.zones.getCards({ zone: "shieldArea", playerId: ownerId });
@@ -219,6 +245,42 @@ export function handleUnitDefeated(cardId: string, ctx: EffectExecutionContext):
           amount: breachValue,
           sourceCardId: ctx.sourceCardId,
         });
+
+        // Shields have 1 HP. Any positive Breach value destroys the first
+        // Shield, reveals it, and offers its optional 【Burst】 effect (rules
+        // 5-5-2, 5-10-3, 13-1-2-2, and 13-2-5). Route that destruction
+        // through the same public trigger queue used by direct attacks.
+        ctx.framework.zones.moveCard(shieldId, { zone: "trash", playerId: ownerId });
+        delete ctx.G.damage[shieldId];
+        enqueueShieldAreaCardDestroyedByUnitDamageTrigger(
+          ctx.G,
+          ctx.sourceCardId,
+          shieldId,
+          ctx.sourcePlayerId,
+          ownerId,
+          ctx.framework,
+        );
+        emitGundamEvent(ctx.framework.events, {
+          kind: "SHIELD_REMOVED",
+          payload: { cardId: shieldId, playerId: ownerId },
+        });
+        logShieldRemoved(ctx.framework, {
+          cardId: shieldId,
+          playerId: ownerId,
+          sourceCardId: ctx.sourceCardId,
+        });
+        enqueueOwnCardTriggers(
+          ctx.G,
+          {
+            type: "shieldDestroyed",
+            cardId: shieldId,
+            playerId: ownerId,
+            destroyedBy: ctx.sourcePlayerId,
+          },
+          shieldId,
+          ownerId,
+          ctx.framework,
+        );
       }
     }
   }
@@ -268,10 +330,16 @@ export function handleRecoverHPAction(
 export function handleRestAction(
   targetIds: readonly CardInstanceId[],
   ctx: EffectExecutionContext,
+  options: { allowSubstitution?: boolean } = {},
 ): void {
   for (const cardId of targetIds) {
-    const substitutedCardId = substituteBaseRestWithUnit(cardId as string, ctx);
-    const restCardId = substitutedCardId ?? (cardId as string);
+    if (
+      options.allowSubstitution !== false &&
+      enqueueBaseRestSubstitutionChoice(cardId as string, ctx)
+    ) {
+      continue;
+    }
+    const restCardId = cardId as string;
     ctx.G.exhausted[restCardId] = true;
     ctx.framework.cards.patchMeta(restCardId, { exhausted: true });
     emitGundamLog(ctx.framework, {
@@ -294,17 +362,15 @@ export function handleRestAction(
   }
 }
 
-function substituteBaseRestWithUnit(
-  cardId: string,
-  ctx: EffectExecutionContext,
-): string | undefined {
-  if (!ctx.sourceCardId) return undefined;
+function enqueueBaseRestSubstitutionChoice(cardId: string, ctx: EffectExecutionContext): boolean {
+  if (!ctx.sourceCardId) return false;
   const targetDef = ctx.framework.cards.getDefinition(cardId);
   const sourceDef = ctx.framework.cards.getDefinition(ctx.sourceCardId);
-  if (targetDef?.type !== "base" || sourceDef?.type !== "unit") return undefined;
+  if (targetDef?.type !== "base" || sourceDef?.type !== "unit") return false;
   const targetOwner = ctx.framework.cards.getOwner(cardId);
-  if (targetOwner !== ctx.sourcePlayerId) return undefined;
+  if (targetOwner !== ctx.sourcePlayerId) return false;
 
+  const candidates: string[] = [];
   for (const unitId of ctx.framework.zones.getCards({
     zone: "battleArea",
     playerId: ctx.sourcePlayerId,
@@ -316,13 +382,51 @@ function substituteBaseRestWithUnit(
       unitDef.effects?.some(
         (effect) =>
           effect.type === "substitution" &&
-          effect.sourceText.toLowerCase().includes("rest your base"),
+          effect.directives.some(
+            (directive) =>
+              "action" in directive && directive.action.action === "substituteBaseRestWithSelf",
+          ),
       )
     ) {
-      return unitId;
+      candidates.push(unitId);
     }
   }
-  return undefined;
+  if (candidates.length === 0) return false;
+
+  const firstCandidateId = candidates[0]!;
+
+  enqueuePendingEffect(
+    ctx.G,
+    {
+      id: nextPendingEffectId(ctx.G),
+      controllerId: ctx.sourcePlayerId,
+      sourceCardId: firstCandidateId,
+      effect: {
+        type: "substitution",
+        activation: {},
+        directives: [
+          {
+            action: {
+              action: "rest",
+              allowSubstitution: false,
+              target: {
+                owner: "friendly",
+                cardType: ["unit", "base"],
+                count: 1,
+                instanceIds: [...candidates, cardId],
+              },
+            },
+          },
+        ],
+        sourceText: `Choose an eligible Unit to rest instead, or choose ${targetDef.name ?? "the Base"} to rest it normally.`,
+      } as CardEffect,
+      effectIndex: -1,
+      kind: "triggered",
+    },
+    ctx.framework,
+    { preempt: true },
+  );
+  return true;
 }
 
 export function handleSetActiveAction(
@@ -330,6 +434,14 @@ export function handleSetActiveAction(
   ctx: EffectExecutionContext,
 ): void {
   for (const cardId of targetIds) {
+    const restrictions = getEffectiveStats(
+      cardId as string,
+      ctx.G,
+      ctx.framework.cards,
+      ctx.framework,
+    ).restrictions;
+    if (restrictions.includes("cannot-set-active")) continue;
+
     const wasExhausted = ctx.G.exhausted[cardId as string] === true;
     ctx.G.exhausted[cardId as string] = false;
     ctx.framework.cards.patchMeta(cardId as string, { exhausted: false });
@@ -373,20 +485,32 @@ export function handleDestroyAction(
   ctx: EffectExecutionContext,
 ): void {
   for (const cardId of targetIds) {
-    if (hasDestroyPreventionFor(cardId as string, ctx)) continue;
+    if (isDestructionPreventedFor(cardId as string, ctx.sourcePlayerId, ctx.G, ctx.framework)) {
+      continue;
+    }
 
     const ownerId = ctx.framework.cards.getOwner(cardId as string) as string | undefined;
     if (!ownerId) continue;
+    const pairedPilotId = ctx.G.pilotAssignments[cardId as string];
 
     const destroyEvent = {
       type: "unitDestroyed" as const,
       cardId: cardId as string,
+      pairedPilotId,
       ownerId,
       playerId: ctx.sourcePlayerId,
       destroyedBy: ctx.sourcePlayerId,
     };
     enqueueOwnCardTriggers(ctx.G, destroyEvent, cardId as string, ownerId, ctx.framework);
-    enqueueObserverTriggers(ctx.G, destroyEvent, ctx.framework, cardId as string);
+    if (pairedPilotId) {
+      enqueueOwnCardTriggers(ctx.G, destroyEvent, pairedPilotId, ownerId, ctx.framework);
+    }
+    enqueueObserverTriggers(
+      ctx.G,
+      destroyEvent,
+      ctx.framework,
+      pairedPilotId ? [cardId as string, pairedPilotId] : (cardId as string),
+    );
 
     ctx.framework.zones.moveCard(cardId as string, { zone: "trash", playerId: ownerId });
     cleanupCardOnLeave(cardId as string, ctx);
@@ -430,6 +554,7 @@ export function cleanupCardOnLeave(cardId: string, ctx: EffectExecutionContext):
 
   const meta = ctx.framework.cards.getMeta(cardId);
   if (meta?.isToken === true) {
+    ctx.framework.zones.removeCard(cardId);
     ctx.framework.cards.deregisterDefinition(cardId);
   }
 }

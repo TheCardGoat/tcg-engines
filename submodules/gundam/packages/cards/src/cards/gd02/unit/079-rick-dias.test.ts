@@ -15,7 +15,7 @@ describe("Rick Dias (GD02-079)", () => {
     const defender = createMockUnit({ ap: 1, hp: 5 });
     const engine = GundamTestEngine.create(
       { play: [attacker] },
-      { play: [defender, gd02RickDias079] },
+      { play: [{ card: defender, exhausted: true }, gd02RickDias079] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
@@ -31,7 +31,10 @@ describe("Rick Dias (GD02-079)", () => {
     const attacker = createMockUnit({ ap: 3, hp: 5 });
     const defender = createMockUnit({ ap: 1, hp: 5 });
     const plain = createMockUnit({ ap: 1, hp: 5, keywordEffects: [] });
-    const engine = GundamTestEngine.create({ play: [attacker] }, { play: [defender, plain] });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { play: [{ card: defender, exhausted: true }, plain] },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;

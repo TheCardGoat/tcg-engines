@@ -3,8 +3,9 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  asPlayerId,
+  createMockCommand,
   createMockUnit,
+  expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd02GrazeRitterGroundType083 } from "./083-graze-ritter-ground-type.ts";
 
@@ -15,33 +16,55 @@ describe("Graze Ritter (Ground Type) (GD02-083)", () => {
     // from p2's perspective) and sets a friendly Gjallarhorn active.
     // We seed an exhausted ally so the setActive flip is observable.
     const attacker = createMockUnit({ ap: 2, hp: 5 });
+    const destroyCommand = createMockCommand({
+      level: 0,
+      cost: 0,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [
+            {
+              action: {
+                action: "destroy",
+                target: { owner: "opponent", cardType: "unit", count: 1 },
+              },
+            },
+          ],
+          sourceText: "【Main】Destroy 1 enemy Unit.",
+        },
+      ],
+    });
     const friendlyGjallarhorn = createMockUnit({
       ap: 1,
       hp: 5,
-      traits: ["gjallarhorn"],
+      traits: ["Gjallarhorn"],
     } as unknown as Parameters<typeof createMockUnit>[0]);
     const engine = GundamTestEngine.create(
-      { play: [attacker] },
+      { hand: [destroyCommand], play: [attacker] },
       {
-        play: [gd02GrazeRitterGroundType083, { card: friendlyGjallarhorn, exhausted: true }],
+        play: [
+          { card: gd02GrazeRitterGroundType083, exhausted: true },
+          { card: friendlyGjallarhorn, exhausted: true },
+        ],
       },
     );
-    const p1Id = asPlayerId(PLAYER_ONE);
-    const p2Id = asPlayerId(PLAYER_TWO);
-    const attackerId = engine.getCardsInZone({ zone: "battleArea", playerId: p1Id })[0]!;
-    const grazeId = engine.getCardsInZone({ zone: "battleArea", playerId: p2Id })[0]!;
-    const allyId = engine.getCardsInZone({ zone: "battleArea", playerId: p2Id })[1]!;
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const commandId = p1.getHand()[0]!;
+    const [grazeId, allyId] = p2.getCardsInZone("battleArea");
 
-    engine.getG().exhausted[attackerId] = false;
-    engine.getG().exhausted[allyId] = true;
+    expectSuccess(p1.playCommand(commandId, { targets: [grazeId!] }));
 
-    engine.resolveCombat({ attackerId, target: grazeId });
+    const choice = p2.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("targetSelection");
+    if (choice?.kind !== "targetSelection") return;
+    expect(choice.legalTargetIds).toEqual([allyId]);
+    expectSuccess(p2.resolveEffect({ targets: [allyId] }));
 
     // Graze Ritter destroyed (AP 2 vs HP 2).
-    expect(engine.getState().ctx.zones.private.cardIndex[grazeId]?.zoneKey).toBe(
-      `trash:${PLAYER_TWO}`,
-    );
+    expect(p2.getCardZone(grazeId!)).toBe(`trash:${PLAYER_TWO}`);
     // Destroyed trigger (on opponent's turn) sets the ally active.
-    expect(engine.getG().exhausted[allyId]).toBe(false);
+    expect(p2.isExhausted(allyId!)).toBe(false);
   });
 });

@@ -84,23 +84,12 @@ export const gd03HumanKarma113: CommandCard = {
       directives: [
         {
           action: {
-            action: "rest",
-            target: {
-              owner: "friendly",
-              cardType: "unit",
-              state: "active",
-              count: 1,
-            },
-          },
-        },
-        {
-          action: {
-            action: "dealDamageByChosenUnitLevel",
+            action: "restThenDamageByChosenUnitLevel",
             amount: 3,
             referenceTarget: {
               owner: "friendly",
               cardType: "unit",
-              state: "rested",
+              state: "active",
               count: 1,
             },
             target: {
@@ -109,7 +98,6 @@ export const gd03HumanKarma113: CommandCard = {
               count: 1,
             },
           },
-          dependsOnPrevious: true,
         },
       ],
       sourceText:

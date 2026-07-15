@@ -4,6 +4,7 @@ export const gd01Shamblo047: UnitCard = {
   cardNumber: "GD01-047",
   name: "Shamblo",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "red",
   traits: ["zeon"],
   id: "GD01-047",
@@ -75,6 +76,7 @@ export const gd01Shamblo047: UnitCard = {
   cost: 7,
   ap: 6,
   hp: 5,
+  linkCondition: "(Newtype) Trait / (Cyber-Newtype) Trait",
   effect:
     "【Attack】If 2 or more other rested friendly Units are in play, choose 1 enemy Unit. Deal 3 damage to it.<br>",
   effects: [

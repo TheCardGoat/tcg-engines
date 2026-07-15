@@ -256,12 +256,13 @@ function executeSteal(
     return;
   }
 
-  const gigsToSteal = Math.min(
-    getGigsStolenCount(state, attack.attackerId as string, attackerPower),
-    opponent.gigArea.length,
-  );
+  const gigsToSteal = getProjectedDirectAttackGigStealCount(state, attack) ?? 0;
 
-  if (input.args.gigIdsToSteal === undefined && opponent.gigArea.length > gigsToSteal) {
+  if (
+    input.args.gigIdsToSteal === undefined &&
+    gigsToSteal > 0 &&
+    opponent.gigArea.length > gigsToSteal
+  ) {
     operations.game.setPendingChoice({
       type: "chooseGigsToSteal",
       chooserId: playerId,
@@ -336,18 +337,27 @@ export function performGigSteal(opts: {
   });
 }
 
-function getGigsStolenCount(
-  state: import("../types/match-state.ts").MatchState,
-  attackerId: string,
-  power: number,
-): number {
+export function getProjectedDirectAttackGigStealCount(
+  state: MatchState,
+  attack: AttackState | null = state.G.attackState,
+): number | null {
+  if (!attack || attack.kind !== "direct" || attack.redirectedByBlocker) {
+    return null;
+  }
+
+  const opponent = state.G.players[attack.rivalId as string];
+  if (!opponent || opponent.gigArea.length === 0) {
+    return 0;
+  }
+
+  const power = getEffectivePower(state, attack.attackerId as string);
   // Base rule (gameplay guide): "Steal 1 Gig on a successful direct attack,
   // plus 1 additional Gig for every full 10 power on the attacking Unit."
   // A Unit with power 0 doesn't steal any Gigs — power must be strictly
   // positive for the base steal to apply.
   if (power <= 0) return 0;
   const base = 1 + Math.floor(power / 10);
-  const rules = getEffectiveRules(state, attackerId);
+  const rules = getEffectiveRules(state, attack.attackerId as string);
   const reduction = rules.includes("stealsOneFewerGig") ? 1 : 0;
-  return Math.max(0, base - reduction);
+  return Math.min(Math.max(0, base - reduction), opponent.gigArea.length);
 }

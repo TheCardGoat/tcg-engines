@@ -26,3 +26,11 @@ storybook-static
 
 # AI agent worktrees
 .claude/worktrees/
+
+# Mobile validation harness: generated/regenerable artifacts
+# (scripts under apps/multi-game-simulator/mobile-validation/ are tracked source)
+apps/multi-game-simulator/mobile-validation/results*.json
+apps/multi-game-simulator/mobile-validation/card-qa-snapshot.json
+apps/multi-game-simulator/mobile-validation/per-card-table.md
+apps/multi-game-simulator/mobile-validation/screenshots/
+apps/multi-game-simulator/mobile-validation/*.png

@@ -4,7 +4,6 @@ import {
   createMockUnit,
   expectFailure,
   expectSuccess,
-  getDamageCounter,
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
@@ -30,7 +29,6 @@ describe("Rozen Zulu (GD04-039)", () => {
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.deployUnit(rozenId, { targets: [enemyId] }));
-    expectSuccess(p1.resolveEffect({ optionalAnswers: { 1: false } }));
 
     expect(p1.getCardsInZone("battleArea")).toContain(rozenId);
     expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(2);
@@ -61,9 +59,9 @@ describe("Rozen Zulu (GD04-039)", () => {
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.deployUnit(gd04RozenZulu039, { targets: [enemyId] }));
-    expectSuccess(p1.resolveEffect({ optionalAnswers: { 1: true } }));
 
-    expect(getDamageCounter(engine, enemyId)).toBe(1);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.getDamage(enemyId)).toBe(1);
   });
 
   it("【Deploy】deals 3 damage instead when the chosen enemy Unit has Repair", () => {
@@ -77,8 +75,30 @@ describe("Rozen Zulu (GD04-039)", () => {
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.deployUnit(gd04RozenZulu039, { targets: [enemyId] }));
-    expectSuccess(p1.resolveEffect({ optionalAnswers: { 1: true } }));
 
-    expect(getDamageCounter(engine, enemyId)).toBe(3);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.getDamage(enemyId)).toBe(3);
+  });
+
+  it("【Deploy】checks Repair on the chosen Unit rather than a different enemy", () => {
+    const chosenEnemy = createMockUnit({ name: "Chosen Enemy", hp: 6 });
+    const repairEnemy = createMockUnit({
+      name: "Other Repair Enemy",
+      hp: 6,
+      keywordEffects: [{ keyword: "Repair", value: 1 }],
+    });
+    const engine = GundamTestEngine.create(
+      { hand: [gd04RozenZulu039], resourceArea: activeResources(6) },
+      { play: [chosenEnemy, repairEnemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [chosenEnemyId, repairEnemyId] = p2.getCardsInZone("battleArea");
+
+    expectSuccess(p1.deployUnit(gd04RozenZulu039, { targets: [chosenEnemyId!] }));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.getDamage(chosenEnemyId!)).toBe(1);
+    expect(p2.getDamage(repairEnemyId!)).toBe(0);
   });
 });

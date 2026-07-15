@@ -19,7 +19,7 @@ describe("Esperansa (GD04-060)", () => {
 
     expect(p1.getCardsInZone("battleArea")).toContain(esperansaId);
     expect(p1.getCardsInZone("hand").length).toBe(handBefore);
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(4);
+    expect(p1.getCardsInZone("deck")).toHaveLength(4);
   });
 
   it("does not draw when deployed from hand", () => {
@@ -33,6 +33,6 @@ describe("Esperansa (GD04-060)", () => {
     expectSuccess(p1.deployUnit(gd04Esperansa060));
 
     expect(p1.getCardsInZone("hand")).toHaveLength(0);
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(5);
+    expect(p1.getCardsInZone("deck")).toHaveLength(5);
   });
 });

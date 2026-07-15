@@ -17,7 +17,7 @@ import type {
   ReadyEddiesEffect,
   RemoveFromGameEffect,
   ReturnToHandEffect,
-  SearchDeckEffect,
+  ScryEffect,
   SpendEffect,
   StealGigEffect,
   TrashFromDeckEffect,
@@ -57,8 +57,8 @@ export const effect = {
     ...args,
   }),
   lookAt: (args: Omit<LookAtEffect, "effect">): LookAtEffect => ({ effect: "lookAt", ...args }),
-  searchDeck: (args: Omit<SearchDeckEffect, "effect">): SearchDeckEffect => ({
-    effect: "searchDeck",
+  scry: (args: Omit<ScryEffect, "effect">): ScryEffect => ({
+    effect: "scry",
     ...args,
   }),
   discardFromHand: (args: Omit<DiscardFromHandEffect, "effect">): DiscardFromHandEffect => ({

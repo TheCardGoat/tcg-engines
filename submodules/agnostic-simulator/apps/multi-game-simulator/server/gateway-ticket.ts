@@ -41,24 +41,47 @@ export interface ResolveGatewayTicketOptions {
   gameSlug: PlayableGameSlug | null;
   matchId?: string;
   playerId?: string;
+  requireAuth?: boolean;
   fetcher?: typeof fetch;
+}
+
+export type GatewayTicketBootstrapResult =
+  | { status: "ready"; ticket: GatewayTicket }
+  | { status: "anonymous_allowed"; reason: "no_game_api" | "not_required" }
+  | {
+      status: "ticket_failed";
+      reason: "http_error" | "request_failed" | "missing_credentials" | "parse_failed";
+      httpStatus?: number;
+      errorCode?: string;
+    };
+
+class GatewayTicketHttpError extends Error {
+  readonly status: number;
+
+  constructor(status: number) {
+    super("Gateway ticket request failed");
+    this.name = "GatewayTicketHttpError";
+    this.status = status;
+  }
 }
 
 /**
  * Resolve a gateway ticket + JWT for the active game namespace, forwarding the
- * browser session cookie to the per-game ticket endpoint. Returns `null` for
- * non-game slugs, anonymous requests, or any fetch failure (the client falls
- * back to an anonymous connect via the gateway-client library).
+ * browser session cookie to the per-game ticket endpoint. Required-auth callers
+ * get structured failures instead of silently downgrading to anonymous.
  */
 export async function resolveGatewayTicket({
   request,
   gameSlug,
   matchId,
   playerId,
+  requireAuth = false,
   fetcher = fetch,
-}: ResolveGatewayTicketOptions): Promise<GatewayTicket | null> {
+}: ResolveGatewayTicketOptions): Promise<GatewayTicketBootstrapResult> {
   if (!gameSlug || !isGameApiSlug(gameSlug)) {
-    return null;
+    const result = { status: "anonymous_allowed", reason: "no_game_api" } as const;
+    logGatewayTicketResult(result);
+    return result;
   }
 
   const url = new URL(request.url);
@@ -81,15 +104,52 @@ export async function resolveGatewayTicket({
   };
 
   try {
-    return await requestGatewayTicket({
+    const ticket = await requestGatewayTicket({
       apiBaseUrl,
       ...(matchId ? { matchId } : {}),
       ...(playerId ? { playerId } : {}),
       fetcher: forwardingFetcher,
+      createHttpError: async (response) => new GatewayTicketHttpError(response.status),
     });
-  } catch {
-    // Anonymous/down: the client connects anonymously via the library.
-    return null;
+    logGatewayTicketResult({
+      status: "ready",
+      hasTicket: Boolean(ticket.ticket),
+      hasAuthToken: Boolean(ticket.authToken),
+      hasCookie: Boolean(cookieHeader),
+      requireAuth,
+      hasMatchId: Boolean(matchId),
+      hasPlayerId: Boolean(playerId),
+    });
+    return { status: "ready", ticket };
+  } catch (error) {
+    const httpStatus = error instanceof GatewayTicketHttpError ? error.status : undefined;
+    const reason =
+      httpStatus === 401 || httpStatus === 403
+        ? "missing_credentials"
+        : httpStatus
+          ? "http_error"
+          : error instanceof SyntaxError
+            ? "parse_failed"
+            : "request_failed";
+    const diagnostic = {
+      status: requireAuth ? "ticket_failed" : "anonymous_allowed",
+      reason,
+      ...(httpStatus ? { httpStatus } : {}),
+      errorCode: error instanceof Error ? error.name : typeof error,
+      hasCookie: Boolean(cookieHeader),
+      requireAuth,
+      hasMatchId: Boolean(matchId),
+      hasPlayerId: Boolean(playerId),
+    } as const;
+    logGatewayTicketResult(diagnostic);
+    return requireAuth
+      ? {
+          status: "ticket_failed",
+          reason,
+          ...(httpStatus ? { httpStatus } : {}),
+          errorCode: error instanceof Error ? error.name : typeof error,
+        }
+      : { status: "anonymous_allowed", reason: "not_required" };
   } finally {
     clearTimeout(timer);
   }
@@ -131,4 +191,8 @@ function normalizeApiBase(value: string | undefined): string {
     return "";
   }
   return trimmed.replace(/\/v1\/?$/i, "").replace(/\/$/, "");
+}
+
+function logGatewayTicketResult(details: Record<string, unknown>): void {
+  console.info("[simulator-auth] gateway ticket bootstrap", details);
 }

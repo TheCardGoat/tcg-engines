@@ -93,9 +93,24 @@ export const gd04Gundam067: UnitCard = {
             action: "copyKeywordEffects",
             duration: "thisTurn",
             source: {
-              owner: "any",
+              owner: "friendly",
               cardType: "unit",
               zone: "trash",
+              count: 1,
+              attributeFilters: [
+                {
+                  attribute: "or",
+                  filters: [
+                    { attribute: "keyword", comparison: "includes", value: "Repair" },
+                    { attribute: "keyword", comparison: "includes", value: "Breach" },
+                    { attribute: "keyword", comparison: "includes", value: "FirstStrike" },
+                    { attribute: "keyword", comparison: "includes", value: "Support" },
+                    { attribute: "keyword", comparison: "includes", value: "HighManeuver" },
+                    { attribute: "keyword", comparison: "includes", value: "Suppression" },
+                    { attribute: "keyword", comparison: "includes", value: "Blocker" },
+                  ],
+                },
+              ],
             },
             target: {
               owner: "self",
