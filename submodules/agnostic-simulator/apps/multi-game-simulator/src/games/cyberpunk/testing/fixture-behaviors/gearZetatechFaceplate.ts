@@ -1,4 +1,4 @@
-import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSwordwiseHuscle } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "../cyberpunk-simulator-pom";
 import {
@@ -15,7 +15,7 @@ export const gearZetatechFaceplateBehavior: CyberpunkFixtureBehavior = {
     const host = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
     const d8 = expectDefined(
       "Zetatech friendly d8",

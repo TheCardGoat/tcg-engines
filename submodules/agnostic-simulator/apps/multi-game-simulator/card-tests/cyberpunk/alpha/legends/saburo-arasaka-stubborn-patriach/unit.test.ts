@@ -7,10 +7,10 @@ import {
   expectCallableLegend,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaSaburoArasakaStubbornPatriach,
-  alphaSwordwiseHuscle,
-  alphaMt0d12Flathead,
-  alphaRuthlessLowlife,
+  embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  theHeistRetailStarterDeckMt0d12Flathead,
+  welcomeToNightCityRetailMoxInciters,
 } from "@tcg/cyberpunk-cards";
 
 registerMatchers();
@@ -19,10 +19,12 @@ describe("Saburo Arasaka - Stubborn Patriarch", () => {
   describe("UI prompt", () => {
     it("shows the legend as callable when face-down", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        legendArea: [{ card: alphaSaburoArasakaStubbornPatriach, faceDown: true }],
+        legendArea: [
+          { card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch, faceDown: true },
+        ],
         eddies: 2,
       });
-      expectCallableLegend(engine, alphaSaburoArasakaStubbornPatriach);
+      expectCallableLegend(engine, embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch);
     });
   });
 
@@ -31,30 +33,40 @@ describe("Saburo Arasaka - Stubborn Patriarch", () => {
       // Swordwise Huscle base power = 5; Saburo grants +1 when attacking → 6
       const engine = CyberpunkTestEngine.createWithFixture(
         {
-          legendArea: [{ card: alphaSaburoArasakaStubbornPatriach, faceDown: false }],
-          field: [alphaSwordwiseHuscle],
+          legendArea: [
+            {
+              card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+              faceDown: false,
+            },
+          ],
+          field: [welcomeToNightCityRetailSwordwiseHuscle],
         },
-        { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+        { field: [{ card: welcomeToNightCityRetailMoxInciters, spent: true }] },
       );
 
-      engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife);
+      engine.attackUnit(
+        welcomeToNightCityRetailSwordwiseHuscle,
+        welcomeToNightCityRetailMoxInciters,
+      );
 
       // Attack is declared — check effective power during the attack
       const state = engine.getState();
-      const huscle = engine.getCard(alphaSwordwiseHuscle);
+      const huscle = engine.getCard(welcomeToNightCityRetailSwordwiseHuscle);
       expect(state).toHaveEffectivePower({ card: huscle.instanceId as string, value: 6 });
     });
 
     it(`Arasaka unit has base power when not attacking (no attack state)`, () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        legendArea: [{ card: alphaSaburoArasakaStubbornPatriach, faceDown: false }],
-        field: [alphaSwordwiseHuscle],
+        legendArea: [
+          { card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch, faceDown: false },
+        ],
+        field: [welcomeToNightCityRetailSwordwiseHuscle],
       });
 
       // Play phase — no attack declared
       const state = engine.getState();
       expect(engine.getAttackState()).toBeNull();
-      const huscle = engine.getCard(alphaSwordwiseHuscle);
+      const huscle = engine.getCard(welcomeToNightCityRetailSwordwiseHuscle);
       expect(state).toHaveEffectivePower({ card: huscle.instanceId as string, value: 5 });
     });
 
@@ -63,22 +75,34 @@ describe("Saburo Arasaka - Stubborn Patriarch", () => {
       // With Saburo face-up: 5 + 1 = 6 vs 5 → attacker wins
       const engine = CyberpunkTestEngine.createWithFixture(
         {
-          legendArea: [{ card: alphaSaburoArasakaStubbornPatriach, faceDown: false }],
-          field: [alphaSwordwiseHuscle],
+          legendArea: [
+            {
+              card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+              faceDown: false,
+            },
+          ],
+          field: [welcomeToNightCityRetailSwordwiseHuscle],
         },
-        { field: [{ card: alphaMt0d12Flathead, spent: true }] },
+        { field: [{ card: theHeistRetailStarterDeckMt0d12Flathead, spent: true }] },
       );
 
-      engine.attackUnit(alphaSwordwiseHuscle, alphaMt0d12Flathead);
+      engine.attackUnit(
+        welcomeToNightCityRetailSwordwiseHuscle,
+        theHeistRetailStarterDeckMt0d12Flathead,
+      );
       engine.resolveFullFight();
 
       // Swordwise Huscle survives on P1's field
       const p1Field = engine.getCardsInZone("field", P1);
-      expect(p1Field.some((c) => c.definitionId === alphaSwordwiseHuscle.id)).toBe(true);
+      expect(
+        p1Field.some((c) => c.definitionId === welcomeToNightCityRetailSwordwiseHuscle.id),
+      ).toBe(true);
 
       // MT0D12 Flathead is defeated to P2's trash
       const p2Trash = engine.getCardsInZone("trash", P2);
-      expect(p2Trash.some((c) => c.definitionId === alphaMt0d12Flathead.id)).toBe(true);
+      expect(
+        p2Trash.some((c) => c.definitionId === theHeistRetailStarterDeckMt0d12Flathead.id),
+      ).toBe(true);
     });
 
     it(`Non-Arasaka unit does not receive the +1 power bonus when attacking`, () => {
@@ -86,16 +110,24 @@ describe("Saburo Arasaka - Stubborn Patriarch", () => {
       // it gets no bonus, so 5 vs 5 → mutual destruction.
       const engine = CyberpunkTestEngine.createWithFixture(
         {
-          legendArea: [{ card: alphaSaburoArasakaStubbornPatriach, faceDown: false }],
-          field: [alphaMt0d12Flathead],
+          legendArea: [
+            {
+              card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+              faceDown: false,
+            },
+          ],
+          field: [theHeistRetailStarterDeckMt0d12Flathead],
         },
-        { field: [{ card: alphaSwordwiseHuscle, spent: true }] },
+        { field: [{ card: welcomeToNightCityRetailSwordwiseHuscle, spent: true }] },
       );
 
       // Verify no bonus before resolution
-      engine.attackUnit(alphaMt0d12Flathead, alphaSwordwiseHuscle);
+      engine.attackUnit(
+        theHeistRetailStarterDeckMt0d12Flathead,
+        welcomeToNightCityRetailSwordwiseHuscle,
+      );
       const state = engine.getState();
-      const flathead = engine.getCard(alphaMt0d12Flathead);
+      const flathead = engine.getCard(theHeistRetailStarterDeckMt0d12Flathead);
       expect(state).toHaveEffectivePower({ card: flathead.instanceId as string, value: 5 });
 
       engine.resolveFullFight();
@@ -110,21 +142,28 @@ describe("Saburo Arasaka - Stubborn Patriarch", () => {
       // Swordwise Huscle (5) vs MT0D12 Flathead (5) → mutual without the bonus.
       const engine = CyberpunkTestEngine.createWithFixture(
         {
-          legendArea: [alphaSaburoArasakaStubbornPatriach], // faceDown: true (default)
-          field: [alphaSwordwiseHuscle],
+          legendArea: [embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch], // faceDown: true (default)
+          field: [welcomeToNightCityRetailSwordwiseHuscle],
         },
-        { field: [{ card: alphaMt0d12Flathead, spent: true }] },
+        { field: [{ card: theHeistRetailStarterDeckMt0d12Flathead, spent: true }] },
       );
 
       // Confirm Saburo is face-down
-      const saburo = engine.getCard(alphaSaburoArasakaStubbornPatriach, "legendArea", P1);
+      const saburo = engine.getCard(
+        embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+        "legendArea",
+        P1,
+      );
       expect(saburo.meta.faceDown).toBe(true);
 
-      engine.attackUnit(alphaSwordwiseHuscle, alphaMt0d12Flathead);
+      engine.attackUnit(
+        welcomeToNightCityRetailSwordwiseHuscle,
+        theHeistRetailStarterDeckMt0d12Flathead,
+      );
 
       // No bonus: effective power stays at 5
       const state = engine.getState();
-      const huscle = engine.getCard(alphaSwordwiseHuscle);
+      const huscle = engine.getCard(welcomeToNightCityRetailSwordwiseHuscle);
       expect(state).toHaveEffectivePower({ card: huscle.instanceId as string, value: 5 });
 
       engine.resolveFullFight();
@@ -138,17 +177,25 @@ describe("Saburo Arasaka - Stubborn Patriarch", () => {
       // Two Arasaka units on P1's field. One attacks; only the attacker gets +1.
       const engine = CyberpunkTestEngine.createWithFixture(
         {
-          legendArea: [{ card: alphaSaburoArasakaStubbornPatriach, faceDown: false }],
-          field: [alphaSwordwiseHuscle, alphaRuthlessLowlife],
+          legendArea: [
+            {
+              card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+              faceDown: false,
+            },
+          ],
+          field: [welcomeToNightCityRetailSwordwiseHuscle, welcomeToNightCityRetailMoxInciters],
         },
-        { field: [{ card: alphaMt0d12Flathead, spent: true }] },
+        { field: [{ card: theHeistRetailStarterDeckMt0d12Flathead, spent: true }] },
       );
 
-      engine.attackUnit(alphaSwordwiseHuscle, alphaMt0d12Flathead);
+      engine.attackUnit(
+        welcomeToNightCityRetailSwordwiseHuscle,
+        theHeistRetailStarterDeckMt0d12Flathead,
+      );
 
       const state = engine.getState();
-      const huscle = engine.getCard(alphaSwordwiseHuscle);
-      const lowlife = engine.getCard(alphaRuthlessLowlife);
+      const huscle = engine.getCard(welcomeToNightCityRetailSwordwiseHuscle);
+      const lowlife = engine.getCard(welcomeToNightCityRetailMoxInciters);
 
       // Attacker gets bonus
       expect(state).toHaveEffectivePower({ card: huscle.instanceId as string, value: 6 });

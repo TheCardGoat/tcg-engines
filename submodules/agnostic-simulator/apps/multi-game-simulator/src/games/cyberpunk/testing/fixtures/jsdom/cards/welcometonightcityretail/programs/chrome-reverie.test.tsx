@@ -1,6 +1,6 @@
 import { describe, test } from "vite-plus/test";
 import {
-  spoilerRiverWardDetectiveOnTheHunt,
+  welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
   welcomeToNightCityRetailChromeReverie,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -32,7 +32,7 @@ describe("Chrome Reverie (Retail) jsdom happy path", () => {
 
       const legendBefore = await pom.getCardsInZone("legendArea", CYBERPUNK_P1);
       const faceDownLegend = legendBefore.find(
-        (c) => c.definitionId === spoilerRiverWardDetectiveOnTheHunt.id,
+        (c) => c.definitionId === welcomeToNightCityRetailRiverWardDetectiveOnTheHunt.id,
       );
       expectEqual("Face-down legend exists", faceDownLegend !== undefined, true);
 

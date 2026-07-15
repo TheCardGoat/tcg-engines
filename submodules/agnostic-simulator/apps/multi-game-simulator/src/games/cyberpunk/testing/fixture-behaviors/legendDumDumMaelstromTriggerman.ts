@@ -1,7 +1,7 @@
 import {
-  alphaKiroshiOptics,
-  alphaTBugAmateurPhilosopher,
-  spoilerDumDumMaelstromTriggerman,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
+  welcomeToNightCityRetailDumDumMaelstromTriggerman,
 } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "../cyberpunk-simulator-pom";
@@ -16,12 +16,12 @@ export const legendDumDumMaelstromTriggermanBehavior: CyberpunkFixtureBehavior =
     const host = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaTBugAmateurPhilosopher.id,
+      welcomeToNightCityRetailTBugAmateurPhilosopher.id,
     );
     const kiroshi = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaKiroshiOptics.id,
+      welcomeToNightCityRetailKiroshiOptics.id,
     );
 
     await pom.callLegend(dumDum.instanceId, CYBERPUNK_P1);
@@ -34,7 +34,7 @@ export const legendDumDumMaelstromTriggermanBehavior: CyberpunkFixtureBehavior =
     expectEqual(
       "Dum Dum definition after call",
       calledDumDum.definitionId,
-      spoilerDumDumMaelstromTriggerman.id,
+      welcomeToNightCityRetailDumDumMaelstromTriggerman.id,
     );
     await pom.expectEddies(CYBERPUNK_P1, 2);
     await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToMove");

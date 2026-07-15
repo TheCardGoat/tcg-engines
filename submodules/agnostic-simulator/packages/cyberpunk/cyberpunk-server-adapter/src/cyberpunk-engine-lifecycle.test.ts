@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vite-plus/test";
+import { theHeistRetailStarterDeckJackieWellesPourOneOutForMe } from "@tcg/cyberpunk-cards";
 import { getDefinition } from "@tcg/cyberpunk-engine";
 import type { CardsMaps } from "@tcg/shared/game-adapter";
 import { cyberpunkServerAdapter } from "./adapter.js";
 import { cyberpunkCreateServerEngine } from "./cyberpunk-engine-lifecycle.js";
 
-const JACKIE_ID = "8ecb2fe3-9117-40be-9ffe-adbc5bbd2899";
-const JACKIE_SLUG = "jackie-welles-pour-one-out-for-me";
+const JACKIE = theHeistRetailStarterDeckJackieWellesPourOneOutForMe;
 
 describe("cyberpunk engine lifecycle", () => {
   it("registers a catalog that accepts slug setup and UUID state lookups", async () => {
@@ -17,7 +17,7 @@ describe("cyberpunk engine lifecycle", () => {
       cardsMaps: cardsMaps(),
     });
 
-    expect(getDefinition(JACKIE_ID).slug).toBe(JACKIE_SLUG);
+    expect(getDefinition(JACKIE.id).slug).toBe(JACKIE.slug);
   });
 
   it("translates universal dynamic time control into Cyberpunk clock state", async () => {
@@ -84,11 +84,11 @@ function cardsMaps(): CardsMaps {
     },
     cardInstances: {
       p1_v: "v-corporate-exile",
-      p1_jackie: JACKIE_SLUG,
+      p1_jackie: JACKIE.slug,
       p1_viktor: "viktor-vektor-sit-down-and-relax",
       p1_tbug: "t-bug-amateur-philosopher",
       p2_v: "v-corporate-exile",
-      p2_jackie: JACKIE_SLUG,
+      p2_jackie: JACKIE.slug,
       p2_viktor: "viktor-vektor-sit-down-and-relax",
       p2_tbug: "t-bug-amateur-philosopher",
     },

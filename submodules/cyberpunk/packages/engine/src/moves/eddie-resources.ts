@@ -28,11 +28,22 @@ export function spendReadyLegendsForEddies(
   const player = state.players[playerId as string];
   if (!player) return [];
 
-  const spent: CardInstanceId[] = [];
-  for (const cardId of player.zones.legendArea) {
-    if (spent.length >= amount) break;
+  const readyLegends = player.zones.legendArea.filter((cardId) => {
     const card = state.cardIndex[cardId as string];
-    if (!card || card.meta.spent) continue;
+    return card && !card.meta.spent;
+  });
+  const faceDownLegends = readyLegends.filter((cardId) => {
+    const card = state.cardIndex[cardId as string];
+    return card?.meta.faceDown;
+  });
+  const faceUpLegends = readyLegends.filter((cardId) => {
+    const card = state.cardIndex[cardId as string];
+    return !card?.meta.faceDown;
+  });
+
+  const spent: CardInstanceId[] = [];
+  for (const cardId of [...faceDownLegends, ...faceUpLegends]) {
+    if (spent.length >= amount) break;
     spent.push(cardId);
   }
   return spent;

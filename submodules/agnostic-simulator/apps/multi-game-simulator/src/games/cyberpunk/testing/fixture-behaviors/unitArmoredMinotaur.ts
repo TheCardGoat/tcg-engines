@@ -1,7 +1,7 @@
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  alphaSecondhandBombus,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailSecondhandBombus,
 } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
@@ -19,12 +19,12 @@ export const unitArmoredMinotaurBehavior: CyberpunkFixtureBehavior = {
     const minotaur = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      alphaArmoredMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
     );
     const corpo = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
 
     expectEqual("Minotaur Street Cred", await pom.getStreetCred(CYBERPUNK_P1), 14);
@@ -34,8 +34,16 @@ export const unitArmoredMinotaurBehavior: CyberpunkFixtureBehavior = {
     const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
     const eligibleDefinitions = await getChoiceDefinitionIds(pom, eligible);
     expectEqual("Minotaur eligible count", eligible.length, 2);
-    expectIncludes("Minotaur eligible definitions", eligibleDefinitions, alphaCorpoSecurity.id);
-    expectIncludes("Minotaur eligible definitions", eligibleDefinitions, alphaSecondhandBombus.id);
+    expectIncludes(
+      "Minotaur eligible definitions",
+      eligibleDefinitions,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
+    expectIncludes(
+      "Minotaur eligible definitions",
+      eligibleDefinitions,
+      welcomeToNightCityRetailSecondhandBombus.id,
+    );
 
     await pom.resolveEffectTarget([corpo.instanceId], CYBERPUNK_P1);
 
@@ -43,6 +51,10 @@ export const unitArmoredMinotaurBehavior: CyberpunkFixtureBehavior = {
     await pom.expectFieldSize(CYBERPUNK_P1, 2);
     await pom.expectFieldSize(CYBERPUNK_P2, 1);
     await pom.expectTrashSize(CYBERPUNK_P2, 1);
-    await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaCorpoSecurity.id);
+    await pom.getCardInZoneByDefinitionId(
+      "trash",
+      CYBERPUNK_P2,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
   },
 };

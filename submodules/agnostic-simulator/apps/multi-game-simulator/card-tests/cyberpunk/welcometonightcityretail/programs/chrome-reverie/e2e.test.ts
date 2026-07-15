@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 
 import {
-  spoilerRiverWardDetectiveOnTheHunt,
+  welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
   welcomeToNightCityRetailChromeReverie,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -25,7 +25,7 @@ test("Chrome Reverie (Retail) - play grants cantAttack then calls legend for fre
 
   const legendBefore = await pom.getCardsInZone("legendArea", CYBERPUNK_P1);
   const faceDownLegend = legendBefore.find(
-    (c) => c.definitionId === spoilerRiverWardDetectiveOnTheHunt.id,
+    (c) => c.definitionId === welcomeToNightCityRetailRiverWardDetectiveOnTheHunt.id,
   );
   expectEqual("Face-down legend exists", faceDownLegend !== undefined, true);
 

@@ -1,5 +1,8 @@
 import { describe, test } from "vite-plus/test";
-import { alphaArmoredMinotaur, alphaRuthlessLowlife } from "@tcg/cyberpunk-cards";
+import {
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailMoxInciters,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -26,12 +29,12 @@ describe("Carnage At The Colosseum jsdom happy path", () => {
       const lowlife = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaRuthlessLowlife.id,
+        welcomeToNightCityRetailMoxInciters.id,
       );
       const minotaur = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaArmoredMinotaur.id,
+        embracingPowerRetailStarterDeckMinotaur.id,
       );
 
       await pom.expectEddies(CYBERPUNK_P1, 4);
@@ -59,7 +62,11 @@ describe("Carnage At The Colosseum jsdom happy path", () => {
       await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
       await pom.expectFieldSize(CYBERPUNK_P2, 1);
       await pom.expectTrashSize(CYBERPUNK_P2, 1);
-      await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaRuthlessLowlife.id);
+      await pom.getCardInZoneByDefinitionId(
+        "trash",
+        CYBERPUNK_P2,
+        welcomeToNightCityRetailMoxInciters.id,
+      );
       await pom.getCardInZoneByInstanceId("field", CYBERPUNK_P2, minotaur.instanceId);
       await pom.expectStructuralState();
     } finally {

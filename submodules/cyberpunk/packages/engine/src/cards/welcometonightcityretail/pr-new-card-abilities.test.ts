@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
-  alphaVCorporateExile,
-  alphaRuthlessLowlife,
+  boxTopperRetailVCorporateExile,
   embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
   theHeistRetailStarterDeckDexterDeshawnOneLastChance,
+  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailDelamainCab,
-  welcomeToNightCityRetailMandibularUpgrade,
   welcomeToNightCityRetailFieldOperator,
+  welcomeToNightCityRetailMandibularUpgrade,
+  welcomeToNightCityRetailMoxInciters,
   welcomeToNightCityRetailOverTheEdge,
   welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch,
 } from "@tcg/cyberpunk-cards";
@@ -23,7 +23,11 @@ describe("new Cyberpunk card abilities", () => {
     });
 
     engine.playCard(theHeistRetailStarterDeckDexterDeshawnOneLastChance, { as: P1 });
-    engine.resolveEffectTargetIds([engine.findGigIdByType(P1, "d6")], { as: P1 });
+    engine.resolveEffectTargetIds([engine.findGigIdByType(P1, "d6")], {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "Dexter still needs the selected Gig's new face value",
+    });
     engine.resolveAdjustGig(3, { as: P1 });
 
     expect(engine.getGigDice(P1).find((die) => die.dieType === "d6")?.faceValue).toBe(3);
@@ -46,7 +50,11 @@ describe("new Cyberpunk card abilities", () => {
     );
 
     engine.attackRival(theHeistRetailStarterDeckDexterDeshawnOneLastChance, { as: P1 });
-    engine.resolveEffectTargetIds([engine.findGigIdByType(P2, "d8")], { as: P1 });
+    engine.resolveEffectTargetIds([engine.findGigIdByType(P2, "d8")], {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "Dexter still needs the selected Gig's new face value",
+    });
     engine.resolveAdjustGig(5, { as: P1 });
 
     expect(engine.getGigDice(P2).find((die) => die.dieType === "d8")?.faceValue).toBe(5);
@@ -55,7 +63,7 @@ describe("new Cyberpunk card abilities", () => {
   it("Dexter DeShawn draws 2 when defeated with a 10+ Street Cred difference", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        deck: [alphaRuthlessLowlife, alphaRuthlessLowlife],
+        deck: [welcomeToNightCityRetailMoxInciters, welcomeToNightCityRetailMoxInciters],
         field: [
           {
             card: theHeistRetailStarterDeckDexterDeshawnOneLastChance,
@@ -69,15 +77,19 @@ describe("new Cyberpunk card abilities", () => {
         ],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true, powerModifier: 4 }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true, powerModifier: 4 }],
         gigArea: [{ dieType: "d4", faceValue: 1 }],
       },
       { preserveDeckOrder: true },
     );
 
-    engine.attackUnit(theHeistRetailStarterDeckDexterDeshawnOneLastChance, alphaCorpoSecurity, {
-      as: P1,
-    });
+    engine.attackUnit(
+      theHeistRetailStarterDeckDexterDeshawnOneLastChance,
+      welcomeToNightCityRetailCorpoSecurity,
+      {
+        as: P1,
+      },
+    );
     engine.executeMove("resolveEffectTarget", { args: { pass: true } }, P1);
     engine.resolveFullFight({ as: P1 });
 
@@ -91,7 +103,7 @@ describe("new Cyberpunk card abilities", () => {
     const even = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailFieldOperator],
-        deck: [alphaRuthlessLowlife],
+        deck: [welcomeToNightCityRetailMoxInciters],
         eddies: 3,
         gigArea: [{ dieType: "d6", faceValue: 2 }],
       },
@@ -101,12 +113,12 @@ describe("new Cyberpunk card abilities", () => {
 
     even.playCard(welcomeToNightCityRetailFieldOperator, { as: P1 });
     expect(even.getCardsInZone("hand", P1).map((card) => card.definitionId)).toContain(
-      alphaRuthlessLowlife.id,
+      welcomeToNightCityRetailMoxInciters.id,
     );
 
     const odd = CyberpunkTestEngine.createWithFixture({
       hand: [welcomeToNightCityRetailFieldOperator],
-      deck: [alphaRuthlessLowlife],
+      deck: [welcomeToNightCityRetailMoxInciters],
       eddies: 3,
       gigArea: [{ dieType: "d6", faceValue: 3 }],
     });
@@ -125,10 +137,10 @@ describe("new Cyberpunk card abilities", () => {
             playedThisTurn: false,
           },
         ],
-        legendArea: [{ card: alphaVCorporateExile, faceDown: false }],
+        legendArea: [{ card: boxTopperRetailVCorporateExile, faceDown: false }],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
       },
     );
 
@@ -137,9 +149,13 @@ describe("new Cyberpunk card abilities", () => {
       "field",
       P1,
     );
-    engine.attackUnit(embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay, alphaCorpoSecurity, {
-      as: P1,
-    });
+    engine.attackUnit(
+      embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
+      welcomeToNightCityRetailCorpoSecurity,
+      {
+        as: P1,
+      },
+    );
 
     expect(getEffectivePower(engine.getState(), goroId)).toBe(
       embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay.power + 5,
@@ -154,15 +170,15 @@ describe("new Cyberpunk card abilities", () => {
         gigArea: [{ dieType: "d20", faceValue: 3 }],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: false }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: false }],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailOverTheEdge, { as: P1 });
-    engine.resolveEffectTarget(alphaCorpoSecurity, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailCorpoSecurity, { as: P1 });
 
     expect(engine.getCardsInZone("trash", P2).map((card) => card.definitionId)).toContain(
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
   });
 
@@ -201,16 +217,20 @@ describe("new Cyberpunk card abilities", () => {
   it("Viktor equips a cheap Cyberware Gear from trash to another friendly Unit", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       hand: [welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch],
-      field: [alphaRuthlessLowlife],
+      field: [welcomeToNightCityRetailFieldOperator],
       trash: [welcomeToNightCityRetailMandibularUpgrade],
       eddies: 3,
     });
 
     engine.playCard(welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch, { as: P1 });
-    engine.resolveEffectTarget(welcomeToNightCityRetailMandibularUpgrade, { as: P1 });
-    engine.resolveCardToPlay(welcomeToNightCityRetailMandibularUpgrade, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailMandibularUpgrade, {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "Viktor still needs a friendly Unit to host the chosen Gear",
+    });
+    engine.resolveEffectTarget(welcomeToNightCityRetailFieldOperator, { as: P1 });
 
-    const host = engine.getCard(alphaRuthlessLowlife, "field", P1);
+    const host = engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P1);
     expect(host.meta.attachedGearIds).toHaveLength(1);
     expect(engine.getCardsInZone("field", P1).map((card) => card.definitionId)).toContain(
       welcomeToNightCityRetailMandibularUpgrade.id,

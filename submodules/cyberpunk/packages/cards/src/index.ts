@@ -13,10 +13,8 @@ export * from "./welcometonightcityretail/index.ts";
 
 import { cards, rawCards } from "./generated.ts";
 import { prm01Cards } from "./PRM01/index.ts";
-import { alphaCards } from "./alpha/index.ts";
 import { boxToppersRetailCards } from "./boxtoppersretail/index.ts";
 import { promoCards } from "./promo/index.ts";
-import { spoilerCards } from "./spoiler/index.ts";
 import { theHeistRetailStarterDeckCards } from "./theheistretailstarterdeck/index.ts";
 import { embracingPowerRetailStarterDeckCards } from "./embracingpowerretailstarterdeck/index.ts";
 import { welcomeToNightCityRetailCards } from "./welcometonightcityretail/index.ts";
@@ -30,8 +28,6 @@ export function getRawCardBySlug(slug: string): RawCardRecord | undefined {
 }
 
 export const structuredCards: StructuredCardDefinition[] = [
-  ...alphaCards,
-  ...spoilerCards,
   ...promoCards,
   ...prm01Cards,
   ...boxToppersRetailCards,
@@ -42,14 +38,6 @@ export const structuredCards: StructuredCardDefinition[] = [
 
 export function getStructuredCardBySlug(slug: string): StructuredCardDefinition | undefined {
   return structuredCards.find((card) => card.slug === slug);
-}
-
-export function getStructuredAlphaCardBySlug(slug: string) {
-  return alphaCards.find((card) => card.slug === slug);
-}
-
-export function getStructuredSpoilerCardBySlug(slug: string) {
-  return spoilerCards.find((card) => card.slug === slug);
 }
 
 export function getStructuredPromoCardBySlug(slug: string) {

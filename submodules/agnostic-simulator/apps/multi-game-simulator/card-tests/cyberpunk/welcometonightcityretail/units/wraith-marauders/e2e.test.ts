@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 import {
-  alphaArmoredMinotaur,
-  alphaSwordwiseHuscle,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailWraithMarauders,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -24,12 +24,12 @@ test("Wraith Marauders (Retail) - steals gig and readies matching-power unit", a
   const swordwise = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaSwordwiseHuscle.id,
+    welcomeToNightCityRetailSwordwiseHuscle.id,
   );
   const minotaur = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaArmoredMinotaur.id,
+    embracingPowerRetailStarterDeckMinotaur.id,
   );
 
   await pom.attackRival(wraith.instanceId, CYBERPUNK_P1);
@@ -41,8 +41,12 @@ test("Wraith Marauders (Retail) - steals gig and readies matching-power unit", a
   const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
   const eligibleDefinitions = await getChoiceDefinitionIds(pom, eligible);
   expectEqual("Wraith Marauders eligible target count", eligible.length, 1);
-  expectIncludes("Wraith Marauders eligible targets", eligibleDefinitions, alphaSwordwiseHuscle.id);
-  if (eligibleDefinitions.includes(alphaArmoredMinotaur.id)) {
+  expectIncludes(
+    "Wraith Marauders eligible targets",
+    eligibleDefinitions,
+    welcomeToNightCityRetailSwordwiseHuscle.id,
+  );
+  if (eligibleDefinitions.includes(embracingPowerRetailStarterDeckMinotaur.id)) {
     throw new Error("Expected Armored Minotaur not to be eligible for Wraith Marauders ready.");
   }
 

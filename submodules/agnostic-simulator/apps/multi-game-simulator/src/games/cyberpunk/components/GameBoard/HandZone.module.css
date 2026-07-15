@@ -104,7 +104,7 @@
 }
 
 .card.player:hover {
-  transform: rotate(var(--card-rotate, 0deg)) translateY(-34px) scale(1.08);
+  transform: rotate(var(--card-rotate, 0deg)) translateY(-22px) scale(1.06);
   box-shadow:
     0 0 0 1px rgb(245 230 66 / 54%),
     0 14px 34px rgb(245 230 66 / 28%),
@@ -114,7 +114,7 @@
 
 .card.player:focus-within,
 .card.player[data-selected="true"] {
-  transform: rotate(var(--card-rotate, 0deg)) translateY(-42px) scale(1.1);
+  transform: rotate(var(--card-rotate, 0deg)) translateY(-28px) scale(1.08);
   box-shadow:
     0 0 0 1px rgb(74 217 255 / 92%),
     0 0 18px rgb(74 217 255 / 42%),

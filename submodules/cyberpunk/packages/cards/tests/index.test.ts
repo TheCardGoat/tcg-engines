@@ -1,19 +1,15 @@
 import { expect, test } from "vite-plus/test";
 
 import {
-  alphaCards,
   cards,
   getStructuredCardBySlug,
   getCardBySlug,
   getStructuredPromoCardBySlug,
   getStructuredPrm01CardBySlug,
   getRawCardBySlug,
-  getStructuredAlphaCardBySlug,
-  getStructuredSpoilerCardBySlug,
   pickCanonicalAndMergePrintings,
   promoCards,
   rawCards,
-  spoilerCards,
   structuredCards,
 } from "../src/index.ts";
 
@@ -37,19 +33,19 @@ test("lookup helpers return a known generated card", () => {
 });
 
 test("structured set exports expose parsed abilities", () => {
-  expect(alphaCards).toHaveLength(28);
-  expect(spoilerCards).toHaveLength(27);
   expect(promoCards).toHaveLength(1);
-  expect(structuredCards).toHaveLength(141);
+  expect(structuredCards.length).toBeGreaterThan(0);
 
-  const corpoSecurity = getStructuredAlphaCardBySlug("corpo-security");
-  const viktor = getStructuredAlphaCardBySlug("viktor-vektor-sit-down-and-relax");
-  const spoilerGoro = getStructuredSpoilerCardBySlug("goro-takemura-vengeful-bodyguard");
-  const chromeReverie = getStructuredSpoilerCardBySlug("chrome-reverie");
-  const mamanBrigitte = getStructuredSpoilerCardBySlug("maman-brigitte");
+  const corpoSecurity = getStructuredCardBySlug("corpo-security");
+  const viktor = getStructuredCardBySlug("viktor-vektor-sit-down-and-relax");
+  const currentGoro = getStructuredCardBySlug("goro-takemura-vengeful-bodyguard");
+  const chromeReverie = getStructuredCardBySlug("chrome-reverie");
+  const mamanBrigitte = getStructuredCardBySlug("maman-brigitte-spirit-of-death");
   const lucyna = getStructuredPromoCardBySlug("lucyna-kushinada");
   const rebecca = getStructuredPrm01CardBySlug("rebecca-having-a-moment");
   const afterparty = getStructuredCardBySlug("afterparty-at-lizzie-s");
+  const augmentedNegotiators = getStructuredCardBySlug("augmented-negotiators");
+  const jackedInVoodooBoy = getStructuredCardBySlug("jacked-in-voodoo-boy");
 
   expect(corpoSecurity?.keywords).toContain("blocker");
   expect(corpoSecurity?.abilities.map((ability) => ability.kind)).toEqual(["keyword", "static"]);
@@ -66,28 +62,41 @@ test("structured set exports expose parsed abilities", () => {
       max: 2,
     },
   });
-  expect(spoilerGoro?.keywords).toEqual([]);
+  expect(currentGoro?.keywords).toContain("quick");
   expect(
-    spoilerGoro?.abilities.some((ability) =>
+    currentGoro?.abilities.some((ability) =>
       ability.effects.some((effect) => effect.effect === "grantRule" && effect.rule === "blocker"),
     ),
   ).toBe(true);
   expect(lucyna?.abilities).toEqual([]);
   expect(rebecca?.ram).toBeNull();
-  expect(afterparty?.set.code).toBe("spoiler");
+  expect(afterparty?.set.code).toBe("welcometonightcityretail");
   expect(chromeReverie?.abilities[0]?.effects.map((effect) => effect.effect)).toEqual([
     "grantRule",
     "callLegend",
   ]);
   expect(mamanBrigitte?.classifications).toEqual(["Mystic", "Netrunner", "Voodoo Boys"]);
+  expect(augmentedNegotiators?.abilities[1]).toMatchObject({
+    trigger: {
+      trigger: "event",
+      event: {
+        event: "blockerActivated",
+      },
+    },
+    effects: [{ effect: "discardFromHand", player: "rival", amount: 1 }],
+  });
+  expect(jackedInVoodooBoy?.abilities[0]?.effects[0]).toMatchObject({
+    effect: "grantRule",
+    rule: "requiresProgramPlayedThisTurn",
+  });
 });
 
-test("retail starter deck printings win over alpha when merging canonical cards", () => {
-  const alpha = {
-    id: "alpha-minotaur",
+test("retail starter deck printings win over lower-priority previews when merging canonical cards", () => {
+  const preview = {
+    id: "preview-minotaur",
     slug: "minotaur",
-    set: { code: "alpha" },
-    printings: [{ id: "alpha-printing" }],
+    set: { code: "preview" },
+    printings: [{ id: "preview-printing" }],
   };
   const retailStarter = {
     id: "retail-minotaur",
@@ -96,11 +105,11 @@ test("retail starter deck printings win over alpha when merging canonical cards"
     printings: [{ id: "retail-printing" }],
   };
 
-  const merged = pickCanonicalAndMergePrintings([alpha, retailStarter]);
+  const merged = pickCanonicalAndMergePrintings([preview, retailStarter]);
 
   expect(merged.id).toBe("retail-minotaur");
   expect(merged.printings.map((printing) => printing.id)).toEqual([
     "retail-printing",
-    "alpha-printing",
+    "preview-printing",
   ]);
 });

@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
-import { alphaCorpoSecurity, welcomeToNightCityRetailChromeReverie } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailChromeReverie,
+  welcomeToNightCityRetailCorpoSecurity,
+} from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("Chrome Reverie", () => {
@@ -11,17 +14,23 @@ describe("Chrome Reverie", () => {
         gigArea: [{ dieType: "d4", faceValue: 1 }],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: false, playedThisTurn: false }],
+        field: [
+          { card: welcomeToNightCityRetailCorpoSecurity, spent: false, playedThisTurn: false },
+        ],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailChromeReverie, { as: P1 });
-    engine.resolveEffectTarget(alphaCorpoSecurity, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailCorpoSecurity, {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "Chrome Reverie still needs a friendly min Gig for the Legend call check",
+    });
 
     const choice = engine.getState().G.turnMetadata.pendingChoice;
     expect(choice?.type).toBe("chooseTarget");
-    expect(engine.getCard(alphaCorpoSecurity, "field", P2).definitionId).toBe(
-      alphaCorpoSecurity.id,
+    expect(engine.getCard(welcomeToNightCityRetailCorpoSecurity, "field", P2).definitionId).toBe(
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
   });
 

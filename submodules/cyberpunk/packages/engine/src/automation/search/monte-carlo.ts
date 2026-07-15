@@ -50,6 +50,7 @@ export function createMonteCarloStrategy(opts: MonteCarloOptions = {}): AIStrate
 
       let bestDecision = candidates[0]!;
       let bestScore = Number.NEGATIVE_INFINITY;
+      let tiedBest: (MoveDecision & { kind: "command" })[] = [];
 
       for (const decision of candidates) {
         const score = evaluateAction(
@@ -64,6 +65,18 @@ export function createMonteCarloStrategy(opts: MonteCarloOptions = {}): AIStrate
         if (score > bestScore) {
           bestScore = score;
           bestDecision = decision;
+          tiedBest = [decision];
+        } else if (score === bestScore) {
+          tiedBest.push(decision);
+        }
+      }
+
+      if (tiedBest.length > 1) {
+        const rolloutPolicyDecision = rolloutStrategy.decideAction(ctx);
+        if (rolloutPolicyDecision.kind === "command") {
+          const preferredKey = actionKey(rolloutPolicyDecision);
+          const preferred = tiedBest.find((candidate) => actionKey(candidate) === preferredKey);
+          if (preferred) return preferred;
         }
       }
       return bestDecision;
@@ -110,4 +123,18 @@ function evaluateAction(
     else if (winner === null) wins += 0.5;
   }
   return wins / Math.max(1, rollouts);
+}
+
+function actionKey(action: MoveDecision & { kind: "command" }): string {
+  return `${action.move}:${stableStringify(action.args ?? {})}`;
+}
+
+function stableStringify(value: unknown): string {
+  if (value === null || typeof value !== "object") return JSON.stringify(value);
+  if (Array.isArray(value)) return `[${value.map((entry) => stableStringify(entry)).join(",")}]`;
+  const record = value as Record<string, unknown>;
+  return `{${Object.keys(record)
+    .sort()
+    .map((key) => `${JSON.stringify(key)}:${stableStringify(record[key])}`)
+    .join(",")}}`;
 }

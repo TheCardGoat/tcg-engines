@@ -7,7 +7,7 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSwordwiseHuscle } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk-simulator/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -30,7 +30,7 @@ describe("gearMandibularUpgrade fixture behavior", () => {
       const blocker = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSwordwiseHuscle.id,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
       );
       const initialAttack = await pom.getAttackState();
       if (!initialAttack) {
@@ -38,7 +38,7 @@ describe("gearMandibularUpgrade fixture behavior", () => {
       }
 
       expectEqual("Mandibular initial attack kind", initialAttack.kind, "direct");
-      expectEqual("Mandibular initial attack step", initialAttack.step, "defensive");
+      expectEqual("Mandibular initial attack step", initialAttack.step, "react");
       expectEqual("Mandibular attack rival", initialAttack.rivalId, CYBERPUNK_P1);
       await pom.expectFieldCardGrantedRule(CYBERPUNK_P1, blocker.instanceId, "blocker", true);
       await pom.expectFieldCardSpent(CYBERPUNK_P1, blocker.instanceId, false);

@@ -27,6 +27,10 @@ const recipes: Record<SimulatorAudioCueId, SynthRecipe> = {
     render: (ctx, dest, now) => synthTone(ctx, dest, now, 520, 760),
   },
   "resource.spend": { duration: 0.12, render: (ctx, dest, now) => synthClick(ctx, dest, now, 360) },
+  "resource.steal": {
+    duration: 0.22,
+    render: (ctx, dest, now) => synthTone(ctx, dest, now, 340, 920),
+  },
   "combat.start": { duration: 0.14, render: (ctx, dest, now) => synthClick(ctx, dest, now, 180) },
   "combat.hit": { duration: 0.18, render: synthHit },
   "effect.trigger": {

@@ -1,4 +1,7 @@
-import { alphaCorpoSecurity, alphaTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
 import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -11,12 +14,12 @@ export const gearSatoriSwordOfSaburoBehavior: CyberpunkFixtureBehavior = {
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaTBugAmateurPhilosopher.id,
+      welcomeToNightCityRetailTBugAmateurPhilosopher.id,
     );
     const defender = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
 
     await pom.expectHandSize(CYBERPUNK_P1, 1);
@@ -26,11 +29,14 @@ export const gearSatoriSwordOfSaburoBehavior: CyberpunkFixtureBehavior = {
     await pom.resolveAttack(CYBERPUNK_P1);
     await pom.resolveAttack(CYBERPUNK_P2, { pass: true });
     await pom.resolveAttack(CYBERPUNK_P1);
-    await pom.resolveAttack(CYBERPUNK_P1);
 
     expectEqual("Satori attack cleared", await pom.getAttackState(), null);
     await pom.expectHandSize(CYBERPUNK_P1, 2);
     await pom.expectTrashSize(CYBERPUNK_P2, 1);
-    await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaCorpoSecurity.id);
+    await pom.getCardInZoneByDefinitionId(
+      "trash",
+      CYBERPUNK_P2,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
   },
 };

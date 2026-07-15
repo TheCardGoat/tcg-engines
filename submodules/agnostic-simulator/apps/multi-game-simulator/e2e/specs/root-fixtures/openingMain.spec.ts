@@ -1,5 +1,8 @@
 import { test } from "@playwright/test";
-import { alphaFloorIt, alphaRuthlessLowlife } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailFloorIt,
+  welcomeToNightCityRetailMoxInciters,
+} from "@tcg/cyberpunk-cards";
 
 import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -27,13 +30,21 @@ test("openingMain first player sells Floor It from hand for one eddie", async ({
 
   const pom = await createPlaywrightCyberpunkSimulatorPom(page);
 
-  const floorIt = await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaFloorIt.id);
+  const floorIt = await pom.getCardInZoneByDefinitionId(
+    "hand",
+    CYBERPUNK_P1,
+    welcomeToNightCityRetailFloorIt.id,
+  );
 
   await pom.sellCard(floorIt.instanceId, CYBERPUNK_P1);
 
   await pom.expectHandSize(CYBERPUNK_P1, 2);
   await pom.expectEddies(CYBERPUNK_P1, 6);
-  await pom.getCardInZoneByDefinitionId("eddieArea", CYBERPUNK_P1, alphaFloorIt.id);
+  await pom.getCardInZoneByDefinitionId(
+    "eddieArea",
+    CYBERPUNK_P1,
+    welcomeToNightCityRetailFloorIt.id,
+  );
 });
 
 test("openingMain first player sells a card, plays Ruthless Lowlife, then passes the turn", async ({
@@ -43,18 +54,26 @@ test("openingMain first player sells a card, plays Ruthless Lowlife, then passes
 
   const pom = await createPlaywrightCyberpunkSimulatorPom(page);
 
-  const floorIt = await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaFloorIt.id);
+  const floorIt = await pom.getCardInZoneByDefinitionId(
+    "hand",
+    CYBERPUNK_P1,
+    welcomeToNightCityRetailFloorIt.id,
+  );
   await pom.sellCard(floorIt.instanceId, CYBERPUNK_P1);
 
   const lowlife = await pom.getCardInZoneByDefinitionId(
     "hand",
     CYBERPUNK_P1,
-    alphaRuthlessLowlife.id,
+    welcomeToNightCityRetailMoxInciters.id,
   );
   await pom.playCardFromHand(lowlife.instanceId, CYBERPUNK_P1);
 
   await pom.expectFieldSize(CYBERPUNK_P1, 3);
-  await pom.getCardInZoneByDefinitionId("field", CYBERPUNK_P1, alphaRuthlessLowlife.id);
+  await pom.getCardInZoneByDefinitionId(
+    "field",
+    CYBERPUNK_P1,
+    welcomeToNightCityRetailMoxInciters.id,
+  );
   await pom.expectEddies(CYBERPUNK_P1, 4);
 
   await pom.passPhase(CYBERPUNK_P1);

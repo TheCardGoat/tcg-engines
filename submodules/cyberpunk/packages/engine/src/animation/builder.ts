@@ -111,6 +111,8 @@ export function buildAnimationScript(
   let cursor = 0;
   let totalEnd = 0;
   let nextId = 0;
+  const hasAttackResolved = events.some((ev) => ev.type === "attackResolved");
+  const pendingCombatConsequences: GameEvent[] = [];
   const id = () => `step-${nextId++}`;
   const advance = (duration: number) => {
     cursor += duration;
@@ -119,8 +121,71 @@ export function buildAnimationScript(
   const parallel = (duration: number) => {
     totalEnd = Math.max(totalEnd, cursor + duration);
   };
+  const pushCardExit = (ev: Extract<GameEvent, { type: "cardDefeated" | "cardSold" }>) => {
+    const exit = scan.exits.get(ev.cardId);
+    const duration = ANIMATION_DURATIONS_MS.cardExit;
+    const sold = ev.type === "cardSold";
+    steps.push({
+      kind: "cardExit",
+      id: id(),
+      startMs: cursor,
+      durationMs: duration,
+      reason: ev.type,
+      cardId: ev.cardId,
+      fromZone: exit?.fromZone ?? (sold ? "hand" : "field"),
+      toZone: exit?.toZone ?? "trash",
+      playerId: ev.playerId,
+      exitReason: sold ? "sold" : "defeated",
+    });
+    advance(duration);
+  };
+  const pushGigMove = (ev: Extract<GameEvent, { type: "gigStolen" | "gigDieMoved" }>) => {
+    const duration = ANIMATION_DURATIONS_MS.gigMove;
+    if (ev.type === "gigStolen") {
+      steps.push({
+        kind: "gigMove",
+        id: id(),
+        startMs: cursor,
+        durationMs: duration,
+        reason: "gigStolen",
+        dieId: ev.dieId,
+        from: "gigArea",
+        to: "gigArea",
+        fromPlayerId: ev.fromPlayerId,
+        toPlayerId: ev.toPlayerId,
+        moveKind: "steal",
+      });
+      advance(duration);
+      return;
+    }
+    steps.push({
+      kind: "gigMove",
+      id: id(),
+      startMs: cursor,
+      durationMs: duration,
+      reason: "gigDieMoved",
+      dieId: ev.dieId,
+      from: "fixerArea",
+      to: "gigArea",
+      fromPlayerId: ev.playerId,
+      toPlayerId: ev.playerId,
+      moveKind: "gain",
+    });
+    advance(duration);
+  };
+  const flushPendingCombatConsequences = () => {
+    while (pendingCombatConsequences.length > 0) {
+      const consequence = pendingCombatConsequences.shift()!;
+      if (consequence.type === "cardDefeated" || consequence.type === "cardSold") {
+        pushCardExit(consequence);
+      } else if (consequence.type === "gigStolen") {
+        pushGigMove(consequence);
+      }
+    }
+  };
 
-  for (const ev of events) {
+  for (let eventIndex = 0; eventIndex < events.length; eventIndex++) {
+    const ev = events[eventIndex]!;
     switch (ev.type) {
       case "cardMoved": {
         if (scan.exits.has(ev.cardId)) {
@@ -177,39 +242,15 @@ export function buildAnimationScript(
         break;
       }
       case "cardDefeated": {
-        const exit = scan.exits.get(ev.cardId);
-        const duration = ANIMATION_DURATIONS_MS.cardExit;
-        steps.push({
-          kind: "cardExit",
-          id: id(),
-          startMs: cursor,
-          durationMs: duration,
-          reason: "cardDefeated",
-          cardId: ev.cardId,
-          fromZone: exit?.fromZone ?? "field",
-          toZone: exit?.toZone ?? "trash",
-          playerId: ev.playerId,
-          exitReason: "defeated",
-        });
-        advance(duration);
+        if (hasAttackResolved) {
+          pendingCombatConsequences.push(ev);
+          break;
+        }
+        pushCardExit(ev);
         break;
       }
       case "cardSold": {
-        const exit = scan.exits.get(ev.cardId);
-        const duration = ANIMATION_DURATIONS_MS.cardExit;
-        steps.push({
-          kind: "cardExit",
-          id: id(),
-          startMs: cursor,
-          durationMs: duration,
-          reason: "cardSold",
-          cardId: ev.cardId,
-          fromZone: exit?.fromZone ?? "hand",
-          toZone: exit?.toZone ?? "trash",
-          playerId: ev.playerId,
-          exitReason: "sold",
-        });
-        advance(duration);
+        pushCardExit(ev);
         break;
       }
       case "effectTargeted": {
@@ -279,6 +320,22 @@ export function buildAnimationScript(
         advance(duration);
         break;
       }
+      case "blockerActivated": {
+        const duration = ANIMATION_DURATIONS_MS.combatDeclare;
+        steps.push({
+          kind: "combatRedirect",
+          id: id(),
+          startMs: cursor,
+          durationMs: duration,
+          reason: "blockerActivated",
+          attackerId: ev.attackerId,
+          blockerId: ev.blockerId,
+          originalTargetId: ev.originalTarget,
+          playerId: ev.playerId,
+        });
+        advance(duration);
+        break;
+      }
       case "attackResolved": {
         const duration = ANIMATION_DURATIONS_MS.combatResolve;
         steps.push({
@@ -290,27 +347,19 @@ export function buildAnimationScript(
           attackerId: ev.attackerId,
           defenderId: ev.defenderId,
           attackKind: ev.attackKind,
+          gigsStolen: ev.gigsStolen,
           playerId: ev.playerId,
         });
         advance(duration);
+        flushPendingCombatConsequences();
         break;
       }
       case "gigStolen": {
-        const duration = ANIMATION_DURATIONS_MS.gigMove;
-        steps.push({
-          kind: "gigMove",
-          id: id(),
-          startMs: cursor,
-          durationMs: duration,
-          reason: "gigStolen",
-          dieId: ev.dieId,
-          from: "gigArea",
-          to: "gigArea",
-          fromPlayerId: ev.fromPlayerId,
-          toPlayerId: ev.toPlayerId,
-          moveKind: "steal",
-        });
-        advance(duration);
+        if (hasAttackResolved) {
+          pendingCombatConsequences.push(ev);
+          break;
+        }
+        pushGigMove(ev);
         break;
       }
       case "gigDieMoved": {
@@ -321,25 +370,16 @@ export function buildAnimationScript(
         if (ev.from !== "fixerArea" || ev.to !== "gigArea") {
           break;
         }
-        const duration = ANIMATION_DURATIONS_MS.gigMove;
-        steps.push({
-          kind: "gigMove",
-          id: id(),
-          startMs: cursor,
-          durationMs: duration,
-          reason: "gigDieMoved",
-          dieId: ev.dieId,
-          from: "fixerArea",
-          to: "gigArea",
-          fromPlayerId: ev.playerId,
-          toPlayerId: ev.playerId,
-          moveKind: "gain",
-        });
-        advance(duration);
+        pushGigMove(ev);
         break;
       }
       case "phaseChanged": {
         const duration = ANIMATION_DURATIONS_MS.phaseChange;
+        const nextEvent = events[eventIndex + 1];
+        const turnStarted =
+          ev.from === "main" && ev.to === "start" && nextEvent?.type === "turnStarted"
+            ? nextEvent
+            : null;
         steps.push({
           kind: "phaseChange",
           id: id(),
@@ -349,6 +389,13 @@ export function buildAnimationScript(
           from: ev.from,
           to: ev.to,
           playerId: ev.playerId,
+          ...(turnStarted
+            ? {
+                variant: "turn" as const,
+                turnPlayerId: turnStarted.playerId,
+                turnNumber: turnStarted.turnNumber,
+              }
+            : {}),
         });
         advance(duration);
         break;
@@ -383,11 +430,35 @@ export function buildAnimationScript(
         parallel(duration);
         break;
       }
+      case "gigValueChanged": {
+        const delta = ev.newValue - ev.previousValue;
+        if (delta === 0) {
+          break;
+        }
+        const duration = ANIMATION_DURATIONS_MS.resourceFloat;
+        steps.push({
+          kind: "resourceFloat",
+          id: id(),
+          startMs: cursor,
+          durationMs: duration,
+          reason: "gigValueChanged",
+          resource: "gig",
+          playerId: ev.playerId,
+          delta,
+          dieId: ev.dieId,
+          previousValue: ev.previousValue,
+          newValue: ev.newValue,
+        });
+        parallel(duration);
+        break;
+      }
       // Phase 2+ — events we don't yet animate. Intentionally fall through.
       default:
         break;
     }
   }
+
+  flushPendingCombatConsequences();
 
   return {
     steps,

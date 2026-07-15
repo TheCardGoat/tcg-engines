@@ -16,6 +16,7 @@ describe("exhaustiveness", () => {
     const expected = [
       "chooseCardToMove",
       "chooseCardToPlay",
+      "chooseCardType",
       "chooseEffect",
       "chooseGigsToSteal",
       "chooseTarget",

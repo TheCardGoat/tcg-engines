@@ -521,14 +521,17 @@ export function PromptBanner({
     const choice = prompt.choice;
     const orderedGigCopyChoice = isOrderedGigCopyChoice(choice);
     const sentence = describeChoice(prompt);
+    const effectTargetCopy = effectTargetChoiceCopy(choice);
     const choiceTitle =
       choice?.type === "chooseTarget" && choice.payload.type === "adjustGig"
         ? "Adjust Gig"
         : choice?.type === "searchDeck"
           ? "Deck search"
-          : orderedGigCopyChoice
-            ? "Choose Gigs"
-            : "Choose target";
+          : choice?.type === "chooseCardToPlay"
+            ? sentence
+            : orderedGigCopyChoice
+              ? "Choose Gigs"
+              : "Choose target";
     const effectSource =
       choice?.type === "chooseTarget" && choice.payload.type === "effectTarget"
         ? choice.payload.source
@@ -550,7 +553,7 @@ export function PromptBanner({
     const titleRequirement =
       choice?.type === "chooseTarget" &&
       (choice.payload.type === "effectTarget" || choice.payload.type === "discardFromHand")
-        ? sentence
+        ? (effectTargetCopy?.subtitle ?? sentence)
         : null;
     const declineTargetChoice =
       choice?.type === "chooseTarget" && choice.payload.canDecline
@@ -590,14 +593,18 @@ export function PromptBanner({
         <p className={classes.title} data-testid="prompt-banner-title">
           <span className={classes.titleText}>
             {sourceForTitle ? (
-              <>
-                {titlePrefix}
-                <CardNameToken
-                  cardId={sourceForTitle.cardId}
-                  fallbackName={sourceForTitle.displayName}
-                  className={classes.sourceCardName}
-                />
-              </>
+              effectTargetCopy?.title ? (
+                effectTargetCopy.title
+              ) : (
+                <>
+                  {titlePrefix}
+                  <CardNameToken
+                    cardId={sourceForTitle.cardId}
+                    fallbackName={sourceForTitle.displayName}
+                    className={classes.sourceCardName}
+                  />
+                </>
+              )
             ) : (
               choiceTitle
             )}
@@ -954,7 +961,6 @@ interface AttackLabelState {
   rivalId?: unknown;
   kind?: string;
   step?: string;
-  fightResult?: string;
   gigsToSteal?: number;
 }
 
@@ -1012,27 +1018,21 @@ function resolveAttackAriaLabel(
   if (!attack) {
     return "Resolve attack";
   }
-  if (attack.step === "offensive") {
+  if (attack.step === "attack") {
     if (attackTriggers.length === 0) {
-      return "Move to the defensive step";
+      return "Move to the React step";
     }
     return attackTriggers.length === 1
       ? `Resolve ${attackTriggers[0]!.cardName} ATTACK trigger: ${attackTriggers[0]!.text}`
-      : `Resolve ${formatTriggerCount(attackTriggers)} before moving to the defensive step`;
+      : `Resolve ${formatTriggerCount(attackTriggers)} before moving to the React step`;
   }
-  if (attack.step === "defensive") {
+  if (attack.step === "react") {
     return attack.kind === "direct"
-      ? "Pass defense and let the attack reach the steal step"
-      : "Pass defense and move to the fight step";
+      ? "Pass React and let the attack reach the steal step"
+      : "Pass React and move to the fight step";
   }
   if (attack.step === "fight") {
-    return "Compare power and determine which units are defeated";
-  }
-  if (attack.step === "defeat") {
-    const defeated = defeatedCardsText(matchState, attack, { fullNames: true });
-    return defeated
-      ? `Move ${defeated} to trash and finish the attack`
-      : "Move defeated units to trash and finish the attack";
+    return "Compare power, move defeated units to trash, and finish the attack";
   }
   if (attack.step === "steal") {
     return needsGigChoice(matchState, attack)
@@ -1050,23 +1050,19 @@ function resolveAttackLabel(
   if (!attack) {
     return "Resolve attack";
   }
-  if (attack.step === "offensive") {
+  if (attack.step === "attack") {
     if (attackTriggers.length === 0) {
-      return "Go to defense";
+      return "Go to React";
     }
     return attackTriggers.length === 1
       ? `Resolve ${attackTriggers[0]!.cardName}`
       : "Resolve effects";
   }
-  if (attack.step === "defensive") {
+  if (attack.step === "react") {
     return attack.kind === "direct" ? "Let them steal" : "Start fight";
   }
   if (attack.step === "fight") {
-    return "Compare power";
-  }
-  if (attack.step === "defeat") {
-    const defeated = defeatedCardsText(matchState, attack, { fullNames: false });
-    return defeated ? `Trash ${defeated}` : "Trash defeated";
+    return "Fight";
   }
   if (attack.step === "steal") {
     return needsGigChoice(matchState, attack) ? "Choose rival gig" : "Steal gigs";
@@ -1170,52 +1166,8 @@ function getStealCount(
   if (!attackerId) {
     return Math.min(1, rivalGigCount);
   }
-  return Math.min(1 + Math.floor(getEffectivePower(matchState, attackerId) / 10), rivalGigCount);
-}
-
-function defeatedCardsText(
-  matchState: ReturnType<typeof useEngine>["matchState"],
-  attack: AttackLabelState,
-  { fullNames }: { fullNames: boolean },
-): string | null {
-  if (attack.kind !== "fight") {
-    return null;
-  }
-
-  const attackerName = cardName(matchState, attack.attackerId, fullNames);
-  const defenderName = cardName(matchState, attack.defenderId, fullNames);
-
-  if (attack.fightResult === "attackerWins") {
-    return defenderName;
-  }
-  if (attack.fightResult === "defenderWins") {
-    return attackerName;
-  }
-  if (attack.fightResult === "mutual") {
-    if (attackerName && defenderName) {
-      return `${attackerName} + ${defenderName}`;
-    }
-    return attackerName ?? defenderName;
-  }
-  return null;
-}
-
-function cardName(
-  matchState: ReturnType<typeof useEngine>["matchState"],
-  cardId: unknown,
-  fullName: boolean,
-): string | null {
-  const key = cardInstanceKey(cardId);
-  if (!key) {
-    return null;
-  }
-  const card = matchState.G.cardIndex[key];
-  if (!card) {
-    return null;
-  }
-  const def = defOf(card);
-  const name = def.displayName ?? def.name;
-  return fullName ? name : shortCardName(name);
+  const power = getEffectivePower(matchState, attackerId);
+  return Math.min(power <= 0 ? 0 : 1 + Math.floor(power / 10), rivalGigCount);
 }
 
 function cardInstanceKey(cardId: unknown): string | null {
@@ -1226,10 +1178,6 @@ function cardInstanceKey(cardId: unknown): string | null {
     return `${cardId}`;
   }
   return null;
-}
-
-function shortCardName(name: string): string {
-  return name.split(" - ")[0]!.trim();
 }
 
 function collectVerbs(
@@ -1289,7 +1237,7 @@ function describeChoice(prompt: ReturnType<typeof useNativePromptPresentation>):
       }
       return "Choose the next trigger to resolve";
     case "chooseCardToPlay":
-      return "Choose a card to play";
+      return chooseCardToPlayCopy(prompt);
     case "chooseCardToMove":
       if (choice.payload.destination === "trash") {
         return `Choose a card to trash${choice.payload.canDecline ? ", or pass" : ""}`;
@@ -1329,6 +1277,56 @@ function describeChoice(prompt: ReturnType<typeof useNativePromptPresentation>):
       return "Pick a gig die from the fixer area";
   }
   return "Awaiting input…";
+}
+
+function chooseCardToPlayCopy(prompt: ReturnType<typeof useNativePromptPresentation>): string {
+  const choice = prompt.choice;
+  if (choice?.type !== "chooseCardToPlay") {
+    return "Choose a card to play";
+  }
+  const cards = choice.payload.cards;
+  const allGear = cards.length > 0 && cards.every((card) => card.type === "gear");
+  if (allGear && choice.payload.free && choice.payload.resolvedAttachToId) {
+    return "Play selected Gear for free";
+  }
+  if (allGear && choice.payload.free) {
+    return "Choose Gear to play for free";
+  }
+  return "Choose a card to play";
+}
+
+function effectTargetChoiceCopy(
+  choice: ReturnType<typeof useNativePromptPresentation>["choice"],
+): { title: string; subtitle: string } | null {
+  if (
+    choice?.type !== "chooseTarget" ||
+    choice.payload.type !== "effectTarget" ||
+    choice.payload.targetKind !== "card"
+  ) {
+    return null;
+  }
+  const cards = choice.payload.cards ?? [];
+  const allUnits = cards.length > 0 && cards.every((card) => card.type === "unit");
+  const allGear = cards.length > 0 && cards.every((card) => card.type === "gear");
+  const allTrash = cards.length > 0 && cards.every((card) => card.zone === "trash");
+
+  if (allUnits && choice.payload.targetPurpose === "attachHost") {
+    return {
+      title: "Choose Unit to equip",
+      subtitle: "Pick the friendly Unit that will receive the Gear.",
+    };
+  }
+
+  if (allGear && allTrash) {
+    return {
+      title: "Choose Gear from trash",
+      subtitle: choice.payload.source?.rulesText?.toLowerCase().includes("cyberware")
+        ? "Pick the Cyberware Gear to play for free."
+        : "Pick the Gear to play from trash.",
+    };
+  }
+
+  return null;
 }
 
 function searchDeckSelectionText(

@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { alphaJackieWellesRideOrDieChoom } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailJackieWellesRideOrDieChoom } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { ensureJsdomAnimationSupport } from "@cyberpunk/testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
@@ -18,7 +18,7 @@ describe("Jackie Welles - Ride Or Die Choom jsdom happy path", () => {
       const jackie = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaJackieWellesRideOrDieChoom.id,
+        welcomeToNightCityRetailJackieWellesRideOrDieChoom.id,
       );
 
       await pom.expectGigCount(CYBERPUNK_P1, 3);

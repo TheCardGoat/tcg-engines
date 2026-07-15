@@ -201,10 +201,17 @@ export function getEffectivePower(state: MatchState, cardId: string): number {
 
   const basePower = defOf(card).power ?? 0;
   const permanentMod = card.meta.powerModifier;
+  const cardDef = defOf(card);
 
   const gearPower = card.meta.attachedGearIds.reduce((sum, gearId) => {
     const gear = state.G.cardIndex[gearId as string];
-    return sum + (gear ? (defOf(gear).power ?? 0) : 0);
+    if (!gear || (gear.meta.attachedToId as string) !== cardId) {
+      return sum;
+    }
+    if (gear.zone !== card.zone && !(cardDef.type === "legend" && gear.zone === "field")) {
+      return sum;
+    }
+    return sum + (defOf(gear).power ?? 0);
   }, 0);
 
   const activeEffectMod = state.G.activeEffects
@@ -226,7 +233,8 @@ export function getEffectiveRules(state: MatchState, cardId: string): RuleModifi
   const card = state.G.cardIndex[cardId];
   if (!card) return [];
 
-  const intrinsic: RuleModifier[] = defOf(card).keywords as RuleModifier[];
+  const cardDef = defOf(card);
+  const intrinsic: RuleModifier[] = cardDef.keywords as RuleModifier[];
   const granted = state.G.activeEffects
     .filter((e) => (e.targetCardId as string) === cardId && e.kind === "grantRule")
     .map((e) => e.rule!)
@@ -235,7 +243,11 @@ export function getEffectiveRules(state: MatchState, cardId: string): RuleModifi
   // Propagate keyword abilities from attached gear to the host
   const gearKeywords: RuleModifier[] = card.meta.attachedGearIds.reduce((keywords, gearId) => {
     const gearCard = state.G.cardIndex[gearId as string];
-    if (!gearCard || (gearCard.meta.attachedToId as string) !== cardId) {
+    if (
+      !gearCard ||
+      (gearCard.meta.attachedToId as string) !== cardId ||
+      (gearCard.zone !== card.zone && !(cardDef.type === "legend" && gearCard.zone === "field"))
+    ) {
       return keywords;
     }
 

@@ -75,6 +75,7 @@ export function createInitialGameState(): GameState {
       activePlayerId: createPlayerId("p1"),
       previousTurnNoGigTaken: false,
       gigTakenThisTurn: false,
+      playedCardTypesThisTurn: {},
       overtimeActive: false,
       abilityFiredThisTurn: [],
       triggerQueue: [],

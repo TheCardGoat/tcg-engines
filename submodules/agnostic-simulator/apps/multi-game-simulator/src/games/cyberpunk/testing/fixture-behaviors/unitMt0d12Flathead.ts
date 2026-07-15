@@ -1,4 +1,7 @@
-import { alphaCorpoSecurity, alphaMt0d12Flathead } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  theHeistRetailStarterDeckMt0d12Flathead,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
 import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -14,12 +17,12 @@ export const unitMt0d12FlatheadBehavior: CyberpunkFixtureBehavior = {
     const flathead = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaMt0d12Flathead.id,
+      theHeistRetailStarterDeckMt0d12Flathead.id,
     );
     const blocker = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
 
     expectEqual("Flathead Street Cred", await pom.getStreetCred(CYBERPUNK_P1), 8);
@@ -44,6 +47,6 @@ export const unitMt0d12FlatheadBehavior: CyberpunkFixtureBehavior = {
       throw new Error("Expected Flathead direct attack to remain active.");
     }
     expectEqual("Flathead attack kind", attack.kind, "direct");
-    expectEqual("Flathead attack step", attack.step, "defensive");
+    expectEqual("Flathead attack step", attack.step, "react");
   },
 };

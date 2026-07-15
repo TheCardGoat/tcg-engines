@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailOverTheEdge,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
@@ -12,18 +12,22 @@ describe("Over the Edge", () => {
       {
         hand: [welcomeToNightCityRetailOverTheEdge],
         eddies: 3,
-        gigArea: [{ dieType: "d20", faceValue: 3 }],
+        gigArea: [{ dieType: "d12", faceValue: 3 }],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: false }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: false }],
       },
     );
 
+    const d12 = engine.getGigDice(P1).find((die) => die.dieType === "d12");
+    if (!d12) throw new Error("Expected fixture to include a d12 die");
+    engine.getState().G.gigDice[d12.id]!.dieType = "d20";
+
     engine.playCard(welcomeToNightCityRetailOverTheEdge, { as: P1 });
-    engine.resolveEffectTarget(alphaCorpoSecurity, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailCorpoSecurity, { as: P1 });
 
     expect(engine.getCardsInZone("trash", P2).map((card) => card.definitionId)).toContain(
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
   });
 
@@ -33,24 +37,27 @@ describe("Over the Edge", () => {
         hand: [welcomeToNightCityRetailOverTheEdge],
         eddies: 3,
         gigArea: [
-          { dieType: "d20", faceValue: 3 },
+          { dieType: "d10", faceValue: 3 },
           { dieType: "d12", faceValue: 5 },
         ],
       },
       {
-        field: [{ card: alphaSwordwiseHuscle, spent: false }],
+        field: [{ card: welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
       },
     );
 
+    const d10 = engine.getGigDice(P1).find((die) => die.dieType === "d10");
     const d12 = engine.getGigDice(P1).find((die) => die.dieType === "d12");
+    if (!d10) throw new Error("Expected fixture to include a d10 die");
     if (!d12) throw new Error("Expected fixture to include a d12 die");
+    engine.getState().G.gigDice[d10.id]!.dieType = "d20";
     engine.getState().G.gigDice[d12.id]!.dieType = "d20";
 
     engine.playCard(welcomeToNightCityRetailOverTheEdge, { as: P1 });
-    engine.resolveEffectTarget(alphaSwordwiseHuscle, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
 
     expect(engine.getCardsInZone("trash", P2).map((card) => card.definitionId)).toContain(
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
   });
 });

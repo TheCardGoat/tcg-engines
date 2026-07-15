@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSwordwiseHuscle } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -16,7 +16,7 @@ test("Reboot Optics - friendly units on field", async ({ page }) => {
   const target = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaSwordwiseHuscle.id,
+    welcomeToNightCityRetailSwordwiseHuscle.id,
   );
   const program = expectDefined(
     "Reboot Optics in hand",

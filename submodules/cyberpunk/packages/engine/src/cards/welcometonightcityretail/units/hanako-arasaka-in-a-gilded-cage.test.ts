@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailHanakoArasakaInAGildedCage,
+  welcomeToNightCityRetailMantisBlades,
+  welcomeToNightCityRetailRebootOptics,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
 
@@ -10,7 +13,12 @@ describe("Hanako Arasaka - In A Gilded Cage", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailHanakoArasakaInAGildedCage],
-        deck: [alphaCorpoSecurity, alphaCorpoSecurity, alphaCorpoSecurity, alphaCorpoSecurity],
+        deck: [
+          welcomeToNightCityRetailCorpoSecurity,
+          welcomeToNightCityRetailFieldOperator,
+          welcomeToNightCityRetailMantisBlades,
+          welcomeToNightCityRetailRebootOptics,
+        ],
         eddies: 4,
         gigArea: [{ dieType: "d4", faceValue: 2 }],
       },
@@ -23,15 +31,15 @@ describe("Hanako Arasaka - In A Gilded Cage", () => {
     expect(engine.getCardsInZone("field", P1).map((card) => card.definitionId)).toContain(
       welcomeToNightCityRetailHanakoArasakaInAGildedCage.id,
     );
-    expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toContain(
-      alphaCorpoSecurity.id,
-    );
+    expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toEqual([
+      welcomeToNightCityRetailCorpoSecurity.id,
+      welcomeToNightCityRetailRebootOptics.id,
+    ]);
     expect(
-      welcomeToNightCityRetailHanakoArasakaInAGildedCage.abilities[0]!.effects[0],
-    ).toMatchObject({
-      effect: "searchDeck",
-      lookCount: 4,
-      reveal: true,
-    });
+      engine
+        .getCardsInZone("deck", P1)
+        .map((card) => card.definitionId)
+        .slice(-2),
+    ).toEqual([welcomeToNightCityRetailFieldOperator.id, welcomeToNightCityRetailMantisBlades.id]);
   });
 });

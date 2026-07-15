@@ -9,17 +9,17 @@ import {
   expectAttachTarget,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaMandibularUpgrade,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailMandibularUpgrade,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
 registerMatchers();
 
-const gear = alphaMandibularUpgrade; // cost 1, power 0, keyword: blocker
-const lowlife = alphaRuthlessLowlife; // cost 2, power 1, unit
-const huscle = alphaSwordwiseHuscle; // cost 3, power 5, unit
+const gear = welcomeToNightCityRetailMandibularUpgrade; // cost 1, power 0, keyword: blocker
+const lowlife = welcomeToNightCityRetailMoxInciters; // cost 2, power 1, unit
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, power 5, unit
 
 describe("Mandibular Upgrade", () => {
   describe("UI prompt", () => {
@@ -94,7 +94,7 @@ describe("Mandibular Upgrade", () => {
       // P2's turn: attack directly
       engine.passPhase({ as: P2 }); // play → attack
       engine.attackRival(huscle, { as: P2 });
-      engine.resolveAttack({ as: P2 }); // offensive → defensive
+      engine.resolveAttack({ as: P2 }); // attack → react
 
       // P1 blocks with lowlife
       engine.useBlocker(lowlife, { as: P1 });

@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { alphaEmergencyAtlus } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailEmergencyAtlus } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -19,7 +19,7 @@ describe("Emergency Atlus jsdom happy path", () => {
       const atlus = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaEmergencyAtlus.id,
+        welcomeToNightCityRetailEmergencyAtlus.id,
       );
 
       await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, atlus.instanceId, 7);

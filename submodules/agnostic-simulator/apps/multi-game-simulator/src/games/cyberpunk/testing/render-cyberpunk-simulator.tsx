@@ -3,6 +3,8 @@ import { render } from "@testing-library/react";
 import { TestingLibraryDomDriver } from "@tcg/simulator-testing/testing-library";
 import type { ReactNode } from "react";
 
+import { CardPreviewProvider } from "../components/CardPreview/CardPreviewContext";
+import { CardInspectProvider } from "../components/GameBoard/CardInspectContext";
 import { UserConfigProvider, type ScenarioId } from "../engine";
 import { BoardSharedPage } from "../pages/BoardShared.page";
 import { theme } from "../theme";
@@ -45,7 +47,9 @@ export function renderCyberpunkSimulatorScenario({
     {
       wrapper: ({ children }: { children: ReactNode }) => (
         <MantineProvider theme={theme} env="test">
-          {children}
+          <CardInspectProvider>
+            <CardPreviewProvider>{children}</CardPreviewProvider>
+          </CardInspectProvider>
         </MantineProvider>
       ),
     },

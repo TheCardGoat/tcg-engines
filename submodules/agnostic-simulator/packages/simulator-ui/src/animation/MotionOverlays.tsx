@@ -35,10 +35,13 @@ export function CardMotionOverlay({
     "motion-destination",
   );
   const faceChanges = overlay.sourceFace !== overlay.destinationFace;
+  const isSpotlight = overlay.kind === "spotlight";
 
   return (
     <motion.div
-      className="motion-card-overlay pointer-events-none fixed z-[1000] [perspective:900px]"
+      className={`motion-card-overlay pointer-events-none fixed z-[1000] [perspective:900px] ${
+        isSpotlight ? "drop-shadow-[0_0_20px_rgba(255,235,122,0.55)]" : ""
+      }`}
       data-testid="motion-card-overlay"
       data-motion-kind={overlay.kind}
       data-motion-id={overlay.id}
@@ -58,26 +61,34 @@ export function CardMotionOverlay({
       initial={
         reduced
           ? false
-          : {
-              x: overlay.from.left - overlay.to.left,
-              y: overlay.from.top - overlay.to.top,
-              scaleX: overlay.from.width / overlay.to.width,
-              scaleY: overlay.from.height / overlay.to.height,
-              opacity: overlay.kind === "enter" ? 0 : 1,
-            }
+          : isSpotlight
+            ? { opacity: 0, scale: 0.96 }
+            : {
+                x: overlay.from.left - overlay.to.left,
+                y: overlay.from.top - overlay.to.top,
+                scaleX: overlay.from.width / overlay.to.width,
+                scaleY: overlay.from.height / overlay.to.height,
+                opacity: overlay.kind === "enter" ? 0 : 1,
+              }
       }
       animate={
         reduced
           ? { opacity: overlay.kind === "exit" ? 0 : 1 }
-          : {
-              x: 0,
-              y: 0,
-              scaleX: overlay.kind === "exit" ? 0.9 : 1,
-              scaleY: overlay.kind === "exit" ? 0.9 : 1,
-              opacity: overlay.kind === "exit" ? 0 : 1,
-            }
+          : isSpotlight
+            ? { opacity: [0, 1, 1, 0], scale: [0.96, 1, 1, 0.98] }
+            : {
+                x: 0,
+                y: 0,
+                scaleX: overlay.kind === "exit" ? 0.9 : 1,
+                scaleY: overlay.kind === "exit" ? 0.9 : 1,
+                opacity: overlay.kind === "exit" ? 0 : 1,
+              }
       }
-      transition={{ duration, delay, ease: CARD_EASE }}
+      transition={
+        isSpotlight
+          ? { duration, delay, ease: "easeOut", times: [0, 0.14, 0.86, 1] }
+          : { duration, delay, ease: CARD_EASE }
+      }
       onAnimationComplete={() => onComplete(overlay)}
     >
       <div className="relative h-full w-full [&_.sim-card-face]:h-full [&_.sim-card-face]:min-h-0 [&_.sim-card-face]:w-full">
@@ -119,6 +130,28 @@ export function CardMotionOverlay({
             fullImageFit="cover"
           />
         )}
+        {overlay.label ? (
+          <motion.div
+            className="pointer-events-none absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-[calc(100%+6px)] whitespace-nowrap rounded-sm border border-[#ffeb7a] bg-[#120713]/95 px-2 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-[#ffeb7a] shadow-[0_0_18px_rgba(255,45,117,0.5)]"
+            data-testid="motion-card-result-badge"
+            data-motion-id={overlay.id}
+            data-result-label={overlay.label}
+            initial={reduced ? false : { opacity: 0, y: 4, scale: 0.96 }}
+            animate={
+              reduced
+                ? { opacity: 1, y: 0, scale: 1 }
+                : { opacity: [0, 1, 1, 0], y: [4, 0, 0, -2], scale: [0.96, 1, 1, 0.98] }
+            }
+            transition={{
+              duration: duration + (reduced ? 0 : 0.25),
+              delay,
+              ease: "easeOut",
+              times: [0, 0.16, 0.84, 1],
+            }}
+          >
+            {overlay.label}
+          </motion.div>
+        ) : null}
       </div>
     </motion.div>
   );
@@ -137,16 +170,124 @@ export function BeamMotionOverlay({
   const delay = reduced ? 0 : overlay.delayMs / 1000;
   const source = rectCenter(overlay.source);
   let completionAttached = false;
+  const isDirectCombat = overlay.kind === "combat" && overlay.attackKind === "direct";
+  const isFightCombat = overlay.kind === "combat" && overlay.attackKind === "fight";
+  const isBlockedCombat = overlay.kind === "combat" && overlay.reason === "blocked";
+  const sourceBadge =
+    overlay.kind === "effect" && overlay.sourceLabel
+      ? overlay.sourceLabel
+      : isBlockedCombat
+        ? "Block"
+        : isDirectCombat
+          ? "Attack"
+          : isFightCombat
+            ? (overlay.sourceLabel ?? "Attacker")
+            : null;
+  const sourceBadgeTitle =
+    isDirectCombat || isBlockedCombat || isFightCombat ? overlay.sourceLabel : sourceBadge;
 
   return (
     <>
-      {overlay.targets.map(({ ref, rect }, index) => {
+      {sourceBadge ? (
+        <>
+          <motion.div
+            className={`pointer-events-none fixed z-[1002] rounded-md border-2 ${
+              isDirectCombat
+                ? "border-[#ff2d75] shadow-[0_0_24px_rgba(255,45,117,0.75),inset_0_0_16px_rgba(255,235,122,0.2)]"
+                : isBlockedCombat
+                  ? "border-[#ffeb7a] shadow-[0_0_24px_rgba(255,235,122,0.72),inset_0_0_16px_rgba(43,243,190,0.2)]"
+                  : "border-[#ffeb7a] shadow-[0_0_20px_rgba(255,235,122,0.65),inset_0_0_14px_rgba(255,235,122,0.18)]"
+            }`}
+            data-testid="motion-source-pulse"
+            data-motion-id={overlay.id}
+            data-motion-kind={overlay.kind}
+            data-attack-kind={overlay.attackKind}
+            data-combat-reason={overlay.reason}
+            data-source-ref={overlay.sourceRef ? refKey(overlay.sourceRef) : undefined}
+            data-source-label={sourceBadgeTitle ?? sourceBadge}
+            style={{
+              left: overlay.source.left,
+              top: overlay.source.top,
+              width: overlay.source.width,
+              height: overlay.source.height,
+            }}
+            initial={reduced ? false : { opacity: 0, scale: 0.96 }}
+            animate={
+              reduced ? { opacity: 0 } : { opacity: [0, 0.95, 0], scale: [0.96, 1.08, 1.12] }
+            }
+            transition={{ duration, delay, ease: "easeOut", times: [0, 0.28, 1] }}
+          />
+          <motion.div
+            className={`pointer-events-none fixed z-[1004] max-w-[min(18rem,calc(100vw-2rem))] rounded-sm border px-2 py-1 text-[11px] font-black uppercase shadow-[0_0_20px_rgba(255,235,122,0.42)] ${
+              isDirectCombat
+                ? "border-[#ff2d75] bg-[#190611]/95 text-[#ffe66d]"
+                : isBlockedCombat
+                  ? "border-[#ffeb7a] bg-[#161004]/95 text-[#fff4a8]"
+                  : isFightCombat
+                    ? "border-[#2bf3be] bg-[#061516]/95 text-[#baffef]"
+                    : "border-[#ffeb7a] bg-[#151005]/95 text-[#fff4a8]"
+            }`}
+            data-testid="motion-source-badge"
+            data-motion-id={overlay.id}
+            data-motion-kind={overlay.kind}
+            data-attack-kind={overlay.attackKind}
+            data-combat-reason={overlay.reason}
+            data-source-label={sourceBadgeTitle ?? sourceBadge}
+            style={{
+              left: source.x,
+              top: overlay.source.top - 10,
+              transform: "translate(-50%, -100%)",
+            }}
+            initial={reduced ? false : { opacity: 0, y: 4, scale: 0.96 }}
+            animate={
+              reduced
+                ? { opacity: 1, y: 0, scale: 1 }
+                : { opacity: [0, 1, 1, 0], y: [4, 0, 0, -2], scale: [0.96, 1, 1, 0.98] }
+            }
+            transition={{
+              duration: duration + (reduced ? 0 : 0.35),
+              delay,
+              ease: "easeOut",
+              times: [0, 0.14, 0.86, 1],
+            }}
+          >
+            <span className="block text-[8px] leading-none text-[#2bf3be]">
+              {isDirectCombat
+                ? "Direct"
+                : isBlockedCombat
+                  ? "Blocker"
+                  : isFightCombat
+                    ? "Deals"
+                    : "Trigger"}
+            </span>
+            <span className="block truncate">{sourceBadgeTitle ?? sourceBadge}</span>
+          </motion.div>
+        </>
+      ) : null}
+      {overlay.targets.map(({ ref, rect, label }, index) => {
         const target = rectCenter(rect);
         const dx = target.x - source.x;
         const dy = target.y - source.y;
         const length = Math.hypot(dx, dy);
         const renderedLength = Math.max(8, length);
         const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+        const resultBadgePosition =
+          overlay.kind === "combat"
+            ? combatResultBadgePosition(source.x, source.y, dx, dy, renderedLength)
+            : {
+                left: rect.left + rect.width / 2,
+                top: rect.top - 10,
+                transform: "translate(-50%, -100%)",
+              };
+        const detailBadgePosition = combatDetailBadgePosition(
+          source.x,
+          source.y,
+          dx,
+          dy,
+          renderedLength,
+        );
+        const fightTargetLabel =
+          overlay.kind === "combat" && overlay.attackKind === "fight" ? (label ?? "Target") : null;
         const attachCompletion = !completionAttached;
         completionAttached = true;
         return (
@@ -167,7 +308,13 @@ export function BeamMotionOverlay({
               }}
             >
               <motion.div
-                className="h-full w-full rounded-full bg-[linear-gradient(90deg,rgba(43,243,190,0.08),rgba(43,243,190,0.95),rgba(255,235,122,0.95))] shadow-[0_0_14px_rgba(43,243,190,0.72)]"
+                className={`h-full w-full rounded-full ${
+                  isDirectCombat
+                    ? "bg-[linear-gradient(90deg,rgba(255,45,117,0.08),rgba(255,45,117,0.98),rgba(255,235,122,0.98))] shadow-[0_0_18px_rgba(255,45,117,0.78)]"
+                    : isBlockedCombat
+                      ? "bg-[linear-gradient(90deg,rgba(255,235,122,0.08),rgba(255,235,122,0.98),rgba(43,243,190,0.98))] shadow-[0_0_18px_rgba(255,235,122,0.72)]"
+                      : "bg-[linear-gradient(90deg,rgba(43,243,190,0.08),rgba(43,243,190,0.95),rgba(255,235,122,0.95))] shadow-[0_0_14px_rgba(43,243,190,0.72)]"
+                }`}
                 initial={reduced ? false : { opacity: 0, scaleX: 0 }}
                 animate={reduced ? { opacity: 0 } : { opacity: [0, 1, 0], scaleX: [0, 1, 1] }}
                 transition={{ duration, delay, ease: "easeOut", times: [0, 0.42, 1] }}
@@ -176,9 +323,18 @@ export function BeamMotionOverlay({
               />
             </div>
             <motion.div
-              className="pointer-events-none fixed z-[1002] rounded-md border-2 border-[#2bf3be] shadow-[0_0_18px_rgba(43,243,190,0.65)]"
+              className={`pointer-events-none fixed z-[1002] rounded-md border-2 ${
+                isDirectCombat
+                  ? "border-[#ffeb7a] shadow-[0_0_22px_rgba(255,235,122,0.76)]"
+                  : isBlockedCombat
+                    ? "border-[#2bf3be] shadow-[0_0_22px_rgba(43,243,190,0.7)]"
+                    : "border-[#2bf3be] shadow-[0_0_18px_rgba(43,243,190,0.65)]"
+              }`}
               data-testid="motion-target-pulse"
               data-motion-id={overlay.id}
+              data-motion-kind={overlay.kind}
+              data-attack-kind={overlay.attackKind}
+              data-combat-reason={overlay.reason}
               data-target-ref={refKey(ref)}
               style={{ left: rect.left, top: rect.top, width: rect.width, height: rect.height }}
               initial={reduced ? false : { opacity: 0, scale: 0.92 }}
@@ -187,18 +343,102 @@ export function BeamMotionOverlay({
               }
               transition={{ duration, delay, ease: "easeOut", times: [0, 0.34, 1] }}
             />
-            {overlay.label ? (
+            {overlay.kind === "effect" && label ? (
               <motion.div
-                className="pointer-events-none fixed z-[1003] rounded-sm border border-[#ff2d75] bg-[#120713]/95 px-2 py-1 text-[11px] font-black uppercase tracking-[0.18em] text-[#ffeb7a] shadow-[0_0_20px_rgba(255,45,117,0.55)]"
-                data-testid="motion-result-badge"
+                className="pointer-events-none fixed z-[1004] max-w-[min(16rem,calc(100vw-2rem))] rounded-sm border border-[#2bf3be] bg-[#071516]/95 px-2 py-1 text-[10px] font-black uppercase text-[#baffef] shadow-[0_0_18px_rgba(43,243,190,0.45)]"
+                data-testid="motion-target-badge"
                 data-motion-id={overlay.id}
-                data-result-label={overlay.label}
                 data-target-ref={refKey(ref)}
+                data-target-label={label}
                 style={{
                   left: rect.left + rect.width / 2,
-                  top: rect.top - 10,
-                  transform: "translate(-50%, -100%)",
+                  top: rect.top + rect.height + 8,
+                  transform: "translateX(-50%)",
                 }}
+                initial={reduced ? false : { opacity: 0, y: -3, scale: 0.96 }}
+                animate={
+                  reduced
+                    ? { opacity: 1, y: 0, scale: 1 }
+                    : { opacity: [0, 1, 1, 0], y: [-3, 0, 0, 2], scale: [0.96, 1, 1, 0.98] }
+                }
+                transition={{
+                  duration: duration + (reduced ? 0 : 0.35),
+                  delay,
+                  ease: "easeOut",
+                  times: [0, 0.14, 0.86, 1],
+                }}
+              >
+                <span className="block text-[8px] leading-none text-[#ffeb7a]">Target</span>
+                <span className="block truncate">{label}</span>
+              </motion.div>
+            ) : null}
+            {fightTargetLabel ? (
+              <motion.div
+                className="pointer-events-none fixed z-[1004] max-w-[min(16rem,calc(100vw-2rem))] rounded-sm border border-[#ffeb7a] bg-[#160811]/95 px-2 py-1 text-[10px] font-black uppercase text-[#fff4a8] shadow-[0_0_18px_rgba(255,235,122,0.42)]"
+                data-testid="motion-combat-target-badge"
+                data-motion-id={overlay.id}
+                data-target-ref={refKey(ref)}
+                data-target-label={fightTargetLabel}
+                style={{
+                  left: rect.left + rect.width / 2,
+                  top: rect.top + rect.height + 8,
+                  transform: "translateX(-50%)",
+                }}
+                initial={reduced ? false : { opacity: 0, y: -3, scale: 0.96 }}
+                animate={
+                  reduced
+                    ? { opacity: 1, y: 0, scale: 1 }
+                    : { opacity: [0, 1, 1, 0], y: [-3, 0, 0, 2], scale: [0.96, 1, 1, 0.98] }
+                }
+                transition={{
+                  duration: duration + (reduced ? 0 : 0.35),
+                  delay,
+                  ease: "easeOut",
+                  times: [0, 0.14, 0.86, 1],
+                }}
+              >
+                <span className="block text-[8px] leading-none text-[#ff2d75]">Receives</span>
+                <span className="block truncate">{fightTargetLabel}</span>
+              </motion.div>
+            ) : null}
+            {overlay.detailLabel ? (
+              <motion.div
+                className="pointer-events-none fixed z-[1010] rounded-sm border border-[#2bf3be] bg-[#061516]/95 px-2 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-[#baffef] shadow-[0_0_18px_rgba(43,243,190,0.45)]"
+                data-testid="motion-combat-detail-badge"
+                data-motion-id={overlay.id}
+                data-motion-kind={overlay.kind}
+                data-detail-label={overlay.detailLabel}
+                data-target-ref={refKey(ref)}
+                style={detailBadgePosition}
+                initial={reduced ? false : { opacity: 0, scale: 0.9 }}
+                animate={
+                  reduced
+                    ? { opacity: 1, scale: 1 }
+                    : { opacity: [0, 1, 1, 0], scale: [0.9, 1, 1, 0.96] }
+                }
+                transition={{
+                  duration: duration + (reduced ? 0 : 0.35),
+                  delay,
+                  ease: "easeOut",
+                  times: [0, 0.14, 0.86, 1],
+                }}
+              >
+                {overlay.detailLabel}
+              </motion.div>
+            ) : null}
+            {overlay.label ? (
+              <motion.div
+                className={`pointer-events-none fixed z-[1010] rounded-sm border px-2 py-1 text-[11px] font-black uppercase text-[#ffeb7a] shadow-[0_0_20px_rgba(255,45,117,0.55)] ${
+                  overlay.kind === "combat"
+                    ? "border-[#ffeb7a] bg-[#160811]/95 tracking-[0.12em]"
+                    : "border-[#ff2d75] bg-[#120713]/95 tracking-[0.18em]"
+                }`}
+                data-testid="motion-result-badge"
+                data-motion-id={overlay.id}
+                data-motion-kind={overlay.kind}
+                data-result-label={overlay.label}
+                data-target-ref={refKey(ref)}
+                style={resultBadgePosition}
                 initial={reduced ? false : { opacity: 0, scale: 0.9 }}
                 animate={
                   reduced
@@ -233,25 +473,70 @@ export function ResourceMotionOverlay({
 }) {
   const duration = reduced ? 0.03 : overlay.durationMs / 1000;
   const delay = reduced ? 0 : overlay.delayMs / 1000;
+  const hasValueTransition =
+    overlay.fromValue !== undefined &&
+    overlay.toValue !== undefined &&
+    overlay.fromValue !== overlay.toValue;
+  const positive = overlay.delta >= 0;
   return (
-    <motion.span
-      className="pointer-events-none fixed z-[1003] rounded-full px-2 py-1 text-[13px] font-extrabold leading-none shadow-[0_0_18px_rgba(124,255,177,.45)]"
-      data-testid="motion-resource-float"
-      data-motion-id={overlay.id}
-      style={{
-        left: overlay.anchor.left + overlay.anchor.width / 2,
-        top: overlay.anchor.top,
-        translateX: "-50%",
-        color: overlay.delta >= 0 ? "#07131f" : "#fff5d6",
-        background: overlay.delta >= 0 ? "#7cffb1" : "#ff4d5e",
-      }}
-      initial={reduced ? false : { y: 0, opacity: 0 }}
-      animate={reduced ? { opacity: 0 } : { y: [0, -12, -56], opacity: [0, 1, 0] }}
-      transition={{ duration, delay, ease: "easeOut", times: [0, 0.2, 1] }}
-      onAnimationComplete={() => onComplete(overlay)}
-    >
-      {`${overlay.delta >= 0 ? "+" : ""}${overlay.delta}${overlay.label ? ` ${overlay.label}` : ""}`}
-    </motion.span>
+    <>
+      {hasValueTransition ? (
+        <motion.span
+          className="pointer-events-none fixed z-[1003] inline-flex items-center gap-1 rounded-md border border-[#ffeb7a] bg-[#070b13]/94 px-2 py-1 text-[12px] font-black text-[#ffeb7a] shadow-[0_0_22px_rgba(255,235,122,0.48)]"
+          data-testid="motion-resource-value"
+          data-motion-id={overlay.id}
+          data-from-value={overlay.fromValue}
+          data-to-value={overlay.toValue}
+          data-delta={overlay.delta}
+          style={{
+            left: overlay.anchor.left + overlay.anchor.width / 2,
+            top: overlay.anchor.top - 8,
+            transform: "translate(-50%, -100%)",
+          }}
+          initial={reduced ? false : { opacity: 0, y: 4, scale: 0.96 }}
+          animate={
+            reduced
+              ? { opacity: 1, y: 0, scale: 1 }
+              : { opacity: [0, 1, 1, 0], y: [4, 0, 0, -2], scale: [0.96, 1.04, 1, 0.98] }
+          }
+          transition={{ duration, delay, ease: "easeOut", times: [0, 0.18, 0.72, 1] }}
+          onAnimationComplete={hasValueTransition ? () => onComplete(overlay) : undefined}
+        >
+          <span>{overlay.fromValue}</span>
+          <span className="text-[10px] text-[#2bf3be]">-&gt;</span>
+          <span>{overlay.toValue}</span>
+          <span className={positive ? "ml-1 text-[#7cffb1]" : "ml-1 text-[#ff7b88]"}>
+            {positive ? "+" : ""}
+            {overlay.delta}
+          </span>
+        </motion.span>
+      ) : null}
+      {!hasValueTransition ? (
+        <motion.span
+          className="pointer-events-none fixed z-[1004] rounded-full px-2 py-1 text-[13px] font-extrabold leading-none shadow-[0_0_18px_rgba(124,255,177,.45)]"
+          data-testid="motion-resource-float"
+          data-motion-id={overlay.id}
+          style={{
+            left: overlay.anchor.left + overlay.anchor.width / 2,
+            top: overlay.anchor.top,
+            translateX: "-50%",
+            color: positive ? "#07131f" : "#fff5d6",
+            background: positive ? "#7cffb1" : "#ff4d5e",
+          }}
+          initial={reduced ? false : { y: 0, opacity: 0 }}
+          animate={reduced ? { opacity: 0 } : { y: [0, -12, -56], opacity: [0, 1, 0] }}
+          transition={{
+            duration,
+            delay,
+            ease: "easeOut",
+            times: [0, 0.2, 1],
+          }}
+          onAnimationComplete={() => onComplete(overlay)}
+        >
+          {`${positive ? "+" : ""}${overlay.delta}${overlay.label ? ` ${overlay.label}` : ""}`}
+        </motion.span>
+      ) : null}
+    </>
   );
 }
 
@@ -266,25 +551,54 @@ export function PhaseMotionOverlay({
 }) {
   const duration = reduced ? 0.03 : overlay.durationMs / 1000;
   const delay = reduced ? 0 : overlay.delayMs / 1000;
+  const turnTitle =
+    overlay.variant === "turn"
+      ? overlay.playerId && overlay.playerId === overlay.viewerSeatId
+        ? "Your Turn"
+        : "Rival Turn"
+      : null;
   return (
-    <motion.div
-      className="pointer-events-none fixed z-[1003] flex items-center gap-2 rounded-md border border-[rgba(76,195,255,.55)] bg-[rgba(6,13,30,.86)] px-4 py-2 text-[13px] font-bold uppercase text-white shadow-[0_0_24px_rgba(76,195,255,.28),0_12px_36px_rgba(0,0,0,.35)]"
+    <div
+      className="pointer-events-none fixed z-[1003]"
       data-testid="motion-phase-change"
       data-motion-id={overlay.id}
+      data-motion-phase-variant={overlay.variant}
+      data-turn-number={overlay.turnNumber}
       style={{
         left: overlay.center.x,
         top: overlay.center.y,
         transform: "translate(-50%, -50%)",
       }}
-      initial={reduced ? false : { x: 30, opacity: 0 }}
-      animate={reduced ? { opacity: 0 } : { x: [30, 0, 0, -30], opacity: [0, 1, 1, 0] }}
-      transition={{ duration, delay, ease: "linear", times: [0, 0.18, 0.82, 1] }}
-      onAnimationComplete={() => onComplete(overlay)}
     >
-      <span className="opacity-60">{formatLabel(overlay.from)}</span>
-      <span className="text-[rgba(76,195,255,.9)]">&gt;</span>
-      <span>{formatLabel(overlay.to)}</span>
-    </motion.div>
+      <motion.div
+        className="flex min-w-36 flex-col items-center justify-center rounded-md border border-[rgba(76,195,255,.55)] bg-[rgba(6,13,30,.86)] px-4 py-2 text-center text-[13px] font-bold text-white shadow-[0_0_24px_rgba(76,195,255,.28),0_12px_36px_rgba(0,0,0,.35)]"
+        initial={reduced ? false : { y: 8, scale: 0.96, opacity: 0 }}
+        animate={
+          reduced
+            ? { opacity: [1, 1, 0] }
+            : { y: [8, 0, 0, -8], scale: [0.96, 1, 1, 0.98], opacity: [0, 1, 1, 0] }
+        }
+        transition={{ duration, delay, ease: "easeOut", times: [0, 0.18, 0.82, 1] }}
+        onAnimationComplete={() => onComplete(overlay)}
+      >
+        {turnTitle ? (
+          <>
+            <span>{turnTitle}</span>
+            {overlay.turnNumber ? (
+              <span className="mt-0.5 text-[11px] font-semibold text-[rgba(76,195,255,.9)]">
+                Turn {overlay.turnNumber}
+              </span>
+            ) : null}
+          </>
+        ) : (
+          <span className="flex items-center gap-2">
+            <span className="opacity-60">{formatLabel(overlay.from)}</span>
+            <span className="text-[rgba(76,195,255,.9)]">&gt;</span>
+            <span>{formatLabel(overlay.to)}</span>
+          </span>
+        )}
+      </motion.div>
+    </div>
   );
 }
 
@@ -336,6 +650,40 @@ function projectEntityForFace(
     frameStyle: undefined,
     overlayBadges: undefined,
     spawnAnimation: undefined,
+  };
+}
+
+function combatResultBadgePosition(
+  sourceX: number,
+  sourceY: number,
+  dx: number,
+  dy: number,
+  length: number,
+): { left: number; top: number; transform: string } {
+  const safeLength = Math.max(1, length);
+  const normalX = (-dy / safeLength) * 20;
+  const normalY = (dx / safeLength) * 20;
+  return {
+    left: sourceX + dx * 0.58 + normalX,
+    top: sourceY + dy * 0.58 + normalY,
+    transform: "translate(-50%, -50%)",
+  };
+}
+
+function combatDetailBadgePosition(
+  sourceX: number,
+  sourceY: number,
+  dx: number,
+  dy: number,
+  length: number,
+): { left: number; top: number; transform: string } {
+  const safeLength = Math.max(1, length);
+  const normalX = (dy / safeLength) * 24;
+  const normalY = (-dx / safeLength) * 24;
+  return {
+    left: sourceX + dx * 0.5 + normalX,
+    top: sourceY + dy * 0.5 + normalY,
+    transform: "translate(-50%, -50%)",
   };
 }
 

@@ -1,5 +1,6 @@
-import { describe, test } from "vite-plus/test";
-import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { fireEvent, waitFor } from "@testing-library/react";
+import { describe, expect, test } from "vite-plus/test";
+import { welcomeToNightCityRetailSwordwiseHuscle } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 import { ensureJsdomAnimationSupport } from "@cyberpunk/testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
@@ -19,7 +20,7 @@ describe("Kiroshi Optics jsdom happy path", () => {
       const attacker = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSwordwiseHuscle.id,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
       );
 
       await pom.expectFaceDownLegendsCount(CYBERPUNK_P1, 2);
@@ -27,6 +28,17 @@ describe("Kiroshi Optics jsdom happy path", () => {
 
       await pom.attackRival(attacker.instanceId, CYBERPUNK_P1);
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+
+      const sourceName = view.container.querySelector<HTMLElement>(
+        'span[class*="_sourceCardName_"]',
+      );
+      expect(sourceName?.textContent).toBe("Kiroshi Optics");
+      expect(view.container.querySelector(".card-inspector-reference")).toBeNull();
+      fireEvent.mouseOver(sourceName!);
+      await waitFor(() => {
+        expect(document.querySelector('[class*="_preview_"][class*="_visible_"]')).not.toBeNull();
+      });
+      fireEvent.mouseLeave(sourceName!);
 
       const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
       expectEqual("Kiroshi face-down legend target count", eligible.length, 2);

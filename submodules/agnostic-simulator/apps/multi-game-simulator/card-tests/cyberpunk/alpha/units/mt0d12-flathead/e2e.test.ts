@@ -1,6 +1,9 @@
 import { test } from "@playwright/test";
 
-import { alphaCorpoSecurity, alphaMt0d12Flathead } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  theHeistRetailStarterDeckMt0d12Flathead,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -13,12 +16,12 @@ test("MT0D12 Flathead - high Street Cred prevents blocking", async ({ page }) =>
   const flathead = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaMt0d12Flathead.id,
+    theHeistRetailStarterDeckMt0d12Flathead.id,
   );
   const blocker = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaCorpoSecurity.id,
+    welcomeToNightCityRetailCorpoSecurity.id,
   );
 
   expectEqual("Flathead Street Cred", await pom.getStreetCred(CYBERPUNK_P1), 8);
@@ -43,7 +46,7 @@ test("MT0D12 Flathead - high Street Cred prevents blocking", async ({ page }) =>
     throw new Error("Expected Flathead direct attack to remain active.");
   }
   expectEqual("Flathead attack kind", attack.kind, "direct");
-  expectEqual("Flathead attack step", attack.step, "defensive");
+  expectEqual("Flathead attack step", attack.step, "react");
 
   await pom.expectStructuralState();
 });

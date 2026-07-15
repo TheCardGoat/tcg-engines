@@ -1,9 +1,9 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaKiroshiOptics,
-  alphaTBugAmateurPhilosopher,
-  spoilerDumDumMaelstromTriggerman,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
+  welcomeToNightCityRetailDumDumMaelstromTriggerman,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -18,12 +18,12 @@ test("Dum Dum - call defeats gear to draw four", async ({ page }) => {
   const host = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaTBugAmateurPhilosopher.id,
+    welcomeToNightCityRetailTBugAmateurPhilosopher.id,
   );
   const kiroshi = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaKiroshiOptics.id,
+    welcomeToNightCityRetailKiroshiOptics.id,
   );
 
   await pom.callLegend(dumDum.instanceId, CYBERPUNK_P1);
@@ -35,7 +35,7 @@ test("Dum Dum - call defeats gear to draw four", async ({ page }) => {
   expectEqual(
     "Dum Dum definition after call",
     calledDumDum.definitionId,
-    spoilerDumDumMaelstromTriggerman.id,
+    welcomeToNightCityRetailDumDumMaelstromTriggerman.id,
   );
 
   await pom.expectEddies(CYBERPUNK_P1, 2);

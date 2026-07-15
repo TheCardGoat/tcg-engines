@@ -1,6 +1,6 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailGoroTakemuraVengefulBodyguard,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -30,7 +30,7 @@ describe("Goro Takemura - Vengeful Bodyguard (Retail) jsdom happy path", () => {
       const unit = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSwordwiseHuscle.id,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
       );
 
       // Swordwise Huscle has base power 5

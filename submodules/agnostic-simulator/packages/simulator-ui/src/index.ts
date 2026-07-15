@@ -80,6 +80,11 @@ export {
 } from "./components/TabletopCounterBadge";
 export { TargetingArrow } from "./components/TargetingArrow";
 export {
+  TargetFilterModal,
+  type TargetFilterModalClassNames,
+  type TargetFilterModalProps,
+} from "./components/TargetFilterModal";
+export {
   TargetingContext,
   TargetingProvider,
   useTargeting,

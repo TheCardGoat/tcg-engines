@@ -7,7 +7,10 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { alphaArmoredMinotaur, alphaSecondhandBombus } from "@tcg/cyberpunk-cards";
+import {
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailSecondhandBombus,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk-simulator/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -30,12 +33,12 @@ describe("unitSecondhandBombus fixture behavior", () => {
       const bombus = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSecondhandBombus.id,
+        welcomeToNightCityRetailSecondhandBombus.id,
       );
       const minotaur = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaArmoredMinotaur.id,
+        embracingPowerRetailStarterDeckMinotaur.id,
       );
 
       const initialAttack = await pom.getAttackState();
@@ -44,7 +47,7 @@ describe("unitSecondhandBombus fixture behavior", () => {
       }
       expectEqual("Bombus attack attacker", initialAttack.attackerId, minotaur.instanceId);
       expectEqual("Bombus initial attack kind", initialAttack.kind, "direct");
-      expectEqual("Bombus initial attack step", initialAttack.step, "defensive");
+      expectEqual("Bombus initial attack step", initialAttack.step, "react");
       expectEqual("Bombus initial attack rival", initialAttack.rivalId, CYBERPUNK_P1);
 
       await pom.expectFieldCardGrantedRule(CYBERPUNK_P1, bombus.instanceId, "blocker", true);

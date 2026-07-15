@@ -8,9 +8,19 @@ type Reporter = (metric: Metric) => void;
 const reporters = new Map<MetricName, Reporter>();
 const trackEvent = mock(() => {});
 const recordWebVitalMetric = mock((_name: MetricName, _value: number, _rating: Rating) => {});
+const ANALYTICS_TEXT_MAX_LENGTH = 100;
 
 function registerReporter(name: MetricName, reporter: Reporter): void {
   reporters.set(name, reporter);
+}
+
+function truncateForAnalytics(input: unknown): string | undefined {
+  if (input == null) return undefined;
+  const text = String(input);
+  if (text.length === 0) return undefined;
+  return text.length > ANALYTICS_TEXT_MAX_LENGTH
+    ? text.slice(0, ANALYTICS_TEXT_MAX_LENGTH)
+    : text;
 }
 
 mock.module("web-vitals", () => ({
@@ -22,15 +32,10 @@ mock.module("web-vitals", () => ({
 }));
 
 mock.module("./analytics.js", () => ({
-  ANALYTICS_TEXT_MAX_LENGTH: 100,
+  ANALYTICS_TEXT_MAX_LENGTH,
   analyticsErrorFields: (error: unknown) => {
     const code = error instanceof Error ? error.name : undefined;
-    const rawMessage =
-      error instanceof Error ? error.message : typeof error === "string" ? error : undefined;
-    const message =
-      typeof rawMessage === "string" && rawMessage.length > 0
-        ? rawMessage.slice(0, 100)
-        : undefined;
+    const message = truncateForAnalytics(error instanceof Error ? error.message : error);
     return {
       ...(code ? { error_code: code } : {}),
       ...(message ? { error_message: message } : {}),
@@ -43,11 +48,7 @@ mock.module("./analytics.js", () => ({
   trackEvent,
   trackException: () => {},
   trackPageView: () => {},
-  truncateForAnalytics: (input: unknown) => {
-    if (input == null) return undefined;
-    const text = String(input);
-    return text.length === 0 ? undefined : text.slice(0, 100);
-  },
+  truncateForAnalytics,
   updateConsent: () => {},
 }));
 

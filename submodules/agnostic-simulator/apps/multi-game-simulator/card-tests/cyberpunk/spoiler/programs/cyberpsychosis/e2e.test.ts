@@ -1,9 +1,9 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaSecondhandBombus,
-  alphaTBugAmateurPhilosopher,
-  spoilerCyberpsychosis,
+  welcomeToNightCityRetailSecondhandBombus,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
+  welcomeToNightCityRetailCyberpsychosis,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
@@ -20,12 +20,12 @@ test("Cyberpsychosis - equipped unit attack window", async ({ page }) => {
   const tBug = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaTBugAmateurPhilosopher.id,
+    welcomeToNightCityRetailTBugAmateurPhilosopher.id,
   );
   const bombus = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaSecondhandBombus.id,
+    welcomeToNightCityRetailSecondhandBombus.id,
   );
 
   await pom.expectHandSize(CYBERPUNK_P1, 1);
@@ -39,7 +39,9 @@ test("Cyberpsychosis - equipped unit attack window", async ({ page }) => {
   const triggerOptions = await pom.getPendingTriggerOptions(CYBERPUNK_P1);
   const cyberpsychosisTrigger = expectDefined(
     "Cyberpsychosis trigger option",
-    triggerOptions.find((option) => option.cardName === spoilerCyberpsychosis.displayName),
+    triggerOptions.find(
+      (option) => option.cardName === welcomeToNightCityRetailCyberpsychosis.displayName,
+    ),
   );
   expectEqual("Cyberpsychosis trigger optional flag", cyberpsychosisTrigger.optional, true);
 
@@ -72,7 +74,11 @@ test("Cyberpsychosis - equipped unit attack window", async ({ page }) => {
   await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, tBug.instanceId, 12);
 
   const remainingTriggers = await pom.getPendingTriggerOptions(CYBERPUNK_P1);
-  if (remainingTriggers.some((option) => option.cardName === spoilerCyberpsychosis.displayName)) {
+  if (
+    remainingTriggers.some(
+      (option) => option.cardName === welcomeToNightCityRetailCyberpsychosis.displayName,
+    )
+  ) {
     throw new Error("Expected Cyberpsychosis to leave the trigger queue after resolving.");
   }
 

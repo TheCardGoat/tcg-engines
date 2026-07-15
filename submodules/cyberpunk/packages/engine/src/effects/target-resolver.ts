@@ -23,6 +23,8 @@ export interface ResolutionContext {
   readonly boundTargets: Record<string, string[]>;
 }
 
+export type TargetOptionValidation = "valid" | "invalid" | "deferred";
+
 export function resolveTarget(target: TargetDSL, ctx: ResolutionContext): string[] {
   switch (target.selector) {
     case "self":
@@ -72,6 +74,52 @@ export function resolveTarget(target: TargetDSL, ctx: ResolutionContext): string
     }
     default:
       return [];
+  }
+}
+
+export function validateTargetOptions(
+  target: TargetDSL,
+  ctx: ResolutionContext,
+  min = 1,
+): TargetOptionValidation {
+  if (min === 0) return "valid";
+  if (targetDependsOnUnresolvedBinding(target, ctx.boundTargets)) return "deferred";
+  return resolveTarget(target, ctx).length >= min ? "valid" : "invalid";
+}
+
+function targetDependsOnUnresolvedBinding(
+  target: TargetDSL,
+  boundTargets: Record<string, string[]>,
+): boolean {
+  switch (target.selector) {
+    case "self":
+    case "host":
+    case "context":
+    case "attacker":
+      return false;
+    case "bound":
+      return boundTargets[target.id] === undefined;
+    case "card":
+      return [
+        target.maxCostOf,
+        target.maxPowerOfGigValueOf,
+        target.attachedTo,
+        target.costEqualsGigValueOf,
+        target.powerEqualsGigValueOf,
+        target.powerLessThanAnyOf,
+      ].some(
+        (nestedTarget): nestedTarget is TargetDSL =>
+          nestedTarget !== undefined &&
+          targetDependsOnUnresolvedBinding(nestedTarget, boundTargets),
+      );
+    case "gig":
+      return [target.sameValueAs, target.valueNotSharedBy, target.sameSidesAs].some(
+        (nestedTarget): nestedTarget is TargetDSL =>
+          nestedTarget !== undefined &&
+          targetDependsOnUnresolvedBinding(nestedTarget, boundTargets),
+      );
+    default:
+      return assertNever(target);
   }
 }
 

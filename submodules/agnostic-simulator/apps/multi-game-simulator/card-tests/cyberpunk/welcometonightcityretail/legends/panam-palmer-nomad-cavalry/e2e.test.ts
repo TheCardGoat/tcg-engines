@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailPanamPalmerNomadCavalry,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -24,7 +24,7 @@ test("Panam Palmer (Retail) - spend moves gear to field", async ({ page }) => {
   const unit = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaSwordwiseHuscle.id,
+    welcomeToNightCityRetailSwordwiseHuscle.id,
   );
 
   await pom.expectFieldCardAttachedGearCount(CYBERPUNK_P1, unit.instanceId, 0);

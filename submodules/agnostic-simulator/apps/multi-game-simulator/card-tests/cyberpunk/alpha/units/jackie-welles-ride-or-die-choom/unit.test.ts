@@ -7,7 +7,10 @@ import {
   expectAttackCandidate,
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
-import { alphaJackieWellesRideOrDieChoom, alphaRuthlessLowlife } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+  welcomeToNightCityRetailMoxInciters,
+} from "@tcg/cyberpunk-cards";
 
 registerMatchers();
 
@@ -29,27 +32,27 @@ describe("Jackie Welles - Ride Or Die Choom", () => {
   describe("UI prompt", () => {
     it("shows the unit as an attack candidate when ready", () => {
       const engine = createEngine({
-        field: [{ card: alphaJackieWellesRideOrDieChoom, spent: false }],
+        field: [{ card: welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: false }],
       });
-      expectAttackCandidate(engine, alphaJackieWellesRideOrDieChoom);
+      expectAttackCandidate(engine, welcomeToNightCityRetailJackieWellesRideOrDieChoom);
     });
 
     it("does NOT show a spent unit as an attack candidate", () => {
       const engine = createEngine({
-        field: [{ card: alphaJackieWellesRideOrDieChoom, spent: true }],
+        field: [{ card: welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: true }],
       });
-      expectNotAttackCandidate(engine, alphaJackieWellesRideOrDieChoom);
+      expectNotAttackCandidate(engine, welcomeToNightCityRetailJackieWellesRideOrDieChoom);
     });
   });
 
   describe(`[Static] +2 power for each friendly Gig`, () => {
     it("has base power with 0 friendly gigs", () => {
       const engine = createEngine({
-        field: [{ card: alphaJackieWellesRideOrDieChoom, spent: false }],
+        field: [{ card: welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: false }],
         gigArea: [],
       });
 
-      const jackie = engine.getCard(alphaJackieWellesRideOrDieChoom);
+      const jackie = engine.getCard(welcomeToNightCityRetailJackieWellesRideOrDieChoom);
       expect(engine.getState()).toHaveEffectivePower({
         card: jackie.instanceId as string,
         value: 6,
@@ -58,11 +61,11 @@ describe("Jackie Welles - Ride Or Die Choom", () => {
 
     it("gains +2 power with 1 friendly gig", () => {
       const engine = createEngine({
-        field: [{ card: alphaJackieWellesRideOrDieChoom, spent: false }],
+        field: [{ card: welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: false }],
         gigArea: [{ dieType: "d6", faceValue: 3 }],
       });
 
-      const jackie = engine.getCard(alphaJackieWellesRideOrDieChoom);
+      const jackie = engine.getCard(welcomeToNightCityRetailJackieWellesRideOrDieChoom);
       expect(engine.getState()).toHaveEffectivePower({
         card: jackie.instanceId as string,
         value: 8,
@@ -71,7 +74,7 @@ describe("Jackie Welles - Ride Or Die Choom", () => {
 
     it("power scales with multiple gigs (3 gigs = base + 6)", () => {
       const engine = createEngine({
-        field: [{ card: alphaJackieWellesRideOrDieChoom, spent: false }],
+        field: [{ card: welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: false }],
         gigArea: [
           { dieType: "d6", faceValue: 2 },
           { dieType: "d8", faceValue: 1 },
@@ -79,7 +82,7 @@ describe("Jackie Welles - Ride Or Die Choom", () => {
         ],
       });
 
-      const jackie = engine.getCard(alphaJackieWellesRideOrDieChoom);
+      const jackie = engine.getCard(welcomeToNightCityRetailJackieWellesRideOrDieChoom);
       // base 6 + 3 gigs × 2 = 12
       expect(engine.getState()).toHaveEffectivePower({
         card: jackie.instanceId as string,
@@ -89,11 +92,12 @@ describe("Jackie Welles - Ride Or Die Choom", () => {
 
     it("power updates when gaining a new gig", () => {
       const engine = createEngine({
-        field: [{ card: alphaJackieWellesRideOrDieChoom, spent: false }],
+        field: [{ card: welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: false }],
         gigArea: [{ dieType: "d6", faceValue: 3 }],
       });
 
-      const jackieId = engine.getCard(alphaJackieWellesRideOrDieChoom).instanceId as string;
+      const jackieId = engine.getCard(welcomeToNightCityRetailJackieWellesRideOrDieChoom)
+        .instanceId as string;
 
       // 1 gig → base 6 + 2 = 8
       expect(engine.getState()).toHaveEffectivePower({ card: jackieId, value: 8 });
@@ -107,18 +111,21 @@ describe("Jackie Welles - Ride Or Die Choom", () => {
     it("power during attack reflects modifier", () => {
       const engine = createEngine(
         {
-          field: [{ card: alphaJackieWellesRideOrDieChoom, spent: false }],
+          field: [{ card: welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: false }],
           gigArea: [
             { dieType: "d6", faceValue: 2 },
             { dieType: "d8", faceValue: 1 },
           ],
         },
-        { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+        { field: [{ card: welcomeToNightCityRetailMoxInciters, spent: true }] },
       );
 
-      engine.attackUnit(alphaJackieWellesRideOrDieChoom, alphaRuthlessLowlife);
+      engine.attackUnit(
+        welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+        welcomeToNightCityRetailMoxInciters,
+      );
 
-      const jackie = engine.getCard(alphaJackieWellesRideOrDieChoom);
+      const jackie = engine.getCard(welcomeToNightCityRetailJackieWellesRideOrDieChoom);
       // base 6 + 2 gigs × 2 = 10
       expect(engine.getState()).toHaveEffectivePower({
         card: jackie.instanceId as string,
@@ -129,7 +136,7 @@ describe("Jackie Welles - Ride Or Die Choom", () => {
     it("steals two gigs at 14 power", () => {
       const engine = createEngine(
         {
-          field: [{ card: alphaJackieWellesRideOrDieChoom, spent: false }],
+          field: [{ card: welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: false }],
           gigArea: [
             { dieType: "d4", faceValue: 1 },
             { dieType: "d6", faceValue: 2 },
@@ -146,9 +153,9 @@ describe("Jackie Welles - Ride Or Die Choom", () => {
         },
       );
 
-      engine.attackRival(alphaJackieWellesRideOrDieChoom);
-      engine.resolveAttack(); // offensive -> defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive -> steal
+      engine.attackRival(welcomeToNightCityRetailJackieWellesRideOrDieChoom);
+      engine.resolveAttack(); // attack -> react
+      engine.resolveAttack({ as: P2, pass: true }); // react -> steal
       engine.resolveAttack(); // steal: 14 power steals 2 gigs
 
       expect(engine.getGigCount(P1)).toBe(6);
@@ -158,7 +165,7 @@ describe("Jackie Welles - Ride Or Die Choom", () => {
     it("does NOT gain power from rival's gigs", () => {
       const engine = createEngine(
         {
-          field: [{ card: alphaJackieWellesRideOrDieChoom, spent: false }],
+          field: [{ card: welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: false }],
           // P1 has no gigs
           gigArea: [],
         },
@@ -170,7 +177,7 @@ describe("Jackie Welles - Ride Or Die Choom", () => {
         },
       );
 
-      const jackie = engine.getCard(alphaJackieWellesRideOrDieChoom);
+      const jackie = engine.getCard(welcomeToNightCityRetailJackieWellesRideOrDieChoom);
       // Only friendly gigs count → 0 gigs → base power 6
       expect(engine.getState()).toHaveEffectivePower({
         card: jackie.instanceId as string,
@@ -181,14 +188,14 @@ describe("Jackie Welles - Ride Or Die Choom", () => {
     it("idle units on same field are NOT buffed (only Jackie)", () => {
       const engine = createEngine({
         field: [
-          { card: alphaJackieWellesRideOrDieChoom, spent: false },
-          { card: alphaRuthlessLowlife, spent: false },
+          { card: welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: false },
+          { card: welcomeToNightCityRetailMoxInciters, spent: false },
         ],
         gigArea: [{ dieType: "d6", faceValue: 3 }],
       });
 
-      const jackie = engine.getCard(alphaJackieWellesRideOrDieChoom);
-      const lowlife = engine.getCard(alphaRuthlessLowlife);
+      const jackie = engine.getCard(welcomeToNightCityRetailJackieWellesRideOrDieChoom);
+      const lowlife = engine.getCard(welcomeToNightCityRetailMoxInciters);
 
       // Jackie gets the buff: base 6 + 1 gig × 2 = 8
       expect(engine.getState()).toHaveEffectivePower({
@@ -205,7 +212,7 @@ describe("Jackie Welles - Ride Or Die Choom", () => {
 
     it("static abilities do not emit action logs", () => {
       const engine = createEngine({
-        field: [{ card: alphaJackieWellesRideOrDieChoom, spent: false }],
+        field: [{ card: welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: false }],
         gigArea: [{ dieType: "d6", faceValue: 3 }],
       });
 
@@ -220,25 +227,36 @@ describe("Jackie Welles - Ride Or Die Choom", () => {
       // With 1 gig Jackie wins.
       const engine = createEngine(
         {
-          field: [{ card: alphaJackieWellesRideOrDieChoom, spent: false }],
+          field: [{ card: welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: false }],
           gigArea: [{ dieType: "d6", faceValue: 2 }],
         },
         {
           // Use another Jackie as a 6-power defender
-          field: [{ card: alphaJackieWellesRideOrDieChoom, spent: true }],
+          field: [{ card: welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: true }],
         },
       );
 
-      engine.attackUnit(alphaJackieWellesRideOrDieChoom, alphaJackieWellesRideOrDieChoom);
+      engine.attackUnit(
+        welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+        welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+      );
       engine.resolveFullFight();
 
       // P1's Jackie (8 power) survives
       const p1Field = engine.getCardsInZone("field", P1);
-      expect(p1Field.some((c) => c.definitionId === alphaJackieWellesRideOrDieChoom.id)).toBe(true);
+      expect(
+        p1Field.some(
+          (c) => c.definitionId === welcomeToNightCityRetailJackieWellesRideOrDieChoom.id,
+        ),
+      ).toBe(true);
 
       // P2's Jackie (6 power, no friendly gigs) is defeated
       const p2Trash = engine.getCardsInZone("trash", P2);
-      expect(p2Trash.some((c) => c.definitionId === alphaJackieWellesRideOrDieChoom.id)).toBe(true);
+      expect(
+        p2Trash.some(
+          (c) => c.definitionId === welcomeToNightCityRetailJackieWellesRideOrDieChoom.id,
+        ),
+      ).toBe(true);
     });
   });
 });

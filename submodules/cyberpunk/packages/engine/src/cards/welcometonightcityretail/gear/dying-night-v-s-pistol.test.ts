@@ -1,11 +1,22 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
-  alphaVCorporateExile,
+  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailDyingNightVSPistol,
+  welcomeToNightCityRetailFieldOperator,
 } from "@tcg/cyberpunk-cards";
+import { enMessages, formatActionLog } from "../../../logging/index.ts";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
+
+const namedVUnit = {
+  ...welcomeToNightCityRetailFieldOperator,
+  id: "test-dying-night-v-unit",
+  slug: "test-dying-night-v-unit",
+  canonicalId: "test-dying-night-v-unit",
+  name: "V",
+  displayName: "V",
+  abilities: [],
+  timingTriggers: [],
+};
 
 describe("Dying Night — V's Pistol (retail) attack clause", () => {
   it("ATTACK decreases a Gig by up to 2", () => {
@@ -13,7 +24,7 @@ describe("Dying Night — V's Pistol (retail) attack clause", () => {
       {
         field: [
           {
-            card: alphaSwordwiseHuscle,
+            card: welcomeToNightCityRetailFieldOperator,
             spent: false,
             playedThisTurn: false,
             attachedGears: [welcomeToNightCityRetailDyingNightVSPistol],
@@ -25,7 +36,7 @@ describe("Dying Night — V's Pistol (retail) attack clause", () => {
       },
     );
 
-    engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+    engine.attackRival(welcomeToNightCityRetailFieldOperator, { as: P1 });
 
     // The attack clause suspends an adjustGig value choice. Resolve it by
     // setting the rival d8 to 4 (decrease by 2).
@@ -33,25 +44,45 @@ describe("Dying Night — V's Pistol (retail) attack clause", () => {
 
     const rivalDie = engine.getGigDice(P2)[0]!;
     expect(engine.getState().G.gigDice[rivalDie.id]!.faceValue).toBe(4);
+
+    const log = engine.getLastActionLog();
+    expect(log?.messageKey).toBe("move.resolveAdjustGig");
+    expect(formatActionLog(log!, enMessages)).toBe("Adjusted D8 gig die from 6 to 4.");
   });
 
-  it("readies 2 Eddies at end of turn when equipped to a Legend named 'V'", () => {
-    // Printed text: 'At the end of your turn, if this Unit is named "V", ready
-    // 2 Eddies.' alphaVCorporateExile has name "V".
+  it("does not open an adjust choice when no Gig exists", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
-      legendArea: [
+      field: [
         {
-          card: alphaVCorporateExile,
-          faceDown: false,
+          card: welcomeToNightCityRetailFieldOperator,
+          spent: false,
+          playedThisTurn: false,
           attachedGears: [welcomeToNightCityRetailDyingNightVSPistol],
         },
       ],
-      hand: [alphaRuthlessLowlife],
+    });
+
+    engine.attackRival(welcomeToNightCityRetailFieldOperator, { as: P1 });
+
+    expect(engine.getPrompt(P1).choice).toBeNull();
+  });
+
+  it("readies 2 Eddies at end of turn when equipped to a Legend named 'V'", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      field: [
+        {
+          card: namedVUnit,
+          spent: false,
+          playedThisTurn: false,
+          attachedGears: [welcomeToNightCityRetailDyingNightVSPistol],
+        },
+      ],
+      hand: [welcomeToNightCityRetailCorpoSecurity],
       eddies: 6,
     });
 
     // Play a 2-cost card to move 2 Eddies from `eddies` to `spentEddies`.
-    engine.playCard(alphaRuthlessLowlife, { as: P1 });
+    engine.playCard(welcomeToNightCityRetailCorpoSecurity, { as: P1 });
     expect(engine.getEddies(P1)).toBe(4);
     expect(engine.getState().G.players[P1].spentEddies).toBe(2);
 
@@ -64,27 +95,26 @@ describe("Dying Night — V's Pistol (retail) attack clause", () => {
   });
 
   it("does NOT ready Eddies at end of turn when equipped to a non-V host", () => {
-    // alphaSwordwiseHuscle has name "Swordwise Huscle" → cardName condition fails.
     const engine = CyberpunkTestEngine.createWithFixture({
       field: [
         {
-          card: alphaSwordwiseHuscle,
+          card: welcomeToNightCityRetailFieldOperator,
           spent: false,
           playedThisTurn: false,
           attachedGears: [welcomeToNightCityRetailDyingNightVSPistol],
         },
       ],
-      hand: [alphaRuthlessLowlife],
+      hand: [welcomeToNightCityRetailCorpoSecurity],
       eddies: 6,
     });
 
-    engine.playCard(alphaRuthlessLowlife, { as: P1 });
+    engine.playCard(welcomeToNightCityRetailCorpoSecurity, { as: P1 });
     expect(engine.getEddies(P1)).toBe(4);
     expect(engine.getState().G.players[P1].spentEddies).toBe(2);
 
     engine.completeTurn({ as: P1 });
 
-    // No V legend → readyEddies does not fire → Eddies unchanged.
+    // No V host → readyEddies does not fire → Eddies unchanged.
     expect(engine.getEddies(P1)).toBe(4);
     expect(engine.getState().G.players[P1].spentEddies).toBe(2);
   });

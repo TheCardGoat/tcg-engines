@@ -8,10 +8,10 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
 });
 
 import {
-  alphaKiroshiOptics,
-  alphaSecondhandBombus,
-  alphaTBugAmateurPhilosopher,
-  spoilerRiverWardDetectiveOnTheHunt,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailSecondhandBombus,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
+  welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk-simulator/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -37,22 +37,22 @@ describe("legendRiverWardDetectiveOnTheHunt fixture behavior", () => {
       const river = await pom.getCardInZoneByDefinitionId(
         "legendArea",
         CYBERPUNK_P1,
-        spoilerRiverWardDetectiveOnTheHunt.id,
+        welcomeToNightCityRetailRiverWardDetectiveOnTheHunt.id,
       );
       const attacker = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaTBugAmateurPhilosopher.id,
+        welcomeToNightCityRetailTBugAmateurPhilosopher.id,
       );
       const host = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSecondhandBombus.id,
+        welcomeToNightCityRetailSecondhandBombus.id,
       );
       const kiroshi = await pom.getCardInZoneByDefinitionId(
         "hand",
         CYBERPUNK_P1,
-        alphaKiroshiOptics.id,
+        welcomeToNightCityRetailKiroshiOptics.id,
       );
 
       await pom.attackRival(attacker.instanceId, CYBERPUNK_P1);

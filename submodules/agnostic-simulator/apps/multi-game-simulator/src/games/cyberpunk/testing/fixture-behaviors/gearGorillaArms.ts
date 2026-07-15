@@ -1,4 +1,4 @@
-import { alphaTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
 import {
@@ -15,7 +15,7 @@ export const gearGorillaArmsBehavior: CyberpunkFixtureBehavior = {
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaTBugAmateurPhilosopher.id,
+      welcomeToNightCityRetailTBugAmateurPhilosopher.id,
     );
     const firstD4 = expectDefined(
       "Gorilla Arms first rival d4",

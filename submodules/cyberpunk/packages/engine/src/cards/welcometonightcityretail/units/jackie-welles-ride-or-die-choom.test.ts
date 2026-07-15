@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
-  alphaRuthlessLowlife,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailJackieWellesRideOrDieChoom,
 } from "@tcg/cyberpunk-cards";
 import { getEffectivePower } from "../../../active-effects/index.ts";
-import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
+import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
 
 describe("Jackie Welles — Ride or Die Choom (retail)", () => {
   it("ATTACK grants +2 power this turn for each friendly even-valued Gig", () => {
@@ -46,10 +46,10 @@ describe("Jackie Welles — Ride or Die Choom (retail)", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         deck: [
-          alphaRuthlessLowlife,
-          alphaRuthlessLowlife,
-          alphaRuthlessLowlife,
-          alphaRuthlessLowlife,
+          welcomeToNightCityRetailFieldOperator,
+          welcomeToNightCityRetailCorpoSecurity,
+          welcomeToNightCityRetailFieldOperator,
+          welcomeToNightCityRetailCorpoSecurity,
         ],
         field: [
           {
@@ -65,19 +65,20 @@ describe("Jackie Welles — Ride or Die Choom (retail)", () => {
         ],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true, powerModifier: 7 }], // 2+7=9
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true, powerModifier: 7 }], // 2+7=9
       },
     );
 
     const handBefore = engine.getCardsInZone("hand", P1).length;
 
-    engine.attackUnit(welcomeToNightCityRetailJackieWellesRideOrDieChoom, alphaCorpoSecurity, {
-      as: P1,
-    });
-    engine.resolveAttack({ as: P1 });
-    engine.resolveAttack({ as: P2, pass: true });
-    engine.resolveAttack({ as: P1 });
-    engine.resolveAttack({ as: P1 });
+    engine.attackUnit(
+      welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+      welcomeToNightCityRetailCorpoSecurity,
+      {
+        as: P1,
+      },
+    );
+    engine.resolveFullFight({ as: P1 });
 
     // Jackie was defeated → defeated trigger drew 3.
     expect(engine.getCardsInZone("hand", P1)).toHaveLength(handBefore + 3);
@@ -114,7 +115,7 @@ describe("Jackie Welles — Ride or Die Choom (retail)", () => {
     // Empty Gig area → 0 odd Gigs → draw 0 on defeat.
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        deck: [alphaRuthlessLowlife, alphaRuthlessLowlife],
+        deck: [welcomeToNightCityRetailFieldOperator, welcomeToNightCityRetailCorpoSecurity],
         field: [
           {
             card: welcomeToNightCityRetailJackieWellesRideOrDieChoom,
@@ -124,19 +125,20 @@ describe("Jackie Welles — Ride or Die Choom (retail)", () => {
         ],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true, powerModifier: 7 }], // 2+7=9
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true, powerModifier: 7 }], // 2+7=9
       },
     );
 
     const handBefore = engine.getCardsInZone("hand", P1).length;
 
-    engine.attackUnit(welcomeToNightCityRetailJackieWellesRideOrDieChoom, alphaCorpoSecurity, {
-      as: P1,
-    });
-    engine.resolveAttack({ as: P1 });
-    engine.resolveAttack({ as: P2, pass: true });
-    engine.resolveAttack({ as: P1 });
-    engine.resolveAttack({ as: P1 });
+    engine.attackUnit(
+      welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+      welcomeToNightCityRetailCorpoSecurity,
+      {
+        as: P1,
+      },
+    );
+    engine.resolveFullFight({ as: P1 });
 
     // Jackie was defeated but no odd Gigs → defeated trigger drew 0.
     expect(engine.getCardsInZone("hand", P1)).toHaveLength(handBefore);

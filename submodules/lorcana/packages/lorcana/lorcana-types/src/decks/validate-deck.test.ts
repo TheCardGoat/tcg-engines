@@ -192,14 +192,10 @@ describe("validateDeckForFormat", () => {
       const lookup = buildLookup({
         fab: card("fab", { sets: ["FAB"] as LorcanaSetCode[] }),
       });
-      const result = validateDeckForFormat(
-        [{ cardId: "fab", quantity: 60 }],
-        lookup,
-        {
-          ...LORCANA_FORMATS["attack-of-the-vine"],
-          requiresAnySet: ["013"] as LorcanaSetCode[],
-        },
-      );
+      const result = validateDeckForFormat([{ cardId: "fab", quantity: 60 }], lookup, {
+        ...LORCANA_FORMATS["attack-of-the-vine"],
+        requiresAnySet: ["013"] as LorcanaSetCode[],
+      });
       const rule = result.rules.find((r) => r.kind === "REQUIRES_ANY_SET");
 
       expect(rule?.passed).toBe(false);

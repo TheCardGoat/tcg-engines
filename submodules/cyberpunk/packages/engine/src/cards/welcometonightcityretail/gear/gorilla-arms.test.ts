@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaSwordwiseHuscle,
   welcomeToNightCityRetailEvelynParkerBeautifulEnigma,
   welcomeToNightCityRetailGorillaArms,
   welcomeToNightCityRetailOffdutyMalfini,
@@ -30,16 +29,22 @@ describe("Gorilla Arms", () => {
   it("attaches to a unit and contributes four power", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       hand: [welcomeToNightCityRetailGorillaArms],
-      field: [{ card: alphaSwordwiseHuscle, spent: false }],
+      field: [{ card: welcomeToNightCityRetailOffdutyMalfini, spent: false }],
       eddies: 4,
     });
 
     expect(
-      engine.attachGear(welcomeToNightCityRetailGorillaArms, alphaSwordwiseHuscle, { as: P1 }),
+      engine.attachGear(
+        welcomeToNightCityRetailGorillaArms,
+        welcomeToNightCityRetailOffdutyMalfini,
+        {
+          as: P1,
+        },
+      ),
     ).toMatchObject({
       success: true,
     });
-    const host = engine.getCard(alphaSwordwiseHuscle, "field", P1);
+    const host = engine.getCard(welcomeToNightCityRetailOffdutyMalfini, "field", P1);
     expect(host.meta.attachedGearIds).toHaveLength(1);
   });
 
@@ -59,14 +64,16 @@ describe("Gorilla Arms", () => {
   });
 
   it("attributes a card-driven steal to the host Unit (Change A) and bounds the cascade", () => {
-    // Host (Swordwise Huscle, power 5) + Gorilla Arms (+3) = power 8 → direct
+    // Host (Offduty Malfini, power 5) + Gorilla Arms (+3) = power 8 → direct
     // attack steals 1 Gig. Gorilla Arms then steals one rival Gig whose value
     // is not shared by a friendly Gig. P2's gigs use distinct values so exactly
     // one qualifies for the cascade after the direct steal takes the first.
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailGorillaArms],
-        field: [{ card: alphaSwordwiseHuscle, spent: false, playedThisTurn: false }],
+        field: [
+          { card: welcomeToNightCityRetailOffdutyMalfini, spent: false, playedThisTurn: false },
+        ],
         eddies: 4,
       },
       {
@@ -77,11 +84,13 @@ describe("Gorilla Arms", () => {
       },
     );
 
-    engine.attachGear(welcomeToNightCityRetailGorillaArms, alphaSwordwiseHuscle, { as: P1 });
-    engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+    engine.attachGear(welcomeToNightCityRetailGorillaArms, welcomeToNightCityRetailOffdutyMalfini, {
+      as: P1,
+    });
+    engine.attackRival(welcomeToNightCityRetailOffdutyMalfini, { as: P1 });
     engine.resolveFullSteal({ as: P1 });
 
-    const host = engine.getCard(alphaSwordwiseHuscle, "field", P1);
+    const host = engine.getCard(welcomeToNightCityRetailOffdutyMalfini, "field", P1);
 
     // 1 direct-attack steal + 1 Gorilla Arms cascade steal.
     expect(engine.getGigCount(P1)).toBe(2);

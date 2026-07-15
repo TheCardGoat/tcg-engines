@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { alphaSecondhandBombus } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSecondhandBombus } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -19,7 +19,7 @@ describe("Secondhand Bombus jsdom happy path", () => {
       const bombus = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSecondhandBombus.id,
+        welcomeToNightCityRetailSecondhandBombus.id,
       );
 
       await pom.useBlocker(bombus.instanceId, CYBERPUNK_P1);

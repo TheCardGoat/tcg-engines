@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
   welcomeToNightCityRetailCaliberTotentanzSTopDog,
+  welcomeToNightCityRetailCorpoSecurity,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
@@ -13,16 +13,16 @@ describe("Caliber - Totentanz's Top Dog", () => {
         eddies: 5,
       },
       {
-        field: [alphaCorpoSecurity],
+        field: [welcomeToNightCityRetailCorpoSecurity],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailCaliberTotentanzSTopDog, { as: P1 });
     expect(engine.getPrompt(P1).choice?.type).toBe("chooseTarget");
-    engine.resolveEffectTarget(alphaCorpoSecurity, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailCorpoSecurity, { as: P1 });
 
     expect(engine.getCardsInZone("trash", P2).map((card) => card.definitionId)).toContain(
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
   });
 

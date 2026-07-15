@@ -1,5 +1,11 @@
 import { useCallback, useMemo, useState, type MouseEvent as ReactMouseEvent } from "react";
 import { Modal } from "@mantine/core";
+import type {
+  SimulatorEntity,
+  SimulatorTable,
+  SimulatorTargetFilter,
+} from "@tcg/simulator-contract";
+import { TargetFilterModal } from "@tcg/simulator-ui";
 import { BoardContextMenu, type BoardContextMenuAction } from "./BoardContextMenu";
 import { DeckZone } from "./DeckZone";
 import { EddiesZone } from "./EddiesZone";
@@ -155,6 +161,30 @@ export function GameBoard({
 
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null);
   const [confirmingConcede, setConfirmingConcede] = useState(false);
+  const [trashViewerOpen, setTrashViewerOpen] = useState(false);
+  const trashViewerOwnerId = String(PLAYER_SIDE_TO_ID[side]);
+  const trashViewerZoneId = opponent ? "opp-trash" : "p-trash";
+  const trashViewerFilter = useMemo<SimulatorTargetFilter>(
+    () => ({
+      kind: "entity",
+      entityKind: "card",
+      ownerId: trashViewerOwnerId,
+      zoneId: trashViewerZoneId,
+      includeHidden: true,
+    }),
+    [trashViewerOwnerId, trashViewerZoneId],
+  );
+  const trashViewerTable = useMemo<SimulatorTable>(
+    () => buildTrashViewerTable(trashViewerOwnerId, trashViewerZoneId, zones.trash),
+    [trashViewerOwnerId, trashViewerZoneId, zones.trash],
+  );
+  const trashViewerEntities = useMemo<SimulatorEntity[]>(
+    () =>
+      zones.trash.map((card) =>
+        trashCardToSimulatorEntity(card, trashViewerOwnerId, trashViewerZoneId),
+      ),
+    [trashViewerOwnerId, trashViewerZoneId, zones.trash],
+  );
 
   const handleContextMenu = useCallback((ev: ReactMouseEvent<HTMLDivElement>) => {
     // Skip if right-clicking on an interactive child that handles its own menu
@@ -316,8 +346,27 @@ export function GameBoard({
           opponent={opponent}
           side={side}
           count={zones.trashCount}
+          onOpen={() => setTrashViewerOpen(true)}
         />
       </div>
+      <TargetFilterModal
+        opened={trashViewerOpen}
+        title={opponent ? "Rival Trash" : "Your Trash"}
+        filter={trashViewerFilter}
+        table={trashViewerTable}
+        entities={trashViewerEntities}
+        emptyLabel="Trash is empty"
+        classNames={{
+          backdrop: classes.trashViewerBackdrop,
+          sheet: classes.trashViewerSheet,
+          header: classes.trashViewerHeader,
+          title: classes.trashViewerTitle,
+          subtitle: classes.trashViewerSubtitle,
+          body: classes.trashViewerBody,
+          closeButton: classes.trashViewerCloseButton,
+        }}
+        onClose={() => setTrashViewerOpen(false)}
+      />
       {contextMenu ? (
         <BoardContextMenu
           x={contextMenu.x}
@@ -388,6 +437,103 @@ export function ConfirmDialog({
       </div>
     </Modal>
   );
+}
+
+interface TrashViewerCard {
+  cardId: string;
+  definitionId: string;
+  imageUrl: string;
+  name: string;
+  cardType: string;
+  color: string;
+  spent: boolean;
+  faceDown: boolean;
+  cost: number | null;
+  effectiveCost: number | null;
+  power: number | null;
+  effectivePower: number | null;
+  classifications: readonly string[];
+  keywords: readonly string[];
+}
+
+function buildTrashViewerTable(
+  ownerId: string,
+  zoneId: string,
+  cards: readonly TrashViewerCard[],
+): SimulatorTable {
+  return {
+    status: {
+      activeSeatId: ownerId,
+      phase: "Trash",
+      stateVersion: 0,
+      turn: 0,
+    },
+    seats: [
+      {
+        id: ownerId,
+        label: "Owner",
+        role: "human",
+        perspective: "bottom",
+        counters: [],
+      },
+    ],
+    zones: [
+      {
+        id: zoneId,
+        label: "Trash",
+        role: "discard",
+        ownerId,
+        visibility: "public",
+        entityIds: cards.map((card) => card.cardId),
+        count: cards.length,
+        hint: "Cards in trash",
+        layoutHint: "grid",
+      },
+    ],
+  };
+}
+
+function trashCardToSimulatorEntity(
+  card: TrashViewerCard,
+  ownerId: string,
+  zoneId: string,
+): SimulatorEntity {
+  const stats = [
+    card.effectiveCost !== null
+      ? { label: "Cost", value: card.effectiveCost.toString() }
+      : card.cost !== null
+        ? { label: "Cost", value: card.cost.toString() }
+        : null,
+    card.effectivePower !== null
+      ? { label: "Power", value: card.effectivePower.toString() }
+      : card.power !== null
+        ? { label: "Power", value: card.power.toString() }
+        : null,
+  ].filter((stat): stat is { label: string; value: string } => stat !== null);
+
+  return {
+    id: card.cardId,
+    title: card.name,
+    subtitle: card.cardType,
+    kind: "card",
+    ownerId,
+    face: card.faceDown ? "hidden" : "public",
+    states: [
+      ...(card.spent ? (["rested"] as const) : []),
+      ...(card.faceDown ? (["hidden"] as const) : []),
+    ],
+    stats,
+    traits: [...card.classifications, ...card.keywords],
+    imageUrl: card.imageUrl,
+    frameStyle: { color: card.color },
+    dataAttributes: {
+      "data-zone-id": zoneId,
+      "data-definition-id": card.definitionId,
+      "data-card-name": card.name,
+      "data-card-type": card.cardType,
+      "data-card-color": card.color,
+    },
+  };
 }
 
 function usePeekedLegendsForSide(

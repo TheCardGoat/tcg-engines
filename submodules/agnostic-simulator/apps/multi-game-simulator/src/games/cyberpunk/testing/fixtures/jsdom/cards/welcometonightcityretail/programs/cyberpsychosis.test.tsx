@@ -1,8 +1,8 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaKiroshiOptics,
-  alphaMantisBlades,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailMantisBlades,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailCyberpsychosis,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -35,11 +35,19 @@ describe("Cyberpsychosis (Retail) jsdom happy path", () => {
       const unit = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSwordwiseHuscle.id,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
       );
       await pom.expectFieldCardAttachedGearCount(CYBERPUNK_P1, unit.instanceId, 2);
-      await pom.getCardInZoneByDefinitionId("field", CYBERPUNK_P1, alphaKiroshiOptics.id);
-      await pom.getCardInZoneByDefinitionId("field", CYBERPUNK_P1, alphaMantisBlades.id);
+      await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailKiroshiOptics.id,
+      );
+      await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailMantisBlades.id,
+      );
 
       await pom.expectStructuralState();
     } finally {

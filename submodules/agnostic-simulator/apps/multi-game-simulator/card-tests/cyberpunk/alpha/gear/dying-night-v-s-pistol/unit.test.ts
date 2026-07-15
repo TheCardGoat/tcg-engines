@@ -14,22 +14,22 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaDyingNightVSPistol,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
-  alphaKiroshiOptics,
-  alphaTBugAmateurPhilosopher,
-  alphaVCorporateExile,
-  alphaJackieWellesPourOneOutForMe,
+  welcomeToNightCityRetailDyingNightVSPistol,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
+  theHeistRetailStarterDeckVCorporateExile,
+  theHeistRetailStarterDeckJackieWellesPourOneOutForMe,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
 registerMatchers();
 
-const gear = alphaDyingNightVSPistol; // cost 2, power 2, attack: defeat rival gear cost<=2 if streetCred>=7
-const lowlife = alphaRuthlessLowlife; // cost 2, power 1, unit
-const huscle = alphaSwordwiseHuscle; // cost 3, power 5, unit
-const kiroshi = alphaKiroshiOptics; // cost 1, power 1, gear (target for defeat)
+const gear = welcomeToNightCityRetailDyingNightVSPistol; // cost 2, power 2, attack: defeat rival gear cost<=2 if streetCred>=7
+const lowlife = welcomeToNightCityRetailMoxInciters; // cost 2, power 1, unit
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, power 5, unit
+const kiroshi = welcomeToNightCityRetailKiroshiOptics; // cost 1, power 1, gear (target for defeat)
 
 // Gig dice that sum to street cred >= 7
 const HIGH_CRED_GIGS: { dieType: "d6" | "d8"; faceValue: number }[] = [
@@ -96,12 +96,12 @@ describe("Dying Night - V's Pistol", () => {
         {
           field: [
             {
-              card: alphaTBugAmateurPhilosopher,
+              card: welcomeToNightCityRetailTBugAmateurPhilosopher,
               spent: false,
               attachedGears: [gear],
             },
           ],
-          legendArea: [alphaVCorporateExile],
+          legendArea: [theHeistRetailStarterDeckVCorporateExile],
           gigArea: HIGH_CRED_GIGS,
         },
         {
@@ -115,7 +115,7 @@ describe("Dying Night - V's Pistol", () => {
         },
       );
 
-      engine.attackRival(alphaTBugAmateurPhilosopher);
+      engine.attackRival(welcomeToNightCityRetailTBugAmateurPhilosopher);
 
       expectPendingChoice(engine, "chooseTarget");
       expectTargetChoice(engine, { type: "effectTarget", targetKind: "card", min: 1, max: 1 });
@@ -201,12 +201,12 @@ describe("Dying Night - V's Pistol", () => {
           hand: [],
           field: [
             {
-              card: alphaTBugAmateurPhilosopher,
+              card: welcomeToNightCityRetailTBugAmateurPhilosopher,
               spent: false,
               attachedGears: [gear],
             },
           ],
-          legendArea: [alphaVCorporateExile],
+          legendArea: [theHeistRetailStarterDeckVCorporateExile],
           gigArea: HIGH_CRED_GIGS,
         },
         {
@@ -218,12 +218,12 @@ describe("Dying Night - V's Pistol", () => {
               attachedGears: [kiroshi],
             },
           ],
-          legendArea: [alphaJackieWellesPourOneOutForMe],
+          legendArea: [theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
       );
 
-      engine.attackRival(alphaTBugAmateurPhilosopher);
+      engine.attackRival(welcomeToNightCityRetailTBugAmateurPhilosopher);
 
       expect(engine.getCard(gear, "field", P1).controllerId).toBe(P1);
       const choice = engine.getState().G.turnMetadata.pendingChoice;

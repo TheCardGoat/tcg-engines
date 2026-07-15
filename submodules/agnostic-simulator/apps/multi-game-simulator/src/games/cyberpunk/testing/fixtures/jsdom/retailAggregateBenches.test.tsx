@@ -36,7 +36,11 @@ describe("retail aggregate visual benches", () => {
         CYBERPUNK_P1,
         c.welcomeToNightCityRetailTBugAmateurPhilosopher.id,
       );
-      await pom.getCardInZoneByDefinitionId("field", CYBERPUNK_P2, c.alphaArmoredMinotaur.id);
+      await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P2,
+        c.embracingPowerRetailStarterDeckMinotaur.id,
+      );
     } finally {
       view.unmount();
     }
@@ -100,6 +104,96 @@ describe("retail aggregate visual benches", () => {
         CYBERPUNK_P1,
         c.welcomeToNightCityRetailEvelynParkerBeautifulEnigma.id,
       );
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("drives Modded Kusanagi direct attack into stolen-Gig resolution", async () => {
+    ensureJsdomAnimationSupport();
+    const view = renderCyberpunkSimulatorScenario({ scenarioId: "retailGearLegendBench" });
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+      await pom.waitForReady();
+
+      const kusanagi = await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P1,
+        c.welcomeToNightCityRetailModdedKusanagi.id,
+      );
+      const rivalGigsBeforeAttack = await pom.getGigDice(CYBERPUNK_P2);
+      expectEqual("gear bench rival Gigs before attack", rivalGigsBeforeAttack.length, 2);
+
+      await pom.attackRival(kusanagi.instanceId, CYBERPUNK_P1);
+
+      const attack = await pom.getAttackState();
+      if (!attack) {
+        throw new Error("Expected Modded Kusanagi direct attack to be pending.");
+      }
+      expectEqual("Kusanagi direct attack kind", attack.kind, "direct");
+      expectEqual("Kusanagi direct attack attacker", attack.attackerId, kusanagi.instanceId);
+
+      for (let i = 0; i < 4; i += 1) {
+        const pendingChoice = await pom.harness.evalEngine(
+          (engine) => engine.getState().G.turnMetadata.pendingChoice,
+        );
+        if (!pendingChoice) {
+          break;
+        }
+        if (
+          pendingChoice.type === "chooseTarget" &&
+          pendingChoice.payload.type === "effectTarget" &&
+          pendingChoice.payload.targetKind === "gig"
+        ) {
+          const targetId = pendingChoice.payload.eligibleIds?.[0];
+          if (!targetId) {
+            throw new Error("Expected Dying Night to expose at least one Gig target.");
+          }
+          await pom.resolveEffectTarget([String(targetId)], CYBERPUNK_P1);
+          continue;
+        }
+        if (pendingChoice.type === "chooseTarget" && pendingChoice.payload.type === "adjustGig") {
+          const currentRivalGigs = await pom.getGigDice(CYBERPUNK_P2);
+          const adjustedGig =
+            currentRivalGigs.find((gig) => gig.id === String(pendingChoice.payload.dieId)) ??
+            currentRivalGigs[0]!;
+          await pom.resolveAdjustGig(Math.max(1, adjustedGig.faceValue - 2), CYBERPUNK_P1);
+          continue;
+        }
+        if (pendingChoice.type === "chooseTrigger") {
+          const triggerAdvance = view.container.querySelector<HTMLElement>(
+            '[data-testid="phase-hud"][data-choice-in-progress="true"] [data-testid="phase-advance"]',
+          );
+          const triggerHud = triggerAdvance?.closest('[data-testid="phase-hud"]');
+          expectEqual(
+            "trigger dock action label",
+            triggerAdvance?.getAttribute("aria-label"),
+            "Choose Trigger",
+          );
+          expectEqual(
+            "trigger dock omits duplicate prompt label",
+            Boolean(triggerHud?.querySelector('[data-testid="phase-hud-label"]')),
+            false,
+          );
+          await pom.resolveTriggerPass(CYBERPUNK_P1);
+          continue;
+        }
+        throw new Error(
+          `Unexpected pending choice before attack resolution: ${pendingChoice.type}`,
+        );
+      }
+      const rivalGigs = await pom.getGigDice(CYBERPUNK_P2);
+      await pom.resolveAttack(CYBERPUNK_P1);
+      await pom.resolveAttack(CYBERPUNK_P2, { pass: true });
+      await pom.resolveAttack(CYBERPUNK_P1, {
+        gigIdsToSteal: rivalGigs.map((gig) => gig.id),
+      });
+
+      expectEqual("gear bench player Gigs after steal", await pom.getGigCount(CYBERPUNK_P1), 4);
+      expectEqual("gear bench rival Gigs after steal", await pom.getGigCount(CYBERPUNK_P2), 0);
+      for (const gig of rivalGigs) {
+        await pom.expectGigValue(gig.id, gig.faceValue);
+      }
     } finally {
       view.unmount();
     }

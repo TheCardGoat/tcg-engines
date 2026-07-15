@@ -10,20 +10,20 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaCorpoSecurity,
-  alphaFloorIt,
-  alphaJackieWellesRideOrDieChoom,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFloorIt,
+  welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 import type { PlayerId } from "@cyberpunk-engine/types/branded.ts";
 
-const program = alphaFloorIt; // cost 3, program
-const corpo = alphaCorpoSecurity; // cost 2, unit
-const lowlife = alphaRuthlessLowlife; // cost 2, unit
-const huscle = alphaSwordwiseHuscle; // cost 3, unit
-const jackie = alphaJackieWellesRideOrDieChoom; // cost 6, unit
+const program = welcomeToNightCityRetailFloorIt; // cost 3, program
+const corpo = welcomeToNightCityRetailCorpoSecurity; // cost 2, unit
+const lowlife = welcomeToNightCityRetailMoxInciters; // cost 2, unit
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, unit
+const jackie = welcomeToNightCityRetailJackieWellesRideOrDieChoom; // cost 6, unit
 
 function floorItFixture(
   p1: Parameters<typeof CyberpunkTestEngine.createWithFixture>[0] = {},

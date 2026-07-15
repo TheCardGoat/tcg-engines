@@ -269,3 +269,120 @@
   border-color: rgb(255 255 255 / 48%);
   color: #fff;
 }
+
+.trashViewerBackdrop {
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgb(7 9 12 / 42%);
+  backdrop-filter: blur(1px);
+}
+
+.trashViewerSheet {
+  position: relative;
+  width: min(1040px, calc(100vw - 40px));
+  min-width: 360px;
+  max-width: min(1040px, calc(100vw - 40px));
+  max-height: min(86vh, 680px);
+  border: 1px solid rgb(245 230 66 / 60%);
+  border-radius: 8px;
+  background: rgb(12 15 20 / 96%);
+  color: #e6f4fb;
+  box-shadow:
+    0 8px 40px rgb(0 0 0 / 70%),
+    0 0 24px rgb(245 230 66 / 18%);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.trashViewerHeader {
+  display: block;
+  padding: 18px 46px 0 22px;
+  border-bottom: 0;
+}
+
+.trashViewerTitle {
+  margin: 0 0 4px;
+  color: rgb(245 230 66 / 85%);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.trashViewerSubtitle {
+  margin: 0 0 14px;
+  color: rgb(207 232 246 / 85%);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.trashViewerCloseButton {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgb(74 217 255 / 32%);
+  border-radius: 3px;
+  background: rgb(7 9 12 / 60%);
+  color: rgb(230 244 251 / 90%);
+}
+
+.trashViewerCloseButton:hover {
+  border-color: rgb(74 217 255 / 70%);
+  background: rgb(74 217 255 / 14%);
+  color: #fff;
+}
+
+.trashViewerCloseButton:focus-visible {
+  outline: none;
+  border-color: rgb(74 217 255 / 90%);
+  box-shadow: 0 0 0 2px rgb(74 217 255 / 30%);
+}
+
+.trashViewerBody {
+  padding: 0 22px 18px;
+}
+
+.trashViewerBody :global(.card-grid) {
+  min-height: 180px;
+  max-height: min(52vh, 420px);
+  grid-template-columns: repeat(auto-fit, minmax(150px, max-content));
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 10px 12px 14px;
+  border-block: 1px solid rgb(74 217 255 / 18%);
+  background:
+    linear-gradient(90deg, rgb(74 217 255 / 6%) 1px, transparent 1px) 0 0 / 64px 64px,
+    linear-gradient(180deg, rgb(74 217 255 / 5%) 1px, transparent 1px) 0 0 / 64px 64px,
+    rgb(0 0 0 / 18%);
+}
+
+.trashViewerBody :global(.card-grid > [data-sim-entity-id]) {
+  justify-self: center;
+}
+
+.trashViewerBody :global([data-testid="card"]) {
+  border-color: rgb(74 217 255 / 30%);
+  background: rgb(74 217 255 / 4%);
+}
+
+.trashViewerBody :global([data-testid="target-filter-modal-empty"]) {
+  margin: 0;
+  border: 1px solid rgb(74 217 255 / 30%);
+  border-radius: 6px;
+  background:
+    linear-gradient(90deg, rgb(74 217 255 / 6%) 1px, transparent 1px) 0 0 / 64px 64px,
+    linear-gradient(180deg, rgb(74 217 255 / 5%) 1px, transparent 1px) 0 0 / 64px 64px,
+    rgb(0 0 0 / 18%);
+  color: rgb(207 232 246 / 85%);
+  font-size: 12px;
+  font-weight: 400;
+}

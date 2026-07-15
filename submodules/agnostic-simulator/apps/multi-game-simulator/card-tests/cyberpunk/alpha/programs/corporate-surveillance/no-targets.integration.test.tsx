@@ -7,7 +7,7 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { alphaArmoredMinotaur } from "@tcg/cyberpunk-cards";
+import { embracingPowerRetailStarterDeckMinotaur } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -35,7 +35,7 @@ describe("progCorporateSurveillanceNoTargets fixture behavior", () => {
       const minotaur = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaArmoredMinotaur.id,
+        embracingPowerRetailStarterDeckMinotaur.id,
       );
       const program = expectDefined(
         "Corporate Surveillance in hand",

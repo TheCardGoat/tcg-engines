@@ -11,43 +11,43 @@ import {
   getZoneDefinitionIds,
 } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-unit-fixture-helpers";
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  alphaCorporateSurveillance,
-  alphaFloorIt,
-  alphaJackieWellesRideOrDieChoom,
-  alphaKiroshiOptics,
-  alphaMantisBlades,
-  alphaMt0d12Flathead,
-  alphaRebootOptics,
-  alphaRuthlessLowlife,
-  alphaSecondhandBombus,
-  alphaSwordwiseHuscle,
-  alphaTBugAmateurPhilosopher,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailFloorIt,
+  welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailMantisBlades,
+  theHeistRetailStarterDeckMt0d12Flathead,
+  welcomeToNightCityRetailRebootOptics,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSecondhandBombus,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
   promoLucynaKushinada,
-  spoilerAdamSmasherMetalOverMeat,
-  spoilerAfterpartyAtLizzieS,
-  spoilerAltCunninghamSoulkillerArchitect,
-  spoilerCaliberTotentanzSTopDog,
-  spoilerCyberpsychosis,
-  spoilerDumDumMaelstromTriggerman,
-  spoilerElSombreronLaVenganzaLenta,
-  spoilerEvelynParkerBeautifulEnigma,
-  spoilerGildedMaton,
-  spoilerGoroTakemuraVengefulBodyguard,
-  spoilerHanakoArasakaInAGildedCage,
-  spoilerKerryEurodyneTheLastRockerboy,
-  spoilerMamanBrigitte,
-  spoilerMeredithStoutStoneColdCorpo,
-  spoilerPanamPalmerNomadCavalry,
-  spoilerPeaceOffering,
-  spoilerPlacideVoodooSentinel,
-  spoilerRidingNomad,
-  spoilerRiverWardDetectiveOnTheHunt,
-  spoilerRoyceDonTCallMeSimon,
-  spoilerRoycePsychoOnTheEdge,
-  spoilerSandayuOdaHanakoSGuardian,
-  spoilerVStreetkid,
+  welcomeToNightCityRetailAdamSmasherMetalOverMeat,
+  welcomeToNightCityRetailAfterpartyAtLizzieS,
+  welcomeToNightCityRetailAltCunninghamSoulkillerArchitect,
+  welcomeToNightCityRetailCaliberTotentanzSTopDog,
+  welcomeToNightCityRetailCyberpsychosis,
+  welcomeToNightCityRetailDumDumMaelstromTriggerman,
+  welcomeToNightCityRetailElSombreroNLaVenganzaLenta,
+  welcomeToNightCityRetailEvelynParkerBeautifulEnigma,
+  welcomeToNightCityRetailGildedMatoN,
+  welcomeToNightCityRetailGoroTakemuraVengefulBodyguard,
+  welcomeToNightCityRetailHanakoArasakaInAGildedCage,
+  welcomeToNightCityRetailKerryEurodyneTheLastRockerboy,
+  welcomeToNightCityRetailMamanBrigitteSpiritOfDeath,
+  welcomeToNightCityRetailMeredithStoutStoneColdCorpo,
+  welcomeToNightCityRetailPanamPalmerNomadCavalry,
+  welcomeToNightCityRetailPeaceOffering,
+  welcomeToNightCityRetailPlacideVoodooSentinel,
+  welcomeToNightCityRetailRidingNomad,
+  welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
+  welcomeToNightCityRetailRoyceDonTCallMeSimon,
+  welcomeToNightCityRetailRoycePsychoOnTheEdge,
+  welcomeToNightCityRetailSandayuOdaHanakoSGuardian,
+  welcomeToNightCityRetailVStreetkid,
 } from "@tcg/cyberpunk-cards";
 import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
 
@@ -144,12 +144,12 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const lowlife = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaRuthlessLowlife.id,
+      welcomeToNightCityRetailMoxInciters.id,
     );
     const minotaur = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaArmoredMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
     );
 
     await pom.expectEddies(CYBERPUNK_P1, 4);
@@ -177,7 +177,11 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
     await pom.expectFieldSize(CYBERPUNK_P2, 1);
     await pom.expectTrashSize(CYBERPUNK_P2, 1);
-    await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaRuthlessLowlife.id);
+    await pom.getCardInZoneByDefinitionId(
+      "trash",
+      CYBERPUNK_P2,
+      welcomeToNightCityRetailMoxInciters.id,
+    );
     await pom.getCardInZoneByInstanceId("field", CYBERPUNK_P2, minotaur.instanceId);
     await pom.expectStructuralState();
   });
@@ -195,7 +199,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const lowlife = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaRuthlessLowlife.id,
+      welcomeToNightCityRetailMoxInciters.id,
     );
 
     await dispatchSimulatorAction(page, {
@@ -330,7 +334,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const corpoSecurity = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
     const riverWard = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P1, 0);
 
@@ -378,7 +382,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     expectEqual(
       "River Ward definition after free call",
       calledRiverWard.definitionId,
-      spoilerRiverWardDetectiveOnTheHunt.id,
+      welcomeToNightCityRetailRiverWardDetectiveOnTheHunt.id,
     );
     await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
     await pom.expectFaceDownLegendsCount(CYBERPUNK_P1, 0);
@@ -393,6 +397,53 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.expectStructuralState();
   });
 
+  test("Call Legend - reveal uses resolving card animation space", async ({ page }) => {
+    await page.goto(
+      "/cyberpunk/simulator/tests/legendVStreetkidRetail?ai=off&auto-advance-attack=off&animationDebug=1",
+    );
+    const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+
+    const legend = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P1, 0);
+    expectEqual("V Streetkid retail starts face-down", legend.faceDown, true);
+
+    await dispatchSimulatorAction(page, {
+      type: "callLegend",
+      cardId: legend.instanceId,
+      as: CYBERPUNK_P1,
+    });
+
+    const legendToResolvingAnchor = page.locator(
+      `[data-testid="motion-card-overlay"][data-sim-entity-id="${legend.instanceId}"][data-from-ref="zone:p-legendArea"][data-to-ref="anchor:resolving-program:${legend.instanceId}"][data-source-face="hidden"][data-destination-face="hidden"]`,
+    );
+    const legendFlip = page.locator(
+      `[data-testid="motion-card-overlay"][data-sim-entity-id="${legend.instanceId}"][data-motion-kind="spotlight"][data-to-ref="anchor:resolving-program:${legend.instanceId}"][data-source-face="hidden"][data-destination-face="public"]`,
+    );
+    const legendReturn = page.locator(
+      `[data-testid="motion-card-overlay"][data-sim-entity-id="${legend.instanceId}"][data-from-ref="anchor:resolving-program:${legend.instanceId}"][data-to-ref="zone:p-legendArea"][data-source-face="public"][data-destination-face="public"]`,
+    );
+
+    await expect(legendToResolvingAnchor).toHaveCount(1);
+    await expect(
+      page.locator(`[data-testid="resolving-program"][data-card-id="${legend.instanceId}"]`),
+    ).toHaveCount(1);
+    await expect(legendFlip).toHaveCount(1);
+    await expect(legendReturn).toHaveCount(1);
+
+    await expect(legendToResolvingAnchor).toHaveCount(0);
+    await expect(legendFlip).toHaveCount(0);
+    await expect(legendReturn).toHaveCount(0);
+    await expect(
+      page.locator(`[data-testid="resolving-program"][data-card-id="${legend.instanceId}"]`),
+    ).toHaveCount(0);
+
+    const calledLegend = await pom.getCardInZoneByInstanceId(
+      "legendArea",
+      CYBERPUNK_P1,
+      legend.instanceId,
+    );
+    expectEqual("V Streetkid retail ends face-up", calledLegend.faceDown, false);
+  });
+
   test("Cyberpsychosis - equipped unit attack window", async ({ page }) => {
     await page.goto("/cyberpunk/simulator/tests/progCyberpsychosis?ai=off&auto-advance-attack=off");
     const pom = await createPlaywrightCyberpunkSimulatorPom(page);
@@ -400,12 +451,12 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const tBug = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaTBugAmateurPhilosopher.id,
+      welcomeToNightCityRetailTBugAmateurPhilosopher.id,
     );
     const bombus = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaSecondhandBombus.id,
+      welcomeToNightCityRetailSecondhandBombus.id,
     );
 
     await pom.expectHandSize(CYBERPUNK_P1, 1);
@@ -419,7 +470,9 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const triggerOptions = await pom.getPendingTriggerOptions(CYBERPUNK_P1);
     const cyberpsychosisTrigger = expectDefined(
       "Cyberpsychosis trigger option",
-      triggerOptions.find((option) => option.cardName === spoilerCyberpsychosis.displayName),
+      triggerOptions.find(
+        (option) => option.cardName === welcomeToNightCityRetailCyberpsychosis.displayName,
+      ),
     );
     expectEqual("Cyberpsychosis trigger optional flag", cyberpsychosisTrigger.optional, true);
 
@@ -452,7 +505,11 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, tBug.instanceId, 12);
 
     const remainingTriggers = await pom.getPendingTriggerOptions(CYBERPUNK_P1);
-    if (remainingTriggers.some((option) => option.cardName === spoilerCyberpsychosis.displayName)) {
+    if (
+      remainingTriggers.some(
+        (option) => option.cardName === welcomeToNightCityRetailCyberpsychosis.displayName,
+      )
+    ) {
       throw new Error("Expected Cyberpsychosis to leave the trigger queue after resolving.");
     }
     await pom.expectStructuralState();
@@ -465,7 +522,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaTBugAmateurPhilosopher.id,
+      welcomeToNightCityRetailTBugAmateurPhilosopher.id,
     );
     const firstD4 = expectDefined(
       "Gorilla Arms first rival d4",
@@ -500,7 +557,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const host = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
     const d8 = expectDefined(
       "Zetatech friendly d8",
@@ -539,7 +596,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const adam = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerAdamSmasherMetalOverMeat.id,
+      welcomeToNightCityRetailAdamSmasherMetalOverMeat.id,
     );
 
     await pom.playCardFromHand(adam.instanceId, CYBERPUNK_P1);
@@ -551,17 +608,17 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      spoilerAdamSmasherMetalOverMeat.id,
+      welcomeToNightCityRetailAdamSmasherMetalOverMeat.id,
     );
 
     const p1Trash = await getZoneDefinitionIds(pom, "trash", CYBERPUNK_P1);
-    expectIncludes("Adam P1 trash", p1Trash, alphaSwordwiseHuscle.id);
-    expectIncludes("Adam P1 trash", p1Trash, alphaSecondhandBombus.id);
+    expectIncludes("Adam P1 trash", p1Trash, welcomeToNightCityRetailSwordwiseHuscle.id);
+    expectIncludes("Adam P1 trash", p1Trash, welcomeToNightCityRetailSecondhandBombus.id);
 
     const p2Trash = await getZoneDefinitionIds(pom, "trash", CYBERPUNK_P2);
-    expectIncludes("Adam P2 trash", p2Trash, alphaCorpoSecurity.id);
-    expectIncludes("Adam P2 trash", p2Trash, alphaArmoredMinotaur.id);
-    expectIncludes("Adam P2 trash", p2Trash, alphaJackieWellesRideOrDieChoom.id);
+    expectIncludes("Adam P2 trash", p2Trash, welcomeToNightCityRetailCorpoSecurity.id);
+    expectIncludes("Adam P2 trash", p2Trash, embracingPowerRetailStarterDeckMinotaur.id);
+    expectIncludes("Adam P2 trash", p2Trash, welcomeToNightCityRetailJackieWellesRideOrDieChoom.id);
     await pom.expectStructuralState();
   });
 
@@ -574,12 +631,12 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const caliber = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      spoilerCaliberTotentanzSTopDog.id,
+      welcomeToNightCityRetailCaliberTotentanzSTopDog.id,
     );
     const minotaur = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaArmoredMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
     );
 
     await pom.attackUnit(caliber.instanceId, minotaur.instanceId, CYBERPUNK_P1);
@@ -589,14 +646,23 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.resolveAttack(CYBERPUNK_P1);
 
     await pom.expectTrashSize(CYBERPUNK_P1, 1);
-    await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P1, spoilerCaliberTotentanzSTopDog.id);
+    await pom.getCardInZoneByDefinitionId(
+      "trash",
+      CYBERPUNK_P1,
+      welcomeToNightCityRetailCaliberTotentanzSTopDog.id,
+    );
     await pom.expectPendingChoiceType(CYBERPUNK_P2, "chooseTarget");
 
     const firstChoices = await pom.getEligibleTargetIds(CYBERPUNK_P2);
     const firstDefinitions = await getChoiceDefinitionIds(pom, firstChoices);
-    expectIncludes("Caliber first discard choices", firstDefinitions, alphaMt0d12Flathead.id);
+    expectIncludes(
+      "Caliber first discard choices",
+      firstDefinitions,
+      theHeistRetailStarterDeckMt0d12Flathead.id,
+    );
 
-    const flatheadId = firstChoices[firstDefinitions.indexOf(alphaMt0d12Flathead.id)];
+    const flatheadId =
+      firstChoices[firstDefinitions.indexOf(theHeistRetailStarterDeckMt0d12Flathead.id)];
     if (!flatheadId) {
       throw new Error("Expected Flathead to be discardable for Caliber's first discard.");
     }
@@ -605,9 +671,14 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.expectPendingChoiceType(CYBERPUNK_P2, "chooseTarget");
     const bonusChoices = await pom.getEligibleTargetIds(CYBERPUNK_P2);
     const bonusDefinitions = await getChoiceDefinitionIds(pom, bonusChoices);
-    expectIncludes("Caliber bonus discard choices", bonusDefinitions, alphaCorpoSecurity.id);
+    expectIncludes(
+      "Caliber bonus discard choices",
+      bonusDefinitions,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
 
-    const corpoId = bonusChoices[bonusDefinitions.indexOf(alphaCorpoSecurity.id)];
+    const corpoId =
+      bonusChoices[bonusDefinitions.indexOf(welcomeToNightCityRetailCorpoSecurity.id)];
     if (!corpoId) {
       throw new Error("Expected Corpo Security to be discardable for Caliber's bonus discard.");
     }
@@ -629,12 +700,12 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const elSombreron = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      spoilerElSombreronLaVenganzaLenta.id,
+      welcomeToNightCityRetailElSombreroNLaVenganzaLenta.id,
     );
     const target = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
 
     await pom.attackUnit(elSombreron.instanceId, target.instanceId, CYBERPUNK_P1);
@@ -655,7 +726,11 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     expectEqual("El Sombreron resolved attack", await pom.getAttackState(), null);
     await pom.expectFieldSize(CYBERPUNK_P1, 1);
     await pom.expectTrashSize(CYBERPUNK_P2, 1);
-    await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaCorpoSecurity.id);
+    await pom.getCardInZoneByDefinitionId(
+      "trash",
+      CYBERPUNK_P2,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
     await pom.expectStructuralState();
   });
 
@@ -666,22 +741,22 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const maton = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerGildedMaton.id,
+      welcomeToNightCityRetailGildedMatoN.id,
     );
     const host = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
     const gear = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaKiroshiOptics.id,
+      welcomeToNightCityRetailKiroshiOptics.id,
     );
     const cheapTarget = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
 
     await pom.expectFieldCardAttachedGearCount(CYBERPUNK_P1, host.instanceId, 1);
@@ -697,8 +772,16 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
 
     const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
     const eligibleDefinitions = await getChoiceDefinitionIds(pom, eligible);
-    expectIncludes("Gilded Maton eligible targets", eligibleDefinitions, alphaCorpoSecurity.id);
-    expectExcludes("Gilded Maton eligible targets", eligibleDefinitions, alphaArmoredMinotaur.id);
+    expectIncludes(
+      "Gilded Maton eligible targets",
+      eligibleDefinitions,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
+    expectExcludes(
+      "Gilded Maton eligible targets",
+      eligibleDefinitions,
+      embracingPowerRetailStarterDeckMinotaur.id,
+    );
 
     await pom.resolveEffectTarget([cheapTarget.instanceId], CYBERPUNK_P1);
 
@@ -708,8 +791,16 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.expectFieldSize(CYBERPUNK_P2, 1);
     await pom.expectTrashSize(CYBERPUNK_P1, 1);
     await pom.expectTrashSize(CYBERPUNK_P2, 1);
-    await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P1, alphaKiroshiOptics.id);
-    await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaCorpoSecurity.id);
+    await pom.getCardInZoneByDefinitionId(
+      "trash",
+      CYBERPUNK_P1,
+      welcomeToNightCityRetailKiroshiOptics.id,
+    );
+    await pom.getCardInZoneByDefinitionId(
+      "trash",
+      CYBERPUNK_P2,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
     await pom.expectStructuralState();
   });
 
@@ -722,7 +813,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const hanako = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerHanakoArasakaInAGildedCage.id,
+      welcomeToNightCityRetailHanakoArasakaInAGildedCage.id,
     );
 
     expectEqual("Hanako initial deck size", await pom.getDeckSize(CYBERPUNK_P1), 40);
@@ -736,13 +827,29 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.expectEddies(CYBERPUNK_P1, 1);
 
     const handDefinitions = await getZoneDefinitionIds(pom, "hand", CYBERPUNK_P1);
-    expectIncludes("Hanako hand definitions", handDefinitions, alphaSwordwiseHuscle.id);
-    expectIncludes("Hanako hand definitions", handDefinitions, alphaFloorIt.id);
-    expectExcludes("Hanako hand definitions", handDefinitions, alphaSecondhandBombus.id);
+    expectIncludes(
+      "Hanako hand definitions",
+      handDefinitions,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
+    );
+    expectIncludes("Hanako hand definitions", handDefinitions, welcomeToNightCityRetailFloorIt.id);
+    expectExcludes(
+      "Hanako hand definitions",
+      handDefinitions,
+      welcomeToNightCityRetailSecondhandBombus.id,
+    );
 
     const trashDefinitions = await getZoneDefinitionIds(pom, "trash", CYBERPUNK_P1);
-    expectIncludes("Hanako trash definitions", trashDefinitions, alphaCorpoSecurity.id);
-    expectIncludes("Hanako trash definitions", trashDefinitions, alphaRuthlessLowlife.id);
+    expectIncludes(
+      "Hanako trash definitions",
+      trashDefinitions,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
+    expectIncludes(
+      "Hanako trash definitions",
+      trashDefinitions,
+      welcomeToNightCityRetailMoxInciters.id,
+    );
     await pom.expectStructuralState();
   });
 
@@ -755,7 +862,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const kerry = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      spoilerKerryEurodyneTheLastRockerboy.id,
+      welcomeToNightCityRetailKerryEurodyneTheLastRockerboy.id,
     );
     const abilityCandidates = await pom.getMoveCandidateIds(CYBERPUNK_P1, "activateAbility");
     if (!abilityCandidates.includes(`${kerry.instanceId}:0`)) {
@@ -780,23 +887,27 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const maman = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerMamanBrigitte.id,
+      welcomeToNightCityRetailMamanBrigitteSpiritOfDeath.id,
     );
     const reboot = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      alphaRebootOptics.id,
+      welcomeToNightCityRetailRebootOptics.id,
     );
     const surveillance = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      alphaCorporateSurveillance.id,
+      welcomeToNightCityRetailCorporateSurveillance.id,
     );
-    await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaKiroshiOptics.id);
+    await pom.getCardInZoneByDefinitionId(
+      "hand",
+      CYBERPUNK_P1,
+      welcomeToNightCityRetailKiroshiOptics.id,
+    );
     const unequippedTarget = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaRuthlessLowlife.id,
+      welcomeToNightCityRetailMoxInciters.id,
     );
 
     const deckBefore = await pom.getDeckSize(CYBERPUNK_P2);
@@ -806,9 +917,21 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const discardChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
     const discardDefinitions = await getChoiceDefinitionIds(pom, discardChoices);
     expectEqual("Maman discard choice count", discardChoices.length, 2);
-    expectIncludes("Maman discard definitions", discardDefinitions, alphaRebootOptics.id);
-    expectIncludes("Maman discard definitions", discardDefinitions, alphaCorporateSurveillance.id);
-    expectExcludes("Maman discard definitions", discardDefinitions, alphaKiroshiOptics.id);
+    expectIncludes(
+      "Maman discard definitions",
+      discardDefinitions,
+      welcomeToNightCityRetailRebootOptics.id,
+    );
+    expectIncludes(
+      "Maman discard definitions",
+      discardDefinitions,
+      welcomeToNightCityRetailCorporateSurveillance.id,
+    );
+    expectExcludes(
+      "Maman discard definitions",
+      discardDefinitions,
+      welcomeToNightCityRetailKiroshiOptics.id,
+    );
 
     await pom.resolveDiscardFromHand([reboot.instanceId, surveillance.instanceId], CYBERPUNK_P1);
 
@@ -816,8 +939,16 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const targetChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
     const targetDefinitions = await getChoiceDefinitionIds(pom, targetChoices);
     expectEqual("Maman bottom-deck target count", targetChoices.length, 1);
-    expectIncludes("Maman target definitions", targetDefinitions, alphaRuthlessLowlife.id);
-    expectExcludes("Maman target definitions", targetDefinitions, alphaSwordwiseHuscle.id);
+    expectIncludes(
+      "Maman target definitions",
+      targetDefinitions,
+      welcomeToNightCityRetailMoxInciters.id,
+    );
+    expectExcludes(
+      "Maman target definitions",
+      targetDefinitions,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
+    );
 
     await pom.resolveEffectTarget([unequippedTarget.instanceId], CYBERPUNK_P1);
 
@@ -827,7 +958,11 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     expectEqual("Maman rival deck size", await pom.getDeckSize(CYBERPUNK_P2), deckBefore + 1);
 
     const p2Deck = await getZoneDefinitionIds(pom, "deck", CYBERPUNK_P2);
-    expectEqual("Maman bottom-decked card", p2Deck[p2Deck.length - 1], alphaRuthlessLowlife.id);
+    expectEqual(
+      "Maman bottom-decked card",
+      p2Deck[p2Deck.length - 1],
+      welcomeToNightCityRetailMoxInciters.id,
+    );
     await pom.expectStructuralState();
   });
 
@@ -840,7 +975,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      spoilerMeredithStoutStoneColdCorpo.id,
+      welcomeToNightCityRetailMeredithStoutStoneColdCorpo.id,
     );
     const evelyn = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P2, 0);
     const p1Gig = (await pom.getGigDice(CYBERPUNK_P1))[0];
@@ -858,16 +993,21 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     expectEqual(
       "Evelyn definition after call",
       calledEvelyn.definitionId,
-      spoilerEvelynParkerBeautifulEnigma.id,
+      welcomeToNightCityRetailEvelynParkerBeautifulEnigma.id,
     );
 
     await pom.expectGigValue(p1Gig.id, 1);
     await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToMove");
     const recoverChoices = await pom.getChoiceCardIds(CYBERPUNK_P1);
     const recoverDefinitions = await getChoiceDefinitionIds(pom, recoverChoices);
-    expectIncludes("Meredith recovery choices", recoverDefinitions, alphaKiroshiOptics.id);
+    expectIncludes(
+      "Meredith recovery choices",
+      recoverDefinitions,
+      welcomeToNightCityRetailKiroshiOptics.id,
+    );
 
-    const kiroshiId = recoverChoices[recoverDefinitions.indexOf(alphaKiroshiOptics.id)];
+    const kiroshiId =
+      recoverChoices[recoverDefinitions.indexOf(welcomeToNightCityRetailKiroshiOptics.id)];
     if (!kiroshiId) {
       throw new Error("Expected Kiroshi Optics to be recoverable by Meredith.");
     }
@@ -877,7 +1017,11 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.expectHandSize(CYBERPUNK_P1, 1);
     await pom.expectTrashSize(CYBERPUNK_P1, 1);
     await pom.expectEddies(CYBERPUNK_P2, 4);
-    await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaKiroshiOptics.id);
+    await pom.getCardInZoneByDefinitionId(
+      "hand",
+      CYBERPUNK_P1,
+      welcomeToNightCityRetailKiroshiOptics.id,
+    );
     expectEqual("Meredith active player remains P2", await pom.getActivePlayerId(), CYBERPUNK_P2);
     await pom.expectStructuralState();
   });
@@ -891,17 +1035,17 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const placide = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerPlacideVoodooSentinel.id,
+      welcomeToNightCityRetailPlacideVoodooSentinel.id,
     );
     const program = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      alphaCorporateSurveillance.id,
+      welcomeToNightCityRetailCorporateSurveillance.id,
     );
     const target = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaArmoredMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
     );
 
     const deckBefore = await pom.getDeckSize(CYBERPUNK_P2);
@@ -911,7 +1055,11 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const cardChoices = await pom.getChoiceCardIds(CYBERPUNK_P1);
     const choiceDefinitions = await getChoiceDefinitionIds(pom, cardChoices);
     expectEqual("Placide program choice count", cardChoices.length, 1);
-    expectIncludes("Placide program choices", choiceDefinitions, alphaCorporateSurveillance.id);
+    expectIncludes(
+      "Placide program choices",
+      choiceDefinitions,
+      welcomeToNightCityRetailCorporateSurveillance.id,
+    );
 
     await pom.resolveCardToMove(program.instanceId, CYBERPUNK_P1);
 
@@ -919,8 +1067,16 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const targetChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
     const targetDefinitions = await getChoiceDefinitionIds(pom, targetChoices);
     expectEqual("Placide target count", targetChoices.length, 2);
-    expectIncludes("Placide target choices", targetDefinitions, alphaArmoredMinotaur.id);
-    expectIncludes("Placide target choices", targetDefinitions, alphaCorpoSecurity.id);
+    expectIncludes(
+      "Placide target choices",
+      targetDefinitions,
+      embracingPowerRetailStarterDeckMinotaur.id,
+    );
+    expectIncludes(
+      "Placide target choices",
+      targetDefinitions,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
 
     await pom.resolveEffectTarget([target.instanceId], CYBERPUNK_P1);
 
@@ -930,7 +1086,11 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     expectEqual("Placide rival deck size", await pom.getDeckSize(CYBERPUNK_P2), deckBefore + 1);
 
     const p2Deck = await getZoneDefinitionIds(pom, "deck", CYBERPUNK_P2);
-    expectEqual("Placide bottom-decked card", p2Deck[p2Deck.length - 1], alphaArmoredMinotaur.id);
+    expectEqual(
+      "Placide bottom-decked card",
+      p2Deck[p2Deck.length - 1],
+      embracingPowerRetailStarterDeckMinotaur.id,
+    );
     await pom.expectStructuralState();
   });
 
@@ -941,24 +1101,24 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const nomadInHand = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerRidingNomad.id,
+      welcomeToNightCityRetailRidingNomad.id,
     );
     const spentTarget = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
     const readyRival = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaArmoredMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
     );
 
     await pom.playCardFromHand(nomadInHand.instanceId, CYBERPUNK_P1);
     const nomad = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      spoilerRidingNomad.id,
+      welcomeToNightCityRetailRidingNomad.id,
     );
     expectEqual("Riding Nomad played this turn", nomad.playedThisTurn, true);
     await pom.expectFieldCardGrantedRule(
@@ -1005,7 +1165,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const royce = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerRoyceDonTCallMeSimon.id,
+      welcomeToNightCityRetailRoyceDonTCallMeSimon.id,
     );
 
     expectEqual("Royce high P1 Street Cred", await pom.getStreetCred(CYBERPUNK_P1), 10);
@@ -1015,9 +1175,17 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
     const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
     const eligibleDefinitions = await getChoiceDefinitionIds(pom, eligible);
-    expectIncludes("Royce high eligible targets", eligibleDefinitions, alphaCorpoSecurity.id);
+    expectIncludes(
+      "Royce high eligible targets",
+      eligibleDefinitions,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
     expectIncludes("Royce high eligible targets", eligibleDefinitions, POWER_THREE_MOCK_ID);
-    expectExcludes("Royce high eligible targets", eligibleDefinitions, alphaArmoredMinotaur.id);
+    expectExcludes(
+      "Royce high eligible targets",
+      eligibleDefinitions,
+      embracingPowerRetailStarterDeckMinotaur.id,
+    );
 
     const mockId = eligible[eligibleDefinitions.indexOf(POWER_THREE_MOCK_ID)];
     if (!mockId) {
@@ -1041,12 +1209,12 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const royce = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerRoyceDonTCallMeSimon.id,
+      welcomeToNightCityRetailRoyceDonTCallMeSimon.id,
     );
     const lowlife = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaRuthlessLowlife.id,
+      welcomeToNightCityRetailMoxInciters.id,
     );
 
     expectEqual("Royce low P1 Street Cred", await pom.getStreetCred(CYBERPUNK_P1), 2);
@@ -1057,15 +1225,27 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
     const eligibleDefinitions = await getChoiceDefinitionIds(pom, eligible);
     expectEqual("Royce low eligible count", eligible.length, 1);
-    expectIncludes("Royce low eligible targets", eligibleDefinitions, alphaRuthlessLowlife.id);
-    expectExcludes("Royce low eligible targets", eligibleDefinitions, alphaSwordwiseHuscle.id);
+    expectIncludes(
+      "Royce low eligible targets",
+      eligibleDefinitions,
+      welcomeToNightCityRetailMoxInciters.id,
+    );
+    expectExcludes(
+      "Royce low eligible targets",
+      eligibleDefinitions,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
+    );
 
     await pom.resolveEffectTarget([lowlife.instanceId], CYBERPUNK_P1);
 
     await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
     await pom.expectFieldSize(CYBERPUNK_P2, 1);
     await pom.expectTrashSize(CYBERPUNK_P2, 1);
-    await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaRuthlessLowlife.id);
+    await pom.getCardInZoneByDefinitionId(
+      "trash",
+      CYBERPUNK_P2,
+      welcomeToNightCityRetailMoxInciters.id,
+    );
     await pom.expectStructuralState();
   });
 
@@ -1078,17 +1258,17 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const sandayuInHand = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerSandayuOdaHanakoSGuardian.id,
+      welcomeToNightCityRetailSandayuOdaHanakoSGuardian.id,
     );
     const corpo = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
     const minotaur = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaArmoredMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
     );
 
     await pom.playCardFromHand(sandayuInHand.instanceId, CYBERPUNK_P1);
@@ -1097,8 +1277,16 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
     const eligibleDefinitions = await getChoiceDefinitionIds(pom, eligible);
     expectEqual("Sandayu spend target count", eligible.length, 2);
-    expectIncludes("Sandayu spend targets", eligibleDefinitions, alphaCorpoSecurity.id);
-    expectIncludes("Sandayu spend targets", eligibleDefinitions, alphaArmoredMinotaur.id);
+    expectIncludes(
+      "Sandayu spend targets",
+      eligibleDefinitions,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
+    expectIncludes(
+      "Sandayu spend targets",
+      eligibleDefinitions,
+      embracingPowerRetailStarterDeckMinotaur.id,
+    );
 
     await pom.resolveEffectTarget([corpo.instanceId, minotaur.instanceId], CYBERPUNK_P1);
 
@@ -1109,7 +1297,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const sandayu = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      spoilerSandayuOdaHanakoSGuardian.id,
+      welcomeToNightCityRetailSandayuOdaHanakoSGuardian.id,
     );
     await pom.expectFieldCardGrantedRule(
       CYBERPUNK_P1,
@@ -1153,12 +1341,12 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const alt = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      spoilerAltCunninghamSoulkillerArchitect.id,
+      welcomeToNightCityRetailAltCunninghamSoulkillerArchitect.id,
     );
     const corpoSecurity = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
 
     await pom.attackRival(alt.instanceId, CYBERPUNK_P1);
@@ -1180,7 +1368,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     expectEqual(
       "Alt program choice",
       await pom.getCardDefinitionId(choices[0]!),
-      alphaCorporateSurveillance.id,
+      welcomeToNightCityRetailCorporateSurveillance.id,
     );
 
     await pom.resolveCardToPlay(choices[0]!, CYBERPUNK_P1);
@@ -1210,12 +1398,12 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const host = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaTBugAmateurPhilosopher.id,
+      welcomeToNightCityRetailTBugAmateurPhilosopher.id,
     );
     const kiroshi = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaKiroshiOptics.id,
+      welcomeToNightCityRetailKiroshiOptics.id,
     );
 
     await pom.callLegend(dumDum.instanceId, CYBERPUNK_P1);
@@ -1228,7 +1416,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     expectEqual(
       "Dum Dum definition after call",
       calledDumDum.definitionId,
-      spoilerDumDumMaelstromTriggerman.id,
+      welcomeToNightCityRetailDumDumMaelstromTriggerman.id,
     );
     await pom.expectEddies(CYBERPUNK_P1, 2);
     await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToMove");
@@ -1258,7 +1446,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const evelyn = await pom.getCardInZoneByDefinitionId(
       "legendArea",
       CYBERPUNK_P1,
-      spoilerEvelynParkerBeautifulEnigma.id,
+      welcomeToNightCityRetailEvelynParkerBeautifulEnigma.id,
     );
 
     await pom.activateAbility(evelyn.instanceId, 1, CYBERPUNK_P1);
@@ -1271,7 +1459,8 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const definitions = await Promise.all(
       revealed.map((cardId) => pom.getCardDefinitionId(cardId)),
     );
-    const afterpartyId = revealed[definitions.indexOf(spoilerAfterpartyAtLizzieS.id)];
+    const afterpartyId =
+      revealed[definitions.indexOf(welcomeToNightCityRetailAfterpartyAtLizzieS.id)];
     if (!afterpartyId) {
       throw new Error("Expected Evelyn search to reveal Afterparty at Lizzie's.");
     }
@@ -1281,7 +1470,11 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
     await pom.expectHandSize(CYBERPUNK_P1, 2);
     expectEqual("Evelyn deck after search", await pom.getDeckSize(CYBERPUNK_P1), 38);
-    await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, spoilerAfterpartyAtLizzieS.id);
+    await pom.getCardInZoneByDefinitionId(
+      "hand",
+      CYBERPUNK_P1,
+      welcomeToNightCityRetailAfterpartyAtLizzieS.id,
+    );
     await pom.expectStructuralState();
   });
 
@@ -1294,17 +1487,17 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const goro = await pom.getCardInZoneByDefinitionId(
       "legendArea",
       CYBERPUNK_P1,
-      spoilerGoroTakemuraVengefulBodyguard.id,
+      welcomeToNightCityRetailGoroTakemuraVengefulBodyguard.id,
     );
     const corpoSecurity = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaArmoredMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
     );
 
     await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
@@ -1341,17 +1534,17 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const panam = await pom.getCardInZoneByDefinitionId(
       "legendArea",
       CYBERPUNK_P1,
-      spoilerPanamPalmerNomadCavalry.id,
+      welcomeToNightCityRetailPanamPalmerNomadCavalry.id,
     );
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
     const mantis = await pom.getCardInZoneByDefinitionId(
       "legendArea",
       CYBERPUNK_P1,
-      alphaMantisBlades.id,
+      welcomeToNightCityRetailMantisBlades.id,
     );
 
     await pom.expectLegendCardAttachedGearCount(CYBERPUNK_P1, panam.instanceId, 1);
@@ -1386,22 +1579,22 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const river = await pom.getCardInZoneByDefinitionId(
       "legendArea",
       CYBERPUNK_P1,
-      spoilerRiverWardDetectiveOnTheHunt.id,
+      welcomeToNightCityRetailRiverWardDetectiveOnTheHunt.id,
     );
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaTBugAmateurPhilosopher.id,
+      welcomeToNightCityRetailTBugAmateurPhilosopher.id,
     );
     const host = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaSecondhandBombus.id,
+      welcomeToNightCityRetailSecondhandBombus.id,
     );
     const kiroshi = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      alphaKiroshiOptics.id,
+      welcomeToNightCityRetailKiroshiOptics.id,
     );
 
     await pom.attackRival(attacker.instanceId, CYBERPUNK_P1);
@@ -1433,7 +1626,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const royce = await pom.getCardInZoneByDefinitionId(
       "legendArea",
       CYBERPUNK_P1,
-      spoilerRoycePsychoOnTheEdge.id,
+      welcomeToNightCityRetailRoycePsychoOnTheEdge.id,
     );
 
     const legendView = await pom.getCardView(royce.instanceId, CYBERPUNK_P1);
@@ -1457,12 +1650,12 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const v = await pom.getCardInZoneByDefinitionId(
       "legendArea",
       CYBERPUNK_P1,
-      spoilerVStreetkid.id,
+      welcomeToNightCityRetailVStreetkid.id,
     );
     const defender = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
 
     await pom.goSolo(v.instanceId, CYBERPUNK_P1);
@@ -1481,7 +1674,11 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.expectFieldSize(CYBERPUNK_P1, 1);
     await pom.expectHandSize(CYBERPUNK_P1, 1);
     await pom.expectTrashSize(CYBERPUNK_P1, 4);
-    await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, spoilerAfterpartyAtLizzieS.id);
+    await pom.getCardInZoneByDefinitionId(
+      "hand",
+      CYBERPUNK_P1,
+      welcomeToNightCityRetailAfterpartyAtLizzieS.id,
+    );
     expectEqual("V Streetkid deck after mill", await pom.getDeckSize(CYBERPUNK_P1), 3);
     await pom.expectStructuralState();
   });
@@ -1493,7 +1690,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     const program = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerPeaceOffering.id,
+      welcomeToNightCityRetailPeaceOffering.id,
     );
     await pom.playCardFromHand(program.instanceId, CYBERPUNK_P1);
 

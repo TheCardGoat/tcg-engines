@@ -10,22 +10,22 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaRebootOptics,
-  alphaGoroTakemuraHandsUnclean,
-  alphaSwordwiseHuscle,
-  alphaVCorporateExile,
+  welcomeToNightCityRetailRebootOptics,
+  embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  theHeistRetailStarterDeckVCorporateExile,
   promoLucynaKushinada,
-  spoilerKerryEurodyneTheLastRockerboy,
-  spoilerZetatechFaceplate,
+  welcomeToNightCityRetailKerryEurodyneTheLastRockerboy,
+  welcomeToNightCityRetailZetatechFaceplate,
 } from "@tcg/cyberpunk-cards";
 
-const faceplate = spoilerZetatechFaceplate;
-const hostUnit = alphaSwordwiseHuscle;
-const faceUpLegend = alphaVCorporateExile;
+const faceplate = welcomeToNightCityRetailZetatechFaceplate;
+const hostUnit = welcomeToNightCityRetailSwordwiseHuscle;
+const faceUpLegend = theHeistRetailStarterDeckVCorporateExile;
 const faceDownLegend = promoLucynaKushinada;
-const goSoloLegend = alphaGoroTakemuraHandsUnclean;
-const kerry = spoilerKerryEurodyneTheLastRockerboy;
-const program = alphaRebootOptics;
+const goSoloLegend = embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean;
+const kerry = welcomeToNightCityRetailKerryEurodyneTheLastRockerboy;
+const program = welcomeToNightCityRetailRebootOptics;
 
 describe("Zetatech Faceplate", () => {
   describe("UI prompt", () => {

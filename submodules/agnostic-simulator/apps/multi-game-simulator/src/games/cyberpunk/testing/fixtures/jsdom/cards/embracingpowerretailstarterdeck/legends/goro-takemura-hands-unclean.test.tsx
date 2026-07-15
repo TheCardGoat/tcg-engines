@@ -1,6 +1,6 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
+  welcomeToNightCityRetailCorpoSecurity,
   embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -32,7 +32,7 @@ describe("Goro Takemura - Hands Unclean (Embracing Power) jsdom behavior", () =>
       const defender = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
 
       await pom.goSolo(goro.instanceId, CYBERPUNK_P1);

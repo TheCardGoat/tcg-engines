@@ -35,7 +35,6 @@ import { DualModeProvider } from "../src/components/ui/dual-mode-context.tsx";
 import { PendingEffectSelectionProvider } from "../src/components/ui/pending-effect-selection-context.tsx";
 import { GundamBoardLayout } from "../src/components/ui/GundamBoardLayout.tsx";
 import { GameTable } from "../src/components/ui/GameTable.tsx";
-import { PhaseRibbon } from "../src/components/ui/PhaseRibbon.tsx";
 import { PriorityActionButton } from "../src/components/ui/PriorityActionButton.tsx";
 import { HintsProvider } from "../src/lib/use-hints-enabled.ts";
 import { createEngineAdapter } from "../src/game/adapter.ts";
@@ -172,7 +171,6 @@ function BotBenchMatch({ snapshot }: { readonly snapshot: MatchSnapshot }) {
                     {!isMobile && (
                       <div className="relative h-0">
                         <div className="centerline -top-px" />
-                        <PhaseRibbon />
                       </div>
                     )}
                     <PlayerSeatContainer side="bottom" />

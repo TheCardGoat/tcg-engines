@@ -10,17 +10,17 @@ import {
   expectCardToMoveDestination,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  spoilerMeredithStoutStoneColdCorpo,
-  spoilerEvelynParkerBeautifulEnigma,
-  spoilerAfterpartyAtLizzieS,
-  alphaRuthlessLowlife,
+  welcomeToNightCityRetailMeredithStoutStoneColdCorpo,
+  welcomeToNightCityRetailEvelynParkerBeautifulEnigma,
+  welcomeToNightCityRetailAfterpartyAtLizzieS,
+  welcomeToNightCityRetailMoxInciters,
 } from "@tcg/cyberpunk-cards";
 import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
 
-const meredith = spoilerMeredithStoutStoneColdCorpo;
-const evelyn = spoilerEvelynParkerBeautifulEnigma;
-const trashCard = spoilerAfterpartyAtLizzieS;
-const otherTrashCard = alphaRuthlessLowlife;
+const meredith = welcomeToNightCityRetailMeredithStoutStoneColdCorpo;
+const evelyn = welcomeToNightCityRetailEvelynParkerBeautifulEnigma;
+const trashCard = welcomeToNightCityRetailAfterpartyAtLizzieS;
+const otherTrashCard = welcomeToNightCityRetailMoxInciters;
 const p1LeadGigs = [
   { dieType: "d4" as const, faceValue: 1 },
   { dieType: "d8" as const, faceValue: 1 },

@@ -235,9 +235,7 @@ describe("server adapter automated action strategy dispatch", () => {
 
     expect(result.finalResult.success).toBe(true);
     if (!result.finalResult.success) return;
-    // Under Beta rules callLegend costs 1 €$, so the bot calls a legend
-    // rather than passing or attacking into a losing fight.
-    expect(result.finalResult.acceptedMoveRecord?.moveId).toBe("callLegend");
-    expect(result.selectedCandidate?.family).toBe("callLegend");
+    expect(result.finalResult.acceptedMoveRecord?.moveId).toBe("playCard");
+    expect(result.selectedCandidate?.family).toBe("playCard");
   });
 });

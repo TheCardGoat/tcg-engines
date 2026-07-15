@@ -1,8 +1,8 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaSecondhandBombus,
-  alphaTBugAmateurPhilosopher,
-  spoilerCyberpsychosis,
+  welcomeToNightCityRetailSecondhandBombus,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
+  welcomeToNightCityRetailCyberpsychosis,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
@@ -26,12 +26,12 @@ describe("Cyberpsychosis jsdom happy path", () => {
       const tBug = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaTBugAmateurPhilosopher.id,
+        welcomeToNightCityRetailTBugAmateurPhilosopher.id,
       );
       const bombus = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSecondhandBombus.id,
+        welcomeToNightCityRetailSecondhandBombus.id,
       );
 
       await pom.expectHandSize(CYBERPUNK_P1, 1);
@@ -45,7 +45,9 @@ describe("Cyberpsychosis jsdom happy path", () => {
       const triggerOptions = await pom.getPendingTriggerOptions(CYBERPUNK_P1);
       const cyberpsychosisTrigger = expectDefined(
         "Cyberpsychosis trigger option",
-        triggerOptions.find((option) => option.cardName === spoilerCyberpsychosis.displayName),
+        triggerOptions.find(
+          (option) => option.cardName === welcomeToNightCityRetailCyberpsychosis.displayName,
+        ),
       );
       expectEqual("Cyberpsychosis trigger optional flag", cyberpsychosisTrigger.optional, true);
 
@@ -79,7 +81,9 @@ describe("Cyberpsychosis jsdom happy path", () => {
 
       const remainingTriggers = await pom.getPendingTriggerOptions(CYBERPUNK_P1);
       if (
-        remainingTriggers.some((option) => option.cardName === spoilerCyberpsychosis.displayName)
+        remainingTriggers.some(
+          (option) => option.cardName === welcomeToNightCityRetailCyberpsychosis.displayName,
+        )
       ) {
         throw new Error("Expected Cyberpsychosis to leave the trigger queue after resolving.");
       }

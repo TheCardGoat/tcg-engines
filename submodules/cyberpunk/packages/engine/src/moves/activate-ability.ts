@@ -1,12 +1,12 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { MatchState } from "../types/match-state.ts";
-import type { Ability } from "@tcg/cyberpunk-types";
+import type { Ability, TargetDSL, TargetSelectionDSL } from "@tcg/cyberpunk-types";
 import { continueTriggerResolution, resumeCurrentTrigger } from "../ability-executor.ts";
-import { resolveTarget } from "../effects/target-resolver.ts";
+import { evaluateCondition, resolveTarget } from "../effects/target-resolver.ts";
 import type { ResolutionContext } from "../effects/target-resolver.ts";
 import { defOf } from "../state/lookups.ts";
-import { isDefensiveStep } from "./is-defensive-step.ts";
+import { isReactStep } from "./is-react-step.ts";
 import { availableEddies } from "./eddie-resources.ts";
 
 export interface ActivateAbilityInput extends MoveInput {
@@ -20,7 +20,7 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
   available({ state, playerId }) {
     if (state.G.gamePhase !== "main") return false;
 
-    const isDefending = isDefensiveStep(state, playerId);
+    const isDefending = isReactStep(state, playerId);
     if (state.G.attackState && !isDefending) return false;
     if (!isDefending && state.G.turnMetadata.activePlayerId !== playerId) return false;
 
@@ -33,7 +33,7 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
         const card = state.G.cardIndex[cardId as string];
         if (!card) continue;
         const cardDef = defOf(card);
-        if (cardDef.type === "legend" && card.meta.faceDown) continue;
+        if (!canHostActivatedAbility(card, cardDef, zone)) continue;
 
         const abilities: Ability[] =
           (cardDef as import("@tcg/cyberpunk-types").StructuredCardDefinition)?.abilities ?? [];
@@ -43,7 +43,7 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
               const isQuick = ability.keyword === "quick" || cardDef.keywords.includes("quick");
               if (!isQuick) continue;
             }
-            if (canPayCosts(ability, state, cardId, playerId)) return true;
+            if (canActivateAbility(ability, state, cardId as CardInstanceId, playerId)) return true;
           }
         }
       }
@@ -71,6 +71,13 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
         errorCode: "LEGEND_FACE_DOWN",
       };
     }
+    if (!canHostActivatedAbility(card, cardDef, card.zone)) {
+      return {
+        valid: false,
+        error: "Activated ability source is not in play",
+        errorCode: "NOT_ON_FIELD",
+      };
+    }
 
     const abilities: Ability[] =
       (cardDef as import("@tcg/cyberpunk-types").StructuredCardDefinition)?.abilities ?? [];
@@ -83,7 +90,7 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
       };
     }
 
-    const isDefending = isDefensiveStep(state, playerId);
+    const isDefending = isReactStep(state, playerId);
     if (state.G.attackState && !isDefending) {
       return { valid: false, error: "Attack in progress", errorCode: "ATTACK_IN_PROGRESS" };
     }
@@ -100,6 +107,14 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
 
     if (!canPayCosts(ability, state, cardId as CardInstanceId, playerId)) {
       return { valid: false, error: "Cannot pay ability costs", errorCode: "CARD_SPENT" };
+    }
+
+    if (!canResolveActivatedAbility(ability, state, cardId as CardInstanceId, playerId)) {
+      return {
+        valid: false,
+        error: "Ability has no valid targets",
+        errorCode: "NO_VALID_TARGETS",
+      };
     }
 
     return { valid: true };
@@ -145,6 +160,17 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
   },
 };
 
+export function canHostActivatedAbility(
+  card: { zone: string; meta: { attachedToId: CardInstanceId | null; faceDown: boolean } },
+  cardDef: { type: string },
+  zone: string,
+): boolean {
+  if (zone === "field") return card.zone === "field";
+  if (zone !== "legendArea" || card.zone !== "legendArea") return false;
+  if (cardDef.type === "legend") return !card.meta.faceDown;
+  return card.meta.attachedToId !== null;
+}
+
 /**
  * Returns true when every cost on the ability could be paid right now. Mirrors
  * what `validate` checks; surfaced for the prompt builder so it can pre-filter
@@ -169,10 +195,15 @@ export function canPayCosts(
 
   for (const cost of ability.costs) {
     if (cost.cost === "spend") {
-      const targets = resolveTarget(cost.target as any, ctx);
+      const targets = resolveTarget(cost.target, ctx);
       for (const id of targets) {
         const c = state.G.cardIndex[id as string];
         if (c?.meta.spent) return false;
+        if ((id as string) === (cardId as string) && c?.meta.playedThisTurn) {
+          const cardDef = c ? defOf(c) : undefined;
+          // ADRENALINE is attack-scoped; it does not override Lag for self-spend effects.
+          if (cardDef?.type === "unit") return false;
+        }
       }
     }
     if (cost.cost === "payEddies" && availableEddies(state, playerId) < cost.amount) {
@@ -180,4 +211,112 @@ export function canPayCosts(
     }
   }
   return true;
+}
+
+export function canActivateAbility(
+  ability: Ability,
+  state: MatchState,
+  cardId: CardInstanceId,
+  playerId: import("../types/branded.ts").PlayerId,
+): boolean {
+  return (
+    canPayCosts(ability, state, cardId, playerId) &&
+    canResolveActivatedAbility(ability, state, cardId, playerId)
+  );
+}
+
+/**
+ * Activated abilities are player-selected actions, so the prompt and move
+ * validator must filter out abilities that would immediately fizzle for lack
+ * of required targets.
+ */
+export function canResolveActivatedAbility(
+  ability: Ability,
+  state: MatchState,
+  cardId: CardInstanceId,
+  playerId: import("../types/branded.ts").PlayerId,
+): boolean {
+  const ctx: ResolutionContext = {
+    state,
+    sourceCardId: cardId,
+    sourcePlayerId: playerId,
+    abilityIndex: -1,
+    contextTargets: {},
+    boundTargets: {},
+  };
+
+  const selectableBindings: NonNullable<Ability["bindings"]> = [];
+  for (const binding of ability.bindings ?? []) {
+    const targets = resolveTarget(binding.target, ctx);
+    const min = getSelectionMin(binding.target);
+    if (targets.length < min) return false;
+
+    if (getSelectionMode(binding.target) === "choose") {
+      selectableBindings.push(binding);
+    } else {
+      ctx.boundTargets[binding.id] = targets;
+    }
+  }
+
+  if (ability.conditions?.length && !ability.conditions.every((c) => evaluateCondition(c, ctx))) {
+    return false;
+  }
+
+  if (selectableBindings.length === 1) {
+    const binding = selectableBindings[0]!;
+    const targets = resolveTarget(binding.target, ctx);
+    const min = getSelectionMin(binding.target);
+    const max = getSelectionMax(binding.target);
+    if (min === 1 && max === 1) {
+      return targets.some((targetId) =>
+        requiredEffectsHaveTargets(ability, {
+          ...ctx,
+          boundTargets: {
+            ...ctx.boundTargets,
+            [binding.id]: [targetId],
+          },
+        }),
+      );
+    }
+  }
+
+  return requiredEffectsHaveTargets(ability, ctx);
+}
+
+function requiredEffectsHaveTargets(ability: Ability, ctx: ResolutionContext): boolean {
+  for (const effect of ability.effects) {
+    if (effect.conditions?.length && !effect.conditions.every((c) => evaluateCondition(c, ctx))) {
+      continue;
+    }
+    if (effect.optional || effect.effect === "searchDeck") continue;
+    if (!("target" in effect) || !effect.target) continue;
+
+    const target = effect.target;
+    if (target.selector === "bound") {
+      const declared = ability.bindings?.find((binding) => binding.id === target.id);
+      if (declared && getSelectionMode(declared.target) === "choose") continue;
+    }
+    if (resolveTarget(target, ctx).length === 0) return false;
+  }
+
+  return true;
+}
+
+function getSelectionMin(target: TargetDSL): number {
+  const selection = getSelection(target);
+  return selection?.min ?? 1;
+}
+
+function getSelectionMax(target: TargetDSL): number {
+  const selection = getSelection(target);
+  return selection?.max ?? 1;
+}
+
+function getSelectionMode(target: TargetDSL): TargetSelectionDSL["mode"] | undefined {
+  const selection = getSelection(target);
+  return selection?.mode;
+}
+
+function getSelection(target: TargetDSL): TargetSelectionDSL | undefined {
+  return "selection" in target ? target.selection : undefined;
 }

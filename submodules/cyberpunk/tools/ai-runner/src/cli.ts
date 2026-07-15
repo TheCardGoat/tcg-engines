@@ -1,11 +1,14 @@
+import { mkdirSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
 import {
-  monteCarloGreedyStrategy,
-  monteCarloStrategy,
+  createMonteCarloStrategy,
+  defaultStrategy,
   firstLegalStrategy,
   greedyStrategy,
   randomStrategy,
   runAutoMatch,
   type AIStrategy,
+  type DeckList,
 } from "@tcg/cyberpunk-engine";
 import {
   listStrategies,
@@ -14,20 +17,43 @@ import {
   runTournament,
   type BatchOptions,
   type BatchSummary,
+  type MatchFailureMetadata,
   type TournamentSummary,
 } from "./runner.ts";
 import { createTestCatalog, createTestDecks, createTestPlayers } from "./test-catalog.ts";
 import { createRealCatalog, createRealDecks } from "./real-catalog.ts";
+import {
+  createLegalDeckPool,
+  createStructuredCatalog,
+  deckListFromGenerated,
+  type DeckSource,
+} from "./legal-decks.ts";
 import { buildRecording, loadRecording, replayRecording, saveRecording } from "./replay.ts";
 import { trainGreedy } from "./train.ts";
 
 const SAVEABLE_STRATEGIES: Record<string, AIStrategy> = {
+  default: defaultStrategy,
   "first-legal": firstLegalStrategy,
   random: randomStrategy,
   greedy: greedyStrategy,
-  "monte-carlo": monteCarloStrategy,
-  "monte-carlo-greedy": monteCarloGreedyStrategy,
 };
+
+function saveableStrategy(name: string, parsed: ParsedArgs): AIStrategy | undefined {
+  if (name === "monte-carlo") {
+    return createMonteCarloStrategy({
+      rolloutsPerAction: parsed.monteCarloRollouts ?? 1,
+      maxRolloutSteps: parsed.monteCarloRolloutSteps ?? 10,
+    });
+  }
+  if (name === "monte-carlo-greedy") {
+    return createMonteCarloStrategy({
+      rolloutsPerAction: parsed.monteCarloRollouts ?? 1,
+      maxRolloutSteps: parsed.monteCarloRolloutSteps ?? 10,
+      rolloutStrategy: greedyStrategy,
+    });
+  }
+  return SAVEABLE_STRATEGIES[name];
+}
 
 interface ParsedArgs {
   mode: "batch" | "tournament" | "replay" | "train";
@@ -43,6 +69,14 @@ interface ParsedArgs {
   maxSteps?: number;
   verbose: boolean;
   realCards: boolean;
+  deckSource?: DeckSource;
+  deckLimit?: number;
+  deckPairLimit?: number;
+  monteCarloRollouts?: number;
+  monteCarloRolloutSteps?: number;
+  pairedSeeds: boolean;
+  failOnMaxSteps: boolean;
+  reportJson?: string;
   workers: number;
   /** Training: total candidate evaluations. */
   iterations?: number;
@@ -80,6 +114,9 @@ function parseArgs(argv: string[]): ParsedArgs {
   let mode: ParsedArgs["mode"] = "batch";
   let verbose = false;
   let realCards = false;
+  let deckSource: DeckSource | undefined;
+  let failOnMaxSteps = false;
+  let pairedSeeds = false;
   let workers = 1;
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
@@ -106,6 +143,39 @@ function parseArgs(argv: string[]): ParsedArgs {
         break;
       case "--real-cards":
         realCards = true;
+        break;
+      case "--deck-source":
+        deckSource = parseDeckSource(next);
+        i++;
+        break;
+      case "--deck-limit":
+        args.deckLimit = parsePositiveInt("--deck-limit", next);
+        i++;
+        break;
+      case "--deck-pair-limit":
+        args.deckPairLimit = parsePositiveInt("--deck-pair-limit", next);
+        i++;
+        break;
+      case "--mc-rollouts":
+        args.monteCarloRollouts = parsePositiveInt("--mc-rollouts", next);
+        i++;
+        break;
+      case "--mc-rollout-steps":
+        args.monteCarloRolloutSteps = parsePositiveInt("--mc-rollout-steps", next);
+        i++;
+        break;
+      case "--paired-seeds":
+        pairedSeeds = true;
+        break;
+      case "--fail-on-max-steps":
+        failOnMaxSteps = true;
+        break;
+      case "--report-json":
+        if (next === undefined || next.startsWith("--")) {
+          throw new Error(`--report-json requires a path`);
+        }
+        args.reportJson = next;
+        i++;
         break;
       case "--workers":
         workers = parsePositiveInt("--workers", next);
@@ -180,6 +250,14 @@ function parseArgs(argv: string[]): ParsedArgs {
     maxSteps: args.maxSteps,
     verbose,
     realCards,
+    deckSource,
+    deckLimit: args.deckLimit,
+    deckPairLimit: args.deckPairLimit,
+    monteCarloRollouts: args.monteCarloRollouts,
+    monteCarloRolloutSteps: args.monteCarloRolloutSteps,
+    pairedSeeds,
+    failOnMaxSteps,
+    reportJson: args.reportJson,
     workers,
     saveLog: args.saveLog,
     replayPath: args.replayPath,
@@ -187,6 +265,22 @@ function parseArgs(argv: string[]): ParsedArgs {
     output: args.output,
     opponent: args.opponent,
   };
+}
+
+function parseDeckSource(raw: string | undefined): DeckSource {
+  if (raw === undefined || raw.startsWith("--")) {
+    throw new Error("--deck-source requires a value");
+  }
+  const allowed: DeckSource[] = [
+    "legal-permutations",
+    "print-and-play-padded",
+    "real-single",
+    "test",
+  ];
+  if (!allowed.includes(raw as DeckSource)) {
+    throw new Error(`--deck-source must be one of: ${allowed.join(", ")}`);
+  }
+  return raw as DeckSource;
 }
 
 function printUsage(): void {
@@ -211,6 +305,25 @@ Common options:
                         (or the first match if all pass)
   --real-cards          Use real @tcg/cyberpunk-cards decks instead of the
                         hand-rolled fixture (exercises actual card text)
+  --deck-source <name>  Deck source: test, real-single,
+                        print-and-play-padded, or legal-permutations.
+                        --real-cards is a compatibility alias for
+                        --deck-source real-single.
+  --deck-limit <n>      Limit selected generated decks before pairing
+  --deck-pair-limit <n> Limit selected ordered deck pairs
+  --mc-rollouts <n>     Rollouts per candidate action for ai-runner Monte
+                        Carlo strategies (default: 1; production default is
+                        unchanged)
+  --mc-rollout-steps <n>
+                        Max decision steps per Monte Carlo rollout
+                        (default: 10; production default is unchanged)
+  --paired-seeds        Tournament mode only: reuse the same deck-pair/match
+                        seeds for every strategy cell. This makes heuristic
+                        comparison less noisy.
+  --fail-on-max-steps   Exit non-zero when any match hits maxSteps
+  --report-json <path>  Write stable reason counts, coverage, and
+                        first-failure metadata. If a failure occurs, also
+                        writes <path>.first-failure.json as a replay.
   --workers <n>         Run the batch across N worker threads (single-matchup
                         mode only; default 1). Splits matches evenly with
                         distinct seed prefixes per worker.
@@ -248,6 +361,16 @@ function printBatchSummary(summary: BatchSummary): void {
   console.log(`Strategy A (p1): ${summary.options.strategyA}`);
   console.log(`Strategy B (p2): ${summary.options.strategyB}`);
   console.log(`Matches:         ${matches}`);
+  console.log(`Decks:           ${summary.deckCount}`);
+  console.log(`Deck pairs:      ${summary.deckPairCount}`);
+  if (summary.deckCoverage) {
+    console.log(
+      `Cards covered:   ${summary.deckCoverage.covered}/${summary.deckCoverage.totalReachable} (missed ${summary.deckCoverage.missed})`,
+    );
+    if (summary.deckCoverage.missedSlugs.length > 0) {
+      console.log(`Cards missed:    ${summary.deckCoverage.missedSlugs.join(", ")}`);
+    }
+  }
   console.log(`Wins p1:         ${p1} (${pct(p1, matches)})`);
   console.log(`Wins p2:         ${p2} (${pct(p2, matches)})`);
   console.log(`Draws:           ${draws}`);
@@ -269,6 +392,12 @@ function printTournamentSummary(summary: TournamentSummary): void {
 
   console.log("");
   console.log(`Tournament: ${strategies.length} strategies, ${matches} matches per pairing`);
+  console.log(`Decks: ${summary.deckCount}; deck pairs: ${summary.deckPairCount}`);
+  if (summary.deckCoverage) {
+    console.log(
+      `Cards covered: ${summary.deckCoverage.covered}/${summary.deckCoverage.totalReachable}; missed: ${summary.deckCoverage.missed}`,
+    );
+  }
   console.log("");
   const labelWidth = Math.max(8, ...strategies.map((s) => s.length)) + 2;
   const colWidth = Math.max(10, ...strategies.map((s) => s.length + 5)); // "vs <name>" + padding
@@ -296,6 +425,16 @@ function printTournamentSummary(summary: TournamentSummary): void {
   console.log("");
   console.log(`Total matches: ${summary.totalMatches}`);
   console.log(`Illegal moves: ${summary.totalIllegal}`);
+  console.log(`Seat wins: p1=${summary.totalWinsBySeat.p1}, p2=${summary.totalWinsBySeat.p2}`);
+  console.log(`Avg turns: ${summary.averageTurnCount.toFixed(1)}`);
+  console.log(`Avg steps: ${summary.averageStepCount.toFixed(1)}`);
+  console.log("Reasons:");
+  for (const [reason, count] of Object.entries(summary.reasonCounts)) {
+    if (count > 0) console.log(`  ${reason.padEnd(14)} ${count}`);
+  }
+  if (summary.firstFailingMatch) {
+    console.log(`First failing seed: ${summary.firstFailingMatch.seed}`);
+  }
 }
 
 function printVerboseLog(summary: BatchSummary): void {
@@ -384,6 +523,12 @@ async function main() {
       seed: parsed.seed,
       maxSteps: parsed.maxSteps,
       realCards: parsed.realCards,
+      deckSource: parsed.deckSource,
+      deckLimit: parsed.deckLimit,
+      deckPairLimit: parsed.deckPairLimit,
+      monteCarloRollouts: parsed.monteCarloRollouts,
+      monteCarloRolloutSteps: parsed.monteCarloRolloutSteps,
+      pairedSeeds: parsed.pairedSeeds,
     });
     printTournamentSummary(summary);
     if (parsed.verbose) {
@@ -395,7 +540,20 @@ async function main() {
         }
       }
     }
-    if (summary.totalIllegal > 0) process.exit(2);
+    if (parsed.reportJson) writeTournamentReport(parsed.reportJson, summary);
+    if (summary.firstFailingMatch && parsed.reportJson) {
+      saveFailureRecording(
+        parsed,
+        summary.firstFailingMatch.failure,
+        `${parsed.reportJson}.first-failure.json`,
+      );
+    }
+    if (
+      summary.totalIllegal > 0 ||
+      summary.reasonCounts.stuck > 0 ||
+      (parsed.failOnMaxSteps && summary.reasonCounts.maxSteps > 0)
+    )
+      process.exit(2);
     return;
   }
 
@@ -416,50 +574,224 @@ async function main() {
     seed: parsed.seed,
     maxSteps: parsed.maxSteps,
     realCards: parsed.realCards,
+    deckSource: parsed.deckSource,
+    deckLimit: parsed.deckLimit,
+    deckPairLimit: parsed.deckPairLimit,
+    monteCarloRollouts: parsed.monteCarloRollouts,
+    monteCarloRolloutSteps: parsed.monteCarloRolloutSteps,
   };
   const summary =
     parsed.workers > 1 ? await runBatchParallel(opts, parsed.workers) : runBatch(opts);
   printBatchSummary(summary);
   if (parsed.verbose) printVerboseLog(summary);
+  if (parsed.reportJson) writeBatchReport(parsed.reportJson, summary);
+  if (summary.firstFailingMatch && parsed.reportJson) {
+    saveFailureRecording(
+      parsed,
+      summary.firstFailingMatch.failure,
+      `${parsed.reportJson}.first-failure.json`,
+    );
+  }
   if (parsed.saveLog) {
-    saveFirstMatchRecording(parsed, opts, parsed.saveLog);
+    const firstMatch = summary.firstMatch?.failure;
+    if (!firstMatch) throw new Error("Cannot save recording because no first match was captured");
+    saveMatchRecording(parsed, firstMatch, parsed.saveLog);
     console.log(`\nSaved recording: ${parsed.saveLog}`);
   }
-  if (summary.illegalCount > 0) process.exit(2);
+  if (
+    summary.illegalCount > 0 ||
+    summary.reasonCounts.stuck > 0 ||
+    (parsed.failOnMaxSteps && summary.reasonCounts.maxSteps > 0)
+  )
+    process.exit(2);
 }
 
 /**
- * Re-run match 0 in-process so we can capture the full `runAutoMatch`
- * result (worker results don't bubble up the per-step decision payload).
- * Same seed prefix as the live batch (`<seed>/match-0`), so the recording
- * is reproducible.
+ * Re-run the selected match in-process so we can capture the full
+ * `runAutoMatch` result (worker results don't bubble up the per-step decision
+ * payload). Uses the metadata reported by `runBatch`, including generated
+ * deck ids and deck-pair seed, so the saved recording matches the live batch.
  */
-function saveFirstMatchRecording(parsed: ParsedArgs, opts: BatchOptions, path: string): void {
-  const strategyA = SAVEABLE_STRATEGIES[parsed.strategyA];
-  const strategyB = SAVEABLE_STRATEGIES[parsed.strategyB];
+function saveMatchRecording(parsed: ParsedArgs, match: MatchFailureMetadata, path: string): void {
+  const strategyA = saveableStrategy(match.strategyA, parsed);
+  const strategyB = saveableStrategy(match.strategyB, parsed);
   if (!strategyA || !strategyB) {
     throw new Error(
-      `--save-log can't capture strategy ${!strategyA ? parsed.strategyA : parsed.strategyB}`,
+      `--save-log can't capture strategy ${!strategyA ? match.strategyA : match.strategyB}`,
     );
   }
-  const seed = `${opts.seed}/match-0`;
+  const source = parsed.deckSource ?? (parsed.realCards ? "real-single" : "test");
+  const decks =
+    source === "test"
+      ? createTestDecks()
+      : source === "real-single"
+        ? createRealDecks()
+        : generatedDecksFor(source, match);
   const result = runAutoMatch({
     players: createTestPlayers(),
-    decks: opts.realCards ? createRealDecks() : createTestDecks(),
+    decks,
     strategies: [strategyA, strategyB],
-    catalog: opts.realCards ? createRealCatalog() : createTestCatalog(),
-    seed,
-    maxSteps: opts.maxSteps,
+    catalog:
+      source === "test"
+        ? createTestCatalog()
+        : source === "real-single"
+          ? createRealCatalog()
+          : createStructuredCatalog(),
+    seed: match.seed,
+    maxSteps: parsed.maxSteps,
   });
+  const generated =
+    source === "test" || source === "real-single" ? undefined : generatedDeckPairFor(source, match);
   const recording = buildRecording({
     result,
-    strategyA: parsed.strategyA,
-    strategyB: parsed.strategyB,
-    seed,
-    realCards: opts.realCards ?? false,
-    maxSteps: opts.maxSteps,
+    strategyA: match.strategyA,
+    strategyB: match.strategyB,
+    seed: match.seed,
+    realCards: source === "real-single",
+    deckSource: source,
+    deckA: generated?.a,
+    deckB: generated?.b,
+    maxSteps: parsed.maxSteps,
+    monteCarloOptions: monteCarloRecordingOptions(parsed),
   });
   saveRecording(path, recording);
+}
+
+function writeBatchReport(path: string, summary: BatchSummary): void {
+  writeJson(path, {
+    mode: "batch",
+    options: summary.options,
+    matches: summary.matches,
+    deckCount: summary.deckCount,
+    deckPairCount: summary.deckPairCount,
+    averageTurnCount: summary.averageTurnCount,
+    averageStepCount: summary.averageStepCount,
+    coverage: summary.deckCoverage,
+    reasonCounts: summary.reasonCounts,
+    firstFailure: summary.firstFailingMatch?.failure,
+  });
+}
+
+function writeTournamentReport(path: string, summary: TournamentSummary): void {
+  writeJson(path, {
+    mode: "tournament",
+    options: summary.options,
+    totalMatches: summary.totalMatches,
+    deckCount: summary.deckCount,
+    deckPairCount: summary.deckPairCount,
+    averageTurnCount: summary.averageTurnCount,
+    averageStepCount: summary.averageStepCount,
+    totalWinsBySeat: summary.totalWinsBySeat,
+    totalWinsByStrategy: summary.totalWinsByStrategy,
+    strategyMatrix: summary.cells.map((cell) => ({
+      strategyA: cell.strategyA,
+      strategyB: cell.strategyB,
+      winsA: cell.summary.perPlayerWins.p1 ?? 0,
+      winsB: cell.summary.perPlayerWins.p2 ?? 0,
+      draws: cell.summary.draws,
+      averageTurnCount: cell.summary.averageTurnCount,
+      averageStepCount: cell.summary.averageStepCount,
+      reasonCounts: cell.summary.reasonCounts,
+    })),
+    coverage: summary.deckCoverage,
+    reasonCounts: summary.reasonCounts,
+    firstFailure: summary.firstFailingMatch?.failure,
+  });
+}
+
+function writeJson(path: string, value: unknown): void {
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`, "utf8");
+}
+
+function saveFailureRecording(
+  parsed: ParsedArgs,
+  failure: MatchFailureMetadata,
+  path: string,
+): void {
+  const strategyA = saveableStrategy(failure.strategyA, parsed);
+  const strategyB = saveableStrategy(failure.strategyB, parsed);
+  if (!strategyA || !strategyB) return;
+  const source = parsed.deckSource ?? (parsed.realCards ? "real-single" : "test");
+  if (source === "test" || source === "real-single") {
+    const result = runAutoMatch({
+      players: createTestPlayers(),
+      decks: source === "real-single" ? createRealDecks() : createTestDecks(),
+      strategies: [strategyA, strategyB],
+      catalog: source === "real-single" ? createRealCatalog() : createTestCatalog(),
+      seed: failure.seed,
+      maxSteps: parsed.maxSteps,
+    });
+    saveRecording(
+      path,
+      buildRecording({
+        result,
+        strategyA: failure.strategyA,
+        strategyB: failure.strategyB,
+        seed: failure.seed,
+        realCards: source === "real-single",
+        deckSource: source,
+        maxSteps: parsed.maxSteps,
+        monteCarloOptions: monteCarloRecordingOptions(parsed),
+      }),
+    );
+    return;
+  }
+
+  const { a: deckA, b: deckB } = generatedDeckPairFor(source, failure);
+  const result = runAutoMatch({
+    players: createTestPlayers(),
+    decks: [deckListFromGenerated(deckA, "p1"), deckListFromGenerated(deckB, "p2")],
+    strategies: [strategyA, strategyB],
+    catalog: createStructuredCatalog(),
+    seed: failure.seed,
+    maxSteps: parsed.maxSteps,
+  });
+  saveRecording(
+    path,
+    buildRecording({
+      result,
+      strategyA: failure.strategyA,
+      strategyB: failure.strategyB,
+      seed: failure.seed,
+      realCards: false,
+      deckSource: source,
+      deckA,
+      deckB,
+      maxSteps: parsed.maxSteps,
+      monteCarloOptions: monteCarloRecordingOptions(parsed),
+    }),
+  );
+}
+
+function generatedDecksFor(source: DeckSource, match: MatchFailureMetadata): [DeckList, DeckList] {
+  const { a, b } = generatedDeckPairFor(source, match);
+  return [deckListFromGenerated(a, "p1"), deckListFromGenerated(b, "p2")];
+}
+
+function generatedDeckPairFor(
+  source: DeckSource,
+  match: MatchFailureMetadata,
+): {
+  a: ReturnType<typeof createLegalDeckPool>["decks"][number];
+  b: ReturnType<typeof createLegalDeckPool>["decks"][number];
+} {
+  const pool = createLegalDeckPool(source);
+  const a = pool.decks.find((deck) => deck.id === match.deckAId);
+  const b = pool.decks.find((deck) => deck.id === match.deckBId);
+  if (!a || !b) {
+    throw new Error(`Cannot find generated deck pair ${match.deckAId} vs ${match.deckBId}`);
+  }
+  return { a, b };
+}
+
+function monteCarloRecordingOptions(
+  parsed: ParsedArgs,
+): Parameters<typeof buildRecording>[0]["monteCarloOptions"] {
+  return {
+    rolloutsPerAction: parsed.monteCarloRollouts ?? 1,
+    maxRolloutSteps: parsed.monteCarloRolloutSteps ?? 10,
+  };
 }
 
 main().catch((err: unknown) => {

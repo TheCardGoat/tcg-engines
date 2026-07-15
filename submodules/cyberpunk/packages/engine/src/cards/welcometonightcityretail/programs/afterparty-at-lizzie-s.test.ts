@@ -1,26 +1,59 @@
 import { describe, expect, it } from "vite-plus/test";
-import { welcomeToNightCityRetailAfterpartyAtLizzieS } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailAfterpartyAtLizzieS,
+  welcomeToNightCityRetailCorpoSecurity,
+} from "@tcg/cyberpunk-cards";
+import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
 
 describe("Afterparty at Lizzie's", () => {
-  it("adjusts a Gig by up to 1 and draws 1 when you control 2+ Gigs with distinct values", () => {
-    const ability = welcomeToNightCityRetailAfterpartyAtLizzieS.abilities[0]!;
-    expect(ability.kind).toBe("triggered");
-    expect(ability.trigger).toMatchObject({ trigger: "play" });
+  it("adjusts a Gig by up to 1 and draws 1 when friendly Gigs have distinct values", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailAfterpartyAtLizzieS],
+        deck: [welcomeToNightCityRetailCorpoSecurity],
+        eddies: 1,
+        gigArea: [
+          { dieType: "d4", faceValue: 1 },
+          { dieType: "d6", faceValue: 6 },
+        ],
+      },
+      {},
+      { preserveDeckOrder: true },
+    );
 
-    expect(ability.effects.map((effect) => effect.effect)).toEqual(["adjustGig", "draw"]);
-
-    expect(ability.effects[0]).toMatchObject({
-      effect: "adjustGig",
-      maxAmount: 1,
-      direction: "either",
-      chooseUpTo: true,
+    engine.playCard(welcomeToNightCityRetailAfterpartyAtLizzieS, { as: P1 });
+    engine.resolveEffectTargetIds([engine.findGigIdByType(P1, "d4")], {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "Afterparty still needs the selected Gig's new face value",
     });
+    engine.resolveAdjustGig(2, { as: P1 });
 
-    // Card text: "If you control 2 or more Gigs with different values, draw 1."
-    const draw = ability.effects[1]!;
-    expect(draw).toMatchObject({ effect: "draw", player: "friendly", amount: 1 });
-    expect(draw.conditions).toEqual([
-      { condition: "hasDistinctGigValues", controller: "friendly", minCount: 2 },
-    ]);
+    expect(engine.getGigDice(P1).find((die) => die.dieType === "d4")?.faceValue).toBe(2);
+    expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toContain(
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
+    expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(
+      welcomeToNightCityRetailAfterpartyAtLizzieS.id,
+    );
+  });
+
+  it("can resolve without selecting a Gig and does not draw without distinct friendly values", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      hand: [welcomeToNightCityRetailAfterpartyAtLizzieS],
+      deck: [welcomeToNightCityRetailCorpoSecurity],
+      eddies: 1,
+      gigArea: [{ dieType: "d4", faceValue: 1 }],
+    });
+    const handBefore = engine.getHandCount(P1);
+
+    engine.playCard(welcomeToNightCityRetailAfterpartyAtLizzieS, { as: P1 });
+    engine.resolveEffectTargetIds([], { as: P1 });
+
+    expect(engine.getGigDice(P1).find((die) => die.dieType === "d4")?.faceValue).toBe(1);
+    expect(engine.getHandCount(P1)).toBe(handBefore - 1);
+    expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).not.toContain(
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
   });
 });

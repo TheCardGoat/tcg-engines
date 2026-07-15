@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { alphaGoroTakemuraLosingHisWay } from "@tcg/cyberpunk-cards";
+import { embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -13,7 +13,7 @@ test("Goro Takemura - power scales with face-up legends", async ({ page }) => {
   const goro = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaGoroTakemuraLosingHisWay.id,
+    embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay.id,
   );
 
   await pom.expectFaceDownLegendsCount(CYBERPUNK_P1, 0);
@@ -26,7 +26,7 @@ test("Goro Takemura - power scales with face-up legends", async ({ page }) => {
     throw new Error("Expected Goro to start a direct attack.");
   }
   expectEqual("Goro attack kind", attack.kind, "direct");
-  expectEqual("Goro attack step", attack.step, "offensive");
+  expectEqual("Goro attack step", attack.step, "attack");
   await pom.expectFieldCardSpent(CYBERPUNK_P1, goro.instanceId, true);
 
   await pom.resolveAttack(CYBERPUNK_P1);

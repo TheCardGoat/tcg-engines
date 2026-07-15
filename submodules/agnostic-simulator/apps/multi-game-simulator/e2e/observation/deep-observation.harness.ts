@@ -717,11 +717,11 @@ async function makePlayerMove(
 function isHumanTurn(snap: EngineSnapshot): boolean {
   const humanSide = "p1";
   if (snap.activePlayer === humanSide) return true;
-  // During attack defensive step, the defender (rivalId) must act even though
+  // During attack React step, the defender (rivalId) must act even though
   // activePlayer is still the attacker.
   if (
     snap.attackState &&
-    snap.attackState.step === "defensive" &&
+    snap.attackState.step === "react" &&
     snap.attackState.rivalId === humanSide
   ) {
     return true;
@@ -881,7 +881,7 @@ async function runSingleGame(
             break;
           }
 
-          // If it's now the human's turn (e.g., defensive step), stop waiting for AI
+          // If it's now the human's turn (e.g., React step), stop waiting for AI
           if (isHumanTurn(current)) {
             aiActed = true;
             game.observations.push({
@@ -894,7 +894,7 @@ async function runSingleGame(
               after: current,
               screenshotPath,
               domSnapshotPath: domPath,
-              notes: ["AI yielded to human for defensive step or pending choice"],
+              notes: ["AI yielded to human for React step or pending choice"],
             });
             break;
           }

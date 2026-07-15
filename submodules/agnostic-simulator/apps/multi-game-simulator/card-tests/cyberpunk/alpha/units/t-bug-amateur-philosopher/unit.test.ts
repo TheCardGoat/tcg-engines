@@ -5,9 +5,9 @@ import {
   expectAttackCandidate,
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
-import { alphaTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
 
-const card = alphaTBugAmateurPhilosopher; // unit, cost 3, power 5, no abilities
+const card = welcomeToNightCityRetailTBugAmateurPhilosopher; // unit, cost 3, power 5, no abilities
 
 describe("T-Bug - Amateur Philosopher", () => {
   describe("UI prompt", () => {

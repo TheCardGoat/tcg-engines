@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 
 import {
-  spoilerAfterpartyAtLizzieS,
+  welcomeToNightCityRetailAfterpartyAtLizzieS,
   welcomeToNightCityRetailVStreetkid,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -35,7 +35,11 @@ test("V - Streetkid (Retail) - CALL trashes 3 and recovers Braindance", async ({
   const deckAfter = await pom.getDeckSize(CYBERPUNK_P1);
   expectEqual("V-Streetkid deck after", deckAfter, deckBefore - 3);
   await pom.expectHandSize(CYBERPUNK_P1, handBefore + 1);
-  await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, spoilerAfterpartyAtLizzieS.id);
+  await pom.getCardInZoneByDefinitionId(
+    "hand",
+    CYBERPUNK_P1,
+    welcomeToNightCityRetailAfterpartyAtLizzieS.id,
+  );
 
   await pom.expectStructuralState();
 });

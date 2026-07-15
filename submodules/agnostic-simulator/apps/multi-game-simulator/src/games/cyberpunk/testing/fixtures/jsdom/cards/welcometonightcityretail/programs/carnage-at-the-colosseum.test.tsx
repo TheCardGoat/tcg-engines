@@ -1,6 +1,6 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaRuthlessLowlife,
+  welcomeToNightCityRetailMoxInciters,
   welcomeToNightCityRetailCarnageAtTheColosseum,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -42,7 +42,11 @@ describe("Carnage At The Colosseum (Retail) jsdom happy path", () => {
       // Cost 6 minus 2 for friendly gigs with value >= 8 = 4 eddies spent
       await pom.expectEddies(CYBERPUNK_P1, eddiesBefore - 4);
       // Defeated rival unit goes to rival trash
-      await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaRuthlessLowlife.id);
+      await pom.getCardInZoneByDefinitionId(
+        "trash",
+        CYBERPUNK_P2,
+        welcomeToNightCityRetailMoxInciters.id,
+      );
       // Carnage goes to P1 trash after resolving
       await pom.getCardInZoneByDefinitionId(
         "trash",

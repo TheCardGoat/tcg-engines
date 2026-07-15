@@ -6,8 +6,13 @@ import type {
   CardExitStep,
   CardLandStep,
   CardMoveStep,
+  CombatRedirectStep,
+  CombatStep,
   EffectTargetStep,
+  GigMoveStep,
   LegendRevealStep,
+  PhaseChangeStep,
+  ResourceFloatStep,
 } from "./types.js";
 import {
   cyberpunkAnimationScriptToAnimationPlans,
@@ -53,6 +58,38 @@ describe("cyberpunkImmediateSystemAudioCues", () => {
 });
 
 describe("cyberpunkAnimationStepToAnimationPlan", () => {
+  test("maps turn phase changes to Motion phaseChange plans", () => {
+    const step: PhaseChangeStep = {
+      id: "turn-step",
+      kind: "phaseChange",
+      startMs: 0,
+      durationMs: 1500,
+      reason: "phaseChanged",
+      from: "main",
+      to: "start",
+      playerId: PLAYER_SIDE_TO_ID.player,
+      variant: "turn",
+      turnPlayerId: PLAYER_SIDE_TO_ID.opponent,
+      turnNumber: 2,
+    };
+
+    expect(cyberpunkAnimationStepToAnimationPlan(step, context)).toMatchObject({
+      id: "turn-step",
+      version: 1,
+      steps: [
+        {
+          id: "turn-step",
+          type: "phaseChange",
+          from: "main",
+          to: "start",
+          variant: "turn",
+          player: { kind: "player", id: String(PLAYER_SIDE_TO_ID.opponent) },
+          turnNumber: 2,
+        },
+      ],
+    });
+  });
+
   test("maps card moves to Motion moveEntity plans", () => {
     const step: CardMoveStep = {
       id: "step-1",
@@ -209,7 +246,39 @@ describe("cyberpunkAnimationStepToAnimationPlan", () => {
       ],
     });
     expect(cyberpunkAnimationStepToAnimationPlan(reveal, context)).toMatchObject({
-      steps: [{ type: "effect", source: { id: "p-legendArea" }, label: "REVEAL" }],
+      actorId: String(PLAYER_SIDE_TO_ID.player),
+      steps: [
+        {
+          id: "reveal-step:to-resolution",
+          type: "moveEntity",
+          entity: { kind: "entity", id: "legend-1" },
+          from: { kind: "zone", id: "p-legendArea", ownerId: String(PLAYER_SIDE_TO_ID.player) },
+          to: { kind: "anchor", id: "resolving-program:legend-1" },
+          sourceFace: "hidden",
+          destinationFace: "hidden",
+          audioCue: "card.move",
+        },
+        {
+          id: "reveal-step:flip",
+          type: "spotlightEntity",
+          entity: { kind: "entity", id: "legend-1" },
+          at: { kind: "anchor", id: "resolving-program:legend-1" },
+          label: "REVEAL",
+          sourceFace: "hidden",
+          destinationFace: "public",
+          audioCue: "effect.trigger",
+        },
+        {
+          id: "reveal-step:return",
+          type: "moveEntity",
+          entity: { kind: "entity", id: "legend-1" },
+          from: { kind: "anchor", id: "resolving-program:legend-1" },
+          to: { kind: "zone", id: "p-legendArea", ownerId: String(PLAYER_SIDE_TO_ID.player) },
+          sourceFace: "public",
+          destinationFace: "public",
+          audioCue: "card.move",
+        },
+      ],
     });
     expect(cyberpunkAnimationStepToAnimationPlan(land, context)).toMatchObject({
       steps: [{ type: "effect", source: { id: "program-1" }, label: "PLAYED" }],
@@ -226,6 +295,140 @@ describe("cyberpunkAnimationStepToAnimationPlan", () => {
     });
   });
 
+  test("stages non-program effect sources in the resolving area before targeting", () => {
+    const effect: EffectTargetStep = {
+      id: "effect-step",
+      kind: "effectTarget",
+      startMs: 30,
+      durationMs: 380,
+      reason: "effectTargeted",
+      sourceCardId: "gear-1" as EffectTargetStep["sourceCardId"],
+      targets: [{ kind: "card", cardId: "unit-1" as EffectTargetStep["sourceCardId"] }],
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+
+    expect(
+      cyberpunkAnimationStepToAnimationPlan(effect, {
+        ...context,
+        stagedEffectSourceCardIds: new Set(["gear-1"]),
+      }),
+    ).toMatchObject({
+      actorId: String(PLAYER_SIDE_TO_ID.player),
+      steps: [
+        {
+          id: "effect-step:source-spotlight",
+          type: "spotlightEntity",
+          entity: { kind: "entity", id: "gear-1" },
+          at: { kind: "anchor", id: "resolving-program:gear-1" },
+          label: "TRIGGER",
+        },
+        {
+          type: "effect",
+          source: { kind: "anchor", id: "resolving-program:gear-1" },
+          targets: [{ kind: "entity", id: "unit-1" }],
+          label: "RESOLVED",
+        },
+      ],
+    });
+  });
+
+  test("labels staged unit play trigger sources in the resolving area before targeting", () => {
+    const effect: EffectTargetStep = {
+      id: "effect-step",
+      kind: "effectTarget",
+      startMs: 30,
+      durationMs: 380,
+      reason: "effectTargeted",
+      sourceCardId: "unit-1" as EffectTargetStep["sourceCardId"],
+      targets: [{ kind: "card", cardId: "gear-1" as EffectTargetStep["sourceCardId"] }],
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+
+    expect(
+      cyberpunkAnimationStepToAnimationPlan(effect, {
+        ...context,
+        stagedEffectSourceLabels: new Map([["unit-1", "PLAY TRIGGER"]]),
+      }),
+    ).toMatchObject({
+      actorId: String(PLAYER_SIDE_TO_ID.player),
+      steps: [
+        {
+          id: "effect-step:source-spotlight",
+          type: "spotlightEntity",
+          entity: { kind: "entity", id: "unit-1" },
+          at: { kind: "anchor", id: "resolving-program:unit-1" },
+          label: "PLAY TRIGGER",
+        },
+        {
+          type: "effect",
+          source: { kind: "anchor", id: "resolving-program:unit-1" },
+          targets: [{ kind: "entity", id: "gear-1" }],
+          label: "RESOLVED",
+        },
+      ],
+    });
+  });
+
+  test("maps gig value changes to anchored resource deltas with before and after values", () => {
+    const step: ResourceFloatStep = {
+      id: "gig-delta",
+      kind: "resourceFloat",
+      startMs: 20,
+      durationMs: 700,
+      reason: "gigValueChanged",
+      resource: "gig",
+      playerId: PLAYER_SIDE_TO_ID.player,
+      delta: -2,
+      dieId: "gig-1" as ResourceFloatStep["dieId"],
+      previousValue: 10,
+      newValue: 8,
+    };
+
+    expect(cyberpunkAnimationStepToAnimationPlan(step, context)).toMatchObject({
+      steps: [
+        {
+          type: "resourceDelta",
+          anchor: { kind: "entity", id: "gig-1" },
+          delta: -2,
+          label: "GIG",
+          fromValue: 10,
+          toValue: 8,
+        },
+      ],
+    });
+  });
+
+  test("omits generic resolved result labels for Gig-targeted effects", () => {
+    const effect: EffectTargetStep = {
+      id: "adjust-gig-target",
+      kind: "effectTarget",
+      startMs: 0,
+      durationMs: 360,
+      reason: "effectTargeted",
+      sourceCardId: "program-1" as EffectTargetStep["sourceCardId"],
+      targets: [
+        {
+          kind: "gig",
+          dieId: "gig-1" as Extract<EffectTargetStep["targets"][number], { kind: "gig" }>["dieId"],
+        },
+      ],
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+
+    expect(cyberpunkAnimationStepToAnimationPlan(effect, context)).toMatchObject({
+      steps: [
+        {
+          type: "effect",
+          source: { kind: "entity", id: "program-1" },
+          targets: [{ kind: "entity", id: "gig-1" }],
+        },
+      ],
+    });
+    expect(cyberpunkAnimationStepToAnimationPlan(effect, context)?.steps[0]).not.toHaveProperty(
+      "label",
+    );
+  });
+
   test("marks every script step as shared Motion-supported", () => {
     const land: CardLandStep = {
       id: "land-step",
@@ -238,6 +441,135 @@ describe("cyberpunkAnimationStepToAnimationPlan", () => {
     };
 
     expect(isCyberpunkAnimationStepSharedSupported(land)).toBe(true);
+  });
+
+  test("maps direct attack and stolen Gig steps with combat and steal cues", () => {
+    const declared: CombatStep = {
+      id: "attack-declared",
+      kind: "combat",
+      startMs: 0,
+      durationMs: 360,
+      reason: "attackDeclared",
+      attackerId: "kusanagi" as CombatStep["attackerId"],
+      attackKind: "direct",
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+    const resolved: CombatStep = {
+      id: "attack-resolved",
+      kind: "combat",
+      startMs: 360,
+      durationMs: 280,
+      reason: "attackResolved",
+      attackerId: "kusanagi" as CombatStep["attackerId"],
+      attackKind: "direct",
+      gigsStolen: 2,
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+    const stolen: GigMoveStep = {
+      id: "steal-d6",
+      kind: "gigMove",
+      startMs: 640,
+      durationMs: 420,
+      reason: "gigStolen",
+      dieId: "gig-d6" as GigMoveStep["dieId"],
+      from: "gigArea",
+      to: "gigArea",
+      fromPlayerId: PLAYER_SIDE_TO_ID.opponent,
+      toPlayerId: PLAYER_SIDE_TO_ID.player,
+      moveKind: "steal",
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+
+    const plans = cyberpunkAnimationScriptToAnimationPlans(
+      { steps: [declared, resolved, stolen], totalDurationMs: 1_060 },
+      { ...context, idPrefix: "entry-1" },
+    );
+
+    expect(plans).toMatchObject([
+      {
+        id: "entry-1:attack-declared",
+        steps: [
+          {
+            id: "attack-declared",
+            type: "combat",
+            reason: "declared",
+            attackKind: "direct",
+            source: { kind: "entity", id: "kusanagi" },
+            target: { kind: "anchor", id: "opp-street-cred" },
+            audioCue: "combat.start",
+          },
+        ],
+      },
+      {
+        id: "entry-1:attack-resolved",
+        steps: [
+          {
+            id: "attack-resolved",
+            type: "combat",
+            reason: "resolved",
+            attackKind: "direct",
+            label: "IMPACT",
+            detailLabel: "STEALS 2 GIGS",
+            source: { kind: "entity", id: "kusanagi" },
+            target: { kind: "anchor", id: "opp-street-cred" },
+            audioCue: "combat.hit",
+          },
+        ],
+      },
+      {
+        id: "entry-1:steal-d6",
+        steps: [
+          {
+            id: "steal-d6",
+            type: "moveEntity",
+            durationMs: 900,
+            entity: { kind: "entity", id: "gig-d6" },
+            from: { kind: "zone", id: "opp-gigArea", ownerId: String(PLAYER_SIDE_TO_ID.opponent) },
+            to: { kind: "zone", id: "p-gigArea", ownerId: String(PLAYER_SIDE_TO_ID.player) },
+            label: "GIG STOLEN",
+            audioCue: "resource.steal",
+          },
+        ],
+      },
+    ]);
+  });
+
+  test("maps blocker redirects as blocked combat cues", () => {
+    const redirect: CombatRedirectStep = {
+      id: "blocker-redirect",
+      kind: "combatRedirect",
+      startMs: 0,
+      durationMs: 360,
+      reason: "blockerActivated",
+      attackerId: "kusanagi" as CombatRedirectStep["attackerId"],
+      blockerId: "corpo-security" as CombatRedirectStep["blockerId"],
+      originalTargetId: null,
+      playerId: PLAYER_SIDE_TO_ID.opponent,
+    };
+
+    const plans = cyberpunkAnimationScriptToAnimationPlans(
+      { steps: [redirect], totalDurationMs: 360 },
+      { ...context, idPrefix: "entry-2" },
+    );
+
+    expect(plans).toMatchObject([
+      {
+        id: "entry-2:blocker-redirect",
+        steps: [
+          {
+            id: "blocker-redirect",
+            type: "combat",
+            durationMs: 900,
+            reason: "blocked",
+            attackKind: "fight",
+            label: "BLOCK",
+            source: { kind: "entity", id: "corpo-security" },
+            target: { kind: "entity", id: "kusanagi" },
+            audioCue: "effect.trigger",
+          },
+        ],
+      },
+    ]);
   });
 });
 

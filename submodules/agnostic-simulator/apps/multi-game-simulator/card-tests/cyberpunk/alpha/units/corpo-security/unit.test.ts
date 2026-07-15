@@ -6,16 +6,16 @@ import {
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaCorpoSecurity,
-  alphaSwordwiseHuscle,
-  alphaRuthlessLowlife,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailMoxInciters,
 } from "@tcg/cyberpunk-cards";
 import { getEffectiveRules } from "@cyberpunk-engine/active-effects/index.ts";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
-const corpoSec = alphaCorpoSecurity; // cost 2, power 2 — blocker + cantAttack
-const huscle = alphaSwordwiseHuscle; // cost 3, power 5 — P2 attacker
-const lowlife = alphaRuthlessLowlife; // cost 2, power 1 — attacker
+const corpoSec = welcomeToNightCityRetailCorpoSecurity; // cost 2, power 2 — blocker + cantAttack
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, power 5 — P2 attacker
+const lowlife = welcomeToNightCityRetailMoxInciters; // cost 2, power 1 — attacker
 
 describe("Corpo Security", () => {
   describe("UI prompt", () => {
@@ -42,7 +42,7 @@ describe("Corpo Security", () => {
 
       engine.completeTurn();
       engine.attackRival(huscle, { as: P2 });
-      engine.resolveAttack({ as: P2 }); // offensive -> defensive
+      engine.resolveAttack({ as: P2 }); // attack -> react
 
       engine.useBlocker(corpoSec, { as: P1 });
 
@@ -66,7 +66,7 @@ describe("Corpo Security", () => {
 
       engine.completeTurn();
       engine.attackUnit(huscle, lowlife, { as: P2 });
-      engine.resolveAttack({ as: P2 }); // offensive -> defensive
+      engine.resolveAttack({ as: P2 }); // attack -> react
 
       engine.useBlocker(corpoSec, { as: P1 });
 
@@ -87,7 +87,7 @@ describe("Corpo Security", () => {
 
       engine.completeTurn();
       engine.attackRival(huscle, { as: P2 });
-      engine.resolveAttack({ as: P2 }); // offensive -> defensive
+      engine.resolveAttack({ as: P2 }); // attack -> react
 
       const failure = engine.expectFailure(() => engine.useBlocker(corpoSec, { as: P1 }));
       expect(failure.errorCode).toBe("CARD_SPENT");
@@ -105,7 +105,7 @@ describe("Corpo Security", () => {
 
       engine.completeTurn();
       engine.attackRival(huscle, { as: P2 });
-      engine.resolveAttack({ as: P2 }); // offensive -> defensive
+      engine.resolveAttack({ as: P2 }); // attack -> react
 
       engine.useBlocker(corpoSec, { as: P1 });
 
@@ -124,7 +124,7 @@ describe("Corpo Security", () => {
 
       engine.completeTurn();
       engine.attackRival(huscle, { as: P2 });
-      engine.resolveAttack({ as: P2 }); // offensive -> defensive
+      engine.resolveAttack({ as: P2 }); // attack -> react
 
       engine.useBlocker(corpoSec, { as: P1 });
 
@@ -212,7 +212,7 @@ describe("Corpo Security", () => {
 
       // Verify it can still block
       engine.attackRival(huscle, { as: P2 });
-      engine.resolveAttack({ as: P2 }); // offensive -> defensive
+      engine.resolveAttack({ as: P2 }); // attack -> react
 
       engine.useBlocker(corpoSec, { as: P1 });
 
@@ -220,7 +220,7 @@ describe("Corpo Security", () => {
       expect(attack!.kind).toBe("fight");
     });
 
-    it("emits blockerActivated event when blocking — confirming defensive utility despite cantAttack", () => {
+    it("emits blockerActivated event when blocking — confirming react utility despite cantAttack", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
         {
           field: [{ card: corpoSec, spent: false }],
@@ -232,7 +232,7 @@ describe("Corpo Security", () => {
 
       engine.completeTurn();
       engine.attackRival(huscle, { as: P2 });
-      engine.resolveAttack({ as: P2 }); // offensive -> defensive
+      engine.resolveAttack({ as: P2 }); // attack -> react
 
       engine.useBlocker(corpoSec, { as: P1 });
 

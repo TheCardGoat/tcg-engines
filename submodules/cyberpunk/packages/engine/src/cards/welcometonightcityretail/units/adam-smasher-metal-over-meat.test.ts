@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
+  embracingPowerRetailStarterDeckMinotaur,
   welcomeToNightCityRetailAdamSmasherMetalOverMeat,
+  welcomeToNightCityRetailCorpoSecurity,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
@@ -11,11 +11,11 @@ describe("Adam Smasher - Metal Over Meat", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailAdamSmasherMetalOverMeat],
-        field: [alphaArmoredMinotaur],
+        field: [embracingPowerRetailStarterDeckMinotaur],
         eddies: 9,
       },
       {
-        field: [alphaCorpoSecurity],
+        field: [welcomeToNightCityRetailCorpoSecurity],
       },
     );
 
@@ -25,10 +25,10 @@ describe("Adam Smasher - Metal Over Meat", () => {
       welcomeToNightCityRetailAdamSmasherMetalOverMeat.id,
     ]);
     expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(
-      alphaArmoredMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
     );
     expect(engine.getCardsInZone("trash", P2).map((card) => card.definitionId)).toContain(
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
   });
 });

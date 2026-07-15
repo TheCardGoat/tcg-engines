@@ -8,17 +8,17 @@ import {
   expectCardToMoveDestination,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaKiroshiOptics,
-  alphaMantisBlades,
-  alphaTBugAmateurPhilosopher,
-  spoilerDumDumMaelstromTriggerman,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailMantisBlades,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
+  welcomeToNightCityRetailDumDumMaelstromTriggerman,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
-const legend = spoilerDumDumMaelstromTriggerman; // legend, call trigger
-const tBug = alphaTBugAmateurPhilosopher;
-const kiroshi = alphaKiroshiOptics;
-const mantis = alphaMantisBlades;
+const legend = welcomeToNightCityRetailDumDumMaelstromTriggerman; // legend, call trigger
+const tBug = welcomeToNightCityRetailTBugAmateurPhilosopher;
+const kiroshi = welcomeToNightCityRetailKiroshiOptics;
+const mantis = welcomeToNightCityRetailMantisBlades;
 
 function setupWithFriendlyGear() {
   return CyberpunkTestEngine.createWithFixture({

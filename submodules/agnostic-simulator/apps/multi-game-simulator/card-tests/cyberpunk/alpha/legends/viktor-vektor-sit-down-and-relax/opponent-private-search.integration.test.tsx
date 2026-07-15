@@ -7,7 +7,7 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { alphaKiroshiOptics } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailKiroshiOptics } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk-simulator/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -48,7 +48,7 @@ describe("legendViktorOpponentPrivateSearch fixture behavior", () => {
       const definitions = await Promise.all(
         revealed.map((cardId) => pom.getCardDefinitionId(cardId)),
       );
-      const kiroshiId = revealed[definitions.indexOf(alphaKiroshiOptics.id)];
+      const kiroshiId = revealed[definitions.indexOf(welcomeToNightCityRetailKiroshiOptics.id)];
       if (!kiroshiId) {
         throw new Error("Expected P2 Viktor search to reveal Kiroshi Optics.");
       }

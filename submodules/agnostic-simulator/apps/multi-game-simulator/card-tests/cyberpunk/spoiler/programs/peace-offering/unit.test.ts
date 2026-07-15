@@ -9,11 +9,11 @@ import {
   expectTargetChoice,
   expectEligibleGigs,
 } from "@cyberpunk-engine/testing/index.ts";
-import { spoilerPeaceOffering } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailPeaceOffering } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 import type { CommandResult } from "@cyberpunk-engine/types/commands.ts";
 
-const peaceOffering = spoilerPeaceOffering; // program, cost 1
+const peaceOffering = welcomeToNightCityRetailPeaceOffering; // program, cost 1
 
 function formattedMoveLogs(result: CommandResult): string[] {
   if (!result.success) return [];

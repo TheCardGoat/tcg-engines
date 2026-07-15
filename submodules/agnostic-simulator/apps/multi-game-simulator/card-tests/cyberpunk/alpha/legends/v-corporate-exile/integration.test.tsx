@@ -7,7 +7,10 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { alphaCorpoSecurity, alphaVCorporateExile } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  theHeistRetailStarterDeckVCorporateExile,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -33,12 +36,12 @@ describe("legendVCorporateExile fixture behavior", () => {
       const v = await pom.getCardInZoneByDefinitionId(
         "legendArea",
         CYBERPUNK_P1,
-        alphaVCorporateExile.id,
+        theHeistRetailStarterDeckVCorporateExile.id,
       );
       const defender = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
 
       await pom.expectEddies(CYBERPUNK_P1, 6);

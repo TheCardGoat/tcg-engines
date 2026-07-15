@@ -8,9 +8,9 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
 });
 
 import {
-  alphaCorporateSurveillance,
-  alphaCorpoSecurity,
-  spoilerAltCunninghamSoulkillerArchitect,
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailAltCunninghamSoulkillerArchitect,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk-simulator/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -36,12 +36,12 @@ describe("legendAltCunninghamSoulkillerArchitect fixture behavior", () => {
       const alt = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        spoilerAltCunninghamSoulkillerArchitect.id,
+        welcomeToNightCityRetailAltCunninghamSoulkillerArchitect.id,
       );
       const corpoSecurity = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
 
       await pom.attackRival(alt.instanceId, CYBERPUNK_P1);
@@ -63,7 +63,7 @@ describe("legendAltCunninghamSoulkillerArchitect fixture behavior", () => {
       expectEqual(
         "Alt program choice",
         await pom.getCardDefinitionId(choices[0]!),
-        alphaCorporateSurveillance.id,
+        welcomeToNightCityRetailCorporateSurveillance.id,
       );
 
       await pom.resolveCardToPlay(choices[0]!, CYBERPUNK_P1);

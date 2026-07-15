@@ -8,14 +8,14 @@ import {
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaVCorporateExile,
-  alphaSwordwiseHuscle,
-  alphaArmoredMinotaur,
+  theHeistRetailStarterDeckVCorporateExile,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  embracingPowerRetailStarterDeckMinotaur,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
-const v = alphaVCorporateExile; // legend, power 8, cost 5
-const huscle = alphaSwordwiseHuscle; // unit, power 5
+const v = theHeistRetailStarterDeckVCorporateExile; // legend, power 8, cost 5
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // unit, power 5
 const p1LeadGigs = [
   { dieType: "d4" as const, faceValue: 1 },
   { dieType: "d10" as const, faceValue: 1 },
@@ -126,8 +126,8 @@ describe("V - Corporate Exile", () => {
       );
 
       engine.attackRival(v);
-      engine.resolveAttack(); // offensive -> defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive -> steal
+      engine.resolveAttack(); // attack -> react
+      engine.resolveAttack({ as: P2, pass: true }); // react -> steal
       engine.resolveAttack(); // steal: steal
 
       expect(engine.getGigCount(P1)).toBeGreaterThanOrEqual(1);
@@ -147,8 +147,8 @@ describe("V - Corporate Exile", () => {
       const p2GigsBefore = engine.getGigCount(P2);
 
       engine.attackRival(v);
-      engine.resolveAttack(); // offensive -> defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive -> steal
+      engine.resolveAttack(); // attack -> react
+      engine.resolveAttack({ as: P2, pass: true }); // react -> steal
       engine.resolveAttack(); // steal: steal
 
       // Power 8 < 10 → steal exactly 1 gig
@@ -162,10 +162,9 @@ describe("V - Corporate Exile", () => {
       );
 
       engine.attackUnit(v, huscle);
-      engine.resolveAttack(); // offensive -> defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive -> fight
+      engine.resolveAttack(); // attack -> react
+      engine.resolveAttack({ as: P2, pass: true }); // react -> fight
       engine.resolveAttack(); // fight -> defeat
-      engine.resolveAttack(); // defeat -> cleared
 
       // V survives, Huscle is trashed
       expect(engine.getCard(v).zone).toBe("field");
@@ -181,10 +180,9 @@ describe("V - Corporate Exile", () => {
       );
 
       engine.attackUnit(v, huscle);
-      engine.resolveAttack(); // offensive -> defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive -> fight
+      engine.resolveAttack(); // attack -> react
+      engine.resolveAttack({ as: P2, pass: true }); // react -> fight
       engine.resolveAttack(); // fight -> defeat
-      engine.resolveAttack(); // defeat -> cleared
 
       const log = engine.getLastActionLog();
       expect(log).toBeDefined();
@@ -193,7 +191,7 @@ describe("V - Corporate Exile", () => {
       expect(log!.params.defenderName).toBe(huscle.displayName);
 
       const text = formatActionLog(log!, enMessages);
-      expect(text).toBe(`${v.displayName} defeated ${huscle.displayName}.`);
+      expect(text).toBe(`Fight: ${v.displayName} (8) defeated ${huscle.displayName} (5).`);
     });
 
     it("appears as an attack candidate in the prompt layer", () => {
@@ -225,18 +223,17 @@ describe("V - Corporate Exile", () => {
       // Armored Minotaur (power 9) vs V (power 8) — Minotaur wins.
       const engine = CyberpunkTestEngine.createWithFixture(
         { field: [{ card: v, spent: true }] },
-        { field: [{ card: alphaArmoredMinotaur, spent: false }] },
+        { field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: false }] },
       );
 
       // V is on the field.
       expect(engine.getCard(v, "field", P1).zone).toBe("field");
 
       // P2 attacks V with Armored Minotaur and wins.
-      engine.attackUnit(alphaArmoredMinotaur, v, { as: P2 });
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P1, pass: true }); // defensive → fight
+      engine.attackUnit(embracingPowerRetailStarterDeckMinotaur, v, { as: P2 });
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P1, pass: true }); // react → fight
       engine.resolveAttack(); // fight → defeat
-      engine.resolveAttack(); // defeat → cleared
 
       // V is removed from the game, not in trash or field.
       expect(engine.getCardsInZone("trash", P1).some((c) => c.definitionId === v.id)).toBe(false);

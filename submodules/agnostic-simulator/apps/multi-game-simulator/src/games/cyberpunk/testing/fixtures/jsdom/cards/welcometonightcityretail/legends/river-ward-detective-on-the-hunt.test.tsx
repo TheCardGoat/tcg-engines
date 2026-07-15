@@ -1,7 +1,7 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaKiroshiOptics,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -31,12 +31,12 @@ describe("River Ward - Detective on the Hunt (Retail) jsdom happy path", () => {
       const host = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSwordwiseHuscle.id,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
       );
       const gear = await pom.getCardInZoneByDefinitionId(
         "hand",
         CYBERPUNK_P1,
-        alphaKiroshiOptics.id,
+        welcomeToNightCityRetailKiroshiOptics.id,
       );
 
       const handBefore = await pom.getHandSize(CYBERPUNK_P1);
@@ -73,7 +73,7 @@ describe("River Ward - Detective on the Hunt (Retail) jsdom happy path", () => {
       const attachedGear = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaKiroshiOptics.id,
+        welcomeToNightCityRetailKiroshiOptics.id,
       );
       expectEqual("River Ward attached gear host", attachedGear.attachedToId, host.instanceId);
       const handAfter = await pom.getHandSize(CYBERPUNK_P1);

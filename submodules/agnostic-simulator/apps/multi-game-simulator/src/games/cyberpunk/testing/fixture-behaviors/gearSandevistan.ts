@@ -1,4 +1,8 @@
-import { alphaCorpoSecurity, alphaSandevistan, alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailSandevistan,
+  welcomeToNightCityRetailSwordwiseHuscle,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
 import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -11,17 +15,17 @@ export const gearSandevistanBehavior: CyberpunkFixtureBehavior = {
     const unitInHand = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
     const gearInHand = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      alphaSandevistan.id,
+      welcomeToNightCityRetailSandevistan.id,
     );
     const rivalTarget = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
 
     await pom.expectHandSize(CYBERPUNK_P1, 2);
@@ -31,7 +35,7 @@ export const gearSandevistanBehavior: CyberpunkFixtureBehavior = {
     const host = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
     await pom.attachGearFromHand(gearInHand.instanceId, host.instanceId, CYBERPUNK_P1);
 
@@ -53,7 +57,7 @@ export const gearSandevistanBehavior: CyberpunkFixtureBehavior = {
       throw new Error("Expected Sandevistan host to attack a spent rival unit.");
     }
     expectEqual("Sandevistan attack kind", attack.kind, "fight");
-    expectEqual("Sandevistan attack step", attack.step, "offensive");
+    expectEqual("Sandevistan attack step", attack.step, "attack");
     expectEqual("Sandevistan attack defender", attack.defenderId, rivalTarget.instanceId);
     await pom.expectFieldCardSpent(CYBERPUNK_P1, host.instanceId, true);
   },

@@ -5,9 +5,9 @@ import {
   expectAttackCandidate,
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
-import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSwordwiseHuscle } from "@tcg/cyberpunk-cards";
 
-const card = alphaSwordwiseHuscle; // unit, cost 3, power 5, no abilities
+const card = welcomeToNightCityRetailSwordwiseHuscle; // unit, cost 3, power 5, no abilities
 
 describe("Swordwise Huscle", () => {
   describe("UI prompt", () => {

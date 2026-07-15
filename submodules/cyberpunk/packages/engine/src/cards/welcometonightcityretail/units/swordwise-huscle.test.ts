@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaRuthlessLowlife,
+  welcomeToNightCityRetailMoxInciters,
   welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
@@ -9,7 +9,7 @@ describe("Swordwise Huscle (retail)", () => {
   it("ATTACK does not draw when effective power is below 5", () => {
     // Base power 3 → no draw.
     const engine = CyberpunkTestEngine.createWithFixture({
-      deck: [alphaRuthlessLowlife],
+      deck: [welcomeToNightCityRetailMoxInciters],
       field: [
         {
           card: welcomeToNightCityRetailSwordwiseHuscle,
@@ -29,7 +29,7 @@ describe("Swordwise Huscle (retail)", () => {
   it("ATTACK draws 1 when effective power is at least 5", () => {
     // Base 3 + modifier +2 → effective 5 → draws 1.
     const engine = CyberpunkTestEngine.createWithFixture({
-      deck: [alphaRuthlessLowlife],
+      deck: [welcomeToNightCityRetailMoxInciters],
       field: [
         {
           card: welcomeToNightCityRetailSwordwiseHuscle,
@@ -51,7 +51,7 @@ describe("Swordwise Huscle (retail)", () => {
     // Base 3 + modifier +1 → effective 4 → still below the `gte 5` threshold.
     // Proves the condition is `>=` against effective (post-modifier) power.
     const engine = CyberpunkTestEngine.createWithFixture({
-      deck: [alphaRuthlessLowlife],
+      deck: [welcomeToNightCityRetailMoxInciters],
       field: [
         {
           card: welcomeToNightCityRetailSwordwiseHuscle,

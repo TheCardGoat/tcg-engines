@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { alphaRuthlessLowlife } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailMoxInciters } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -23,7 +23,7 @@ test("Choice - pick a card to play", async ({ page }) => {
   const cardToPlay = await pom.getCardInZoneByDefinitionId(
     "hand",
     CYBERPUNK_P1,
-    alphaRuthlessLowlife.id,
+    welcomeToNightCityRetailMoxInciters.id,
   );
   await pom.expectHandCardChoiceEligible(CYBERPUNK_P1, cardToPlay.instanceId, true);
 

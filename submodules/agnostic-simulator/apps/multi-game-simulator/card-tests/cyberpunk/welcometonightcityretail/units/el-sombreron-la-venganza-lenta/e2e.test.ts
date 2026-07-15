@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaCorpoSecurity,
+  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailElSombreroNLaVenganzaLenta,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -24,7 +24,7 @@ test("El Sombreron (Retail) - attack trigger doubles fight power", async ({ page
   const target = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaCorpoSecurity.id,
+    welcomeToNightCityRetailCorpoSecurity.id,
   );
 
   await pom.attackUnit(elSombreron.instanceId, target.instanceId, CYBERPUNK_P1);
@@ -39,12 +39,15 @@ test("El Sombreron (Retail) - attack trigger doubles fight power", async ({ page
   await pom.resolveAttack(CYBERPUNK_P1);
   await pom.resolveAttack(CYBERPUNK_P2, { pass: true });
   await pom.resolveAttack(CYBERPUNK_P1);
-  await pom.resolveAttack(CYBERPUNK_P1);
 
   expectEqual("El Sombreron resolved attack", await pom.getAttackState(), null);
   await pom.expectFieldSize(CYBERPUNK_P1, 1);
   await pom.expectTrashSize(CYBERPUNK_P2, 1);
-  await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaCorpoSecurity.id);
+  await pom.getCardInZoneByDefinitionId(
+    "trash",
+    CYBERPUNK_P2,
+    welcomeToNightCityRetailCorpoSecurity.id,
+  );
 
   await pom.expectStructuralState();
 });

@@ -1,7 +1,7 @@
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  spoilerSandayuOdaHanakoSGuardian,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailSandayuOdaHanakoSGuardian,
 } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
@@ -19,17 +19,17 @@ export const unitSandayuOdaHanakoSGuardianBehavior: CyberpunkFixtureBehavior = {
     const sandayuInHand = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerSandayuOdaHanakoSGuardian.id,
+      welcomeToNightCityRetailSandayuOdaHanakoSGuardian.id,
     );
     const corpo = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
     const minotaur = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaArmoredMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
     );
 
     await pom.playCardFromHand(sandayuInHand.instanceId, CYBERPUNK_P1);
@@ -38,8 +38,16 @@ export const unitSandayuOdaHanakoSGuardianBehavior: CyberpunkFixtureBehavior = {
     const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
     const eligibleDefinitions = await getChoiceDefinitionIds(pom, eligible);
     expectEqual("Sandayu spend target count", eligible.length, 2);
-    expectIncludes("Sandayu spend targets", eligibleDefinitions, alphaCorpoSecurity.id);
-    expectIncludes("Sandayu spend targets", eligibleDefinitions, alphaArmoredMinotaur.id);
+    expectIncludes(
+      "Sandayu spend targets",
+      eligibleDefinitions,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
+    expectIncludes(
+      "Sandayu spend targets",
+      eligibleDefinitions,
+      embracingPowerRetailStarterDeckMinotaur.id,
+    );
 
     await pom.resolveEffectTarget([corpo.instanceId, minotaur.instanceId], CYBERPUNK_P1);
 
@@ -50,7 +58,7 @@ export const unitSandayuOdaHanakoSGuardianBehavior: CyberpunkFixtureBehavior = {
     const sandayu = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      spoilerSandayuOdaHanakoSGuardian.id,
+      welcomeToNightCityRetailSandayuOdaHanakoSGuardian.id,
     );
     await pom.expectFieldCardGrantedRule(
       CYBERPUNK_P1,

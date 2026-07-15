@@ -1,10 +1,10 @@
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  alphaJackieWellesRideOrDieChoom,
-  alphaSecondhandBombus,
-  alphaSwordwiseHuscle,
-  spoilerAdamSmasherMetalOverMeat,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+  welcomeToNightCityRetailSecondhandBombus,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailAdamSmasherMetalOverMeat,
 } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
@@ -22,7 +22,7 @@ export const unitAdamSmasherMetalOverMeatBehavior: CyberpunkFixtureBehavior = {
     const adam = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerAdamSmasherMetalOverMeat.id,
+      welcomeToNightCityRetailAdamSmasherMetalOverMeat.id,
     );
 
     await pom.playCardFromHand(adam.instanceId, CYBERPUNK_P1);
@@ -34,16 +34,16 @@ export const unitAdamSmasherMetalOverMeatBehavior: CyberpunkFixtureBehavior = {
     await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      spoilerAdamSmasherMetalOverMeat.id,
+      welcomeToNightCityRetailAdamSmasherMetalOverMeat.id,
     );
 
     const p1Trash = await getZoneDefinitionIds(pom, "trash", CYBERPUNK_P1);
-    expectIncludes("Adam P1 trash", p1Trash, alphaSwordwiseHuscle.id);
-    expectIncludes("Adam P1 trash", p1Trash, alphaSecondhandBombus.id);
+    expectIncludes("Adam P1 trash", p1Trash, welcomeToNightCityRetailSwordwiseHuscle.id);
+    expectIncludes("Adam P1 trash", p1Trash, welcomeToNightCityRetailSecondhandBombus.id);
 
     const p2Trash = await getZoneDefinitionIds(pom, "trash", CYBERPUNK_P2);
-    expectIncludes("Adam P2 trash", p2Trash, alphaCorpoSecurity.id);
-    expectIncludes("Adam P2 trash", p2Trash, alphaArmoredMinotaur.id);
-    expectIncludes("Adam P2 trash", p2Trash, alphaJackieWellesRideOrDieChoom.id);
+    expectIncludes("Adam P2 trash", p2Trash, welcomeToNightCityRetailCorpoSecurity.id);
+    expectIncludes("Adam P2 trash", p2Trash, embracingPowerRetailStarterDeckMinotaur.id);
+    expectIncludes("Adam P2 trash", p2Trash, welcomeToNightCityRetailJackieWellesRideOrDieChoom.id);
   },
 };

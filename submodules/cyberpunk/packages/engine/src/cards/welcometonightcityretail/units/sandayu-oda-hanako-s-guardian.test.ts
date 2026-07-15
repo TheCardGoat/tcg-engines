@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailSandayuOdaHanakoSGuardian,
 } from "@tcg/cyberpunk-cards";
-import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
+import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("Sandayu Oda - Hanako's Guardian", () => {
   it("spends one rival unit for each friendly value-pair", () => {
@@ -18,8 +19,8 @@ describe("Sandayu Oda - Hanako's Guardian", () => {
       },
       {
         field: [
-          { card: alphaCorpoSecurity, spent: false },
-          { card: alphaCorpoSecurity, spent: false },
+          { card: welcomeToNightCityRetailCorpoSecurity, spent: false },
+          { card: welcomeToNightCityRetailFieldOperator, spent: false },
         ],
       },
     );
@@ -29,11 +30,14 @@ describe("Sandayu Oda - Hanako's Guardian", () => {
     ).toMatchObject({
       success: true,
     });
-    expect(
-      welcomeToNightCityRetailSandayuOdaHanakoSGuardian.abilities[0]!.effects[0],
-    ).toMatchObject({
-      effect: "forEachFriendlyGigPair",
-    });
+    engine.resolveEffectTarget(welcomeToNightCityRetailFieldOperator, { as: P1 });
+
+    expect(engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P2).meta.spent).toBe(
+      true,
+    );
+    expect(engine.getCard(welcomeToNightCityRetailCorpoSecurity, "field", P2).meta.spent).toBe(
+      false,
+    );
   });
 
   it("can attack rival units the turn it is played", () => {
@@ -43,15 +47,19 @@ describe("Sandayu Oda - Hanako's Guardian", () => {
         eddies: 7,
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailSandayuOdaHanakoSGuardian, { as: P1 });
     expect(
-      engine.attackUnit(welcomeToNightCityRetailSandayuOdaHanakoSGuardian, alphaCorpoSecurity, {
-        as: P1,
-      }),
+      engine.attackUnit(
+        welcomeToNightCityRetailSandayuOdaHanakoSGuardian,
+        welcomeToNightCityRetailCorpoSecurity,
+        {
+          as: P1,
+        },
+      ),
     ).toMatchObject({
       success: true,
     });

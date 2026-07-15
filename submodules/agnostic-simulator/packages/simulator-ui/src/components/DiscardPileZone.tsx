@@ -1,4 +1,5 @@
 import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
+import type { MouseEvent } from "react";
 
 import { cx } from "../class-names";
 import { CardFace } from "./CardFace";
@@ -14,6 +15,9 @@ export interface DiscardPileZoneProps {
   selectedId?: string;
   className?: string;
   onSelect?: (entity: SimulatorEntity) => void;
+  onHoverEnter?: (entity: SimulatorEntity) => void;
+  onHoverLeave?: (entity: SimulatorEntity) => void;
+  onContextMenu?: (entity: SimulatorEntity, event: MouseEvent) => void;
 }
 
 export function DiscardPileZone({
@@ -26,6 +30,9 @@ export function DiscardPileZone({
   selectedId,
   className,
   onSelect,
+  onHoverEnter,
+  onHoverLeave,
+  onContextMenu,
 }: DiscardPileZoneProps) {
   const topEntity = entities[0];
   const resolvedLabel = label ?? zone?.label ?? "Discard";
@@ -57,6 +64,9 @@ export function DiscardPileZone({
             density={density}
             selected={topEntity.id === selectedId}
             onClick={onSelect}
+            onHoverEnter={onHoverEnter}
+            onHoverLeave={onHoverLeave}
+            onContextMenu={onContextMenu}
           />
         </>
       ) : (

@@ -1,4 +1,4 @@
-import { alphaRuthlessLowlife } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailMoxInciters } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
 import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -22,7 +22,7 @@ export const chooseCardTargetBehavior: CyberpunkFixtureBehavior = {
     const cardToPlay = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      alphaRuthlessLowlife.id,
+      welcomeToNightCityRetailMoxInciters.id,
     );
     await pom.expectHandCardChoiceEligible(CYBERPUNK_P1, cardToPlay.instanceId, true);
 

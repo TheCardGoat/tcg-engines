@@ -85,7 +85,7 @@ export interface TestEngineOptions {
   preserveDeckOrder?: boolean;
   /**
    * Preset the attack state so fixtures can start mid-attack
-   * (e.g., defensive step, fight step, steal step).
+   * (e.g., React step, fight step, steal step).
    */
   attackState?: AttackState;
 }

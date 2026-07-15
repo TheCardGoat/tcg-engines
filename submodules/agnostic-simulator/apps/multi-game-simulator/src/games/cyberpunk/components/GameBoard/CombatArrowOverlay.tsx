@@ -283,7 +283,9 @@ function findPlayerTargetElement(side: Side | null): HTMLElement | null {
     return null;
   }
   const dropZone = side === "opponent" ? "opp-pinfo" : "p-pinfo";
+  const streetCredAnchor = side === "opponent" ? "opp-street-cred" : "p-street-cred";
   return (
+    document.querySelector<HTMLElement>(`[data-sim-anchor-id="${streetCredAnchor}"]`) ??
     document.querySelector<HTMLElement>(`[data-testid="pinfo-zone"][data-side="${side}"]`) ??
     document.querySelector<HTMLElement>(`[data-drop-zone="${dropZone}"]`) ??
     document.querySelector<HTMLElement>(`[data-testid="gig-row"][data-side="${side}"]`) ??

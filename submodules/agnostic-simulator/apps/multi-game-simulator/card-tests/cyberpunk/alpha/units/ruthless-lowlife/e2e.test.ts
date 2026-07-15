@@ -1,6 +1,9 @@
 import { test } from "@playwright/test";
 
-import { alphaArmoredMinotaur, alphaRuthlessLowlife } from "@tcg/cyberpunk-cards";
+import {
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailMoxInciters,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -16,7 +19,7 @@ test("Ruthless Lowlife - spent unit changes stolen gig to 1", async ({ page }) =
   const lowlife = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaRuthlessLowlife.id,
+    welcomeToNightCityRetailMoxInciters.id,
   );
   const p2GigToSteal = (await pom.getGigDice(CYBERPUNK_P2))[0];
   if (!p2GigToSteal) {
@@ -38,7 +41,7 @@ test("Ruthless Lowlife - spent unit changes stolen gig to 1", async ({ page }) =
   const minotaur = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaArmoredMinotaur.id,
+    embracingPowerRetailStarterDeckMinotaur.id,
   );
   const p1GigToSteal = (await pom.getGigDice(CYBERPUNK_P1))[0];
   if (!p1GigToSteal) {

@@ -1,9 +1,9 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaCorporateSurveillance,
-  alphaCorpoSecurity,
-  spoilerAltCunninghamSoulkillerArchitect,
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailAltCunninghamSoulkillerArchitect,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -20,12 +20,12 @@ test("Alt Cunningham - steal gig and replay a program", async ({ page }) => {
   const alt = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    spoilerAltCunninghamSoulkillerArchitect.id,
+    welcomeToNightCityRetailAltCunninghamSoulkillerArchitect.id,
   );
   const corpoSecurity = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaCorpoSecurity.id,
+    welcomeToNightCityRetailCorpoSecurity.id,
   );
 
   await pom.attackRival(alt.instanceId, CYBERPUNK_P1);
@@ -47,7 +47,7 @@ test("Alt Cunningham - steal gig and replay a program", async ({ page }) => {
   expectEqual(
     "Alt program choice",
     await pom.getCardDefinitionId(choices[0]!),
-    alphaCorporateSurveillance.id,
+    welcomeToNightCityRetailCorporateSurveillance.id,
   );
 
   await pom.resolveCardToPlay(choices[0]!, CYBERPUNK_P1);

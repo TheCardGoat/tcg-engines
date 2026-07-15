@@ -269,6 +269,7 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
                 sourceRulesText: source.rulesText ?? "",
               }
             : {}),
+          ...(choice.payload.targetPurpose ? { targetPurpose: choice.payload.targetPurpose } : {}),
           ...(choice.payload.adjustGig
             ? {
                 adjustGigMaxAmount: choice.payload.adjustGig.maxAmount ?? 0,

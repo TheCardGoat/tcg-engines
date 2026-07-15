@@ -56,6 +56,8 @@ import {
 import classes from "./Card.module.css";
 
 const GEAR_PEEK_PERCENT = 24;
+const GEAR_HOVER_FAN_SPREAD_PERCENT = 58;
+const GEAR_HOVER_FAN_ROTATION_DEGREES = 6;
 /** Sentinel side used when a card is rendered without engine awareness. */
 const NO_SIDE: Side = "player";
 
@@ -898,6 +900,9 @@ export function Card({
     >
       {gear.map((g, i) => {
         const offsetPercent = (i + 1) * GEAR_PEEK_PERCENT;
+        const fanCenterIndex = i - (gearCount - 1) / 2;
+        const fanOffsetPercent = fanCenterIndex * GEAR_HOVER_FAN_SPREAD_PERCENT;
+        const fanRotationDegrees = fanCenterIndex * GEAR_HOVER_FAN_ROTATION_DEGREES;
         return (
           <AttachedGear
             key={`${g.cardId ?? g.name}-${i}`}
@@ -905,6 +910,8 @@ export function Card({
             side={side}
             attachedToId={cardId}
             offsetPercent={offsetPercent}
+            fanOffsetPercent={fanOffsetPercent}
+            fanRotationDegrees={fanRotationDegrees}
             zIndex={gearCount - i}
           />
         );
@@ -1134,12 +1141,16 @@ function AttachedGear({
   side,
   attachedToId,
   offsetPercent,
+  fanOffsetPercent,
+  fanRotationDegrees,
   zIndex,
 }: {
   gear: CardGearAttachment;
   side?: Side;
   attachedToId?: string;
   offsetPercent: number;
+  fanOffsetPercent: number;
+  fanRotationDegrees: number;
   zIndex: number;
 }) {
   const engineCtx = useEngineOptional();
@@ -1194,10 +1205,14 @@ function AttachedGear({
   return (
     <div
       className={[classes.gear, selectable ? classes.selectable : ""].filter(Boolean).join(" ")}
-      style={{
-        transform: `translateY(${offsetPercent}%)`,
-        zIndex,
-      }}
+      style={
+        {
+          "--gear-offset": `${offsetPercent}%`,
+          "--gear-fan-x": `${fanOffsetPercent}%`,
+          "--gear-fan-rotation": `${fanRotationDegrees}deg`,
+          "--gear-z-index": zIndex,
+        } as CSSProperties
+      }
       data-testid="attached-gear"
       data-card-id={gear.cardId}
       data-instance-id={gear.cardId}

@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { alphaDelamainCab } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailDelamainCab } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 
 import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
@@ -12,7 +12,7 @@ test("Delamain Cab - renders at printed power and starts a direct attack", async
   const delamain = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaDelamainCab.id,
+    welcomeToNightCityRetailDelamainCab.id,
   );
 
   await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, delamain.instanceId, 7);

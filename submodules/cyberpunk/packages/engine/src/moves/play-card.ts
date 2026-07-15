@@ -4,7 +4,7 @@ import { processCardSpentEventsSince, processEventTriggers } from "../ability-ex
 import { defOf } from "../state/lookups.ts";
 import { computeEffectiveCost, consumeCostModifierUse } from "./compute-effective-cost.ts";
 import { availableEddies } from "./eddie-resources.ts";
-import { isDefensiveStep } from "./is-defensive-step.ts";
+import { isReactStep } from "./is-react-step.ts";
 
 export interface PlayCardInput extends MoveInput {
   args: {
@@ -19,12 +19,12 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
     if (!player) return false;
     if (state.G.gamePhase !== "main") return false;
 
-    const isDefending = isDefensiveStep(state, playerId);
+    const isDefending = isReactStep(state, playerId);
     if (state.G.attackState && !isDefending) return false;
     if (!isDefending && state.G.turnMetadata.activePlayerId !== playerId) return false;
 
     if (isDefending) {
-      // During defensive step, only QUICK cards can be played.
+      // During react step, only QUICK cards can be played.
       return player.zones.hand.some((id) => {
         const card = state.G.cardIndex[id as string];
         return card && defOf(card).keywords.includes("quick");
@@ -41,7 +41,7 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
     if (state.G.gamePhase !== "main")
       return { valid: false, error: "Not in main phase", errorCode: "WRONG_PHASE" };
 
-    const isDefending = isDefensiveStep(state, playerId);
+    const isDefending = isReactStep(state, playerId);
     if (state.G.attackState && !isDefending) {
       return { valid: false, error: "Attack in progress", errorCode: "ATTACK_IN_PROGRESS" };
     }
@@ -104,6 +104,7 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
       operations.card.attachGear(cardId as CardInstanceId, attachToId as CardInstanceId);
     } else if (def.type === "unit") {
       operations.zone.moveCard(cardId as CardInstanceId, "field", playerId);
+      operations.card.moveAttachedGear(cardId as CardInstanceId, "field");
       operations.card.setPlayedThisTurn(cardId as CardInstanceId, true);
     }
 

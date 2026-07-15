@@ -10,17 +10,17 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaRuthlessLowlife,
-  alphaVCorporateExile,
-  spoilerChromeReverie,
-  spoilerRiverWardDetectiveOnTheHunt,
+  welcomeToNightCityRetailMoxInciters,
+  theHeistRetailStarterDeckVCorporateExile,
+  welcomeToNightCityRetailChromeReverie,
+  welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
 } from "@tcg/cyberpunk-cards";
 import type { ActionLogEvent } from "@cyberpunk-engine/types/game-events.ts";
 
-const chromeReverie = spoilerChromeReverie;
-const rivalUnit = alphaRuthlessLowlife;
-const legend = alphaVCorporateExile;
-const riverWard = spoilerRiverWardDetectiveOnTheHunt;
+const chromeReverie = welcomeToNightCityRetailChromeReverie;
+const rivalUnit = welcomeToNightCityRetailMoxInciters;
+const legend = theHeistRetailStarterDeckVCorporateExile;
+const riverWard = welcomeToNightCityRetailRiverWardDetectiveOnTheHunt;
 
 function playChromeReverieAndTargetUnit(engine: CyberpunkTestEngine) {
   engine.playCard(chromeReverie);

@@ -1,7 +1,7 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaArmoredMinotaur,
-  alphaSwordwiseHuscle,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailWraithMarauders,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -32,12 +32,12 @@ describe("Wraith Marauders (Retail) jsdom happy path", () => {
       const swordwise = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSwordwiseHuscle.id,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
       );
       const minotaur = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaArmoredMinotaur.id,
+        embracingPowerRetailStarterDeckMinotaur.id,
       );
 
       await pom.attackRival(wraith.instanceId, CYBERPUNK_P1);
@@ -52,9 +52,9 @@ describe("Wraith Marauders (Retail) jsdom happy path", () => {
       expectIncludes(
         "Wraith Marauders eligible targets",
         eligibleDefinitions,
-        alphaSwordwiseHuscle.id,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
       );
-      if (eligibleDefinitions.includes(alphaArmoredMinotaur.id)) {
+      if (eligibleDefinitions.includes(embracingPowerRetailStarterDeckMinotaur.id)) {
         throw new Error("Expected Armored Minotaur not to be eligible for Wraith Marauders ready.");
       }
 

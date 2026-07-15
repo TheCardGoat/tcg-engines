@@ -109,6 +109,8 @@ const testEngine = $derived.by(() => {
 	);
 });
 
+const serverGameplaySettings = { animationSpeed: "normal" } as const;
+
 let aiController = $state<HarnessAiController | null>(null);
 let aiControllerRevision = 0;
 
@@ -465,6 +467,7 @@ $effect(() => {
   <LorcanaTabletopSimulator
     {engine}
     {readModel}
+    {serverGameplaySettings}
     bind:gameContext={gameContextRef}
     bind:interactionView={interactionViewRef}
   />

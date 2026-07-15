@@ -55,6 +55,7 @@ export type {
   CardExitStep,
   CardLandStep,
   CardMoveStep,
+  CombatRedirectStep,
   CombatStep,
   EffectTargetSpec,
   EffectTargetStep,

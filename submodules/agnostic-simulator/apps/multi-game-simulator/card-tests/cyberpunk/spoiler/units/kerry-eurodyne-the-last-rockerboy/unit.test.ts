@@ -6,14 +6,14 @@ import {
   expectAttackCandidate,
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
-import { spoilerKerryEurodyneTheLastRockerboy } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailKerryEurodyneTheLastRockerboy } from "@tcg/cyberpunk-cards";
 import {
   enMessages,
   formatActionLog,
   stripPrivateFields,
 } from "@cyberpunk-engine/logging/index.ts";
 
-const kerry = spoilerKerryEurodyneTheLastRockerboy;
+const kerry = welcomeToNightCityRetailKerryEurodyneTheLastRockerboy;
 
 describe("Kerry Eurodyne - The Last Rockerboy", () => {
   describe("UI prompt", () => {

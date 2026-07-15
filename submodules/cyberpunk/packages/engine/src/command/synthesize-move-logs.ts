@@ -62,6 +62,7 @@ const EXPLICIT_TYPES_THAT_REPLACE_GENERIC = new Set<MoveLog["type"]>([
   "attackUnit",
   "attackRival",
   "useBlocker",
+  "reactPass",
   "passPhase",
   "phaseChanged",
   "gainGig",

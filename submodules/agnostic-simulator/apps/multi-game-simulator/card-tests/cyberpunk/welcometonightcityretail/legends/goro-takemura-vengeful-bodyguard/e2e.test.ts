@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailGoroTakemuraVengefulBodyguard,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -24,7 +24,7 @@ test("Goro Takemura (Retail) - spend ability resolves", async ({ page }) => {
   const unit = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaSwordwiseHuscle.id,
+    welcomeToNightCityRetailSwordwiseHuscle.id,
   );
 
   await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, unit.instanceId, 5);

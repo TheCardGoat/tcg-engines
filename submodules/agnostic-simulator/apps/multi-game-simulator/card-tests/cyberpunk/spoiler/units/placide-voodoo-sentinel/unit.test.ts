@@ -11,16 +11,16 @@ import {
   expectEligibleTargets,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  spoilerPlacideVoodooSentinel,
-  alphaRebootOptics,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailPlacideVoodooSentinel,
+  welcomeToNightCityRetailRebootOptics,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 
-const placide = spoilerPlacideVoodooSentinel;
-const program = alphaRebootOptics; // A Program card for the discard option
-const rivalUnit = alphaRuthlessLowlife; // A Unit for the rival's field
-const otherRivalUnit = alphaSwordwiseHuscle; // Second valid Unit to prove the effect chooses one
+const placide = welcomeToNightCityRetailPlacideVoodooSentinel;
+const program = welcomeToNightCityRetailRebootOptics; // A Program card for the discard option
+const rivalUnit = welcomeToNightCityRetailMoxInciters; // A Unit for the rival's field
+const otherRivalUnit = welcomeToNightCityRetailSwordwiseHuscle; // Second valid Unit to prove the effect chooses one
 
 function discardProgramAndBottomDeckRivalUnit(engine: CyberpunkTestEngine) {
   engine.resolveCardToMove(program);

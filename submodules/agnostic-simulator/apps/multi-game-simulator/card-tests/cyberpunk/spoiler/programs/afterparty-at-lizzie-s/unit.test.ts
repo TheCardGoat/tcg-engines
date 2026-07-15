@@ -8,10 +8,10 @@ import {
   expectTargetChoice,
   expectAdjustGigChoice,
 } from "@cyberpunk-engine/testing/index.ts";
-import { spoilerAfterpartyAtLizzieS } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailAfterpartyAtLizzieS } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
-const program = spoilerAfterpartyAtLizzieS; // cost 2, program
+const program = welcomeToNightCityRetailAfterpartyAtLizzieS; // cost 2, program
 const p1LeadGigs = [
   { dieType: "d4" as const, faceValue: 1 },
   { dieType: "d8" as const, faceValue: 1 },

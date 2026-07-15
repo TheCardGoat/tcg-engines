@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
+  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailNadiaFightingThroughGrief,
 } from "@tcg/cyberpunk-cards";
 import { getEffectiveRules } from "../../../active-effects/index.ts";
@@ -88,7 +88,7 @@ describe("Nadia - Fighting Through Grief", () => {
         gigArea: [{ dieType: "d4", faceValue: 2 }],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
         gigArea: [
           { dieType: "d6", faceValue: 3 },
           { dieType: "d8", faceValue: 4 },
@@ -102,7 +102,7 @@ describe("Nadia - Fighting Through Grief", () => {
     expectNotAttackPair(
       engine,
       welcomeToNightCityRetailNadiaFightingThroughGrief,
-      alphaCorpoSecurity,
+      welcomeToNightCityRetailCorpoSecurity,
       { as: P1 },
     );
     expectAttackCandidate(engine, welcomeToNightCityRetailNadiaFightingThroughGrief, {
@@ -123,7 +123,7 @@ describe("Nadia - Fighting Through Grief", () => {
         gigArea: [{ dieType: "d4", faceValue: 2 }],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
         gigArea: [
           { dieType: "d6", faceValue: 3 },
           { dieType: "d8", faceValue: 4 },

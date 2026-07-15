@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { spoilerPeaceOffering } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailPeaceOffering } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -13,7 +13,7 @@ test("Peace Offering - playing creates a two-Gig target choice", async ({ page }
   const program = await pom.getCardInZoneByDefinitionId(
     "hand",
     CYBERPUNK_P1,
-    spoilerPeaceOffering.id,
+    welcomeToNightCityRetailPeaceOffering.id,
   );
 
   await pom.playCardFromHand(program.instanceId, CYBERPUNK_P1);

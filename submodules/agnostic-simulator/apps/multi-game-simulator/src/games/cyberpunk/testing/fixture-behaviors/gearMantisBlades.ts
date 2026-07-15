@@ -1,4 +1,7 @@
-import { alphaCorpoSecurity, alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailSwordwiseHuscle,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
 import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -11,12 +14,12 @@ export const gearMantisBladesBehavior: CyberpunkFixtureBehavior = {
     const host = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
     const defender = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
 
     await pom.expectFieldSize(CYBERPUNK_P1, 1);
@@ -35,11 +38,14 @@ export const gearMantisBladesBehavior: CyberpunkFixtureBehavior = {
     await pom.resolveAttack(CYBERPUNK_P1);
     await pom.resolveAttack(CYBERPUNK_P2, { pass: true });
     await pom.resolveAttack(CYBERPUNK_P1);
-    await pom.resolveAttack(CYBERPUNK_P1);
 
     expectEqual("Mantis Blades attack cleared", await pom.getAttackState(), null);
     await pom.expectFieldSize(CYBERPUNK_P1, 1);
     await pom.expectTrashSize(CYBERPUNK_P2, 1);
-    await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaCorpoSecurity.id);
+    await pom.getCardInZoneByDefinitionId(
+      "trash",
+      CYBERPUNK_P2,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
   },
 };

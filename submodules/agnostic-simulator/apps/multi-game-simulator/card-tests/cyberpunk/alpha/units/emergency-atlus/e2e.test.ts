@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { alphaEmergencyAtlus } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailEmergencyAtlus } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 
 import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
@@ -12,7 +12,7 @@ test("Emergency Atlus - renders at printed power and starts a direct attack", as
   const atlus = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaEmergencyAtlus.id,
+    welcomeToNightCityRetailEmergencyAtlus.id,
   );
 
   await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, atlus.instanceId, 7);

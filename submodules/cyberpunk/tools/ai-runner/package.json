@@ -11,7 +11,8 @@
   "dependencies": {
     "@tcg/cyberpunk-cards": "workspace:*",
     "@tcg/cyberpunk-engine": "workspace:*",
-    "@tcg/cyberpunk-types": "workspace:*"
+    "@tcg/cyberpunk-types": "workspace:*",
+    "@tcg/cyberpunk-utils": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^25.5.0",

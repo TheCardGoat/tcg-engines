@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  alphaTBugAmateurPhilosopher,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailCarnageAtTheColosseum,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
@@ -12,20 +12,20 @@ describe("Carnage At The Colosseum", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailCarnageAtTheColosseum],
-        field: [alphaArmoredMinotaur],
+        field: [embracingPowerRetailStarterDeckMinotaur],
         eddies: 6,
       },
       {
-        field: [alphaCorpoSecurity],
+        field: [welcomeToNightCityRetailCorpoSecurity],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailCarnageAtTheColosseum, { as: P1 });
     expect(engine.getState().G.turnMetadata.pendingChoice?.type).toBe("chooseTarget");
-    engine.resolveEffectTarget(alphaCorpoSecurity, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailCorpoSecurity, { as: P1 });
 
     expect(engine.getCardsInZone("trash", P2).map((card) => card.definitionId)).toContain(
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
   });
 
@@ -33,11 +33,11 @@ describe("Carnage At The Colosseum", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailCarnageAtTheColosseum],
-        field: [alphaTBugAmateurPhilosopher],
+        field: [welcomeToNightCityRetailTBugAmateurPhilosopher],
         eddies: 6,
       },
       {
-        field: [alphaArmoredMinotaur, alphaCorpoSecurity],
+        field: [embracingPowerRetailStarterDeckMinotaur, welcomeToNightCityRetailCorpoSecurity],
       },
     );
 
@@ -47,7 +47,7 @@ describe("Carnage At The Colosseum", () => {
     const eligibleDefinitions = (choice.payload.eligibleIds ?? []).map(
       (id) => engine.getState().G.cardIndex[id]!.definitionId,
     );
-    expect(eligibleDefinitions).toContain(alphaCorpoSecurity.id);
-    expect(eligibleDefinitions).not.toContain(alphaArmoredMinotaur.id);
+    expect(eligibleDefinitions).toContain(welcomeToNightCityRetailCorpoSecurity.id);
+    expect(eligibleDefinitions).not.toContain(embracingPowerRetailStarterDeckMinotaur.id);
   });
 });

@@ -10,6 +10,30 @@ const isVitest = process.env.VITEST === "true";
 const immerEntry = fileURLToPath(import.meta.resolve("immer"));
 const mantineCoreEntry = fileURLToPath(import.meta.resolve("@mantine/core"));
 const mantineHooksEntry = fileURLToPath(import.meta.resolve("@mantine/hooks"));
+const cyberpunkFixtureTestPatterns = [
+  "card-tests/cyberpunk/**",
+  "src/games/cyberpunk/testing/fixtures/jsdom/**",
+  "src/games/cyberpunk/testing/cyberpunk-simulator-pom-root-fixtures.test.tsx",
+];
+
+function isCyberpunkFixtureTestArg(arg: string): boolean {
+  return cyberpunkFixtureTestPatterns.some((pattern) => {
+    const pathPrefix = pattern.replace(/\/\*\*$/, "");
+    return arg.includes(pathPrefix);
+  });
+}
+
+const includeCyberpunkFixtureTests =
+  process.env.CYBERPUNK_FIXTURE_TESTS === "1" || process.argv.some(isCyberpunkFixtureTestArg);
+
+const testExclude = [
+  "e2e/**",
+  "**/e2e.test.ts",
+  "**/*.e2e.test.ts",
+  "node_modules/**",
+  "dist/**",
+  ...(includeCyberpunkFixtureTests ? [] : cyberpunkFixtureTestPatterns),
+];
 
 export default defineConfig({
   base: process.env.VITE_BASE_URL || "/",
@@ -240,7 +264,7 @@ export default defineConfig({
   },
   test: {
     environment: "jsdom",
-    exclude: ["e2e/**", "**/e2e.test.ts", "**/*.e2e.test.ts", "node_modules/**", "dist/**"],
+    exclude: testExclude,
     setupFiles: "./vitest.setup.mjs",
   },
 });

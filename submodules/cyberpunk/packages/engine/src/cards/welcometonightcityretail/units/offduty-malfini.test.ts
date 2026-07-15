@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
-import { alphaCorpoSecurity, welcomeToNightCityRetailOffdutyMalfini } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailOffdutyMalfini,
+} from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("Offduty Malfini (retail)", () => {
@@ -10,7 +13,9 @@ describe("Offduty Malfini (retail)", () => {
         eddies: 6,
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: false, playedThisTurn: false }],
+        field: [
+          { card: welcomeToNightCityRetailCorpoSecurity, spent: false, playedThisTurn: false },
+        ],
       },
     );
 
@@ -22,10 +27,14 @@ describe("Offduty Malfini (retail)", () => {
     );
 
     // Choose the rival unit to spend.
-    expect(engine.resolveEffectTarget(alphaCorpoSecurity, { as: P1 })).toMatchObject({
+    expect(
+      engine.resolveEffectTarget(welcomeToNightCityRetailCorpoSecurity, { as: P1 }),
+    ).toMatchObject({
       success: true,
     });
-    expect(engine.getCard(alphaCorpoSecurity, "field", P2).meta.spent).toBe(true);
+    expect(engine.getCard(welcomeToNightCityRetailCorpoSecurity, "field", P2).meta.spent).toBe(
+      true,
+    );
   });
 
   it("PLAY trigger fizzles gracefully when no rival Unit is on the field", () => {

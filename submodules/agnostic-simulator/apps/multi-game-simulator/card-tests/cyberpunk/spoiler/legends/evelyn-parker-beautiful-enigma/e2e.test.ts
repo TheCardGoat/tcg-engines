@@ -1,8 +1,8 @@
 import { test } from "@playwright/test";
 
 import {
-  spoilerAfterpartyAtLizzieS,
-  spoilerEvelynParkerBeautifulEnigma,
+  welcomeToNightCityRetailAfterpartyAtLizzieS,
+  welcomeToNightCityRetailEvelynParkerBeautifulEnigma,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -16,7 +16,7 @@ test("Evelyn Parker - spend searches for Braindance", async ({ page }) => {
   const evelyn = await pom.getCardInZoneByDefinitionId(
     "legendArea",
     CYBERPUNK_P1,
-    spoilerEvelynParkerBeautifulEnigma.id,
+    welcomeToNightCityRetailEvelynParkerBeautifulEnigma.id,
   );
 
   await pom.activateAbility(evelyn.instanceId, 1, CYBERPUNK_P1);
@@ -27,7 +27,8 @@ test("Evelyn Parker - spend searches for Braindance", async ({ page }) => {
   expectEqual("Evelyn reveal count", revealed.length, 3);
 
   const definitions = await Promise.all(revealed.map((cardId) => pom.getCardDefinitionId(cardId)));
-  const afterpartyId = revealed[definitions.indexOf(spoilerAfterpartyAtLizzieS.id)];
+  const afterpartyId =
+    revealed[definitions.indexOf(welcomeToNightCityRetailAfterpartyAtLizzieS.id)];
   if (!afterpartyId) {
     throw new Error("Expected Evelyn search to reveal Afterparty at Lizzie's.");
   }
@@ -37,7 +38,11 @@ test("Evelyn Parker - spend searches for Braindance", async ({ page }) => {
   await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectHandSize(CYBERPUNK_P1, 2);
   expectEqual("Evelyn deck after search", await pom.getDeckSize(CYBERPUNK_P1), 38);
-  await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, spoilerAfterpartyAtLizzieS.id);
+  await pom.getCardInZoneByDefinitionId(
+    "hand",
+    CYBERPUNK_P1,
+    welcomeToNightCityRetailAfterpartyAtLizzieS.id,
+  );
 
   await pom.expectStructuralState();
 });

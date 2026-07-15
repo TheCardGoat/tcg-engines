@@ -3,6 +3,7 @@ import { useMoveSelection } from "./MoveSelectionContext";
 import { useZoneDroppable } from "./useZoneDroppable";
 import { ZoneBadge } from "./ZoneBadge";
 import { useEngineOptional } from "../../engine";
+import type { KeyboardEvent, MouseEvent } from "react";
 import classes from "./TrashZone.module.css";
 
 interface TrashZoneCard {
@@ -23,9 +24,17 @@ interface TrashZoneProps {
   opponent?: boolean;
   side?: "player" | "opponent";
   count?: number;
+  onOpen?: () => void;
 }
 
-export function TrashZone({ topCard, cards, opponent = false, side, count = 0 }: TrashZoneProps) {
+export function TrashZone({
+  topCard,
+  cards,
+  opponent = false,
+  side,
+  count = 0,
+  onOpen,
+}: TrashZoneProps) {
   const zoneName = opponent ? "opp-trash" : "p-trash";
   const drop = useZoneDroppable(zoneName);
   const engine = useEngineOptional();
@@ -40,16 +49,44 @@ export function TrashZone({ topCard, cards, opponent = false, side, count = 0 }:
     : undefined;
   const hideResolvingTopCard = Boolean(topCard?.cardId && topCard.cardId === resolvingProgramId);
   const trashCards = cards ?? (topCard ? [topCard] : []);
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (!onOpen) return;
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    onOpen();
+  };
+  const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
+    if (!onOpen) return;
+    const target = event.target instanceof Element ? event.target : null;
+    const interactiveCard = target?.closest(
+      '[data-testid="card"][data-actionable="true"], [data-testid="card"][data-selectable="true"]',
+    );
+    if (interactiveCard && event.currentTarget.contains(interactiveCard)) {
+      return;
+    }
+    event.stopPropagation();
+    onOpen();
+  };
 
   return (
     <div
       ref={drop.setNodeRef}
-      className={`${classes.zone} ${drop.isOver ? classes.dropOver : ""}`}
+      className={`${classes.zone} ${drop.isOver ? classes.dropOver : ""} ${
+        onOpen ? classes.interactive : ""
+      }`}
       data-testid="trash-zone"
       data-zone-id={opponent ? "opp-trash" : "p-trash"}
       data-sim-zone-id={opponent ? "opp-trash" : "p-trash"}
       data-side={side}
       data-count={count}
+      role={onOpen ? "button" : undefined}
+      tabIndex={onOpen ? 0 : undefined}
+      aria-label={`${opponent ? "Rival" : "Your"} Trash, ${count} ${
+        count === 1 ? "card" : "cards"
+      }`}
+      aria-haspopup={onOpen ? "dialog" : undefined}
+      onClickCapture={handleClickCapture}
+      onKeyDown={handleKeyDown}
     >
       <div className={classes.inner}>
         {topCard ? (

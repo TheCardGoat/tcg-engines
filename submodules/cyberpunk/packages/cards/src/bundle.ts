@@ -1,16 +1,12 @@
 import { DSL_VERSION, type StructuredCardDefinition } from "@tcg/cyberpunk-types";
 import { prm01Cards } from "./PRM01/index.ts";
-import { alphaCards } from "./alpha/index.ts";
 import { boxToppersRetailCards } from "./boxtoppersretail/index.ts";
 import { promoCards } from "./promo/index.ts";
-import { spoilerCards } from "./spoiler/index.ts";
 import { theHeistRetailStarterDeckCards } from "./theheistretailstarterdeck/index.ts";
 import { embracingPowerRetailStarterDeckCards } from "./embracingpowerretailstarterdeck/index.ts";
 import { welcomeToNightCityRetailCards } from "./welcometonightcityretail/index.ts";
 
 const structuredCards: StructuredCardDefinition[] = [
-  ...alphaCards,
-  ...spoilerCards,
   ...promoCards,
   ...prm01Cards,
   ...boxToppersRetailCards,

@@ -1,4 +1,7 @@
-import { alphaCorpoSecurity, spoilerRiverWardDetectiveOnTheHunt } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
 import {
@@ -19,7 +22,7 @@ export const progChromeReverieBehavior: CyberpunkFixtureBehavior = {
     const corpoSecurity = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
     const riverWard = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P1, 0);
 
@@ -67,7 +70,7 @@ export const progChromeReverieBehavior: CyberpunkFixtureBehavior = {
     expectEqual(
       "River Ward definition after free call",
       calledRiverWard.definitionId,
-      spoilerRiverWardDetectiveOnTheHunt.id,
+      welcomeToNightCityRetailRiverWardDetectiveOnTheHunt.id,
     );
     await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
     await pom.expectFaceDownLegendsCount(CYBERPUNK_P1, 0);

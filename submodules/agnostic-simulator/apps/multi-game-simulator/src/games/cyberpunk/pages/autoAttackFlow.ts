@@ -13,7 +13,7 @@ export function getAutoAttackAdvanceAction(
     return null;
   }
 
-  if (attack.step === "offensive") {
+  if (attack.step === "attack") {
     if (collectPendingAttackTriggerSummaries(matchState).length > 0) {
       return null;
     }
@@ -25,7 +25,7 @@ export function getAutoAttackAdvanceAction(
     return attackerSide ? { type: "resolveAttack", as: PLAYER_SIDE_TO_ID[attackerSide] } : null;
   }
 
-  if (attack.step === "defensive") {
+  if (attack.step === "react") {
     const defenderSide = sideForPlayerId(attack.rivalId);
     if (!defenderSide) {
       return null;
@@ -41,7 +41,7 @@ export function getAutoAttackAdvanceAction(
       : { type: "resolveAttack", pass: true, as: PLAYER_SIDE_TO_ID[defenderSide] };
   }
 
-  if (attack.step === "fight" || attack.step === "defeat") {
+  if (attack.step === "fight") {
     const promptSide = sideWithAction(interactionViews, "resolveAttack");
     if (promptSide) {
       return { type: "resolveAttack", as: PLAYER_SIDE_TO_ID[promptSide] };

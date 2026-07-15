@@ -19,11 +19,10 @@ export const resolveAttackMove: MoveDefinition<ResolveAttackInput> = {
   available({ state, playerId }) {
     const attack = state.G.attackState;
     if (!attack) return false;
-    if (attack.step === "defensive" && attack.rivalId === playerId) return true;
-    if (attack.step === "offensive" && state.G.turnMetadata.activePlayerId === playerId)
-      return true;
+    if (attack.step === "react" && attack.rivalId === playerId) return true;
+    if (attack.step === "attack" && state.G.turnMetadata.activePlayerId === playerId) return true;
     if (
-      (attack.step === "fight" || attack.step === "defeat" || attack.step === "steal") &&
+      (attack.step === "fight" || attack.step === "steal") &&
       state.G.turnMetadata.activePlayerId === playerId
     )
       return true;
@@ -40,14 +39,25 @@ export const resolveAttackMove: MoveDefinition<ResolveAttackInput> = {
     const attack = state.G.attackState;
     if (!attack) return;
 
-    if (attack.step === "offensive") {
-      operations.game.setAttackState({ ...attack, step: "defensive" });
+    if (attack.step === "attack") {
+      operations.game.setAttackState({ ...attack, step: "react" });
       return;
     }
 
-    if (attack.step === "defensive") {
+    if (attack.step === "react") {
       if (input.args.pass) {
         const nextStep = attack.kind === "fight" ? "fight" : "steal";
+        const attackerName = state.G.cardIndex[attack.attackerId as string]
+          ? getDefinitionFor(state.G, attack.attackerId as string).displayName
+          : "";
+        operations.log.emit({
+          type: "reactPass",
+          playerId,
+          timestamp: Date.now(),
+          turnNumber: state.G.turnMetadata.turnNumber,
+          attackerId: attack.attackerId,
+          attackerName,
+        });
         operations.game.setAttackState({ ...attack, step: nextStep });
       }
       return;
@@ -55,11 +65,6 @@ export const resolveAttackMove: MoveDefinition<ResolveAttackInput> = {
 
     if (attack.step === "fight") {
       executeFight(state, playerId, operations, attack);
-      return;
-    }
-
-    if (attack.step === "defeat") {
-      executeDefeat(state, playerId, operations, attack);
       return;
     }
 
@@ -89,12 +94,6 @@ function executeFight(
     result = "mutual";
   }
 
-  operations.game.setAttackState({
-    ...attack,
-    step: "defeat",
-    fightResult: result,
-  });
-
   const attackerName = state.G.cardIndex[attack.attackerId as string]
     ? getDefinitionFor(state.G, attack.attackerId as string).displayName
     : "";
@@ -109,6 +108,8 @@ function executeFight(
     params: { attackerName, defenderName, attackerPower, defenderPower },
     playerId,
   });
+
+  executeDefeat(state, playerId, operations, { ...attack, fightResult: result });
 }
 
 function removeFromGameIfGoSolo(
@@ -145,7 +146,7 @@ function executeDefeat(
   ) {
     const hadAttachedCards =
       (state.G.cardIndex[defenderId as string]?.meta.attachedGearIds.length ?? 0) > 0;
-    operations.card.moveAttachedGear(defenderId, "trash");
+    operations.card.moveAttachedGear(defenderId, "trash", { detachAfterMove: true });
     operations.zone.moveCard(defenderId, "trash", attack.rivalId);
     const event = {
       type: "cardDefeated" as const,
@@ -165,7 +166,7 @@ function executeDefeat(
   ) {
     const hadAttachedCards =
       (state.G.cardIndex[attack.attackerId as string]?.meta.attachedGearIds.length ?? 0) > 0;
-    operations.card.moveAttachedGear(attack.attackerId, "trash");
+    operations.card.moveAttachedGear(attack.attackerId, "trash", { detachAfterMove: true });
     operations.zone.moveCard(attack.attackerId, "trash", playerId);
     const event = {
       type: "cardDefeated" as const,

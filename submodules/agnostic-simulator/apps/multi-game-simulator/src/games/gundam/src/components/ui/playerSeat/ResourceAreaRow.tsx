@@ -95,12 +95,12 @@ export function ResourceAreaRow({
         data-sim-anchor-id={`resourceArea:${playerId}`}
         data-sim-resource-anchor-id={playerId}
       >
-        <span className="absolute -top-2 left-0 z-10 font-mono text-hud-2xs text-hud-accent/70 font-bold tracking-hud-label bg-hud-deep/90 border border-hud-border/30 rounded-sm px-1.5 py-0.5 pointer-events-none">
+        <span className="absolute -top-2 left-0 z-10 font-mono text-hud-2xs text-hud-accent-deep font-bold tracking-hud-label bg-white/95 border border-hud-border/60 rounded-sm px-1.5 py-0.5 pointer-events-none shadow-[0_1px_4px_rgba(26,37,66,.12)]">
           {String(availableResources).padStart(2, "0")}/
           {String(resourceArea.length).padStart(2, "0")}
         </span>
         {resourceArea.length === 0 ? (
-          <span className="font-mono text-hud-xs text-white/25 tracking-hud-label">
+          <span className="font-mono text-hud-xs text-hud-text-dim tracking-hud-label bg-white/60 border border-hud-border/20 clip-hud-3 px-2 py-1">
             {m["sim.seat.resources.empty"]()}
           </span>
         ) : (

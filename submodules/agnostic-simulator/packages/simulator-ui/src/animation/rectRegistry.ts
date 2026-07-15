@@ -132,20 +132,22 @@ export function virtualCardRect(anchor: Rect, preference: "source" | "destinatio
 }
 
 export function buildSuppressionCss(overlays: readonly CardOverlayState[]): string {
-  const selectors = overlays.flatMap((overlay) => [
-    `${STAGE_SELECTOR} ${dataSelector("sim-entity-id", overlay.entity.id)}`,
-    ...[overlay.fromRef, overlay.toRef].flatMap((ref) => {
-      if (ref?.kind !== "zone") {
-        return [];
-      }
-      return [
-        `${STAGE_SELECTOR} ${dataSelector("sim-zone-id", ref.id)} ${dataSelector(
-          "sim-entity-id",
-          overlay.entity.id,
-        )}`,
-      ];
-    }),
-  ]);
+  const selectors = overlays
+    .filter((overlay) => overlay.suppressEntity !== false)
+    .flatMap((overlay) => [
+      `${STAGE_SELECTOR} ${dataSelector("sim-entity-id", overlay.entity.id)}`,
+      ...[overlay.fromRef, overlay.toRef].flatMap((ref) => {
+        if (ref?.kind !== "zone") {
+          return [];
+        }
+        return [
+          `${STAGE_SELECTOR} ${dataSelector("sim-zone-id", ref.id)} ${dataSelector(
+            "sim-entity-id",
+            overlay.entity.id,
+          )}`,
+        ];
+      }),
+    ]);
   const unique = Array.from(new Set(selectors));
   return unique.length > 0
     ? `${unique.join(",\n")} { visibility: hidden !important; pointer-events: none !important; }`
@@ -153,17 +155,19 @@ export function buildSuppressionCss(overlays: readonly CardOverlayState[]): stri
 }
 
 export function buildDestinationZoneSuppressionCss(overlays: readonly CardOverlayState[]): string {
-  const selectors = overlays.flatMap((overlay) => {
-    if (overlay.toRef?.kind !== "zone") {
-      return [];
-    }
-    return [
-      `${STAGE_SELECTOR} ${dataSelector("sim-zone-id", overlay.toRef.id)} ${dataSelector(
-        "sim-entity-id",
-        overlay.entity.id,
-      )}`,
-    ];
-  });
+  const selectors = overlays
+    .filter((overlay) => overlay.suppressEntity !== false)
+    .flatMap((overlay) => {
+      if (overlay.toRef?.kind !== "zone") {
+        return [];
+      }
+      return [
+        `${STAGE_SELECTOR} ${dataSelector("sim-zone-id", overlay.toRef.id)} ${dataSelector(
+          "sim-entity-id",
+          overlay.entity.id,
+        )}`,
+      ];
+    });
   const unique = Array.from(new Set(selectors));
   return unique.length > 0
     ? `${unique.join(",\n")} { visibility: hidden !important; pointer-events: none !important; }`

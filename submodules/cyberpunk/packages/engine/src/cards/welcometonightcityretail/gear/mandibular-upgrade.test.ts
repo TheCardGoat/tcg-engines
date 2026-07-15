@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaArmoredMinotaur,
-  alphaGoroTakemuraHandsUnclean,
-  alphaRuthlessLowlife,
-  alphaVCorporateExile,
+  boxTopperRetailGoroTakemuraHandsUnclean,
+  boxTopperRetailVCorporateExile,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailMandibularUpgrade,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2, expectAttachTarget } from "../../../testing/index.ts";
@@ -22,43 +22,71 @@ describe("Mandibular Upgrade", () => {
   it("can attach to a friendly Unit or face-up Legend, but not a face-down Legend", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       hand: [welcomeToNightCityRetailMandibularUpgrade],
-      field: [{ card: alphaRuthlessLowlife, spent: false }],
+      field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }],
       legendArea: [
-        { card: alphaVCorporateExile, faceDown: false },
-        { card: alphaGoroTakemuraHandsUnclean, faceDown: true },
+        { card: boxTopperRetailVCorporateExile, faceDown: false },
+        { card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: true },
       ],
       eddies: 1,
     });
 
-    expectAttachTarget(engine, welcomeToNightCityRetailMandibularUpgrade, alphaRuthlessLowlife);
+    expectAttachTarget(
+      engine,
+      welcomeToNightCityRetailMandibularUpgrade,
+      welcomeToNightCityRetailFieldOperator,
+    );
     const attachTargets = getAttachTargets(engine);
     expect(attachTargets).toContain(
-      engine.getCard(alphaVCorporateExile, "legendArea", P1).instanceId,
+      engine.getCard(boxTopperRetailVCorporateExile, "legendArea", P1).instanceId,
     );
     expect(attachTargets).not.toContain(
-      engine.getCard(alphaGoroTakemuraHandsUnclean, "legendArea", P1).instanceId,
+      engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean, "legendArea", P1).instanceId,
     );
+  });
+
+  it("has no attach targets when there is no friendly Unit or face-up Legend", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      hand: [welcomeToNightCityRetailMandibularUpgrade],
+      legendArea: [{ card: boxTopperRetailVCorporateExile, faceDown: true }],
+      eddies: 1,
+    });
+
+    expect(getAttachTargets(engine)).toEqual([]);
   });
 
   it("grants BLOCKER to the attached host", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailMandibularUpgrade],
-        field: [{ card: alphaRuthlessLowlife, spent: false }],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }],
         eddies: 1,
       },
       {
-        field: [{ card: alphaArmoredMinotaur, spent: false, playedThisTurn: false }],
+        field: [
+          {
+            card: embracingPowerRetailStarterDeckMinotaur,
+            spent: false,
+            playedThisTurn: false,
+          },
+        ],
       },
     );
 
-    engine.attachGear(welcomeToNightCityRetailMandibularUpgrade, alphaRuthlessLowlife, { as: P1 });
+    engine.attachGear(
+      welcomeToNightCityRetailMandibularUpgrade,
+      welcomeToNightCityRetailFieldOperator,
+      {
+        as: P1,
+      },
+    );
     engine.judgeSetTurnMetadata({ activePlayerId: P2 }, { as: P1 });
-    engine.attackRival(alphaArmoredMinotaur, { as: P2 });
+    engine.attackRival(embracingPowerRetailStarterDeckMinotaur, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    engine.useBlocker(alphaRuthlessLowlife, { as: P1 });
+    engine.useBlocker(welcomeToNightCityRetailFieldOperator, { as: P1 });
 
-    expect(engine.getCard(alphaRuthlessLowlife, "field", P1).meta.spent).toBe(true);
+    expect(engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P1).meta.spent).toBe(
+      true,
+    );
     expect(engine.getState().G.attackState).toMatchObject({ kind: "fight" });
   });
 });

@@ -1,10 +1,10 @@
 import {
-  alphaCorporateSurveillance,
-  alphaKiroshiOptics,
-  alphaRebootOptics,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
-  spoilerMamanBrigitte,
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailRebootOptics,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailMamanBrigitteSpiritOfDeath,
 } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
@@ -27,23 +27,27 @@ export const unitMamanBrigitteBehavior: CyberpunkFixtureBehavior = {
     const maman = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerMamanBrigitte.id,
+      welcomeToNightCityRetailMamanBrigitteSpiritOfDeath.id,
     );
     const reboot = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      alphaRebootOptics.id,
+      welcomeToNightCityRetailRebootOptics.id,
     );
     const surveillance = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      alphaCorporateSurveillance.id,
+      welcomeToNightCityRetailCorporateSurveillance.id,
     );
-    await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaKiroshiOptics.id);
+    await pom.getCardInZoneByDefinitionId(
+      "hand",
+      CYBERPUNK_P1,
+      welcomeToNightCityRetailKiroshiOptics.id,
+    );
     const unequippedTarget = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaRuthlessLowlife.id,
+      welcomeToNightCityRetailMoxInciters.id,
     );
 
     const deckBefore = await pom.getDeckSize(CYBERPUNK_P2);
@@ -53,9 +57,21 @@ export const unitMamanBrigitteBehavior: CyberpunkFixtureBehavior = {
     const discardChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
     const discardDefinitions = await getChoiceDefinitionIds(pom, discardChoices);
     expectEqual("Maman discard choice count", discardChoices.length, 2);
-    expectIncludes("Maman discard definitions", discardDefinitions, alphaRebootOptics.id);
-    expectIncludes("Maman discard definitions", discardDefinitions, alphaCorporateSurveillance.id);
-    expectExcludes("Maman discard definitions", discardDefinitions, alphaKiroshiOptics.id);
+    expectIncludes(
+      "Maman discard definitions",
+      discardDefinitions,
+      welcomeToNightCityRetailRebootOptics.id,
+    );
+    expectIncludes(
+      "Maman discard definitions",
+      discardDefinitions,
+      welcomeToNightCityRetailCorporateSurveillance.id,
+    );
+    expectExcludes(
+      "Maman discard definitions",
+      discardDefinitions,
+      welcomeToNightCityRetailKiroshiOptics.id,
+    );
 
     await pom.resolveDiscardFromHand([reboot.instanceId, surveillance.instanceId], CYBERPUNK_P1);
 
@@ -63,8 +79,16 @@ export const unitMamanBrigitteBehavior: CyberpunkFixtureBehavior = {
     const targetChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
     const targetDefinitions = await getChoiceDefinitionIds(pom, targetChoices);
     expectEqual("Maman bottom-deck target count", targetChoices.length, 1);
-    expectIncludes("Maman target definitions", targetDefinitions, alphaRuthlessLowlife.id);
-    expectExcludes("Maman target definitions", targetDefinitions, alphaSwordwiseHuscle.id);
+    expectIncludes(
+      "Maman target definitions",
+      targetDefinitions,
+      welcomeToNightCityRetailMoxInciters.id,
+    );
+    expectExcludes(
+      "Maman target definitions",
+      targetDefinitions,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
+    );
 
     await pom.resolveEffectTarget([unequippedTarget.instanceId], CYBERPUNK_P1);
 
@@ -74,6 +98,10 @@ export const unitMamanBrigitteBehavior: CyberpunkFixtureBehavior = {
     expectEqual("Maman rival deck size", await pom.getDeckSize(CYBERPUNK_P2), deckBefore + 1);
 
     const p2Deck = await getZoneDefinitionIds(pom, "deck", CYBERPUNK_P2);
-    expectEqual("Maman bottom-decked card", p2Deck[p2Deck.length - 1], alphaRuthlessLowlife.id);
+    expectEqual(
+      "Maman bottom-decked card",
+      p2Deck[p2Deck.length - 1],
+      welcomeToNightCityRetailMoxInciters.id,
+    );
   },
 };

@@ -13,7 +13,7 @@ interface AttackPhaseHudProps {
   compact?: boolean;
 }
 
-type VisibleAttackStep = "offensive" | "defensive" | "fight" | "defeat" | "steal";
+type VisibleAttackStep = "attack" | "react" | "fight" | "steal";
 type VisibleAttackKind = "fight" | "direct";
 
 interface AttackCueText {
@@ -24,12 +24,6 @@ interface AttackCueText {
 
 interface PendingAttackTriggerSummary extends AttackTriggerSummary {
   triggerId?: string;
-}
-
-interface FightOutcomeCue {
-  label: string;
-  summary: string;
-  detail: string;
 }
 
 export function AttackPhaseHud({ compact = false }: AttackPhaseHudProps) {
@@ -66,12 +60,6 @@ export function AttackPhaseHud({ compact = false }: AttackPhaseHudProps) {
         activeSide,
         humanSide,
       });
-  const fightOutcome = getFightOutcomeCue({
-    attacker,
-    defender,
-    result: kind === "fight" && step === "defeat" ? attack?.fightResult : undefined,
-  });
-
   const steps = buildSteps(kind, step);
   const combatLine = renderCombatLine({
     attackActive: Boolean(attack),
@@ -122,7 +110,6 @@ export function AttackPhaseHud({ compact = false }: AttackPhaseHudProps) {
           </div>
           <AttackCue
             cue={cue}
-            fightOutcome={fightOutcome}
             onResolveTrigger={(triggerId) => {
               dispatch({ type: "resolveTrigger", triggerId, as: PLAYER_SIDE_TO_ID[activeSide] });
             }}
@@ -143,7 +130,7 @@ function getVisibleAttackStep(
   moveLogs: ReadonlyArray<MoveLogEntry>,
 ): VisibleAttackStep | undefined {
   const step = attack?.step;
-  if (!attack || step !== "offensive" || attack.kind !== "fight") {
+  if (!attack || step !== "attack" || attack.kind !== "fight") {
     return isVisibleAttackStep(step) ? step : undefined;
   }
 
@@ -156,7 +143,7 @@ function getVisibleAttackStep(
     );
   });
 
-  return wasRedirectedByBlocker ? "defensive" : step;
+  return wasRedirectedByBlocker ? "react" : step;
 }
 
 function getVisibleAttackTriggers(
@@ -175,13 +162,7 @@ function getVisibleAttackTriggers(
 }
 
 function isVisibleAttackStep(step: string | undefined): step is VisibleAttackStep {
-  return (
-    step === "offensive" ||
-    step === "defensive" ||
-    step === "fight" ||
-    step === "defeat" ||
-    step === "steal"
-  );
+  return step === "attack" || step === "react" || step === "fight" || step === "steal";
 }
 
 function renderCombatLine({
@@ -266,28 +247,28 @@ function getAttackCue({
         };
   }
 
-  if (step === "offensive") {
+  if (step === "attack") {
     if (attackTriggers.length === 0) {
       return {
-        now: `Offensive step: ${attackerName} has no ATTACK trigger.`,
+        now: `Attack: ${attackerName} has no ATTACK trigger.`,
         next:
           kind === "direct"
-            ? "Go to defense; rival may call a Legend or block."
-            : "Go to defense; rival may call a Legend or respond.",
+            ? "Go to React; rival may call a Legend or block."
+            : "Go to React; rival may call a Legend or respond.",
       };
     }
 
     return {
-      now: `Offensive step: ${formatAttackTriggerCount(attackTriggers)} pending.`,
-      next: "Resolve these effects before defense responds.",
+      now: `Attack: ${formatAttackTriggerCount(attackTriggers)} pending.`,
+      next: "Resolve ATTACK effects before React.",
       triggers: attackTriggers,
     };
   }
 
-  if (step === "defensive") {
+  if (step === "react") {
     if (activeSide === humanSide) {
       return {
-        now: "Defensive step: waiting on rival.",
+        now: "React: waiting on rival.",
         next:
           kind === "direct"
             ? "If they do not block, you steal Gigs."
@@ -295,7 +276,7 @@ function getAttackCue({
       };
     }
     return {
-      now: "Defensive step: choose a response.",
+      now: "React: choose a response.",
       next:
         kind === "direct"
           ? "Block or call a Legend, or let them steal."
@@ -305,23 +286,16 @@ function getAttackCue({
 
   if (step === "fight") {
     return {
-      now: "Fight step: compare total power.",
-      next: "Higher power wins. A tie defeats both Units.",
-    };
-  }
-
-  if (step === "defeat") {
-    return {
-      now: "Defeat step: trash defeated Units.",
-      next: "Then this attack is finished.",
+      now: "Fight: compare total power.",
+      next: "Higher power wins. A tie defeats both Units, then the attack ends.",
     };
   }
 
   if (step === "steal") {
     const power = attackerPower ?? 0;
-    const gigs = 1 + Math.floor(power / 10);
+    const gigs = power <= 0 ? 0 : 1 + Math.floor(power / 10);
     return {
-      now: `Steal step: take ${gigs} Gig${gigs === 1 ? "" : "s"}.`,
+      now: `Steal: take ${gigs} Gig${gigs === 1 ? "" : "s"}.`,
       next: "Choose which rival Gig die moves to you.",
     };
   }
@@ -330,50 +304,6 @@ function getAttackCue({
     now: "Attack in progress.",
     next: "Finish this attack before declaring another.",
   };
-}
-
-function getFightOutcomeCue({
-  attacker,
-  defender,
-  result,
-}: {
-  attacker: ZoneCardView | null;
-  defender: ZoneCardView | null;
-  result: string | undefined;
-}): FightOutcomeCue | null {
-  if (!result || !attacker || !defender) {
-    return null;
-  }
-
-  const attackerPower = attacker.effectivePower ?? 0;
-  const defenderPower = defender.effectivePower ?? 0;
-  const powerText = `${attackerPower} - ${defenderPower}`;
-
-  if (result === "attackerWins") {
-    return {
-      label: powerText,
-      summary: `${attacker.name} wins`,
-      detail: `${defender.name} is defeated and moves to Trash.`,
-    };
-  }
-
-  if (result === "defenderWins") {
-    return {
-      label: powerText,
-      summary: `${defender.name} wins`,
-      detail: `${attacker.name} is defeated and moves to Trash.`,
-    };
-  }
-
-  if (result === "mutual") {
-    return {
-      label: powerText,
-      summary: "Both Units are defeated",
-      detail: `${attacker.name} and ${defender.name} move to Trash.`,
-    };
-  }
-
-  return null;
 }
 
 function buildSteps(
@@ -386,20 +316,15 @@ function buildSteps(
 
   if (kind === "fight") {
     return [
-      { label: "OFFENSIVE", active: step === "offensive", complete: step !== "offensive" },
-      {
-        label: "DEFENSIVE",
-        active: step === "defensive",
-        complete: step === "fight" || step === "defeat",
-      },
-      { label: "FIGHT", active: step === "fight", complete: step === "defeat" },
-      { label: "DEFEAT", active: step === "defeat", complete: false },
+      { label: "ATTACK", active: step === "attack", complete: step !== "attack" },
+      { label: "REACT", active: step === "react", complete: step === "fight" },
+      { label: "FIGHT", active: step === "fight", complete: false },
     ];
   }
 
   return [
-    { label: "OFFENSIVE", active: step === "offensive", complete: step !== "offensive" },
-    { label: "DEFENSIVE", active: step === "defensive", complete: step === "steal" },
+    { label: "ATTACK", active: step === "attack", complete: step !== "attack" },
+    { label: "REACT", active: step === "react", complete: step === "steal" },
     { label: "STEAL", active: step === "steal", complete: false },
   ];
 }
@@ -462,11 +387,9 @@ function CombatTarget({ label, value }: { label: string; value: string }) {
 
 function AttackCue({
   cue,
-  fightOutcome,
   onResolveTrigger,
 }: {
   cue: AttackCueText;
-  fightOutcome?: FightOutcomeCue | null;
   onResolveTrigger?: (triggerId: string) => void;
 }) {
   return (
@@ -475,14 +398,7 @@ function AttackCue({
         <span className={classes.cueText}>{cue.now}</span>
         <span className={classes.cueText}>{cue.next}</span>
       </div>
-      {fightOutcome ? (
-        <div className={classes.fightOutcome} data-testid="fight-outcome-cue">
-          <span className={classes.outcomeMeta}>RESULT</span>
-          <span className={classes.outcomePower}>{fightOutcome.label}</span>
-          <span className={classes.outcomeSummary}>{fightOutcome.summary}</span>
-          <span className={classes.outcomeDetail}>{fightOutcome.detail}</span>
-        </div>
-      ) : cue.triggers && cue.triggers.length > 0 ? (
+      {cue.triggers && cue.triggers.length > 0 ? (
         <div className={classes.triggerList} aria-label="Attack triggers to resolve">
           {cue.triggers.map((trigger, index) => (
             <AttackTriggerRow

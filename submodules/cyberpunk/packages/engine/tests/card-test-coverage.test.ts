@@ -16,6 +16,8 @@ import { structuredCards } from "@tcg/cyberpunk-cards";
 
 const ENGINE_SRC = join(__dirname, "../src");
 
+const IGNORED_SET_CODES = new Set(["alpha", "spoiler"]);
+
 const TYPE_TO_FOLDER: Record<string, string> = {
   unit: "units",
   gear: "gear",
@@ -27,6 +29,8 @@ describe("card test coverage", () => {
   it("every structured card has a matching *.test.ts file under packages/engine/src/{set}/{type}/", () => {
     const missing: Array<{ slug: string; expectedPath: string }> = [];
     for (const card of structuredCards) {
+      if (IGNORED_SET_CODES.has(card.set.code)) continue;
+
       const folder = TYPE_TO_FOLDER[card.type];
       if (!folder) {
         missing.push({ slug: card.slug, expectedPath: `unknown card.type: ${card.type}` });

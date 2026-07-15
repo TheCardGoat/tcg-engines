@@ -1,9 +1,9 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaCorpoSecurity,
-  alphaKiroshiOptics,
-  alphaTBugAmateurPhilosopher,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -17,12 +17,12 @@ test("Dying Night - low Street Cred does not defeat gear", async ({ page }) => {
   const attacker = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaTBugAmateurPhilosopher.id,
+    welcomeToNightCityRetailTBugAmateurPhilosopher.id,
   );
   const rivalHost = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaCorpoSecurity.id,
+    welcomeToNightCityRetailCorpoSecurity.id,
   );
 
   expectEqual("Dying Night low-cred Street Cred", await pom.getStreetCred(CYBERPUNK_P1), 4);
@@ -32,7 +32,11 @@ test("Dying Night - low Street Cred does not defeat gear", async ({ page }) => {
 
   await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectTrashSize(CYBERPUNK_P2, 0);
-  await pom.getCardInZoneByDefinitionId("field", CYBERPUNK_P2, alphaKiroshiOptics.id);
+  await pom.getCardInZoneByDefinitionId(
+    "field",
+    CYBERPUNK_P2,
+    welcomeToNightCityRetailKiroshiOptics.id,
+  );
   await pom.expectFieldCardAttachedGearCount(CYBERPUNK_P2, rivalHost.instanceId, 1);
 
   await pom.expectStructuralState();

@@ -1,22 +1,18 @@
 import type { CardDefinition, StructuredCardDefinition } from "@tcg/cyberpunk-types";
 import { prm01Cards } from "./PRM01/index.ts";
-import { alphaCards } from "./alpha/index.ts";
 import { boxToppersRetailCards } from "./boxtoppersretail/index.ts";
 import { promoCards } from "./promo/index.ts";
-import { spoilerCards } from "./spoiler/index.ts";
 import { theHeistRetailStarterDeckCards } from "./theheistretailstarterdeck/index.ts";
 import { embracingPowerRetailStarterDeckCards } from "./embracingpowerretailstarterdeck/index.ts";
 import { welcomeToNightCityRetailCards } from "./welcometonightcityretail/index.ts";
 
 /**
- * The full Cyberpunk card pool before any dedup/merge, assembled from every
- * authored set array. This mirrors the assembly in `src/index.ts` and
- * `src/bundle.ts`; the set arrays are the single source of truth, so importing
- * them directly avoids a circular re-export through `index.ts`.
+ * The full runtime Cyberpunk card pool before any dedup/merge, assembled from
+ * the exported set arrays. This mirrors the assembly in `src/index.ts` and
+ * `src/bundle.ts`; preview-only sets are intentionally excluded from runtime
+ * card lookup and deck validation.
  */
 const allStructuredCards: StructuredCardDefinition[] = [
-  ...alphaCards,
-  ...spoilerCards,
   ...promoCards,
   ...prm01Cards,
   ...boxToppersRetailCards,
@@ -45,9 +41,8 @@ export interface MergeableCard {
 
 /**
  * Set priority used to pick the canonical entry when the same card appears in
- * multiple sets. Retail sets win over preview/spoiler sets so the released
- * gameplay definition is authoritative; printings from every set are still
- * unioned onto the canonical entry.
+ * multiple sets. Released retail sets win over lower-priority preview-style
+ * sets so the released gameplay definition is authoritative.
  *
  * This MUST stay in lockstep with the catalog merge in
  * `platform/apps/general-api/src/modules/cyberpunk/service.ts`. It is exported
@@ -60,8 +55,6 @@ export const SET_PRIORITY: Record<string, number> = {
   boxtoppersretail: 80,
   promo: 70,
   PRM01: 70,
-  alpha: 60,
-  spoiler: 10,
 };
 
 export function setPriority(setCode: string): number {
@@ -109,9 +102,8 @@ export function pickCanonicalAndMergePrintings<TCard extends MergeableCard>(grou
  *
  * 1. Group by `id` — identical ids are almost always the same card reprinted
  *    across sets. Keep the most authoritative version and union its printings.
- * 2. Group by `slug` — the same card can also be reprinted with a NEW id
- *    across sets (e.g. spoiler vs. retail). The slug pass collapses these so a
- *    spoiler printing lands on its canonical retail entry.
+ * 2. Group by `slug` — the same runtime card can also be reprinted with a NEW
+ *    id across sets. The slug pass collapses these onto one canonical entry.
  *
  * Returns a slug-unique array. This is the single shared implementation used
  * by both the card catalog and the deck-save validator to prevent drift.
@@ -157,12 +149,10 @@ const mergedCyberpunkCards: CardDefinition[] = mergeDuplicateCards(allStructured
 );
 
 /**
- * Lookup keyed by EVERY `id` present in the authored card pool (including
- * set-specific ids like a spoiler entry that shares a slug with a retail
- * card). Each value is that card's fully-merged {@link CardDefinition} with all
- * printings unioned. Truly-unknown ids are absent, so callers can keep a
- * strict "Unknown Cyberpunk card" rejection while resolving any legitimately
- * stored card id to its complete printing set. Memoized at module load.
+ * Lookup keyed by every `id` present in the runtime card pool. Preview-only
+ * ids are intentionally absent, so callers can keep a strict "Unknown
+ * Cyberpunk card" rejection while resolving any legitimately stored runtime
+ * card id to its complete printing set. Memoized at module load.
  */
 const mergedCyberpunkCardsById: ReadonlyMap<string, CardDefinition> = (() => {
   const slugToMerged = new Map<string, CardDefinition>();

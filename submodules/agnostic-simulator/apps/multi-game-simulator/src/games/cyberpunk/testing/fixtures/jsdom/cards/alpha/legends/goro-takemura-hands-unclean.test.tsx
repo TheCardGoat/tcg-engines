@@ -1,5 +1,8 @@
 import { describe, test } from "vite-plus/test";
-import { alphaCorpoSecurity, alphaGoroTakemuraHandsUnclean } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -22,12 +25,12 @@ describe("Goro Takemura - Hands Unclean jsdom happy path", () => {
       const goro = await pom.getCardInZoneByDefinitionId(
         "legendArea",
         CYBERPUNK_P1,
-        alphaGoroTakemuraHandsUnclean.id,
+        embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean.id,
       );
       const defender = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
 
       await pom.goSolo(goro.instanceId, CYBERPUNK_P1);

@@ -5,7 +5,7 @@ vi.mock("../../../animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { alphaRuthlessLowlife } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailMoxInciters } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../../cyberpunk-simulator-pom";
 import { expectEqual } from "../../fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -37,7 +37,7 @@ describe("chooseCardTarget fixture behavior", () => {
       const cardToPlay = await pom.getCardInZoneByDefinitionId(
         "hand",
         CYBERPUNK_P1,
-        alphaRuthlessLowlife.id,
+        welcomeToNightCityRetailMoxInciters.id,
       );
       await pom.expectHandCardChoiceEligible(CYBERPUNK_P1, cardToPlay.instanceId, true);
 

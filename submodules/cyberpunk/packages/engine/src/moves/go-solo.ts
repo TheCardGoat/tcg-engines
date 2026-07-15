@@ -73,6 +73,7 @@ export const goSoloMove: MoveDefinition<GoSoloInput> = {
     const eventsBeforePayment = operations.event.getEmittedEvents().length;
     operations.game.spendEddies(playerId, cost, "goSolo");
     operations.zone.moveCard(cardId as CardInstanceId, "field", playerId);
+    operations.card.moveAttachedGear(cardId as CardInstanceId, "field");
     operations.card.ready(cardId as CardInstanceId);
     operations.card.setPlayedThisTurn(cardId as CardInstanceId, false);
 

@@ -1,7 +1,7 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaKiroshiOptics,
-  alphaMantisBlades,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailMantisBlades,
   theHeistRetailStarterDeckViktorVektorSitDownAndRelax,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -45,8 +45,8 @@ describe("Viktor Vektor - Sit Down and Relax (Retail) jsdom happy path", () => {
         revealed.map((cardId) => pom.getCardDefinitionId(cardId)),
       );
       const selected = [
-        revealed[revealedDefinitions.indexOf(alphaKiroshiOptics.id)]!,
-        revealed[revealedDefinitions.indexOf(alphaMantisBlades.id)]!,
+        revealed[revealedDefinitions.indexOf(welcomeToNightCityRetailKiroshiOptics.id)]!,
+        revealed[revealedDefinitions.indexOf(welcomeToNightCityRetailMantisBlades.id)]!,
       ];
       if (selected.some((cardId) => !cardId)) {
         throw new Error("Expected Viktor search to reveal Kiroshi Optics and Mantis Blades.");

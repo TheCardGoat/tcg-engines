@@ -11,10 +11,11 @@ export type AnimationStepKind =
   | "effectTarget"
   | "resourceFloat"
   | "combat"
+  | "combatRedirect"
   | "gigMove"
   | "phaseChange";
 
-export type ResourceKind = "eddies";
+export type ResourceKind = "eddies" | "gig";
 
 export type CardExitReason = "defeated" | "sold" | "discarded";
 
@@ -111,6 +112,9 @@ export interface ResourceFloatStep extends BaseStep {
   playerId: PlayerId;
   /** Signed delta (negative = spent, positive = gained). */
   delta: number;
+  dieId?: GigDieId;
+  previousValue?: number;
+  newValue?: number;
 }
 
 export interface CombatStep extends BaseStep {
@@ -118,6 +122,15 @@ export interface CombatStep extends BaseStep {
   attackerId: CardInstanceId;
   defenderId: CardInstanceId | null;
   attackKind: "fight" | "direct";
+  gigsStolen?: number;
+  playerId: PlayerId;
+}
+
+export interface CombatRedirectStep extends BaseStep {
+  kind: "combatRedirect";
+  attackerId: CardInstanceId;
+  blockerId: CardInstanceId;
+  originalTargetId: CardInstanceId | null;
   playerId: PlayerId;
 }
 
@@ -136,6 +149,9 @@ export interface PhaseChangeStep extends BaseStep {
   from: string;
   to: string;
   playerId: PlayerId;
+  variant?: "phase" | "turn";
+  turnPlayerId?: PlayerId;
+  turnNumber?: number;
 }
 
 export type AnimationStep =
@@ -148,6 +164,7 @@ export type AnimationStep =
   | EffectTargetStep
   | ResourceFloatStep
   | CombatStep
+  | CombatRedirectStep
   | GigMoveStep
   | PhaseChangeStep;
 

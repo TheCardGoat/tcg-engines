@@ -9,21 +9,21 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaCorpoSecurity,
-  alphaCorporateSurveillance,
-  alphaRuthlessLowlife,
-  alphaEmergencyAtlus,
-  alphaJackieWellesRideOrDieChoom,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailEmergencyAtlus,
+  welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+  welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
-const program = alphaCorporateSurveillance; // cost 2, program
-const corpo = alphaCorpoSecurity; // cost 2, unit
-const lowlife = alphaRuthlessLowlife; // cost 2, unit
-const huscle = alphaSwordwiseHuscle; // cost 3, unit
-const atlus = alphaEmergencyAtlus; // cost 4, unit
-const jackie = alphaJackieWellesRideOrDieChoom; // cost 6, unit
+const program = welcomeToNightCityRetailCorporateSurveillance; // cost 2, program
+const corpo = welcomeToNightCityRetailCorpoSecurity; // cost 2, unit
+const lowlife = welcomeToNightCityRetailMoxInciters; // cost 2, unit
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, unit
+const atlus = welcomeToNightCityRetailEmergencyAtlus; // cost 4, unit
+const jackie = welcomeToNightCityRetailJackieWellesRideOrDieChoom; // cost 6, unit
 
 function corporateSurveillanceChoice(engine: CyberpunkTestEngine) {
   const choice = engine.getState().G.turnMetadata.pendingChoice;

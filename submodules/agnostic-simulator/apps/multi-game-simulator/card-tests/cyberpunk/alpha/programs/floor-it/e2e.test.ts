@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { alphaCorpoSecurity } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailCorpoSecurity } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -16,7 +16,7 @@ test("Floor It - spent units to bounce", async ({ page }) => {
   const rivalTarget = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaCorpoSecurity.id,
+    welcomeToNightCityRetailCorpoSecurity.id,
   );
   await pom.expectFieldCardSpent(CYBERPUNK_P2, rivalTarget.instanceId, true);
 

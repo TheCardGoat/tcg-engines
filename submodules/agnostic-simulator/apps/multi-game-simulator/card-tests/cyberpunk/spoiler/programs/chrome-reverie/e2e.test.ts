@@ -1,6 +1,9 @@
 import { test } from "@playwright/test";
 
-import { alphaCorpoSecurity, spoilerRiverWardDetectiveOnTheHunt } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -20,7 +23,7 @@ test("Chrome Reverie - cant-attack target and free legend call", async ({ page }
   const corpoSecurity = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaCorpoSecurity.id,
+    welcomeToNightCityRetailCorpoSecurity.id,
   );
   const riverWard = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P1, 0);
 
@@ -63,7 +66,7 @@ test("Chrome Reverie - cant-attack target and free legend call", async ({ page }
   expectEqual(
     "River Ward definition after free call",
     calledRiverWard.definitionId,
-    spoilerRiverWardDetectiveOnTheHunt.id,
+    welcomeToNightCityRetailRiverWardDetectiveOnTheHunt.id,
   );
   await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectFaceDownLegendsCount(CYBERPUNK_P1, 0);

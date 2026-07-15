@@ -61,7 +61,6 @@ import { CardInspectDialog } from "../src/components/ui/CardInspectDialogContain
 import { GundamBoardLayout } from "../src/components/ui/GundamBoardLayout.tsx";
 import { GameTable } from "../src/components/ui/GameTable.tsx";
 import { FloatingUndoButton } from "../src/components/ui/FloatingUndoButton.tsx";
-import { PhaseRibbon } from "../src/components/ui/PhaseRibbon.tsx";
 import { PriorityActionButton } from "../src/components/ui/PriorityActionButton.tsx";
 import { asViewerId } from "../src/game/types.ts";
 
@@ -485,7 +484,6 @@ export function LiveSimulatorShell({
         {!isMobile && (
           <div className="relative h-0">
             <div className="centerline -top-px" />
-            <PhaseRibbon />
           </div>
         )}
         <PlayerSeatContainer side="bottom" />

@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
-  alphaGoroTakemuraHandsUnclean,
-  alphaJackieWellesPourOneOutForMe,
-  alphaSaburoArasakaStubbornPatriach,
+  boxTopperRetailGoroTakemuraHandsUnclean,
+  boxTopperRetailJackieWellesPourOneOutForMe,
+  boxTopperRetailSaburoArasakaStubbornPatriarch,
+  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailTBugAmateurPhilosopher,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
@@ -22,17 +22,21 @@ describe("T-Bug — Amateur Philosopher", () => {
           },
         ],
         legendArea: [
-          { card: alphaGoroTakemuraHandsUnclean, faceDown: true },
-          { card: alphaJackieWellesPourOneOutForMe, faceDown: true },
+          { card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: true },
+          { card: boxTopperRetailJackieWellesPourOneOutForMe, faceDown: true },
         ],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true, powerModifier: 3 }], // 2 + 3 = 5 > 4
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true, powerModifier: 3 }], // 2 + 3 = 5 > 4
       },
     );
-    engine.attackUnit(welcomeToNightCityRetailTBugAmateurPhilosopher, alphaCorpoSecurity, {
-      as: P1,
-    });
+    engine.attackUnit(
+      welcomeToNightCityRetailTBugAmateurPhilosopher,
+      welcomeToNightCityRetailCorpoSecurity,
+      {
+        as: P1,
+      },
+    );
     engine.resolveFullFight({ as: P1 });
     return engine;
   }
@@ -45,10 +49,10 @@ describe("T-Bug — Amateur Philosopher", () => {
     expect(engine.getPrompt(P1).choice?.type).toBe("chooseTarget");
 
     // Choose Goro → flip it for free.
-    engine.resolveEffectTarget(alphaGoroTakemuraHandsUnclean, { as: P1 });
+    engine.resolveEffectTarget(boxTopperRetailGoroTakemuraHandsUnclean, { as: P1 });
 
-    expect(engine.getCard(alphaGoroTakemuraHandsUnclean).meta.faceDown).toBe(false);
-    expect(engine.getCard(alphaJackieWellesPourOneOutForMe).meta.faceDown).toBe(true);
+    expect(engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean).meta.faceDown).toBe(false);
+    expect(engine.getCard(boxTopperRetailJackieWellesPourOneOutForMe).meta.faceDown).toBe(true);
     // Free Call — Eddie total unchanged.
     expect(engine.getEddies(P1)).toBe(eddiesBefore);
     expect(engine.getCardsInZone("trash", P1).map((c) => c.definitionId)).toContain(
@@ -71,8 +75,8 @@ describe("T-Bug — Amateur Philosopher", () => {
     // Decline the optional call.
     engine.executeMove("resolveEffectTarget", { args: { pass: true } }, P1);
 
-    expect(engine.getCard(alphaGoroTakemuraHandsUnclean).meta.faceDown).toBe(true);
-    expect(engine.getCard(alphaJackieWellesPourOneOutForMe).meta.faceDown).toBe(true);
+    expect(engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean).meta.faceDown).toBe(true);
+    expect(engine.getCard(boxTopperRetailJackieWellesPourOneOutForMe).meta.faceDown).toBe(true);
   });
 
   it("if a Legend was already Called this turn, the free Call is skipped but lookAt still occurs (c)", () => {
@@ -87,30 +91,34 @@ describe("T-Bug — Amateur Philosopher", () => {
           },
         ],
         legendArea: [
-          { card: alphaSaburoArasakaStubbornPatriach, faceDown: true },
-          { card: alphaGoroTakemuraHandsUnclean, faceDown: true },
-          { card: alphaJackieWellesPourOneOutForMe, faceDown: true },
+          { card: boxTopperRetailSaburoArasakaStubbornPatriarch, faceDown: true },
+          { card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: true },
+          { card: boxTopperRetailJackieWellesPourOneOutForMe, faceDown: true },
         ],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true, powerModifier: 3 }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true, powerModifier: 3 }],
       },
     );
 
     // Call Saburo first — flips it face-up and sets calledLegendThisTurn.
-    engine.callLegend(alphaSaburoArasakaStubbornPatriach, { as: P1 });
-    expect(engine.getCard(alphaSaburoArasakaStubbornPatriach).meta.faceDown).toBe(false);
+    engine.callLegend(boxTopperRetailSaburoArasakaStubbornPatriarch, { as: P1 });
+    expect(engine.getCard(boxTopperRetailSaburoArasakaStubbornPatriarch).meta.faceDown).toBe(false);
 
-    engine.attackUnit(welcomeToNightCityRetailTBugAmateurPhilosopher, alphaCorpoSecurity, {
-      as: P1,
-    });
+    engine.attackUnit(
+      welcomeToNightCityRetailTBugAmateurPhilosopher,
+      welcomeToNightCityRetailCorpoSecurity,
+      {
+        as: P1,
+      },
+    );
     engine.resolveFullFight({ as: P1 });
 
     // calledLegendThisTurn already true → callLegend is a noAction: no choice prompt,
     // and the remaining face-down Legends stay face-down. The lookAt still occurred
     // (it ran before the guarded callLegend effect and emitted cardsRevealed).
     expect(engine.getPrompt(P1).choice).toBeNull();
-    expect(engine.getCard(alphaGoroTakemuraHandsUnclean).meta.faceDown).toBe(true);
-    expect(engine.getCard(alphaJackieWellesPourOneOutForMe).meta.faceDown).toBe(true);
+    expect(engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean).meta.faceDown).toBe(true);
+    expect(engine.getCard(boxTopperRetailJackieWellesPourOneOutForMe).meta.faceDown).toBe(true);
   });
 });

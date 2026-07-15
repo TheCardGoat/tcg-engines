@@ -3,10 +3,8 @@ import type { SimulatorEventLogEntry } from "@tcg/simulator-contract";
 import { EventLogPanel } from "@tcg/simulator-ui";
 
 import { m } from "../../lib/i18n/messages.ts";
-import { useHintsEnabled } from "../../lib/use-hints-enabled.ts";
 import { Button } from "../primitives/index.ts";
 import type { LogItem, LogTurn, MatchInfo, PlayerInfo } from "./types.ts";
-import { UndoButton } from "./UndoButton.tsx";
 import { PlayerTimer } from "./PlayerTimer.tsx";
 
 const CLIP_DIAMOND = "polygon(50% 0, 100% 50%, 50% 100%, 0 50%)";
@@ -22,12 +20,10 @@ export interface MatchSidebarProps {
   readonly priorityHolder?: CurrentTurn;
   readonly log: readonly LogTurn[];
   readonly eventLogEntries?: readonly SimulatorEventLogEntry[];
-  readonly onUndo: () => void;
-  readonly canUndo: boolean;
   readonly onConcede: () => void;
   readonly onCollapse?: () => void;
   /**
-   * Optional panel rendered just above the `BATTLE DATA` meta block.
+   * Optional panel rendered between the opponent header and event log.
    * Used for the vs-AI control panel on fixtures that attach a bot;
    * `null`/undefined for regular matches. Component-agnostic so the
    * sidebar stays a dumb presentational shell.
@@ -42,8 +38,6 @@ export function MatchSidebar({
   priorityHolder,
   log,
   eventLogEntries,
-  onUndo,
-  canUndo,
   onConcede,
   onCollapse,
   aboveBattleData,
@@ -70,15 +64,8 @@ export function MatchSidebar({
         who="HOSTILE"
       />
       {aboveBattleData}
-      <MatchMetaBlock matchInfo={matchInfo} />
       <EventLog log={log} eventLogEntries={eventLogEntries} />
-      <FooterActions
-        onUndo={onUndo}
-        canUndo={canUndo}
-        onConcede={onConcede}
-        playerClock={players[1].clock}
-        isTurn={currentTurn === "self"}
-      />
+      <FooterActions onConcede={onConcede} />
       <PlayerHeader
         player={players[1]}
         isTurn={currentTurn === "self"}
@@ -119,6 +106,11 @@ function HeaderBlock({
         </div>
         <div className="font-mono text-hud-xs text-hud-accent font-semibold mt-px tracking-hud-label">
           {m["sim.sidebar.brand.sortie"]({ format: matchInfo.format.toUpperCase() })}
+        </div>
+        <div className="font-mono mt-1 flex min-w-0 items-center gap-1.5 text-hud-2xs font-bold tracking-hud-label text-hud-text-dim">
+          <span className="text-hud-accent-deep">#{matchInfo.turn}</span>
+          <span className="text-[#94a3b8]">·</span>
+          <span className="truncate text-hud-text-muted">{matchInfo.phase}</span>
         </div>
       </div>
       <Button
@@ -259,34 +251,6 @@ function PlayerHeader({ player, isTurn, hasPriority, who }: PlayerHeaderProps) {
   );
 }
 
-function MatchMetaBlock({ matchInfo }: { readonly matchInfo: MatchInfo }) {
-  return (
-    <div className="pt-2.5 pb-3 pr-hud-sm pl-hud-md border-b border-hud-border">
-      <div className="font-mono text-hud-xs font-bold text-hud-accent mb-2 flex items-center gap-1.5 tracking-hud-label">
-        <span className="w-1.5 h-1.5 bg-hud-accent" style={{ clipPath: CLIP_TRIANGLE_DOWN }} />
-        {m["sim.sidebar.meta.heading"]()}
-      </div>
-      <div className="grid gap-1">
-        <MetaRow label={m["sim.sidebar.meta.turn"]()} value={`#${matchInfo.turn}`} />
-        <MetaRow label={m["sim.sidebar.meta.phase"]()} value={matchInfo.phase} />
-        <MetaRow label={m["sim.sidebar.meta.opsMode"]()} value={matchInfo.mode} />
-        <MetaRow label={m["sim.sidebar.meta.format"]()} value={matchInfo.format} />
-      </div>
-    </div>
-  );
-}
-
-function MetaRow({ label, value }: { readonly label: string; readonly value: string }) {
-  return (
-    <div className="font-mono flex justify-between items-center text-hud-md py-0.5">
-      <span className="text-[#475569] text-hud-xs tracking-hud-label">{label}</span>
-      <span className="text-hud-info font-bold [text-shadow:0_0_6px_rgba(76,195,255,.35)]">
-        {value}
-      </span>
-    </div>
-  );
-}
-
 function EventLog({
   log,
   eventLogEntries,
@@ -407,14 +371,10 @@ function LogGroup({ who, items }: LogItem) {
 }
 
 interface FooterActionsProps {
-  readonly onUndo: () => void;
-  readonly canUndo: boolean;
   readonly onConcede: () => void;
-  readonly playerClock: string | number | undefined;
-  readonly isTurn: boolean;
 }
 
-function FooterActions({ onUndo, canUndo, onConcede, playerClock, isTurn }: FooterActionsProps) {
+function FooterActions({ onConcede }: FooterActionsProps) {
   return (
     <div
       className="py-2.5 pr-3 pl-4 border-t border-hud-border flex flex-col gap-2"
@@ -422,60 +382,14 @@ function FooterActions({ onUndo, canUndo, onConcede, playerClock, isTurn }: Foot
         background: "linear-gradient(180deg, rgba(248,250,254,.2), rgba(248,250,254,.8))",
       }}
     >
-      <div
-        className="relative flex items-center justify-between py-2.5 px-hud-sm clip-hud-10"
-        style={{
-          background: "rgba(10,31,92,.35)",
-          border: "1px solid rgba(76,195,255,.3)",
-        }}
+      <Button
+        onClick={onConcede}
+        variant="danger"
+        size="md"
+        className="w-full clip-hud-6 tracking-hud-label"
       >
-        <span className="font-mono text-hud-xs text-hud-info font-bold tracking-hud-label">
-          {m["sim.sidebar.footer.pilotClock"]()}
-        </span>
-        <span
-          className="font-display text-lg font-extrabold tracking-hud-display"
-          style={{
-            color: isTurn ? "#2d6bff" : "#4cc3ff",
-            textShadow: isTurn ? "0 0 12px rgba(45,107,255,.55)" : "0 0 6px rgba(76,195,255,.35)",
-          }}
-        >
-          {playerClock}
-        </span>
-      </div>
-
-      <div className="flex gap-1.5">
-        <UndoButton onUndo={onUndo} canUndo={canUndo} className="flex-1" />
-        <Button
-          onClick={onConcede}
-          variant="danger"
-          size="md"
-          className="flex-1 clip-hud-6 tracking-hud-label"
-        >
-          {m["sim.sidebar.footer.concede"]()}
-        </Button>
-      </div>
-
-      <HintsToggle />
+        {m["sim.sidebar.footer.concede"]()}
+      </Button>
     </div>
-  );
-}
-
-function HintsToggle() {
-  const { enabled, toggle } = useHintsEnabled();
-  return (
-    <button
-      type="button"
-      title={m["sim.seat.hints.title"]()}
-      onClick={toggle}
-      className="font-mono px-hud-sm py-1 flex items-center justify-between gap-2 text-hud-2xs font-bold tracking-hud-label clip-hud-5"
-      style={{
-        color: enabled ? "#4cc3ff" : "#475569",
-        background: enabled ? "rgba(76,195,255,.12)" : "rgba(248,250,254,.6)",
-        border: enabled ? "1px solid rgba(76,195,255,.4)" : "1px solid rgba(255,255,255,.1)",
-      }}
-    >
-      <span>⚡ {m["sim.seat.hints.label"]()}</span>
-      <span>{enabled ? m["sim.seat.hints.on"]() : m["sim.seat.hints.off"]()}</span>
-    </button>
   );
 }

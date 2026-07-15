@@ -12,10 +12,10 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaKiroshiOptics,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
-  alphaVCorporateExile,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  theHeistRetailStarterDeckVCorporateExile,
 } from "@tcg/cyberpunk-cards";
 import {
   enMessages,
@@ -25,9 +25,9 @@ import {
 
 registerMatchers();
 
-const gear = alphaKiroshiOptics; // cost 1, power 1, attack: lookAt face-down legend
-const lowlife = alphaRuthlessLowlife; // cost 2, power 1, unit
-const huscle = alphaSwordwiseHuscle; // cost 3, power 5, unit
+const gear = welcomeToNightCityRetailKiroshiOptics; // cost 1, power 1, attack: lookAt face-down legend
+const lowlife = welcomeToNightCityRetailMoxInciters; // cost 2, power 1, unit
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, power 5, unit
 
 describe("Kiroshi Optics", () => {
   describe("UI prompt", () => {
@@ -53,7 +53,7 @@ describe("Kiroshi Optics", () => {
     it("presents friendly face-down legends as targets after the host attacks", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
         field: [{ card: lowlife, spent: false, attachedGears: [gear] }],
-        legendArea: [{ card: alphaVCorporateExile, faceDown: true }],
+        legendArea: [{ card: theHeistRetailStarterDeckVCorporateExile, faceDown: true }],
       });
 
       engine.attackRival(lowlife);
@@ -201,13 +201,13 @@ describe("Kiroshi Optics", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
         {
           field: [{ card: lowlife, spent: false, attachedGears: [gear] }],
-          legendArea: [{ card: alphaVCorporateExile, faceDown: true }],
+          legendArea: [{ card: theHeistRetailStarterDeckVCorporateExile, faceDown: true }],
         },
         { field: [{ card: huscle, spent: true }] },
       );
 
       engine.attackUnit(lowlife, huscle);
-      const result = engine.resolveEffectTarget(alphaVCorporateExile);
+      const result = engine.resolveEffectTarget(theHeistRetailStarterDeckVCorporateExile);
       const log = result.moveLogs.find(
         (entry) => entry.type === "action" && entry.messageKey === "trigger.targetResolved",
       );
@@ -222,7 +222,9 @@ describe("Kiroshi Optics", () => {
       const ownerLog = stripPrivateFields(log, P1);
       const rivalLog = stripPrivateFields(log, P2);
 
-      expect(ownerLog.params.targetNames).toBe(alphaVCorporateExile.displayName);
+      expect(ownerLog.params.targetNames).toBe(
+        theHeistRetailStarterDeckVCorporateExile.displayName,
+      );
       expect(ownerLog.params.targetId).toBeDefined();
       expect(rivalLog.params.targetNames).toBeUndefined();
       expect(rivalLog.params.targetId).toBeUndefined();

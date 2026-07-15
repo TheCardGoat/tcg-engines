@@ -53,6 +53,7 @@ export const SimulatorAudioCueIdSchema = z.enum([
   "deck.shuffle",
   "resource.gain",
   "resource.spend",
+  "resource.steal",
   "combat.start",
   "combat.hit",
   "effect.trigger",
@@ -71,23 +72,32 @@ const AnimationStepBaseSchema = z
   })
   .strict();
 
+const AnimationCardFaceSchema = z.enum(["public", "hidden"]);
+
 export const MoveEntityAnimationStepSchema = AnimationStepBaseSchema.extend({
   type: z.literal("moveEntity"),
   entity: AnimationEntityRefSchema,
   from: AnimationRefSchema.optional(),
   to: AnimationRefSchema,
+  label: z.string().min(1).optional(),
+  sourceFace: AnimationCardFaceSchema.optional(),
+  destinationFace: AnimationCardFaceSchema.optional(),
 });
 
 export const EnterEntityAnimationStepSchema = AnimationStepBaseSchema.extend({
   type: z.literal("enterEntity"),
   entity: AnimationEntityRefSchema,
   to: AnimationRefSchema,
+  sourceFace: AnimationCardFaceSchema.optional(),
+  destinationFace: AnimationCardFaceSchema.optional(),
 });
 
 export const ExitEntityAnimationStepSchema = AnimationStepBaseSchema.extend({
   type: z.literal("exitEntity"),
   entity: AnimationEntityRefSchema,
   from: AnimationRefSchema,
+  sourceFace: AnimationCardFaceSchema.optional(),
+  destinationFace: AnimationCardFaceSchema.optional(),
 });
 
 export const EffectAnimationStepSchema = AnimationStepBaseSchema.extend({
@@ -97,11 +107,23 @@ export const EffectAnimationStepSchema = AnimationStepBaseSchema.extend({
   label: z.string().min(1).optional(),
 });
 
+export const SpotlightEntityAnimationStepSchema = AnimationStepBaseSchema.extend({
+  type: z.literal("spotlightEntity"),
+  entity: AnimationEntityRefSchema,
+  at: AnimationRefSchema,
+  label: z.string().min(1).optional(),
+  sourceFace: AnimationCardFaceSchema.optional(),
+  destinationFace: AnimationCardFaceSchema.optional(),
+});
+
 export const CombatAnimationStepSchema = AnimationStepBaseSchema.extend({
   type: z.literal("combat"),
   source: AnimationRefSchema,
   target: AnimationRefSchema,
-  reason: z.enum(["declared", "resolved"]).optional(),
+  reason: z.enum(["declared", "blocked", "resolved"]).optional(),
+  attackKind: z.enum(["direct", "fight"]).optional(),
+  label: z.string().min(1).optional(),
+  detailLabel: z.string().min(1).optional(),
 });
 
 export const ResourceDeltaAnimationStepSchema = AnimationStepBaseSchema.extend({
@@ -109,13 +131,18 @@ export const ResourceDeltaAnimationStepSchema = AnimationStepBaseSchema.extend({
   player: AnimationPlayerRefSchema,
   delta: z.number().int(),
   label: z.string().min(1).optional(),
-  anchor: AnimationAnchorRefSchema.optional(),
+  anchor: AnimationRefSchema.optional(),
+  fromValue: z.number().int().optional(),
+  toValue: z.number().int().optional(),
 });
 
 export const PhaseChangeAnimationStepSchema = AnimationStepBaseSchema.extend({
   type: z.literal("phaseChange"),
   from: z.string().min(1),
   to: z.string().min(1),
+  variant: z.enum(["phase", "turn"]).optional(),
+  player: AnimationPlayerRefSchema.optional(),
+  turnNumber: z.number().int().min(1).optional(),
 });
 
 export const LayoutShiftAnimationStepSchema = AnimationStepBaseSchema.extend({
@@ -128,6 +155,7 @@ export const AnimationPlanStepV1Schema = z.discriminatedUnion("type", [
   EnterEntityAnimationStepSchema,
   ExitEntityAnimationStepSchema,
   EffectAnimationStepSchema,
+  SpotlightEntityAnimationStepSchema,
   CombatAnimationStepSchema,
   ResourceDeltaAnimationStepSchema,
   PhaseChangeAnimationStepSchema,

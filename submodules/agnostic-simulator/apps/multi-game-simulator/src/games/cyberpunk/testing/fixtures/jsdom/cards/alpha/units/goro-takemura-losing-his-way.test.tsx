@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { alphaGoroTakemuraLosingHisWay } from "@tcg/cyberpunk-cards";
+import { embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { ensureJsdomAnimationSupport } from "@cyberpunk/testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
@@ -18,7 +18,7 @@ describe("Goro Takemura - Losing His Way jsdom happy path", () => {
       const goro = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaGoroTakemuraLosingHisWay.id,
+        embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay.id,
       );
 
       await pom.expectFaceDownLegendsCount(CYBERPUNK_P1, 0);

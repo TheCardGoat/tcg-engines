@@ -1,10 +1,10 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaArmoredMinotaur,
-  alphaCorporateSurveillance,
-  alphaCorpoSecurity,
-  spoilerPlacideVoodooSentinel,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailPlacideVoodooSentinel,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -23,17 +23,17 @@ test("Placide - discards program to bottom-deck a rival unit", async ({ page }) 
   const placide = await pom.getCardInZoneByDefinitionId(
     "hand",
     CYBERPUNK_P1,
-    spoilerPlacideVoodooSentinel.id,
+    welcomeToNightCityRetailPlacideVoodooSentinel.id,
   );
   const program = await pom.getCardInZoneByDefinitionId(
     "hand",
     CYBERPUNK_P1,
-    alphaCorporateSurveillance.id,
+    welcomeToNightCityRetailCorporateSurveillance.id,
   );
   const target = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaArmoredMinotaur.id,
+    embracingPowerRetailStarterDeckMinotaur.id,
   );
 
   const deckBefore = await pom.getDeckSize(CYBERPUNK_P2);
@@ -43,7 +43,11 @@ test("Placide - discards program to bottom-deck a rival unit", async ({ page }) 
   const cardChoices = await pom.getChoiceCardIds(CYBERPUNK_P1);
   const choiceDefinitions = await getChoiceDefinitionIds(pom, cardChoices);
   expectEqual("Placide program choice count", cardChoices.length, 1);
-  expectIncludes("Placide program choices", choiceDefinitions, alphaCorporateSurveillance.id);
+  expectIncludes(
+    "Placide program choices",
+    choiceDefinitions,
+    welcomeToNightCityRetailCorporateSurveillance.id,
+  );
 
   await pom.resolveCardToMove(program.instanceId, CYBERPUNK_P1);
 
@@ -51,8 +55,16 @@ test("Placide - discards program to bottom-deck a rival unit", async ({ page }) 
   const targetChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
   const targetDefinitions = await getChoiceDefinitionIds(pom, targetChoices);
   expectEqual("Placide target count", targetChoices.length, 2);
-  expectIncludes("Placide target choices", targetDefinitions, alphaArmoredMinotaur.id);
-  expectIncludes("Placide target choices", targetDefinitions, alphaCorpoSecurity.id);
+  expectIncludes(
+    "Placide target choices",
+    targetDefinitions,
+    embracingPowerRetailStarterDeckMinotaur.id,
+  );
+  expectIncludes(
+    "Placide target choices",
+    targetDefinitions,
+    welcomeToNightCityRetailCorpoSecurity.id,
+  );
 
   await pom.resolveEffectTarget([target.instanceId], CYBERPUNK_P1);
 
@@ -62,7 +74,11 @@ test("Placide - discards program to bottom-deck a rival unit", async ({ page }) 
   expectEqual("Placide rival deck size", await pom.getDeckSize(CYBERPUNK_P2), deckBefore + 1);
 
   const p2Deck = await getZoneDefinitionIds(pom, "deck", CYBERPUNK_P2);
-  expectEqual("Placide bottom-decked card", p2Deck[p2Deck.length - 1], alphaArmoredMinotaur.id);
+  expectEqual(
+    "Placide bottom-decked card",
+    p2Deck[p2Deck.length - 1],
+    embracingPowerRetailStarterDeckMinotaur.id,
+  );
 
   await pom.expectStructuralState();
 });

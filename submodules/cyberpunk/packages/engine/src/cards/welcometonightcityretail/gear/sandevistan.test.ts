@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaSwordwiseHuscle,
-  alphaVCorporateExile,
+  boxTopperRetailVCorporateExile,
   welcomeToNightCityRetailSandevistan,
+  welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
 
@@ -11,7 +11,7 @@ describe("Sandevistan (retail)", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       field: [
         {
-          card: alphaSwordwiseHuscle,
+          card: welcomeToNightCityRetailSwordwiseHuscle,
           spent: true,
           playedThisTurn: false,
           attachedGears: [welcomeToNightCityRetailSandevistan],
@@ -19,11 +19,15 @@ describe("Sandevistan (retail)", () => {
       ],
     });
 
-    expect(engine.getCard(alphaSwordwiseHuscle, "field", P1).meta.spent).toBe(true);
+    expect(engine.getCard(welcomeToNightCityRetailSwordwiseHuscle, "field", P1).meta.spent).toBe(
+      true,
+    );
 
     engine.completeTurn({ as: P1 });
 
-    expect(engine.getCard(alphaSwordwiseHuscle, "field", P1).meta.spent).toBe(false);
+    expect(engine.getCard(welcomeToNightCityRetailSwordwiseHuscle, "field", P1).meta.spent).toBe(
+      false,
+    );
   });
 
   it("readies an equipped face-up Legend at the end of its controller's turn", () => {
@@ -32,7 +36,7 @@ describe("Sandevistan (retail)", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       legendArea: [
         {
-          card: alphaVCorporateExile,
+          card: boxTopperRetailVCorporateExile,
           faceDown: false,
           attachedGears: [welcomeToNightCityRetailSandevistan],
         },
@@ -41,11 +45,11 @@ describe("Sandevistan (retail)", () => {
 
     // Fixture setup auto-readies legends; spend it explicitly so Sandevistan
     // has work to do at end of turn.
-    engine.judgeSpendCard(alphaVCorporateExile, { as: P1 });
-    expect(engine.getCard(alphaVCorporateExile, "legendArea", P1).meta.spent).toBe(true);
+    engine.judgeSpendCard(boxTopperRetailVCorporateExile, { as: P1 });
+    expect(engine.getCard(boxTopperRetailVCorporateExile, "legendArea", P1).meta.spent).toBe(true);
 
     engine.completeTurn({ as: P1 });
 
-    expect(engine.getCard(alphaVCorporateExile, "legendArea", P1).meta.spent).toBe(false);
+    expect(engine.getCard(boxTopperRetailVCorporateExile, "legendArea", P1).meta.spent).toBe(false);
   });
 });

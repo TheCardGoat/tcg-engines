@@ -78,18 +78,6 @@ export const gainGigMove: MoveDefinition<GainGigInput> = {
       faceValue: die?.faceValue ?? 0,
     });
 
-    // Lose check: deck reached 0 cards. Gig victory is checked at the
-    // turn-start boundary before this start-phase gain resolves.
-    const player = state.G.players[playerId as string];
-    const deckEmpty = (player?.zones.deck.length ?? 0) === 0;
-    if (deckEmpty) {
-      const opponentId = state.ctx.playerIds.find((id) => id !== playerId);
-      if (opponentId) {
-        operations.game.endGame(opponentId, "deck_out_victory");
-      }
-      return;
-    }
-
     operations.game.setPhase("main");
   },
 };

@@ -6,12 +6,12 @@ import {
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaCorpoSecurity,
-  alphaFloorIt,
-  alphaRuthlessLowlife,
-  alphaSecondhandBombus,
-  alphaSwordwiseHuscle,
-  spoilerHanakoArasakaInAGildedCage,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFloorIt,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSecondhandBombus,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailHanakoArasakaInAGildedCage,
 } from "@tcg/cyberpunk-cards";
 import { createMockUnit } from "@cyberpunk-engine/testing/card-mocks.ts";
 import { overrideDefinition } from "@cyberpunk-engine/state/card-registry.ts";
@@ -47,7 +47,7 @@ function setDeckToDefinitions(
   engine.judgeStackDeck(deckCards, { as: P1, replace: true });
 }
 
-const hanako = spoilerHanakoArasakaInAGildedCage;
+const hanako = welcomeToNightCityRetailHanakoArasakaInAGildedCage;
 
 describe("Hanako Arasaka - In A Gilded Cage", () => {
   describe("UI prompt", () => {
@@ -69,7 +69,11 @@ describe("Hanako Arasaka - In A Gilded Cage", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
         hand: [hanako],
         eddies: hanako.cost,
-        deck: [alphaCorpoSecurity, alphaFloorIt, alphaRuthlessLowlife],
+        deck: [
+          welcomeToNightCityRetailCorpoSecurity,
+          welcomeToNightCityRetailFloorIt,
+          welcomeToNightCityRetailMoxInciters,
+        ],
       });
       engine.playCard(hanako);
       expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
@@ -226,37 +230,37 @@ describe("Hanako Arasaka - In A Gilded Cage", () => {
         hand: [hanako],
         eddies: hanako.cost ?? 0,
         deck: [
-          alphaSwordwiseHuscle,
-          alphaCorpoSecurity,
-          alphaFloorIt,
-          alphaRuthlessLowlife,
-          alphaSecondhandBombus,
+          welcomeToNightCityRetailSwordwiseHuscle,
+          welcomeToNightCityRetailCorpoSecurity,
+          welcomeToNightCityRetailFloorIt,
+          welcomeToNightCityRetailMoxInciters,
+          welcomeToNightCityRetailSecondhandBombus,
         ],
         gigArea: [{ dieType: "d4", faceValue: 3 }],
       });
       setDeckToDefinitions(engine, [
-        alphaSwordwiseHuscle,
-        alphaCorpoSecurity,
-        alphaFloorIt,
-        alphaRuthlessLowlife,
-        alphaSecondhandBombus,
+        welcomeToNightCityRetailSwordwiseHuscle,
+        welcomeToNightCityRetailCorpoSecurity,
+        welcomeToNightCityRetailFloorIt,
+        welcomeToNightCityRetailMoxInciters,
+        welcomeToNightCityRetailSecondhandBombus,
       ]);
 
       engine.playCard(hanako);
 
       const handDefinitionIds = engine.getCardsInZone("hand", P1).map((card) => card.definitionId);
-      expect(handDefinitionIds).toContain(alphaSwordwiseHuscle.id);
-      expect(handDefinitionIds).toContain(alphaFloorIt.id);
-      expect(handDefinitionIds).not.toContain(alphaSecondhandBombus.id);
+      expect(handDefinitionIds).toContain(welcomeToNightCityRetailSwordwiseHuscle.id);
+      expect(handDefinitionIds).toContain(welcomeToNightCityRetailFloorIt.id);
+      expect(handDefinitionIds).not.toContain(welcomeToNightCityRetailSecondhandBombus.id);
 
       const trashDefinitionIds = engine
         .getCardsInZone("trash", P1)
         .map((card) => card.definitionId);
-      expect(trashDefinitionIds).toContain(alphaCorpoSecurity.id);
-      expect(trashDefinitionIds).toContain(alphaRuthlessLowlife.id);
+      expect(trashDefinitionIds).toContain(welcomeToNightCityRetailCorpoSecurity.id);
+      expect(trashDefinitionIds).toContain(welcomeToNightCityRetailMoxInciters.id);
 
       const deckDefinitionIds = engine.getCardsInZone("deck", P1).map((card) => card.definitionId);
-      expect(deckDefinitionIds).toEqual([alphaSecondhandBombus.id]);
+      expect(deckDefinitionIds).toEqual([welcomeToNightCityRetailSecondhandBombus.id]);
     });
 
     it("hand count increases by number of matched cards", () => {
@@ -301,20 +305,20 @@ describe("Hanako Arasaka - In A Gilded Cage", () => {
         hand: [hanako],
         eddies: hanako.cost ?? 0,
         deck: [
-          alphaSwordwiseHuscle,
-          alphaCorpoSecurity,
-          alphaFloorIt,
-          alphaRuthlessLowlife,
-          alphaSecondhandBombus,
+          welcomeToNightCityRetailSwordwiseHuscle,
+          welcomeToNightCityRetailCorpoSecurity,
+          welcomeToNightCityRetailFloorIt,
+          welcomeToNightCityRetailMoxInciters,
+          welcomeToNightCityRetailSecondhandBombus,
         ],
         gigArea: [{ dieType: "d4", faceValue: 3 }],
       });
       setDeckToDefinitions(engine, [
-        alphaSwordwiseHuscle,
-        alphaCorpoSecurity,
-        alphaFloorIt,
-        alphaRuthlessLowlife,
-        alphaSecondhandBombus,
+        welcomeToNightCityRetailSwordwiseHuscle,
+        welcomeToNightCityRetailCorpoSecurity,
+        welcomeToNightCityRetailFloorIt,
+        welcomeToNightCityRetailMoxInciters,
+        welcomeToNightCityRetailSecondhandBombus,
       ]);
 
       const result = engine.playCard(hanako);

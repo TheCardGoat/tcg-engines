@@ -1,4 +1,7 @@
-import { alphaJackieWellesRideOrDieChoom, alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+  welcomeToNightCityRetailSwordwiseHuscle,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
 import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -18,12 +21,12 @@ export const attackStepBehavior: CyberpunkFixtureBehavior = {
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
     const defender = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaJackieWellesRideOrDieChoom.id,
+      welcomeToNightCityRetailJackieWellesRideOrDieChoom.id,
     );
     await pom.expectFieldCardSpent(CYBERPUNK_P1, attacker.instanceId, false);
     await pom.expectFieldCardSpent(CYBERPUNK_P2, defender.instanceId, true);
@@ -35,7 +38,7 @@ export const attackStepBehavior: CyberpunkFixtureBehavior = {
       throw new Error("Expected attack state after attacking a spent unit.");
     }
     expectEqual("attack kind", attack.kind, "fight");
-    expectEqual("attack step", attack.step, "offensive");
+    expectEqual("attack step", attack.step, "attack");
     expectEqual("attack attacker", attack.attackerId, attacker.instanceId);
     expectEqual("attack defender", attack.defenderId, defender.instanceId);
     expectEqual("attack rival", attack.rivalId, CYBERPUNK_P2);

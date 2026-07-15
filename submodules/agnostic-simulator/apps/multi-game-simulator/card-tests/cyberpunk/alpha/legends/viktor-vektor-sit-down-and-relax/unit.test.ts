@@ -7,17 +7,17 @@ import {
   expectSearchDeckChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaViktorVektorSitDownAndRelax,
-  alphaKiroshiOptics,
-  alphaMantisBlades,
-  alphaSandevistan,
-  alphaDyingNightVSPistol,
-  alphaSwordwiseHuscle,
+  theHeistRetailStarterDeckViktorVektorSitDownAndRelax,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailMantisBlades,
+  welcomeToNightCityRetailSandevistan,
+  welcomeToNightCityRetailDyingNightVSPistol,
+  welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 import { getDefinitionFor } from "@cyberpunk-engine/state/lookups.ts";
 
-const viktor = alphaViktorVektorSitDownAndRelax;
+const viktor = theHeistRetailStarterDeckViktorVektorSitDownAndRelax;
 
 // Gear costing ≤ 2: Kiroshi Optics (1), Mantis Blades (1), Mandibular Upgrade (1),
 //                    Dying Night (2), Satori (2)
@@ -39,8 +39,8 @@ describe("Viktor Vektor - Sit Down and Relax", () => {
         eddies: 2,
         deck: 20,
       });
-      engine.judgeMoveCardToTopOfDeck(alphaKiroshiOptics);
-      engine.judgeMoveCardToTopOfDeck(alphaMantisBlades);
+      engine.judgeMoveCardToTopOfDeck(welcomeToNightCityRetailKiroshiOptics);
+      engine.judgeMoveCardToTopOfDeck(welcomeToNightCityRetailMantisBlades);
 
       engine.callLegend(viktor);
 
@@ -63,12 +63,12 @@ describe("Viktor Vektor - Sit Down and Relax", () => {
         deck: 20,
       });
 
-      engine.judgeMoveCardToTopOfDeck(alphaKiroshiOptics);
+      engine.judgeMoveCardToTopOfDeck(welcomeToNightCityRetailKiroshiOptics);
 
       const handBefore = engine.getHandCount(P1);
 
       engine.callLegend(viktor);
-      engine.resolveSearchDeck([alphaKiroshiOptics]);
+      engine.resolveSearchDeck([welcomeToNightCityRetailKiroshiOptics]);
 
       expect(engine.getHandCount(P1)).toBe(handBefore + 1);
     });
@@ -80,13 +80,16 @@ describe("Viktor Vektor - Sit Down and Relax", () => {
         deck: 20,
       });
 
-      engine.judgeMoveCardToTopOfDeck(alphaKiroshiOptics);
-      engine.judgeMoveCardToTopOfDeck(alphaMantisBlades);
+      engine.judgeMoveCardToTopOfDeck(welcomeToNightCityRetailKiroshiOptics);
+      engine.judgeMoveCardToTopOfDeck(welcomeToNightCityRetailMantisBlades);
 
       const handBefore = engine.getHandCount(P1);
 
       engine.callLegend(viktor);
-      engine.resolveSearchDeck([alphaKiroshiOptics, alphaMantisBlades]);
+      engine.resolveSearchDeck([
+        welcomeToNightCityRetailKiroshiOptics,
+        welcomeToNightCityRetailMantisBlades,
+      ]);
 
       expect(engine.getHandCount(P1)).toBe(handBefore + 2);
     });
@@ -133,14 +136,16 @@ describe("Viktor Vektor - Sit Down and Relax", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
         legendArea: [viktor],
         eddies: 2,
-        deck: [alphaSandevistan],
+        deck: [welcomeToNightCityRetailSandevistan],
       });
 
-      engine.judgeMoveCardToTopOfDeck(alphaSandevistan);
+      engine.judgeMoveCardToTopOfDeck(welcomeToNightCityRetailSandevistan);
 
       engine.callLegend(viktor);
 
-      const failure = engine.expectFailure(() => engine.resolveSearchDeck([alphaSandevistan]));
+      const failure = engine.expectFailure(() =>
+        engine.resolveSearchDeck([welcomeToNightCityRetailSandevistan]),
+      );
       expect(failure.errorCode).toBe("INVALID_COST");
     });
 
@@ -152,7 +157,7 @@ describe("Viktor Vektor - Sit Down and Relax", () => {
       });
 
       // Place a known non-gear card at the top of the deck
-      engine.judgeMoveCardToTopOfDeck(alphaSwordwiseHuscle);
+      engine.judgeMoveCardToTopOfDeck(welcomeToNightCityRetailSwordwiseHuscle);
 
       engine.callLegend(viktor);
 
@@ -162,7 +167,7 @@ describe("Viktor Vektor - Sit Down and Relax", () => {
       const revealedIds = choice.payload.revealedCardIds as string[];
       const huscleId = revealedIds.find((id: string) =>
         state.G.cardIndex[id]
-          ? getDefinitionFor(state.G, id).id === alphaSwordwiseHuscle.id
+          ? getDefinitionFor(state.G, id).id === welcomeToNightCityRetailSwordwiseHuscle.id
           : false,
       );
 
@@ -292,10 +297,10 @@ describe("Viktor Vektor - Sit Down and Relax", () => {
         deck: 20,
       });
 
-      engine.judgeMoveCardToTopOfDeck(alphaKiroshiOptics);
+      engine.judgeMoveCardToTopOfDeck(welcomeToNightCityRetailKiroshiOptics);
 
       engine.callLegend(viktor);
-      engine.resolveSearchDeck([alphaKiroshiOptics]);
+      engine.resolveSearchDeck([welcomeToNightCityRetailKiroshiOptics]);
 
       const logs = engine.getEvents("actionLog");
       const searchLog = logs.find((e: any) => e.messageKey === "move.resolveSearchDeck") as any;
@@ -315,12 +320,12 @@ describe("Viktor Vektor - Sit Down and Relax", () => {
         deck: 20,
       });
 
-      engine.judgeMoveCardToTopOfDeck(alphaDyingNightVSPistol);
+      engine.judgeMoveCardToTopOfDeck(welcomeToNightCityRetailDyingNightVSPistol);
 
       const handBefore = engine.getHandCount(P1);
 
       engine.callLegend(viktor);
-      engine.resolveSearchDeck([alphaDyingNightVSPistol]);
+      engine.resolveSearchDeck([welcomeToNightCityRetailDyingNightVSPistol]);
 
       expect(engine.getHandCount(P1)).toBe(handBefore + 1);
     });

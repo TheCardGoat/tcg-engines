@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaArmoredMinotaur,
+  embracingPowerRetailStarterDeckMinotaur,
   welcomeToNightCityRetailSecondhandBombus,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
@@ -14,14 +14,16 @@ describe("Secondhand Bombus (retail)", () => {
         field: [{ card: welcomeToNightCityRetailSecondhandBombus, spent: false }],
       },
       {
-        field: [{ card: alphaArmoredMinotaur, spent: false, playedThisTurn: false }],
+        field: [
+          { card: embracingPowerRetailStarterDeckMinotaur, spent: false, playedThisTurn: false },
+        ],
       },
     );
 
     // Hand the turn to P2 so P2 can declare an attack.
     engine.judgeSetTurnMetadata({ activePlayerId: P2 }, { as: P1 });
-    engine.attackRival(alphaArmoredMinotaur, { as: P2 });
-    engine.resolveAttack({ as: P2 }); // offensive → defensive
+    engine.attackRival(embracingPowerRetailStarterDeckMinotaur, { as: P2 });
+    engine.resolveAttack({ as: P2 }); // attack → react
 
     expect(engine.useBlocker(welcomeToNightCityRetailSecondhandBombus, { as: P1 })).toMatchObject({
       success: true,

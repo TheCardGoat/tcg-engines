@@ -1,15 +1,15 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
-  alphaRebootOptics,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience,
   welcomeToNightCityRetailLaLloronaGhostOfThePast,
   welcomeToNightCityRetailMistyOlszewskiMenderOfBrokenSpirits,
   welcomeToNightCityRetailMoxInciters,
   welcomeToNightCityRetailOverwatchPanamSGift,
+  welcomeToNightCityRetailRebootOptics,
   welcomeToNightCityRetailSaulBrightStormrider,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailYorinobuArasakaSteelDragon,
 } from "@tcg/cyberpunk-cards";
 import { getEffectivePower, getEffectiveRules } from "../../active-effects/index.ts";
@@ -23,18 +23,24 @@ describe("Welcome to Night City Retail PR #2295 cards", () => {
         gigArea: [{ dieType: "d6", faceValue: 2 }],
       },
       {
-        field: [{ card: alphaRuthlessLowlife, spent: false, playedThisTurn: false }],
+        field: [
+          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
+        ],
       },
     );
 
-    engine.attackRival(alphaRuthlessLowlife, { as: P2 });
+    engine.attackRival(welcomeToNightCityRetailFieldOperator, { as: P2 });
     engine.resolveAttack({ as: P2 });
     engine.useBlocker(welcomeToNightCityRetailLaLloronaGhostOfThePast, { as: P1 });
 
     const choice = engine.getState().G.turnMetadata.pendingChoice;
     expect(choice?.type).toBe("chooseTarget");
     const dieId = engine.getGigDice(P1)[0]!.id as string;
-    engine.resolveEffectTargetIds([dieId], { as: P1 });
+    engine.resolveEffectTargetIds([dieId], {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "La Llorona still needs the selected Gig's new face value",
+    });
     engine.resolveAdjustGig(5, { as: P1 });
 
     expect(engine.getGigValue(P1)).toBe(5);
@@ -43,7 +49,7 @@ describe("Welcome to Night City Retail PR #2295 cards", () => {
   it("Misty guesses the top card type, adds a hit to hand, and readies 1 Eddie", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        deck: [alphaRuthlessLowlife],
+        deck: [welcomeToNightCityRetailMoxInciters],
         field: [welcomeToNightCityRetailMistyOlszewskiMenderOfBrokenSpirits],
       },
       {},
@@ -58,7 +64,7 @@ describe("Welcome to Night City Retail PR #2295 cards", () => {
     engine.resolveCardTypeChoice("unit", { as: P1 });
 
     expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toContain(
-      alphaRuthlessLowlife.id,
+      welcomeToNightCityRetailMoxInciters.id,
     );
     expect(engine.getEddies(P1)).toBe(1);
     expect(engine.getActivePlayerId()).toBe(P2);
@@ -71,12 +77,14 @@ describe("Welcome to Night City Retail PR #2295 cards", () => {
         eddies: 3,
       },
       {
-        field: [{ card: alphaRuthlessLowlife, spent: false, playedThisTurn: false }],
+        field: [
+          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
+        ],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailMoxInciters, { as: P1 });
-    engine.resolveEffectTarget(alphaRuthlessLowlife, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailFieldOperator, { as: P1 });
     engine.skipToNextPlayerTurn(P1);
 
     const failure = engine.expectFailure(() => engine.completeTurn({ as: P2 }));
@@ -86,25 +94,25 @@ describe("Welcome to Night City Retail PR #2295 cards", () => {
   it("Overwatch discards a card and defeats a spent rival Unit within that cost", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        hand: [alphaRebootOptics],
+        hand: [welcomeToNightCityRetailRebootOptics],
         field: [welcomeToNightCityRetailOverwatchPanamSGift],
         eddies: 1,
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
       },
     );
 
     engine.activateAbility(welcomeToNightCityRetailOverwatchPanamSGift, 1, { as: P1 });
     if (engine.getState().G.turnMetadata.pendingChoice?.type === "chooseTarget") {
-      engine.resolveEffectTarget(alphaCorpoSecurity, { as: P1 });
+      engine.resolveEffectTarget(welcomeToNightCityRetailCorpoSecurity, { as: P1 });
     }
 
     expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(
-      alphaRebootOptics.id,
+      welcomeToNightCityRetailRebootOptics.id,
     );
     expect(engine.getCardsInZone("trash", P2).map((card) => card.definitionId)).toContain(
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
   });
 
@@ -113,56 +121,79 @@ describe("Welcome to Night City Retail PR #2295 cards", () => {
       {
         field: [
           welcomeToNightCityRetailSaulBrightStormrider,
-          { card: alphaRuthlessLowlife, spent: false, playedThisTurn: false },
-          { card: alphaSwordwiseHuscle, spent: true, playedThisTurn: false },
+          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
+          { card: welcomeToNightCityRetailSwordwiseHuscle, spent: true, playedThisTurn: false },
         ],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
       },
     );
 
-    const attackerId = engine.findCardId(alphaRuthlessLowlife, "field", P1);
-    engine.attackUnit(alphaRuthlessLowlife, alphaCorpoSecurity, { as: P1 });
-    expect(getEffectivePower(engine.getState(), attackerId)).toBe(alphaRuthlessLowlife.power + 2);
+    const attackerId = engine.findCardId(welcomeToNightCityRetailFieldOperator, "field", P1);
+    engine.attackUnit(
+      welcomeToNightCityRetailFieldOperator,
+      welcomeToNightCityRetailCorpoSecurity,
+      {
+        as: P1,
+      },
+    );
+    expect(getEffectivePower(engine.getState(), attackerId)).toBe(
+      welcomeToNightCityRetailFieldOperator.power + 2,
+    );
     engine.resolveFullFight({ as: P1 });
 
     engine.completeTurn({ as: P1 });
-    const spentUnitId = engine.findCardId(alphaSwordwiseHuscle, "field", P1);
+    const spentUnitId = engine.findCardId(welcomeToNightCityRetailSwordwiseHuscle, "field", P1);
     engine.resolveEffectTargetIds([spentUnitId], { as: P1 });
 
-    expect(engine.getCard(alphaSwordwiseHuscle, "field", P1).meta.spent).toBe(false);
+    expect(engine.getCard(welcomeToNightCityRetailSwordwiseHuscle, "field", P1).meta.spent).toBe(
+      false,
+    );
     expect(engine.getActivePlayerId()).toBe(P2);
   });
 
   it("Yorinobu plays a cheap Unit for free and lets it attack rival Units this turn", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        hand: [welcomeToNightCityRetailYorinobuArasakaSteelDragon, alphaRuthlessLowlife],
+        hand: [
+          welcomeToNightCityRetailYorinobuArasakaSteelDragon,
+          welcomeToNightCityRetailFieldOperator,
+        ],
         eddies: 7,
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailYorinobuArasakaSteelDragon, { as: P1 });
-    engine.resolveEffectTarget(alphaRuthlessLowlife, { as: P1 });
-    engine.resolveCardToPlay(alphaRuthlessLowlife, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailFieldOperator, {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "Yorinobu still needs the chosen Unit to be confirmed for free play",
+    });
+    engine.resolveCardToPlay(welcomeToNightCityRetailFieldOperator, { as: P1 });
 
-    const lowlifeId = engine.findCardId(alphaRuthlessLowlife, "field", P1);
-    expect(getEffectiveRules(engine.getState(), lowlifeId)).toContain(
+    const fieldOperatorId = engine.findCardId(welcomeToNightCityRetailFieldOperator, "field", P1);
+    expect(getEffectiveRules(engine.getState(), fieldOperatorId)).toContain(
       "canAttackOnPlayedTurnAgainstUnits",
     );
     expect(() =>
-      engine.attackUnit(alphaRuthlessLowlife, alphaCorpoSecurity, { as: P1 }),
+      engine.attackUnit(
+        welcomeToNightCityRetailFieldOperator,
+        welcomeToNightCityRetailCorpoSecurity,
+        {
+          as: P1,
+        },
+      ),
     ).not.toThrow();
   });
 
   it("Kerry offers the just-rolled Gig for reroll and draws on min or max rolls", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        deck: [alphaRuthlessLowlife, alphaRebootOptics],
+        deck: [welcomeToNightCityRetailMoxInciters, welcomeToNightCityRetailRebootOptics],
         legendArea: [
           { card: welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience, faceDown: false },
         ],

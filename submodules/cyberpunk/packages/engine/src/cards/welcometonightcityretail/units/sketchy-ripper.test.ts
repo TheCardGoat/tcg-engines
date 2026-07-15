@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaKiroshiOptics,
-  alphaRuthlessLowlife,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailMoxInciters,
   welcomeToNightCityRetailSketchyRipper,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
@@ -13,7 +13,7 @@ describe("Sketchy Ripper", () => {
         field: [
           { card: welcomeToNightCityRetailSketchyRipper, spent: false, playedThisTurn: false },
         ],
-        deck: [alphaRuthlessLowlife, alphaKiroshiOptics],
+        deck: [welcomeToNightCityRetailMoxInciters, welcomeToNightCityRetailKiroshiOptics],
       },
       {
         gigArea: [{ dieType: "d4", faceValue: 1 }],
@@ -37,10 +37,14 @@ describe("Sketchy Ripper", () => {
       throw new Error("Expected Sketchy Ripper to offer attack-trigger targets.");
     }
     expect(choice?.payload.eligibleIds).toContain(
-      engine.getCard(alphaKiroshiOptics, "deck", P1).instanceId,
+      engine.getCard(welcomeToNightCityRetailKiroshiOptics, "deck", P1).instanceId,
     );
 
-    engine.resolveEffectTarget(alphaKiroshiOptics, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailKiroshiOptics, {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "Sketchy Ripper still needs the deck search selection to resolve",
+    });
     expect(engine.getPrompt(P1).choice).toMatchObject({
       type: "searchDeck",
       payload: {
@@ -49,13 +53,13 @@ describe("Sketchy Ripper", () => {
         },
       },
     });
-    engine.resolveSearchDeck([alphaKiroshiOptics], { as: P1 });
+    engine.resolveSearchDeck([welcomeToNightCityRetailKiroshiOptics], { as: P1 });
 
     expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toContain(
-      alphaKiroshiOptics.id,
+      welcomeToNightCityRetailKiroshiOptics.id,
     );
     expect(engine.getCardsInZone("deck", P1).map((card) => card.definitionId)).toContain(
-      alphaRuthlessLowlife.id,
+      welcomeToNightCityRetailMoxInciters.id,
     );
   });
 
@@ -65,7 +69,7 @@ describe("Sketchy Ripper", () => {
         field: [
           { card: welcomeToNightCityRetailSketchyRipper, spent: false, playedThisTurn: false },
         ],
-        deck: [alphaRuthlessLowlife],
+        deck: [welcomeToNightCityRetailMoxInciters],
       },
       {
         gigArea: [{ dieType: "d4", faceValue: 1 }],

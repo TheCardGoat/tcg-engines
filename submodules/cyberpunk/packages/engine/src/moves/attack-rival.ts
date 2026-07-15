@@ -3,7 +3,7 @@ import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
 import { getEffectiveRules } from "../active-effects/index.ts";
 import { defOf, getDefinitionFor } from "../state/lookups.ts";
-import { satisfiesMustAttackRequirement } from "./attack-requirements.ts";
+import { hasPlayedProgramThisTurn, satisfiesMustAttackRequirement } from "./attack-requirements.ts";
 
 export interface AttackRivalInput extends MoveInput {
   args: {
@@ -28,6 +28,12 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
         id as string,
       );
       if (rules.includes("cantAttack")) return false;
+      if (
+        rules.includes("requiresProgramPlayedThisTurn") &&
+        !hasPlayedProgramThisTurn(state, playerId)
+      ) {
+        return false;
+      }
       if (
         card.meta.playedThisTurn &&
         !rules.includes("adrenaline") &&
@@ -81,6 +87,16 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
       return { valid: false, error: "Attacker can't attack", errorCode: "CANT_ATTACK" };
     }
     if (
+      attackerRules.includes("requiresProgramPlayedThisTurn") &&
+      !hasPlayedProgramThisTurn(state as import("../types/match-state.ts").MatchState, playerId)
+    ) {
+      return {
+        valid: false,
+        error: "Attacker requires a Program played this turn",
+        errorCode: "PROGRAM_NOT_PLAYED_THIS_TURN",
+      };
+    }
+    if (
       !satisfiesMustAttackRequirement(
         state as import("../types/match-state.ts").MatchState,
         playerId,
@@ -110,7 +126,7 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
       defenderId: null,
       rivalId: opponentId,
       kind: "direct",
-      step: "offensive",
+      step: "attack",
     });
 
     const attackerName = state.G.cardIndex[attackerId]

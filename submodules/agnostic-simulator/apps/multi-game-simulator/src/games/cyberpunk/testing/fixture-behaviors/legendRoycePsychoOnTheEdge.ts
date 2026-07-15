@@ -1,4 +1,4 @@
-import { spoilerRoycePsychoOnTheEdge } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailRoycePsychoOnTheEdge } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "../cyberpunk-simulator-pom";
 import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -11,7 +11,7 @@ export const legendRoycePsychoOnTheEdgeBehavior: CyberpunkFixtureBehavior = {
     const royce = await pom.getCardInZoneByDefinitionId(
       "legendArea",
       CYBERPUNK_P1,
-      spoilerRoycePsychoOnTheEdge.id,
+      welcomeToNightCityRetailRoycePsychoOnTheEdge.id,
     );
 
     const legendView = await pom.getCardView(royce.instanceId, CYBERPUNK_P1);

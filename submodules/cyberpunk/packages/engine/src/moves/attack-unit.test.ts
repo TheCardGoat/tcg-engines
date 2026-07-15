@@ -126,7 +126,7 @@ describe("attackUnit", () => {
   });
 
   describe("execute()", () => {
-    it("opens an attack window with the offensive step", () => {
+    it("opens an attack window with the attack step", () => {
       const { engine, attacker, defender } = setupAttack();
 
       engine.attackUnit(attacker, defender);
@@ -138,7 +138,7 @@ describe("attackUnit", () => {
         defenderId: engine.findCardId(defender, "field", P2),
         rivalId: P2,
         kind: "fight",
-        step: "offensive",
+        step: "attack",
       });
     });
 
@@ -176,15 +176,34 @@ describe("attackUnit", () => {
       );
 
       engine.attackUnit(attacker, defender);
-      engine.resolveAttack({ as: P1 }); // offensive -> defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive -> fight
-      engine.resolveAttack({ as: P1 }); // fight -> defeat
-      engine.resolveAttack({ as: P1 }); // defeat -> cleared
+      engine.resolveAttack({ as: P1 }); // attack -> react
+      engine.resolveAttack({ as: P2, pass: true }); // react -> fight
+      engine.resolveAttack({ as: P1 }); // fight -> cleared
 
       const log = engine.getLastActionLog();
       expect(log?.messageKey).toBe("move.resolveAttack.fight.attackerWins");
       expect(log?.params.attackerPower).toBe(6);
       expect(log?.params.defenderPower).toBe(2);
+      expect(engine.getAttackState()).toBeNull();
+    });
+
+    it("logs the rival passing React before the Fight beat", () => {
+      const { engine, attacker, defender } = setupAttack();
+
+      engine.attackUnit(attacker, defender);
+      engine.resolveAttack({ as: P1 }); // attack -> react
+      const result = engine.resolveAttack({ as: P2, pass: true }); // react -> fight
+
+      expect(result.moveLogs).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            type: "reactPass",
+            playerId: P2,
+            attackerName: attacker.name,
+          }),
+        ]),
+      );
+      expect(engine.getAttackState()).toMatchObject({ step: "fight" });
     });
 
     it("blocks a second attack while one is already in progress", () => {

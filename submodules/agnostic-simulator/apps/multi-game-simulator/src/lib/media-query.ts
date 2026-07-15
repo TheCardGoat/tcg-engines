@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
 
+function initialMediaQueryValue(query: string, fallback: boolean): boolean {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    return fallback;
+  }
+
+  return window.matchMedia(query).matches;
+}
+
 function subscribeMediaQuery(
   mediaQueryList: MediaQueryList,
   onChange: (event: MediaQueryListEvent) => void,
@@ -14,7 +22,7 @@ function subscribeMediaQuery(
 }
 
 export function useMediaQuery(query: string, fallback: boolean): boolean {
-  const [matches, setMatches] = useState<boolean>(fallback);
+  const [matches, setMatches] = useState<boolean>(() => initialMediaQueryValue(query, fallback));
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof window.matchMedia !== "function") {

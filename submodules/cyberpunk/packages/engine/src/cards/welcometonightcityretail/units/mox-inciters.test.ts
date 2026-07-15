@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vite-plus/test";
-import { alphaRuthlessLowlife, welcomeToNightCityRetailMoxInciters } from "@tcg/cyberpunk-cards";
+import {
+  alphaCorpoSecurity,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailRidingNomad,
+} from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("Mox Inciters", () => {
@@ -10,15 +14,46 @@ describe("Mox Inciters", () => {
         eddies: 3,
       },
       {
-        field: [{ card: alphaRuthlessLowlife, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailRidingNomad, spent: false, playedThisTurn: false }],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailMoxInciters, { as: P1 });
-    engine.resolveEffectTarget(alphaRuthlessLowlife, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailRidingNomad, { as: P1 });
     engine.skipToNextPlayerTurn(P1);
 
     const failure = engine.expectFailure(() => engine.completeTurn({ as: P2 }));
     expect(failure.errorCode).toBe("MUST_ATTACK");
+  });
+
+  it("lets the rival pass if the incited Unit can't attack", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailMoxInciters],
+        eddies: 3,
+      },
+      {
+        field: [{ card: alphaCorpoSecurity, spent: false, playedThisTurn: false }],
+      },
+    );
+
+    engine.playCard(welcomeToNightCityRetailMoxInciters, { as: P1 });
+    engine.resolveEffectTarget(alphaCorpoSecurity, { as: P1 });
+    engine.skipToNextPlayerTurn(P1);
+
+    expect(engine.completeTurn({ as: P2 })).toMatchObject({ success: true });
+  });
+
+  it("does not break when there is no rival Unit to incite", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      hand: [welcomeToNightCityRetailMoxInciters],
+      eddies: 3,
+    });
+
+    engine.playCard(welcomeToNightCityRetailMoxInciters, { as: P1 });
+    engine.expectNoPendingChoice();
+    engine.skipToNextPlayerTurn(P1);
+
+    expect(engine.completeTurn({ as: P2 })).toMatchObject({ success: true });
   });
 });

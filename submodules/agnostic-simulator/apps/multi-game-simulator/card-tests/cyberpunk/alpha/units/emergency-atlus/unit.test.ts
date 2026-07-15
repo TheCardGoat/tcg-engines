@@ -5,9 +5,9 @@ import {
   expectAttackCandidate,
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
-import { alphaEmergencyAtlus } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailEmergencyAtlus } from "@tcg/cyberpunk-cards";
 
-const card = alphaEmergencyAtlus; // unit, cost 4, power 7, no abilities
+const card = welcomeToNightCityRetailEmergencyAtlus; // unit, cost 4, power 7, no abilities
 
 describe("Emergency Atlus", () => {
   describe("UI prompt", () => {

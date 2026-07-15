@@ -7,20 +7,20 @@ import {
   expectCallableLegend,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  spoilerRiverWardDetectiveOnTheHunt,
-  alphaTBugAmateurPhilosopher,
-  alphaKiroshiOptics,
-  alphaSandevistan,
-  alphaSwordwiseHuscle,
-  alphaRuthlessLowlife,
+  welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailSandevistan,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailMoxInciters,
 } from "@tcg/cyberpunk-cards";
 
-const riverWard = spoilerRiverWardDetectiveOnTheHunt;
-const tBug = alphaTBugAmateurPhilosopher; // yellow unit, cost 3, power 5
-const kiroshi = alphaKiroshiOptics; // yellow gear, cost 1 (valid: ≤2)
-const sandevistan = alphaSandevistan; // gear, cost 3 (invalid: >2)
-const huscle = alphaSwordwiseHuscle; // red unit, power 5 (attacker, non-yellow)
-const lowlife = alphaRuthlessLowlife; // red unit, power 1 (defender / P2 attacker)
+const riverWard = welcomeToNightCityRetailRiverWardDetectiveOnTheHunt;
+const tBug = welcomeToNightCityRetailTBugAmateurPhilosopher; // yellow unit, cost 3, power 5
+const kiroshi = welcomeToNightCityRetailKiroshiOptics; // yellow gear, cost 1 (valid: ≤2)
+const sandevistan = welcomeToNightCityRetailSandevistan; // gear, cost 3 (invalid: >2)
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // red unit, power 5 (attacker, non-yellow)
+const lowlife = welcomeToNightCityRetailMoxInciters; // red unit, power 1 (defender / P2 attacker)
 
 const CALL_COST = 1; // eddies needed to call any legend
 

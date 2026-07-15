@@ -12,22 +12,26 @@ export { c, CyberpunkTestEngine, P1, P2 };
 export type { PlayerFixture };
 
 export const playerBase: PlayerFixture = {
-  hand: [c.alphaRuthlessLowlife, c.alphaSwordwiseHuscle, c.alphaFloorIt],
-  field: [
-    { card: c.alphaSecondhandBombus, spent: false },
-    { card: c.alphaSwordwiseHuscle, spent: false },
+  hand: [
+    c.welcomeToNightCityRetailMoxInciters,
+    c.welcomeToNightCityRetailSwordwiseHuscle,
+    c.welcomeToNightCityRetailFloorIt,
   ],
-  legendArea: [c.alphaVCorporateExile, c.spoilerVStreetkid],
+  field: [
+    { card: c.welcomeToNightCityRetailSecondhandBombus, spent: false },
+    { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false },
+  ],
+  legendArea: [c.theHeistRetailStarterDeckVCorporateExile, c.welcomeToNightCityRetailVStreetkid],
   eddies: 5,
 };
 
 export const opponentBase: PlayerFixture = {
   hand: 4,
   field: [
-    { card: c.alphaArmoredMinotaur, spent: false },
-    { card: c.alphaJackieWellesRideOrDieChoom, spent: true },
+    { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+    { card: c.welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: true },
   ],
-  legendArea: [c.alphaJackieWellesRideOrDieChoom],
+  legendArea: [c.welcomeToNightCityRetailJackieWellesRideOrDieChoom],
   eddies: 3,
 };
 
@@ -35,7 +39,7 @@ const POWER_THREE_MOCK_UNIT_IMAGE =
   "data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20500%20700%22%3E%3Crect%20width=%22500%22%20height=%22700%22%20fill=%22%23070b12%22/%3E%3Crect%20x=%2222%22%20y=%2222%22%20width=%22456%22%20height=%22656%22%20rx=%2218%22%20fill=%22%23161122%22%20stroke=%22%23ff2d8f%22%20stroke-width=%228%22/%3E%3Crect%20x=%2244%22%20y=%22148%22%20width=%22412%22%20height=%22370%22%20fill=%22%230d1721%22%20stroke=%22%23f6ff00%22%20stroke-width=%225%22/%3E%3Ctext%20x=%2248%22%20y=%2284%22%20fill=%22%23f6ff00%22%20font-family=%22monospace%22%20font-size=%2236%22%20font-weight=%22700%22%3EPOWER-3%3C/text%3E%3Ctext%20x=%2248%22%20y=%22124%22%20fill=%22%23ffffff%22%20font-family=%22monospace%22%20font-size=%2228%22%20font-weight=%22700%22%3EMOCK%20UNIT%3C/text%3E%3Ccircle%20cx=%22418%22%20cy=%2284%22%20r=%2244%22%20fill=%22%23ff2d8f%22/%3E%3Ctext%20x=%22418%22%20y=%2299%22%20fill=%22%23070b12%22%20text-anchor=%22middle%22%20font-family=%22monospace%22%20font-size=%2246%22%20font-weight=%22700%22%3E3%3C/text%3E%3Cpath%20d=%22M110%20210h260l-64%20120h84L210%20494l40-126h-92z%22%20fill=%22%23f6ff00%22/%3E%3Ctext%20x=%22250%22%20y=%22582%22%20fill=%22%23ffffff%22%20text-anchor=%22middle%22%20font-family=%22monospace%22%20font-size=%2224%22%3ESCENARIO%20ONLY%3C/text%3E%3Ctext%20x=%2248%22%20y=%22644%22%20fill=%22%23ff2d8f%22%20font-family=%22monospace%22%20font-size=%2224%22%20font-weight=%22700%22%3EUNIT%3C/text%3E%3Ctext%20x=%22426%22%20y=%22644%22%20fill=%22%23f6ff00%22%20text-anchor=%22middle%22%20font-family=%22monospace%22%20font-size=%2230%22%20font-weight=%22700%22%3E03%3C/text%3E%3C/svg%3E";
 
 export const powerThreeMockUnit = {
-  ...c.alphaRuthlessLowlife,
+  ...c.welcomeToNightCityRetailMoxInciters,
   id: "scenario-royce-power-three-mock",
   slug: "scenario-royce-power-three-mock",
   name: "Power-3 Mock Unit",
@@ -47,21 +51,29 @@ export const powerThreeMockUnit = {
 } satisfies FixtureCardEntry;
 
 export const endGamePlayer: PlayerFixture = {
-  hand: [c.alphaRuthlessLowlife, c.alphaSwordwiseHuscle, c.alphaFloorIt],
+  hand: [
+    c.welcomeToNightCityRetailMoxInciters,
+    c.welcomeToNightCityRetailSwordwiseHuscle,
+    c.welcomeToNightCityRetailFloorIt,
+  ],
   field: [
-    { card: c.alphaSecondhandBombus, spent: false },
-    { card: c.alphaSwordwiseHuscle, spent: false },
-    { card: c.alphaGoroTakemuraLosingHisWay, spent: true },
+    { card: c.welcomeToNightCityRetailSecondhandBombus, spent: false },
+    { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false },
+    { card: c.embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay, spent: true },
     {
-      card: c.alphaTBugAmateurPhilosopher,
+      card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
       spent: false,
-      attachedGears: [c.alphaSatoriSwordOfSaburo, c.alphaKiroshiOptics, c.alphaDyingNightVSPistol],
+      attachedGears: [
+        c.welcomeToNightCityRetailSatoriSwordOfSaburo,
+        c.welcomeToNightCityRetailKiroshiOptics,
+        c.welcomeToNightCityRetailDyingNightVSPistol,
+      ],
     },
   ],
   legendArea: [
-    { card: c.alphaVCorporateExile, faceDown: false },
-    { card: c.alphaGoroTakemuraHandsUnclean, faceDown: true },
-    { card: c.alphaYorinobuArasakaEmbracingDestruction, faceDown: false },
+    { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+    { card: c.embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: true },
+    { card: c.embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction, faceDown: false },
   ],
   eddies: 8,
   gigArea: [
@@ -75,15 +87,15 @@ export const endGamePlayer: PlayerFixture = {
 export const endGameOpponent: PlayerFixture = {
   hand: 4,
   field: [
-    { card: c.alphaArmoredMinotaur, spent: false },
-    { card: c.alphaJackieWellesRideOrDieChoom, spent: true },
-    { card: c.alphaCorpoSecurity, spent: false },
-    { card: c.alphaSecondhandBombus, spent: true },
+    { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+    { card: c.welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: true },
+    { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+    { card: c.welcomeToNightCityRetailSecondhandBombus, spent: true },
   ],
   legendArea: [
-    { card: c.alphaJackieWellesPourOneOutForMe, faceDown: false },
-    { card: c.alphaSaburoArasakaStubbornPatriach, faceDown: false },
-    { card: c.alphaViktorVektorSitDownAndRelax, faceDown: false },
+    { card: c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: false },
+    { card: c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch, faceDown: false },
+    { card: c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax, faceDown: false },
   ],
   eddies: 7,
   gigArea: [
@@ -108,7 +120,7 @@ export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   retailNewCardAbilities: "scenario:retailNewCardAbilities",
   openingMain: "scenario:openingMain",
   attackStep: "scenario:attackStep",
-  defensiveStep: "scenario:defensiveStep",
+  reactStep: "scenario:reactStep",
   chooseCardTarget: "scenario:chooseCardTarget",
   opponentTurn: "scenario:opponentTurn",
   stealGigTest: "scenario:stealGigTest",

@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
-import { alphaCorpoSecurity, welcomeToNightCityRetailTakeControl } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailTakeControl,
+} from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 import { createMockUnit } from "../../../testing/card-mocks.ts";
 
@@ -56,7 +59,7 @@ describe("Take Control", () => {
         hand: [welcomeToNightCityRetailTakeControl],
         field: [filler],
         gigArea: [
-          { dieType: "d6", faceValue: 3 },
+          { dieType: "d4", faceValue: 3 },
           { dieType: "d6", faceValue: 3 },
         ],
         eddies: 5,
@@ -70,15 +73,21 @@ describe("Take Control", () => {
     // Make it P2's turn so P2 can attack.
     engine.judgeSetTurnMetadata({ activePlayerId: P2 }, { as: P1 });
     engine.attackRival(attacker, { as: P2 });
-    engine.resolveAttack({ as: P2 }); // offensive → defensive
+    engine.resolveAttack({ as: P2 }); // attack → react
 
-    // P1 plays Take Control as a QUICK reaction during the defensive step.
+    // P1 plays Take Control as a QUICK reaction during the React step.
     expect(engine.playCard(welcomeToNightCityRetailTakeControl, { as: P1 })).toMatchObject({
       success: true,
     });
 
-    engine.resolveAttack({ as: P1, pass: true }); // defensive → steal
-    engine.resolveAttack({ as: P2 }); // steal resolves
+    engine.resolveAttack({ as: P1, pass: true }); // react → steal
+    engine.resolveAttack({
+      as: P2,
+      gigIdsToSteal: engine
+        .getGigDice(P1)
+        .slice(0, 1)
+        .map((die) => die.id),
+    }); // steal resolves
 
     const resolved = engine.getLastEvent("attackResolved");
     expect(resolved).toMatchObject({ gigsStolen: 1 });
@@ -113,10 +122,10 @@ describe("Take Control", () => {
 
     engine.judgeSetTurnMetadata({ activePlayerId: P2 }, { as: P1 });
     engine.attackRival(attacker, { as: P2 });
-    engine.resolveAttack({ as: P2 }); // offensive → defensive
+    engine.resolveAttack({ as: P2 }); // attack → react
     engine.playCard(welcomeToNightCityRetailTakeControl, { as: P1 });
-    engine.resolveAttack({ as: P1, pass: true }); // defensive → steal
-    engine.resolveAttack({ as: P2 }); // steal resolves
+    engine.resolveAttack({ as: P1, pass: true }); // react → steal
+    engine.resolveAttack({ as: P2, gigIdsToSteal: [] }); // steal resolves
 
     const resolved = engine.getLastEvent("attackResolved");
     expect(resolved).toMatchObject({ gigsStolen: 0 });
@@ -141,10 +150,10 @@ describe("Take Control", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailTakeControl],
-        deck: [alphaCorpoSecurity],
+        deck: [welcomeToNightCityRetailCorpoSecurity],
         field: [filler],
         gigArea: [
-          { dieType: "d6", faceValue: 3 },
+          { dieType: "d4", faceValue: 3 },
           { dieType: "d6", faceValue: 3 },
         ],
         eddies: 5,
@@ -159,7 +168,7 @@ describe("Take Control", () => {
 
     engine.judgeSetTurnMetadata({ activePlayerId: P2 }, { as: P1 });
     engine.attackRival(attacker, { as: P2 });
-    engine.resolveAttack({ as: P2 }); // offensive → defensive
+    engine.resolveAttack({ as: P2 }); // attack → react
     engine.playCard(welcomeToNightCityRetailTakeControl, { as: P1 });
 
     // Take Control was played (left hand) AND drew 1 (AI attacker).
@@ -183,10 +192,10 @@ describe("Take Control", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailTakeControl],
-        deck: [alphaCorpoSecurity],
+        deck: [welcomeToNightCityRetailCorpoSecurity],
         field: [filler],
         gigArea: [
-          { dieType: "d6", faceValue: 3 },
+          { dieType: "d4", faceValue: 3 },
           { dieType: "d6", faceValue: 3 },
         ],
         eddies: 5,
@@ -201,7 +210,7 @@ describe("Take Control", () => {
 
     engine.judgeSetTurnMetadata({ activePlayerId: P2 }, { as: P1 });
     engine.attackRival(attacker, { as: P2 });
-    engine.resolveAttack({ as: P2 }); // offensive → defensive
+    engine.resolveAttack({ as: P2 }); // attack → react
     engine.playCard(welcomeToNightCityRetailTakeControl, { as: P1 });
 
     // Take Control was played (-1 from hand) with no draw (not AI/Drone/Vehicle).
@@ -226,7 +235,7 @@ describe("Take Control", () => {
         hand: [welcomeToNightCityRetailTakeControl],
         field: [filler],
         gigArea: [
-          { dieType: "d6", faceValue: 3 },
+          { dieType: "d4", faceValue: 3 },
           { dieType: "d6", faceValue: 3 },
         ],
         eddies: 5,
@@ -239,10 +248,16 @@ describe("Take Control", () => {
 
     engine.judgeSetTurnMetadata({ activePlayerId: P2 }, { as: P1 });
     engine.attackRival(attacker, { as: P2 });
-    engine.resolveAttack({ as: P2 }); // offensive → defensive
+    engine.resolveAttack({ as: P2 }); // attack → react
     engine.playCard(welcomeToNightCityRetailTakeControl, { as: P1 });
-    engine.resolveAttack({ as: P1, pass: true }); // defensive → steal
-    engine.resolveAttack({ as: P2 }); // steal resolves
+    engine.resolveAttack({ as: P1, pass: true }); // react → steal
+    engine.resolveAttack({
+      as: P2,
+      gigIdsToSteal: engine
+        .getGigDice(P1)
+        .slice(0, 1)
+        .map((die) => die.id),
+    }); // steal resolves
 
     // The stealsOneFewerGig active effect had duration: "turn" — ending the
     // turn must clear it so a later attack by the same Unit steals normally.

@@ -1,9 +1,9 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  alphaMt0d12Flathead,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  theHeistRetailStarterDeckMt0d12Flathead,
   welcomeToNightCityRetailCaliberTotentanzSTopDog,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -27,13 +27,12 @@ test("Caliber (Retail) - defeated trigger forces rival discards", async ({ page 
   const minotaur = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaArmoredMinotaur.id,
+    embracingPowerRetailStarterDeckMinotaur.id,
   );
 
   await pom.attackUnit(caliber.instanceId, minotaur.instanceId, CYBERPUNK_P1);
   await pom.resolveAttack(CYBERPUNK_P1);
   await pom.resolveAttack(CYBERPUNK_P2, { pass: true });
-  await pom.resolveAttack(CYBERPUNK_P1);
   await pom.resolveAttack(CYBERPUNK_P1);
 
   await pom.expectTrashSize(CYBERPUNK_P1, 1);
@@ -46,9 +45,14 @@ test("Caliber (Retail) - defeated trigger forces rival discards", async ({ page 
 
   const firstChoices = await pom.getEligibleTargetIds(CYBERPUNK_P2);
   const firstDefinitions = await getChoiceDefinitionIds(pom, firstChoices);
-  expectIncludes("Caliber first discard choices", firstDefinitions, alphaMt0d12Flathead.id);
+  expectIncludes(
+    "Caliber first discard choices",
+    firstDefinitions,
+    theHeistRetailStarterDeckMt0d12Flathead.id,
+  );
 
-  const flatheadId = firstChoices[firstDefinitions.indexOf(alphaMt0d12Flathead.id)];
+  const flatheadId =
+    firstChoices[firstDefinitions.indexOf(theHeistRetailStarterDeckMt0d12Flathead.id)];
   if (!flatheadId) {
     throw new Error("Expected Flathead to be discardable for Caliber's first discard.");
   }
@@ -57,9 +61,13 @@ test("Caliber (Retail) - defeated trigger forces rival discards", async ({ page 
   await pom.expectPendingChoiceType(CYBERPUNK_P2, "chooseTarget");
   const bonusChoices = await pom.getEligibleTargetIds(CYBERPUNK_P2);
   const bonusDefinitions = await getChoiceDefinitionIds(pom, bonusChoices);
-  expectIncludes("Caliber bonus discard choices", bonusDefinitions, alphaCorpoSecurity.id);
+  expectIncludes(
+    "Caliber bonus discard choices",
+    bonusDefinitions,
+    welcomeToNightCityRetailCorpoSecurity.id,
+  );
 
-  const corpoId = bonusChoices[bonusDefinitions.indexOf(alphaCorpoSecurity.id)];
+  const corpoId = bonusChoices[bonusDefinitions.indexOf(welcomeToNightCityRetailCorpoSecurity.id)];
   if (!corpoId) {
     throw new Error("Expected Corpo Security to be discardable for Caliber's bonus discard.");
   }

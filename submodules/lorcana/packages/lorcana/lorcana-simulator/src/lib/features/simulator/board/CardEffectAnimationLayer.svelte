@@ -1,11 +1,14 @@
 <script lang="ts">
   import { useLorcanaBoardPresenter } from "@/features/simulator/context/game-context.svelte.js";
+  import LorcanaCard from "@/design-system/simulator/cards/LorcanaCard.svelte";
   import type { ResolvedCardEffectAnimation } from "@/features/simulator/animations/card-effect-animations.js";
   import { watchCssAnimation } from "@/features/simulator/animations/animation-shared.js";
   import type { BoardLocalRect } from "@/features/simulator/animations/board-move-animations.js";
+  import { getActionCardStageRect } from "@/features/simulator/animations/action-animations.js";
 
   const board = useLorcanaBoardPresenter();
   const cardEffectAnimations = $derived(board.cardEffectAnimations);
+  const cardSnapshotsById = $derived(board.cardSnapshotsById);
   let layerWidth = $state(0);
   let layerHeight = $state(0);
 
@@ -14,7 +17,10 @@
   }
 
   function getGlowStyle(animation: ResolvedCardEffectAnimation): string {
-    const rect = animation.sourceRect;
+    const rect = getSourceRect(animation);
+    if (!rect) {
+      return "";
+    }
     const size = Math.max(rect.width, rect.height) * 1.6;
     return [
       `left:${rect.centerX - size / 2}px`,
@@ -46,12 +52,13 @@
     return `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
   }
 
-  function targetFrameStyle(rect: BoardLocalRect): string {
+  function targetFrameStyle(animation: ResolvedCardEffectAnimation, rect: BoardLocalRect): string {
     return [
       `left:${rect.x}px`,
       `top:${rect.y}px`,
       `width:${rect.width}px`,
       `height:${rect.height}px`,
+      `--card-effect-duration:${animation.durationMs}ms`,
     ].join(";");
   }
 
@@ -64,6 +71,37 @@
     const offset = (index - (count - 1) / 2) * 24;
     return `left:${rect.centerX + offset}px;top:${rect.y + rect.height + 18}px;`;
   }
+
+  function getSourceRect(animation: ResolvedCardEffectAnimation): BoardLocalRect | null {
+    if (animation.sourceRect) {
+      return animation.sourceRect;
+    }
+
+    const sourceCard = cardSnapshotsById[animation.cardId];
+    if (sourceCard?.cardType !== "action" || layerWidth <= 0 || layerHeight <= 0) {
+      return null;
+    }
+
+    return getActionCardStageRect(layerWidth, layerHeight);
+  }
+
+  function actionSourceCardStyle(animation: ResolvedCardEffectAnimation): string {
+    const rect = getSourceRect(animation);
+    if (!rect) {
+      return "";
+    }
+
+    return [
+      `left:${rect.x}px`,
+      `top:${rect.y}px`,
+      `width:${rect.width}px`,
+      `height:${rect.height}px`,
+    ].join(";");
+  }
+
+  function getSourceCard(animation: ResolvedCardEffectAnimation) {
+    return cardSnapshotsById[animation.cardId] ?? null;
+  }
 </script>
 
 <div
@@ -73,18 +111,39 @@
   bind:clientHeight={layerHeight}
 >
   {#each cardEffectAnimations as animation (animation.id)}
+    {@const sourceRect = getSourceRect(animation)}
+    {@const sourceCard = getSourceCard(animation)}
     <div>
-      <div
-        class="card-effect-glow"
-        class:card-effect-glow--activate={animation.effectKind === "activate-ability"}
-        class:card-effect-glow--sing={animation.effectKind === "sing"}
-        class:card-effect-glow--resolve={animation.effectKind === "resolve-effect"}
-        class:card-effect-glow--damage={animation.damageTargets.length > 0}
-        style={getGlowStyle(animation)}
-        use:watchCssAnimation={{ id: animation.id, onFinished: onCardEffectAnimationFinished }}
-      ></div>
+      {#if sourceRect}
+        <div
+          class="card-effect-glow"
+          class:card-effect-glow--activate={animation.effectKind === "activate-ability"}
+          class:card-effect-glow--sing={animation.effectKind === "sing"}
+          class:card-effect-glow--resolve={animation.effectKind === "resolve-effect"}
+          class:card-effect-glow--damage={animation.damageTargets.length > 0}
+          style={getGlowStyle(animation)}
+          use:watchCssAnimation={{ id: animation.id, onFinished: onCardEffectAnimationFinished }}
+        ></div>
+      {/if}
 
-      {#if animation.damageTargets.length > 0 && layerWidth > 0 && layerHeight > 0}
+      {#if sourceCard?.cardType === "action" && sourceRect}
+        <div
+          class="card-effect-action-stage"
+          data-testid="card-effect-action-stage"
+          style={actionSourceCardStyle(animation)}
+        >
+          <LorcanaCard
+            card={sourceCard}
+            size="small"
+            isExerted={false}
+            isMasked={sourceCard.isMasked}
+            showHoverCard={false}
+            clickOpensHover={false}
+          />
+        </div>
+      {/if}
+
+      {#if animation.damageTargets.length > 0 && layerWidth > 0 && layerHeight > 0 && sourceRect}
         <svg
           class="card-effect-shot-svg"
           viewBox={`0 0 ${layerWidth} ${layerHeight}`}
@@ -109,18 +168,18 @@
 
           {#each animation.damageTargets as target, index (`${animation.id}:shot:${target.cardId}:${index}`)}
             <path
-              d={beamPath(animation.sourceRect, target.targetRect, index, animation.damageTargets.length)}
+              d={beamPath(sourceRect, target.targetRect, index, animation.damageTargets.length)}
               class="card-effect-shot-shadow"
               pathLength="1"
             />
             <path
-              d={beamPath(animation.sourceRect, target.targetRect, index, animation.damageTargets.length)}
+              d={beamPath(sourceRect, target.targetRect, index, animation.damageTargets.length)}
               class="card-effect-shot"
               marker-end={`url(#${markerId(animation, index)})`}
               pathLength="1"
             />
             <path
-              d={beamPath(animation.sourceRect, target.targetRect, index, animation.damageTargets.length)}
+              d={beamPath(sourceRect, target.targetRect, index, animation.damageTargets.length)}
               class="card-effect-shot-hot"
               pathLength="1"
             />
@@ -132,7 +191,7 @@
             class:card-effect-target-frame={true}
             class:card-effect-target-frame--banished={target.wasBanished}
             data-card-effect-target={target.cardId}
-            style={targetFrameStyle(target.targetRect)}
+            style={targetFrameStyle(animation, target.targetRect)}
           ></div>
           <div
             class="card-effect-impact-ring"
@@ -182,6 +241,28 @@
     position: absolute;
     inset: 0;
     overflow: visible;
+  }
+
+  .card-effect-action-stage {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    transform-origin: center;
+    filter: drop-shadow(0 22px 26px rgba(2, 6, 23, 0.55));
+    animation: card-effect-action-stage var(--card-effect-duration, 400ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .card-effect-action-stage::before {
+    content: "";
+    position: absolute;
+    inset: -12px;
+    z-index: -1;
+    border: 1px solid rgba(253, 230, 138, 0.34);
+    border-radius: 12px;
+    background: radial-gradient(circle at 50% 40%, rgba(251, 191, 36, 0.26), transparent 64%);
+    box-shadow:
+      0 0 28px rgba(245, 158, 11, 0.34),
+      inset 0 0 24px rgba(253, 230, 138, 0.12);
   }
 
   .card-effect-glow--activate {
@@ -342,6 +423,22 @@
     100% {
       opacity: 0;
       transform: scale(1.15);
+    }
+  }
+
+  @keyframes card-effect-action-stage {
+    0% {
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+    }
+    18%,
+    72% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.98);
     }
   }
 

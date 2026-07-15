@@ -133,6 +133,12 @@ export interface SimulatorEventLogEntry {
   message: string;
   tags: ("move" | "combat" | "ability" | "system")[];
   entityIds?: string[];
+  cardRefs?: { id?: string; name: string }[];
+  section?: {
+    id: string;
+    label: string;
+    tone?: string;
+  };
 }
 
 export interface SimulatorTargetingIntent {
@@ -141,6 +147,46 @@ export interface SimulatorTargetingIntent {
   targetEntityIds: string[];
   targetZoneIds: string[];
   preview?: { damage?: number; banish?: boolean };
+}
+
+export interface SimulatorTargetFilter {
+  kind: "entity";
+  entityKind?: EntityKind;
+  ownerId?: string;
+  zoneId?: string;
+  zoneRole?: ZoneRole;
+  includeHidden?: boolean;
+}
+
+export function resolveSimulatorTargetFilter(
+  filter: SimulatorTargetFilter,
+  table: SimulatorTable,
+  entities: readonly SimulatorEntity[],
+): SimulatorEntity[] {
+  const zoneIds = new Set(
+    table.zones
+      .filter((zone) => {
+        if (filter.zoneId !== undefined && zone.id !== filter.zoneId) return false;
+        if (filter.zoneRole !== undefined && zone.role !== filter.zoneRole) return false;
+        if (filter.ownerId !== undefined && zone.ownerId !== filter.ownerId) return false;
+        return true;
+      })
+      .map((zone) => zone.id),
+  );
+
+  return entities.filter((entity) => {
+    if (filter.entityKind !== undefined && entity.kind !== filter.entityKind) return false;
+    if (filter.ownerId !== undefined && entity.ownerId !== filter.ownerId) return false;
+    if (filter.includeHidden !== true && entity.face === "hidden") return false;
+
+    if (filter.zoneId !== undefined || filter.zoneRole !== undefined) {
+      const entityZoneId =
+        entity.dataAttributes?.["zoneId"] ?? entity.dataAttributes?.["data-zone-id"];
+      if (typeof entityZoneId !== "string" || !zoneIds.has(entityZoneId)) return false;
+    }
+
+    return true;
+  });
 }
 
 export interface FixtureGuideStep {

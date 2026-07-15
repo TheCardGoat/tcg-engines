@@ -3,7 +3,7 @@ import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
 import { getEffectiveRules, markDefeatAtEndOfTurnIfAttacked } from "../active-effects/index.ts";
 import { defOf, getDefinitionFor } from "../state/lookups.ts";
-import { satisfiesMustAttackRequirement } from "./attack-requirements.ts";
+import { hasPlayedProgramThisTurn, satisfiesMustAttackRequirement } from "./attack-requirements.ts";
 
 export interface AttackUnitInput extends MoveInput {
   args: {
@@ -29,6 +29,12 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
         id as string,
       );
       if (rules.includes("cantAttack")) return false;
+      if (
+        rules.includes("requiresProgramPlayedThisTurn") &&
+        !hasPlayedProgramThisTurn(state, playerId)
+      ) {
+        return false;
+      }
       if (card.meta.playedThisTurn) {
         // Units with adrenaline or canAttackOnPlayedTurnAgainstUnits can still attack units
         return rules.includes("canAttackOnPlayedTurnAgainstUnits") || rules.includes("adrenaline");
@@ -62,6 +68,16 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
     );
     if (attackerRules.includes("cantAttack")) {
       return { valid: false, error: "Attacker can't attack", errorCode: "CANT_ATTACK" };
+    }
+    if (
+      attackerRules.includes("requiresProgramPlayedThisTurn") &&
+      !hasPlayedProgramThisTurn(state as import("../types/match-state.ts").MatchState, playerId)
+    ) {
+      return {
+        valid: false,
+        error: "Attacker requires a Program played this turn",
+        errorCode: "PROGRAM_NOT_PLAYED_THIS_TURN",
+      };
     }
     if (
       !satisfiesMustAttackRequirement(
@@ -118,7 +134,7 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
       defenderId: defenderId as CardInstanceId,
       rivalId: opponentId,
       kind: "fight",
-      step: "offensive",
+      step: "attack",
     });
     markDefeatAtEndOfTurnIfAttacked(
       state as import("../types/match-state.ts").MatchState,

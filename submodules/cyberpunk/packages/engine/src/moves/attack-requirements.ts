@@ -3,6 +3,12 @@ import type { CardInstanceId, PlayerId } from "../types/branded.ts";
 import { getEffectiveRules } from "../active-effects/index.ts";
 import { defOf } from "../state/lookups.ts";
 
+export function hasPlayedProgramThisTurn(state: MatchState, playerId: PlayerId): boolean {
+  return (
+    state.G.turnMetadata.playedCardTypesThisTurn[playerId as string]?.includes("program") === true
+  );
+}
+
 export function getMustAttackCardIds(state: MatchState, playerId: PlayerId): CardInstanceId[] {
   const player = state.G.players[playerId as string];
   if (!player) return [];
@@ -12,6 +18,12 @@ export function getMustAttackCardIds(state: MatchState, playerId: PlayerId): Car
     if (!card || card.meta.spent) return false;
     const rules = getEffectiveRules(state, id as string);
     if (!rules.includes("mustAttack") || rules.includes("cantAttack")) return false;
+    if (
+      rules.includes("requiresProgramPlayedThisTurn") &&
+      !hasPlayedProgramThisTurn(state, playerId)
+    ) {
+      return false;
+    }
     const def = defOf(card);
     if (card.meta.playedThisTurn && !rules.includes("adrenaline")) return false;
     return def.type === "unit" || def.keywords.includes("goSolo");

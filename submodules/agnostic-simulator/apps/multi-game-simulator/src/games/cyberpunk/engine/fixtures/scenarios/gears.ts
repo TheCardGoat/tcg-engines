@@ -15,12 +15,12 @@ export const gearScenarios: Scenario[] = [
           hand: [],
           field: [
             {
-              card: c.alphaTBugAmateurPhilosopher,
+              card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
               spent: false,
-              attachedGears: [c.alphaDyingNightVSPistol],
+              attachedGears: [c.welcomeToNightCityRetailDyingNightVSPistol],
             },
           ],
-          legendArea: [c.alphaVCorporateExile],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [
             { dieType: "d4", faceValue: 3 },
@@ -31,12 +31,12 @@ export const gearScenarios: Scenario[] = [
           hand: [],
           field: [
             {
-              card: c.alphaCorpoSecurity,
+              card: c.welcomeToNightCityRetailCorpoSecurity,
               spent: true,
-              attachedGears: [c.alphaKiroshiOptics],
+              attachedGears: [c.welcomeToNightCityRetailKiroshiOptics],
             },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
@@ -55,24 +55,24 @@ export const gearScenarios: Scenario[] = [
           hand: [],
           field: [
             {
-              card: c.alphaTBugAmateurPhilosopher,
+              card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
               spent: false,
-              attachedGears: [c.alphaDyingNightVSPistol],
+              attachedGears: [c.welcomeToNightCityRetailDyingNightVSPistol],
             },
           ],
-          legendArea: [c.alphaVCorporateExile],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 4 }],
         },
         {
           field: [
             {
-              card: c.alphaCorpoSecurity,
+              card: c.welcomeToNightCityRetailCorpoSecurity,
               spent: true,
-              attachedGears: [c.alphaKiroshiOptics],
+              attachedGears: [c.welcomeToNightCityRetailKiroshiOptics],
             },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -93,22 +93,25 @@ export const gearScenarios: Scenario[] = [
           hand: [],
           field: [
             {
-              card: c.alphaSwordwiseHuscle,
+              card: c.welcomeToNightCityRetailSwordwiseHuscle,
               spent: false,
-              attachedGears: [c.alphaKiroshiOptics],
+              attachedGears: [c.welcomeToNightCityRetailKiroshiOptics],
             },
           ],
           legendArea: [
-            { card: c.alphaVCorporateExile, faceDown: true },
-            { card: c.alphaYorinobuArasakaEmbracingDestruction, faceDown: true },
-            { card: c.alphaGoroTakemuraHandsUnclean, faceDown: false },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: true },
+            {
+              card: c.embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
+              faceDown: true,
+            },
+            { card: c.embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: false },
           ],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: true }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -127,22 +130,25 @@ export const gearScenarios: Scenario[] = [
           hand: [],
           field: [
             {
-              card: c.alphaSwordwiseHuscle,
+              card: c.welcomeToNightCityRetailSwordwiseHuscle,
               spent: false,
-              attachedGears: [c.alphaKiroshiOptics],
+              attachedGears: [c.welcomeToNightCityRetailKiroshiOptics],
             },
           ],
           legendArea: [
-            { card: c.alphaVCorporateExile, faceDown: false },
-            { card: c.alphaYorinobuArasakaEmbracingDestruction, faceDown: false },
-            { card: c.alphaGoroTakemuraHandsUnclean, faceDown: false },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+            {
+              card: c.embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
+              faceDown: false,
+            },
+            { card: c.embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: false },
           ],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: true }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -163,29 +169,29 @@ export const gearScenarios: Scenario[] = [
           hand: [],
           field: [
             {
-              card: c.alphaSecondhandBombus,
+              card: c.welcomeToNightCityRetailSecondhandBombus,
               spent: false,
             },
             {
-              card: c.alphaSwordwiseHuscle,
+              card: c.welcomeToNightCityRetailSwordwiseHuscle,
               spent: false,
-              attachedGears: [c.alphaMandibularUpgrade],
+              attachedGears: [c.welcomeToNightCityRetailMandibularUpgrade],
             },
           ],
-          legendArea: [c.alphaVCorporateExile],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
         {
           field: [
             {
-              card: c.alphaArmoredMinotaur,
+              card: c.embracingPowerRetailStarterDeckMinotaur,
               spent: false,
-              attachedGears: [c.alphaMandibularUpgrade],
+              attachedGears: [c.welcomeToNightCityRetailMandibularUpgrade],
             },
-            { card: c.alphaArmoredMinotaur, spent: true },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 5,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -199,7 +205,7 @@ export const gearScenarios: Scenario[] = [
         .getCardsInZone("field", P2)
         .filter(
           (card) =>
-            card.definitionId === c.alphaArmoredMinotaur.id &&
+            card.definitionId === c.embracingPowerRetailStarterDeckMinotaur.id &&
             card.meta.attachedGearIds.length === 0,
         )[0];
       if (!attackingMinotaur) {
@@ -224,21 +230,21 @@ export const gearScenarios: Scenario[] = [
           hand: [],
           field: [
             {
-              card: c.alphaSwordwiseHuscle,
+              card: c.welcomeToNightCityRetailSwordwiseHuscle,
               spent: false,
-              attachedGears: [c.alphaMantisBlades],
+              attachedGears: [c.welcomeToNightCityRetailMantisBlades],
             },
           ],
-          legendArea: [c.alphaVCorporateExile],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
         {
           field: [
-            { card: c.alphaCorpoSecurity, spent: true },
-            { card: c.alphaArmoredMinotaur, spent: true },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 5,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -256,18 +262,20 @@ export const gearScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.alphaSandevistan, c.alphaSwordwiseHuscle],
+          hand: [c.welcomeToNightCityRetailSandevistan, c.welcomeToNightCityRetailSwordwiseHuscle],
           field: [],
-          legendArea: [c.alphaVCorporateExile],
-          eddies: c.alphaSandevistan.cost + c.alphaSwordwiseHuscle.cost,
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies:
+            c.welcomeToNightCityRetailSandevistan.cost +
+            c.welcomeToNightCityRetailSwordwiseHuscle.cost,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
         {
           field: [
-            { card: c.alphaCorpoSecurity, spent: true },
-            { card: c.alphaSecondhandBombus, spent: false },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.welcomeToNightCityRetailSecondhandBombus, spent: false },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 5,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -285,24 +293,24 @@ export const gearScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.alphaRuthlessLowlife],
+          hand: [c.welcomeToNightCityRetailMoxInciters],
           field: [
             {
-              card: c.alphaTBugAmateurPhilosopher,
+              card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
               spent: false,
-              attachedGears: [c.alphaSatoriSwordOfSaburo],
+              attachedGears: [c.welcomeToNightCityRetailSatoriSwordOfSaburo],
             },
           ],
-          legendArea: [c.alphaVCorporateExile],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
         {
           field: [
-            { card: c.alphaCorpoSecurity, spent: true },
-            { card: c.alphaArmoredMinotaur, spent: false },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 5,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -323,21 +331,21 @@ export const gearScenarios: Scenario[] = [
           hand: [],
           field: [
             {
-              card: c.alphaTBugAmateurPhilosopher,
+              card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
               spent: false,
-              attachedGears: [c.spoilerGorillaArms],
+              attachedGears: [c.welcomeToNightCityRetailGorillaArms],
             },
           ],
-          legendArea: [c.alphaVCorporateExile],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
         {
           field: [],
           legendArea: [
-            c.alphaJackieWellesPourOneOutForMe,
-            c.alphaSaburoArasakaStubbornPatriach,
-            c.alphaViktorVektorSitDownAndRelax,
+            c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe,
+            c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+            c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax,
           ],
           eddies: 5,
           gigArea: [
@@ -358,20 +366,20 @@ export const gearScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.alphaRebootOptics],
+          hand: [c.welcomeToNightCityRetailRebootOptics],
           field: [
             {
-              card: c.alphaSwordwiseHuscle,
+              card: c.welcomeToNightCityRetailSwordwiseHuscle,
               spent: false,
-              attachedGears: [c.spoilerZetatechFaceplate],
+              attachedGears: [c.welcomeToNightCityRetailZetatechFaceplate],
             },
           ],
           legendArea: [
             {
-              card: c.alphaVCorporateExile,
+              card: c.theHeistRetailStarterDeckVCorporateExile,
               faceDown: false,
             },
-            { card: c.spoilerRiverWardDetectiveOnTheHunt, faceDown: true },
+            { card: c.welcomeToNightCityRetailRiverWardDetectiveOnTheHunt, faceDown: true },
           ],
           eddies: 4,
           gigArea: [
@@ -381,8 +389,8 @@ export const gearScenarios: Scenario[] = [
           ],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: true }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 4,
           gigArea: [{ dieType: "d10", faceValue: 4 }],
         },
@@ -400,21 +408,23 @@ export const gearScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.alphaMantisBlades],
+          hand: [c.welcomeToNightCityRetailMantisBlades],
           field: [
             {
-              card: c.alphaVCorporateExile,
+              card: c.theHeistRetailStarterDeckVCorporateExile,
               spent: false,
               faceDown: false,
             },
           ],
-          legendArea: [{ card: c.alphaGoroTakemuraHandsUnclean, faceDown: false }],
+          legendArea: [
+            { card: c.embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: false },
+          ],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: true }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -435,21 +445,21 @@ export const gearScenarios: Scenario[] = [
           hand: [],
           field: [
             {
-              card: c.alphaTBugAmateurPhilosopher,
+              card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
               spent: false,
               attachedGears: [c.welcomeToNightCityRetailGorillaArms],
             },
           ],
-          legendArea: [c.alphaVCorporateExile],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 1 }],
         },
         {
           field: [],
           legendArea: [
-            c.alphaJackieWellesPourOneOutForMe,
-            c.alphaSaburoArasakaStubbornPatriach,
-            c.alphaViktorVektorSitDownAndRelax,
+            c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe,
+            c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+            c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax,
           ],
           eddies: 5,
           gigArea: [
@@ -471,20 +481,20 @@ export const gearScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.alphaRebootOptics],
+          hand: [c.welcomeToNightCityRetailRebootOptics],
           field: [
             {
-              card: c.alphaSwordwiseHuscle,
+              card: c.welcomeToNightCityRetailSwordwiseHuscle,
               spent: false,
               attachedGears: [c.welcomeToNightCityRetailZetatechFaceplate],
             },
           ],
           legendArea: [
             {
-              card: c.alphaVCorporateExile,
+              card: c.theHeistRetailStarterDeckVCorporateExile,
               faceDown: false,
             },
-            { card: c.spoilerRiverWardDetectiveOnTheHunt, faceDown: true },
+            { card: c.welcomeToNightCityRetailRiverWardDetectiveOnTheHunt, faceDown: true },
           ],
           eddies: 4,
           gigArea: [
@@ -494,8 +504,8 @@ export const gearScenarios: Scenario[] = [
           ],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: true }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 4,
           gigArea: [{ dieType: "d10", faceValue: 4 }],
         },

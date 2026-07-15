@@ -8,20 +8,20 @@ import {
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaGoroTakemuraLosingHisWay,
-  alphaGoroTakemuraHandsUnclean,
-  alphaJackieWellesPourOneOutForMe,
-  alphaSaburoArasakaStubbornPatriach,
-  alphaCorpoSecurity,
+  embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
+  embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
+  theHeistRetailStarterDeckJackieWellesPourOneOutForMe,
+  embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+  welcomeToNightCityRetailCorpoSecurity,
 } from "@tcg/cyberpunk-cards";
 
 registerMatchers();
 
-const goro = alphaGoroTakemuraLosingHisWay; // cost 4, power 5
-const legend1 = alphaGoroTakemuraHandsUnclean;
-const legend2 = alphaJackieWellesPourOneOutForMe;
-const legend3 = alphaSaburoArasakaStubbornPatriach;
-const corpoSec = alphaCorpoSecurity; // cost 2, power 2
+const goro = embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay; // cost 4, power 5
+const legend1 = embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean;
+const legend2 = theHeistRetailStarterDeckJackieWellesPourOneOutForMe;
+const legend3 = embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch;
+const corpoSec = welcomeToNightCityRetailCorpoSecurity; // cost 2, power 2
 
 const CALL_COST = 1;
 

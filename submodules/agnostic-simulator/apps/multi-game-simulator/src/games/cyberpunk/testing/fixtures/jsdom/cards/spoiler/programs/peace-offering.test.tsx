@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { spoilerPeaceOffering } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailPeaceOffering } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -20,7 +20,7 @@ describe("Peace Offering jsdom happy path", () => {
       const program = await pom.getCardInZoneByDefinitionId(
         "hand",
         CYBERPUNK_P1,
-        spoilerPeaceOffering.id,
+        welcomeToNightCityRetailPeaceOffering.id,
       );
       await pom.playCardFromHand(program.instanceId, CYBERPUNK_P1);
 

@@ -257,18 +257,18 @@ describe("win conditions", () => {
     });
   });
 
-  describe("deck-out loss — running out of cards", () => {
-    it("hands victory to the rival when the active player's deck empties", () => {
-      // p1 begins with a tiny deck. After a couple of draws on subsequent
-      // turn-starts, p1's deck reaches 0 — at which point the rival wins.
+  describe("deck-out loss — drawing from an empty deck", () => {
+    it("hands victory to the rival when the active player must draw with no deck", () => {
       const engine = CyberpunkTestEngine.createWithFixture({ deck: 1 }, { deck: 40 });
 
-      // Drain p1's deck by playing through enough turns that they draw it
-      // dry. Two turns is enough: turn 1's start-of-turn draw was already
-      // performed during setup, so a single additional p1 turn-start will
-      // drop the deck to 0.
       engine.completeTurn(); // p1 → p2
-      engine.completeTurn(); // p2 → p1 (start of turn drew last card)
+      engine.completeTurn(); // p2 → p1 (start of turn draws last card)
+
+      expect(engine.isGameOver()).toBe(false);
+      expect(engine.getCardsInZone("deck", P1)).toHaveLength(0);
+
+      engine.completeTurn(); // p1 → p2
+      engine.completeTurn(); // p2 → p1 (required draw with no cards)
 
       expect(engine.isGameOver()).toBe(true);
       expect(engine.getWinnerId()).toBe(P2);

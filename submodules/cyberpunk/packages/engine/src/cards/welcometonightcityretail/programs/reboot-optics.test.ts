@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFieldOperator,
+  welcomeToNightCityRetailOffdutyMalfini,
   welcomeToNightCityRetailRebootOptics,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
@@ -26,25 +26,35 @@ describe("Reboot Optics", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailRebootOptics],
-        field: [{ card: alphaCorpoSecurity, spent: true, playedThisTurn: false }],
+        field: [
+          { card: welcomeToNightCityRetailCorpoSecurity, spent: true, playedThisTurn: false },
+        ],
         eddies: 2,
       },
       {
-        field: [{ card: alphaSwordwiseHuscle, spent: false, playedThisTurn: false }],
+        field: [
+          { card: welcomeToNightCityRetailOffdutyMalfini, spent: false, playedThisTurn: false },
+        ],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailRebootOptics, { as: P1 });
     engine.judgeSetTurnMetadata({ activePlayerId: P2 }, { as: P1 });
 
-    engine.attackUnit(alphaSwordwiseHuscle, alphaCorpoSecurity, { as: P2 });
+    engine.attackUnit(
+      welcomeToNightCityRetailOffdutyMalfini,
+      welcomeToNightCityRetailCorpoSecurity,
+      {
+        as: P2,
+      },
+    );
     engine.resolveFullFight({ as: P2 });
 
     expect(engine.getCardsInZone("field", P1).map((card) => card.definitionId)).toContain(
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
     expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).not.toContain(
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
     expect(
       engine
@@ -57,20 +67,30 @@ describe("Reboot Optics", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailRebootOptics],
-        field: [{ card: alphaRuthlessLowlife, spent: false, playedThisTurn: false }],
+        field: [
+          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
+        ],
         eddies: 2,
       },
       {
-        field: [{ card: alphaSwordwiseHuscle, spent: true, playedThisTurn: false }],
+        field: [
+          { card: welcomeToNightCityRetailOffdutyMalfini, spent: true, playedThisTurn: false },
+        ],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailRebootOptics, { as: P1 });
-    engine.attackUnit(alphaRuthlessLowlife, alphaSwordwiseHuscle, { as: P1 });
+    engine.attackUnit(
+      welcomeToNightCityRetailFieldOperator,
+      welcomeToNightCityRetailOffdutyMalfini,
+      {
+        as: P1,
+      },
+    );
     engine.resolveFullFight({ as: P1 });
 
     expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(
-      alphaRuthlessLowlife.id,
+      welcomeToNightCityRetailFieldOperator.id,
     );
     expect(
       engine

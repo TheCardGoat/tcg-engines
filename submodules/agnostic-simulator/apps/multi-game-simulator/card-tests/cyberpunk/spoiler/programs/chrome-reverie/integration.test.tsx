@@ -7,7 +7,10 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { alphaCorpoSecurity, spoilerRiverWardDetectiveOnTheHunt } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -37,12 +40,12 @@ describe("progChromeReverie fixture behavior", () => {
       const corpoSecurity = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
       const riverWard = await pom.getCardInZoneByDefinitionId(
         "legendArea",
         CYBERPUNK_P1,
-        spoilerRiverWardDetectiveOnTheHunt.id,
+        welcomeToNightCityRetailRiverWardDetectiveOnTheHunt.id,
       );
 
       expectEqual("River Ward starts face-down", riverWard.faceDown, true);

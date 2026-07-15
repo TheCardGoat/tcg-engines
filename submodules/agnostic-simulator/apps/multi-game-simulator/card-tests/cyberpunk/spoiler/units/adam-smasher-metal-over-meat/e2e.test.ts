@@ -1,12 +1,12 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  alphaJackieWellesRideOrDieChoom,
-  alphaSecondhandBombus,
-  alphaSwordwiseHuscle,
-  spoilerAdamSmasherMetalOverMeat,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+  welcomeToNightCityRetailSecondhandBombus,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailAdamSmasherMetalOverMeat,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
@@ -23,7 +23,7 @@ test("Adam Smasher - play trigger defeats every other unit", async ({ page }) =>
   const adam = await pom.getCardInZoneByDefinitionId(
     "hand",
     CYBERPUNK_P1,
-    spoilerAdamSmasherMetalOverMeat.id,
+    welcomeToNightCityRetailAdamSmasherMetalOverMeat.id,
   );
 
   await pom.playCardFromHand(adam.instanceId, CYBERPUNK_P1);
@@ -32,16 +32,20 @@ test("Adam Smasher - play trigger defeats every other unit", async ({ page }) =>
   await pom.expectFieldSize(CYBERPUNK_P2, 0);
   await pom.expectTrashSize(CYBERPUNK_P1, 2);
   await pom.expectTrashSize(CYBERPUNK_P2, 3);
-  await pom.getCardInZoneByDefinitionId("field", CYBERPUNK_P1, spoilerAdamSmasherMetalOverMeat.id);
+  await pom.getCardInZoneByDefinitionId(
+    "field",
+    CYBERPUNK_P1,
+    welcomeToNightCityRetailAdamSmasherMetalOverMeat.id,
+  );
 
   const p1Trash = await getZoneDefinitionIds(pom, "trash", CYBERPUNK_P1);
-  expectIncludes("Adam P1 trash", p1Trash, alphaSwordwiseHuscle.id);
-  expectIncludes("Adam P1 trash", p1Trash, alphaSecondhandBombus.id);
+  expectIncludes("Adam P1 trash", p1Trash, welcomeToNightCityRetailSwordwiseHuscle.id);
+  expectIncludes("Adam P1 trash", p1Trash, welcomeToNightCityRetailSecondhandBombus.id);
 
   const p2Trash = await getZoneDefinitionIds(pom, "trash", CYBERPUNK_P2);
-  expectIncludes("Adam P2 trash", p2Trash, alphaCorpoSecurity.id);
-  expectIncludes("Adam P2 trash", p2Trash, alphaArmoredMinotaur.id);
-  expectIncludes("Adam P2 trash", p2Trash, alphaJackieWellesRideOrDieChoom.id);
+  expectIncludes("Adam P2 trash", p2Trash, welcomeToNightCityRetailCorpoSecurity.id);
+  expectIncludes("Adam P2 trash", p2Trash, embracingPowerRetailStarterDeckMinotaur.id);
+  expectIncludes("Adam P2 trash", p2Trash, welcomeToNightCityRetailJackieWellesRideOrDieChoom.id);
 
   await pom.expectStructuralState();
 });

@@ -7,17 +7,17 @@ import {
   expectPendingChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  spoilerAltCunninghamSoulkillerArchitect,
-  alphaCorporateSurveillance,
-  alphaRebootOptics,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailAltCunninghamSoulkillerArchitect,
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailRebootOptics,
+  welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
-const alt = spoilerAltCunninghamSoulkillerArchitect;
-const corpSurv = alphaCorporateSurveillance; // program, cost 2
-const reboot = alphaRebootOptics; // program, cost 2
-const huscle = alphaSwordwiseHuscle; // unit, power 5
+const alt = welcomeToNightCityRetailAltCunninghamSoulkillerArchitect;
+const corpSurv = welcomeToNightCityRetailCorporateSurveillance; // program, cost 2
+const reboot = welcomeToNightCityRetailRebootOptics; // program, cost 2
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // unit, power 5
 const p1LeadGigs = [
   { dieType: "d4" as const, faceValue: 1 },
   { dieType: "d8" as const, faceValue: 1 },
@@ -46,8 +46,8 @@ describe("Alt Cunningham - Soulkiller Architect", () => {
         },
       );
       engine.attackRival(alt);
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive → resolve
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P2, pass: true }); // react → resolve
       engine.resolveAttack(); // steal: steal gigs
 
       const choice = expectPendingChoice(engine, "chooseCardToPlay");
@@ -130,8 +130,8 @@ describe("Alt Cunningham - Soulkiller Architect", () => {
       const engine = setupForGigSteal();
 
       engine.attackRival(alt);
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive → resolve
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P2, pass: true }); // react → resolve
       engine.resolveAttack(); // steal: steal gigs
 
       const choice = engine.getState().G.turnMetadata.pendingChoice;
@@ -143,8 +143,8 @@ describe("Alt Cunningham - Soulkiller Architect", () => {
       const engine = setupForGigSteal();
 
       engine.attackRival(alt);
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive → resolve
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P2, pass: true }); // react → resolve
       engine.resolveAttack(); // steal: steal gigs
 
       // Alt should be removed from cardIndex entirely
@@ -157,8 +157,8 @@ describe("Alt Cunningham - Soulkiller Architect", () => {
       const engine = setupForGigSteal();
 
       engine.attackRival(alt);
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive → resolve
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P2, pass: true }); // react → resolve
       engine.resolveAttack(); // steal: steal gigs
 
       // Pending choice should offer the program in trash
@@ -182,8 +182,8 @@ describe("Alt Cunningham - Soulkiller Architect", () => {
       const p2GigsBefore = engine.getGigCount(P2);
 
       engine.attackRival(alt);
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive → resolve
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P2, pass: true }); // react → resolve
       engine.resolveAttack(); // steal: steal gigs
 
       expect(engine.getGigCount(P1)).toBeGreaterThanOrEqual(1);
@@ -205,8 +205,8 @@ describe("Alt Cunningham - Soulkiller Architect", () => {
       );
 
       engine.attackRival(huscle);
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive → resolve
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P2, pass: true }); // react → resolve
       engine.resolveAttack(); // steal: steal gigs
 
       // No pending choice — Alt's ability should NOT have fired
@@ -232,8 +232,8 @@ describe("Alt Cunningham - Soulkiller Architect", () => {
       );
 
       engine.attackRival(alt);
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive → resolve
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P2, pass: true }); // react → resolve
       engine.resolveAttack(); // steal: steal gigs
 
       // No pending choice (no gigs stolen → trigger didn't fire)
@@ -255,8 +255,8 @@ describe("Alt Cunningham - Soulkiller Architect", () => {
       );
 
       engine.attackRival(alt);
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive → resolve
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P2, pass: true }); // react → resolve
       engine.resolveAttack(); // steal: steal gigs
 
       // Alt is still removed (the doEffect fires unconditionally)
@@ -283,8 +283,8 @@ describe("Alt Cunningham - Soulkiller Architect", () => {
       );
 
       engine.attackRival(alt);
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive → resolve
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P2, pass: true }); // react → resolve
       engine.resolveAttack(); // steal: steal gigs
 
       const choice = engine.getState().G.turnMetadata.pendingChoice;
@@ -297,8 +297,8 @@ describe("Alt Cunningham - Soulkiller Architect", () => {
       const engine = setupForGigSteal();
 
       engine.attackRival(alt);
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive → resolve
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P2, pass: true }); // react → resolve
       engine.resolveAttack(); // steal: steal gigs
 
       // The last action log should be from the direct attack resolution
@@ -325,8 +325,8 @@ describe("Alt Cunningham - Soulkiller Architect", () => {
       );
 
       engine.attackRival(huscle);
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive → resolve
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P2, pass: true }); // react → resolve
       engine.resolveAttack(); // steal: steal gigs
 
       // Face-down legends have inactive triggered abilities

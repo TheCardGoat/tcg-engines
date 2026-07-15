@@ -15,7 +15,7 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
     if (state.G.gamePhase !== "main") return false;
     const attack = state.G.attackState;
     if (!attack) return false;
-    if (attack.step !== "defensive") return false;
+    if (attack.step !== "react") return false;
     if (attack.rivalId !== playerId) return false;
 
     // Attacker with cantBeBlocked prevents all blocking.
@@ -34,11 +34,11 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
   validate({ state, playerId, input }) {
     const { blockerId } = input.args;
     const attack = state.G.attackState;
-    if (!attack || attack.step !== "defensive") {
-      return { valid: false, error: "Not in defensive step", errorCode: "NOT_DEFENSIVE_STEP" };
+    if (!attack || attack.step !== "react") {
+      return { valid: false, error: "Not in react step", errorCode: "NOT_REACT_STEP" };
     }
     if (attack.rivalId !== playerId) {
-      return { valid: false, error: "Not your defensive step", errorCode: "NOT_YOUR_DEFENSE" };
+      return { valid: false, error: "Not your react step", errorCode: "NOT_YOUR_REACT" };
     }
 
     const blocker = state.G.cardIndex[blockerId];
@@ -86,6 +86,7 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
 
     const blockerActivatedEvent = {
       type: "blockerActivated",
+      attackerId: attack.attackerId,
       blockerId: blockerId as CardInstanceId,
       originalTarget: attack.defenderId,
       playerId,
@@ -101,7 +102,7 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
       ...attack,
       defenderId: blockerId as CardInstanceId,
       kind: "fight",
-      step: "defensive",
+      step: "react",
       redirectedByBlocker: true,
     });
     markDefeatAtEndOfTurnIfAttacked(

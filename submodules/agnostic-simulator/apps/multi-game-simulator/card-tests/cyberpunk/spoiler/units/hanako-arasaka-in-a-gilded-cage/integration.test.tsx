@@ -8,12 +8,12 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
 });
 
 import {
-  alphaCorpoSecurity,
-  alphaFloorIt,
-  alphaRuthlessLowlife,
-  alphaSecondhandBombus,
-  alphaSwordwiseHuscle,
-  spoilerHanakoArasakaInAGildedCage,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFloorIt,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSecondhandBombus,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailHanakoArasakaInAGildedCage,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk-simulator/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -42,7 +42,7 @@ describe("unitHanakoArasakaInAGildedCage fixture behavior", () => {
       const hanako = await pom.getCardInZoneByDefinitionId(
         "hand",
         CYBERPUNK_P1,
-        spoilerHanakoArasakaInAGildedCage.id,
+        welcomeToNightCityRetailHanakoArasakaInAGildedCage.id,
       );
 
       expectEqual("Hanako initial deck size", await pom.getDeckSize(CYBERPUNK_P1), 40);
@@ -56,13 +56,33 @@ describe("unitHanakoArasakaInAGildedCage fixture behavior", () => {
       await pom.expectEddies(CYBERPUNK_P1, 1);
 
       const handDefinitions = await getZoneDefinitionIds(pom, "hand", CYBERPUNK_P1);
-      expectIncludes("Hanako hand definitions", handDefinitions, alphaSwordwiseHuscle.id);
-      expectIncludes("Hanako hand definitions", handDefinitions, alphaFloorIt.id);
-      expectExcludes("Hanako hand definitions", handDefinitions, alphaSecondhandBombus.id);
+      expectIncludes(
+        "Hanako hand definitions",
+        handDefinitions,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
+      );
+      expectIncludes(
+        "Hanako hand definitions",
+        handDefinitions,
+        welcomeToNightCityRetailFloorIt.id,
+      );
+      expectExcludes(
+        "Hanako hand definitions",
+        handDefinitions,
+        welcomeToNightCityRetailSecondhandBombus.id,
+      );
 
       const trashDefinitions = await getZoneDefinitionIds(pom, "trash", CYBERPUNK_P1);
-      expectIncludes("Hanako trash definitions", trashDefinitions, alphaCorpoSecurity.id);
-      expectIncludes("Hanako trash definitions", trashDefinitions, alphaRuthlessLowlife.id);
+      expectIncludes(
+        "Hanako trash definitions",
+        trashDefinitions,
+        welcomeToNightCityRetailCorpoSecurity.id,
+      );
+      expectIncludes(
+        "Hanako trash definitions",
+        trashDefinitions,
+        welcomeToNightCityRetailMoxInciters.id,
+      );
 
       await pom.expectStructuralState();
     } finally {

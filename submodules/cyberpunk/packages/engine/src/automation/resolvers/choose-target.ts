@@ -21,7 +21,10 @@ export const chooseTargetResolver: ChoiceResolver<ChooseTargetChoicePrompt> = (c
   }
 };
 
-const resolveEffectTarget: ChoiceResolver<ChooseTargetChoicePrompt> = (choice): MoveDecision => {
+const resolveEffectTarget: ChoiceResolver<ChooseTargetChoicePrompt> = (
+  choice,
+  ctx,
+): MoveDecision => {
   const min = choice.payload.min ?? 1;
   const max = choice.payload.max ?? 1;
   const eligible = choice.payload.eligibleIds ?? [];
@@ -38,12 +41,42 @@ const resolveEffectTarget: ChoiceResolver<ChooseTargetChoicePrompt> = (choice): 
       reason: `effectTarget: need ${min} target(s), only ${eligible.length} eligible`,
     };
   }
+  const selected = pickEffectTargets(choice, ctx, eligible, max);
   return {
     kind: "command",
     move: "resolveEffectTarget",
-    args: { targetIds: eligible.slice(0, max) },
+    args: { targetIds: selected },
   };
 };
+
+function pickEffectTargets(
+  choice: ChooseTargetChoicePrompt,
+  ctx: Parameters<ChoiceResolver<ChooseTargetChoicePrompt>>[1],
+  eligible: string[],
+  max: number,
+): string[] {
+  const eligibleCards = choice.payload.cards ?? [];
+  const chooserHand = ctx.view.players[choice.chooserId]?.zones.hand;
+  const handIds = new Set(
+    Array.isArray(chooserHand) ? chooserHand.map((card) => card.instanceId) : [],
+  );
+  const allEligibleFromChooserHand = eligible.length > 0 && eligible.every((id) => handIds.has(id));
+
+  if (allEligibleFromChooserHand && eligibleCards.length > 0) {
+    return [...eligibleCards]
+      .filter((card) => eligible.includes(card.instanceId))
+      .sort((a, b) => {
+        const ac = a.cost ?? Number.NEGATIVE_INFINITY;
+        const bc = b.cost ?? Number.NEGATIVE_INFINITY;
+        if (ac !== bc) return bc - ac;
+        return a.instanceId.localeCompare(b.instanceId);
+      })
+      .slice(0, max)
+      .map((card) => card.instanceId);
+  }
+
+  return eligible.slice(0, max);
+}
 
 const resolveDiscardFromHand: ChoiceResolver<ChooseTargetChoicePrompt> = (
   choice,
@@ -56,8 +89,11 @@ const resolveDiscardFromHand: ChoiceResolver<ChooseTargetChoicePrompt> = (
   const targetPlayer = choice.chooserId;
   const handZone = ctx.view.players[targetPlayer]?.zones.hand;
   const hand: FilteredCardView[] = Array.isArray(handZone) ? handZone : [];
+  const eligibleIds = choice.payload.eligibleIds;
+  const eligibleHand =
+    eligibleIds === undefined ? hand : hand.filter((card) => eligibleIds.includes(card.instanceId));
 
-  if (hand.length < amount) {
+  if (eligibleHand.length < amount) {
     if (choice.payload.canDecline) {
       return {
         kind: "command",
@@ -67,12 +103,12 @@ const resolveDiscardFromHand: ChoiceResolver<ChooseTargetChoicePrompt> = (
     }
     return {
       kind: "stuck",
-      reason: `discardFromHand: need ${amount} cards but hand has ${hand.length}`,
+      reason: `discardFromHand: need ${amount} cards but only ${eligibleHand.length} eligible`,
     };
   }
 
   // Pick the cheapest cards. Ties broken by id for determinism.
-  const sorted = [...hand].sort((a, b) => {
+  const sorted = [...eligibleHand].sort((a, b) => {
     const ac = a.cost ?? Number.POSITIVE_INFINITY;
     const bc = b.cost ?? Number.POSITIVE_INFINITY;
     if (ac !== bc) return ac - bc;

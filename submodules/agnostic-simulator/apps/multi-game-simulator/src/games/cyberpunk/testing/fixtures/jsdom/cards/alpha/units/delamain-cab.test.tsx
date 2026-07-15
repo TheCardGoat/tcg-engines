@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { alphaDelamainCab } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailDelamainCab } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -19,7 +19,7 @@ describe("Delamain Cab jsdom happy path", () => {
       const delamain = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaDelamainCab.id,
+        welcomeToNightCityRetailDelamainCab.id,
       );
 
       await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, delamain.instanceId, 7);

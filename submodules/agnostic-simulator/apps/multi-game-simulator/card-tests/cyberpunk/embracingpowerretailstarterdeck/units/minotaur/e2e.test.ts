@@ -1,8 +1,8 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaArmoredMinotaur,
-  alphaSwordwiseHuscle,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailSwordwiseHuscle,
   embracingPowerRetailStarterDeckMinotaur,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -29,13 +29,17 @@ test("Minotaur (Embracing Power) - higher Street Cred defeats low-power rival Un
   await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
   const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
   const eligibleDefinitions = await getChoiceDefinitionIds(pom, eligible);
-  expectIncludes("Minotaur low-power target", eligibleDefinitions, alphaSwordwiseHuscle.id);
+  expectIncludes(
+    "Minotaur low-power target",
+    eligibleDefinitions,
+    welcomeToNightCityRetailSwordwiseHuscle.id,
+  );
   expectExcludes(
     "Minotaur excludes high-power target",
     eligibleDefinitions,
-    alphaArmoredMinotaur.id,
+    embracingPowerRetailStarterDeckMinotaur.id,
   );
-  const target = eligible[eligibleDefinitions.indexOf(alphaSwordwiseHuscle.id)];
+  const target = eligible[eligibleDefinitions.indexOf(welcomeToNightCityRetailSwordwiseHuscle.id)];
   if (!target) {
     throw new Error("Expected Minotaur to target Swordwise Huscle.");
   }
@@ -44,6 +48,10 @@ test("Minotaur (Embracing Power) - higher Street Cred defeats low-power rival Un
 
   await pom.expectFieldSize(CYBERPUNK_P2, 1);
   await pom.expectTrashSize(CYBERPUNK_P2, 1);
-  await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaSwordwiseHuscle.id);
+  await pom.getCardInZoneByDefinitionId(
+    "trash",
+    CYBERPUNK_P2,
+    welcomeToNightCityRetailSwordwiseHuscle.id,
+  );
   await pom.expectStructuralState();
 });

@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { alphaIndustrialAssembly } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailIndustrialAssembly } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -25,14 +25,18 @@ describe("Industrial Assembly jsdom happy path", () => {
       const program = await pom.getCardInZoneByDefinitionId(
         "hand",
         CYBERPUNK_P1,
-        alphaIndustrialAssembly.id,
+        welcomeToNightCityRetailIndustrialAssembly.id,
       );
       await pom.playCardFromHand(program.instanceId, CYBERPUNK_P1);
       await pom.resolveEffectTarget([d8.id], CYBERPUNK_P1);
 
       await pom.expectGigValue(d8.id, 5);
       await pom.expectHandSize(CYBERPUNK_P1, handBefore);
-      await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P1, alphaIndustrialAssembly.id);
+      await pom.getCardInZoneByDefinitionId(
+        "trash",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailIndustrialAssembly.id,
+      );
       expectEqual(
         "Industrial Assembly pending choice resolved",
         await pom.getPendingChoiceType(CYBERPUNK_P1),

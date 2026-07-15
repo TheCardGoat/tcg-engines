@@ -1,8 +1,8 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaKiroshiOptics,
-  alphaMantisBlades,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailMantisBlades,
   theHeistRetailStarterDeckViktorVektorSitDownAndRelax,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -41,8 +41,8 @@ test("Viktor Vektor (Retail) - call searches top deck for gear", async ({ page }
     revealed.map((cardId) => pom.getCardDefinitionId(cardId)),
   );
   const selected = [
-    revealed[revealedDefinitions.indexOf(alphaKiroshiOptics.id)]!,
-    revealed[revealedDefinitions.indexOf(alphaMantisBlades.id)]!,
+    revealed[revealedDefinitions.indexOf(welcomeToNightCityRetailKiroshiOptics.id)]!,
+    revealed[revealedDefinitions.indexOf(welcomeToNightCityRetailMantisBlades.id)]!,
   ];
   if (selected.some((cardId) => !cardId)) {
     throw new Error("Expected Viktor search to reveal Kiroshi Optics and Mantis Blades.");

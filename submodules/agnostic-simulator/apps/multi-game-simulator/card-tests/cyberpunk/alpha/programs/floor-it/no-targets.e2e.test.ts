@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { alphaJackieWellesRideOrDieChoom } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailJackieWellesRideOrDieChoom } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -16,7 +16,7 @@ test("Floor It - no spent low-cost units", async ({ page }) => {
   const jackie = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaJackieWellesRideOrDieChoom.id,
+    welcomeToNightCityRetailJackieWellesRideOrDieChoom.id,
   );
   const program = expectDefined(
     "Floor It in hand",
