@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "zai-coding-plan/glm-5.1",
+  "instructions": ["AGENTS.md"],
+  "formatter": {
+    "prettier": {
+      "disabled": true
+    },
+    "biome": {
+      "disabled": true
+    }
+  },
+  "permission": {
+    "*": {
+      "*": "allow"
+    }
+  },
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
+  },
+  "default_agent": "lead"
+}

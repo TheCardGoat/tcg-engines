@@ -1,0 +1,9 @@
+import { describe, test } from "vite-plus/test";
+import { op06Tsuru051 } from "../../../../../cards/src/cards/OP06/characters/051-tsuru.ts";
+import { validateCardAbility } from "../../card-behavior-harness.ts";
+
+describe("OP06-051 Tsuru", () => {
+  test("validates its ability through OnePieceTestEngine", () => {
+    validateCardAbility(op06Tsuru051);
+  });
+});

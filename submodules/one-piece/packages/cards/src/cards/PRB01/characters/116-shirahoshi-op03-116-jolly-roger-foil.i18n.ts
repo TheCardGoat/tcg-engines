@@ -1,0 +1,9 @@
+import type { OPCardI18n } from "@tcg/op-types";
+
+export const prb01ShirahoshiOp03116JollyRogerFoil116I18n: OPCardI18n = {
+  en: {
+    name: "Shirahoshi (OP03-116) (Jolly Roger Foil)",
+    effect: "[On Play] Draw 3 cards and trash 2 cards from your hand.[Trigger] Play this card.",
+    imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-116_p5.jpg",
+  },
+};

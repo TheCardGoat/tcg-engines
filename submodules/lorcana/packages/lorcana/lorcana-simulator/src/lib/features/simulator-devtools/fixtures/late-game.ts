@@ -1,0 +1,66 @@
+import { createFixture } from "./fixture-factory.js";
+import type { LorcanaSimulatorFixture } from "@/features/simulator/model/contracts.js";
+import {
+  friendsOnTheOtherSide,
+  hakunaMatata,
+  controlYourTemper,
+  bePrepared,
+  aWholeNewWorld,
+  stitchAbomination,
+  mickeyMouseWaywardSorcerer,
+  elsaQueenRegent,
+  mulanImperialSoldier,
+  merlinGoat,
+  stitchRockStar,
+  dinglehopper,
+  rapunzelGiftedWithHealing,
+  hadesKingOfOlympus,
+  maleficentBidingHerTime,
+  arielOnHumanLegs,
+  smash,
+  maleficentSorceress,
+  elsaGlovesOff,
+  peterPansShadowNotSewnOn,
+  mauiDemigod,
+  shieldOfVirtue,
+  youHaveForgottenMe,
+  motherKnowsBest,
+  befuddle,
+} from "./fixture-cards.js";
+
+export const lateGameFixture: LorcanaSimulatorFixture = createFixture({
+  id: "late-game",
+  name: "Late Game",
+  description:
+    "Late game state with nearly full boards and high lore counts approaching win condition.",
+  playerOne: {
+    deck: 15,
+    discard: [friendsOnTheOtherSide, hakunaMatata, controlYourTemper, bePrepared, aWholeNewWorld],
+    hand: [stitchAbomination, mickeyMouseWaywardSorcerer, elsaQueenRegent],
+    inkwell: 8,
+    lore: 17,
+    play: [
+      mulanImperialSoldier,
+      merlinGoat,
+      stitchRockStar,
+      dinglehopper,
+      rapunzelGiftedWithHealing,
+      hadesKingOfOlympus,
+    ],
+  },
+  playerTwo: {
+    deck: 12,
+    discard: [youHaveForgottenMe, motherKnowsBest, befuddle],
+    hand: [maleficentBidingHerTime, arielOnHumanLegs, smash],
+    inkwell: 9,
+    lore: 19,
+    play: [
+      { card: maleficentSorceress, exerted: true },
+      elsaGlovesOff,
+      peterPansShadowNotSewnOn,
+      mauiDemigod,
+      shieldOfVirtue,
+    ],
+  },
+  seed: "storybook-local-late-game",
+});

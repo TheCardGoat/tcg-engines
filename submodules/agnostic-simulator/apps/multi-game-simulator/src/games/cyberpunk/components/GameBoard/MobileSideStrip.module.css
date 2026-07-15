@@ -1,0 +1,111 @@
+.strip {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 8px;
+  padding: 0 6px;
+  border-top: 1px solid rgb(245 230 66 / 35%);
+  border-bottom: 1px solid rgb(245 230 66 / 35%);
+  background: #07090c;
+  font-family: "Share Tech Mono", monospace;
+  color: #f5e642;
+  height: 100%;
+}
+
+/* When a trailing slot is present (player strip with PASS TURN), allocate
+   space for it on the right. */
+.strip.hasTrailing {
+  grid-template-columns: auto auto 1fr auto;
+}
+
+.opp {
+  border-color: rgb(245 230 66 / 25%);
+}
+
+.leading,
+.trailing {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Compact stats column: HP and CD as plain key/val text rows.
+   Drops the progress bars used on desktop to save horizontal space. */
+.statCol {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  min-width: 32px;
+}
+
+.statLine {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.statKey {
+  color: #b8b8b8;
+  font-size: 8px;
+}
+
+.statVal {
+  color: #f5e642;
+  font-weight: 700;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.statLow {
+  color: #ff5252;
+  text-shadow: 0 0 6px rgb(255 82 82 / 60%);
+}
+
+/* Chips: tighter padding and smaller type so all three fit on phone width. */
+.chips {
+  display: flex;
+  gap: 3px;
+  justify-self: end;
+}
+
+.chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(20 23 28 / 90%);
+  border: 1px solid rgb(245 230 66 / 55%);
+  color: #f5e642;
+  font-family: inherit;
+  padding: 2px 5px;
+  min-width: 30px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  height: 80%;
+}
+
+.chip:active {
+  background: rgb(245 230 66 / 15%);
+}
+
+.chipKey {
+  font-size: 6px;
+  opacity: 0.75;
+  line-height: 1.1;
+}
+
+.chipVal {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.dice {
+  border-color: rgb(61 240 255 / 70%);
+  color: #3df0ff;
+}

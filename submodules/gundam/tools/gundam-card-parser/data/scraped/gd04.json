@@ -1,0 +1,5240 @@
+[
+  {
+    "id": "GD01-002_p2",
+    "code": "GD01-002",
+    "name": "Unicorn Gundam (Destroy Mode)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 6,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 4,
+    "effect": "When playing this card from your hand, you may destroy 1 of your Link Units with \"Unicorn Mode\" in its card name that is Lv.5. If you do, play this card as if it has 0 Lv. and cost.\n【Attack】Choose 1 enemy Unit. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Civilian)",
+    "link": "[Banagher Links]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-002_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-002_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd01",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD03-026_p1",
+    "code": "GD03-026",
+    "name": "Gundam Dynames",
+    "rarity": "U +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Lockon Stratos]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-026_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-026_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd03",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD03-039_p1",
+    "code": "GD03-039",
+    "name": "Red Gundam",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 4,
+    "effect": "【Deploy】Choose 1 other active friendly (Clan) Unit. Rest it. If you do, choose 1 enemy Unit with 2 or less AP. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Clan)",
+    "link": "(Clan) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-039_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-039_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd03",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD03-056_p1",
+    "code": "GD03-056",
+    "name": "Gundam Barbatos Adapt",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 4,
+    "effect": "【Deploy】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-056_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-056_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Iron-Blooded Orphans",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd03",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-001",
+    "code": "GD04-001",
+    "name": "Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 6,
+    "hp": 3,
+    "effect": "【During Link】【Attack】If you are attacking an enemy Unit, you may return a blue Pilot paired with this Unit to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-001.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-001.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-001_p1",
+    "code": "GD04-001",
+    "name": "Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 6,
+    "hp": 3,
+    "effect": "【During Link】【Attack】If you are attacking an enemy Unit, you may return a blue Pilot paired with this Unit to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-001_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-001_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-002",
+    "code": "GD04-002",
+    "name": "Penelope (Flight Form)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 5,
+    "effect": "During your turn, all your (Earth Federation) Units get AP+1.\n【Deploy】During this turn, when one of your (Earth Federation) Units destroys an enemy Unit with battle damage, choose 1 enemy Unit with 5 or less HP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Lane Aim]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-002.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-002.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway\"s Flash",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-002_p1",
+    "code": "GD04-002",
+    "name": "Penelope (Flight Form)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 5,
+    "effect": "During your turn, all your (Earth Federation) Units get AP+1.\n【Deploy】During this turn, when one of your (Earth Federation) Units destroys an enemy Unit with battle damage, choose 1 enemy Unit with 5 or less HP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Lane Aim]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-002_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-002_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway\"s Flash",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-003",
+    "code": "GD04-003",
+    "name": "Victory Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【Attack】If you have 3 or more (League Militaire) Units in play, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(League Militaire) (Victory Type)",
+    "link": "(League Militaire) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-003.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-003.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-003_p1",
+    "code": "GD04-003",
+    "name": "Victory Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【Attack】If you have 3 or more (League Militaire) Units in play, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(League Militaire) (Victory Type)",
+    "link": "(League Militaire) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-003_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-003_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-004",
+    "code": "GD04-004",
+    "name": "Psycho Gundam Mk-Ⅱ",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 7,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\n【Once per Turn】When you pair a (Cyber-Newtype) Pilot with one of your blue Units, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "[Rosamia Badam]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-004.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-004.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-005",
+    "code": "GD04-005",
+    "name": "GM III",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-005.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-005.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-006",
+    "code": "GD04-006",
+    "name": "V-Dash Gundam",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 5,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【Activate･Main】【Once per Turn】Rest 1 of your other (League Militaire) Units：Choose 1 enemy Unit with 4 or less HP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(League Militaire) (Victory Type)",
+    "link": "[Üso Ewin]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-006.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-006.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-006_p1",
+    "code": "GD04-006",
+    "name": "V-Dash Gundam",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 5,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【Activate･Main】【Once per Turn】Rest 1 of your other (League Militaire) Units：Choose 1 enemy Unit with 4 or less HP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(League Militaire) (Victory Type)",
+    "link": "[Üso Ewin]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-006_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-006_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-007",
+    "code": "GD04-007",
+    "name": "Victory Gundam Hexa",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【During Pair】【Attack】Deploy 1 [Parts]((League Militaire)･AP1･HP1･This Unit can't choose the enemy player as its attack target) Unit token.",
+    "zone": "Space Earth",
+    "trait": "(League Militaire) (Victory Type)",
+    "link": "(League Militaire) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-007.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-007.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-008",
+    "code": "GD04-008",
+    "name": "Gundam",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【During Link】This Unit gains <High-Maneuver>.\n\r\n(This Unit can't be blocked.)",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-008.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-008.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-009",
+    "code": "GD04-009",
+    "name": "Guncannon (108) & Guncannon (109)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【When Linked】Choose 1 of your other (White Base Team) Units that is Lv.4 or higher. Set it as active.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Kai Shiden] / [Hayato Kobayashi]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-009.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-009.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-009_p1",
+    "code": "GD04-009",
+    "name": "Guncannon (108) & Guncannon (109)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【When Linked】Choose 1 of your other (White Base Team) Units that is Lv.4 or higher. Set it as active.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Kai Shiden] / [Hayato Kobayashi]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-009_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-009_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-010",
+    "code": "GD04-010",
+    "name": "Gaplant",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "(Titans) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-010.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-010.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-011",
+    "code": "GD04-011",
+    "name": "Victory Gundam",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Destroyed】If another friendly (League Militaire) Unit is in play, deploy 1 [Parts]((League Militaire)･AP1･HP1･This Unit can't choose the enemy player as its attack target) Unit token.",
+    "zone": "Space Earth",
+    "trait": "(League Militaire) (Victory Type)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-011.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-011.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-012",
+    "code": "GD04-012",
+    "name": "Core Booster (005) & Core Booster (006)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Sleggar Law] / [Sayla Mass]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-012.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-012.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-013",
+    "code": "GD04-013",
+    "name": "Core Fighter",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 3,
+    "effect": "While this Unit is rested, all your (League Militaire) Unit tokens gain <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(League Militaire) (Victory Type)",
+    "link": "(League Militaire) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-013.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-013.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-014",
+    "code": "GD04-014",
+    "name": "Shokew",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Earth",
+    "trait": "(League Militaire) (Zanscare)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-014.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-014.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-015",
+    "code": "GD04-015",
+    "name": "Gun EZ",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 3,
+    "effect": "【Deploy】Choose 1 of your active (League Militaire) Units and 1 enemy Unit that is Lv.3 or lower. Rest them.",
+    "zone": "Space Earth",
+    "trait": "(League Militaire) (Shrike Team)",
+    "link": "(Shrike Team) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-015.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-015.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-016",
+    "code": "GD04-016",
+    "name": "Zoloat (League Militaire)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 2,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\nThis Unit can't choose the enemy player as its attack target.",
+    "zone": "Space",
+    "trait": "(League Militaire)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-016.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-016.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-017",
+    "code": "GD04-017",
+    "name": "Zeong",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【When Paired･(Newtype) Pilot】Deploy 2 [Wire-Guided Arm]((Zeon)･AP2･HP1・This Unit can't be paired with a Pilot) Unit tokens.\n【Destroyed】Deploy 1 rested [Zeong (Head)]((Zeon)･AP3･HP1) Unit token.",
+    "zone": "Space",
+    "trait": "(Zeon)",
+    "link": "[Char Aznable]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-017.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-017.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-017_p1",
+    "code": "GD04-017",
+    "name": "Zeong",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【When Paired･(Newtype) Pilot】Deploy 2 [Wire-Guided Arm]((Zeon)･AP2･HP1・This Unit can't be paired with a Pilot) Unit tokens.\n【Destroyed】Deploy 1 rested [Zeong (Head)]((Zeon)･AP3･HP1) Unit token.",
+    "zone": "Space",
+    "trait": "(Zeon)",
+    "link": "[Char Aznable]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-017_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-017_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-017_p2",
+    "code": "GD04-017",
+    "name": "Zeong",
+    "rarity": "LR ++",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【When Paired･(Newtype) Pilot】Deploy 2 [Wire-Guided Arm]((Zeon)･AP2･HP1・This Unit can't be paired with a Pilot) Unit tokens.\n【Destroyed】Deploy 1 rested [Zeong (Head)]((Zeon)･AP3･HP1) Unit token.",
+    "zone": "Space",
+    "trait": "(Zeon)",
+    "link": "[Char Aznable]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-017_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-017_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-018",
+    "code": "GD04-018",
+    "name": "Gundam Pharact",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Green",
+    "ap": 5,
+    "hp": 4,
+    "effect": "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【Once per Turn】During your turn, when one of your other (Academy) Units receives damage from an enemy, place 1 EX Resource.",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "[Elan Ceres]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-018.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-018.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-018_p1",
+    "code": "GD04-018",
+    "name": "Gundam Pharact",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Green",
+    "ap": 5,
+    "hp": 4,
+    "effect": "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【Once per Turn】During your turn, when one of your other (Academy) Units receives damage from an enemy, place 1 EX Resource.",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "[Elan Ceres]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-018_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-018_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-019",
+    "code": "GD04-019",
+    "name": "GN Armor Type-D (Trans-Am)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Green",
+    "ap": 4,
+    "hp": 5,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【Destroyed】Look at the top 3 cards of your deck. You may reveal 1 (CB) Unit card that is Lv.5 or lower among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Lockon Stratos]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-019.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-019.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-020",
+    "code": "GD04-020",
+    "name": "Gundam Lfrith Ur",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Once per Turn】During your turn, when you play and activate a (Dawn of Fold) Command card using an EX Resource, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(Dawn of Fold) (Academy)",
+    "link": "[Sophie Pulone]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-020.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-020.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-021",
+    "code": "GD04-021",
+    "name": "Gundam Lfrith Thorn",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\nDuring your turn, when you play and activate a (Dawn of Fold) Command card using an EX Resource, you may pair that card from your trash with one of your Units with \"Gundam Lfrith\" in its card name.",
+    "zone": "Space Earth",
+    "trait": "(Dawn of Fold) (Academy)",
+    "link": "[Norea Du Noc]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-021.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-021.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-021_p1",
+    "code": "GD04-021",
+    "name": "Gundam Lfrith Thorn",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\nDuring your turn, when you play and activate a (Dawn of Fold) Command card using an EX Resource, you may pair that card from your trash with one of your Units with \"Gundam Lfrith\" in its card name.",
+    "zone": "Space Earth",
+    "trait": "(Dawn of Fold) (Academy)",
+    "link": "[Norea Du Noc]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-021_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-021_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-022",
+    "code": "GD04-022",
+    "name": "Kikeroga (MS Mode) (GQ)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 4,
+    "color": "Green",
+    "ap": 3,
+    "hp": 6,
+    "effect": "All your Unit tokens gain <Breach 1>.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【During Link】All Units that are Lv.3 or lower other than Unit tokens are deployed rested.",
+    "zone": "Space",
+    "trait": "(Zeon)",
+    "link": "[Challia Bull]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-022.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-022.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-022_p1",
+    "code": "GD04-022",
+    "name": "Kikeroga (MS Mode) (GQ)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 4,
+    "color": "Green",
+    "ap": 3,
+    "hp": 6,
+    "effect": "All your Unit tokens gain <Breach 1>.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【During Link】All Units that are Lv.3 or lower other than Unit tokens are deployed rested.",
+    "zone": "Space",
+    "trait": "(Zeon)",
+    "link": "[Challia Bull]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-022_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-022_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-023",
+    "code": "GD04-023",
+    "name": "Gundam Kyrios (Tail Booster)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Green",
+    "ap": 5,
+    "hp": 3,
+    "effect": "【Deploy】Choose 1 of your Units paired with a (Super Soldier) Pilot. During this turn, it may choose an active enemy Unit that is Lv.4 or lower as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Allelujah Haptism] / [Hallelujah Haptism]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-023.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-023.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-024",
+    "code": "GD04-024",
+    "name": "Gundam Aerial Rebuild",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Green",
+    "ap": 5,
+    "hp": 5,
+    "effect": "【Deploy】Look at the top 3 cards of your deck. You may reveal 1 (Academy) Unit card/Command card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "[Suletta Mercury]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-024.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-024.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-025",
+    "code": "GD04-025",
+    "name": "Gundvölva",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Destroyed】During your turn, if you have another (Dawn of Fold) Unit in play, place 1 EX Resource.",
+    "zone": "Space Earth",
+    "trait": "(Dawn of Fold) (Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-025.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-025.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-026",
+    "code": "GD04-026",
+    "name": "Garma's Dopp",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Deploy】Look at the top card of your deck. Return it to the top of your deck or place it into your trash.",
+    "zone": "Earth",
+    "trait": "(Zeon)",
+    "link": "[Garma Zabi]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-026.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-026.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-027",
+    "code": "GD04-027",
+    "name": "Bigro",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Green",
+    "ap": 5,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space",
+    "trait": "(Zeon)",
+    "link": "[Tokwan]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-027.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-027.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-028",
+    "code": "GD04-028",
+    "name": "Zakrello",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 4,
+    "hp": 1,
+    "effect": "【Attack】Choose 1 active enemy Unit. It gains <Blocker> during this turn.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-028.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-028.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-029",
+    "code": "GD04-029",
+    "name": "Gundam Dynames (GN Full Shield)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 2,
+    "hp": 3,
+    "effect": "【Once per Turn】If you have a (CB) Pilot in play, when this Unit receives damage from an enemy, reduce it by 1.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Lockon Stratos]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-029.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-029.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-030",
+    "code": "GD04-030",
+    "name": "Chuchu's Demi Trainer",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Attack】Choose 1 of your other (Academy) Units. During this turn, it may choose an active enemy Unit that is Lv.3 or lower as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "(Academy) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-030.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-030.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-031",
+    "code": "GD04-031",
+    "name": "Heindree",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-031.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-031.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-032",
+    "code": "GD04-032",
+    "name": "Xavier's Gyan Hakuji-Packs (GQ)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 5,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "[Xavier Olivette]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-032.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-032.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-033",
+    "code": "GD04-033",
+    "name": "Neo Zeong",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "9",
+    "cost": 8,
+    "color": "Red",
+    "ap": 6,
+    "hp": 7,
+    "effect": "When this Unit or one of your (Neo Zeon) Units is deployed, choose 1 enemy Unit. Deal 3 damage to it.\n【During Link】All your Units gain (Neo Zeon).",
+    "zone": "Space",
+    "trait": "(Neo Zeon)",
+    "link": "[Full Frontal]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-033.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-033.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-033_p1",
+    "code": "GD04-033",
+    "name": "Neo Zeong",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "9",
+    "cost": 8,
+    "color": "Red",
+    "ap": 6,
+    "hp": 7,
+    "effect": "When this Unit or one of your (Neo Zeon) Units is deployed, choose 1 enemy Unit. Deal 3 damage to it.\n【During Link】All your Units gain (Neo Zeon).",
+    "zone": "Space",
+    "trait": "(Neo Zeon)",
+    "link": "[Full Frontal]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-033_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-033_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-034",
+    "code": "GD04-034",
+    "name": "Gundam Kyrios",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 1,
+    "hp": 4,
+    "effect": "<First Strike> (While this Unit is attacking, it deals damage before the enemy Unit.)\n【During Link】This Unit gets AP+2 for each of your rested (CB) Units.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Allelujah Haptism] / [Hallelujah Haptism]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-034.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-034.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-034_p1",
+    "code": "GD04-034",
+    "name": "Gundam Kyrios",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 1,
+    "hp": 4,
+    "effect": "<First Strike> (While this Unit is attacking, it deals damage before the enemy Unit.)\n【During Link】This Unit gets AP+2 for each of your rested (CB) Units.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Allelujah Haptism] / [Hallelujah Haptism]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-034_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-034_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-035",
+    "code": "GD04-035",
+    "name": "Ξ Gundam",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】Choose 1 of your (Mafty) Units. When it destroys an enemy Unit with battle damage during this turn, if you have 3 or less cards in your hand, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "[Hathaway Noa]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-035.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-035.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway\"s Flash",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-036",
+    "code": "GD04-036",
+    "name": "Gundam Throne Eins",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Red",
+    "ap": 5,
+    "hp": 2,
+    "effect": "【Deploy】You may choose 1 to 2 of your other active (CB) Units. Rest them. If you do, deal damage equal to the number of Units rested with this effect to all enemy Units that are Lv.6 or lower.",
+    "zone": "Space Earth",
+    "trait": "(CB) (Trinity)",
+    "link": "(Trinity) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-036.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-036.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-036_p1",
+    "code": "GD04-036",
+    "name": "Gundam Throne Eins",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Red",
+    "ap": 5,
+    "hp": 2,
+    "effect": "【Deploy】You may choose 1 to 2 of your other active (CB) Units. Rest them. If you do, deal damage equal to the number of Units rested with this effect to all enemy Units that are Lv.6 or lower.",
+    "zone": "Space Earth",
+    "trait": "(CB) (Trinity)",
+    "link": "(Trinity) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-036_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-036_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-037",
+    "code": "GD04-037",
+    "name": "Gundam Kyrios (Trans-Am)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Red",
+    "ap": 5,
+    "hp": 4,
+    "effect": "While you have a red (Super Soldier) Pilot in play, this Unit gains <First Strike>.\n\r\n(While this Unit is attacking, it deals damage before the enemy Unit.)\nWhile you have a green (Super Soldier) Pilot in play, this Unit gains <Breach 3>.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Allelujah Haptism] / [Hallelujah Haptism]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-037.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-037.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-038",
+    "code": "GD04-038",
+    "name": "Gundam Exia",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Deploy】If 2 or more enemy Units are in play, choose 1 enemy Unit that is Lv.2 or lower. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Setsuna F. Seiei]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-038.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-038.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-039",
+    "code": "GD04-039",
+    "name": "Rozen Zulu",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 6,
+    "color": "Red",
+    "ap": 4,
+    "hp": 4,
+    "effect": "If there are 8 or more (Neo Zeon) cards in your trash, this card in your hand gets cost -4.\n【Deploy】Choose 1 enemy Unit. Deal 1 damage to it. If it has <Repair>, deal 3 damage instead.",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "[Angelo Sauper]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-039.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-039.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-040",
+    "code": "GD04-040",
+    "name": "Schuzrum-Galluss",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Red",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "(Neo Zeon) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-040.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-040.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-041",
+    "code": "GD04-041",
+    "name": "Gundam Throne Drei",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Once per Turn】When this Unit is rested by an effect, set it as active.",
+    "zone": "Space Earth",
+    "trait": "(CB) (Trinity)",
+    "link": "(Trinity) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-041.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-041.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-042",
+    "code": "GD04-042",
+    "name": "Psycho Gundam (GQ)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Red",
+    "ap": 4,
+    "hp": 5,
+    "effect": "【During Link】【Once per Turn】When damage from one of your Units paired with a (Cyber-Newtype) Pilot destroys an enemy shield area card, choose 1 enemy Unit with 5 or less AP. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Deux Murasame]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-042.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-042.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-042_p1",
+    "code": "GD04-042",
+    "name": "Psycho Gundam (GQ)",
+    "rarity": "U +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Red",
+    "ap": 4,
+    "hp": 5,
+    "effect": "【During Link】【Once per Turn】When damage from one of your Units paired with a (Cyber-Newtype) Pilot destroys an enemy shield area card, choose 1 enemy Unit with 5 or less AP. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Deux Murasame]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-042_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-042_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-043",
+    "code": "GD04-043",
+    "name": "Zssa (Sleeves)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 3,
+    "effect": "【Deploy】Choose 1 enemy Base. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-043.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-043.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-044",
+    "code": "GD04-044",
+    "name": "Gadeel",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Attack】If you are attacking a damaged enemy Unit, this Unit gains <Breach 3> during this battle.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Earth",
+    "trait": "(New UNE)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-044.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-044.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-045",
+    "code": "GD04-045",
+    "name": "Gundam Throne Zwei",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【When Linked】Choose 1 of your (CB) Units. During this turn, it may choose a damaged active enemy Unit as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(CB) (Trinity)",
+    "link": "(Trinity) Trait / [Ali al-Saachez]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-045.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-045.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-046",
+    "code": "GD04-046",
+    "name": "Gundam Dynames",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】You may rest this Unit. If you do, choose 1 enemy Unit that is Lv.3 or lower. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Lockon Stratos]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-046.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-046.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-047",
+    "code": "GD04-047",
+    "name": "Gundam Virtue",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 1,
+    "color": "Red",
+    "ap": 3,
+    "hp": 1,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Tieria Erde]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-047.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-047.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-048",
+    "code": "GD04-048",
+    "name": "Hambrabi (GQ)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Red",
+    "ap": 4,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "(Earth Federation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-048.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-048.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-049",
+    "code": "GD04-049",
+    "name": "Gundam DX",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "Purple",
+    "ap": 6,
+    "hp": 6,
+    "effect": "<Suppression> (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\n【During Pair】【Attack】If you are attacking the enemy player, you may choose 7 (Vulture) cards from your trash. Exile them from the game. If you do, choose 1 enemy Unit/Base that is Lv.8 or lower. Destroy it.",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "[Garrod Ran]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-049.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-049.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-049_p1",
+    "code": "GD04-049",
+    "name": "Gundam DX",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "Purple",
+    "ap": 6,
+    "hp": 6,
+    "effect": "<Suppression> (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\n【During Pair】【Attack】If you are attacking the enemy player, you may choose 7 (Vulture) cards from your trash. Exile them from the game. If you do, choose 1 enemy Unit/Base that is Lv.8 or lower. Destroy it.",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "[Garrod Ran]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-049_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-049_p1.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-050",
+    "code": "GD04-050",
+    "name": "Destiny Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 5,
+    "effect": "<High-Maneuver> (This Unit can't be blocked.)\n【During Pair】【Attack】You may choose 1 (Minerva Squad) Unit card from your trash. Pay its cost to deploy it.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "[Shinn Asuka]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-050.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-050.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-050_p1",
+    "code": "GD04-050",
+    "name": "Destiny Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 5,
+    "effect": "<High-Maneuver> (This Unit can't be blocked.)\n【During Pair】【Attack】You may choose 1 (Minerva Squad) Unit card from your trash. Pay its cost to deploy it.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "[Shinn Asuka]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-050_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-050_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-050_p2",
+    "code": "GD04-050",
+    "name": "Destiny Gundam",
+    "rarity": "LR ++",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 5,
+    "effect": "<High-Maneuver> (This Unit can't be blocked.)\n【During Pair】【Attack】You may choose 1 (Minerva Squad) Unit card from your trash. Pay its cost to deploy it.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "[Shinn Asuka]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-050_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-050_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-051",
+    "code": "GD04-051",
+    "name": "Gundam Airmaster Burst",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 3,
+    "effect": "【During Pair･(Vulture) Pilot】If there are 7 or more cards in your trash, this Unit may choose an active enemy Unit with a keyword effect as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "[Witz Sou]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-051.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-051.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-052",
+    "code": "GD04-052",
+    "name": "Gundam Leopard Destroy",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 5,
+    "effect": "【During Pair】【Attack】You may choose 1 enemy Unit. Deal 2 damage to it and this Unit.",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "(Vulture) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-052.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-052.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-053",
+    "code": "GD04-053",
+    "name": "Rey's Blaze Zaku Phantom",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【During Link】【Once per Turn】When this Unit receives damage from an enemy, reduce it by 1.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "(Minerva Squad) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-053.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-053.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-053_p1",
+    "code": "GD04-053",
+    "name": "Rey's Blaze Zaku Phantom",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【During Link】【Once per Turn】When this Unit receives damage from an enemy, reduce it by 1.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "(Minerva Squad) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-053_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-053_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-054",
+    "code": "GD04-054",
+    "name": "Gundam Virtue (Trans-Am)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 6,
+    "effect": "When this Unit deals battle damage to an enemy Unit, destroy that enemy Unit.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Tieria Erde]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-054.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-054.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-055",
+    "code": "GD04-055",
+    "name": "Heine's Gouf Ignited",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "[Heine Westenfluss]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-055.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-055.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-056",
+    "code": "GD04-056",
+    "name": "Sword Impulse Gundam",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Deploy】Deal 1 damage to this Unit. If you do, choose 1 enemy Unit with 3 or less AP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "[Shinn Asuka] / [Lunamaria Hawke]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-056.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-056.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-057",
+    "code": "GD04-057",
+    "name": "Gundam Nadleeh",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Deploy】Choose 1 enemy Unit that is Lv.6 or lower. During this turn, reduce its AP by an amount equal to the number of Unit cards with \"Gundam Virtue\" in their card names in your trash.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Tieria Erde]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-057.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-057.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-058",
+    "code": "GD04-058",
+    "name": "Jamil's Gundam X",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【During Pair･(Vulture) Pilot】【Destroyed】If it is your turn, return this Unit's paired Pilot to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(Old UNE)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-058.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-058.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-059",
+    "code": "GD04-059",
+    "name": "Daughtress High Mobility Command Wise Wallaby",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Earth",
+    "trait": "(Vulture)",
+    "link": "(Vulture) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-059.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-059.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-060",
+    "code": "GD04-060",
+    "name": "Esperansa",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 4,
+    "effect": "【Deploy】If you deploy this Unit from your trash, draw 1.",
+    "zone": "Earth",
+    "trait": "(Vulture)",
+    "link": "[Ennil El]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-060.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-060.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-061",
+    "code": "GD04-061",
+    "name": "G-Falcon",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 1,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\nThis Unit can't attack while there are 6 or less cards in your trash.",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "[Pala Sys]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-061.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-061.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-062",
+    "code": "GD04-062",
+    "name": "Lunamaria's Gunner Zaku Warrior",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "(Minerva Squad) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-062.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-062.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-063",
+    "code": "GD04-063",
+    "name": "GN Armor Type-E",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Deploy】Choose 1 enemy Unit that is Lv.1 or lower or has 1 or less AP. Destroy it.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Setsuna F. Seiei]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-063.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-063.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-064",
+    "code": "GD04-064",
+    "name": "Gundam Exia",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-064.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-064.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-065",
+    "code": "GD04-065",
+    "name": "Unicorn Gundam 02 Banshee Norn (Destroy Mode)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "White",
+    "ap": 5,
+    "hp": 5,
+    "effect": "【During Link】【Activate･Main】Exile 3 blue cards from your trash：Set this Unit as active. It can't choose the enemy player as its attack target during this turn.\n【Attack】All enemy Units get AP-1 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Riddhe Marcenas]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-065.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-065.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-065_p1",
+    "code": "GD04-065",
+    "name": "Unicorn Gundam 02 Banshee Norn (Destroy Mode)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "White",
+    "ap": 5,
+    "hp": 5,
+    "effect": "【During Link】【Activate･Main】Exile 3 blue cards from your trash：Set this Unit as active. It can't choose the enemy player as its attack target during this turn.\n【Attack】All enemy Units get AP-1 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Riddhe Marcenas]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-065_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-065_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-066",
+    "code": "GD04-066",
+    "name": "Unicorn Gundam (Awakened)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "White",
+    "ap": 4,
+    "hp": 6,
+    "effect": "<Suppression> (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\nWhen you activate a Command's 【Main】/【Action】 effect, choose 1 enemy Unit. It gets AP-2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Civilian)",
+    "link": "[Banagher Links]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-066.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-066.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-066_p1",
+    "code": "GD04-066",
+    "name": "Unicorn Gundam (Awakened)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "White",
+    "ap": 4,
+    "hp": 6,
+    "effect": "<Suppression> (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\nWhen you activate a Command's 【Main】/【Action】 effect, choose 1 enemy Unit. It gets AP-2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Civilian)",
+    "link": "[Banagher Links]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-066_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-066_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-067",
+    "code": "GD04-067",
+    "name": "∀ Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Activate･Main】【Once per Turn】①：Choose 1 Unit card with <Repair>/<Breach>/<First Strike>/<Support>/<High-Maneuver>/<Suppression>/<Blocker> from your trash. During this turn, this Unit gets AP+1 and all <Repair>/<Breach>/<First Strike>/<Support>/<High-Maneuver>/<Suppression>/<Blocker> on that Unit card.",
+    "zone": "Space Earth",
+    "trait": "(Militia)",
+    "link": "[Loran Cehack]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-067.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-067.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-067_p1",
+    "code": "GD04-067",
+    "name": "∀ Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Activate･Main】【Once per Turn】①：Choose 1 Unit card with <Repair>/<Breach>/<First Strike>/<Support>/<High-Maneuver>/<Suppression>/<Blocker> from your trash. During this turn, this Unit gets AP+1 and all <Repair>/<Breach>/<First Strike>/<Support>/<High-Maneuver>/<Suppression>/<Blocker> on that Unit card.",
+    "zone": "Space Earth",
+    "trait": "(Militia)",
+    "link": "[Loran Cehack]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-067_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-067_p1.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-068",
+    "code": "GD04-068",
+    "name": "Silver Bullet",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\nWhen this Unit receives effect damage from an enemy, reduce it by 3.",
+    "zone": "Space Earth",
+    "trait": "(Civilian)",
+    "link": "[Gael Chan]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-068.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-068.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-068_p1",
+    "code": "GD04-068",
+    "name": "Silver Bullet",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\nWhen this Unit receives effect damage from an enemy, reduce it by 3.",
+    "zone": "Space Earth",
+    "trait": "(Civilian)",
+    "link": "[Gael Chan]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-068_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-068_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-069",
+    "code": "GD04-069",
+    "name": "∀ Gundam",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 3,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【During Link】At the end of a turn where you have paid ① or more for one of your other (Militia)/(Dianna Counter) Units' effects, choose 1 of your (Militia) Units. Set it as active.",
+    "zone": "Space Earth",
+    "trait": "(Militia)",
+    "link": "[Loran Cehack]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-069.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-069.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-070",
+    "code": "GD04-070",
+    "name": "Al-Saachez's AEU Enact Custom Moralia Development Experiment Type",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 1,
+    "effect": "【Deploy】You may pair 1 Pilot card with \"Ali al-Saachez\" in its card name from your hand with this Unit.",
+    "zone": "Space Earth",
+    "trait": "(Superpower Bloc)",
+    "link": "[Ali al-Saachez]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-070.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-070.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-071",
+    "code": "GD04-071",
+    "name": "Graham's Union Flag Custom Ⅱ (GN Flag)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Burst】If an enemy (CB) Unit is in play, add this card to your hand.\n【Activate･Main】Choose 1 (Superpower Bloc) card and 1 (UN) card from your trash. Exile them from the game. If you do, set this Unit as active. It can't attack during this turn.",
+    "zone": "Space Earth",
+    "trait": "(UN)",
+    "link": "[Graham Aker]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-071.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-071.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-071_p1",
+    "code": "GD04-071",
+    "name": "Graham's Union Flag Custom Ⅱ (GN Flag)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Burst】If an enemy (CB) Unit is in play, add this card to your hand.\n【Activate･Main】Choose 1 (Superpower Bloc) card and 1 (UN) card from your trash. Exile them from the game. If you do, set this Unit as active. It can't attack during this turn.",
+    "zone": "Space Earth",
+    "trait": "(UN)",
+    "link": "[Graham Aker]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-071_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-071_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-072",
+    "code": "GD04-072",
+    "name": "Unicorn Gundam 02 Banshee Norn (Unicorn Mode)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 5,
+    "hp": 3,
+    "effect": "【When Linked】Choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Riddhe Marcenas]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-072.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-072.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-073",
+    "code": "GD04-073",
+    "name": "∀ Gundam",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Activate･Main】【Once per Turn】①：This Unit gets AP+2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Militia)",
+    "link": "(Militia) Trait / (Moonrace) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-073.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-073.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-074",
+    "code": "GD04-074",
+    "name": "Kapool",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Attack】You may pay ①. If you do, draw 1. Then, discard 1.",
+    "zone": "Space Earth",
+    "trait": "(Militia)",
+    "link": "(Militia) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-074.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-074.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-075",
+    "code": "GD04-075",
+    "name": "GN-X",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 6,
+    "color": "White",
+    "ap": 5,
+    "hp": 3,
+    "effect": "Reduce the cost of this card in your hand by an amount equal to the number of (UN)/(Superpower Bloc) Command cards in your trash.",
+    "zone": "Space Earth",
+    "trait": "(UN)",
+    "link": "(UN) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-075.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-075.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-076",
+    "code": "GD04-076",
+    "name": "Hipheavy",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Earth",
+    "trait": "(Militia)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-076.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-076.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-077",
+    "code": "GD04-077",
+    "name": "Flat (Militia)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 2,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Militia)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-077.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-077.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-078",
+    "code": "GD04-078",
+    "name": "Borjarnon",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Militia)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-078.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-078.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-079",
+    "code": "GD04-079",
+    "name": "Agrissa",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 5,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Earth",
+    "trait": "(Superpower Bloc)",
+    "link": "[Ali al-Saachez]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-079.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-079.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-080",
+    "code": "GD04-080",
+    "name": "Alvatore",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 4,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Destroyed】If you have another (UN)/(Superpower Bloc) Unit in play, deploy 1 rested [Alvaaron]((UN)･AP4･HP1) Unit token.",
+    "zone": "Space",
+    "trait": "(UN)",
+    "link": "[Alejandro Corner]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-080.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-080.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-081",
+    "code": "GD04-081",
+    "name": "Üso Ewin",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If this is a (League Militaire) Unit, deploy 1 [Parts]((League Militaire)･AP1･HP1･This Unit can't choose the enemy player as its attack target) Unit token.",
+    "zone": "-",
+    "trait": "(League Militaire) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-081.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-081.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-081_p1",
+    "code": "GD04-081",
+    "name": "Üso Ewin",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If this is a (League Militaire) Unit, deploy 1 [Parts]((League Militaire)･AP1･HP1･This Unit can't choose the enemy player as its attack target) Unit token.",
+    "zone": "-",
+    "trait": "(League Militaire) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-081_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-081_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-082",
+    "code": "GD04-082",
+    "name": "Rosamia Badam",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 0,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 rested Unit. Deal 1 damage to it.",
+    "zone": "-",
+    "trait": "(Titans) (Cyber-Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-082.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-082.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-083",
+    "code": "GD04-083",
+    "name": "Marbet Fingerhat",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nAll your (League Militaire) Unit tokens get AP+1.",
+    "zone": "-",
+    "trait": "(League Militaire)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-083.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-083.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-084",
+    "code": "GD04-084",
+    "name": "Sleggar Law",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】Choose 1 of your (White Base Team) Units. It gets AP+1 during this turn.",
+    "zone": "-",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-084.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-084.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-085",
+    "code": "GD04-085",
+    "name": "Suletta Mercury",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Once per Turn】When you play and activate an (Academy) Command card using an EX Resource, if you have no remaining EX Resources, place 1 rested EX Resource.",
+    "zone": "-",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-085.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-085.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-085_p1",
+    "code": "GD04-085",
+    "name": "Suletta Mercury",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Once per Turn】When you play and activate an (Academy) Command card using an EX Resource, if you have no remaining EX Resources, place 1 rested EX Resource.",
+    "zone": "-",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-085_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-085_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-086",
+    "code": "GD04-086",
+    "name": "Garma Zabi",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Destroyed】If you have no EX Resources, place 1 EX Resource.",
+    "zone": "-",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-086.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-086.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-087",
+    "code": "GD04-087",
+    "name": "Elan Ceres (Enhanced Person Number 5)",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Attack】You may choose 1 of your (Academy) Units. During this battle, battle damage this Unit would receive is dealt to that Unit instead.",
+    "zone": "-",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-087.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-087.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-088",
+    "code": "GD04-088",
+    "name": "Tokwan",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 0,
+    "effect": "【Burst】Add this card to your hand.\nWhen this Unit is blocked by an enemy Unit that is Lv.4 or lower, it can't receive battle damage during this battle.",
+    "zone": "-",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-088.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-088.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-089",
+    "code": "GD04-089",
+    "name": "Nena Trinity",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 0,
+    "hp": 3,
+    "effect": "【Burst】Add this card to your hand.\n【Activate･Main】<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+    "zone": "-",
+    "trait": "(CB) (Trinity)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-089.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-089.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-089_p1",
+    "code": "GD04-089",
+    "name": "Nena Trinity",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 0,
+    "hp": 3,
+    "effect": "【Burst】Add this card to your hand.\n【Activate･Main】<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+    "zone": "-",
+    "trait": "(CB) (Trinity)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-089_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-089_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-090",
+    "code": "GD04-090",
+    "name": "Hallelujah Haptism",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Once per Turn】During your turn, when this Unit destroys an enemy Unit with battle damage, look at the top card of your deck. If it is a (CB) card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.",
+    "zone": "-",
+    "trait": "(CB) (Super Soldier)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-090.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-090.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-091",
+    "code": "GD04-091",
+    "name": "Deux Murasame",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Destroyed】Choose 1 undamaged enemy Unit. Deal 1 damage to it.",
+    "zone": "-",
+    "trait": "(Earth Federation) (Cyber-Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-091.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-091.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-092",
+    "code": "GD04-092",
+    "name": "Michael Trinity",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 damaged enemy Unit. Deal 1 damage to it.",
+    "zone": "-",
+    "trait": "(CB) (Trinity)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-092.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-092.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-093",
+    "code": "GD04-093",
+    "name": "Rey Za Burrel",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 of your (ZAFT) Link Units. During this turn, reduce the next damage it receives by 2.",
+    "zone": "-",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-093.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-093.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-093_p1",
+    "code": "GD04-093",
+    "name": "Rey Za Burrel",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 of your (ZAFT) Link Units. During this turn, reduce the next damage it receives by 2.",
+    "zone": "-",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-093_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-093_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-094",
+    "code": "GD04-094",
+    "name": "Pala Sys",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 purple Unit card with <Suppression> from your trash. Add it to your hand.",
+    "zone": "-",
+    "trait": "(Satyricon) (Vulture)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-094.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-094.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-095",
+    "code": "GD04-095",
+    "name": "Lunamaria Hawke",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 of your (Minerva Squad) Units. During this turn, battle damage it would receive is dealt to this Unit instead.",
+    "zone": "-",
+    "trait": "(ZAFT) (Minerva Squad) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-095.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-095.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-095_p1",
+    "code": "GD04-095",
+    "name": "Lunamaria Hawke",
+    "rarity": "U +",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 of your (Minerva Squad) Units. During this turn, battle damage it would receive is dealt to this Unit instead.",
+    "zone": "-",
+    "trait": "(ZAFT) (Minerva Squad) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-095_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-095_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-096",
+    "code": "GD04-096",
+    "name": "Ennil El",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】When this Unit deals battle damage to an enemy Unit that is Lv.5 or lower, destroy that enemy Unit.",
+    "zone": "-",
+    "trait": "(Vulture)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-096.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-096.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-097",
+    "code": "GD04-097",
+    "name": "Loran Cehack",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand.",
+    "zone": "-",
+    "trait": "(Militia) (Moonrace)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-097.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-097.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-097_p1",
+    "code": "GD04-097",
+    "name": "Loran Cehack",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand.",
+    "zone": "-",
+    "trait": "(Militia) (Moonrace)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-097_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-097_p1.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-098",
+    "code": "GD04-098",
+    "name": "Riddhe Marcenas",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】When this Unit receives effect damage from an enemy, reduce it by 2.",
+    "zone": "-",
+    "trait": "(Earth Federation) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-098.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-098.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-099",
+    "code": "GD04-099",
+    "name": "Ali al-Saachez",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Attack】You may choose 1 enemy Pilot. Return it to its owner's hand.",
+    "zone": "-",
+    "trait": "(Superpower Bloc) (UN)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-099.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-099.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-100",
+    "code": "GD04-100",
+    "name": "Sochie Heim",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": 0,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【Once per Turn】When you pay ① or more cost for one of your Units' effects, you may increase this Unit's AP during this turn by an amount equal to the cost paid.",
+    "zone": "-",
+    "trait": "(Militia)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-100.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-100.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-101",
+    "code": "GD04-101",
+    "name": "Kindhearted",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Main】.\n【Main】/【Action】During this turn, friendly Units can't be destroyed by enemy effects. Then, draw 1.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-101.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-101.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-102",
+    "code": "GD04-102",
+    "name": "Moment of Rest",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Draw 1.\n【Main】Choose 1 rested enemy Unit that is Lv.5 or lower. It won't be set as active during the start phase of your opponent's next turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-102.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-102.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-102_p1",
+    "code": "GD04-102",
+    "name": "Moment of Rest",
+    "rarity": "U +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Draw 1.\n【Main】Choose 1 rested enemy Unit that is Lv.5 or lower. It won't be set as active during the start phase of your opponent's next turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-102_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-102_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-103",
+    "code": "GD04-103",
+    "name": "Spiritual Support",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Choose 1 of your Units. It gains <Repair 2> during this turn.\n\r\n(At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-103.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-103.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-104",
+    "code": "GD04-104",
+    "name": "Shrike Team's Bulwark",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Main】/【Action】Choose 1 to 2 enemy Units that are Lv.2 or lower. Rest them.\n【Pilot】[Junko Jenko]",
+    "zone": "-",
+    "trait": "(League Militaire) (Shrike Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-104.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-104.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-105",
+    "code": "GD04-105",
+    "name": "Encounter",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "5",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Look at the top 5 cards of your deck. You may reveal 1 Pilot card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-105.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-105.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-105_p1",
+    "code": "GD04-105",
+    "name": "Encounter",
+    "rarity": "R +",
+    "cardType": "COMMAND",
+    "level": "5",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Look at the top 5 cards of your deck. You may reveal 1 Pilot card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-105_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-105_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-106",
+    "code": "GD04-106",
+    "name": "Indiscriminate Violence",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "5",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 0,
+    "effect": "【Main】Choose 1 friendly (Academy) Unit. During this turn, it may choose an active enemy Unit with 5 or less AP as its attack target. If you use an EX Resource to play this card, choose 1 to 2 friendly (Academy) Units instead.\n【Pilot】[Norea Du Noc]",
+    "zone": "-",
+    "trait": "(Academy) (Dawn of Fold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-106.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-106.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-107",
+    "code": "GD04-107",
+    "name": "Destined Battle",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Add this card to your hand.\n【Action】Choose 1 of your rested Units. During this turn, all enemy Units must choose that Unit as their attack target when attacking.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-107.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-107.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-108",
+    "code": "GD04-108",
+    "name": "Witches from Earth",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Main】/【Action】Choose 1 friendly (Academy) Unit. During this turn, reduce the next damage it receives by 2. If you use an EX Resource to play this card, reduce by 4 instead.\n【Pilot】[Sophie Pulone]",
+    "zone": "-",
+    "trait": "(Academy) (Dawn of Fold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-108.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-108.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-109",
+    "code": "GD04-109",
+    "name": "Overwhelming Pressure",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "5",
+    "cost": 3,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Choose 1 enemy Unit that is Lv.6 or lower. Deal 4 damage to it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-109.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-109.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-110",
+    "code": "GD04-110",
+    "name": "Financier",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "6",
+    "cost": 3,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Deploy 1 EX Base.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-110.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-110.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-110_p1",
+    "code": "GD04-110",
+    "name": "Financier",
+    "rarity": "U +",
+    "cardType": "COMMAND",
+    "level": "6",
+    "cost": 3,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Deploy 1 EX Base.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-110_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-110_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-111",
+    "code": "GD04-111",
+    "name": "Trinity",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Main】/【Action】Choose 1 to 3 of your (CB) Units. They get AP+2 during this turn.\n【Pilot】[Johann Trinity]",
+    "zone": "-",
+    "trait": "(CB) (Trinity)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-111.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-111.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-112",
+    "code": "GD04-112",
+    "name": "Inspector",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Main】Deal 1 damage to all Units that are Lv.2 or lower.\n【Pilot】[Gates Capa]",
+    "zone": "-",
+    "trait": "(Earth Federation) (Cyber-Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-112.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-112.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-113",
+    "code": "GD04-113",
+    "name": "Damage Control",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. It gets AP-2 during this turn.\n【Action】Choose 1 of your Units. During this battle, reduce battle damage it receives by 3.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-113.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-113.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-114",
+    "code": "GD04-114",
+    "name": "Reformationist",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 Unit card with \"Trans-Am\" in its card name from your trash. Add it to your hand.\n【Main】/【Action】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-114.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-114.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-114_p1",
+    "code": "GD04-114",
+    "name": "Reformationist",
+    "rarity": "U +",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 Unit card with \"Trans-Am\" in its card name from your trash. Add it to your hand.\n【Main】/【Action】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-114_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-114_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-115",
+    "code": "GD04-115",
+    "name": "Backup",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. Deal 1 damage to it.\n【Main】Choose 1 of your Units. When it deals battle damage to an enemy Unit that is Lv.5 or lower during this turn, destroy that enemy Unit.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-115.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-115.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-116",
+    "code": "GD04-116",
+    "name": "Reliable Big Brother",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 0,
+    "hp": 2,
+    "effect": "【Main】Place the top 2 cards of your deck into your trash. If you do, choose 1 enemy Unit with 4 or less AP. Deal an amount of damage equal to the number of (Minerva Squad) cards placed with this effect to that enemy Unit.\n【Pilot】[Heine Westenfluss]",
+    "zone": "-",
+    "trait": "(ZAFT) (Minerva Squad) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-116.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-116.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-117",
+    "code": "GD04-117",
+    "name": "Graceful Demeanor",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Action】.\n【Action】Choose 1 to 2 enemy Units that are Lv.3 or lower. Return them to their owners' hands.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-117.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-117.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-117_p1",
+    "code": "GD04-117",
+    "name": "Graceful Demeanor",
+    "rarity": "R +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Action】.\n【Action】Choose 1 to 2 enemy Units that are Lv.3 or lower. Return them to their owners' hands.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-117_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-117_p1.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-118",
+    "code": "GD04-118",
+    "name": "World Distortion",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】/【Action】If 2 or more friendly (UN) Units are in play, choose 1 enemy Unit with 5 or less HP. Return it to its owner's hand.\n【Pilot】[Alejandro Corner]",
+    "zone": "-",
+    "trait": "(UN)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-118.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-118.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-119",
+    "code": "GD04-119",
+    "name": "Fighting Alone",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Main】/【Action】Choose 1 friendly Unit paired with a (Newtype) Pilot. It can't receive effect damage from enemy Units during this turn.\n【Pilot】[Gael Chan]",
+    "zone": "-",
+    "trait": "(Civilian)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-119.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-119.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-120",
+    "code": "GD04-120",
+    "name": "Machine Doll Squad",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】/【Action】Choose 1 friendly (Militia)/(Dianna Counter) Unit. It gets AP+2 during this turn.\n【Pilot】[Miashei Kune]",
+    "zone": "-",
+    "trait": "(Militia)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-120.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-120.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-121",
+    "code": "GD04-121",
+    "name": "Reineforce Jr.",
+    "rarity": "R",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, during your turn, if a friendly (League Militaire) Unit is in play, deploy 1 [Parts]((League Militaire)･AP1･HP1･This Unit can't choose the enemy player as its attack target) Unit token.",
+    "zone": "Space Earth",
+    "trait": "(League Militaire) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-121.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-121.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-122",
+    "code": "GD04-122",
+    "name": "Jaburo",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】【Once per Turn】Rest 1 of your (Earth Federation) Units：Choose 1 enemy Unit that is Lv.3 or lower. Rest it.",
+    "zone": "Earth",
+    "trait": "(Earth Federation) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-122.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-122.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-123",
+    "code": "GD04-123",
+    "name": "A Baoa Qu",
+    "rarity": "U",
+    "cardType": "BASE",
+    "level": "5",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\nWhile you have a rested (Zeon) Unit in play, this Base can't receive battle damage from enemy Units that are Lv.4 or lower.",
+    "zone": "Space",
+    "trait": "(Zeon) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-123.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-123.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-124",
+    "code": "GD04-124",
+    "name": "9th Tactical Testing Sector",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\nWhen you place an EX Resource, choose 1 friendly (Academy) Unit. It gets AP+2 during this turn.",
+    "zone": "Space",
+    "trait": "(Academy) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-124.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-124.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-125",
+    "code": "GD04-125",
+    "name": "Trinity Warship",
+    "rarity": "U",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】【Once per Turn】①, rest 1 friendly (CB) Unit：Choose 1 enemy Unit that is Lv.5 or lower. Deal 1 damage to it.",
+    "zone": "Space",
+    "trait": "(CB) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-125.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-125.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-126",
+    "code": "GD04-126",
+    "name": "Izuma Colony",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "1",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": 4,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\nWhen this Base receives battle damage from an enemy Unit with 3 or less AP, deal 1 damage to that Unit.",
+    "zone": "Space",
+    "trait": "(Clan) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-126.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-126.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-127",
+    "code": "GD04-127",
+    "name": "Freeden Ⅱ",
+    "rarity": "U",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if there are 7 or more (Vulture) cards in your trash, choose 1 enemy Unit with 2 or less AP. Destroy it.",
+    "zone": "Space",
+    "trait": "(Vulture) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-127.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-127.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-128",
+    "code": "GD04-128",
+    "name": "Armory One",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": 6,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Destroyed】All players draw 1.",
+    "zone": "Space",
+    "trait": "(ZAFT) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-128.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-128.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-129",
+    "code": "GD04-129",
+    "name": "Willgem",
+    "rarity": "R",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": 7,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, deal 3 damage to this Base.\n\r\n【Once per Turn】During your turn, when you pay ① or more for a friendly Unit's effect, this Base recovers 2 HP.",
+    "zone": "Space Earth",
+    "trait": "(Militia) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-129.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-129.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "GD04-130",
+    "code": "GD04-130",
+    "name": "Industrial 7",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】【Once per Turn】Exile 1 Command card from your trash：Choose 1 enemy Unit. It gets AP-1 during this turn.",
+    "zone": "Space",
+    "trait": "(Civilian) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD04-130.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD04-130.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-031",
+    "code": "R-031",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-031.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-031.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway\"s Flash",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-031_p1",
+    "code": "R-031",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-031_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-031_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway\"s Flash",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-032",
+    "code": "R-032",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-032.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-032.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-032_p1",
+    "code": "R-032",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-032_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-032_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-033",
+    "code": "R-033",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-033.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-033.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-033_p1",
+    "code": "R-033",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-033_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-033_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-034",
+    "code": "R-034",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-034.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-034.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-034_p1",
+    "code": "R-034",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-034_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-034_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-035",
+    "code": "R-035",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-035.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-035.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway\"s Flash",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-035_p1",
+    "code": "R-035",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-035_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-035_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway\"s Flash",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-036",
+    "code": "R-036",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-036.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-036.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-036_p1",
+    "code": "R-036",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-036_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-036_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-037",
+    "code": "R-037",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-037.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-037.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-037_p1",
+    "code": "R-037",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-037_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-037_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-038",
+    "code": "R-038",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-038.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-038.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-038_p1",
+    "code": "R-038",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-038_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-038_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-038_p2",
+    "code": "R-038",
+    "name": "Resource",
+    "rarity": "C ++",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-038_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-038_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED Destiny",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-039",
+    "code": "R-039",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-039.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-039.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-039_p1",
+    "code": "R-039",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-039_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-039_p1.webp?260424"
+    },
+    "sourceTitle": "∀ Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-040",
+    "code": "R-040",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-040.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-040.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "R-040_p1",
+    "code": "R-040",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-040_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-040_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "r",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "ST04-001_p4",
+    "code": "ST04-001",
+    "name": "Aile Strike Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-001_p4.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-001_p4.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "st04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "T-021",
+    "code": "T-021",
+    "name": "Parts",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 1,
+    "hp": 1,
+    "effect": "This Unit can't choose the enemy player as its attack target.",
+    "zone": "-",
+    "trait": "(League Militaire)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-021.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-021.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit V Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "t",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "T-022",
+    "code": "T-022",
+    "name": "Wire-Guided Arm",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 2,
+    "hp": 1,
+    "effect": "This Unit can't be paired with a Pilot.",
+    "zone": "-",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-022.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-022.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "t",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "T-023",
+    "code": "T-023",
+    "name": "Zeong (Head)",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 3,
+    "hp": 1,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-023.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-023.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "t",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  },
+  {
+    "id": "T-024",
+    "code": "T-024",
+    "name": "Alvaaron",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 4,
+    "hp": 1,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(UN)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-024.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-024.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Phantom Aria [GD04]",
+    "set": {
+      "id": "t",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104"
+    }
+  }
+]

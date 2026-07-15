@@ -1,0 +1,653 @@
+/*
+ * Cyberpunk sidebar primitive.
+ *
+ * Mirrors the lorcana shadcn-svelte sidebar's data-attribute-driven layout
+ * (data-state / data-collapsible / data-side / data-variant) but styled with
+ * the cyberpunk yellow + dark gradient surfaces from tokens.css.
+ *
+ * Width is controlled via the wrapper-scoped --sidebar-width and
+ * --sidebar-width-icon vars set by SidebarProvider.
+ */
+
+.wrapper {
+  display: flex;
+  min-height: 100svh;
+  width: 100%;
+}
+
+/* Main content sibling. flex: 1 lets it eat the remaining width once the
+   sidebar gap reserves its space. */
+.inset {
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--cp-black, #00000f);
+}
+
+/* ── Desktop sidebar root ─────────────────────────────────────────────── */
+
+.sidebarRoot {
+  position: relative;
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+}
+
+@media (width <= 768px) {
+  .sidebarRoot {
+    display: none;
+  }
+}
+
+/* Layout spacer. Keeps document flow honest while the actual panel uses
+   position: fixed for smooth transform/width transitions. */
+.gap {
+  position: relative;
+  width: var(--sidebar-width);
+  background: transparent;
+  transition: width 200ms ease;
+}
+
+.sidebarRoot[data-collapsible="offcanvas"] .gap {
+  width: 0;
+}
+
+.sidebarRoot[data-collapsible="icon"] .gap {
+  width: var(--sidebar-width-icon);
+}
+
+/* The actual visible panel. Fixed-positioned so collapse transitions don't
+   shove the board grid around mid-animation. */
+.container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  height: 100svh;
+  z-index: 10;
+  display: flex;
+  transition:
+    left 200ms ease,
+    right 200ms ease,
+    width 200ms ease;
+}
+
+.sidebarRoot[data-side="left"] .container {
+  left: 0;
+}
+
+.sidebarRoot[data-side="right"] .container {
+  right: 0;
+}
+
+.sidebarRoot[data-side="left"][data-collapsible="offcanvas"] .container {
+  left: calc(var(--sidebar-width) * -1);
+}
+
+.sidebarRoot[data-side="right"][data-collapsible="offcanvas"] .container {
+  right: calc(var(--sidebar-width) * -1);
+}
+
+.sidebarRoot[data-collapsible="icon"] .container {
+  width: var(--sidebar-width-icon);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(90deg, rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 10%), transparent 42px),
+    linear-gradient(180deg, rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 4%), transparent 112px),
+    var(--cp-sidebar-bg, rgb(6 9 13 / 96%));
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+  box-shadow:
+    inset 1px 0 0 var(--cp-sidebar-rule, rgb(210 232 238 / 8%)),
+    inset 14px 0 30px -26px rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 55%),
+    inset 0 1px 0 rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 10%);
+}
+
+.sidebarRoot[data-side="right"] .inner {
+  border-left: 1px solid rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 18%);
+}
+
+.sidebarRoot[data-side="left"] .inner {
+  border-right: 1px solid rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 18%);
+}
+
+/* Floating + inset variants: detach the panel from the viewport edge with
+   a small gutter and round the corners, matching shadcn's "card" feel. */
+.sidebarRoot[data-variant="floating"] .container,
+.sidebarRoot[data-variant="inset"] .container {
+  padding: 8px;
+}
+
+.sidebarRoot[data-variant="floating"] .inner,
+.sidebarRoot[data-variant="inset"] .inner {
+  border-radius: 12px;
+  border: 1px solid rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 60%);
+}
+
+/* `collapsible="none"` renders inline (no fixed positioning, no gap). */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: var(--sidebar-width);
+  height: 100%;
+  background: var(--cp-sidebar-bg, rgb(6 9 13 / 96%));
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+  border-left: 1px solid rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 18%);
+}
+
+.sidebarStatic {
+  /* placeholder hook for future variants */
+}
+
+/* ── Mobile (Mantine Drawer body) ─────────────────────────────────────── */
+
+.mobileDrawer {
+  background: var(--cp-sidebar-bg, rgb(6 9 13 / 96%));
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+}
+
+.mobileBody {
+  padding: 0;
+  height: 100%;
+}
+
+.mobileInner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Slots ────────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px 8px;
+  border-bottom: 1px solid rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 18%);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 25%);
+}
+
+.content {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 0;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden auto;
+  scrollbar-gutter: stable;
+}
+
+.sidebarRoot[data-collapsible="icon"] .content {
+  overflow: hidden;
+}
+
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 5%);
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 22%);
+  border: 2px solid var(--cp-sidebar-bg, rgb(6 9 13 / 96%));
+  border-radius: 999px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 38%);
+}
+
+.separator {
+  width: calc(100% - 16px);
+  height: 1px;
+  margin: 4px 8px;
+  background: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 20%);
+}
+
+.input {
+  width: 100%;
+}
+
+.inputControl {
+  background: var(--cp-black, #00000f);
+  border-color: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 30%);
+  color: var(--cp-fg, #fff);
+  height: 32px;
+}
+
+/* ── Trigger ──────────────────────────────────────────────────────────── */
+
+.trigger {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 46%);
+  border-radius: 4px;
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.trigger:hover {
+  background: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 12%);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+  outline-offset: 2px;
+}
+
+/* ── Rail (clickable edge strip on desktop) ───────────────────────────── */
+
+.rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  cursor: ew-resize;
+  z-index: 11;
+}
+
+.rail svg {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebarRoot[data-side="right"] .rail {
+  left: -6px;
+}
+
+.sidebarRoot[data-side="left"] .rail {
+  right: -6px;
+}
+
+.rail:hover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 1px);
+  width: 2px;
+  background: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 60%);
+}
+
+.sidebarRoot[data-collapsible="icon"] .rail {
+  top: 12px;
+  bottom: auto;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 48%);
+  border-radius: 4px;
+  background:
+    linear-gradient(
+      135deg,
+      rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 20%),
+      rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 10%)
+    ),
+    rgb(4 8 13 / 94%);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 70%),
+    0 0 16px rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 18%);
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+  cursor: pointer;
+}
+
+.sidebarRoot[data-side="right"][data-collapsible="icon"] .rail {
+  left: 8px;
+}
+
+.sidebarRoot[data-side="left"][data-collapsible="icon"] .rail {
+  right: 8px;
+}
+
+.sidebarRoot[data-collapsible="icon"] .rail svg {
+  opacity: 1;
+}
+
+.sidebarRoot[data-collapsible="icon"] .rail:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 30%),
+      rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 16%)
+    ),
+    rgb(7 13 20 / 96%);
+}
+
+.sidebarRoot[data-collapsible="icon"] .rail:hover::after {
+  content: none;
+}
+
+.sidebarRoot[data-collapsible="icon"] .rail:focus-visible {
+  outline: 2px solid rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+  outline-offset: 2px;
+}
+
+/* ── Group ────────────────────────────────────────────────────────────── */
+
+.group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  padding: 12px 12px 14px;
+  border-bottom: 1px solid rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 12%);
+  background:
+    linear-gradient(90deg, rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 3%), transparent 32%),
+    linear-gradient(180deg, rgb(var(--cp-signal-neutral-rgb, 180 191 200) / 2%), transparent 42%);
+}
+
+.group:first-child {
+  padding-top: 10px;
+}
+
+.group:last-child {
+  border-bottom: 0;
+}
+
+.groupLabel {
+  display: flex;
+  align-items: center;
+  height: auto;
+  margin-bottom: 8px;
+  padding: 0;
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 68%);
+  text-transform: uppercase;
+  transition:
+    margin 200ms ease,
+    opacity 200ms ease;
+}
+
+.sidebarRoot[data-collapsible="icon"] .groupLabel {
+  margin-top: -28px;
+  opacity: 0;
+}
+
+.groupAction {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+  cursor: pointer;
+}
+
+.groupAction:hover {
+  background: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 12%);
+}
+
+.sidebarRoot[data-collapsible="icon"] .groupAction {
+  display: none;
+}
+
+.groupContent {
+  width: 100%;
+  min-height: 0;
+  font-size: 13px;
+}
+
+/* ── Menu ─────────────────────────────────────────────────────────────── */
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menuItem {
+  position: relative;
+  list-style: none;
+}
+
+.menuButton {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  gap: 8px;
+  padding: 6px 8px;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  color: var(--cp-sidebar-text, rgb(247 252 255 / 88%));
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  transition:
+    background 120ms ease,
+    color 120ms ease,
+    padding 200ms ease,
+    width 200ms ease;
+}
+
+.menuButton:hover,
+.menuButton[data-active="true"] {
+  background: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 12%);
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+}
+
+.menuButton[data-active="true"] {
+  font-weight: 600;
+}
+
+.menuButton:focus-visible {
+  outline: 2px solid rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+  outline-offset: -2px;
+}
+
+.menuButton:disabled,
+.menuButton[aria-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.menuButton_sm {
+  height: 28px;
+  font-size: 12px;
+}
+
+.menuButton_lg {
+  height: 44px;
+  font-size: 14px;
+}
+
+.menuButton_outline {
+  background: var(--cp-panel, rgb(10 12 22 / 78%));
+  box-shadow: 0 0 0 1px rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 25%);
+}
+
+.menuButton_outline:hover {
+  box-shadow: 0 0 0 1px rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 60%);
+}
+
+/* When collapsed-to-icon, shrink rows to a square and clip labels. */
+.sidebarRoot[data-collapsible="icon"] .menuButton {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  justify-content: center;
+}
+
+.sidebarRoot[data-collapsible="icon"] .menuButton > :not(svg) {
+  display: none;
+}
+
+.menuAction {
+  position: absolute;
+  top: 6px;
+  right: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  color: var(--cp-sidebar-text, rgb(247 252 255 / 88%));
+  cursor: pointer;
+}
+
+.menuAction:hover {
+  background: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 12%);
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+}
+
+.menuActionHover {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.menuItem:hover .menuActionHover,
+.menuItem:focus-within .menuActionHover {
+  opacity: 1;
+}
+
+.sidebarRoot[data-collapsible="icon"] .menuAction {
+  display: none;
+}
+
+.menuBadge {
+  position: absolute;
+  top: 7px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  min-width: 18px;
+  padding: 0 5px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+  pointer-events: none;
+  user-select: none;
+}
+
+.sidebarRoot[data-collapsible="icon"] .menuBadge {
+  display: none;
+}
+
+.menuSkeleton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 8px;
+}
+
+.menuSkeletonText {
+  flex: 1;
+  max-width: var(--skeleton-w, 75%);
+}
+
+/* ── Sub menu ─────────────────────────────────────────────────────────── */
+
+.menuSub {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  margin: 4px 14px;
+  padding: 2px 10px;
+  border-left: 1px solid rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 25%);
+  list-style: none;
+}
+
+.sidebarRoot[data-collapsible="icon"] .menuSub {
+  display: none;
+}
+
+.menuSubItem {
+  position: relative;
+  list-style: none;
+}
+
+.menuSubButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  min-width: 0;
+  padding: 0 8px;
+  border-radius: 4px;
+  color: var(--cp-sidebar-muted, rgb(210 232 238 / 56%));
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+.menuSubButton:hover,
+.menuSubButton[data-active="true"] {
+  background: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 12%);
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+}
+
+.menuSubButton:focus-visible {
+  outline: 2px solid rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+  outline-offset: -2px;
+}
+
+.menuSubButton_sm {
+  height: 24px;
+  font-size: 12px;
+}
+
+.menuSubButton_md {
+  font-size: 13px;
+}

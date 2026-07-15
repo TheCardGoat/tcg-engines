@@ -1,0 +1,866 @@
+[
+  {
+    "id": "ST01-014_p4",
+    "code": "ST01-014",
+    "name": "Unforeseen Incident",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Main】.\n【Main】/【Action】Choose 1 enemy Unit. It gets AP-3 during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-014_p4.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-014_p4.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st01",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST01-014_p5",
+    "code": "ST01-014",
+    "name": "Unforeseen Incident",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Main】.\n【Main】/【Action】Choose 1 enemy Unit. It gets AP-3 during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-014_p5.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-014_p5.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-001",
+    "code": "ST05-001",
+    "name": "Gundam Barbatos 4th Form",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 5,
+    "effect": "【Deploy】Choose 1 of your other Units. Deal 1 damage to it. It gets AP+1 during this turn.\nWhile this is damaged, it gains <Suppression>.\n\n(Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-001.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-001.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-001_p1",
+    "code": "ST05-001",
+    "name": "Gundam Barbatos 4th Form",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 5,
+    "effect": "【Deploy】Choose 1 of your other Units. Deal 1 damage to it. It gets AP+1 during this turn.\nWhile this is damaged, it gains <Suppression>.\n\n(Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-001_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-001_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-002",
+    "code": "ST05-002",
+    "name": "Gundam Barbatos 2nd Form",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 4,
+    "effect": "While this Unit is damaged, it gets AP+2.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-002.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-002.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-002_p1",
+    "code": "ST05-002",
+    "name": "Gundam Barbatos 2nd Form",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 4,
+    "effect": "While this Unit is damaged, it gets AP+2.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-002_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-002_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-003",
+    "code": "ST05-003",
+    "name": "CGS Mobile Worker",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": 2,
+    "effect": "【Activate･Main】Rest this Unit：Choose 1 of your Units. Deal 1 damage to it. It gets AP+1 during this turn.",
+    "zone": "Earth",
+    "trait": "(Tekkadan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-003.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-003.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-003_p1",
+    "code": "ST05-003",
+    "name": "CGS Mobile Worker",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": 2,
+    "effect": "【Activate･Main】Rest this Unit：Choose 1 of your Units. Deal 1 damage to it. It gets AP+1 during this turn.",
+    "zone": "Earth",
+    "trait": "(Tekkadan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-003_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-003_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-004",
+    "code": "ST05-004",
+    "name": "Graze Custom",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-004.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-004.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-004_p1",
+    "code": "ST05-004",
+    "name": "Graze Custom",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-004_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-004_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-005",
+    "code": "ST05-005",
+    "name": "Gundam Gusion Rebake",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【Destroyed】Choose 1 enemy Unit with 4 or less AP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Akihiro Altland]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-005.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-005.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-005_p1",
+    "code": "ST05-005",
+    "name": "Gundam Gusion Rebake",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【Destroyed】Choose 1 enemy Unit with 4 or less AP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Akihiro Altland]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-005_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-005_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-006",
+    "code": "ST05-006",
+    "name": "Hyakuren",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Teiwaz)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-006.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-006.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-006_p1",
+    "code": "ST05-006",
+    "name": "Hyakuren",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Teiwaz)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-006_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-006_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-007",
+    "code": "ST05-007",
+    "name": "McGillis' Schwalbe Graze",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 2,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【When Paired】Choose 1 enemy Unit that is Lv.3 or lower. It gets AP-2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Gjallarhorn)",
+    "link": "[McGillis Fareed]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-007.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-007.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-007_p1",
+    "code": "ST05-007",
+    "name": "McGillis' Schwalbe Graze",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 2,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【When Paired】Choose 1 enemy Unit that is Lv.3 or lower. It gets AP-2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Gjallarhorn)",
+    "link": "[McGillis Fareed]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-007_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-007_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-008",
+    "code": "ST05-008",
+    "name": "Graze Commander Type",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 2,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Gjallarhorn)",
+    "link": "(Gjallarhorn) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-008.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-008.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-008_p1",
+    "code": "ST05-008",
+    "name": "Graze Commander Type",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 2,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Gjallarhorn)",
+    "link": "(Gjallarhorn) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-008_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-008_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-009",
+    "code": "ST05-009",
+    "name": "Graze",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Gjallarhorn)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-009.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-009.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-009_p1",
+    "code": "ST05-009",
+    "name": "Graze",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Gjallarhorn)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-009_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-009_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-010",
+    "code": "ST05-010",
+    "name": "Mikazuki Augus",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+    "zone": "-",
+    "trait": "(Tekkadan) (Alaya-Vijnana)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-010.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-010.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-010_p1",
+    "code": "ST05-010",
+    "name": "Mikazuki Augus",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+    "zone": "-",
+    "trait": "(Tekkadan) (Alaya-Vijnana)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-010_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-010_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-011",
+    "code": "ST05-011",
+    "name": "Akihiro Altland",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, choose 1 (Tekkadan) Unit card that is Lv.2 or lower from your trash. Add it to your hand.",
+    "zone": "-",
+    "trait": "(Tekkadan) (Alaya-Vijnana)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-011.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-011.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-011_p1",
+    "code": "ST05-011",
+    "name": "Akihiro Altland",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, choose 1 (Tekkadan) Unit card that is Lv.2 or lower from your trash. Add it to your hand.",
+    "zone": "-",
+    "trait": "(Tekkadan) (Alaya-Vijnana)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-011_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-011_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-012",
+    "code": "ST05-012",
+    "name": "McGillis Fareed",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If you have 2 or more other (Gjallarhorn)/(Tekkadan) Units in play, choose 1 enemy Unit with 3 or less HP. Rest it.",
+    "zone": "-",
+    "trait": "(Gjallarhorn)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-012.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-012.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-012_p1",
+    "code": "ST05-012",
+    "name": "McGillis Fareed",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If you have 2 or more other (Gjallarhorn)/(Tekkadan) Units in play, choose 1 enemy Unit with 3 or less HP. Rest it.",
+    "zone": "-",
+    "trait": "(Gjallarhorn)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-012_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-012_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-013",
+    "code": "ST05-013",
+    "name": "With Iron and Blood",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Choose 1 of your Units. Deal 1 damage to it. It gets AP+3 during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-013.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-013.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-013_p1",
+    "code": "ST05-013",
+    "name": "With Iron and Blood",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Choose 1 of your Units. Deal 1 damage to it. It gets AP+3 during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-013_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-013_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-014",
+    "code": "ST05-014",
+    "name": "Fatal Strike",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. Deal 1 damage to it.\n【Main】Choose 1 enemy Unit that is Lv.3 or lower. Destroy it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-014.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-014.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-014_p1",
+    "code": "ST05-014",
+    "name": "Fatal Strike",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. Deal 1 damage to it.\n【Main】Choose 1 enemy Unit that is Lv.3 or lower. Destroy it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-014_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-014_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-015",
+    "code": "ST05-015",
+    "name": "Isaribi",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\n【Activate･Main】Rest this Base：Choose 1 of your damaged Units. It gets AP+2 during this turn.",
+    "zone": "Space",
+    "trait": "(Tekkadan) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-015.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-015.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05]",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  },
+  {
+    "id": "ST05-015_p1",
+    "code": "ST05-015",
+    "name": "Isaribi",
+    "rarity": "C +",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\n【Activate･Main】Rest this Base：Choose 1 of your damaged Units. It gets AP+2 during this turn.",
+    "zone": "Space",
+    "trait": "(Tekkadan) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-015_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-015_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Iron Bloom [ST05] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005"
+    }
+  }
+]

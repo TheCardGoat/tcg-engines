@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "game": "lorcana",
+  "promotedStrategyId": "deck-aware-lore-race",
+  "previousStrategyId": "deck-aware-lore-race",
+  "informationPolicy": "oracle",
+  "manifestHash": "bootstrap:existing-production-default",
+  "scheduleHash": "bootstrap:unevaluated",
+  "engineRevision": "bootstrap",
+  "cardCatalogHash": "bootstrap",
+  "strategyConfig": {},
+  "blocks": 1,
+  "matches": 1,
+  "meanPairedImprovement": 0,
+  "confidenceInterval": { "level": 0.95, "lower": 0, "upper": 0 }
+}

@@ -1,0 +1,81 @@
+name: Agnostic Simulator CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/ci-agnostic.yml"
+      - ".bun-version"
+      - "submodules/agnostic-simulator/**"
+      - "submodules/cyberpunk/**"
+      - "submodules/gundam/**"
+      - "submodules/lorcana/**"
+      - "submodules/one-piece/**"
+      - "submodules/star-wars-unlimited/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/ci-agnostic.yml"
+      - ".bun-version"
+      - "submodules/agnostic-simulator/**"
+      - "submodules/cyberpunk/**"
+      - "submodules/gundam/**"
+      - "submodules/lorcana/**"
+      - "submodules/one-piece/**"
+      - "submodules/star-wars-unlimited/**"
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_OPTIONS: --max-old-space-size=8192
+  VP_RUN_CONCURRENCY_LIMIT: 4
+  TURBO_RUN_SUMMARY: false
+
+jobs:
+  agnostic-simulator:
+    name: Agnostic Simulator CI
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: ".bun-version"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+          run_install: false
+
+      - name: Set up Vite+
+        uses: voidzero-dev/setup-vp@v1
+        with:
+          node-version: 24
+          cache: true
+
+      - name: Install linked game dependencies
+        run: |
+          pnpm --dir submodules/cyberpunk install --frozen-lockfile
+          pnpm --dir submodules/gundam install --frozen-lockfile
+          pnpm --dir submodules/one-piece install --frozen-lockfile
+          # Lorcana + SWU resolve to source (not built dist), but their
+          # node_modules must exist so the card-model conformance guard can
+          # resolve `@tcg/card-model` while type-checking their linked types.
+          pnpm --dir submodules/lorcana install --frozen-lockfile
+          pnpm --dir submodules/star-wars-unlimited install --frozen-lockfile
+
+      - name: Install agnostic simulator dependencies
+        working-directory: submodules/agnostic-simulator
+        run: vp install --no-frozen-lockfile
+
+      - name: Run agnostic simulator CI
+        working-directory: submodules/agnostic-simulator
+        run: pnpm run ci-check

@@ -1,0 +1,7 @@
+{
+  "opponent": "default",
+  "matchesPerEval": 20,
+  "iterations": 40,
+  "seed": "cyberpunk-self-improve-v1",
+  "maxSteps": 5000
+}

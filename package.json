@@ -1,49 +1,26 @@
 {
+  "name": "tcg-engines",
+  "version": "0.0.0",
   "private": true,
-  "name": "the-card-goat",
-  "packageManager": "bun@1.2.18",
-  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "ci:agnostic:check": "pnpm --dir submodules/agnostic-simulator run ci-check",
+    "ci:agnostic": "pnpm --dir submodules/agnostic-simulator run ci-check-full",
+    "ci:cyberpunk:check": "pnpm --dir submodules/cyberpunk run ci-check",
+    "ci:cyberpunk": "pnpm --dir submodules/cyberpunk run ci-check-full",
+    "ci:gundam:check": "pnpm --dir submodules/gundam run ci-check",
+    "ci:gundam": "pnpm --dir submodules/gundam run ci-check-full",
+    "ci:lorcana:check": "pnpm --dir submodules/lorcana run ci-check",
+    "ci:lorcana": "pnpm --dir submodules/lorcana run ci-check-full",
+    "ci:one-piece:check": "pnpm --dir submodules/one-piece run ci-check",
+    "ci:one-piece": "pnpm --dir submodules/one-piece run ci-check-full",
+    "ci:star-wars-unlimited:check": "pnpm --dir submodules/star-wars-unlimited run ci-check",
+    "ci:star-wars-unlimited": "pnpm --dir submodules/star-wars-unlimited run ci-check-full",
+    "ci:public": "pnpm run ci:cyberpunk:check && pnpm run ci:gundam:check && pnpm run ci:lorcana:check && pnpm run ci:one-piece:check && pnpm run ci:star-wars-unlimited:check && pnpm run ci:agnostic:check"
+  },
   "volta": {
     "node": "24.12.0",
-    "bun": "1.2.18"
+    "pnpm": "10.33.0"
   },
-  "workspaces": [
-    "packages/engines/*",
-    "packages/*",
-    "apps/*"
-  ],
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "echo 'run projects individually'",
-    "test": "turbo run test",
-    "lint": "turbo run lint",
-    "format": "turbo run format",
-    "check-types": "turbo run check-types",
-    "ci-check": "turbo run format lint check-types test",
-    "boundaries": "turbo boundaries"
-  },
-  "devDependencies": {
-    "oxfmt": "^0.31.0",
-    "oxlint": "^1.46.0",
-    "@commitlint/cli": "^20.2.0",
-    "@commitlint/config-conventional": "^20.2.0",
-    "@evilmartians/lefthook": "1.11.2",
-    "@types/seedrandom": "^3.0.8",
-    "bun-types": "^1.3.5",
-    "commitizen": "^4.3.1",
-    "cz-conventional-changelog": "^3.3.0",
-    "turbo": "^2.7.5",
-    "typescript": "5.9.3"
-  },
-  "dependencies": {
-    "object-hash": "3.0.0",
-    "pino": "^9.4.0",
-    "pino-pretty": "^11.2.2",
-    "seedrandom": "^3.0.5"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  }
+  "packageManager": "pnpm@10.33.0"
 }

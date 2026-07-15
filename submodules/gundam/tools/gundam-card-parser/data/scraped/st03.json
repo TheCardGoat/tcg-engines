@@ -1,0 +1,920 @@
+[
+  {
+    "id": "ST03-001",
+    "code": "ST03-001",
+    "name": "Sinanju",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Red",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【During Pair】This Unit gains <High-Maneuver>.\n\r\n(This Unit can't be blocked.)\nDuring your turn, when this Unit destroys an enemy shield area card with battle damage, choose 1 enemy Unit. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "[Full Frontal]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-001.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-001.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-001_p1",
+    "code": "ST03-001",
+    "name": "Sinanju",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Red",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【During Pair】This Unit gains <High-Maneuver>.\n\r\n(This Unit can't be blocked.)\nDuring your turn, when this Unit destroys an enemy shield area card with battle damage, choose 1 enemy Unit. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "[Full Frontal]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-001_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-001_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-002",
+    "code": "ST03-002",
+    "name": "Angelo's Geara Zulu",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Activate･Main】<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "[Angelo Sauper]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-002.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-002.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-002_p1",
+    "code": "ST03-002",
+    "name": "Angelo's Geara Zulu",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Activate･Main】<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "[Angelo Sauper]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-002_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-002_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-003",
+    "code": "ST03-003",
+    "name": "Geara Zulu",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "(Neo Zeon) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-003.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-003.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-003_p1",
+    "code": "ST03-003",
+    "name": "Geara Zulu",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "(Neo Zeon) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-003_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-003_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-004",
+    "code": "ST03-004",
+    "name": "Gaza D (Sleeves)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Activate･Main】<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-004.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-004.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-004_p1",
+    "code": "ST03-004",
+    "name": "Gaza D (Sleeves)",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Activate･Main】<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-004_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-004_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-005",
+    "code": "ST03-005",
+    "name": "Dra-C (Sleeves)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space",
+    "trait": "(Neo Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-005.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-005.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-005_p1",
+    "code": "ST03-005",
+    "name": "Dra-C (Sleeves)",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space",
+    "trait": "(Neo Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-005_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-005_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-006",
+    "code": "ST03-006",
+    "name": "Char's Zaku Ⅱ",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Destroyed】Look at the top 3 cards of your deck. You may reveal 1 (Zeon)/(Neo Zeon) Unit card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "[Char Aznable]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-006.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-006.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-006_p1",
+    "code": "ST03-006",
+    "name": "Char's Zaku Ⅱ",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Destroyed】Look at the top 3 cards of your deck. You may reveal 1 (Zeon)/(Neo Zeon) Unit card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "[Char Aznable]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-006_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-006_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-007",
+    "code": "ST03-007",
+    "name": "Zaku Ⅰ",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-007.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-007.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-007_p1",
+    "code": "ST03-007",
+    "name": "Zaku Ⅰ",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-007_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-007_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-008",
+    "code": "ST03-008",
+    "name": "Zaku Ⅱ",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Attack】This Unit gets AP+2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-008.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-008.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-008_p1",
+    "code": "ST03-008",
+    "name": "Zaku Ⅱ",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Attack】This Unit gets AP+2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-008_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-008_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-009",
+    "code": "ST03-009",
+    "name": "Gouf",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 3,
+    "color": "Green",
+    "ap": 2,
+    "hp": 3,
+    "effect": "【Deploy】Deploy 1 rested [Zaku Ⅱ]((Zeon)･AP1･HP1) Unit token.",
+    "zone": "Earth",
+    "trait": "(Zeon)",
+    "link": "[Ramba Ral]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-009.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-009.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-009_p1",
+    "code": "ST03-009",
+    "name": "Gouf",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 3,
+    "color": "Green",
+    "ap": 2,
+    "hp": 3,
+    "effect": "【Deploy】Deploy 1 rested [Zaku Ⅱ]((Zeon)･AP1･HP1) Unit token.",
+    "zone": "Earth",
+    "trait": "(Zeon)",
+    "link": "[Ramba Ral]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-009_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-009_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-010",
+    "code": "ST03-010",
+    "name": "Full Frontal",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "6",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】You may deploy 1 (Neo Zeon)/(Zeon) Unit card that is Lv.4 or lower from your hand.",
+    "zone": "-",
+    "trait": "(Neo Zeon) (Cyber-Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-010.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-010.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-010_p1",
+    "code": "ST03-010",
+    "name": "Full Frontal",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "6",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】You may deploy 1 (Neo Zeon)/(Zeon) Unit card that is Lv.4 or lower from your hand.",
+    "zone": "-",
+    "trait": "(Neo Zeon) (Cyber-Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-010_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-010_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-011",
+    "code": "ST03-011",
+    "name": "Char Aznable",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】During this turn, this Unit gets AP+1 and, if it is a Link Unit, it gains <High-Maneuver>.\n\r\n(This Unit can't be blocked.)",
+    "zone": "-",
+    "trait": "(Zeon) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-011.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-011.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-011_p1",
+    "code": "ST03-011",
+    "name": "Char Aznable",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】This Unit gets AP+1 during this turn. If it is a Link Unit, it also gains <High-Maneuver>.\n\r\n(This Unit can't be blocked.)",
+    "zone": "-",
+    "trait": "(Zeon) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-011_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-011_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-012",
+    "code": "ST03-012",
+    "name": "Indignation",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】/【Action】Choose 1 friendly Unit. It gets AP+2 during this turn.\n【Pilot】[Angelo Sauper]",
+    "zone": "-",
+    "trait": "(Neo Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-012.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-012.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-012_p1",
+    "code": "ST03-012",
+    "name": "Indignation",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】/【Action】Choose 1 friendly Unit. It gets AP+2 during this turn.\n【Pilot】[Angelo Sauper]",
+    "zone": "-",
+    "trait": "(Neo Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-012_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-012_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-013",
+    "code": "ST03-013",
+    "name": "Close Combat",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Main】.\n【Main】/【Action】Choose 1 enemy Unit. Deal 2 damage to it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-013.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-013.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-013_p1",
+    "code": "ST03-013",
+    "name": "Close Combat",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Main】.\n【Main】/【Action】Choose 1 enemy Unit. Deal 2 damage to it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-013_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-013_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-014",
+    "code": "ST03-014",
+    "name": "The Blue Giant",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Action】Choose 1 friendly Unit. It can't receive battle damage from enemy Units with 2 or less AP during this battle.\n【Pilot】[Ramba Ral]",
+    "zone": "-",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-014.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-014.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-014_p1",
+    "code": "ST03-014",
+    "name": "The Blue Giant",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Action】Choose 1 friendly Unit. It can't receive battle damage from enemy Units with 2 or less AP during this battle.\n【Pilot】[Ramba Ral]",
+    "zone": "-",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-014_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-014_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-015",
+    "code": "ST03-015",
+    "name": "Rewloola",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 5 or less AP. Deal 1 damage to it.",
+    "zone": "Space",
+    "trait": "(Neo Zeon) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-015.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-015.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-015_p1",
+    "code": "ST03-015",
+    "name": "Rewloola",
+    "rarity": "C +",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 5 or less AP. Deal 1 damage to it.",
+    "zone": "Space",
+    "trait": "(Neo Zeon) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-015_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-015_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-016",
+    "code": "ST03-016",
+    "name": "Falmel",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+    "zone": "Space",
+    "trait": "(Zeon) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-016.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-016.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "ST03-016_p1",
+    "code": "ST03-016",
+    "name": "Falmel",
+    "rarity": "C +",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+    "zone": "Space",
+    "trait": "(Zeon) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-016_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-016_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03] Bonus Pack",
+    "set": {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "T-006",
+    "code": "T-006",
+    "name": "Char's Zaku Ⅱ",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 3,
+    "hp": 1,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-006.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-006.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "t",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  },
+  {
+    "id": "T-007",
+    "code": "T-007",
+    "name": "Zaku Ⅱ",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 1,
+    "hp": 1,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-007.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-007.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Zeon's Rush [ST03]",
+    "set": {
+      "id": "t",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003"
+    }
+  }
+]

@@ -1,0 +1,13 @@
+export { exrpExResource003 } from "@tcg/gundam-token-data";
+export { exrpExResource001 } from "./001-ex-resource.ts";
+export { exrpExResource002 } from "./002-ex-resource.ts";
+export { exrpExResource004 } from "./004-ex-resource.ts";
+export { exrpExResource005 } from "./005-ex-resource.ts";
+export { exrpExResource006 } from "./006-ex-resource.ts";
+export { exrpExResource007 } from "./007-ex-resource.ts";
+export { exrpExResource008 } from "./008-ex-resource.ts";
+export { exrpExResource009 } from "./009-ex-resource.ts";
+export { exrpExResource010 } from "./010-ex-resource.ts";
+export { exrpExResource011 } from "./011-ex-resource.ts";
+export { exrpExResource012 } from "./012-ex-resource.ts";
+export { exrpExResource013 } from "./013-ex-resource.ts";

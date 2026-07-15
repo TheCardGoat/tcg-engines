@@ -1,0 +1,5051 @@
+[
+  {
+    "id": "GD02-001",
+    "code": "GD02-001",
+    "name": "Psycho Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 5,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【During Pair･(Cyber-Newtype) Pilot】When one of your (Titans) Units destroys an enemy shield area card with damage, this Unit recovers 2 HP.",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "[Four Murasame]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-001.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-001.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-001_p1",
+    "code": "GD02-001",
+    "name": "Psycho Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 5,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【During Pair･(Cyber-Newtype) Pilot】When one of your (Titans) Units destroys an enemy shield area card with damage, this Unit recovers 2 HP.",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "[Four Murasame]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-001_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-001_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-002",
+    "code": "GD02-002",
+    "name": "Gundam Epyon",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "Blue",
+    "ap": 6,
+    "hp": 6,
+    "effect": "【During Link】【Once per Turn】During your turn, when one of your Units destroys an enemy Unit with battle damage, set this Unit as active.",
+    "zone": "Space Earth",
+    "trait": "(White Fang)",
+    "link": "[Zechs Merquise]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-002.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-002.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-002_p1",
+    "code": "GD02-002",
+    "name": "Gundam Epyon",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "Blue",
+    "ap": 6,
+    "hp": 6,
+    "effect": "【During Link】【Once per Turn】During your turn, when one of your Units destroys an enemy Unit with battle damage, set this Unit as active.",
+    "zone": "Space Earth",
+    "trait": "(White Fang)",
+    "link": "[Zechs Merquise]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-002_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-002_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-003",
+    "code": "GD02-003",
+    "name": "Gundam Mk-II (Titans)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 2,
+    "effect": "【During Pair･Lv.3 or Lower Pilot】【Destroyed】You may discard 1 Unit card. If you do, return the card paired with this Unit to your hand.",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "(Titans) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-003.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-003.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-003_p1",
+    "code": "GD02-003",
+    "name": "Gundam Mk-II (Titans)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 2,
+    "effect": "【During Pair･Lv.3 or Lower Pilot】【Destroyed】You may discard 1 Unit card. If you do, return the card paired with this Unit to your hand.",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "(Titans) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-003_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-003_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-004",
+    "code": "GD02-004",
+    "name": "Byarlant",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【When Paired】Choose 1 rested enemy Unit with 3 or less HP. It won't be set as active during the start phase of your opponent's next turn.",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "[Jerid Messa]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-004.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-004.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-005",
+    "code": "GD02-005",
+    "name": "Tallgeese",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【During Link】【Attack】Choose 1 enemy Unit with 2 or less HP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(OZ)",
+    "link": "(OZ) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-005.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-005.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-005_p1",
+    "code": "GD02-005",
+    "name": "Tallgeese",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【During Link】【Attack】Choose 1 enemy Unit with 2 or less HP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(OZ)",
+    "link": "(OZ) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-005_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-005_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-006",
+    "code": "GD02-006",
+    "name": "Forbidden Gundam",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\nDuring your turn, this Unit can't receive battle damage from enemy Units that are Lv.2 or lower.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "(Biological CPU) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-006.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-006.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-007",
+    "code": "GD02-007",
+    "name": "Psycho Gundam (MA Mode)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "(Cyber-Newtype) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-007.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-007.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-008",
+    "code": "GD02-008",
+    "name": "Gabthley",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【When Linked】Choose 1 rested enemy Unit. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "(Titans) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-008.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-008.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-009",
+    "code": "GD02-009",
+    "name": "Calamity Gundam",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 5,
+    "effect": "【Once per Turn】When this Unit's AP is reduced by an enemy effect, choose 1 rested enemy Unit. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "(Biological CPU) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-009.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-009.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-010",
+    "code": "GD02-010",
+    "name": "Raider Gundam",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Once per Turn】When this Unit receives enemy effect damage, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "(Biological CPU) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-010.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-010.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-011",
+    "code": "GD02-011",
+    "name": "Moebius (Peacemaker Team)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Blue",
+    "ap": null,
+    "hp": 1,
+    "effect": "【Activate･Action】Destroy this Unit：Choose 1 enemy Base/enemy Shield this Unit is battling. Deal 6 damage to it.",
+    "zone": "Space",
+    "trait": "(Earth Alliance)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-011.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-011.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-012",
+    "code": "GD02-012",
+    "name": "Core Booster",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "(White Base Team) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-012.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-012.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-013",
+    "code": "GD02-013",
+    "name": "Hizack",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-013.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-013.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-014",
+    "code": "GD02-014",
+    "name": "Galbaldy Beta",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 1,
+    "effect": "【Deploy】Choose 1 of your (Titans) Units. It gets AP+1 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-014.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-014.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-015",
+    "code": "GD02-015",
+    "name": "Marasai",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "(Titans) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-015.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-015.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-016",
+    "code": "GD02-016",
+    "name": "Barzam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Deploy】Choose 1 of your (Titans) Units. It gets AP+1 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-016.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-016.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-017",
+    "code": "GD02-017",
+    "name": "Delta Plus (Waverider Mode)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 3,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Riddhe Marcenas]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-017.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-017.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-018",
+    "code": "GD02-018",
+    "name": "Taurus",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 3,
+    "effect": "This Unit can't choose the enemy player as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(OZ)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-018.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-018.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-019",
+    "code": "GD02-019",
+    "name": "Raider Gundam (MA Mode)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "(Biological CPU) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-019.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-019.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-020",
+    "code": "GD02-020",
+    "name": "Elmeth",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】Look at the top 5 cards of your deck. You may reveal 1 green (Zeon) Pilot card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.\n【During Link】 This Unit gets AP+2.",
+    "zone": "Space",
+    "trait": "(Zeon)",
+    "link": "[Lalah Sune]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-020.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-020.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-020_p1",
+    "code": "GD02-020",
+    "name": "Elmeth",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】Look at the top 5 cards of your deck. You may reveal 1 green (Zeon) Pilot card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.\n【During Link】 This Unit gets AP+2.",
+    "zone": "Space",
+    "trait": "(Zeon)",
+    "link": "[Lalah Sune]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-020_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-020_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-021",
+    "code": "GD02-021",
+    "name": "Gundam AGE-1 Normal",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Deploy】You may discard 1 green (Earth Federation) Unit card. If you do, place 1 EX Resource. Then, if you are Lv.7 or higher, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (AGE System)",
+    "link": "(Asuno Family) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-021.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-021.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-021_p1",
+    "code": "GD02-021",
+    "name": "Gundam AGE-1 Normal",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Deploy】You may discard 1 green (Earth Federation) Unit card. If you do, place 1 EX Resource. Then, if you are Lv.7 or higher, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (AGE System)",
+    "link": "(Asuno Family) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-021_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-021_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-022",
+    "code": "GD02-022",
+    "name": "G-Exes",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 2,
+    "hp": 3,
+    "effect": "【Once per Turn】When you place an EX Resource, choose 1 of your (AGE System) Units. It gains <Breach 2> during this turn.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Woolf Enneacle]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-022.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-022.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-023",
+    "code": "GD02-023",
+    "name": "Gundam AGE-1 Spallow",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【During Link】While you are Lv.7 or higher, this Unit gains <First Strike>.\n\r\n(While this Unit is attacking, it deals damage before the enemy Unit.)",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (AGE System)",
+    "link": "[Flit Asuno]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-023.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-023.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-023_p1",
+    "code": "GD02-023",
+    "name": "Gundam AGE-1 Spallow",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【During Link】While you are Lv.7 or higher, this Unit gains <First Strike>.\n\r\n(While this Unit is attacking, it deals damage before the enemy Unit.)",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (AGE System)",
+    "link": "[Flit Asuno]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-023_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-023_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-024",
+    "code": "GD02-024",
+    "name": "Red Gundam",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【During Link】This Unit gains <High-Maneuver>.\n\r\n(This Unit can't be blocked.)",
+    "zone": "Space Earth",
+    "trait": "(Clan)",
+    "link": "(Clan) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-024.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-024.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-024_p1",
+    "code": "GD02-024",
+    "name": "Red Gundam",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【During Link】This Unit gains <High-Maneuver>.\n\r\n(This Unit can't be blocked.)",
+    "zone": "Space Earth",
+    "trait": "(Clan)",
+    "link": "(Clan) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-024_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-024_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-025",
+    "code": "GD02-025",
+    "name": "Gundam Heavyarms",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【Deploy】Look at the top card of your deck. Return it to the top or bottom of your deck.",
+    "zone": "Earth",
+    "trait": "(Operation Meteor)",
+    "link": "(Operation Meteor) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-025.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-025.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-026",
+    "code": "GD02-026",
+    "name": "Genoace Custom",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Green",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Deploy】If you are Lv.7 or higher, choose 1 of your (AGE System) Units. It gets AP+2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Woolf Enneacle]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-026.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-026.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-027",
+    "code": "GD02-027",
+    "name": "Gundam AGE-1 Titus",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 4,
+    "color": "Green",
+    "ap": 5,
+    "hp": 5,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (AGE System)",
+    "link": "[Flit Asuno]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-027.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-027.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-028",
+    "code": "GD02-028",
+    "name": "Abdul's Maganac",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Maganac Corps)",
+    "link": "(Maganac Corps) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-028.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-028.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-029",
+    "code": "GD02-029",
+    "name": "Gundam AGE-1 Normal",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (AGE System)",
+    "link": "(Asuno Family) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-029.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-029.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-030",
+    "code": "GD02-030",
+    "name": "Genoace",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-030.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-030.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-031",
+    "code": "GD02-031",
+    "name": "Gundam AGE-1 Titus",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Green",
+    "ap": 2,
+    "hp": 4,
+    "effect": "While you are Lv.7 or higher, this Unit gets AP+2.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (AGE System)",
+    "link": "[Flit Asuno]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-031.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-031.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-032",
+    "code": "GD02-032",
+    "name": "White Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "[Char Aznable]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-032.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-032.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-033",
+    "code": "GD02-033",
+    "name": "Kikeroga (MA Mode) (GQ)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Green",
+    "ap": 3,
+    "hp": 4,
+    "effect": "While another friendly (Zeon) Link Unit is in play, this Unit gains <Breach 5>.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space",
+    "trait": "(Zeon)",
+    "link": "[Challia Bull]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-033.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-033.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-034",
+    "code": "GD02-034",
+    "name": "GQuuuuuuX",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": 3,
+    "effect": "【During Pair･Red Pilot】This Unit gets AP+2.",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-034.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-034.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-035",
+    "code": "GD02-035",
+    "name": "Police Zaku (Armored RRU Type)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 3,
+    "effect": "This Unit can't choose the enemy player as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(Side 6)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-035.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-035.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-036",
+    "code": "GD02-036",
+    "name": "Qubeley",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Red",
+    "ap": 5,
+    "hp": 5,
+    "effect": "【When Linked】This Unit gains <Suppression> during this turn.\n\r\n(Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\n【During Pair･(Neo Zeon) Pilot】【Attack】Choose 1 damaged enemy Unit. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "[Haman Karn]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-036.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-036.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-036_p1",
+    "code": "GD02-036",
+    "name": "Qubeley",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Red",
+    "ap": 5,
+    "hp": 5,
+    "effect": "【When Linked】This Unit gains <Suppression> during this turn.\n\r\n(Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\n【During Pair･(Neo Zeon) Pilot】【Attack】Choose 1 damaged enemy Unit. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "[Haman Karn]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-036_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-036_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-037",
+    "code": "GD02-037",
+    "name": "Gundam Virsago",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Breach 1> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【Deploy】If there are 3 or less enemy Shields, choose 1 enemy Unit with 5 or less AP. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(New UNE)",
+    "link": "[Shagia Frost]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-037.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-037.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-037_p1",
+    "code": "GD02-037",
+    "name": "Gundam Virsago",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Breach 1> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【Deploy】If there are 3 or less enemy Shields, choose 1 enemy Unit with 5 or less AP. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(New UNE)",
+    "link": "[Shagia Frost]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-037_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-037_p1.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-038",
+    "code": "GD02-038",
+    "name": "GQuuuuuuX (Omega Psycommu)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Red",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【Deploy】Look at the top 3 cards of your deck. You may deploy 1 (Clan) Unit card that is Lv.4 or lower among them. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "Space Earth",
+    "trait": "(Clan)",
+    "link": "[Amate Yuzuriha (Machu)]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-038.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-038.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-038_p1",
+    "code": "GD02-038",
+    "name": "GQuuuuuuX (Omega Psycommu)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Red",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【Deploy】Look at the top 3 cards of your deck. You may deploy 1 (Clan) Unit card that is Lv.4 or lower among them. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "Space Earth",
+    "trait": "(Clan)",
+    "link": "[Amate Yuzuriha (Machu)]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-038_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-038_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-038_p2",
+    "code": "GD02-038",
+    "name": "GQuuuuuuX (Omega Psycommu)",
+    "rarity": "LR ++",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Red",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【Deploy】Look at the top 3 cards of your deck. You may deploy 1 (Clan) Unit card that is Lv.4 or lower among them. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "Space Earth",
+    "trait": "(Clan)",
+    "link": "[Amate Yuzuriha (Machu)]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-038_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-038_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-039",
+    "code": "GD02-039",
+    "name": "Haman Karn's Gaza C",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 3,
+    "effect": "【When Paired】Choose 1 enemy Unit that is Lv.3 or lower. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "[Haman Karn]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-039.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-039.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-040",
+    "code": "GD02-040",
+    "name": "Gundam Ashtaron",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Activate･Main】<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)\n【Deploy】Choose 1 of your other (New UNE) Units. It can't receive battle damage from enemy Units with 2 or less HP during this turn.",
+    "zone": "Space Earth",
+    "trait": "(New UNE)",
+    "link": "(New UNE) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-040.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-040.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-040_p1",
+    "code": "GD02-040",
+    "name": "Gundam Ashtaron",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Activate･Main】<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)\n【Deploy】Choose 1 of your other (New UNE) Units. It can't receive battle damage from enemy Units with 2 or less HP during this turn.",
+    "zone": "Space Earth",
+    "trait": "(New UNE)",
+    "link": "(New UNE) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-040_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-040_p1.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-041",
+    "code": "GD02-041",
+    "name": "Sugai's Gelgoog (GQ)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 4,
+    "color": "Red",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Deploy】Choose 1 enemy Unit that is Lv.5 or higher. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Clan)",
+    "link": "[Shiiko Sugai]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-041.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-041.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-041_p1",
+    "code": "GD02-041",
+    "name": "Sugai's Gelgoog (GQ)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 4,
+    "color": "Red",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Deploy】Choose 1 enemy Unit that is Lv.5 or higher. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Clan)",
+    "link": "[Shiiko Sugai]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-041_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-041_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-042",
+    "code": "GD02-042",
+    "name": "Gundam Ashtaron (MA Mode)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Deploy】Choose 1 of your (New UNE) Units. It gains <High-Maneuver> during this turn.\n\r\n(This Unit can't be blocked.)",
+    "zone": "Space Earth",
+    "trait": "(New UNE)",
+    "link": "[Olba Frost]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-042.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-042.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-043",
+    "code": "GD02-043",
+    "name": "Daughtress Weapon",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Deploy】If you have another (New UNE) Unit in play, deploy 1 rested [Daughtress]((New UNE)･AP0･HP1) Unit token.",
+    "zone": "Space Earth",
+    "trait": "(New UNE)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-043.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-043.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-044",
+    "code": "GD02-044",
+    "name": "Daughtress Command",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 1,
+    "effect": "【Destroyed】If you have another (New UNE) Unit in play, deploy 1 rested [Daughtress]((New UNE)･AP0･HP1) Unit token.",
+    "zone": "Space Earth",
+    "trait": "(New UNE)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-044.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-044.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-045",
+    "code": "GD02-045",
+    "name": "GINN Long-Range Reconnaissance Type",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Attack】If this Unit has 5 or more AP and it is attacking an enemy Unit, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-045.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-045.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-046",
+    "code": "GD02-046",
+    "name": "Sayla's Light-Type Guncannon",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【Deploy】Choose 1 enemy Unit token. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Sayla Mass]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-046.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-046.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-047",
+    "code": "GD02-047",
+    "name": "Gaza C",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": 1,
+    "effect": "【Activate･Main】Rest this Unit：Destroy this and choose 1 enemy Unit that is Lv.5 or lower. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-047.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-047.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-048",
+    "code": "GD02-048",
+    "name": "Zaku Ⅲ (Sleeves)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": 4,
+    "hp": 1,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "(Neo Zeon) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-048.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-048.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-049",
+    "code": "GD02-049",
+    "name": "Daughtress",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Activate･Main】<Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+    "zone": "Space Earth",
+    "trait": "(New UNE)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-049.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-049.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-050",
+    "code": "GD02-050",
+    "name": "Ga-Zowmn (Sleeves)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-050.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-050.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-051",
+    "code": "GD02-051",
+    "name": "01 Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-051.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-051.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-052",
+    "code": "GD02-052",
+    "name": "Guncannon (GQ)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-052.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-052.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-053",
+    "code": "GD02-053",
+    "name": "Gundam X",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Purple",
+    "ap": 6,
+    "hp": 5,
+    "effect": "[Suppression] (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\n【During Link】During your turn, while there are 7 or more cards in your trash, all your other (Vulture) Units get AP+2.",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "[Garrod Ran]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-053.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-053.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-053_p1",
+    "code": "GD02-053",
+    "name": "Gundam X",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Purple",
+    "ap": 6,
+    "hp": 5,
+    "effect": "[Suppression] (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\n【During Link】During your turn, while there are 7 or more cards in your trash, all your other (Vulture) Units get AP+2.",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "[Garrod Ran]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-053_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-053_p1.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-054",
+    "code": "GD02-054",
+    "name": "Gundam Barbatos 1st Form",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Attack】If this Unit is damaged, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-054.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-054.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-054_p1",
+    "code": "GD02-054",
+    "name": "Gundam Barbatos 1st Form",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Attack】If this Unit is damaged, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-054_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-054_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-054_p2",
+    "code": "GD02-054",
+    "name": "Gundam Barbatos 1st Form",
+    "rarity": "LR ++",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Attack】If this Unit is damaged, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-054_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-054_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-055",
+    "code": "GD02-055",
+    "name": "Gundam Gusion Rebake",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 5,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【Deploy】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Akihiro Altland]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-055.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-055.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-055_p1",
+    "code": "GD02-055",
+    "name": "Gundam Gusion Rebake",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 5,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【Deploy】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Akihiro Altland]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-055_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-055_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-056",
+    "code": "GD02-056",
+    "name": "Gundam X",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【During Pair･(Vulture) Pilot】【Destroyed】Choose 1 (Vulture) Unit card that is Lv.5 or higher from your trash. Add it to your hand.",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "[Garrod Ran]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-056.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-056.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-057",
+    "code": "GD02-057",
+    "name": "Zedas",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 3,
+    "effect": "【During Pair】【Attack】You may choose 1 of your other Units. Destroy it. If you do, choose 1 enemy Unit that is Lv.4 or lower. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(UE) (Vagan)",
+    "link": "[Desil Galette]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-057.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-057.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-058",
+    "code": "GD02-058",
+    "name": "Ryusei-Go (Graze Custom Ⅱ)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Deploy】Choose 1 of your Units. Deal 1 damage to it. If you do, draw 1. Then, discard 1.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan)",
+    "link": "(Tekkadan) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-058.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-058.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-059",
+    "code": "GD02-059",
+    "name": "Gundam Airmaster",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 3,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "(Vulture) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-059.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-059.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-059_p1",
+    "code": "GD02-059",
+    "name": "Gundam Airmaster",
+    "rarity": "U +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 3,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "(Vulture) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-059_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-059_p1.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-060",
+    "code": "GD02-060",
+    "name": "Gundam Leopard",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】If there are 7 or more cards in your trash, choose 1 enemy Unit that is Lv.4 or lower. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "[Roybea Loy]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-060.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-060.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-060_p1",
+    "code": "GD02-060",
+    "name": "Gundam Leopard",
+    "rarity": "U +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】If there are 7 or more cards in your trash, choose 1 enemy Unit that is Lv.4 or lower. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "[Roybea Loy]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-060_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-060_p1.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-061",
+    "code": "GD02-061",
+    "name": "Hyakuri",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【When Paired･Purple Pilot】If there are 3 or more (Teiwaz)/(Tekkadan) cards in your trash, choose 1 enemy Unit with 3 or less AP. Rest it.",
+    "zone": "Space",
+    "trait": "(Teiwaz)",
+    "link": "(Teiwaz) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-061.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-061.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-062",
+    "code": "GD02-062",
+    "name": "Amida's Hyakuren",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Teiwaz)",
+    "link": "(Teiwaz) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-062.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-062.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-063",
+    "code": "GD02-063",
+    "name": "Gundam Airmaster (Fighter Mode)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "(Vulture) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-063.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-063.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-064",
+    "code": "GD02-064",
+    "name": "Gundam Leopard",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 4,
+    "effect": "During your turn, while there are 7 or more cards in your trash, this Unit can't receive effect damage from enemy Commands.",
+    "zone": "Earth",
+    "trait": "(Vulture)",
+    "link": "(Vulture) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-064.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-064.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-065",
+    "code": "GD02-065",
+    "name": "Jenice Custom",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Earth",
+    "trait": "(Vulture)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-065.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-065.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-066",
+    "code": "GD02-066",
+    "name": "Gafran",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 3,
+    "effect": "This Unit can't choose the enemy player as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(UE) (Vagan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-066.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-066.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-067",
+    "code": "GD02-067",
+    "name": "Baqto",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(UE) (Vagan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-067.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-067.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-068",
+    "code": "GD02-068",
+    "name": "Gundam Barbatos 3rd Form",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 5,
+    "effect": "【Deploy】Deal 2 damage to this Unit.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "(Tekkadan) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-068.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-068.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-069",
+    "code": "GD02-069",
+    "name": "Zeta Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "White",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【During Link】【Activate･Main】【Once per Turn】Choose 1 active friendly Base. Rest it. If you do, set this Unit as active. It can't choose the enemy player as its attack target during this turn.",
+    "zone": "Space Earth",
+    "trait": "(AEUG)",
+    "link": "[Kamille Bidan]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-069.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-069.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-069_p1",
+    "code": "GD02-069",
+    "name": "Zeta Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "White",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【During Link】【Activate･Main】【Once per Turn】Choose 1 active friendly Base. Rest it. If you do, set this Unit as active. It can't choose the enemy player as its attack target during this turn.",
+    "zone": "Space Earth",
+    "trait": "(AEUG)",
+    "link": "[Kamille Bidan]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-069_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-069_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-070",
+    "code": "GD02-070",
+    "name": "Gundam Kimaris",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】If there are 4 or more (Gjallarhorn) cards in your trash, draw 2. If you do, discard 2.",
+    "zone": "Space Earth",
+    "trait": "(Gjallarhorn) (Gundam Frame)",
+    "link": "[Gaelio Bauduin]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-070.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-070.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-070_p1",
+    "code": "GD02-070",
+    "name": "Gundam Kimaris",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】If there are 4 or more (Gjallarhorn) cards in your trash, draw 2. If you do, discard 2.",
+    "zone": "Space Earth",
+    "trait": "(Gjallarhorn) (Gundam Frame)",
+    "link": "[Gaelio Bauduin]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-070_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-070_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-071",
+    "code": "GD02-071",
+    "name": "Gundam Mk-II (AEUG)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【Deploy】If a friendly white Base is in play, you may pair 1 (AEUG) Pilot card from your hand with this Unit.",
+    "zone": "Space Earth",
+    "trait": "(AEUG)",
+    "link": "(AEUG) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-071.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-071.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-072",
+    "code": "GD02-072",
+    "name": "Hyaku-Shiki",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\nWhile a friendly white Base is in play, this Unit gains <Repair 1>.\n\r\n(At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(AEUG)",
+    "link": "[Quattro Bajeena]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-072.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-072.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-072_p1",
+    "code": "GD02-072",
+    "name": "Hyaku-Shiki",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\nWhile a friendly white Base is in play, this Unit gains <Repair 1>.\n\r\n(At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(AEUG)",
+    "link": "[Quattro Bajeena]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-072_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-072_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-073",
+    "code": "GD02-073",
+    "name": "Carta's Graze Ritter (Ground Type)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 5,
+    "hp": 4,
+    "effect": "During your opponent's turn, the enemy Unit battling this Unit gains <First Strike>.\n\r\n(While this Unit is attacking, it deals damage before the enemy Unit.)",
+    "zone": "Earth",
+    "trait": "(Gjallarhorn)",
+    "link": "[Carta Issue]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-073.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-073.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-073_p1",
+    "code": "GD02-073",
+    "name": "Carta's Graze Ritter (Ground Type)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 5,
+    "hp": 4,
+    "effect": "During your opponent's turn, the enemy Unit battling this Unit gains <First Strike>.\n\r\n(While this Unit is attacking, it deals damage before the enemy Unit.)",
+    "zone": "Earth",
+    "trait": "(Gjallarhorn)",
+    "link": "[Carta Issue]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-073_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-073_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-074",
+    "code": "GD02-074",
+    "name": "Gundam Aerial Rebuild",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "White",
+    "ap": 5,
+    "hp": 5,
+    "effect": "<High-Maneuver> (This Unit can't be blocked.)\n【During Pair】While there are 4 or more Command cards in your trash, this Unit gains <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "[Suletta Mercury]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-074.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-074.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-075",
+    "code": "GD02-075",
+    "name": "Rick Dias (Red)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Attack】Choose 1 active friendly Base. Rest it. If you do, choose 1 enemy Unit that is Lv.4 or lower. It gets AP-2 during this battle.",
+    "zone": "Space Earth",
+    "trait": "(AEUG)",
+    "link": "(AEUG) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-075.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-075.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-076",
+    "code": "GD02-076",
+    "name": "Buster Gundam",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 3,
+    "effect": "While this Unit has 5 or more AP, it gains <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Triple Ship Alliance)",
+    "link": "(Coordinator) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-076.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-076.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-077",
+    "code": "GD02-077",
+    "name": "Ein's Schwalbe Graze",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Gjallarhorn)",
+    "link": "(Gjallarhorn) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-077.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-077.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-078",
+    "code": "GD02-078",
+    "name": "Gundam Pharact",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 5,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "[Elan Ceres]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-078.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-078.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-079",
+    "code": "GD02-079",
+    "name": "Rick Dias",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(AEUG)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-079.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-079.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-080",
+    "code": "GD02-080",
+    "name": "Nemo",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(AEUG)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-080.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-080.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-081",
+    "code": "GD02-081",
+    "name": "Methuss",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Deploy】If a friendly white Base is in play, choose 1 enemy Unit. It gets AP-2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(AEUG)",
+    "link": "[Fa Yuiry]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-081.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-081.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-082",
+    "code": "GD02-082",
+    "name": "Gaelio's Schwalbe Graze",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "While you have another (Gjallarhorn) Unit in play, this Unit gains <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Gjallarhorn)",
+    "link": "[Gaelio Bauduin]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-082.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-082.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-083",
+    "code": "GD02-083",
+    "name": "Graze Ritter (Ground Type)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Destroyed】If it is your opponent's turn, choose 1 of your (Gjallarhorn) Units. Set it as active.",
+    "zone": "Earth",
+    "trait": "(Gjallarhorn)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-083.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-083.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-084",
+    "code": "GD02-084",
+    "name": "Lauda's Dilanza",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "White",
+    "ap": 1,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "(Academy) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-084.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-084.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-085",
+    "code": "GD02-085",
+    "name": "Four Murasame",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Once per Turn】During your turn, when this Unit recovers HP, if you have 4 or less cards in your hand, draw 1.",
+    "zone": "-",
+    "trait": "(Titans) (Cyber-Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-085.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-085.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-085_p1",
+    "code": "GD02-085",
+    "name": "Four Murasame",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Once per Turn】During your turn, when this Unit recovers HP, if you have 4 or less cards in your hand, draw 1.",
+    "zone": "-",
+    "trait": "(Titans) (Cyber-Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-085_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-085_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-086",
+    "code": "GD02-086",
+    "name": "Jerid Messa",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nWhile you have another (Titans) Unit in play, this gets AP+1.",
+    "zone": "-",
+    "trait": "(Titans)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-086.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-086.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-087",
+    "code": "GD02-087",
+    "name": "Orga, Crot, and Shani",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】If this is a blue Unit, choose 1 enemy Unit with <Blocker>. Rest it.",
+    "zone": "-",
+    "trait": "(Earth Alliance) (Biological CPU)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-087.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-087.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-088",
+    "code": "GD02-088",
+    "name": "Flit Asuno",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Look at the top 3 cards of your deck. You may reveal 1 green (Earth Federation) Unit card/1 card with \"AGE Device\" in its card name among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "-",
+    "trait": "(Earth Federation) (Asuno Family) (X-Rounder)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-088.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-088.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-088_p1",
+    "code": "GD02-088",
+    "name": "Flit Asuno",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Look at the top 3 cards of your deck. You may reveal 1 green (Earth Federation) Unit card/1 card with \"AGE Device\" in its card name among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "-",
+    "trait": "(Earth Federation) (Asuno Family) (X-Rounder)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-088_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-088_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-089",
+    "code": "GD02-089",
+    "name": "Lalah Sune",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Choose 1 of your other (Zeon) Link Units. It gains <Breach 1> during this turn.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "-",
+    "trait": "(Zeon) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-089.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-089.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-090",
+    "code": "GD02-090",
+    "name": "Challia Bull (GQ)",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\nWhile you have another Unit with <High-Maneuver> in play, this Unit gets AP+1.",
+    "zone": "-",
+    "trait": "(Zeon) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-090.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-090.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-091",
+    "code": "GD02-091",
+    "name": "Haman Karn",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If this Unit is red, choose 1 enemy Unit whose Lv. is equal to or lower than this Unit. Deal 1 damage to it.",
+    "zone": "-",
+    "trait": "(Neo Zeon) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-091.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-091.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-091_p1",
+    "code": "GD02-091",
+    "name": "Haman Karn",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If this Unit is red, choose 1 enemy Unit whose Lv. is equal to or lower than this Unit. Deal 1 damage to it.",
+    "zone": "-",
+    "trait": "(Neo Zeon) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-091_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-091_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-092",
+    "code": "GD02-092",
+    "name": "Shagia Frost",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Attack】Choose 1 of your (New UNE) Units. It gets AP+2 during this turn.",
+    "zone": "-",
+    "trait": "(New UNE)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-092.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-092.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-093",
+    "code": "GD02-093",
+    "name": "Olba Frost",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nDuring your turn, when this Unit destroys an enemy Unit paired with a (Newtype) Pilot with battle damage, draw 1.",
+    "zone": "-",
+    "trait": "(New UNE)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-093.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-093.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-094",
+    "code": "GD02-094",
+    "name": "Garrod Ran & Tiffa Adill",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】You may discard 1. If you do, look at the top 3 cards of your deck. You may reveal 1 (Vulture) Unit card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "-",
+    "trait": "(Vulture) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-094.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-094.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-094_p1",
+    "code": "GD02-094",
+    "name": "Garrod Ran & Tiffa Adill",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】You may discard 1. If you do, look at the top 3 cards of your deck. You may reveal 1 (Vulture) Unit card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "-",
+    "trait": "(Vulture) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-094_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-094_p1.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-095",
+    "code": "GD02-095",
+    "name": "Lafter Frankland",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】If this Unit is damaged and Lv.5 or lower, it gains <High-Maneuver> during this battle.\n\r\n(This Unit can't be blocked.)",
+    "zone": "-",
+    "trait": "(Teiwaz)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-095.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-095.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-096",
+    "code": "GD02-096",
+    "name": "Desil Galette",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】You may choose 1 (Vagan) Unit card that is Lv.2 or lower from your trash. Pay its cost to deploy it.",
+    "zone": "-",
+    "trait": "(Vagan) (X-Rounder)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-096.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-096.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-097",
+    "code": "GD02-097",
+    "name": "Kamille Bidan",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\nWhile there is a friendly white Base in play, this Unit gets AP+2.",
+    "zone": "-",
+    "trait": "(AEUG) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-097.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-097.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-097_p1",
+    "code": "GD02-097",
+    "name": "Kamille Bidan",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\nWhile there is a friendly white Base in play, this Unit gets AP+2.",
+    "zone": "-",
+    "trait": "(AEUG) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-097_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-097_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-098",
+    "code": "GD02-098",
+    "name": "Quattro Bajeena",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 2,
+    "effect": "This card's name is also treated as [Char Aznable].\n\r\n【Burst】Add this card to your hand.\n【When Linked】If this is an (AEUG) Unit, draw 1. If you do, discard 1.",
+    "zone": "-",
+    "trait": "(AEUG) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-098.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-098.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-099",
+    "code": "GD02-099",
+    "name": "Gaelio Bauduin",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If there are 4 or more (Gjallarhorn) cards in your trash, choose 1 enemy Unit. It gets AP-2 during this turn.",
+    "zone": "-",
+    "trait": "(Gjallarhorn)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-099.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-099.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-100",
+    "code": "GD02-100",
+    "name": "Dramatic Turnabout",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "5",
+    "cost": 2,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Draw 1.\n【Main】Choose 1 friendly damaged Unit. It recovers 2 HP. Then, draw 1.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-100.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-100.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-100_p1",
+    "code": "GD02-100",
+    "name": "Dramatic Turnabout",
+    "rarity": "R +",
+    "cardType": "COMMAND",
+    "level": "5",
+    "cost": 2,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Draw 1.\n【Main】Choose 1 friendly damaged Unit. It recovers 2 HP. Then, draw 1.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-100_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-100_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-101",
+    "code": "GD02-101",
+    "name": "Beneath the Mask",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "1",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Choose 1 to 2 enemy Units that are Lv.2 or lower. Rest them.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-101.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-101.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-102",
+    "code": "GD02-102",
+    "name": "Mouar’s Determination",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】/【Action】Choose 1 friendly (Titans) Unit. It gets AP+2 during this turn.\n【Pilot】[Mouar Pharaoh]",
+    "zone": "-",
+    "trait": "(Titans)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-102.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-102.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-103",
+    "code": "GD02-103",
+    "name": "AGE Device",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 (Asuno Family) Pilot card from your trash. Add it to your hand.\n【Main】If you have an (AGE System) Unit in play, place 1 EX Resource.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-103.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-103.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-103_p1",
+    "code": "GD02-103",
+    "name": "AGE Device",
+    "rarity": "R +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 (Asuno Family) Pilot card from your trash. Add it to your hand.\n【Main】If you have an (AGE System) Unit in play, place 1 EX Resource.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-103_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-103_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-104",
+    "code": "GD02-104",
+    "name": "Turning Point of History",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "1",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Look at the top 3 cards of your deck and return 1 to the top. Return the remaining cards to the bottom of your deck. Then, if you have a (Newtype) Pilot in play, draw 1.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-104.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-104.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-105",
+    "code": "GD02-105",
+    "name": "Valedictorian",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Action】Choose 1 of your Unit tokens. It can't receive battle damage from enemy Units during this battle.\n【Pilot】[Xavier Olivette]",
+    "zone": "-",
+    "trait": "(Zeon) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-105.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-105.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-106",
+    "code": "GD02-106",
+    "name": "White Wolf",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Action】During this battle, your shield area cards can't receive damage from enemy Units that are Lv.3 or lower.\n【Pilot】[Woolf Enneacle]",
+    "zone": "-",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-106.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-106.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-107",
+    "code": "GD02-107",
+    "name": "All-Range Attack",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. Deal 1 damage to it.\n【Main】Deal 1 damage to all enemy Units other than Link Units.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-107.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-107.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-107_p1",
+    "code": "GD02-107",
+    "name": "All-Range Attack",
+    "rarity": "R +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. Deal 1 damage to it.\n【Main】Deal 1 damage to all enemy Units other than Link Units.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-107_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-107_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-108",
+    "code": "GD02-108",
+    "name": "That One Looks A Lot Stronger?",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Choose 1 friendly (Clan) Unit. During this turn, it may choose an active enemy Unit that is Lv.4 or lower as its attack target.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-108.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-108.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-109",
+    "code": "GD02-109",
+    "name": "Undying Persistence",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Main】/【Action】Choose 1 enemy Unit. Deal 1 damage to it.\n【Pilot】[Shiiko Sugai]",
+    "zone": "-",
+    "trait": "(Clan) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-109.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-109.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-110",
+    "code": "GD02-110",
+    "name": "Awakened Power",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "6",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Choose 1 Unit card that is Lv.5 or lower from your trash. Pay its cost to deploy it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-110.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-110.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-110_p1",
+    "code": "GD02-110",
+    "name": "Awakened Power",
+    "rarity": "R +",
+    "cardType": "COMMAND",
+    "level": "6",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Choose 1 Unit card that is Lv.5 or lower from your trash. Pay its cost to deploy it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-110_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-110_p1.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-111",
+    "code": "GD02-111",
+    "name": "Decisive Last Resort",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit that is Lv.3 or lower. Deal 2 damage to it.\n【Main】Choose 6 purple Unit cards from your trash. Exile them from the game. If you do, choose 1 enemy Unit. Destroy it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-111.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-111.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-112",
+    "code": "GD02-112",
+    "name": "Momentary Respite",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Draw 1.\n【Main】Choose 1 purple Pilot card from your trash. Add it to your hand.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-112.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-112.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-112_p1",
+    "code": "GD02-112",
+    "name": "Momentary Respite",
+    "rarity": "R +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Draw 1.\n【Main】Choose 1 purple Pilot card from your trash. Add it to your hand.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-112_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-112_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-113",
+    "code": "GD02-113",
+    "name": "Sisterly Care",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Main】/【Action】If a friendly (Teiwaz) Link Unit is in play, choose 1 enemy Unit with 2 or less AP. Destroy it.\n【Pilot】[Amida Arca]",
+    "zone": "-",
+    "trait": "(Teiwaz)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-113.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-113.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-114",
+    "code": "GD02-114",
+    "name": "It's Name is Ryusei-Go",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】/【Action】Choose 1 damaged friendly Unit. It gets AP+2 during this turn.\n【Pilot】[Norba Shino]",
+    "zone": "-",
+    "trait": "(Tekkadan) (Alaya-Vijnana)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-114.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-114.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-115",
+    "code": "GD02-115",
+    "name": "Familial Devotion",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 0,
+    "hp": 1,
+    "effect": "【Main】/【Action】Choose 1 friendly (Vulture) Unit. It gets AP+2 during this turn.\n【Pilot】[Witz Sou]",
+    "zone": "-",
+    "trait": "(Vulture)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-115.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-115.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-116",
+    "code": "GD02-116",
+    "name": "Comrades Come First",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】If there are 7 or more cards in your trash, choose 1 friendly (Vulture) Unit. During this turn, it may choose an active enemy Unit that is Lv.4 or lower as its attack target.\n【Pilot】[Roybea Loy]",
+    "zone": "-",
+    "trait": "(Vulture)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-116.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-116.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-117",
+    "code": "GD02-117",
+    "name": "A New Sign",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 (AEUG) Base card from your trash. Add it to your hand.\n【Main】Draw 3. Then, discard 2.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-117.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-117.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-118",
+    "code": "GD02-118",
+    "name": "Heart Set on Revenge",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Action】Choose 1 enemy Unit with 4 or less HP battling a friendly Unit with <Blocker>. Return it to its owner's hand.\n【Pilot】[Ein Dalton]",
+    "zone": "-",
+    "trait": "(Gjallarhorn)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-118.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-118.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-119",
+    "code": "GD02-119",
+    "name": "Persistent and Fortudinous",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Action】If you have a (Gjallarhorn) Link Unit in play, choose 1 enemy Unit. It gets AP-3 during this battle.\n【Pilot】[Carta Issue]",
+    "zone": "-",
+    "trait": "(Gjallarhorn)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-119.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-119.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-120",
+    "code": "GD02-120",
+    "name": "Aspiring Pilot",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": 0,
+    "hp": 1,
+    "effect": "【Action】Choose 1 of your (AEUG) Units/Bases. It recovers 2 HP.\n【Pilot】[Fa Yuiry]",
+    "zone": "-",
+    "trait": "(AEUG)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-120.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-120.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-121",
+    "code": "GD02-121",
+    "name": "Dominion",
+    "rarity": "U",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, choose 1 friendly blue Unit. It recovers 2 HP.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-121.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-121.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-122",
+    "code": "GD02-122",
+    "name": "Alexandria",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, choose 1 rested enemy Unit that is Lv.4 or lower. Deal 1 damage to it.",
+    "zone": "Space",
+    "trait": "(Titans) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-122.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-122.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-123",
+    "code": "GD02-123",
+    "name": "Sodon",
+    "rarity": "R",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, choose 1 friendly Unit token. During this turn, it may choose an active enemy Unit with 5 or less AP as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(Zeon) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-123.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-123.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-124",
+    "code": "GD02-124",
+    "name": "Diva",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\nDuring your turn, while you are Lv.7 or higher, all friendly green (Earth Federation) Units get AP+1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-124.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-124.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-125",
+    "code": "GD02-125",
+    "name": "Gwadan",
+    "rarity": "R",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 2,
+    "color": "Red",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if it is your turn, you may discard 1 red card. If you do, draw 1.",
+    "zone": "Space",
+    "trait": "(Neo Zeon) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-125.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-125.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-126",
+    "code": "GD02-126",
+    "name": "Shuji's Hideout",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Destroyed】Choose 1 enemy Unit that is Lv.4 or lower. Deal 1 damage to it.",
+    "zone": "Space",
+    "trait": "(Clan) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-126.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-126.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-127",
+    "code": "GD02-127",
+    "name": "Freeden",
+    "rarity": "U",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Destroyed】Place the top 2 cards of your deck into your trash.",
+    "zone": "Earth",
+    "trait": "(Vulture) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-127.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-127.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-128",
+    "code": "GD02-128",
+    "name": "Hammerhead",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if it is your turn and a friendly (Teiwaz) Link Unit is in play, choose 1 enemy Unit with 2 or less AP. Destroy it.",
+    "zone": "Space",
+    "trait": "(Teiwaz) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-128.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-128.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-129",
+    "code": "GD02-129",
+    "name": "Argama",
+    "rarity": "R",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\nThis Base can't receive enemy effect damage.",
+    "zone": "Space Earth",
+    "trait": "(AEUG) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-129.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-129.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-129_p1",
+    "code": "GD02-129",
+    "name": "Argama",
+    "rarity": "R +",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\nThis Base can't receive enemy effect damage.",
+    "zone": "Space Earth",
+    "trait": "(AEUG) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-129_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-129_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "GD02-130",
+    "code": "GD02-130",
+    "name": "Sleipnir",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if a friendly (Gjallarhorn) Unit is in play, choose 1 enemy Unit. It gets AP-2 during this turn.",
+    "zone": "Space",
+    "trait": "(Gjallarhorn) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-130.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-130.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-010",
+    "code": "R-010",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-010.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-010.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-010_p1",
+    "code": "R-010",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-010_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-010_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-011",
+    "code": "R-011",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-011.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-011.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-011_p1",
+    "code": "R-011",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-011_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-011_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-012",
+    "code": "R-012",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-012.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-012.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-012_p1",
+    "code": "R-012",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-012_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-012_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-013",
+    "code": "R-013",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-013.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-013.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-013_p1",
+    "code": "R-013",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-013_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-013_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-014",
+    "code": "R-014",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-014.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-014.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-014_p1",
+    "code": "R-014",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-014_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-014_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-015",
+    "code": "R-015",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-015.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-015.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-015_p1",
+    "code": "R-015",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-015_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-015_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-015_p2",
+    "code": "R-015",
+    "name": "Resource",
+    "rarity": "C ++",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-015_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-015_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-016",
+    "code": "R-016",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-016.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-016.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-016_p1",
+    "code": "R-016",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-016_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-016_p1.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-017",
+    "code": "R-017",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-017.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-017.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Dual Impact [GD02]",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-017_p1",
+    "code": "R-017",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-017_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-017_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "-",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-018",
+    "code": "R-018",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-018.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-018.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "-",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-018_p1",
+    "code": "R-018",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-018_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-018_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "-",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-019",
+    "code": "R-019",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-019.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-019.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "-",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "R-019_p1",
+    "code": "R-019",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-019_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-019_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "-",
+    "set": {
+      "id": "r",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  },
+  {
+    "id": "T-012",
+    "code": "T-012",
+    "name": "Daughtress",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": 1,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(New UNE)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-012.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-012.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "-",
+    "set": {
+      "id": "t",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102"
+    }
+  }
+]

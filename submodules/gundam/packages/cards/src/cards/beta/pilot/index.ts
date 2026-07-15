@@ -1,0 +1,9 @@
+export { betaAmuroRay010 } from "./010-amuro-ray.ts";
+export { betaSulettaMercury011 } from "./011-suletta-mercury.ts";
+export { betaHeeroYuy010 } from "./010-heero-yuy.ts";
+export { betaCharAznable011 } from "./011-char-aznable.ts";
+export { betaKiraYamato010 } from "./010-kira-yamato.ts";
+export { betaBanagherLinks088 } from "./088-banagher-links.ts";
+export { betaRiddheMarcenas089 } from "./089-riddhe-marcenas.ts";
+export { betaChangWufei091 } from "./091-chang-wufei.ts";
+export { betaGuelJeturk097 } from "./097-guel-jeturk.ts";

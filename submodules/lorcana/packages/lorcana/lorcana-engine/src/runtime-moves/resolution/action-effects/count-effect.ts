@@ -1,0 +1,112 @@
+import type { CountEffect, InkType } from "@tcg/lorcana-types";
+import type { CardInstanceId } from "#core";
+import type { CardPlayedPayload } from "../../../types";
+import type { ActionResolutionInput, PlayCardExecutionContext } from "./types";
+import { markLastEffectPerformed } from "./event-snapshot-utils";
+
+type InkedCardLike = {
+  inkType?: InkType[];
+};
+
+type CardTypeLike = {
+  cardType?: string;
+};
+
+type CountController = "you" | "opponent";
+
+export function isCountEffect(effect: unknown): effect is CountEffect {
+  return (
+    typeof effect === "object" &&
+    effect !== null &&
+    "type" in effect &&
+    (effect as { type?: unknown }).type === "count"
+  );
+}
+
+export function resolveCountEffect(
+  ctx: PlayCardExecutionContext,
+  _cardPlayed: CardPlayedPayload,
+  effect: CountEffect,
+  resolutionInput: ActionResolutionInput,
+): void {
+  if (!resolutionInput.eventSnapshot) {
+    resolutionInput.eventSnapshot = {};
+  }
+
+  const multiplier =
+    typeof (effect as { multiplier?: unknown }).multiplier === "number"
+      ? ((effect as { multiplier?: number }).multiplier as number)
+      : 1;
+
+  if (effect.what === "distinct-revealed-ink-types") {
+    const revealedCardIds =
+      (resolutionInput.eventSnapshot.revealedCardIds as CardInstanceId[] | undefined) ?? [];
+    const distinctInkTypes = new Set<InkType>();
+
+    for (const cardId of revealedCardIds) {
+      const definition = ctx.cards.getDefinition(cardId) as InkedCardLike | undefined;
+      for (const inkType of definition?.inkType ?? []) {
+        distinctInkTypes.add(inkType);
+      }
+    }
+
+    resolutionInput.eventSnapshot.triggerAmount = distinctInkTypes.size * multiplier;
+    markLastEffectPerformed(resolutionInput.eventSnapshot, distinctInkTypes.size > 0);
+    return;
+  }
+
+  if (effect.what === "distinct-character-ink-types") {
+    const controller = effect.controller === "opponent" ? "opponent" : ("you" satisfies CountController);
+    const sourceController =
+      ctx.framework.zones.getCardController(_cardPlayed.cardId) ?? _cardPlayed.playerId;
+    const playerIds =
+      controller === "you"
+        ? [sourceController]
+        : ctx.framework.state.playerIds.filter((playerId) => playerId !== sourceController);
+    const distinctInkTypes = new Set<InkType>();
+
+    for (const playerId of playerIds) {
+      const cardIds = ctx.framework.zones.getCards({
+        zone: "play",
+        playerId,
+      }) as CardInstanceId[];
+      for (const cardId of cardIds) {
+        const definition = ctx.cards.getDefinition(cardId) as
+          | (InkedCardLike & CardTypeLike)
+          | undefined;
+        if (definition?.cardType !== "character") {
+          continue;
+        }
+
+        for (const inkType of definition.inkType ?? []) {
+          distinctInkTypes.add(inkType);
+        }
+      }
+    }
+
+    resolutionInput.eventSnapshot.triggerAmount = distinctInkTypes.size * multiplier;
+    markLastEffectPerformed(resolutionInput.eventSnapshot, distinctInkTypes.size > 0);
+    return;
+  }
+
+  if (effect.what === "discarded-action-cards" || effect.what === "discarded-item-cards") {
+    const discardedCardIds =
+      (resolutionInput.eventSnapshot.discardedCardIds as CardInstanceId[] | undefined) ?? [];
+    let count = 0;
+    const expectedType = effect.what === "discarded-action-cards" ? "action" : "item";
+
+    for (const cardId of discardedCardIds) {
+      const definition = ctx.cards.getDefinition(cardId) as CardTypeLike | undefined;
+      if (definition?.cardType === expectedType) {
+        count += 1;
+      }
+    }
+
+    resolutionInput.eventSnapshot.triggerAmount = count * multiplier;
+    markLastEffectPerformed(resolutionInput.eventSnapshot, count > 0);
+    return;
+  }
+
+  resolutionInput.eventSnapshot.triggerAmount = 0;
+  markLastEffectPerformed(resolutionInput.eventSnapshot, false);
+}

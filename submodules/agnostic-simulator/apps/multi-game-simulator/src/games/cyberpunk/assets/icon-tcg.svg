@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Background (transparent) -->
+  <rect width="512" height="512" fill="none"/>
+  
+  <!-- TCG Monogram Design -->
+  <g transform="translate(56, 40)">
+    <!-- T Letter -->
+    <path d="M80 40 L80 80 L60 80 L60 400 L20 400 L20 80 L0 80 L0 40 Z" fill="currentColor"/>
+    
+    <!-- C Letter -->
+    <path d="M140 80 L140 40 L220 40 L220 80 L180 80 L180 360 L220 360 L220 400 L140 400 L140 360 L140 80 Z" fill="currentColor"/>
+    
+    <!-- G Letter (Triangle shape) -->
+    <path d="M280 40 L400 40 L340 180 Z" fill="currentColor"/>
+    <path d="M360 100 L320 100 L340 60 Z" fill="currentColor"/>
+  </g>
+</svg>

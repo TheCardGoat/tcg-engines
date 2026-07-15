@@ -1,0 +1,68 @@
+{
+  "name": "@tcg/simulator-ui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Game-agnostic HTML renderers and styles for TCG simulator harnesses.",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./SimulatorHarness": {
+      "types": "./src/SimulatorHarness.tsx",
+      "default": "./src/SimulatorHarness.tsx"
+    },
+    "./components/*": {
+      "types": "./src/components/*.tsx",
+      "default": "./src/components/*.tsx"
+    },
+    "./styles/*": {
+      "default": "./src/styles/*"
+    }
+  },
+  "scripts": {
+    "storybook": "storybook dev --host 127.0.0.1 --port 6006 --no-open",
+    "build-storybook": "storybook build",
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "format": "vp fmt ./src",
+    "lint": "vp lint ./src",
+    "test": "vp test run src"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "catalog:",
+    "@mantine/core": "9.0.0",
+    "@mantine/hooks": "9.0.0",
+    "@tabler/icons-react": "catalog:",
+    "@tcg/protocol": "link:../protocol",
+    "@tcg/simulator-contract": "link:../simulator-contract",
+    "@tcg/simulator-runtime": "link:../simulator-runtime",
+    "canvas-confetti": "^1.9.4",
+    "motion": "catalog:"
+  },
+  "devDependencies": {
+    "@storybook/react-vite": "10.4.2",
+    "@tailwindcss/vite": "4.1.18",
+    "@tcg/typescript-config": "link:../typescript-config",
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@typescript/native": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "storybook": "10.4.2",
+    "tailwindcss": "4.1.18",
+    "vite": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

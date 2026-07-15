@@ -1,0 +1,10 @@
+{
+  "extends": "@tcg/typescript-config/base.json",
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "types": ["vite-plus/client", "@types/bun"]
+  },
+  "include": ["src"]
+}

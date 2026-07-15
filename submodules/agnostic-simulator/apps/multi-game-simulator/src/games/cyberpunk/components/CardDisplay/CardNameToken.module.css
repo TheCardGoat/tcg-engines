@@ -1,0 +1,24 @@
+.token {
+  color: var(--card-name-accent);
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in srgb, var(--card-name-accent), transparent 32%);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  cursor: zoom-in;
+  outline: none;
+}
+
+.token:hover,
+.token:focus-visible {
+  text-decoration-color: var(--card-name-accent);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--card-name-accent), transparent 35%);
+}
+
+.token:focus-visible {
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--card-name-accent), transparent 40%);
+}
+
+.missing {
+  opacity: 0.72;
+}

@@ -1,0 +1,83 @@
+[
+  {
+    "id": "EXB-001_p6",
+    "code": "EXB-001",
+    "name": "EX Base",
+    "rarity": "C",
+    "cardType": "EX BASE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": 3,
+    "effect": "(At the start of the game, place 1 active EX Base into your shield area.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXB-001_p6.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXB-001_p6.webp?260424"
+    },
+    "sourceTitle": "-",
+    "getIt": "Included in Booster Packs",
+    "set": {
+      "id": "exb",
+      "name": "Basic Cards",
+      "packageId": "616801"
+    }
+  },
+  {
+    "id": "EXR-001_p6",
+    "code": "EXR-001",
+    "name": "EX Resource",
+    "rarity": "C",
+    "cardType": "EX RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(At the start of the game, the second-turn player places 1 active EX Resource into their resource area.)\n(Rest an EX Resource then remove it from the game when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXR-001_p6.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXR-001_p6.webp?260424"
+    },
+    "sourceTitle": "-",
+    "getIt": "Included in Booster Packs",
+    "set": {
+      "id": "exr",
+      "name": "Basic Cards",
+      "packageId": "616801"
+    }
+  },
+  {
+    "id": "R-001_p6",
+    "code": "R-001",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-001_p6.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-001_p6.webp?260424"
+    },
+    "sourceTitle": "-",
+    "getIt": "Included in Starter Decks",
+    "set": {
+      "id": "r",
+      "name": "Basic Cards",
+      "packageId": "616801"
+    }
+  }
+]

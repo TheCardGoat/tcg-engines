@@ -1,0 +1,36 @@
+{
+  "name": "@tcg/gateway-client",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Framework-neutral WebSocket gateway client shared by the platform web app and the game simulator.",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "test": "vp test run --configLoader runner",
+    "format": "vp fmt ./src",
+    "lint": "vp lint ./src"
+  },
+  "dependencies": {
+    "@tcg/protocol": "link:../protocol",
+    "socket.io-client": "catalog:",
+    "socket.io-msgpack-parser": "catalog:"
+  },
+  "devDependencies": {
+    "@tcg/typescript-config": "link:../typescript-config",
+    "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
+    "vitest": "catalog:"
+  }
+}

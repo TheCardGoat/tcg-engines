@@ -1,0 +1,34 @@
+.badge {
+  --badge-rgb: var(--side-accent-rgb, 245 230 66);
+
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(180deg, rgb(var(--badge-rgb) / 16%), rgb(var(--badge-rgb) / 6%)),
+    rgb(7 9 12 / 94%);
+  color: rgb(var(--badge-rgb) / 86%);
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 2px 14px;
+  line-height: 1.2;
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 8px 100%, 0 50%);
+  z-index: 3;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--badge-rgb) / 42%),
+    0 0 10px rgb(var(--badge-rgb) / 10%);
+  text-shadow: 0 0 8px rgb(var(--badge-rgb) / 30%);
+}
+
+.bottom {
+  bottom: -8px;
+}
+
+.top {
+  top: -8px;
+}

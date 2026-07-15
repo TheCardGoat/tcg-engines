@@ -1,0 +1,9 @@
+{
+  "shortcuts": [
+    {
+      "label": "Run Server",
+      "command": "vp dev",
+      "icon": "play"
+    }
+  ]
+}

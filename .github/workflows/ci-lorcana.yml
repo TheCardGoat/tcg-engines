@@ -1,0 +1,67 @@
+name: Lorcana CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/ci-lorcana.yml"
+      - ".bun-version"
+      - "package.json"
+      - "submodules/lorcana/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/ci-lorcana.yml"
+      - ".bun-version"
+      - "package.json"
+      - "submodules/lorcana/**"
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_OPTIONS: --max-old-space-size=8192
+  VP_RUN_CONCURRENCY_LIMIT: 4
+  TURBO_RUN_SUMMARY: false
+
+jobs:
+  lorcana:
+    name: Lorcana Project CI
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: ".bun-version"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+          run_install: false
+
+      - name: Set up Vite+
+        uses: voidzero-dev/setup-vp@v1
+        with:
+          node-version: 24
+          cache: true
+
+      - name: Install root dependencies
+        run: vp install
+
+      - name: Install Lorcana dependencies
+        working-directory: submodules/lorcana
+        run: vp install --no-frozen-lockfile
+
+      - name: Run Lorcana full CI
+        working-directory: submodules/lorcana
+        env:
+          CI_CHECK_TIMEOUT_SECONDS: 900
+        run: vp run ci-check-full

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Black version of TCG Monogram for light backgrounds -->
+  <rect width="512" height="512" fill="none"/>
+  
+  <g transform="translate(256, 256) translate(-200, -200) scale(0.78)">
+    <!-- T - Top bar and stem -->
+    <path d="M50 80 L350 80 L350 140 L230 140 L230 400 L170 400 L170 140 L50 140 Z" fill="#1a1a1a"/>
+    
+    <!-- C - Curved/interwoven shape -->
+    <path d="M100 140 L160 140 L160 340 L280 340 L280 400 L100 400 Q60 400 60 360 L60 180 Q60 140 100 140 Z" fill="#1a1a1a"/>
+    <path d="M100 180 L140 180 L140 360 L100 360 Q80 360 80 340 L80 200 Q80 180 100 180 Z" fill="#ffffff"/>
+    
+    <!-- G - Triangle shape -->
+    <path d="M300 80 L450 80 L375 280 Z" fill="#1a1a1a"/>
+    <path d="M345 140 L405 140 L375 200 Z" fill="#ffffff"/>
+  </g>
+</svg>

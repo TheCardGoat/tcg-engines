@@ -1,0 +1,3 @@
+[test]
+preload = ["./src/testing/register-matchers.ts"]
+timeout = 30000

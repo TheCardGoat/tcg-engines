@@ -1,0 +1,45 @@
+{
+  "name": "@tcg/game-page-contract",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cross-deployable schema for the live-match, replay, and practice pages. Every game (Lorcana, Gundam, Cyberpunk, Riftbound) implements this contract so the three pages share one URL shape, one HTTP surface, one WebSocket envelope, and one replay file format.",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./ids": "./src/ids.ts",
+    "./cards": "./src/cards.ts",
+    "./match": "./src/match.ts",
+    "./snapshot": "./src/snapshot.ts",
+    "./page-data": "./src/page-data.ts",
+    "./replay": "./src/replay.ts",
+    "./ws": "./src/ws.ts",
+    "./json-patch": "./src/json-patch.ts",
+    "./deck-codec": "./src/deck-codec.ts",
+    "./connection-diagnostic": "./src/connection-diagnostic.ts",
+    "./schemas": "./src/schemas.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "bun x oxlint --fix ./src",
+    "test": "vp test run --configLoader runner",
+    "check:isolation": "bun ./scripts/check-isolation.ts"
+  },
+  "dependencies": {
+    "@tcg/gateway-client": "link:../gateway-client",
+    "@tcg/protocol": "link:../protocol",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tcg/typescript-config": "link:../typescript-config",
+    "@types/node": "^22.13.4",
+    "@typescript/native": "catalog:",
+    "vitest": "catalog:"
+  }
+}

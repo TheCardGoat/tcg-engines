@@ -1,0 +1,1 @@
+gundam-tcg-rules/SKILL.md

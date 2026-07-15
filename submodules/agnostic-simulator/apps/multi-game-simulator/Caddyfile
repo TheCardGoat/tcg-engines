@@ -1,0 +1,24 @@
+:{$PORT:8080}
+
+redir /cyberpunk/simulator /cyberpunk/simulator/ 308
+redir /gundam/simulator /gundam/simulator/ 308
+
+handle / {
+	respond "ok" 200
+}
+
+handle_path /cyberpunk/simulator/* {
+	root * /srv
+	try_files {path} /index.html
+	file_server
+}
+
+handle_path /gundam/simulator/* {
+	root * /srv
+	try_files {path} /index.html
+	file_server
+}
+
+handle {
+	respond "Not Found" 404
+}

@@ -1,0 +1,37 @@
+.breadcrumb {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgb(7 9 12 / 85%);
+  border: 1px solid rgb(74 217 255 / 30%);
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  color: rgb(207 232 246 / 85%);
+  backdrop-filter: blur(4px);
+}
+
+.crumb {
+  color: rgb(74 217 255 / 85%);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.crumb:hover {
+  color: #4ad9ff;
+  text-decoration: underline;
+}
+
+.separator {
+  color: rgb(207 232 246 / 40%);
+}
+
+.current {
+  color: #f5e642;
+  letter-spacing: 0.04em;
+}

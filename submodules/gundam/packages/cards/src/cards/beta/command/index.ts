@@ -1,0 +1,12 @@
+export { betaThoroughlyDamaged012 } from "./012-thoroughly-damaged.ts";
+export { betaKaiSResolve013 } from "./013-kai-s-resolve.ts";
+export { betaSimultaneousFire012 } from "./012-simultaneous-fire.ts";
+export { betaPeacefulTimbre013 } from "./013-peaceful-timbre.ts";
+export { betaHawkOfEndymion013 } from "./013-hawk-of-endymion.ts";
+export { betaInterceptOrders099 } from "./099-intercept-orders.ts";
+export { betaAShowOfResolve100 } from "./100-a-show-of-resolve.ts";
+export { betaCitizensTakeAStand105 } from "./105-citizens-take-a-stand.ts";
+export { betaFirstContact107 } from "./107-first-contact.ts";
+export { betaTheWitchAndTheBride117 } from "./117-the-witch-and-the-bride.ts";
+export { betaOverflowingAffection118 } from "./118-overflowing-affection.ts";
+export { betaNavalBombardment120 } from "./120-naval-bombardment.ts";

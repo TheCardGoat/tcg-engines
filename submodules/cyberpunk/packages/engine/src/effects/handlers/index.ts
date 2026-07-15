@@ -1,0 +1,1756 @@
+import type {
+  Effect,
+  DefeatEffect,
+  SpendEffect,
+  ReturnToHandEffect,
+  DrawEffect,
+  ModifyGigEffect,
+  AdjustGigEffect,
+  ModifyPowerEffect,
+  MultiplyPowerEffect,
+  GrantRuleEffect,
+  ReadyEffect,
+  ReadyEddiesEffect,
+  LookAtEffect,
+  ScryEffect,
+  ScryDestination,
+  SearchDeckEffect,
+  RivalRevealChoiceEffect,
+  DiscardFromHandEffect,
+  MoveCardEffect,
+  PlayCardEffect,
+  AttachCardEffect,
+  RemoveFromGameEffect,
+  StealGigEffect,
+  TrashFromDeckEffect,
+  SellFromDeckEffect,
+  IfYouDoEffect,
+  DelayedEffect,
+  DefeatAtEndOfTurnIfAttacksEffect,
+  PreventNextRivalFightDefeatEffect,
+  CopyGigValueEffect,
+  ForEachFriendlyGigPairEffect,
+  CallLegendEffect,
+  GrantCostModifierEffect,
+  RerollGigEffect,
+  RevealTopCardTypeEffect,
+  RevealTopCardAndModifyPowerByCostEffect,
+  TargetDSL,
+} from "@tcg/cyberpunk-types";
+import type { CardZone } from "@tcg/cyberpunk-types";
+import type { Operations } from "../../operations/index.ts";
+import type { ResolutionContext } from "../target-resolver.ts";
+import { resolveTarget, resolveNumericValue, countFriendlyGigPairs } from "../target-resolver.ts";
+import type { CardInstanceId, GigDieId, PlayerId } from "../../types/branded.ts";
+import { DIE_MAX_VALUES } from "../../types/gig-die.ts";
+import { defOf } from "../../state/lookups.ts";
+import { createDefaultMetaForZone } from "../../types/card-instance.ts";
+import { SeededRNG } from "../../state/rng.ts";
+import { privateField } from "../../logging/private-field.ts";
+import {
+  computeEffectiveCost,
+  consumeCostModifierUse,
+} from "../../moves/compute-effective-cost.ts";
+import { playSelectedCard } from "../../moves/play-selected-card.ts";
+
+export type EffectHandlerResult =
+  | { status: "resolved" }
+  | { status: "noAction" }
+  | { status: "suspended"; pendingChoice: unknown }
+  | { status: "partial"; remaining: Effect[] };
+
+export type EffectHandler<E> = (
+  effect: E,
+  ctx: ResolutionContext,
+  ops: Operations,
+) => EffectHandlerResult;
+
+function warnMissingPlayerState(handler: string, playerId: PlayerId, ctx: ResolutionContext): void {
+  console.warn("[cyberpunk-engine] effect handler skipped missing player state", {
+    handler,
+    playerId,
+    sourceCardId: ctx.sourceCardId,
+    sourcePlayerId: ctx.sourcePlayerId,
+    abilityIndex: ctx.abilityIndex,
+  });
+}
+
+function handleDefeat(
+  effect: DefeatEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  for (const id of targets) {
+    const cardBeforeMove = ctx.state.G.cardIndex[id as string];
+    const hadAttachedCards = Boolean(cardBeforeMove?.meta.attachedGearIds.length);
+    if (cardBeforeMove?.meta.attachedToId) ops.card.detachGear(id as CardInstanceId);
+    ops.card.moveAttachedGear(id as CardInstanceId, "trash", { detachAfterMove: true });
+    ops.zone.moveCard(id as CardInstanceId, "trash");
+    if (cardBeforeMove) {
+      ops.event.emit({
+        type: "cardDefeated",
+        cardId: id as CardInstanceId,
+        defeatedBy: ctx.sourceCardId as CardInstanceId,
+        playerId: cardBeforeMove.ownerId,
+        hadAttachedCards,
+      });
+    }
+
+    // GO SOLO: if the card leaves the field, remove it from the game.
+    const card = ctx.state.G.cardIndex[id as string];
+    if (card) {
+      const def = defOf(card);
+      if (def.keywords?.includes("goSolo")) {
+        const player = ctx.state.G.players[card.controllerId as string];
+        if (player) {
+          const idx = player.zones.trash.indexOf(id as CardInstanceId);
+          if (idx !== -1) player.zones.trash.splice(idx, 1);
+        }
+        delete ctx.state.G.cardIndex[id as string];
+      }
+    }
+  }
+  return { status: "resolved" };
+}
+
+function handleSpend(
+  effect: SpendEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  for (const id of targets) {
+    ops.card.spend(id as CardInstanceId);
+  }
+  return { status: "resolved" };
+}
+
+function handleReturnToHand(
+  effect: ReturnToHandEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  for (const id of targets) {
+    const card = ctx.state.G.cardIndex[id];
+    if (!card) continue;
+    if (card.meta.attachedToId) {
+      ops.card.detachGear(id as CardInstanceId);
+    } else {
+      ops.card.moveAttachedGear(id as CardInstanceId, "hand");
+    }
+    ops.zone.moveCard(id as CardInstanceId, "hand", card.ownerId);
+  }
+  return { status: "resolved" };
+}
+
+function resolveRelativePlayer(relative: string | undefined, ctx: ResolutionContext): PlayerId {
+  if (!relative || relative === "friendly" || relative === "owner") return ctx.sourcePlayerId;
+  if (relative === "rival") {
+    return ctx.state.ctx.playerIds.find((id) => id !== ctx.sourcePlayerId)!;
+  }
+  return ctx.sourcePlayerId;
+}
+
+function handleDraw(
+  effect: DrawEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  const amount = resolveNumericValue(effect.amount, ctx);
+  ops.zone.drawCards(playerId, amount);
+  return { status: "resolved" };
+}
+
+function handleRevealTopCardAndModifyPowerByCost(
+  effect: RevealTopCardAndModifyPowerByCostEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  const player = ctx.state.G.players[playerId as string];
+  const topCardId = player?.zones.deck[0];
+  if (!topCardId) return { status: "noAction" };
+
+  const topCard = ctx.state.G.cardIndex[topCardId as string];
+  if (!topCard) return { status: "noAction" };
+
+  ops.event.emit({
+    type: "cardsRevealed",
+    cardIds: [topCardId],
+    playerId,
+  });
+  ops.zone.moveCard(topCardId, "hand", playerId);
+
+  const power = defOf(topCard).cost ?? 0;
+  if (power <= 0) return { status: "resolved" };
+
+  for (const targetId of resolveTarget(effect.target, ctx)) {
+    ops.game.addActiveEffect({
+      id: `e${ctx.state.G.nextEffectId}`,
+      sourceCardId: ctx.sourceCardId,
+      targetCardId: targetId as CardInstanceId,
+      kind: "powerModifier",
+      powerModifier: power,
+      duration: effect.duration,
+      origin: "imperative",
+      abilityIndex: ctx.abilityIndex,
+    });
+  }
+
+  return { status: "resolved" };
+}
+
+function handleModifyGig(
+  effect: ModifyGigEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  for (const id of targets) {
+    const die = ctx.state.G.gigDice[id];
+    if (!die) continue;
+    let value = effect.value;
+    if (effect.operation === "increase") value = die.faceValue + value;
+    else if (effect.operation === "decrease") value = die.faceValue - value;
+    const maxVal = DIE_MAX_VALUES[die.dieType];
+    value = Math.min(Math.max(value, 1), maxVal);
+    ops.gig.setGigValue(id as any, value);
+  }
+  return { status: "resolved" };
+}
+
+function handleAdjustGig(
+  effect: AdjustGigEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  for (const id of targets) {
+    const die = ctx.state.G.gigDice[id];
+    if (!die) continue;
+    ops.game.setPendingChoice({
+      type: "chooseTarget",
+      chooserId: ctx.sourcePlayerId,
+      effectId: id,
+      payload: {
+        type: "adjustGig",
+        dieId: id as GigDieId,
+        direction: effect.direction,
+        maxAmount: effect.maxAmount,
+        chooseUpTo: effect.chooseUpTo,
+        sourceCardId: ctx.sourceCardId,
+        sourcePlayerId: ctx.sourcePlayerId,
+      },
+    });
+    return { status: "suspended", pendingChoice: { dieId: id, effect } };
+  }
+  return { status: "resolved" };
+}
+
+function handleModifyPower(
+  effect: ModifyPowerEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  const value = resolveNumericValue(effect.value, ctx);
+  for (const id of targets) {
+    if (effect.duration === "permanent") {
+      ops.card.setMeta(id as CardInstanceId, {
+        powerModifier: (ctx.state.G.cardIndex[id]?.meta.powerModifier ?? 0) + value,
+      });
+    } else {
+      ops.game.addActiveEffect({
+        id: `e${ctx.state.G.nextEffectId}`,
+        sourceCardId: ctx.sourceCardId,
+        targetCardId: id as CardInstanceId,
+        kind: "powerModifier",
+        powerModifier: value,
+        duration: effect.duration as "turn" | "continuous",
+        origin: "imperative",
+        abilityIndex: ctx.abilityIndex,
+      });
+    }
+  }
+  return { status: "resolved" };
+}
+
+function handleMultiplyPower(
+  effect: MultiplyPowerEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  for (const id of targets) {
+    if (effect.duration === "permanent") {
+      const card = ctx.state.G.cardIndex[id as string];
+      const currentMod = card?.meta.powerMultiplier ?? 1;
+      ops.card.setMeta(id as CardInstanceId, {
+        powerMultiplier: currentMod * effect.multiplier,
+      });
+    } else {
+      ops.game.addActiveEffect({
+        id: `e${ctx.state.G.nextEffectId}`,
+        sourceCardId: ctx.sourceCardId,
+        targetCardId: id as CardInstanceId,
+        kind: "powerMultiplier",
+        powerMultiplier: effect.multiplier,
+        duration: effect.duration as "turn" | "continuous",
+        origin: "imperative",
+        abilityIndex: ctx.abilityIndex,
+      });
+    }
+  }
+  return { status: "resolved" };
+}
+
+function handleGrantRule(
+  effect: GrantRuleEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  const sourceCard = ctx.state.G.cardIndex[ctx.sourceCardId as string];
+  const sourceCardName = sourceCard ? defOf(sourceCard).displayName : "That effect";
+  const targetNames = targets
+    .map((id) => {
+      const card = ctx.state.G.cardIndex[id as string];
+      return card ? defOf(card).displayName : null;
+    })
+    .filter((name): name is string => Boolean(name))
+    .join(", ");
+  for (const id of targets) {
+    ops.game.addActiveEffect({
+      id: `e${ctx.state.G.nextEffectId}`,
+      sourceCardId: ctx.sourceCardId,
+      targetCardId: id as CardInstanceId,
+      kind: "grantRule",
+      rule: effect.rule,
+      duration: effect.duration,
+      ...(effect.duration === "untilSourceNextTurn"
+        ? { expiresAtStartOfTurnForPlayerId: ctx.sourcePlayerId }
+        : {}),
+      origin: "imperative",
+      abilityIndex: ctx.abilityIndex,
+    });
+  }
+  if (effect.rule === "cantAttack" && targetNames) {
+    ops.event.emit({
+      type: "actionLog",
+      messageKey: "trigger.grantRule.cantAttack",
+      params: {
+        sourceCardName,
+        targetNames,
+      },
+      playerId: ctx.sourcePlayerId,
+      category: "trigger",
+      cardIds: [ctx.sourceCardId as string, ...targets.map((id) => id as string)],
+    });
+  }
+  return { status: "resolved" };
+}
+
+function handleGrantCostModifier(
+  effect: GrantCostModifierEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  ops.game.addActiveEffect({
+    id: `e${ctx.state.G.nextEffectId}`,
+    sourceCardId: ctx.sourceCardId,
+    targetCardId: ctx.sourceCardId,
+    kind: "costModifier",
+    costModifier: effect.modifier,
+    appliesTo: effect.appliesTo,
+    playerId,
+    remainingUses: effect.uses,
+    duration: effect.duration,
+    origin: "imperative",
+    abilityIndex: ctx.abilityIndex,
+  });
+  return { status: "resolved" };
+}
+
+function handleRerollGig(
+  effect: RerollGigEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  const rng = new SeededRNG(ctx.state.ctx.seed);
+  if (ctx.state.ctx.rngState) rng.setState(ctx.state.ctx.rngState);
+
+  for (const id of targets) {
+    const die = ctx.state.G.gigDice[id];
+    if (!die) continue;
+    const previousValue = die.faceValue;
+    const newValue = rng.rollDie(die.dieType);
+    die.faceValue = newValue;
+    ops.event.emit({
+      type: "gigDieRolled",
+      dieId: id as GigDieId,
+      dieType: die.dieType,
+      result: newValue,
+      previousValue,
+      playerId: die.ownerId,
+      origin: "reroll",
+    });
+    ops.event.emit({
+      type: "gigValueChanged",
+      dieId: id as GigDieId,
+      previousValue,
+      newValue,
+      playerId: die.ownerId,
+    });
+  }
+
+  ctx.state.ctx.rngState = rng.getState();
+  return targets.length > 0 ? { status: "resolved" } : { status: "noAction" };
+}
+
+function handleRevealTopCardType(
+  effect: RevealTopCardTypeEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  const player = ctx.state.G.players[playerId as string];
+  if (!player || player.zones.deck.length === 0) return { status: "noAction" };
+
+  ops.game.setPendingChoice({
+    type: "chooseCardType",
+    chooserId: playerId,
+    effectId: ctx.state.G.turnMetadata.currentTrigger?.id ?? "",
+    payload: {
+      cardTypes: effect.cardTypes,
+      sourceCardId: ctx.sourceCardId,
+      sourcePlayerId: ctx.sourcePlayerId,
+      abilityIndex: ctx.abilityIndex,
+    },
+  });
+  return { status: "suspended", pendingChoice: effect };
+}
+
+function handleDefeatAtEndOfTurnIfAttacks(
+  effect: DefeatAtEndOfTurnIfAttacksEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  for (const id of targets) {
+    ops.game.addActiveEffect({
+      id: `e${ctx.state.G.nextEffectId}`,
+      sourceCardId: ctx.sourceCardId,
+      targetCardId: id as CardInstanceId,
+      kind: "defeatAtEndOfTurnIfAttacked",
+      duration: "turn",
+      origin: "imperative",
+      abilityIndex: ctx.abilityIndex,
+      triggered: false,
+    });
+  }
+  return targets.length > 0 ? { status: "resolved" } : { status: "noAction" };
+}
+
+function handlePreventNextRivalFightDefeat(
+  effect: PreventNextRivalFightDefeatEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  ops.game.addActiveEffect({
+    id: `e${ctx.state.G.nextEffectId}`,
+    sourceCardId: ctx.sourceCardId,
+    targetCardId: ctx.sourceCardId,
+    kind: "preventNextRivalFightDefeat",
+    playerId: ctx.sourcePlayerId,
+    duration: effect.duration,
+    origin: "imperative",
+    abilityIndex: ctx.abilityIndex,
+  });
+  return { status: "resolved" };
+}
+
+function handleReady(
+  effect: ReadyEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  for (const id of targets) {
+    ops.card.ready(id as CardInstanceId);
+  }
+  return { status: "resolved" };
+}
+
+function handleReadyEddies(
+  effect: ReadyEddiesEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  const player = ctx.state.G.players[playerId as string];
+  if (!player) return { status: "resolved" };
+  const amount = Math.min(effect.amount, player.spentEddies ?? 0);
+  if (amount <= 0) return { status: "resolved" };
+  player.spentEddies -= amount;
+  player.eddies += amount;
+  ops.event.emit({ type: "eddiesGained", playerId, amount });
+  return { status: "resolved" };
+}
+
+function handleLookAt(
+  effect: LookAtEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  const firstTarget = targets.length > 0 ? ctx.state.G.cardIndex[targets[0] as string] : undefined;
+  ops.event.emit({
+    type: "cardsRevealed",
+    cardIds: targets as CardInstanceId[],
+    playerId: ctx.sourcePlayerId,
+  });
+  if (targets.length > 0 && firstTarget) {
+    ops.log.emit({
+      type: "lookAtCards",
+      sourceCardId: ctx.sourceCardId,
+      playerId: ctx.sourcePlayerId,
+      ownerId: firstTarget.ownerId,
+      zone: firstTarget.zone,
+      timestamp: Date.now(),
+      turnNumber: ctx.state.G.turnMetadata.turnNumber,
+      cardIds: privateField(targets as CardInstanceId[], [ctx.sourcePlayerId]),
+    });
+  }
+  return { status: "resolved" };
+}
+
+function scryDestinationRequiresChoice(destination: ScryDestination): boolean {
+  if (destination.remainder) return false;
+  return destination.min !== undefined || destination.max !== undefined;
+}
+
+function cardMatchesScryDestination(
+  cardId: CardInstanceId,
+  destination: ScryDestination,
+  ctx: ResolutionContext,
+): boolean {
+  if (!destination.target) return true;
+  return resolveTarget(destination.target, ctx).includes(cardId);
+}
+
+function moveScryCardToZone(
+  cardId: CardInstanceId,
+  zone: ScryDestination["zone"],
+  playerId: PlayerId,
+  ctx: ResolutionContext,
+  ops: Operations,
+): void {
+  const destination = zone === "deckBottom" || zone === "deckTop" ? "deck" : zone;
+  if (zone === "deckBottom") {
+    const player = ctx.state.G.players[playerId as string];
+    const idx = player?.zones.deck.indexOf(cardId);
+    if (idx !== undefined && idx !== -1) player?.zones.deck.splice(idx, 1);
+    player?.zones.deck.push(cardId);
+    return;
+  }
+  if (zone === "deckTop") {
+    const player = ctx.state.G.players[playerId as string];
+    const idx = player?.zones.deck.indexOf(cardId);
+    if (idx !== undefined && idx !== -1) player?.zones.deck.splice(idx, 1);
+    player?.zones.deck.unshift(cardId);
+    return;
+  }
+  ops.zone.moveCard(cardId, destination as CardZone, playerId);
+}
+
+function handleScry(
+  effect: ScryEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  const player = ctx.state.G.players[playerId as string];
+  const lookCount = Math.min(effect.amount, player?.zones.deck.length ?? 0);
+  const revealedCardIds = player?.zones.deck.slice(0, lookCount) ?? [];
+
+  // Emit reveal log with card IDs for UI visibility
+  ops.event.emit({
+    type: "actionLog",
+    messageKey: "move.searchDeck.reveal",
+    params: { count: lookCount },
+    playerId,
+    category: "search",
+    cardIds: revealedCardIds.map((id) => id as string),
+  });
+  ops.log.emit({
+    type: "searchDeck",
+    playerId,
+    timestamp: Date.now(),
+    turnNumber: ctx.state.G.turnMetadata.turnNumber,
+    revealedCount: revealedCardIds.length,
+    revealed: privateField(revealedCardIds as CardInstanceId[], [playerId]),
+  });
+
+  const destinations = effect.destinations;
+  const requiresChoice = destinations.some(scryDestinationRequiresChoice);
+  if (!requiresChoice) {
+    const assigned = new Set<CardInstanceId>();
+    const selectedIds: CardInstanceId[] = [];
+    const remainderDestination =
+      destinations.find((destination) => destination.remainder) ??
+      ({ zone: "deckBottom", remainder: true } satisfies ScryDestination);
+
+    for (const destination of destinations) {
+      if (destination.remainder) continue;
+      const matching = revealedCardIds.filter(
+        (id) => !assigned.has(id) && cardMatchesScryDestination(id, destination, ctx),
+      );
+      for (const cardId of matching) {
+        assigned.add(cardId);
+        selectedIds.push(cardId);
+        moveScryCardToZone(cardId as CardInstanceId, destination.zone, playerId, ctx, ops);
+      }
+    }
+
+    const remainderIds = revealedCardIds.filter((id) => !assigned.has(id));
+    const foundDestination = destinations.find((entry) => !entry.remainder);
+    const destination = foundDestination?.zone ?? "hand";
+    const shouldRevealSelected = foundDestination?.reveal === true;
+    const selectedCardNames = selectedIds
+      .map((cardId) => ctx.state.G.cardIndex[cardId])
+      .filter((card): card is NonNullable<typeof card> => card !== undefined)
+      .map((card) => defOf(card).displayName ?? defOf(card).name);
+
+    if (selectedIds.length > 0 && shouldRevealSelected) {
+      ops.event.emit({
+        type: "cardsRevealed",
+        cardIds: selectedIds.map((id) => id as CardInstanceId),
+        playerId,
+      });
+      ops.event.emit({
+        type: "actionLog",
+        messageKey: "move.searchDeck.revealSelected",
+        params: {
+          count: selectedIds.length,
+          revealedCardNames: selectedCardNames.join(", "),
+        },
+        playerId,
+        category: "search",
+        cardIds: selectedIds,
+      });
+    }
+
+    if (remainderDestination.order === "random") {
+      const rng = new SeededRNG(ctx.state.ctx.seed);
+      const shuffled = rng.shuffle(remainderIds);
+      remainderIds.splice(0, remainderIds.length, ...shuffled);
+    } else {
+      // Keep original revealed order by default.
+    }
+    for (const cardId of remainderIds) {
+      moveScryCardToZone(cardId as CardInstanceId, remainderDestination.zone, playerId, ctx, ops);
+    }
+
+    ops.event.emit({
+      type: "searchPerformed",
+      playerId,
+      zone: "deck",
+      found: selectedIds.length,
+    });
+
+    ops.event.emit({
+      type: "actionLog",
+      messageKey: "move.resolveSearchDeck",
+      params: {
+        count: selectedIds.length,
+        looked: revealedCardIds.length,
+      },
+      playerId,
+      category: "search",
+      cardIds: selectedIds,
+    });
+    if (selectedIds.length > 0 && shouldRevealSelected) {
+      ops.event.emit({
+        type: "actionLog",
+        messageKey: "move.resolveSearchDeckNamed",
+        params: {
+          count: selectedIds.length,
+          looked: revealedCardIds.length,
+          destination,
+          selectedCardNames: selectedCardNames.join(", "),
+          remainderCount: remainderIds.length,
+        },
+        playerId,
+        category: "search",
+        cardIds: selectedIds,
+      });
+    }
+
+    return { status: "resolved" };
+  }
+
+  const choiceDestinations = destinations.map((destination) =>
+    normalizeScryDestinationForRevealedCards(destination, revealedCardIds, ctx),
+  );
+
+  ops.game.setPendingChoice({
+    type: "scry",
+    chooserId: playerId,
+    effectId: "",
+    payload: {
+      ...effect,
+      destinations: choiceDestinations,
+      revealedCardIds,
+      sourceCardId: ctx.sourceCardId,
+      sourcePlayerId: ctx.sourcePlayerId,
+    },
+  });
+
+  return { status: "suspended", pendingChoice: effect };
+}
+
+function normalizeScryDestinationForRevealedCards(
+  destination: ScryDestination,
+  revealedCardIds: readonly CardInstanceId[],
+  ctx: ResolutionContext,
+): ScryDestination {
+  if (destination.remainder) return destination;
+  const matchingCount = revealedCardIds.filter((cardId) =>
+    cardMatchesScryDestination(cardId, destination, ctx),
+  ).length;
+  return {
+    ...destination,
+    min: Math.min(destination.min ?? 0, matchingCount),
+    ...(destination.max === undefined ? {} : { max: Math.min(destination.max, matchingCount) }),
+  };
+}
+
+function handleSearchDeck(
+  effect: SearchDeckEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const destinations: ScryDestination[] = [
+    {
+      zone: effect.destination,
+      target: effect.target,
+      reveal: effect.reveal,
+      ...(effect.select.kind === "upTo" ? { min: 0, max: effect.select.max } : {}),
+    },
+    {
+      zone: effect.remainder?.zone ?? "deckBottom",
+      remainder: true,
+      order: effect.remainder?.order,
+    },
+  ];
+
+  return handleScry(
+    {
+      effect: "scry",
+      player: effect.player,
+      amount: effect.lookCount,
+      destinations,
+      conditions: effect.conditions,
+      optional: effect.optional,
+    },
+    ctx,
+    ops,
+  );
+}
+
+function handleRivalRevealChoice(
+  effect: RivalRevealChoiceEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  const chooserId = resolveRelativePlayer("rival", { ...ctx, sourcePlayerId: playerId });
+  const player = ctx.state.G.players[playerId as string];
+  const lookCount = Math.min(effect.lookCount, player?.zones.deck.length ?? 0);
+  const revealedCardIds = player?.zones.deck.slice(0, lookCount) ?? [];
+  const revealedCardNames = revealedCardIds
+    .map((cardId) => ctx.state.G.cardIndex[cardId as string])
+    .filter((card): card is NonNullable<typeof card> => card !== undefined)
+    .map((card) => {
+      const definition = defOf(card);
+      return definition.displayName ?? definition.name;
+    });
+
+  ops.event.emit({
+    type: "actionLog",
+    messageKey:
+      revealedCardNames.length > 0 ? "move.searchDeck.revealNamed" : "move.searchDeck.reveal",
+    params:
+      revealedCardNames.length > 0
+        ? { count: lookCount, revealedCardNames: revealedCardNames.join(", ") }
+        : { count: lookCount },
+    playerId,
+    category: "search",
+    cardIds: revealedCardIds.map((id) => id as string),
+  });
+  ops.log.emit({
+    type: "searchDeck",
+    playerId,
+    timestamp: Date.now(),
+    turnNumber: ctx.state.G.turnMetadata.turnNumber,
+    revealedCount: revealedCardIds.length,
+    revealed: privateField(revealedCardIds as CardInstanceId[], [playerId, chooserId]),
+  });
+  if (revealedCardIds.length > 0) {
+    ops.event.emit({
+      type: "cardsRevealed",
+      cardIds: revealedCardIds,
+      playerId,
+    });
+  }
+
+  ops.game.setPendingChoice({
+    type: "revealDestination",
+    chooserId,
+    effectId: "",
+    payload: {
+      player: playerId,
+      destinations: effect.destinations,
+      revealedCardIds,
+      sourceCardId: ctx.sourceCardId,
+      sourcePlayerId: ctx.sourcePlayerId,
+      drawIfDestination: effect.drawIfDestination
+        ? {
+            destination: effect.drawIfDestination.destination,
+            player: resolveRelativePlayer(effect.drawIfDestination.player, ctx),
+            amount: effect.drawIfDestination.amount,
+          }
+        : undefined,
+    },
+  });
+
+  return { status: "suspended", pendingChoice: effect };
+}
+
+function handleDiscardFromHand(
+  effect: DiscardFromHandEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  const player = ctx.state.G.players[playerId as string];
+  if (!player) {
+    warnMissingPlayerState("handleDiscardFromHand", playerId, ctx);
+    return { status: "resolved" };
+  }
+  const eligibleIds = effect.target
+    ? resolveTarget(effect.target, ctx).filter((id) =>
+        player.zones.hand.includes(id as CardInstanceId),
+      )
+    : player.zones.hand.map((id) => id as string);
+  if (eligibleIds.length < effect.amount) return { status: "noAction" };
+  if (effect.amount > 1 || eligibleIds.length > effect.amount) {
+    ops.game.setPendingChoice({
+      type: "chooseTarget",
+      chooserId: playerId,
+      effectId: "",
+      payload: {
+        type: "discardFromHand",
+        amount: effect.amount,
+        player: effect.player,
+        targetKind: "card",
+        eligibleIds,
+        sourceCardId: ctx.sourceCardId,
+        sourcePlayerId: ctx.sourcePlayerId,
+        abilityIndex: ctx.abilityIndex,
+        contextTargets: ctx.contextTargets,
+        boundTargets: ctx.boundTargets,
+        logReason: effect.logReason,
+      },
+    });
+    return { status: "suspended", pendingChoice: effect };
+  }
+  for (let i = 0; i < effect.amount; i++) {
+    const cardId = eligibleIds[i];
+    if (!cardId) break;
+    ops.zone.moveCard(cardId as CardInstanceId, "trash", playerId);
+  }
+  return { status: "resolved" };
+}
+
+function handleMoveCard(
+  effect: MoveCardEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+
+  // Optional move with attachTo: create a pending choice for the player to select one card.
+  if (effect.optional && effect.attachTo) {
+    if (targets.length === 0) return { status: "noAction" };
+    const attachTargets = resolveTarget(
+      effect.attachTo as import("@tcg/cyberpunk-types").TargetDSL,
+      ctx,
+    );
+    const resolvedAttachToId = attachTargets[0];
+    if (!resolvedAttachToId) return { status: "noAction" };
+
+    ops.game.setPendingChoice({
+      type: "chooseCardToMove",
+      chooserId: ctx.sourcePlayerId,
+      effectId: "",
+      payload: {
+        cardIds: targets as CardInstanceId[],
+        resolvedAttachToId,
+        boundTargets: ctx.boundTargets,
+        sourceCardId: ctx.sourceCardId,
+        sourcePlayerId: ctx.sourcePlayerId,
+        abilityIndex: ctx.abilityIndex,
+        ifEffects: [],
+        elseEffects: [],
+        canDecline: true,
+      },
+    });
+    return { status: "suspended", pendingChoice: effect };
+  }
+
+  if (effect.optional) {
+    if (targets.length === 0) return { status: "noAction" };
+
+    ops.game.setPendingChoice({
+      type: "chooseCardToMove",
+      chooserId: ctx.sourcePlayerId,
+      effectId: "",
+      payload: {
+        cardIds: targets as CardInstanceId[],
+        destination: effect.destination,
+        boundTargets: ctx.boundTargets,
+        sourceCardId: ctx.sourceCardId,
+        sourcePlayerId: ctx.sourcePlayerId,
+        abilityIndex: ctx.abilityIndex,
+        ifEffects: [],
+        elseEffects: [],
+        canDecline: true,
+      },
+    });
+    return { status: "suspended", pendingChoice: effect };
+  }
+
+  for (const id of targets) {
+    const card = ctx.state.G.cardIndex[id];
+    if (!card) continue;
+    if (card.meta.attachedToId) ops.card.detachGear(id as CardInstanceId);
+    if (effect.destination === "deckBottom") {
+      // Remove from current zone, then append to the bottom of the owner's deck.
+      const owner = card.ownerId;
+      const fromZone = card.zone;
+      const attachedGearIds = [...card.meta.attachedGearIds];
+      const player = ctx.state.G.players[owner as string];
+      if (player) {
+        for (const movedId of [id as CardInstanceId, ...attachedGearIds]) {
+          const movedCard = ctx.state.G.cardIndex[movedId as string];
+          if (!movedCard) continue;
+          const fromList = player.zones[movedCard.zone];
+          const idx = fromList.indexOf(movedId);
+          if (idx !== -1) fromList.splice(idx, 1);
+        }
+      }
+      ops.zone.moveCardsToBottom(owner, [id as CardInstanceId, ...attachedGearIds]);
+      card.zone = "deck";
+      card.meta = createDefaultMetaForZone("deck", { attachedGearIds });
+      ops.event.emit({
+        type: "cardMoved",
+        cardId: id as CardInstanceId,
+        fromZone,
+        toZone: "deck",
+        playerId: owner,
+      } as any);
+      for (const gearId of attachedGearIds) {
+        const gear = ctx.state.G.cardIndex[gearId as string];
+        if (!gear) continue;
+        const gearFromZone = gear.zone;
+        gear.zone = "deck";
+        gear.meta = createDefaultMetaForZone("deck", { attachedToId: id as CardInstanceId });
+        ops.event.emit({
+          type: "cardMoved",
+          cardId: gearId,
+          fromZone: gearFromZone,
+          toZone: "deck",
+          playerId: owner,
+        } as any);
+      }
+    } else {
+      const fromZone = card.zone;
+      const cardDef = defOf(card);
+      const sourceCard = ctx.state.G.cardIndex[ctx.sourceCardId as string];
+      ops.zone.moveCard(id as CardInstanceId, effect.destination as CardZone, card.ownerId);
+      if (fromZone === "hand" && effect.destination === "trash") {
+        ops.event.emit({
+          type: "actionLog",
+          messageKey: "effect.discard.resolved",
+          params: {
+            sourceCardName: sourceCard ? defOf(sourceCard).displayName : "The effect",
+            discardedCardName: cardDef.displayName,
+            discardedCost: cardDef.cost ?? 0,
+          },
+          playerId: card.ownerId,
+          category: "trigger",
+          cardIds: [ctx.sourceCardId as string, id],
+        });
+      }
+    }
+    if (effect.attachTo) {
+      const attachTargets = resolveTarget(
+        effect.attachTo as import("@tcg/cyberpunk-types").TargetDSL,
+        ctx,
+      );
+      const resolvedAttachToId = attachTargets[0];
+      if (resolvedAttachToId)
+        ops.card.attachGear(id as CardInstanceId, resolvedAttachToId as CardInstanceId);
+    }
+  }
+  return { status: "resolved" };
+}
+
+function handlePlayCard(
+  effect: PlayCardEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  if (targets.length === 0) return { status: "resolved" };
+
+  // Resolve the bound attachTo target eagerly while the binding context is available.
+  // The pending choice is resolved later (via resolveCardToPlay move) when the binding
+  // context is no longer present, so we store the concrete ID here.
+  let resolvedAttachToId: string | undefined;
+  if (effect.attachTo) {
+    const attachTargets = resolveTarget(
+      effect.attachTo as import("@tcg/cyberpunk-types").TargetDSL,
+      ctx,
+    );
+    resolvedAttachToId = attachTargets[0];
+  }
+
+  if (effect.free === true && isDirectCardPlayTarget(effect.target) && targets.length === 1) {
+    playSelectedCard({
+      state: ctx.state,
+      operations: ops,
+      playerId: ctx.sourcePlayerId,
+      cardId: targets[0] as CardInstanceId,
+      free: effect.free,
+      resolvedAttachToId,
+    });
+    return { status: "resolved" };
+  }
+
+  ops.game.setPendingChoice({
+    type: "chooseCardToPlay",
+    chooserId: ctx.sourcePlayerId,
+    effectId: "",
+    payload: {
+      cardIds: targets as CardInstanceId[],
+      free: effect.free,
+      attachTo: effect.attachTo,
+      resolvedAttachToId,
+      boundTargets: ctx.boundTargets,
+      sourceCardId: ctx.sourceCardId,
+      sourcePlayerId: ctx.sourcePlayerId,
+      abilityIndex: ctx.abilityIndex,
+      ifEffects: [],
+    },
+  });
+  return { status: "suspended", pendingChoice: effect };
+}
+
+function handleAttachCard(
+  effect: AttachCardEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  if (targets.length === 0) return { status: "resolved" };
+
+  const attachTargets = resolveTarget(effect.attachTo, ctx);
+  const resolvedAttachToId = attachTargets[0];
+  if (!resolvedAttachToId) return { status: "resolved" };
+
+  if (!isDirectCardPlayTarget(effect.target) || targets.length !== 1) {
+    ops.game.setPendingChoice({
+      type: "chooseCardToPlay",
+      chooserId: ctx.sourcePlayerId,
+      effectId: "",
+      payload: {
+        cardIds: targets as CardInstanceId[],
+        free: effect.free,
+        attachTo: effect.attachTo,
+        resolvedAttachToId,
+      },
+    });
+    return { status: "suspended", pendingChoice: effect };
+  }
+
+  const cardId = targets[0] as CardInstanceId;
+  const card = ctx.state.G.cardIndex[cardId as string];
+  if (!card) return { status: "resolved" };
+  const def = defOf(card);
+  if (def.type !== "gear") return { status: "resolved" };
+
+  const playerId = ctx.sourcePlayerId;
+  const cost = effect.free ? 0 : computeEffectiveCost(ctx.state, cardId, playerId);
+  if (!effect.free) {
+    ops.game.spendEddies(playerId, cost, "playCard");
+    consumeCostModifierUse(ctx.state, cardId, playerId);
+  }
+
+  ops.zone.moveCard(cardId, "field", playerId);
+  ops.card.attachGear(cardId, resolvedAttachToId as CardInstanceId);
+
+  const cardPlayedEvent = {
+    type: "cardPlayed" as const,
+    cardId,
+    playerId,
+    cost,
+  };
+  ops.event.emit(cardPlayedEvent);
+
+  const attachedToCard = ctx.state.G.cardIndex[resolvedAttachToId as string];
+  ops.event.emit({
+    type: "actionLog",
+    messageKey: "move.playCard.gear",
+    params: {
+      cardName: def.displayName,
+      cost,
+      ...(attachedToCard ? { attachedToName: defOf(attachedToCard).displayName } : {}),
+    },
+    playerId,
+  });
+  return { status: "resolved" };
+}
+
+function isDirectCardPlayTarget(target: TargetDSL): boolean {
+  return target.selector === "bound";
+}
+
+function handleRemoveFromGame(
+  effect: RemoveFromGameEffect,
+  ctx: ResolutionContext,
+  _ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  for (const id of targets) {
+    const card = ctx.state.G.cardIndex[id];
+    if (!card) continue;
+    const player = ctx.state.G.players[card.controllerId as string];
+    if (player) {
+      const idx = player.zones[card.zone].indexOf(id as CardInstanceId);
+      if (idx !== -1) player.zones[card.zone].splice(idx, 1);
+    }
+    delete ctx.state.G.cardIndex[id];
+  }
+  return { status: "resolved" };
+}
+
+function handleStealGig(
+  effect: StealGigEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  // Card-driven steals (e.g. Gorilla Arms) attribute the theft to the host
+  // Unit/Legend when the source is an attached Gear, matching the direct-attack
+  // path which passes `attack.attackerId` to `moveGig`. This keeps the emitted
+  // `gigStolen` event's `sourceCardId` well-formed for `source.host` /
+  // `source.self` / `source.card` trigger filters, so card-driven steals reach
+  // gigStolen listeners (e.g. Evelyn Parker, 6th Street Recruits).
+  const sourceCard = ctx.state.G.cardIndex[ctx.sourceCardId as string];
+  const thiefId =
+    sourceCard && sourceCard.meta.attachedToId ? sourceCard.meta.attachedToId : ctx.sourceCardId;
+  for (const id of targets) {
+    ops.gig.moveGig(id as GigDieId, ctx.sourcePlayerId, thiefId);
+  }
+  if (targets.length > 0) {
+    const cardName = sourceCard ? defOf(sourceCard).displayName : "Unknown card";
+    const dieTypes = [
+      ...new Set(
+        targets
+          .map((id) => ctx.state.G.gigDice[id])
+          .filter(Boolean)
+          .map((die) => die.dieType),
+      ),
+    ].join(", ");
+    ops.event.emit({
+      type: "actionLog",
+      messageKey: "trigger.stealGig",
+      params: {
+        cardName,
+        count: targets.length,
+        dieTypes,
+        gigWord: targets.length === 1 ? "Gig" : "Gigs",
+      },
+      playerId: ctx.sourcePlayerId,
+      category: "trigger",
+      cardIds: [ctx.sourceCardId as string],
+    });
+  }
+  return { status: "resolved" };
+}
+
+function handleTrashFromDeck(
+  effect: TrashFromDeckEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  const player = ctx.state.G.players[playerId as string];
+  if (!player) {
+    warnMissingPlayerState("handleTrashFromDeck", playerId, ctx);
+    return { status: "resolved" };
+  }
+  const count = Math.min(effect.amount, player.zones.deck.length);
+  const trashedIds: string[] = [];
+  const trashedCardNames: string[] = [];
+  for (let i = 0; i < count; i++) {
+    const cardId = player.zones.deck.shift();
+    if (!cardId) break;
+    const card = ctx.state.G.cardIndex[cardId as string];
+    if (card) {
+      trashedCardNames.push(defOf(card).displayName);
+    }
+    ops.zone.moveCard(cardId, "trash", playerId);
+    trashedIds.push(cardId as string);
+  }
+  // Publish the just-trashed card ids into the named binding so a later
+  // effect in the same ability can read them (e.g. "Add a Unit from among
+  // them to your hand."). `boundTargets` is shared across all effects in the
+  // ability's ResolutionContext.
+  if (effect.outputBinding) {
+    ctx.boundTargets[effect.outputBinding] = trashedIds;
+  }
+  if (trashedIds.length > 0) {
+    const sourceCard = ctx.state.G.cardIndex[ctx.sourceCardId as string];
+    ops.event.emit({
+      type: "actionLog",
+      messageKey: "effect.trashFromDeck.resolved",
+      params: {
+        sourceCardName: sourceCard ? defOf(sourceCard).displayName : "Unknown card",
+        trashedCount: trashedIds.length,
+        trashedCardIds: privateField(trashedIds, [playerId]),
+        trashedCardNames: privateField(trashedCardNames.join(", "), [playerId]),
+      },
+      playerId: ctx.sourcePlayerId,
+      category: "effect",
+      cardIds: [ctx.sourceCardId as string, ...trashedIds],
+    });
+  }
+  return { status: "resolved" };
+}
+
+function handleSellFromDeck(
+  effect: SellFromDeckEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  const player = ctx.state.G.players[playerId as string];
+  if (!player) {
+    warnMissingPlayerState("handleSellFromDeck", playerId, ctx);
+    return { status: "resolved" };
+  }
+
+  const count = Math.min(effect.amount, player.zones.deck.length);
+  const soldCardIds: string[] = [];
+  const soldCardNames: string[] = [];
+  for (let index = 0; index < count; index += 1) {
+    const cardId = player.zones.deck[0];
+    if (!cardId) break;
+    const card = ctx.state.G.cardIndex[cardId as string];
+    if (card) {
+      soldCardIds.push(cardId as string);
+      soldCardNames.push(defOf(card).displayName);
+    }
+    ops.zone.moveCard(cardId, "eddieArea", playerId);
+    ops.game.gainEddies(playerId, 1);
+  }
+
+  if (soldCardIds.length > 0) {
+    const sourceCard = ctx.state.G.cardIndex[ctx.sourceCardId as string];
+    ops.event.emit({
+      type: "actionLog",
+      messageKey: "effect.sellFromDeck.resolved",
+      params: {
+        sourceCardName: sourceCard ? defOf(sourceCard).displayName : "Unknown card",
+        soldCount: soldCardIds.length,
+        soldCardIds: privateField(soldCardIds, [playerId]),
+        soldCardNames: privateField(soldCardNames.join(", "), [playerId]),
+      },
+      playerId: ctx.sourcePlayerId,
+      category: "effect",
+      cardIds: [ctx.sourceCardId as string, ...soldCardIds],
+    });
+  }
+
+  return { status: "resolved" };
+}
+
+function handleIfYouDo(
+  effect: IfYouDoEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  // When the doEffect is an optional moveCard without attachTo (e.g. "You may discard a
+  // Program"), we must give the player a choice instead of auto-executing. Create a
+  // chooseCardToMove pending choice that the player can accept or decline, carrying the
+  // ifEffects/elseEffects for later resolution.
+  const doEffect = effect.doEffect;
+  if (
+    doEffect.optional &&
+    doEffect.effect === "moveCard" &&
+    !("attachTo" in doEffect && (doEffect as any).attachTo)
+  ) {
+    const targets =
+      "target" in doEffect && doEffect.target ? resolveTarget((doEffect as any).target, ctx) : [];
+    if (targets.length === 0) {
+      // No valid targets for the optional action → treat as declined.
+      const remaining = effect.elseEffects ? [...effect.elseEffects] : [];
+      if (remaining.length > 0) {
+        return { status: "partial", remaining };
+      }
+      return { status: "resolved" };
+    }
+
+    ops.game.setPendingChoice({
+      type: "chooseCardToMove",
+      chooserId: ctx.sourcePlayerId,
+      effectId: "",
+      payload: {
+        cardIds: targets as CardInstanceId[],
+        destination: (doEffect as any).destination,
+        boundTargets: ctx.boundTargets,
+        sourceCardId: ctx.sourceCardId,
+        sourcePlayerId: ctx.sourcePlayerId,
+        abilityIndex: ctx.abilityIndex,
+        ifEffects: [...effect.ifEffects],
+        elseEffects: effect.elseEffects ? [...effect.elseEffects] : [],
+        canDecline: true,
+      },
+    });
+    return { status: "resolved" };
+  }
+
+  if (doEffect.optional && doEffect.effect === "defeat") {
+    const targets = resolveTarget(doEffect.target, ctx);
+    if (targets.length === 0) {
+      const remaining = effect.elseEffects ? [...effect.elseEffects] : [];
+      if (remaining.length > 0) {
+        return { status: "partial", remaining };
+      }
+      return { status: "resolved" };
+    }
+
+    ops.game.setPendingChoice({
+      type: "chooseCardToMove",
+      chooserId: ctx.sourcePlayerId,
+      effectId: "",
+      payload: {
+        cardIds: targets as CardInstanceId[],
+        destination: "trash",
+        boundTargets: ctx.boundTargets,
+        sourceCardId: ctx.sourceCardId,
+        sourcePlayerId: ctx.sourcePlayerId,
+        abilityIndex: ctx.abilityIndex,
+        ifEffects: [...effect.ifEffects],
+        elseEffects: effect.elseEffects ? [...effect.elseEffects] : [],
+        canDecline: true,
+      },
+    });
+    return { status: "resolved" };
+  }
+
+  if (doEffect.optional && doEffect.effect === "discardFromHand") {
+    const playerId = resolveRelativePlayer(doEffect.player, ctx);
+    const player = ctx.state.G.players[playerId as string];
+    if (!player) return { status: "resolved" };
+    const eligibleIds = doEffect.target
+      ? resolveTarget(doEffect.target, ctx).filter((id) =>
+          player.zones.hand.includes(id as CardInstanceId),
+        )
+      : player.zones.hand.map((id) => id as string);
+
+    if (eligibleIds.length < doEffect.amount) {
+      const remaining = effect.elseEffects ? [...effect.elseEffects] : [];
+      if (remaining.length > 0) {
+        return { status: "partial", remaining };
+      }
+      return { status: "resolved" };
+    }
+
+    ops.game.setPendingChoice({
+      type: "chooseTarget",
+      chooserId: playerId,
+      effectId: "",
+      payload: {
+        type: "discardFromHand",
+        amount: doEffect.amount,
+        player: doEffect.player,
+        targetKind: "card",
+        eligibleIds,
+        canDecline: true,
+        sourceCardId: ctx.sourceCardId,
+        sourcePlayerId: ctx.sourcePlayerId,
+        abilityIndex: ctx.abilityIndex,
+        ifEffects: [...effect.ifEffects],
+        elseEffects: effect.elseEffects ? [...effect.elseEffects] : [],
+        contextTargets: ctx.contextTargets,
+        boundTargets: ctx.boundTargets,
+      },
+    });
+    return { status: "resolved" };
+  }
+
+  const doResult = resolveEffect(effect.doEffect, ctx, ops);
+  if (doResult.status === "resolved") {
+    if (effect.ifEffects.length > 0) {
+      return { status: "partial", remaining: [...effect.ifEffects] };
+    }
+    return { status: "resolved" };
+  }
+  if (doResult.status === "noAction") {
+    const remaining = effect.elseEffects ? [...effect.elseEffects] : [];
+    if (remaining.length > 0) {
+      return { status: "partial", remaining };
+    }
+    return { status: "resolved" };
+  }
+  if (doResult.status === "suspended") {
+    // Store follow-up effects in the pending choice so the resolver can execute them.
+    const pendingChoice = ctx.state.G.turnMetadata.pendingChoice;
+    if (pendingChoice && pendingChoice.type === "chooseCardToMove") {
+      pendingChoice.payload.ifEffects = [...effect.ifEffects];
+      pendingChoice.payload.elseEffects = effect.elseEffects ? [...effect.elseEffects] : [];
+    } else if (pendingChoice && pendingChoice.type === "chooseCardToPlay") {
+      pendingChoice.payload.ifEffects = [...effect.ifEffects];
+    } else if (
+      pendingChoice &&
+      pendingChoice.type === "chooseTarget" &&
+      pendingChoice.payload.type === "effectTarget"
+    ) {
+      pendingChoice.payload.ifEffects = [...effect.ifEffects];
+      pendingChoice.payload.elseEffects = effect.elseEffects ? [...effect.elseEffects] : [];
+    }
+    return { status: "resolved" };
+  }
+  return doResult;
+}
+
+function handleCopyGigValue(
+  effect: CopyGigValueEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const sourceIds = resolveTarget(effect.source, ctx);
+  const targetIds = resolveTarget(effect.target, ctx);
+  if (sourceIds.length === 0 || targetIds.length === 0) return { status: "noAction" };
+  const sourceDie = ctx.state.G.gigDice[sourceIds[0]!];
+  if (!sourceDie) return { status: "noAction" };
+  const sourceCard = ctx.state.G.cardIndex[ctx.sourceCardId as string];
+  const sourceCardName = sourceCard ? defOf(sourceCard).displayName : "That effect";
+  const sourceDieType = sourceDie.dieType.toUpperCase();
+  for (const id of targetIds) {
+    const targetDie = ctx.state.G.gigDice[id];
+    if (!targetDie) continue;
+    const previousValue = targetDie.faceValue;
+    const maxVal = DIE_MAX_VALUES[targetDie.dieType];
+    const value = Math.min(Math.max(sourceDie.faceValue, 1), maxVal);
+    ops.gig.setGigValue(id as GigDieId, value);
+    const targetDieType = targetDie.dieType.toUpperCase();
+    const capped = sourceDie.faceValue > maxVal;
+    ops.event.emit({
+      type: "actionLog",
+      messageKey: capped ? "trigger.copyGigValueCapped" : "trigger.copyGigValue",
+      params: {
+        sourceCardName,
+        sourceDieType,
+        sourceValue: sourceDie.faceValue,
+        targetDieType,
+        targetMax: maxVal,
+        previousValue,
+        newValue: value,
+        resultText: previousValue === value ? `stayed at ${value}` : `became ${value}`,
+      },
+      playerId: ctx.sourcePlayerId,
+      category: "trigger",
+      cardIds: [ctx.sourceCardId as string],
+    });
+  }
+  return { status: "resolved" };
+}
+
+function handleForEachFriendlyGigPair(
+  effect: ForEachFriendlyGigPairEffect,
+  ctx: ResolutionContext,
+  _ops: Operations,
+): EffectHandlerResult {
+  const pairCount = countFriendlyGigPairs(ctx);
+  if (pairCount <= 0 || effect.effects.length === 0) return { status: "noAction" };
+  const repeatedEffect = collapseRepeatedSelectableEffect(effect.effects, ctx, pairCount);
+  if (repeatedEffect) {
+    return { status: "partial", remaining: [repeatedEffect] };
+  }
+  const remaining: Effect[] = [];
+  for (let i = 0; i < pairCount; i += 1) {
+    remaining.push(...effect.effects);
+  }
+  return { status: "partial", remaining };
+}
+
+function handleCallLegend(
+  effect: CallLegendEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  const player = ctx.state.G.players[playerId as string];
+  if (!player) {
+    warnMissingPlayerState("handleCallLegend", playerId, ctx);
+    return { status: "noAction" };
+  }
+  const sourceCard = ctx.state.G.cardIndex[ctx.sourceCardId as string];
+  const sourceCardName = sourceCard ? defOf(sourceCard).displayName : "That effect";
+  if (player.calledLegendThisTurn) {
+    ops.event.emit({
+      type: "actionLog",
+      messageKey: "effect.callLegend.skippedAlreadyCalled",
+      params: { sourceCardName },
+      playerId,
+      category: "trigger",
+      cardIds: [ctx.sourceCardId as string],
+    });
+    return { status: "noAction" };
+  }
+
+  // Cap F — player choice / optional decline is handled by the generic
+  // choose-target suspension path in `resolveEffect` (the `selection` branch
+  // above): when `effect.target` carries a `selection`, that path suspends
+  // with a chooseTarget prompt (honoring `effect.optional` / `selection.min`
+  // so the player may decline), and on resume `resolve-effect-target` swaps
+  // the target for a `bound` selector holding the chosen id. So by the time
+  // this handler runs, `resolveTarget` yields either:
+  //   • the single auto-selected legend when no selection is present, or
+  //   • the player's CHOSEN legend id (the bound selection) on resume.
+  // `legendId` below is therefore always the intended legend, never a guess.
+  const targets = resolveTarget(effect.target, ctx).filter((id) => {
+    const card = ctx.state.G.cardIndex[id];
+    return card?.meta.faceDown && card.controllerId === playerId;
+  });
+  const legendId = targets[0] as CardInstanceId | undefined;
+  if (!legendId) return { status: "noAction" };
+  const legend = ctx.state.G.cardIndex[legendId as string];
+  const legendName = legend ? defOf(legend).displayName : "a Legend";
+
+  ops.card.setMeta(legendId, { faceDown: false });
+  ops.game.markCalledLegendThisTurn(playerId);
+  ops.event.emit({
+    type: "actionLog",
+    messageKey: effect.free ? "effect.callLegend.free" : "move.callLegend",
+    params: effect.free ? { sourceCardName, legendName } : { legendName },
+    playerId,
+    category: "trigger",
+    cardIds: [ctx.sourceCardId as string, legendId as string],
+  });
+  ops.event.emit({
+    type: "legendFlipped",
+    cardId: legendId,
+    playerId,
+  });
+  ops.event.emit({
+    type: "legendCalled",
+    cardId: legendId,
+    playerId,
+  });
+
+  return { status: "resolved" };
+}
+
+function collapseRepeatedSelectableEffect(
+  effects: readonly Effect[],
+  ctx: ResolutionContext,
+  pairCount: number,
+): Effect | null {
+  if (effects.length !== 1) return null;
+  const effect = effects[0]!;
+  if (!("target" in effect) || !effect.target) return null;
+  const target = effect.target as TargetDSL;
+  if (target.selector !== "card" && target.selector !== "gig") return null;
+  if (target.selection?.mode !== "choose") return null;
+
+  const maxTargets = Math.min(pairCount, resolveTarget(target, ctx).length);
+  if (maxTargets <= 0) return null;
+  return {
+    ...effect,
+    target: {
+      ...target,
+      selection: {
+        ...target.selection,
+        min: maxTargets,
+        max: maxTargets,
+      },
+    },
+  } as Effect;
+}
+
+function handleDelayed(
+  effect: DelayedEffect,
+  ctx: ResolutionContext,
+  _ops: Operations,
+): EffectHandlerResult {
+  // Snapshot resolved bound targets so they survive until the delayed timing.
+  const resolvedBindings: Record<string, string[]> = {};
+  if (ctx.boundTargets) {
+    for (const [key, ids] of Object.entries(ctx.boundTargets)) {
+      resolvedBindings[key] = [...ids];
+    }
+  }
+  _ops.game.addBagEntry({
+    // Deterministic id: sourceCardId + the engine's monotonic stateID
+    // (bumped once per processed command). The bag length disambiguates the
+    // rare case where the same source schedules >1 delayed effect within a
+    // single command resolution.
+    id: `delayed-${ctx.sourceCardId}-${ctx.state.ctx.stateID}-${ctx.state.G.effectBag.length}`,
+    sourceCardId: ctx.sourceCardId,
+    sourcePlayerId: ctx.sourcePlayerId,
+    effectIndex: -1,
+    abilityText: "delayed",
+    suspended: false,
+    delayedTiming: effect.timing,
+    delayedEffects: effect.effects,
+    resolvedBindings,
+  });
+  return { status: "resolved" };
+}
+
+/**
+ * Strictly typed against `Effect["effect"]` so adding a new effect kind to
+ * the union without registering a handler fails compile (TS error: missing
+ * property). Each handler is correspondingly typed against the matching
+ * effect variant via `Extract`.
+ */
+type EffectHandlerRegistry = {
+  [K in Effect["effect"]]: EffectHandler<Extract<Effect, { effect: K }>>;
+};
+
+export const effectHandlers: EffectHandlerRegistry = {
+  defeat: handleDefeat,
+  spend: handleSpend,
+  returnToHand: handleReturnToHand,
+  draw: handleDraw,
+  revealTopCardAndModifyPowerByCost: handleRevealTopCardAndModifyPowerByCost,
+  modifyGig: handleModifyGig,
+  adjustGig: handleAdjustGig,
+  modifyPower: handleModifyPower,
+  multiplyPower: handleMultiplyPower,
+  grantRule: handleGrantRule,
+  ready: handleReady,
+  readyEddies: handleReadyEddies,
+  lookAt: handleLookAt,
+  scry: handleScry,
+  searchDeck: handleSearchDeck,
+  rivalRevealChoice: handleRivalRevealChoice,
+  discardFromHand: handleDiscardFromHand,
+  moveCard: handleMoveCard,
+  playCard: handlePlayCard,
+  attachCard: handleAttachCard,
+  removeFromGame: handleRemoveFromGame,
+  stealGig: handleStealGig,
+  trashFromDeck: handleTrashFromDeck,
+  sellFromDeck: handleSellFromDeck,
+  ifYouDo: handleIfYouDo,
+  delayed: handleDelayed,
+  defeatAtEndOfTurnIfAttacks: handleDefeatAtEndOfTurnIfAttacks,
+  preventNextRivalFightDefeat: handlePreventNextRivalFightDefeat,
+  copyGigValue: handleCopyGigValue,
+  forEachFriendlyGigPair: handleForEachFriendlyGigPair,
+  callLegend: handleCallLegend,
+  grantCostModifier: handleGrantCostModifier,
+  rerollGig: handleRerollGig,
+  revealTopCardType: handleRevealTopCardType,
+};
+
+export function resolveEffect(
+  effect: Effect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  if (effect.effect === "callLegend") {
+    const playerId = resolveRelativePlayer(effect.player, ctx);
+    const player = ctx.state.G.players[playerId as string];
+    if (!player) {
+      warnMissingPlayerState("resolveEffect.callLegend", playerId, ctx);
+      return { status: "noAction" };
+    }
+    if (player.calledLegendThisTurn) {
+      const sourceCard = ctx.state.G.cardIndex[ctx.sourceCardId as string];
+      const sourceCardName = sourceCard ? defOf(sourceCard).displayName : "That effect";
+      ops.event.emit({
+        type: "actionLog",
+        messageKey: "effect.callLegend.skippedAlreadyCalled",
+        params: { sourceCardName },
+        playerId,
+        category: "trigger",
+        cardIds: [ctx.sourceCardId as string],
+      });
+      return { status: "noAction" };
+    }
+  }
+
+  if ("target" in effect && effect.target) {
+    const target = effect.target as TargetDSL;
+    const selection =
+      target.selector === "card" ||
+      target.selector === "gig" ||
+      target.selector === "bound" ||
+      target.selector === "context"
+        ? target.selection
+        : undefined;
+    if (selection) {
+      const targets = resolveTarget(target, ctx);
+      const { min, max } = selection;
+      if (targets.length < min) return { status: "noAction" };
+      ops.game.setPendingChoice({
+        type: "chooseTarget",
+        chooserId: ctx.sourcePlayerId,
+        effectId: ctx.state.G.turnMetadata.currentTrigger?.id ?? "",
+        payload: {
+          type: "effectTarget",
+          targetKind:
+            target.selector === "gig" ||
+            (target.selector === "context" &&
+              targets.some((id) => ctx.state.G.gigDice[id] !== undefined))
+              ? "gig"
+              : "card",
+          eligibleIds: targets,
+          min,
+          max,
+          canDecline: effect.optional === true,
+          effect,
+          sourceCardId: ctx.sourceCardId,
+          sourcePlayerId: ctx.sourcePlayerId,
+          abilityIndex: ctx.abilityIndex,
+          contextTargets: ctx.contextTargets,
+          boundTargets: ctx.boundTargets,
+          ...(effect.effect === "attachCard" && effect.attachTo === target
+            ? { targetPurpose: "attachHost" as const }
+            : {}),
+        },
+      });
+      return { status: "suspended", pendingChoice: effect };
+    }
+  }
+
+  // `EffectHandlerRegistry` is exhaustive against `Effect["effect"]`, so the
+  // lookup is statically guaranteed to find a handler. The cast widens the
+  // registry's per-variant `EffectHandler<Extract<…>>` to a uniform shape
+  // accepting any `Effect`.
+  const handler = effectHandlers[effect.effect] as EffectHandler<Effect>;
+  return handler(effect, ctx, ops);
+}

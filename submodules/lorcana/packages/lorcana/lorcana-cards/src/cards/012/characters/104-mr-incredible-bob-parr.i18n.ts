@@ -1,0 +1,20 @@
+import type { I18nProperties, Languages } from "@tcg/lorcana-types";
+
+export const mrIncredibleBobParrI18n: Record<Languages, I18nProperties> = {
+  en: {
+    name: "Mr. Incredible",
+    version: "Bob Parr",
+  },
+  de: {
+    name: "Mr. Incredible",
+    version: "Bob Parr",
+  },
+  fr: {
+    name: "M. Indestructible",
+    version: "Bob Parr",
+  },
+  it: {
+    name: "Mr. Incredibile",
+    version: "Bob Parr",
+  },
+};

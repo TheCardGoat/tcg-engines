@@ -1,0 +1,259 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 12px 16px;
+  font-family: "Share Tech Mono", monospace;
+  color: #c8e6ff;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid rgb(120 200 255 / 18%);
+  background: rgb(8 16 28 / 60%);
+  padding: 8px 9px;
+  border-radius: 2px;
+}
+
+.heading {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8fd5ff;
+  margin: 0 0 2px;
+}
+
+.kvGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 4px 6px;
+}
+
+.kvCell {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border: 1px solid rgb(120 200 255 / 12%);
+  background: rgb(4 9 17 / 70%);
+  padding: 4px 6px;
+}
+
+.kvLabel {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.kvValue {
+  font-size: 11px;
+  color: #f0f8ff;
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.select {
+  appearance: none;
+  background: #07090c;
+  border: 1px solid rgb(120 200 255 / 35%);
+  color: #c8e6ff;
+  font: inherit;
+  font-size: 11px;
+  padding: 6px 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.select:focus-visible {
+  outline: 1px solid #8fd5ff;
+}
+
+.btnRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.btn {
+  appearance: none;
+  background: transparent;
+  border: 1px solid rgb(120 200 255 / 35%);
+  color: inherit;
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 7px 8px;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+.btn:hover {
+  background: rgb(120 200 255 / 8%);
+  border-color: rgb(120 200 255 / 60%);
+}
+
+.btnAccent {
+  border-color: #ff4d8b;
+  color: #ff8fb0;
+}
+
+.btnAccent:hover {
+  background: rgb(255 77 139 / 10%);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+}
+
+.table th,
+.table td {
+  border: 1px solid rgb(120 200 255 / 14%);
+  padding: 3px 5px;
+  text-align: left;
+}
+
+.table th {
+  background: rgb(20 38 60 / 80%);
+  color: #b9d6f5;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.table td {
+  background: rgb(6 12 22 / 70%);
+  color: #ecf6ff;
+}
+
+.tableHighlight {
+  color: #4dff95 !important;
+}
+
+.list {
+  margin: 0;
+  padding-left: 16px;
+  display: grid;
+  gap: 2px;
+  font-size: 10px;
+}
+
+.ok {
+  margin: 0;
+  font-size: 11px;
+  color: #4dff95;
+}
+
+.anomaly {
+  margin: 0;
+  padding-left: 16px;
+  display: grid;
+  gap: 2px;
+  font-size: 10px;
+  color: #ffa1a1;
+}
+
+.miniLog {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 10px;
+}
+
+.miniLogEntry {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 6px;
+  border-bottom: 1px solid rgb(120 200 255 / 8%);
+  padding: 2px 0;
+}
+
+.miniLogSidePlayer {
+  color: #4ddfff;
+}
+
+.miniLogSideOpponent {
+  color: #ff4d8b;
+}
+
+.miniLogIllegal,
+.miniLogStuck {
+  color: #ffa1a1;
+}
+
+.empty {
+  font-size: 10px;
+  opacity: 0.55;
+}
+
+.rawSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b9d6f5;
+}
+
+.copyBtn {
+  appearance: none;
+  border: 1px solid rgb(120 200 255 / 35%);
+  background: rgb(18 32 50 / 90%);
+  color: #c8e6ff;
+  font: inherit;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.copyBtn:hover {
+  background: rgb(28 55 88 / 96%);
+}
+
+.copyFeedback {
+  margin: 4px 0 0;
+  font-size: 9px;
+  color: #4dff95;
+  letter-spacing: 0.06em;
+}
+
+.copyFeedbackError {
+  color: #ffa1a1;
+}
+
+.rawBody {
+  margin-top: 6px;
+  border-top: 1px solid rgb(120 200 255 / 14%);
+  padding-top: 6px;
+}
+
+.rawPre {
+  margin: 0;
+  max-height: 240px;
+  overflow: auto;
+  background: rgb(0 0 0 / 45%);
+  padding: 6px 8px;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  color: #cde0fb;
+  white-space: pre;
+}

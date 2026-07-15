@@ -1,0 +1,17 @@
+.label {
+  color: #f5e642;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.6rem;
+  font-weight: 700;
+  font-family: monospace;
+}
+
+.label.glow {
+  text-shadow: 0 0 8px rgb(245 230 66 / 55%);
+}
+
+.label.dim {
+  color: rgb(245 230 66 / 50%);
+  text-shadow: none;
+}

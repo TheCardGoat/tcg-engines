@@ -1,0 +1,12 @@
+export { exbpExBase001 } from "@tcg/gundam-token-data";
+export { exbpExBase002 } from "./002-ex-base.ts";
+export { exbpExBase003 } from "./003-ex-base.ts";
+export { exbpExBase004 } from "./004-ex-base.ts";
+export { exbpExBase005 } from "./005-ex-base.ts";
+export { exbpExBase006 } from "./006-ex-base.ts";
+export { exbpExBase007 } from "./007-ex-base.ts";
+export { exbpExBase008 } from "./008-ex-base.ts";
+export { exbpExBase009 } from "./009-ex-base.ts";
+export { exbpExBase010 } from "./010-ex-base.ts";
+export { exbpExBase011 } from "./011-ex-base.ts";
+export { exbpExBase019 } from "./019-ex-base.ts";

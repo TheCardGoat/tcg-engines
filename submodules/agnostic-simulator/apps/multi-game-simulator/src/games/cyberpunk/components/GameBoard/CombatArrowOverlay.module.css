@@ -1,0 +1,99 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 188;
+  pointer-events: none;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.glowLine,
+.attackLine {
+  vector-effect: non-scaling-stroke;
+}
+
+.glowLine {
+  stroke: rgb(255 61 94 / 34%);
+  stroke-width: 14px;
+  filter: blur(9px);
+}
+
+.attackLine {
+  stroke: #ff3d5e;
+  stroke-width: 4px;
+  stroke-linecap: butt;
+  stroke-dasharray: 12 7;
+  filter: drop-shadow(0 0 7px rgb(255 61 94 / 78%));
+  animation: combat-line-flow 0.9s linear infinite;
+}
+
+.arrowHead {
+  fill: #ff3d5e;
+  filter: drop-shadow(0 0 5px rgb(255 61 94 / 86%));
+}
+
+.stealCue {
+  position: absolute;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 5px 8px 4px;
+  border: 1px solid rgb(74 217 255 / 64%);
+  background: linear-gradient(90deg, rgb(74 217 255 / 22%), rgb(7 9 12 / 88%)), rgb(7 9 12 / 94%);
+  box-shadow:
+    0 0 0 1px rgb(7 9 12 / 72%) inset,
+    0 0 18px rgb(74 217 255 / 28%);
+  color: #bff4ff;
+  font-family: Rajdhani, sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgb(74 217 255 / 46%);
+  transform: translate(-50%, -50%);
+}
+
+.stealCue strong {
+  color: #fff8a8;
+  font: inherit;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+.block .glowLine {
+  stroke: rgb(245 230 66 / 36%);
+}
+
+.block .attackLine {
+  stroke: #f5e642;
+  stroke-width: 3px;
+  stroke-dasharray: 7 6;
+  filter: drop-shadow(0 0 6px rgb(245 230 66 / 78%));
+  animation-duration: 0.72s;
+}
+
+.block .arrowHead {
+  fill: #f5e642;
+  filter: drop-shadow(0 0 5px rgb(245 230 66 / 86%));
+}
+
+@keyframes combat-line-flow {
+  to {
+    stroke-dashoffset: -19;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .attackLine {
+    animation: none;
+  }
+}

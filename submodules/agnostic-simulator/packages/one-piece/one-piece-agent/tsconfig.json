@@ -1,0 +1,8 @@
+{
+  "extends": "@tcg/typescript-config/base.json",
+  "compilerOptions": {
+    "types": ["node", "@types/bun"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.test.ts"]
+}

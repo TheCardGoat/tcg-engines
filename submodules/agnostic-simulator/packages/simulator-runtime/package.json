@@ -1,0 +1,61 @@
+{
+  "name": "@tcg/simulator-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared browser runtime helpers for TCG simulator apps.",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./auth": {
+      "types": "./src/auth.tsx",
+      "default": "./src/auth.tsx"
+    },
+    "./chat": {
+      "types": "./src/chat.ts",
+      "default": "./src/chat.ts"
+    },
+    "./debug": {
+      "types": "./src/debug.ts",
+      "default": "./src/debug.ts"
+    },
+    "./gateway": {
+      "types": "./src/gateway.ts",
+      "default": "./src/gateway.ts"
+    },
+    "./live-transition": {
+      "types": "./src/live-transition.ts",
+      "default": "./src/live-transition.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "test": "vp test run --configLoader runner",
+    "format": "vp fmt ./src",
+    "lint": "vp lint ./src"
+  },
+  "dependencies": {
+    "@tcg/protocol": "link:../protocol",
+    "socket.io-client": "catalog:",
+    "socket.io-msgpack-parser": "catalog:"
+  },
+  "devDependencies": {
+    "@tcg/typescript-config": "link:../typescript-config",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@typescript/native": "catalog:",
+    "react": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}

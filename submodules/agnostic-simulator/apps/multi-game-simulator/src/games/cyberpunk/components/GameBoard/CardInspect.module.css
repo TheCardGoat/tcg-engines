@@ -1,0 +1,289 @@
+/* Mantine modal overrides — make the card the hero, not the chrome. */
+.content {
+  background: transparent;
+  box-shadow: none;
+  overflow: hidden;
+  width: 100dvw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+}
+
+.body {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stage {
+  position: relative;
+  z-index: 0;
+  box-sizing: border-box;
+  display: grid;
+  width: 100%;
+  min-height: 100%;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  place-items: center;
+  pointer-events: none;
+}
+
+.dismissLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: auto;
+}
+
+/* The card itself, sized to the viewport: ~78vw on phones, capped at 420px so
+   it doesn't get gigantic on tablets / desktop. Aspect-ratio locks the 5:7
+   card shape regardless of image natural size. */
+.shell {
+  position: relative;
+  z-index: 1;
+  width: min(82vw, 440px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  object-fit: cover;
+  display: block;
+  border: 2px solid var(--accent, #f5e642);
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 80%),
+    0 0 24px color-mix(in srgb, var(--accent, #f5e642) 40%, transparent),
+    0 24px 60px rgb(0 0 0 / 90%);
+}
+
+.meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: "Share Tech Mono", monospace;
+  color: var(--accent, #f5e642);
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.zone {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(245 230 66 / 60%);
+}
+
+.gallery {
+  display: flex;
+  gap: 8px;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 2px 1px 4px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.thumbnail {
+  appearance: none;
+  display: grid;
+  grid-template-columns: 28px auto;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  min-height: 38px;
+  max-width: 136px;
+  padding: 4px 7px 4px 4px;
+  border: 1px solid rgb(74 217 255 / 35%);
+  border-radius: 4px;
+  background: rgb(7 9 12 / 82%);
+  color: rgb(207 232 246 / 76%);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.thumbnail[data-active="true"] {
+  border-color: #f5e642;
+  color: #f5e642;
+  box-shadow: 0 0 10px rgb(245 230 66 / 24%);
+}
+
+.thumbnail img {
+  width: 28px;
+  aspect-ratio: 5 / 7;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.thumbnail span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Floating close button at the top-right corner of the card. Big enough for
+   thumbs but visually unobtrusive — the tap-outside dismiss is the primary
+   exit path. */
+.close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 42px;
+  height: 42px;
+  background: #07090c;
+  border: 2px solid var(--accent, #f5e642);
+  color: var(--accent, #f5e642);
+  border-radius: 50%;
+  font-weight: 700;
+  cursor: pointer;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 3;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 82%),
+    0 0 14px color-mix(in srgb, var(--accent, #f5e642) 34%, transparent);
+  transition:
+    background 0.15s ease,
+    transform 0.12s ease;
+}
+
+.close::before {
+  content: attr(data-countdown);
+  position: absolute;
+  inset: -7px;
+  display: grid;
+  place-items: center;
+  border: 2px solid color-mix(in srgb, var(--accent, #f5e642) 70%, transparent);
+  border-radius: inherit;
+  color: #07090c;
+  background: var(--accent, #f5e642);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 10px;
+  line-height: 1;
+  opacity: 0.94;
+  transform: translate(17px, -17px);
+  width: 21px;
+  height: 21px;
+}
+
+.countdown {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.close:hover {
+  background: color-mix(in srgb, var(--accent, #f5e642) 18%, transparent);
+}
+
+.close:active {
+  transform: scale(0.92);
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  .content {
+    max-height: calc(100dvh - 18px);
+  }
+
+  .shell {
+    width: auto;
+    max-width: min(58dvw, 360px);
+    max-height: calc(100dvh - 18px);
+    align-items: center;
+    gap: 5px;
+  }
+
+  .image {
+    width: auto;
+    height: min(calc(100dvh - 74px), 300px);
+    max-width: min(58dvw, 360px);
+    border-radius: 6px;
+  }
+
+  .meta {
+    width: min(58dvw, 360px);
+    max-width: 100%;
+    gap: 8px;
+  }
+
+  .name {
+    overflow: hidden;
+    font-size: 11px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .zone {
+    flex: 0 0 auto;
+    font-size: 8px;
+  }
+
+  .gallery {
+    width: min(58dvw, 360px);
+    max-width: 100%;
+    padding-bottom: 1px;
+  }
+
+  .thumbnail {
+    min-height: 30px;
+    grid-template-columns: 22px auto;
+    gap: 4px;
+    padding: 3px 6px 3px 3px;
+    font-size: 8px;
+  }
+
+  .thumbnail img {
+    width: 22px;
+  }
+
+  .close {
+    top: 0;
+    right: -34px;
+    width: 32px;
+    height: 32px;
+    border-width: 1px;
+  }
+
+  .close::before {
+    inset: -5px;
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+    transform: translate(14px, -14px);
+  }
+}
+
+@media (orientation: landscape) and (max-height: 340px) {
+  .content {
+    max-height: calc(100dvh - 56px);
+  }
+
+  .shell {
+    max-height: calc(100dvh - 56px);
+  }
+
+  .image {
+    height: min(calc(100dvh - 118px), 220px);
+  }
+}

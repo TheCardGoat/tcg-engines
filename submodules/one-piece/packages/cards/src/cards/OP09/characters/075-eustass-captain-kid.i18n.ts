@@ -1,0 +1,10 @@
+import type { OPCardI18n } from "@tcg/op-types";
+
+export const op09EustassCaptainKid075I18n: OPCardI18n = {
+  en: {
+    name: 'Eustass"Captain"Kid',
+    effect:
+      '[On Play] You may add 1 card from the top of your Life cards to your hand: If your Leader has the "Kid Pirates" type, add up to 1 DON!! card from your DON!! deck and set it as active.',
+    imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP09-075.jpg",
+  },
+};

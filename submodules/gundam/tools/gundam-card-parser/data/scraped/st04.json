@@ -1,0 +1,947 @@
+[
+  {
+    "id": "ST04-001",
+    "code": "ST04-001",
+    "name": "Aile Strike Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-001.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-001.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-001_p1",
+    "code": "ST04-001",
+    "name": "Aile Strike Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-001_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-001_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-002",
+    "code": "ST04-002",
+    "name": "Strike Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Deploy】Draw 1. Then, discard 1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-002.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-002.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-002_p1",
+    "code": "ST04-002",
+    "name": "Strike Gundam",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Deploy】Draw 1. Then, discard 1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-002_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-002_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-003",
+    "code": "ST04-003",
+    "name": "Moebius Zero",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 2,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space",
+    "trait": "(Earth Alliance)",
+    "link": "[Mu La Flaga]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-003.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-003.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-003_p1",
+    "code": "ST04-003",
+    "name": "Moebius Zero",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 2,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space",
+    "trait": "(Earth Alliance)",
+    "link": "[Mu La Flaga]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-003_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-003_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-004",
+    "code": "ST04-004",
+    "name": "Moebius",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space",
+    "trait": "(Earth Alliance)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-004.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-004.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-004_p1",
+    "code": "ST04-004",
+    "name": "Moebius",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space",
+    "trait": "(Earth Alliance)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-004_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-004_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-005",
+    "code": "ST04-005",
+    "name": "Strike Dagger",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-005.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-005.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-005_p1",
+    "code": "ST04-005",
+    "name": "Strike Dagger",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-005_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-005_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-006",
+    "code": "ST04-006",
+    "name": "Aegis Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Attack】If this Unit has 5 or more AP, choose 1 enemy Unit that is Lv.5 or higher. Deal 3 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "[Athrun Zala]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-006.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-006.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-006_p1",
+    "code": "ST04-006",
+    "name": "Aegis Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Attack】If this Unit has 5 or more AP, choose 1 enemy Unit that is Lv.5 or higher. Deal 3 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "[Athrun Zala]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-006_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-006_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-007",
+    "code": "ST04-007",
+    "name": "Aegis Gundam (MA Mode)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 3,
+    "hp": 4,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "[Athrun Zala]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-007.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-007.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-007_p1",
+    "code": "ST04-007",
+    "name": "Aegis Gundam (MA Mode)",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 3,
+    "hp": 4,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "[Athrun Zala]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-007_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-007_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-008",
+    "code": "ST04-008",
+    "name": "Ginn",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-008.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-008.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-008_p1",
+    "code": "ST04-008",
+    "name": "Ginn",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-008_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-008_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-009",
+    "code": "ST04-009",
+    "name": "Miguel's Ginn",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 1,
+    "effect": "【During Pair】【Destroyed】If you have another Link Unit in play, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "[Miguel Ayman]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-009.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-009.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-009_p1",
+    "code": "ST04-009",
+    "name": "Miguel's Ginn",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 1,
+    "effect": "【During Pair】【Destroyed】If you have another Link Unit in play, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "[Miguel Ayman]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-009_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-009_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-010",
+    "code": "ST04-010",
+    "name": "Kira Yamato",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】Choose 1 enemy Unit. It gets AP-2 during this battle.",
+    "zone": "-",
+    "trait": "(Earth Alliance) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-010.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-010.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-010_p1",
+    "code": "ST04-010",
+    "name": "Kira Yamato",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】Choose 1 enemy Unit. It gets AP-2 during this battle.",
+    "zone": "-",
+    "trait": "(Earth Alliance) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-010_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-010_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-011",
+    "code": "ST04-011",
+    "name": "Athrun Zala",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
+    "zone": "-",
+    "trait": "(ZAFT) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-011.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-011.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-011_p1",
+    "code": "ST04-011",
+    "name": "Athrun Zala",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
+    "zone": "-",
+    "trait": "(ZAFT) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-011_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-011_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-012",
+    "code": "ST04-012",
+    "name": "Striker Pack",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】If you have no (Earth Alliance) Unit tokens in play, deploy 1 [Aile Strike Gundam]((Earth Alliance)･AP3･HP3･<Blocker>) Unit token.\n【Main】If you have no (Earth Alliance) Unit tokens in play, deploy 1 [Sword Strike Gundam]((Earth Alliance)･AP4･HP2･<Blocker>) or 1 [Launcher Strike Gundam]((Earth Alliance)･AP2･HP4･<Blocker>) Unit token.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-012.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-012.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-012_p1",
+    "code": "ST04-012",
+    "name": "Striker Pack",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】If you have no (Earth Alliance) Unit tokens in play, deploy 1 [Aile Strike Gundam]((Earth Alliance)･AP3･HP3･<Blocker>) Unit token.\n【Main】If you have no (Earth Alliance) Unit tokens in play, deploy 1 [Sword Strike Gundam]((Earth Alliance)･AP4･HP2･<Blocker>) or 1 [Launcher Strike Gundam]((Earth Alliance)･AP2･HP4･<Blocker>) Unit token.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-012_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-012_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-013",
+    "code": "ST04-013",
+    "name": "Hawk of Endymion",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】/【Action】Choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand.\n【Pilot】[Mu La Flaga]",
+    "zone": "-",
+    "trait": "(Earth Alliance)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-013.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-013.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-013_p1",
+    "code": "ST04-013",
+    "name": "Hawk of Endymion",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】/【Action】Choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand.\n【Pilot】[Mu La Flaga]",
+    "zone": "-",
+    "trait": "(Earth Alliance)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-013_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-013_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-014",
+    "code": "ST04-014",
+    "name": "The Magic Bullet of Dusk",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Red",
+    "ap": 0,
+    "hp": 1,
+    "effect": "【Main】/【Action】Choose 1 friendly Unit that is Lv.2 or lower. It gains <First Strike> during this turn.\n\n(While this Unit is attacking, it deals damage before the enemy Unit.)\n【Pilot】[Miguel Ayman]",
+    "zone": "-",
+    "trait": "(ZAFT) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-014.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-014.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-014_p1",
+    "code": "ST04-014",
+    "name": "The Magic Bullet of Dusk",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Red",
+    "ap": 0,
+    "hp": 1,
+    "effect": "【Main】/【Action】Choose 1 friendly Unit that is Lv.2 or lower. It gains <First Strike> during this turn.\n\n(While this Unit is attacking, it deals damage before the enemy Unit.)\n【Pilot】[Miguel Ayman]",
+    "zone": "-",
+    "trait": "(ZAFT) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-014_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-014_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-015",
+    "code": "ST04-015",
+    "name": "Archangel",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\n【Activate･Main】【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-015.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-015.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-015_p1",
+    "code": "ST04-015",
+    "name": "Archangel",
+    "rarity": "C +",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\n【Activate･Main】【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-015_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-015_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-016",
+    "code": "ST04-016",
+    "name": "Vesalius",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\n【Activate･Main】Rest this Base：Choose 1 friendly Unit. It gets AP+1 during this turn.",
+    "zone": "Space",
+    "trait": "(ZAFT) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-016.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-016.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "ST04-016_p1",
+    "code": "ST04-016",
+    "name": "Vesalius",
+    "rarity": "C +",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\n【Activate･Main】Rest this Base：Choose 1 friendly Unit. It gets AP+1 during this turn.",
+    "zone": "Space",
+    "trait": "(ZAFT) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-016_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-016_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04] Bonus Pack",
+    "set": {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "T-008",
+    "code": "T-008",
+    "name": "Aile Strike Gundam",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 3,
+    "hp": 3,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "-",
+    "trait": "(Earth Alliance)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-008.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-008.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "t",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "T-009",
+    "code": "T-009",
+    "name": "Launcher Strike Gundam",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 2,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "-",
+    "trait": "(Earth Alliance)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-009.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-009.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "t",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  },
+  {
+    "id": "T-010",
+    "code": "T-010",
+    "name": "Sword Strike Gundam",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 4,
+    "hp": 2,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "-",
+    "trait": "(Earth Alliance)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-010.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-010.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "SEED Strike [ST04]",
+    "set": {
+      "id": "t",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004"
+    }
+  }
+]

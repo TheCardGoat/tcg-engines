@@ -1,0 +1,28 @@
+{
+  "name": "Cyberpunk TCG Simulator",
+  "short_name": "Cyberpunk TCG",
+  "description": "Play and test Cyberpunk TCG games online with an interactive tabletop simulator, scenario launcher, AI turns, move history, and board-state tools.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "theme_color": "#0B1220",
+  "background_color": "#0B1220",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "orientation": "any"
+}

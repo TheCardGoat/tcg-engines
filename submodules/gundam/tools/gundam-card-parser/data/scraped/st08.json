@@ -1,0 +1,866 @@
+[
+  {
+    "id": "ST02-014_p2",
+    "code": "ST02-014",
+    "name": "Siege Ploy",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card' s 【Main】.\n【Main】/【Action】Choose 1 enemy Unit with 5 or less HP. Rest it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST02-014_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST02-014_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st02",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST02-014_p3",
+    "code": "ST02-014",
+    "name": "Siege Ploy",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card' s 【Main】.\n【Main】/【Action】Choose 1 enemy Unit with 5 or less HP. Rest it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST02-014_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST02-014_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st02",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-001",
+    "code": "ST08-001",
+    "name": "Ξ Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "9",
+    "cost": 8,
+    "color": "Red",
+    "ap": 5,
+    "hp": 5,
+    "effect": "While you have no Units that are Lv.6 or higher in play, this card in your hand gets Lv. -1 and cost -1 for each enemy Unit in play.\n【When Paired】Choose 1 enemy Unit with the highest Lv. Deal 3 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "[Hathaway Noa]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-001.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-001.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-001_p1",
+    "code": "ST08-001",
+    "name": "Ξ Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "9",
+    "cost": 8,
+    "color": "Red",
+    "ap": 5,
+    "hp": 5,
+    "effect": "While you have no Units that are Lv.6 or higher in play, this card in your hand gets Lv. -1 and cost -1 for each enemy Unit in play.\n【When Paired】Choose 1 enemy Unit with the highest Lv. Deal 3 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "[Hathaway Noa]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-001_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-001_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-002",
+    "code": "ST08-002",
+    "name": "Ξ Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】Choose 1 enemy Unit. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "[Hathaway Noa]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-002.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-002.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-002_p1",
+    "code": "ST08-002",
+    "name": "Ξ Gundam",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】Choose 1 enemy Unit. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "[Hathaway Noa]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-002_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-002_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-003",
+    "code": "ST08-003",
+    "name": "Messer (Type-F Naked) (Commander Type)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Red",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "(Mafty) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-003.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-003.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-003_p1",
+    "code": "ST08-003",
+    "name": "Messer (Type-F Naked) (Commander Type)",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Red",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "(Mafty) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-003_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-003_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-004",
+    "code": "ST08-004",
+    "name": "Messer Type-F01",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Attack】If this Unit is attacking an enemy Unit, choose 1 enemy Unit. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "(Mafty) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-004.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-004.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-004_p1",
+    "code": "ST08-004",
+    "name": "Messer Type-F01",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Attack】If this Unit is attacking an enemy Unit, choose 1 enemy Unit. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "(Mafty) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-004_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-004_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-005",
+    "code": "ST08-005",
+    "name": "Messer Type-F02 Minelayer",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-005.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-005.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-005_p1",
+    "code": "ST08-005",
+    "name": "Messer Type-F02 Minelayer",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-005_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-005_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-006",
+    "code": "ST08-006",
+    "name": "Penelope",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 6,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 5,
+    "effect": "【During Pair】【Attack】【Once per Turn】If this Unit is attacking the enemy player, reveal 1 (Earth Federation) Unit card from your hand. Return it to the bottom of your deck. If you do, draw 2.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Lane Aim]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-006.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-006.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-006_p1",
+    "code": "ST08-006",
+    "name": "Penelope",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 6,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 5,
+    "effect": "【During Pair】【Attack】【Once per Turn】If this Unit is attacking the enemy player, reveal 1 (Earth Federation) Unit card from your hand. Return it to the bottom of your deck. If you do, draw 2.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Lane Aim]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-006_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-006_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-007",
+    "code": "ST08-007",
+    "name": "Penelope",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Lane Aim]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-007.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-007.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-007_p1",
+    "code": "ST08-007",
+    "name": "Penelope",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Lane Aim]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-007_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-007_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-008",
+    "code": "ST08-008",
+    "name": "Gustav Karl Type-00",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "While 3 or more enemy Units are in play, this Unit gains <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-008.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-008.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-008_p1",
+    "code": "ST08-008",
+    "name": "Gustav Karl Type-00",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "While 3 or more enemy Units are in play, this Unit gains <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-008_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-008_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-009",
+    "code": "ST08-009",
+    "name": "Jegan Ground Type-A (Man Hunter)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": 1,
+    "effect": "【Deploy】Choose 1 rested enemy Unit that is Lv.2 or lower. It won' t be set as active during the start phase of your opponent' s next turn.",
+    "zone": "Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-009.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-009.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-009_p1",
+    "code": "ST08-009",
+    "name": "Jegan Ground Type-A (Man Hunter)",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": 1,
+    "effect": "【Deploy】Choose 1 rested enemy Unit that is Lv.2 or lower. It won' t be set as active during the start phase of your opponent' s next turn.",
+    "zone": "Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-009_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-009_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-010",
+    "code": "ST08-010",
+    "name": "Hathaway Noa",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If this is a (Mafty) Unit, choose 1 of your (Mafty) Units. During this turn, it may choose a damaged active enemy Unit as its attack target.",
+    "zone": "-",
+    "trait": "(Mafty) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-010.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-010.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-010_p1",
+    "code": "ST08-010",
+    "name": "Hathaway Noa",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If this is a (Mafty) Unit, choose 1 of your (Mafty) Units. During this turn, it may choose a damaged active enemy Unit as its attack target.",
+    "zone": "-",
+    "trait": "(Mafty) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-010_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-010_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-011",
+    "code": "ST08-011",
+    "name": "Lane Aim",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nWhen you draw with an effect, if this is a blue Unit, it gains <High-Maneuver> during this turn.\n\r\n(This Unit can' t be blocked.)",
+    "zone": "-",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-011.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-011.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-011_p1",
+    "code": "ST08-011",
+    "name": "Lane Aim",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nWhen you draw with an effect, if this is a blue Unit, it gains <High-Maneuver> during this turn.\n\r\n(This Unit can' t be blocked.)",
+    "zone": "-",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-011_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-011_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-012",
+    "code": "ST08-012",
+    "name": "Words for Hathaway",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】Choose 1 friendly Link Unit. It gains <Breach 1> during this turn.\n\r\n(When this Unit' s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent' s shield area.)\n【Pilot】[Gawman Nobile]",
+    "zone": "-",
+    "trait": "(Mafty)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-012.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-012.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-012_p1",
+    "code": "ST08-012",
+    "name": "Words for Hathaway",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】Choose 1 friendly Link Unit. It gains <Breach 1> during this turn.\n\r\n(When this Unit' s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent' s shield area.)\n【Pilot】[Gawman Nobile]",
+    "zone": "-",
+    "trait": "(Mafty)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-012_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-012_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-013",
+    "code": "ST08-013",
+    "name": "Lady Luck",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "5",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Choose 1 enemy Unit. Deal 1 damage to it. If a friendly (Mafty) Link Unit is in play, deal 2 damage instead.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-013.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-013.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-013_p1",
+    "code": "ST08-013",
+    "name": "Lady Luck",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "5",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Choose 1 enemy Unit. Deal 1 damage to it. If a friendly (Mafty) Link Unit is in play, deal 2 damage instead.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-013_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-013_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-014",
+    "code": "ST08-014",
+    "name": "Valiant",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, choose 1 of your Units. It gets AP+2 during this turn.",
+    "zone": "Earth",
+    "trait": "(Mafty) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-014.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-014.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-014_p1",
+    "code": "ST08-014",
+    "name": "Valiant",
+    "rarity": "C +",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, choose 1 of your Units. It gets AP+2 during this turn.",
+    "zone": "Earth",
+    "trait": "(Mafty) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-014_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-014_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-015",
+    "code": "ST08-015",
+    "name": "Davao",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】【Once per Turn】②：Choose 1 of your Units. It recovers 2 HP.",
+    "zone": "Earth",
+    "trait": "(Earth Federation) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-015.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-015.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08]",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  },
+  {
+    "id": "ST08-015_p1",
+    "code": "ST08-015",
+    "name": "Davao",
+    "rarity": "C +",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】【Once per Turn】②：Choose 1 of your Units. It recovers 2 HP.",
+    "zone": "Earth",
+    "trait": "(Earth Federation) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-015_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-015_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Flash of Radiance [ST08] Bonus Pack",
+    "set": {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008"
+    }
+  }
+]

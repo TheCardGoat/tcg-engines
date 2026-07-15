@@ -1,0 +1,291 @@
+{
+  "title": "Multi-game Simulator - Browser Reliability",
+  "description": "Browser errors, warnings, anonymous sessions, Web Vitals, document load, and network traces for Cyberpunk, Gundam, and One Piece.",
+  "tags": ["frontend", "browser", "simulator", "tcg"],
+  "variables": {},
+  "layout": [
+    {
+      "i": "error-warning-volume",
+      "x": 0,
+      "y": 0,
+      "w": 6,
+      "h": 3,
+      "moved": false,
+      "static": false
+    },
+    { "i": "telemetry-volume", "x": 6, "y": 0, "w": 6, "h": 3, "moved": false, "static": false },
+    { "i": "web-vitals", "x": 0, "y": 3, "w": 6, "h": 3, "moved": false, "static": false },
+    { "i": "poor-web-vitals", "x": 6, "y": 3, "w": 6, "h": 3, "moved": false, "static": false },
+    { "i": "trace-latency", "x": 0, "y": 6, "w": 12, "h": 3, "moved": false, "static": false },
+    { "i": "recent-errors", "x": 0, "y": 9, "w": 12, "h": 6, "moved": false, "static": false }
+  ],
+  "widgets": [
+    {
+      "id": "error-warning-volume",
+      "title": "Errors and warnings by game and route",
+      "description": "Browser ERROR and WARN records grouped by game, normalized route, and severity.",
+      "panelTypes": "graph",
+      "yAxisUnit": "cps",
+      "query": {
+        "queryType": "builder",
+        "builder": {
+          "queryData": [
+            {
+              "queryName": "A",
+              "dataSource": "logs",
+              "aggregateOperator": "count",
+              "aggregateAttribute": {},
+              "timeAggregation": "rate",
+              "spaceAggregation": "sum",
+              "filters": {
+                "items": [
+                  {
+                    "key": { "key": "service.name", "type": "resource", "dataType": "string" },
+                    "op": "=",
+                    "value": "tcg-multi-game-simulator"
+                  },
+                  {
+                    "key": { "key": "severity_text", "type": "tag", "dataType": "string" },
+                    "op": "in",
+                    "value": ["ERROR", "WARN"]
+                  }
+                ],
+                "op": "AND"
+              },
+              "groupBy": [
+                { "key": "severity_text", "type": "tag", "dataType": "string" },
+                { "key": "simulator.game", "type": "tag", "dataType": "string" },
+                { "key": "app.route", "type": "tag", "dataType": "string" }
+              ],
+              "expression": "A",
+              "legend": "{{severity_text}} - {{simulator.game}} - {{app.route}}",
+              "disabled": false
+            }
+          ],
+          "queryFormulas": []
+        }
+      }
+    },
+    {
+      "id": "telemetry-volume",
+      "title": "Browser log ingestion by event and release",
+      "description": "Total simulator browser log volume, including Web Vitals.",
+      "panelTypes": "graph",
+      "yAxisUnit": "cps",
+      "query": {
+        "queryType": "builder",
+        "builder": {
+          "queryData": [
+            {
+              "queryName": "A",
+              "dataSource": "logs",
+              "aggregateOperator": "count",
+              "aggregateAttribute": {},
+              "timeAggregation": "rate",
+              "spaceAggregation": "sum",
+              "filters": {
+                "items": [
+                  {
+                    "key": { "key": "service.name", "type": "resource", "dataType": "string" },
+                    "op": "=",
+                    "value": "tcg-multi-game-simulator"
+                  }
+                ],
+                "op": "AND"
+              },
+              "groupBy": [
+                { "key": "body", "type": "tag", "dataType": "string" },
+                { "key": "service.version", "type": "resource", "dataType": "string" }
+              ],
+              "expression": "A",
+              "legend": "{{body}} - {{service.version}}",
+              "disabled": false
+            }
+          ],
+          "queryFormulas": []
+        }
+      }
+    },
+    {
+      "id": "web-vitals",
+      "title": "Web Vitals p75 by game and route",
+      "description": "LCP, INP, CLS, FCP, and TTFB p75 from real simulator sessions.",
+      "panelTypes": "graph",
+      "yAxisUnit": "ms",
+      "query": {
+        "queryType": "builder",
+        "builder": {
+          "queryData": [
+            {
+              "queryName": "A",
+              "dataSource": "logs",
+              "aggregateOperator": "p75",
+              "aggregateAttribute": {
+                "key": "web_vital.value",
+                "dataType": "float64",
+                "type": "tag",
+                "isColumn": false
+              },
+              "timeAggregation": "p75",
+              "spaceAggregation": "p75",
+              "filters": {
+                "items": [
+                  {
+                    "key": { "key": "service.name", "type": "resource", "dataType": "string" },
+                    "op": "=",
+                    "value": "tcg-multi-game-simulator"
+                  },
+                  {
+                    "key": { "key": "web_vital.name", "type": "tag", "dataType": "string" },
+                    "op": "in",
+                    "value": ["LCP", "INP", "CLS", "FCP", "TTFB"]
+                  }
+                ],
+                "op": "AND"
+              },
+              "groupBy": [
+                { "key": "web_vital.name", "type": "tag", "dataType": "string" },
+                { "key": "simulator.game", "type": "tag", "dataType": "string" },
+                { "key": "app.route", "type": "tag", "dataType": "string" }
+              ],
+              "expression": "A",
+              "legend": "{{web_vital.name}} - {{simulator.game}} - {{app.route}}",
+              "disabled": false
+            }
+          ],
+          "queryFormulas": []
+        }
+      }
+    },
+    {
+      "id": "poor-web-vitals",
+      "title": "Poor Web Vitals by game and metric",
+      "description": "Count of simulator Web Vitals classified as poor.",
+      "panelTypes": "graph",
+      "yAxisUnit": "cps",
+      "query": {
+        "queryType": "builder",
+        "builder": {
+          "queryData": [
+            {
+              "queryName": "A",
+              "dataSource": "logs",
+              "aggregateOperator": "count",
+              "aggregateAttribute": {},
+              "timeAggregation": "rate",
+              "spaceAggregation": "sum",
+              "filters": {
+                "items": [
+                  {
+                    "key": { "key": "service.name", "type": "resource", "dataType": "string" },
+                    "op": "=",
+                    "value": "tcg-multi-game-simulator"
+                  },
+                  {
+                    "key": { "key": "web_vital.rating", "type": "tag", "dataType": "string" },
+                    "op": "=",
+                    "value": "poor"
+                  }
+                ],
+                "op": "AND"
+              },
+              "groupBy": [
+                { "key": "web_vital.name", "type": "tag", "dataType": "string" },
+                { "key": "simulator.game", "type": "tag", "dataType": "string" }
+              ],
+              "expression": "A",
+              "legend": "{{web_vital.name}} - {{simulator.game}}",
+              "disabled": false
+            }
+          ],
+          "queryFormulas": []
+        }
+      }
+    },
+    {
+      "id": "trace-latency",
+      "title": "Document, resource, fetch, and XHR latency p95",
+      "description": "Simulator browser span duration grouped by operation; failed HTTP responses carry ERROR status.",
+      "panelTypes": "graph",
+      "yAxisUnit": "ns",
+      "query": {
+        "queryType": "builder",
+        "builder": {
+          "queryData": [
+            {
+              "queryName": "A",
+              "dataSource": "traces",
+              "aggregateOperator": "p95",
+              "aggregateAttribute": {
+                "key": "duration_nano",
+                "dataType": "int64",
+                "type": "tag",
+                "isColumn": true
+              },
+              "timeAggregation": "p95",
+              "spaceAggregation": "p95",
+              "filters": {
+                "items": [
+                  {
+                    "key": { "key": "service.name", "type": "resource", "dataType": "string" },
+                    "op": "=",
+                    "value": "tcg-multi-game-simulator"
+                  }
+                ],
+                "op": "AND"
+              },
+              "groupBy": [{ "key": "name", "type": "tag", "dataType": "string" }],
+              "expression": "A",
+              "legend": "{{name}}",
+              "disabled": false
+            }
+          ],
+          "queryFormulas": []
+        }
+      }
+    },
+    {
+      "id": "recent-errors",
+      "title": "Recent simulator errors",
+      "description": "Latest errors with game, normalized route, release, and exception type.",
+      "panelTypes": "list",
+      "query": {
+        "queryType": "builder",
+        "builder": {
+          "queryData": [
+            {
+              "queryName": "A",
+              "dataSource": "logs",
+              "aggregateOperator": "noop",
+              "aggregateAttribute": {},
+              "timeAggregation": "",
+              "spaceAggregation": "",
+              "filters": {
+                "items": [
+                  {
+                    "key": { "key": "service.name", "type": "resource", "dataType": "string" },
+                    "op": "=",
+                    "value": "tcg-multi-game-simulator"
+                  },
+                  {
+                    "key": { "key": "severity_text", "type": "tag", "dataType": "string" },
+                    "op": "=",
+                    "value": "ERROR"
+                  }
+                ],
+                "op": "AND"
+              },
+              "groupBy": [],
+              "expression": "A",
+              "legend": "",
+              "disabled": false,
+              "limit": 100,
+              "orderBy": [{ "columnName": "timestamp", "order": "desc" }]
+            }
+          ],
+          "queryFormulas": []
+        }
+      }
+    }
+  ]
+}

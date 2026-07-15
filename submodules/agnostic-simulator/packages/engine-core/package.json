@@ -1,0 +1,53 @@
+{
+  "name": "@tcg/engine-core",
+  "version": "0.0.0",
+  "description": "Unified TCG engine core for Gundam, Cyberpunk, and One Piece.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./test-simulator": {
+      "types": "./src/test-simulator.ts",
+      "default": "./src/test-simulator.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "./test-simulator": {
+        "types": "./dist/test-simulator.d.mts",
+        "default": "./dist/test-simulator.mjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/index.mjs",
+    "types": "./dist/index.d.mts"
+  },
+  "scripts": {
+    "build": "vp pack",
+    "dev": "vp pack --watch",
+    "test": "vp test --configLoader runner",
+    "check": "vp check",
+    "prepublishOnly": "vp run build"
+  },
+  "dependencies": {
+    "@tcg/protocol": "link:../protocol",
+    "mutative": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

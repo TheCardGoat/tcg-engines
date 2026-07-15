@@ -1,0 +1,75 @@
+import type { CharacterCard } from "@tcg/lorcana-types";
+import { sisuDivineWaterDragonEnchantedI18n } from "./214-sisu-divine-water-dragon-enchanted.i18n";
+
+export const sisuDivineWaterDragonEnchanted: CharacterCard = {
+  id: "Gxv",
+  canonicalId: "ci_mTe",
+  slug: "lorcana-ci_mTe",
+  printings: [
+    {
+      id: "set2-214-enchanted",
+      artId: "ci_mTe-enchanted",
+      setCode: "set2",
+      collectorNumber: "214",
+      rarity: "enchanted",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set2-159"],
+  cardType: "character",
+  name: "Sisu",
+  version: "Divine Water Dragon",
+  inkType: ["sapphire"],
+  franchise: "Raya and the Last Dragon",
+  set: "002",
+  cardNumber: 214,
+  rarity: "enchanted",
+  specialRarity: "enchanted",
+  cost: 4,
+  strength: 2,
+  willpower: 4,
+  lore: 2,
+  inkable: false,
+  externalIds: {
+    lorcast: "crd_f9edf9a591974716b2d7f02764f93737",
+    tcgPlayer: "528112",
+  },
+  text: [
+    {
+      title: "I TRUST YOU",
+      description:
+        "Whenever this character quests, look at the top 2 cards of your deck. You may put one into your hand. Put the rest on the bottom of your deck in any order.",
+    },
+  ],
+  classifications: ["Storyborn", "Hero", "Deity", "Dragon"],
+  abilities: [
+    {
+      effect: {
+        type: "scry",
+        amount: 2,
+        destinations: [
+          {
+            zone: "hand",
+            min: 0,
+            max: 1,
+          },
+          {
+            zone: "deck-bottom",
+            remainder: true,
+            ordering: "player-choice",
+          },
+        ],
+      },
+      id: "rwp-1",
+      name: "I TRUST YOU",
+      text: "I TRUST YOU Whenever this character quests, look at the top 2 cards of your deck. You may put one into your hand. Put the rest on the bottom of your deck in any order.",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+        timing: "whenever",
+      },
+      type: "triggered",
+    },
+  ],
+  i18n: sisuDivineWaterDragonEnchantedI18n,
+};

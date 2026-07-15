@@ -1,0 +1,237 @@
+.page {
+  min-height: 100vh;
+  background: #08090d;
+  color: #f5f7fb;
+}
+
+.loadingPage {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+  background: #08090d;
+  color: #b7becd;
+}
+
+.errorPanel {
+  width: min(560px, 100%);
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  border-radius: 8px;
+  padding: 24px;
+  background: rgba(18, 20, 29, 0.96);
+}
+
+.errorPanel h1 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.errorPanel p {
+  margin: 0 0 18px;
+  color: #fda4af;
+}
+
+.backLink {
+  color: #facc15;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.controls {
+  position: fixed;
+  left: 50%;
+  z-index: 10000;
+  display: flex;
+  max-width: calc(100vw - 24px);
+  transform: translateX(-50%);
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 6px;
+  background: rgba(8, 9, 13, 0.88);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(16px);
+  user-select: none;
+}
+
+.controlsPlayerActive {
+  bottom: max(17vh, 122px);
+}
+
+.controlsOpponentActive {
+  top: max(18px, calc(18vh - 40px));
+}
+
+.controlsDragged {
+  right: auto;
+  bottom: auto;
+  transform: none;
+}
+
+.dragHandle {
+  display: inline-flex;
+  width: 26px;
+  height: 34px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #94a3b8;
+  cursor: grab;
+}
+
+.dragHandle:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
+
+.controlGroup {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.iconButton,
+.textButton {
+  display: inline-flex;
+  min-width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #d8dee9;
+  cursor: pointer;
+}
+
+.iconButton:hover,
+.textButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.iconButton:disabled,
+.textButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.primaryButton {
+  color: #facc15;
+}
+
+.textButton {
+  gap: 6px;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.position {
+  white-space: nowrap;
+  border-inline: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0 12px;
+  color: #cbd5e1;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.position strong {
+  color: #f8fafc;
+}
+
+.forkMenu {
+  position: fixed;
+  top: 62px;
+  left: 50%;
+  z-index: 51;
+  display: flex;
+  transform: translateX(-50%);
+  gap: 6px;
+  border: 1px solid rgba(250, 204, 21, 0.28);
+  border-radius: 8px;
+  padding: 8px;
+  background: rgba(8, 9, 13, 0.96);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+}
+
+.forkMenu a,
+.forkMenu button {
+  border: 0;
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: rgba(250, 204, 21, 0.12);
+  color: #fde68a;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.forkMenu button {
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+.forkHeader {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  z-index: 50;
+  display: flex;
+  max-width: calc(100vw - 24px);
+  transform: translateX(-50%);
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(250, 204, 21, 0.28);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: rgba(8, 9, 13, 0.9);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(16px);
+}
+
+.forkHeader strong {
+  color: #f8fafc;
+  font-size: 13px;
+}
+
+.forkHeader span {
+  color: #cbd5e1;
+  font-size: 12px;
+}
+
+@media (max-width: 760px) {
+  .controls {
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 8px;
+  }
+
+  .controlsPlayerActive:not(.controlsDragged) {
+    top: auto;
+    bottom: 10px;
+  }
+
+  .controlsOpponentActive:not(.controlsDragged) {
+    top: 10px;
+    bottom: auto;
+  }
+
+  .forkMenu {
+    top: auto;
+    bottom: 76px;
+  }
+
+  .position {
+    order: -1;
+    width: 100%;
+    border-inline: 0;
+    text-align: center;
+  }
+}

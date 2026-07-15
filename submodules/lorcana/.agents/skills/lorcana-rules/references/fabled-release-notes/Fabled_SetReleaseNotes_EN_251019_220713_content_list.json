@@ -1,0 +1,1724 @@
+[
+  {
+    "type": "image",
+    "img_path": "images/51829077e75028ba465a6586b83ccec2b7fdbc6435403fe2cab89f8113cb134f.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [437, 122, 555, 162],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "LORCANA",
+    "text_level": 1,
+    "bbox": [326, 160, 673, 224],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "TRADING CARD GAME",
+    "bbox": [383, 224, 609, 241],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "FABLED",
+    "text_level": 1,
+    "bbox": [292, 313, 715, 395],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Disney Lorcana TCG Set Release Notes: Fabled",
+    "text_level": 2,
+    "bbox": [112, 450, 779, 477],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Hello, Illumineers, far and wide! Welcome to our first set release notes, where we'll explain the latest updates to the game and answer questions about the new cards. These release notes go over any rules changes, new mechanics, and features of the game introduced with Fabled and offer context for why the adjustments are necessary.",
+    "bbox": [111, 486, 880, 566],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "For more detailed game information beyond these release notes, visit",
+    "bbox": [111, 577, 661, 595],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "DisneyLorcana.com/Resources to check out the Comprehensive Rules, tournament rules, and more.",
+    "bbox": [111, 598, 815, 633],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Game Updates",
+    "text_level": 2,
+    "bbox": [112, 648, 264, 669],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "We're excited to announce that we're introducing two bigger updates to the Disney Lorcana TCG. Here's how those will work and what that means for you, the player.",
+    "bbox": [111, 676, 839, 715],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Set Rotation",
+    "text_level": 3,
+    "bbox": [112, 728, 233, 746],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "In August 2023, we launched the Disney Lorcana TCG with 204 cards in The First Chapter set. Two years later, we're ready to announce a new milestone, to ensure the stability of the game for many years to come. Fabled brings a new concept to the Disney Lorcana TCG: set rotation!",
+    "bbox": [111, 756, 875, 816],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Currently, you can use all eight existing sets in the Core Constructed format. When Fabled releases on September 5, 2025, the first four sets will rotate out of that tournament format. This",
+    "bbox": [111, 825, 866, 864],
+    "page_idx": 0
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 184, 955],
+    "page_idx": 0
+  },
+  {
+    "type": "footer",
+    "text": "Ravensburger",
+    "bbox": [807, 893, 883, 952],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "means that cards from the following sets will no longer be legal in Core Constructed events: The First Chapter, Rise of the Floodborn, Into the Inklands, and Ursula's Return.",
+    "bbox": [116, 90, 875, 128],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "It's worth repeating that this applies only to Core Constructed tournament play. You can continue to enjoy all the cards however you like at home with your friends and family!",
+    "bbox": [116, 141, 875, 179],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "Let's say you like Limited format events, where you get sealed booster packs and build new decks on the spot. Would you be able to have a Limited event where players opened one booster pack each from every Disney Lorcana TCG set so far? Absolutely! (Actually, that sounds like a lot of fun.)",
+    "bbox": [116, 191, 872, 268],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "Likewise, you can still use cards from any sets in Infinity Constructed. Just remember that Infinity Constructed will have its own banned card list.",
+    "bbox": [116, 282, 826, 319],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "Future set rotations will happen once a year. The next one will be in the summer of 2026, when Shimmering Skies, Azurite Sea, Archazia's Island, and Reign of Jafar will rotate out of Core Constructed. Generally, you'll be able to play cards from between five and eight sets in Core Constructed at any given time.",
+    "bbox": [116, 332, 864, 410],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "You can learn more about set rotation at Twitch.tv/DisneyLorcana.com.",
+    "bbox": [116, 422, 676, 441],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "Reprinted Favorites",
+    "text_level": 3,
+    "bbox": [116, 454, 299, 473],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "We've reprinted cards in the past, but with the release of Fabled, you'll see many of your (and our) favorite cards returning to the spotlight! This means that even with set rotation, some powerful staple cards will remain in the Core Constructed tournament format for at least another year, giving you more chances to play the cards you love.",
+    "bbox": [116, 482, 875, 560],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "A card is considered a reprint if it has all the same characteristics as a previous card. For example, take a look at these two printings of *Stitch* – Rock Star:",
+    "bbox": [116, 571, 810, 611],
+    "page_idx": 1
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [116, 936, 184, 954],
+    "page_idx": 1
+  },
+  {
+    "type": "footer",
+    "text": "Petersburg",
+    "bbox": [808, 893, 883, 950],
+    "page_idx": 1
+  },
+  {
+    "type": "image",
+    "img_path": "images/893d83dc0c64c4b549cdf0a6c1059208906cbf1c850d984a05589064879eda75.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 87, 393, 386],
+    "page_idx": 2
+  },
+  {
+    "type": "image",
+    "img_path": "images/0ac163eb14c4daefc42c605fba21642d384d5bf5fa9cb820d9c5727055cc7d85.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [465, 87, 746, 386],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Stitch - Rock Star",
+    "bbox": [112, 398, 303, 412],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Amber character",
+    "bbox": [112, 421, 272, 434],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Floodborn · Hero · Alien",
+    "bbox": [112, 443, 364, 455],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "6 cost, inkable",
+    "bbox": [114, 465, 272, 479],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "3/5/3",
+    "bbox": [114, 488, 169, 501],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Stitch.)",
+    "bbox": [112, 510, 789, 547],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "\\Adoring Fans\\ Whenever you play a character with cost 2 or less, you may exert them to draw a card.",
+    "bbox": [112, 555, 870, 592],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "The first is from The First Chapter, and the other is from Fabled. However, every mechanical part of the card is the same, so the new version in Fabled is a reprint. (Some eagle-eyed viewers will spot one tiny difference between these two cards. See the Card Readability Updates section below for more info on that.)",
+    "bbox": [109, 618, 874, 699],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Various printings of a card (including promo card versions) are still copies of the same card, since they have the same full name. This means they can be used interchangeably with each other. So, if you want to have the maximum of 4 copies of Stitch - Rock Star in your deck, you could put in 2 from The First Chapter and 2 from Fabled. You couldn't put 4 from The First Chapter and 4 from Fabled in your deck, however, because they're the same card.",
+    "bbox": [109, 709, 866, 809],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "By the same token, this also allows you to put The First Chapter versions in your Core Constructed deck and Fabled versions in your Infinity Constructed deck. Basically, if the card is legal for the format, any printing of it is allowed.",
+    "bbox": [109, 821, 875, 881],
+    "page_idx": 2
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 184, 955],
+    "page_idx": 2
+  },
+  {
+    "type": "footer",
+    "text": "Reverburgy",
+    "bbox": [808, 893, 883, 950],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Minor Rules Updates",
+    "text_level": 3,
+    "bbox": [112, 90, 315, 111],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "With the release of Fabled, we made a few small updates to the Disney Lorcana TCG",
+    "bbox": [111, 118, 789, 136],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "Comprehensive Rules. The sections of the rules that were affected are:",
+    "bbox": [111, 138, 671, 157],
+    "page_idx": 3
+  },
+  {
+    "type": "list",
+    "sub_type": "text",
+    "list_items": [
+      "1.6.1.5. Updated the definition of replacement effects to align with the definition in section 7.7.1.",
+      "- 1.9.1.3. Added language to clarify when a character is considered to have banished another character or location.",
+      "7.7.6. Added a definition for self-replacement effects.",
+      "- 7.7.7. Added the steps for applying replacement effects to make it clear how to apply multiple replacement effects at the same time."
+    ],
+    "bbox": [111, 170, 861, 311],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "Card Readability Updates",
+    "text_level": 3,
+    "bbox": [112, 325, 354, 345],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "We made the following minor change to existing card text to improve readability and clarity.",
+    "bbox": [111, 354, 844, 373],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "- New Shift Construction: Shift abilities now include the  \\(\\{\\mathrm{I}\\}\\)  symbol for added clarity. For example, Shift 4 became Shift 4  \\(\\{\\mathrm{I}\\}\\) .",
+    "bbox": [111, 385, 857, 424],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "Rules Glossary Updates",
+    "text_level": 3,
+    "bbox": [112, 436, 339, 455],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "Glossary updates may include newly introduced terms or clarifications of past entries. For Fabled, we edited the definition for replacement effect to remove \"static\" before abilities.",
+    "bbox": [111, 464, 826, 502],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "- replacement effect: An effect generated by some abilities that replaces one effect with another.",
+    "bbox": [112, 516, 792, 553],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "Card-Specific Notes",
+    "text_level": 3,
+    "bbox": [112, 566, 313, 587],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "The following are answers to a few questions that might come up when playing specific Fabled cards. This isn't meant to be an exhaustive list, but we hope it's a helpful guide for some of the more complex cards in the set.",
+    "bbox": [111, 595, 870, 654],
+    "page_idx": 3
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 184, 954],
+    "page_idx": 3
+  },
+  {
+    "type": "footer",
+    "text": "Ravenburg",
+    "bbox": [808, 893, 883, 952],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "Stitch - Rock Star / Lantern",
+    "text_level": 4,
+    "bbox": [114, 90, 374, 109],
+    "page_idx": 4
+  },
+  {
+    "type": "image",
+    "img_path": "images/2497edb0c9b2f9f5a165d43c41c41ca953e74d08a8e34d79c7479ae198a7402b.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 116, 393, 415],
+    "page_idx": 4
+  },
+  {
+    "type": "image",
+    "img_path": "images/3a977924d22c34fc1a09a820c7224d99f3b040d4d69fc1175ebc00ee2e9c1a58.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [467, 114, 746, 415],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "Stitch - Rock Star",
+    "bbox": [112, 426, 303, 440],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "Amber character",
+    "bbox": [112, 449, 272, 462],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "Floodborn · Hero · Alien",
+    "bbox": [112, 470, 364, 486],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "6 cost, inkable",
+    "bbox": [114, 494, 272, 507],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "3/5/3",
+    "bbox": [114, 515, 169, 530],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Stitch.)",
+    "bbox": [112, 537, 789, 575],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "\\Adoring Fans\\ Whenever you play a character with cost 2 or less, you may exert them to draw a card.",
+    "bbox": [112, 584, 870, 621],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "Lantern",
+    "bbox": [112, 628, 189, 642],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "Amber item",
+    "bbox": [112, 652, 220, 665],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "2 cost, uninkable",
+    "bbox": [112, 674, 292, 688],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "\\Birthday Lights\\ {E} - You pay 1 {I} less for the next character you play this turn.",
+    "bbox": [112, 696, 880, 733],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "Q: Say I have Stitch - Rock Star in play and a cost 3 character in my hand. If I use Lantern so I can pay 1  \\(\\{\\mathrm{I}\\}\\)  less to play that character, can I then exert the character to draw a card?",
+    "bbox": [109, 758, 866, 797],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "A: No. It's not the character's cost that's reduced by Lantern but rather the amount of ink you need to pay in order to play it. The character's cost would still be 3, so they wouldn't qualify for the \"cost 2 or less\" part of the Adoring Fans ability.",
+    "bbox": [109, 799, 874, 859],
+    "page_idx": 4
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 184, 954],
+    "page_idx": 4
+  },
+  {
+    "type": "footer",
+    "text": "Reverburgy",
+    "bbox": [808, 893, 883, 950],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "Pongo – Determined Father",
+    "text_level": 4,
+    "bbox": [114, 90, 372, 109],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/f130b17fe5310bd72ef35d1b8348d07aed254a0b012a74d7b169df066c91c759.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 116, 390, 412],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Pongo - Determined Father",
+    "bbox": [112, 419, 374, 434],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Amber character",
+    "bbox": [112, 441, 272, 455],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Storyborn · Hero",
+    "bbox": [112, 464, 282, 478],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "3 cost, inkable",
+    "bbox": [112, 486, 272, 500],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "3/2/1",
+    "bbox": [112, 508, 166, 522],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Twilight Bark\\ Once during your turn, you may pay 2 {I} to reveal the top card of your deck. If it's a character card, put it into your hand. Otherwise, put it on the bottom of your deck.",
+    "bbox": [112, 531, 879, 590],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Q: If I have 3 copies of Pongo – Determined Father in play, how many times can I use his Twilight Bark ability per turn?",
+    "bbox": [111, 618, 821, 655],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "A: 3 times. You can use it once for each copy of Pongo – Determined Father you have in play. Note that if you return Pongo to your hand and then play him again, you can use his Twilight Bark ability again because the card resets when it leaves play.",
+    "bbox": [111, 657, 854, 715],
+    "page_idx": 5
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 184, 954],
+    "page_idx": 5
+  },
+  {
+    "type": "footer",
+    "text": "Ravenburger",
+    "bbox": [808, 893, 885, 950],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "The Queen – Wicked and Vain",
+    "text_level": 4,
+    "bbox": [114, 90, 397, 109],
+    "page_idx": 6
+  },
+  {
+    "type": "image",
+    "img_path": "images/27a08edb6f3d0afe83c7cdd0d3969e71bbeb05e3a06804b05aa9782cb24b7364.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 116, 393, 415],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "The Queen - Wicked and Vain",
+    "bbox": [112, 421, 395, 436],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "Amethyst character",
+    "bbox": [112, 444, 303, 458],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "Storyborn • Villain • Queen",
+    "bbox": [112, 465, 395, 481],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "5 cost, inkable",
+    "bbox": [112, 488, 271, 502],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "4/5/1",
+    "bbox": [112, 510, 166, 523],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "\\I Summon Thee\\{E\\} - Draw a card.",
+    "bbox": [112, 532, 465, 547],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "Q: If I have The Queen – Wicked and Vain in play and an effect makes me exert her, do I get to draw a card with her I Summon Thee ability?",
+    "bbox": [109, 574, 866, 612],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "A: No. When an ability has a cost, the card's player must pay that cost to use the ability. If another effect exerts The Queen, you haven't paid the cost for I Summon Thee, so you don't get to draw the card. Additionally, you won't be able to use I Summon Thee until The Queen is readied.",
+    "bbox": [109, 614, 870, 691],
+    "page_idx": 6
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 184, 954],
+    "page_idx": 6
+  },
+  {
+    "type": "footer",
+    "text": "Ravenbutter",
+    "bbox": [808, 893, 883, 950],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "Ursula - Sea Witch",
+    "text_level": 4,
+    "bbox": [114, 90, 294, 108],
+    "page_idx": 7
+  },
+  {
+    "type": "image",
+    "img_path": "images/6f1d0d5b13c219c11dae1b776dd738c4a71d07a2ea8d65e367a3f742d14d2631.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 116, 390, 414],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "Ursula - Sea Witch",
+    "bbox": [112, 421, 303, 435],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "Amethyst character",
+    "bbox": [112, 444, 303, 458],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "Dreamborn · Villain · Sorcerer",
+    "bbox": [112, 467, 426, 479],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "3 cost, uninkable",
+    "bbox": [114, 489, 292, 502],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "3/3/1",
+    "bbox": [114, 511, 166, 523],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "\\You're Too Late\\ Whenever this character quests, chosen opposing character can't ready at the start of their next turn.",
+    "bbox": [112, 532, 785, 571],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "Q: When I use Ursula – Sea Witch's ability You're Too Late, can I choose a ready character?",
+    "bbox": [111, 597, 844, 614],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "A: Yes. Note, however, that You're Too Late doesn't exert the character you've chosen. It only prevents them from being readied if they're exerted.",
+    "bbox": [111, 618, 857, 656],
+    "page_idx": 7
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 184, 954],
+    "page_idx": 7
+  },
+  {
+    "type": "footer",
+    "text": "Petersburg",
+    "bbox": [808, 893, 883, 950],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "Jafar – Keeper of Secrets / Flynn Rider – Charming Rogue",
+    "text_level": 4,
+    "bbox": [112, 90, 656, 112],
+    "page_idx": 8
+  },
+  {
+    "type": "image",
+    "img_path": "images/13e97b4a8da9160182a774989cb017d24428b210ba78232ba0b9f89a5280725f.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 116, 393, 415],
+    "page_idx": 8
+  },
+  {
+    "type": "image",
+    "img_path": "images/1ae838b42b3a818f4d3cb8b255eaad951a904d72d5be3f8dd5896559b9ba32c8.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [467, 125, 740, 415],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "Jafar - Keeper of Secrets",
+    "bbox": [112, 421, 374, 436],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "Amethyst character",
+    "bbox": [112, 444, 303, 458],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "Dreamborn · Villain · Sorcerer",
+    "bbox": [112, 467, 426, 481],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "4 cost, inkable",
+    "bbox": [114, 488, 272, 502],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "0/5/2",
+    "bbox": [114, 510, 169, 525],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "\\Hidden Wonders\\ This character gets +1 \\{S\\} for each card in your hand.",
+    "bbox": [112, 532, 736, 571],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "Flynn Rider - Charming Rogue",
+    "bbox": [112, 601, 406, 616],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "Emerald character",
+    "bbox": [112, 625, 292, 638],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "Storyborn • Hero • Prince",
+    "bbox": [112, 646, 375, 661],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "2 cost, inkable",
+    "bbox": [112, 669, 272, 683],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "1/2/2",
+    "bbox": [114, 691, 169, 705],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "\\Here Comes the Smolder\\ Whenever this character is challenged, the challenging player chooses and discards a card.",
+    "bbox": [112, 714, 807, 752],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "Q: I have 2 cards in my hand plus a Jafar – Keeper of Secrets in play, and my Jafar challenges Flynn Rider – Charming Rogue. When does Flynn Rider's ability Here Comes the Smolder happen? How much damage will he take from the challenge, considering Jafar's Hidden Wonders ability?",
+    "bbox": [109, 777, 854, 854],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "A: Here Comes the Smolder happens as soon as Flynn Rider is chosen to be challenged. This",
+    "bbox": [111, 858, 846, 876],
+    "page_idx": 8
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 184, 955],
+    "page_idx": 8
+  },
+  {
+    "type": "footer",
+    "text": "REVEA",
+    "bbox": [823, 931, 867, 945],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "means the challenging player must discard a card before any damage from the challenge is dealt to either character. In this case, you'll have to discard 1 of your 2 cards, so you'll have 1 card left. Hidden Wonders increases Jafar's Strength by an amount equal to the number of cards in your hand, so he'll have  \\(+1\\)  Strength when he deals damage to Flynn Rider in the challenge.",
+    "bbox": [109, 90, 872, 174],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "Elsa – Spirit of Winter / Fan the Flames",
+    "text_level": 4,
+    "bbox": [112, 181, 482, 200],
+    "page_idx": 9
+  },
+  {
+    "type": "image",
+    "img_path": "images/9391a7833317baeb7db12ff598ccef50c4f8cb11b4cff2bdb1eda528fa6f2091.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 207, 395, 506],
+    "page_idx": 9
+  },
+  {
+    "type": "image",
+    "img_path": "images/8de67b283eddf1d95a9117469a974f25f80ec858ad33945aad78ce59740f7bff.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [465, 207, 746, 507],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "Elsa - Spirit of Winter",
+    "bbox": [112, 517, 354, 531],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "Amethyst character",
+    "bbox": [112, 540, 303, 554],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "Floodborn • Hero • Queen • Sorcerer",
+    "bbox": [112, 561, 477, 575],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "8 cost, uninkable",
+    "bbox": [112, 585, 290, 598],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "4/6/3",
+    "bbox": [112, 607, 169, 619],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "Shift 6 {I} (You may pay 6 {I} to play this on top of one of your characters named Elsa.)",
+    "bbox": [112, 630, 785, 667],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "\\Deep Freeze\\ When you play this character, exert up to 2 chosen characters. They can't ready at the start of their next turn.",
+    "bbox": [112, 675, 776, 712],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "Fan the Flames",
+    "bbox": [112, 743, 261, 756],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "Ruby action",
+    "bbox": [112, 765, 230, 779],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "1 cost, inkable",
+    "bbox": [112, 787, 271, 801],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "Ready chosen character. They can't quest for the rest of this turn.",
+    "bbox": [112, 810, 803, 824],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "Q: If I use Elsa – Spirit of Winter's ability Deep Freeze to exert 2 characters, can they be readied with Fan the Flames on their next turn?",
+    "bbox": [109, 849, 877, 887],
+    "page_idx": 9
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 184, 955],
+    "page_idx": 9
+  },
+  {
+    "type": "footer",
+    "text": "Ravenburg",
+    "bbox": [808, 893, 883, 952],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "A: Yes. Deep Freeze only keeps characters from readying during the Ready step of their next turn. It doesn't keep them from being readied by Fan the Flames and similar abilities.",
+    "bbox": [116, 90, 846, 128],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "Mickey Mouse – Trumpeter",
+    "text_level": 4,
+    "bbox": [114, 141, 374, 162],
+    "page_idx": 10
+  },
+  {
+    "type": "image",
+    "img_path": "images/8cae828b1281ab97e03ed5b9f26e06c328a15067848e800af0207bf8d2a39c8c.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 167, 390, 465],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "Mickey Mouse - Trumpeter",
+    "bbox": [112, 477, 364, 492],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "Steel character",
+    "bbox": [114, 500, 272, 513],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "Dreamborn • Hero",
+    "bbox": [114, 522, 281, 534],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "4 cost, uninkable",
+    "bbox": [114, 544, 292, 558],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "0/1/1",
+    "bbox": [114, 566, 166, 580],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "\\Sound the Call\\ {E}, 2 {I} - Play a character for free.",
+    "bbox": [116, 589, 691, 604],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "Q: If I use Mickey Mouse – Trumpeter's Sound the Call ability, can I play a character using their Shift ability for free?",
+    "bbox": [116, 628, 877, 667],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "A: It depends. \"For free\" applies only to the ink cost of playing a card, not to any other costs of playing it. If the Shift cost of the character you want to play is just ink, you can play them using their Shift ability for free. However, if their Shift cost includes other costs, those would still need to be paid.",
+    "bbox": [114, 670, 874, 750],
+    "page_idx": 10
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [116, 936, 184, 954],
+    "page_idx": 10
+  },
+  {
+    "type": "footer",
+    "text": "Petersburg",
+    "bbox": [808, 893, 883, 950],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "Donald Duck – Perfect Gentleman",
+    "text_level": 4,
+    "bbox": [114, 90, 436, 109],
+    "page_idx": 11
+  },
+  {
+    "type": "image",
+    "img_path": "images/0d03d6feb2fd3f6acc05a4919a345f7a6ce91acb3b4f787d7746eec64916a37b.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 116, 393, 415],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "Donald Duck - Perfect Gentleman",
+    "bbox": [112, 426, 437, 441],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "Emerald character",
+    "bbox": [112, 449, 294, 463],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "Floodborn • Ally",
+    "bbox": [114, 470, 282, 486],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "4 cost, inkable",
+    "bbox": [114, 494, 272, 508],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "2/5/2",
+    "bbox": [114, 515, 169, 530],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "Shift 3 {I} (You may pay 3 {I} to play this on top of one of your characters named Donald Duck.)",
+    "bbox": [112, 537, 790, 578],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "\\Allow Me\\ At the start of your turn, each player may draw a card.",
+    "bbox": [112, 584, 795, 599],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "Q: If I choose not to draw a card for Donald Duck – Perfect Gentleman's Allow Me ability, can my opponent still draw a card?",
+    "bbox": [109, 625, 866, 662],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "A: Yes. Each player decides individually whether they want to draw a card at the start of your turn.",
+    "bbox": [109, 664, 815, 703],
+    "page_idx": 11
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 184, 955],
+    "page_idx": 11
+  },
+  {
+    "type": "footer",
+    "text": "Ravensburg",
+    "bbox": [810, 892, 883, 952],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "Grand Pabbie – Oldest and Wisest",
+    "text_level": 4,
+    "bbox": [114, 90, 431, 108],
+    "page_idx": 12
+  },
+  {
+    "type": "image",
+    "img_path": "images/35dbb538f01184160caaedda41fee15616d509ec54d8157ada2735b553be660a.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 116, 390, 412],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Grand Pabbie - Oldest and Wisest",
+    "bbox": [112, 426, 446, 440],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Sapphire character",
+    "bbox": [112, 449, 302, 463],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Storyborn · Mentor",
+    "bbox": [112, 470, 302, 486],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "7 cost, uninkable",
+    "bbox": [112, 494, 292, 507],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "3/6/3",
+    "bbox": [112, 515, 169, 530],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "\\Ancient Insight\\ Whenever you remove 1 or more damage from one of your characters, gain 2 lore.",
+    "bbox": [112, 539, 846, 575],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Q: If I have 3 damaged characters in play, including Grand Pabbie – Oldest and Wisest, and I play a card that removes damage from all my characters, how much lore do I gain from his Ancient Insight ability?",
+    "bbox": [109, 609, 846, 666],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "A: 6 lore. Ancient Insight triggers for each character that has damage removed, even if those characters have damage removed simultaneously.",
+    "bbox": [111, 670, 843, 709],
+    "page_idx": 12
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 184, 954],
+    "page_idx": 12
+  },
+  {
+    "type": "footer",
+    "text": "Reverburgy",
+    "bbox": [808, 893, 883, 950],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Pluto - Determined Defender",
+    "text_level": 4,
+    "bbox": [114, 90, 390, 109],
+    "page_idx": 13
+  },
+  {
+    "type": "image",
+    "img_path": "images/c55cae8ab98d2759c9dbc9775082078c64d5bb756e3daf296e2357567a6f1c36.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [116, 116, 390, 414],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Pluto - Determined Defender",
+    "bbox": [112, 426, 395, 440],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Amber character",
+    "bbox": [112, 449, 272, 462],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Floodborn • Ally",
+    "bbox": [112, 470, 282, 486],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "7 cost, inkable",
+    "bbox": [114, 494, 272, 507],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "3/8/2",
+    "bbox": [114, 516, 169, 529],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Shift 5 {I} (You may pay 5 {I} to play this on top of one of your characters named Pluto.)",
+    "bbox": [112, 539, 789, 575],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+    "bbox": [112, 584, 849, 643],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "\\Guard Dog\\ At the start of your turn, remove up to 3 damage from this character.",
+    "bbox": [112, 651, 789, 688],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I choose not to remove any damage from Pluto – Determined Defender at the start of my turn?",
+    "bbox": [111, 714, 846, 750],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "A: Yes. The Guard Dog ability lets you remove up to 3 damage from Pluto, so you can choose any amount from 0 to 3.",
+    "bbox": [111, 755, 854, 790],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Q: If I play Pluto – Determined Defender using his Shift ability, can I also use his Bodyguard ability to have him enter play exerted?",
+    "bbox": [111, 805, 856, 840],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "A: Yes, you can do both.",
+    "bbox": [112, 845, 308, 861],
+    "page_idx": 13
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [112, 936, 184, 954],
+    "page_idx": 13
+  },
+  {
+    "type": "footer",
+    "text": "Ravensburger",
+    "bbox": [808, 893, 883, 952],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Ursula's Shell Necklace",
+    "text_level": 4,
+    "bbox": [114, 90, 339, 109],
+    "page_idx": 14
+  },
+  {
+    "type": "image",
+    "img_path": "images/2656919ffef8b1d7faf4b63dda4fbff00629fb73527358163f9601a4f444351c.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 116, 393, 416],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "Ursula's Shell Necklace",
+    "bbox": [112, 426, 354, 441],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "Amber item",
+    "bbox": [112, 449, 222, 462],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "3 cost, uninkable",
+    "bbox": [112, 470, 294, 484],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "\\Now, Sing! \\ Whenever you play a song, you may pay 1 {I} to draw a card.",
+    "bbox": [112, 494, 854, 508],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "Q: If I have Ursula's Shell Necklace in play and exert a cost 3 character to sing a cost 2 song, can I use the difference of 1 ink to use its Now, Sing! ability to draw a card?",
+    "bbox": [111, 534, 879, 571],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "A: No. Ink costs, including the cost to use an ability like Now, Sing!, must be paid with ink from your inkwell. Using a character with a higher cost than necessary to sing a song doesn't generate ink.",
+    "bbox": [111, 574, 877, 632],
+    "page_idx": 14
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 186, 954],
+    "page_idx": 14
+  },
+  {
+    "type": "footer",
+    "text": "Ravenburg",
+    "bbox": [808, 893, 885, 952],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "Queen of Hearts – Sensing Weakness / Jafar – Keeper of Secrets",
+    "text_level": 4,
+    "bbox": [112, 90, 709, 112],
+    "page_idx": 15
+  },
+  {
+    "type": "image",
+    "img_path": "images/9766d6084a3fbe012e28c653859fce65f45eb53b0f28627720319a8c8a92217a.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 116, 393, 415],
+    "page_idx": 15
+  },
+  {
+    "type": "image",
+    "img_path": "images/a3744dbcfe835984e7340474f8f34a993cb44cbea9bd4717a3250d0152b95003.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [467, 116, 746, 415],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Queen of Hearts - Sensing Weakness",
+    "bbox": [112, 426, 468, 441],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Ruby character",
+    "bbox": [112, 449, 263, 463],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Floodborn • Villain • Queen",
+    "bbox": [112, 470, 395, 486],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "5 cost, inkable",
+    "bbox": [114, 494, 272, 507],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "4/3/1",
+    "bbox": [114, 516, 169, 529],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Shift 2 {I} (You may pay 2 {I} to play this on top of one of your characters named Queen of Hearts.)",
+    "bbox": [112, 539, 789, 575],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "\\Let the Game Begin\\ Whenever one of your characters challenges another character, you may draw a card.",
+    "bbox": [112, 584, 846, 622],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Jafar - Keeper of Secrets",
+    "bbox": [112, 652, 374, 666],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Amethyst character",
+    "bbox": [112, 675, 303, 689],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Dreamborn · Villain · Sorcerer",
+    "bbox": [112, 696, 426, 710],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "4 cost, inkable",
+    "bbox": [114, 719, 271, 733],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "0/5/2",
+    "bbox": [114, 741, 168, 755],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "\\Hidden Wonderss\\ This character gets  \\(+1\\)  {S} for each card in your hand.",
+    "bbox": [112, 763, 844, 779],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Q: I have a Queen of Hearts – Sensing Weakness and a Jafar – Keeper of Secrets in play and 1 card in my hand. If I challenge my opponent's Flounder – Voice of Reason, how much damage does Flounder take?",
+    "bbox": [109, 804, 859, 859],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "A: 2 damage. Let the Game Begin applies as soon as a challenge is declared, so you draw a card",
+    "bbox": [111, 864, 870, 883],
+    "page_idx": 15
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 184, 954],
+    "page_idx": 15
+  },
+  {
+    "type": "footer",
+    "text": "Reverburgy",
+    "bbox": [808, 893, 883, 950],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "before the challenge itself has happened. With his Hidden Wonderss ability, Jafar then gains 2 Strength for the total of 2 cards you now have in your hand.",
+    "bbox": [112, 90, 848, 130],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "Dinner Bell",
+    "text_level": 4,
+    "bbox": [114, 141, 225, 159],
+    "page_idx": 16
+  },
+  {
+    "type": "image",
+    "img_path": "images/f3633fc24bbe3bf3e2613bd48dfefb7644ab81773da64c7fd90ea3d66c3cc818.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 166, 393, 467],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "Dinner Bell",
+    "bbox": [112, 477, 230, 491],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "Ruby item",
+    "bbox": [112, 500, 212, 515],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "4 cost, uninkable",
+    "bbox": [112, 522, 294, 536],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "\\You Know What Happens\\ {E}, 2 {I} - Draw cards equal to the damage on chosen character of yours, then banish them.",
+    "bbox": [112, 544, 839, 583],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "Q: If I use Dinner Bell's You Know What Happens ability, can I choose one of my characters that doesn't have any damage?",
+    "bbox": [109, 614, 883, 652],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "A: Yes. If you did, you wouldn't draw any cards because there's no damage on the character you chose, but you'd still banish that character. It certainly is a bold choice, but hey, you do you!",
+    "bbox": [111, 655, 877, 694],
+    "page_idx": 16
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 186, 954],
+    "page_idx": 16
+  },
+  {
+    "type": "footer",
+    "text": "Ravenburg",
+    "bbox": [808, 893, 885, 952],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "Last-Ditch Effort",
+    "text_level": 4,
+    "bbox": [114, 90, 277, 109],
+    "page_idx": 17
+  },
+  {
+    "type": "image",
+    "img_path": "images/511a1b94efbc0b499bd7b79bb1218414bbc0c8ce2e37fd173df27ac9a04dd745.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 116, 393, 416],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "Last-Ditch Effort",
+    "bbox": [112, 426, 294, 441],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "Amethyst action",
+    "bbox": [112, 449, 272, 463],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "3 cost, uninkable",
+    "bbox": [112, 470, 294, 486],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "Exert chosen opposing character. Chosen character of yours gains Challenger +2 this turn. (They get +2  \\(\\{S\\}\\)  while challenging.)",
+    "bbox": [112, 494, 777, 534],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "Q: The only character my opponent has in play has Ward. Can I still play Last-Ditch Effort and give my character Challenger +2 even though I can't choose an opposing character?",
+    "bbox": [109, 556, 870, 595],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "A: Yes. When there aren't any eligible opposing characters to choose for the first part of Last-Ditch Effort, that part of its effect simply finishes without exerting a character. However, the second part of its effect still happens, so you still choose a character of yours to get Challenger +2 until the end of the turn.",
+    "bbox": [111, 597, 854, 676],
+    "page_idx": 17
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 186, 955],
+    "page_idx": 17
+  },
+  {
+    "type": "footer",
+    "text": "Ravenburg",
+    "bbox": [808, 893, 885, 952],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "Moana – Of Motunui (new text)",
+    "text_level": 4,
+    "bbox": [114, 90, 413, 109],
+    "page_idx": 18
+  },
+  {
+    "type": "image",
+    "img_path": "images/36b47a42f198c402ad8cfae96f38fcd2a2c2e17cdd23bc6264b6ce0b73a67e72.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 116, 393, 415],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "Moana - Of Motunui",
+    "bbox": [112, 426, 303, 440],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "Amber character",
+    "bbox": [112, 449, 272, 462],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "Storyborn • Hero • Princess",
+    "bbox": [112, 470, 393, 486],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "5 cost, inkable",
+    "bbox": [112, 494, 272, 507],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "1/6/3",
+    "bbox": [114, 515, 169, 529],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "\\We Can Fix It\\ Whenever this character quests, you may ready your other exerted Princess characters. If you do, they can't quest for the rest of this turn.",
+    "bbox": [112, 539, 859, 598],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "Q: If I quest with Moana – Of Motunui and use her We Can Fix It ability, can I choose which Princess characters I ready? If I instead ready them with other effects later in the turn, can they quest that turn?",
+    "bbox": [111, 625, 859, 681],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "A: No, you can't choose only some of your Princess characters for We Can Fix It. When you use the ability, you must ready all of your Princess characters. If you don't use We Can Fix It, your other Princess characters can quest as normal and you can ready them with other abilities and effects later in the turn.",
+    "bbox": [111, 685, 874, 762],
+    "page_idx": 18
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 184, 954],
+    "page_idx": 18
+  },
+  {
+    "type": "footer",
+    "text": "Reverburgy",
+    "bbox": [808, 893, 883, 950],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "Pluto - Friendly Pooch",
+    "text_level": 4,
+    "bbox": [114, 90, 331, 111],
+    "page_idx": 19
+  },
+  {
+    "type": "image",
+    "img_path": "images/811e00d4582ae2a3197064fc9e66857466b203c231678607a0983f027677cfd1.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 116, 393, 416],
+    "page_idx": 19
+  },
+  {
+    "type": "text",
+    "text": "Pluto - Friendly Pooch",
+    "bbox": [112, 426, 346, 441],
+    "page_idx": 19
+  },
+  {
+    "type": "text",
+    "text": "Amber character",
+    "bbox": [112, 449, 272, 463],
+    "page_idx": 19
+  },
+  {
+    "type": "text",
+    "text": "Storyborn • Ally",
+    "bbox": [112, 470, 282, 487],
+    "page_idx": 19
+  },
+  {
+    "type": "text",
+    "text": "1 cost, uninkable",
+    "bbox": [112, 494, 292, 508],
+    "page_idx": 19
+  },
+  {
+    "type": "text",
+    "text": "0/2/1",
+    "bbox": [112, 515, 169, 530],
+    "page_idx": 19
+  },
+  {
+    "type": "text",
+    "text": "\\Good Dog\\ {E} - You pay 1 {I} less for the next character you play this turn.",
+    "bbox": [112, 537, 808, 575],
+    "page_idx": 19
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I use Pluto – Friendly Pooch’s Good Dog ability to reduce the ink I need to pay for the Shift cost of a character?",
+    "bbox": [109, 601, 859, 638],
+    "page_idx": 19
+  },
+  {
+    "type": "text",
+    "text": "A: Yes. The Good Dog ability reduces the amount of ink you have to pay for the character, which includes the ink needed for an alternate cost like Shift.",
+    "bbox": [109, 642, 883, 680],
+    "page_idx": 19
+  },
+  {
+    "type": "footer",
+    "text": "©Disney",
+    "bbox": [114, 936, 186, 955],
+    "page_idx": 19
+  },
+  {
+    "type": "footer",
+    "text": "Ravensburg",
+    "bbox": [810, 892, 885, 952],
+    "page_idx": 19
+  }
+]

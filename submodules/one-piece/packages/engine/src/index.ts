@@ -1,0 +1,80 @@
+import "../../cards/src/index.ts";
+
+export { applyCommand, createMatch, getLegalCommands, replayMatch } from "./core.ts";
+export { cardZoneSummary, projectStateForSeat } from "./projection.ts";
+export { commandFromDescriptor, greedyStrategy } from "./automation/bot-strategies.ts";
+export { resolveBotPromptCommand, runBotMatch } from "./automation/bot-harness.ts";
+export {
+  DEFAULT_ONE_PIECE_AUTOMATED_ACTION_STRATEGY_ID,
+  ONE_PIECE_AUTOMATED_ACTION_STRATEGIES,
+  getOnePieceAutomatedActionStrategyOption,
+  getSafeOnePieceAutomatedActionStrategyOption,
+  resolveOnePieceAutomatedActionStrategyOption,
+  type OnePieceAutomatedActionStrategyOption,
+} from "./automation/strategy-registry.ts";
+export {
+  createSt01MirrorPracticeConfig,
+  createSt01PlayerConfig,
+  ST01_LEADER_CARD_ID,
+  ST01_MAIN_DECK,
+} from "./starter-decks.ts";
+export { NORTH, OnePieceTestEngine, PLAYER_ONE, PLAYER_TWO, SOUTH } from "./testing/test-engine.ts";
+export {
+  createTestMatchState,
+  extractCardId,
+  type CardRef,
+  type FixtureCardEntry,
+  type FixtureCardState,
+  type PlayerFixture,
+  type TestMatchOptions,
+} from "./testing/test-fixtures.ts";
+
+export type {
+  ApplyCommandResult,
+  BattleState,
+  CardInstance,
+  CardZone,
+  ChoiceKind,
+  EngineActor,
+  EngineAnimation,
+  EngineAnimationData,
+  EngineCapabilityIssue,
+  EngineCommand,
+  EngineEvent,
+  GameCommand,
+  GameLogEntry,
+  JudgeCommand,
+  LegalCommandDescriptor,
+  MatchConfig,
+  MatchPhase,
+  MatchPlayerConfig,
+  MatchSeat,
+  MatchState,
+  MatchStatus,
+  ModifierState,
+  PlayerState,
+  PlayerView,
+  ProjectedCard,
+  ProjectedActionCandidate,
+  ProjectedDecision,
+  ProjectedDecisionConstraint,
+  ProjectedDecisionKind,
+  ProjectedDecisionStep,
+  ProjectedDecisionSubmitSpec,
+  ProjectedDecisionValidationSummary,
+  ProjectedEntityCandidate,
+  ProjectedEntityKind,
+  ProjectedEntityRef,
+  ProjectedLogEntry,
+  ProjectedPlayerState,
+  ProjectedPrompt,
+  PromptKind,
+  PromptOption,
+  PromptResolution,
+  PromptState,
+  ReplayResult,
+  ResolutionItem,
+  ResolutionStatus,
+  SetupState,
+  Viewer,
+} from "./types.ts";

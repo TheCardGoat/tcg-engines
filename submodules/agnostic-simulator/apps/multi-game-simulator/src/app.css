@@ -1,0 +1,75 @@
+@import "tailwindcss";
+@source "../../../packages/simulator-ui/src";
+
+:root {
+  --bg: #f6f7f2;
+  --surface: #ffffff;
+  --surface-soft: #eef1f4;
+  --surface-strong: #111827;
+  --text: #172033;
+  --muted: #5d697b;
+  --quiet: #7c8797;
+  --border: #d7dde6;
+  --border-strong: #aab4c2;
+  --game-accent: #2f6f73;
+  --game-accent-soft: #e5f3f1;
+  --shadow: 0 18px 60px rgb(17 24 39 / 8%);
+  --board-layout-bg: #ffffff;
+  --board-mat-bg: #eef1f4;
+  --board-surface: rgb(255 255 255 / 86%);
+  --board-surface-soft: #eef1f4;
+  --board-text: #172033;
+  --board-muted: #5d697b;
+  --board-border: #d7dde6;
+  --board-border-strong: #aab4c2;
+  --board-label-bg: #111827;
+  --board-player-label-bg: #111827;
+  --board-opponent-label-bg: #111827;
+  --board-shared-label-bg: var(--game-accent);
+  --board-label-text: #f7fafc;
+  --card-bg: #fffefa;
+  --card-border: #aab4c2;
+  --card-art-a: var(--game-accent);
+  --card-art-b: #ffffff;
+  --card-art-c: var(--surface-strong);
+  --pill-bg: #eef1f4;
+  --pill-text: #5d697b;
+  --pill-border: #d7dde6;
+  --font-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  font-family: var(--font-sans);
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--bg);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+#app {
+  min-height: 100svh;
+}

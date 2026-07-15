@@ -1,0 +1,61 @@
+name: e2e
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: voidzero-dev/setup-vp@v1
+        with:
+          cache: true
+
+      - name: Install dependencies
+        run: vp install
+
+      - name: Build workspace libraries
+        run: |
+          cd packages/types && vp pack && cd ../..
+          cd packages/utils && vp pack && cd ../..
+          cd packages/cards && vp pack && cd ../..
+          cd packages/engine && vp pack && cd ../..
+          cd tools/scraper && vp pack && cd ../..
+          cd tools/parser && vp pack && cd ../..
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Install Playwright browsers
+        working-directory: apps/simulator
+        run: vp exec playwright install --with-deps chromium
+
+      - name: Run Playwright e2e
+        working-directory: apps/simulator
+        run: vp run e2e
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/simulator/playwright-report
+          retention-days: 14
+          if-no-files-found: ignore
+
+      - name: Upload Playwright test-results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: apps/simulator/test-results
+          retention-days: 14
+          if-no-files-found: ignore

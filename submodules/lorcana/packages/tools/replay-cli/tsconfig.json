@@ -1,0 +1,16 @@
+{
+  "include": ["src/**/*", "__tests__/**/*"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "types": ["bun"]
+  }
+}

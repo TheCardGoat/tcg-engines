@@ -1,0 +1,57 @@
+import type { ActionCard } from "@tcg/lorcana-types";
+import { worldsGreatestCriminalMindI18n } from "./030-worlds-greatest-criminal-mind.i18n";
+
+export const worldsGreatestCriminalMind: ActionCard = {
+  id: "l5v",
+  canonicalId: "ci_NsP",
+  slug: "lorcana-ci_NsP",
+  printings: [
+    {
+      id: "set9-030",
+      artId: "set9-030",
+      setCode: "set9",
+      collectorNumber: "30",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set2-031", "set9-030"],
+  cardType: "action",
+  name: "World's Greatest Criminal Mind",
+  inkType: ["amber"],
+  franchise: "Great Mouse Detective",
+  set: "009",
+  cardNumber: 30,
+  rarity: "uncommon",
+  cost: 3,
+  inkable: true,
+  externalIds: {
+    lorcast: "crd_772b7e1de7024e47bdbe47e672f35d2f",
+    tcgPlayer: "649977",
+  },
+  text: "Banish chosen character with 5 {S} or more.",
+  actionSubtype: "song",
+  abilities: [
+    {
+      type: "action",
+      effect: {
+        type: "banish",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+          filter: [
+            {
+              type: "strength-comparison",
+              comparison: "greater-or-equal",
+              value: 5,
+            },
+          ],
+        },
+      },
+    },
+  ],
+  i18n: worldsGreatestCriminalMindI18n,
+};

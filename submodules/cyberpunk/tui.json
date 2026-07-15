@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "theme": "system",
+  "keybinds": {
+    "leader": "ctrl+x",
+    "session_compact": "<leader>c",
+    "session_child_cycle": "ctrl+right",
+    "session_child_cycle_reverse": "ctrl+left"
+  },
+  "scroll_speed": 3
+}

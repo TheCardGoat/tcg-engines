@@ -1,0 +1,233 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0;
+  font-family: "Share Tech Mono", monospace;
+  color: #fff;
+  font-size: 11px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.count {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.clear {
+  appearance: none;
+  border: 1px solid rgb(120 200 255 / 35%);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.clear:hover:not(:disabled) {
+  background: rgb(120 200 255 / 8%);
+  border-color: rgb(120 200 255 / 60%);
+}
+
+.clear:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.copyStatus {
+  margin-top: -2px;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: rgb(120 200 255 / 72%);
+}
+
+.scroll {
+  min-height: 104px;
+  max-height: 196px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 4px;
+  border: 1px solid rgb(120 200 255 / 14%);
+  background: rgb(120 200 255 / 2%);
+  border-radius: 2px;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background: rgb(120 200 255 / 25%);
+  border-radius: 3px;
+}
+
+.empty {
+  margin: auto;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.45;
+}
+
+.row {
+  position: relative;
+  border: 1px solid rgb(120 200 255 / 10%);
+  background: rgb(4 9 17 / 52%);
+  border-radius: 2px;
+}
+
+.scroll > .row + .rowGrouped {
+  margin-top: -4px;
+  border-top-color: rgb(120 200 255 / 4%);
+}
+
+.row[open] {
+  border-color: rgb(120 200 255 / 24%);
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: minmax(72px, max-content) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 7px;
+  padding: 4px 6px 4px 34px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary:hover {
+  background: rgb(120 200 255 / 6%);
+}
+
+.side {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 2px 5px;
+  border: 1px solid currentcolor;
+  border-radius: 2px;
+}
+
+.rowGrouped .side {
+  visibility: hidden;
+}
+
+.sidePlayer {
+  color: #5cf6ff;
+}
+
+.sideOpponent {
+  color: #ff4dd2;
+}
+
+.sideSystem {
+  color: #f5e642;
+  opacity: 0.72;
+}
+
+.type {
+  color: #fff;
+  overflow-wrap: anywhere;
+}
+
+.brief {
+  min-width: 0;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.raw {
+  margin: 0;
+  background: rgb(0 0 0 / 42%);
+  color: #fff;
+  overflow: auto;
+  max-height: 180px;
+  padding: 6px 8px;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  line-height: 1.35;
+  white-space: pre;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid rgb(120 200 255 / 12%);
+  padding: 7px 8px 8px;
+}
+
+.traceSection {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.traceSection h4 {
+  margin: 0;
+  color: rgb(120 200 255 / 72%);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.detailEmpty {
+  color: rgb(255 255 255 / 48%);
+  font-size: 10px;
+}
+
+.eventList {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.eventList li {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.eventType {
+  color: #fff;
+  font-size: 10px;
+}
+
+.eventBrief {
+  color: rgb(255 255 255 / 68%);
+  overflow-wrap: anywhere;
+}
