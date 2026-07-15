@@ -49,6 +49,7 @@ export const gd04Gundam069: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["onUnitEffectCostPaid"],
+        restrictions: [{ type: "oncePerTurn" }],
         conditions: [
           { type: "duringLink" },
           {
@@ -73,20 +74,38 @@ export const gd04Gundam069: UnitCard = {
       directives: [
         {
           action: {
-            action: "setActive",
-            target: {
-              owner: "friendly",
-              cardType: "unit",
-              state: "rested",
-              count: 1,
-              excludeSource: true,
-              attributeFilters: [
+            action: "createDelayedTrigger",
+            duration: "thisTurn",
+            eventType: "turnEnded",
+            eventCardFilter: { owner: "self", cardType: "unit" },
+            effect: {
+              type: "triggered",
+              activation: {
+                timing: ["endOfTurn"],
+                conditions: [{ type: "duringLink" }],
+              },
+              directives: [
                 {
-                  attribute: "trait",
-                  comparison: "includes",
-                  value: "militia",
+                  action: {
+                    action: "setActive",
+                    target: {
+                      owner: "friendly",
+                      cardType: "unit",
+                      state: "rested",
+                      count: 1,
+                      attributeFilters: [
+                        {
+                          attribute: "trait",
+                          comparison: "includes",
+                          value: "militia",
+                        },
+                      ],
+                    },
+                  },
                 },
               ],
+              sourceText:
+                "At the end of the turn, choose 1 of your (Militia) Units. Set it as active.",
             },
           },
         },

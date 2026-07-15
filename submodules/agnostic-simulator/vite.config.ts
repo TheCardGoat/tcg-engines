@@ -11,5 +11,15 @@ export default defineConfig({
   },
   run: {
     cache: true,
+    tasks: {
+      "ci:check": {
+        command: "pnpm run check && vp run -r test",
+        cache: false,
+      },
+      "ci:full": {
+        command: "vp run ci:check && vp run -r build",
+        cache: false,
+      },
+    },
   },
 });

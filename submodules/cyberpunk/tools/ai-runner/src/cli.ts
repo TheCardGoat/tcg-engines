@@ -1,12 +1,14 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import {
+  attackRivalOnlyStrategy,
   createMonteCarloStrategy,
-  defaultStrategy,
   firstLegalStrategy,
+  getSafeAutomatedActionStrategyOption,
   greedyStrategy,
   randomStrategy,
   runAutoMatch,
+  tacticalStrategy,
   type AIStrategy,
   type DeckList,
 } from "@tcg/cyberpunk-engine";
@@ -32,10 +34,12 @@ import { buildRecording, loadRecording, replayRecording, saveRecording } from ".
 import { trainGreedy } from "./train.ts";
 
 const SAVEABLE_STRATEGIES: Record<string, AIStrategy> = {
-  default: defaultStrategy,
+  default: getSafeAutomatedActionStrategyOption().strategy,
+  "attack-rival-only": attackRivalOnlyStrategy,
   "first-legal": firstLegalStrategy,
   random: randomStrategy,
   greedy: greedyStrategy,
+  tactical: tacticalStrategy,
 };
 
 function saveableStrategy(name: string, parsed: ParsedArgs): AIStrategy | undefined {
@@ -551,6 +555,7 @@ async function main() {
     if (
       summary.totalIllegal > 0 ||
       summary.reasonCounts.stuck > 0 ||
+      summary.reasonCounts.repeatedState > 0 ||
       (parsed.failOnMaxSteps && summary.reasonCounts.maxSteps > 0)
     )
       process.exit(2);
@@ -601,6 +606,7 @@ async function main() {
   if (
     summary.illegalCount > 0 ||
     summary.reasonCounts.stuck > 0 ||
+    summary.reasonCounts.repeatedState > 0 ||
     (parsed.failOnMaxSteps && summary.reasonCounts.maxSteps > 0)
   )
     process.exit(2);

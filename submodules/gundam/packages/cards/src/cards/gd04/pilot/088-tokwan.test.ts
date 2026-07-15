@@ -6,19 +6,34 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd04Tokwan088 } from "./088-tokwan.ts";
 
 describe("Tokwan (GD04-088)", () => {
-  it("【Burst】adds this card to hand", () => {
-    const engine = GundamTestEngine.create({ deck: [gd04Tokwan088] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
+  it("【Burst】adds this card to hand when its controller accepts the revealed Shield prompt", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1 });
+    const engine = GundamTestEngine.create(
+      { shieldArea: [gd04Tokwan088] },
+      { play: [attacker] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    expect(engine.asPlayer(PLAYER_ONE).getHand()).toContain(shieldId);
+    expect(p1.getHand()).toContain(shieldId);
   });
 
   it("when blocked by an enemy Lv.4 or lower Unit, this Unit cannot receive battle damage this battle", () => {

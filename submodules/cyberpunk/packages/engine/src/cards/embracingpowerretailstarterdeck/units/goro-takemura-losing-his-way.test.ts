@@ -15,7 +15,7 @@ describe("Goro Takemura - Losing His Way", () => {
           {
             card: embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         legendArea: [{ card: boxTopperRetailVCorporateExile, faceDown: false }],
@@ -50,7 +50,7 @@ describe("Goro Takemura - Losing His Way", () => {
           {
             card: embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         legendArea: [{ card: boxTopperRetailVCorporateExile, faceDown: true }],

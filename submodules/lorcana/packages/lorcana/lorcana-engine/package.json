@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "@logtape/logtape": "^2.0.4",
+    "@tcg/bot-core": "link:../../../../agnostic-simulator/packages/bot-core",
     "@tcg/lorcana-types": "workspace:*",
     "mutative": "^1.1.0",
     "nanoid": "^5.0.0",
@@ -66,10 +67,12 @@
   "devDependencies": {
     "@inlang/paraglide-js": "^2.10.0",
     "@types/bun": "1.3.4",
+    "@types/node": "catalog:",
     "@types/seedrandom": "^3.0.8",
-    "typescript": "5.9.3"
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:"
   },
   "peerDependencies": {
-    "typescript": "5.9.3"
+    "typescript": "^6.0.0 || ^7.0.0"
   }
 }

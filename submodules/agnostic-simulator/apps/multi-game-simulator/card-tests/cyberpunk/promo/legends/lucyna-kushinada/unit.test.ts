@@ -7,49 +7,46 @@ import {
   expectNoPendingChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 
+// Lucyna Kushinada is a promo Legend with no card-specific abilities. Her tests
+// exercise the core Legend rules (Call, flip, Eddie spend) through the engine.
 const lucyna = promoLucynaKushinada;
 
 describe("Lucyna Kushinada", () => {
-  describe("UI prompt", () => {
-    it("shows the legend as callable when face-down", () => {
-      const engine = CyberpunkTestEngine.createWithFixture({
-        legendArea: [{ card: lucyna, faceDown: true }],
-        eddies: 2,
-      });
-      expectCallableLegend(engine, lucyna);
+  it("appears as callable while face-down", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      legendArea: [{ card: lucyna, faceDown: true }],
+      eddies: 2,
     });
-
-    it("does NOT create a pending choice after calling", () => {
-      const engine = CyberpunkTestEngine.createWithFixture({
-        legendArea: [lucyna],
-        eddies: 2,
-      });
-      engine.callLegend(lucyna);
-      expectNoPendingChoice(engine);
-    });
+    expectCallableLegend(engine, lucyna);
   });
 
-  describe("No card-specific abilities", () => {
-    it("can be called as a standard face-down Legend without creating a pending ability", () => {
-      const engine = CyberpunkTestEngine.createWithFixture({
-        legendArea: [lucyna],
-        eddies: 2,
-      });
-
-      engine.callLegend(lucyna);
-
-      const calledLucyna = engine.getCard(lucyna, "legendArea", P1);
-      expect(calledLucyna.meta.faceDown).toBe(false);
-      expect(calledLucyna.meta.spent).toBe(false);
-      expect(engine.getEddies(P1)).toBe(1);
-      expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
+  it("flips face-up and costs 1 Eddie when Called, creating no ability prompt", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      legendArea: [lucyna],
+      eddies: 2,
     });
 
-    it("declares no card-specific timing triggers, keywords, or abilities", () => {
-      expect("rulesText" in lucyna).toBe(false);
-      expect(lucyna.timingTriggers).toEqual([]);
-      expect(lucyna.keywords).toEqual([]);
-      expect(lucyna.abilities).toEqual([]);
+    engine.callLegend(lucyna);
+
+    const calledLucyna = engine.getCard(lucyna, "legendArea", P1);
+    // Calling flips the Legend face-up and spends exactly 1 Eddie.
+    expect(calledLucyna.meta.faceDown).toBe(false);
+    expect(calledLucyna.meta.spent).toBe(false);
+    expect(engine.getEddies(P1)).toBe(1);
+    // No card-specific ability → no pending choice after the Call.
+    expectNoPendingChoice(engine);
+  });
+
+  it("can be spent as 1 €$ (Eddie currency) like any Legend", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      legendArea: [{ card: lucyna, faceDown: false }],
+      eddies: 0,
     });
+
+    // A Legend can be spent to act as 1 Eddie when paying a cost. Spending
+    // turns the Legend sideways — it is now a spent Eddie source.
+    expect(engine.getCard(lucyna, "legendArea", P1).meta.spent).toBe(false);
+    engine.judgeSpendCard(lucyna, { as: P1 });
+    expect(engine.getCard(lucyna, "legendArea", P1).meta.spent).toBe(true);
   });
 });

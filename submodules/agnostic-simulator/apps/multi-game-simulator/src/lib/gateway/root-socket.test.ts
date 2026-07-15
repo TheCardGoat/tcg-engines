@@ -49,22 +49,56 @@ interface FakeSocket {
   disconnect: ReturnType<typeof vi.fn>;
   removeAllListeners: ReturnType<typeof vi.fn>;
   io: { on: ReturnType<typeof vi.fn>; off: ReturnType<typeof vi.fn> };
+  __emit(event: string, ...args: unknown[]): void;
 }
 
 function makeFakeSocket(): FakeSocket {
-  return {
+  const listeners = new Map<string, Set<(...args: unknown[]) => void>>();
+  const managerListeners = new Map<string, Set<(...args: unknown[]) => void>>();
+
+  const add = (
+    map: Map<string, Set<(...args: unknown[]) => void>>,
+    event: string,
+    h: (...args: unknown[]) => void,
+  ): void => {
+    let set = map.get(event);
+    if (!set) {
+      set = new Set();
+      map.set(event, set);
+    }
+    set.add(h);
+  };
+
+  const socket: FakeSocket = {
     connected: false,
     id: "conn_1",
-    on: vi.fn(),
-    off: vi.fn(),
+    on: vi.fn((event: string, h: (...args: unknown[]) => void) => add(listeners, event, h)),
+    off: vi.fn((event: string, h: (...args: unknown[]) => void) => {
+      listeners.get(event)?.delete(h);
+    }),
     onAny: vi.fn(),
     offAny: vi.fn(),
     emit: vi.fn(),
     connect: vi.fn(),
-    disconnect: vi.fn(),
+    disconnect: vi.fn(() => {
+      socket.connected = false;
+    }),
     removeAllListeners: vi.fn(),
-    io: { on: vi.fn(), off: vi.fn() },
-  };
+    io: {
+      on: vi.fn((event: string, h: (...args: unknown[]) => void) =>
+        add(managerListeners, event, h),
+      ),
+      off: vi.fn((event: string, h: (...args: unknown[]) => void) => {
+        managerListeners.get(event)?.delete(h);
+      }),
+    },
+    __emit(event: string, ...args: unknown[]): void {
+      if (event === "connect") socket.connected = true;
+      if (event === "disconnect") socket.connected = false;
+      for (const h of listeners.get(event) ?? []) h(...args);
+    },
+  } satisfies FakeSocket;
+  return socket;
 }
 
 type RootSocketModule = typeof import("./root-socket");
@@ -72,10 +106,10 @@ type ManagerModule = typeof import("./gateway-manager");
 
 let fakes: FakeSocket[];
 let initRootSocket: RootSocketModule["initRootSocket"];
+let acquireRootGatewayHandle: RootSocketModule["acquireRootGatewayHandle"];
 let destroyRootSocket: RootSocketModule["destroyRootSocket"];
 let getRootSocketHandleForTests: RootSocketModule["getRootSocketHandleForTests"];
 let getRootSocketControllerForTests: RootSocketModule["getRootSocketControllerForTests"];
-let getGatewayManager: ManagerModule["getGatewayManager"];
 let resetGatewayManagerForTests: ManagerModule["resetGatewayManagerForTests"];
 
 function lastFake(): FakeSocket {
@@ -121,10 +155,10 @@ beforeEach(async () => {
   const rootMod = await import("./root-socket");
   const mgrMod = await import("./gateway-manager");
   initRootSocket = rootMod.initRootSocket;
+  acquireRootGatewayHandle = rootMod.acquireRootGatewayHandle;
   destroyRootSocket = rootMod.destroyRootSocket;
   getRootSocketHandleForTests = rootMod.getRootSocketHandleForTests;
   getRootSocketControllerForTests = rootMod.getRootSocketControllerForTests;
-  getGatewayManager = mgrMod.getGatewayManager;
   resetGatewayManagerForTests = mgrMod.resetGatewayManagerForTests;
   resetGatewayManagerForTests();
 });
@@ -172,6 +206,41 @@ describe("initRootSocket (shared manager)", () => {
     expect(invokeAuth()).toMatchObject({ ticket: "t2", token: "j2" });
   });
 
+  it("forces a fresh handshake when same-slug SSR credentials arrive on an anonymous socket", () => {
+    const session = makeSession("s");
+    initRootSocket({ session: null, gameSlug: "cyberpunk" });
+    const fake = lastFake();
+    fake.__emit("connect");
+    fake.__emit("welcome", { authenticated: false, connectionId: "anon_conn" });
+    fake.disconnect.mockClear();
+    fake.connect.mockClear();
+
+    initRootSocket({ session, gameSlug: "cyberpunk", ticket: "t2", authToken: "j2" });
+
+    expect(ioMock).toHaveBeenCalledTimes(1);
+    expect(fake.disconnect).toHaveBeenCalledTimes(1);
+    expect(fake.connect).toHaveBeenCalledTimes(1);
+    expect(invokeAuth()).toEqual({ ticket: "t2", token: "j2", requireAuth: true });
+  });
+
+  it("retries a same-slug required-auth socket when missing credentials arrive later", async () => {
+    ticketMock.mockRejectedValue(new Error("session missing"));
+    initRootSocket({ session: null, gameSlug: "cyberpunk", requireAuth: true });
+    const fake = lastFake();
+    expect(fake.connect).not.toHaveBeenCalled();
+
+    initRootSocket({
+      session: makeSession("sess1"),
+      gameSlug: "cyberpunk",
+      authToken: "jwt1",
+      requireAuth: true,
+    });
+
+    expect(ioMock).toHaveBeenCalledTimes(1);
+    expect(fake.connect).toHaveBeenCalledTimes(1);
+    await Promise.resolve();
+  });
+
   it("installs a stable credentials controller per slug whose refresh() fetches a fresh ticket snapshot", async () => {
     ticketMock.mockResolvedValue({ ticket: "refreshed_ticket", authToken: "refreshed_jwt" });
     initRootSocket({
@@ -214,6 +283,76 @@ describe("initRootSocket (shared manager)", () => {
     });
   });
 
+  it("forwards live match identity hints when refreshing credentials", async () => {
+    ticketMock.mockResolvedValue({ ticket: "refreshed_ticket", authToken: "refreshed_jwt" });
+    initRootSocket({
+      session: makeSession("sess1"),
+      gameSlug: "cyberpunk",
+      ticket: "t1",
+      authToken: "j1",
+      requireAuth: true,
+      matchId: "match_1",
+      playerId: "player_1",
+    });
+
+    await getRootSocketControllerForTests()!.refresh();
+
+    expect(ticketMock).toHaveBeenCalledWith({
+      apiBaseUrl: expect.any(String),
+      matchId: "match_1",
+      playerId: "player_1",
+    });
+  });
+
+  it("does not reconnect an authenticated socket when only refresh hints change", () => {
+    const session = makeSession("sess1");
+    initRootSocket({
+      session,
+      gameSlug: "cyberpunk",
+      ticket: "t1",
+      authToken: "j1",
+      requireAuth: true,
+      matchId: "match_1",
+      playerId: "player_1",
+    });
+    const fake = lastFake();
+    fake.__emit("connect");
+    fake.__emit("welcome", {
+      authenticated: true,
+      authenticationMethod: "jwt",
+      connectionId: "auth_conn",
+    });
+    fake.connect.mockClear();
+    fake.disconnect.mockClear();
+
+    initRootSocket({
+      session,
+      gameSlug: "cyberpunk",
+      ticket: "t1",
+      authToken: "j1",
+      requireAuth: true,
+      matchId: "match_2",
+      playerId: "player_2",
+    });
+
+    expect(fake.disconnect).not.toHaveBeenCalled();
+    expect(fake.connect).not.toHaveBeenCalled();
+  });
+
+  it("fails closed instead of refreshing unsupported protocol slugs through another game", async () => {
+    ticketMock.mockResolvedValue({ ticket: "should_not_be_used", authToken: "should_not_be_used" });
+    initRootSocket({
+      session: makeSession("sess1"),
+      gameSlug: "riftbound",
+      requireAuth: true,
+    });
+
+    await expect(getRootSocketControllerForTests()!.refresh()).rejects.toThrow(
+      /not supported for riftbound/i,
+    );
+    expect(ticketMock).not.toHaveBeenCalled();
+  });
+
   it("keeps exactly ONE socket when a second consumer acquires the same slug (LiveMatch)", () => {
     initRootSocket({
       session: makeSession("s"),
@@ -224,7 +363,7 @@ describe("initRootSocket (shared manager)", () => {
     expect(ioMock).toHaveBeenCalledTimes(1);
 
     // LiveMatch acquires the SAME namespace from the shared manager.
-    const liveHandle = getGatewayManager().acquire("cyberpunk");
+    const liveHandle = acquireRootGatewayHandle("cyberpunk");
 
     // No second Socket.IO socket is created.
     expect(ioMock).toHaveBeenCalledTimes(1);
@@ -233,6 +372,52 @@ describe("initRootSocket (shared manager)", () => {
     liveHandle.release();
     // Releasing the LiveMatch handle does not tear down the root's socket.
     expect(lastFake().disconnect).not.toHaveBeenCalled();
+  });
+
+  it("lets LiveMatch acquire first and then installs the root credentials controller", () => {
+    const liveHandle = acquireRootGatewayHandle("cyberpunk");
+    expect(ioMock).toHaveBeenCalledTimes(1);
+
+    initRootSocket({
+      session: makeSession("s"),
+      gameSlug: "cyberpunk",
+      ticket: "t1",
+      authToken: "j1",
+    });
+
+    expect(ioMock).toHaveBeenCalledTimes(1);
+    expect(getRootSocketControllerForTests()?.get()).toEqual({
+      ticket: "t1",
+      token: "j1",
+      requireAuth: true,
+    });
+    expect(invokeAuth()).toEqual({ ticket: "t1", token: "j1", requireAuth: true });
+
+    liveHandle.release();
+  });
+
+  it("same-slug SSR credentials force a fresh handshake when the socket is anonymous", () => {
+    initRootSocket({ session: null, gameSlug: "cyberpunk" });
+    const fake = lastFake();
+    fake.__emit("connect");
+    fake.__emit("welcome", {
+      authenticated: false,
+      authenticationMethod: "anonymous",
+      connectionId: "anon-1",
+    });
+
+    fake.connect.mockClear();
+    fake.disconnect.mockClear();
+    initRootSocket({
+      session: makeSession("s"),
+      gameSlug: "cyberpunk",
+      ticket: "t1",
+      authToken: "j1",
+    });
+
+    expect(fake.disconnect).toHaveBeenCalledTimes(1);
+    expect(fake.connect).toHaveBeenCalledTimes(1);
+    expect(invokeAuth()).toEqual({ ticket: "t1", token: "j1", requireAuth: true });
   });
 
   it("tears down on a null slug", () => {
@@ -278,5 +463,13 @@ describe("initRootSocket (shared manager)", () => {
   it("omits requireAuth and credentials for an anonymous root", () => {
     initRootSocket({ session: null, gameSlug: "cyberpunk" });
     expect(invokeAuth()).toEqual({});
+  });
+
+  it("keeps required-auth live-player routes from connecting anonymously when credentials are missing", () => {
+    ticketMock.mockRejectedValue(new Error("session missing"));
+    initRootSocket({ session: null, gameSlug: "cyberpunk", requireAuth: true });
+
+    expect(getRootSocketControllerForTests()?.get()).toEqual({ requireAuth: true });
+    expect(lastFake().connect).not.toHaveBeenCalled();
   });
 });

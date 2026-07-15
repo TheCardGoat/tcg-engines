@@ -67,8 +67,12 @@ export const gd03JamilNeate096: PilotCard = {
       directives: [
         {
           action: {
-            action: "discard",
-            count: 1,
+            action: "discardChosen",
+            target: {
+              owner: "friendly",
+              zone: "hand",
+              count: 1,
+            },
           },
           optional: true,
         },

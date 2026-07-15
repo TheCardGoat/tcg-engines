@@ -7,7 +7,6 @@ import {
   createMockPilot,
   createMockUnit,
   expectSuccess,
-  getEffectiveStats,
 } from "@tcg/gundam-engine";
 import { gd04VictoryGundamHexa007 } from "./007-victory-gundam-hexa.ts";
 
@@ -37,11 +36,13 @@ describe("Victory Gundam Hexa (GD04-007)", () => {
     expectSuccess(p1.enterBattle(hexaId!, defenderId!));
 
     const partsId = p1.getCardsInZone("battleArea").at(-1)!;
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    expect(framework.cards.getDefinition(partsId)?.name).toBe("Parts");
-    expect(
-      getEffectiveStats(partsId, engine.getG(), framework.cards, framework).restrictions,
-    ).toContain("cannot-target-player");
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(partsId).not.toBe(hexaId);
+    expect(p1.getVisibleCard(partsId)?.restrictions).toContain("cannot-target-player");
+    expect(p1.getLegalAttackTargets(partsId)).not.toContain("direct");
   });
 
   it("does not deploy the Parts token when unpaired", () => {

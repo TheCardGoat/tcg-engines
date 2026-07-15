@@ -5,11 +5,10 @@ import {
   PLAYER_TWO,
   expectSuccess,
   activeResources,
+  createMockPilot,
   seedBaseAsShield,
   seedShieldsFromDeck,
   createMockUnit,
-  markAsLinkUnit,
-  expectCardInTrash,
 } from "@tcg/gundam-engine";
 import { gd02Hammerhead128 } from "./128-hammerhead.ts";
 
@@ -31,24 +30,37 @@ describe("Hammerhead (GD02-128)", () => {
   });
 
   it("【Deploy】 destroys an enemy Unit with AP ≤ 2 when friendly (Teiwaz) Link Unit is in play during your turn", () => {
-    const teiwazUnit = createMockUnit({ ap: 3, hp: 3, traits: ["teiwaz"] });
+    const teiwazUnit = createMockUnit({
+      ap: 3,
+      hp: 3,
+      traits: ["teiwaz"],
+      linkCondition: "[Teiwaz Pilot]",
+    });
+    const teiwazPilot = createMockPilot({ name: "Teiwaz Pilot", level: 1, cost: 1 });
     const enemyWeak = createMockUnit({ ap: 2, hp: 3 });
     const engine = GundamTestEngine.create(
-      { hand: [gd02Hammerhead128], play: [teiwazUnit], resourceArea: activeResources(6), deck: 6 },
+      {
+        hand: [gd02Hammerhead128, teiwazPilot],
+        play: [teiwazUnit],
+        shieldArea: [createMockUnit({ name: "Returned Shield" })],
+        resourceArea: activeResources(6),
+      },
       { play: [enemyWeak] },
     );
-    seedShieldsFromDeck(engine, PLAYER_ONE, 2);
     const p1 = engine.asPlayer(PLAYER_ONE);
     const [teiwazId] = p1.getCardsInZone("battleArea");
     const p2 = engine.asPlayer(PLAYER_TWO);
     const [enemyId] = p2.getCardsInZone("battleArea");
 
-    // Mark the friendly unit as a Link Unit with teiwaz trait
-    markAsLinkUnit(engine, teiwazId!);
+    expectSuccess(p1.assignPilot(teiwazPilot, teiwazId!));
+    expectSuccess(p1.deployBase(gd02Hammerhead128));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([enemyId]),
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId!] }));
 
-    expectSuccess(p1.deployBase(gd02Hammerhead128, { targets: [enemyId!] }));
-
-    expectCardInTrash(engine, enemyId!, p2.playerId);
+    expect(p2.getCardZone(enemyId!)).toBe(`trash:${PLAYER_TWO}`);
   });
 
   it("【Burst】 Deploy this card — flips Hammerhead into baseSection on shield destruction", () => {

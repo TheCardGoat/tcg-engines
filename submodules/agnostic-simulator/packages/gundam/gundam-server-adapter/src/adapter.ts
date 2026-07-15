@@ -3,6 +3,7 @@ import { getGundamCanonicalForCardId } from "@tcg/gundam-cards";
 import {
   GUNDAM_MAIN_DECK_SIZE,
   GUNDAM_MAX_COPIES_PER_CARD,
+  GUNDAM_MAX_DECK_COLORS,
   GUNDAM_RESOURCE_DECK_SIZE,
   isDeckListToken,
 } from "@tcg/gundam-engine";
@@ -127,6 +128,7 @@ export const gundamServerAdapter: GameAdapter = {
 function validateStandardDeck(deck: ReadonlyArray<DeckCard>): DeckFormatResult["rules"] {
   const rules: DeckFormatResult["rules"] = [];
   const nonResourceCounts = new Map<string, number>();
+  const mainDeckColors = new Set<string>();
   const unknownEntries: DeckCard[] = [];
   const malformedEntries = deck.filter(
     (entry) => !Number.isInteger(entry.quantity) || entry.quantity <= 0,
@@ -155,6 +157,7 @@ function validateStandardDeck(deck: ReadonlyArray<DeckCard>): DeckFormatResult["
     }
 
     nonResourceEntries.push(entry);
+    if (card.color) mainDeckColors.add(card.color);
     nonResourceCounts.set(
       card.cardNumber,
       (nonResourceCounts.get(card.cardNumber) ?? 0) + entry.quantity,
@@ -206,6 +209,15 @@ function validateStandardDeck(deck: ReadonlyArray<DeckCard>): DeckFormatResult["
     passed: resourceCount === GUNDAM_RESOURCE_DECK_SIZE,
     message: `Resource deck has ${resourceCount}/${GUNDAM_RESOURCE_DECK_SIZE} resource cards`,
     details: { count: resourceCount, expected: GUNDAM_RESOURCE_DECK_SIZE },
+  });
+  rules.push({
+    kind: "deck-colors",
+    passed: mainDeckColors.size >= 1 && mainDeckColors.size <= GUNDAM_MAX_DECK_COLORS,
+    message:
+      mainDeckColors.size >= 1 && mainDeckColors.size <= GUNDAM_MAX_DECK_COLORS
+        ? `Main deck uses ${mainDeckColors.size} color${mainDeckColors.size === 1 ? "" : "s"}`
+        : `Main deck must use one or two colors (found ${mainDeckColors.size})`,
+    details: { colors: [...mainDeckColors].sort() },
   });
 
   const overCopyLimit = [...nonResourceCounts].filter(

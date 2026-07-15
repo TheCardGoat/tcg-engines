@@ -10,7 +10,13 @@
 
 import { describe, it, expect } from "vite-plus/test";
 import type { CardEffect, UnitCard } from "@tcg/gundam-types";
-import { GundamTestEngine, PLAYER_ONE, PLAYER_TWO, createMockUnit } from "../../../../index.ts";
+import {
+  GundamTestEngine,
+  PLAYER_ONE,
+  PLAYER_TWO,
+  createMockUnit,
+  expectSuccess,
+} from "../../../../index.ts";
 
 const probeUnit: UnitCard = {
   cardNumber: "TEST-PROBE-01",
@@ -93,5 +99,28 @@ describe("onDestroyByBattle (attackerDestroyedDefender event)", () => {
     engine.resolveCombat({ attackerId, target: "direct" });
 
     expect(engine.getG().damage[witnessId] ?? 0).toBe(0);
+  });
+
+  it("fires when the attacker and defender destroy each other simultaneously", () => {
+    const mutualAttacker = { ...probeUnit, hp: 1 };
+    const fragile = createMockUnit({ ap: 1, hp: 1 });
+    const witness = createMockUnit({ ap: 1, hp: 5 });
+    const engine = GundamTestEngine.create(
+      { play: [mutualAttacker] },
+      { play: [{ card: fragile, exhausted: true }, witness] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const [defenderId, witnessId] = p2.getCardsInZone("battleArea");
+
+    expectSuccess(p1.enterBattle(attackerId, defenderId!));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p1.getCardZone(attackerId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p2.getCardZone(defenderId!)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getDamage(witnessId!)).toBe(1);
   });
 });

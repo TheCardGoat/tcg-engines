@@ -1,90 +1,49 @@
 # Cyberpunk TCG Submodule
 
-Production entry points:
+Production surfaces:
 
 - Platform pages: `https://tcg.online/cyberpunk/*`
 - Mounted simulator: `https://tcg.online/cyberpunk/simulator`
 
-Always load the `cyberpunk-tcg-rules` skill at
-`.agents/skills/cyberpunk-tcg-rules/SKILL.md` before changing gameplay logic,
-card text, simulator prompts, rules-facing UI copy, tests, AI, or balance.
-Treat `https://cyberpunktcg.com/gameplay-guide` as the current alpha rules
-source unless the repo documents an intentional divergence.
+Load `.agents/skills/cyberpunk-tcg-rules/SKILL.md` before changing gameplay,
+card text, prompts, rules-facing UI or tests, AI, or balance. Treat the rules
+source selected by that skill as authoritative unless the repository documents
+an intentional divergence.
 
-Platform runtime or shared simulator exposure should map Cyberpunk concepts
-through `../agnostic-simulator` contracts/adapters. Keep Cyberpunk rules, cards,
-engine semantics, and glossary-native wording inside this submodule.
+Keep Cyberpunk rules, cards, engine semantics, and native wording here. Expose
+runtime and browser behavior through `../agnostic-simulator` adapters and
+contracts.
 
 ## Where To Look
 
-- `packages/engine/src` - rules engine, moves, prompts, targeting, automation,
-  and deterministic gameplay behavior.
-- `packages/cards/src` - card definitions and generated/exported card data.
-- `packages/types/src` - shared Cyberpunk card/game types.
-- `packages/server-adapter/src` - adapter used by platform `game-server` and
-  `general-api`.
+- `packages/engine/src` - moves, prompts, targeting, automation, and gameplay.
+- `packages/cards/src` - card definitions and generated exports.
+- `packages/types/src` - Cyberpunk card and game types.
+- `packages/server-adapter/src` - legacy/local adapter code; confirm the active
+  platform adapter before editing runtime integration.
 - `../agnostic-simulator/apps/multi-game-simulator/src/games/cyberpunk` -
-  migrated browser simulator source and practice/match routes.
-- `tools/parser`, `tools/scraper`, `tools/ai-runner` - ingestion, generation,
-  and automation support.
+  current browser simulator and practice/match routes.
+- `tools/parser`, `tools/scraper`, `tools/ai-runner` - ingestion and automation.
 
-## Platform Deck-Builder Practice Embed
+## Deck-Builder Practice
 
-The platform deck-builder Play tab embeds the mounted simulator in an iframe at
-`/cyberpunk/simulator/play/practice?source=card-db` and sends the deck through the
-`cyberpunk.deck.import.v1` postMessage bridge. Treat this as a local
-deck-builder practice surface, not a hosted match: post-game UI should use the
-`deck-builder-practice` surface and must not assume match-history analytics,
-rematch, or matchmaking return actions are available.
+The platform deck-builder embeds
+`/cyberpunk/simulator/play/practice?source=card-db` and imports the deck through
+`cyberpunk.deck.import.v1`. This is a local practice surface, not a hosted
+match; post-game behavior must not assume analytics, rematch, or matchmaking
+return actions.
 
-## Bug Triage
+## Focused Evidence
 
-- Production navigation/deck/community bugs usually start in
-  `../platform/apps/web/src/lib/games/cyberpunk` or platform routes, then cross
-  into this submodule if the simulator payload or card data is wrong.
-- Runtime matchmaking or live-match bugs cross three layers: platform
-  `apps/gateway`, platform `apps/game-server`, then
-  `packages/server-adapter`/`packages/engine`.
-- Player-visible simulator bugs should be validated in
-  `../agnostic-simulator/apps/multi-game-simulator` with a focused test or
-  browser route. If a built package feeds platform, rebuild or repack before
-  trusting stale localhost behavior.
+- Browser behavior: focused app test or route, then visible board proof.
+- Engine/card legality: focused engine or card test using local rules terms.
+- Bot/automation: use `.agents/skills/self-improve-bot/SKILL.md` and its
+  documented runner or strategy gate.
+- Live match/matchmaking: prove platform gateway/game-server behavior
+  separately from engine or browser behavior.
 
-## Agent Backpressure Gates
+Do not use blind autoplay as UI proof. Inspect the board, legal actions, logs,
+or backend state relevant to the report.
 
-Use the root `/backpressured` command for long-running Cyberpunk work. Load the
-`cyberpunk-tcg-rules` skill before rules-facing edits.
-
-- Simulator/UI behavior: focused app test or route proof, then browser
-  inspection of the visible board or interaction.
-- Engine legality or card behavior: focused engine/card test first, using
-  rules terminology from the local skill.
-- Bot or automation changes: use `.agents/skills/self-improve-bot/SKILL.md`
-  and validate with the documented AI-runner or strategy command.
-- Platform live-match/matchmaking: prove the platform gateway/game-server path
-  separately from the Cyberpunk engine or simulator path.
-
-Do not use blind autoplay scripts as proof for UI readiness. Inspect the board,
-legal actions, logs, backend state, or Redis state that the report depends on.
-
-## Validation
-
-- From this submodule: `vp check`, `vp test`, focused `bun test`, or
-  `pnpm run ci-check` depending on the package touched.
-- From repo root: `bun run ci:cyberpunk:check`.
-
-<!--VITE PLUS START-->
-
-# Using Vite+, the Unified Toolchain for the Web
-
-This project is using Vite+, a unified toolchain built on top of Vite, Rolldown, Vitest, tsdown, Oxlint, Oxfmt, and Vite Task. Vite+ wraps runtime management, package management, and frontend tooling in a single global CLI called `vp`. Vite+ is distinct from Vite, and it invokes Vite through `vp dev` and `vp build`. Run `vp help` to print a list of commands and `vp <command> --help` for information about a specific command.
-
-Docs are local at `node_modules/vite-plus/docs` or online at https://viteplus.dev/guide/.
-
-## Review Checklist
-
-- [ ] Run `vp install` after pulling remote changes and before getting started.
-- [ ] Run `vp check` and `vp test` to format, lint, type check and test changes.
-- [ ] Check if there are `vite.config.ts` tasks or `package.json` scripts necessary for validation, run via `vp run <script>`.
-
-<!--VITE PLUS END-->
+Run focused `vp check`, `vp test`, or `bun test` commands in this workspace;
+use `pnpm run ci:cyberpunk:check` from the root after they pass.

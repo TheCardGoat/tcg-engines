@@ -4,6 +4,8 @@ export const gd0113thTacticalTestingSector130: BaseCard = {
   cardNumber: "GD01-130",
   name: "13th Tactical Testing Sector",
   type: "base",
+  battlefieldZones: ["space"],
+  color: "white",
   traits: ["academy", "stronghold"],
   id: "GD01-130",
   canonicalId: "GD01-130",

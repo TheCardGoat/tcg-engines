@@ -35,7 +35,7 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
       ) {
         return false;
       }
-      if (card.meta.playedThisTurn) {
+      if (card.meta.hasLag) {
         // Units with adrenaline or canAttackOnPlayedTurnAgainstUnits can still attack units
         return rules.includes("canAttackOnPlayedTurnAgainstUnits") || rules.includes("adrenaline");
       }
@@ -92,15 +92,15 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
         errorCode: "MUST_ATTACK",
       };
     }
-    if (attacker.meta.playedThisTurn) {
+    if (attacker.meta.hasLag) {
       if (
         !attackerRules.includes("canAttackOnPlayedTurnAgainstUnits") &&
         !attackerRules.includes("adrenaline")
       ) {
         return {
           valid: false,
-          error: "Can't attack on turn played",
-          errorCode: "SUMMONING_SICKNESS",
+          error: "Can't attack while this Unit has Lag",
+          errorCode: "LAG",
         };
       }
     }

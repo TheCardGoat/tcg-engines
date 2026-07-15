@@ -16,7 +16,7 @@ function setupAttack(
   defender = createMockUnit({ name: "Defender", power: 2 }),
 ) {
   const engine = CyberpunkTestEngine.createWithFixture(
-    { field: [{ card: attacker, spent: false, playedThisTurn: false }] },
+    { field: [{ card: attacker, spent: false, hasLag: false }] },
     { field: [{ card: defender, spent: true }] },
   );
   // Fixtures start in main phase; no phase transition needed for attacks.
@@ -44,10 +44,10 @@ describe("attackUnit", () => {
       expect(moveIds(engine)).not.toContain("attackUnit");
     });
 
-    it("is not listed when every friendly unit is spent or summoning-sick", () => {
+    it("is not listed when every friendly unit is spent or Lagged", () => {
       const sick = createMockUnit({ name: "Sick" });
       const engine = CyberpunkTestEngine.createWithFixture({
-        field: [{ card: sick, spent: false, playedThisTurn: true }],
+        field: [{ card: sick, spent: false, hasLag: true }],
       });
       expect(moveIds(engine)).not.toContain("attackUnit");
     });
@@ -82,15 +82,15 @@ describe("attackUnit", () => {
       expect(failure.errorCode).toBe("CARD_SPENT");
     });
 
-    it("fails with SUMMONING_SICKNESS when the attacker was played this turn", () => {
+    it("fails with LAG when the attacker was played this turn", () => {
       const attacker = createMockUnit({ name: "Fresh" });
       const defender = createMockUnit({ name: "Defender" });
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [{ card: attacker, spent: false, playedThisTurn: true }] },
+        { field: [{ card: attacker, spent: false, hasLag: true }] },
         { field: [{ card: defender, spent: true }] },
       );
       const failure = engine.expectFailure(() => engine.attackUnit(attacker, defender));
-      expect(failure.errorCode).toBe("SUMMONING_SICKNESS");
+      expect(failure.errorCode).toBe("LAG");
     });
 
     it("fails with TARGET_READY when the defender is not spent", () => {
@@ -213,8 +213,8 @@ describe("attackUnit", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
         {
           field: [
-            { card: attackerA, spent: false, playedThisTurn: false },
-            { card: attackerB, spent: false, playedThisTurn: false },
+            { card: attackerA, spent: false, hasLag: false },
+            { card: attackerB, spent: false, hasLag: false },
           ],
         },
         { field: [{ card: defender, spent: true }] },

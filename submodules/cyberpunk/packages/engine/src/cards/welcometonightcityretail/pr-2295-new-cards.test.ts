@@ -23,9 +23,7 @@ describe("Welcome to Night City Retail PR #2295 cards", () => {
         gigArea: [{ dieType: "d6", faceValue: 2 }],
       },
       {
-        field: [
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
       },
     );
 
@@ -77,9 +75,7 @@ describe("Welcome to Night City Retail PR #2295 cards", () => {
         eddies: 3,
       },
       {
-        field: [
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
       },
     );
 
@@ -121,8 +117,8 @@ describe("Welcome to Night City Retail PR #2295 cards", () => {
       {
         field: [
           welcomeToNightCityRetailSaulBrightStormrider,
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-          { card: welcomeToNightCityRetailSwordwiseHuscle, spent: true, playedThisTurn: false },
+          { card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false },
+          { card: welcomeToNightCityRetailSwordwiseHuscle, spent: true, hasLag: false },
         ],
       },
       {
@@ -168,12 +164,8 @@ describe("Welcome to Night City Retail PR #2295 cards", () => {
     );
 
     engine.playCard(welcomeToNightCityRetailYorinobuArasakaSteelDragon, { as: P1 });
-    engine.resolveEffectTarget(welcomeToNightCityRetailFieldOperator, {
-      as: P1,
-      allowPendingChoice: true,
-      reason: "Yorinobu still needs the chosen Unit to be confirmed for free play",
-    });
-    engine.resolveCardToPlay(welcomeToNightCityRetailFieldOperator, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailFieldOperator, { as: P1 });
+    engine.expectNoPendingChoice();
 
     const fieldOperatorId = engine.findCardId(welcomeToNightCityRetailFieldOperator, "field", P1);
     expect(getEffectiveRules(engine.getState(), fieldOperatorId)).toContain(

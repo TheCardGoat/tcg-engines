@@ -23,6 +23,7 @@ import type {
 } from "./types";
 
 export * from "./types";
+export * from "./shared-profiles";
 
 type SignatureCardEntry = {
   count: number;

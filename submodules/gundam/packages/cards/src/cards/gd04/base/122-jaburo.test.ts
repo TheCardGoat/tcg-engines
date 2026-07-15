@@ -6,8 +6,6 @@ import {
   activeResources,
   createMockUnit,
   expectFailure,
-  seedBaseAsShield,
-  seedShieldsFromDeck,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd04Jaburo122 } from "./122-jaburo.ts";
@@ -17,10 +15,11 @@ describe("Jaburo (GD04-122)", () => {
     const engine = GundamTestEngine.create({
       hand: [gd04Jaburo122],
       resourceArea: activeResources(4),
+      shieldArea: [createMockUnit({ name: "Shield" })],
       deck: 4,
     });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
 
     expectSuccess(p1.deployBase(gd04Jaburo122));
 
@@ -28,15 +27,50 @@ describe("Jaburo (GD04-122)", () => {
     expect(p1.getCardsInZone("baseSection")).toHaveLength(1);
   });
 
-  it("【Burst】 deploys this card from shield area", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd04Jaburo122] });
-    const shieldId = seedBaseAsShield(engine, PLAYER_TWO, gd04Jaburo122);
+  it("【Burst】 offers its owner the choice to deploy this card after a direct attack", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1 });
+    const engine = GundamTestEngine.create({ play: [attacker] }, { shieldArea: [gd04Jaburo122] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      controllerId: PLAYER_TWO,
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `baseSection:${PLAYER_TWO}`,
-    );
+    expect(p2.getCardZone(shieldId)).toBe(`baseSection:${PLAYER_TWO}`);
+  });
+
+  it("【Burst】 leaves this card in trash when its owner declines", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1 });
+    const engine = GundamTestEngine.create({ play: [attacker] }, { shieldArea: [gd04Jaburo122] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      controllerId: PLAYER_TWO,
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: false } }));
+
+    expect(p2.getCardZone(shieldId)).toBe(`trash:${PLAYER_TWO}`);
   });
 
   describe("【Activate･Main】【Once per Turn】Rest 1 of your (Earth Federation) Units：Choose 1 enemy Unit that is Lv.3 or lower. Rest it.", () => {

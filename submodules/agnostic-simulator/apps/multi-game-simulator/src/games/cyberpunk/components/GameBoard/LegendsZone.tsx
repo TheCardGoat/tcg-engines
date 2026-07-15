@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { MaskedCardFrame } from "@tcg/simulator-ui";
 import { Card } from "./Card";
 import { ZoneBadge } from "./ZoneBadge";
 import {
@@ -7,6 +8,7 @@ import {
   type EffectiveRule,
   type EngineCardType,
   type Side,
+  useEngineOptional,
   useInteractionPermission,
 } from "../../engine";
 import { useMoveSelectionStateForSide } from "./MoveSelectionContext";
@@ -59,9 +61,15 @@ interface LegendsZoneProps {
   legends?: LegendCard[];
   opponent?: boolean;
   side?: Side;
+  maskBottomPercent?: number;
 }
 
-export function LegendsZone({ legends = [], opponent = false, side }: LegendsZoneProps) {
+export function LegendsZone({
+  legends = [],
+  opponent = false,
+  side,
+  maskBottomPercent,
+}: LegendsZoneProps) {
   const zoneName = opponent ? "opp-legends" : "p-legends";
   const faceDownCount = legends.filter((l) => l.faceDown).length;
   const [logHighlight, setLogHighlight] = useState<{ ownerId: string; index: number } | null>(null);
@@ -103,11 +111,14 @@ export function LegendsZone({ legends = [], opponent = false, side }: LegendsZon
               logHighlight={logHighlight}
               side={side}
               zoneName={zoneName}
+              maskBottomPercent={maskBottomPercent}
             />
           );
         })}
       </div>
-      <ZoneBadge position={opponent ? "top" : "bottom"}>Legends</ZoneBadge>
+      <ZoneBadge position={opponent ? "top" : "bottom"} label="Legends">
+        Legends
+      </ZoneBadge>
     </div>
   );
 }
@@ -119,6 +130,7 @@ function LegendSlot({
   logHighlight,
   side,
   zoneName,
+  maskBottomPercent,
 }: {
   legend: LegendCard | undefined;
   index: number;
@@ -126,15 +138,19 @@ function LegendSlot({
   logHighlight: { ownerId: string; index: number } | null;
   side: Side | undefined;
   zoneName: string;
+  maskBottomPercent: number | undefined;
 }) {
   const permission = useInteractionPermission(side ?? "player", legend?.cardId ?? "");
+  const engine = useEngineOptional();
+  const isLocalHumanSide = side !== undefined && side === engine?.humanSide;
   const selectedMove = useMoveSelectionStateForSide(side ?? "player")?.moveId ?? null;
   const canCallLegend =
+    isLocalHumanSide &&
     permission.kind === "armable" &&
     permission.actionIds.some((actionId) => actionId === "callLegend");
   const isSelectedCallLegendCandidate = selectedMove === "callLegend" && canCallLegend;
   const isActionable =
-    permission.kind === "selectable" ||
+    (isLocalHumanSide && permission.kind === "selectable") ||
     (selectedMove ? isSelectedCallLegendCandidate : canCallLegend);
   const instanceAttrs = legend
     ? {
@@ -172,35 +188,61 @@ function LegendSlot({
       {...publicLegendAttrs}
     >
       {legend ? (
-        <Card
-          imageUrl={legend.imageUrl}
-          faceDown={legend.faceDown}
-          name={legend.name}
-          definitionId={legend.definitionId}
-          cardType={legend.cardType}
-          color={legend.color}
-          tapped={legend.spent}
-          rotateWhenTapped={false}
-          zone={zoneName}
-          index={index}
-          acceptsDrop
-          cardId={legend.cardId}
-          side={side}
-          effectiveRules={legend.effectiveRules}
-          rulesText={legend.rulesText}
-          classifications={legend.classifications}
-          keywords={legend.keywords}
-          hasSellTag={legend.hasSellTag}
-          cost={legend.cost}
-          effectiveCost={legend.effectiveCost}
-          costEffects={legend.costEffects}
-          power={legend.power}
-          effectivePower={legend.effectivePower}
-          activeEffects={legend.activeEffects}
-          gear={legend.gear}
-          peeked={legend.peeked}
-        />
+        maskBottomPercent === undefined ? (
+          <LegendCardView legend={legend} index={index} side={side} zoneName={zoneName} />
+        ) : (
+          <MaskedCardFrame
+            maskBottomPercent={maskBottomPercent}
+            className={classes.maskedCardFrame}
+            ariaLabel={legend.name}
+          >
+            <LegendCardView legend={legend} index={index} side={side} zoneName={zoneName} />
+          </MaskedCardFrame>
+        )
       ) : null}
     </div>
+  );
+}
+
+function LegendCardView({
+  legend,
+  index,
+  side,
+  zoneName,
+}: {
+  legend: LegendCard;
+  index: number;
+  side: Side | undefined;
+  zoneName: string;
+}) {
+  return (
+    <Card
+      imageUrl={legend.imageUrl}
+      faceDown={legend.faceDown}
+      name={legend.name}
+      definitionId={legend.definitionId}
+      cardType={legend.cardType}
+      color={legend.color}
+      tapped={legend.spent}
+      rotateWhenTapped={false}
+      zone={zoneName}
+      index={index}
+      acceptsDrop
+      cardId={legend.cardId}
+      side={side}
+      effectiveRules={legend.effectiveRules}
+      rulesText={legend.rulesText}
+      classifications={legend.classifications}
+      keywords={legend.keywords}
+      hasSellTag={legend.hasSellTag}
+      cost={legend.cost}
+      effectiveCost={legend.effectiveCost}
+      costEffects={legend.costEffects}
+      power={legend.power}
+      effectivePower={legend.effectivePower}
+      activeEffects={legend.activeEffects}
+      gear={legend.gear}
+      peeked={legend.peeked}
+    />
   );
 }

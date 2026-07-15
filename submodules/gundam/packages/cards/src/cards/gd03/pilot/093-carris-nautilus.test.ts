@@ -7,22 +7,27 @@ import {
   createMockBase,
   createMockUnit,
   expectSuccess,
-  getEffectiveStats,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd03CarrisNautilus093 } from "./093-carris-nautilus.ts";
 
 describe("Carris Nautilus (GD03-093)", () => {
-  it("【Burst】 adds this card to hand", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd03CarrisNautilus093] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
-
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `hand:${PLAYER_TWO}`,
+  it("【Burst】 adds this revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd03CarrisNautilus093] },
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+
+    expect(p2.getCardZone(gd03CarrisNautilus093)).toBe(`hand:${PLAYER_TWO}`);
   });
 
   it("while no enemy Base is in play, the paired Unit gets AP+1", () => {
@@ -37,10 +42,7 @@ describe("Carris Nautilus (GD03-093)", () => {
     expectSuccess(p1.assignPilot(gd03CarrisNautilus093, host));
     const hostId = p1.getCardsInZone("battleArea")[0]!;
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const stats = getEffectiveStats(hostId, engine.getG(), framework.cards, framework);
-    expect(stats.ap).toBe(2 + gd03CarrisNautilus093.apBonus + 1);
-    expect(stats.hp).toBe(4 + gd03CarrisNautilus093.hpBonus);
+    expect(p1.getVisibleCard(hostId)).toMatchObject({ effectiveAp: 5, effectiveHp: 5 });
   });
 
   it("does not grant AP+1 while an enemy Base is in play", () => {
@@ -56,9 +58,6 @@ describe("Carris Nautilus (GD03-093)", () => {
     expectSuccess(p1.assignPilot(gd03CarrisNautilus093, host));
     const hostId = p1.getCardsInZone("battleArea")[0]!;
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const stats = getEffectiveStats(hostId, engine.getG(), framework.cards, framework);
-    expect(stats.ap).toBe(2 + gd03CarrisNautilus093.apBonus);
-    expect(stats.hp).toBe(4 + gd03CarrisNautilus093.hpBonus);
+    expect(p1.getVisibleCard(hostId)).toMatchObject({ effectiveAp: 4, effectiveHp: 5 });
   });
 });

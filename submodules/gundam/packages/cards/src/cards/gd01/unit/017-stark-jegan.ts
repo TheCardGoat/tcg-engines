@@ -4,6 +4,7 @@ export const gd01StarkJegan017: UnitCard = {
   cardNumber: "GD01-017",
   name: "Stark Jegan",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-017",
@@ -41,6 +42,7 @@ export const gd01StarkJegan017: UnitCard = {
   cost: 3,
   ap: 3,
   hp: 3,
+  linkCondition: "(Earth Federation) Trait",
   effect:
     "&lt;Repair 1&gt; (At the end of your turn, this Unit recovers the specified number of HP.)<br>",
   keywordEffects: [{ keyword: "Repair", value: 1 }],

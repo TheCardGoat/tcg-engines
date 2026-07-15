@@ -17,7 +17,7 @@ export const unitPlacideVoodooSentinelBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitPlacideVoodooSentinel",
   label: "Placide - discards program to bottom-deck a rival unit",
   references: [
-    "packages/engine/src/cards/spoiler/units/placide-voodoo-sentinel.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/placide-voodoo-sentinel.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

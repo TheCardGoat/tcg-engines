@@ -28,7 +28,7 @@ describe("Goro Takemura - Hands Unclean (Embracing Power retail starter)", () =>
       P1,
     );
     expect(goro.meta.spent).toBe(false);
-    expect(goro.meta.playedThisTurn).toBe(false);
+    expect(goro.meta.hasLag).toBe(false);
     expectAttackCandidate(engine, embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, {
       as: P1,
     });
@@ -63,12 +63,12 @@ describe("Goro Takemura - Hands Unclean (Embracing Power retail starter)", () =>
           {
             card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
       },
       {
-        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, hasLag: false }],
       },
     );
 
@@ -98,12 +98,12 @@ describe("Goro Takemura - Hands Unclean (Embracing Power retail starter)", () =>
           {
             card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
             spent: true,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
       },
       {
-        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, hasLag: false }],
       },
     );
 

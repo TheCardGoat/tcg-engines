@@ -4,6 +4,7 @@ export const gd01ChuchuSDemiTrainer074: UnitCard = {
   cardNumber: "GD01-074",
   name: "Chuchu's Demi Trainer",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["academy"],
   id: "GD01-074",
@@ -41,6 +42,7 @@ export const gd01ChuchuSDemiTrainer074: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 1,
+  linkCondition: "[Chuatury Panlunch]",
   effect: "【Attack】Draw 1. Then, discard 1.<br>",
   effects: [
     {
@@ -51,14 +53,9 @@ export const gd01ChuchuSDemiTrainer074: UnitCard = {
       directives: [
         {
           action: {
-            action: "draw",
-            count: 1,
-          },
-        },
-        {
-          action: {
-            action: "discard",
-            count: 1,
+            action: "drawThenDiscard",
+            drawCount: 1,
+            discardCount: 1,
           },
         },
       ],

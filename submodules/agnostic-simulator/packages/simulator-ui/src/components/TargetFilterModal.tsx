@@ -134,7 +134,7 @@ export function TargetFilterModal({
             </p>
           ) : renderEntity ? (
             <div
-              className="grid grid-cols-[repeat(auto-fit,minmax(118px,1fr))] items-stretch gap-2"
+              className="target-filter-modal-grid grid grid-cols-[repeat(auto-fit,minmax(118px,1fr))] items-stretch gap-2"
               role="list"
               aria-label={title}
             >

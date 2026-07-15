@@ -149,3 +149,21 @@ describe("classifyDirectiveIntent: stat modifier sign × owner", () => {
     ).toBe("accept");
   });
 });
+
+describe("classifyDirectiveIntent: move-level substitutions", () => {
+  it("leaves deploy-cost substitution to the move procedure", () => {
+    expect(
+      classifyDirectiveIntent({
+        action: "deployCostSubstitution",
+        level: 0,
+        cost: 0,
+        destroyTarget: {
+          owner: "friendly",
+          zone: "battleArea",
+          cardType: "unit",
+          count: 1,
+        },
+      }),
+    ).toBe("neutral");
+  });
+});

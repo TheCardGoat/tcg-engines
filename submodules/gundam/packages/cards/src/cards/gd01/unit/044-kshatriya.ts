@@ -4,6 +4,7 @@ export const gd01Kshatriya044: UnitCard = {
   cardNumber: "GD01-044",
   name: "Kshatriya",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["neo zeon"],
   id: "GD01-044",

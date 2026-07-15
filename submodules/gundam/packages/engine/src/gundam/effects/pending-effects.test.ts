@@ -20,6 +20,7 @@ import {
   PLAYER_TWO,
   expectSuccess,
   expectFailure,
+  createMockPilot,
   createMockUnit,
 } from "../../index.ts";
 import type { PendingEffect } from "../types.ts";
@@ -33,9 +34,8 @@ const drawOneEffect: CardEffect = {
 };
 
 // Effect used in halt-path tests: player-chosen target (rule 10-3-3).
-// Modeled as "activated" so requiresPlayerChoice halts until the caller
-// supplies targets — triggered/burst kinds auto-pick candidates and
-// never halt, matching legacy TriggerQueue.flush semantics.
+// Every effect kind now uses the pending-choice interaction boundary for
+// bounded targets; this activated fixture isolates the queue plumbing.
 const restOpponentUnitEffect: CardEffect = {
   type: "activated",
   activation: { timing: ["activate:main"] },
@@ -97,6 +97,31 @@ describe("Pending effects — auto-drain", () => {
     engine.tickFlow(PLAYER_ONE);
 
     expect(engine.getG().pendingEffects).toHaveLength(0);
+    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore - 1);
+  });
+
+  it("fizzles an unpromptable target-selection head and keeps draining", () => {
+    const unit = createMockUnit({ ap: 1, hp: 1 });
+    const engine = GundamTestEngine.create({ play: [unit], deck: 5 }, {});
+    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
+
+    engine.getG().pendingEffects.push(
+      makePending({
+        effect: restOpponentUnitEffect,
+        controllerId: PLAYER_ONE,
+        kind: "activated",
+      }),
+      makePending({
+        effect: drawOneEffect,
+        controllerId: PLAYER_ONE,
+        kind: "activated",
+      }),
+    );
+
+    engine.tickFlow(PLAYER_ONE);
+
+    expect(engine.getG().pendingEffects).toHaveLength(0);
+    expect(engine.asPlayer(PLAYER_ONE).getBoardView().pendingChoice).toBeUndefined();
     expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore - 1);
   });
 });
@@ -220,7 +245,10 @@ describe("Pending effects — addFromTrash zone guard", () => {
   };
 
   it("executor throws when addFromTrash target names a non-trash zone", () => {
-    const engine = GundamTestEngine.create({}, {});
+    const pilot = createMockPilot({ name: "Invalid-Zone Target" });
+    const engine = GundamTestEngine.create({ hand: [pilot] }, {});
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const pilotId = p1.getHand()[0]!;
     engine.getG().pendingEffects.push(
       makePending({
         effect: badZoneAddFromTrashEffect,
@@ -230,7 +258,7 @@ describe("Pending effects — addFromTrash zone guard", () => {
     );
 
     // `executeAction` throws; the runtime wraps it as a CommandFailure.
-    const result = engine.asPlayer(PLAYER_ONE).resolveEffect({});
+    const result = p1.resolveEffect({ targets: [pilotId] });
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.errorCode).toBe("EXECUTION_ERROR");

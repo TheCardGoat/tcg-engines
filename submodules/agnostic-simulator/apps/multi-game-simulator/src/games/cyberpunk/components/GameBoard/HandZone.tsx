@@ -3,6 +3,7 @@ import { Card } from "./Card";
 import { CardImage } from "./CardImage";
 import { useDragDrop } from "./DragDropContext";
 import { useHandCommand, useSelectedHandCard } from "./useHandCommand";
+import { useHandCardTap } from "./useHandCardTap";
 import { useMoveSelection } from "./MoveSelectionContext";
 import { useZoneDroppable } from "./useZoneDroppable";
 import type { CardActiveEffectView, EffectiveRule, EngineCardType, Side } from "../../engine";
@@ -27,6 +28,7 @@ interface HandCard {
   power?: number | null;
   effectivePower?: number | null;
   activeEffects?: readonly CardActiveEffectView[];
+  temporaryRevealed?: boolean;
 }
 
 interface HandZoneProps {
@@ -79,7 +81,8 @@ export function HandZone({
 }: HandZoneProps) {
   const renderCount = cards ? cards.length : cardCount;
   const [setZoneElement, zoneWidth] = useElementWidth<HTMLDivElement>();
-  const playerLayout = computePlayerHandLayout(renderCount, zoneWidth);
+  const layoutVariant = faceDown ? "opponent" : "player";
+  const playerLayout = computePlayerHandLayout(renderCount, zoneWidth, layoutVariant);
   const layout = playerLayout.cards;
   const cardW = playerLayout.cardWidth;
   const variantClass = faceDown ? classes.opponent : classes.player;
@@ -109,6 +112,10 @@ export function HandZone({
   });
   const selectedIndex = cards?.findIndex((card) => card.cardId === selectedCardId) ?? -1;
   const selectedLayout = selectedIndex >= 0 ? layout[selectedIndex] : null;
+  const { handleHandCardPointerDown, handleHandCardPointerUp } = useHandCardTap({
+    faceDown,
+    selectCard: command.selectCard,
+  });
 
   return (
     <div
@@ -120,6 +127,8 @@ export function HandZone({
       data-active-fan="true"
       data-side={side}
       data-face-down={faceDown ? "true" : "false"}
+      data-hand-layout={layoutVariant}
+      data-hand-card-width={playerLayout.cardWidth}
       data-count={renderCount}
       data-drop-zone={!faceDown ? zoneName : undefined}
       data-drop-ready={isReturnDropReady ? "return" : undefined}
@@ -129,7 +138,11 @@ export function HandZone({
       }}
     >
       {faceDown ? (
-        <span className={classes.opponentCount} data-testid="opponent-hand-count">
+        <span
+          className={classes.opponentCount}
+          data-testid="opponent-hand-count"
+          data-sim-value={renderCount}
+        >
           <span>HAND</span>
           <strong>{renderCount}</strong>
         </span>
@@ -168,16 +181,19 @@ export function HandZone({
         </div>
       ) : null}
       {layout.map(({ angle, x, y }, i) => {
+        const leftOffset = Math.round(x - cardW / 2);
         const positionStyle = faceDown
           ? {
-              left: `calc(50% - ${cardW / 2}px + ${x}px)`,
+              left: `calc(50% + ${leftOffset}px)`,
               top: `${-y}px`,
             }
           : {
-              left: `calc(50% - ${cardW / 2}px + ${x}px)`,
+              left: `calc(50% + ${leftOffset}px)`,
               bottom: `${-y}px`,
             };
         const card = cards?.[i];
+        const cardRevealed = faceDown && card?.temporaryRevealed === true;
+        const cardFaceDown = faceDown && !cardRevealed;
         const stagedProgram =
           Boolean(card?.cardId) &&
           moveSelection.selection?.moveId === "playCard" &&
@@ -191,7 +207,7 @@ export function HandZone({
             ? availableEddies >= (card.effectiveCost ?? card.cost)!
             : undefined;
         const publicCardAttrs =
-          card && !faceDown
+          card && !cardFaceDown
             ? {
                 "data-card-id": card.cardId,
                 "data-instance-id": card.cardId,
@@ -211,25 +227,28 @@ export function HandZone({
             key={card?.cardId ?? i}
             className={`${classes.card} ${variantClass}`}
             data-testid="hand-card"
-            data-face-down={faceDown ? "true" : "false"}
+            data-face-down={cardFaceDown ? "true" : "false"}
+            data-temporary-revealed={cardRevealed ? "true" : undefined}
             data-selected={card?.cardId && card.cardId === selectedCardId ? "true" : "false"}
             data-staged-program={stagedProgram ? "true" : undefined}
             {...publicCardAttrs}
-            data-sim-entity-id={card?.cardId}
-            data-ready={card && !faceDown ? "true" : undefined}
+            data-sim-entity-id={!cardFaceDown ? card?.cardId : undefined}
+            data-ready={card && !cardFaceDown ? "true" : undefined}
             style={{
               ...positionStyle,
               ["--card-rotate" as string]: `${angle}deg`,
               zIndex: card?.cardId === selectedCardId ? 230 : i + 1,
             }}
+            onPointerDown={(event) => handleHandCardPointerDown(card?.cardId, event)}
+            onPointerUp={(event) => handleHandCardPointerUp(card?.cardId, event)}
           >
-            {faceDown ? (
+            {cardFaceDown ? (
               <div
                 data-testid="card"
                 data-card-kind="card"
-                data-entity-id={card?.cardId}
-                data-instance-id={card?.cardId}
-                data-sim-entity-id={card?.cardId}
+                data-entity-id={undefined}
+                data-instance-id={undefined}
+                data-sim-entity-id={undefined}
                 data-face="hidden"
                 style={{ display: "contents" }}
                 aria-hidden
@@ -258,7 +277,6 @@ export function HandZone({
                 power={card?.power}
                 effectivePower={card?.effectivePower}
                 activeEffects={card?.activeEffects}
-                onCardClick={command.selectCard}
               />
             )}
           </div>

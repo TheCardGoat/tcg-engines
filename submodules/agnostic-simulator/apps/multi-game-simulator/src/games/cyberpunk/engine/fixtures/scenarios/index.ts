@@ -49,6 +49,7 @@ export const SCENARIO_GROUPS: readonly { id: ScenarioGroup; label: string }[] = 
   { id: "legend-attack-trigger", label: "Legend · Attack Trigger" },
   { id: "legend-call-trigger", label: "Legend · Call Trigger" },
   { id: "legend-defeated", label: "Legend · Defeated" },
+  { id: "legend-qa", label: "Legend · QA Groups" },
   { id: "unit-blocker", label: "Unit · Blocker" },
   { id: "unit-gig-stolen", label: "Unit · Gig Stolen" },
   { id: "unit-power-scaling", label: "Unit · Power Scaling" },

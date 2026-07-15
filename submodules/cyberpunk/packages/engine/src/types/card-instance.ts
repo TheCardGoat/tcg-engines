@@ -10,7 +10,7 @@ export interface CardMeta {
   counters: Record<string, number>;
   attachedGearIds: CardInstanceId[];
   attachedToId: CardInstanceId | null;
-  playedThisTurn: boolean;
+  hasLag: boolean;
   hasAttackedThisTurn: boolean;
 }
 
@@ -45,7 +45,7 @@ export function createCardInstance(
       counters: {},
       attachedGearIds: [],
       attachedToId: null,
-      playedThisTurn: false,
+      hasLag: false,
       hasAttackedThisTurn: false,
       ...overrides,
     },
@@ -62,7 +62,7 @@ export function createDefaultMeta(overrides?: Partial<CardMeta>): CardMeta {
     counters: {},
     attachedGearIds: [],
     attachedToId: null,
-    playedThisTurn: false,
+    hasLag: false,
     hasAttackedThisTurn: false,
     ...overrides,
   };

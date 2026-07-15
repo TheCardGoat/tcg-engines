@@ -178,7 +178,12 @@ export function InteractionPanel({
             {(input.kind === "single-target" ||
               input.kind === "multi-target" ||
               input.kind === "drag-drop-target") && (
-              <div className="grid gap-2">
+              <div
+                className="grid gap-2"
+                data-sim-selection-kind="target"
+                data-sim-selection-min={input.min}
+                data-sim-selection-max={input.max ?? input.candidateEntityIds.length}
+              >
                 <span className="text-[11px] font-black uppercase text-[var(--quiet)]">
                   Select target{input.kind === "multi-target" ? "s" : ""}{" "}
                   <span className="ml-1 text-[10px] font-bold text-[var(--muted)]">
@@ -204,7 +209,12 @@ export function InteractionPanel({
             )}
 
             {input.kind === "payment" && (
-              <div className="grid gap-2">
+              <div
+                className="grid gap-2"
+                data-sim-selection-kind="payment"
+                data-sim-selection-min={input.min}
+                data-sim-selection-max={input.max ?? input.candidateEntityIds.length}
+              >
                 <span className="text-[11px] font-black uppercase text-[var(--quiet)]">
                   Payment{" "}
                   <span className="text-[10px] font-bold text-[var(--muted)]">
@@ -235,7 +245,12 @@ export function InteractionPanel({
             )}
 
             {input.kind === "ordering" && (
-              <div className="grid gap-2">
+              <div
+                className="grid gap-2"
+                data-sim-selection-kind="ordering"
+                data-sim-selection-min={input.min}
+                data-sim-selection-max={input.max ?? input.candidateEntityIds.length}
+              >
                 <span className="text-[11px] font-black uppercase text-[var(--quiet)]">
                   Order{" "}
                   <span className="text-[10px] font-bold text-[var(--muted)]">

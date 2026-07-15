@@ -4,6 +4,7 @@ export const gd01PerfectStrikeGundam068: UnitCard = {
   cardNumber: "GD01-068",
   name: "Perfect Strike Gundam",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["triple ship alliance"],
   id: "GD01-068",
@@ -75,6 +76,7 @@ export const gd01PerfectStrikeGundam068: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 4,
+  linkCondition: "(Earth Alliance) Trait",
   effect:
     "&lt;Blocker&gt; (Rest this Unit to change the attack target to it.)<br>【Deploy】Choose 1 enemy Unit with 1 HP. Return it to its owner's hand.<br>",
   effects: [
@@ -91,6 +93,7 @@ export const gd01PerfectStrikeGundam068: UnitCard = {
               owner: "opponent",
               cardType: "unit",
               count: 1,
+              attributeFilters: [{ attribute: "hp", comparison: "lte", value: 1 }],
             },
           },
         },

@@ -3,32 +3,43 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  asPlayerId,
   expectSuccess,
   expectFailure,
   createMockUnit,
   activeResources,
-  expectCardInTrash,
-  findStatModifier,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { betaNavalBombardment120 } from "./120-naval-bombardment.ts";
 describe("Naval Bombardment (GD01-120, beta reprint)", () => {
   it("【Burst】Choose 1 enemy Unit. It gets AP-3 during this turn.", () => {
-    const enemy = createMockUnit({ ap: 5, hp: 5 });
-    const engine = GundamTestEngine.create({ deck: [betaNavalBombardment120] }, { play: [enemy] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, betaNavalBombardment120.cardNumber, asPlayerId(PLAYER_ONE));
-
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 5, hp: 5 });
+    const engine = GundamTestEngine.create(
+      { shieldArea: [betaNavalBombardment120] },
+      { play: [attacker] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const [enemyId] = p2.getCardsInZone("battleArea");
+    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      sourceCardId: shieldId,
+      legalTargetIds: [attackerId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [attackerId] }));
 
-    expect(findStatModifier(engine, enemyId!, "ap")?.modifier).toBe(-3);
+    expect(p2.getVisibleCard(attackerId)?.effectiveAp).toBe(2);
   });
 
   describe("【Action】Choose 1 friendly Unit with <Blocker>. It gets AP+3 during this turn.", () => {
@@ -38,35 +49,49 @@ describe("Naval Bombardment (GD01-120, beta reprint)", () => {
         hp: 5,
         keywordEffects: [{ keyword: "Blocker" }],
       });
-      const engine = GundamTestEngine.create({
-        hand: [betaNavalBombardment120],
-        resourceArea: activeResources(2),
-        play: [blocker],
-      });
-      engine.setPhase("end-phase");
-      engine.setStep("action-step");
+      const attacker = createMockUnit({ ap: 1, hp: 5 });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [betaNavalBombardment120],
+          resourceArea: activeResources(2),
+          play: [blocker],
+        },
+        { play: [attacker] },
+        { initialActivePlayer: PLAYER_TWO },
+      );
       const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
       const [unitId] = p1.getCardsInZone("battleArea");
+      const [attackerId] = p2.getCardsInZone("battleArea");
       const cmdId = p1.getHand()[0]!;
 
+      expectSuccess(p2.enterBattle(attackerId!, "direct"));
+      expectSuccess(p1.passBlock());
       expectSuccess(p1.playCommand(betaNavalBombardment120, { targets: [unitId!] }));
 
-      expect(findStatModifier(engine, unitId!, "ap")?.modifier).toBe(3);
-      expectCardInTrash(engine, cmdId, p1.playerId);
+      expect(p1.getVisibleCard(unitId!)?.effectiveAp).toBe(5);
+      expect(p1.getCardZone(cmdId)).toBe(`trash:${PLAYER_ONE}`);
     });
 
     it("cannot target a friendly unit without Blocker", () => {
       const plain = createMockUnit({ ap: 2, hp: 5 });
-      const engine = GundamTestEngine.create({
-        hand: [betaNavalBombardment120],
-        resourceArea: activeResources(2),
-        play: [plain],
-      });
-      engine.setPhase("end-phase");
-      engine.setStep("action-step");
+      const attacker = createMockUnit({ ap: 1, hp: 5 });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [betaNavalBombardment120],
+          resourceArea: activeResources(2),
+          play: [plain],
+        },
+        { play: [attacker] },
+        { initialActivePlayer: PLAYER_TWO },
+      );
       const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
       const [unitId] = p1.getCardsInZone("battleArea");
+      const [attackerId] = p2.getCardsInZone("battleArea");
 
+      expectSuccess(p2.enterBattle(attackerId!, "direct"));
+      expectSuccess(p1.passBlock());
       expectFailure(
         p1.playCommand(betaNavalBombardment120, { targets: [unitId!] }),
         "INVALID_TARGET",

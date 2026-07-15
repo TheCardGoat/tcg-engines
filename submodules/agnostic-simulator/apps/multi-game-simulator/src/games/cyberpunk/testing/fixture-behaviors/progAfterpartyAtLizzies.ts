@@ -8,7 +8,9 @@ import {
 export const progAfterpartyAtLizziesBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "progAfterpartyAtLizzies",
   label: "Afterparty at Lizzie's - rival gig to adjust",
-  references: ["packages/engine/src/cards/spoiler/programs/afterparty-at-lizzie-s.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/programs/afterparty-at-lizzie-s.test.ts",
+  ],
   async run(pom) {
     const rivalD6 = expectDefined(
       "Afterparty rival d6",

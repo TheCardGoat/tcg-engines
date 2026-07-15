@@ -95,9 +95,9 @@ export const gd04NeoZeong033: UnitCard = {
         "When this Unit or one of your (Neo Zeon) Units is deployed, choose 1 enemy Unit. Deal 3 damage to it.",
     },
     {
-      type: "triggered",
+      type: "constant",
       activation: {
-        timing: ["whenLinked"],
+        conditions: [{ type: "duringLink" }],
       },
       directives: [
         {

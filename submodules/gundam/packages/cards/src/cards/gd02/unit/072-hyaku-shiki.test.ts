@@ -17,7 +17,7 @@ describe("Hyaku-Shiki (GD02-072)", () => {
     const defender = createMockUnit({ ap: 1, hp: 5 });
     const engine = GundamTestEngine.create(
       { play: [attacker] },
-      { play: [defender, gd02HyakuShiki072] },
+      { play: [{ card: defender, exhausted: true }, gd02HyakuShiki072] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);

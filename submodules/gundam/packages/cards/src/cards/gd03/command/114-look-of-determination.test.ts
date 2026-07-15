@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
@@ -8,7 +8,6 @@ import {
   createMockUnit,
   expectFailure,
   expectSuccess,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd03LookOfDetermination114 } from "./114-look-of-determination.ts";
 
@@ -18,93 +17,77 @@ function trashCards(count: number) {
 
 describe("Look of Determination (GD03-114)", () => {
   it("【Action】 destroys an active enemy Unit that is Lv.2 or lower", () => {
-    const enemy = createMockUnit({ level: 2 });
+    const legalEnemy = createMockUnit({ level: 2 });
+    const tooHigh = createMockUnit({ level: 3 });
     const engine = GundamTestEngine.create(
       { hand: [gd03LookOfDetermination114], resourceArea: activeResources(2) },
-      { play: [enemy] },
+      { play: [legalEnemy, tooHigh] },
     );
-    engine.setPhase("end-phase");
-    engine.setStep("action-step");
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+    const commandId = p1.getHand()[0]!;
+    const [legalEnemyId, tooHighId] = p2.getCardsInZone("battleArea");
 
-    expectSuccess(p1.playCommand(gd03LookOfDetermination114, { targets: [enemyId] }));
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectFailure(p1.playCommand(commandId, { targets: [tooHighId!] }), "INVALID_TARGET");
+    expectSuccess(p1.playCommand(commandId, { targets: [legalEnemyId!] }));
 
-    expect(p2.getCardsInZone("trash")).toContain(enemyId);
+    expect(p2.getCardsInZone("trash")).toContain(legalEnemyId);
+    expect(p2.getCardsInZone("battleArea")).toContain(tooHighId);
   });
 
-  it("cannot target an enemy Unit above Lv.2 without the trash threshold clause", () => {
-    const enemy = createMockUnit({ level: 3 });
-    const engine = GundamTestEngine.create(
-      { hand: [gd03LookOfDetermination114], resourceArea: activeResources(2) },
-      { play: [enemy] },
-    );
-    engine.setPhase("end-phase");
-    engine.setStep("action-step");
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
-
-    expectFailure(
-      p1.playCommand(gd03LookOfDetermination114, { targets: [enemyId] }),
-      "INVALID_TARGET",
-    );
-  });
-
-  it("【Burst】 activates this card's Action timing", () => {
-    const enemy = createMockUnit({ level: 2 });
-    const engine = GundamTestEngine.create(
-      { play: [enemy] },
-      { deck: [gd03LookOfDetermination114] },
-    );
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
-    const enemyId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
-
-    engine.fireShieldBurst(shieldId, { targets: [enemyId] });
-
-    expect(engine.asPlayer(PLAYER_ONE).getCardsInZone("trash")).toContain(enemyId);
-  });
-
-  it("with 10 or more cards in trash, destroys an active enemy Unit that is Lv.4 or lower", () => {
-    const enemy = createMockUnit({ level: 4 });
+  it("with 10 cards in trash, destroys Lv.4 but still rejects Lv.5", () => {
+    const legalEnemy = createMockUnit({ level: 4 });
+    const tooHigh = createMockUnit({ level: 5 });
     const engine = GundamTestEngine.create(
       {
         hand: [gd03LookOfDetermination114],
         trash: trashCards(10),
         resourceArea: activeResources(2),
       },
-      { play: [enemy] },
+      { play: [legalEnemy, tooHigh] },
     );
-    engine.setPhase("end-phase");
-    engine.setStep("action-step");
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+    const commandId = p1.getHand()[0]!;
+    const [legalEnemyId, tooHighId] = p2.getCardsInZone("battleArea");
 
-    expectSuccess(p1.playCommand(gd03LookOfDetermination114, { targets: [enemyId] }));
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectFailure(p1.playCommand(commandId, { targets: [tooHighId!] }), "INVALID_TARGET");
+    expectSuccess(p1.playCommand(commandId, { targets: [legalEnemyId!] }));
 
-    expect(p2.getCardsInZone("trash")).toContain(enemyId);
+    expect(p2.getCardsInZone("trash")).toContain(legalEnemyId);
+    expect(p2.getCardsInZone("battleArea")).toContain(tooHighId);
   });
 
-  it("still rejects an enemy Unit above Lv.4 with 10 or more cards in trash", () => {
-    const enemy = createMockUnit({ level: 5 });
+  it("【Burst】 lets its controller choose and destroy a legal active enemy Unit", () => {
+    const attacker = createMockUnit({ level: 1, ap: 1, hp: 4 });
+    const burstTarget = createMockUnit({ level: 2, hp: 4 });
     const engine = GundamTestEngine.create(
-      {
-        hand: [gd03LookOfDetermination114],
-        trash: trashCards(10),
-        resourceArea: activeResources(2),
-      },
-      { play: [enemy] },
+      { play: [attacker, burstTarget] },
+      { shieldArea: [gd03LookOfDetermination114] },
     );
-    engine.setPhase("end-phase");
-    engine.setStep("action-step");
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [attackerId, burstTargetId] = p1.getCardsInZone("battleArea");
 
-    expectFailure(
-      p1.playCommand(gd03LookOfDetermination114, { targets: [enemyId] }),
-      "INVALID_TARGET",
-    );
+    expectSuccess(p1.enterBattle(attackerId!, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [burstTargetId],
+    });
+    expectSuccess(p2.resolveEffect({ targets: [burstTargetId!] }));
+
+    expect(p1.getCardsInZone("trash")).toContain(burstTargetId);
+    expect(p2.getCardZone(gd03LookOfDetermination114)).toBe(`trash:${PLAYER_TWO}`);
   });
 });

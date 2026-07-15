@@ -3,31 +3,44 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  asPlayerId,
   expectSuccess,
   expectFailure,
   createMockUnit,
   activeResources,
-  expectCardInTrash,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { st02SiegePloy014 } from "./014-siege-ploy.ts";
 describe("Siege Ploy (ST02-014)", () => {
   it("【Burst】Activate this card's 【Main】 — rests an HP ≤ 5 enemy Unit.", () => {
-    const enemy = createMockUnit({ ap: 3, hp: 4 });
-    const engine = GundamTestEngine.create({ deck: [st02SiegePloy014] }, { play: [enemy] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, st02SiegePloy014.cardNumber, asPlayerId(PLAYER_ONE));
-
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 3, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { shieldArea: [st02SiegePloy014] },
+      { play: [attacker] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const [enemyId] = p2.getCardsInZone("battleArea");
+    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      sourceCardId: shieldId,
+      legalTargetIds: [attackerId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [attackerId] }));
 
-    expect(engine.getG().exhausted[enemyId!]).toBe(true);
+    expect(p2.isExhausted(attackerId)).toBe(true);
+    expect(p1.getCardZone(shieldId)).toBe(`trash:${PLAYER_ONE}`);
   });
 
   describe("【Main】/【Action】Choose 1 enemy Unit with 5 or less HP. Rest it.", () => {
@@ -44,10 +57,8 @@ describe("Siege Ploy (ST02-014)", () => {
 
       expectSuccess(p1.playCommand(st02SiegePloy014, { targets: [enemyId!] }));
 
-      if (!engine.getG().exhausted[enemyId!]) {
-        throw new Error("Expected enemy unit to be rested");
-      }
-      expectCardInTrash(engine, cmdId, p1.playerId);
+      expect(p2.isExhausted(enemyId!)).toBe(true);
+      expect(p1.getCardZone(cmdId)).toBe(`trash:${PLAYER_ONE}`);
     });
 
     it("cannot target an enemy unit with more than 5 HP", () => {

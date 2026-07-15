@@ -64,8 +64,12 @@ export const st02GundamHeavyarms003: UnitCard = {
     {
       type: "triggered",
       activation: {
-        timing: ["destroyed"],
-        conditions: [{ type: "duringPair" }],
+        timing: ["onDestroyByBattle"],
+        conditions: [
+          { type: "duringPair" },
+          { type: "isTurn", whose: "friendly" },
+          { type: "eventCardIsSelf" },
+        ],
       },
       directives: [
         {
@@ -75,6 +79,7 @@ export const st02GundamHeavyarms003: UnitCard = {
             target: {
               owner: "opponent",
               cardType: "unit",
+              attributeFilters: [{ attribute: "level", comparison: "lte", value: 3 }],
             },
           },
         },

@@ -36,4 +36,54 @@ describe("Peace Offering", () => {
         .some((card) => card.definitionId === welcomeToNightCityRetailPeaceOffering.id),
     ).toBe(true);
   });
+
+  it("uses the first selected Gig as the source and the second as the target", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailPeaceOffering],
+        deck: [welcomeToNightCityRetailCorpoSecurity],
+        eddies: 1,
+        gigArea: [
+          { dieType: "d4", faceValue: 4 },
+          { dieType: "d6", faceValue: 5 },
+        ],
+      },
+      {},
+      { preserveDeckOrder: true },
+    );
+
+    engine.playCard(welcomeToNightCityRetailPeaceOffering, { as: P1 });
+    const d4 = engine.getGigDice(P1).find((die) => die.dieType === "d4");
+    const d6 = engine.getGigDice(P1).find((die) => die.dieType === "d6");
+    expect(d4).toBeDefined();
+    expect(d6).toBeDefined();
+
+    engine.resolveEffectTargetIds([d4!.id, d6!.id], { as: P1 });
+
+    expect(engine.getGigDice(P1).find((die) => die.id === d6!.id)?.faceValue).toBe(4);
+  });
+
+  it("caps copied values at the target die maximum", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailPeaceOffering],
+        eddies: 1,
+        gigArea: [
+          { dieType: "d6", faceValue: 5 },
+          { dieType: "d4", faceValue: 4 },
+        ],
+      },
+      {},
+    );
+
+    engine.playCard(welcomeToNightCityRetailPeaceOffering, { as: P1 });
+    const d6 = engine.getGigDice(P1).find((die) => die.dieType === "d6");
+    const d4 = engine.getGigDice(P1).find((die) => die.dieType === "d4");
+    expect(d6).toBeDefined();
+    expect(d4).toBeDefined();
+
+    engine.resolveEffectTargetIds([d6!.id, d4!.id], { as: P1 });
+
+    expect(engine.getGigDice(P1).find((die) => die.id === d4!.id)?.faceValue).toBe(4);
+  });
 });

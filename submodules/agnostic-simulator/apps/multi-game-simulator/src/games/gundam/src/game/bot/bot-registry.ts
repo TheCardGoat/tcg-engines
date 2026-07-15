@@ -59,12 +59,10 @@ const attachStrategy: BotAttacher = async (runtime, staticResources) => {
  * undefined-strategy crash on a stale snapshot).
  */
 const attachVsAiMatch: BotAttacher = async (runtime, staticResources, args) => {
-  const [{ attachStrategyBot }, { greedyLegalStrategy, passOnlyStrategy }] = await Promise.all([
-    import("./strategy-bot.ts"),
-    import("@tcg/gundam-engine"),
-  ]);
-  const strategyId = args?.botConfig?.strategy ?? "greedy-legal";
-  const strategy = strategyId === "pass-only" ? passOnlyStrategy : greedyLegalStrategy;
+  const [{ attachStrategyBot }, { getSafeGundamAutomatedActionStrategyOption }] = await Promise.all(
+    [import("./strategy-bot.ts"), import("@tcg/gundam-engine")],
+  );
+  const strategy = getSafeGundamAutomatedActionStrategyOption(args?.botConfig?.strategy).strategy;
   const handle = attachStrategyBot(runtime, staticResources, DEV_PLAYER_TWO, { strategy });
   return { handle, dispose: () => handle.dispose() };
 };
@@ -83,16 +81,10 @@ const attachBotVsBot: BotAttacher = async (runtime, staticResources, args) => {
     import("./strategy-bot.ts"),
     import("@tcg/gundam-engine"),
   ]);
-  const strategyById = {
-    "greedy-legal": engine.greedyLegalStrategy,
-    "pass-only": engine.passOnlyStrategy,
-    tempo: engine.tempoStrategy,
-    "value-ranked": engine.valueRankedStrategy,
-  } as const;
-  const p1Strategy =
-    strategyById[(args?.botConfig?.strategy as keyof typeof strategyById) ?? "greedy-legal"] ??
-    engine.greedyLegalStrategy;
-  const p2Strategy = engine.valueRankedStrategy;
+  const p1Strategy = engine.getSafeGundamAutomatedActionStrategyOption(
+    args?.botConfig?.strategy,
+  ).strategy;
+  const p2Strategy = engine.getSafeGundamAutomatedActionStrategyOption().strategy;
   const p1Handle = attachStrategyBot(runtime, staticResources, DEV_PLAYER_ONE, {
     strategy: p1Strategy,
   });

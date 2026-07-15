@@ -80,12 +80,15 @@ export const gd02CartaSGrazeRitterGroundType073: UnitCard = {
             target: {
               owner: "opponent",
               cardType: "unit",
-              // "the enemy Unit BATTLING this Unit" — narrow the grant to
-              // the single opponent currently in combat with Carta via the
-              // TargetFilter.isBattling predicate. With no active combat
-              // the battling set is empty and the grant applies to no one,
-              // which matches the printed semantics.
-              isBattling: true,
+              // "the enemy Unit battling THIS Unit" is relational: being in
+              // any battle is insufficient; its opposing combatant must be
+              // Carta itself.
+              isBattling: {
+                opponentMatches: {
+                  owner: "self",
+                  cardType: "unit",
+                },
+              },
             },
           },
         },

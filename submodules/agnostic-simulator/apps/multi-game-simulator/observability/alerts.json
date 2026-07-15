@@ -1,0 +1,119 @@
+{
+  "service": "tcg-multi-game-simulator",
+  "alerts": [
+    {
+      "alert": "Multi-game simulator - uncaught browser errors",
+      "alertType": "LOGS_BASED_ALERT",
+      "ruleType": "threshold_rule",
+      "evalWindow": "5m0s",
+      "frequency": "1m0s",
+      "labels": {
+        "severity": "critical",
+        "service": "tcg-multi-game-simulator",
+        "team": "simulator"
+      },
+      "annotations": {
+        "summary": "At least 5 uncaught simulator errors in 5 minutes",
+        "description": "Inspect simulator.game, app.route, service.version, exception.type, and session.id."
+      },
+      "condition": {
+        "compositeQuery": {
+          "queryType": "builder",
+          "panelType": "graph",
+          "builder": {
+            "queryData": [
+              {
+                "queryName": "A",
+                "dataSource": "logs",
+                "aggregateOperator": "count",
+                "aggregateAttribute": {},
+                "timeAggregation": "count",
+                "spaceAggregation": "sum",
+                "filters": {
+                  "items": [
+                    {
+                      "key": { "key": "service.name", "type": "resource", "dataType": "string" },
+                      "op": "=",
+                      "value": "tcg-multi-game-simulator"
+                    },
+                    {
+                      "key": { "key": "body", "type": "tag", "dataType": "string" },
+                      "op": "in",
+                      "value": ["window.error", "unhandledrejection"]
+                    }
+                  ],
+                  "op": "AND"
+                },
+                "groupBy": [],
+                "expression": "A",
+                "disabled": false
+              }
+            ],
+            "queryFormulas": []
+          }
+        },
+        "op": ">=",
+        "target": 5,
+        "matchType": "1",
+        "targetUnit": ""
+      }
+    },
+    {
+      "alert": "Multi-game simulator - browser warning storm",
+      "alertType": "LOGS_BASED_ALERT",
+      "ruleType": "threshold_rule",
+      "evalWindow": "10m0s",
+      "frequency": "1m0s",
+      "labels": {
+        "severity": "warning",
+        "service": "tcg-multi-game-simulator",
+        "team": "simulator"
+      },
+      "annotations": {
+        "summary": "At least 100 simulator warnings in 10 minutes",
+        "description": "Group warnings by simulator.game, app.route, service.version, and log.message."
+      },
+      "condition": {
+        "compositeQuery": {
+          "queryType": "builder",
+          "panelType": "graph",
+          "builder": {
+            "queryData": [
+              {
+                "queryName": "A",
+                "dataSource": "logs",
+                "aggregateOperator": "count",
+                "aggregateAttribute": {},
+                "timeAggregation": "count",
+                "spaceAggregation": "sum",
+                "filters": {
+                  "items": [
+                    {
+                      "key": { "key": "service.name", "type": "resource", "dataType": "string" },
+                      "op": "=",
+                      "value": "tcg-multi-game-simulator"
+                    },
+                    {
+                      "key": { "key": "severity_text", "type": "tag", "dataType": "string" },
+                      "op": "=",
+                      "value": "WARN"
+                    }
+                  ],
+                  "op": "AND"
+                },
+                "groupBy": [],
+                "expression": "A",
+                "disabled": false
+              }
+            ],
+            "queryFormulas": []
+          }
+        },
+        "op": ">=",
+        "target": 100,
+        "matchType": "1",
+        "targetUnit": ""
+      }
+    }
+  ]
+}

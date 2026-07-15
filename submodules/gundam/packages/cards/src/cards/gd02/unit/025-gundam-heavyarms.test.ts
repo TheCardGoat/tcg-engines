@@ -17,22 +17,22 @@ describe("Gundam Heavyarms (GD02-025)", () => {
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
 
-    // Snapshot the deck before deploy.
-    const deckBefore = p1.getCardsInZone("deck");
-    const topCardBefore = deckBefore[0]!;
-    const deckSizeBefore = deckBefore.length;
+    const deckSizeBefore = p1.getCardsInZone("deck").length;
 
     expectSuccess(p1.deployUnit(gd02GundamHeavyarms025));
 
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("deckLook");
+    if (choice?.kind !== "deckLook") return;
+    expect(choice.revealedCardIds).toHaveLength(1);
+    const [revealedId] = choice.revealedCardIds;
+    expectSuccess(p1.resolveEffect({ deckLookAnswers: { 0: { toBottom: [revealedId!] } } }));
+
     // The deploy trigger fires lookAtTopDeck(1, "topAndBottom").
     // Auto-resolve places the single revealed card to the bottom.
-    const deckAfter = p1.getCardsInZone("deck");
-    expect(deckAfter.length).toBe(deckSizeBefore);
-
-    // The card that was on top is now at the bottom.
-    expect(deckAfter[deckAfter.length - 1]).toBe(topCardBefore);
-    // It should no longer be the first card in the deck.
-    expect(deckAfter[0]).not.toBe(topCardBefore);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getCardsInZone("deck")).toHaveLength(deckSizeBefore);
+    expect(p1.getCardsInZone("battleArea")).toHaveLength(1);
   });
 
   it("【Deploy】 on empty deck is a no-op", () => {

@@ -22,10 +22,18 @@ describe("Afterparty at Lizzie's", () => {
     );
 
     engine.playCard(welcomeToNightCityRetailAfterpartyAtLizzieS, { as: P1 });
+    expect(engine.getPrompt(P1).choice).toMatchObject({
+      type: "chooseTarget",
+      payload: { type: "effectTarget", source: { color: "yellow" } },
+    });
     engine.resolveEffectTargetIds([engine.findGigIdByType(P1, "d4")], {
       as: P1,
       allowPendingChoice: true,
       reason: "Afterparty still needs the selected Gig's new face value",
+    });
+    expect(engine.getPrompt(P1).choice).toMatchObject({
+      type: "chooseTarget",
+      payload: { type: "adjustGig", source: { color: "yellow" } },
     });
     engine.resolveAdjustGig(2, { as: P1 });
 
@@ -55,5 +63,30 @@ describe("Afterparty at Lizzie's", () => {
     expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).not.toContain(
       welcomeToNightCityRetailCorpoSecurity.id,
     );
+  });
+
+  it("requires choosing the Gig before showing adjust values even when only one Gig is eligible", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      hand: [welcomeToNightCityRetailAfterpartyAtLizzieS],
+      deck: [welcomeToNightCityRetailCorpoSecurity],
+      eddies: 1,
+      gigArea: [{ dieType: "d4", faceValue: 1 }],
+    });
+
+    engine.playCard(welcomeToNightCityRetailAfterpartyAtLizzieS, { as: P1 });
+
+    expect(engine.getPrompt(P1).choice).toMatchObject({
+      type: "chooseTarget",
+      payload: {
+        type: "effectTarget",
+        targetKind: "gig",
+        eligibleIds: [engine.findGigIdByType(P1, "d4")],
+        adjustGig: {
+          direction: "either",
+          maxAmount: 1,
+          chooseUpTo: true,
+        },
+      },
+    });
   });
 });

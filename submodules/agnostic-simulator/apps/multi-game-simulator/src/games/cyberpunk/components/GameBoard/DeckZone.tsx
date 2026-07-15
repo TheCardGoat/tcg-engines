@@ -1,3 +1,6 @@
+import type { SimulatorDeckReveal } from "@tcg/simulator-contract";
+import { DeckRevealShelf } from "@tcg/simulator-ui";
+
 import { CardImage } from "./CardImage";
 import { useZoneDroppable } from "./useZoneDroppable";
 import { ZoneBadge } from "./ZoneBadge";
@@ -7,9 +10,10 @@ interface DeckZoneProps {
   count?: number;
   opponent?: boolean;
   side?: "player" | "opponent";
+  reveal?: SimulatorDeckReveal;
 }
 
-export function DeckZone({ count = 40, opponent = false, side }: DeckZoneProps) {
+export function DeckZone({ count = 40, opponent = false, side, reveal }: DeckZoneProps) {
   const zoneName = opponent ? "opp-deck" : "p-deck";
   const drop = useZoneDroppable(zoneName);
 
@@ -22,6 +26,7 @@ export function DeckZone({ count = 40, opponent = false, side }: DeckZoneProps) 
       data-sim-zone-id={opponent ? "opp-deck" : "p-deck"}
       data-side={side}
       data-count={count}
+      data-has-reveal={reveal ? "true" : "false"}
     >
       <div className={classes.inner}>
         {count > 0 ? (
@@ -33,7 +38,16 @@ export function DeckZone({ count = 40, opponent = false, side }: DeckZoneProps) 
           <div className={classes.empty} />
         )}
       </div>
-      <ZoneBadge position={opponent ? "bottom" : "top"}>Deck</ZoneBadge>
+      {reveal ? (
+        <DeckRevealShelf
+          reveal={reveal}
+          compact
+          className={`${classes.revealShelf} ${opponent ? classes.revealShelfOpponent : ""}`}
+        />
+      ) : null}
+      <ZoneBadge position={opponent ? "bottom" : "top"} label="Deck">
+        Deck
+      </ZoneBadge>
     </div>
   );
 }

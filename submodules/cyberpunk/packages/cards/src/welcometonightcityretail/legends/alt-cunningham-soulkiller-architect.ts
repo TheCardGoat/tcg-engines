@@ -117,7 +117,7 @@ export const welcomeToNightCityRetailAltCunninghamSoulkillerArchitect = defineCy
         },
         {
           effect: "delayed",
-          timing: "endOfTurn",
+          timing: "afterTriggerResolution",
           effects: [
             {
               effect: "moveCard",

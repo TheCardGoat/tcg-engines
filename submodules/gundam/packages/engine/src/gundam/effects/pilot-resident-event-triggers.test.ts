@@ -1,25 +1,4 @@
-/**
- * Pilot-resident triggered effects with event-driven timings must fire
- * when the paired unit is the subject of the matching event. Rule
- * 3-3-9-1: text printed on a Pilot card belongs to the pilot, so when
- * the paired unit does X (attacks, is destroyed, pairs) the pilot's
- * triggered effects for that event activate.
- *
- * The observer scan in `enqueueObserverTriggers` iterates every card in
- * battleArea + baseSection on both sides. Because `executePilotPairing`
- * moves the pilot card into battleArea (PR #103), the observer pass
- * already visits pilot cards. These tests lock that in so future
- * refactors of the scan (e.g. switching to a per-cardType partition)
- * don't silently drop pilot observers.
- *
- * Covers:
- *   - `triggered` + `["attack"]` on a pilot fires on attackDeclared of
- *     the paired unit.
- *   - `triggered` + `["duringLink", "attack"]` fires when the host unit
- *     is a Link Unit at attack-declaration.
- *   - Same effect does NOT fire when the host is not a Link Unit
- *     (link-condition unsatisfied).
- */
+/** Player-visible coverage for attack effects gained from a paired Pilot. */
 
 import { describe, it, expect } from "vite-plus/test";
 import type {
@@ -34,6 +13,7 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
+  createMockPilot,
   createMockUnit,
   expectSuccess,
 } from "../../index.ts";
@@ -47,11 +27,6 @@ function makePilotWithAttackTrigger(
   name = "Synthetic Test Pilot",
   conditions?: readonly EffectCondition[],
 ): PilotCard {
-  // `statModifier` thisTurn AP+5 on the paired unit (owner: "self" on a
-  // pilot source rebinds to the paired unit via selfIdentityCardId — PR
-  // #122). Pre-combat snapshot before enterBattle lets us observe the
-  // fire via continuousEffects. We use a large amount (5) and a unique
-  // duration marker so accidental stacking is obvious.
   const effect: CardEffect = {
     type: "triggered",
     activation: { timing: [...timing], ...(conditions ? { conditions: [...conditions] } : {}) },
@@ -68,23 +43,12 @@ function makePilotWithAttackTrigger(
     ],
     sourceText: `【${timing.join("】【")}】AP+5.`,
   };
-  return {
-    cardNumber: `TEST-P-ATK-${Math.random().toString(36).slice(2, 8)}`,
+  return createMockPilot({
     name,
-    type: "pilot",
-    canonicalId: "mock",
-    slug: "mock",
-    printings: [],
-    color: "blue",
-    traits: [],
-    level: 1,
-    cost: 1,
     apBonus: 0,
     hpBonus: 0,
-    keywordEffects: [],
-    rarity: "common",
     effects: [effect],
-  } as PilotCard;
+  });
 }
 
 function makeHost(linkCondition: string | undefined): UnitCard {
@@ -107,31 +71,19 @@ describe("Pilot-resident triggered effects — event-driven timings", () => {
     const host = makeHost("[Plain Attack Pilot]");
     const enemy = createMockUnit({ ap: 1, hp: 5 });
     const engine = GundamTestEngine.create(
-      { hand: [host, pilot], resourceArea: activeResources(6) },
+      { play: [host], hand: [pilot], resourceArea: activeResources(1) },
       { play: [{ card: enemy, exhausted: true }] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    expectSuccess(p1.deployUnit(host));
     expectSuccess(p1.assignPilot(pilot, host));
 
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
-    engine.getG().exhausted[attackerId] = false;
-    engine.getG().turnMetadata.deployedThisTurn = [];
 
     expectSuccess(p1.enterBattle(host, enemyId));
-    // The pilot trigger parked an AP+5 thisTurn modifier on the host.
-    const modifiers = engine
-      .getG()
-      .continuousEffects.filter(
-        (e) =>
-          e.targetId === attackerId &&
-          e.payload.kind === "stat-modifier" &&
-          e.payload.stat === "ap" &&
-          e.payload.modifier === 5,
-      );
-    expect(modifiers.length).toBeGreaterThanOrEqual(1);
+
+    expect(p1.getVisibleCard(attackerId)?.effectiveAp).toBe(8);
   });
 
   it("fires an attack trigger with a duringLink condition when the paired unit is a Link Unit", () => {
@@ -141,30 +93,19 @@ describe("Pilot-resident triggered effects — event-driven timings", () => {
     const host = makeHost("[Link Attack Pilot]");
     const enemy = createMockUnit({ ap: 1, hp: 5 });
     const engine = GundamTestEngine.create(
-      { hand: [host, pilot], resourceArea: activeResources(6) },
+      { play: [host], hand: [pilot], resourceArea: activeResources(1) },
       { play: [{ card: enemy, exhausted: true }] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    expectSuccess(p1.deployUnit(host));
     expectSuccess(p1.assignPilot(pilot, host));
 
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
-    engine.getG().exhausted[attackerId] = false;
-    engine.getG().turnMetadata.deployedThisTurn = [];
 
     expectSuccess(p1.enterBattle(host, enemyId));
-    const modifiers = engine
-      .getG()
-      .continuousEffects.filter(
-        (e) =>
-          e.targetId === attackerId &&
-          e.payload.kind === "stat-modifier" &&
-          e.payload.stat === "ap" &&
-          e.payload.modifier === 5,
-      );
-    expect(modifiers.length).toBeGreaterThanOrEqual(1);
+
+    expect(p1.getVisibleCard(attackerId)?.effectiveAp).toBe(8);
   });
 
   it("does NOT fire an attack trigger with a duringLink condition when the paired unit is not a Link Unit", () => {
@@ -178,29 +119,18 @@ describe("Pilot-resident triggered effects — event-driven timings", () => {
     const host = makeHost("[Some Other Name]");
     const enemy = createMockUnit({ ap: 1, hp: 5 });
     const engine = GundamTestEngine.create(
-      { hand: [host, pilot], resourceArea: activeResources(6) },
+      { play: [host], hand: [pilot], resourceArea: activeResources(1) },
       { play: [{ card: enemy, exhausted: true }] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    expectSuccess(p1.deployUnit(host));
     expectSuccess(p1.assignPilot(pilot, host));
 
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
-    engine.getG().exhausted[attackerId] = false;
-    engine.getG().turnMetadata.deployedThisTurn = [];
 
     expectSuccess(p1.enterBattle(host, enemyId));
-    const modifiers = engine
-      .getG()
-      .continuousEffects.filter(
-        (e) =>
-          e.targetId === attackerId &&
-          e.payload.kind === "stat-modifier" &&
-          e.payload.stat === "ap" &&
-          e.payload.modifier === 5,
-      );
-    expect(modifiers.length).toBe(0);
+
+    expect(p1.getVisibleCard(attackerId)?.effectiveAp).toBe(3);
   });
 });

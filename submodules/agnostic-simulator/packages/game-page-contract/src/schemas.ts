@@ -392,9 +392,21 @@ export const SimulatorConnectionDiagnosticSchema = z
         socketId: z.string().optional(),
         authModeLabel: z.string().optional(),
         authenticated: z.boolean().optional(),
+        authStatus: z.enum(["ok", "refreshing", "failed"]).optional(),
+        authFailureReason: z
+          .enum([
+            "missing_credentials",
+            "anonymous_welcome",
+            "connect_error",
+            "refresh_failed",
+            "refresh_exhausted",
+          ])
+          .optional(),
         latencyMs: z.number().optional(),
         lastPongAt: z.iso.datetime().optional(),
         lastPingAt: z.iso.datetime().optional(),
+        lastHeartbeatSentAt: z.iso.datetime().optional(),
+        lastHeartbeatAckAt: z.iso.datetime().optional(),
         reconnectAttempts: z.number().int().nonnegative().optional(),
         disconnectCount: z.number().int().nonnegative().optional(),
         lastError: z.string().optional(),

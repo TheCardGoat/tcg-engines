@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -24,6 +25,8 @@ const ACCENT_HEX: Record<CardColor, string> = {
   red: "#ff4a6b",
   yellow: "#f5e642",
 };
+const INSPECT_TIMEOUT_MS = 15_000;
+const INSPECT_TIMEOUT_SECONDS = INSPECT_TIMEOUT_MS / 1000;
 
 interface InspectState {
   imageUrl: string;
@@ -52,22 +55,49 @@ const CardInspectContext = createContext<CardInspectContextValue | null>(null);
 export function CardInspectProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<InspectState | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [remainingSeconds, setRemainingSeconds] = useState(INSPECT_TIMEOUT_SECONDS);
+  const closeInspect = useCallback(() => setState(null), []);
 
   const value = useMemo<CardInspectContextValue>(
     () => ({
       inspect: (next) => setState(next),
-      close: () => setState(null),
+      close: closeInspect,
     }),
-    [],
+    [closeInspect],
   );
   const cards = state
     ? [{ imageUrl: state.imageUrl, name: state.name }, ...(state.attachments ?? [])]
     : [];
   const selectedCard = cards[selectedIndex] ?? cards[0];
+  const inspectSessionKey = state
+    ? [state.imageUrl, state.name ?? "", state.zone ?? ""].join("|")
+    : null;
 
   useEffect(() => {
     setSelectedIndex(0);
   }, [state?.imageUrl]);
+
+  useEffect(() => {
+    if (!inspectSessionKey) {
+      setRemainingSeconds(INSPECT_TIMEOUT_SECONDS);
+      return undefined;
+    }
+
+    const openedAt = Date.now();
+    setRemainingSeconds(INSPECT_TIMEOUT_SECONDS);
+
+    const tick = () => {
+      const elapsed = Date.now() - openedAt;
+      setRemainingSeconds(Math.max(0, Math.ceil((INSPECT_TIMEOUT_MS - elapsed) / 1000)));
+    };
+    const intervalId = window.setInterval(tick, 1000);
+    const timeoutId = window.setTimeout(closeInspect, INSPECT_TIMEOUT_MS);
+
+    return () => {
+      window.clearInterval(intervalId);
+      window.clearTimeout(timeoutId);
+    };
+  }, [closeInspect, inspectSessionKey]);
 
   return (
     <CardInspectContext.Provider value={value}>
@@ -75,62 +105,76 @@ export function CardInspectProvider({ children }: { children: ReactNode }) {
       <Modal
         opened={!!state}
         onClose={() => setState(null)}
-        centered
+        fullScreen
         size="auto"
         padding={0}
+        zIndex={5500}
         withCloseButton={false}
         overlayProps={{ backgroundOpacity: 0.85, blur: 4 }}
         classNames={{ content: classes.content, body: classes.body }}
       >
         {state && selectedCard ? (
-          <div
-            className={classes.shell}
-            data-testid="card-inspect-modal"
-            style={
-              {
-                "--accent": state.color ? ACCENT_HEX[state.color] : "#f5e642", // card color accent
-              } as CSSProperties
-            }
-          >
-            <img
-              className={classes.image}
-              data-testid="card-inspect-image"
-              src={selectedCard.imageUrl}
-              alt={selectedCard.name ?? ""}
+          <div className={classes.stage} data-testid="card-inspect-stage">
+            <div
+              className={classes.dismissLayer}
+              data-testid="card-inspect-dismiss-layer"
+              onPointerDown={closeInspect}
+              aria-hidden="true"
             />
-            {(state.name ?? state.zone) && (
-              <div className={classes.meta}>
-                {selectedCard.name ? (
-                  <span className={classes.name}>{selectedCard.name}</span>
-                ) : null}
-                {state.zone ? <span className={classes.zone}>{state.zone}</span> : null}
-              </div>
-            )}
-            {cards.length > 1 ? (
-              <div className={classes.gallery} aria-label="Attached card gallery">
-                {cards.map((card, index) => (
-                  <button
-                    key={`${card.imageUrl}-${index}`}
-                    type="button"
-                    className={classes.thumbnail}
-                    data-active={index === selectedIndex ? "true" : "false"}
-                    onClick={() => setSelectedIndex(index)}
-                    aria-label={index === 0 ? "View main card" : `View attached gear ${index}`}
-                  >
-                    <img src={card.imageUrl} alt={card.name ?? ""} />
-                    <span>{index === 0 ? "Unit" : `Gear ${index}`}</span>
-                  </button>
-                ))}
-              </div>
-            ) : null}
-            <button
-              type="button"
-              aria-label="Close inspect"
-              className={classes.close}
-              onClick={() => setState(null)}
+            <div
+              className={classes.shell}
+              data-testid="card-inspect-modal"
+              onPointerDown={(event) => event.stopPropagation()}
+              style={
+                {
+                  "--accent": state.color ? ACCENT_HEX[state.color] : "#f5e642", // card color accent
+                } as CSSProperties
+              }
             >
-              <IconX size={20} stroke={2.5} aria-hidden="true" />
-            </button>
+              <img
+                className={classes.image}
+                data-testid="card-inspect-image"
+                src={selectedCard.imageUrl}
+                alt={selectedCard.name ?? ""}
+              />
+              {(state.name ?? state.zone) && (
+                <div className={classes.meta}>
+                  {selectedCard.name ? (
+                    <span className={classes.name}>{selectedCard.name}</span>
+                  ) : null}
+                  {state.zone ? <span className={classes.zone}>{state.zone}</span> : null}
+                </div>
+              )}
+              {cards.length > 1 ? (
+                <div className={classes.gallery} aria-label="Attached card gallery">
+                  {cards.map((card, index) => (
+                    <button
+                      key={`${card.imageUrl}-${index}`}
+                      type="button"
+                      className={classes.thumbnail}
+                      data-active={index === selectedIndex ? "true" : "false"}
+                      onClick={() => setSelectedIndex(index)}
+                      aria-label={index === 0 ? "View main card" : `View attached gear ${index}`}
+                    >
+                      <img src={card.imageUrl} alt={card.name ?? ""} />
+                      <span>{index === 0 ? "Unit" : `Gear ${index}`}</span>
+                    </button>
+                  ))}
+                </div>
+              ) : null}
+              <button
+                type="button"
+                aria-label="Close inspect"
+                className={classes.close}
+                data-countdown={remainingSeconds}
+                onClick={closeInspect}
+              >
+                <IconX size={18} stroke={2.5} aria-hidden="true" />
+                <span className={classes.countdown} data-testid="card-inspect-countdown">
+                  {remainingSeconds}
+                </span>
+              </button>
+            </div>
           </div>
         ) : null}
       </Modal>

@@ -16,7 +16,11 @@ describe("sample decks", () => {
   for (const id of SAMPLE_DECK_IDS) {
     const deck = SAMPLE_DECKS[id];
     it(`${id}: passes validateDeckList against the real card catalog`, () => {
-      const result = validateDeckList(deck, { catalog });
+      const result = validateDeckList(deck, {
+        catalog,
+        // Coverage decks intentionally span many colors to exercise the full card catalog.
+        maxColors: Number.POSITIVE_INFINITY,
+      });
       if (!result.ok) {
         throw new Error(`${id} invalid:\n  - ${result.errors.join("\n  - ")}`);
       }

@@ -4,7 +4,6 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  asPlayerId,
   createMockPilot,
   createMockUnit,
   expectFailure,
@@ -17,37 +16,43 @@ describe("Tieren Taozi (GD03-074)", () => {
     hasOtherSuperpowerBloc = true,
     rested = true,
   }: { hasOtherSuperpowerBloc?: boolean; rested?: boolean } = {}) {
-    const pilot = createMockPilot({ name: "Super Soldier Pilot", traits: ["super soldier"] });
+    const pilot = createMockPilot({
+      name: "Super Soldier Pilot",
+      traits: ["super soldier"],
+      cost: 1,
+    });
     const otherUnit = createMockUnit({
       name: "Other Unit",
       traits: hasOtherSuperpowerBloc ? ["superpower bloc"] : ["zeon"],
       hp: 5,
     });
     const attacker = createMockUnit({ name: "Enemy Attacker", ap: 3, hp: 5 });
+    const transitionDefender = createMockUnit({ name: "Transition Defender", ap: 0, hp: 8 });
     const engine = GundamTestEngine.create(
       {
         hand: [pilot],
-        play: [
-          { card: gd03TierenTaozi074, exhausted: rested },
-          { card: otherUnit, exhausted: true },
-        ],
+        play: [gd03TierenTaozi074, { card: otherUnit, exhausted: true }],
         resourceArea: activeResources(3),
+        deck: 5,
       },
-      { play: [attacker] },
+      { play: [attacker, { card: transitionDefender, exhausted: true }], deck: 5 },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const [taoziId, otherUnitId] = p1.getCardsInZone("battleArea");
-    const attackerId = p2.getCardsInZone("battleArea")[0]!;
+    const [attackerId, transitionDefenderId] = p2.getCardsInZone("battleArea");
     expectSuccess(p1.assignPilot(pilot, taoziId!));
-    engine.getState().ctx.status.activePlayer = asPlayerId(PLAYER_TWO);
-    engine.getState().ctx.status.turnPlayer = asPlayerId(PLAYER_TWO);
-    engine.getRuntime().runTestMutation(asPlayerId(PLAYER_ONE), ({ G, framework }) => {
-      G.exhausted[taoziId!] = rested;
-      framework.cards.patchMeta(taoziId!, { exhausted: rested });
-    });
+    if (rested) {
+      expectSuccess(p1.enterBattle(taoziId!, transitionDefenderId!));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+    }
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
 
-    return { p2, taoziId: taoziId!, otherUnitId: otherUnitId!, attackerId };
+    return { p2, taoziId: taoziId!, otherUnitId: otherUnitId!, attackerId: attackerId! };
   }
 
   it("prevents an enemy Unit from attacking a different target while Taozi is paired, rested, and another Superpower Bloc Unit is in play", () => {

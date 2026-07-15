@@ -4,6 +4,7 @@ export const gd01ZakuISniperType048: UnitCard = {
   cardNumber: "GD01-048",
   name: "Zaku I Sniper Type",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["zeon"],
   id: "GD01-048",
@@ -41,6 +42,7 @@ export const gd01ZakuISniperType048: UnitCard = {
   cost: 2,
   ap: 0,
   hp: 1,
+  linkCondition: "(Zeon) Trait",
   effect:
     "【Activate･Main】&lt;Support 1&gt; (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)<br>【Deploy】Look at the top card of your deck. If it is a (Zeon)/(Neo Zeon) Unit card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.<br>",
   effects: [

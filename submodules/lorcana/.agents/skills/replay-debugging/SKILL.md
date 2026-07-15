@@ -142,9 +142,12 @@ What "involved" means: any `cardInstanceId` that appears inside the turn's `patc
 - **If the trace looks empty/weird:** Check `totalTurns` in the header. If you asked for a turn beyond it, the CLI exits 1 with a clear "no steps found for turn N" message listing the available turns.
 - **If `--- INITIAL STATE ---` looks malformed:** That's the unwrapping error path; capture the full output and report it — the CLI handles five known envelope shapes (v2 server-authority, v2 client-authority, legacy `EngineSnapshot`, very old `engineSnapshot.state`, and a direct `ctx`-bearing root). Anything else throws "did not unwrap to a recognised match-state shape".
 
-## Posting a Linear progress comment
+## Optional Linear progress comment
 
-When this skill runs as part of a Linear-tracked triage flow (e.g. `/triage-player-report` was invoked with a Linear issue URL), use the Linear MCP tools to post a single progress comment on the issue summarising what the replay revealed. The agent driving triage should call this after the CLI finishes and _before_ moving on to card validation.
+Post a Linear progress comment only when the user explicitly asks to update the
+issue. Reading a Linear issue as the report source does not authorize external
+writes. When authorized, post one concise comment after the CLI finishes and
+before card validation.
 
 Use this canonical shape so reports are scannable across issues:
 
@@ -164,7 +167,8 @@ Rules:
 - One comment per replay pull, not one per section. Keep it under ~10 lines so the issue thread stays readable.
 - The `Suspect step` observation must point at concrete trace evidence (a missing patch, a wrong patch value, or a log showing a trigger that produced no patches). Don't speculate — if nothing looks anomalous in the printed trace, say so explicitly: _"no obvious anomaly in the printed trace; bug may be in a different turn or in an effect that produced the expected patches."_
 - For `Cards involved (touched)`, list the cards from `--- CARDS INVOLVED ---` only. If the player named a card that _isn't_ on the touched list (a passive static modifier sitting in play, for example), note that separately under the `Pre-turn state highlights` line — search the initial state for it and report the zone.
-- If the CLI failed (replay not found, turn out of range, network timeout), post a one-line comment saying which failure occurred and that triage will continue without replay evidence. Don't omit the comment — the absence of evidence is itself useful triage context for whoever picks the issue up next.
+- If the CLI failed (replay not found, turn out of range, network timeout), say
+  which failure occurred and that triage will continue without replay evidence.
 
 ## What this skill does NOT do
 
@@ -176,5 +180,5 @@ Rules:
 
 - CLI source: [`packages/tools/replay-cli/src/cli.ts`](../../../packages/tools/replay-cli/src/cli.ts)
 - Replay payload type: [`packages/lorcana/lorcana-simulator/src/lib/features/replay/fetch-replay.ts`](../../../packages/lorcana/lorcana-simulator/src/lib/features/replay/fetch-replay.ts) (`PersistedReplayData`)
-- API endpoint: `GET /v1/games/lorcana/play/replays/:gameId/data` (see [`apps/api/src/modules/play/routes/replay-routes.ts`](../../../apps/api/src/modules/play/routes/replay-routes.ts))
+- API endpoint: `GET /v1/games/lorcana/play/replays/:gameId/data` (see [`platform/apps/general-api/src/modules/play/routes/replay-routes.ts`](../../../../platform/apps/general-api/src/modules/play/routes/replay-routes.ts))
 - Card path conventions: [`packages/lorcana/lorcana-cards/src/cards/<set>/<type>/<NNN>-<slug>.ts`](../../../packages/lorcana/lorcana-cards/src/cards/)

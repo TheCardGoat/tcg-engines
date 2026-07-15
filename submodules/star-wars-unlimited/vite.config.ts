@@ -11,24 +11,13 @@ export default defineConfig({
     ...(isWorkspaceRoot ? { cache: { tasks: true, scripts: false } } : {}),
     tasks: {
       "ci:check": {
-        command: "bunx turbo run check-types test",
-        input: [
-          { auto: true },
-          "!**/*.tsbuildinfo",
-          "!**/dist/**",
-          "!**/.vite/**",
-          "!**/.turbo/**",
-        ],
+        command:
+          'vp fmt "**/*.{ts,tsx,css}" --check && vp lint && pnpm exec turbo run check-types test',
+        cache: false,
       },
       "ci:full": {
-        command: "bunx turbo run check-types test build",
-        input: [
-          { auto: true },
-          "!**/*.tsbuildinfo",
-          "!**/dist/**",
-          "!**/.vite/**",
-          "!**/.turbo/**",
-        ],
+        command: "vp run ci:check && pnpm exec turbo run build",
+        cache: false,
       },
     },
   },

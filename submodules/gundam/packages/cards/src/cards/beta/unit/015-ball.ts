@@ -4,6 +4,7 @@ export const betaBall015: UnitCard = {
   cardNumber: "GD01-015",
   name: "Ball",
   type: "unit",
+  battlefieldZones: ["space"],
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-015_p1",

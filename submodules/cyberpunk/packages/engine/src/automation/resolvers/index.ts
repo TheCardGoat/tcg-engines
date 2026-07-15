@@ -1,5 +1,5 @@
 import type { ChoiceResolverMap } from "../types.ts";
-import { searchDeckResolver } from "./search-deck.ts";
+import { scryResolver } from "./scry.ts";
 import { chooseTargetResolver } from "./choose-target.ts";
 import { chooseEffectResolver } from "./choose-effect.ts";
 import { chooseTriggerResolver } from "./choose-trigger.ts";
@@ -8,6 +8,7 @@ import { chooseCardToPlayResolver } from "./choose-card-to-play.ts";
 import { chooseCardToMoveResolver } from "./choose-card-to-move.ts";
 import { chooseCardTypeResolver } from "./choose-card-type.ts";
 import { gainGigResolver } from "./gain-gig.ts";
+import { revealDestinationResolver } from "./reveal-destination.ts";
 
 /**
  * Shared decision tree for resolving every variant of a player-facing pending
@@ -17,7 +18,8 @@ import { gainGigResolver } from "./gain-gig.ts";
  * entry here.
  */
 export const defaultChoiceResolvers: ChoiceResolverMap = {
-  searchDeck: searchDeckResolver,
+  scry: scryResolver,
+  revealDestination: revealDestinationResolver,
   chooseTarget: chooseTargetResolver,
   chooseEffect: chooseEffectResolver,
   chooseTrigger: chooseTriggerResolver,
@@ -29,7 +31,8 @@ export const defaultChoiceResolvers: ChoiceResolverMap = {
 };
 
 export {
-  searchDeckResolver,
+  scryResolver,
+  revealDestinationResolver,
   chooseTargetResolver,
   chooseEffectResolver,
   chooseTriggerResolver,

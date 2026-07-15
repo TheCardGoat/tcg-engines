@@ -3,40 +3,36 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  asPlayerId,
   createMockUnit,
+  expectSuccess,
 } from "@tcg/gundam-engine";
 import { st05GundamGusionRebake005 } from "./005-gundam-gusion-rebake.ts";
 
 describe("Gundam Gusion Rebake (ST05-005)", () => {
   it("【Destroyed】 rests an enemy Unit with 4 or less AP when killed in combat", () => {
-    // Gusion Rebake has HP 4 AP 3. An AP-4 big attacker destroys it
-    // (and is too strong for the ≤ 4 AP rest-filter). A separate AP-2
-    // active unit is the only eligible target; the Destroyed trigger
-    // auto-picks and rests it.
     const bigAttacker = createMockUnit({ ap: 5, hp: 5 });
     const weakEnemy = createMockUnit({ ap: 2, hp: 5 });
     const engine = GundamTestEngine.create(
       { play: [bigAttacker, weakEnemy] },
-      { play: [st05GundamGusionRebake005] },
+      { play: [{ card: st05GundamGusionRebake005, exhausted: true }] },
     );
-    const p1Id = asPlayerId(PLAYER_ONE);
-    const p2Id = asPlayerId(PLAYER_TWO);
-    const bigAttackerId = engine.getCardsInZone({ zone: "battleArea", playerId: p1Id })[0]!;
-    const weakEnemyId = engine.getCardsInZone({ zone: "battleArea", playerId: p1Id })[1]!;
-    const gusionId = engine.getCardsInZone({ zone: "battleArea", playerId: p2Id })[0]!;
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [bigAttackerId, weakEnemyId] = p1.getCardsInZone("battleArea");
+    const gusionId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.getG().exhausted[bigAttackerId] = false;
-    engine.getG().exhausted[weakEnemyId] = false;
+    expectSuccess(p1.enterBattle(bigAttackerId!, gusionId));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      sourceCardId: gusionId,
+      legalTargetIds: [weakEnemyId],
+    });
+    expectSuccess(p2.resolveEffect({ targets: [weakEnemyId!] }));
 
-    engine.resolveCombat({ attackerId: bigAttackerId, target: gusionId });
-
-    // Gusion destroyed (AP 5 vs HP 4).
-    expect(engine.getState().ctx.zones.private.cardIndex[gusionId]?.zoneKey).toBe(
-      `trash:${PLAYER_TWO}`,
-    );
-    // Destroyed trigger auto-picks the only ≤ 4 AP enemy (the weak
-    // unit) and rests it — the big attacker is out of range.
-    expect(engine.getG().exhausted[weakEnemyId]).toBe(true);
+    expect(p2.getCardZone(gusionId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p1.isExhausted(weakEnemyId!)).toBe(true);
   });
 });

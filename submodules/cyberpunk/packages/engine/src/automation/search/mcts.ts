@@ -135,7 +135,7 @@ export function createMctsStrategy(opts: MctsOptions = {}): AIStrategy {
         }
 
         // 3. Simulation: rollout to game-end from this node's engine state.
-        const winner = runRollout(
+        const outcome = runRollout(
           node.engine.fork(),
           ctx.playerId,
           rolloutStrategy,
@@ -144,7 +144,7 @@ export function createMctsStrategy(opts: MctsOptions = {}): AIStrategy {
         );
 
         // 4. Backpropagation.
-        backpropagate(node, winner);
+        backpropagate(node, outcome.winnerId);
       }
 
       // Pick the most-visited root child. Ties broken by highest win-rate

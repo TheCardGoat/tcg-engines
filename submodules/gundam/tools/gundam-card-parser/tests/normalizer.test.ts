@@ -252,24 +252,24 @@ describe("normalizeUnit", () => {
     expect(card).not.toHaveProperty("linkCondition");
   });
 
-  test("parses zone with spaces to camelCase Zone", () => {
-    const card = normalizeUnit(makeRaw({ zone: "Battle Area" }));
-    expect(card.zone).toBe("battleArea");
+  test("parses a Space and Earth battlefield characteristic", () => {
+    const card = normalizeUnit(makeRaw({ zone: "Space Earth" }));
+    expect(card.battlefieldZones).toEqual(["space", "earth"]);
   });
 
-  test("parses Shield Area zone", () => {
-    const card = normalizeUnit(makeRaw({ zone: "Shield Area" }));
-    expect(card.zone).toBe("shieldArea");
+  test("parses an Earth-only battlefield characteristic", () => {
+    const card = normalizeUnit(makeRaw({ zone: "Earth" }));
+    expect(card.battlefieldZones).toEqual(["earth"]);
   });
 
-  test("parses Resource Deck zone", () => {
-    const card = normalizeUnit(makeRaw({ zone: "Resource Deck" }));
-    expect(card.zone).toBe("resourceDeck");
+  test("omits the battlefield characteristic for a printed dash", () => {
+    const card = normalizeUnit(makeRaw({ zone: "-" }));
+    expect(card.battlefieldZones).toBeUndefined();
   });
 
-  test("omits zone when zone is null", () => {
+  test("omits the battlefield characteristic when source zone is null", () => {
     const card = normalizeUnit(makeRaw({ zone: null }));
-    expect(card).not.toHaveProperty("zone");
+    expect(card.battlefieldZones).toBeUndefined();
   });
 
   test("includes effect string when present", () => {
@@ -579,6 +579,12 @@ describe("normalizeBase", () => {
   test("includes traits", () => {
     const card = normalizeBase({ ...base(), trait: "(White Base)" });
     expect(card.traits).toEqual(["white base"]);
+  });
+
+  test("preserves a Base's color and printed battlefield characteristic", () => {
+    const card = normalizeBase({ ...base(), color: "Blue", zone: "Space Earth" });
+    expect(card.color).toBe("blue");
+    expect(card.battlefieldZones).toEqual(["space", "earth"]);
   });
 
   test("omits effect when null", () => {

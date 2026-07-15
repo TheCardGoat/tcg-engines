@@ -11,6 +11,7 @@ export { CardImage, DEFAULT_CARD_ASPECT_RATIO } from "./components/CardImage";
 export { CardStack, type CardStackProps } from "./components/CardStack";
 export { CardZone } from "./components/CardZone";
 export { DeckStackZone, type DeckStackZoneProps } from "./components/DeckStackZone";
+export { DeckRevealShelf, type DeckRevealShelfProps } from "./components/DeckRevealShelf";
 export { DiscardPileZone, type DiscardPileZoneProps } from "./components/DiscardPileZone";
 export { ChatPanel, type ChatMessage, type ChatPanelProps } from "./components/ChatPanel";
 export { CompactHandZone } from "./components/CompactHandZone";
@@ -30,6 +31,27 @@ export { Droppable } from "./components/Droppable";
 export { FixtureNavigation } from "./components/FixtureNavigation";
 export { HandZone } from "./components/HandZone";
 export { MobileShell } from "./components/MobileShell";
+export {
+  MaskedCardFrame,
+  type MaskedCardFrameOverlayPosition,
+  type MaskedCardFrameProps,
+} from "./components/MaskedCardFrame";
+export {
+  MobileBattlefieldLane,
+  MobileHandDock,
+  MobileMirrorLedger,
+  MobilePlayerRail,
+  MobilePortraitBoard,
+  MobileZoneInventoryPopover,
+  type FieldOverflowState,
+  type FieldScrollAxis,
+  type MobileBattlefieldLaneProps,
+  type MobileHandDockProps,
+  type MobileMirrorLedgerProps,
+  type MobilePlayerRailProps,
+  type MobilePortraitBoardProps,
+  type MobileZoneInventoryPopoverProps,
+} from "./components/MobilePortraitBoard";
 export { InteractionPanel } from "./components/InteractionPanel";
 export { PostGameModal, type PostGameModalProps } from "./components/PostGameModal";
 export { RunbookPanel } from "./components/RunbookPanel";

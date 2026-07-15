@@ -1,5 +1,6 @@
 import type {
   BaseCard,
+  BattlefieldZone,
   Card,
   CardColor,
   CardPrinting,
@@ -11,7 +12,6 @@ import type {
   PilotCard,
   ResourceCard,
   UnitCard,
-  Zone,
 } from "@tcg/gundam-types";
 import { cleanHtml } from "../scripts/effect-parser/helpers.ts";
 import { extractPrintedKeyword, splitIntoSegments } from "../scripts/effect-parser/segments.ts";
@@ -68,22 +68,6 @@ const COLOR_MAP: Record<string, CardColor> = {
   purple: "purple",
 };
 
-const ZONE_MAP: Record<string, Zone> = {
-  Deck: "deck",
-  ResourceDeck: "resourceDeck",
-  "Resource Deck": "resourceDeck",
-  ResourceArea: "resourceArea",
-  "Resource Area": "resourceArea",
-  BattleArea: "battleArea",
-  "Battle Area": "battleArea",
-  ShieldArea: "shieldArea",
-  "Shield Area": "shieldArea",
-  RemovalArea: "removalArea",
-  "Removal Area": "removalArea",
-  Hand: "hand",
-  Trash: "trash",
-};
-
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function parseRarity(raw: string | null, id: string): CardRarity {
@@ -100,13 +84,12 @@ function parseColor(raw: string | null, id: string): CardColor | undefined {
   return color;
 }
 
-function parseZone(raw: string | null): Zone | undefined {
-  if (!raw || raw.trim() === "") return undefined;
-  const cleaned = raw
-    .trim()
-    .replace(/^\(|\)$/g, "")
-    .trim();
-  return ZONE_MAP[cleaned];
+function parseBattlefieldZones(raw: string | null): readonly BattlefieldZone[] | undefined {
+  if (!raw || raw.trim() === "" || raw.trim() === "-") return undefined;
+  const zones: BattlefieldZone[] = [];
+  if (/\bspace\b/i.test(raw)) zones.push("space");
+  if (/\bearth\b/i.test(raw)) zones.push("earth");
+  return zones.length > 0 ? zones : undefined;
 }
 
 function parseTraits(raw: string | null): string[] {
@@ -304,7 +287,7 @@ function parsePilotName(effect: string | null): string | undefined {
 // ── Normalizers ───────────────────────────────────────────────────────────────
 
 export function normalizeUnit(raw: RawGundamCard): UnitCard {
-  const zone = parseZone(raw.zone);
+  const battlefieldZones = parseBattlefieldZones(raw.zone);
   const rarity = parseRarity(raw.rarity, raw.id);
   return {
     cardNumber: raw.code || raw.id,
@@ -321,7 +304,7 @@ export function normalizeUnit(raw: RawGundamCard): UnitCard {
     ...(raw.link !== null &&
       raw.link !== undefined &&
       raw.link.trim() !== "-" && { linkCondition: raw.link }),
-    ...(zone !== undefined && { zone }),
+    ...(battlefieldZones !== undefined && { battlefieldZones }),
     ...(raw.effect !== null && raw.effect !== undefined && { effect: raw.effect }),
     keywordEffects: parseKeywordEffects(raw.effect),
     rarity,
@@ -374,16 +357,19 @@ export function normalizeCommand(raw: RawGundamCard): CommandCard {
 
 export function normalizeBase(raw: RawGundamCard): BaseCard {
   const rarity = parseRarity(raw.rarity, raw.id);
+  const battlefieldZones = parseBattlefieldZones(raw.zone);
   return {
     cardNumber: raw.code || raw.id,
     ...catalogMetadata(raw, rarity),
     name: raw.name,
     type: "base",
+    color: parseColor(raw.color, raw.id),
     traits: parseTraits(raw.trait),
     ...sourceTitleProperties(raw),
     level: parseLevel(raw.level),
     cost: parseCost(raw.cost),
     hp: parseStat(raw.hp),
+    ...(battlefieldZones !== undefined && { battlefieldZones }),
     ...(raw.effect !== null && raw.effect !== undefined && { effect: raw.effect }),
     keywordEffects: parseKeywordEffects(raw.effect),
     rarity,

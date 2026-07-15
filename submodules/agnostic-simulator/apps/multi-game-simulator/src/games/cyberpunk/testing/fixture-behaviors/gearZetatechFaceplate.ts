@@ -10,7 +10,9 @@ import {
 export const gearZetatechFaceplateBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "gearZetatechFaceplate",
   label: "Zetatech Faceplate - spend trigger adjusts a gig and draws",
-  references: ["packages/engine/src/cards/spoiler/gear/zetatech-faceplate.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/gear/zetatech-faceplate.test.ts",
+  ],
   async run(pom) {
     const host = await pom.getCardInZoneByDefinitionId(
       "field",

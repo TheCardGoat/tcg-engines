@@ -182,6 +182,8 @@ function summarizeMoveLog(log: MoveLog): string {
       return `${log.revealedCount} revealed`;
     case "resolveSearchDeck":
       return `${log.lookedAt} looked, ${log.found} found`;
+    case "resolveRevealDestination":
+      return `${log.count} to ${log.destination}`;
     case "turnStarted":
     case "turnEnded":
       return `turn ${log.turnNumber}`;

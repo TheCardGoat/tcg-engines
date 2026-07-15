@@ -4,6 +4,7 @@ export const gd01Zno063: UnitCard = {
   cardNumber: "GD01-063",
   name: "ZnO",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "red",
   traits: ["zaft"],
   id: "GD01-063",
@@ -41,6 +42,7 @@ export const gd01Zno063: UnitCard = {
   cost: 2,
   ap: 2,
   hp: 1,
+  linkCondition: "(ZAFT) Trait",
   effect:
     "During your turn, while this Unit is battling an enemy Unit that is Lv.2 or lower, it gains &lt;First Strike&gt;.<br>\n(While this Unit is attacking, it deals damage before the enemy Unit.)<br>",
   effects: [

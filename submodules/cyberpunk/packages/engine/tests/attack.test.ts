@@ -1,13 +1,13 @@
 import { beforeAll, describe, expect, it } from "vite-plus/test";
 import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
-import { alphaRuthlessLowlife } from "@tcg/cyberpunk-cards";
-import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
-import { alphaArmoredMinotaur } from "@tcg/cyberpunk-cards";
-import { alphaCorpoSecurity } from "@tcg/cyberpunk-cards";
-import { alphaSecondhandBombus } from "@tcg/cyberpunk-cards";
-import { alphaMantisBlades } from "@tcg/cyberpunk-cards";
-import { alphaSaburoArasakaStubbornPatriach } from "@tcg/cyberpunk-cards";
-import { spoilerPlacideVoodooSentinel } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSketchyRipper } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { embracingPowerRetailStarterDeckMinotaur } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailCorpoSecurity } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSecondhandBombus } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailMantisBlades } from "@tcg/cyberpunk-cards";
+import { embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailPlacideVoodooSentinel } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2, registerMatchers } from "../src/testing/index.ts";
 import "../src/testing/matchers.d.ts";
 
@@ -38,25 +38,33 @@ describe("Attack Step", () => {
     describe("Offensive Step", () => {
       it("spends the attacking unit", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
-          { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+          { field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: true }] },
         );
         toAttackPhase(engine);
 
-        engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          welcomeToNightCityRetailSketchyRipper,
+          { as: P1 },
+        );
 
-        const attacker = engine.getCard(alphaSwordwiseHuscle, "field", P1);
+        const attacker = engine.getCard(welcomeToNightCityRetailSwordwiseHuscle, "field", P1);
         expect(attacker.meta.spent).toBe(true);
       });
 
       it("sets attack state with kind fight and step offensive", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
-          { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+          { field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: true }] },
         );
         toAttackPhase(engine);
 
-        engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          welcomeToNightCityRetailSketchyRipper,
+          { as: P1 },
+        );
 
         const attack = engine.getState().G.attackState;
         expect(attack).not.toBeNull();
@@ -67,12 +75,16 @@ describe("Attack Step", () => {
 
       it("emits attackDeclared event with kind fight", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
-          { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+          { field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: true }] },
         );
         toAttackPhase(engine);
 
-        engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          welcomeToNightCityRetailSketchyRipper,
+          { as: P1 },
+        );
 
         const event = engine.getLastEvent("attackDeclared");
         expect(event).toBeDefined();
@@ -81,39 +93,51 @@ describe("Attack Step", () => {
 
       it("cannot attack with a spent unit", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [{ card: alphaSwordwiseHuscle, spent: true }] },
-          { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+          { field: [{ card: welcomeToNightCityRetailSwordwiseHuscle, spent: true }] },
+          { field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: true }] },
         );
         toAttackPhase(engine);
 
         const failure = engine.expectFailure(() =>
-          engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 }),
+          engine.attackUnit(
+            welcomeToNightCityRetailSwordwiseHuscle,
+            welcomeToNightCityRetailSketchyRipper,
+            { as: P1 },
+          ),
         );
         expect(failure.errorCode).toBe("CARD_SPENT");
       });
 
-      it("cannot attack with a unit played this turn (summoning sickness)", () => {
+      it("cannot attack with a unit played this turn (Lag)", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [{ card: alphaSwordwiseHuscle, playedThisTurn: true }] },
-          { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+          { field: [{ card: welcomeToNightCityRetailSwordwiseHuscle, hasLag: true }] },
+          { field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: true }] },
         );
         toAttackPhase(engine);
 
         const failure = engine.expectFailure(() =>
-          engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 }),
+          engine.attackUnit(
+            welcomeToNightCityRetailSwordwiseHuscle,
+            welcomeToNightCityRetailSketchyRipper,
+            { as: P1 },
+          ),
         );
-        expect(failure.errorCode).toBe("SUMMONING_SICKNESS");
+        expect(failure.errorCode).toBe("LAG");
       });
 
       it("can only attack spent rival units, not ready ones", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
-          { field: [alphaRuthlessLowlife] }, // ready (not spent)
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+          { field: [welcomeToNightCityRetailSketchyRipper] }, // ready (not spent)
         );
         toAttackPhase(engine);
 
         const failure = engine.expectFailure(() =>
-          engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 }),
+          engine.attackUnit(
+            welcomeToNightCityRetailSwordwiseHuscle,
+            welcomeToNightCityRetailSketchyRipper,
+            { as: P1 },
+          ),
         );
         expect(failure.errorCode).toBe("TARGET_READY");
       });
@@ -122,12 +146,16 @@ describe("Attack Step", () => {
     describe("Defensive Step", () => {
       it("resolveAttack advances from offensive to defensive step", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
-          { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+          { field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: true }] },
         );
         toAttackPhase(engine);
 
-        engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          welcomeToNightCityRetailSketchyRipper,
+          { as: P1 },
+        );
         engine.resolveAttack({ as: P1 }); // offensive -> defensive
 
         const attack = engine.getState().G.attackState;
@@ -136,12 +164,16 @@ describe("Attack Step", () => {
 
       it("rival can pass the defensive step to proceed to fight", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
-          { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+          { field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: true }] },
         );
         toAttackPhase(engine);
 
-        engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          welcomeToNightCityRetailSketchyRipper,
+          { as: P1 },
+        );
         engine.resolveAttack({ as: P1 }); // offensive -> defensive
         engine.resolveAttack({ as: P2, pass: true }); // defensive -> fight
 
@@ -154,59 +186,81 @@ describe("Attack Step", () => {
       it("higher-power attacker defeats defender", () => {
         // Swordwise Huscle (5) vs Ruthless Lowlife (1)
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
-          { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+          { field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: true }] },
         );
         toAttackPhase(engine);
 
-        engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          welcomeToNightCityRetailSketchyRipper,
+          { as: P1 },
+        );
         engine.resolveFullFight();
 
         // Defender defeated -> trash
         const p2Trash = engine.getCardsInZone("trash", P2);
-        expect(p2Trash.some((c) => c.definitionId === alphaRuthlessLowlife.id)).toBe(true);
+        expect(
+          p2Trash.some((c) => c.definitionId === welcomeToNightCityRetailSketchyRipper.id),
+        ).toBe(true);
 
         // Attacker survives on field
         const p1Field = engine.getCardsInZone("field", P1);
-        expect(p1Field.some((c) => c.definitionId === alphaSwordwiseHuscle.id)).toBe(true);
+        expect(
+          p1Field.some((c) => c.definitionId === welcomeToNightCityRetailSwordwiseHuscle.id),
+        ).toBe(true);
       });
 
       it("higher-power defender defeats attacker", () => {
-        // Ruthless Lowlife (1) attacks Armored Minotaur (9)
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaRuthlessLowlife] },
-          { field: [{ card: alphaArmoredMinotaur, spent: true }] },
+          { field: [welcomeToNightCityRetailSecondhandBombus] },
+          { field: [{ card: welcomeToNightCityRetailSwordwiseHuscle, spent: true }] },
         );
         toAttackPhase(engine);
 
-        engine.attackUnit(alphaRuthlessLowlife, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSecondhandBombus,
+          welcomeToNightCityRetailSwordwiseHuscle,
+          { as: P1 },
+        );
         engine.resolveFullFight();
 
         // Attacker defeated -> trash
         const p1Trash = engine.getCardsInZone("trash", P1);
-        expect(p1Trash.some((c) => c.definitionId === alphaRuthlessLowlife.id)).toBe(true);
+        expect(
+          p1Trash.some((c) => c.definitionId === welcomeToNightCityRetailSecondhandBombus.id),
+        ).toBe(true);
 
         // Defender survives on field
         const p2Field = engine.getCardsInZone("field", P2);
-        expect(p2Field.some((c) => c.definitionId === alphaArmoredMinotaur.id)).toBe(true);
+        expect(
+          p2Field.some((c) => c.definitionId === welcomeToNightCityRetailSwordwiseHuscle.id),
+        ).toBe(true);
       });
 
       it("equal power causes mutual defeat", () => {
-        // Swordwise Huscle (5) vs Swordwise Huscle (5)
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
-          { field: [{ card: alphaArmoredMinotaur, spent: true, powerModifier: -4 }] }, // 9 - 4 = 5
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+          { field: [{ card: welcomeToNightCityRetailSwordwiseHuscle, spent: true }] },
         );
         toAttackPhase(engine);
 
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          welcomeToNightCityRetailSwordwiseHuscle,
+          { as: P1 },
+        );
         engine.resolveFullFight();
 
         // Both defeated
         const p1Trash = engine.getCardsInZone("trash", P1);
         const p2Trash = engine.getCardsInZone("trash", P2);
-        expect(p1Trash.some((c) => c.definitionId === alphaSwordwiseHuscle.id)).toBe(true);
-        expect(p2Trash.some((c) => c.definitionId === alphaArmoredMinotaur.id)).toBe(true);
+        expect(
+          p1Trash.some((c) => c.definitionId === welcomeToNightCityRetailSwordwiseHuscle.id),
+        ).toBe(true);
+        expect(
+          p2Trash.some((c) => c.definitionId === welcomeToNightCityRetailSwordwiseHuscle.id),
+        ).toBe(true);
 
         const p1Field = engine.getCardsInZone("field", P1);
         const p2Field = engine.getCardsInZone("field", P2);
@@ -218,27 +272,36 @@ describe("Attack Step", () => {
     describe("Defeat", () => {
       it("defeated unit moves to trash", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaArmoredMinotaur] }, // power 9
-          { field: [{ card: alphaRuthlessLowlife, spent: true }] }, // power 1
+          { field: [embracingPowerRetailStarterDeckMinotaur] }, // power 9
+          { field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: true }] }, // power 1
         );
         toAttackPhase(engine);
 
-        engine.attackUnit(alphaArmoredMinotaur, alphaRuthlessLowlife, { as: P1 });
+        engine.attackUnit(
+          embracingPowerRetailStarterDeckMinotaur,
+          welcomeToNightCityRetailSketchyRipper,
+          { as: P1 },
+        );
         engine.resolveFullFight();
 
-        const defeated = engine.getCard(alphaRuthlessLowlife, "trash", P2);
+        const defeated = engine.getCard(welcomeToNightCityRetailSketchyRipper, "trash", P2);
         expect(defeated.zone).toBe("trash");
       });
 
       it("defeated unit's attached gear moves to trash with it", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaArmoredMinotaur] }, // power 9
-          { field: [{ card: alphaRuthlessLowlife, spent: true }, alphaMantisBlades] }, // power 1 + gear
+          { field: [embracingPowerRetailStarterDeckMinotaur] }, // power 9
+          {
+            field: [
+              { card: welcomeToNightCityRetailSketchyRipper, spent: true },
+              welcomeToNightCityRetailMantisBlades,
+            ],
+          }, // power 1 + gear
         );
 
         // Attach gear to the defender manually before attacking
-        const defenderCard = engine.getCard(alphaRuthlessLowlife, "field", P2);
-        const gearCard = engine.getCard(alphaMantisBlades, "field", P2);
+        const defenderCard = engine.getCard(welcomeToNightCityRetailSketchyRipper, "field", P2);
+        const gearCard = engine.getCard(welcomeToNightCityRetailMantisBlades, "field", P2);
 
         // Use low-level state to attach gear (no move for this in test engine)
         const state = engine.getState();
@@ -253,23 +316,32 @@ describe("Attack Step", () => {
         // The engine needs gear to be properly attached via operations. Let me use a simpler approach.
         toAttackPhase(engine);
 
-        engine.attackUnit(alphaArmoredMinotaur, alphaRuthlessLowlife, { as: P1 });
+        engine.attackUnit(
+          embracingPowerRetailStarterDeckMinotaur,
+          welcomeToNightCityRetailSketchyRipper,
+          { as: P1 },
+        );
         engine.resolveFullFight();
 
         // Defender is in trash
         const p2Trash = engine.getCardsInZone("trash", P2);
-        expect(p2Trash.some((c) => c.definitionId === alphaRuthlessLowlife.id)).toBe(true);
+        expect(
+          p2Trash.some((c) => c.definitionId === welcomeToNightCityRetailSketchyRipper.id),
+        ).toBe(true);
       });
 
       it("mutual defeat sends both units to trash", () => {
-        // Both power 5
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] }, // power 5
-          { field: [{ card: alphaArmoredMinotaur, spent: true, powerModifier: -4 }] }, // 9-4 = 5
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+          { field: [{ card: welcomeToNightCityRetailSwordwiseHuscle, spent: true }] },
         );
         toAttackPhase(engine);
 
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          welcomeToNightCityRetailSwordwiseHuscle,
+          { as: P1 },
+        );
         engine.resolveFullFight();
 
         expect(engine.getCardsInZone("field", P1)).toHaveLength(0);
@@ -286,20 +358,24 @@ describe("Attack Step", () => {
   describe("Attack Rival (Direct Attack / Steal)", () => {
     describe("Offensive Step", () => {
       it("spends the attacking unit", () => {
-        const engine = CyberpunkTestEngine.createWithFixture({ field: [alphaSwordwiseHuscle] });
+        const engine = CyberpunkTestEngine.createWithFixture({
+          field: [welcomeToNightCityRetailSwordwiseHuscle],
+        });
         toAttackPhase(engine);
 
-        engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+        engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
 
-        const attacker = engine.getCard(alphaSwordwiseHuscle, "field", P1);
+        const attacker = engine.getCard(welcomeToNightCityRetailSwordwiseHuscle, "field", P1);
         expect(attacker.meta.spent).toBe(true);
       });
 
       it("sets attack state with kind direct and defenderId null", () => {
-        const engine = CyberpunkTestEngine.createWithFixture({ field: [alphaSwordwiseHuscle] });
+        const engine = CyberpunkTestEngine.createWithFixture({
+          field: [welcomeToNightCityRetailSwordwiseHuscle],
+        });
         toAttackPhase(engine);
 
-        engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+        engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
 
         const attack = engine.getState().G.attackState;
         expect(attack).not.toBeNull();
@@ -311,18 +387,18 @@ describe("Attack Step", () => {
 
     describe("Steal Resolution", () => {
       it("steals 0 gigs at power 0 (base rule: power-0 Units don't steal)", () => {
-        // alphaArmoredMinotaur has printed power 9; -9 modifier → effective 0.
+        // embracingPowerRetailStarterDeckMinotaur has printed power 9; -9 modifier → effective 0.
         // Direct attacks from a power-0 attacker must not steal any Gigs even
         // on a successful hit (gameplay-guide base rule).
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [{ card: alphaArmoredMinotaur, powerModifier: -9 }] }, // effective power 0
+          { field: [{ card: embracingPowerRetailStarterDeckMinotaur, powerModifier: -9 }] }, // effective power 0
           { gigArea: [{ dieType: "d6", faceValue: 3 }] },
         );
         toAttackPhase(engine);
 
         expect(engine.getGigCount(P2)).toBe(1);
 
-        engine.attackRival(alphaArmoredMinotaur, { as: P1 });
+        engine.attackRival(embracingPowerRetailStarterDeckMinotaur, { as: P1 });
         resolveFullSteal(engine);
 
         expect(engine.getGigCount(P1)).toBe(0);
@@ -331,7 +407,7 @@ describe("Attack Step", () => {
 
       it("steals 1 gig by default (power < 10)", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaArmoredMinotaur] }, // power 9
+          { field: [embracingPowerRetailStarterDeckMinotaur] }, // power 9
           { gigArea: [{ dieType: "d6", faceValue: 3 }] },
         );
         toAttackPhase(engine);
@@ -339,7 +415,7 @@ describe("Attack Step", () => {
         const p2GigsBefore = engine.getGigCount(P2);
         expect(p2GigsBefore).toBe(1);
 
-        engine.attackRival(alphaArmoredMinotaur, { as: P1 });
+        engine.attackRival(embracingPowerRetailStarterDeckMinotaur, { as: P1 });
         resolveFullSteal(engine);
 
         expect(engine.getGigCount(P2)).toBe(0);
@@ -348,7 +424,7 @@ describe("Attack Step", () => {
 
       it("steals 2 gigs at power 10", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [spoilerPlacideVoodooSentinel], hand: [], deck: 0 }, // power 10
+          { field: [welcomeToNightCityRetailPlacideVoodooSentinel], hand: [], deck: 0 }, // power 10
           {
             gigArea: [
               { dieType: "d6", faceValue: 3 },
@@ -361,7 +437,7 @@ describe("Attack Step", () => {
 
         expect(engine.getGigCount(P2)).toBe(3);
 
-        engine.attackRival(spoilerPlacideVoodooSentinel, { as: P1 });
+        engine.attackRival(welcomeToNightCityRetailPlacideVoodooSentinel, { as: P1 });
         resolveFullSteal(engine);
 
         // 1 + floor(10/10) = 2 gigs stolen
@@ -372,8 +448,13 @@ describe("Attack Step", () => {
       it("uses effective attacking power for steal count and direct steal logs", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
           {
-            legendArea: [{ card: alphaSaburoArasakaStubbornPatriach, faceDown: false }],
-            field: [alphaArmoredMinotaur], // printed 9, Saburo makes it 10 while attacking
+            legendArea: [
+              {
+                card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+                faceDown: false,
+              },
+            ],
+            field: [embracingPowerRetailStarterDeckMinotaur], // printed 9, Saburo makes it 10 while attacking
           },
           {
             gigArea: [
@@ -384,7 +465,7 @@ describe("Attack Step", () => {
         );
         toAttackPhase(engine);
 
-        engine.attackRival(alphaArmoredMinotaur, { as: P1 });
+        engine.attackRival(embracingPowerRetailStarterDeckMinotaur, { as: P1 });
         engine.resolveAttack({ as: P1 });
         engine.resolveAttack({ as: P2, pass: true });
         const result = engine.resolveAttack({ as: P1 });
@@ -396,7 +477,7 @@ describe("Attack Step", () => {
             type: "action",
             messageKey: "move.resolveAttack.direct",
             params: expect.objectContaining({
-              attackerName: "Armored Minotaur",
+              attackerName: "Minotaur",
               attackerPower: 10,
               count: 2,
             }),
@@ -407,8 +488,13 @@ describe("Attack Step", () => {
       it("includes effective attacking power on chosen multi-gig steal logs", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
           {
-            legendArea: [{ card: alphaSaburoArasakaStubbornPatriach, faceDown: false }],
-            field: [alphaArmoredMinotaur],
+            legendArea: [
+              {
+                card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+                faceDown: false,
+              },
+            ],
+            field: [embracingPowerRetailStarterDeckMinotaur],
           },
           {
             gigArea: [
@@ -420,7 +506,7 @@ describe("Attack Step", () => {
         );
         toAttackPhase(engine);
 
-        engine.attackRival(alphaArmoredMinotaur, { as: P1 });
+        engine.attackRival(embracingPowerRetailStarterDeckMinotaur, { as: P1 });
         engine.executeMove("resolveAttack", { args: {} }, P1);
         engine.executeMove("resolveAttack", { args: { pass: true } }, P2);
         engine.executeMove("resolveAttack", { args: {} }, P1);
@@ -436,7 +522,7 @@ describe("Attack Step", () => {
           expect(result.moveLogs).toContainEqual(
             expect.objectContaining({
               type: "resolveStealGigs",
-              attackerName: "Armored Minotaur",
+              attackerName: "Minotaur",
               attackerPower: 10,
               stolenCount: 2,
             }),
@@ -446,14 +532,14 @@ describe("Attack Step", () => {
 
       it("steals 0 gigs if rival has none", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle], gigArea: [] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle], gigArea: [] },
           { gigArea: [] }, // no gigs
         );
         toAttackPhase(engine);
 
         expect(engine.getGigCount(P2)).toBe(0);
 
-        engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+        engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
         resolveFullSteal(engine);
 
         expect(engine.getGigCount(P1)).toBe(0);
@@ -462,7 +548,7 @@ describe("Attack Step", () => {
 
       it("stolen gig moves from rival gigArea to attacker gigArea", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] }, // power 5
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] }, // power 5
           { gigArea: [{ dieType: "d10", faceValue: 7 }] },
         );
         toAttackPhase(engine);
@@ -471,7 +557,7 @@ describe("Attack Step", () => {
         expect(p2GigsBefore).toHaveLength(1);
         const stolenDieId = p2GigsBefore[0]!.id;
 
-        engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+        engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
         resolveFullSteal(engine);
 
         // The die moved from P2 to P1
@@ -483,7 +569,7 @@ describe("Attack Step", () => {
 
       it("steals 3 gigs at power 20", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [{ card: alphaArmoredMinotaur, powerModifier: 11 }] }, // 9+11=20
+          { field: [{ card: embracingPowerRetailStarterDeckMinotaur, powerModifier: 11 }] }, // 9+11=20
           {
             gigArea: [
               { dieType: "d4", faceValue: 1 },
@@ -495,7 +581,7 @@ describe("Attack Step", () => {
         );
         toAttackPhase(engine);
 
-        engine.attackRival(alphaArmoredMinotaur, { as: P1 });
+        engine.attackRival(embracingPowerRetailStarterDeckMinotaur, { as: P1 });
         resolveFullSteal(engine);
 
         // 1 + floor(20/10) = 3 gigs stolen
@@ -505,12 +591,12 @@ describe("Attack Step", () => {
 
       it("steals only available gigs when rival has fewer than steal count", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [spoilerPlacideVoodooSentinel], hand: [], deck: 0 }, // power 10 → would steal 2
+          { field: [welcomeToNightCityRetailPlacideVoodooSentinel], hand: [], deck: 0 }, // power 10 → would steal 2
           { gigArea: [{ dieType: "d6", faceValue: 3 }] }, // only 1 gig
         );
         toAttackPhase(engine);
 
-        engine.attackRival(spoilerPlacideVoodooSentinel, { as: P1 });
+        engine.attackRival(welcomeToNightCityRetailPlacideVoodooSentinel, { as: P1 });
         resolveFullSteal(engine);
 
         // Rival only had 1, so only 1 stolen
@@ -520,12 +606,12 @@ describe("Attack Step", () => {
 
       it("emits gigStolen event when a gig is stolen", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
           { gigArea: [{ dieType: "d8", faceValue: 4 }] },
         );
         toAttackPhase(engine);
 
-        engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+        engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
         resolveFullSteal(engine);
 
         const event = engine.getLastEvent("gigStolen");
@@ -534,12 +620,12 @@ describe("Attack Step", () => {
 
       it("attack state is null after steal resolves", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
           { gigArea: [{ dieType: "d6", faceValue: 2 }] },
         );
         toAttackPhase(engine);
 
-        engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+        engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
         resolveFullSteal(engine);
 
         expect(engine.getState().G.attackState).toBeNull();
@@ -552,16 +638,19 @@ describe("Attack Step", () => {
   describe("Blocker Mechanic", () => {
     it("blocker redirects direct attack to itself", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle] }, // power 5
-        { field: [alphaCorpoSecurity], gigArea: [{ dieType: "d6", faceValue: 3 }] }, // blocker, power 2
+        { field: [welcomeToNightCityRetailSwordwiseHuscle] }, // power 5
+        {
+          field: [welcomeToNightCityRetailCorpoSecurity],
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        }, // blocker, power 2
       );
       toAttackPhase(engine);
 
-      engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+      engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
       engine.resolveAttack({ as: P1 }); // offensive -> defensive
 
       // Defender uses blocker during defensive step
-      engine.useBlocker(alphaCorpoSecurity, { as: P2 });
+      engine.useBlocker(welcomeToNightCityRetailCorpoSecurity, { as: P2 });
 
       const attack = engine.getState().G.attackState;
       expect(attack!.defenderId).not.toBeNull();
@@ -572,15 +661,15 @@ describe("Attack Step", () => {
 
     it("attack kind changes to fight after blocker", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle] },
-        { field: [alphaCorpoSecurity] },
+        { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+        { field: [welcomeToNightCityRetailCorpoSecurity] },
       );
       toAttackPhase(engine);
 
-      engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+      engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
       engine.resolveAttack({ as: P1 }); // offensive -> defensive
 
-      engine.useBlocker(alphaCorpoSecurity, { as: P2 });
+      engine.useBlocker(welcomeToNightCityRetailCorpoSecurity, { as: P2 });
 
       const attack = engine.getState().G.attackState;
       expect(attack!.kind).toBe("fight");
@@ -588,33 +677,36 @@ describe("Attack Step", () => {
 
     it("blocker is spent when activated", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle] },
-        { field: [alphaCorpoSecurity] },
+        { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+        { field: [welcomeToNightCityRetailCorpoSecurity] },
       );
       toAttackPhase(engine);
 
-      engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+      engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
       engine.resolveAttack({ as: P1 }); // offensive -> defensive
 
-      engine.useBlocker(alphaCorpoSecurity, { as: P2 });
+      engine.useBlocker(welcomeToNightCityRetailCorpoSecurity, { as: P2 });
 
-      const blocker = engine.getCard(alphaCorpoSecurity, "field", P2);
+      const blocker = engine.getCard(welcomeToNightCityRetailCorpoSecurity, "field", P2);
       expect(blocker.meta.spent).toBe(true);
     });
 
     it("defeating a blocker does NOT steal gigs", () => {
       // Swordwise Huscle (5) vs Corpo Security blocker (2)
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle] }, // power 5
-        { field: [alphaCorpoSecurity], gigArea: [{ dieType: "d6", faceValue: 3 }] },
+        { field: [welcomeToNightCityRetailSwordwiseHuscle] }, // power 5
+        {
+          field: [welcomeToNightCityRetailCorpoSecurity],
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
       );
       toAttackPhase(engine);
 
       const p2GigsBefore = engine.getGigCount(P2);
 
-      engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+      engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
       engine.resolveAttack({ as: P1 }); // offensive -> defensive
-      engine.useBlocker(alphaCorpoSecurity, { as: P2 });
+      engine.useBlocker(welcomeToNightCityRetailCorpoSecurity, { as: P2 });
 
       // Now it's a fight, resolve it
       engine.resolveAttack({ as: P2, pass: true }); // defensive -> fight
@@ -622,7 +714,9 @@ describe("Attack Step", () => {
 
       // Blocker defeated
       const p2Trash = engine.getCardsInZone("trash", P2);
-      expect(p2Trash.some((c) => c.definitionId === alphaCorpoSecurity.id)).toBe(true);
+      expect(p2Trash.some((c) => c.definitionId === welcomeToNightCityRetailCorpoSecurity.id)).toBe(
+        true,
+      );
 
       // No gigs stolen - fight resolution, not steal
       expect(engine.getGigCount(P2)).toBe(p2GigsBefore);
@@ -631,47 +725,51 @@ describe("Attack Step", () => {
 
     it("spent blocker cannot block", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle] },
-        { field: [{ card: alphaCorpoSecurity, spent: true }] },
+        { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+        { field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }] },
       );
       toAttackPhase(engine);
 
-      engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+      engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
       engine.resolveAttack({ as: P1 }); // offensive -> defensive
 
-      const failure = engine.expectFailure(() => engine.useBlocker(alphaCorpoSecurity, { as: P2 }));
+      const failure = engine.expectFailure(() =>
+        engine.useBlocker(welcomeToNightCityRetailCorpoSecurity, { as: P2 }),
+      );
       expect(failure.errorCode).toBe("CARD_SPENT");
     });
 
     it("non-blocker unit cannot block", () => {
       // Ruthless Lowlife has no blocker keyword
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle] },
-        { field: [alphaRuthlessLowlife] },
+        { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+        { field: [welcomeToNightCityRetailSketchyRipper] },
       );
       toAttackPhase(engine);
 
-      engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+      engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
       engine.resolveAttack({ as: P1 }); // offensive -> defensive
 
       const failure = engine.expectFailure(() =>
-        engine.useBlocker(alphaRuthlessLowlife, { as: P2 }),
+        engine.useBlocker(welcomeToNightCityRetailSketchyRipper, { as: P2 }),
       );
       expect(failure.errorCode).toBe("NO_BLOCKER");
     });
 
     it("only the defending player can use blocker", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle] },
-        { field: [alphaCorpoSecurity] },
+        { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+        { field: [welcomeToNightCityRetailCorpoSecurity] },
       );
       toAttackPhase(engine);
 
-      engine.attackRival(alphaSwordwiseHuscle, { as: P1 });
+      engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
       engine.resolveAttack({ as: P1 }); // offensive -> defensive
 
       // P1 (attacker) tries to use P2's blocker
-      const failure = engine.expectFailure(() => engine.useBlocker(alphaCorpoSecurity, { as: P1 }));
+      const failure = engine.expectFailure(() =>
+        engine.useBlocker(welcomeToNightCityRetailCorpoSecurity, { as: P1 }),
+      );
       expect(failure.errorCode).toBe("NOT_YOUR_REACT");
     });
   });
@@ -681,94 +779,126 @@ describe("Attack Step", () => {
   describe("Attack Restrictions", () => {
     it("can attack in the main phase", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle] },
-        { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+        { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+        { field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: true }] },
       );
       expect(engine.getPhase()).toBe("main");
 
       expect(
-        engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 }),
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          welcomeToNightCityRetailSketchyRipper,
+          { as: P1 },
+        ),
       ).toBeSuccessfulCommand();
     });
 
     it("cannot declare a new attack while one is in progress", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle, alphaArmoredMinotaur] },
+        {
+          field: [welcomeToNightCityRetailSwordwiseHuscle, embracingPowerRetailStarterDeckMinotaur],
+        },
         {
           field: [
-            { card: alphaRuthlessLowlife, spent: true },
-            { card: alphaSecondhandBombus, spent: true },
+            { card: welcomeToNightCityRetailSketchyRipper, spent: true },
+            { card: welcomeToNightCityRetailSecondhandBombus, spent: true },
           ],
         },
       );
       toAttackPhase(engine);
 
       // Start first attack
-      engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 });
+      engine.attackUnit(
+        welcomeToNightCityRetailSwordwiseHuscle,
+        welcomeToNightCityRetailSketchyRipper,
+        { as: P1 },
+      );
 
       // Try to declare second attack while first is in progress
       const failure = engine.expectFailure(() =>
-        engine.attackUnit(alphaArmoredMinotaur, alphaSecondhandBombus, { as: P1 }),
+        engine.attackUnit(
+          embracingPowerRetailStarterDeckMinotaur,
+          welcomeToNightCityRetailSecondhandBombus,
+          { as: P1 },
+        ),
       );
       expect(failure.errorCode).toBe("ATTACK_IN_PROGRESS");
     });
 
     it("ready rival units cannot be targeted", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle] },
-        { field: [alphaRuthlessLowlife] }, // ready
+        { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+        { field: [welcomeToNightCityRetailSketchyRipper] }, // ready
       );
       toAttackPhase(engine);
 
       const failure = engine.expectFailure(() =>
-        engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 }),
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          welcomeToNightCityRetailSketchyRipper,
+          { as: P1 },
+        ),
       );
       expect(failure.errorCode).toBe("TARGET_READY");
     });
 
-    it("summoning sickness prevents attacking", () => {
+    it("Lag prevents attacking", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        field: [{ card: alphaSwordwiseHuscle, playedThisTurn: true }],
+        field: [{ card: welcomeToNightCityRetailSwordwiseHuscle, hasLag: true }],
       });
       toAttackPhase(engine);
 
       const failure = engine.expectFailure(() =>
-        engine.attackRival(alphaSwordwiseHuscle, { as: P1 }),
+        engine.attackRival(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 }),
       );
-      expect(failure.errorCode).toBe("SUMMONING_SICKNESS");
+      expect(failure.errorCode).toBe("LAG");
     });
 
     describe("Main-phase moves blocked during attack", () => {
       it("attacker cannot play cards during offensive step", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle], hand: [alphaRuthlessLowlife] },
-          { field: [{ card: alphaArmoredMinotaur, spent: true }] },
+          {
+            field: [welcomeToNightCityRetailSwordwiseHuscle],
+            hand: [welcomeToNightCityRetailSketchyRipper],
+          },
+          { field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: true }] },
         );
         toAttackPhase(engine);
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          embracingPowerRetailStarterDeckMinotaur,
+          { as: P1 },
+        );
 
         const prompt = engine.getPrompt(P1);
         expect(prompt.availableMoves.some((m) => m.moveId === "playCard")).toBe(false);
 
         const failure = engine.expectFailure(() =>
-          engine.playCard(alphaRuthlessLowlife, { as: P1 }),
+          engine.playCard(welcomeToNightCityRetailSketchyRipper, { as: P1 }),
         );
         expect(failure.errorCode).toBe("ATTACK_IN_PROGRESS");
       });
 
       it("attacker cannot sell cards during offensive step", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle], hand: [alphaRuthlessLowlife] },
-          { field: [{ card: alphaArmoredMinotaur, spent: true }] },
+          {
+            field: [welcomeToNightCityRetailSwordwiseHuscle],
+            hand: [welcomeToNightCityRetailSketchyRipper],
+          },
+          { field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: true }] },
         );
         toAttackPhase(engine);
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          embracingPowerRetailStarterDeckMinotaur,
+          { as: P1 },
+        );
 
         const prompt = engine.getPrompt(P1);
         expect(prompt.availableMoves.some((m) => m.moveId === "sellCard")).toBe(false);
 
         const failure = engine.expectFailure(() =>
-          engine.sellCard(alphaRuthlessLowlife, { as: P1 }),
+          engine.sellCard(welcomeToNightCityRetailSketchyRipper, { as: P1 }),
         );
         expect(failure.errorCode).toBe("ATTACK_IN_PROGRESS");
       });
@@ -776,19 +906,30 @@ describe("Attack Step", () => {
       it("attacker cannot call legend during offensive step", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
           {
-            field: [alphaSwordwiseHuscle],
-            legendArea: [{ card: alphaSaburoArasakaStubbornPatriach, faceDown: true }],
+            field: [welcomeToNightCityRetailSwordwiseHuscle],
+            legendArea: [
+              {
+                card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+                faceDown: true,
+              },
+            ],
           },
-          { field: [{ card: alphaArmoredMinotaur, spent: true }] },
+          { field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: true }] },
         );
         toAttackPhase(engine);
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          embracingPowerRetailStarterDeckMinotaur,
+          { as: P1 },
+        );
 
         const prompt = engine.getPrompt(P1);
         expect(prompt.availableMoves.some((m) => m.moveId === "callLegend")).toBe(false);
 
         const failure = engine.expectFailure(() =>
-          engine.callLegend(alphaSaburoArasakaStubbornPatriach, { as: P1 }),
+          engine.callLegend(embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch, {
+            as: P1,
+          }),
         );
         expect(failure.errorCode).toBe("ATTACK_IN_PROGRESS");
       });
@@ -796,19 +937,28 @@ describe("Attack Step", () => {
       it("attacker cannot go solo during offensive step", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
           {
-            field: [alphaSwordwiseHuscle],
-            legendArea: [{ card: alphaSaburoArasakaStubbornPatriach, faceDown: false }],
+            field: [welcomeToNightCityRetailSwordwiseHuscle],
+            legendArea: [
+              {
+                card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+                faceDown: false,
+              },
+            ],
           },
-          { field: [{ card: alphaArmoredMinotaur, spent: true }] },
+          { field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: true }] },
         );
         toAttackPhase(engine);
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          embracingPowerRetailStarterDeckMinotaur,
+          { as: P1 },
+        );
 
         const prompt = engine.getPrompt(P1);
         expect(prompt.availableMoves.some((m) => m.moveId === "goSolo")).toBe(false);
 
         const legendId = engine.getCard(
-          alphaSaburoArasakaStubbornPatriach,
+          embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
           "legendArea",
           P1,
         ).instanceId;
@@ -821,11 +971,15 @@ describe("Attack Step", () => {
 
       it("attacker cannot activate abilities during offensive step", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
-          { field: [{ card: alphaArmoredMinotaur, spent: true }] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+          { field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: true }] },
         );
         toAttackPhase(engine);
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          embracingPowerRetailStarterDeckMinotaur,
+          { as: P1 },
+        );
 
         const prompt = engine.getPrompt(P1);
         expect(prompt.availableMoves.some((m) => m.moveId === "activateAbility")).toBe(false);
@@ -833,11 +987,15 @@ describe("Attack Step", () => {
 
       it("attacker cannot pass phase during attack", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
-          { field: [{ card: alphaArmoredMinotaur, spent: true }] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+          { field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: true }] },
         );
         toAttackPhase(engine);
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          embracingPowerRetailStarterDeckMinotaur,
+          { as: P1 },
+        );
 
         const prompt = engine.getPrompt(P1);
         expect(prompt.availableMoves.some((m) => m.moveId === "passPhase")).toBe(false);
@@ -848,27 +1006,38 @@ describe("Attack Step", () => {
 
       it("defender can call legend during defensive step", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
           {
-            field: [{ card: alphaArmoredMinotaur, spent: true }],
-            legendArea: [{ card: alphaSaburoArasakaStubbornPatriach, faceDown: true }],
+            field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: true }],
+            legendArea: [
+              {
+                card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+                faceDown: true,
+              },
+            ],
           },
         );
         toAttackPhase(engine);
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          embracingPowerRetailStarterDeckMinotaur,
+          { as: P1 },
+        );
         engine.resolveAttack({ as: P1 }); // offensive -> defensive
 
         const prompt = engine.getPrompt(P2);
         expect(prompt.availableMoves.some((m) => m.moveId === "callLegend")).toBe(true);
 
         expect(
-          engine.callLegend(alphaSaburoArasakaStubbornPatriach, { as: P2 }),
+          engine.callLegend(embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch, {
+            as: P2,
+          }),
         ).toBeSuccessfulCommand();
       });
 
       it("defender can play QUICK cards during defensive step", () => {
         const quickProgram: StructuredCardDefinition = {
-          ...(alphaRuthlessLowlife as unknown as StructuredCardDefinition),
+          ...(welcomeToNightCityRetailSketchyRipper as unknown as StructuredCardDefinition),
           id: "test-quick-program",
           externalId: "test-quick-program",
           slug: "test-quick-program",
@@ -883,14 +1052,18 @@ describe("Attack Step", () => {
         } as unknown as StructuredCardDefinition;
 
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
           {
-            field: [{ card: alphaArmoredMinotaur, spent: true }],
+            field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: true }],
             hand: [quickProgram],
           },
         );
         toAttackPhase(engine);
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          embracingPowerRetailStarterDeckMinotaur,
+          { as: P1 },
+        );
         engine.resolveAttack({ as: P1 }); // offensive -> defensive
 
         const prompt = engine.getPrompt(P2);
@@ -901,28 +1074,32 @@ describe("Attack Step", () => {
 
       it("defender cannot play non-QUICK cards during defensive step", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
           {
-            field: [{ card: alphaArmoredMinotaur, spent: true }],
-            hand: [alphaRuthlessLowlife],
+            field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: true }],
+            hand: [welcomeToNightCityRetailSketchyRipper],
           },
         );
         toAttackPhase(engine);
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          embracingPowerRetailStarterDeckMinotaur,
+          { as: P1 },
+        );
         engine.resolveAttack({ as: P1 }); // offensive -> defensive
 
         const prompt = engine.getPrompt(P2);
         expect(prompt.availableMoves.some((m) => m.moveId === "playCard")).toBe(false);
 
         const failure = engine.expectFailure(() =>
-          engine.playCard(alphaRuthlessLowlife, { as: P2 }),
+          engine.playCard(welcomeToNightCityRetailSketchyRipper, { as: P2 }),
         );
         expect(failure.errorCode).toBe("NOT_QUICK");
       });
 
       it("defender can activate QUICK abilities during defensive step", () => {
         const quickUnit: StructuredCardDefinition = {
-          ...(alphaRuthlessLowlife as unknown as StructuredCardDefinition),
+          ...(welcomeToNightCityRetailSketchyRipper as unknown as StructuredCardDefinition),
           id: "test-quick-ability-unit",
           externalId: "test-quick-ability-unit",
           slug: "test-quick-ability-unit",
@@ -943,13 +1120,17 @@ describe("Attack Step", () => {
         } as unknown as StructuredCardDefinition;
 
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
           {
-            field: [{ card: alphaArmoredMinotaur, spent: true }, quickUnit],
+            field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: true }, quickUnit],
           },
         );
         toAttackPhase(engine);
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          embracingPowerRetailStarterDeckMinotaur,
+          { as: P1 },
+        );
         engine.resolveAttack({ as: P1 }); // offensive -> defensive
 
         const prompt = engine.getPrompt(P2);
@@ -960,7 +1141,7 @@ describe("Attack Step", () => {
 
       it("defender cannot activate non-QUICK abilities during defensive step", () => {
         const nonQuickUnit: StructuredCardDefinition = {
-          ...(alphaRuthlessLowlife as unknown as StructuredCardDefinition),
+          ...(welcomeToNightCityRetailSketchyRipper as unknown as StructuredCardDefinition),
           id: "test-nonquick-ability-unit",
           externalId: "test-nonquick-ability-unit",
           slug: "test-nonquick-ability-unit",
@@ -980,13 +1161,17 @@ describe("Attack Step", () => {
         } as unknown as StructuredCardDefinition;
 
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle] },
+          { field: [welcomeToNightCityRetailSwordwiseHuscle] },
           {
-            field: [{ card: alphaArmoredMinotaur, spent: true }, nonQuickUnit],
+            field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: true }, nonQuickUnit],
           },
         );
         toAttackPhase(engine);
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          embracingPowerRetailStarterDeckMinotaur,
+          { as: P1 },
+        );
         engine.resolveAttack({ as: P1 }); // offensive -> defensive
 
         const prompt = engine.getPrompt(P2);
@@ -1000,11 +1185,18 @@ describe("Attack Step", () => {
 
       it("normal main-phase moves are available again after attack resolves", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { field: [alphaSwordwiseHuscle], hand: [alphaRuthlessLowlife] },
-          { field: [{ card: alphaArmoredMinotaur, spent: true }] },
+          {
+            field: [welcomeToNightCityRetailSwordwiseHuscle],
+            hand: [welcomeToNightCityRetailSketchyRipper],
+          },
+          { field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: true }] },
         );
         toAttackPhase(engine);
-        engine.attackUnit(alphaSwordwiseHuscle, alphaArmoredMinotaur, { as: P1 });
+        engine.attackUnit(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          embracingPowerRetailStarterDeckMinotaur,
+          { as: P1 },
+        );
         engine.resolveFullFight();
 
         expect(engine.getState().G.attackState).toBeNull();
@@ -1020,12 +1212,16 @@ describe("Attack Step", () => {
   describe("Multiple Attacks in One Phase", () => {
     it("attack state is null after resolution", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle] },
-        { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+        { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+        { field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: true }] },
       );
       toAttackPhase(engine);
 
-      engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 });
+      engine.attackUnit(
+        welcomeToNightCityRetailSwordwiseHuscle,
+        welcomeToNightCityRetailSketchyRipper,
+        { as: P1 },
+      );
       engine.resolveFullFight();
 
       expect(engine.getState().G.attackState).toBeNull();
@@ -1033,24 +1229,34 @@ describe("Attack Step", () => {
 
     it("can declare a new attack after the previous one resolves", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle, alphaArmoredMinotaur] },
+        {
+          field: [welcomeToNightCityRetailSwordwiseHuscle, embracingPowerRetailStarterDeckMinotaur],
+        },
         {
           field: [
-            { card: alphaRuthlessLowlife, spent: true },
-            { card: alphaSecondhandBombus, spent: true },
+            { card: welcomeToNightCityRetailSketchyRipper, spent: true },
+            { card: welcomeToNightCityRetailSecondhandBombus, spent: true },
           ],
         },
       );
       toAttackPhase(engine);
 
       // First attack
-      engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 });
+      engine.attackUnit(
+        welcomeToNightCityRetailSwordwiseHuscle,
+        welcomeToNightCityRetailSketchyRipper,
+        { as: P1 },
+      );
       engine.resolveFullFight();
 
       expect(engine.getState().G.attackState).toBeNull();
 
       // Second attack with a different unit
-      engine.attackUnit(alphaArmoredMinotaur, alphaSecondhandBombus, { as: P1 });
+      engine.attackUnit(
+        embracingPowerRetailStarterDeckMinotaur,
+        welcomeToNightCityRetailSecondhandBombus,
+        { as: P1 },
+      );
 
       const attack = engine.getState().G.attackState;
       expect(attack).not.toBeNull();

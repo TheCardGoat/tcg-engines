@@ -1,5 +1,6 @@
 export type {
   BaseCard,
+  BattlefieldZone,
   CardBase,
   Card,
   CardCatalogMetadata,

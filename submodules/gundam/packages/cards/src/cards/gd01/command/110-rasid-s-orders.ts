@@ -55,8 +55,10 @@ export const gd01RasidSOrders110: CommandCard = {
           action: {
             action: "chooseAttackTarget",
             unit: {
-              owner: "friendly",
+              owner: "any",
+              cardType: "unit",
               count: 1,
+              attributeFilters: [{ attribute: "level", comparison: "gte", value: 4 }],
             },
             attackTarget: {
               owner: "opponent",

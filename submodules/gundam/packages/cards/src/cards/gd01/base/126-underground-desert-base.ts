@@ -4,6 +4,8 @@ export const gd01UndergroundDesertBase126: BaseCard = {
   cardNumber: "GD01-126",
   name: "Underground Desert Base",
   type: "base",
+  battlefieldZones: ["earth"],
+  color: "green",
   traits: ["maganac corps", "stronghold"],
   id: "GD01-126",
   canonicalId: "GD01-126",

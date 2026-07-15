@@ -1,8 +1,6 @@
 ---
 name: typeset
 description: Improves typography by fixing font choices, hierarchy, sizing, weight, and readability so text feels intentional. Use when the user mentions fonts, type, readability, text hierarchy, sizing looks off, or wants more polished, intentional typography.
-user-invocable: true
-argument-hint: "[target]"
 ---
 
 Assess and improve typography that feels generic, inconsistent, or poorly structured — turning default-looking text into intentional, well-crafted type.
@@ -46,7 +44,7 @@ Analyze what's weak or generic about the current type:
 
 ## Plan Typography Improvements
 
-Consult the [typography reference](reference/typography.md) from the frontend-design skill for detailed guidance on scales, pairing, and loading strategies.
+Consult the [typography reference](../frontend-design/reference/typography.md) from the frontend-design skill for detailed guidance on scales, pairing, and loading strategies.
 
 Create a systematic plan:
 

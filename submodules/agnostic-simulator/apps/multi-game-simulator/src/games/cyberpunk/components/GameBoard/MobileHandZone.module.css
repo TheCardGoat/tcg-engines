@@ -4,15 +4,22 @@
   height: 100%;
   container-type: size;
   overflow: hidden;
+  overscroll-behavior: contain;
   background:
     linear-gradient(180deg, rgb(74 217 255 / 6%), transparent 36%),
     linear-gradient(0deg, rgb(7 9 12 / 94%) 0%, rgb(7 9 12 / 62%) 42%, transparent 100%);
 }
 
 .player {
+  z-index: 12;
   background:
     radial-gradient(ellipse at 50% 100%, rgb(74 217 255 / 13%), transparent 58%),
     linear-gradient(0deg, rgb(7 9 12 / 94%) 0%, rgb(7 9 12 / 70%) 44%, transparent 100%);
+}
+
+.player:has(.commandTray) {
+  z-index: 2400;
+  overflow: visible;
 }
 
 .zone::after {
@@ -23,6 +30,25 @@
   background: linear-gradient(0deg, rgb(7 9 12 / 80%), transparent);
   pointer-events: none;
   z-index: 2;
+}
+
+.edgeFade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 8;
+  width: 34px;
+  pointer-events: none;
+}
+
+.edgeFadeBefore {
+  left: 0;
+  background: linear-gradient(90deg, rgb(7 9 12 / 94%), transparent);
+}
+
+.edgeFadeAfter {
+  right: 0;
+  background: linear-gradient(270deg, rgb(7 9 12 / 94%), transparent);
 }
 
 .zone[data-drop-ready="return"]::before {
@@ -69,14 +95,17 @@
   height: 100%;
   padding: 2px 7px;
   overflow: auto hidden;
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
   scrollbar-width: none;
   scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
 }
 
 .player .scroller {
-  padding-top: 18px;
-  padding-bottom: 5px;
+  align-items: flex-start;
+  padding-top: 3px;
+  padding-bottom: 0;
 }
 
 .playerHandSummary {
@@ -146,14 +175,30 @@
   flex: 0 0 auto;
   min-width: 0;
   min-height: 0;
+  overflow: visible;
+  touch-action: pan-x;
   scroll-snap-align: end;
   transition: transform 160ms ease;
 }
 
+.slot:has(:global(.stack[data-draggable="true"])) {
+  touch-action: pan-x;
+}
+
 .slot {
-  width: clamp(48px, 8dvh, 72px);
+  width: clamp(60px, 19vw, 80px);
   aspect-ratio: 5 / 7;
   filter: drop-shadow(0 4px 7px rgb(0 0 0 / 58%));
+}
+
+.player .slot::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 18px;
+  background: linear-gradient(180deg, transparent, rgb(7 9 12 / 88%));
+  pointer-events: none;
+  z-index: 40;
 }
 
 .player .slot:active,
@@ -161,6 +206,18 @@
 .player .slot[data-selected="true"] {
   transform: translateY(-1.7dvh) scale(1.04);
   z-index: 1000 !important;
+}
+
+.player .slot + .slot {
+  margin-left: clamp(-18px, -3.8dvw, -10px);
+}
+
+.player[data-spread-mode="full"] .scroller {
+  gap: clamp(6px, 1.2vw, 10px);
+}
+
+.player[data-spread-mode="full"] .slot + .slot {
+  margin-left: 0;
 }
 
 .opp {
@@ -179,6 +236,24 @@
   pointer-events: none;
 }
 
+.opp .slot[data-temporary-revealed="true"] {
+  filter: drop-shadow(0 0 9px rgb(245 230 66 / 36%)) drop-shadow(0 4px 8px rgb(0 0 0 / 58%));
+}
+
+.opp .slot[data-temporary-revealed="true"]::after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: -2px;
+  z-index: 2;
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgb(7 9 12 / 90%);
+  background: rgb(245 230 66);
+  box-shadow: 0 0 8px rgb(245 230 66 / 50%);
+  transform: rotate(45deg);
+}
+
 .opp .scroller {
   justify-content: flex-start;
   gap: 4px;
@@ -187,62 +262,52 @@
   overflow: auto hidden;
 }
 
-.oppCount {
-  position: relative;
-  z-index: 6;
-  display: grid;
-  gap: 1px;
-  min-width: 42px;
-  padding: 4px 6px;
-  border: 1px solid rgb(255 61 138 / 42%);
-  background: rgb(7 9 12 / 78%);
-  color: rgb(255 143 187 / 90%);
-  font-size: 7px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  line-height: 1;
-  text-align: center;
-  clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
-}
-
-.oppCount strong {
-  color: #fff7c2;
-  font-size: 14px;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0;
-}
-
 /* Card primitives inside the slot fill it. */
 .slot > * {
   width: 100%;
   height: 100%;
 }
 
-@supports (width: 1cqh) {
-  .player .slot {
-    width: min(88px, calc(71.43cqh - 3px));
-  }
+.player .slot :global(.stack[data-draggable="true"]) {
+  touch-action: pan-x;
+}
 
+.scrollCue {
+  appearance: none;
+  position: absolute;
+  top: 50%;
+  z-index: 35;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 40px;
+  border: 1px solid rgb(74 217 255 / 54%);
+  border-radius: 4px;
+  background: rgb(7 9 12 / 86%);
+  color: rgb(204 249 255);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 74%),
+    0 8px 18px rgb(0 0 0 / 38%);
+  transform: translateY(-50%);
+}
+
+.scrollCue:focus-visible {
+  outline: 2px solid rgb(245 230 66 / 88%);
+  outline-offset: 2px;
+}
+
+.scrollCueBefore {
+  left: 5px;
+}
+
+.scrollCueAfter {
+  right: 5px;
+}
+
+@supports (width: 1cqh) {
   .opp .slot {
     width: min(50px, 71.43cqh);
   }
-}
-
-.player .slot :global([class*="inspectBtn"]) {
-  display: flex;
-  top: auto;
-  right: auto;
-  bottom: 0;
-  left: 0;
-  width: 32px;
-  min-width: 32px;
-  height: 32px;
-  min-height: 32px;
-  border-color: rgb(245 230 66 / 84%);
-  background: rgb(7 9 12 / 88%);
-  box-shadow:
-    0 0 0 1px rgb(0 0 0 / 76%),
-    0 0 10px rgb(245 230 66 / 28%);
 }
 
 .player .slot :global([class*="abilityRail"]) {
@@ -276,30 +341,106 @@
 }
 
 .commandTray {
-  position: absolute;
-  inset: 4px 5px auto;
-  z-index: 30;
+  position: fixed;
+  left: 8px;
+  right: 8px;
+  bottom: calc(
+    var(--mobile-shell-nav-h, 0px) + var(--mobile-portrait-bottom-rail-h, 44px) +
+      var(--mobile-portrait-hand-h, 78px)
+  );
+  z-index: 3400;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-items: stretch;
   gap: 6px;
-  min-height: 36px;
-  padding: 5px 6px;
+  width: auto;
+  max-height: min(132px, 36dvh);
+  padding: 7px;
   border: 1px solid rgb(74 217 255 / 76%);
   background: linear-gradient(90deg, rgb(74 217 255 / 13%), rgb(7 9 12 / 95%) 42%), #07090c;
   box-shadow:
     0 0 0 1px rgb(0 0 0 / 82%),
-    0 0 16px rgb(74 217 255 / 22%);
+    0 8px 26px rgb(0 0 0 / 54%),
+    0 0 18px rgb(74 217 255 / 22%);
   color: rgb(204 249 255);
   pointer-events: auto;
   clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+}
+
+.commandTray[data-command-placement="rival"] {
+  top: calc(
+    env(safe-area-inset-top, 0px) + var(--mobile-portrait-top-rail-h, 44px) +
+      var(--mobile-portrait-opponent-hand-h, 48px)
+  );
+  bottom: auto;
+}
+
+.commandPeek {
+  display: grid;
+  grid-column: 1;
+  grid-row: 1 / -1;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: 7px;
+  min-width: 0;
+  padding-right: 70px;
+}
+
+.commandPreviewImage {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 5 / 7;
+  overflow: hidden;
+  border: 1px solid rgb(245 230 66 / 58%);
+  border-radius: 4px;
+  background: rgb(7 9 12 / 86%);
+  box-shadow: 0 0 12px rgb(245 230 66 / 12%);
+}
+
+.commandPreviewImage > * {
+  width: 100%;
+  height: 100%;
+}
+
+.commandPreviewImageButton {
+  appearance: none;
+  display: block;
+  width: auto;
+  height: min(118px, calc(36dvh - 14px));
+  aspect-ratio: 5 / 7;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.commandPreviewImageButton:focus-visible .commandPreviewImage {
+  outline: 2px solid rgb(245 230 66 / 88%);
+  outline-offset: 2px;
+}
+
+.commandCopy {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+  padding-bottom: 34px;
+}
+
+.commandHeading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 7px;
+  min-width: 0;
 }
 
 .commandName {
   min-width: 0;
   overflow: hidden;
   color: rgb(245 230 66 / 90%);
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.05em;
   line-height: 1.1;
@@ -308,10 +449,70 @@
   white-space: nowrap;
 }
 
-.commandActions {
+.commandKind {
+  flex: 0 1 auto;
+  overflow: hidden;
+  color: rgb(204 249 255 / 70%);
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.commandMeta {
   display: flex;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
   gap: 4px;
+  min-width: 0;
+}
+
+.commandStats {
+  display: flex;
+  gap: 5px;
+}
+
+.commandStats span {
+  min-width: 34px;
+  padding: 2px 5px;
+  border: 1px solid rgb(245 230 66 / 34%);
+  background: rgb(245 230 66 / 8%);
+  color: rgb(255 247 194 / 92%);
+  font-size: 8px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.commandRules {
+  display: -webkit-box;
+  max-height: 3.45em;
+  margin: 0;
+  overflow: hidden;
+  color: rgb(230 252 255 / 78%);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.15;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.commandActions {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  justify-self: end;
+  min-width: 0;
+  max-width: 100%;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -322,7 +523,7 @@
 
 .commandActions button {
   appearance: none;
-  min-width: 44px;
+  min-width: 64px;
   min-height: 28px;
   padding: 0 8px;
   border: 1px solid rgb(74 217 255 / 48%);
@@ -337,8 +538,40 @@
   text-transform: uppercase;
 }
 
+.commandChrome {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.commandIconButton {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center !important;
+  min-width: 30px;
+  width: 30px;
+  min-height: 28px;
+  padding: 0;
+  border: 1px solid rgb(74 217 255 / 48%);
+  border-radius: 2px;
+  background: rgb(7 9 12 / 72%);
+  color: rgb(230 252 255 / 94%);
+  cursor: pointer;
+}
+
+.commandIconButton svg {
+  display: block;
+}
+
 .commandActions button:focus-visible,
-.commandActions button:active {
+.commandActions button:active,
+.commandIconButton:focus-visible,
+.commandIconButton:active {
   border-color: rgb(245 230 66 / 90%);
   background: rgb(245 230 66 / 13%);
   color: #fff7c2;

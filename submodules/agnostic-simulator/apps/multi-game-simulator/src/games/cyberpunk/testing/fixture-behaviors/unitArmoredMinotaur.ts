@@ -12,7 +12,7 @@ export const unitArmoredMinotaurBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitArmoredMinotaur",
   label: "Armored Minotaur - high Street Cred defeats low-power rival",
   references: [
-    "packages/engine/src/cards/alpha/units/armored-minotaur.test.ts",
+    "packages/engine/src/cards/embracingpowerretailstarterdeck/units/minotaur.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

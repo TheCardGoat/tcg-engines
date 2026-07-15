@@ -67,13 +67,6 @@ export const gd03PalaceAthene009: UnitCard = {
           },
         ],
       },
-      // KNOWN LIMITATION: the `validateDeployTriggerTargets` plumbing
-      // pre-validates every counted target before any `optionalAnswers`
-      // get read, so deploying Palace Athene without supplying ALL 3
-      // targets (2 trash + 1 enemy) up front is rejected even when the
-      // controller wants to decline the optional branch. The deploy-
-      // trigger validator needs to be taught to skip targets gated on a
-      // not-yet-answered optional. Tracked separately.
       directives: [
         {
           action: {

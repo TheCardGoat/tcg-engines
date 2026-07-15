@@ -10,7 +10,9 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const legendPanamPalmerNomadCavalryBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendPanamPalmerNomadCavalry",
   label: "Panam Palmer - transfers legend gear to attacker",
-  references: ["packages/engine/src/cards/spoiler/legends/panam-palmer-nomad-cavalry.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/legends/panam-palmer-nomad-cavalry.test.ts",
+  ],
   async run(pom) {
     const panam = await pom.getCardInZoneByDefinitionId(
       "legendArea",

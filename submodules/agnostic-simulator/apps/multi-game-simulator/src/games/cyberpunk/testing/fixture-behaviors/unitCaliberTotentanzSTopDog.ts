@@ -13,7 +13,7 @@ export const unitCaliberTotentanzSTopDogBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitCaliberTotentanzSTopDog",
   label: "Caliber - defeated trigger forces rival discards",
   references: [
-    "packages/engine/src/cards/spoiler/units/caliber-totentanz-s-top-dog.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/caliber-totentanz-s-top-dog.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

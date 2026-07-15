@@ -9,7 +9,11 @@ import { getMoveProcedure } from "../runtime/match-runtime.procedure.ts";
 import type { MatchStaticResources } from "../runtime/static-resources.ts";
 
 import { commandToCandidate, type GundamBotCandidate } from "./candidate-types.ts";
-import { seedPrimaryCardInput, selectTargetInputBinding } from "./move-binding.ts";
+import {
+  seedPrimaryCardInput,
+  selectModeInputBinding,
+  selectTargetInputBinding,
+} from "./move-binding.ts";
 import {
   buildPendingChoicePrompt,
   findChoiceDirective,
@@ -28,8 +32,9 @@ import { buildReadAPI } from "../runtime/match-runtime.queries.ts";
 function findOptionalHeadDirectiveIndex(state: MatchState, playerId: PlayerId): number | null {
   const g = state.G as unknown as GundamG;
   if (!g.pendingEffects || g.pendingEffects.length === 0) return null;
-  const activePlayerId = state.ctx.status.activePlayer as unknown as string;
-  const head = priorityHead(g, activePlayerId);
+  const turnPlayerId = (state.ctx.status.turnPlayer ??
+    state.ctx.status.activePlayer) as unknown as string;
+  const head = priorityHead(g, turnPlayerId);
   if (!head) return null;
   if (head.controllerId !== (playerId as unknown as string)) return null;
   const choice = findChoiceDirective(head);
@@ -49,8 +54,9 @@ function findChooseOneHeadShape(
 ): { directiveIndex: number; optionCount: number } | null {
   const g = state.G as unknown as GundamG;
   if (!g.pendingEffects || g.pendingEffects.length === 0) return null;
-  const activePlayerId = state.ctx.status.activePlayer as unknown as string;
-  const head = priorityHead(g, activePlayerId);
+  const turnPlayerId = (state.ctx.status.turnPlayer ??
+    state.ctx.status.activePlayer) as unknown as string;
+  const head = priorityHead(g, turnPlayerId);
   if (!head) return null;
   if (head.controllerId !== (playerId as unknown as string)) return null;
   const choice = findChoiceDirective(head);
@@ -71,7 +77,7 @@ function findDeckLookHeadAnswer(
   const prompt = buildPendingChoicePrompt(
     g,
     buildReadAPI(state, staticResources),
-    state.ctx.status.activePlayer as unknown as string,
+    (state.ctx.status.turnPlayer ?? state.ctx.status.activePlayer) as unknown as string,
   );
   if (!prompt || prompt.kind !== "deckLook") return null;
   if (prompt.controllerId !== (playerId as unknown as string)) return null;
@@ -80,7 +86,10 @@ function findDeckLookHeadAnswer(
   const remaining = prompt.revealedCardIds.filter((id) => id !== tutorCardId);
   const answer: DeckLookAnswer = tutorCardId ? { tutorCardId } : {};
 
-  if (prompt.returnMode === "topOrTrash") {
+  if (prompt.randomizeRemainingToBottom) {
+    // The engine owns the seeded random ordering. The bot chooses only the
+    // optional tutor, exactly like a human client.
+  } else if (prompt.returnMode === "topOrTrash") {
     answer.toTrash = remaining;
   } else if (prompt.returnMode === "topAndBottom") {
     if (remaining.length === 1) {
@@ -207,14 +216,15 @@ function walkProcedure(
   }
 
   if (step.kind === "selectMode") {
-    // Each mode's `id` is a string-encoded effectIndex (see
-    // `activateAbility.describeProcedure`). `effectIndex` is always a
-    // number in the move's input shape, so we coerce here.
+    const binding = selectModeInputBinding(moveName);
     const slice = step.modes.slice(0, ctx.caps.modeOptions);
     for (const mode of slice) {
-      const asNumber = Number(mode.id);
-      const value = Number.isFinite(asNumber) ? asNumber : mode.id;
-      walkProcedure(ctx, moveName, { ...partialInput, effectIndex: value }, depth + 1);
+      walkProcedure(
+        ctx,
+        moveName,
+        { ...partialInput, [binding.key]: binding.coerce(mode.id) },
+        depth + 1,
+      );
     }
     return;
   }

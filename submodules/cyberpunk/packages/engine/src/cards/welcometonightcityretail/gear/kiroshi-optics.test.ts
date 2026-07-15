@@ -14,7 +14,7 @@ describe("Kiroshi Optics (retail)", () => {
         {
           card: welcomeToNightCityRetailFieldOperator,
           spent: false,
-          playedThisTurn: false,
+          hasLag: false,
           attachedGears: [welcomeToNightCityRetailKiroshiOptics],
         },
       ],
@@ -41,7 +41,7 @@ describe("Kiroshi Optics (retail)", () => {
         {
           card: welcomeToNightCityRetailFieldOperator,
           spent: false,
-          playedThisTurn: false,
+          hasLag: false,
           attachedGears: [welcomeToNightCityRetailKiroshiOptics],
         },
       ],

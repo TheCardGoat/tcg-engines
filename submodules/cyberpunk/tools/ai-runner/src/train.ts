@@ -176,7 +176,7 @@ function evaluateWeights(
     maxSteps: opts.maxSteps,
     realCards: opts.realCards ?? false,
   });
-  const wins = summary.perPlayerWins["p1"] ?? 0;
+  const wins = summary.candidateWins;
   return {
     wins,
     matches: summary.matches,
@@ -196,24 +196,33 @@ function runBatchWithStrategies(args: {
   seed: string;
   maxSteps?: number;
   realCards: boolean;
-}): { matches: number; perPlayerWins: Record<string, number> } {
+}): { matches: number; candidateWins: number } {
   const catalog = args.realCards ? createRealCatalog() : createTestCatalog();
   const decks = args.realCards ? createRealDecks() : createTestDecks();
-  const perPlayerWins: Record<string, number> = { p1: 0, p2: 0 };
+  let candidateWins = 0;
   for (let i = 0; i < args.matches; i++) {
-    const result = runAutoMatch({
+    const seed = `${args.seed}/match-${i}`;
+    const candidateAsP1 = runAutoMatch({
       players: createTestPlayers(),
       decks,
       strategies: [args.a, args.b],
       catalog,
-      seed: `${args.seed}/match-${i}`,
+      seed,
       maxSteps: args.maxSteps,
     });
-    if (result.winnerId) {
-      perPlayerWins[result.winnerId] = (perPlayerWins[result.winnerId] ?? 0) + 1;
-    }
+    if (candidateAsP1.winnerId === "p1") candidateWins++;
+
+    const candidateAsP2 = runAutoMatch({
+      players: createTestPlayers(),
+      decks,
+      strategies: [args.b, args.a],
+      catalog,
+      seed,
+      maxSteps: args.maxSteps,
+    });
+    if (candidateAsP2.winnerId === "p2") candidateWins++;
   }
-  return { matches: args.matches, perPlayerWins };
+  return { matches: args.matches * 2, candidateWins };
 }
 
 export function trainGreedy(opts: TrainOptions): TrainResult {

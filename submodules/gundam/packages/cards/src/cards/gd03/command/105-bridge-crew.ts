@@ -84,6 +84,7 @@ export const gd03BridgeCrew105: CommandCard = {
             action: "chooseAttackTarget",
             unit: {
               owner: "friendly",
+              cardType: "unit",
               count: 1,
             },
             attackTarget: {
@@ -92,6 +93,7 @@ export const gd03BridgeCrew105: CommandCard = {
               state: "active",
               attributeFilters: [{ attribute: "paired", comparison: "eq", value: false }],
             },
+            duration: "thisTurn",
           },
         },
       ],

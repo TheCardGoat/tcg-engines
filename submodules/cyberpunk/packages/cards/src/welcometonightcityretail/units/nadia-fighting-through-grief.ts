@@ -36,7 +36,7 @@ export const welcomeToNightCityRetailNadiaFightingThroughGrief = defineCyberpunk
           duration: "continuous",
           conditions: [
             {
-              condition: "playedThisTurn",
+              condition: "hasLag",
               target: {
                 selector: "self",
               },

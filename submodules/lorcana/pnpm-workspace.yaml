@@ -4,11 +4,23 @@ packages:
   - "packages/tools/*"
 
 catalog:
+  "@typescript/native": "npm:typescript@7.0.2"
+  "@typescript/native-preview": "npm:typescript@7.0.2"
   "@discord/embedded-app-sdk": ^2.5.0
-  vite: "npm:@voidzero-dev/vite-plus-core@0.1.21"
-  vite-plus: 0.1.21
-  vitest: "npm:@voidzero-dev/vite-plus-test@0.1.21"
+  vite: "npm:@voidzero-dev/vite-plus-core@0.2.4"
+  vite-plus: 0.2.4
+  vitest: "npm:@voidzero-dev/vite-plus-test@0.1.24"
   "@types/node": ^24.12.0
-  typescript: ^5
+  typescript: "npm:@typescript/typescript6@6.0.2"
   "@better-auth/infra": ^0.2.5
   better-auth: ^1.6.9
+
+catalogMode: prefer
+
+overrides:
+  "@voidzero-dev/vite-plus-core": 0.2.4
+  vite: "catalog:"
+  vitest: "catalog:"
+
+patchedDependencies:
+  '@voidzero-dev/vite-plus-test': patches/@voidzero-dev__vite-plus-test.patch

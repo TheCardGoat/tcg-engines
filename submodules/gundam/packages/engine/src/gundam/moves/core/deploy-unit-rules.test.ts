@@ -160,7 +160,7 @@ describe("Gap 1 — Link Unit can attack turn deployed (rule 3-2-6-3)", () => {
 
     const engine = GundamTestEngine.create(
       { hand: [unit], resourceArea: resources(3) },
-      { play: [enemy] },
+      { play: [{ card: enemy, exhausted: true }] },
     );
 
     const p1 = engine.asPlayer(PLAYER_ONE);
@@ -182,7 +182,7 @@ describe("Gap 1 — Link Unit can attack turn deployed (rule 3-2-6-3)", () => {
 
     const engine = GundamTestEngine.create(
       { hand: [unit, pilot], resourceArea: resources(5) },
-      { play: [enemy] },
+      { play: [{ card: enemy, exhausted: true }] },
     );
 
     const p1 = engine.asPlayer(PLAYER_ONE);

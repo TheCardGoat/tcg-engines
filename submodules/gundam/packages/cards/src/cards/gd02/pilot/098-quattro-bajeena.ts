@@ -103,25 +103,13 @@ export const gd02QuattroBajeena098: PilotCard = {
         // lacks the trait.
         conditions: [{ type: "linkedUnitHasTrait", trait: "aeug" }],
       },
-      // Non-targeted mandatory `draw` always resolves, so
-      // `dependsOnPrevious` on the `discard` here fires iff the `draw`
-      // fired at all — in other words: the whole clause triggers on the
-      // AEUG gate and then draw-then-discard run in sequence. Keeping
-      // the dependency explicit matches the printed "If you do"
-      // connective (rule-less but canonical).
       directives: [
         {
           action: {
-            action: "draw",
-            count: 1,
+            action: "drawThenDiscard",
+            drawCount: 1,
+            discardCount: 1,
           },
-        },
-        {
-          action: {
-            action: "discard",
-            count: 1,
-          },
-          dependsOnPrevious: true,
         },
       ],
       sourceText: "【When Linked】If this is an (AEUG) Unit, draw 1. If you do, discard 1.",

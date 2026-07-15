@@ -5,32 +5,13 @@
  * return the rest" pattern found on cards like Saint Gabriel Institute,
  * Flit Asuno's 【When Linked】, and The Path to Victory or Defeat.
  *
- * Auto-resolving implementation with top/bottom placement:
+ * Player decisions arrive through deckLookAnswers, populated from the
+ * public pending-choice protocol. Ordered deck arrays store their top card
+ * at the end, so revealed cards are read in draw order and explicit top /
+ * bottom routes are applied without exposing the rest of the hidden deck.
  *
- *   - If `tutorFilter` is present, adds the first matching card among
- *     the revealed top-N to the controller's hand.
- *   - `return: "topAndBottom"`:
- *       - count = 1: the revealed card is placed to the **bottom** of the
- *         deck. This is a deterministic auto-resolve for "Return it to
- *         the top or bottom" — placing to the bottom is the strategically
- *         meaningful choice that tests can verify. A follow-up PR can add
- *         a `PendingDeckRevealPrompt` so the controller picks top/bottom.
- *       - count > 1: splits the remainder — first half stays on top,
- *         second half goes to bottom (in revealed order).
- *   - `return: "chooseTop"`:
- *       - when `remainingDestination` is set, the first non-tutored
- *         revealed card stays on top and the rest move to that
- *         destination in revealed order.
- *       - with `remainingDestination: "trash"`, the first revealed card
- *         stays on top and the rest go to trash. This deterministic
- *         branch models "return 1 to the top. Place the remaining card
- *         into your trash" until a deck-reveal prompt lets the player
- *         choose which revealed card stays on top.
- *       - otherwise, all remaining non-tutored cards go to the bottom in
- *         revealed order (legacy auto-resolve).
- *
- * This is enough to exercise the action end-to-end and unblock burst /
- * command / whenLinked / deploy tests for the affected cards.
+ * The deterministic branches are retained only for legacy execution paths
+ * that invoke the directive without a pending answer.
  */
 
 import type { Card, TargetFilter } from "@tcg/gundam-types";
@@ -46,11 +27,13 @@ import {
 import { evaluateTargetFilter } from "../../../runtime/target-dsl.ts";
 import { emitGundamLog } from "../../logging.ts";
 import { enqueueObserverTriggers, enqueueOwnCardTriggers } from "../pending-effects.ts";
+import { takeTopCards } from "../../../runtime/zone-order.ts";
 
 export function handleLookAtTopDeckAction(
   count: number,
   returnMode: "topAndBottom" | "chooseTop" | "topOrTrash",
   remainingDestination: "bottom" | "trash" | undefined,
+  randomizeRemainingToBottom: boolean,
   tutorFilter: TargetFilter | undefined,
   tutorDestination: "hand" | "battleArea" | undefined,
   ctx: EffectExecutionContext,
@@ -59,7 +42,7 @@ export function handleLookAtTopDeckAction(
   const deckCards = ctx.framework.zones.getCards({ zone: "deck", playerId });
   if (deckCards.length === 0) return;
 
-  const topN = deckCards.slice(0, count);
+  const topN = takeTopCards(deckCards, count);
 
   // Revealed top-N is visible only to the searcher (rule 7-3-2: looking
   // at a zone doesn't expose it to the opponent).
@@ -115,13 +98,13 @@ export function handleLookAtTopDeckAction(
       enqueueOwnCardTriggers(ctx.G, event, tutored, playerId, ctx.framework);
       enqueueObserverTriggers(ctx.G, event, ctx.framework, tutored);
     }
-    // Tutor: searcher sees the card identity, opponent sees only that
-    // something was tutored. Model as PRIVATE since the card is already
-    // hidden once it enters hand — no further public signal needed.
+    // Printed tutor effects reveal the selected card before it enters a
+    // hidden hand. The looked-at group remains private, but this identity is
+    // public so both players can verify that the chosen card matched.
     emitGundamLog(ctx.framework, {
       type: "gundam.effect.cardTutored",
       values: { playerId, cardId: tutored },
-      visibility: { mode: "PRIVATE", visibleTo: [playerId as PlayerId] },
+      visibility: { mode: "PUBLIC" },
       category: "action",
     });
     if (destination === "battleArea") {
@@ -137,6 +120,11 @@ export function handleLookAtTopDeckAction(
   const remaining = topN.filter((id) => id !== tutored);
   if (remaining.length === 0) return;
 
+  if (randomizeRemainingToBottom) {
+    moveCardsToBottom(ctx.framework.random.shuffle([...remaining]), playerId, ctx);
+    return;
+  }
+
   if (answer) {
     applyDeckLookAnswer(remaining, answer, playerId, ctx);
     return;
@@ -151,23 +139,23 @@ export function handleLookAtTopDeckAction(
 
   if (returnMode === "chooseTop") {
     if (remainingDestination) {
-      const destination = remainingDestination === "trash" ? "trash" : "deck";
       const toMove = remaining.slice(1);
-      for (const id of toMove) {
-        ctx.framework.zones.moveCard(id, { zone: destination, playerId });
+      if (remainingDestination === "trash") {
+        for (const id of toMove) {
+          ctx.framework.zones.moveCard(id, { zone: "trash", playerId });
+        }
+      } else {
+        moveCardsToBottom(toMove, playerId, ctx);
       }
       return;
     }
 
     // Send all remaining cards to the bottom of the deck in revealed order.
-    for (const id of remaining) {
-      ctx.framework.zones.moveCard(id, { zone: "deck", playerId });
-    }
+    moveCardsToBottom(remaining, playerId, ctx);
     return;
   }
 
-  // topAndBottom: the player chooses which cards stay on top vs. go to
-  // the bottom. Auto-resolve heuristic:
+  // Legacy topAndBottom fallback when no player answer was supplied:
   //
   //   - count = 1: move the single card to the bottom. This exercises the
   //     "Return it to the top or bottom" choice and is the strategically
@@ -181,15 +169,13 @@ export function handleLookAtTopDeckAction(
   //     extra card.
   if (remaining.length === 1) {
     // Single card → move to bottom.
-    ctx.framework.zones.moveCard(remaining[0]!, { zone: "deck", playerId });
+    moveCardsToBottom(remaining, playerId, ctx);
     return;
   }
 
   const topHalf = Math.ceil(remaining.length / 2);
   const toBottom = remaining.slice(topHalf);
-  for (const id of toBottom) {
-    ctx.framework.zones.moveCard(id, { zone: "deck", playerId });
-  }
+  moveCardsToBottom(toBottom, playerId, ctx);
 }
 
 function applyDeckLookAnswer(
@@ -201,18 +187,36 @@ function applyDeckLookAnswer(
   const remainingSet = new Set(remaining);
   const toTrash = uniqueKnown(answer.toTrash, remainingSet);
   const toBottom = uniqueKnown(answer.toBottom, remainingSet).filter((id) => !toTrash.includes(id));
-  const routed = new Set([...toTrash, ...toBottom, ...(answer.toTop ?? [])]);
+  const toTop = uniqueKnown(answer.toTop, remainingSet).filter(
+    (id) => !toTrash.includes(id) && !toBottom.includes(id),
+  );
 
   for (const id of toTrash) {
     ctx.framework.zones.moveCard(id, { zone: "trash", playerId });
   }
-  for (const id of toBottom) {
+  moveCardsToBottom(toBottom, playerId, ctx);
+  moveCardsToTop(toTop, playerId, ctx);
+}
+
+/** `ids` are ordered top-most first. */
+function moveCardsToTop(
+  ids: readonly string[],
+  playerId: string,
+  ctx: EffectExecutionContext,
+): void {
+  for (const id of ids.toReversed()) {
     ctx.framework.zones.moveCard(id, { zone: "deck", playerId });
   }
-  for (const id of remaining) {
-    if (!routed.has(id)) {
-      ctx.framework.zones.moveCard(id, { zone: "deck", playerId });
-    }
+}
+
+/** `ids` are ordered bottom-most first. */
+function moveCardsToBottom(
+  ids: readonly string[],
+  playerId: string,
+  ctx: EffectExecutionContext,
+): void {
+  for (const id of ids.toReversed()) {
+    ctx.framework.zones.moveCard(id, { zone: "deck", playerId }, { index: 0 });
   }
 }
 

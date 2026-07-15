@@ -35,6 +35,12 @@ describe("Rick Dias (Red) (GD02-075)", () => {
 
     expectSuccess(p1.enterBattle(attackerId, enemyId));
 
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("targetSelection");
+    if (choice?.kind !== "targetSelection") return;
+    expect(choice.legalTargetIds).toEqual(expect.arrayContaining([baseId, enemyId]));
+    expectSuccess(p1.resolveEffect({ targets: [baseId, enemyId] }));
+
     // Base should be rested
     expect(isCardExhausted(engine, baseId)).toBe(true);
     // Enemy should have AP-2 continuous effect

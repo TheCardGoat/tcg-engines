@@ -22,7 +22,7 @@ beforeAll(() => {
  */
 
 describe("Lag and Adrenaline", () => {
-  describe("Lag — summoning sickness", () => {
+  describe("Lag", () => {
     it("prevents a fresh unit from attacking a spent rival unit", () => {
       const freshUnit = createMockUnit({ id: "fresh", name: "Fresh Unit", cost: 1, power: 3 });
       const target = createMockUnit({ id: "target", name: "Target", cost: 1, power: 1 });
@@ -35,14 +35,14 @@ describe("Lag and Adrenaline", () => {
       // Spend the target so it can be attacked.
       engine.judgeSpendCard(engine.getCard(target, "field", P2).instanceId);
 
-      // The unit was placed via fixture with playedThisTurn already false,
+      // The unit was placed via fixture with hasLag already false,
       // so to test Lag we need a unit that was actually played this turn.
       engine.playCard(freshUnit, { as: P1 });
       const played = engine.getCard(freshUnit, "field", P1);
-      expect(played.meta.playedThisTurn).toBe(true);
+      expect(played.meta.hasLag).toBe(true);
 
       const failure = engine.expectFailure(() => engine.attackUnit(freshUnit, target, { as: P1 }));
-      expect(failure.errorCode).toBe("SUMMONING_SICKNESS");
+      expect(failure.errorCode).toBe("LAG");
     });
 
     it("prevents a fresh unit from attacking the rival directly", () => {
@@ -52,10 +52,10 @@ describe("Lag and Adrenaline", () => {
 
       engine.playCard(freshUnit, { as: P1 });
       const played = engine.getCard(freshUnit, "field", P1);
-      expect(played.meta.playedThisTurn).toBe(true);
+      expect(played.meta.hasLag).toBe(true);
 
       const failure = engine.expectFailure(() => engine.attackRival(freshUnit, { as: P1 }));
-      expect(failure.errorCode).toBe("SUMMONING_SICKNESS");
+      expect(failure.errorCode).toBe("LAG");
     });
 
     it("clears at the start of the next turn", () => {
@@ -68,14 +68,14 @@ describe("Lag and Adrenaline", () => {
       );
 
       engine.playCard(freshUnit, { as: P1 });
-      expect(engine.getCard(freshUnit, "field", P1).meta.playedThisTurn).toBe(true);
+      expect(engine.getCard(freshUnit, "field", P1).meta.hasLag).toBe(true);
 
       // End P1's turn, then P2's turn, then back to P1.
       engine.passPhase({ as: P1 });
       engine.completeTurn({ as: P2 });
 
       // Now it's P1's turn 2. The unit's Lag should be cleared.
-      expect(engine.getCard(freshUnit, "field", P1).meta.playedThisTurn).toBe(false);
+      expect(engine.getCard(freshUnit, "field", P1).meta.hasLag).toBe(false);
 
       // Spend the target so it can be attacked.
       engine.judgeSpendCard(engine.getCard(target, "field", P2).instanceId);
@@ -105,7 +105,7 @@ describe("Lag and Adrenaline", () => {
       engine.judgeSpendCard(engine.getCard(target, "field", P2).instanceId);
 
       engine.playCard(adrenalineUnit, { as: P1 });
-      expect(engine.getCard(adrenalineUnit, "field", P1).meta.playedThisTurn).toBe(true);
+      expect(engine.getCard(adrenalineUnit, "field", P1).meta.hasLag).toBe(true);
 
       // Adrenaline lets it attack despite Lag.
       expect(engine.attackUnit(adrenalineUnit, target, { as: P1 })).toBeSuccessfulCommand();
@@ -126,7 +126,7 @@ describe("Lag and Adrenaline", () => {
       );
 
       engine.playCard(adrenalineUnit, { as: P1 });
-      expect(engine.getCard(adrenalineUnit, "field", P1).meta.playedThisTurn).toBe(true);
+      expect(engine.getCard(adrenalineUnit, "field", P1).meta.hasLag).toBe(true);
 
       // Adrenaline lets it attack rival directly despite Lag.
       expect(engine.attackRival(adrenalineUnit, { as: P1 })).toBeSuccessfulCommand();

@@ -4,7 +4,12 @@ import {
   type OpenInSimulatorOptions,
   type OpenInSimulatorResult,
 } from "@tcg/engine-core/test-simulator";
-import type { StructuredCardDefinition, CardZone, CardType } from "@tcg/cyberpunk-types";
+import type {
+  StructuredCardDefinition,
+  CardZone,
+  CardType,
+  ScryDestinationZone,
+} from "@tcg/cyberpunk-types";
 import type { MatchState } from "../types/match-state.ts";
 import type {
   CommandResult,
@@ -24,6 +29,7 @@ import type {
 } from "../types/match-state.ts";
 import { asCardInstanceId } from "../types/branded.ts";
 import { LocalEngine } from "../transport/local-engine.ts";
+import { allMoves } from "../moves/index.ts";
 import { judgeAllMoves } from "../moves/judge.ts";
 import { registerMoves } from "../command/index.ts";
 import { getCardRegistry } from "../state/card-registry.ts";
@@ -254,7 +260,7 @@ export class CyberpunkTestEngine {
       recomputeActiveEffects(draft);
     });
     this.engine = new LocalEngine(stateWithActiveEffects);
-    registerMoves(judgeAllMoves);
+    registerMoves({ ...allMoves, ...judgeAllMoves });
     this.autoGainGig = opts?.autoGainGig ?? true;
     // The auto-advance from setup→play (via mulligan/keepHand inside
     // createTestMatchState path) may already have set a `gainGig` pending
@@ -475,17 +481,43 @@ export class CyberpunkTestEngine {
     );
   }
 
-  resolveSearchDeck(selectedCards: CardRef[], opts?: MoveOpts): CommandSuccess {
+  resolveScry(
+    destinations: Array<{ zone: ScryDestinationZone; cards: CardRef[] }>,
+    opts?: MoveOpts,
+  ): CommandSuccess {
     const playerId = opts?.as ?? this.getActivePlayerId();
     const state = this.getState();
     const choice = state.G.turnMetadata.pendingChoice;
-    if (!choice || choice.type !== "searchDeck") {
-      throw new Error("No searchDeck pending choice to resolve");
+    if (!choice || choice.type !== "scry") {
+      throw new Error("No scry pending choice to resolve");
     }
-    const selectedCardIds = selectedCards.map(
-      (card) => resolveCardRef(state, card, undefined, playerId) as string,
+    return this.exec(
+      "resolveScry",
+      {
+        args: {
+          destinations: destinations.map((destination) => ({
+            zone: destination.zone,
+            cardIds: destination.cards.map(
+              (card) => resolveCardRef(state, card, undefined, playerId) as string,
+            ),
+          })),
+        },
+      },
+      playerId,
     );
-    return this.exec("resolveSearchDeck", { args: { selectedCardIds } }, playerId);
+  }
+
+  resolveScryTo(
+    zone: ScryDestinationZone,
+    selectedCards: CardRef[],
+    opts?: MoveOpts,
+  ): CommandSuccess {
+    return this.resolveScry([{ zone, cards: selectedCards }], opts);
+  }
+
+  resolveRevealDestination(destination: "hand" | "trash", opts?: MoveOpts): CommandSuccess {
+    const playerId = opts?.as ?? this.getActivePlayerId();
+    return this.exec("resolveRevealDestination", { args: { destination } }, playerId);
   }
 
   resolveDiscardFromHand(cards: CardRef[], opts?: MoveOpts): CommandSuccess {
@@ -1243,8 +1275,16 @@ export class PlayerHandle {
   activateAbility(card: CardRef, abilityIndex: number): CommandSuccess {
     return this.engine.activateAbility(card, abilityIndex, { as: this.playerId });
   }
-  resolveSearchDeck(selectedCards: CardRef[]): CommandSuccess {
-    return this.engine.resolveSearchDeck(selectedCards, { as: this.playerId });
+  resolveScry(
+    destinations: Array<{ zone: ScryDestinationZone; cards: CardRef[] }>,
+  ): CommandSuccess {
+    return this.engine.resolveScry(destinations, { as: this.playerId });
+  }
+  resolveScryTo(zone: ScryDestinationZone, selectedCards: CardRef[]): CommandSuccess {
+    return this.engine.resolveScryTo(zone, selectedCards, { as: this.playerId });
+  }
+  resolveRevealDestination(destination: "hand" | "trash"): CommandSuccess {
+    return this.engine.resolveRevealDestination(destination, { as: this.playerId });
   }
 
   // Judge moves

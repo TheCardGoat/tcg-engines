@@ -15,10 +15,13 @@ specific `submodules/{name}/AGENTS.md` before editing inside that subtree.
   Lorcana-specific rules/test skills.
 - `submodules/cyberpunk` - Cyberpunk cards, engine, parser/scraper tools,
   server adapter, and Cyberpunk rules skill.
-- `submodules/gundam` - Gundam cards, engine, simulator, server adapter, bot
-  tooling, rules references, and architecture docs.
-- `submodules/one-piece` - One Piece simulator snapshot with engine,
-  cards, types, utils, and browser simulator.
+- `submodules/gundam` - Gundam cards, engine, server adapter, bot tooling,
+  rules references, and architecture docs. Its browser surface lives in
+  `submodules/agnostic-simulator`.
+- `submodules/one-piece` - One Piece engine, cards, types, utils, parser, and
+  rules. Its browser surface lives in `submodules/agnostic-simulator`.
+- `submodules/star-wars-unlimited` - Star Wars Unlimited engine, cards, types,
+  import tooling, and rules references.
 
 ## Private Boundary
 
@@ -46,6 +49,7 @@ Use the smallest relevant check first:
 - `pnpm run ci:gundam:check`
 - `pnpm run ci:lorcana:check`
 - `pnpm run ci:one-piece:check`
+- `pnpm run ci:star-wars-unlimited:check`
 - `pnpm run ci:agnostic:check`
 - `pnpm run ci:public`
 

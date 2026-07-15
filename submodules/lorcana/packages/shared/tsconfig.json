@@ -1,8 +1,8 @@
 {
   "extends": "@tcg/typescript-config/node.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "lib": ["esnext", "ES2023", "dom"]
+    "lib": ["esnext", "ES2023", "dom"],
+    "types": ["node"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "**/*.test.ts"]

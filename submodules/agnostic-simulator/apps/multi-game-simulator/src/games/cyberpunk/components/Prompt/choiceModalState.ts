@@ -79,3 +79,17 @@ export function useChoiceModalOpen(side: Side, requestId: string | undefined): b
   );
   return Boolean(requestId && state.requestId === requestId && state.open);
 }
+
+export function useChoiceModalExplicitlyClosed(side: Side, requestId: string | undefined): boolean {
+  const state = useSyncExternalStore(
+    subscribeChoiceModalMinimize,
+    () => choiceModalSnapshot(side),
+    () => DEFAULT_MINIMIZE_STATE,
+  );
+  return Boolean(requestId && state.requestId === requestId && !state.open && !state.minimized);
+}
+
+export function resetChoiceModalStateForTests() {
+  choiceModalMinimizeState.clear();
+  emitChoiceModalMinimizeChange();
+}

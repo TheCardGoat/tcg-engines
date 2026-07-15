@@ -25,13 +25,14 @@ import type {
   InteractionSubmissionValue,
 } from "@tcg/protocol";
 import { DEFAULT_SCENARIO, getScenario, P1, P2, type ScenarioId } from "./fixtures/scenarios";
-import { AI_SPEED_MS, type AiMode, type AiSpeed } from "./aiStatus";
+import { AI_SPEED_MS, shouldWaitForAiAnimations, type AiMode, type AiSpeed } from "./aiStatus";
 import type { ChatMessage, ChatPresetKey } from "./chat";
 import type { EngineAction } from "../types/e2e";
 import type { CyberpunkAnalyticsEnvelope } from "../components/EndGameModal/postGameApi";
 import { EngineContext } from "./engineContext";
 import { actionToInteractionSubmission } from "./live/actionToInteraction";
 import { otherSide, PLAYER_SIDE_TO_ID, type Side } from "./sides";
+import { useAiAnimationWaitCircuitBreaker } from "./useAiAnimationWaitCircuitBreaker";
 
 function captureSimulatorAnimationRects(): void {
   if (typeof window === "undefined") {
@@ -208,8 +209,9 @@ function cardEffectTargetSelectionFromInteractionView(
   if (!action || !targetInput) {
     return null;
   }
+  const min = targetInput.min;
   const max = targetInput.max;
-  if (max <= 1) {
+  if (max <= 1 && min > 0) {
     return null;
   }
   const eligibleIds = targetInput.candidates.map((candidate) => candidate.entity.instanceId);
@@ -219,12 +221,12 @@ function cardEffectTargetSelectionFromInteractionView(
       action.id,
       action.source?.instanceId ?? "",
       eligibleIds.join("|"),
-      targetInput.min,
+      min,
       targetInput.max,
     ].join(":"),
     actionId: action.id,
     targetInput,
-    min: targetInput.min,
+    min,
     max: targetInput.max,
   };
 }
@@ -342,10 +344,20 @@ export interface EngineContextValue {
   canResetScenario: boolean;
   /** Local chat history. Cleared on scenario reset. */
   chatMessages: ReadonlyArray<ChatMessage>;
+  /** True when the current viewer may send chat messages. */
+  canSendChat: boolean;
+  /** True after both hosted players approve free-text chat. */
+  freeTextEnabled: boolean;
+  /** True while the local player is waiting for free-text approval. */
+  freeTextProposalPending: boolean;
+  /** True when this surface can request free-text approval from the opponent. */
+  canRequestFreeText: boolean;
   /** Send a canned chat message attributed to the current humanSide. */
   sendChatPreset: (key: ChatPresetKey) => void;
   /** Send a free-text chat message attributed to the current humanSide. */
   sendChatText: (text: string) => void;
+  /** Request opponent approval for free-text chat. */
+  requestFreeTextChat: () => boolean;
 
   // ── Setters ───────────────────────────────────────────────────────────────
   /** Move the human seat to the given side (and so flip the board camera). */
@@ -376,6 +388,8 @@ export interface EngineContextValue {
   effectCardTargetSelection: EffectCardTargetSelection | null;
   /** Toggle one visible card target and auto-submit when the prompt is complete. */
   toggleEffectCardTarget: (side: Side, cardId: string) => boolean;
+  /** Submit the currently staged visible-card target picks. */
+  submitEffectCardTargets: (side: Side) => boolean;
 
   /**
    * Dispatch a CyberpunkTestEngine method (e.g. "playCard", "attackUnit") and
@@ -416,6 +430,8 @@ interface EngineProviderProps {
   initialAiMode?: AiMode;
   /** Initial speed bucket. Defaults to "balanced". */
   initialAiSpeed?: AiSpeed;
+  /** Whether simulator animation plans are still resolving for the previous command. */
+  hasPendingAnimations?: boolean;
   /**
    * When true, single-card non-Program target prompts resolve automatically.
    * Useful for smoother practice play, but disabled by dev test fixtures that
@@ -456,6 +472,20 @@ interface EngineProviderProps {
   remoteEngineEvents?: ReadonlyArray<RawEngineEventEntry>;
   /** Server-authority chat history collected from context and gateway updates. */
   remoteChatMessages?: ReadonlyArray<ChatMessage>;
+  /** Whether the current hosted viewer may send chat messages. */
+  canSendChat?: boolean;
+  /** Hosted chat free-text state collected from context and gateway updates. */
+  remoteFreeTextEnabled?: boolean;
+  /** Hosted chat free-text proposal state owned by the live match shell. */
+  remoteFreeTextProposalPending?: boolean;
+  /** Whether this hosted session may ask the opponent to enable free text. */
+  canRequestFreeText?: boolean;
+  /** Hosted chat preset sender. When omitted, presets are local-only. */
+  sendRemoteChatPreset?: (key: ChatPresetKey) => boolean;
+  /** Hosted chat free-text sender. When omitted, free text is local-only. */
+  sendRemoteChatText?: (text: string) => boolean;
+  /** Hosted free-text proposal sender. */
+  requestRemoteFreeTextChat?: () => boolean;
   /** Server-authority live match has one optimistic move awaiting ack. */
   hasPendingRemoteMove?: boolean;
   /** Return target for hosted matches once the game is over. */
@@ -559,10 +589,22 @@ export function executeEngineAction(eng: CyberpunkTestEngine, action: EngineActi
         { args: { cardIds: action.cardIds, pass: action.pass } },
         action.as,
       );
-    case "resolveSearchDeck":
+    case "resolveScry":
       return eng.executeMove(
-        "resolveSearchDeck",
-        { args: { selectedCardIds: action.selectedCardIds } },
+        "resolveScry",
+        { args: { destinations: action.destinations } },
+        action.as,
+      );
+    case "resolveRevealDestination":
+      return eng.executeMove(
+        "resolveRevealDestination",
+        { args: { destination: action.destination } },
+        action.as,
+      );
+    case "resolveCardTypeChoice":
+      return eng.executeMove(
+        "resolveCardTypeChoice",
+        { args: { cardType: action.cardType } },
         action.as,
       );
     case "passPhase":
@@ -626,6 +668,7 @@ export function EngineProvider({
   initialHumanSide = "player",
   initialAiMode = "auto",
   initialAiSpeed = "balanced",
+  hasPendingAnimations = false,
   autoResolveSingletonCardTargets = true,
   onMatchEnded,
   remoteDispatch,
@@ -634,6 +677,13 @@ export function EngineProvider({
   remoteMoveLogs = [],
   remoteEngineEvents = [],
   remoteChatMessages = [],
+  canSendChat = true,
+  remoteFreeTextEnabled = false,
+  remoteFreeTextProposalPending = false,
+  canRequestFreeText = false,
+  sendRemoteChatPreset,
+  sendRemoteChatText,
+  requestRemoteFreeTextChat,
   hasPendingRemoteMove = false,
   remoteReturnUrl,
   postGameContext,
@@ -662,7 +712,12 @@ export function EngineProvider({
   );
   const [aiMode, setAiModeState] = useState<AiMode>(initialAiMode);
   const [aiSpeed, setAiSpeedState] = useState<AiSpeed>(initialAiSpeed);
+  const animationWaitExpired = useAiAnimationWaitCircuitBreaker(
+    hasPendingAnimations,
+    aiMode === "auto" && aiSpeed !== "fast",
+  );
   const [aiTakeover, setAiTakeover] = useState<AiTakeoverState | null>(null);
+  const [historyControlsHydrated, setHistoryControlsHydrated] = useState(false);
   const [eventLog, setEventLog] = useState<AiLogEntry[]>([]);
   const [lastAiError, setLastAiError] = useState<string | null>(null);
   const [effectCardTargetSelection, setEffectCardTargetSelection] =
@@ -678,6 +733,15 @@ export function EngineProvider({
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>(() =>
     remoteChatMessages.slice(-CHAT_LOG_CAP),
   );
+  const hasHostedChat =
+    Boolean(sendRemoteChatPreset) ||
+    Boolean(sendRemoteChatText) ||
+    Boolean(requestRemoteFreeTextChat);
+  const canSendCurrentChat = canSendChat;
+  const freeTextEnabled = hasHostedChat ? remoteFreeTextEnabled : true;
+  const freeTextProposalPending = hasHostedChat ? remoteFreeTextProposalPending : false;
+  const canRequestFreeTextChat =
+    hasHostedChat && canRequestFreeText && !freeTextEnabled && Boolean(requestRemoteFreeTextChat);
   const moveLogIdRef = useRef(remoteMoveLogs.length);
   const rawEngineEventIdRef = useRef(0);
   const chatIdRef = useRef(0);
@@ -691,6 +755,10 @@ export function EngineProvider({
   onLocalCommandCommittedRef.current = onLocalCommandCommitted;
 
   const forceRender = useCallback(() => bump((n) => n + 1), []);
+
+  useEffect(() => {
+    setHistoryControlsHydrated(true);
+  }, []);
 
   useEffect(() => {
     if (syncedEngineBuilderRef.current === initialEngineBuilder) {
@@ -928,44 +996,75 @@ export function EngineProvider({
   }, [remoteDispatch, remoteEngineEvents]);
 
   useEffect(() => {
-    if (!remoteDispatch) {
+    if (!hasHostedChat) {
       return;
     }
     setChatMessages(remoteChatMessages.slice(-CHAT_LOG_CAP));
     chatIdRef.current = remoteChatMessages.reduce((max, message) => Math.max(max, message.id), 0);
-  }, [remoteDispatch, remoteChatMessages]);
+  }, [hasHostedChat, remoteChatMessages]);
 
   // ── Chat ──────────────────────────────────────────────────────────────────
 
-  const sendChatPreset = useCallback((key: ChatPresetKey) => {
-    setChatMessages((prev) => {
-      const next = prev.concat({
-        kind: "preset",
-        id: ++chatIdRef.current,
-        timestamp: Date.now(),
-        senderSide: humanSideRef.current,
-        presetKey: key,
-      });
-      return next.length > CHAT_LOG_CAP ? next.slice(next.length - CHAT_LOG_CAP) : next;
-    });
-  }, []);
+  const sendChatPreset = useCallback(
+    (key: ChatPresetKey) => {
+      if (!canSendCurrentChat) {
+        return;
+      }
+      if (sendRemoteChatPreset) {
+        sendRemoteChatPreset(key);
+        return;
+      }
 
-  const sendChatText = useCallback((text: string) => {
-    const trimmed = text.trim();
-    if (!trimmed) {
-      return;
-    }
-    setChatMessages((prev) => {
-      const next = prev.concat({
-        kind: "text",
-        id: ++chatIdRef.current,
-        timestamp: Date.now(),
-        senderSide: humanSideRef.current,
-        text: trimmed,
+      setChatMessages((prev) => {
+        const next = prev.concat({
+          kind: "preset",
+          id: ++chatIdRef.current,
+          timestamp: Date.now(),
+          senderSide: humanSideRef.current,
+          presetKey: key,
+        });
+        return next.length > CHAT_LOG_CAP ? next.slice(next.length - CHAT_LOG_CAP) : next;
       });
-      return next.length > CHAT_LOG_CAP ? next.slice(next.length - CHAT_LOG_CAP) : next;
-    });
-  }, []);
+    },
+    [canSendCurrentChat, sendRemoteChatPreset],
+  );
+
+  const sendChatText = useCallback(
+    (text: string) => {
+      const trimmed = text.trim();
+      if (!canSendCurrentChat || !trimmed || !freeTextEnabled) {
+        return;
+      }
+      if (sendRemoteChatText) {
+        sendRemoteChatText(trimmed);
+        return;
+      }
+
+      setChatMessages((prev) => {
+        const next = prev.concat({
+          kind: "text",
+          id: ++chatIdRef.current,
+          timestamp: Date.now(),
+          senderSide: humanSideRef.current,
+          text: trimmed,
+        });
+        return next.length > CHAT_LOG_CAP ? next.slice(next.length - CHAT_LOG_CAP) : next;
+      });
+    },
+    [canSendCurrentChat, freeTextEnabled, sendRemoteChatText],
+  );
+
+  const requestFreeTextChat = useCallback(() => {
+    if (!canSendCurrentChat || !canRequestFreeTextChat || freeTextProposalPending) {
+      return false;
+    }
+    return requestRemoteFreeTextChat?.() ?? false;
+  }, [
+    canRequestFreeTextChat,
+    canSendCurrentChat,
+    freeTextProposalPending,
+    requestRemoteFreeTextChat,
+  ]);
 
   // ── AI step execution ─────────────────────────────────────────────────────
 
@@ -1293,10 +1392,24 @@ export function EngineProvider({
               action.as,
             );
             break;
-          case "resolveSearchDeck":
+          case "resolveScry":
             result = eng.executeMove(
-              "resolveSearchDeck",
-              { args: { selectedCardIds: action.selectedCardIds } },
+              "resolveScry",
+              { args: { destinations: action.destinations } },
+              action.as,
+            );
+            break;
+          case "resolveRevealDestination":
+            result = eng.executeMove(
+              "resolveRevealDestination",
+              { args: { destination: action.destination } },
+              action.as,
+            );
+            break;
+          case "resolveCardTypeChoice":
+            result = eng.executeMove(
+              "resolveCardTypeChoice",
+              { args: { cardType: action.cardType } },
               action.as,
             );
             break;
@@ -1438,6 +1551,41 @@ export function EngineProvider({
     }
   }, [effectCardTargetSelection, playerEffectCardTargetKey, opponentEffectCardTargetKey]);
 
+  useEffect(() => {
+    if (effectCardTargetSelection) {
+      return;
+    }
+
+    const playerSelection = cardEffectTargetSelectionFromInteractionView(
+      "player",
+      playerInteractionView,
+    );
+    if (playerSelection?.min === 0) {
+      setEffectCardTargetSelection({
+        side: "player",
+        choiceKey: playerSelection.choiceKey,
+        targetIds: [],
+        min: playerSelection.min,
+        max: playerSelection.max,
+      });
+      return;
+    }
+
+    const opponentSelection = cardEffectTargetSelectionFromInteractionView(
+      "opponent",
+      opponentInteractionView,
+    );
+    if (opponentSelection?.min === 0) {
+      setEffectCardTargetSelection({
+        side: "opponent",
+        choiceKey: opponentSelection.choiceKey,
+        targetIds: [],
+        min: opponentSelection.min,
+        max: opponentSelection.max,
+      });
+    }
+  }, [effectCardTargetSelection, opponentInteractionView, playerInteractionView]);
+
   const toggleEffectCardTarget = useCallback<EngineContextValue["toggleEffectCardTarget"]>(
     (side, cardId) => {
       const view = side === "player" ? playerInteractionView : opponentInteractionView;
@@ -1503,6 +1651,35 @@ export function EngineProvider({
     [dispatch, effectCardTargetSelection, opponentInteractionView, playerInteractionView],
   );
 
+  const submitEffectCardTargets = useCallback<EngineContextValue["submitEffectCardTargets"]>(
+    (side) => {
+      const selection = effectCardTargetSelection;
+      if (!selection || selection.side !== side) {
+        return false;
+      }
+
+      const view = side === "player" ? playerInteractionView : opponentInteractionView;
+      const currentSelection = cardEffectTargetSelectionFromInteractionView(side, view);
+      if (!currentSelection || currentSelection.choiceKey !== selection.choiceKey) {
+        return false;
+      }
+
+      const targetIds = [...selection.targetIds];
+      if (targetIds.length < currentSelection.min || targetIds.length > currentSelection.max) {
+        return false;
+      }
+
+      setEffectCardTargetSelection(null);
+      dispatch(
+        currentSelection.actionId === "resolveDiscardFromHand"
+          ? { type: "resolveDiscardFromHand", cardIds: targetIds, as: PLAYER_SIDE_TO_ID[side] }
+          : { type: "resolveEffectTarget", targetIds, as: PLAYER_SIDE_TO_ID[side] },
+      );
+      return true;
+    },
+    [dispatch, effectCardTargetSelection, opponentInteractionView, playerInteractionView],
+  );
+
   useEffect(() => {
     if (!autoResolveSingletonCardTargets) {
       return;
@@ -1515,10 +1692,8 @@ export function EngineProvider({
   }, [autoResolveSingletonCardTargets, dispatch, engineStateId, matchState]);
 
   // After every render, in auto mode, schedule one AI step if a side is
-  // eligible. The setTimeout delay lets the UI paint the previous state so
-  // each AI move is visually distinct. The effect re-runs because the bump
-  // above changes React state, so the loop drains naturally until no side is
-  // eligible (game ended, or it's the human's turn / waiting state).
+  // eligible. Normal and slow pacing wait for the previous animation queue to
+  // finish; fast pacing intentionally drains without that visual gate.
   useEffect(() => {
     if (aiMode !== "auto") {
       return;
@@ -1531,6 +1706,9 @@ export function EngineProvider({
     // floods the event log with the same failure. The user clears the error
     // (Next, Restart, Clear log, or strategy change) to resume auto stepping.
     if (lastAiError) {
+      return;
+    }
+    if (shouldWaitForAiAnimations(aiSpeed, hasPendingAnimations, animationWaitExpired)) {
       return;
     }
     const delay = AI_SPEED_MS[aiSpeed];
@@ -1547,7 +1725,9 @@ export function EngineProvider({
     aiMode,
     aiSpeed,
     aiSideToStep,
+    animationWaitExpired,
     engineStateId,
+    hasPendingAnimations,
     lastAiError,
     remoteSubmitInteraction,
     runRemoteStepFor,
@@ -1581,9 +1761,13 @@ export function EngineProvider({
       log: stripPrivateFields(entry.log, viewerId),
     }));
   }, [rawMoveLogs, humanSide]);
-  const canUndo = remoteDispatch
-    ? !hasPendingRemoteMove && remoteMoveLogs.length > 0 && !matchState.G.gameEnded
-    : !lockLocalHistoryControls && engine.canUndo();
+  const canUndo =
+    historyControlsHydrated &&
+    (remoteDispatch
+      ? !hasPendingRemoteMove && remoteMoveLogs.length > 0 && !matchState.G.gameEnded
+      : !lockLocalHistoryControls && engine.canUndo());
+  const canUndoToTurnStart =
+    historyControlsHydrated && !lockLocalHistoryControls && engine.canUndoToTurnStart();
 
   const value: EngineContextValue = {
     scenarioId,
@@ -1609,13 +1793,19 @@ export function EngineProvider({
     moveLogs,
     rawEngineEvents,
     canUndo,
-    canUndoToTurnStart: !lockLocalHistoryControls && engine.canUndoToTurnStart(),
+    canUndoToTurnStart,
     canResetScenario: !lockLocalResetControls,
     chatMessages,
+    canSendChat: canSendCurrentChat,
+    freeTextEnabled,
+    freeTextProposalPending,
+    canRequestFreeText: canRequestFreeTextChat,
     sendChatPreset,
     sendChatText,
+    requestFreeTextChat,
     effectCardTargetSelection,
     toggleEffectCardTarget,
+    submitEffectCardTargets,
     setHumanSide,
     toggleHumanSide,
     setStrategy,

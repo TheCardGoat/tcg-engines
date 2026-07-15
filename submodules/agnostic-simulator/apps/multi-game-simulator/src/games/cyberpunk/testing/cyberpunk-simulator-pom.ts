@@ -17,7 +17,7 @@ export interface CyberpunkPomCard {
   readonly definitionId: string;
   readonly attachedToId: string | null;
   readonly faceDown: boolean;
-  readonly playedThisTurn: boolean;
+  readonly hasLag: boolean;
   readonly spent: boolean;
 }
 
@@ -170,10 +170,12 @@ export class CyberpunkSimulatorPom<
     if (hasEngineHarness(this.harness)) {
       return this.harness.evalEngine((engine) => engine.getTurnNumber());
     }
-    const turnText = await this.dom.locator('[aria-label^="Turn "]').first().textContent();
-    const match = /\bT(\d+)\b/.exec(turnText);
+    const turnLocator = this.dom.locator('[aria-label^="Turn "]').first();
+    const turnLabel =
+      (await turnLocator.getAttribute("aria-label")) ?? (await turnLocator.textContent()) ?? "";
+    const match = /\b(?:Turn\s*)?T?(\d+)\b/i.exec(turnLabel);
     if (!match) {
-      throw new Error(`Expected rendered turn number in ${JSON.stringify(turnText)}.`);
+      throw new Error(`Expected rendered turn number in ${JSON.stringify(turnLabel)}.`);
     }
     return Number(match[1]);
   }
@@ -215,20 +217,20 @@ export class CyberpunkSimulatorPom<
             attachedToId:
               typeof card.meta.attachedToId === "string" ? card.meta.attachedToId : null,
             faceDown: card.meta.faceDown,
-            playedThisTurn: card.meta.playedThisTurn,
+            hasLag: card.meta.hasLag,
             spent: card.meta.spent,
           })),
         { zone, player },
       );
     }
     const elements = this.zoneCardElements(zone, player);
-    const [instanceIds, definitionIds, attachedToIds, faceDowns, playedThisTurns, spents] =
+    const [instanceIds, definitionIds, attachedToIds, faceDowns, hasLags, spents] =
       await Promise.all([
         elements.getAttributeAll("data-instance-id"),
         elements.getAttributeAll("data-definition-id"),
         elements.getAttributeAll("data-attached-to-id"),
         elements.getAttributeAll("data-face-down"),
-        elements.getAttributeAll("data-played-this-turn"),
+        elements.getAttributeAll("data-has-lag"),
         elements.getAttributeAll("data-spent"),
       ]);
 
@@ -240,7 +242,7 @@ export class CyberpunkSimulatorPom<
           definitionId: definitionIds[index] ?? "",
           attachedToId: attachedToIds[index] || null,
           faceDown: faceDowns[index] === "true",
-          playedThisTurn: playedThisTurns[index] === "true",
+          hasLag: hasLags[index] === "true",
           spent: spents[index] === "true",
         },
       ];
@@ -541,8 +543,9 @@ export class CyberpunkSimulatorPom<
         if ((await action.count()) === 0) {
           continue;
         }
-        const abilityIndex = (await action.getAttribute("data-ability-index")) ?? "0";
-        candidates.push(`${id}:${abilityIndex}`);
+        for (const abilityIndex of await action.getAttributeAll("data-ability-index")) {
+          candidates.push(`${id}:${abilityIndex ?? "0"}`);
+        }
       }
       return candidates;
     }
@@ -1075,7 +1078,12 @@ export class CyberpunkSimulatorPom<
     }
     await this.takeControl(as);
     await this.boardForPlayer(as).handCard(gearId).click({ force: true });
-    await this.dom.getByTestId("card-action-playCard").click({ force: true });
+    const legacyPlayAction = this.dom.getByTestId("card-action-playCard");
+    if ((await legacyPlayAction.count()) > 0) {
+      await legacyPlayAction.click({ force: true });
+    } else {
+      await this.dom.getByTestId("hand-action-play").click({ force: true });
+    }
     await this.choiceTarget(attachToId).clickJs();
   }
 
@@ -1153,11 +1161,15 @@ export class CyberpunkSimulatorPom<
       .click({
         force: true,
       });
-    const action = this.dom.getByTestId("card-action-activateAbility");
-    const renderedAbilityIndex = await action.getAttribute("data-ability-index");
-    if (renderedAbilityIndex !== null && Number(renderedAbilityIndex) !== abilityIndex) {
+    const action = this.dom.locator(
+      `[data-testid="card-action-activateAbility"][data-ability-index="${abilityIndex}"]`,
+    );
+    if ((await action.count()) === 0) {
+      const renderedAbilityIndexes = await this.dom
+        .getByTestId("card-action-activateAbility")
+        .getAttributeAll("data-ability-index");
       throw new Error(
-        `Expected activateAbility index ${abilityIndex}, got ${renderedAbilityIndex}.`,
+        `Expected activateAbility index ${abilityIndex}, got ${renderedAbilityIndexes.join(", ")}.`,
       );
     }
     await action.click({ force: true });
@@ -1196,18 +1208,41 @@ export class CyberpunkSimulatorPom<
     await this.clickPromptPass(as);
   }
 
-  async resolveSearchDeck(selectedCardIds: ReadonlyArray<string>, as: PlayerId): Promise<void> {
+  async resolveScry(selectedCardIds: ReadonlyArray<string>, as: PlayerId): Promise<void> {
     if (hasEngineHarness(this.harness)) {
       await this.harness.dispatchEngine(
-        (engine, payload) =>
-          engine.resolveSearchDeck(payload.selectedCardIds.slice(), {
-            as: payload.as,
-          }),
+        (engine, payload) => {
+          engine.executeMove(
+            "resolveScry",
+            {
+              args: {
+                destinations: [{ zone: "hand", cardIds: payload.selectedCardIds.slice() }],
+              },
+            },
+            payload.as,
+          );
+        },
         { selectedCardIds, as },
       );
       return;
     }
-    await this.runMultiCandidateMove(as, "resolveSearchDeck", selectedCardIds);
+    await this.runMultiCandidateMove(as, "resolveScry", selectedCardIds);
+  }
+
+  async resolveSearchDeck(selectedCardIds: ReadonlyArray<string>, as: PlayerId): Promise<void> {
+    await this.resolveScry(selectedCardIds, as);
+  }
+
+  async resolveRevealDestination(destination: "hand" | "trash", as: PlayerId): Promise<void> {
+    if (hasEngineHarness(this.harness)) {
+      await this.harness.dispatchEngine(
+        (engine, payload) =>
+          engine.resolveRevealDestination(payload.destination, { as: payload.as }),
+        { destination, as },
+      );
+      return;
+    }
+    await this.runSingleOptionMove(as, "resolveRevealDestination", destination);
   }
 
   async resolveDiscardFromHand(cardIds: ReadonlyArray<string>, as: PlayerId): Promise<void> {
@@ -1571,7 +1606,7 @@ export class CyberpunkSimulatorPom<
     }
     if (rule === "canAttackOnPlayedTurnAgainstUnits") {
       await expectDomCount(
-        this.boardForPlayer(player).fieldCardRuleBadges(cardId, "playedThisTurnCantAttack"),
+        this.boardForPlayer(player).fieldCardRuleBadges(cardId, "lagCantAttack"),
         expected ? 0 : 1,
       );
       return;
@@ -1589,6 +1624,7 @@ export class CyberpunkSimulatorPom<
     if (
       rule === "blocker" ||
       rule === "cantAttack" ||
+      rule === "mustAttack" ||
       rule === "cantBeBlocked" ||
       rule === "goSolo"
     ) {
@@ -1686,7 +1722,7 @@ export class CyberpunkSimulatorPom<
       (await scopedButton.count()) > 0
         ? scopedButton
         : verb === "resolveAttack"
-          ? this.dom.getByRole("button", { name: /resolve attack/i }).first()
+          ? this.dom.getByRole("button", { name: /^resolve(?: attack)?$/i }).first()
           : verb === "passPhase"
             ? this.dom.getByRole("button", { name: /pass turn/i }).first()
             : this.dom.locator(`[data-testid=${cssString(`prompt-verb-${verb}`)}]`).first();
@@ -1777,8 +1813,10 @@ export class CyberpunkSimulatorPom<
       case "cyberpunk.resolveEffectTarget":
       case "cyberpunk.resolveDiscardFromHand":
         return "chooseTarget";
-      case "cyberpunk.resolveSearchDeck":
-        return "searchDeck";
+      case "cyberpunk.resolveScry":
+        return "scry";
+      case "cyberpunk.resolveRevealDestination":
+        return "revealDestination";
       case "cyberpunk.resolveCardToPlay":
         return "chooseCardToPlay";
       case "cyberpunk.resolveCardToMove":

@@ -13,7 +13,9 @@ import {
 export const legendVCorporateExileBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendVCorporateExile",
   label: "V - Corporate Exile - GO SOLO",
-  references: ["packages/engine/src/cards/alpha/legends/v-corporate-exile.test.ts"],
+  references: [
+    "packages/engine/src/cards/theheistretailstarterdeck/legends/v-corporate-exile.test.ts",
+  ],
   async run(pom) {
     const v = await pom.getCardInZoneByDefinitionId(
       "legendArea",

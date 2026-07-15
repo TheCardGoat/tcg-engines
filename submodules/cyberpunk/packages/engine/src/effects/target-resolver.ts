@@ -335,6 +335,10 @@ function resolveGigTarget(target: GigTargetDSL, ctx: ResolutionContext): string[
     dice = dice.filter((d) => d.faceValue <= target.maxValue!);
   }
 
+  if (target.atMax === true) {
+    dice = dice.filter((d) => d.faceValue === DIE_MAX_VALUES[d.dieType]);
+  }
+
   if (target.valueParity !== undefined) {
     const wantEven = target.valueParity === "even";
     dice = dice.filter((d) => (d.faceValue % 2 === 0) === wantEven);
@@ -487,11 +491,11 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
       return attack.attackerId === (ids[0] as CardInstanceId);
     }
 
-    case "playedThisTurn": {
+    case "hasLag": {
       const ids = resolveTarget(condition.target, ctx);
       if (ids.length === 0) return false;
       const card = ctx.state.G.cardIndex[ids[0]!];
-      return card?.meta.playedThisTurn ?? false;
+      return card?.meta.hasLag ?? false;
     }
 
     case "hasGigAtMaxValue": {
@@ -702,6 +706,12 @@ export function resolveNumericValue(value: NumericValue, ctx: ResolutionContext)
       .filter(Boolean)
       .map((die) => die.faceValue);
     return values.length > 0 ? Math.max(...values) : 0;
+  }
+
+  if (value.type === "gigValue") {
+    const ids = resolveTarget(value.target, ctx);
+    const die = ctx.state.G.gigDice[ids[0] as string];
+    return die?.faceValue ?? 0;
   }
 
   return 0;

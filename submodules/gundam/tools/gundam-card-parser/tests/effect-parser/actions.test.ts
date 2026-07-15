@@ -82,17 +82,17 @@ describe("addShieldToHand", () => {
 // ── Resources ──────────────────────────────────────────────────────────────────
 
 describe("placeResource", () => {
-  test("Place 1 EX Resource produces placeResource with EX type active state", () => {
+  test("Place 1 EX Resource produces the dedicated EX-token action", () => {
     const [effect] = parseEffect("【Deploy】 Place 1 EX Resource.");
     expect(effect.directives[0]).toMatchObject({
-      action: { action: "placeResource", resourceType: "EX", state: "active" },
+      action: { action: "placeExResource", state: "active" },
     });
   });
 
-  test("Place 1 rested Resource produces placeResource with normal type rested state", () => {
+  test("Place 1 rested Resource produces the normal Resource-deck action", () => {
     const [effect] = parseEffect("【Deploy】 Place 1 rested Resource.");
     expect(effect.directives[0]).toMatchObject({
-      action: { action: "placeResource", resourceType: "normal", state: "rested" },
+      action: { action: "placeResource", state: "rested" },
     });
   });
 });

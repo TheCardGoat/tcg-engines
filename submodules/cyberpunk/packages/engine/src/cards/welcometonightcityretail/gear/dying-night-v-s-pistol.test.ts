@@ -26,7 +26,7 @@ describe("Dying Night — V's Pistol (retail) attack clause", () => {
           {
             card: welcomeToNightCityRetailFieldOperator,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
             attachedGears: [welcomeToNightCityRetailDyingNightVSPistol],
           },
         ],
@@ -56,7 +56,7 @@ describe("Dying Night — V's Pistol (retail) attack clause", () => {
         {
           card: welcomeToNightCityRetailFieldOperator,
           spent: false,
-          playedThisTurn: false,
+          hasLag: false,
           attachedGears: [welcomeToNightCityRetailDyingNightVSPistol],
         },
       ],
@@ -73,7 +73,7 @@ describe("Dying Night — V's Pistol (retail) attack clause", () => {
         {
           card: namedVUnit,
           spent: false,
-          playedThisTurn: false,
+          hasLag: false,
           attachedGears: [welcomeToNightCityRetailDyingNightVSPistol],
         },
       ],
@@ -100,7 +100,7 @@ describe("Dying Night — V's Pistol (retail) attack clause", () => {
         {
           card: welcomeToNightCityRetailFieldOperator,
           spent: false,
-          playedThisTurn: false,
+          hasLag: false,
           attachedGears: [welcomeToNightCityRetailDyingNightVSPistol],
         },
       ],

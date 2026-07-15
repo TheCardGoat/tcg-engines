@@ -13,6 +13,7 @@ export type {
   AcceptedMoveRecord,
   BotActionOptions,
   BotActionResult,
+  BotDecisionDiagnostics,
   DispatchContext,
   DispatchFailure,
   DispatchResult,

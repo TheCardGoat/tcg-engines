@@ -6,7 +6,8 @@ import {
   chooseGigsToStealResolver,
   chooseTargetResolver,
   defaultChoiceResolvers,
-  searchDeckResolver,
+  revealDestinationResolver,
+  scryResolver,
 } from "../../src/automation/index.ts";
 import type { DecisionContext } from "../../src/automation/index.ts";
 import type {
@@ -15,9 +16,11 @@ import type {
   ChooseEffectChoicePrompt,
   ChooseGigsToStealChoicePrompt,
   ChooseTargetChoicePrompt,
-  SearchDeckChoicePrompt,
+  RevealDestinationChoicePrompt,
+  ScryChoicePrompt,
 } from "../../src/view/player-prompt.ts";
 import type { FilteredCardView } from "../../src/view/filter.ts";
+import type { CardColor } from "@tcg/cyberpunk-types";
 import { createPlayerId } from "../../src/types/branded.ts";
 
 const stubCtx: DecisionContext = {
@@ -29,6 +32,7 @@ const stubCtx: DecisionContext = {
             {
               instanceId: "h-1",
               definitionId: "unit-1",
+              cardName: "Unit 1",
               zone: "hand",
               faceDown: false,
               spent: false,
@@ -41,14 +45,17 @@ const stubCtx: DecisionContext = {
               hasSellTag: false,
               attachedGearIds: [],
               attachedToId: null,
-              playedThisTurn: false,
+              hasLag: false,
               hasAttackedThisTurn: false,
               grantedRules: [],
               keywords: [],
+              triggerHints: [],
+              abilityHints: [],
             },
             {
               instanceId: "h-2",
               definitionId: "unit-2",
+              cardName: "Unit 2",
               zone: "hand",
               faceDown: false,
               spent: false,
@@ -61,14 +68,17 @@ const stubCtx: DecisionContext = {
               hasSellTag: false,
               attachedGearIds: [],
               attachedToId: null,
-              playedThisTurn: false,
+              hasLag: false,
               hasAttackedThisTurn: false,
               grantedRules: [],
               keywords: [],
+              triggerHints: [],
+              abilityHints: [],
             },
           ],
         },
         eddies: 0,
+        availableEddies: 0,
         gigCount: 0,
         fixerCount: 6,
         streetCred: 0,
@@ -77,6 +87,7 @@ const stubCtx: DecisionContext = {
     gamePhase: "main",
     turnNumber: 1,
     activePlayerId: "p1",
+    playedCardTypesThisTurn: {},
     attackState: null,
     gameEnded: false,
     winnerId: null,
@@ -100,6 +111,7 @@ function makeRevealed(
   return {
     instanceId: id,
     definitionId: `def-${id}`,
+    cardName: id,
     zone: "deck",
     faceDown: false,
     spent: false,
@@ -112,74 +124,113 @@ function makeRevealed(
     hasSellTag: false,
     attachedGearIds: [],
     attachedToId: null,
-    playedThisTurn: false,
+    hasLag: false,
     hasAttackedThisTurn: false,
     grantedRules: [],
     keywords: [],
+    triggerHints: [],
+    abilityHints: [],
   };
 }
 
-describe("searchDeckResolver", () => {
+function makeGig(id: string, dieType: "d4" | "d6" | "d8", value: number): FilteredCardView {
+  return {
+    ...makeRevealed(id),
+    definitionId: dieType,
+    zone: "gigArea",
+    effectivePower: value,
+    power: value,
+    type: null,
+    cost: null,
+  };
+}
+
+function withGigs(p1: FilteredCardView[], p2: FilteredCardView[] = []): DecisionContext {
+  return {
+    ...stubCtx,
+    view: {
+      ...stubCtx.view,
+      players: {
+        p1: {
+          ...stubCtx.view.players.p1!,
+          zones: { ...stubCtx.view.players.p1!.zones, gigArea: p1 },
+          gigCount: p1.length,
+          streetCred: p1.reduce((total, gig) => total + gig.effectivePower, 0),
+        },
+        p2: {
+          zones: { gigArea: p2 },
+          eddies: 0,
+          availableEddies: 0,
+          gigCount: p2.length,
+          fixerCount: 6,
+          streetCred: p2.reduce((total, gig) => total + gig.effectivePower, 0),
+        },
+      },
+    },
+  };
+}
+
+function colorSource(color: CardColor) {
+  return {
+    cardId: `source-${color}`,
+    definitionId: `definition-${color}`,
+    displayName: `${color} source`,
+    cardType: "program" as const,
+    color,
+  };
+}
+
+describe("scryResolver", () => {
   test("picks first N revealed cards (sorted by id) when no filter is set", () => {
-    const choice: SearchDeckChoicePrompt = {
-      type: "searchDeck",
+    const choice: ScryChoicePrompt = {
+      type: "scry",
       chooserId: "p1",
       payload: {
         player: "p1",
-        lookCount: 3,
-        reveal: false,
-        destination: "hand",
-        target: null,
-        select: { kind: "upTo", max: 2 },
-        remainder: { zone: "deck" },
+        amount: 3,
+        destinations: [{ zone: "hand", min: 0, max: 2, reveal: false, target: null }],
         revealedCardIds: ["c", "a", "b"],
         revealedCards: [makeRevealed("c"), makeRevealed("a"), makeRevealed("b")],
       },
     };
-    const result = searchDeckResolver(choice, stubCtx);
+    const result = scryResolver(choice, stubCtx);
     expect(result).toEqual({
       kind: "command",
-      move: "resolveSearchDeck",
-      args: { selectedCardIds: ["a", "b"] },
+      move: "resolveScry",
+      args: { destinations: [{ zone: "hand", cardIds: ["a", "b"] }] },
     });
   });
 
-  test("respects allMatching by selecting every revealed card", () => {
-    const choice: SearchDeckChoicePrompt = {
-      type: "searchDeck",
+  test("respects unbounded destination by selecting every revealed card", () => {
+    const choice: ScryChoicePrompt = {
+      type: "scry",
       chooserId: "p1",
       payload: {
         player: "p1",
-        lookCount: 3,
-        reveal: false,
-        destination: "hand",
-        target: null,
-        select: { kind: "all" },
-        remainder: { zone: "deck" },
+        amount: 3,
+        destinations: [{ zone: "hand", reveal: false, target: null }],
         revealedCardIds: ["a", "b", "c"],
         revealedCards: [makeRevealed("a"), makeRevealed("b"), makeRevealed("c")],
       },
     };
-    const result = searchDeckResolver(choice, stubCtx);
+    const result = scryResolver(choice, stubCtx);
     expect(result).toEqual({
       kind: "command",
-      move: "resolveSearchDeck",
-      args: { selectedCardIds: ["a", "b", "c"] },
+      move: "resolveScry",
+      args: { destinations: [{ zone: "hand", cardIds: ["a", "b", "c"] }] },
     });
   });
 
   test("filters revealed cards by cardTypes before selecting", () => {
-    const choice: SearchDeckChoicePrompt = {
-      type: "searchDeck",
+    const choice: ScryChoicePrompt = {
+      type: "scry",
       chooserId: "p1",
       payload: {
         player: "p1",
-        lookCount: 3,
-        reveal: false,
-        destination: "hand",
-        target: { cardTypes: ["program"] },
-        select: { kind: "upTo", max: 2 },
-        remainder: { zone: "deck" },
+        amount: 3,
+        destinations: [
+          { zone: "hand", min: 0, max: 2, reveal: false, target: { cardTypes: ["program"] } },
+        ],
         revealedCardIds: ["a", "b", "c"],
         revealedCards: [
           makeRevealed("a", { type: "unit" }),
@@ -188,25 +239,29 @@ describe("searchDeckResolver", () => {
         ],
       },
     };
-    expect(searchDeckResolver(choice, stubCtx)).toEqual({
+    expect(scryResolver(choice, stubCtx)).toEqual({
       kind: "command",
-      move: "resolveSearchDeck",
-      args: { selectedCardIds: ["b", "c"] },
+      move: "resolveScry",
+      args: { destinations: [{ zone: "hand", cardIds: ["b", "c"] }] },
     });
   });
 
   test("filters by maxCost and classifications", () => {
-    const choice: SearchDeckChoicePrompt = {
-      type: "searchDeck",
+    const choice: ScryChoicePrompt = {
+      type: "scry",
       chooserId: "p1",
       payload: {
         player: "p1",
-        lookCount: 4,
-        reveal: false,
-        destination: "hand",
-        target: { maxCost: 2, classifications: ["Netrunner"] },
-        select: { kind: "upTo", max: 1 },
-        remainder: { zone: "deck" },
+        amount: 4,
+        destinations: [
+          {
+            zone: "hand",
+            min: 0,
+            max: 1,
+            reveal: false,
+            target: { maxCost: 2, classifications: ["Netrunner"] },
+          },
+        ],
         revealedCardIds: ["a", "b", "c", "d"],
         revealedCards: [
           makeRevealed("a", { cost: 5, classifications: ["Netrunner"] }),
@@ -216,25 +271,23 @@ describe("searchDeckResolver", () => {
         ],
       },
     };
-    expect(searchDeckResolver(choice, stubCtx)).toEqual({
+    expect(scryResolver(choice, stubCtx)).toEqual({
       kind: "command",
-      move: "resolveSearchDeck",
-      args: { selectedCardIds: ["c"] },
+      move: "resolveScry",
+      args: { destinations: [{ zone: "hand", cardIds: ["c"] }] },
     });
   });
 
   test("returns an empty selection when no revealed card matches the filter", () => {
-    const choice: SearchDeckChoicePrompt = {
-      type: "searchDeck",
+    const choice: ScryChoicePrompt = {
+      type: "scry",
       chooserId: "p1",
       payload: {
         player: "p1",
-        lookCount: 2,
-        reveal: false,
-        destination: "hand",
-        target: { cardTypes: ["legend"] },
-        select: { kind: "upTo", max: 1 },
-        remainder: { zone: "deck" },
+        amount: 2,
+        destinations: [
+          { zone: "hand", min: 0, max: 1, reveal: false, target: { cardTypes: ["legend"] } },
+        ],
         revealedCardIds: ["a", "b"],
         revealedCards: [
           makeRevealed("a", { type: "unit" }),
@@ -242,25 +295,29 @@ describe("searchDeckResolver", () => {
         ],
       },
     };
-    expect(searchDeckResolver(choice, stubCtx)).toEqual({
+    expect(scryResolver(choice, stubCtx)).toEqual({
       kind: "command",
-      move: "resolveSearchDeck",
-      args: { selectedCardIds: [] },
+      move: "resolveScry",
+      args: { destinations: [{ zone: "hand", cardIds: [] }] },
     });
   });
 
   test("filters by minCost / maxCost range", () => {
-    const choice: SearchDeckChoicePrompt = {
-      type: "searchDeck",
+    const choice: ScryChoicePrompt = {
+      type: "scry",
       chooserId: "p1",
       payload: {
         player: "p1",
-        lookCount: 4,
-        reveal: false,
-        destination: "hand",
-        target: { minCost: 2, maxCost: 4 },
-        select: { kind: "upTo", max: 2 },
-        remainder: { zone: "deck" },
+        amount: 4,
+        destinations: [
+          {
+            zone: "hand",
+            min: 0,
+            max: 2,
+            reveal: false,
+            target: { minCost: 2, maxCost: 4 },
+          },
+        ],
         revealedCardIds: ["a", "b", "c", "d"],
         revealedCards: [
           { ...makeRevealed("a", { cost: 1 }) },
@@ -270,25 +327,21 @@ describe("searchDeckResolver", () => {
         ],
       },
     };
-    expect(searchDeckResolver(choice, stubCtx)).toEqual({
+    expect(scryResolver(choice, stubCtx)).toEqual({
       kind: "command",
-      move: "resolveSearchDeck",
-      args: { selectedCardIds: ["b", "c"] },
+      move: "resolveScry",
+      args: { destinations: [{ zone: "hand", cardIds: ["b", "c"] }] },
     });
   });
 
   test("filters by minPower / maxPower bounds", () => {
-    const choice: SearchDeckChoicePrompt = {
-      type: "searchDeck",
+    const choice: ScryChoicePrompt = {
+      type: "scry",
       chooserId: "p1",
       payload: {
         player: "p1",
-        lookCount: 3,
-        reveal: false,
-        destination: "hand",
-        target: { minPower: 3, maxPower: 5 },
-        select: { kind: "all" },
-        remainder: { zone: "deck" },
+        amount: 3,
+        destinations: [{ zone: "hand", reveal: false, target: { minPower: 3, maxPower: 5 } }],
         revealedCardIds: ["a", "b", "c"],
         revealedCards: [
           { ...makeRevealed("a"), effectivePower: 2 },
@@ -297,10 +350,36 @@ describe("searchDeckResolver", () => {
         ],
       },
     };
-    expect(searchDeckResolver(choice, stubCtx)).toEqual({
+    expect(scryResolver(choice, stubCtx)).toEqual({
       kind: "command",
-      move: "resolveSearchDeck",
-      args: { selectedCardIds: ["b"] },
+      move: "resolveScry",
+      args: { destinations: [{ zone: "hand", cardIds: ["b"] }] },
+    });
+  });
+});
+
+describe("revealDestinationResolver", () => {
+  test("chooses trash when available", () => {
+    const choice: RevealDestinationChoicePrompt = {
+      type: "revealDestination",
+      chooserId: "p2",
+      payload: {
+        player: "p1",
+        destinations: ["hand", "trash"],
+        revealedCardIds: ["a", "b"],
+        revealedCards: [makeRevealed("a"), makeRevealed("b")],
+        drawIfDestination: {
+          destination: "trash",
+          player: "p1",
+          amount: 2,
+        },
+      },
+    };
+
+    expect(revealDestinationResolver(choice, stubCtx)).toEqual({
+      kind: "command",
+      move: "resolveRevealDestination",
+      args: { destination: "trash" },
     });
   });
 });
@@ -375,6 +454,7 @@ describe("chooseTargetResolver", () => {
         currentValue: 4,
         maxFaceValue: 6,
         dieOwnerId: "p1",
+        source: colorSource("red"),
       },
     };
     expect(chooseTargetResolver(choice, stubCtx)).toEqual({
@@ -401,6 +481,107 @@ describe("chooseTargetResolver", () => {
     expect(chooseTargetResolver(choice, stubCtx)).toEqual({
       kind: "command",
       move: "resolveAdjustGig",
+      args: { value: 1 },
+    });
+  });
+
+  test("Yellow disrupts a rival Gig instead of widening Street Cred in the rival's favor", () => {
+    const ctx = withGigs(
+      [makeGig("friendly", "d6", 5)],
+      [makeGig("rival-target", "d8", 4), makeGig("rival-other", "d6", 6)],
+    );
+    const choice: ChooseTargetChoicePrompt = {
+      type: "chooseTarget",
+      chooserId: "p1",
+      payload: {
+        type: "adjustGig",
+        direction: "either",
+        maxAmount: 2,
+        dieId: "rival-target",
+        currentValue: 4,
+        maxFaceValue: 8,
+        dieOwnerId: "p2",
+        source: colorSource("yellow"),
+      },
+    };
+
+    expect(chooseTargetResolver(choice, ctx)).toMatchObject({
+      kind: "command",
+      args: { value: 2 },
+    });
+  });
+
+  test("rival disruption breaks aligned values when lowering Street Cred", () => {
+    const ctx = withGigs(
+      [makeGig("friendly", "d6", 3)],
+      [makeGig("rival-target", "d8", 4), makeGig("rival-pair", "d6", 4)],
+    );
+    const choice: ChooseTargetChoicePrompt = {
+      type: "chooseTarget",
+      chooserId: "p1",
+      payload: {
+        type: "adjustGig",
+        direction: "either",
+        maxAmount: 1,
+        dieId: "rival-target",
+        currentValue: 4,
+        maxFaceValue: 8,
+        dieOwnerId: "p2",
+        source: colorSource("green"),
+      },
+    };
+
+    expect(chooseTargetResolver(choice, ctx)).toMatchObject({
+      kind: "command",
+      args: { value: 3 },
+    });
+  });
+
+  test("adjustGig target selection chooses the rival Gig with the largest disruption", () => {
+    const ctx = withGigs(
+      [makeGig("friendly", "d6", 3)],
+      [makeGig("small-rival", "d4", 2), makeGig("large-rival", "d8", 6)],
+    );
+    const choice: ChooseTargetChoicePrompt = {
+      type: "chooseTarget",
+      chooserId: "p1",
+      payload: {
+        type: "effectTarget",
+        targetKind: "gig",
+        eligibleIds: ["small-rival", "large-rival"],
+        adjustGig: { direction: "either", maxAmount: 2, chooseUpTo: true },
+        min: 0,
+        max: 1,
+        canDecline: true,
+        source: colorSource("yellow"),
+      },
+    };
+
+    expect(chooseTargetResolver(choice, ctx)).toEqual({
+      kind: "command",
+      move: "resolveEffectTarget",
+      args: { targetIds: ["large-rival"] },
+    });
+  });
+
+  test("Blue decreases a friendly Gig to its minimum value", () => {
+    const choice: ChooseTargetChoicePrompt = {
+      type: "chooseTarget",
+      chooserId: "p1",
+      payload: {
+        type: "adjustGig",
+        direction: "decrease",
+        maxAmount: 5,
+        dieId: "blue-target",
+        currentValue: 4,
+        maxFaceValue: 6,
+        dieOwnerId: "p1",
+        source: colorSource("blue"),
+      },
+    };
+
+    expect(chooseTargetResolver(choice, stubCtx)).toMatchObject({
+      kind: "command",
       args: { value: 1 },
     });
   });
@@ -443,6 +624,138 @@ describe("chooseTargetResolver", () => {
     });
   });
 
+  test("Green adjusts a friendly Gig to align with another value", () => {
+    const ctx = withGigs([makeGig("green-target", "d8", 2), makeGig("green-pair", "d6", 4)]);
+    const choice: ChooseTargetChoicePrompt = {
+      type: "chooseTarget",
+      chooserId: "p1",
+      payload: {
+        type: "adjustGig",
+        direction: "either",
+        maxAmount: 3,
+        dieId: "green-target",
+        currentValue: 2,
+        maxFaceValue: 8,
+        dieOwnerId: "p1",
+        source: colorSource("green"),
+      },
+    };
+
+    expect(chooseTargetResolver(choice, ctx)).toMatchObject({
+      kind: "command",
+      args: { value: 4 },
+    });
+  });
+
+  test("Yellow preserves distinct friendly values instead of forcing an adjustment", () => {
+    const ctx = withGigs([makeGig("yellow-target", "d6", 3), makeGig("yellow-other", "d6", 4)]);
+    const choice: ChooseTargetChoicePrompt = {
+      type: "chooseTarget",
+      chooserId: "p1",
+      payload: {
+        type: "adjustGig",
+        direction: "either",
+        maxAmount: 1,
+        dieId: "yellow-target",
+        currentValue: 3,
+        maxFaceValue: 6,
+        dieOwnerId: "p1",
+        source: colorSource("yellow"),
+      },
+    };
+
+    expect(chooseTargetResolver(choice, ctx)).toMatchObject({
+      kind: "command",
+      args: { value: 3 },
+    });
+  });
+
+  test("color-aware adjustGig target selection chooses the Gig that improves the plan", () => {
+    const ctx = withGigs([
+      makeGig("already-distinct", "d6", 2),
+      makeGig("duplicate", "d6", 3),
+      makeGig("matching", "d8", 3),
+    ]);
+    const choice: ChooseTargetChoicePrompt = {
+      type: "chooseTarget",
+      chooserId: "p1",
+      payload: {
+        type: "effectTarget",
+        targetKind: "gig",
+        eligibleIds: ["already-distinct", "duplicate", "matching"],
+        adjustGig: { direction: "either", maxAmount: 1, chooseUpTo: true },
+        min: 0,
+        max: 1,
+        canDecline: true,
+        source: colorSource("yellow"),
+      },
+    };
+
+    expect(chooseTargetResolver(choice, ctx)).toEqual({
+      kind: "command",
+      move: "resolveEffectTarget",
+      args: { targetIds: ["duplicate"] },
+    });
+  });
+
+  test("color-aware adjustGig target selection handles direct selectable effects", () => {
+    const ctx = withGigs([
+      makeGig("already-distinct", "d6", 2),
+      makeGig("duplicate", "d6", 3),
+      makeGig("matching", "d8", 3),
+    ]);
+    const choice: ChooseTargetChoicePrompt = {
+      type: "chooseTarget",
+      chooserId: "p1",
+      payload: {
+        type: "effectTarget",
+        targetKind: "gig",
+        eligibleIds: ["already-distinct", "duplicate", "matching"],
+        effect: {
+          effect: "adjustGig",
+          target: { selector: "gig", controller: "friendly" },
+          direction: "either",
+          maxAmount: 1,
+          chooseUpTo: true,
+        },
+        min: 0,
+        max: 1,
+        canDecline: true,
+        source: colorSource("yellow"),
+      },
+    };
+
+    expect(chooseTargetResolver(choice, ctx)).toEqual({
+      kind: "command",
+      move: "resolveEffectTarget",
+      args: { targetIds: ["duplicate"] },
+    });
+  });
+
+  test("optional adjustGig selection declines when no color objective improves", () => {
+    const ctx = withGigs([makeGig("min-blue", "d4", 1)]);
+    const choice: ChooseTargetChoicePrompt = {
+      type: "chooseTarget",
+      chooserId: "p1",
+      payload: {
+        type: "effectTarget",
+        targetKind: "gig",
+        eligibleIds: ["min-blue"],
+        adjustGig: { direction: "decrease", maxAmount: 2, chooseUpTo: true },
+        min: 0,
+        max: 1,
+        canDecline: true,
+        source: colorSource("blue"),
+      },
+    };
+
+    expect(chooseTargetResolver(choice, ctx)).toEqual({
+      kind: "command",
+      move: "resolveEffectTarget",
+      args: { pass: true },
+    });
+  });
+
   test("adjustGig is stuck when die context is missing", () => {
     const choice: ChooseTargetChoicePrompt = {
       type: "chooseTarget",
@@ -471,6 +784,46 @@ describe("simple resolvers", () => {
       kind: "command",
       move: "resolveCardToPlay",
       args: { cardId: "beta" }, // tie on power → higher cost wins
+    });
+  });
+
+  test("chooseTarget picks a payable card for paid play-card bindings", () => {
+    const choice: ChooseTargetChoicePrompt = {
+      type: "chooseTarget",
+      chooserId: "p1",
+      payload: {
+        type: "effectTarget",
+        targetKind: "card",
+        eligibleIds: ["expensive", "payable"],
+        min: 1,
+        max: 1,
+        targetPurpose: "playCard",
+        effectiveCostsByCardId: { expensive: 3, payable: 1 },
+        cards: [
+          { ...makeRevealed("expensive"), zone: "trash", cost: 3 },
+          { ...makeRevealed("payable"), zone: "trash", cost: 1 },
+        ],
+      },
+    };
+    const ctx: DecisionContext = {
+      ...stubCtx,
+      view: {
+        ...stubCtx.view,
+        players: {
+          ...stubCtx.view.players,
+          p1: {
+            ...stubCtx.view.players.p1!,
+            eddies: 0,
+            availableEddies: 1,
+          },
+        },
+      },
+    };
+
+    expect(chooseTargetResolver(choice, ctx)).toEqual({
+      kind: "command",
+      move: "resolveEffectTarget",
+      args: { targetIds: ["payable"] },
     });
   });
 
@@ -616,7 +969,8 @@ describe("defaultChoiceResolvers map", () => {
         "chooseTrigger",
         "chooseTarget",
         "gainGig",
-        "searchDeck",
+        "revealDestination",
+        "scry",
       ].sort(),
     );
   });

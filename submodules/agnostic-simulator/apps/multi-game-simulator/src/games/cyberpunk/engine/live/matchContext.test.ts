@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import {
   buildLiveMatchGameHref,
+  parseLiveMatchContext,
   resolveMatchOverviewDestination,
   resolveSeriesDestination,
   type LiveMatchContext,
@@ -42,6 +43,80 @@ describe("live match route destinations", () => {
     expect(buildLiveMatchGameHref("match 1", "game 2", "?playerId=p1", basename)).toBe(
       "/cyberpunk/simulator/matches/match%201/games/game%202?playerId=p1",
     );
+  });
+});
+
+describe("parseLiveMatchContext", () => {
+  test("preserves live participant profile details for the human match sidebar", () => {
+    const context = parseLiveMatchContext({
+      object: "game_context",
+      match: {
+        matchId: "match_1",
+        status: "in_progress",
+        format: "best_of_1",
+        currentGameId: "game_1",
+        gameIds: ["game_1"],
+        participants: [
+          {
+            id: "gp_self",
+            seat: 1,
+            userId: "user_self",
+            displayName: "Wazar Testing",
+            subscriptionTier: "tier2",
+            isMobile: false,
+            mmrAtMatch: 1425.4,
+            deckName: "Corpo Control",
+            deckListId: "dl_self",
+          },
+          {
+            id: "gp_opp",
+            seat: 2,
+            userId: "user_opp",
+            displayName: "MrGMBH",
+            subscriptionTier: "free",
+            isMobile: true,
+            mmrAtMatch: 1510.2,
+            deckName: "Mox Pressure",
+            deckListId: "dl_opp",
+          },
+        ],
+      },
+      game: {
+        gameId: "game_1",
+        gameNumber: 1,
+        status: "in_progress",
+        authority: "server",
+        player1Id: "gp_self",
+        player2Id: "gp_opp",
+        state: null,
+        version: 4,
+      },
+    });
+
+    expect(context.match.participants).toEqual([
+      expect.objectContaining({
+        id: "gp_self",
+        seat: 1,
+        userId: "user_self",
+        displayName: "Wazar Testing",
+        subscriptionTier: "tier2",
+        isMobile: false,
+        mmrAtMatch: 1425.4,
+        deckName: "Corpo Control",
+        deckListId: "dl_self",
+      }),
+      expect.objectContaining({
+        id: "gp_opp",
+        seat: 2,
+        userId: "user_opp",
+        displayName: "MrGMBH",
+        subscriptionTier: "free",
+        isMobile: true,
+        mmrAtMatch: 1510.2,
+        deckName: "Mox Pressure",
+        deckListId: "dl_opp",
+      }),
+    ]);
   });
 });
 

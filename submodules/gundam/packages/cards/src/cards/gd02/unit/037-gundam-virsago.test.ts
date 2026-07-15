@@ -5,7 +5,6 @@ import {
   activeResources,
   createMockUnit,
   expectSuccess,
-  getDamageCounter,
   seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd02GundamVirsago037 } from "./037-gundam-virsago.ts";
@@ -29,7 +28,7 @@ describe("Gundam Virsago (GD02-037)", () => {
 
     expectSuccess(p1.deployUnit(gd02GundamVirsago037, { targets: [enemyId] }));
 
-    expect(getDamageCounter(engine, enemyId)).toBe(2);
+    expect(engine.asPlayer(PLAYER_TWO).getDamage(enemyId)).toBe(2);
   });
 
   it("does not fire the deploy damage while the opponent has 4 Shields", () => {
@@ -42,8 +41,9 @@ describe("Gundam Virsago (GD02-037)", () => {
     const p1 = engine.asPlayer("player_one");
     const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(p1.deployUnit(gd02GundamVirsago037, { targets: [enemyId] }));
+    expectSuccess(p1.deployUnit(gd02GundamVirsago037));
 
-    expect(getDamageCounter(engine, enemyId)).toBe(0);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(engine.asPlayer(PLAYER_TWO).getDamage(enemyId)).toBe(0);
   });
 });

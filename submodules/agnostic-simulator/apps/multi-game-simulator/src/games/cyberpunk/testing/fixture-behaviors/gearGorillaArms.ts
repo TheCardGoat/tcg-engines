@@ -10,7 +10,7 @@ import {
 export const gearGorillaArmsBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "gearGorillaArms",
   label: "Gorilla Arms - extra same-sided gig steal",
-  references: ["packages/engine/src/cards/spoiler/gear/gorilla-arms.test.ts"],
+  references: ["packages/engine/src/cards/welcometonightcityretail/gear/gorilla-arms.test.ts"],
   async run(pom) {
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",
@@ -24,7 +24,7 @@ export const gearGorillaArmsBehavior: CyberpunkFixtureBehavior = {
 
     await pom.expectGigCount(CYBERPUNK_P1, 1);
     await pom.expectGigCount(CYBERPUNK_P2, 3);
-    await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, attacker.instanceId, 9);
+    await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, attacker.instanceId, 7);
 
     await pom.attackRival(attacker.instanceId, CYBERPUNK_P1);
     await pom.resolveAttack(CYBERPUNK_P1);
@@ -32,6 +32,11 @@ export const gearGorillaArmsBehavior: CyberpunkFixtureBehavior = {
     await pom.resolveAttack(CYBERPUNK_P1, { gigIdsToSteal: [firstD4.id] });
 
     expectEqual("Gorilla Arms attack cleared", await pom.getAttackState(), null);
+    const extraD4 = expectDefined(
+      "Gorilla Arms extra rival d4",
+      (await pom.getGigDice(CYBERPUNK_P2)).find((die) => die.dieType === "d4"),
+    );
+    await pom.resolveEffectTarget([extraD4.id], CYBERPUNK_P1);
     await pom.expectGigCount(CYBERPUNK_P1, 3);
     await pom.expectGigCount(CYBERPUNK_P2, 1);
     const remainingRivalD4s = (await pom.getGigDice(CYBERPUNK_P2)).filter(

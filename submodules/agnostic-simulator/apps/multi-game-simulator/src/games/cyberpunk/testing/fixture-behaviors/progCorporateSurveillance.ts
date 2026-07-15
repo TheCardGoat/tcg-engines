@@ -8,7 +8,9 @@ import {
 export const progCorporateSurveillanceBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "progCorporateSurveillance",
   label: "Corporate Surveillance - rival field has targets",
-  references: ["packages/engine/src/cards/alpha/programs/corporate-surveillance.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/programs/corporate-surveillance.test.ts",
+  ],
   async run(pom) {
     await pom.expectHandSize(CYBERPUNK_P1, 1);
     await pom.expectEddies(CYBERPUNK_P1, 3);

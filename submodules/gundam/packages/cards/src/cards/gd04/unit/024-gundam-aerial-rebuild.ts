@@ -70,17 +70,13 @@ export const gd04GundamAerialRebuild024: UnitCard = {
       },
       directives: [
         {
-          // NOTE: Printed text says "You may reveal 1 (Academy) Unit
-          // card/Command card and add it to your hand". The engine's
-          // `lookAtTopDeck` handler always tutors `matches[0]` when the
-          // filter matches — see Encounter (GD04-105) for the same
-          // trade-off. The filter restricts to Unit/Command cards so
-          // (Academy) Pilots in the top 3 are deliberately ignored
-          // (rule: card text only allows Unit / Command).
+          // The filter deliberately excludes (Academy) Pilots because the
+          // printed choice permits only Unit and Command cards.
           action: {
             action: "lookAtTopDeck",
             count: 3,
             return: "chooseTop",
+            randomizeRemainingToBottom: true,
             tutorFilter: {
               owner: "friendly",
               cardType: ["unit", "command"],

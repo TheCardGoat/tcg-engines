@@ -25,10 +25,13 @@ export type DicierStyle =
   | "Round-Heavy"
   | "Round-Light";
 
+export type FieldCardSize = "compact" | "standard" | "large";
+
 export interface CyberpunkSpecificUserConfig {
   diceDisplayMode: DiceDisplayMode;
   diceImageColor: DiceImageColor;
   dicierStyle: DicierStyle;
+  fieldCardSize: FieldCardSize;
 }
 
 export type UserConfig = GameUserConfig<CyberpunkSpecificUserConfig>;
@@ -38,11 +41,18 @@ const DEFAULTS: UserConfig = {
   diceDisplayMode: "shape",
   diceImageColor: "yellow",
   dicierStyle: "Round-Heavy",
+  fieldCardSize: "standard",
 };
 
 const STORAGE_KEY = "cyberpunk:userConfig";
 
 export const DEFAULT_USER_CONFIG: UserConfig = DEFAULTS;
+
+export function parseFieldCardSize(value: unknown): FieldCardSize {
+  return value === "compact" || value === "standard" || value === "large"
+    ? value
+    : DEFAULTS.fieldCardSize;
+}
 
 export function parseUserConfig(raw: string | null): UserConfig {
   if (!raw) {
@@ -55,6 +65,7 @@ export function parseUserConfig(raw: string | null): UserConfig {
       ...DEFAULTS,
       ...parsed,
       ...baseConfig,
+      fieldCardSize: parseFieldCardSize(parsed.fieldCardSize),
     };
   } catch {
     return DEFAULTS;
@@ -89,6 +100,10 @@ export function UserConfigProvider({ children }: { children: ReactNode }) {
           patch.animationPacing === undefined
             ? prev.animationPacing
             : parseAnimationPacing(patch.animationPacing),
+        fieldCardSize:
+          patch.fieldCardSize === undefined
+            ? prev.fieldCardSize
+            : parseFieldCardSize(patch.fieldCardSize),
       };
       try {
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));

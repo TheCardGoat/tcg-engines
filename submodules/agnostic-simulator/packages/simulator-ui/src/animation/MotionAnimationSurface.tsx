@@ -11,6 +11,7 @@ import {
   LayoutShiftSentinel,
   PhaseMotionOverlay,
   ResourceMotionOverlay,
+  type MotionEntityRenderer,
 } from "./MotionOverlays";
 import type {
   BeamOverlayState,
@@ -29,6 +30,8 @@ import {
 } from "./rectRegistry";
 import type { RectCache } from "./rectRegistry";
 
+const ANIMATION_PLAN_WATCHDOG_TIMEOUT_MS = 10_000;
+
 export interface MotionAnimationSurfaceProps<TState = unknown> {
   readonly activeTransition?: LiveStateTransition<TState, AnimationPlanV1> | null;
   readonly animationPlans?: readonly AnimationPlanV1[] | null;
@@ -36,6 +39,7 @@ export interface MotionAnimationSurfaceProps<TState = unknown> {
   readonly children: ReactNode;
   readonly resolveEntity?: (entityId: string) => SimulatorEntity | null | undefined;
   readonly resolveZone?: (zoneRef: AnimationZoneRef) => SimulatorZone | null | undefined;
+  readonly renderEntity?: MotionEntityRenderer;
   readonly getCardSuppressionDelayMs?: (overlay: CardOverlayState) => number;
   readonly onAnimationStepsScheduled?: (steps: readonly ScheduledAnimationStep[]) => void;
   readonly onPlanComplete?: (planId: string) => void;
@@ -57,6 +61,7 @@ export function MotionAnimationSurface<TState = unknown>({
   children,
   resolveEntity,
   resolveZone,
+  renderEntity,
   getCardSuppressionDelayMs,
   onAnimationStepsScheduled,
   onPlanComplete,
@@ -77,12 +82,16 @@ export function MotionAnimationSurface<TState = unknown>({
     () => new Set(),
   );
   const completedPlanIdsRef = useRef<Set<string>>(new Set());
+  const completedStepIdsRef = useRef<ReadonlySet<string>>(new Set());
   const completedTransitionIdRef = useRef<string | null>(null);
   const seenStepIdsRef = useRef<Set<string>>(new Set());
   const rectCacheRef = useRef<RectCache>(emptyRectCache());
   const pendingInteractionRectCacheRef = useRef<RectCache | null>(null);
   const pendingInteractionRectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const suppressionTimersRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+  const planWatchdogsRef = useRef<
+    Map<string, { plan: AnimationPlanV1; timer: ReturnType<typeof setTimeout> }>
+  >(new Map());
   const onPlanCompleteRef = useRef(onPlanComplete);
   const onTransitionCompleteRef = useRef(onTransitionComplete);
   const onAnimationStepsScheduledRef = useRef(onAnimationStepsScheduled);
@@ -107,6 +116,10 @@ export function MotionAnimationSurface<TState = unknown>({
         clearTimeout(timer);
       }
       suppressionTimersRef.current.clear();
+      for (const watchdog of planWatchdogsRef.current.values()) {
+        clearTimeout(watchdog.timer);
+      }
+      planWatchdogsRef.current.clear();
     },
     [],
   );
@@ -156,7 +169,14 @@ export function MotionAnimationSurface<TState = unknown>({
     }
     seenStepIdsRef.current.clear();
     completedPlanIdsRef.current.clear();
-    setCompletedStepIds((current) => (current.size === 0 ? current : new Set()));
+    setCompletedStepIds((current) => {
+      if (current.size === 0) {
+        return current;
+      }
+      const next = new Set<string>();
+      completedStepIdsRef.current = next;
+      return next;
+    });
   }, [plans.length]);
 
   const markStepComplete = useCallback((stepKey: string) => {
@@ -166,7 +186,39 @@ export function MotionAnimationSurface<TState = unknown>({
       }
       const next = new Set(current);
       next.add(stepKey);
+      completedStepIdsRef.current = next;
       return next;
+    });
+  }, []);
+
+  const markPlanStepsComplete = useCallback((plan: AnimationPlanV1) => {
+    setCompletedStepIds((current) => {
+      const next = new Set(current);
+      for (const step of plan.steps) {
+        next.add(stepKeyOf(plan.id, step.id));
+      }
+      completedStepIdsRef.current = next;
+      return next.size === current.size ? current : next;
+    });
+  }, []);
+
+  const clearPlanVisuals = useCallback((plan: AnimationPlanV1) => {
+    const stepKeys = new Set(plan.steps.map((step) => stepKeyOf(plan.id, step.id)));
+    for (const stepKey of stepKeys) {
+      const suppressionTimer = suppressionTimersRef.current.get(stepKey);
+      if (suppressionTimer) {
+        clearTimeout(suppressionTimer);
+        suppressionTimersRef.current.delete(stepKey);
+      }
+    }
+    setCardOverlays((current) => current.filter((overlay) => overlay.planId !== plan.id));
+    setBeamOverlays((current) => current.filter((overlay) => overlay.planId !== plan.id));
+    setResourceOverlays((current) => current.filter((overlay) => overlay.planId !== plan.id));
+    setPhaseOverlays((current) => current.filter((overlay) => overlay.planId !== plan.id));
+    setLayoutShifts((current) => current.filter((overlay) => overlay.planId !== plan.id));
+    setSuppressedCardOverlayIds((current) => {
+      const next = new Set([...current].filter((overlayId) => !stepKeys.has(overlayId)));
+      return next.size === current.size ? current : next;
     });
   }, []);
 
@@ -258,12 +310,52 @@ export function MotionAnimationSurface<TState = unknown>({
   ]);
 
   useEffect(() => {
+    const activePlanIds = new Set(planById.keys());
+    for (const [planId, watchdog] of planWatchdogsRef.current) {
+      if (activePlanIds.has(planId)) {
+        continue;
+      }
+      clearTimeout(watchdog.timer);
+      clearPlanVisuals(watchdog.plan);
+      planWatchdogsRef.current.delete(planId);
+    }
+
+    for (const [planId, plan] of planById) {
+      if (completedPlanIdsRef.current.has(planId) || planWatchdogsRef.current.has(planId)) {
+        continue;
+      }
+      const timer = setTimeout(() => {
+        planWatchdogsRef.current.delete(planId);
+        const pendingStepIds = plan.steps
+          .filter((step) => !completedStepIdsRef.current.has(stepKeyOf(planId, step.id)))
+          .map((step) => step.id);
+        if (pendingStepIds.length === 0) {
+          return;
+        }
+        console.warn("[sim-animation] animation plan watchdog timed out", {
+          planId,
+          pendingStepIds,
+          timeoutMs: ANIMATION_PLAN_WATCHDOG_TIMEOUT_MS,
+        });
+        clearPlanVisuals(plan);
+        markPlanStepsComplete(plan);
+      }, ANIMATION_PLAN_WATCHDOG_TIMEOUT_MS);
+      planWatchdogsRef.current.set(planId, { plan, timer });
+    }
+  }, [clearPlanVisuals, markPlanStepsComplete, planById]);
+
+  useEffect(() => {
     for (const [planId, plan] of planById) {
       if (completedPlanIdsRef.current.has(planId)) {
         continue;
       }
       if (plan.steps.every((step) => completedStepIds.has(stepKeyOf(planId, step.id)))) {
         completedPlanIdsRef.current.add(planId);
+        const watchdog = planWatchdogsRef.current.get(planId);
+        if (watchdog) {
+          clearTimeout(watchdog.timer);
+          planWatchdogsRef.current.delete(planId);
+        }
         onPlanCompleteRef.current?.(planId);
       }
     }
@@ -332,6 +424,7 @@ export function MotionAnimationSurface<TState = unknown>({
             overlay={overlay}
             reduced={Boolean(prefersReducedMotion)}
             visible={overlay.suppressEntity === false || suppressedCardOverlayIds.has(overlay.id)}
+            renderEntity={renderEntity}
             onComplete={completeCard}
           />
         ))}

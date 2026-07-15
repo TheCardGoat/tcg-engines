@@ -61,6 +61,8 @@ export interface ZoneQueryAPI {
 }
 
 export interface ZoneMutationAPI {
+  /** Remove a card from all in-game zones and the runtime card index. */
+  removeCard: (cardId: string) => void;
   moveCard: (
     cardId: string,
     toZone: ZoneRef,

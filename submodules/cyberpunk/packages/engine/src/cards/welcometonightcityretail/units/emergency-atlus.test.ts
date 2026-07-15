@@ -12,7 +12,7 @@ describe("Emergency - Atlus", () => {
     engine.playCard(welcomeToNightCityRetailEmergencyAtlus, { as: P1 });
 
     const atlus = engine.getCard(welcomeToNightCityRetailEmergencyAtlus, "field", P1);
-    expect(atlus.meta.playedThisTurn).toBe(true);
+    expect(atlus.meta.hasLag).toBe(true);
     expect(engine.getEddies(P1)).toBe(0);
     expectNotAttackCandidate(engine, welcomeToNightCityRetailEmergencyAtlus, { as: P1 });
   });
@@ -20,9 +20,7 @@ describe("Emergency - Atlus", () => {
   it("can attack normally after lag clears because it has no card-specific restriction", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [
-          { card: welcomeToNightCityRetailEmergencyAtlus, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailEmergencyAtlus, spent: false, hasLag: false }],
       },
       {
         gigArea: [{ dieType: "d4", faceValue: 1 }],

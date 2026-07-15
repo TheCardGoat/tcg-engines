@@ -95,6 +95,38 @@ export function gatherAllCardsForTargeting(
  * play-time target that enemy Units must attack later.
  */
 export function extractActionFilters(action: EffectAction): TargetFilter[] {
+  if (action.action === "discard") {
+    return [
+      {
+        ...action.filter,
+        owner: "friendly",
+        zone: "hand",
+        count: action.count,
+      },
+    ];
+  }
+
+  if (action.action === "restThenDamageByChosenUnitLevel") {
+    return [action.referenceTarget];
+  }
+
+  if (action.action === "resolveThenQueue") {
+    return extractActionFilters(action.first);
+  }
+
+  // These compound actions change public state before their conditional
+  // target exists. Their first step auto-resolves, then the executor
+  // enqueues an ordinary targeted follow-up against the updated board.
+  // Treating the embedded filter as an up-front choice would expose hidden
+  // deck information and force a meaningless target when the trait misses.
+  if (
+    action.action === "millDeckThenDamageIfTrait" ||
+    action.action === "millDeckThenDamageByTraitCount" ||
+    action.action === "millDeckThenStatModifierIfTrait"
+  ) {
+    return [];
+  }
+
   const filters: TargetFilter[] = [];
   const a = action as { target?: unknown; unit?: unknown };
   if (a.target !== undefined) filters.push(a.target as TargetFilter);

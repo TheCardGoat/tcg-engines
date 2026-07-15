@@ -88,9 +88,8 @@ const INVARIANTS = [
   // removed. The heuristic (line-level grep for .opponent.hand etc.) had both
   // false positives (matched comments, type aliases, selector keys) and false
   // negatives (any line that happens to mention `filterMatchView` was given
-  // a pass). Private-field hygiene is now checked inferentially by
-  // .claude/skills/review.md (criterion 2: engine invariants). The invariant
-  // itself remains documented in docs/design-docs/core-beliefs.md §8.
+  // a pass). Private-field hygiene remains an inferential code-review concern.
+  // The invariant itself is documented in docs/design-docs/core-beliefs.md.
 ];
 
 const IGNORE_DIRS = new Set([

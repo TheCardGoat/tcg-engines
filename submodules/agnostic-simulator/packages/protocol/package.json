@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@tcg/typescript-config": "link:../typescript-config",
-    "@types/node": "^22.13.4"
+    "@types/node": "^22.13.4",
+    "@typescript/native": "catalog:"
   }
 }

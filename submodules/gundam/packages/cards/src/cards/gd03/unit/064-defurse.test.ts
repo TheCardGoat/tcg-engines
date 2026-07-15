@@ -20,24 +20,38 @@ describe("Defurse (GD03-064)", () => {
     });
     const p1 = engine.asPlayer(PLAYER_ONE);
     const [xrounderId] = p1.getCardsInZone("trash");
-
-    const handBefore = engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE });
-    const trashBefore = engine.getCardCount({ zone: "trash", playerId: PLAYER_ONE });
+    const fillerId = p1.getHand()[1]!;
 
     expectSuccess(p1.deployUnit(gd03Defurse064, { targets: [xrounderId!] }));
-    while (engine.getPendingChoice()) {
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
-    }
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([fillerId, xrounderId]),
+    });
+    expectSuccess(p1.resolveEffect({ targets: [fillerId] }));
 
-    // Net hand size: -1 (defurse played) + 1 (x-rounder added) - 1 (discard) = -1.
-    expect(engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE })).toBe(handBefore - 1);
-    // X-Rounder left the trash (discard added something else, so net could be 0 or +1).
-    expect(engine.getCardCount({ zone: "trash", playerId: PLAYER_ONE })).toBeGreaterThanOrEqual(
-      trashBefore,
-    );
-    // The X-Rounder card is no longer in the trash.
-    expect(engine.getState().ctx.zones.private.cardIndex[xrounderId!]?.zoneKey).not.toBe(
-      `trash:${PLAYER_ONE}`,
-    );
+    expect(p1.getHand()).toContain(xrounderId);
+    expect(p1.getHand()).not.toContain(fillerId);
+    expect(p1.getCardZone(fillerId)).toBe(`trash:${PLAYER_ONE}`);
+  });
+
+  it("may decline to recover a card and does not discard", () => {
+    const xrounder = createMockUnit({ traits: ["x-rounder"] });
+    const handFiller = createMockUnit();
+    const engine = GundamTestEngine.create({
+      hand: [gd03Defurse064, handFiller],
+      trash: [xrounder],
+      resourceArea: activeResources(5),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const trashId = p1.getCardsInZone("trash")[0]!;
+    const fillerId = p1.getHand()[1]!;
+
+    expectSuccess(p1.deployUnit(gd03Defurse064));
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: false } }));
+
+    expect(p1.getCardsInZone("trash")).toEqual([trashId]);
+    expect(p1.getHand()).toEqual([fillerId]);
   });
 });

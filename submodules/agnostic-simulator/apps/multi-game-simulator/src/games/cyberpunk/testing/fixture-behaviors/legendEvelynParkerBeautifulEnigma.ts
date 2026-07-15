@@ -9,7 +9,9 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const legendEvelynParkerBeautifulEnigmaBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendEvelynParkerBeautifulEnigma",
   label: "Evelyn Parker - spend searches for Braindance",
-  references: ["packages/engine/src/cards/spoiler/legends/evelyn-parker-beautiful-enigma.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/legends/evelyn-parker-beautiful-enigma.test.ts",
+  ],
   async run(pom) {
     const evelyn = await pom.getCardInZoneByDefinitionId(
       "legendArea",
@@ -20,7 +22,7 @@ export const legendEvelynParkerBeautifulEnigmaBehavior: CyberpunkFixtureBehavior
     await pom.activateAbility(evelyn.instanceId, 1, CYBERPUNK_P1);
 
     await pom.expectLegendCardSpent(CYBERPUNK_P1, evelyn.instanceId, true);
-    await pom.expectPendingChoiceType(CYBERPUNK_P1, "searchDeck");
+    await pom.expectPendingChoiceType(CYBERPUNK_P1, "scry");
     const revealed = await pom.getSearchDeckRevealedCardIds(CYBERPUNK_P1);
     expectEqual("Evelyn reveal count", revealed.length, 3);
 

@@ -9,6 +9,7 @@ export const INITIAL_GATEWAY_STATE: GatewayConnectionState = {
   reconnectAttempt: 0,
   error: null,
   authStatus: "ok",
+  authFailureReason: null,
 };
 
 export interface StateStore {

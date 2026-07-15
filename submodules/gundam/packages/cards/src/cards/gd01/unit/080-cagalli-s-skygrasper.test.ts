@@ -1,42 +1,86 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  asPlayerId,
+  activeResources,
+  createMockPilot,
   createMockUnit,
+  expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd01CagalliSSkygrasper080 } from "./080-cagalli-s-skygrasper.ts";
+import {
+  passTurnThroughPublicMoves,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
+
+function completeBattle(
+  attacker: ReturnType<GundamTestEngine["asPlayer"]>,
+  defender: ReturnType<GundamTestEngine["asPlayer"]>,
+) {
+  expectSuccess(defender.passBlock());
+  expectSuccess(defender.passBattleAction());
+  expectSuccess(attacker.passBattleAction());
+}
 
 describe("Cagalli's Skygrasper (GD01-080)", () => {
-  it("【Destroyed】 returns a Lv.2-or-lower enemy Unit to its owner's hand", () => {
-    // Cagalli (AP 2, HP 1) dies to an AP-2 attacker. A separate Lv.1
-    // enemy is the only eligible target for the Destroyed trigger — the
-    // big attacker (level 5 via createMockUnit default) is out of
-    // range, so the auto-pick lands on the Lv.1 unit.
-    const bigAttacker = createMockUnit({ ap: 2, hp: 5, level: 5 });
-    const weakEnemy = createMockUnit({ ap: 1, hp: 5, level: 1 });
+  it("offers a Lv.2-or-lower enemy Unit after it is destroyed and returns the choice to hand", () => {
+    const attacker = createMockUnit({ ap: 2, hp: 5, level: 5 });
+    const eligibleEnemy = createMockUnit({ hp: 5, level: 1 });
     const engine = GundamTestEngine.create(
-      { play: [bigAttacker, weakEnemy] },
+      {
+        deck: 2,
+        play: [attacker, eligibleEnemy],
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
       { play: [gd01CagalliSSkygrasper080] },
+      { initialActivePlayer: PLAYER_TWO },
     );
-    const p1Id = asPlayerId(PLAYER_ONE);
-    const p2Id = asPlayerId(PLAYER_TWO);
-    const bigAttackerId = engine.getCardsInZone({ zone: "battleArea", playerId: p1Id })[0]!;
-    const weakEnemyId = engine.getCardsInZone({ zone: "battleArea", playerId: p1Id })[1]!;
-    const cagalliId = engine.getCardsInZone({ zone: "battleArea", playerId: p2Id })[0]!;
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [attackerId, eligibleEnemyId] = p1.getCardsInZone("battleArea");
+    const cagalliId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.getG().exhausted[bigAttackerId] = false;
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [cagalliId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
 
-    engine.resolveCombat({ attackerId: bigAttackerId, target: cagalliId });
+    expectSuccess(p1.enterBattle(attackerId!, cagalliId));
+    completeBattle(p1, p2);
 
-    // Cagalli destroyed (AP 2 vs HP 1).
-    expect(engine.getState().ctx.zones.private.cardIndex[cagalliId]?.zoneKey).toBe(
-      `trash:${PLAYER_TWO}`,
+    expect(p2.getCardZone(cagalliId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [eligibleEnemyId],
+    });
+    expectSuccess(p2.resolveEffect({ targets: [eligibleEnemyId!] }));
+
+    expect(p1.getCardZone(eligibleEnemyId!)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getCardZone(attackerId!)).toBe(`battleArea:${PLAYER_ONE}`);
+  });
+
+  it("links with Cagalli Yula Athha and can attack on the deployment turn", () => {
+    const cagalli = createMockPilot({ name: "Cagalli Yula Athha", level: 1, cost: 1 });
+    const enemy = createMockUnit({ hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd01CagalliSSkygrasper080, cagalli],
+        deck: 2,
+        resourceArea: activeResources(3),
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
+      { play: [enemy] },
+      { initialActivePlayer: PLAYER_TWO },
     );
-    // Lv.1 enemy returned to p1's hand.
-    expect(engine.getState().ctx.zones.private.cardIndex[weakEnemyId]?.zoneKey).toBe(
-      `hand:${PLAYER_ONE}`,
-    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [enemyId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+
+    expectSuccess(p1.deployUnit(gd01CagalliSSkygrasper080));
+    const skygrasperId = p1.getCardsInZone("battleArea")[0]!;
+    expectSuccess(p1.assignPilot(cagalli, skygrasperId));
+
+    expectSuccess(p1.enterBattle(skygrasperId, enemyId));
   });
 });

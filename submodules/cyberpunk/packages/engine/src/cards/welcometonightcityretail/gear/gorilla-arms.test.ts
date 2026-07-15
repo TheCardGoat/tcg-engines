@@ -3,8 +3,9 @@ import {
   welcomeToNightCityRetailEvelynParkerBeautifulEnigma,
   welcomeToNightCityRetailGorillaArms,
   welcomeToNightCityRetailOffdutyMalfini,
+  welcomeToNightCityRetailRidingNomad,
 } from "@tcg/cyberpunk-cards";
-import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
+import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 /**
  * Resolves any pending `chooseTrigger` choices in arrival order. Used when a
@@ -23,6 +24,32 @@ function drainChooseTrigger(engine: CyberpunkTestEngine): void {
       choice.chooserId,
     );
   }
+}
+
+function resolveFirstPendingGigTarget(
+  engine: CyberpunkTestEngine,
+  opts?: { allowPendingChoice?: boolean },
+): string {
+  const choice = engine.getState().G.turnMetadata.pendingChoice;
+  expect(choice?.type).toBe("chooseTarget");
+  if (!choice || choice.type !== "chooseTarget") {
+    throw new Error("Expected a chooseTarget pending choice.");
+  }
+  expect(choice.payload.type).toBe("effectTarget");
+  expect(choice.payload.targetKind).toBe("gig");
+  const eligibleIds = choice.payload.eligibleIds ?? [];
+  const targetId = eligibleIds[0];
+  expect(targetId).toBeDefined();
+  if (opts?.allowPendingChoice) {
+    engine.resolveEffectTargetIds([targetId!], {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "Gorilla Arms can queue follow-up gigStolen triggers.",
+    });
+  } else {
+    engine.resolveEffectTargetIds([targetId!], { as: P1 });
+  }
+  return targetId!;
 }
 
 describe("Gorilla Arms", () => {
@@ -59,8 +86,74 @@ describe("Gorilla Arms", () => {
         valueNotSharedBy: {
           controller: "friendly",
         },
+        selection: {
+          mode: "choose",
+          min: 1,
+          max: 1,
+        },
       },
     });
+  });
+
+  it("lets the player choose which unshared-value rival Gig Gorilla Arms steals", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        field: [{ card: welcomeToNightCityRetailRidingNomad, spent: false, hasLag: false }],
+        hand: [welcomeToNightCityRetailGorillaArms],
+        eddies: 4,
+        gigArea: [
+          { dieType: "d4", faceValue: 3 },
+          { dieType: "d6", faceValue: 5 },
+          { dieType: "d12", faceValue: 10 },
+        ],
+      },
+      {
+        gigArea: [
+          { dieType: "d4", faceValue: 2 },
+          { dieType: "d12", faceValue: 9 },
+          { dieType: "d6", faceValue: 5 },
+        ],
+      },
+    );
+
+    engine.attachGear(welcomeToNightCityRetailGorillaArms, welcomeToNightCityRetailRidingNomad, {
+      as: P1,
+    });
+    const stolenFive = engine.getGigDice(P2).find((die) => die.faceValue === 5);
+    expect(stolenFive).toBeDefined();
+
+    engine.attackRival(welcomeToNightCityRetailRidingNomad, { as: P1 });
+    engine.resolveAttack({ as: P1 });
+    engine.resolveAttack({ as: P2, pass: true });
+    engine.resolveAttack({ as: P1, gigIdsToSteal: [stolenFive!.id] });
+
+    const choice = engine.getState().G.turnMetadata.pendingChoice;
+    expect(choice?.type).toBe("chooseTarget");
+    if (!choice || choice.type !== "chooseTarget") {
+      throw new Error("Expected Gorilla Arms to ask for a Gig target.");
+    }
+    expect(choice.payload.type).toBe("effectTarget");
+    expect(choice.payload.targetKind).toBe("gig");
+    expect(choice.payload.min).toBe(1);
+    expect(choice.payload.max).toBe(1);
+
+    const eligibleIds = choice.payload.eligibleIds ?? [];
+    const eligibleValues = eligibleIds
+      .map((id) => engine.getState().G.gigDice[id]?.faceValue)
+      .sort((a, b) => (a ?? 0) - (b ?? 0));
+    expect(eligibleValues).toEqual([2, 9]);
+
+    const nine = eligibleIds.find((id) => engine.getState().G.gigDice[id]?.faceValue === 9);
+    expect(nine).toBeDefined();
+    engine.resolveEffectTargetIds([nine!], { as: P1 });
+
+    expect(
+      engine
+        .getGigDice(P1)
+        .map((die) => die.faceValue)
+        .sort((a, b) => a - b),
+    ).toEqual([3, 5, 5, 9, 10]);
+    expect(engine.getGigDice(P2).map((die) => die.faceValue)).toEqual([2]);
   });
 
   it("attributes a card-driven steal to the host Unit (Change A) and bounds the cascade", () => {
@@ -71,9 +164,7 @@ describe("Gorilla Arms", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailGorillaArms],
-        field: [
-          { card: welcomeToNightCityRetailOffdutyMalfini, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailOffdutyMalfini, spent: false, hasLag: false }],
         eddies: 4,
       },
       {
@@ -89,6 +180,7 @@ describe("Gorilla Arms", () => {
     });
     engine.attackRival(welcomeToNightCityRetailOffdutyMalfini, { as: P1 });
     engine.resolveFullSteal({ as: P1 });
+    resolveFirstPendingGigTarget(engine);
 
     const host = engine.getCard(welcomeToNightCityRetailOffdutyMalfini, "field", P1);
 
@@ -119,9 +211,7 @@ describe("Gorilla Arms", () => {
         legendArea: [
           { card: welcomeToNightCityRetailEvelynParkerBeautifulEnigma, faceDown: false },
         ],
-        field: [
-          { card: welcomeToNightCityRetailOffdutyMalfini, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailOffdutyMalfini, spent: false, hasLag: false }],
         hand: [welcomeToNightCityRetailGorillaArms],
         eddies: 4,
       },
@@ -141,6 +231,10 @@ describe("Gorilla Arms", () => {
 
     engine.attackRival(welcomeToNightCityRetailOffdutyMalfini, { as: P1 });
     engine.resolveFullSteal({ as: P1 });
+    drainChooseTrigger(engine);
+    if (engine.getState().G.turnMetadata.pendingChoice?.type === "chooseTarget") {
+      resolveFirstPendingGigTarget(engine, { allowPendingChoice: true });
+    }
 
     // The direct steal queues Gorilla Arms + Evelyn Parker (two mandatory P1
     // triggers), so a chooseTrigger choice suspends. The cascade re-queues

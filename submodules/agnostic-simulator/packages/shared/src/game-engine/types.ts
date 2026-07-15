@@ -98,6 +98,16 @@ export interface DispatchFailure {
   stateID?: number;
 }
 
+export interface BotDecisionDiagnostics {
+  kind: "search";
+  strategyId: string;
+  candidateCount: number;
+  nodesEvaluated: number;
+  depthReached: number;
+  scoreGap: number | null;
+  cutoffReason: "complete" | "depth" | "node-budget" | "hidden-information";
+}
+
 /**
  * Result of running a single bot action on behalf of the current actor.
  * Mirrors the Lorcana shape; non-Lorcana adapters either populate it
@@ -106,8 +116,14 @@ export interface DispatchFailure {
 export interface BotActionResult {
   finalResult: DispatchResult;
   blocked?: { reason: string };
+  /** Concrete engine strategy that ran after resolving aliases and promotions. */
+  strategyId?: string;
   selectedCandidate?: { family: string };
   fallbackTaken?: string;
+  /** Bounded, public-information-only decision telemetry. */
+  decisionDiagnostics?: BotDecisionDiagnostics;
+  /** Strategy/resolver execution time, excluding command dispatch and persistence. */
+  decisionDurationMs?: number;
 }
 
 export interface BotActionOptions {

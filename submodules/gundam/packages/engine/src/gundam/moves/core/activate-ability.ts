@@ -6,7 +6,13 @@
  */
 
 import type { Card, CardEffect, EffectCondition, TargetFilter } from "@tcg/gundam-types";
-import type { GundamMoveDefinition, GundamCardMeta, PendingEffect } from "../../types.ts";
+import type {
+  GundamMoveDefinition,
+  GundamCardMeta,
+  PendingEffect,
+  ReadonlyGundamG,
+} from "../../types.ts";
+import type { FrameworkReadAPI } from "../../../types/move-types.ts";
 import {
   getActivatedEffects,
   getAvailableResources,
@@ -14,41 +20,124 @@ import {
   isLinkUnit,
 } from "../../rules/derived-state.ts";
 import { evaluateCondition, evaluateTargetFilter } from "../../../runtime/target-dsl.ts";
-import { gatherAllCardsForTargeting } from "../../effects/target-legality.ts";
-import { countPayableDiscardCostCards, payCost } from "./play-card-shared.ts";
+import { gatherAllCardsForTargeting, getFilterCountBounds } from "../../effects/target-legality.ts";
+import {
+  countPayableDiscardCostCards,
+  listPayableDiscardCostCards,
+  payCost,
+} from "./play-card-shared.ts";
 import { resetActionStepOnAction } from "./action-step-reset.ts";
 import {
+  assignTargetsToGroups,
   enqueuePendingEffect,
   enqueueObserverTriggers,
   enqueueOwnCardTriggers,
   evaluateLegalTargets,
   nextPendingEffectId,
+  requiredTargetAssignmentExists,
 } from "../../effects/pending-effects.ts";
 import { emitGundamEvent } from "../../events.ts";
 import { emitGundamLog } from "../../logging.ts";
 import { rejectWithKey } from "./validation-error.ts";
 
+function isActionTiming(phase: string | undefined, step: string | undefined): boolean {
+  return (phase === "battle-phase" || phase === "end-phase") && step === "action-step";
+}
+
+function canBeginActivation(
+  effect: CardEffect,
+  effectIndex: number,
+  cardId: string,
+  playerId: string,
+  G: ReadonlyGundamG,
+  framework: FrameworkReadAPI,
+): boolean {
+  if (framework.cards.getController(cardId) !== playerId) return false;
+  const sourceZone = framework.cards.getZone(cardId)?.split(":")[0];
+  if (sourceZone !== "battleArea" && sourceZone !== "baseSection") return false;
+  const timing = (effect.activation.timing ?? []) as string[];
+  const phase = framework.state.status.phase;
+  const validInPhase =
+    (timing.includes("activate:main") && phase === "main-phase") ||
+    (timing.includes("activate:action") && isActionTiming(phase, framework.state.status.step));
+  if (!validInPhase) return false;
+  if (timing.includes("duringLink") && !isLinkUnit(cardId, G, framework.cards)) return false;
+  if (timing.includes("duringPair") && !(cardId in G.pilotAssignments)) return false;
+
+  const tgtCtx = buildTargetResolutionContext(G, playerId, framework, {
+    sourceCardId: cardId,
+  });
+  if (
+    effect.activation.conditions?.some(
+      (condition) => !evaluateCondition(condition as EffectCondition, tgtCtx),
+    )
+  ) {
+    return false;
+  }
+
+  const cost = effect.cost;
+  if (cost?.restSelf) {
+    const meta = framework.cards.getMeta(cardId) as GundamCardMeta | undefined;
+    if (meta?.exhausted || G.exhausted[cardId]) return false;
+  }
+  if (
+    cost?.payResources !== undefined &&
+    getAvailableResources(playerId, G, framework) < cost.payResources
+  ) {
+    return false;
+  }
+  if (
+    cost?.discardCount &&
+    countPayableDiscardCostCards(cost, cardId, playerId, G, framework) < cost.discardCount
+  ) {
+    return false;
+  }
+  if (cost?.exileFromTrash) {
+    const filter: TargetFilter = { ...cost.exileFromTrash, zone: "trash" };
+    const candidates = evaluateTargetFilter(filter, gatherAllCardsForTargeting(tgtCtx), tgtCtx);
+    if (candidates.length < getFilterCountBounds(filter).min) return false;
+  }
+  if (
+    cost?.restTarget &&
+    evaluateTargetFilter(cost.restTarget, gatherAllCardsForTargeting(tgtCtx), tgtCtx).length === 0
+  ) {
+    return false;
+  }
+  if (effect.activation.restrictions?.some((restriction) => restriction.type === "oncePerTurn")) {
+    const meta = framework.cards.getMeta(cardId) as GundamCardMeta | undefined;
+    if ((meta?.abilityUsesThisTurn?.[String(effectIndex)] ?? 0) >= 1) return false;
+  }
+  const targetResolution = evaluateLegalTargets(
+    {
+      id: "__availability__",
+      controllerId: playerId,
+      sourceCardId: cardId,
+      effect,
+      effectIndex,
+      kind: "activated",
+    },
+    G,
+    framework,
+  );
+  if (targetResolution && !requiredTargetAssignmentExists(targetResolution.groups)) return false;
+  return true;
+}
+
 export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
   gatedByPendingEffects: true,
 
-  describeProcedure({ G, playerId: _playerId, partialInput, framework }) {
+  describeProcedure({ G, playerId, partialInput, framework }) {
     const g = G;
     const cardId = (partialInput as { cardId?: string }).cardId;
     if (!cardId) return [];
 
-    const phase = framework.state.status.phase;
-    const step = framework.state.status.step;
-    const isMain = phase === "main-phase";
-    const isAction = phase === "end-phase" && step === "action-step";
     const activated = getActivatedEffects(cardId, g, framework.cards);
 
     const usableIndices: number[] = [];
     activated.forEach((effect, idx) => {
-      const timing = (effect.activation.timing ?? []) as string[];
-      const validInPhase =
-        (timing.includes("activate:main") && isMain) ||
-        (timing.includes("activate:action") && (isAction || isMain));
-      if (validInPhase) usableIndices.push(idx);
+      if (canBeginActivation(effect, idx, cardId, playerId, g, framework)) {
+        usableIndices.push(idx);
+      }
     });
 
     if (usableIndices.length === 0) return [];
@@ -71,6 +160,50 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
       ];
     }
 
+    const effectIndex = (partialInput as { effectIndex: number }).effectIndex;
+    const effect = activated[effectIndex];
+    if (effect?.cost?.discardCount) {
+      const candidates = listPayableDiscardCostCards(effect.cost, playerId, cardId, g, framework);
+      const selected = ((partialInput as { targets?: readonly string[] }).targets ?? []).filter(
+        (id) => candidates.includes(id),
+      );
+      if (selected.length !== effect.cost.discardCount) {
+        return [
+          {
+            kind: "selectTarget",
+            role: "cost",
+            candidateIds: candidates,
+            minTargets: effect.cost.discardCount,
+            maxTargets: effect.cost.discardCount,
+          },
+        ];
+      }
+    }
+    if (effect?.cost?.exileFromTrash) {
+      const tgtCtx = buildTargetResolutionContext(g, playerId, framework, { sourceCardId: cardId });
+      const filter: TargetFilter = { ...effect.cost.exileFromTrash, zone: "trash" };
+      const candidates = evaluateTargetFilter(
+        filter,
+        gatherAllCardsForTargeting(tgtCtx),
+        tgtCtx,
+      ) as readonly string[];
+      const selected = ((partialInput as { targets?: readonly string[] }).targets ?? []).filter(
+        (id) => candidates.includes(id),
+      );
+      const { min, max } = getFilterCountBounds(filter);
+      if (selected.length < min) {
+        return [
+          {
+            kind: "selectTarget",
+            role: "cost",
+            candidateIds: candidates,
+            minTargets: min,
+            maxTargets: Number.isFinite(max) ? max : candidates.length,
+          },
+        ];
+      }
+    }
+
     return [];
   },
 
@@ -78,7 +211,7 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
     const phase = framework.state.status.phase;
     const step = framework.state.status.step;
     const isMain = phase === "main-phase";
-    const isAction = phase === "end-phase" && step === "action-step";
+    const isAction = isActionTiming(phase, step);
     if (!isMain && !isAction) return [];
 
     const g = G;
@@ -88,12 +221,9 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
       const ids = framework.zones.getCards({ zone, playerId });
       for (const cardId of ids) {
         const activated = getActivatedEffects(cardId, g, framework.cards);
-        const hasUsable = activated.some((effect) => {
-          const timing = (effect.activation.timing ?? []) as string[];
-          if (timing.includes("activate:main") && isMain) return true;
-          if (timing.includes("activate:action") && (isAction || isMain)) return true;
-          return false;
-        });
+        const hasUsable = activated.some((effect, effectIndex) =>
+          canBeginActivation(effect, effectIndex, cardId, playerId, g, framework),
+        );
         if (hasUsable) out.push(cardId);
       }
     }
@@ -107,6 +237,22 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
 
     if (!framework.cards.getDefinition(cardId)) {
       return { valid: false, error: "Card not found", errorCode: "UNKNOWN_CARD" };
+    }
+    const controllerId = framework.cards.getController(cardId) as string | undefined;
+    if (controllerId !== playerId) {
+      return {
+        valid: false,
+        error: "Only the card's controller can activate this ability",
+        errorCode: "NOT_EFFECT_CONTROLLER",
+      };
+    }
+    const sourceZone = framework.cards.getZone(cardId)?.split(":")[0];
+    if (sourceZone !== "battleArea" && sourceZone !== "baseSection") {
+      return {
+        valid: false,
+        error: "Activated ability source is not in play",
+        errorCode: "ABILITY_SOURCE_NOT_IN_PLAY",
+      };
     }
 
     // `getActivatedEffects` returns printed activated effects plus
@@ -122,9 +268,7 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
     const timing = (effect.activation.timing ?? []) as string[];
     const validInPhase =
       (timing.includes("activate:main") && phase === "main-phase") ||
-      (timing.includes("activate:action") &&
-        ((phase === "end-phase" && framework.state.status.step === "action-step") ||
-          phase === "main-phase"));
+      (timing.includes("activate:action") && isActionTiming(phase, framework.state.status.step));
 
     if (!validInPhase) {
       return {
@@ -172,6 +316,7 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
     }
 
     const cost = effect.cost;
+    let costTargetIds: string[] = [];
 
     // Cost: rest self
     if (cost?.restSelf) {
@@ -202,6 +347,23 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
           errorCode: "COST_NOT_PAYABLE",
         };
       }
+      const candidates = listPayableDiscardCostCards(cost, playerId, cardId, g, framework);
+      const selected = (targets ?? []).filter((id) => candidates.includes(id));
+      if (new Set(selected).size !== selected.length) {
+        return {
+          valid: false,
+          error: "Cost targets must be unique",
+          errorCode: "DUPLICATE_TARGETS",
+        };
+      }
+      if (selected.length !== cost.discardCount) {
+        return rejectWithKey(
+          "gundam.error.ability.wrongTargetCount",
+          { min: cost.discardCount, max: cost.discardCount, got: selected.length },
+          "WRONG_TARGET_COUNT",
+        );
+      }
+      costTargetIds.push(...selected);
     }
 
     if (cost?.exileFromTrash) {
@@ -209,14 +371,35 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
         sourceCardId: cardId,
       });
       const filter: TargetFilter = { ...cost.exileFromTrash, zone: "trash" };
-      const candidates = evaluateTargetFilter(filter, gatherAllCardsForTargeting(tgtCtx), tgtCtx);
-      if (candidates.length === 0) {
+      const candidates = evaluateTargetFilter(
+        filter,
+        gatherAllCardsForTargeting(tgtCtx),
+        tgtCtx,
+      ) as string[];
+      const { min, max } = getFilterCountBounds(filter);
+      if (candidates.length < min) {
         return {
           valid: false,
           error: "No matching card in trash to exile for cost",
           errorCode: "COST_NOT_PAYABLE",
         };
       }
+      const selected = (targets ?? []).filter((id) => candidates.includes(id));
+      if (new Set(selected).size !== selected.length) {
+        return {
+          valid: false,
+          error: "Cost targets must be unique",
+          errorCode: "DUPLICATE_TARGETS",
+        };
+      }
+      if (selected.length < min || selected.length > max) {
+        return rejectWithKey(
+          "gundam.error.ability.wrongTargetCount",
+          { min, max, got: selected.length },
+          "WRONG_TARGET_COUNT",
+        );
+      }
+      costTargetIds.push(...selected);
     }
 
     if (cost?.restTarget) {
@@ -254,23 +437,48 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
     // targets at play-time so they can't be snuck in via pre-commit and bypass
     // the resolveEffect path. Same shape as resolveEffect.validate — shared
     // candidate evaluation via `evaluateLegalTargets`.
-    if (targets !== undefined) {
-      if (new Set(targets).size !== targets.length) {
+    const syntheticPE: PendingEffect = {
+      id: "__validate__",
+      controllerId: playerId,
+      sourceCardId: cardId,
+      effect: effect as CardEffect,
+      effectIndex,
+      kind: "activated",
+    };
+    const resolution = evaluateLegalTargets(syntheticPE, g, framework);
+    const effectTargets = targets?.filter((id) => !costTargetIds.includes(id));
+    const shouldValidateEffectTargets =
+      effectTargets !== undefined && (costTargetIds.length === 0 || effectTargets.length > 0);
+    if (
+      !shouldValidateEffectTargets &&
+      resolution &&
+      !requiredTargetAssignmentExists(resolution.groups)
+    ) {
+      if (resolution.legalTargetIds.length > 0) {
+        return rejectWithKey(
+          "gundam.error.ability.wrongTargetCount",
+          {
+            min: resolution.minTargets,
+            max: resolution.maxTargets,
+            got: effectTargets?.length ?? 0,
+          },
+          "WRONG_TARGET_COUNT",
+        );
+      }
+      return {
+        valid: false,
+        error: "No legal targets for this activated ability",
+        errorCode: "NO_LEGAL_TARGETS",
+      };
+    }
+    if (shouldValidateEffectTargets) {
+      if (new Set(effectTargets).size !== effectTargets.length) {
         return {
           valid: false,
           error: "Targets must be unique",
           errorCode: "DUPLICATE_TARGETS",
         };
       }
-      const syntheticPE: PendingEffect = {
-        id: "__validate__",
-        controllerId: playerId,
-        sourceCardId: cardId,
-        effect: effect as CardEffect,
-        effectIndex,
-        kind: "activated",
-      };
-      const resolution = evaluateLegalTargets(syntheticPE, g, framework);
       if (!resolution) {
         // The effect has no counted target-selection directive (e.g. a
         // self-only action, an "all"-target sweep, or no target at all).
@@ -287,7 +495,7 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
       } else {
         const { legalTargetIds, minTargets, maxTargets } = resolution;
         const legalSet = new Set<string>(legalTargetIds);
-        for (const id of targets) {
+        for (const id of effectTargets) {
           if (!legalSet.has(id)) {
             return rejectWithKey(
               "gundam.error.ability.illegalTarget",
@@ -296,23 +504,19 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
             );
           }
         }
-        if (targets.length < minTargets || targets.length > maxTargets) {
+        if (effectTargets.length < minTargets || effectTargets.length > maxTargets) {
           return rejectWithKey(
             "gundam.error.ability.wrongTargetCount",
-            { min: minTargets, max: maxTargets, got: targets.length },
+            { min: minTargets, max: maxTargets, got: effectTargets.length },
             "WRONG_TARGET_COUNT",
           );
         }
-        for (const group of resolution.groups) {
-          const groupLegalSet = new Set<string>(group.legalTargetIds);
-          const groupCount = targets.filter((id) => groupLegalSet.has(id)).length;
-          if (groupCount < group.minTargets || groupCount > group.maxTargets) {
-            return rejectWithKey(
-              "gundam.error.ability.wrongTargetCount",
-              { min: group.minTargets, max: group.maxTargets, got: groupCount },
-              "WRONG_TARGET_COUNT",
-            );
-          }
+        if (!assignTargetsToGroups(effectTargets, resolution.groups)) {
+          return rejectWithKey(
+            "gundam.error.ability.wrongTargetCount",
+            { min: minTargets, max: maxTargets, got: effectTargets.length },
+            "WRONG_TARGET_COUNT",
+          );
         }
       }
     }
@@ -327,8 +531,37 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
     const activatedEffects = getActivatedEffects(cardId, g, framework.cards);
     const effect = activatedEffects[effectIndex]!;
     const cost = effect.cost;
+    let costTargetIds: string[] = [];
+    if (cost?.discardCount) {
+      const candidates = listPayableDiscardCostCards(cost, playerId, cardId, g, framework);
+      costTargetIds.push(...(targets ?? []).filter((id) => candidates.includes(id)));
+    }
+    if (cost?.exileFromTrash) {
+      const tgtCtx = buildTargetResolutionContext(g, playerId, framework, { sourceCardId: cardId });
+      const filter: TargetFilter = { ...cost.exileFromTrash, zone: "trash" };
+      const candidates = evaluateTargetFilter(
+        filter,
+        gatherAllCardsForTargeting(tgtCtx),
+        tgtCtx,
+      ) as string[];
+      costTargetIds.push(...(targets ?? []).filter((id) => candidates.includes(id)));
+    }
+    let effectTargets = targets?.filter((id) => !costTargetIds.includes(id));
+    if (effectTargets !== undefined) {
+      const syntheticPE: PendingEffect = {
+        id: "__execute__",
+        controllerId: playerId,
+        sourceCardId: cardId,
+        effect: effect as CardEffect,
+        effectIndex,
+        kind: "activated",
+      };
+      const resolution = evaluateLegalTargets(syntheticPE, g, framework);
+      const assigned = resolution ? assignTargetsToGroups(effectTargets, resolution.groups) : null;
+      if (assigned) effectTargets = assigned.flat();
+    }
 
-    payCost(cost, cardId, playerId, g, framework);
+    payCost(cost, cardId, playerId, g, framework, costTargetIds);
     const cardDef = framework.cards.getDefinition(cardId) as Card | undefined;
     if (cardDef?.type === "unit" && cost?.payResources !== undefined && cost.payResources > 0) {
       const event = {
@@ -373,7 +606,7 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
         effect: effect as CardEffect,
         effectIndex,
         kind: "activated",
-        chosenTargets: targets,
+        chosenTargets: effectTargets && effectTargets.length > 0 ? effectTargets : undefined,
         originatingMoveId: moveId,
       },
       framework,
@@ -391,10 +624,7 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
     });
 
     // Rule 9-4-1: acting during action-step resets consecutive passes
-    if (
-      framework.state.status.phase === "end-phase" &&
-      framework.state.status.step === "action-step"
-    ) {
+    if (isActionTiming(framework.state.status.phase, framework.state.status.step)) {
       resetActionStepOnAction(playerId, framework);
     }
   },

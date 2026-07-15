@@ -3,7 +3,11 @@ import { defineConfig } from "vite-plus";
 
 export default defineConfig({
   test: {
-    include: ["tests/index.test.ts", "tests/test-engine.test.ts"],
+    include: [
+      "tests/index.test.ts",
+      "tests/test-engine.test.ts",
+      "src/automation/bot-harness.test.ts",
+    ],
     isolate: false,
   },
   pack: {

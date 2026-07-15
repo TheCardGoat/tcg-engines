@@ -8,10 +8,7 @@ export default defineConfig({
         new URL("../../../../cyberpunk/packages/cards/src/index.ts", import.meta.url),
       ),
       "@tcg/cyberpunk-engine": fileURLToPath(
-        new URL(
-          "../../../../cyberpunk/packages/engine/src/index.ts",
-          import.meta.url,
-        ),
+        new URL("../../../../cyberpunk/packages/engine/src/index.ts", import.meta.url),
       ),
       "@tcg/cyberpunk-types": fileURLToPath(
         new URL("../../../../cyberpunk/packages/types/src/index.ts", import.meta.url),

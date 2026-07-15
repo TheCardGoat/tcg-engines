@@ -1,4 +1,5 @@
 import { useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { getProjectedDirectAttackGigStealCount } from "@tcg/cyberpunk-engine";
 import { useCardView } from "../../engine/zoneViews";
 import { PLAYER_SIDE_TO_ID, useEngine, type RawEngineEventEntry, type Side } from "../../engine";
 import classes from "./CombatArrowOverlay.module.css";
@@ -43,6 +44,7 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
   const attackerPower = attacker?.effectivePower ?? 0;
   const defenderPower = defender?.effectivePower ?? 0;
   const isBlocked = attack?.redirectedByBlocker === true && Boolean(defenderId);
+  const directStealCount = getProjectedDirectAttackGigStealCount(matchState);
 
   useLayoutEffect(() => {
     if (!shouldShow || !attack?.attackerId) {
@@ -150,11 +152,19 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
     return null;
   }
 
+  const stealPoint =
+    !isBlocked && activeAttack.kind === "direct" && directStealCount !== null
+      ? midpoint(line.segments[0])
+      : null;
+  const stealCue =
+    stealPoint && directStealCount !== null ? { point: stealPoint, count: directStealCount } : null;
   const label = isBlocked
     ? `${attacker.name} attacks ${originalTarget?.name ?? "the player"}; ${defender?.name ?? "Blocker"} blocks`
     : defender
       ? `${attacker.name} attacks ${defender.name}: ${attackerPower} to ${defenderPower}`
-      : `${attacker.name} attacks the player`;
+      : directStealCount !== null
+        ? `${attacker.name} attacks the player and would steal ${formatGigCount(directStealCount)} if unblocked`
+        : `${attacker.name} attacks the player`;
 
   return (
     <div
@@ -175,6 +185,17 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
           <ArrowSegment key={`${segment.kind}-${index}`} segment={segment} />
         ))}
       </svg>
+      {stealCue ? (
+        <div
+          className={classes.stealCue}
+          style={{ left: stealCue.point.x, top: stealCue.point.y }}
+          data-testid="direct-attack-steal-cue"
+          aria-label={`If unblocked, steal ${formatGigCount(stealCue.count)}`}
+        >
+          <span>Steal</span>
+          <strong data-testid="direct-attack-steal-count">{stealCue.count}</strong>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -350,6 +371,18 @@ function centerPoint(rect: DOMRect, container: DOMRect): Point {
     x: rect.left + rect.width / 2 - container.left,
     y: rect.top + rect.height / 2 - container.top,
   };
+}
+
+function midpoint(segment: CombatSegment | undefined): Point {
+  if (!segment) return { x: 0, y: 0 };
+  return {
+    x: (segment.from.x + segment.to.x) / 2,
+    y: (segment.from.y + segment.to.y) / 2,
+  };
+}
+
+function formatGigCount(count: number): string {
+  return `${count} Gig${count === 1 ? "" : "s"}`;
 }
 
 function cssEscape(value: string): string {

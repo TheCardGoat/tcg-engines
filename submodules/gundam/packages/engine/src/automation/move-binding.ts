@@ -29,6 +29,13 @@ export interface SelectTargetBinding {
   readonly multi: boolean;
 }
 
+export interface SelectModeBinding {
+  /** Native move-input key populated when the player chooses a mode. */
+  readonly key: "effectIndex" | "mode";
+  /** Convert the protocol/UI string id into the native move-input value. */
+  readonly coerce: (modeId: string) => string | number;
+}
+
 export interface MoveBinding {
   /**
    * Build the initial partial-input the UI seeds when the player clicks a
@@ -69,6 +76,19 @@ const targetsMulti = (_step: SelectTargetStep): SelectTargetBinding => ({
   key: "targets",
   multi: true,
 });
+
+const genericModeBinding: SelectModeBinding = {
+  key: "mode",
+  coerce: (modeId) => modeId,
+};
+
+const activatedEffectModeBinding: SelectModeBinding = {
+  key: "effectIndex",
+  coerce: (modeId) => {
+    const effectIndex = Number(modeId);
+    return Number.isFinite(effectIndex) ? effectIndex : modeId;
+  },
+};
 
 export const MOVE_BINDINGS: Readonly<Record<GundamMoveName, MoveBinding>> = {
   // Setup moves: no card-driven primary input (UI uses dedicated
@@ -222,4 +242,16 @@ export function selectTargetInputBinding(
   step: SelectTargetStep,
 ): SelectTargetBinding {
   return MOVE_BINDINGS[moveName].keyForSelectTarget(step);
+}
+
+/**
+ * Bind a generic `selectMode` step to the native input shape of its move.
+ *
+ * Activated abilities use a numeric `effectIndex`; ordinary named modes
+ * (currently deploy-unit payment modes) use the string-valued `mode` slot.
+ * Keeping both the key and coercion here prevents UI, protocol, and bot
+ * consumers from independently hard-coding the activated-ability shape.
+ */
+export function selectModeInputBinding(moveName: GundamMoveName): SelectModeBinding {
+  return moveName === "activateAbility" ? activatedEffectModeBinding : genericModeBinding;
 }

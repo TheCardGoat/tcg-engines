@@ -4,6 +4,7 @@ export const gd01Anksha020: UnitCard = {
   cardNumber: "GD01-020",
   name: "Anksha",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-020",

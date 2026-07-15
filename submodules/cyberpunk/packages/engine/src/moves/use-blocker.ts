@@ -1,7 +1,11 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
-import { getEffectiveRules, markDefeatAtEndOfTurnIfAttacked } from "../active-effects/index.ts";
+import {
+  getEffectiveRules,
+  isReadyFieldBlocker,
+  markDefeatAtEndOfTurnIfAttacked,
+} from "../active-effects/index.ts";
 import { getDefinitionFor } from "../state/lookups.ts";
 
 export interface UseBlockerInput extends MoveInput {
@@ -25,10 +29,7 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
     const player = state.G.players[playerId as string];
     if (!player) return false;
 
-    return player.zones.field.some((id) => {
-      const card = state.G.cardIndex[id as string];
-      return card && !card.meta.spent && getEffectiveRules(state, id as string).includes("blocker");
-    });
+    return player.zones.field.some((id) => isReadyFieldBlocker(state, id as string));
   },
 
   validate({ state, playerId, input }) {
@@ -48,10 +49,13 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
     if (!player?.zones.field.includes(blockerId as CardInstanceId)) {
       return { valid: false, error: "Blocker not on field", errorCode: "NOT_ON_FIELD" };
     }
+    if (blocker.zone !== "field") {
+      return { valid: false, error: "Blocker not on field", errorCode: "NOT_ON_FIELD" };
+    }
     if (blocker.meta.spent)
       return { valid: false, error: "Blocker is spent", errorCode: "CARD_SPENT" };
 
-    const hasBlocker = getEffectiveRules(state, blockerId).includes("blocker");
+    const hasBlocker = isReadyFieldBlocker(state, blockerId);
     if (!hasBlocker)
       return { valid: false, error: "Card does not have blocker", errorCode: "NO_BLOCKER" };
 
@@ -84,20 +88,6 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
       operations,
     );
 
-    const blockerActivatedEvent = {
-      type: "blockerActivated",
-      attackerId: attack.attackerId,
-      blockerId: blockerId as CardInstanceId,
-      originalTarget: attack.defenderId,
-      playerId,
-    } as const;
-    operations.event.emit(blockerActivatedEvent);
-    processEventTriggers(
-      blockerActivatedEvent,
-      state as import("../types/match-state.ts").MatchState,
-      operations,
-    );
-
     operations.game.setAttackState({
       ...attack,
       defenderId: blockerId as CardInstanceId,
@@ -120,5 +110,19 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
       params: { blockerName, attackerName, originalAttackKind: attack.kind },
       playerId,
     });
+
+    const blockerActivatedEvent = {
+      type: "blockerActivated",
+      attackerId: attack.attackerId,
+      blockerId: blockerId as CardInstanceId,
+      originalTarget: attack.defenderId,
+      playerId,
+    } as const;
+    operations.event.emit(blockerActivatedEvent);
+    processEventTriggers(
+      blockerActivatedEvent,
+      state as import("../types/match-state.ts").MatchState,
+      operations,
+    );
   },
 };

@@ -4,6 +4,7 @@ export const betaGundamAerial070: UnitCard = {
   cardNumber: "GD01-070",
   name: "Gundam Aerial",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["academy"],
   id: "GD01-070_p1",
@@ -109,6 +110,7 @@ export const betaGundamAerial070: UnitCard = {
   cost: 3,
   ap: 3,
   hp: 3,
+  linkCondition: "[Suletta Mercury]",
   effect:
     "While there are 4 or more Command cards in your trash, this card in your hand gets cost -2.<br>",
   effects: [

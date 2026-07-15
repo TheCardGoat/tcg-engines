@@ -30,7 +30,7 @@ export const GAMES: readonly GameMeta[] = [
     accentColor: "#1f5faa",
     accentSoft: "#e8f1fb",
     badgeLabel: "Visual fixtures",
-    defaultIndexPath: "/gundam/simulator/tests",
+    defaultIndexPath: "/gundam/simulator",
   },
   {
     slug: "cyberpunk",

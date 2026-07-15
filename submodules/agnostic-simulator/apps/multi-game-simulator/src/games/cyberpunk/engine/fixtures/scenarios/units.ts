@@ -30,9 +30,9 @@ export const unitScenarios: Scenario[] = [
             {
               card: c.embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
             },
-            { card: c.welcomeToNightCityRetailMoxInciters, spent: false, playedThisTurn: false },
+            { card: c.welcomeToNightCityRetailMoxInciters, spent: false, hasLag: false },
           ],
           trash: [c.welcomeToNightCityRetailMantisBlades],
           legendArea: [
@@ -87,6 +87,36 @@ export const unitScenarios: Scenario[] = [
       ),
   },
   {
+    id: "unitWelcomeToNightCityRetailMoxIncitersMustAttack",
+    group: "unit-play-trigger",
+    label: "Mox Inciters · rival Unit must attack next turn",
+    description:
+      "P1 can play Mox Inciters and choose a rival Unit. The target gains mustAttack until P1's next turn.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailMoxInciters],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        {
+          seed: scenarioSeed("unitWelcomeToNightCityRetailMoxIncitersMustAttack"),
+          autoGainGig: false,
+        },
+      ),
+  },
+  {
     id: "unitTheHeistMt0d12Flathead",
     group: "unit-street-cred",
     label: "MT0D12 Flathead (The Heist) · can't be blocked at lower Street Cred",
@@ -99,7 +129,7 @@ export const unitScenarios: Scenario[] = [
             {
               card: c.theHeistRetailStarterDeckMt0d12Flathead,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
             },
           ],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
@@ -107,9 +137,7 @@ export const unitScenarios: Scenario[] = [
           gigArea: [{ dieType: "d4", faceValue: 1 }],
         },
         {
-          field: [
-            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false, playedThisTurn: false },
-          ],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false, hasLag: false }],
           legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 4,
           gigArea: [{ dieType: "d8", faceValue: 7 }],
@@ -130,7 +158,7 @@ export const unitScenarios: Scenario[] = [
             {
               card: c.embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
             },
           ],
           legendArea: [
@@ -254,9 +282,7 @@ export const unitScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          field: [
-            { card: c.welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false },
-          ],
+          field: [{ card: c.welcomeToNightCityRetailDelamainCab, spent: false, hasLag: false }],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
@@ -279,9 +305,7 @@ export const unitScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          field: [
-            { card: c.welcomeToNightCityRetailEmergencyAtlus, spent: false, playedThisTurn: false },
-          ],
+          field: [{ card: c.welcomeToNightCityRetailEmergencyAtlus, spent: false, hasLag: false }],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
@@ -308,7 +332,7 @@ export const unitScenarios: Scenario[] = [
             {
               card: c.welcomeToNightCityRetailSwordwiseHuscle,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
             },
           ],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
@@ -337,7 +361,7 @@ export const unitScenarios: Scenario[] = [
             {
               card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
             },
           ],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
@@ -862,7 +886,7 @@ export const unitScenarios: Scenario[] = [
     group: "unit-rush",
     label: "Riding Nomad · can attack spent units the turn it's played",
     description:
-      "P1 holds Riding Nomad (green, cost 6, power 6). When played, it can attack spent rival units that same turn (overrides normal summoning sickness). Rival has Corpo Security (spent). Tests the canAttackOnPlayedTurnAgainstUnits rule.",
+      "P1 holds Riding Nomad (green, cost 6, power 6). When played, it can attack spent rival units that same turn (overrides normal Lag). Rival has Corpo Security (spent). Tests the canAttackOnPlayedTurnAgainstUnits rule.",
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
@@ -1196,20 +1220,49 @@ export const unitScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [],
-          field: [{ card: c.welcomeToNightCityRetailElSombreroNLaVenganzaLenta, spent: false }],
+          hand: [
+            c.welcomeToNightCityRetailHanakoArasakaInAGildedCage,
+            c.welcomeToNightCityRetailAdamSmasherMetalOverMeat,
+            c.welcomeToNightCityRetailRidingNomad,
+            c.welcomeToNightCityRetailNadiaFightingThroughGrief,
+          ],
+          field: [
+            c.welcomeToNightCityRetailSketchyRipper,
+            { card: c.welcomeToNightCityRetailElSombreroNLaVenganzaLenta, spent: false },
+            c.welcomeToNightCityRetailScrewLovelornFool,
+            c.theHeistRetailStarterDeckDexterDeshawnOneLastChance,
+            c.welcomeToNightCityRetailCaliberTotentanzSTopDog,
+            c.embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
+          ],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
-          eddies: 3,
-          gigArea: [{ dieType: "d4", faceValue: 2 }],
+          trash: [c.welcomeToNightCityRetail6thStreetRecruits],
+          deck: [
+            c.welcomeToNightCityRetailOverwatchPanamSGift,
+            c.welcomeToNightCityRetailPanamPalmerNomadCavalry,
+            c.welcomeToNightCityRetailSandevistan,
+          ],
+          eddies: 9,
+          gigArea: [
+            { dieType: "d4", faceValue: 4 },
+            { dieType: "d12", faceValue: 12 },
+          ],
         },
         {
+          hand: [
+            c.welcomeToNightCityRetailHanakoArasakaInAGildedCage,
+            c.welcomeToNightCityRetailOffdutyMalfini,
+          ],
           field: [
             { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
-            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true },
           ],
           legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 5,
-          gigArea: [{ dieType: "d6", faceValue: 3 }],
+          gigArea: [
+            { dieType: "d6", faceValue: 3 },
+            { dieType: "d4", faceValue: 1 },
+            { dieType: "d12", faceValue: 3 },
+          ],
         },
         { seed: scenarioSeed("unitElSombreronLaVenganzaLentaRetail"), autoGainGig: false },
       ),
@@ -1436,8 +1489,17 @@ export const unitScenarios: Scenario[] = [
           hand: [
             c.welcomeToNightCityRetailSandayuOdaHanakoSGuardian,
             c.welcomeToNightCityRetailPeaceOffering,
+            c.welcomeToNightCityRetailRebootOptics,
+            c.welcomeToNightCityRetailLizzyWizzyDelicateWeapon,
+            c.welcomeToNightCityRetailModdedKusanagi,
+            c.welcomeToNightCityRetailPlacideVoodooSentinel,
           ],
-          field: [],
+          field: [
+            c.welcomeToNightCityRetailSketchyRipper,
+            c.welcomeToNightCityRetailEvelynParkerSchemingSiren,
+            c.welcomeToNightCityRetailDelamainCab,
+          ],
+          trash: [c.welcomeToNightCityRetailRebootOptics, c.welcomeToNightCityRetailPeaceOffering],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 8,
           gigArea: [
@@ -1474,10 +1536,10 @@ export const unitScenarios: Scenario[] = [
             {
               card: c.welcomeToNightCityRetailWraithMarauders,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
             },
-            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: true, playedThisTurn: false },
-            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true, playedThisTurn: false },
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: true, hasLag: false },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true, hasLag: false },
           ],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
@@ -1490,6 +1552,482 @@ export const unitScenarios: Scenario[] = [
           gigArea: [{ dieType: "d6", faceValue: 5 }],
         },
         { seed: scenarioSeed("unitWraithMaraudersRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unit6thStreetRecruitsRetail",
+    group: "unit-gig-stolen",
+    label: "6th Street Recruits · d6 stolen Gig boost",
+    description:
+      "P1 has 6th Street Recruits and a direct attacker ready. Rival controls a d6 Gig so stealing it can trigger the up-to-6 friendly Gig increase.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            { card: c.welcomeToNightCityRetail6thStreetRecruits, spent: false },
+            { card: c.welcomeToNightCityRetailTBugAmateurPhilosopher, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 5,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 4 }],
+        },
+        { seed: scenarioSeed("unit6thStreetRecruitsRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitAugmentedNegotiatorsRetail",
+    group: "unit-blocker",
+    label: "Augmented Negotiators · BLOCKER discard trigger",
+    description:
+      "P1 has Augmented Negotiators ready while rival has an attacker and cards in hand. This exposes the Blocker redirect plus rival discard trigger.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailAugmentedNegotiators, spent: false },
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          hand: [c.welcomeToNightCityRetailMoxInciters, c.welcomeToNightCityRetailFloorIt],
+          field: [{ card: c.embracingPowerRetailStarterDeckMinotaur, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("unitAugmentedNegotiatorsRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitJackedInVoodooBoyRetail",
+    group: "unit-rush",
+    label: "Jacked-In Voodoo Boy · requires Program played this turn",
+    description:
+      "P1 has Jacked-In Voodoo Boy ready with a Program in hand and another Program in trash. Use to validate the attack restriction and played-program workflow.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailRebootOptics],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailJackedInVoodooBoy,
+              spent: false,
+              hasLag: false,
+            },
+          ],
+          trash: [c.welcomeToNightCityRetailCorporateSurveillance],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 5,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("unitJackedInVoodooBoyRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitLaLloronaGhostOfThePastRetail",
+    group: "unit-blocker",
+    label: "La Llorona · BLOCKER Gig increase",
+    description:
+      "P1 has La Llorona ready with a friendly Gig to increase after she uses Blocker against a rival attack.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailLaLloronaGhostOfThePast, spent: false },
+            { card: c.welcomeToNightCityRetailSecondhandBombus, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.embracingPowerRetailStarterDeckMinotaur, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d8", faceValue: 4 }],
+        },
+        { seed: scenarioSeed("unitLaLloronaGhostOfThePastRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitLizzyWizzyDelicateWeaponRetail",
+    group: "unit-play-trigger",
+    label: "Lizzy Wizzy · free low-cost Program from hand or trash",
+    description:
+      "P1 holds Lizzy Wizzy with low-cost Programs in hand and trash, plus a rival target, to validate her PLAY Program selection and Blocker keyword.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [
+            c.welcomeToNightCityRetailLizzyWizzyDelicateWeapon,
+            c.welcomeToNightCityRetailOverTheEdge,
+          ],
+          trash: [c.welcomeToNightCityRetailRebootOptics],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 6,
+          gigArea: [{ dieType: "d20", faceValue: 7 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("unitLizzyWizzyDelicateWeaponRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitMistyOlszewskiMenderOfBrokenSpiritsRetail",
+    group: "unit-gig-condition",
+    label: "Misty Olszewski · end-turn card-type reveal",
+    description:
+      "P1 has Misty on field with ordered Unit, Gear, and Program deck cards plus spent eddies to ready when the chosen type matches.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          deck: [
+            c.welcomeToNightCityRetailMantisBlades,
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailFloorIt,
+          ],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailMistyOlszewskiMenderOfBrokenSpirits,
+              spent: false,
+              hasLag: false,
+            },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        {
+          seed: scenarioSeed("unitMistyOlszewskiMenderOfBrokenSpiritsRetail"),
+          autoGainGig: false,
+          preserveDeckOrder: true,
+        },
+      ),
+  },
+  {
+    id: "unitNadiaFightingThroughGriefRetail",
+    group: "unit-gig-condition",
+    label: "Nadia · rival controls more Gigs",
+    description:
+      "P1 just played Nadia while rival controls more Gigs. The board exposes her conditional ability to attack the rival Gig area on the played turn.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            {
+              card: c.welcomeToNightCityRetailNadiaFightingThroughGrief,
+              spent: false,
+              hasLag: true,
+            },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [
+            { dieType: "d6", faceValue: 3 },
+            { dieType: "d8", faceValue: 5 },
+          ],
+        },
+        { seed: scenarioSeed("unitNadiaFightingThroughGriefRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitOffdutyMalfiniRetail",
+    group: "unit-play-trigger",
+    label: "Offduty Malfini · PLAY spends both Units",
+    description:
+      "P1 holds Offduty Malfini and rival has ready Units. PLAY should spend Malfini and one chosen rival Unit.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailOffdutyMalfini],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 5,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("unitOffdutyMalfiniRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitSaulBrightStormriderRetail",
+    group: "unit-attack-trigger",
+    label: "Saul Bright · attack power aura and end-turn ready",
+    description:
+      "P1 has Saul with other friendly Units, including spent Units, so QA can validate both the attack aura and ready-up-to-3 end-turn board.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailSaulBrightStormrider, spent: false },
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false },
+            { card: c.welcomeToNightCityRetailSecondhandBombus, spent: true },
+            { card: c.welcomeToNightCityRetailTBugAmateurPhilosopher, spent: true },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 8,
+          gigArea: [{ dieType: "d10", faceValue: 7 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("unitSaulBrightStormriderRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitScrewLovelornFoolRetail",
+    group: "unit-defeated",
+    label: "Screw · Lovelorn Fool · defeated Unit recovery",
+    description:
+      "P1 has Screw on field and another Unit in trash. If Screw is defeated, the recovery choice has a valid Unit target.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            {
+              card: c.welcomeToNightCityRetailScrewLovelornFool,
+              spent: false,
+              hasLag: false,
+            },
+          ],
+          trash: [c.welcomeToNightCityRetailMoxInciters, c.welcomeToNightCityRetailRebootOptics],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 5,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.embracingPowerRetailStarterDeckMinotaur, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("unitScrewLovelornFoolRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitSketchyRipperRetail",
+    group: "unit-attack-trigger",
+    label: "Sketchy Ripper · top-3 Gear search",
+    description:
+      "P1 has Sketchy Ripper ready with an ordered top deck containing Gear among non-Gear cards, exposing the attack-trigger search choice.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          deck: [
+            c.welcomeToNightCityRetailMantisBlades,
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailFloorIt,
+          ],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailSketchyRipper,
+              spent: false,
+              hasLag: false,
+            },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        {
+          seed: scenarioSeed("unitSketchyRipperRetail"),
+          autoGainGig: false,
+          preserveDeckOrder: true,
+        },
+      ),
+  },
+  {
+    id: "unitYorinobuArasakaSteelDragonRetail",
+    group: "unit-play-trigger",
+    label: "Yorinobu Arasaka · free low-cost Unit and Arasaka defeat draw",
+    description:
+      "P1 holds Yorinobu with low-cost Units in hand and trash plus an Arasaka Unit on board for the first-defeated draw trigger.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [
+            c.welcomeToNightCityRetailYorinobuArasakaSteelDragon,
+            c.welcomeToNightCityRetailCorpoSecurity,
+          ],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          trash: [c.welcomeToNightCityRetailMoxInciters],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 8,
+          gigArea: [{ dieType: "d10", faceValue: 7 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("unitYorinobuArasakaSteelDragonRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitFieldOperatorRetail",
+    group: "unit-play-trigger",
+    label: "Field Operator · even Street Cred draw",
+    description:
+      "P1 holds Field Operator with even Street Cred. PLAY should satisfy the even-Street-Cred condition and draw 1.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailFieldOperator],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 4,
+          gigArea: [
+            { dieType: "d4", faceValue: 2 },
+            { dieType: "d6", faceValue: 4 },
+          ],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("unitFieldOperatorRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitMoxIncitersRetail",
+    group: "unit-play-trigger",
+    label: "Mox Inciters · must-attack target plus BLOCKER",
+    description:
+      "P1 holds Mox Inciters while rival has multiple ready Units. PLAY can mark a rival Unit that must attack next turn and the card also exposes BLOCKER.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailMoxInciters],
+          field: [{ card: c.welcomeToNightCityRetailSecondhandBombus, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("unitMoxIncitersRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitPsychoSquadRetail",
+    group: "unit-vanilla",
+    label: "Psycho Squad · 6-power vanilla NCPD",
+    description:
+      "P1 has Psycho Squad ready and lag-free on field. This validates the no-ability NCPD body in a simple attack board.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            {
+              card: c.welcomeToNightCityRetailPsychoSquad,
+              spent: false,
+              hasLag: false,
+            },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("unitPsychoSquadRetail"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitViktorVektorYouMightFeelALittlePinchRetail",
+    group: "unit-play-trigger",
+    label: "Viktor Vektor · trash Cyberware equip",
+    description:
+      "P1 holds Viktor with low-cost Cyberware in trash and another friendly Unit on field, exposing the PLAY attach target restrictions.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          trash: [
+            c.welcomeToNightCityRetailKiroshiOptics,
+            c.welcomeToNightCityRetailOverwatchPanamSGift,
+          ],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        {
+          seed: scenarioSeed("unitViktorVektorYouMightFeelALittlePinchRetail"),
+          autoGainGig: false,
+        },
       ),
   },
 ];

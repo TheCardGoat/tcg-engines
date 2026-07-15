@@ -39,15 +39,22 @@ interface SynthesizeArgs {
 const SYSTEM_MIRRORED_MESSAGE_KEYS = new Set<string>(["move.turnEnded"]);
 const ADDITIONAL_GENERIC_MESSAGE_KEYS = new Set<string>([
   "move.searchDeck.reveal",
+  "move.searchDeck.revealNamed",
+  "move.searchDeck.revealSelected",
   "move.resolveSearchDeck",
+  "move.resolveSearchDeckNamed",
   "effect.draw.resolved",
   "effect.draw.skipped",
+  "effect.discard.resolved",
+  "effect.trashFromDeck.resolved",
+  "effect.sellFromDeck.resolved",
   "trigger.noValidTargets",
   "trigger.autoResolved",
   "trigger.resolved",
   "trigger.stealGig",
   "trigger.targetResolved",
   "trigger.targetResolved.deckBottom",
+  "trigger.targetResolved.rerollGig",
   "trigger.defeatedTarget",
   "trigger.grantRule.cantAttack",
   "effect.callLegend.free",
@@ -55,7 +62,7 @@ const ADDITIONAL_GENERIC_MESSAGE_KEYS = new Set<string>([
   "trigger.revealTopCardType.miss",
 ]);
 
-const EXPLICIT_TYPES_THAT_REPLACE_GENERIC = new Set<MoveLog["type"]>([
+const EXPLICIT_TYPES_THAT_REPLACE_GENERIC = new Set<string>([
   "playCard",
   "sellCard",
   "callLegend",
@@ -74,8 +81,7 @@ const EXPLICIT_TYPES_THAT_REPLACE_GENERIC = new Set<MoveLog["type"]>([
   "resolveStealGigs",
   "concede",
   "activateAbility",
-  "searchDeck",
-  "resolveSearchDeck",
+  "resolveScry",
   "action",
 ]);
 

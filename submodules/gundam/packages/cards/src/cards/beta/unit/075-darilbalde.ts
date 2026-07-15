@@ -4,6 +4,7 @@ export const betaDarilbalde075: UnitCard = {
   cardNumber: "GD01-075",
   name: "Darilbalde",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["academy"],
   id: "GD01-075_p1",
@@ -58,6 +59,7 @@ export const betaDarilbalde075: UnitCard = {
   cost: 2,
   ap: 4,
   hp: 2,
+  linkCondition: "(Academy) Trait",
   effect: "【Deploy】Choose 1 enemy Unit with 1 HP. Return it to its owner's hand.<br>",
   effects: [
     {
@@ -73,6 +75,7 @@ export const betaDarilbalde075: UnitCard = {
               owner: "opponent",
               cardType: "unit",
               count: 1,
+              attributeFilters: [{ attribute: "hp", comparison: "lte", value: 1 }],
             },
           },
         },

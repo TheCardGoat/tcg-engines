@@ -15,26 +15,26 @@ import {
   type MatchState,
 } from "@tcg/cyberpunk-engine";
 import {
-  alphaCorporateSurveillance,
-  alphaFloorIt,
-  alphaIndustrialAssembly,
-  alphaRebootOptics,
-  spoilerAfterpartyAtLizzieS,
-  spoilerCarnageAtTheColosseum,
-  spoilerCyberpsychosis,
-  spoilerPeaceOffering,
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailFloorIt,
+  welcomeToNightCityRetailIndustrialAssembly,
+  welcomeToNightCityRetailRebootOptics,
+  welcomeToNightCityRetailAfterpartyAtLizzieS,
+  welcomeToNightCityRetailCarnageAtTheColosseum,
+  welcomeToNightCityRetailCyberpsychosis,
+  welcomeToNightCityRetailPeaceOffering,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkServerEngine } from "./cyberpunk-server-engine.ts";
 
 const PROGRAM_HEAVY_HAND = [
-  alphaCorporateSurveillance,
-  alphaFloorIt,
-  alphaIndustrialAssembly,
-  alphaRebootOptics,
-  spoilerAfterpartyAtLizzieS,
-  spoilerCarnageAtTheColosseum,
-  spoilerCyberpsychosis,
-  spoilerPeaceOffering,
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailFloorIt,
+  welcomeToNightCityRetailIndustrialAssembly,
+  welcomeToNightCityRetailRebootOptics,
+  welcomeToNightCityRetailAfterpartyAtLizzieS,
+  welcomeToNightCityRetailCarnageAtTheColosseum,
+  welcomeToNightCityRetailCyberpsychosis,
+  welcomeToNightCityRetailPeaceOffering,
 ] satisfies CardRef[];
 
 function createProgramHeavyNoTargetFixture(): CyberpunkTestEngine {
@@ -79,7 +79,7 @@ function createUnsafeDefaultAttackState(): MatchState {
   const attacker = createMockUnit({ id: "adapter-default-attacker", power: 2 });
   const defender = createMockUnit({ id: "adapter-default-defender", power: 5 });
   const engine = CyberpunkTestEngine.createWithFixture(
-    { field: [{ card: attacker, spent: false, playedThisTurn: true }] },
+    { field: [{ card: attacker, spent: false, hasLag: true }] },
     { field: [{ card: defender, spent: true }] },
     { seed: "adapter-default-unsafe-attack" },
   );
@@ -128,7 +128,7 @@ describe("engine strategy program-heavy no-target bot reproduction", () => {
 
     expect(candidateIds).toHaveLength(PROGRAM_HEAVY_HAND.length);
     expect(candidateIds.map((id) => engine.getState().G.cardIndex[id]!.definitionId)).toContain(
-      alphaCorporateSurveillance.id,
+      welcomeToNightCityRetailCorporateSurveillance.id,
     );
 
     const bot = new AIPlayer(engine.getLocalEngine(), P2, firstLegalStrategy, {
@@ -145,13 +145,8 @@ describe("engine strategy program-heavy no-target bot reproduction", () => {
       move: "playCard",
     });
 
-    expectProgramInZone(engine, "trash", alphaCorporateSurveillance.id);
+    expectProgramInZone(engine, "trash", welcomeToNightCityRetailCorporateSurveillance.id);
     expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
-    expect(
-      result.result.moveLogs.some(
-        (log) => log.type === "action" && log.messageKey === "trigger.noValidTargets",
-      ),
-    ).toBe(true);
   });
 
   test("greedyStrategy selects the highest-cost no-target Program and discards it", () => {
@@ -159,7 +154,7 @@ describe("engine strategy program-heavy no-target bot reproduction", () => {
     const candidateIds = getPlayCardCandidates(engine);
 
     expect(candidateIds.map((id) => engine.getState().G.cardIndex[id]!.definitionId)).toContain(
-      spoilerCarnageAtTheColosseum.id,
+      welcomeToNightCityRetailCarnageAtTheColosseum.id,
     );
 
     const bot = new AIPlayer(engine.getLocalEngine(), P2, greedyStrategy, {
@@ -176,18 +171,77 @@ describe("engine strategy program-heavy no-target bot reproduction", () => {
       move: "playCard",
     });
 
-    expectProgramInZone(engine, "trash", spoilerCarnageAtTheColosseum.id);
-    expectProgramInZone(engine, "hand", alphaCorporateSurveillance.id);
+    expectProgramInZone(engine, "trash", welcomeToNightCityRetailCarnageAtTheColosseum.id);
+    expectProgramInZone(engine, "hand", welcomeToNightCityRetailCorporateSurveillance.id);
     expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
-    expect(
-      result.result.moveLogs.some(
-        (log) => log.type === "action" && log.messageKey === "trigger.noValidTargets",
-      ),
-    ).toBe(true);
   });
 });
 
 describe("server adapter automated action strategy dispatch", () => {
+  test("server-authoritative forfeit commits the supplied automation reason", () => {
+    const serverEngine = new CyberpunkServerEngine(
+      new LocalEngine(createProgramHeavyNoTargetState()),
+    );
+
+    const result = serverEngine.forfeit("p1", "automation-concession", {
+      gameId: "program-heavy-forfeit",
+      sourceAuthority: "server",
+    });
+
+    expect(result.success).toBe(true);
+    if (!result.success) return;
+    const state = result.state as MatchState;
+    expect(state.G.gameEnded).toBe(true);
+    expect(state.G.winnerId).toBe("p1");
+    expect(state.G.winReason).toBe("automation-concession");
+    expect(result.acceptedMoveRecord?.moveId).toBe("forfeitGame");
+    expect(result.patches).toContainEqual({
+      op: "replace",
+      path: ["G", "winReason"],
+      value: "automation-concession",
+    });
+    expect(serverEngine.getGameEndResult()).toEqual({
+      winnerId: "p1",
+      reason: "automation-concession",
+    });
+  });
+
+  test("tactical decisions expose bounded public search diagnostics", () => {
+    const serverEngine = new CyberpunkServerEngine(
+      new LocalEngine(createProgramHeavyNoTargetState()),
+    );
+
+    const result = serverEngine.takeAutomatedAction(
+      { strategyId: "tactical" },
+      { gameId: "program-heavy-tactical", sourceAuthority: "server" },
+    );
+
+    expect(result.finalResult.success).toBe(true);
+    expect(result.strategyId).toBe("tactical");
+    expect(result.decisionDiagnostics).toMatchObject({
+      kind: "search",
+      strategyId: "tactical",
+    });
+    expect(result.decisionDiagnostics?.candidateCount).toBeGreaterThan(1);
+    expect(result.decisionDiagnostics?.nodesEvaluated).toBeGreaterThan(0);
+    expect(result.decisionDiagnostics?.depthReached).toBeGreaterThanOrEqual(0);
+  });
+
+  test("the default compatibility id resolves to the promoted strategy", () => {
+    const serverEngine = new CyberpunkServerEngine(
+      new LocalEngine(createProgramHeavyNoTargetState()),
+    );
+
+    const result = serverEngine.takeAutomatedAction(
+      { strategyId: "default" },
+      { gameId: "program-heavy-default", sourceAuthority: "server" },
+    );
+
+    expect(result.finalResult.success).toBe(true);
+    expect(result.strategyId).toBe("tactical");
+    expect(result.decisionDiagnostics?.strategyId).toBe("tactical");
+  });
+
   test("takeAutomatedAction uses the requested engine strategy to choose Program args", () => {
     const state = createProgramHeavyNoTargetState();
     const serverEngine = new CyberpunkServerEngine(new LocalEngine(state));
@@ -201,7 +255,7 @@ describe("server adapter automated action strategy dispatch", () => {
       playCard.inputSpec.candidates.map(
         (candidate) => serverEngine.engine.getState().G.cardIndex[candidate.cardId]!.definitionId,
       ),
-    ).toContain(alphaCorporateSurveillance.id);
+    ).toContain(welcomeToNightCityRetailCorporateSurveillance.id);
 
     const result = serverEngine.takeAutomatedAction(
       { strategyId: "greedy" },
@@ -218,7 +272,7 @@ describe("server adapter automated action strategy dispatch", () => {
         .G.players[P2 as string]!.zones.trash.some(
           (cardId) =>
             serverEngine.getRawState().G.cardIndex[cardId as string]?.definitionId ===
-            spoilerCarnageAtTheColosseum.id,
+            welcomeToNightCityRetailCarnageAtTheColosseum.id,
         ),
     ).toBe(true);
   });

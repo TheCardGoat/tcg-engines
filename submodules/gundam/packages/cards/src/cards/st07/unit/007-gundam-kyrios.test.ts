@@ -4,7 +4,6 @@ import {
   PLAYER_ONE,
   activeResources,
   createMockPilot,
-  getEffectiveStats,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { st07GundamKyrios007 } from "./007-gundam-kyrios.ts";
@@ -27,7 +26,6 @@ describe("Gundam Kyrios (ST07-007)", () => {
 
     expectSuccess(p1.assignPilot(allelujah, st07GundamKyrios007));
 
-    const fw = engine.getRuntime().getFrameworkReadAPI();
-    expect(getEffectiveStats(kyriosId!, engine.getG(), fw.cards, fw).ap).toBe(5);
+    expect(p1.getVisibleCard(kyriosId!)?.effectiveAp).toBe(5);
   });
 });

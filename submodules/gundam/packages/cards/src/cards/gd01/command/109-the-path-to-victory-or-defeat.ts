@@ -53,6 +53,7 @@ export const gd01ThePathToVictoryOrDefeat109: CommandCard = {
             action: "lookAtTopDeck",
             count: 5,
             return: "chooseTop",
+            randomizeRemainingToBottom: true,
             tutorFilter: {
               owner: "friendly",
               cardType: ["unit", "pilot"],

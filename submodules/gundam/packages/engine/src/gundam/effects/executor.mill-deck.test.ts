@@ -8,8 +8,13 @@
 
 import { describe, it, expect } from "vite-plus/test";
 import type { CardEffect } from "@tcg/gundam-types";
-import { GundamTestEngine, PLAYER_ONE, PLAYER_TWO, expectSuccess } from "../../index.ts";
-import type { PendingEffect } from "../types.ts";
+import {
+  createMockUnit,
+  GundamTestEngine,
+  PLAYER_ONE,
+  PLAYER_TWO,
+  expectSuccess,
+} from "../../index.ts";
 
 function millEffect(count: number, owner: "self" | "opponent"): CardEffect {
   return {
@@ -20,32 +25,17 @@ function millEffect(count: number, owner: "self" | "opponent"): CardEffect {
   };
 }
 
-let peIdCounter = 0;
-function makePending(
-  overrides: Partial<PendingEffect> & Pick<PendingEffect, "effect" | "controllerId">,
-): PendingEffect {
-  return {
-    id: overrides.id ?? `mill_${++peIdCounter}`,
-    sourceCardId: overrides.sourceCardId ?? "unused",
-    effectIndex: overrides.effectIndex ?? 0,
-    kind: overrides.kind ?? "activated",
-    ...overrides,
-  };
-}
-
 describe("executor — millDeck", () => {
   it("owner=self mills the source controller's deck into their trash", () => {
-    const engine = GundamTestEngine.create({ deck: 10 }, { deck: 10 });
+    const miller = createMockUnit({ effects: [millEffect(3, "self")] });
+    const engine = GundamTestEngine.create({ play: [miller], deck: 10 }, { deck: 10 });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const millerId = p1.getCardsInZone("battleArea")[0]!;
     const p1DeckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
     const p1TrashBefore = engine.getCardCount({ zone: "trash", playerId: PLAYER_ONE });
     const p2DeckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_TWO });
 
-    engine
-      .getG()
-      .pendingEffects.push(
-        makePending({ effect: millEffect(3, "self"), controllerId: PLAYER_ONE }),
-      );
-    expectSuccess(engine.asPlayer(PLAYER_ONE).resolveEffect({}));
+    expectSuccess(p1.activateAbility(millerId, 0));
 
     expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(p1DeckBefore - 3);
     expect(engine.getCardCount({ zone: "trash", playerId: PLAYER_ONE })).toBe(p1TrashBefore + 3);
@@ -54,17 +44,15 @@ describe("executor — millDeck", () => {
   });
 
   it("owner=opponent mills the opposing player's deck into their trash", () => {
-    const engine = GundamTestEngine.create({ deck: 10 }, { deck: 10 });
+    const miller = createMockUnit({ effects: [millEffect(2, "opponent")] });
+    const engine = GundamTestEngine.create({ play: [miller], deck: 10 }, { deck: 10 });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const millerId = p1.getCardsInZone("battleArea")[0]!;
     const p1DeckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
     const p2DeckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_TWO });
     const p2TrashBefore = engine.getCardCount({ zone: "trash", playerId: PLAYER_TWO });
 
-    engine
-      .getG()
-      .pendingEffects.push(
-        makePending({ effect: millEffect(2, "opponent"), controllerId: PLAYER_ONE }),
-      );
-    expectSuccess(engine.asPlayer(PLAYER_ONE).resolveEffect({}));
+    expectSuccess(p1.activateAbility(millerId, 0));
 
     expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_TWO })).toBe(p2DeckBefore - 2);
     expect(engine.getCardCount({ zone: "trash", playerId: PLAYER_TWO })).toBe(p2TrashBefore + 2);
@@ -72,20 +60,17 @@ describe("executor — millDeck", () => {
     expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(p1DeckBefore);
   });
 
-  it("clamps count to remaining deck size (no crash on short / empty deck)", () => {
-    // Deck size 1, request mill 5 — should mill just the one remaining card
-    // and leave the deck empty without throwing.
-    const engine = GundamTestEngine.create({ deck: 1 }, {});
+  it("mills a short deck and immediately awards the game to the opponent", () => {
+    const miller = createMockUnit({ effects: [millEffect(5, "self")] });
+    const engine = GundamTestEngine.create({ play: [miller], deck: 1 }, {});
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const millerId = p1.getCardsInZone("battleArea")[0]!;
     const p1TrashBefore = engine.getCardCount({ zone: "trash", playerId: PLAYER_ONE });
 
-    engine
-      .getG()
-      .pendingEffects.push(
-        makePending({ effect: millEffect(5, "self"), controllerId: PLAYER_ONE }),
-      );
-    expectSuccess(engine.asPlayer(PLAYER_ONE).resolveEffect({}));
+    expectSuccess(p1.activateAbility(millerId, 0));
 
     expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(0);
     expect(engine.getCardCount({ zone: "trash", playerId: PLAYER_ONE })).toBe(p1TrashBefore + 1);
+    expect(p1.getBoardView().winner).toBe(PLAYER_TWO);
   });
 });

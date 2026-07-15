@@ -104,6 +104,8 @@ export const gd03ZakuFz020: UnitCard = {
               ap: 0,
               hp: 1,
               deployState: "rested",
+              restrictions: ["cannotSetActive", "cannotPairPilot"],
+              printedCardNumber: "T-014",
             },
             count: 2,
           },

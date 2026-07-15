@@ -8,14 +8,18 @@
 import type { MatchState } from "../../types/match-state.ts";
 import type { MatchStaticResources } from "../../runtime/static-resources.ts";
 import type { ViewRoleContext } from "../../types/projection.ts";
-import type { Card, UnitCard } from "@tcg/gundam-types";
+import type { FrameworkReadAPI } from "../../types/move-types.ts";
 import type {
   GundamG,
   GundamBoardView,
   GundamPlayerBoardView,
   GundamRuntimeCard,
 } from "../types.ts";
-import { getDamage } from "../rules/derived-state.ts";
+import {
+  getDamage,
+  getEffectiveKeywordEffects,
+  getEffectiveStats,
+} from "../rules/derived-state.ts";
 import { buildPendingChoicePrompt } from "../effects/pending-effects.ts";
 import { buildReadAPI } from "../../runtime/match-runtime.queries.ts";
 import { projectTimerView } from "../../runtime/view-filter.ts";
@@ -27,6 +31,7 @@ export function projectGundamBoardView(
 ): GundamBoardView {
   const g = state.G;
   const ctx = state.ctx;
+  const framework = buildReadAPI(state, staticResources);
 
   const playerViews: Record<string, GundamPlayerBoardView> = {};
 
@@ -37,6 +42,7 @@ export function projectGundamBoardView(
       ctx,
       roleCtx,
       staticResources,
+      framework,
     );
   }
 
@@ -72,8 +78,9 @@ function computeRoleScopedPendingChoice(
 ) {
   if (g.pendingEffects.length === 0) return undefined;
   if (roleCtx.role === "spectator") return undefined;
-  const activePlayerId = state.ctx.status.activePlayer as unknown as string;
-  const prompt = buildPendingChoicePrompt(g, buildReadAPI(state, staticResources), activePlayerId);
+  const turnPlayerId = (state.ctx.status.turnPlayer ??
+    state.ctx.status.activePlayer) as unknown as string;
+  const prompt = buildPendingChoicePrompt(g, buildReadAPI(state, staticResources), turnPlayerId);
   if (!prompt) return undefined;
   if (roleCtx.role === "judge") return prompt;
   if ((roleCtx.playerId as string) === prompt.controllerId) return prompt;
@@ -86,6 +93,7 @@ function buildPlayerView(
   ctx: MatchState<GundamG>["ctx"],
   roleCtx: ViewRoleContext,
   staticResources: MatchStaticResources,
+  framework: FrameworkReadAPI,
 ): GundamPlayerBoardView {
   const isOwner = roleCtx.role === "player" && (roleCtx.playerId as string) === playerId;
   const isJudge = roleCtx.role === "judge";
@@ -94,6 +102,7 @@ function buildPlayerView(
   const zoneSummaries = ctx.zones.public.zoneSummaries;
 
   const deckKey = `deck:${playerId}`;
+  const resourceDeckKey = `resourceDeck:${playerId}`;
   const handKey = `hand:${playerId}`;
   const battlefieldKey = `battleArea:${playerId}`;
   const baseSectionKey = `baseSection:${playerId}`;
@@ -102,6 +111,7 @@ function buildPlayerView(
   const resourceAreaKey = `resourceArea:${playerId}`;
 
   const deckCount = zoneSummaries[deckKey]?.count ?? 0;
+  const resourceDeckCount = zoneSummaries[resourceDeckKey]?.count ?? 0;
   const handCount = zoneSummaries[handKey]?.count ?? 0;
   const trashCount = zoneSummaries[trashKey]?.count ?? 0;
   const shieldCount = zoneSummaries[shieldKey]?.count ?? 0;
@@ -109,19 +119,19 @@ function buildPlayerView(
   // Battlefield (always public)
   const battlefieldIds = ctx.zones.private.zoneCards[battlefieldKey] ?? [];
   const battlefield = battlefieldIds.map((id) =>
-    buildRuntimeCard(id, battlefieldKey, g, staticResources),
+    buildRuntimeCard(id, battlefieldKey, g, staticResources, framework),
   );
 
   // Base section (always public — Rule 4-6-3)
   const baseSectionIds = ctx.zones.private.zoneCards[baseSectionKey] ?? [];
   const baseSection = baseSectionIds.map((id) =>
-    buildRuntimeCard(id, baseSectionKey, g, staticResources),
+    buildRuntimeCard(id, baseSectionKey, g, staticResources, framework),
   );
 
   // Resource area (always public per Rule 4-4-3)
   const resourceAreaIds = ctx.zones.private.zoneCards[resourceAreaKey] ?? [];
   const resourceArea = resourceAreaIds.map((id) =>
-    buildRuntimeCard(id, resourceAreaKey, g, staticResources),
+    buildRuntimeCard(id, resourceAreaKey, g, staticResources, framework),
   );
   const resourceCount = resourceAreaIds.length;
 
@@ -129,12 +139,13 @@ function buildPlayerView(
   let hand: GundamRuntimeCard[] | undefined;
   if (canSeePrivate) {
     const handIds = ctx.zones.private.zoneCards[handKey] ?? [];
-    hand = handIds.map((id) => buildRuntimeCard(id, handKey, g, staticResources));
+    hand = handIds.map((id) => buildRuntimeCard(id, handKey, g, staticResources, framework));
   }
 
   return {
     playerId,
     resourceCount,
+    resourceDeckCount,
     handCount,
     deckCount,
     trashCount,
@@ -151,28 +162,15 @@ function buildRuntimeCard(
   zoneKey: string,
   g: GundamG,
   staticResources: MatchStaticResources,
+  framework: FrameworkReadAPI,
 ): GundamRuntimeCard {
   const instanceData = staticResources.cardsMaps.instances.get(instanceId);
-  // Use cardsMaps.definitions (not catalog) so runtime-registered tokens are found.
-  // catalog only contains deck cards defined at startup; tokens are registered at runtime
-  // via framework.cards.registerDefinition() which writes to cardsMaps.definitions.
-  const definition = instanceData
-    ? (staticResources.cardsMaps.definitions.get(instanceData.definitionId) as Card | undefined)
-    : undefined;
 
   const damage = getDamage(instanceId, g);
   const exhausted = g.exhausted[instanceId] ?? false;
   const pilotId = g.pilotAssignments[instanceId];
 
-  // For projection, use base stats (no CardReadAPI available here for effective stats)
-  const isUnit = definition?.type === "unit";
-  const isBase = definition?.type === "base";
-  const baseAp = isUnit ? (definition as UnitCard).ap : 0;
-  const baseHp = isUnit
-    ? (definition as UnitCard).hp
-    : isBase
-      ? (definition as import("@tcg/gundam-types").BaseCard).hp
-      : 0;
+  const stats = getEffectiveStats(instanceId, g, framework.cards, framework);
 
   return {
     instanceId,
@@ -180,13 +178,20 @@ function buildRuntimeCard(
     ownerId: instanceData?.ownerID ?? "",
     controllerId: instanceData?.ownerID ?? "",
     zoneId: zoneKey,
-    effectiveAp: baseAp,
-    effectiveHp: baseHp,
-    effectiveCost: definition?.cost ?? 0,
+    effectiveAp: stats.ap,
+    effectiveHp: stats.hp,
+    effectiveCost: stats.cost,
     damage,
     exhausted,
     pilotId,
-    keywords: definition ? definition.keywordEffects.map((k) => k.keyword) : [],
-    restrictions: [],
+    keywordEffects: getEffectiveKeywordEffects(
+      instanceId,
+      g,
+      framework.cards,
+      framework,
+      stats.keywords,
+    ),
+    keywords: stats.keywords,
+    restrictions: stats.restrictions,
   };
 }

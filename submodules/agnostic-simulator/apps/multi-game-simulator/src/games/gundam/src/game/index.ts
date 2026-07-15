@@ -77,6 +77,7 @@ export {
   interactionViewSourceCardIds,
   protocolTargetSelection,
   type ProtocolTargetSelection,
+  type ProtocolTargetSelectionGroup,
 } from "./selectors/interactionView.ts";
 
 export {

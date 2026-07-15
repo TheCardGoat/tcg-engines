@@ -37,12 +37,27 @@ export interface SimulatorCounter {
   value: string;
 }
 
+export interface SimulatorActiveEffect {
+  id: string;
+  targetKind: "entity" | "seat";
+  targetId: string;
+  sourceEntityId?: string;
+  sourceLabel: string;
+  label: string;
+  detail: string;
+  tone: "buff" | "debuff" | "neutral";
+  durationLabel?: string;
+  kind?: string;
+  rule?: string;
+}
+
 export interface SimulatorSeat {
   id: string;
   label: string;
   role: "human" | "agent";
   perspective: "bottom" | "top";
   counters: SimulatorCounter[];
+  activeEffects?: SimulatorActiveEffect[];
   timerMs?: number;
   timerState?: "running" | "paused" | "expired";
   avatarUrl?: string;
@@ -63,6 +78,7 @@ export interface SimulatorEntity {
   backImageUrl?: string;
   frameStyle?: { color: string; pattern?: string };
   overlayBadges?: { label: string; color: string; position: "tl" | "tr" | "bl" | "br" }[];
+  activeEffects?: SimulatorActiveEffect[];
   dataAttributes?: Record<string, string | number | boolean | undefined>;
   spawnAnimation?: "fade" | "slide-up" | "flip";
 }
@@ -80,6 +96,26 @@ export interface SimulatorZone {
   orientation?: "portrait" | "landscape";
   allowedDropRoles?: ZoneRole[];
   transitionStyle?: "instant" | "slide" | "shuffle";
+  deckReveal?: SimulatorDeckReveal;
+}
+
+export interface SimulatorDeckRevealCard {
+  entityId?: string;
+  title?: string;
+  subtitle?: string;
+  imageUrl?: string;
+  frameColor?: string;
+}
+
+export interface SimulatorDeckReveal {
+  id: string;
+  zoneId: string;
+  ownerId?: string;
+  position: "top" | "bottom";
+  visibility: "public" | "private";
+  turnNumber: number;
+  count: number;
+  cards: SimulatorDeckRevealCard[];
 }
 
 export interface SimulatorStatus {

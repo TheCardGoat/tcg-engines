@@ -6,7 +6,7 @@ import { type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
 export const gearKiroshiOpticsNoFaceDownBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "gearKiroshiOpticsNoFaceDown",
   label: "Kiroshi Optics - no face-down legends",
-  references: ["packages/engine/src/cards/alpha/gear/kiroshi-optics.test.ts"],
+  references: ["packages/engine/src/cards/welcometonightcityretail/gear/kiroshi-optics.test.ts"],
   async run(pom) {
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",

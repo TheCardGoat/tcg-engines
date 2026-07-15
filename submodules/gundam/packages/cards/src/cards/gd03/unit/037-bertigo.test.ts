@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vite-plus/test";
-import type { UnitCard } from "@tcg/gundam-types";
 import {
   GundamTestEngine,
   PLAYER_ONE,
@@ -8,31 +7,16 @@ import {
   createMockPilot,
   createMockUnit,
   expectSuccess,
-  getEffectiveStats,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
+import { gd03HumanKarma113 } from "../command/113-human-karma.ts";
+import { gd03GundamNt1FullArmor007 } from "./007-gundam-nt-1-full-armor.ts";
 import { gd03Bertigo037 } from "./037-bertigo.ts";
-
-const destroyedEffectUnit = (name: string): UnitCard =>
-  createMockUnit({
-    name,
-    ap: 2,
-    hp: 5,
-    effects: [
-      {
-        type: "triggered",
-        activation: { timing: ["destroyed"] },
-        directives: [{ action: { action: "draw", count: 1 } }],
-        sourceText: "【Destroyed】Draw 1.",
-      },
-    ],
-  });
 
 describe("Bertigo (GD03-037)", () => {
   function setup({ enemyHasDestroyedEffect = true }: { enemyHasDestroyedEffect?: boolean } = {}) {
     const pilot = createMockPilot({ name: "Newtype Pilot", traits: ["newtype"] });
     const enemy = enemyHasDestroyedEffect
-      ? destroyedEffectUnit("Enemy With Destroyed")
+      ? gd03GundamNt1FullArmor007
       : createMockUnit({ name: "Enemy Without Destroyed", ap: 2, hp: 5 });
     const engine = GundamTestEngine.create(
       {
@@ -40,7 +24,7 @@ describe("Bertigo (GD03-037)", () => {
         play: [gd03Bertigo037],
         resourceArea: activeResources(5),
       },
-      { play: [enemy] },
+      { play: [{ card: enemy, exhausted: true }] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
@@ -48,42 +32,51 @@ describe("Bertigo (GD03-037)", () => {
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.assignPilot(pilot, bertigoId));
-    engine.getState().ctx.status.activePlayer = PLAYER_ONE as PlayerId;
-    engine.getG().turnMetadata.pendingCombat = {
-      stage: "attack-step",
-      attackerId: bertigoId,
-      attackerPlayerId: PLAYER_ONE,
-      target: enemyId,
-    };
+    expectSuccess(p1.enterBattle(bertigoId, enemyId));
 
-    return { engine, bertigoId };
+    return { p1, bertigoId };
   }
 
   it("gains First Strike during your turn while linked and battling an enemy Unit with a Destroyed effect", () => {
-    const { engine, bertigoId } = setup();
-    const framework = engine.getRuntime().getFrameworkReadAPI();
+    const { p1, bertigoId } = setup();
 
-    expect(
-      getEffectiveStats(bertigoId, engine.getG(), framework.cards, framework).keywords,
-    ).toContain("FirstStrike");
+    expect(p1.getVisibleCard(bertigoId)?.keywords).toContain("FirstStrike");
   });
 
   it("does not gain First Strike when the battling enemy has no Destroyed effect", () => {
-    const { engine, bertigoId } = setup({ enemyHasDestroyedEffect: false });
-    const framework = engine.getRuntime().getFrameworkReadAPI();
+    const { p1, bertigoId } = setup({ enemyHasDestroyedEffect: false });
 
-    expect(
-      getEffectiveStats(bertigoId, engine.getG(), framework.cards, framework).keywords,
-    ).not.toContain("FirstStrike");
+    expect(p1.getVisibleCard(bertigoId)?.keywords).not.toContain("FirstStrike");
   });
 
   it("does not gain First Strike during the opponent's turn", () => {
-    const { engine, bertigoId } = setup();
-    engine.getState().ctx.status.activePlayer = PLAYER_TWO as PlayerId;
-    const framework = engine.getRuntime().getFrameworkReadAPI();
+    const pilot = createMockPilot({ name: "Newtype Pilot", traits: ["newtype"] });
+    const damageTarget = createMockUnit({ name: "Human Karma Target", level: 5, hp: 10 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [pilot, gd03HumanKarma113],
+        play: [gd03Bertigo037],
+        resourceArea: activeResources(6),
+        deck: 5,
+      },
+      {
+        play: [gd03GundamNt1FullArmor007, damageTarget],
+        deck: 5,
+      },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const bertigoId = p1.getCardsInZone("battleArea")[0]!;
+    const [attackerId, damageTargetId] = p2.getCardsInZone("battleArea");
 
-    expect(
-      getEffectiveStats(bertigoId, engine.getG(), framework.cards, framework).keywords,
-    ).not.toContain("FirstStrike");
+    expectSuccess(p1.assignPilot(pilot, bertigoId));
+    expectSuccess(p1.playCommand(gd03HumanKarma113, { targets: [bertigoId] }));
+    expectSuccess(p1.resolveEffect({ targets: [damageTargetId!] }));
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.enterBattle(attackerId, bertigoId));
+
+    expect(p1.getVisibleCard(bertigoId)?.keywords).not.toContain("FirstStrike");
   });
 });

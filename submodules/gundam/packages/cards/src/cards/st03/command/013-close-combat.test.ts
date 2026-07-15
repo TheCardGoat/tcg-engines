@@ -3,31 +3,43 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  asPlayerId,
   expectSuccess,
   createMockUnit,
   activeResources,
-  expectCardInTrash,
-  getDamageCounter,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { st03CloseCombat013 } from "./013-close-combat.ts";
 describe("Close Combat (ST03-013)", () => {
   it("【Burst】Activate this card's 【Main】 — deals 2 damage to an enemy Unit.", () => {
-    const enemy = createMockUnit({ ap: 3, hp: 5 });
-    const engine = GundamTestEngine.create({ deck: [st03CloseCombat013] }, { play: [enemy] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, st03CloseCombat013.cardNumber, asPlayerId(PLAYER_ONE));
-
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 3, hp: 5 });
+    const engine = GundamTestEngine.create(
+      { shieldArea: [st03CloseCombat013] },
+      { play: [attacker] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const [enemyId] = p2.getCardsInZone("battleArea");
+    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      sourceCardId: shieldId,
+      legalTargetIds: [attackerId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [attackerId] }));
 
-    expect(getDamageCounter(engine, enemyId!)).toBe(2);
+    expect(p2.getDamage(attackerId)).toBe(2);
+    expect(p1.getCardZone(shieldId)).toBe(`trash:${PLAYER_ONE}`);
   });
 
   describe("【Main】/【Action】Choose 1 enemy Unit. Deal 2 damage to it.", () => {
@@ -44,8 +56,8 @@ describe("Close Combat (ST03-013)", () => {
 
       expectSuccess(p1.playCommand(st03CloseCombat013, { targets: [enemyId!] }));
 
-      expect(getDamageCounter(engine, enemyId!)).toBe(2);
-      expectCardInTrash(engine, cmdId, p1.playerId);
+      expect(p2.getDamage(enemyId!)).toBe(2);
+      expect(p1.getCardZone(cmdId)).toBe(`trash:${PLAYER_ONE}`);
     });
   });
 });

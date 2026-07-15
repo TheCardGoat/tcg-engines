@@ -61,9 +61,16 @@ export function ConnectionPanel({
               connectionId: diagnosticConnection.connectionId,
               socketId: diagnosticConnection.socketId,
               authModeLabel: diagnosticConnection.authModeLabel,
+              authenticated: diagnosticConnection.authenticated,
+              authStatus: diagnosticConnection.authStatus,
+              authFailureReason: diagnosticConnection.authFailureReason,
               reconnectAttempts: diagnosticConnection.reconnectAttempts,
               disconnectCount: diagnosticConnection.disconnectCount,
               latencyMs: diagnosticConnection.latencyMs,
+              lastPingAt: diagnosticConnection.lastPingAt,
+              lastPongAt: diagnosticConnection.lastPongAt,
+              lastHeartbeatSentAt: diagnosticConnection.lastHeartbeatSentAt,
+              lastHeartbeatAckAt: diagnosticConnection.lastHeartbeatAckAt,
             }
           : undefined,
         presence: connectionDiagnostic.presence

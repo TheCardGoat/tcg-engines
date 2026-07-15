@@ -16,7 +16,7 @@ describe("Satori — Sword of Saburo (retail)", () => {
           {
             card: welcomeToNightCityRetailOffdutyMalfini,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
             attachedGears: [welcomeToNightCityRetailSatoriSwordOfSaburo],
           },
         ],
@@ -53,7 +53,7 @@ describe("Satori — Sword of Saburo (retail)", () => {
           {
             card: welcomeToNightCityRetailOffdutyMalfini,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
             attachedGears: [welcomeToNightCityRetailSatoriSwordOfSaburo],
           },
         ],

@@ -8,7 +8,7 @@ export const stealGigTestBehavior: CyberpunkFixtureBehavior = {
   label: "Validate Steal Gig",
   references: [
     "packages/engine/tests/flow/two-turns-with-moves.test.ts",
-    "packages/engine/src/cards/spoiler/gear/gorilla-arms.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/gear/gorilla-arms.test.ts",
   ],
   async run(pom) {
     expectEqual("stealGigTest phase", await pom.getPhase(), "main");

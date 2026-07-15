@@ -22,7 +22,8 @@ describe("exhaustiveness", () => {
       "chooseTarget",
       "chooseTrigger",
       "gainGig",
-      "searchDeck",
+      "revealDestination",
+      "scry",
     ].sort();
     expect(Object.keys(defaultChoiceResolvers).sort()).toEqual(expected);
   });

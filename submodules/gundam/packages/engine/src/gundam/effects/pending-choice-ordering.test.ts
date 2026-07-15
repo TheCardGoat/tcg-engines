@@ -232,7 +232,10 @@ describe("Pending choice — ordering descriptor (PR F.3)", () => {
   });
 
   it("falls through to content prompt when only one peer remains at the tier", () => {
-    const engine = GundamTestEngine.create({ deck: 10 }, {});
+    const engine = GundamTestEngine.create(
+      { deck: 10 },
+      { play: [createMockUnit({ ap: 1, hp: 1 })] },
+    );
     engine.getG().pendingEffects.push(
       makePending({
         id: "only",
@@ -249,7 +252,10 @@ describe("Pending choice — ordering descriptor (PR F.3)", () => {
   it("does not emit ordering when peers belong to different controllers (same tier)", () => {
     // Two 'activated' entries at tier 3 — but different controllers, so
     // neither player has an ordering choice over the other's effect.
-    const engine = GundamTestEngine.create({ deck: 10 }, { deck: 10 });
+    const engine = GundamTestEngine.create(
+      { deck: 10, play: [createMockUnit({ ap: 1, hp: 1 })] },
+      { deck: 10, play: [createMockUnit({ ap: 1, hp: 1 })] },
+    );
     engine.getG().pendingEffects.push(
       makePending({
         id: "mine",

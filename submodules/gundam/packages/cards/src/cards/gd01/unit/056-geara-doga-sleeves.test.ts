@@ -1,39 +1,87 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  asPlayerId,
   createMockUnit,
+  expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd01GearaDogaSleeves056 } from "./056-geara-doga-sleeves.ts";
+import {
+  passTurnThroughPublicMoves,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
+
+function completeBattle(
+  attacker: ReturnType<GundamTestEngine["asPlayer"]>,
+  defender: ReturnType<GundamTestEngine["asPlayer"]>,
+) {
+  expectSuccess(defender.passBlock());
+  expectSuccess(defender.passBattleAction());
+  expectSuccess(attacker.passBattleAction());
+}
 
 describe("Geara Doga (Sleeves) (GD01-056)", () => {
-  it("【Destroyed】Choose 1 enemy Unit with 5 or less AP. Deal 1 damage to it.", () => {
-    // Geara Doga Sleeves (AP 2, HP 3) dies to an AP-3 attacker. The
-    // Destroyed trigger auto-picks the only eligible enemy (≤ 5 AP
-    // filter over p1's battleArea) — we set up a sole attacker so the
-    // auto-pick is deterministic.
-    const attacker = createMockUnit({ ap: 3, hp: 5 });
+  it("offers only enemy Units with 5 or less AP after it is destroyed in battle", () => {
+    const eligibleAttacker = createMockUnit({ ap: 3, hp: 6 });
+    const tooStrong = createMockUnit({ ap: 6, hp: 6 });
     const engine = GundamTestEngine.create(
-      { play: [attacker] },
+      {
+        deck: 2,
+        play: [eligibleAttacker, tooStrong],
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
       { play: [gd01GearaDogaSleeves056] },
+      { initialActivePlayer: PLAYER_TWO },
     );
-    const p1Id = asPlayerId(PLAYER_ONE);
-    const p2Id = asPlayerId(PLAYER_TWO);
-    const attackerId = engine.getCardsInZone({ zone: "battleArea", playerId: p1Id })[0]!;
-    const gearaDogaId = engine.getCardsInZone({ zone: "battleArea", playerId: p2Id })[0]!;
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [eligibleAttackerId, tooStrongId] = p1.getCardsInZone("battleArea");
+    const gearaDogaId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.getG().exhausted[attackerId] = false;
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [gearaDogaId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
 
-    engine.resolveCombat({ attackerId, target: gearaDogaId });
+    expectSuccess(p1.enterBattle(eligibleAttackerId!, gearaDogaId));
+    completeBattle(p1, p2);
 
-    // Geara Doga destroyed (AP 3 vs HP 3).
-    expect(engine.getState().ctx.zones.private.cardIndex[gearaDogaId]?.zoneKey).toBe(
-      `trash:${PLAYER_TWO}`,
+    expect(p2.getCardZone(gearaDogaId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [eligibleAttackerId],
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expectSuccess(p2.resolveEffect({ targets: [eligibleAttackerId!] }));
+
+    expect(p1.getDamage(eligibleAttackerId!)).toBe(3);
+    expect(p1.getDamage(tooStrongId!)).toBe(0);
+  });
+
+  it("does not open a target prompt when every enemy Unit has more than 5 AP", () => {
+    const attacker = createMockUnit({ ap: 6, hp: 6 });
+    const engine = GundamTestEngine.create(
+      {
+        deck: 2,
+        play: [attacker],
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
+      { play: [gd01GearaDogaSleeves056] },
+      { initialActivePlayer: PLAYER_TWO },
     );
-    // Counter-attack from Geara (AP 2) deals 2; Destroyed trigger deals
-    // an additional 1 damage to the sole enemy attacker → 3 total.
-    expect(engine.getG().damage[attackerId]).toBe(3);
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const gearaDogaId = p2.getCardsInZone("battleArea")[0]!;
+
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [gearaDogaId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+
+    expectSuccess(p1.enterBattle(attackerId, gearaDogaId));
+    completeBattle(p1, p2);
+
+    expect(p2.getCardZone(gearaDogaId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getDamage(attackerId)).toBe(2);
   });
 });

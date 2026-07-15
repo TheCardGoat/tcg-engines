@@ -41,7 +41,13 @@ describe("playMatch: termination", () => {
       maxActions: 500,
     });
 
-    expect(["game-won", "max-actions-exceeded", "concede-failed"]).toContain(outcome.termination);
+    expect([
+      "game-won",
+      "automation-concession",
+      "repeated-state",
+      "max-actions-exceeded",
+      "concede-failed",
+    ]).toContain(outcome.termination);
     expect(outcome.actionCount).toBeGreaterThan(0);
     expect(outcome.actionCount).toBeLessThanOrEqual(500);
   });

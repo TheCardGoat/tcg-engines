@@ -2,8 +2,6 @@ import type { CardDefinition, RawCardRecord, StructuredCardDefinition } from "@t
 
 export { cards, rawCards } from "./generated.ts";
 export { deckLists } from "./decks/index.ts";
-export * from "./alpha/index.ts";
-export * from "./spoiler/index.ts";
 export * from "./promo/index.ts";
 export * from "./PRM01/index.ts";
 export * from "./boxtoppersretail/index.ts";

@@ -1,4 +1,10 @@
-import { applyCommand, projectStateForSeat } from "@tcg/op-engine";
+import {
+  applyCommand,
+  getLegalCommands,
+  getSafeOnePieceAutomatedActionStrategyOption,
+  projectStateForSeat,
+  resolveBotPromptCommand,
+} from "@tcg/op-engine";
 import type {
   CardZone,
   EngineCommand,
@@ -11,11 +17,14 @@ import type { EngineInteractionView, InteractionSubmission } from "@tcg/protocol
 import { createCanonicalEngineMoveLog, createEngineLogMessage } from "@tcg/shared/game-engine";
 import type {
   AcceptedMoveRecord,
+  BotActionOptions,
+  BotActionResult,
   DispatchContext,
   DispatchResult,
   EngineLogRecord,
   ServerGameEngine,
 } from "@tcg/shared/game-engine";
+import { createRandomAPI } from "@tcg/engine-core";
 import { validateInteractionSubmission } from "@tcg/protocol";
 import { buildOnePieceInteractionView, onePieceSubmissionToPayload } from "./interaction-protocol";
 
@@ -122,6 +131,10 @@ export class OnePieceServerEngine implements ServerGameEngine {
   }
 
   getActivePlayerId(): string | undefined {
+    const pendingPrompt = this.state.promptQueue.find((prompt) => prompt.status === "pending");
+    if (pendingPrompt) {
+      return pendingPrompt.seat === "judge" ? undefined : this.seatToPlayerId[pendingPrompt.seat];
+    }
     return this.seatToPlayerId[this.state.activeSeat];
   }
 
@@ -149,6 +162,77 @@ export class OnePieceServerEngine implements ServerGameEngine {
 
   getInteractionActorIds(): readonly string[] {
     return Object.keys(this.playerIdToSeat);
+  }
+
+  takeAutomatedAction(options: BotActionOptions, context: DispatchContext): BotActionResult {
+    const pendingPrompt = this.state.promptQueue.find((prompt) => prompt.status === "pending");
+    if (pendingPrompt?.seat === "judge") {
+      return {
+        finalResult: {
+          success: false,
+          error: "Judge prompt requires judge authority.",
+          errorCode: "MOVE_NOT_AVAILABLE",
+          stateID: this.getStateID(),
+        },
+        blocked: { reason: "judge-prompt" },
+      };
+    }
+    const setupSeat =
+      this.state.status === "setup"
+        ? (["south", "north"] as const).find(
+            (seat) => getLegalCommands(this.state, seat).length > 0,
+          )
+        : undefined;
+    const actionSeat = pendingPrompt?.seat ?? setupSeat ?? this.state.activeSeat;
+    const actorId = this.seatToPlayerId[actionSeat];
+    if (!actorId) {
+      return {
+        finalResult: {
+          success: false,
+          error: "One Piece has no active bot actor.",
+          errorCode: "MOVE_NOT_AVAILABLE",
+          stateID: this.getStateID(),
+        },
+        blocked: { reason: "no-active-actor" },
+      };
+    }
+    const seat = this.playerIdToSeat[actorId];
+    if (!seat) {
+      return {
+        finalResult: {
+          success: false,
+          error: `Unknown bot actor: ${actorId}`,
+          errorCode: "INVALID_ARGUMENTS",
+          stateID: this.getStateID(),
+        },
+        blocked: { reason: "unknown-actor" },
+      };
+    }
+
+    const strategyOption = getSafeOnePieceAutomatedActionStrategyOption(options.strategyId);
+    const random = createRandomAPI(`${context.gameId}:${this.getStateID()}:${seat}`);
+    const command = pendingPrompt
+      ? resolveBotPromptCommand(this.state, pendingPrompt)
+      : strategyOption.strategy(this.state, seat, getLegalCommands(this.state, seat), {
+          random: () => random.random(),
+        });
+    if (!command || command.seat === "judge") {
+      return {
+        finalResult: {
+          success: false,
+          error: "The selected One Piece strategy could not produce an action.",
+          errorCode: "MOVE_NOT_AVAILABLE",
+          stateID: this.getStateID(),
+        },
+        blocked: { reason: "strategy-stuck" },
+      };
+    }
+
+    const { type, seat: _seat, ...payload } = command;
+    return {
+      finalResult: this.dispatch(type, actorId, payload, context),
+      selectedCandidate: { family: type },
+    };
   }
 
   submitInteraction(

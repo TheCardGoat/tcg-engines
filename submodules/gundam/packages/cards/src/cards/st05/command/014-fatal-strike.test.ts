@@ -3,32 +3,44 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  asPlayerId,
   expectSuccess,
   expectFailure,
   createMockUnit,
   activeResources,
-  expectCardInTrash,
-  getDamageCounter,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { st05FatalStrike014 } from "./014-fatal-strike.ts";
 describe("Fatal Strike (ST05-014)", () => {
   it("【Burst】Choose 1 enemy Unit. Deal 1 damage to it.", () => {
-    const enemy = createMockUnit({ ap: 3, hp: 5 });
-    const engine = GundamTestEngine.create({ deck: [st05FatalStrike014] }, { play: [enemy] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, st05FatalStrike014.cardNumber, asPlayerId(PLAYER_ONE));
-
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 3, hp: 5 });
+    const engine = GundamTestEngine.create(
+      { shieldArea: [st05FatalStrike014] },
+      { play: [attacker] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const [enemyId] = p2.getCardsInZone("battleArea");
+    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      sourceCardId: shieldId,
+      legalTargetIds: [attackerId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [attackerId] }));
 
-    expect(getDamageCounter(engine, enemyId!)).toBe(1);
+    expect(p2.getDamage(attackerId)).toBe(1);
+    expect(p1.getCardZone(shieldId)).toBe(`trash:${PLAYER_ONE}`);
   });
 
   describe("【Main】Choose 1 enemy Unit that is Lv.3 or lower. Destroy it.", () => {
@@ -45,8 +57,8 @@ describe("Fatal Strike (ST05-014)", () => {
 
       expectSuccess(p1.playCommand(st05FatalStrike014, { targets: [enemyId!] }));
 
-      expectCardInTrash(engine, enemyId!, p2.playerId);
-      expectCardInTrash(engine, cmdId, p1.playerId);
+      expect(p2.getCardZone(enemyId!)).toBe(`trash:${PLAYER_TWO}`);
+      expect(p1.getCardZone(cmdId)).toBe(`trash:${PLAYER_ONE}`);
     });
 
     it("cannot target an enemy unit with Lv > 3", () => {

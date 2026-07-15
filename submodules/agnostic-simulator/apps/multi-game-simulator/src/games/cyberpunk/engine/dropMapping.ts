@@ -60,6 +60,10 @@ function inputIdForMove(moveId: string): string {
   return "cardId";
 }
 
+function isFriendlyAttachHostZone(zone: string): boolean {
+  return zone === "p-field" || zone === "p-legendArea";
+}
+
 export function mapDropToAction(event: CardDropEvent, ctx: DropContext): EngineAction | null {
   const { source, target } = event;
   if (!source.cardId) {
@@ -73,12 +77,15 @@ export function mapDropToAction(event: CardDropEvent, ctx: DropContext): EngineA
       return null;
     }
 
-    // Hand → friendly field card: gear attach. `cardType === "gear"` is the
+    // Hand → friendly host card: gear attach. `cardType === "gear"` is the
     // routing signal (gear lands on a card, other types on the zone); the
     // legality gate is still the engine's `playCard` permission.
-    if (source.zone === "p-hand" && target.zone === "p-field") {
+    if (source.zone === "p-hand" && isFriendlyAttachHostZone(target.zone)) {
       const sourceCard = ctx.humanZones.hand.find((c) => c.cardId === source.cardId);
       if (sourceCard?.cardType !== "gear") {
+        if (target.zone !== "p-field") {
+          return null;
+        }
         if (!hasLegalMove(ctx, source.cardId, "playCard")) {
           return null;
         }

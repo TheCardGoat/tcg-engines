@@ -66,6 +66,12 @@ describe("Shuji's Hideout (GD02-126)", () => {
     // Destroy the base using the destroyUnit harness helper.
     engine.destroyUnit(baseId);
 
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("targetSelection");
+    if (choice?.kind !== "targetSelection") return;
+    expect(choice.legalTargetIds).toEqual([enemyId]);
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+
     // The destroyed trigger should deal 1 damage to the enemy Lv.4 unit.
     expect(getDamageCounter(engine, enemyId)).toBe(1);
   });

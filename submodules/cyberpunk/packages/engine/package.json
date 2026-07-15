@@ -16,11 +16,12 @@
     "dist"
   ],
   "type": "module",
+  "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
     ".": {
       "types": "./src/index.ts",
-      "default": "./dist/index.mjs"
+      "default": "./src/index.ts"
     },
     "./package.json": "./package.json"
   },
@@ -42,6 +43,7 @@
     "prepublishOnly": "vp run build"
   },
   "dependencies": {
+    "@tcg/bot-core": "link:../../../agnostic-simulator/packages/bot-core",
     "@tcg/cyberpunk-cards": "workspace:*",
     "@tcg/cyberpunk-types": "workspace:*",
     "@tcg/engine-core": "link:../../../agnostic-simulator/packages/engine-core",
@@ -49,9 +51,9 @@
   },
   "devDependencies": {
     "@types/node": "^25.5.0",
-    "@typescript/native-preview": "7.0.0-dev.20260328.1",
+    "@typescript/native": "catalog:",
     "bumpp": "^11.0.1",
-    "typescript": "^6.0.2",
-    "vite-plus": "^0.1.14"
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
   }
 }

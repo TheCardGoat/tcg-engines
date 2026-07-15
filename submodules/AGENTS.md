@@ -9,9 +9,9 @@ submodule gitlinks, even though the directory is named `submodules`.
   shapes, playable game slugs, runtime adapter interfaces, shared simulator/page
   contracts, reusable simulator UI primitives, shared agent-core behavior, and
   per-game server adapters.
-- Use a game submodule (`lorcana`, `cyberpunk`, `gundam`, `one-piece`) for
-  that game's rules, cards, engine state, local
-  simulator implementation, parser/scraper tooling, and game-native wording.
+- Use a game submodule (`lorcana`, `cyberpunk`, `gundam`, `one-piece`,
+  `star-wars-unlimited`) for that game's rules, cards, engine state,
+  parser/scraper tooling, game-native wording, and any simulator it owns.
 
 If a change crosses these boundaries, keep the shared concept in
 `agnostic-simulator` and map each game into it through an adapter. Do not add
@@ -33,8 +33,9 @@ Install order matters for cross-game simulator work: game submodules first, then
 | `agnostic-simulator`  | Cross-game protocol, contracts, adapter interfaces, simulator UI primitives, agent core, and per-game server adapters. | `packages/protocol/src`, `packages/shared/src/game-adapter`, `packages/game-page-contract/src`, `packages/simulator-contract/src`, `packages/simulator-ui/src`, `packages/*/*-server-adapter/src` |
 | `lorcana`             | Lorcana engine, cards, simulator, replay tools, and rules skills.                                                      | `packages/lorcana/lorcana-engine/src`, `packages/lorcana/lorcana-cards/src`, `packages/lorcana/lorcana-simulator/src`, `packages/tools/replay-cli/src`                                            |
 | `cyberpunk`           | Cyberpunk cards, engine, parser/scraper tools, and game-native rules source.                                           | `packages/engine/src`, `packages/cards/src`, `packages/server-adapter/src`, `.agents/skills/cyberpunk-tcg-rules`                                                                                 |
-| `gundam`              | Gundam cards, engine, simulator, server adapter, bot bench, and rule docs.                                             | `packages/engine/src`, `packages/cards/src`, `apps/simulator/app`, `apps/simulator/src`, `packages/server-adapter/src`, `docs/architecture.md`                                                    |
-| `one-piece`           | One Piece simulator snapshot with engine, cards, types, utils, and browser app.                                        | `packages/engine/src`, `packages/cards/src`, `apps/simulator/src`, `.agents/skills/op-rules/comprehensive-rules.md`                                                                               |
+| `gundam`              | Gundam cards, engine, server adapter, bot bench, and rule docs.                                                        | `packages/engine/src`, `packages/cards/src`, `packages/server-adapter/src`, `tools/bot-bench`, `docs/architecture.md`                                                                              |
+| `one-piece`           | One Piece engine, cards, types, utils, parser, and rules.                                                              | `packages/engine/src`, `packages/cards/src`, `packages/types/src`, `tools/op-card-parser`, `.agents/skills/op-rules`                                                                               |
+| `star-wars-unlimited` | Star Wars Unlimited engine, cards, types, import tooling, and rules.                                                   | `packages/engine/src`, `packages/cards/src`, `packages/types/src`, `tools/import-card-data`, `.agents/skills/swu-rules`                                                                           |
 
 ## Validation
 
@@ -44,6 +45,7 @@ Use focused validation from the owning submodule first:
 - `pnpm run ci:gundam:check`
 - `pnpm run ci:lorcana:check`
 - `pnpm run ci:one-piece:check`
+- `pnpm run ci:star-wars-unlimited:check`
 - `pnpm run ci:agnostic:check`
 
 For docs-only edits, `git diff --check` is usually sufficient.

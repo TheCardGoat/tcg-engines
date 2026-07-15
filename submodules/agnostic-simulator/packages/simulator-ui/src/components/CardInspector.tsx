@@ -40,16 +40,34 @@ export function CardInspector({ entity, children }: CardInspectorProps) {
     return () => window.removeEventListener("keydown", handleKeydown);
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (referenceRef.current?.contains(target) || floatingRef.current?.contains(target)) {
+        return;
+      }
+      clearTimeout(hoverTimeoutRef.current);
+      setIsOpen(false);
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [isOpen]);
+
   const popoverPosition = getPopoverPosition(referenceRef.current);
   const popover = isOpen && (
     <div
       ref={floatingRef}
       className={cx(
-        "card-inspector-popover z-50 w-[260px] rounded-lg border border-[var(--board-border)] bg-[var(--board-surface)] p-3 shadow-xl",
-        "pointer-events-none",
+        "card-inspector-popover z-[1100] w-[260px] rounded-lg border border-[var(--board-border)] bg-[var(--board-surface)] p-3 shadow-xl",
+        "pointer-events-auto",
       )}
       role="dialog"
       tabIndex={-1}
+      data-testid="card-inspector-popover"
       aria-label={`${entity.title} inspection`}
       onMouseEnter={open}
       onMouseLeave={close}
@@ -105,7 +123,12 @@ export function CardInspector({ entity, children }: CardInspectorProps) {
           event.stopPropagation();
           openNow();
         }}
-        onPointerDown={(event) => event.stopPropagation()}
+        onPointerDown={(event) => {
+          event.stopPropagation();
+          if (event.pointerType === "touch" || event.pointerType === "pen") {
+            openNow();
+          }
+        }}
         role="button"
         tabIndex={0}
         aria-haspopup="dialog"

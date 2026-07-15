@@ -11,14 +11,14 @@ describe("Wraith Marauders retail printing", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         field: [
-          { card: welcomeToNightCityRetailWraithMarauders, spent: false, playedThisTurn: false },
+          { card: welcomeToNightCityRetailWraithMarauders, spent: false, hasLag: false },
           {
             card: welcomeToNightCityRetailSwordwiseHuscle,
             spent: true,
-            playedThisTurn: false,
+            hasLag: false,
             powerModifier: 2,
           },
-          { card: embracingPowerRetailStarterDeckMinotaur, spent: true, playedThisTurn: false },
+          { card: embracingPowerRetailStarterDeckMinotaur, spent: true, hasLag: false },
         ],
       },
       {

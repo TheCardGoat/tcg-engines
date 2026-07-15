@@ -4,8 +4,10 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
+  createMockPilot,
   createMockUnit,
   createMockResource,
+  expectSuccess,
 } from "../gundam/testing/index.ts";
 import { asPlayerId } from "../types/branded.ts";
 import type { PlayerId } from "../types/branded.ts";
@@ -13,6 +15,7 @@ import type { PlayerId } from "../types/branded.ts";
 import type { CardEffect } from "@tcg/gundam-types";
 import type { PendingEffect } from "../gundam/types.ts";
 import { enumerateGundamBotCandidates } from "./candidate-enumerator.ts";
+import { candidateToCommand } from "./candidate-types.ts";
 
 /**
  * Enumerator tests. Each test pins an expected candidate *family* set
@@ -60,6 +63,116 @@ describe("candidate-enumerator: deployUnit", () => {
     );
 
     expect(candidates.some((c) => c.family === "deployUnit")).toBe(false);
+  });
+
+  it("walks a named alternate deploy mode and emits an executable headless candidate", () => {
+    const alternateDeploy: CardEffect = {
+      type: "substitution",
+      activation: {},
+      directives: [
+        {
+          optional: true,
+          action: {
+            action: "deployCostSubstitution",
+            level: 0,
+            cost: 0,
+            destroyTarget: {
+              owner: "friendly",
+              zone: "battleArea",
+              cardType: "unit",
+              count: 1,
+              isLinkUnit: true,
+              attributeFilters: [
+                { attribute: "name", comparison: "includes", value: "Unicorn Mode" },
+                { attribute: "level", comparison: "eq", value: 5 },
+              ],
+            },
+          },
+        },
+      ],
+      sourceText: "Destroy a Lv.5 Unicorn Mode Link Unit to deploy this for free.",
+    };
+    const host = createMockUnit({
+      name: "Unicorn Gundam (Unicorn Mode)",
+      level: 5,
+      linkCondition: "[Banagher Links]",
+    });
+    const pilot = createMockPilot({ name: "Banagher Links", level: 0, cost: 0 });
+    const upgrade = createMockUnit({
+      name: "Unicorn Gundam (Destroy Mode)",
+      level: 7,
+      cost: 6,
+      effects: [alternateDeploy],
+    });
+    const engine = GundamTestEngine.create({ play: [host], hand: [pilot, upgrade] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const [pilotId, upgradeId] = p1.getHand();
+
+    expectSuccess(p1.assignPilot(pilotId!, hostId));
+    const candidates = enumerateGundamBotCandidates(
+      engine.runtime.getState(),
+      PLAYER_ONE as PlayerId,
+      engine.runtime.getStaticResources(),
+      { moveNameFilter: ["deployUnit"] },
+    );
+    const deploy = candidates.find(
+      (candidate) => candidate.family === "deployUnit" && candidate.cardId === upgradeId,
+    );
+    expect(deploy).toMatchObject({
+      family: "deployUnit",
+      cardId: upgradeId,
+      mode: "alternate",
+      targets: [hostId],
+    });
+    if (deploy?.family !== "deployUnit") {
+      throw new Error("Expected the alternate deploy candidate");
+    }
+
+    const command = candidateToCommand(deploy);
+    expectSuccess(engine.doMove(command.move, asPlayerId(PLAYER_ONE), command.args));
+
+    expect(p1.getCardZone(hostId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(pilotId!)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(upgradeId!)).toBe(`battleArea:${PLAYER_ONE}`);
+  });
+});
+
+describe("candidate-enumerator: activateAbility", () => {
+  it("keeps activated-effect mode ids numeric and executable", () => {
+    const drawAbility: CardEffect = {
+      type: "activated",
+      activation: { timing: ["activate:main"] },
+      directives: [{ action: { action: "draw", count: 1 } }],
+      sourceText: "【Activate·Main】Draw 1.",
+    };
+    const source = createMockUnit({ name: "Mode Source", effects: [drawAbility] });
+    const engine = GundamTestEngine.create({ play: [source], deck: 2 });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const sourceId = p1.getCardsInZone("battleArea")[0]!;
+    const candidates = enumerateGundamBotCandidates(
+      engine.runtime.getState(),
+      PLAYER_ONE as PlayerId,
+      engine.runtime.getStaticResources(),
+      { moveNameFilter: ["activateAbility"] },
+    );
+    const activation = candidates.find(
+      (candidate) => candidate.family === "activateAbility" && candidate.cardId === sourceId,
+    );
+    expect(activation).toMatchObject({
+      family: "activateAbility",
+      cardId: sourceId,
+      effectIndex: 0,
+    });
+    if (activation?.family !== "activateAbility") {
+      throw new Error("Expected the activated-ability candidate");
+    }
+
+    const command = candidateToCommand(activation);
+    expectSuccess(engine.doMove(command.move, asPlayerId(PLAYER_ONE), command.args));
+
+    expect(p1.getHand()).toHaveLength(1);
+    expect(p1.getCardsInZone("deck")).toHaveLength(1);
   });
 });
 

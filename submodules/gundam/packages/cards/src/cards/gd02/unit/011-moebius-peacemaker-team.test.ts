@@ -46,23 +46,23 @@ describe("Moebius (Peacemaker Team) (GD02-011)", () => {
     expect(effect.cost?.destroySelf).toBe(true);
   });
 
-  it("pay cost end-to-end: activating the ability sends Moebius to p1's trash", () => {
-    // Focused cost-payment check. We don't need the 6-damage directive to
-    // resolve (that requires a battling Base/Shield to exist and targets
-    // to be pre-committed), only that the `destroySelf` cost is paid
-    // up-front in `payCost` and Moebius leaves the battle area. The
-    // damage directive will halt awaiting target selection — expected;
-    // the cost has already been paid by then, which is the contract.
-    const engine = GundamTestEngine.create({ play: [gd02MoebiusPeacemakerTeam011] }, { deck: 4 });
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const moebiusId = p1.getCardsInZone("battleArea")[0]!;
-
-    expectSuccess(p1.activateAbility(gd02MoebiusPeacemakerTeam011, 0, {}));
-
-    expect(engine.getCardsInZone({ zone: "battleArea", playerId: PLAYER_ONE })).not.toContain(
-      moebiusId,
+  it("destroys itself as the Action cost and deals 6 damage to the Base it is battling", () => {
+    const engine = GundamTestEngine.create(
+      { play: [gd02MoebiusPeacemakerTeam011] },
+      { baseSection: [gd02Gwadan125] },
     );
-    expect(engine.getCardsInZone({ zone: "trash", playerId: PLAYER_ONE })).toContain(moebiusId);
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const moebiusId = p1.getCardsInZone("battleArea")[0]!;
+    const baseId = p2.getCardsInZone("baseSection")[0]!;
+
+    expectSuccess(p1.enterBattle(moebiusId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.activateAbility(moebiusId, 0, { targets: [baseId] }));
+
+    expect(p1.getCardsInZone("trash")).toContain(moebiusId);
+    expect(p2.getCardsInZone("trash")).toContain(baseId);
   });
 
   function allTargetableCards(

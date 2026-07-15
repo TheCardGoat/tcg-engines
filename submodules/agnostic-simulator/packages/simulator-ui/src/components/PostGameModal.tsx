@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import confetti from "canvas-confetti";
 import classes from "./PostGameModal.module.css";
 
@@ -81,7 +81,7 @@ export function PostGameModal({
   celebrationKey,
 }: PostGameModalProps) {
   const [activeSectionId, setActiveSectionId] = useState<string | null>(null);
-  const [celebratedKey, setCelebratedKey] = useState<string | null>(null);
+  const celebratedKeyRef = useRef<string | null>(null);
 
   const headline = useMemo(() => {
     if (outcome === "win") return "You win";
@@ -90,11 +90,18 @@ export function PostGameModal({
   }, [outcome]);
 
   useEffect(() => {
+    if (!open) return;
     if (outcome !== "win") return;
-    if (celebrationKey !== undefined && celebrationKey === celebratedKey) return;
-    setCelebratedKey(celebrationKey ?? "celebrated");
+    const key = celebrationKey ?? "celebrated";
+    if (key === celebratedKeyRef.current) return;
+    celebratedKeyRef.current = key;
     return fireWinConfetti();
-  }, [outcome, celebrationKey, celebratedKey]);
+  }, [open, outcome, celebrationKey]);
+
+  useEffect(() => {
+    if (open || celebrationKey !== undefined) return;
+    celebratedKeyRef.current = null;
+  }, [open, celebrationKey]);
 
   useEffect(() => {
     setActiveSectionId((current) => {

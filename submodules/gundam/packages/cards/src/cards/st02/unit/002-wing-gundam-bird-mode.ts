@@ -119,8 +119,7 @@ export const st02WingGundamBirdMode002: UnitCard = {
       directives: [
         {
           action: {
-            action: "placeResource",
-            resourceType: "EX",
+            action: "placeExResource",
             state: "active",
           },
         },

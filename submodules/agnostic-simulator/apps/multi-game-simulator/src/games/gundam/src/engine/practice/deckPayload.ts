@@ -1,5 +1,11 @@
 import { decodeDeckFromUrlParam } from "@tcg/game-page-contract";
-import { validateDeckList, type DeckList } from "@tcg/gundam-engine";
+import {
+  DEFAULT_GUNDAM_AUTOMATED_ACTION_STRATEGY_ID,
+  getGundamAutomatedActionStrategyOption,
+  validateDeckList,
+  type DeckList,
+  type GundamAutomatedActionStrategyId,
+} from "@tcg/gundam-engine";
 
 import {
   buildGundamCardCatalog,
@@ -9,7 +15,7 @@ import {
   type SampleDeckId,
 } from "../../data/sample-decks/index.ts";
 
-export type GundamPracticeStrategyId = "greedy-legal" | "pass-only";
+export type GundamPracticeStrategyId = GundamAutomatedActionStrategyId;
 
 export interface GundamPracticePayload {
   readonly playerDeck: DeckList;
@@ -30,7 +36,8 @@ export type GundamPracticePayloadResult =
 
 export function resolveGundamPracticePayload(search: URLSearchParams): GundamPracticePayloadResult {
   const opponentDeckId = readSampleDeckId(search.get("opponent")) ?? DEFAULT_DECK_ID;
-  const botStrategyId = readStrategyId(search.get("strategy")) ?? "greedy-legal";
+  const botStrategyId =
+    readStrategyId(search.get("strategy")) ?? DEFAULT_GUNDAM_AUTOMATED_ACTION_STRATEGY_ID;
   const botDeck = SAMPLE_DECKS[opponentDeckId];
   const encodedDeck = search.get("deck");
 
@@ -112,7 +119,9 @@ function readSampleDeckId(value: string | null): SampleDeckId | null {
 }
 
 function readStrategyId(value: string | null): GundamPracticeStrategyId | null {
-  return value === "greedy-legal" || value === "pass-only" ? value : null;
+  return value && getGundamAutomatedActionStrategyOption(value)
+    ? (value as GundamPracticeStrategyId)
+    : null;
 }
 
 function isDeckList(value: unknown): value is DeckList {

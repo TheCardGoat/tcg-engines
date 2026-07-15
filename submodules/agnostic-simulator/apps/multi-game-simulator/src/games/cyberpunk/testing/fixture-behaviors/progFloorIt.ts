@@ -10,7 +10,7 @@ import {
 export const progFloorItBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "progFloorIt",
   label: "Floor It - spent units to bounce",
-  references: ["packages/engine/src/cards/alpha/programs/floor-it.test.ts"],
+  references: ["packages/engine/src/cards/welcometonightcityretail/programs/floor-it.test.ts"],
   async run(pom) {
     const rivalTarget = await pom.getCardInZoneByDefinitionId(
       "field",

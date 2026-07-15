@@ -30,6 +30,7 @@
   "devDependencies": {
     "@tcg/typescript-config": "link:../typescript-config",
     "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
     "vitest": "catalog:"
   }
 }

@@ -1,83 +1,86 @@
-/**
- * A Show of Resolve (GD01-100) — card behavior tests
- *
- * Effect: 【Main】Draw 2.
- * Level 4, cost 3, blue, no burst, no pilot.
- */
-
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
-  expectSuccess,
-  expectFailure,
+  PLAYER_TWO,
   activeResources,
-  expectCardInTrash,
+  createMockCommand,
+  expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd01AShowOfResolve100 } from "./100-a-show-of-resolve.ts";
 
 describe("A Show of Resolve (GD01-100)", () => {
-  describe("【Main】Draw 2.", () => {
-    it("draws 2 cards from deck to hand", () => {
-      const engine = GundamTestEngine.create({
-        hand: [gd01AShowOfResolve100],
-        resourceArea: activeResources(5),
-        deck: 5,
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const handBefore = p1.getHand().length;
-      const deckBefore = p1.getCardsInZone("deck").length;
-
-      expectSuccess(p1.playCommand(gd01AShowOfResolve100));
-
-      const handAfter = p1.getHand().length;
-      const deckAfter = p1.getCardsInZone("deck").length;
-      // Hand: lost command card (-1), drew 2 (+2) = net +1
-      expect(handAfter).toBe(handBefore + 1);
-      expect(deckAfter).toBe(deckBefore - 2);
+  it("【Main】 draws 2 and moves the resolved Command to trash", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd01AShowOfResolve100],
+      resourceArea: activeResources(4),
+      deck: 5,
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const commandId = p1.getHand()[0]!;
+    const handBefore = p1.getHand().length;
+    const deckBefore = p1.getBoardView().players[PLAYER_ONE]!.deckCount;
 
-    it("moves the command card to trash after resolution", () => {
-      const engine = GundamTestEngine.create({
-        hand: [gd01AShowOfResolve100],
-        resourceArea: activeResources(5),
-        deck: 5,
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const cmdId = p1.getHand()[0]!;
+    expectSuccess(p1.playCommand(commandId));
 
-      expectSuccess(p1.playCommand(gd01AShowOfResolve100));
+    expect(p1.getHand()).toHaveLength(handBefore + 1);
+    expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(deckBefore - 2);
+    expect(p1.getCardZone(commandId)).toBe(`trash:${PLAYER_ONE}`);
+  });
 
-      expectCardInTrash(engine, cmdId, p1.playerId);
+  it("cannot be played in a legally reached Action step", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd01AShowOfResolve100],
+      resourceArea: activeResources(4),
+      deck: 5,
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
 
-    it("cannot be played during action-phase (timing is main only)", () => {
-      const engine = GundamTestEngine.create({
-        hand: [gd01AShowOfResolve100],
-        resourceArea: activeResources(5),
-        deck: 5,
-      });
-      engine.setPhase("end-phase");
-      engine.setStep("action-step");
-      const p1 = engine.asPlayer(PLAYER_ONE);
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
 
-      expectFailure(p1.playCommand(gd01AShowOfResolve100), "WRONG_TIMING");
+    expectFailure(p1.playCommand(gd01AShowOfResolve100), "WRONG_TIMING");
+    expect(p1.getHand()).toHaveLength(1);
+  });
+
+  it("cannot be played below its printed Lv.4 requirement", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd01AShowOfResolve100],
+      resourceArea: activeResources(3),
+      deck: 5,
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
 
-    it("cannot be played without enough active resources", () => {
-      // Level 4 requires 4 cards in resourceArea, cost 3 requires 3 active.
-      // Provide 4 resources but exhaust 2 → only 2 active < 3 cost.
-      const res = activeResources(4);
-      res[0]!.exhausted = true;
-      res[1]!.exhausted = true;
-      const engine = GundamTestEngine.create({
-        hand: [gd01AShowOfResolve100],
-        resourceArea: res,
-        deck: 5,
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
+    expectFailure(p1.playCommand(gd01AShowOfResolve100), "INSUFFICIENT_RESOURCE_LEVEL");
+    expect(p1.getCardZone(gd01AShowOfResolve100)).toBe(`hand:${PLAYER_ONE}`);
+  });
 
-      expectFailure(p1.playCommand(gd01AShowOfResolve100), "INSUFFICIENT_RESOURCES");
+  it("cannot pay its printed cost after a legal setup leaves only 2 active Resources", () => {
+    const setup = createMockCommand({
+      name: "Resource Setup",
+      level: 0,
+      cost: 2,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [],
+          sourceText: "【Main】Do nothing.",
+        },
+      ],
     });
+    const engine = GundamTestEngine.create({
+      hand: [setup, gd01AShowOfResolve100],
+      resourceArea: activeResources(4),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [setupId, commandId] = p1.getHand();
+
+    expectSuccess(p1.playCommand(setupId!));
+    expect(p1.getCardsInZone("resourceArea").filter((id) => !p1.isExhausted(id))).toHaveLength(2);
+    expectFailure(p1.playCommand(commandId!), "INSUFFICIENT_RESOURCES");
+    expect(p1.getCardZone(commandId!)).toBe(`hand:${PLAYER_ONE}`);
   });
 });

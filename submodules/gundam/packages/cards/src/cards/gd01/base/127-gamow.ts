@@ -4,6 +4,8 @@ export const gd01Gamow127: BaseCard = {
   cardNumber: "GD01-127",
   name: "Gamow",
   type: "base",
+  battlefieldZones: ["space"],
+  color: "red",
   traits: ["zaft", "warship"],
   id: "GD01-127",
   canonicalId: "GD01-127",

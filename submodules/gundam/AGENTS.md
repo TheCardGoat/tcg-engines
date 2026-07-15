@@ -1,22 +1,18 @@
-# Gundam Simulator Submodule
+# Gundam Submodule
 
-This is the Gundam Card Game implementation: engine, cards, simulator, server
-adapter, docs, and bot tooling.
-
-Production entry points:
-
-- Platform pages: `https://tcg.online/gundam/*`
-- Mounted simulator: `https://tcg.online/gundam/simulator`
+This is the Gundam Card Game implementation: engine, cards, server adapter,
+docs, and bot tooling. The browser simulator lives in `../agnostic-simulator`.
 
 Before rules-facing work, load
 `.agents/skills/gundam-tcg-rules/references/glossary.md`, then
 `.agents/skills/gundam-tcg-rules/SKILL.md`. Keep the glossary in context and
 use the skill index before opening the comprehensive rules. Use
-`.agents/skills/gundam-test-generation.md` when adding focused behavior tests.
+`.agents/skills/gundam-test-generation/SKILL.md` when adding focused behavior
+tests and `.agents/skills/gundam-cards/SKILL.md` for single-card work. Bot
+evaluation belongs to `.agents/skills/gundam-bot-bench/SKILL.md`.
 
-Platform runtime or shared simulator exposure should map Gundam concepts
-through `../agnostic-simulator` contracts/adapters. Keep Gundam rules, cards,
-engine semantics, and glossary-native wording inside this submodule.
+Keep Gundam rules, cards, engine semantics, and glossary-native wording inside
+this submodule. The parent guide owns cross-workspace adapter and route rules.
 
 ## Where To Look
 
@@ -45,9 +41,8 @@ engine semantics, and glossary-native wording inside this submodule.
 
 ## Agent Backpressure Gates
 
-Use the root `/backpressured` command for long-running Gundam work. Load the
-Gundam rules glossary and skill before rules-facing edits, and keep the local
-architecture docs in scope for package-boundary decisions.
+Use the root `/backpressured` command for long-running Gundam work and keep the
+local architecture docs in scope for package-boundary decisions.
 
 - Card data behavior: add or update the sibling card/engine fixture before
   changing broad primitives.
@@ -70,5 +65,3 @@ when the work is done.
 - Prefer the injected clock over `Date.now()` for new match logic so replays
   and tests stay deterministic.
 - All match-side-effect logs go through `GameLogger`.
-- For non-trivial changes, add a short plan under `docs/exec-plans/active/`
-  before coding and move it to `completed/` when done.

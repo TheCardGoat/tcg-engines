@@ -46,7 +46,7 @@ import type { TargetResolutionContext } from "../../../runtime/target-dsl.ts";
 
 type Phase = "main-phase" | "battle-phase" | "end-phase";
 
-function isActionTiming(phase: string, step: string | undefined): boolean {
+function isActionTiming(phase: string | undefined, step: string | undefined): boolean {
   return (phase === "battle-phase" || phase === "end-phase") && step === "action-step";
 }
 
@@ -460,10 +460,7 @@ export const playCommand: GundamMoveDefinition<"playCommand"> = {
     // Rule 9-4-1: acting during action-step resets consecutive passes.
     // Fires on activation (when the player played the card), not on
     // effect resolution.
-    if (
-      framework.state.status.phase === "end-phase" &&
-      framework.state.status.step === "action-step"
-    ) {
+    if (isActionTiming(framework.state.status.phase, framework.state.status.step)) {
       resetActionStepOnAction(playerId, framework);
     }
   },

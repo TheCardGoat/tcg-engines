@@ -12,19 +12,21 @@ export const exrpExResource003: ResourceCard = {
     {
       id: "EXRP-003",
       artId: "EXRP-003",
-      setCode: "T",
+      setCode: "EXRP",
       collectorNumber: "EXRP-003",
       cardNumber: "EXRP-003",
       set: {
-        code: "T",
-        name: "Token Cards",
+        code: "EXRP",
+        name: "EX Resources",
       },
       rarity: "common",
       finish: "standard",
-      imageUrl: "",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/exrp/EXRP-003.webp",
     },
   ],
   level: 0,
+  effect:
+    "(At the start of the game, the second-turn player places 1 active EX Resource into their resource area.)\n(Rest an EX Resource then exile it from the game when paying a cost.)",
   keywordEffects: [],
   rarity: "common",
 };

@@ -45,13 +45,12 @@ export const SUPPORTER_PERK_CONFIG = {
 } as const satisfies Record<SupporterPerkTier, SupporterPerkConfig>;
 
 export const SUPPORTER_PERK_TIER_ALIASES = {
-  tier1: "tier2",
   tier2: "tier2",
   tier3: "tier3",
   tier4: "tier4",
   tier5: "tier4",
   tier6: "tier4",
-} as const satisfies Record<Exclude<SubscriptionTier, "free">, SupporterPerkTier>;
+} as const satisfies Partial<Record<Exclude<SubscriptionTier, "free">, SupporterPerkTier>>;
 
 export const ATELIER_INKMARK_PRICE_ANCHORS = {
   permanentLegendaryInkmarks: 50,

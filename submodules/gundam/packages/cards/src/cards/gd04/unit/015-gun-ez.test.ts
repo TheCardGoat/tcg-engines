@@ -25,8 +25,8 @@ describe("Gun EZ (GD04-015)", () => {
 
     expectSuccess(p1.deployUnit(gd04GunEz015, { targets: [friendlyId!, enemyId!] }));
 
-    expect(engine.getG().exhausted[friendlyId!]).toBe(true);
-    expect(engine.getG().exhausted[enemyId!]).toBe(true);
+    expect(p1.isExhausted(friendlyId!)).toBe(true);
+    expect(p2.isExhausted(enemyId!)).toBe(true);
   });
 
   it("rejects a friendly Unit without the (League Militaire) trait", () => {

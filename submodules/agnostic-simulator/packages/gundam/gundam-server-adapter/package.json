@@ -32,7 +32,8 @@
     "@tcg/gundam-types": "link:../../../../gundam/packages/types",
     "@tcg/typescript-config": "link:../../typescript-config",
     "@types/bun": "^1.3.9",
-    "@types/node": "^22.13.4"
+    "@types/node": "^22.13.4",
+    "@typescript/native": "catalog:"
   },
   "peerDependencies": {
     "@tcg/gundam-cards": "*",

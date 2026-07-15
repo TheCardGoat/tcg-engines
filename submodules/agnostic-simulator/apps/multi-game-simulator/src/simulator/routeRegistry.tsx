@@ -17,7 +17,7 @@ import { WebviewPracticePage } from "../games/cyberpunk/pages/WebviewPractice.pa
 import { GundamSimulatorProviders } from "../games/gundam/App";
 import { BotBenchUiPage } from "../games/gundam/pages/BotBenchUi.page";
 import { BotVsBotPage } from "../games/gundam/pages/BotVsBot.page";
-import { GundamFixtureIndexPage } from "../games/gundam/pages/FixtureRoutes.page";
+import { GundamFixtureIndexPage, GundamHomePage } from "../games/gundam/pages/FixtureRoutes.page";
 import { LiveMatchLandingPage as GundamLiveMatchLandingPage } from "../games/gundam/pages/LiveMatchLanding.page";
 import { LiveMatchPage as GundamLiveMatchPage } from "../games/gundam/pages/LiveMatch.page";
 import { PracticePage as GundamPracticePage } from "../games/gundam/pages/Practice.page";
@@ -85,7 +85,7 @@ const ROUTE_REGISTRY: Record<RegisteredRouteGame, SimulatorRouteRegistration> = 
   gundam: {
     Providers: GundamSimulatorProviders,
     pages: {
-      "game-index": VsAiPage,
+      "game-index": GundamHomePage,
       "play-practice": GundamPracticePage,
       "practice-vs-ai": GundamPracticePage,
       tests: GundamFixtureIndexPage,

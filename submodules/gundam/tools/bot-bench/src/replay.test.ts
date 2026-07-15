@@ -93,6 +93,8 @@ describe("bot-bench regression classification", () => {
         avgElapsedMs: 0,
         terminationDistribution: {
           "game-won": 0,
+          "automation-concession": 0,
+          "repeated-state": 0,
           "max-actions-exceeded": 1,
           "concede-failed": 0,
         },

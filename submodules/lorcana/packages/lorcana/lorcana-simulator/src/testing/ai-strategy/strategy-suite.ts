@@ -1630,10 +1630,13 @@ function runStrategyMatch(
     });
     actionCount += 1;
 
-    if (result.fallbackTaken === "concede" || server.getWinner()) {
-      if (result.fallbackTaken === "concede") {
-        deadlockConcedeCount += 1;
-      }
+    if (result.fallbackTaken === "concede") {
+      deadlockConcedeCount += 1;
+      endReason = "automation-concession";
+      break;
+    }
+
+    if (server.getWinner()) {
       pendingDeadlock = false;
       continue;
     }
@@ -1650,8 +1653,8 @@ function runStrategyMatch(
 
     if (deadlockResolution.conceded) {
       deadlockConcedeCount += 1;
-      pendingDeadlock = false;
-      continue;
+      endReason = "repeated-state-deadlock";
+      break;
     }
 
     pendingDeadlock = observation.repeatedStateDeadlock;

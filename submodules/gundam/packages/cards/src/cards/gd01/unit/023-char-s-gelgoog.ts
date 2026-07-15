@@ -4,6 +4,7 @@ export const gd01CharSGelgoog023: UnitCard = {
   cardNumber: "GD01-023",
   name: "Char's Gelgoog",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "green",
   traits: ["zeon"],
   id: "GD01-023",

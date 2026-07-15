@@ -70,7 +70,6 @@ export function fingerprint(state: MatchState): string {
   const parts: string[] = [];
 
   // Core context
-  parts.push(`sid:${state.ctx._stateID}`);
   parts.push(`p:${state.ctx.status.phase ?? ""}`);
   parts.push(`s:${state.ctx.status.step ?? ""}`);
   parts.push(`t:${state.ctx.status.turn}`);

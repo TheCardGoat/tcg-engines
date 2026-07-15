@@ -267,6 +267,15 @@ export function getEffectiveKeywords(state: MatchState, cardId: string): string[
   return getEffectiveRules(state, cardId).filter(isKeywordRule);
 }
 
+export function isReadyFieldBlocker(state: MatchState, cardId: string): boolean {
+  const card = state.G.cardIndex[cardId];
+  if (!card || card.zone !== "field" || card.meta.spent) return false;
+
+  const definition = defOf(card);
+  const isFieldUnit = definition.type === "unit" || definition.keywords.includes("goSolo");
+  return isFieldUnit && getEffectiveRules(state, cardId).includes("blocker");
+}
+
 export function markDefeatAtEndOfTurnIfAttacked(state: MatchState, cardId: CardInstanceId): void {
   for (const effect of state.G.activeEffects) {
     if (

@@ -95,8 +95,12 @@ export const st02ZechsMerquise011: PilotCard = {
     {
       type: "triggered",
       activation: {
-        timing: ["destroyed"],
-        conditions: [{ type: "duringLink" }],
+        timing: ["onDestroyByBattle"],
+        conditions: [
+          { type: "duringLink" },
+          { type: "isTurn", whose: "friendly" },
+          { type: "eventCardIsSelf" },
+        ],
       },
       directives: [
         {

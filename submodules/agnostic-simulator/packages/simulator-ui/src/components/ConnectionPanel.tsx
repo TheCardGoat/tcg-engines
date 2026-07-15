@@ -22,9 +22,16 @@ export interface ConnectionPanelProps {
       connectionId?: string;
       socketId?: string;
       authModeLabel?: string;
+      authenticated?: boolean;
+      authStatus?: "ok" | "refreshing" | "failed";
+      authFailureReason?: string;
       reconnectAttempts?: number;
       disconnectCount?: number;
       latencyMs?: number;
+      lastPingAt?: string;
+      lastPongAt?: string;
+      lastHeartbeatSentAt?: string;
+      lastHeartbeatAckAt?: string;
     };
     presence?: ReadonlyArray<{
       side: "player" | "opponent";
@@ -77,6 +84,8 @@ function ConnectionPopover({
   const popoverRef = useRef<HTMLDivElement>(null);
   const status = side.connection?.status ?? "disconnected";
   const latencyMs = side.connection?.latencyMs ?? diagnostic?.connection?.latencyMs;
+  const lastHeartbeatAt =
+    diagnostic?.connection?.lastHeartbeatAckAt ?? diagnostic?.connection?.lastHeartbeatSentAt;
 
   const payload = useMemo(
     () => ({
@@ -84,11 +93,18 @@ function ConnectionPopover({
         connectionId: diagnostic?.connection?.connectionId,
         socketId: diagnostic?.connection?.socketId,
         authModeLabel: diagnostic?.connection?.authModeLabel,
+        authenticated: diagnostic?.connection?.authenticated,
+        authStatus: diagnostic?.connection?.authStatus,
+        authFailureReason: diagnostic?.connection?.authFailureReason,
         reconnectAttempts:
           diagnostic?.connection?.reconnectAttempts ?? side.connection?.disconnectCount ?? 0,
         disconnectCount:
           diagnostic?.connection?.disconnectCount ?? side.connection?.disconnectCount ?? 0,
         latencyMs,
+        lastPingAt: diagnostic?.connection?.lastPingAt,
+        lastPongAt: diagnostic?.connection?.lastPongAt,
+        lastHeartbeatSentAt: diagnostic?.connection?.lastHeartbeatSentAt,
+        lastHeartbeatAckAt: diagnostic?.connection?.lastHeartbeatAckAt,
       },
       presence: diagnostic?.presence ?? [],
       events: diagnostic?.events ?? [],
@@ -153,6 +169,18 @@ function ConnectionPopover({
               </dd>
             </div>
             <div className={classes.metric}>
+              <dt>Heartbeat</dt>
+              <dd title={lastHeartbeatAt ?? "Waiting for heartbeat"}>
+                {formatAge(lastHeartbeatAt)}
+              </dd>
+            </div>
+            <div className={classes.metric}>
+              <dt>Auth</dt>
+              <dd title={formatAuthDetail(diagnostic?.connection)}>
+                {formatAuthStatus(diagnostic?.connection)}
+              </dd>
+            </div>
+            <div className={classes.metric}>
               <dt>Reconnects</dt>
               <dd>{payload.connection.reconnectAttempts}</dd>
             </div>
@@ -175,6 +203,26 @@ function ConnectionPopover({
               <dt>Socket</dt>
               <dd title={diagnostic?.connection?.socketId ?? "None"}>
                 {diagnostic?.connection?.socketId ?? "None"}
+              </dd>
+              <dt>Last heartbeat sent</dt>
+              <dd title={diagnostic?.connection?.lastHeartbeatSentAt ?? "None"}>
+                {formatTimestamp(diagnostic?.connection?.lastHeartbeatSentAt)}
+              </dd>
+              <dt>Last heartbeat ack</dt>
+              <dd title={diagnostic?.connection?.lastHeartbeatAckAt ?? "None"}>
+                {formatTimestamp(diagnostic?.connection?.lastHeartbeatAckAt)}
+              </dd>
+              <dt>Last ping</dt>
+              <dd title={diagnostic?.connection?.lastPingAt ?? "None"}>
+                {formatTimestamp(diagnostic?.connection?.lastPingAt)}
+              </dd>
+              <dt>Last pong</dt>
+              <dd title={diagnostic?.connection?.lastPongAt ?? "None"}>
+                {formatTimestamp(diagnostic?.connection?.lastPongAt)}
+              </dd>
+              <dt>Auth reason</dt>
+              <dd title={diagnostic?.connection?.authFailureReason ?? "None"}>
+                {diagnostic?.connection?.authFailureReason ?? "None"}
               </dd>
               {diagnostic?.events && diagnostic.events.length > 0 ? (
                 <>
@@ -267,4 +315,37 @@ function latencyQuality(latencyMs: number | undefined): string {
 
 function formatLatency(latencyMs: number | undefined): string {
   return typeof latencyMs === "number" ? `${latencyMs}ms` : "Measuring";
+}
+
+function formatAge(value: string | undefined): string {
+  if (!value) return "Waiting";
+  const timestamp = Date.parse(value);
+  if (!Number.isFinite(timestamp)) return "Recorded";
+  const ageMs = Math.max(0, Date.now() - timestamp);
+  if (ageMs < 1_000) return "Now";
+  if (ageMs < 60_000) return `${Math.round(ageMs / 1_000)}s ago`;
+  return `${Math.round(ageMs / 60_000)}m ago`;
+}
+
+function formatTimestamp(value: string | undefined): string {
+  return value ?? "None";
+}
+
+type DiagnosticConnection = NonNullable<ConnectionPanelProps["diagnostic"]>["connection"];
+
+function formatAuthStatus(connection: DiagnosticConnection): string {
+  if (!connection) return "Unknown";
+  if (connection.authStatus === "failed") return "Failed";
+  if (connection.authStatus === "refreshing") return "Refreshing";
+  if (connection.authenticated === true) return "Authed";
+  if (connection.authenticated === false) return "Anon";
+  return "Unknown";
+}
+
+function formatAuthDetail(connection: DiagnosticConnection): string {
+  if (!connection) return "Unknown";
+  const status = connection.authStatus ?? "unknown";
+  const mode = connection.authModeLabel ?? "unknown mode";
+  const reason = connection.authFailureReason ? ` (${connection.authFailureReason})` : "";
+  return `${status} · ${mode}${reason}`;
 }

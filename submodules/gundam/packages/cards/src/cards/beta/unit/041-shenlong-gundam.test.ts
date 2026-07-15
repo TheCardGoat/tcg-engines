@@ -5,8 +5,6 @@ import {
   PLAYER_TWO,
   expectSuccess,
   createMockUnit,
-  getDamageCounter,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { betaShenlongGundam041 } from "./041-shenlong-gundam.ts";
 describe("Shenlong Gundam (GD01-041)", () => {
@@ -15,19 +13,19 @@ describe("Shenlong Gundam (GD01-041)", () => {
     const shieldSeed = createMockUnit({ ap: 1, hp: 5 });
     const engine = GundamTestEngine.create(
       { play: [betaShenlongGundam041] },
-      { play: [defender], deck: [shieldSeed] },
+      { play: [{ card: defender, exhausted: true }], shieldArea: [shieldSeed] },
     );
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const shenlongId = p1.getCardsInZone("battleArea")[0]!;
     const defenderId = p2.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
 
     expectSuccess(p1.enterBattle(shenlongId, defenderId));
     expectSuccess(p2.passBlock());
     expectSuccess(p2.passBattleAction());
     expectSuccess(p1.passBattleAction());
 
-    expect(getDamageCounter(engine, shieldId!)).toBe(3);
+    expect(p2.getCardZone(shieldId)).toBe(`trash:${PLAYER_TWO}`);
   });
 });

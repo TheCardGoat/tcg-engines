@@ -32,6 +32,11 @@ export function blockStepOnEnter(ctx: LifecycleContext): void {
 
   const combat = g.turnMetadata.pendingCombat;
   if (!combat) return;
+  // When an 【Attack】 trigger halted for player input, the generic flow
+  // runner resumes by entering this step directly. Normalise the combat
+  // stage here so block-step endIf does not immediately skip the human's
+  // Blocker window.
+  combat.stage = "block-step";
 
   const playerIds = [...ctx.framework.state.playerIds] as string[];
   const standbyPlayer =

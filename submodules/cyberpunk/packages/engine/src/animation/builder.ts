@@ -20,6 +20,8 @@ interface ExitDecision {
 
 interface PreScan {
   exits: Map<CardInstanceId, ExitDecision>;
+  /** cardId -> destination for cards moved after a public reveal in this command. */
+  revealedDestinations: Map<CardInstanceId, CardZone>;
   /** gearId -> hostId for cards being attached in this command. */
   attached: Map<CardInstanceId, CardInstanceId>;
   /** cardIds with a cardPlayed event in this command — used to emit cardLand. */
@@ -39,11 +41,17 @@ export interface BuildAnimationScriptContext {
 function prescan(events: ReadonlyArray<GameEvent>): PreScan {
   const exits = new Map<CardInstanceId, ExitDecision>();
   const moves = new Map<CardInstanceId, { fromZone: CardZone; toZone: CardZone }>();
+  const revealed = new Set<CardInstanceId>();
+  const revealedDestinations = new Map<CardInstanceId, CardZone>();
   const attached = new Map<CardInstanceId, CardInstanceId>();
   const played = new Set<CardInstanceId>();
   const stolenGigs = new Set<GigDieId>();
   for (const ev of events) {
-    if (ev.type === "cardDefeated") {
+    if (ev.type === "cardsRevealed") {
+      for (const cardId of ev.cardIds) {
+        revealed.add(cardId);
+      }
+    } else if (ev.type === "cardDefeated") {
       const move = moves.get(ev.cardId);
       exits.set(ev.cardId, {
         reason: "defeated",
@@ -61,6 +69,9 @@ function prescan(events: ReadonlyArray<GameEvent>): PreScan {
       });
     } else if (ev.type === "cardMoved") {
       moves.set(ev.cardId, { fromZone: ev.fromZone, toZone: ev.toZone });
+      if (revealed.has(ev.cardId) && ev.fromZone === "deck") {
+        revealedDestinations.set(ev.cardId, ev.toZone);
+      }
       const exit = exits.get(ev.cardId);
       if (exit) {
         exits.set(ev.cardId, { ...exit, fromZone: ev.fromZone, toZone: ev.toZone });
@@ -73,7 +84,7 @@ function prescan(events: ReadonlyArray<GameEvent>): PreScan {
       stolenGigs.add(ev.dieId);
     }
   }
-  return { exits, attached, played, stolenGigs };
+  return { exits, revealedDestinations, attached, played, stolenGigs };
 }
 
 /**
@@ -188,6 +199,10 @@ export function buildAnimationScript(
     const ev = events[eventIndex]!;
     switch (ev.type) {
       case "cardMoved": {
+        if (scan.revealedDestinations.has(ev.cardId) && ev.fromZone === "deck") {
+          // Suppressed — the cardReveal step owns the reveal + destination settle.
+          break;
+        }
         if (scan.exits.has(ev.cardId)) {
           // Suppressed — a cardExit step will cover this card.
           break;
@@ -281,6 +296,28 @@ export function buildAnimationScript(
           playerId: ev.playerId,
         });
         advance(duration);
+        break;
+      }
+      case "cardsRevealed": {
+        if (ev.cardIds.length === 0) break;
+        const stagger = ANIMATION_DURATIONS_MS.drawStaggerMs;
+        const each = ANIMATION_DURATIONS_MS.cardReveal;
+        for (let i = 0; i < ev.cardIds.length; i++) {
+          const cardId = ev.cardIds[i]!;
+          const destination = scan.revealedDestinations.get(cardId);
+          steps.push({
+            kind: "cardReveal",
+            id: id(),
+            startMs: cursor + i * stagger,
+            durationMs: each,
+            reason: "cardsRevealed",
+            cardId,
+            fromZone: "deck",
+            ...(destination ? { toZone: destination } : {}),
+            playerId: ev.playerId,
+          });
+        }
+        advance((ev.cardIds.length - 1) * stagger + each);
         break;
       }
       case "cardsDrawn": {

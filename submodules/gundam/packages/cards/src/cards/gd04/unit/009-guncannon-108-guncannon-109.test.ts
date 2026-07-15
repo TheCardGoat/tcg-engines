@@ -27,13 +27,16 @@ describe("Guncannon (108) & Guncannon (109) (GD04-009)", () => {
     const p1 = engine.asPlayer(PLAYER_ONE);
     const [guncannonId, otherWbtId] = p1.getCardsInZone("battleArea");
 
-    expect(engine.getG().exhausted[otherWbtId!]).toBe(true);
+    expect(p1.isExhausted(otherWbtId!)).toBe(true);
 
     expectSuccess(p1.assignPilot(kai, guncannonId!));
-    while (engine.getPendingChoice()) {
-      expectSuccess(p1.resolveEffect({ targets: [otherWbtId!] }));
-    }
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      sourceCardId: guncannonId,
+      directiveIndex: 0,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [otherWbtId!] }));
 
-    expect(engine.getG().exhausted[otherWbtId!]).toBeFalsy();
+    expect(p1.isExhausted(otherWbtId!)).toBe(false);
   });
 });

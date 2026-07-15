@@ -10,6 +10,7 @@
 }
 
 .panelEmbedded {
+  gap: 6px;
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -20,6 +21,11 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  min-width: 0;
+}
+
+.panelEmbedded .row {
+  gap: 0.4rem;
 }
 
 .popoverWrap {
@@ -37,6 +43,11 @@
   padding: 0;
   cursor: pointer;
   background: var(--simulator-muted, #9ca3af);
+}
+
+.panelEmbedded .dot {
+  width: 11px;
+  height: 11px;
 }
 
 .dot:focus-visible {
@@ -73,6 +84,17 @@
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--simulator-text, #111827);
+}
+
+.panelEmbedded .label {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--simulator-muted, rgb(210 232 238 / 66%));
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .popover {

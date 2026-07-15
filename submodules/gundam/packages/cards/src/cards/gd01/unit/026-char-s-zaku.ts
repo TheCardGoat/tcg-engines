@@ -4,6 +4,7 @@ export const gd01CharSZaku026: UnitCard = {
   cardNumber: "GD01-026",
   name: "Char's Zaku Ⅱ",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "green",
   traits: ["zeon"],
   id: "GD01-026",
@@ -75,6 +76,7 @@ export const gd01CharSZaku026: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 2,
+  linkCondition: "[Char Aznable]",
   effect:
     "【During Pair】【Destroyed】Deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.<br>",
   effects: [

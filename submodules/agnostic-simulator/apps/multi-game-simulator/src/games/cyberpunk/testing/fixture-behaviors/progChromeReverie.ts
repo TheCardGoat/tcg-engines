@@ -13,7 +13,9 @@ import {
 export const progChromeReverieBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "progChromeReverie",
   label: "Chrome Reverie - cant-attack target and free legend call",
-  references: ["packages/engine/src/cards/spoiler/programs/chrome-reverie.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/programs/chrome-reverie.test.ts",
+  ],
   async run(pom) {
     const program = expectDefined(
       "Chrome Reverie in hand",

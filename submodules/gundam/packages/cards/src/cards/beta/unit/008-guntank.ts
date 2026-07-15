@@ -4,6 +4,7 @@ export const betaGuntank008: UnitCard = {
   cardNumber: "GD01-008",
   name: "Guntank",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD01-008_p1",

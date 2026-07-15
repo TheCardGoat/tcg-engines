@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaFloorIt,
-  alphaRebootOptics,
-  alphaRuthlessLowlife,
-  alphaCorpoSecurity,
-  alphaSwordwiseHuscle,
-  alphaMantisBlades,
+  welcomeToNightCityRetailFloorIt,
+  welcomeToNightCityRetailRebootOptics,
+  welcomeToNightCityRetailSketchyRipper,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailMantisBlades,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../src/testing/index.ts";
 
@@ -16,36 +16,38 @@ describe("Main Phase", () => {
     describe("Successful Sell", () => {
       it("moves card from hand to eddieArea", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaFloorIt],
+          hand: [welcomeToNightCityRetailFloorIt],
           eddies: 0,
         });
 
-        engine.sellCard(alphaFloorIt);
+        engine.sellCard(welcomeToNightCityRetailFloorIt);
 
         expect(engine.getCardsInZone("eddieArea", P1)).toHaveLength(1);
-        expect(engine.getCardsInZone("eddieArea", P1)[0]!.definitionId).toBe(alphaFloorIt.id);
+        expect(engine.getCardsInZone("eddieArea", P1)[0]!.definitionId).toBe(
+          welcomeToNightCityRetailFloorIt.id,
+        );
       });
 
       it("removes card from hand", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaFloorIt, alphaRuthlessLowlife],
+          hand: [welcomeToNightCityRetailFloorIt, welcomeToNightCityRetailSketchyRipper],
           eddies: 0,
         });
 
-        engine.sellCard(alphaFloorIt);
+        engine.sellCard(welcomeToNightCityRetailFloorIt);
 
         const hand = engine.getCardsInZone("hand", P1);
         expect(hand).toHaveLength(1);
-        expect(hand[0]!.definitionId).toBe(alphaRuthlessLowlife.id);
+        expect(hand[0]!.definitionId).toBe(welcomeToNightCityRetailSketchyRipper.id);
       });
 
       it("emits cardSold event", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaFloorIt],
+          hand: [welcomeToNightCityRetailFloorIt],
           eddies: 0,
         });
 
-        engine.sellCard(alphaFloorIt);
+        engine.sellCard(welcomeToNightCityRetailFloorIt);
 
         const events = engine.getEvents("cardSold");
         expect(events).toHaveLength(1);
@@ -54,27 +56,27 @@ describe("Main Phase", () => {
 
       it("adds one available eddie", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaFloorIt],
+          hand: [welcomeToNightCityRetailFloorIt],
           eddies: 0,
         });
 
-        engine.sellCard(alphaFloorIt);
+        engine.sellCard(welcomeToNightCityRetailFloorIt);
 
         expect(engine.getEddies(P1)).toBe(1);
       });
 
       it("sold card is only worth 1 eddie per turn", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaFloorIt, alphaRuthlessLowlife],
+          hand: [welcomeToNightCityRetailFloorIt, welcomeToNightCityRetailSketchyRipper],
           eddies: 0,
         });
 
         // Sell the card → 1 eddie available.
-        engine.sellCard(alphaFloorIt);
+        engine.sellCard(welcomeToNightCityRetailFloorIt);
         expect(engine.getEddies(P1)).toBe(1);
 
         // Play a card costing 1 eddie, spending the sold-card eddie.
-        engine.playCard(alphaRuthlessLowlife, { as: P1 });
+        engine.playCard(welcomeToNightCityRetailSketchyRipper, { as: P1 });
         expect(engine.getEddies(P1)).toBe(0);
 
         // End the turn.
@@ -89,13 +91,15 @@ describe("Main Phase", () => {
 
       it("prevents a second sell in the same turn", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaFloorIt, alphaRebootOptics],
+          hand: [welcomeToNightCityRetailFloorIt, welcomeToNightCityRetailRebootOptics],
           eddies: 0,
         });
 
-        engine.sellCard(alphaFloorIt);
+        engine.sellCard(welcomeToNightCityRetailFloorIt);
 
-        const failure = engine.expectFailure(() => engine.sellCard(alphaRebootOptics));
+        const failure = engine.expectFailure(() =>
+          engine.sellCard(welcomeToNightCityRetailRebootOptics),
+        );
         expect(failure.errorCode).toBe("ALREADY_SOLD");
       });
     });
@@ -103,34 +107,38 @@ describe("Main Phase", () => {
     describe("Restrictions", () => {
       it("cannot sell a card without sell tag", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaRuthlessLowlife],
+          hand: [welcomeToNightCityRetailSketchyRipper],
           eddies: 0,
         });
 
-        const failure = engine.expectFailure(() => engine.sellCard(alphaRuthlessLowlife));
+        const failure = engine.expectFailure(() =>
+          engine.sellCard(welcomeToNightCityRetailSketchyRipper),
+        );
         expect(failure.errorCode).toBe("NO_SELL_TAG");
       });
 
       it("cannot sell a card not in hand", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaRuthlessLowlife],
-          field: [alphaFloorIt],
+          hand: [welcomeToNightCityRetailSketchyRipper],
+          field: [welcomeToNightCityRetailFloorIt],
           eddies: 0,
         });
 
         const failure = engine.expectFailure(() =>
-          engine.sellCard(engine.getCard(alphaFloorIt, "field", P1)),
+          engine.sellCard(engine.getCard(welcomeToNightCityRetailFloorIt, "field", P1)),
         );
         expect(failure.errorCode).toBe("CARD_NOT_IN_HAND");
       });
 
       it("non-active player cannot sell", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { hand: [alphaRuthlessLowlife] },
-          { hand: [alphaFloorIt], eddies: 0 },
+          { hand: [welcomeToNightCityRetailSketchyRipper] },
+          { hand: [welcomeToNightCityRetailFloorIt], eddies: 0 },
         );
 
-        const failure = engine.expectFailure(() => engine.sellCard(alphaFloorIt, { as: P2 }));
+        const failure = engine.expectFailure(() =>
+          engine.sellCard(welcomeToNightCityRetailFloorIt, { as: P2 }),
+        );
         expect(failure.errorCode).toBe("NOT_YOUR_TURN");
       });
     });
@@ -251,47 +259,49 @@ describe("Main Phase", () => {
     describe("Playing a Unit", () => {
       it("moves unit from hand to field", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaRuthlessLowlife],
+          hand: [welcomeToNightCityRetailSketchyRipper],
           eddies: 10,
         });
 
-        engine.playCard(alphaRuthlessLowlife);
+        engine.playCard(welcomeToNightCityRetailSketchyRipper);
 
         expect(engine.getCardsInZone("field", P1)).toHaveLength(1);
-        expect(engine.getCardsInZone("field", P1)[0]!.definitionId).toBe(alphaRuthlessLowlife.id);
+        expect(engine.getCardsInZone("field", P1)[0]!.definitionId).toBe(
+          welcomeToNightCityRetailSketchyRipper.id,
+        );
       });
 
       it("deducts eddies equal to card cost", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaRuthlessLowlife],
+          hand: [welcomeToNightCityRetailSketchyRipper],
           eddies: 10,
         });
 
-        engine.playCard(alphaRuthlessLowlife);
+        engine.playCard(welcomeToNightCityRetailSketchyRipper);
 
-        // alphaRuthlessLowlife costs 2
+        // welcomeToNightCityRetailSketchyRipper costs 2
         expect(engine.getEddies(P1)).toBe(8);
       });
 
-      it("marks unit as playedThisTurn", () => {
+      it("marks unit as hasLag", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaRuthlessLowlife],
+          hand: [welcomeToNightCityRetailSketchyRipper],
           eddies: 10,
         });
 
-        engine.playCard(alphaRuthlessLowlife);
+        engine.playCard(welcomeToNightCityRetailSketchyRipper);
 
-        const card = engine.getCard(alphaRuthlessLowlife, "field", P1);
-        expect(card.meta.playedThisTurn).toBe(true);
+        const card = engine.getCard(welcomeToNightCityRetailSketchyRipper, "field", P1);
+        expect(card.meta.hasLag).toBe(true);
       });
 
       it("emits cardPlayed event with cost", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaRuthlessLowlife],
+          hand: [welcomeToNightCityRetailSketchyRipper],
           eddies: 10,
         });
 
-        engine.playCard(alphaRuthlessLowlife);
+        engine.playCard(welcomeToNightCityRetailSketchyRipper);
 
         const events = engine.getEvents("cardPlayed");
         expect(events).toHaveLength(1);
@@ -302,37 +312,38 @@ describe("Main Phase", () => {
     describe("Playing a Program", () => {
       it("moves program from hand to trash", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaFloorIt],
+          hand: [welcomeToNightCityRetailRebootOptics],
           eddies: 10,
         });
 
-        engine.playCard(alphaFloorIt);
+        engine.playCard(welcomeToNightCityRetailRebootOptics);
 
         expect(engine.getCardsInZone("hand", P1)).toHaveLength(0);
         expect(
-          engine.getCardsInZone("trash", P1).some((c) => c.definitionId === alphaFloorIt.id),
+          engine
+            .getCardsInZone("trash", P1)
+            .some((c) => c.definitionId === welcomeToNightCityRetailRebootOptics.id),
         ).toBe(true);
       });
 
       it("deducts eddies equal to card cost", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaFloorIt],
+          hand: [welcomeToNightCityRetailRebootOptics],
           eddies: 10,
         });
 
-        engine.playCard(alphaFloorIt);
+        engine.playCard(welcomeToNightCityRetailRebootOptics);
 
-        // alphaFloorIt costs 3
-        expect(engine.getEddies(P1)).toBe(7);
+        expect(engine.getEddies(P1)).toBe(10 - welcomeToNightCityRetailRebootOptics.cost);
       });
 
       it("emits cardPlayed event", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaFloorIt],
+          hand: [welcomeToNightCityRetailFloorIt],
           eddies: 10,
         });
 
-        engine.playCard(alphaFloorIt);
+        engine.playCard(welcomeToNightCityRetailFloorIt);
 
         expect(engine.getEvents("cardPlayed")).toHaveLength(1);
       });
@@ -341,49 +352,61 @@ describe("Main Phase", () => {
     describe("Playing a Gear", () => {
       it("moves gear from hand to field attached to a unit", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaMantisBlades],
-          field: [alphaRuthlessLowlife],
+          hand: [welcomeToNightCityRetailMantisBlades],
+          field: [welcomeToNightCityRetailSketchyRipper],
           eddies: 10,
         });
 
-        const hostId = engine.getCard(alphaRuthlessLowlife, "field", P1).instanceId;
-        const gearId = engine.findCardId(alphaMantisBlades, "hand", P1);
+        const hostId = engine.getCard(
+          welcomeToNightCityRetailSketchyRipper,
+          "field",
+          P1,
+        ).instanceId;
+        const gearId = engine.findCardId(welcomeToNightCityRetailMantisBlades, "hand", P1);
         const result = engine.executeMove("playCard", {
           args: { cardId: gearId as string, attachToId: hostId as string },
         });
         expect(result.success).toBe(true);
 
         expect(engine.getCardsInZone("field", P1)).toHaveLength(2);
-        const gear = engine.getCard(alphaMantisBlades, "field", P1);
+        const gear = engine.getCard(welcomeToNightCityRetailMantisBlades, "field", P1);
         expect(gear.meta.attachedToId).toBe(hostId);
       });
 
       it("deducts eddies equal to card cost", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaMantisBlades],
-          field: [alphaRuthlessLowlife],
+          hand: [welcomeToNightCityRetailMantisBlades],
+          field: [welcomeToNightCityRetailSketchyRipper],
           eddies: 10,
         });
 
-        const hostId = engine.getCard(alphaRuthlessLowlife, "field", P1).instanceId;
-        const gearId = engine.findCardId(alphaMantisBlades, "hand", P1);
+        const hostId = engine.getCard(
+          welcomeToNightCityRetailSketchyRipper,
+          "field",
+          P1,
+        ).instanceId;
+        const gearId = engine.findCardId(welcomeToNightCityRetailMantisBlades, "hand", P1);
         engine.executeMove("playCard", {
           args: { cardId: gearId as string, attachToId: hostId as string },
         });
 
-        // alphaMantisBlades costs 1
+        // welcomeToNightCityRetailMantisBlades costs 1
         expect(engine.getEddies(P1)).toBe(9);
       });
 
       it("emits cardPlayed event", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaMantisBlades],
-          field: [alphaRuthlessLowlife],
+          hand: [welcomeToNightCityRetailMantisBlades],
+          field: [welcomeToNightCityRetailSketchyRipper],
           eddies: 10,
         });
 
-        const hostId = engine.getCard(alphaRuthlessLowlife, "field", P1).instanceId;
-        const gearId = engine.findCardId(alphaMantisBlades, "hand", P1);
+        const hostId = engine.getCard(
+          welcomeToNightCityRetailSketchyRipper,
+          "field",
+          P1,
+        ).instanceId;
+        const gearId = engine.findCardId(welcomeToNightCityRetailMantisBlades, "hand", P1);
         engine.executeMove("playCard", {
           args: { cardId: gearId as string, attachToId: hostId as string },
         });
@@ -395,35 +418,39 @@ describe("Main Phase", () => {
     describe("Restrictions", () => {
       it("cannot play without enough eddies", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaSwordwiseHuscle],
+          hand: [welcomeToNightCityRetailSwordwiseHuscle],
           eddies: 1,
         });
         engine.spendAllLegends();
 
-        const failure = engine.expectFailure(() => engine.playCard(alphaSwordwiseHuscle));
+        const failure = engine.expectFailure(() =>
+          engine.playCard(welcomeToNightCityRetailSwordwiseHuscle),
+        );
         expect(failure.errorCode).toBe("INSUFFICIENT_EDDIES");
       });
 
       it("cannot play a card not in hand", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          hand: [alphaRuthlessLowlife],
-          field: [alphaCorpoSecurity],
+          hand: [welcomeToNightCityRetailSketchyRipper],
+          field: [welcomeToNightCityRetailCorpoSecurity],
           eddies: 10,
         });
 
         const failure = engine.expectFailure(() =>
-          engine.playCard(engine.getCard(alphaCorpoSecurity, "field", P1)),
+          engine.playCard(engine.getCard(welcomeToNightCityRetailCorpoSecurity, "field", P1)),
         );
         expect(failure.errorCode).toBe("CARD_NOT_IN_HAND");
       });
 
       it("non-active player cannot play", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
-          { hand: [alphaRuthlessLowlife] },
-          { hand: [alphaCorpoSecurity], eddies: 10 },
+          { hand: [welcomeToNightCityRetailSketchyRipper] },
+          { hand: [welcomeToNightCityRetailCorpoSecurity], eddies: 10 },
         );
 
-        const failure = engine.expectFailure(() => engine.playCard(alphaCorpoSecurity, { as: P2 }));
+        const failure = engine.expectFailure(() =>
+          engine.playCard(welcomeToNightCityRetailCorpoSecurity, { as: P2 }),
+        );
         expect(failure.errorCode).toBe("NOT_YOUR_TURN");
       });
     });
@@ -434,15 +461,15 @@ describe("Main Phase", () => {
   describe("Action Ordering", () => {
     it("can sell, call legend, and play cards in any order", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaFloorIt, alphaRuthlessLowlife],
+        hand: [welcomeToNightCityRetailFloorIt, welcomeToNightCityRetailSketchyRipper],
         eddies: 10,
       });
 
       // Play a unit first
-      engine.playCard(alphaRuthlessLowlife);
+      engine.playCard(welcomeToNightCityRetailSketchyRipper);
 
       // Then sell
-      engine.sellCard(alphaFloorIt);
+      engine.sellCard(welcomeToNightCityRetailFloorIt);
 
       // Then call legend
       const legend = engine.getFaceDownLegends(P1)[0]!;
@@ -455,12 +482,12 @@ describe("Main Phase", () => {
 
     it("can play multiple cards in a single turn", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife, alphaCorpoSecurity],
+        hand: [welcomeToNightCityRetailSketchyRipper, welcomeToNightCityRetailCorpoSecurity],
         eddies: 10,
       });
 
-      engine.playCard(alphaRuthlessLowlife);
-      engine.playCard(alphaCorpoSecurity);
+      engine.playCard(welcomeToNightCityRetailSketchyRipper);
+      engine.playCard(welcomeToNightCityRetailCorpoSecurity);
 
       expect(engine.getCardsInZone("field", P1)).toHaveLength(2);
       // 10 - 2 - 2 = 6
@@ -469,11 +496,11 @@ describe("Main Phase", () => {
 
     it("sell and call-legend are independent once-per-turn limits", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaFloorIt],
+        hand: [welcomeToNightCityRetailFloorIt],
         eddies: 10,
       });
 
-      engine.sellCard(alphaFloorIt);
+      engine.sellCard(welcomeToNightCityRetailFloorIt);
       const legend = engine.getFaceDownLegends(P1)[0]!;
       engine.callLegend(legend);
 

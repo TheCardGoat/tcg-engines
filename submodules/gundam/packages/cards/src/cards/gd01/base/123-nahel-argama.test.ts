@@ -1,64 +1,101 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  createMockResource,
   createMockUnit,
   expectSuccess,
-  asPlayerId,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd01NahelArgama123 } from "./123-nahel-argama.ts";
 
 describe("Nahel Argama (GD01-123)", () => {
-  it("【Burst】Deploy this card — flips Nahel Argama into baseSection on shield destruction", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd01NahelArgama123] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
+  it("【Burst】 deploys the revealed Shield into its owner's Base section", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd01NahelArgama123] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, gd01NahelArgama123.cardNumber, asPlayerId(PLAYER_TWO));
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({ kind: "optional", directiveIndex: -1 });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    engine.fireShieldBurst(shieldId);
-
-    const finalZone = engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey;
-    expect(finalZone).toBe(`baseSection:${PLAYER_TWO}`);
+    expect(p2.getCardZone(gd01NahelArgama123)).toBe(`baseSection:${PLAYER_TWO}`);
   });
 
-  describe("【Deploy】Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 3 or less HP. Rest it.", () => {
-    it("moves 1 shield to hand and rests a chosen enemy on deploy", () => {
-      const enemy = createMockUnit({ ap: 2, hp: 3 });
-      const engine = GundamTestEngine.create(
-        {
-          hand: [gd01NahelArgama123],
-          resourceArea: activeResources(5),
-          deck: 5,
-        },
-        { play: [enemy], deck: 5 },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const p2 = engine.asPlayer(PLAYER_TWO);
+  it("【Deploy】 adds a Shield to hand, then asks which eligible enemy Unit to rest", () => {
+    const returnedShield = createMockUnit({ name: "Returned Shield" });
+    const eligibleEnemy = createMockUnit({ hp: 3 });
+    const ineligibleEnemy = createMockUnit({ hp: 4 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd01NahelArgama123],
+        shieldArea: [returnedShield],
+        resourceArea: activeResources(3),
+      },
+      { play: [eligibleEnemy, ineligibleEnemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [eligibleEnemyId, ineligibleEnemyId] = p2.getCardsInZone("battleArea");
 
-      for (let i = 0; i < 3; i++) {
-        engine.giveCard(asPlayerId(PLAYER_ONE), createMockResource().cardNumber, {
-          zone: "shieldArea",
-          playerId: PLAYER_ONE,
-        });
-      }
-
-      const shieldsBefore = p1.getCardsInZone("shieldArea").length;
-      const enemyId = p2.getCardsInZone("battleArea")[0]!;
-
-      expectSuccess(p1.deployBase(gd01NahelArgama123, { targets: [enemyId] }));
-
-      // Pre-committed targets should auto-drain without halting.
-      expect(engine.getPendingChoice()).toBeUndefined();
-      expect(p1.getCardsInZone("baseSection").length).toBe(1);
-      expect(p1.getCardsInZone("shieldArea").length).toBe(shieldsBefore - 1);
-      expect(p1.isExhausted(enemyId)).toBe(true);
+    expectSuccess(p1.deployBase(gd01NahelArgama123));
+    expect(p1.getCardZone(returnedShield)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [eligibleEnemyId],
     });
+    expectSuccess(p1.resolveEffect({ targets: [eligibleEnemyId!] }));
+
+    expect(p2.isExhausted(eligibleEnemyId!)).toBe(true);
+    expect(p2.isExhausted(ineligibleEnemyId!)).toBe(false);
+    expect(p1.getCardZone(gd01NahelArgama123)).toBe(`baseSection:${PLAYER_ONE}`);
+  });
+
+  it("still asks for the enemy Unit when there is no Shield to add", () => {
+    const enemy = createMockUnit({ hp: 3 });
+    const engine = GundamTestEngine.create(
+      { hand: [gd01NahelArgama123], resourceArea: activeResources(3) },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.deployBase(gd01NahelArgama123));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+
+    expect(engine.asPlayer(PLAYER_TWO).isExhausted(enemyId)).toBe(true);
+  });
+
+  it("does not offer a high-HP enemy Unit or a qualifying friendly Unit", () => {
+    const friendly = createMockUnit({ hp: 3 });
+    const enemy = createMockUnit({ hp: 4 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd01NahelArgama123],
+        play: [friendly],
+        resourceArea: activeResources(3),
+      },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const friendlyId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.deployBase(gd01NahelArgama123));
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.isExhausted(friendlyId)).toBe(false);
+    expect(engine.asPlayer(PLAYER_TWO).isExhausted(enemyId)).toBe(false);
   });
 });

@@ -4,6 +4,7 @@ import {
   PLAYER_ONE,
   activeResources,
   createMockUnit,
+  expectFailure,
   expectSuccess,
   restedResources,
 } from "@tcg/gundam-engine";
@@ -23,5 +24,19 @@ describe("Union Flag (GD03-082)", () => {
     expectSuccess(p1.deployUnit(gd03UnionFlag082));
 
     expect(p1.getCardsInZone("battleArea")).toHaveLength(3);
+  });
+
+  it("requires its full cost with fewer than 2 qualifying Units in play", () => {
+    const ally = createMockUnit({ traits: ["superpower bloc"] });
+    const engine = GundamTestEngine.create({
+      hand: [gd03UnionFlag082],
+      play: [ally],
+      resourceArea: [...restedResources(2), ...activeResources(1)],
+    });
+
+    expectFailure(
+      engine.asPlayer(PLAYER_ONE).deployUnit(gd03UnionFlag082),
+      "INSUFFICIENT_RESOURCES",
+    );
   });
 });

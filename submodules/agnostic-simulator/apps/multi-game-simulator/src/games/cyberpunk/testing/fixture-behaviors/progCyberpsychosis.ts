@@ -14,7 +14,9 @@ import {
 export const progCyberpsychosisBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "progCyberpsychosis",
   label: "Cyberpsychosis - equipped unit attack window",
-  references: ["packages/engine/src/cards/spoiler/programs/cyberpsychosis.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/programs/cyberpsychosis.test.ts",
+  ],
   async run(pom) {
     const tBug = await pom.getCardInZoneByDefinitionId(
       "field",

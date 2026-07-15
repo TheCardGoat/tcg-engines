@@ -1,6 +1,6 @@
 import { assertNever } from "../utils/assert-never.ts";
 import type { GundamMoveName } from "../gundam/moves/move-name.ts";
-import type { DeckLookAnswer } from "../gundam/types.ts";
+import type { DeckLookAnswer, DeployUnitArgs } from "../gundam/types.ts";
 
 /**
  * Tagged-union type for every candidate action the Gundam bot might submit.
@@ -22,6 +22,7 @@ export type GundamBotCandidate =
   | {
       readonly family: "deployUnit";
       readonly cardId: string;
+      readonly mode?: DeployUnitArgs["mode"];
       readonly targets?: readonly string[];
     }
   | {
@@ -115,7 +116,12 @@ export function candidateToCommand(candidate: GundamBotCandidate): {
   readonly args: Record<string, unknown>;
 } {
   switch (candidate.family) {
-    case "deployUnit":
+    case "deployUnit": {
+      const args: Record<string, unknown> = { cardId: candidate.cardId };
+      if (candidate.mode !== undefined) args.mode = candidate.mode;
+      if (candidate.targets !== undefined) args.targets = candidate.targets;
+      return { move: "deployUnit", args };
+    }
     case "deployBase":
     case "playCommand": {
       const args: Record<string, unknown> = { cardId: candidate.cardId };
@@ -187,7 +193,19 @@ export function commandToCandidate(
   partialInput: Readonly<Record<string, unknown>>,
 ): GundamBotCandidate | null {
   switch (moveName) {
-    case "deployUnit":
+    case "deployUnit": {
+      const cardId = partialInput.cardId;
+      if (typeof cardId !== "string") return null;
+      const rawMode = partialInput.mode;
+      if (rawMode !== undefined && rawMode !== "normal" && rawMode !== "alternate") return null;
+      const targets = partialInput.targets;
+      return {
+        family: "deployUnit",
+        cardId,
+        ...(rawMode === undefined ? {} : { mode: rawMode }),
+        ...(Array.isArray(targets) ? { targets: targets as readonly string[] } : {}),
+      };
+    }
     case "deployBase":
     case "playCommand": {
       const cardId = partialInput.cardId;

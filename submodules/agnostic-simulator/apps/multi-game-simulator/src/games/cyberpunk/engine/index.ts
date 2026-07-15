@@ -1,6 +1,6 @@
 import {
   AUTOMATED_ACTION_STRATEGIES,
-  DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
+  DEFAULT_AUTOMATED_ACTION_STRATEGY_ID as ENGINE_DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
   type AIStrategy,
 } from "@tcg/cyberpunk-engine";
 
@@ -55,6 +55,7 @@ export type {
   CardExitStep,
   CardLandStep,
   CardMoveStep,
+  CardRevealStep,
   CombatRedirectStep,
   CombatStep,
   EffectTargetSpec,
@@ -75,6 +76,7 @@ export {
   interactionViewActionHasCandidate,
   interactionViewActionIdsForCandidate,
   interactionViewAttachTargets,
+  interactionViewAbilityIndexesForCard,
   interactionViewAbilityIndexForCard,
   interactionViewCanAttackRival,
   interactionViewCanFightTarget,
@@ -94,19 +96,21 @@ export {
   callLegendOnlyStrategy,
   greedyStrategy,
   AUTOMATED_ACTION_STRATEGIES,
-  DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
   type AIStrategy,
 } from "@tcg/cyberpunk-engine";
 
 /** Curated strategy descriptors — single source of truth for the UI dropdown. */
 export type StrategyId =
   | "default"
+  | "tactical"
   | "greedy"
   | "random"
   | "first-legal"
   | "pass-only"
   | "attack-unit-only"
-  | "call-legend-only";
+  | "attack-rival-only"
+  | "call-legend-only"
+  | `greedy-trained-${string}`;
 
 export interface StrategyDescriptor {
   id: StrategyId;
@@ -116,19 +120,17 @@ export interface StrategyDescriptor {
   testOnly?: boolean;
 }
 
-const STRATEGY_IDS: ReadonlySet<StrategyId> = new Set([
-  "default",
-  "greedy",
-  "random",
-  "first-legal",
-  "pass-only",
-  "attack-unit-only",
-  "call-legend-only",
-]);
-
 export function isStrategyId(value: unknown): value is StrategyId {
-  return typeof value === "string" && (STRATEGY_IDS as Set<string>).has(value);
+  return (
+    typeof value === "string" && AUTOMATED_ACTION_STRATEGIES.some((option) => option.id === value)
+  );
 }
+
+export const DEFAULT_AUTOMATED_ACTION_STRATEGY_ID: StrategyId = isStrategyId(
+  ENGINE_DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
+)
+  ? ENGINE_DEFAULT_AUTOMATED_ACTION_STRATEGY_ID
+  : "default";
 
 export const AI_STRATEGIES: ReadonlyArray<StrategyDescriptor> = AUTOMATED_ACTION_STRATEGIES.map(
   (option) => ({
@@ -231,5 +233,6 @@ export {
   type DiceDisplayMode,
   type DiceImageColor,
   type DicierStyle,
+  type FieldCardSize,
   type AnimationPacing,
 } from "./UserConfigContext";

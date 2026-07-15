@@ -29,11 +29,17 @@ describe("Penelope (ST08-006)", () => {
 
       expectSuccess(p1.assignPilot(pilot, penelopeId));
       const revealId = p1.getHand()[0]!;
+      const deckBefore = p1.getCardsInZone("deck").length;
       expectSuccess(p1.enterBattle(penelopeId, "direct"));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [revealId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [revealId] }));
 
       expect(p1.getHand()).not.toContain(revealId);
       expect(p1.getHand()).toHaveLength(2);
-      expect(p1.getCardsInZone("deck")).toEqual(expect.arrayContaining([revealId]));
+      expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore - 1);
     });
 
     it("does not pay the reveal cost or draw when attacking an enemy Unit", () => {
@@ -59,11 +65,12 @@ describe("Penelope (ST08-006)", () => {
 
       expectSuccess(p1.assignPilot(pilot, penelopeId));
       const revealId = p1.getHand()[0]!;
-      const deckBefore = p1.getCardsInZone("deck");
+      const deckBefore = p1.getCardsInZone("deck").length;
       expectSuccess(p1.enterBattle(penelopeId, enemyId));
 
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
       expect(p1.getHand()).toEqual([revealId]);
-      expect(p1.getCardsInZone("deck")).toEqual(deckBefore);
+      expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore);
     });
 
     it("does not draw if there is no Earth Federation Unit card in hand to return", () => {
@@ -80,11 +87,12 @@ describe("Penelope (ST08-006)", () => {
 
       expectSuccess(p1.assignPilot(pilot, penelopeId));
       const handBefore = p1.getHand();
-      const deckBefore = p1.getCardsInZone("deck");
+      const deckBefore = p1.getCardsInZone("deck").length;
       expectSuccess(p1.enterBattle(penelopeId, "direct"));
 
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
       expect(p1.getHand()).toEqual(handBefore);
-      expect(p1.getCardsInZone("deck")).toEqual(deckBefore);
+      expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore);
     });
   });
 });

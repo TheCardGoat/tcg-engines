@@ -8,15 +8,30 @@ import {
   useBoardMode,
   useEngineOptional,
   useInteractionPermission,
+  type CardActiveEffectView,
   type EngineCardType,
+  type EffectiveRule,
   type Side,
 } from "../../engine";
 
 interface HandCommandCard {
   imageUrl: string;
   name: string;
+  definitionId?: string;
   cardId?: string;
   cardType?: EngineCardType;
+  color?: "blue" | "green" | "red" | "yellow";
+  effectiveRules?: readonly EffectiveRule[];
+  rulesText?: string | null;
+  classifications?: readonly string[];
+  keywords?: readonly string[];
+  hasSellTag?: boolean;
+  cost?: number | null;
+  effectiveCost?: number | null;
+  costEffects?: readonly CardActiveEffectView[];
+  power?: number | null;
+  effectivePower?: number | null;
+  activeEffects?: readonly CardActiveEffectView[];
 }
 
 interface UseHandCommandOptions {

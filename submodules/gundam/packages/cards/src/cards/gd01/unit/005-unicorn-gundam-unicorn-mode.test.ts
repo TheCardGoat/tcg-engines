@@ -1,57 +1,110 @@
-import { describe, it, expect } from "vite-plus/test";
-import { GundamTestEngine, PLAYER_ONE, markAsLinkUnit, createMockUnit } from "@tcg/gundam-engine";
+import { describe, expect, it } from "vite-plus/test";
+import {
+  GundamTestEngine,
+  PLAYER_ONE,
+  PLAYER_TWO,
+  activeResources,
+  createMockPilot,
+  createMockUnit,
+  expectSuccess,
+} from "@tcg/gundam-engine";
 import { gd01UnicornGundamUnicornMode005 } from "./005-unicorn-gundam-unicorn-mode.ts";
+import {
+  passTurnThroughPublicMoves,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 
 describe("Unicorn Gundam (Unicorn Mode) (GD01-005)", () => {
-  // Card data encodes only the `discard 1` directive for this effect
-  // (the printed "return paired pilot" clause is not structured yet).
-  // The effect is a destroyed trigger gated by duringLink, so it fires on
-  // unitDestroyed when the continuous duringLink condition holds.
-  it("【During Link】【Destroyed】 discards 1 when destroyed as a Link Unit", () => {
-    // Give P1 a separate card in hand — destroyed trigger needs
-    // something discardable to verify the discard fired. Using a
-    // non-Unicorn unit card makes the assertion unambiguous.
-    const filler = createMockUnit({ ap: 1, hp: 1 });
+  it("returns its linked Pilot to hand, then asks which card to discard when destroyed", () => {
+    const banagher = createMockPilot({ name: "Banagher Links", level: 1, cost: 1 });
+    const keep = createMockUnit({ name: "Keep" });
+    const discard = createMockUnit({ name: "Discard" });
+    const attacker = createMockUnit({ ap: 5, hp: 10 });
+    const transitionDefender = createMockUnit({ ap: 0, hp: 10 });
     const engine = GundamTestEngine.create(
-      { play: [gd01UnicornGundamUnicornMode005], hand: [filler] },
-      {},
+      {
+        hand: [banagher, keep, discard],
+        play: [gd01UnicornGundamUnicornMode005],
+        resourceArea: activeResources(5),
+        shieldArea: [createMockUnit()],
+        deck: 5,
+      },
+      { play: [attacker, transitionDefender], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const unicornId = p1.getCardsInZone("battleArea")[0]!;
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const [attackerId, transitionDefenderId] = p2.getCardsInZone("battleArea");
+    const [banagherId, keepId, discardId] = p1.getHand();
 
-    markAsLinkUnit(engine, unicornId);
-
-    const handBefore = engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE });
-    const trashBefore = engine.getCardCount({
-      zone: "trash",
-      playerId: PLAYER_ONE,
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [transitionDefenderId!]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+    expectSuccess(p1.assignPilot(banagher, unitId));
+    expectSuccess(p1.enterBattle(unitId, transitionDefenderId!));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.enterBattle(attackerId!, unitId));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([banagherId, keepId, discardId]),
+      minTargets: 1,
+      maxTargets: 1,
     });
+    expectSuccess(p1.resolveEffect({ targets: [discardId!] }));
 
-    engine.destroyUnit(unicornId);
-
-    // Hand lost 1 card (discard fired); trash gained the filler +
-    // the destroyed Unicorn → +2 net, compared to +1 without the
-    // trigger.
-    expect(engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE })).toBe(handBefore - 1);
-    expect(engine.getCardCount({ zone: "trash", playerId: PLAYER_ONE })).toBe(trashBefore + 2);
+    expect(p1.getCardZone(unitId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(banagherId!)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getCardZone(keepId!)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getCardZone(discardId!)).toBe(`trash:${PLAYER_ONE}`);
   });
 
-  it("does NOT discard when destroyed while not a Link Unit", () => {
-    // Unpaired → duringLink gate fails at enqueue time → discard does
-    // not fire.
-    const filler = createMockUnit({ ap: 1, hp: 1 });
+  it("sends a non-link Pilot to trash and does not discard when the Unit is destroyed", () => {
+    const wrongPilot = createMockPilot({ name: "Wrong Pilot", level: 1, cost: 1 });
+    const filler = createMockUnit({ name: "Filler" });
+    const attacker = createMockUnit({ ap: 5, hp: 10 });
+    const transitionDefender = createMockUnit({ ap: 0, hp: 10 });
     const engine = GundamTestEngine.create(
-      { play: [gd01UnicornGundamUnicornMode005], hand: [filler] },
-      {},
+      {
+        hand: [wrongPilot, filler],
+        play: [gd01UnicornGundamUnicornMode005],
+        resourceArea: activeResources(5),
+        shieldArea: [createMockUnit()],
+        deck: 5,
+      },
+      { play: [attacker, transitionDefender], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const unicornId = p1.getCardsInZone("battleArea")[0]!;
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const [attackerId, transitionDefenderId] = p2.getCardsInZone("battleArea");
+    const [pilotId, fillerId] = p1.getHand();
 
-    const handBefore = engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE });
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [transitionDefenderId!]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+    expectSuccess(p1.assignPilot(wrongPilot, unitId));
+    expectSuccess(p1.enterBattle(unitId, transitionDefenderId!));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.enterBattle(attackerId!, unitId));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
 
-    engine.destroyUnit(unicornId);
-
-    // Discard didn't fire → hand unchanged.
-    expect(engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE })).toBe(handBefore);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getCardZone(pilotId!)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(fillerId!)).toBe(`hand:${PLAYER_ONE}`);
   });
 });

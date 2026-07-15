@@ -1,7 +1,6 @@
 import type { LifecycleContext } from "../../../types/index.ts";
 import type { PlayerId } from "../../../types/branded.ts";
 import type { GundamG } from "../../types.ts";
-import { hasKeyword, getKeywordValue } from "../../rules/derived-state.ts";
 import { emitGundamEvent } from "../../events.ts";
 import { emitGundamLog } from "../../logging.ts";
 
@@ -49,27 +48,6 @@ export function turnCycleOnEnd(ctx: LifecycleContext): void {
       visibility: { mode: "PUBLIC" },
       category: "system",
     });
-  }
-
-  if (currentPlayer) {
-    const zones = ["battleArea", "baseSection"] as const;
-    for (const zone of zones) {
-      const cards = ctx.framework.zones.getCards({ zone, playerId: currentPlayer });
-      for (const cardId of cards) {
-        if (hasKeyword(cardId, "Repair", g, ctx.framework.cards)) {
-          const value = getKeywordValue(cardId, "Repair", g, ctx.framework.cards);
-          const current = g.damage[cardId] ?? 0;
-          if (current > 0) {
-            const remaining = current - value;
-            if (remaining > 0) {
-              g.damage[cardId] = remaining;
-            } else {
-              delete g.damage[cardId];
-            }
-          }
-        }
-      }
-    }
   }
 
   g.turnMetadata = {

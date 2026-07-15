@@ -12,7 +12,7 @@ import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 describe("Goro Takemura - Vengeful Bodyguard", () => {
   it("spends to grant BLOCKER and +1 power to a cheap friendly Unit when you control a Gig pair", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
-      field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false }],
+      field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
       legendArea: [
         {
           card: welcomeToNightCityRetailGoroTakemuraVengefulBodyguard,
@@ -56,7 +56,7 @@ describe("Goro Takemura - Vengeful Bodyguard", () => {
         eddies: 1,
       },
       {
-        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, hasLag: false }],
       },
       { preserveDeckOrder: true },
     );

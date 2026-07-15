@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
@@ -6,54 +6,97 @@ import {
   activeResources,
   createMockUnit,
   expectSuccess,
-  getEffectiveStats,
-  isCardExhausted,
 } from "@tcg/gundam-engine";
 import { gd04PenelopeFlightForm002 } from "./002-penelope-flight-form.ts";
 
 describe("Penelope (Flight Form) (GD04-002)", () => {
-  it("during your turn, all friendly (Earth Federation) Units get AP+1", () => {
-    const ef = createMockUnit({ ap: 2, hp: 3, traits: ["earth federation"] });
-    const nonEf = createMockUnit({ ap: 2, hp: 3, traits: ["zeon"] });
+  describe("During your turn, all your (Earth Federation) Units get AP+1.", () => {
+    it("increases battle damage from Penelope and other Earth Federation Units by 1", () => {
+      const earthFederationUnit = createMockUnit({
+        name: "Earth Federation Unit",
+        ap: 2,
+        hp: 6,
+        traits: ["earth federation"],
+      });
+      const zeonUnit = createMockUnit({ name: "Zeon Unit", ap: 2, hp: 6, traits: ["zeon"] });
+      const defenders = Array.from({ length: 3 }, (_, index) => ({
+        card: createMockUnit({ name: `Defender ${index + 1}`, ap: 0, hp: 10 }),
+        exhausted: true,
+      }));
+      const engine = GundamTestEngine.create(
+        { play: [gd04PenelopeFlightForm002, earthFederationUnit, zeonUnit] },
+        { play: defenders },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const [penelopeId, earthFederationId, zeonId] = p1.getCardsInZone("battleArea");
+      const [penelopeTargetId, earthFederationTargetId, zeonTargetId] =
+        p2.getCardsInZone("battleArea");
 
-    const engine = GundamTestEngine.create({
-      play: [gd04PenelopeFlightForm002, ef, nonEf],
+      expectSuccess(p1.enterBattle(penelopeId!, penelopeTargetId!));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+
+      expectSuccess(p1.enterBattle(earthFederationId!, earthFederationTargetId!));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+
+      expectSuccess(p1.enterBattle(zeonId!, zeonTargetId!));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+
+      expect(p2.getDamage(penelopeTargetId!)).toBe(4);
+      expect(p2.getDamage(earthFederationTargetId!)).toBe(3);
+      expect(p2.getDamage(zeonTargetId!)).toBe(2);
     });
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const [penelopeId, efId, nonEfId] = p1.getCardsInZone("battleArea");
-    const framework = engine.getRuntime().getFrameworkReadAPI();
 
-    // Penelope itself is (Earth Federation) and benefits from the AP+1.
-    expect(getEffectiveStats(penelopeId!, engine.getG(), framework.cards, framework).ap).toBe(
-      gd04PenelopeFlightForm002.ap + 1,
-    );
-    // Friendly EF unit also gets +1.
-    expect(getEffectiveStats(efId!, engine.getG(), framework.cards, framework).ap).toBe(ef.ap + 1);
-    // Non-EF unit unaffected.
-    expect(getEffectiveStats(nonEfId!, engine.getG(), framework.cards, framework).ap).toBe(
-      nonEf.ap,
-    );
-  });
+    it("does not increase Earth Federation AP during the opponent's turn", () => {
+      const earthFederationUnit = createMockUnit({
+        name: "Earth Federation Unit",
+        ap: 2,
+        hp: 6,
+        traits: ["earth federation"],
+      });
+      const attackers = [
+        createMockUnit({ name: "Attacker 1", ap: 0, hp: 10 }),
+        createMockUnit({ name: "Attacker 2", ap: 0, hp: 10 }),
+      ];
+      const engine = GundamTestEngine.create(
+        { play: attackers },
+        {
+          play: [
+            { card: gd04PenelopeFlightForm002, exhausted: true },
+            { card: earthFederationUnit, exhausted: true },
+          ],
+        },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const [firstAttackerId, secondAttackerId] = p1.getCardsInZone("battleArea");
+      const [penelopeId, earthFederationId] = p2.getCardsInZone("battleArea");
 
-  it("on the opponent's turn, the AP+1 buff does NOT apply", () => {
-    const ef = createMockUnit({ ap: 2, hp: 3, traits: ["earth federation"] });
-    const engine = GundamTestEngine.create({}, { play: [gd04PenelopeFlightForm002, ef] });
-    const p2 = engine.asPlayer(PLAYER_TWO);
-    const [penelopeId, efId] = p2.getCardsInZone("battleArea");
-    const framework = engine.getRuntime().getFrameworkReadAPI();
+      expectSuccess(p1.enterBattle(firstAttackerId!, penelopeId!));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
 
-    // It's PLAYER_ONE's turn; Penelope (controlled by P2) does not see
-    // its `isTurn whose: friendly` predicate satisfied, so no AP+1.
-    expect(getEffectiveStats(penelopeId!, engine.getG(), framework.cards, framework).ap).toBe(
-      gd04PenelopeFlightForm002.ap,
-    );
-    expect(getEffectiveStats(efId!, engine.getG(), framework.cards, framework).ap).toBe(ef.ap);
+      expectSuccess(p1.enterBattle(secondAttackerId!, earthFederationId!));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+
+      expect(p1.getDamage(firstAttackerId!)).toBe(3);
+      expect(p1.getDamage(secondAttackerId!)).toBe(2);
+    });
   });
 
   describe("【Deploy】During this turn, when one of your (Earth Federation) Units destroys an enemy Unit with battle damage, choose 1 enemy Unit with 5 or less HP. Rest it.", () => {
-    it("rests an active enemy HP<=5 Unit after a friendly Earth Federation Unit destroys an enemy Unit with battle damage", () => {
+    it("rests an active enemy Unit with 5 HP after a friendly Earth Federation Unit destroys a Unit in battle", () => {
       const attacker = createMockUnit({
-        name: "EF Attacker",
+        name: "Earth Federation Attacker",
         traits: ["earth federation"],
         ap: 4,
         hp: 4,
@@ -77,9 +120,13 @@ describe("Penelope (Flight Form) (GD04-002)", () => {
       const [defenderId, restTargetId] = p2.getCardsInZone("battleArea");
 
       expectSuccess(p1.deployUnit(gd04PenelopeFlightForm002));
-      expectSuccess(engine.resolveCombat({ attackerId, target: defenderId! }));
+      expectSuccess(p1.enterBattle(attackerId, defenderId!));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+      expectSuccess(p1.resolveEffect({ targets: [restTargetId!] }));
 
-      expect(isCardExhausted(engine, restTargetId!)).toBe(true);
+      expect(p2.isExhausted(restTargetId!)).toBe(true);
     });
 
     it("does not trigger when the battle-destroying friendly Unit is not Earth Federation", () => {
@@ -103,14 +150,17 @@ describe("Penelope (Flight Form) (GD04-002)", () => {
       const [defenderId, restTargetId] = p2.getCardsInZone("battleArea");
 
       expectSuccess(p1.deployUnit(gd04PenelopeFlightForm002));
-      expectSuccess(engine.resolveCombat({ attackerId, target: defenderId! }));
+      expectSuccess(p1.enterBattle(attackerId, defenderId!));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
 
-      expect(isCardExhausted(engine, restTargetId!)).toBe(false);
+      expect(p2.isExhausted(restTargetId!)).toBe(false);
     });
 
     it("does not rest an enemy Unit with more than 5 HP", () => {
       const attacker = createMockUnit({
-        name: "EF Attacker",
+        name: "Earth Federation Attacker",
         traits: ["earth federation"],
         ap: 4,
         hp: 4,
@@ -134,9 +184,12 @@ describe("Penelope (Flight Form) (GD04-002)", () => {
       const [defenderId, sturdyTargetId] = p2.getCardsInZone("battleArea");
 
       expectSuccess(p1.deployUnit(gd04PenelopeFlightForm002));
-      expectSuccess(engine.resolveCombat({ attackerId, target: defenderId! }));
+      expectSuccess(p1.enterBattle(attackerId, defenderId!));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
 
-      expect(isCardExhausted(engine, sturdyTargetId!)).toBe(false);
+      expect(p2.isExhausted(sturdyTargetId!)).toBe(false);
     });
   });
 });

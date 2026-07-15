@@ -1,83 +1,110 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  asPlayerId,
+  createMockCommand,
   createMockPilot,
-  expectCardInHand,
-  expectCardInTrash,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd04JamilSGundamX058 } from "./058-jamil-s-gundam-x.ts";
 
+function destroyCommand(owner: "friendly" | "opponent") {
+  return createMockCommand({
+    name: `Destroy ${owner} Unit`,
+    level: 1,
+    cost: 1,
+    effects: [
+      {
+        type: "command",
+        activation: { timing: ["main"] },
+        directives: [
+          {
+            action: {
+              action: "destroy",
+              target: { owner, cardType: "unit", count: 1 },
+            },
+          },
+        ],
+        sourceText: `【Main】Destroy 1 ${owner} Unit.`,
+      },
+    ],
+  });
+}
+
 describe("Jamil's Gundam X (GD04-058)", () => {
   describe("【During Pair･(Vulture) Pilot】【Destroyed】If it is your turn, return this Unit's paired Pilot to its owner's hand.", () => {
-    it("returns the paired Vulture Pilot to hand when destroyed on its controller's turn", () => {
+    it("returns its paired Vulture Pilot when a played effect destroys it on its controller's turn", () => {
       const vulturePilot = createMockPilot({ traits: ["vulture"], cost: 1 });
+      const command = destroyCommand("friendly");
       const engine = GundamTestEngine.create({
-        hand: [vulturePilot],
+        hand: [vulturePilot, command],
         play: [gd04JamilSGundamX058],
-        resourceArea: activeResources(1),
+        resourceArea: activeResources(2),
       });
-      engine.getState().ctx.status.activePlayer = asPlayerId(PLAYER_ONE);
-      engine.getState().ctx.status.turnPlayer = asPlayerId(PLAYER_ONE);
       const p1 = engine.asPlayer(PLAYER_ONE);
       const unitId = p1.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p1.assignPilot(vulturePilot, unitId));
-      const pilotId = engine.getG().pilotAssignments[unitId]!;
+      const pilotId = p1.getPilotId(unitId)!;
+      expectSuccess(p1.playCommand(command, { targets: [unitId] }));
 
-      engine.destroyUnit(unitId);
-
-      expectCardInTrash(engine, unitId, PLAYER_ONE);
-      expectCardInHand(engine, pilotId, PLAYER_ONE);
-      expect(engine.getG().pilotAssignments[unitId]).toBeUndefined();
+      expect(p1.getCardZone(unitId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardZone(pilotId)).toBe(`hand:${PLAYER_ONE}`);
+      expect(p1.getPilotId(unitId)).toBeUndefined();
     });
 
-    it("does not return the paired Pilot when the Pilot lacks Vulture", () => {
+    it("lets a non-Vulture paired Pilot follow the destroyed Unit to trash", () => {
       const wrongPilot = createMockPilot({ traits: ["newtype"], cost: 1 });
+      const command = destroyCommand("friendly");
       const engine = GundamTestEngine.create({
-        hand: [wrongPilot],
+        hand: [wrongPilot, command],
         play: [gd04JamilSGundamX058],
-        resourceArea: activeResources(1),
+        resourceArea: activeResources(2),
       });
-      engine.getState().ctx.status.activePlayer = asPlayerId(PLAYER_ONE);
-      engine.getState().ctx.status.turnPlayer = asPlayerId(PLAYER_ONE);
       const p1 = engine.asPlayer(PLAYER_ONE);
       const unitId = p1.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p1.assignPilot(wrongPilot, unitId));
-      const pilotId = engine.getG().pilotAssignments[unitId]!;
+      const pilotId = p1.getPilotId(unitId)!;
+      expectSuccess(p1.playCommand(command, { targets: [unitId] }));
 
-      engine.destroyUnit(unitId);
-
-      expectCardInTrash(engine, unitId, PLAYER_ONE);
-      expectCardInTrash(engine, pilotId, PLAYER_ONE);
-      expect(engine.getG().pilotAssignments[unitId]).toBeUndefined();
+      expect(p1.getCardZone(unitId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardZone(pilotId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getPilotId(unitId)).toBeUndefined();
     });
 
-    it("does not return the paired Vulture Pilot when destroyed on the opponent's turn", () => {
+    it("lets the paired Vulture Pilot follow the Unit to trash when an opponent destroys it", () => {
       const vulturePilot = createMockPilot({ traits: ["vulture"], cost: 1 });
-      const engine = GundamTestEngine.create({
-        hand: [vulturePilot],
-        play: [gd04JamilSGundamX058],
-        resourceArea: activeResources(1),
-      });
+      const enemyCommand = destroyCommand("opponent");
+      const engine = GundamTestEngine.create(
+        {
+          hand: [vulturePilot],
+          deck: 2,
+          play: [gd04JamilSGundamX058],
+          resourceArea: activeResources(1),
+        },
+        {
+          hand: [enemyCommand],
+          deck: 2,
+          resourceArea: activeResources(1),
+        },
+      );
       const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
       const unitId = p1.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p1.assignPilot(vulturePilot, unitId));
-      const pilotId = engine.getG().pilotAssignments[unitId]!;
-      engine.getState().ctx.status.activePlayer = asPlayerId(PLAYER_TWO);
-      engine.getState().ctx.status.turnPlayer = asPlayerId(PLAYER_TWO);
+      const pilotId = p1.getPilotId(unitId)!;
+      expectSuccess(p1.passPhase());
+      expectSuccess(p2.passActionStep());
+      expectSuccess(p1.passActionStep());
+      expectSuccess(p2.playCommand(enemyCommand, { targets: [unitId] }));
 
-      engine.destroyUnit(unitId);
-
-      expectCardInTrash(engine, unitId, PLAYER_ONE);
-      expectCardInTrash(engine, pilotId, PLAYER_ONE);
-      expect(engine.getG().pilotAssignments[unitId]).toBeUndefined();
+      expect(p1.getCardZone(unitId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardZone(pilotId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getPilotId(unitId)).toBeUndefined();
     });
   });
 });

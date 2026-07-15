@@ -7,7 +7,7 @@ description: "Single owner for everything related to a specific Disney Lorcana c
 
 This skill owns the full lifecycle of a single card: from printed text to passing test, including bounded extensions to `lorcana-engine` and `lorcana-types` when the card requires them. There is no separate "engine-extend" skill for card-driven gaps. If a card needs the engine to do something new, that work lives here.
 
-Use this skill when the unit of work is **a specific card**. For cross-cutting engine work (new variant unsupported by _any_ card), follow the engine-package conventions in [`packages/lorcana/lorcana-engine/AGENTS.md`](../../../packages/lorcana/lorcana-engine/AGENTS.md) directly.
+Use this skill when the unit of work is **a specific card**. For cross-cutting engine work (new variant unsupported by _any_ card), follow the engine package guide and its [`variant-extension` reference](../../../packages/lorcana/lorcana-engine/docs/variant-extension.md).
 
 ## Required Memory Step
 
@@ -80,12 +80,12 @@ A claimed engine gap must reduce to one named registry entry or one named resolv
 
 ### 4. Author
 
-Reference: [`PATTERNS.md`](./PATTERNS.md) for DSL shapes; [`packages/lorcana/lorcana-cards/AGENTS.md`](../../../packages/lorcana/lorcana-cards/AGENTS.md) for ability-type conventions. Do not duplicate those tables here.
+Reference: [`PATTERNS.md`](./PATTERNS.md) is the canonical owner for DSL shapes, ability types, helpers, and examples. Do not duplicate those tables here or in package instruction files.
 
 Hard rules:
 
 - Implement from printed text, not from a stale generated stub.
-- If a bounded engine/types extension is needed, do it in the same task. Add or extend the per-variant test in `lorcana-engine` (see engine AGENTS.md) so the extension is registry-tracked.
+- If a bounded engine/types extension is needed, do it in the same task. Follow the engine [`variant-extension` reference](../../../packages/lorcana/lorcana-engine/docs/variant-extension.md) so the resolver, registry, and focused test stay aligned.
 - Only leave `missingImplementation: true` after Probe identifies an unbounded gap and you can name the exact unsupported registry entry.
 - Enchanted/epic variants share `canonicalId` and copy abilities verbatim from the base card.
 

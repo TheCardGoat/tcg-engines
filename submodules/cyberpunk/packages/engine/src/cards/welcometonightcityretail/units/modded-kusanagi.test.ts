@@ -13,9 +13,7 @@ describe("Modded Kusanagi retail printing", () => {
         eddies: 6,
       },
       {
-        field: [
-          { card: welcomeToNightCityRetailCorpoSecurity, spent: true, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true, hasLag: false }],
       },
     );
 

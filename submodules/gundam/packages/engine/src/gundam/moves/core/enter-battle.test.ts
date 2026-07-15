@@ -2,7 +2,7 @@
  * enterBattle — `enumerateCandidates` + `describeProcedure` tests.
  *
  * Covers the attacker-selection hook (legal attackers: active,
- * deploy-turn-exempt link units, not already attacked, no cannot-attack
+ * deploy-turn-exempt link units, no cannot-attack
  * restriction, has at least one legal target) and the two-step procedure
  * hook (attacker → target → auto-submit) together with runtime-ability
  * interactions: `HighManeuver`, `cannot-target-player`, `force-attack-
@@ -97,19 +97,6 @@ describe("enterBattle.enumerateCandidates", () => {
 
     const move = getEnterBattleMove(engine, PLAYER_ONE);
     // No legal attacker → move drops out of availableMoves.
-    expect(move).toBeUndefined();
-  });
-
-  it("excludes a unit that already attacked this turn", () => {
-    const attacker = createMockUnit();
-    const engine = GundamTestEngine.create(
-      { play: [attacker] },
-      { play: [rested(createMockUnit())] },
-    );
-    const attackerId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
-    (engine.getRuntime().state.G as GundamG).turnMetadata.attackedThisTurn.push(attackerId);
-
-    const move = getEnterBattleMove(engine, PLAYER_ONE);
     expect(move).toBeUndefined();
   });
 

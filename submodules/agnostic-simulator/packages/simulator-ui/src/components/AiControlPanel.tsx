@@ -1,5 +1,5 @@
 import { IconBolt, IconRobot } from "@tabler/icons-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { copyTextToClipboard, safeStringify } from "@tcg/simulator-runtime/debug";
 import classes from "./AiControlPanel.module.css";
 
@@ -36,7 +36,7 @@ export interface AiControlPanelProps {
 
 const SPEED_OPTIONS: ReadonlyArray<{ value: "fast" | "balanced" | "slow"; label: string }> = [
   { value: "fast", label: "Fast" },
-  { value: "balanced", label: "Balanced" },
+  { value: "balanced", label: "Normal" },
   { value: "slow", label: "Slow" },
 ];
 
@@ -117,12 +117,17 @@ export function AiControlPanel({
   embedded = false,
 }: AiControlPanelProps) {
   const [copyStatus, setCopyStatus] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
   const selectedStrategy = useMemo(
     () => strategies.find((s) => s.id === selectedStrategyId),
     [strategies, selectedStrategyId],
   );
   const side = sideProp ?? inferSide(decisionLog);
   const isTerminal = status === "done";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleStrategyChange = (id: string) => {
     const next = id === "" ? null : id;
@@ -168,6 +173,7 @@ export function AiControlPanel({
           <IconRobot size={20} stroke={1.6} aria-hidden />
         </span>
         <div className={classes.statusBody}>
+          <span className={classes.statusKicker}>AI coach</span>
           <span className={classes.statusName}>
             {selectedStrategy?.label ?? (isTakeover ? "—" : "No strategy")}
           </span>
@@ -308,7 +314,7 @@ export function AiControlPanel({
                 data-testid="ai-log-copy"
                 className={classes.logClear}
                 onClick={handleCopyDecisionLog}
-                disabled={decisionLog.length === 0}
+                disabled={mounted && decisionLog.length === 0}
               >
                 Copy
               </button>

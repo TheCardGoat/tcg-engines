@@ -13,7 +13,7 @@ import { activateAbility } from "./core/activate-ability.ts";
 import { assignPilot } from "./core/assign-pilot.ts";
 import { playCommandAsPilot } from "./core/play-command-as-pilot.ts";
 import { declareBlock } from "./core/declare-block.ts";
-import { enterBattle } from "./core/enter-battle.ts";
+import { enterBattle, listLegalAttackTargets } from "./core/enter-battle.ts";
 import { passBlock } from "./core/pass-block.ts";
 import { passBattleAction } from "./core/pass-battle-action.ts";
 import { discardToHandLimit } from "./core/discard-to-hand-limit.ts";
@@ -61,6 +61,7 @@ export {
   playCommandAsPilot,
   declareBlock,
   enterBattle,
+  listLegalAttackTargets,
   passBlock,
   passBattleAction,
   discardToHandLimit,

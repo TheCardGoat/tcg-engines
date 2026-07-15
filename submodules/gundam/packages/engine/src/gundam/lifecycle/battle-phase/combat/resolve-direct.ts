@@ -1,5 +1,10 @@
 import type { GundamG } from "../../../types.ts";
-import { getEffectiveStats, hasKeyword, isDefeated } from "../../../rules/derived-state.ts";
+import {
+  getEffectiveStats,
+  getKeywordValue,
+  hasKeyword,
+  isDefeated,
+} from "../../../rules/derived-state.ts";
 import { emitGundamEvent } from "../../../events.ts";
 import { logShieldRemoved, logUnitDefeated } from "../../../logging.ts";
 import { handleUnitDefeated } from "../../../effects/handlers/combat.ts";
@@ -10,6 +15,7 @@ import {
 import type { BattleEffCtx } from "./types.ts";
 import { hasDamagePreventionFor, hasZoneDamagePreventionFor } from "./damage-prevention.ts";
 import { applyBattleDamage } from "./apply-damage.ts";
+import { enqueueShieldAreaCardDestroyedByUnitDamageTrigger } from "./shield-area-destroy-event.ts";
 
 /**
  * Enqueue the `attackerDestroyedDefender` trigger on the *attacker* card
@@ -37,26 +43,6 @@ function enqueueAttackerDestroyedDefenderTrigger(
     defeatedCardId: defenderId,
     ownerId: attackerPlayerId,
     playerId: attackerPlayerId,
-  };
-  enqueueOwnCardTriggers(g, event, attackerId, attackerPlayerId, ctx.framework);
-  enqueueObserverTriggers(g, event, ctx.framework, attackerId);
-}
-
-function enqueueShieldAreaCardDestroyedByBattleTrigger(
-  g: GundamG,
-  attackerId: string,
-  destroyedCardId: string,
-  attackerPlayerId: string,
-  defenderPlayerId: string,
-  ctx: BattleEffCtx,
-): void {
-  const event = {
-    type: "shieldAreaCardDestroyedByBattle" as const,
-    cardId: attackerId,
-    destroyedCardId,
-    ownerId: attackerPlayerId,
-    playerId: attackerPlayerId,
-    defenderPlayerId,
   };
   enqueueOwnCardTriggers(g, event, attackerId, attackerPlayerId, ctx.framework);
   enqueueObserverTriggers(g, event, ctx.framework, attackerId);
@@ -121,13 +107,13 @@ export function resolveDirectBattle(
           ctx.framework.zones.moveCard(baseId, { zone: "trash", playerId: defenderPlayerId });
           delete g.damage[baseId];
           delete g.exhausted[baseId];
-          enqueueShieldAreaCardDestroyedByBattleTrigger(
+          enqueueShieldAreaCardDestroyedByUnitDamageTrigger(
             g,
             attackerId,
             baseId,
             attackerPlayerId,
             defenderPlayerId,
-            ctx,
+            ctx.framework,
           );
 
           emitGundamEvent(ctx.framework.events, {
@@ -166,7 +152,15 @@ export function resolveDirectBattle(
 
         // Rule 13-1-7-1..3: Suppression attempts to damage the first two
         // shields. If only one exists, only that one is affected.
-        const requested = hasKeyword(attackerId, "Suppression", g, ctx.framework.cards) ? 2 : 1;
+        const requested = hasKeyword(
+          attackerId,
+          "Suppression",
+          g,
+          ctx.framework.cards,
+          ctx.framework,
+        )
+          ? 2
+          : 1;
         const toRemove = shieldsBefore.slice(0, Math.min(requested, shieldsBefore.length));
 
         // Rule 13-1-7-4: shields destroyed by Suppression are revealed
@@ -176,13 +170,13 @@ export function resolveDirectBattle(
         // player choice) is still deferred to PR F.
         for (const shieldId of toRemove) {
           ctx.framework.zones.moveCard(shieldId, { zone: "trash", playerId: defenderPlayerId });
-          enqueueShieldAreaCardDestroyedByBattleTrigger(
+          enqueueShieldAreaCardDestroyedByUnitDamageTrigger(
             g,
             attackerId,
             shieldId,
             attackerPlayerId,
             defenderPlayerId,
-            ctx,
+            ctx.framework,
           );
           emitGundamEvent(ctx.framework.events, {
             kind: "SHIELD_REMOVED",
@@ -216,6 +210,16 @@ export function resolveDirectBattle(
     if (!defenderOwnerId) return;
 
     const targetStats = getEffectiveStats(target, g, ctx.framework.cards, ctx.framework);
+    const battleDestroyCtx = {
+      ...ctx,
+      battleDestroyBreachValue: getKeywordValue(
+        attackerId,
+        "Breach",
+        g,
+        ctx.framework.cards,
+        ctx.framework,
+      ),
+    };
 
     if (hasDamagePreventionFor(target, attackerId, g, ctx.framework)) {
       if (!hasDamagePreventionFor(attackerId, target, g, ctx.framework)) {
@@ -239,7 +243,7 @@ export function resolveDirectBattle(
         applyBattleDamage(g, ctx.framework, target, attackerStats.ap, attackerId) &&
         isDefeated(target, g, ctx.framework.cards)
       ) {
-        handleUnitDefeated(target, ctx);
+        handleUnitDefeated(target, battleDestroyCtx);
         enqueueAttackerDestroyedDefenderTrigger(g, attackerId, target, attackerPlayerId, ctx);
       }
       return;
@@ -248,8 +252,20 @@ export function resolveDirectBattle(
     // Rule 13-1-5-2: with no damage prevention on either side, <First Strike>
     // changes damage timing. The unit with First Strike deals damage first,
     // and if the opposing unit is destroyed, it deals no counter-damage.
-    const attackerFirstStrike = hasKeyword(attackerId, "FirstStrike", g, ctx.framework.cards);
-    const targetFirstStrike = hasKeyword(target, "FirstStrike", g, ctx.framework.cards);
+    const attackerFirstStrike = hasKeyword(
+      attackerId,
+      "FirstStrike",
+      g,
+      ctx.framework.cards,
+      ctx.framework,
+    );
+    const targetFirstStrike = hasKeyword(
+      target,
+      "FirstStrike",
+      g,
+      ctx.framework.cards,
+      ctx.framework,
+    );
 
     const targetDefeatCtx: BattleEffCtx = {
       ...ctx,
@@ -262,7 +278,7 @@ export function resolveDirectBattle(
         applyBattleDamage(g, ctx.framework, target, attackerStats.ap, attackerId) &&
         isDefeated(target, g, ctx.framework.cards)
       ) {
-        handleUnitDefeated(target, ctx);
+        handleUnitDefeated(target, battleDestroyCtx);
         enqueueAttackerDestroyedDefenderTrigger(g, attackerId, target, attackerPlayerId, ctx);
         return;
       }
@@ -287,7 +303,7 @@ export function resolveDirectBattle(
         applyBattleDamage(g, ctx.framework, target, attackerStats.ap, attackerId) &&
         isDefeated(target, g, ctx.framework.cards)
       ) {
-        handleUnitDefeated(target, ctx);
+        handleUnitDefeated(target, battleDestroyCtx);
         enqueueAttackerDestroyedDefenderTrigger(g, attackerId, target, attackerPlayerId, ctx);
       }
       return;
@@ -300,15 +316,19 @@ export function resolveDirectBattle(
     const attackerDefeated = isDefeated(attackerId, g, ctx.framework.cards);
     const targetDefeated = isDefeated(target, g, ctx.framework.cards);
 
+    // Rule 13-1-2-3: destroying the defender still satisfies attacker-side
+    // battle-destruction triggers when both Units are destroyed. Enqueue the
+    // event before either card leaves play so linked Pilot conditions and
+    // last-known paired state are still available.
+    if (attackerDefeated && targetDefeated) {
+      enqueueAttackerDestroyedDefenderTrigger(g, attackerId, target, attackerPlayerId, ctx);
+    }
+
     if (attackerDefeated) {
       handleUnitDefeated(attackerId, targetDefeatCtx);
     }
     if (targetDefeated) {
-      handleUnitDefeated(target, ctx);
-      // Fire `attackerDestroyedDefender` only when the attacker survives —
-      // a mutual-defeat scenario means the attacker isn't around to fire
-      // its trigger (rule 10-1-6-7: a card off the field can't activate
-      // its on-field triggers).
+      handleUnitDefeated(target, battleDestroyCtx);
       if (!attackerDefeated) {
         enqueueAttackerDestroyedDefenderTrigger(g, attackerId, target, attackerPlayerId, ctx);
       }

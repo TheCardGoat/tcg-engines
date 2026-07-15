@@ -1,35 +1,39 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  expectSuccess,
   createMockUnit,
-  getDamageCounter,
-  seedShieldsFromDeck,
+  expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd01RickDom030 } from "./030-rick-dom.ts";
+import {
+  passTurnThroughPublicMoves,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 
 describe("Rick Dom (GD01-030)", () => {
-  it("<Breach 2> deals 2 damage to a shield when the attacker destroys a Unit", () => {
-    const defender = createMockUnit({ ap: 1, hp: 1 });
-    const shieldSeed = createMockUnit({ ap: 1, hp: 5 });
+  it("Breach removes one Shield after Rick Dom destroys an enemy Unit with battle damage", () => {
+    const defender = createMockUnit({ ap: 0, hp: 1 });
     const engine = GundamTestEngine.create(
-      { play: [gd01RickDom030] },
-      { play: [defender], deck: [shieldSeed] },
+      { play: [gd01RickDom030], shieldArea: [createMockUnit()], deck: 5 },
+      { play: [defender], shieldArea: [createMockUnit()], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
     );
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const rickId = p1.getCardsInZone("battleArea")[0]!;
+    const rickDomId = p1.getCardsInZone("battleArea")[0]!;
     const defenderId = p2.getCardsInZone("battleArea")[0]!;
+    const shieldsBefore = p2.getBoardView().players[PLAYER_TWO]!.shieldCount;
 
-    expectSuccess(p1.enterBattle(rickId, defenderId));
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [defenderId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+    expectSuccess(p1.enterBattle(rickDomId, defenderId));
     expectSuccess(p2.passBlock());
     expectSuccess(p2.passBattleAction());
     expectSuccess(p1.passBattleAction());
 
-    // Rick Dom (AP 3) destroys defender (HP 1) -> Breach 2 lands on the shield.
-    expect(getDamageCounter(engine, shieldId!)).toBe(2);
+    expect(p2.getCardZone(defenderId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getBoardView().players[PLAYER_TWO]!.shieldCount).toBe(shieldsBefore - 1);
   });
 });

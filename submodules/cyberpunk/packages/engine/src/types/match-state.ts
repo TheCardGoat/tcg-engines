@@ -5,7 +5,8 @@ import type {
   CostModifier,
   RuleModifier,
   Effect,
-  SearchDeckSelect,
+  DelayedEffect,
+  ScryDestination,
   CardType,
 } from "@tcg/cyberpunk-types";
 import type { ZoneRuntimeState } from "@tcg/engine-core";
@@ -71,8 +72,9 @@ export interface BagEntry {
   effectIndex: number;
   abilityText: string;
   suspended: boolean;
-  /** Delayed sub-effects to execute at end of turn */
+  /** Delayed sub-effects to execute at a later timing */
   delayedEffects?: Effect[];
+  delayedTiming?: DelayedEffect["timing"];
   /** Snapshot of resolved bindings from when the delayed effect was created */
   resolvedBindings?: Record<string, string[]>;
 }
@@ -119,7 +121,8 @@ export interface TurnMetadata {
 }
 
 export type PendingChoice =
-  | SearchDeckPendingChoice
+  | ScryPendingChoice
+  | RevealDestinationPendingChoice
   | ChooseTargetPendingChoice
   | ChooseEffectPendingChoice
   | ChooseTriggerPendingChoice
@@ -135,22 +138,36 @@ export type PendingChoiceType = PendingChoice["type"];
 /** Discriminator union of every {@link ChooseTargetPendingChoice} sub-type. */
 export type ChooseTargetSubType = ChooseTargetPendingChoice["payload"]["type"];
 
-export interface SearchDeckPendingChoice {
-  type: "searchDeck";
+export interface ScryPendingChoice {
+  type: "scry";
   chooserId: PlayerId;
   effectId: string;
   payload: {
     player: string;
-    lookCount: number;
-    target: unknown;
-    select: SearchDeckSelect;
-    reveal: boolean;
-    destination: string;
-    remainder: unknown;
+    amount: number;
+    destinations: ScryDestination[];
     /** Card instance IDs snapshotted at creation time — the revealed search window. */
     revealedCardIds: CardInstanceId[];
     sourceCardId?: CardInstanceId;
     sourcePlayerId?: PlayerId;
+  };
+}
+
+export interface RevealDestinationPendingChoice {
+  type: "revealDestination";
+  chooserId: PlayerId;
+  effectId: string;
+  payload: {
+    player: PlayerId;
+    destinations: ["hand", "trash"];
+    revealedCardIds: CardInstanceId[];
+    sourceCardId?: CardInstanceId;
+    sourcePlayerId?: PlayerId;
+    drawIfDestination?: {
+      destination: "hand" | "trash";
+      player: PlayerId;
+      amount: number;
+    };
   };
 }
 
@@ -182,10 +199,13 @@ export interface ChooseTargetPendingChoice {
     abilityIndex?: number;
     ifEffects?: Effect[];
     elseEffects?: Effect[];
+    logReason?: "costMatchedFriendlyGig";
     contextTargets?: Record<string, string[]>;
     boundTargets?: Record<string, string[]>;
     selectedBindingId?: string;
-    targetPurpose?: "attachHost";
+    targetPurpose?: "attachHost" | "playCard";
+    availableEddiesAfterCosts?: number;
+    effectiveCostsByCardId?: Record<string, number>;
   };
 }
 

@@ -7,7 +7,7 @@ import type {
   HasGigPairCondition,
   MatchingGigCondition,
   OvertimeCondition,
-  PlayedThisTurnCondition,
+  LagCondition,
   StreetCredCondition,
   TargetValueCondition,
   TurnCondition,
@@ -38,8 +38,8 @@ export const condition = {
     condition: "attacking",
     ...args,
   }),
-  playedThisTurn: (args: Omit<PlayedThisTurnCondition, "condition">): PlayedThisTurnCondition => ({
-    condition: "playedThisTurn",
+  hasLag: (args: Omit<LagCondition, "condition">): LagCondition => ({
+    condition: "hasLag",
     ...args,
   }),
   hasGigAtMaxValue: (

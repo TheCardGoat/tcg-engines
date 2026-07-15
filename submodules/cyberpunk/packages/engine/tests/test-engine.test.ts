@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vite-plus/test";
-import { alphaRuthlessLowlife } from "@tcg/cyberpunk-cards";
-import { alphaSecondhandBombus } from "@tcg/cyberpunk-cards";
-import { alphaTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
-import { alphaArmoredMinotaur } from "@tcg/cyberpunk-cards";
-import { alphaVCorporateExile } from "@tcg/cyberpunk-cards";
-import { alphaJackieWellesRideOrDieChoom } from "@tcg/cyberpunk-cards";
-import { alphaKiroshiOptics } from "@tcg/cyberpunk-cards";
-import { alphaMandibularUpgrade } from "@tcg/cyberpunk-cards";
-import { alphaSatoriSwordOfSaburo } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSketchyRipper } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSecondhandBombus } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
+import { embracingPowerRetailStarterDeckMinotaur } from "@tcg/cyberpunk-cards";
+import { theHeistRetailStarterDeckVCorporateExile } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailJackieWellesRideOrDieChoom } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailKiroshiOptics } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailMandibularUpgrade } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSatoriSwordOfSaburo } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../src/testing/index.ts";
 import { defOf } from "../src/state/lookups.ts";
 
@@ -26,40 +26,46 @@ describe("CyberpunkTestEngine.createWithFixture", () => {
 
   it("places cards in hand from fixture", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
-      hand: [alphaRuthlessLowlife, alphaSecondhandBombus],
+      hand: [welcomeToNightCityRetailSketchyRipper, welcomeToNightCityRetailSecondhandBombus],
     });
 
     const hand = engine.getCardsInZone("hand", P1);
     expect(hand).toHaveLength(2);
-    expect(hand[0]!.definitionId).toBe(alphaRuthlessLowlife.id);
-    expect(hand[1]!.definitionId).toBe(alphaSecondhandBombus.id);
+    expect(hand[0]!.definitionId).toBe(welcomeToNightCityRetailSketchyRipper.id);
+    expect(hand[1]!.definitionId).toBe(welcomeToNightCityRetailSecondhandBombus.id);
   });
 
   it("places cards on field from fixture", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
-      field: [alphaArmoredMinotaur, alphaTBugAmateurPhilosopher],
+      field: [
+        embracingPowerRetailStarterDeckMinotaur,
+        welcomeToNightCityRetailTBugAmateurPhilosopher,
+      ],
     });
 
     const field = engine.getCardsInZone("field", P1);
     expect(field).toHaveLength(2);
-    expect(field[0]!.definitionId).toBe(alphaArmoredMinotaur.id);
-    expect(field[1]!.definitionId).toBe(alphaTBugAmateurPhilosopher.id);
+    expect(field[0]!.definitionId).toBe(embracingPowerRetailStarterDeckMinotaur.id);
+    expect(field[1]!.definitionId).toBe(welcomeToNightCityRetailTBugAmateurPhilosopher.id);
   });
 
   it("places attached gears on the field from fixture card state", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       field: [
         {
-          card: alphaTBugAmateurPhilosopher,
+          card: welcomeToNightCityRetailTBugAmateurPhilosopher,
           spent: false,
-          attachedGears: [alphaSatoriSwordOfSaburo, alphaKiroshiOptics],
+          attachedGears: [
+            welcomeToNightCityRetailSatoriSwordOfSaburo,
+            welcomeToNightCityRetailKiroshiOptics,
+          ],
         },
       ],
     });
 
-    const host = engine.getCard(alphaTBugAmateurPhilosopher, "field", P1);
-    const satori = engine.getCard(alphaSatoriSwordOfSaburo, "field", P1);
-    const kiroshi = engine.getCard(alphaKiroshiOptics, "field", P1);
+    const host = engine.getCard(welcomeToNightCityRetailTBugAmateurPhilosopher, "field", P1);
+    const satori = engine.getCard(welcomeToNightCityRetailSatoriSwordOfSaburo, "field", P1);
+    const kiroshi = engine.getCard(welcomeToNightCityRetailKiroshiOptics, "field", P1);
 
     expect(host.meta.attachedGearIds).toEqual([satori.instanceId, kiroshi.instanceId]);
     expect(satori.meta.attachedToId).toBe(host.instanceId);
@@ -72,23 +78,27 @@ describe("CyberpunkTestEngine.createWithFixture", () => {
       {
         field: [
           {
-            card: alphaArmoredMinotaur,
+            card: embracingPowerRetailStarterDeckMinotaur,
             spent: false,
-            attachedGears: [alphaMandibularUpgrade],
+            attachedGears: [welcomeToNightCityRetailMandibularUpgrade],
           },
-          { card: alphaArmoredMinotaur, spent: true },
+          { card: embracingPowerRetailStarterDeckMinotaur, spent: true },
         ],
       },
       { seed: "duplicate-field-card-gear" },
     );
 
     const field = engine.getCardsInZone("field", P2);
-    const minotaurs = field.filter((card) => card.definitionId === alphaArmoredMinotaur.id);
-    const gear = field.find((card) => card.definitionId === alphaMandibularUpgrade.id);
+    const minotaurs = field.filter(
+      (card) => card.definitionId === embracingPowerRetailStarterDeckMinotaur.id,
+    );
+    const gear = field.find(
+      (card) => card.definitionId === welcomeToNightCityRetailMandibularUpgrade.id,
+    );
 
     expect(field.slice(0, 2).map((card) => card.definitionId)).toEqual([
-      alphaArmoredMinotaur.id,
-      alphaArmoredMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
     ]);
     expect(minotaurs).toHaveLength(2);
     expect(minotaurs[0]!.meta.spent).toBe(false);
@@ -120,27 +130,30 @@ describe("CyberpunkTestEngine.createWithFixture", () => {
 
   it("places cards in legendArea from fixture", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
-      legendArea: [alphaVCorporateExile, alphaJackieWellesRideOrDieChoom],
+      legendArea: [
+        theHeistRetailStarterDeckVCorporateExile,
+        welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+      ],
     });
 
     const legends = engine.getCardsInZone("legendArea", P1);
     expect(legends.length).toBeGreaterThanOrEqual(2);
 
     const ids = legends.map((c) => c.definitionId);
-    expect(ids).toContain(alphaVCorporateExile.id);
-    expect(ids).toContain(alphaJackieWellesRideOrDieChoom.id);
+    expect(ids).toContain(theHeistRetailStarterDeckVCorporateExile.id);
+    expect(ids).toContain(welcomeToNightCityRetailJackieWellesRideOrDieChoom.id);
   });
 
   it("initializes card instance properties correctly", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
-      field: [alphaArmoredMinotaur],
+      field: [embracingPowerRetailStarterDeckMinotaur],
     });
 
-    const card = engine.getCard(alphaArmoredMinotaur, "field", P1);
+    const card = engine.getCard(embracingPowerRetailStarterDeckMinotaur, "field", P1);
     expect(card.zone).toBe("field");
-    expect(card.definitionId).toBe(alphaArmoredMinotaur.id);
-    expect(defOf(card).cost).toBe(6);
-    expect(defOf(card).power).toBe(9);
+    expect(card.definitionId).toBe(embracingPowerRetailStarterDeckMinotaur.id);
+    expect(defOf(card).cost).toBe(embracingPowerRetailStarterDeckMinotaur.cost);
+    expect(defOf(card).power).toBe(embracingPowerRetailStarterDeckMinotaur.power);
     expect(card.meta.spent).toBe(false);
     expect(card.meta.damage).toBe(0);
   });
@@ -148,12 +161,12 @@ describe("CyberpunkTestEngine.createWithFixture", () => {
   it("places cards for player two from fixture", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {},
-      { field: [alphaRuthlessLowlife], eddies: 5 },
+      { field: [welcomeToNightCityRetailSketchyRipper], eddies: 5 },
     );
 
     const p2Field = engine.getCardsInZone("field", P2);
     expect(p2Field).toHaveLength(1);
-    expect(p2Field[0]!.definitionId).toBe(alphaRuthlessLowlife.id);
+    expect(p2Field[0]!.definitionId).toBe(welcomeToNightCityRetailSketchyRipper.id);
     expect(engine.getEddies(P2)).toBe(5);
   });
 

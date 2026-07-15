@@ -36,10 +36,6 @@
   border-radius: 0;
 }
 
-.pageShell :global(.mobile-action-rail) {
-  flex: 0 0 auto;
-}
-
 .boardViewport {
   width: 100%;
   height: 100%;

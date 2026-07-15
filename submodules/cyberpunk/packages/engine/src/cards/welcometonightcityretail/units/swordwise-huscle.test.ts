@@ -14,7 +14,7 @@ describe("Swordwise Huscle (retail)", () => {
         {
           card: welcomeToNightCityRetailSwordwiseHuscle,
           spent: false,
-          playedThisTurn: false,
+          hasLag: false,
         },
       ],
     });
@@ -34,7 +34,7 @@ describe("Swordwise Huscle (retail)", () => {
         {
           card: welcomeToNightCityRetailSwordwiseHuscle,
           spent: false,
-          playedThisTurn: false,
+          hasLag: false,
           powerModifier: 2,
         },
       ],
@@ -56,7 +56,7 @@ describe("Swordwise Huscle (retail)", () => {
         {
           card: welcomeToNightCityRetailSwordwiseHuscle,
           spent: false,
-          playedThisTurn: false,
+          hasLag: false,
           powerModifier: 1,
         },
       ],

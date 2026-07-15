@@ -21,19 +21,14 @@ gd01 / gd02 / st0x command-card Burst tests.
 - ~~`packages/cards/src/cards/beta/command/117-the-witch-and-the-bride.test.ts`~~
 - ~~`packages/cards/src/cards/beta/command/120-naval-bombardment.test.ts`~~
 
-## 2. ~~`placeResource` on a command card clobbered by play-command cleanup~~ (resolved in `fix/activate-targets-placeresource-resource-dsl`)
+## 2. Resource placement clean break
 
-~~**Cards left skipped**~~
-
-- ~~`packages/cards/src/cards/beta/command/107-first-contact.test.ts` — `【Main】Place 1 rested Resource.`~~
-
-**Fix**: `pending-effects.ts#runPostActions` now checks the card's current
-zone before executing a `moveToTrash` postAction — if the command card's
-own effect moved it out of `removalArea` (e.g. into `resourceArea` via
-`placeResource`), the trash step is skipped. `executor.ts#placeResource`
-honours `action.state === "rested"` and marks the placed resource as
-exhausted. Unblocks beta/gd01 `107-first-contact`, gd02 `103-age-device`,
-and any future EX-resource-from-command card.
+`placeResource` moves the top normal Resource from the controller's Resource
+Deck into the Resource Area; a source Command still moves from `removalArea`
+to trash after its effect. `placeExResource` creates the canonical EX Resource
+token and leaves the source card in its rules-defined zone. The action union
+has no `resourceType` switch, so EX placement cannot silently compile into
+normal Resource placement.
 
 ## 3. ~~Base `【Burst】Deploy this card` from a shield~~ (unblocked in `feat/deploy-self-tutor-actions`)
 

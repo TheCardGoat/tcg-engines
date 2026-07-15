@@ -6,7 +6,6 @@ import {
   activeResources,
   createMockBase,
   expectSuccess,
-  getDamageCounter,
 } from "@tcg/gundam-engine";
 import { gd03Patulia041 } from "./041-patulia.ts";
 
@@ -24,7 +23,7 @@ describe("Patulia (GD03-041)", () => {
 
     expectSuccess(p1.deployUnit(gd03Patulia041));
 
-    expect(getDamageCounter(engine, friendlyBaseId)).toBe(3);
-    expect(getDamageCounter(engine, enemyBaseId)).toBe(3);
+    expect(p1.getDamage(friendlyBaseId)).toBe(3);
+    expect(engine.asPlayer(PLAYER_TWO).getDamage(enemyBaseId)).toBe(3);
   });
 });

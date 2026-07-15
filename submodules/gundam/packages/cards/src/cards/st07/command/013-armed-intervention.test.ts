@@ -7,23 +7,34 @@ import {
   createMockUnit,
   expectFailure,
   expectSuccess,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { st07ArmedIntervention013 } from "./013-armed-intervention.ts";
 
 describe("Armed Intervention (ST07-013)", () => {
   it("【Burst】Draw 1.", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
+    const drawCard = createMockUnit({ name: "Drawn Card" });
     const engine = GundamTestEngine.create(
-      {},
-      { deck: [st07ArmedIntervention013, createMockUnit()] },
+      { play: [attacker] },
+      { shieldArea: [st07ArmedIntervention013], deck: [drawCard] },
     );
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
-    const handBefore = engine.asPlayer(PLAYER_TWO).getHand().length;
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    expect(engine.asPlayer(PLAYER_TWO).getHand().length).toBe(handBefore + 1);
+    expect(p2.getHand()).toHaveLength(1);
+    expect(p2.getCardZone(shieldId)).toBe(`trash:${PLAYER_TWO}`);
   });
 
   it("【Action】changes the battling enemy Unit's attack target to a rested friendly CB Unit", () => {
@@ -37,10 +48,10 @@ describe("Armed Intervention (ST07-013)", () => {
         deck: 5,
       },
       { play: [attacker], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    engine.endTurn();
     const attackerId = p2.getCardsInZone("battleArea")[0]!;
     const targetId = p1.getCardsInZone("battleArea")[0]!;
 
@@ -48,7 +59,7 @@ describe("Armed Intervention (ST07-013)", () => {
     expectSuccess(p1.passBlock());
     expectSuccess(p1.playCommand(st07ArmedIntervention013, { targets: [targetId] }));
 
-    expect(engine.getG().turnMetadata.pendingCombat?.target).toBe(targetId);
+    expect(p1.getBoardView().pendingCombat?.target).toBe(targetId);
   });
 
   it("cannot choose an active friendly CB Unit as the new attack target", () => {
@@ -62,10 +73,10 @@ describe("Armed Intervention (ST07-013)", () => {
         deck: 5,
       },
       { play: [attacker], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    engine.endTurn();
     const attackerId = p2.getCardsInZone("battleArea")[0]!;
     const targetId = p1.getCardsInZone("battleArea")[0]!;
 

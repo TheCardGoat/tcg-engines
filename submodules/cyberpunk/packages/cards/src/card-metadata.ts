@@ -2814,6 +2814,35 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "91f9d30c-f74d-4be4-8505-52f05d309c92",
   },
+  "welcometonightcityretail:fool-on-the-hill": {
+    i18n: {
+      en: {
+        name: "Fool on the Hill",
+        displayName: "Fool on the Hill",
+        rulesText:
+          "Reveal the top 2 cards of your deck. A Rival chooses whether you add them to your hand or trash them. If you trash them, draw 2.",
+      },
+    },
+    printings: [
+      {
+        id: "7751b719-978b-44b1-a82f-b2881d3a416e",
+        artId: "7751b719-978b-44b1-a82f-b2881d3a416e",
+        collectorNumber: "099",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/099.webp",
+      },
+      {
+        id: "04511c2f-c766-4d1a-9176-66f913789667",
+        artId: "04511c2f-c766-4d1a-9176-66f913789667",
+        collectorNumber: "β099",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b099.webp",
+      },
+    ],
+    selectedPrintingId: "7751b719-978b-44b1-a82f-b2881d3a416e",
+  },
   "welcometonightcityretail:gilded-mato-n": {
     i18n: {
       en: {

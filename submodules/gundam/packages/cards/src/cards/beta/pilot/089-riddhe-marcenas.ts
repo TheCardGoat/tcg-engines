@@ -63,36 +63,27 @@ export const betaRiddheMarcenas089: PilotCard = {
   effects: [
     {
       type: "triggered",
+      activation: { timing: ["burst"] },
+      directives: [{ action: { action: "addSelfToHand" } }],
+      sourceText: "【Burst】Add this card to your hand.",
+    },
+    {
+      type: "constant",
       activation: {
-        timing: ["burst"],
+        conditions: [{ type: "selfHasKeyword", keyword: "Repair" }],
       },
       directives: [
         {
           action: {
-            action: "addSelfToHand",
+            action: "statModifier",
+            stat: "ap",
+            amount: 1,
+            duration: "permanent",
+            target: { owner: "self" },
           },
-        },
-        {
-          condition: {
-            type: "selfHasKeyword",
-            keyword: "Repair",
-          },
-          thenDirectives: [
-            {
-              action: {
-                action: "statModifier",
-                stat: "ap",
-                amount: 1,
-                duration: "permanent",
-                target: {
-                  owner: "self",
-                },
-              },
-            },
-          ],
         },
       ],
-      sourceText: "【Burst】Add this card to your hand. If this Unit has <Repair>, it gets AP+1.",
+      sourceText: "While this Unit has <Repair>, it gets AP+1.",
     },
   ] as CardEffect[],
   keywordEffects: [],

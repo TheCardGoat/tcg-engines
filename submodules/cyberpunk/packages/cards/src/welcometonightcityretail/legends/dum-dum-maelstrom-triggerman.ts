@@ -47,8 +47,14 @@ export const welcomeToNightCityRetailDumDumMaelstromTriggerman = defineCyberpunk
             target: {
               selector: "card",
               controller: "friendly",
-              zones: ["field"],
+              zones: ["field", "legendArea"],
               cardTypes: ["gear"],
+              attachedTo: {
+                selector: "card",
+                controller: "friendly",
+                zones: ["field", "legendArea"],
+                cardTypes: ["unit", "legend"],
+              },
             },
             optional: true,
           },

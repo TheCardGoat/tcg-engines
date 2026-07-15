@@ -14,6 +14,7 @@ import { FixerZone } from "./FixerZone";
 import { LegendsZone } from "./LegendsZone";
 import { PInfoZone } from "./PInfoZone";
 import { TrashZone } from "./TrashZone";
+import { CardImage } from "./CardImage";
 import { useGameState } from "./gameStateContext";
 import { useMoveSelectionForSide } from "./MoveSelectionContext";
 import { ClockDisplay, PassTurnControl } from "./CenterRow";
@@ -23,9 +24,11 @@ import {
   useEngine,
   type MoveLogEntry,
   type Side,
+  type ZoneCardView,
 } from "../../engine";
 import { useSideZones } from "../../engine/zoneViews";
 import { useLastSoldCardForSide } from "./useLastSoldCard";
+import { useDeckRevealForSide } from "./deckReveal";
 import classes from "./GameBoard.module.css";
 
 interface GameBoardProps {
@@ -69,6 +72,7 @@ export function GameBoard({
   const zones = useSideZones(side);
   const { moveLogs, matchState, canUndo, canUndoToTurnStart, dispatch } = useEngine();
   const lastSold = useLastSoldCardForSide(moveLogs, side);
+  const deckReveal = useDeckRevealForSide(side);
   const peekedLegends = usePeekedLegendsForSide(
     moveLogs,
     side,
@@ -83,7 +87,7 @@ export function GameBoard({
     cardType: c.cardType,
     color: c.color,
     tapped: c.spent,
-    playedThisTurn: c.playedThisTurn,
+    hasLag: c.hasLag,
     effectiveRules: c.effectiveRules,
     rulesText: c.rulesText,
     classifications: c.classifications,
@@ -184,6 +188,30 @@ export function GameBoard({
         trashCardToSimulatorEntity(card, trashViewerOwnerId, trashViewerZoneId),
       ),
     [trashViewerOwnerId, trashViewerZoneId, zones.trash],
+  );
+  const trashViewerCardsById = useMemo(
+    () => new Map(zones.trash.map((card) => [card.cardId, card])),
+    [zones.trash],
+  );
+  const renderTrashViewerEntity = useCallback(
+    (entity: SimulatorEntity) => {
+      const card = trashViewerCardsById.get(entity.id);
+      if (!card) return null;
+
+      return (
+        <div className={classes.trashViewerCard} data-card-id={card.cardId}>
+          <CardImage
+            imageUrl={card.imageUrl}
+            faceDown={card.faceDown}
+            cardType={card.cardType}
+            alt={card.faceDown ? "Face-down card" : card.name}
+            color={card.color}
+            previewDetails={trashCardToPreviewDetails(card)}
+          />
+        </div>
+      );
+    },
+    [trashViewerCardsById],
   );
 
   const handleContextMenu = useCallback((ev: ReactMouseEvent<HTMLDivElement>) => {
@@ -328,7 +356,7 @@ export function GameBoard({
         />
       </div>
       <div className={classes.stackCol}>
-        <PInfoZone opponent={opponent} phase={phase}>
+        <PInfoZone opponent={opponent} phase={phase} activeEffects={zones.activeEffects}>
           {opponent ? (
             <div className={classes.statusDock}>
               <ClockDisplay docked />
@@ -339,7 +367,7 @@ export function GameBoard({
             </div>
           )}
         </PInfoZone>
-        <DeckZone count={zones.deckCount} opponent={opponent} side={side} />
+        <DeckZone count={zones.deckCount} opponent={opponent} side={side} reveal={deckReveal} />
         <TrashZone
           topCard={zones.trashTop ?? undefined}
           cards={zones.trash}
@@ -365,6 +393,7 @@ export function GameBoard({
           body: classes.trashViewerBody,
           closeButton: classes.trashViewerCloseButton,
         }}
+        renderEntity={renderTrashViewerEntity}
         onClose={() => setTrashViewerOpen(false)}
       />
       {contextMenu ? (
@@ -439,22 +468,7 @@ export function ConfirmDialog({
   );
 }
 
-interface TrashViewerCard {
-  cardId: string;
-  definitionId: string;
-  imageUrl: string;
-  name: string;
-  cardType: string;
-  color: string;
-  spent: boolean;
-  faceDown: boolean;
-  cost: number | null;
-  effectiveCost: number | null;
-  power: number | null;
-  effectivePower: number | null;
-  classifications: readonly string[];
-  keywords: readonly string[];
-}
+type TrashViewerCard = ZoneCardView;
 
 function buildTrashViewerTable(
   ownerId: string,
@@ -536,6 +550,35 @@ function trashCardToSimulatorEntity(
   };
 }
 
+function trashCardToPreviewDetails(card: TrashViewerCard) {
+  if (card.faceDown) return undefined;
+
+  return {
+    name: card.name,
+    cardType: card.cardType,
+    cost: card.cost,
+    effectiveCost: card.effectiveCost,
+    power: card.power,
+    effectivePower: card.effectivePower,
+    classifications: card.classifications,
+    keywords: card.keywords,
+    rules: [
+      ...card.keywords.map(formatPreviewKeyword),
+      ...(card.rulesText ? [card.rulesText] : []),
+      ...card.effectiveRules
+        .filter((rule) => !card.keywords.includes(rule))
+        .map((rule) => `Effective: ${formatPreviewKeyword(rule)}.`),
+    ],
+    costEffects: card.costEffects,
+    activeEffects: card.activeEffects,
+    hasSellTag: card.hasSellTag,
+  };
+}
+
+function formatPreviewKeyword(value: string): string {
+  return value.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/^./, (first) => first.toUpperCase());
+}
+
 function usePeekedLegendsForSide(
   moveLogs: ReadonlyArray<MoveLogEntry>,
   side: Side,
@@ -547,6 +590,18 @@ function usePeekedLegendsForSide(
     const indexes = new Set<number>();
     for (const entry of moveLogs) {
       const log = entry.log;
+      if (
+        log.type === "lookAtCards" &&
+        log.turnNumber === turnNumber &&
+        log.zone === "legendArea" &&
+        log.ownerId === ownerId &&
+        Array.isArray(log.cardIds)
+      ) {
+        for (const cardId of log.cardIds) {
+          ids.add(cardId);
+        }
+        continue;
+      }
       if (
         log.type !== "action" ||
         log.turnNumber !== turnNumber ||

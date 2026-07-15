@@ -34,7 +34,7 @@ test("Riding Nomad (Retail) - can attack spent units on played turn", async ({ p
     CYBERPUNK_P1,
     welcomeToNightCityRetailRidingNomad.id,
   );
-  expectEqual("Riding Nomad played this turn", nomad.playedThisTurn, true);
+  expectEqual("Riding Nomad has Lag", nomad.hasLag, true);
 
   const attackers = await pom.getMoveCandidateIds(CYBERPUNK_P1, "attackUnit");
   const targets = await pom.getMoveTargetCandidateIds(CYBERPUNK_P1, "attackUnit");

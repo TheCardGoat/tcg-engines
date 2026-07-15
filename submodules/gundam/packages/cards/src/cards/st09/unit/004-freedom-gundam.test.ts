@@ -5,45 +5,18 @@ import {
   PLAYER_TWO,
   createMockBase,
   createMockUnit,
-  expectAttackRedirectedTo,
   expectSuccess,
-  getEffectiveStats,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
 import { st09FreedomGundam004 } from "./004-freedom-gundam.ts";
 
-function effectiveKeywords(engine: GundamTestEngine): string[] {
-  const rt = engine.getRuntime();
-  const uid = rt.getInstanceIdByDefinition(
-    PLAYER_ONE as PlayerId,
-    st09FreedomGundam004.cardNumber,
-  )!;
-  const fw = rt.getFrameworkReadAPI();
-  return getEffectiveStats(uid, engine.getG(), fw.cards, fw).keywords;
+function effectiveKeywords(engine: GundamTestEngine): readonly string[] {
+  const p1 = engine.asPlayer(PLAYER_ONE);
+  const unitId = p1.getCardsInZone("battleArea")[0]!;
+  return p1.getVisibleCard(unitId)?.keywords ?? [];
 }
 
 describe("Freedom Gundam (ST09-004)", () => {
   describe("<Blocker> and friendly-Base Suppression", () => {
-    it("data declares printed Blocker and constant Suppression grant", () => {
-      expect(st09FreedomGundam004.keywordEffects).toEqual([{ keyword: "Blocker" }]);
-      const effect = st09FreedomGundam004.effects?.[0];
-      const directive = effect?.directives[0];
-
-      expect(effect?.type).toBe("constant");
-      expect(effect?.activation).toEqual({
-        conditions: [{ type: "friendlyBaseInPlay" }],
-      });
-      if (!directive || !("action" in directive) || directive.action.action !== "grantKeyword") {
-        throw new Error("Unexpected directive shape");
-      }
-      expect(directive.action).toEqual({
-        action: "grantKeyword",
-        keyword: "Suppression",
-        duration: "permanent",
-        target: { owner: "self", cardType: "unit" },
-      });
-    });
-
     it("gains Suppression while a friendly Base is in play", () => {
       const base = createMockBase();
       const engine = GundamTestEngine.create(
@@ -77,7 +50,7 @@ describe("Freedom Gundam (ST09-004)", () => {
       const defender = createMockUnit({ ap: 1, hp: 5 });
       const engine = GundamTestEngine.create(
         { play: [attacker] },
-        { play: [defender, st09FreedomGundam004] },
+        { play: [{ card: defender, exhausted: true }, st09FreedomGundam004] },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
@@ -87,9 +60,15 @@ describe("Freedom Gundam (ST09-004)", () => {
 
       expectSuccess(p1.enterBattle(attackerId, defenderId));
       expectSuccess(p2.declareBlock(blockerId));
+      expect(p1.getBoardView().pendingCombat).toMatchObject({
+        stage: "blocker-declared",
+        blockerId,
+        target: defenderId,
+      });
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
 
-      expectAttackRedirectedTo(engine, blockerId);
-      expect(engine.getG().turnMetadata.pendingCombat?.target).toBe(defenderId);
+      expect(p2.getDamage(blockerId)).toBe(3);
     });
   });
 });

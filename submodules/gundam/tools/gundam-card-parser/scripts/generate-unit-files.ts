@@ -42,7 +42,9 @@ function renderUnit(card: UnitCard, constName: string): string {
   lines.push(`  hp: ${card.hp},`);
   if (card.linkCondition !== undefined)
     lines.push(`  linkCondition: ${JSON.stringify(card.linkCondition)},`);
-  if (card.zone !== undefined) lines.push(`  zone: ${JSON.stringify(card.zone)},`);
+  if (card.battlefieldZones !== undefined) {
+    lines.push(`  battlefieldZones: ${JSON.stringify(card.battlefieldZones)},`);
+  }
   if (card.effect !== undefined) lines.push(`  effect: ${JSON.stringify(card.effect)},`);
   if (hasEffects) lines.push(`  effects: ${JSON.stringify(effects, null, 2)} as CardEffect[],`);
   else lines.push(`  effects: [],`);

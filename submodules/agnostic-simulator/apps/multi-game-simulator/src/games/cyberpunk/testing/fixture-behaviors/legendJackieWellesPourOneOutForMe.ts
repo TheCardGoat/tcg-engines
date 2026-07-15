@@ -9,7 +9,9 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const legendJackieWellesPourOneOutForMeBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendJackieWellesPourOneOutForMe",
   label: "Jackie Welles - blue gear increases a gig",
-  references: ["packages/engine/src/cards/alpha/legends/jackie-welles-pour-one-out-for-me.test.ts"],
+  references: [
+    "packages/engine/src/cards/theheistretailstarterdeck/legends/jackie-welles-pour-one-out-for-me.test.ts",
+  ],
   async run(pom) {
     const gear = await pom.getCardInZoneByDefinitionId(
       "hand",

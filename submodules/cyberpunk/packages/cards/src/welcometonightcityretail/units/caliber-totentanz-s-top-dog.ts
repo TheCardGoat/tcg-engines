@@ -73,6 +73,7 @@ export const welcomeToNightCityRetailCaliberTotentanzSTopDog = defineCyberpunkCa
           effect: "discardFromHand",
           player: "rival",
           amount: 1,
+          logReason: "costMatchedFriendlyGig",
           conditions: [
             {
               condition: "costMatchesGig",

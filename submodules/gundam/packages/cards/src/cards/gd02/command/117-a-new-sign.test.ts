@@ -2,55 +2,78 @@ import { describe, it, expect } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
-  asPlayerId,
+  PLAYER_TWO,
   expectSuccess,
   activeResources,
+  createMockUnit,
   createMockBase,
-  expectCardInHand,
   expectCardInTrash,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd02ANewSign117 } from "./117-a-new-sign.ts";
 
 describe("A New Sign (GD02-117)", () => {
   it("【Burst】Chooses an AEUG Base from trash and moves it to hand", () => {
     const aeugBase = createMockBase({ traits: ["aeug"], hp: 5 });
-    const engine = GundamTestEngine.create({ deck: [gd02ANewSign117], trash: [aeugBase] }, {});
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, gd02ANewSign117.cardNumber, asPlayerId(PLAYER_ONE));
-
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { shieldArea: [gd02ANewSign117], trash: [aeugBase], deck: 5 },
+      { play: [attacker], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
     const [baseId] = p1.getCardsInZone("trash");
-    if (!baseId) throw new Error("seed setup: no base in trash");
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId, { targets: [baseId] });
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [baseId],
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [baseId!] }));
 
-    expectCardInHand(engine, baseId, p1.playerId);
+    expect(p1.getCardZone(baseId!)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getCardZone(gd02ANewSign117)).toBe(`trash:${PLAYER_ONE}`);
   });
 
   describe("【Main】Draw 3. Then, discard 2.", () => {
-    it("draws 3 then discards 2 (net 0 overall hand size after playing the command)", () => {
+    it("draws 3, then asks which 2 cards from the updated hand to discard", () => {
+      const firstDiscard = createMockUnit({ name: "First Discard" });
+      const secondDiscard = createMockUnit({ name: "Second Discard" });
       const engine = GundamTestEngine.create({
-        hand: [gd02ANewSign117],
+        hand: [gd02ANewSign117, firstDiscard, secondDiscard],
         resourceArea: activeResources(4),
         deck: 5,
       });
       const p1 = engine.asPlayer(PLAYER_ONE);
-      const handBefore = p1.getHand().length;
-      const deckBefore = p1.getCardsInZone("deck").length;
-      const cmdId = p1.getHand()[0]!;
+      const [commandId, firstDiscardId, secondDiscardId] = p1.getHand();
 
       expectSuccess(p1.playCommand(gd02ANewSign117));
+      const choice = p1.getBoardView().pendingChoice;
+      expect(choice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: expect.arrayContaining([firstDiscardId, secondDiscardId]),
+        minTargets: 2,
+        maxTargets: 2,
+      });
+      if (choice?.kind !== "targetSelection") {
+        throw new Error("Expected A New Sign to ask which 2 cards to discard after drawing");
+      }
+      expect(choice.legalTargetIds).toHaveLength(5);
+      expectSuccess(p1.resolveEffect({ targets: [firstDiscardId!, secondDiscardId!] }));
 
-      const handAfter = p1.getHand().length;
-      const deckAfter = p1.getCardsInZone("deck").length;
-      // Hand: lost command (-1), drew 3 (+3), discarded 2 (-2) = net 0
-      expect(handAfter).toBe(handBefore);
-      expect(deckAfter).toBe(deckBefore - 3);
-      expectCardInTrash(engine, cmdId, p1.playerId);
+      expect(p1.getCardZone(firstDiscardId!)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardZone(secondDiscardId!)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getBoardView().players[PLAYER_ONE]?.handCount).toBe(3);
+      expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(2);
+      expectCardInTrash(engine, commandId!, p1.playerId);
     });
   });
 });

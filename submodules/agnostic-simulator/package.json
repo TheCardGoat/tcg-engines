@@ -8,21 +8,23 @@
     "dev": "vp run website#dev",
     "prepare": "vp config",
     "build": "vp run -r build",
-    "check": "vp fmt --check apps/*/src packages/*/src packages/*/*/src && vp lint apps/*/src packages/*/src packages/*/*/src --ignore-pattern '**/*.test.ts' --ignore-pattern '**/*.svelte' --no-error-on-unmatched-pattern && vp run -r check-types",
+    "check": "vp fmt --check --ignore-path .oxfmtignore apps/*/src packages/*/src packages/*/*/src && vp lint apps/*/src packages/*/src packages/*/*/src --ignore-pattern '**/*.test.ts' --ignore-pattern '**/*.svelte' --no-error-on-unmatched-pattern && vp run -r check-types",
     "test": "vp run -r test",
-    "ci-check": "pnpm run check && vp run -r test",
-    "ci-check-full": "pnpm run check && vp run -r test && vp run -r build",
-    "check:fix": "vp fmt apps/*/src packages/*/src packages/*/*/src && vp lint --fix apps/*/src packages/*/src packages/*/*/src"
+    "ci-check": "vp run ci:check",
+    "ci-check-full": "vp run ci:full",
+    "check:fix": "vp fmt --ignore-path .oxfmtignore apps/*/src packages/*/src packages/*/*/src && vp lint --fix apps/*/src packages/*/src packages/*/*/src"
   },
   "devDependencies": {
     "@types/bun": "^1.3.9",
     "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
+    "@typescript/native-preview": "catalog:",
     "bun-types": "catalog:",
     "typescript": "catalog:",
     "vite-plus": "catalog:"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.18.0"
   },
   "packageManager": "pnpm@10.33.0"
 }

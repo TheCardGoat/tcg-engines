@@ -5,8 +5,9 @@ import {
   IconShield,
   IconShieldOff,
   IconSkull,
+  IconRun,
   IconSwordOff,
-  IconZoomIn,
+  IconSwords,
 } from "@tabler/icons-react";
 import {
   buildInteractionSubmissionForActionId,
@@ -22,6 +23,7 @@ import {
   type PointerEvent,
 } from "react";
 import { createPortal } from "react-dom";
+import { useCyberpunkAnimationVisualState } from "../../animation/AnimationVisualStateContext";
 import { useCardInspect } from "./CardInspectContext";
 import type { CardPreviewDetails } from "../CardPreview/CardPreviewContext";
 import { CardImage } from "./CardImage";
@@ -42,6 +44,7 @@ import {
   getGearAttachTargets,
   getProgramSpatialTargets,
   interactionSubmissionToEngineAction,
+  interactionViewAbilityIndexesForCard,
   interactionViewAbilityIndexForCard,
   interactionViewActionHasCandidate,
   interactionViewCanFightTarget,
@@ -66,9 +69,10 @@ function cardKindFromType(cardType: EngineCardType | undefined): "leader" | "car
 }
 
 type CardMenuAction = {
-  id: CardActionHotkeyMoveId;
+  id: CardActionHotkeyMoveId | "inspectCard";
+  key: string;
   label: string;
-  hotkey: string;
+  hotkey?: string;
   abilityIndex?: number;
   run: () => void;
 };
@@ -120,7 +124,7 @@ interface CardProps {
   /** Whether the primary card face is spent/tapped. Attached gear remains upright. */
   tapped?: boolean;
   /** Whether a unit entered the field this turn and is still attack-restricted. */
-  playedThisTurn?: boolean;
+  hasLag?: boolean;
   /** Some zones show spent state with their own overlay instead of rotating the card. */
   rotateWhenTapped?: boolean;
   /** Owner-only look effect: render the face while preserving face-down semantics. */
@@ -147,6 +151,10 @@ interface CardProps {
   effectivePower?: number | null;
   /** Active effects currently changing or threatening this card. */
   activeEffects?: readonly CardActiveEffectView[];
+  /** Disable the global hover/tap preview while preserving explicit inspect. */
+  disablePreview?: boolean;
+  /** Suppress the default card action popover when a parent surface owns card actions. */
+  disableActionMenu?: boolean;
   /** Click hook — receives the cardId (or undefined for legacy cards). */
   onCardClick?: (cardId: string | undefined) => void;
 }
@@ -173,18 +181,21 @@ export function Card({
   classifications = [],
   keywords = [],
   hasSellTag = false,
-  playedThisTurn = false,
+  hasLag = false,
   cost,
   effectiveCost,
   costEffects = [],
   power,
   effectivePower,
   activeEffects = [],
+  disablePreview = false,
+  disableActionMenu = false,
   onCardClick,
 }: CardProps) {
   const [powerMenuOpen, setPowerMenuOpen] = useState(false);
   const [actionMenuAnchor, setActionMenuAnchor] = useState<{ x: number; y: number } | null>(null);
   const powerMenuCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { hasPendingAnimations } = useCyberpunkAnimationVisualState();
   // Hooks are always called. When the card is not engine-aware (no cardId or
   // no provider), the hooks return safe defaults.
   const engineCtx = useEngineOptional();
@@ -415,7 +426,12 @@ export function Card({
     moveSelection.clearSelection();
   };
 
-  const executeDirectMove = (moveId: MoveId, actionSide: Side, sourceCardId: string) => {
+  const executeDirectMove = (
+    moveId: MoveId,
+    actionSide: Side,
+    sourceCardId: string,
+    selectedAbilityIndex?: number,
+  ) => {
     if (!engineCtx) return;
     const asPlayer = PLAYER_SIDE_TO_ID[actionSide];
     if (moveId === "playCard") {
@@ -453,10 +469,9 @@ export function Card({
       return;
     }
     if (moveId === "activateAbility") {
-      const abilityIndex = interactionViewAbilityIndexForCard(
-        engineCtx.interactionViews[actionSide],
-        sourceCardId,
-      );
+      const abilityIndex =
+        selectedAbilityIndex ??
+        interactionViewAbilityIndexForCard(engineCtx.interactionViews[actionSide], sourceCardId);
       if (abilityIndex !== null) {
         engineCtx.dispatch({
           type: "activateAbility",
@@ -551,7 +566,30 @@ export function Card({
     return true;
   };
 
-  const actionMenuActions: CardMenuAction[] = [];
+  const inspectCard = () => {
+    if (faceDown || !imageUrl) {
+      return;
+    }
+    inspect({
+      imageUrl,
+      name,
+      zone,
+      color,
+      attachments: gear.map((g) => ({ imageUrl: g.imageUrl, name: g.name })),
+    });
+  };
+
+  const actionMenuActions: CardMenuAction[] =
+    !faceDown && imageUrl
+      ? [
+          {
+            id: "inspectCard",
+            key: "inspectCard",
+            label: "Inspect card",
+            run: inspectCard,
+          },
+        ]
+      : [];
   if (engineAware && !selectedMove && permission.kind === "armable" && cardId && side) {
     const availableMoves = new Set<CardActionHotkeyMoveId>();
     for (const actionId of permission.actionIds) {
@@ -562,18 +600,48 @@ export function Card({
     for (const slot of CARD_ACTION_HOTKEY_SLOTS) {
       const moveId = slot.moveId;
       if (!availableMoves.has(moveId)) continue;
-      const abilityIndex =
+      const abilityIndexes =
         moveId === "activateAbility" && engineCtx
-          ? (interactionViewAbilityIndexForCard(engineCtx.interactionViews[side], cardId) ??
-            undefined)
-          : undefined;
-      actionMenuActions.push({
-        id: moveId,
-        label: getCardActionLabel(moveId),
-        hotkey: getCardActionHotkey(moveId),
-        abilityIndex,
-        run: () => executeDirectMove(moveId, side, cardId),
-      });
+          ? interactionViewAbilityIndexesForCard(engineCtx.interactionViews[side], cardId)
+          : [undefined];
+      const actionIndexes = abilityIndexes.length > 0 ? abilityIndexes : [undefined];
+      for (const abilityIndex of actionIndexes) {
+        actionMenuActions.push({
+          id: moveId,
+          key: abilityIndex === undefined ? moveId : `${moveId}:${abilityIndex}`,
+          label:
+            moveId === "activateAbility" && abilityIndex !== undefined
+              ? `${getCardActionLabel(moveId)} ${abilityIndex + 1}`
+              : getCardActionLabel(moveId),
+          hotkey: getCardActionHotkey(moveId),
+          abilityIndex,
+          run: () => executeDirectMove(moveId, side, cardId, abilityIndex),
+        });
+      }
+    }
+
+    if (engineCtx) {
+      for (const attachment of gear) {
+        if (!attachment.cardId) continue;
+        const abilityIndexes = interactionViewAbilityIndexesForCard(
+          engineCtx.interactionViews[side],
+          attachment.cardId,
+        );
+        if (abilityIndexes.length === 0) continue;
+        for (const abilityIndex of abilityIndexes) {
+          actionMenuActions.push({
+            id: "activateAbility",
+            key: `activateAbility:${attachment.cardId}:${abilityIndex}`,
+            label:
+              abilityIndexes.length > 1
+                ? `Ability ${abilityIndex + 1}: ${attachment.name}`
+                : `Ability: ${attachment.name}`,
+            hotkey: getCardActionHotkey("activateAbility"),
+            abilityIndex,
+            run: () => executeDirectMove("activateAbility", side, attachment.cardId!, abilityIndex),
+          });
+        }
+      }
     }
   }
 
@@ -595,7 +663,14 @@ export function Card({
     }
     ev.stopPropagation();
     setActionMenuAnchor(null);
-    if (!selectedMove && openActionMenu(ev)) {
+    const shouldOpenActionMenu =
+      !disableActionMenu &&
+      !selectedMove &&
+      !selectedGearAttachTarget &&
+      !selectedProgramSpatialTarget &&
+      !attackSelection.canSelectFightTarget &&
+      permission.kind !== "selectable";
+    if (shouldOpenActionMenu && openActionMenu(ev)) {
       return;
     }
     if (executeSelectedTarget()) {
@@ -628,26 +703,6 @@ export function Card({
     onCardClick?.(cardId);
   };
 
-  // Inspect button: a small magnifier in the bottom-left corner of every
-  // face-up card. Tap opens the inspect overlay. Stops pointer propagation
-  // so dnd-kit doesn't read the press as the start of a drag.
-  const handleInspect = (ev: MouseEvent<HTMLButtonElement>) => {
-    ev.stopPropagation();
-    if (faceDown || !imageUrl) {
-      return;
-    }
-    inspect({
-      imageUrl,
-      name,
-      zone,
-      color,
-      attachments: gear.map((g) => ({ imageUrl: g.imageUrl, name: g.name })),
-    });
-  };
-
-  const stopPointer = (ev: PointerEvent<HTMLButtonElement>) => {
-    ev.stopPropagation();
-  };
   const stopCostClick = (ev: MouseEvent<HTMLDivElement>) => {
     ev.stopPropagation();
   };
@@ -711,8 +766,9 @@ export function Card({
               : "inert"
             : permission.kind
     : "legacy";
-  const stateClass =
-    interactionState === "inert"
+  const stateClass = hasPendingAnimations
+    ? ""
+    : interactionState === "inert"
       ? classes.inert
       : interactionState === "selectable"
         ? classes.selectable
@@ -764,12 +820,16 @@ export function Card({
           ? "defender"
           : null
       : null;
-  const blockedByPlayedThisTurn =
+  const blockedByLag =
     cardType === "unit" &&
-    playedThisTurn &&
+    hasLag &&
+    !effectiveRules.includes("adrenaline") &&
+    !keywords.includes("adrenaline") &&
     !effectiveRules.includes("canAttackOnPlayedTurnAgainstUnits");
-  const abilityBadges = buildAbilityBadges(effectiveRules, blockedByPlayedThisTurn);
+  const abilityBadges = buildAbilityBadges(effectiveRules, keywords, blockedByLag);
   const statusBadges = buildStatusBadges(activeEffects);
+  const statusBadgeRules = new Set<string>(statusBadges.map((badge) => badge.rule));
+  const visibleAbilityBadges = abilityBadges.filter((badge) => !statusBadgeRules.has(badge.rule));
   const hasModifiedCost =
     cost !== undefined &&
     cost !== null &&
@@ -781,6 +841,11 @@ export function Card({
     cost !== undefined && cost !== null && hasModifiedCost
       ? `${cost} printed cost, ${effectiveCost} current cost`
       : `${effectiveCost ?? cost} cost`;
+  const activeTriggerSource = Boolean(
+    cardId &&
+    engineCtx?.matchState.G.turnMetadata.currentTrigger?.sourceCardId &&
+    String(engineCtx.matchState.G.turnMetadata.currentTrigger.sourceCardId) === cardId,
+  );
   const isSelected = armed || attackSelection.isSelectedAttacker || effectCardTargetSelected;
   const isHandCard = zone === "p-hand" || zone === "opp-hand";
   const powerAriaLabel =
@@ -849,11 +914,12 @@ export function Card({
       className={[
         classes.stack,
         stateClass,
+        activeTriggerSource && !hasPendingAnimations ? classes.activeTriggerSource : "",
         peeked && faceDown ? classes.peekedFaceDown : "",
-        isValidAttackDropTarget ? classes.validAttackDropTarget : "",
-        isValidGearDropTarget ? classes.validGearDropTarget : "",
-        isValidProgramDropTarget ? classes.validProgramDropTarget : "",
-        drop.isOver ? classes.dropOver : "",
+        isValidAttackDropTarget && !hasPendingAnimations ? classes.validAttackDropTarget : "",
+        isValidGearDropTarget && !hasPendingAnimations ? classes.validGearDropTarget : "",
+        isValidProgramDropTarget && !hasPendingAnimations ? classes.validProgramDropTarget : "",
+        drop.isOver && !hasPendingAnimations ? classes.dropOver : "",
       ]
         .filter(Boolean)
         .join(" ")}
@@ -868,7 +934,7 @@ export function Card({
       data-face-down={faceDown ? "true" : "false"}
       data-face={faceDown ? "hidden" : undefined}
       data-spent={tapped ? "true" : "false"}
-      data-played-this-turn={playedThisTurn ? "true" : "false"}
+      data-has-lag={hasLag ? "true" : "false"}
       data-peeked={peeked ? "true" : "false"}
       data-selectable={interactionState === "selectable" ? "true" : "false"}
       data-actionable={
@@ -877,7 +943,9 @@ export function Card({
       data-action-hint={isActionHint ? "true" : "false"}
       data-selection-candidate={isSelectionCandidate ? "true" : "false"}
       data-selected={isSelected ? "true" : "false"}
+      data-draggable={draggable ? "true" : "false"}
       data-choice-selected={effectCardTargetSelected ? "true" : "false"}
+      data-active-trigger-source={activeTriggerSource ? "true" : "false"}
       data-selected-move={selectedMove ?? undefined}
       data-choice-eligible={selectablePermission ? "true" : "false"}
       data-choice-side={selectablePermission?.side}
@@ -924,6 +992,7 @@ export function Card({
           alt={faceDown ? (peeked ? "Peeked face-down card" : "Face-down card") : (name ?? "")}
           color={color}
           previewDetails={previewDetails}
+          disablePreview={disablePreview}
         />
         {showCostBadge ? (
           <div
@@ -949,21 +1018,12 @@ export function Card({
             ) : null}
           </div>
         ) : null}
-        {!faceDown && imageUrl ? (
-          <button
-            type="button"
-            aria-label="Inspect card"
-            className={classes.inspectBtn}
-            onClick={handleInspect}
-            onPointerDown={stopPointer}
-            onPointerUp={stopPointer}
-          >
-            <IconZoomIn size="65%" stroke={2} aria-hidden="true" />
-          </button>
-        ) : null}
-        {!isHandCard && !faceDown && imageUrl && abilityBadges.length + statusBadges.length > 0 ? (
+        {!isHandCard &&
+        !faceDown &&
+        imageUrl &&
+        visibleAbilityBadges.length + statusBadges.length > 0 ? (
           <div className={classes.abilityRail} aria-label="Card abilities and effects">
-            {[...abilityBadges, ...statusBadges].map((badge) => {
+            {[...visibleAbilityBadges, ...statusBadges].map((badge) => {
               const Icon = badge.Icon;
               return (
                 <span
@@ -1105,12 +1165,13 @@ function CardActionMenu({
     >
       {actions.map((action) => (
         <button
-          key={action.id}
+          key={action.key}
           type="button"
           className={classes.actionMenuItem}
           role="menuitem"
           aria-keyshortcuts={action.hotkey}
           data-testid={`card-action-${action.id}`}
+          data-action-key={action.key}
           data-hotkey={action.hotkey}
           data-ability-index={action.abilityIndex}
           onClick={(ev) => {
@@ -1120,7 +1181,7 @@ function CardActionMenu({
           }}
         >
           <span>{action.label}</span>
-          <kbd className={classes.actionMenuHotkey}>{action.hotkey}</kbd>
+          {action.hotkey ? <kbd className={classes.actionMenuHotkey}>{action.hotkey}</kbd> : null}
         </button>
       ))}
     </div>
@@ -1154,6 +1215,7 @@ function AttachedGear({
   zIndex: number;
 }) {
   const engineCtx = useEngineOptional();
+  const { hasPendingAnimations } = useCyberpunkAnimationVisualState();
   const choiceSide = engineCtx?.humanSide ?? side ?? NO_SIDE;
   const choicePermission = useInteractionPermission(choiceSide, gear.cardId ?? "");
   const selectablePermission =
@@ -1204,7 +1266,9 @@ function AttachedGear({
 
   return (
     <div
-      className={[classes.gear, selectable ? classes.selectable : ""].filter(Boolean).join(" ")}
+      className={[classes.gear, selectable && !hasPendingAnimations ? classes.selectable : ""]
+        .filter(Boolean)
+        .join(" ")}
       style={
         {
           "--gear-offset": `${offsetPercent}%`,
@@ -1263,6 +1327,7 @@ function AttachedGear({
           data-choice-eligible="true"
           data-choice-side={selectablePermission?.side}
           data-choice-type={selectablePermission?.permission.interaction.actionId}
+          data-choice-label="Select"
           onClick={handleGearClick}
         />
       ) : null}
@@ -1270,15 +1335,28 @@ function AttachedGear({
   );
 }
 
-function buildAbilityBadges(rules: readonly EffectiveRule[], blockedByPlayedThisTurn: boolean) {
+function buildAbilityBadges(
+  rules: readonly EffectiveRule[],
+  keywords: readonly string[],
+  blockedByLag: boolean,
+) {
   const has = (rule: EffectiveRule) => rules.includes(rule);
+  const hasKeyword = (keyword: string) => keywords.includes(keyword);
   return [
-    blockedByPlayedThisTurn
+    blockedByLag
       ? {
-          id: "playedThisTurnCantAttack",
-          rule: "playedThisTurnCantAttack" as const,
-          label: "Just played: can't attack this turn",
+          id: "lagCantAttack",
+          rule: "lagCantAttack" as const,
+          label: "Lag: can't attack this turn",
           Icon: IconClockPause,
+        }
+      : null,
+    has("adrenaline") || hasKeyword("adrenaline")
+      ? {
+          id: "adrenaline",
+          rule: "adrenaline" as const,
+          label: "ADRENALINE: can attack the turn it's played",
+          Icon: IconRun,
         }
       : null,
     has("blocker")
@@ -1295,6 +1373,14 @@ function buildAbilityBadges(rules: readonly EffectiveRule[], blockedByPlayedThis
           rule: "cantAttack" as const,
           label: "Can't attack",
           Icon: IconSwordOff,
+        }
+      : null,
+    has("mustAttack")
+      ? {
+          id: "mustAttack",
+          rule: "mustAttack" as const,
+          label: "Must attack if able",
+          Icon: IconSwords,
         }
       : null,
     has("cantBeBlocked")
@@ -1317,6 +1403,14 @@ function buildAbilityBadges(rules: readonly EffectiveRule[], blockedByPlayedThis
 }
 
 function buildStatusBadges(effects: readonly CardActiveEffectView[]) {
+  const mustAttackSources = [
+    ...new Set(
+      effects
+        .filter((effect) => effect.rule === "mustAttack")
+        .map((effect) => effect.sourceName)
+        .filter(Boolean),
+    ),
+  ];
   const defeatSources = [
     ...new Set(
       effects
@@ -1325,15 +1419,24 @@ function buildStatusBadges(effects: readonly CardActiveEffectView[]) {
         .filter(Boolean),
     ),
   ];
-  if (defeatSources.length === 0) return [];
   return [
-    {
-      id: "defeatEndTurn",
-      rule: "defeatEndTurn" as const,
-      label: `Defeated at end of turn by ${defeatSources.join(", ")}`,
-      Icon: IconSkull,
-    },
-  ];
+    mustAttackSources.length > 0
+      ? {
+          id: "mustAttack",
+          rule: "mustAttack" as const,
+          label: `Must attack next turn if able. Source: ${mustAttackSources.join(", ")}`,
+          Icon: IconSwords,
+        }
+      : null,
+    defeatSources.length > 0
+      ? {
+          id: "defeatEndTurn",
+          rule: "defeatEndTurn" as const,
+          label: `Defeated at end of turn by ${defeatSources.join(", ")}`,
+          Icon: IconSkull,
+        }
+      : null,
+  ].filter((badge): badge is NonNullable<typeof badge> => Boolean(badge));
 }
 
 function signedNumber(value: number): string {

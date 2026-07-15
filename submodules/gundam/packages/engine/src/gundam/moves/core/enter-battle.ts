@@ -16,6 +16,7 @@ import type {
   CardEffect,
   EffectCondition,
   EffectDirective,
+  AttributeFilter,
   TargetFilter,
 } from "@tcg/gundam-types";
 import type { GundamMoveDefinition, GundamCardMeta, ReadonlyGundamG } from "../../types.ts";
@@ -23,9 +24,12 @@ import { canAttack, getEffectiveStats } from "../../rules/derived-state.ts";
 import { emitGundamEvent } from "../../events.ts";
 import { emitGundamLog } from "../../logging.ts";
 import { buildTargetResolutionContext } from "../../rules/derived-state.ts";
-import { evaluateCondition, evaluateTargetFilter } from "../../../runtime/target-dsl.ts";
+import {
+  evaluateAttributeFilter,
+  evaluateCondition,
+  evaluateTargetFilter,
+} from "../../../runtime/target-dsl.ts";
 import { attackStepOnEnter } from "../../lifecycle/battle-phase/attack-step.ts";
-import { rejectWithKey } from "./validation-error.ts";
 import type { RuntimeCard } from "../../../types/base-card.ts";
 import type { CardInstanceId } from "../../../types/branded.ts";
 
@@ -133,60 +137,26 @@ export const enterBattle: GundamMoveDefinition<"enterBattle"> = {
       return { valid: false, error: "This unit cannot attack", errorCode: "CANNOT_ATTACK" };
     }
 
-    if (
-      target === "direct" &&
-      getEffectiveStats(attackerId, g, framework.cards, framework).restrictions.includes(
-        "cannot-target-player",
-      )
-    ) {
+    const legalTargets = listLegalAttackTargets(attackerId, playerId, g, framework);
+    if (!legalTargets.includes(target)) {
+      if (
+        target === "direct" &&
+        getEffectiveStats(attackerId, g, framework.cards, framework).restrictions.includes(
+          "cannot-target-player",
+        )
+      ) {
+        return {
+          valid: false,
+          error: "This unit can't choose the enemy player as its attack target",
+          errorCode: "CANNOT_TARGET_PLAYER",
+        };
+      }
       return {
         valid: false,
-        error: "This unit can't choose the enemy player as its attack target",
-        errorCode: "CANNOT_TARGET_PLAYER",
+        error: "Target is not a legal attack target",
+        errorCode: "INVALID_TARGET",
       };
     }
-
-    if (target !== "direct") {
-      const isEnemyUnit = Object.keys(g.players)
-        .filter((id) => id !== playerId)
-        .some((oppId) => {
-          const oppField = framework.zones.getCards({ zone: "battleArea", playerId: oppId });
-          return oppField.includes(target);
-        });
-
-      if (!isEnemyUnit) {
-        return { valid: false, error: "Target must be an enemy unit", errorCode: "INVALID_TARGET" };
-      }
-    }
-
-    // Force-attack-target: RESTRICTS the attacker to only attack matching targets.
-    const forceTargetEffects = getForceAttackTargetPayloads(attackerId, playerId, g, framework);
-    if (forceTargetEffects.length > 0) {
-      const tgtCtx = buildTargetResolutionContext(g, playerId, framework, {
-        sourceCardId: attackerId,
-      });
-      const battleCards = getAllBattleAreaRuntimeCards(g, framework);
-      for (const payload of forceTargetEffects) {
-        const validTargets = payload.attackTargetId
-          ? [payload.attackTargetId]
-          : evaluateTargetFilter(payload.attackTarget, battleCards, tgtCtx);
-        if (!validTargets.includes(target as CardInstanceId)) {
-          return rejectWithKey(
-            "gundam.error.battle.mustAttackRequiredTarget",
-            {},
-            "INVALID_TARGET",
-          );
-        }
-      }
-    }
-
-    // Grant-attack-target-option: EXPANDS the attacker's valid target set
-    // (permissive / may-choose). If the target was already valid it's still
-    // accepted. If it was rejected by a prior check (e.g. future rested-
-    // target enforcement), having a matching grant overrides the rejection.
-    // Currently a no-op for validation since the engine doesn't enforce
-    // rested-target rules yet — but the continuous effect is registered so
-    // the grant shows up in `continuousEffects` and can be queried.
 
     return { valid: true };
   },
@@ -271,6 +241,7 @@ export function listLegalAttackTargets(
   g: ReadonlyGundamG,
   framework: FrameworkReadAPI,
 ): string[] {
+  if (!canAttack(attackerId, g, framework.cards, framework)) return [];
   const opponentIds = Object.keys(g.players).filter((id) => id !== playerId);
 
   // Rested enemy units are the only unit-type targets per the attack rules.
@@ -302,16 +273,47 @@ export function listLegalAttackTargets(
   const grantTargetEffects = g.continuousEffects.filter(
     (e) => e.targetId === attackerId && e.payload.kind === "grant-attack-target-option",
   );
+  const constantGrantTargetFilters = getConstantGrantAttackTargetFilters(
+    attackerId,
+    playerId,
+    g,
+    framework,
+  );
 
-  if (forceTargetEffects.length > 0 || grantTargetEffects.length > 0) {
+  if (
+    forceTargetEffects.length > 0 ||
+    grantTargetEffects.length > 0 ||
+    constantGrantTargetFilters.length > 0
+  ) {
     const tgtCtx = buildTargetResolutionContext(g, playerId, framework, {
       sourceCardId: attackerId,
     });
     const battleCards = getAllBattleAreaRuntimeCards(g, framework);
 
+    if (grantTargetEffects.length > 0 || constantGrantTargetFilters.length > 0) {
+      // Grants are permissive — union them into the set even if the card
+      // was otherwise filtered out (e.g. active enemy unit).
+      const granted = new Set<string>();
+      for (const effect of grantTargetEffects) {
+        if (effect.payload.kind !== "grant-attack-target-option") continue;
+        for (const id of evaluateTargetFilter(effect.payload.attackTarget, battleCards, tgtCtx)) {
+          granted.add(id as string);
+        }
+      }
+      for (const attackTarget of constantGrantTargetFilters) {
+        for (const id of evaluateTargetFilter(attackTarget, battleCards, tgtCtx)) {
+          granted.add(id as string);
+        }
+      }
+      for (const id of granted) {
+        if (!candidateIds.includes(id)) candidateIds.push(id);
+      }
+    }
+
     if (forceTargetEffects.length > 0) {
-      // Intersect candidate set with every force filter (multiple forces are
-      // additive restrictions: the target must satisfy all of them).
+      // Mandatory targets apply after every normal and permissive option has
+      // been assembled. A Unit that "may choose" an otherwise-illegal target
+      // still has to obey each active "must choose" effect.
       for (const payload of forceTargetEffects) {
         const allowed = new Set(
           payload.attackTargetId
@@ -325,24 +327,64 @@ export function listLegalAttackTargets(
         candidateIds = candidateIds.filter((id) => id !== DIRECT_TARGET && allowed.has(id));
       }
     }
+  }
 
-    if (grantTargetEffects.length > 0) {
-      // Grants are permissive — union them into the set even if the card
-      // was otherwise filtered out (e.g. active enemy unit).
-      const granted = new Set<string>();
-      for (const effect of grantTargetEffects) {
-        if (effect.payload.kind !== "grant-attack-target-option") continue;
-        for (const id of evaluateTargetFilter(effect.payload.attackTarget, battleCards, tgtCtx)) {
-          granted.add(id as string);
-        }
+  return candidateIds;
+}
+
+function getConstantGrantAttackTargetFilters(
+  attackerId: string,
+  playerId: string,
+  g: ReadonlyGundamG,
+  framework: FrameworkReadAPI,
+): TargetFilter[] {
+  const filters: TargetFilter[] = [];
+  const battleCards = getAllBattleAreaRuntimeCards(g, framework);
+
+  for (const sourceCard of battleCards) {
+    const sourceId = sourceCard.instanceId as string;
+    const sourceDef = framework.cards.getDefinition(sourceId) as Card | undefined;
+    if (!sourceDef?.effects?.length) continue;
+    const sourceOwner = sourceCard.ownerId as string;
+    if (sourceOwner !== playerId) continue;
+
+    const sourceCtx = buildTargetResolutionContext(g, playerId, framework, {
+      sourceCardId: sourceId,
+    });
+
+    for (const effect of sourceDef.effects as CardEffect[]) {
+      if (effect.type !== "constant") continue;
+
+      const gateUnitId =
+        sourceDef.type === "pilot"
+          ? Object.entries(g.pilotAssignments).find(([, pilotId]) => pilotId === sourceId)?.[0]
+          : sourceId;
+      const qualification = effect.activation.qualification as AttributeFilter | undefined;
+      if (qualification) {
+        const pilotId = gateUnitId ? g.pilotAssignments[gateUnitId] : undefined;
+        const pilotCard = pilotId ? framework.cards.get(pilotId) : undefined;
+        if (!pilotCard || !evaluateAttributeFilter(qualification, pilotCard, sourceCtx)) continue;
       }
-      for (const id of granted) {
-        if (!candidateIds.includes(id)) candidateIds.push(id);
+      const failedConditions = effect.activation.conditions?.filter(
+        (condition) => !evaluateCondition(condition as EffectCondition, sourceCtx),
+      );
+      if (failedConditions?.length) {
+        continue;
+      }
+
+      for (const directive of effect.directives) {
+        if (!("action" in directive)) continue;
+        const action = (directive as EffectDirective).action;
+        if (action.action !== "chooseAttackTarget") continue;
+        const affectedUnits = evaluateTargetFilter(action.unit, battleCards, sourceCtx);
+        if (affectedUnits.includes(attackerId as CardInstanceId)) {
+          filters.push(action.attackTarget);
+        }
       }
     }
   }
 
-  return candidateIds;
+  return filters;
 }
 
 type ForceAttackTargetPayload = {

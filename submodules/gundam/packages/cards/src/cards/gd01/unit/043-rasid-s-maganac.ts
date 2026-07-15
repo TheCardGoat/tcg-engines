@@ -4,6 +4,7 @@ export const gd01RasidSMaganac043: UnitCard = {
   cardNumber: "GD01-043",
   name: "Rasid's Maganac",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "green",
   traits: ["maganac corps"],
   id: "GD01-043",
@@ -41,6 +42,7 @@ export const gd01RasidSMaganac043: UnitCard = {
   cost: 2,
   ap: 2,
   hp: 3,
+  linkCondition: "(Maganac Corps) Trait",
   effect:
     "【Deploy】Choose 1 of your green Units. During this turn, it may choose an active enemy Unit with 4 or less AP as its attack target.<br>",
   effects: [

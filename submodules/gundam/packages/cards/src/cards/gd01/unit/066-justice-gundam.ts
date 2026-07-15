@@ -4,6 +4,7 @@ export const gd01JusticeGundam066: UnitCard = {
   cardNumber: "GD01-066",
   name: "Justice Gundam",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["triple ship alliance"],
   id: "GD01-066",
@@ -73,6 +74,7 @@ export const gd01JusticeGundam066: UnitCard = {
             action: "deployToken",
             token: {
               name: "Fatum-00",
+              printedCardNumber: "T-011",
               traits: ["triple ship alliance"],
               ap: 2,
               hp: 2,

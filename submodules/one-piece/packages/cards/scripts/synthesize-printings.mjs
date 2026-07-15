@@ -1,4 +1,5 @@
 // @ts-check
+/// <reference types="node" />
 /**
  * One-shot codemod: synthesize the cross-game identity model onto One Piece
  * card definitions (RFC §10 One Piece steps 1–6 / ADR-9 / ADR-11).
@@ -35,6 +36,7 @@ const CARDS_DIR = join(__dirname, "..", "src", "cards");
 /** @typedef {{ id: string; artId: string; setCode: string; collectorNumber: string; rarity: string; imageUrl: string }} Printing */
 
 const CARD_FILES = globSync("**/*.ts", { cwd: CARDS_DIR }).filter(
+  /** @param {string} rel */
   (rel) => !rel.endsWith(".i18n.ts") && basename(rel) !== "index.ts",
 );
 
@@ -219,7 +221,11 @@ for (const rel of CARD_FILES) {
     failures.push(`${rel}: id-line re-match failed`);
     continue;
   }
-  const next = text.replace(idLineRegex, (match) => `${match}${insertion}\n`);
+  const next = text.replace(
+    idLineRegex,
+    /** @param {string} match */
+    (match) => `${match}${insertion}\n`,
+  );
 
   writeFileSync(cardPath, next);
   processed += 1;

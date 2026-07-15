@@ -30,10 +30,6 @@ function restFriendlyCommand(): CommandCard {
 }
 
 describe("Gundam Throne Drei (GD04-041)", () => {
-  it("data triggers on any effect that rests this Unit", () => {
-    expect(gd04GundamThroneDrei041.effects?.[0]?.activation.timing).toEqual(["onRestedByEffect"]);
-  });
-
   describe("【Once per Turn】When this Unit is rested by an effect, set it as active.", () => {
     it("sets itself active after a friendly effect rests it", () => {
       const command = restFriendlyCommand();

@@ -1,156 +1,131 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  expectSuccess,
   activeResources,
+  createMockBase,
   createMockUnit,
-  createMockResource,
-  asPlayerId,
-  seedShieldsFromDeck,
+  expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
+import { gd01StrategicArms108 } from "../command/108-strategic-arms.ts";
 import { gd01Side7124 } from "./124-side-7.ts";
 
 describe("Side 7 (GD01-124)", () => {
-  it("【Burst】Deploy this card — flips Side 7 into baseSection on shield destruction", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd01Side7124] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
+  it("【Burst】 deploys the revealed Shield into its owner's Base section", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create({ play: [attacker] }, { shieldArea: [gd01Side7124] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, gd01Side7124.cardNumber, asPlayerId(PLAYER_TWO));
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({ kind: "optional", directiveIndex: -1 });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    engine.fireShieldBurst(shieldId);
-
-    const finalZone = engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey;
-    expect(finalZone).toBe(`baseSection:${PLAYER_TWO}`);
+    expect(p2.getCardZone(gd01Side7124)).toBe(`baseSection:${PLAYER_TWO}`);
   });
 
-  describe("【Deploy】Add 1 of your Shields to your hand.", () => {
-    it("moves 1 shield from shield area to hand when base is deployed", () => {
-      const engine = GundamTestEngine.create(
-        {
-          hand: [gd01Side7124],
-          resourceArea: activeResources(3),
-          deck: 5,
-        },
-        { deck: 5 },
-        { skipToMainPhase: true },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-
-      // Manually add shields (simulate setup shields)
-      for (let i = 0; i < 3; i++) {
-        engine.giveCard(asPlayerId(PLAYER_ONE), createMockResource().cardNumber, {
-          zone: "shieldArea",
-          playerId: PLAYER_ONE,
-        });
-      }
-
-      const shieldsBefore = p1.getCardsInZone("shieldArea").length;
-      const handBefore = p1.getHand().length;
-
-      expectSuccess(p1.deployBase(gd01Side7124));
-
-      // Base should be in baseSection, not battleArea
-      expect(p1.getCardsInZone("baseSection").length).toBe(1);
-      expect(p1.getCardsInZone("battleArea").length).toBe(0);
-
-      // 1 shield should have moved to hand
-      expect(p1.getCardsInZone("shieldArea").length).toBe(shieldsBefore - 1);
-      // Hand: lost base card (-1), gained shield (+1) = net 0
-      expect(p1.getHand().length).toBe(handBefore);
+  it("【Deploy】 adds one Shield to hand", () => {
+    const returnedShield = createMockUnit({ name: "Returned Shield" });
+    const engine = GundamTestEngine.create({
+      hand: [gd01Side7124],
+      shieldArea: [returnedShield],
+      resourceArea: activeResources(1),
     });
-
-    it("base has correct HP after deployment", () => {
-      const engine = GundamTestEngine.create(
-        {
-          hand: [gd01Side7124],
-          resourceArea: activeResources(3),
-          deck: 5,
-        },
-        { deck: 5 },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-
-      expectSuccess(p1.deployBase(gd01Side7124));
-
-      const baseId = p1.getCardsInZone("baseSection")[0]!;
-      expect(p1.getDamage(baseId)).toBe(0);
-    });
-
-    it("does not duplicate shield if no shields remain", () => {
-      const engine = GundamTestEngine.create(
-        {
-          hand: [gd01Side7124],
-          resourceArea: activeResources(3),
-          deck: 5,
-        },
-        { deck: 5 },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-
-      // No shields added — deploy effect should not crash
-      const result = p1.deployBase(gd01Side7124);
-      expectSuccess(result);
-
-      // Base still deployed successfully
-      expect(p1.getCardsInZone("baseSection").length).toBe(1);
-    });
-  });
-
-  it("【Activate･Main】Rest this Base：Choose 1 friendly Unit. It recovers 1 HP.", () => {
-    const friendlyUnit = createMockUnit({ level: 1, cost: 1, hp: 5 });
-    const engine = GundamTestEngine.create(
-      {
-        hand: [gd01Side7124],
-        play: [friendlyUnit],
-        resourceArea: activeResources(3),
-        deck: 5,
-      },
-      { deck: 5 },
-    );
     const p1 = engine.asPlayer(PLAYER_ONE);
 
     expectSuccess(p1.deployBase(gd01Side7124));
 
-    const unitId = p1.getCardsInZone("battleArea")[0]!;
-    const baseId = p1.getCardsInZone("baseSection")[0]!;
-    // Seed damage on the friendly unit so recoverHP has something to heal.
-    // Re-fetch state after each move — the draft returned by getG() is a
-    // snapshot, so holding a reference across moves would read stale data.
-    engine.getG().damage[unitId] = 3;
-
-    expectSuccess(p1.activateAbility(baseId, 0, { targets: [unitId] }));
-
-    expect(p1.getDamage(unitId)).toBe(2);
-    expect(p1.isExhausted(baseId)).toBe(true);
+    expect(p1.getCardZone(returnedShield)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getCardZone(gd01Side7124)).toBe(`baseSection:${PLAYER_ONE}`);
   });
 
-  describe("baseSection zone rules", () => {
-    it("rejects deploying a second base when one is already present", () => {
-      const engine = GundamTestEngine.create(
-        {
-          hand: [gd01Side7124, gd01Side7124],
-          resourceArea: activeResources(5),
-          deck: 5,
-        },
-        { deck: 5 },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-
-      // Deploy first base
-      expectSuccess(p1.deployBase(gd01Side7124));
-      expect(p1.getCardsInZone("baseSection").length).toBe(1);
-
-      // Try deploying a second base — should fail
-      const result = p1.deployBase(gd01Side7124);
-      expect(result.success).toBe(false);
-      if (!result.success) {
-        expect(result.errorCode).toBe("BASE_LIMIT_REACHED");
-      }
+  it("【Activate･Main】 rests Side 7 and recovers 1 HP from a legally damaged friendly Unit", () => {
+    const friendly = createMockUnit({ hp: 6, keywordEffects: [{ keyword: "Blocker" }] });
+    const engine = GundamTestEngine.create({
+      hand: [gd01StrategicArms108],
+      play: [friendly],
+      baseSection: [gd01Side7124],
+      resourceArea: activeResources(6),
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const friendlyId = p1.getCardsInZone("battleArea")[0]!;
+    const baseId = p1.getCardsInZone("baseSection")[0]!;
+
+    expectSuccess(p1.playCommand(gd01StrategicArms108));
+    expect(p1.getDamage(friendlyId)).toBe(2);
+    expectSuccess(p1.activateAbility(baseId, 0));
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "targetSelection") {
+      throw new Error("Expected Side 7 to ask which damaged friendly Unit to recover");
+    }
+    expect(choice.legalTargetIds).toEqual([friendlyId]);
+    expectSuccess(p1.resolveEffect({ targets: [friendlyId] }));
+
+    expect(p1.getDamage(friendlyId)).toBe(1);
+    expect(p1.isExhausted(baseId)).toBe(true);
+    expectFailure(p1.activateAbility(baseId, 0, { targets: [friendlyId] }), "CARD_EXHAUSTED");
+  });
+
+  it("rejects an enemy Unit as the recovery target", () => {
+    const friendly = createMockUnit({ hp: 5, keywordEffects: [{ keyword: "Blocker" }] });
+    const enemy = createMockUnit({ hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd01StrategicArms108],
+        play: [friendly],
+        baseSection: [gd01Side7124],
+        resourceArea: activeResources(6),
+      },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const baseId = p1.getCardsInZone("baseSection")[0]!;
+    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.playCommand(gd01StrategicArms108));
+    expectFailure(p1.activateAbility(baseId, 0, { targets: [enemyId] }), "ILLEGAL_TARGET");
+  });
+
+  it("places Side 7, lets its controller choose which Base remains, then resolves Deploy", () => {
+    const establishedBase = createMockBase({ name: "Established Base" });
+    const returnedShield = createMockUnit({ name: "Returned Shield" });
+    const engine = GundamTestEngine.create({
+      hand: [gd01Side7124],
+      shieldArea: [returnedShield],
+      baseSection: [establishedBase],
+      resourceArea: activeResources(1),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const establishedBaseId = p1.getCardsInZone("baseSection")[0]!;
+
+    expectSuccess(p1.deployBase(gd01Side7124));
+
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "targetSelection") {
+      throw new Error("Expected a Base-section replacement choice");
+    }
+    const visibleBases = p1.getCardsInZone("baseSection");
+    const side7Id = visibleBases.find((cardId) => cardId !== establishedBaseId)!;
+    expect(visibleBases).toEqual(expect.arrayContaining([establishedBaseId, side7Id]));
+    expect(choice).toMatchObject({
+      controllerId: PLAYER_ONE,
+      sourceCardId: side7Id,
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expect(choice.legalTargetIds).toEqual(expect.arrayContaining([establishedBaseId, side7Id]));
+    expect(p1.getBoardView().players[PLAYER_ONE]?.shieldCount).toBe(1);
+
+    expectSuccess(p1.resolveEffect({ targets: [establishedBaseId] }));
+
+    expect(p1.getCardZone(establishedBaseId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(side7Id)).toBe(`baseSection:${PLAYER_ONE}`);
+    expect(p1.getCardZone(returnedShield)).toBe(`hand:${PLAYER_ONE}`);
   });
 });

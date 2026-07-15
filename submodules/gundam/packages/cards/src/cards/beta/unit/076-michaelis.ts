@@ -4,6 +4,7 @@ export const betaMichaelis076: UnitCard = {
   cardNumber: "GD01-076",
   name: "Michaelis",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["academy"],
   id: "GD01-076_p1",
@@ -58,6 +59,7 @@ export const betaMichaelis076: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 3,
+  linkCondition: "(Academy) Trait",
   effect:
     "While there are 4 or more Command cards in your trash, this Unit gets AP+1 and HP+1.<br>",
   effects: [

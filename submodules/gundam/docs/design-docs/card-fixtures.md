@@ -11,11 +11,25 @@ For every card file `packages/cards/src/cards/<set>/<type>/<file>.ts` that has e
 
 there must be a sibling `<file>.test.ts` containing at least one `it(...)` / `test(...)` block that drives the card through a `GundamTestEngine` fixture.
 
+Sets under the strict behavior gate also require fixtures for vanilla cards.
+Deploying a vanilla card, paying its visible cost, and observing its public
+destination and stats are behaviors even when `effects` is empty.
+
 A fixture, in this context, is a tuple of:
 
 1. **Initial state** (zones, resources, hand) — built via `GundamTestEngine.create(...)`.
-2. **A command sequence** (the user action: `deploy`, `attack`, `fireShieldBurst`, etc.).
-3. **An assertion on the final state** — what zones contain, what was logged, what stats changed.
+2. **A legal player command sequence** using the same public moves the simulator
+   can submit: deploy, pair, attack, pass, and resolve a published interaction.
+3. **An assertion on the player-visible result**: public zone/count changes,
+   effective stats, damage, exhausted state, legal targets, winner, logs, or a
+   published interaction and its legal choices.
+
+The fixture owns setup only. After `GundamTestEngine.create(...)`, do not mutate
+the phase, inject an effect, seed a hidden identity, or call a test-only combat
+shortcut to manufacture the result. Reach it through player moves. Likewise,
+do not inspect `effects[]`, raw runtime state, pending-effect storage, or a
+face-down Deck/Shield identity. A simulator user cannot observe those details,
+so they cannot prove the interaction is usable.
 
 This is exactly what existing tests already do (see [`packages/cards/src/cards/beta/unit/`](../../packages/cards/src/cards/beta/unit/) for examples). We're formalizing the pattern, not inventing it.
 
@@ -31,16 +45,21 @@ The alternative — "write tests later, when we have time" — produces cards wh
 
 ## What the sensor catches
 
-- **Missing fixtures** — card with `effects[]` but no `*.test.ts`.
+- **Missing fixtures** — a covered card has no `*.test.ts`.
 - **Empty fixtures** — `*.test.ts` exists but contains no `it()` block.
+- **Structural tests** — tests inspect `effects[]` or object shape instead of behavior.
+- **Engine shortcuts** — tests read/mutate raw runtime state or execute effects directly.
+- **Hidden-zone leaks** — audited sets cannot capture Deck or face-down Shield identities.
+- **Skipped debt** — strict-set behavior cannot be committed as `skip` or `todo`.
 
 What it does **not** catch (and shouldn't pretend to):
 
 - A fixture that asserts the wrong thing.
-- A fixture that exercises only one of several `effects[]` entries.
+- A fixture that exercises only one of several printed behaviors.
 - A fixture that passes by accident because the assertion is trivially true.
 
-Those failure modes are caught by the `/review` skill (criterion 4: test depth) and by human review. The sensor is the floor, not the ceiling.
+Those failure modes require behavior review in addition to the computational
+sensor. The sensor is the floor, not the ceiling.
 
 ## Allowlist
 
@@ -48,14 +67,21 @@ Those failure modes are caught by the `/review` skill (criterion 4: test depth) 
 
 ## When you're implementing a card
 
-The flow is in [`.claude/skills/implement-card.md`](../../.claude/skills/implement-card.md). The fixture is the deliverable, not an afterthought. Specifically:
+The flow is in
+[`gundam-cards`](../../.agents/skills/gundam-cards/SKILL.md). The fixture is the
+deliverable, not an afterthought. Specifically:
 
 1. Read the card's `effect` text.
-2. Decompose into structured `effects[]` entries.
-3. **Write the fixture before or alongside the implementation** — the fixture tells you what shape `effects[]` needs.
-4. If a structural `effects[]` entry can't be exercised by a fixture, that's a smell — either the engine is missing something, or the entry is dead.
+2. Write the fixture from the player interaction: legal setup, legal moves, and
+   the visible result.
+3. **Write the fixture before or alongside the implementation.** Treat any
+   missing prompt, choice, legal-target query, or staged resolution as an
+   engine/protocol gap.
+4. Implement the card with game-agnostic actions and interaction protocols.
+5. Add positive, negative, expiry, ownership, and terminal-game cases where the
+   printed text makes those boundaries meaningful.
 
-This mirrors the pattern in Anthropic Labs' generator/evaluator harness: the contract is negotiated before the implementation, not after.
+The test contract is established before the implementation, not after.
 
 ## Future extensions
 

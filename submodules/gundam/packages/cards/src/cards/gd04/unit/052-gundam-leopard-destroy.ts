@@ -53,6 +53,7 @@ export const gd04GundamLeopardDestroy052: UnitCard = {
       },
       directives: [
         {
+          optional: true,
           action: {
             action: "dealDamage",
             amount: 2,
@@ -64,6 +65,7 @@ export const gd04GundamLeopardDestroy052: UnitCard = {
           },
         },
         {
+          dependsOnPrevious: true,
           action: {
             action: "dealDamage",
             amount: 2,

@@ -64,34 +64,34 @@ export const gd02Gwadan125: BaseCard = {
       directives: [
         {
           action: {
-            action: "addShieldToHand",
-            count: 1,
-          },
-        },
-        {
-          condition: { type: "isTurn", whose: "friendly" },
-          thenDirectives: [
-            {
-              action: {
-                action: "discard",
-                count: 1,
-                filter: {
-                  owner: "friendly",
-                  zone: "hand",
-                  count: 1,
-                  attributeFilters: [{ attribute: "color", comparison: "eq", value: "red" }],
+            action: "resolveThenQueue",
+            first: { action: "addShieldToHand", count: 1 },
+            condition: { type: "isTurn", whose: "friendly" },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
+                {
+                  action: {
+                    action: "discard",
+                    count: 1,
+                    filter: {
+                      owner: "friendly",
+                      zone: "hand",
+                      count: 1,
+                      attributeFilters: [{ attribute: "color", comparison: "eq", value: "red" }],
+                    },
+                  },
+                  optional: true,
                 },
-              },
-              optional: true,
+                {
+                  action: { action: "draw", count: 1 },
+                  dependsOnPrevious: true,
+                },
+              ],
+              sourceText: "You may discard 1 red card. If you do, draw 1.",
             },
-            {
-              action: {
-                action: "draw",
-                count: 1,
-              },
-              dependsOnPrevious: true,
-            },
-          ],
+          },
         },
       ],
       sourceText:

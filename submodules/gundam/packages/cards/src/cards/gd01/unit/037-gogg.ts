@@ -4,6 +4,7 @@ export const gd01Gogg037: UnitCard = {
   cardNumber: "GD01-037",
   name: "Gogg",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "green",
   traits: ["zeon"],
   id: "GD01-037",

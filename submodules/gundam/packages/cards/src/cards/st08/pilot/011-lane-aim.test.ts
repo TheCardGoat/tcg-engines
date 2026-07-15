@@ -7,22 +7,29 @@ import {
   createMockCommand,
   createMockUnit,
   expectSuccess,
-  getEffectiveStats,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { st08LaneAim011 } from "./011-lane-aim.ts";
 
 describe("Lane Aim (ST08-011)", () => {
   it("【Burst】Add this card to your hand.", () => {
-    const engine = GundamTestEngine.create({}, { deck: [st08LaneAim011] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create({ play: [attacker] }, { shieldArea: [st08LaneAim011] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `hand:${PLAYER_TWO}`,
-    );
+    expect(p2.getHand()).toContain(shieldId);
   });
 
   describe("When you draw with an effect, if this is a blue Unit, it gains <High-Maneuver> during this turn.", () => {
@@ -51,10 +58,7 @@ describe("Lane Aim (ST08-011)", () => {
       expectSuccess(p1.assignPilot(st08LaneAim011, host));
       expectSuccess(p1.playCommand(drawCommand));
 
-      const framework = engine.getRuntime().getFrameworkReadAPI();
-      expect(
-        getEffectiveStats(hostId!, engine.getG(), framework.cards, framework).keywords,
-      ).toContain("HighManeuver");
+      expect(p1.getVisibleCard(hostId!)?.keywords).toContain("HighManeuver");
     });
 
     it("does not grant High-Maneuver when the paired Unit is not blue", () => {
@@ -82,10 +86,7 @@ describe("Lane Aim (ST08-011)", () => {
       expectSuccess(p1.assignPilot(st08LaneAim011, host));
       expectSuccess(p1.playCommand(drawCommand));
 
-      const framework = engine.getRuntime().getFrameworkReadAPI();
-      expect(
-        getEffectiveStats(hostId!, engine.getG(), framework.cards, framework).keywords,
-      ).not.toContain("HighManeuver");
+      expect(p1.getVisibleCard(hostId!)?.keywords).not.toContain("HighManeuver");
     });
   });
 });

@@ -10,7 +10,7 @@ export const unitSecondhandBombusBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitSecondhandBombus",
   label: "Secondhand Bombus - blocker redirects direct attack",
   references: [
-    "packages/engine/src/cards/alpha/units/secondhand-bombus.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/secondhand-bombus.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

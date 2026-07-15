@@ -18,7 +18,7 @@ describe("Goro Takemura - Hands Unclean (box topper retail)", () => {
     expect(result.success).toBe(true);
     const goro = engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean, "field", P1);
     expect(goro.meta.spent).toBe(false);
-    expect(goro.meta.playedThisTurn).toBe(false);
+    expect(goro.meta.hasLag).toBe(false);
     expectAttackCandidate(engine, boxTopperRetailGoroTakemuraHandsUnclean, { as: P1 });
   });
 
@@ -37,22 +37,48 @@ describe("Goro Takemura - Hands Unclean (box topper retail)", () => {
     ).toBe(true);
   });
 
-  it("spends as BLOCKER to redirect a rival direct attack into a fight", () => {
+  it("does not block from the legend area before going solo", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [
-          {
-            card: boxTopperRetailGoroTakemuraHandsUnclean,
-            spent: false,
-            playedThisTurn: false,
-          },
-        ],
+        legendArea: [{ card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: false }],
       },
       {
-        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, hasLag: false }],
       },
     );
 
+    engine.judgeSetTurnMetadata({ activePlayerId: P2 }, { as: P1 });
+    engine.attackRival(welcomeToNightCityRetailDelamainCab, { as: P2 });
+    engine.resolveAttack({ as: P2 });
+    const goroId = engine.findCardId(boxTopperRetailGoroTakemuraHandsUnclean, "legendArea", P1);
+
+    const prompt = engine.getPrompt(P1);
+    const blockerMove = prompt.availableMoves.find((move) => move.moveId === "useBlocker");
+    expect(blockerMove).toBeUndefined();
+
+    const result = engine.executeMove("useBlocker", { args: { blockerId: goroId as string } }, P1);
+
+    expect(result).toMatchObject({ success: false, errorCode: "NOT_ON_FIELD" });
+    expect(
+      engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean, "legendArea", P1).meta.spent,
+    ).toBe(false);
+  });
+
+  it("goes solo before spending as BLOCKER to redirect a rival direct attack into a fight", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        legendArea: [{ card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: false }],
+        eddies: 5,
+      },
+      {
+        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, hasLag: false }],
+      },
+    );
+    const goroId = engine.findCardId(boxTopperRetailGoroTakemuraHandsUnclean, "legendArea", P1);
+
+    expect(engine.executeMove("goSolo", { args: { cardId: goroId as string } }, P1)).toMatchObject({
+      success: true,
+    });
     engine.judgeSetTurnMetadata({ activePlayerId: P2 }, { as: P1 });
     engine.attackRival(welcomeToNightCityRetailDelamainCab, { as: P2 });
     engine.resolveAttack({ as: P2 });
@@ -74,12 +100,12 @@ describe("Goro Takemura - Hands Unclean (box topper retail)", () => {
           {
             card: boxTopperRetailGoroTakemuraHandsUnclean,
             spent: true,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
       },
       {
-        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, hasLag: false }],
       },
     );
 

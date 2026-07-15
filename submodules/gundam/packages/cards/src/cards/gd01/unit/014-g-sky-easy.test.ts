@@ -1,84 +1,165 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
+  PLAYER_TWO,
+  activeResources,
+  createMockPilot,
   createMockUnit,
-  markAsLinkUnit,
-  expectSuccess,
   expectFailure,
-  getDamageCounter,
+  expectSuccess,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
 import { gd01GSkyEasy014 } from "./014-g-sky-easy.ts";
+import {
+  passTurnThroughPublicMoves,
+  resolveUnitBattle,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 
 describe("G-Sky Easy (GD01-014)", () => {
-  it("【During Link】【Activate·Action】recoverHP fires when linked", () => {
-    const friendly = createMockUnit({ ap: 2, hp: 4, level: 2 });
-
+  it("recovers 1 HP from a chosen friendly Unit during the end-phase Action Step while linked", () => {
+    const pilot = createMockPilot({ traits: ["white base team"], level: 1, cost: 1 });
+    const damaged = createMockUnit({ hp: 4 });
+    const defender = createMockUnit({ ap: 2, hp: 10 });
     const engine = GundamTestEngine.create(
-      { play: [gd01GSkyEasy014, friendly], deck: 5 },
-      { deck: 5 },
+      {
+        hand: [pilot],
+        play: [gd01GSkyEasy014, damaged],
+        resourceArea: activeResources(3),
+        shieldArea: [createMockUnit()],
+        deck: 5,
+      },
+      { play: [defender], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
     );
-    const rt = engine.getRuntime();
-    const gSkyId = rt.getInstanceIdByDefinition(
-      PLAYER_ONE as PlayerId,
-      gd01GSkyEasy014.cardNumber,
-    )!;
-    const friendlyId = engine
-      .asPlayer(PLAYER_ONE)
-      .getCardsInZone("battleArea")
-      .find((id) => id !== gSkyId)!;
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [gSkyId, damagedId] = p1.getCardsInZone("battleArea");
+    const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
-    // Seed 2 damage on the friendly so recoverHP has something to heal.
-    engine.getG().damage[friendlyId] = 2;
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [defenderId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+    expectSuccess(p1.assignPilot(pilot, gSkyId!));
+    resolveUnitBattle(engine, PLAYER_ONE, damagedId!, defenderId);
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.activateAbility(gSkyId!, 0));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([damagedId]),
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [damagedId!] }));
 
-    // Link the G-Sky Easy so the duringLink gate is satisfied.
-    markAsLinkUnit(engine, gSkyId);
-
-    // Move to action-step of end-phase so activate:action is legal.
-    engine.setPhase("end-phase");
-    engine.setStep("action-step");
-
-    expectSuccess(
-      engine.asPlayer(PLAYER_ONE).activateAbility(gSkyId, 0, { targets: [friendlyId] }),
-    );
-
-    // Should have recovered 1 HP → damage goes from 2 to 1.
-    expect(getDamageCounter(engine, friendlyId)).toBe(1);
+    expect(p1.getDamage(damagedId!)).toBe(1);
   });
 
-  it("ability does NOT fire when not linked (duringLink activation gate)", () => {
-    const friendly = createMockUnit({ ap: 2, hp: 4, level: 2 });
-
+  it("can choose a damaged enemy Unit because the printed target is any Unit", () => {
+    const pilot = createMockPilot({ traits: ["white base team"], level: 1, cost: 1 });
+    const enemy = createMockUnit({ ap: 2, hp: 4 });
     const engine = GundamTestEngine.create(
-      { play: [gd01GSkyEasy014, friendly], deck: 5 },
-      { deck: 5 },
+      {
+        hand: [pilot],
+        play: [gd01GSkyEasy014],
+        resourceArea: activeResources(3),
+        shieldArea: [createMockUnit()],
+        deck: 5,
+      },
+      { play: [enemy], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
     );
-    const rt = engine.getRuntime();
-    const gSkyId = rt.getInstanceIdByDefinition(
-      PLAYER_ONE as PlayerId,
-      gd01GSkyEasy014.cardNumber,
-    )!;
-    const friendlyId = engine
-      .asPlayer(PLAYER_ONE)
-      .getCardsInZone("battleArea")
-      .find((id) => id !== gSkyId)!;
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const gSkyId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
-    // Seed 2 damage on the friendly so recoverHP would have something to heal.
-    engine.getG().damage[friendlyId] = 2;
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [enemyId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+    expectSuccess(p1.assignPilot(pilot, gSkyId));
+    resolveUnitBattle(engine, PLAYER_ONE, gSkyId, enemyId);
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.activateAbility(gSkyId, 0));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([enemyId]),
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
 
-    // Do NOT link the G-Sky Easy — the duringLink gate should block activation.
-    engine.setPhase("end-phase");
-    engine.setStep("action-step");
+    expect(p2.getDamage(enemyId)).toBe(1);
+  });
 
-    const result = engine
-      .asPlayer(PLAYER_ONE)
-      .activateAbility(gSkyId, 0, { targets: [friendlyId] });
+  it("rejects a second activation during the same turn", () => {
+    const pilot = createMockPilot({ traits: ["white base team"], level: 1, cost: 1 });
+    const damaged = createMockUnit({ hp: 4 });
+    const defender = createMockUnit({ ap: 2, hp: 10 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [pilot],
+        play: [gd01GSkyEasy014, damaged],
+        resourceArea: activeResources(3),
+        shieldArea: [createMockUnit()],
+        deck: 5,
+      },
+      { play: [defender], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [gSkyId, damagedId] = p1.getCardsInZone("battleArea");
+    const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
-    // Should be rejected because the unit is not linked.
-    expectFailure(result);
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [defenderId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+    expectSuccess(p1.assignPilot(pilot, gSkyId!));
+    resolveUnitBattle(engine, PLAYER_ONE, damagedId!, defenderId);
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.activateAbility(gSkyId!, 0));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([damagedId]),
+    });
+    expectSuccess(p1.resolveEffect({ targets: [damagedId!] }));
+    expectSuccess(p2.passActionStep());
 
-    // Damage should remain unchanged.
-    expect(getDamageCounter(engine, friendlyId)).toBe(2);
+    expectFailure(
+      p1.activateAbility(gSkyId!, 0, { targets: [damagedId!] }),
+      "ABILITY_LIMIT_REACHED",
+    );
+  });
+
+  it("rejects activation when its paired Pilot does not satisfy the Link Condition", () => {
+    const pilot = createMockPilot({ traits: ["oz"], level: 1, cost: 1 });
+    const damaged = createMockUnit({ hp: 4 });
+    const defender = createMockUnit({ ap: 2, hp: 10 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [pilot],
+        play: [gd01GSkyEasy014, damaged],
+        resourceArea: activeResources(3),
+        shieldArea: [createMockUnit()],
+        deck: 5,
+      },
+      { play: [defender], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [gSkyId, damagedId] = p1.getCardsInZone("battleArea");
+    const defenderId = p2.getCardsInZone("battleArea")[0]!;
+
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [defenderId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+    expectSuccess(p1.assignPilot(pilot, gSkyId!));
+    resolveUnitBattle(engine, PLAYER_ONE, damagedId!, defenderId);
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+
+    expectFailure(p1.activateAbility(gSkyId!, 0, { targets: [damagedId!] }), "CONDITIONS_NOT_MET");
+    expect(p1.getDamage(damagedId!)).toBe(2);
   });
 });

@@ -1,0 +1,12 @@
+{
+  "opponent": "default",
+  "matchesPerEval": 2,
+  "iterations": 2,
+  "seed": "cyberpunk-self-improve-smoke",
+  "maxSteps": 500,
+  "evaluation": {
+    "minimumBlocks": 2,
+    "maximumBlocks": 4,
+    "batchSize": 2
+  }
+}

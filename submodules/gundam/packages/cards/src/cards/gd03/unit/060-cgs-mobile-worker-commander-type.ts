@@ -83,6 +83,7 @@ export const gd03CgsMobileWorkerCommanderType060: UnitCard = {
               ap: 1,
               hp: 1,
               deployState: "rested",
+              printedCardNumber: "T-015",
             },
           },
         },

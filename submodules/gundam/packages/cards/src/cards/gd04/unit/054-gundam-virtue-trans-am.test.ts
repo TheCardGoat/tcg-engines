@@ -20,7 +20,10 @@ describe("Gundam Virtue (Trans-Am) (GD04-054)", () => {
     const virtueId = p1.getCardsInZone("battleArea")[0]!;
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.resolveCombat({ attackerId: virtueId, target: enemyId });
+    expectSuccess(p1.enterBattle(virtueId, enemyId));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
 
     expect(p2.getCardsInZone("trash")).toContain(enemyId);
   });

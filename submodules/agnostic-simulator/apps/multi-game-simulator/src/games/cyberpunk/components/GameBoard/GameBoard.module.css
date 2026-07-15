@@ -350,7 +350,8 @@
   padding: 0 22px 18px;
 }
 
-.trashViewerBody :global(.card-grid) {
+.trashViewerBody :global(.card-grid),
+.trashViewerBody :global(.target-filter-modal-grid) {
   min-height: 180px;
   max-height: min(52vh, 420px);
   grid-template-columns: repeat(auto-fit, minmax(150px, max-content));
@@ -367,6 +368,14 @@
 
 .trashViewerBody :global(.card-grid > [data-sim-entity-id]) {
   justify-self: center;
+}
+
+.trashViewerBody :global(.target-filter-modal-grid > [data-sim-entity-id]) {
+  justify-self: center;
+}
+
+.trashViewerCard {
+  width: min(126px, 100%);
 }
 
 .trashViewerBody :global([data-testid="card"]) {

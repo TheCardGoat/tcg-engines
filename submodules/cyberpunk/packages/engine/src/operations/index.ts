@@ -47,7 +47,7 @@ export interface CardOperations {
     toZone: CardZone,
     opts?: { detachAfterMove?: boolean },
   ): void;
-  setPlayedThisTurn(cardId: CardInstanceId, value: boolean): void;
+  setHasLag(cardId: CardInstanceId, value: boolean): void;
   setAttackedThisTurn(cardId: CardInstanceId, value: boolean): void;
 }
 
@@ -313,9 +313,9 @@ export function createOperations(
       }
     },
 
-    setPlayedThisTurn(cardId, value) {
+    setHasLag(cardId, value) {
       const c = G.cardIndex[cardId as string];
-      if (c) c.meta.playedThisTurn = value;
+      if (c) c.meta.hasLag = value;
     },
 
     setAttackedThisTurn(cardId, value) {
@@ -459,7 +459,7 @@ export function createOperations(
       for (const cardId of p.zones.field) {
         const c = G.cardIndex[cardId as string];
         if (c) {
-          c.meta.playedThisTurn = false;
+          c.meta.hasLag = false;
           c.meta.hasAttackedThisTurn = false;
         }
       }
@@ -489,6 +489,7 @@ export function createOperations(
         dieType: die.dieType,
         result: faceValue,
         playerId,
+        origin: "gainGig",
       });
       events.push({
         type: "gigDieMoved",

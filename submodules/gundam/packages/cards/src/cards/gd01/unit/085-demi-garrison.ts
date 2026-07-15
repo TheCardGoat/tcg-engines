@@ -4,6 +4,7 @@ export const gd01DemiGarrison085: UnitCard = {
   cardNumber: "GD01-085",
   name: "Demi Garrison",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["academy"],
   id: "GD01-085",

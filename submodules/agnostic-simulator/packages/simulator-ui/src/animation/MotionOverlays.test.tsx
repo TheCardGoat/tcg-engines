@@ -1,8 +1,8 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vite-plus/test";
 
-import { BeamMotionOverlay, PhaseMotionOverlay } from "./MotionOverlays";
-import type { BeamOverlayState, PhaseOverlayState } from "./motionTypes";
+import { BeamMotionOverlay, CardMotionOverlay, PhaseMotionOverlay } from "./MotionOverlays";
+import type { BeamOverlayState, CardOverlayState, PhaseOverlayState } from "./motionTypes";
 
 const baseOverlay: BeamOverlayState = {
   id: "combat-plan:combat-step",
@@ -71,6 +71,102 @@ describe("BeamMotionOverlay combat badges", () => {
     expect(markup).toContain('data-detail-label="STEALS 2 GIGS"');
     expect(markup).toContain("STEALS 2 GIGS");
     expect(markup).toContain('data-result-label="IMPACT"');
+  });
+});
+
+describe("CardMotionOverlay die rendering", () => {
+  test("renders moving dice as compact tokens instead of generic card detail panels", () => {
+    const overlay: CardOverlayState = {
+      id: "gain-gig:step-0",
+      planId: "gain-gig",
+      stepId: "step-0",
+      kind: "move",
+      entity: {
+        id: "gig-d6",
+        title: "D6",
+        subtitle: "Gig die",
+        kind: "die",
+        ownerId: "p1",
+        face: "public",
+        states: ["active"],
+        stats: [{ label: "Face", value: "3" }],
+        traits: ["d6"],
+        dataAttributes: { "data-face": "3" },
+      },
+      from: { left: 20, top: 30, width: 36, height: 36 },
+      to: { left: 100, top: 120, width: 36, height: 36 },
+      sourceFace: "public",
+      destinationFace: "public",
+      delayMs: 0,
+      durationMs: 360,
+    };
+
+    const markup = renderToStaticMarkup(
+      <CardMotionOverlay
+        overlay={overlay}
+        reduced
+        visible
+        onComplete={() => {
+          // Test render only.
+        }}
+      />,
+    );
+
+    expect(markup).toContain('data-testid="motion-die-face"');
+    expect(markup).toContain('data-card-kind="die"');
+    expect(markup).toContain('data-face="3"');
+    expect(markup).toContain(">3</span>");
+    expect(markup).not.toContain('data-testid="card"');
+    expect(markup).not.toContain("Gig die | die");
+    expect(markup).not.toContain(">DIE</span>");
+    expect(markup).not.toContain(">FACE</span>");
+  });
+});
+
+describe("CardMotionOverlay geometry guards", () => {
+  test("clamps oversized card overlay rectangles before rendering", () => {
+    const overlay: CardOverlayState = {
+      id: "bad-geometry:step-0",
+      planId: "bad-geometry",
+      stepId: "step-0",
+      kind: "move",
+      entity: {
+        id: "unit-1",
+        title: "Unit",
+        subtitle: "Unit",
+        kind: "unit",
+        ownerId: "p1",
+        face: "public",
+        states: [],
+        stats: [],
+        traits: [],
+        imageUrl: "unit.webp",
+        backImageUrl: "back.webp",
+      },
+      from: { left: 0, top: 0, width: 900, height: 1200 },
+      to: { left: 0, top: 0, width: 900, height: 1200 },
+      sourceFace: "public",
+      destinationFace: "public",
+      delayMs: 0,
+      durationMs: 360,
+    };
+
+    const markup = renderToStaticMarkup(
+      <CardMotionOverlay
+        overlay={overlay}
+        reduced
+        visible
+        onComplete={() => {
+          // Test render only.
+        }}
+      />,
+    );
+
+    expect(markup).toContain('data-testid="motion-card-overlay"');
+    expect(markup).toContain("width:240px");
+    expect(markup).toContain("height:320px");
+    expect(markup).not.toContain("width:900px");
+    expect(markup).not.toContain("height:1200px");
   });
 });
 

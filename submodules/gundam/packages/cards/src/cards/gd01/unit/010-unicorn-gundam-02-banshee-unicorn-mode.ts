@@ -4,6 +4,7 @@ export const gd01UnicornGundam02BansheeUnicornMode010: UnitCard = {
   cardNumber: "GD01-010",
   name: "Unicorn Gundam 02 Banshee (Unicorn Mode)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-010",
@@ -41,6 +42,7 @@ export const gd01UnicornGundam02BansheeUnicornMode010: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 3,
+  linkCondition: "(Cyber-Newtype) Trait",
   effect: "【When Paired】Choose 1 enemy Unit with 3 or less HP. Rest it.<br>",
   effects: [
     {

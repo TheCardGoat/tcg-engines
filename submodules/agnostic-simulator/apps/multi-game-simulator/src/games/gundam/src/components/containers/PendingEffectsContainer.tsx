@@ -9,6 +9,7 @@ import type {
   DeckLookConfirmResult,
   GameCardData,
   PendingEffect,
+  PendingEffectChoiceOption,
   PendingEffectKind,
 } from "../ui/types.ts";
 import { usePendingEffectSelection } from "../ui/pending-effect-selection-context.tsx";
@@ -43,13 +44,6 @@ export function PendingEffectsContainer() {
         }),
       );
       return;
-    }
-    if (prompt.kind === "ordering") {
-      report(
-        adapter.submit(asMoveName("resolveEffect"), {
-          pendingEffectId: prompt.effectId,
-        }),
-      );
     }
   }, [prompt, adapter, report, pendingEffectSelection]);
 
@@ -124,7 +118,9 @@ export function PendingEffectsContainer() {
           ? "choose-one"
           : prompt.kind === "deckLook"
             ? "deck-look"
-            : "confirm";
+            : prompt.kind === "ordering"
+              ? "choose-one"
+              : "confirm";
 
   const chooseOptions =
     prompt.kind === "chooseOne"
@@ -137,15 +133,22 @@ export function PendingEffectsContainer() {
               adapter.submit(asMoveName("resolveEffect"), {
                 // Thread `pendingEffectId` so the click resolves the
                 // intended modal head even when the priority head shifts
-                // mid-resolution (rule 10-1-6-5 ordering paths). Mirrors
-                // the `ordering` branch above.
+                // mid-resolution (rule 10-1-6-5 ordering paths).
                 pendingEffectId: prompt.effectId,
                 chooseOneAnswers: { [prompt.directiveIndex]: opt.index },
               }),
             );
           },
         }))
-      : undefined;
+      : prompt.kind === "ordering"
+        ? pendingOrderingOptions(prompt.candidates, (pendingEffectId) => {
+            report(
+              adapter.submit(asMoveName("resolveEffect"), {
+                pendingEffectId,
+              }),
+            );
+          })
+        : undefined;
 
   const effect: PendingEffect = {
     id: prompt.effectId,
@@ -177,6 +180,7 @@ export function PendingEffectsContainer() {
             directiveIndex: prompt.directiveIndex,
             returnMode: prompt.returnMode,
             remainingDestination: prompt.remainingDestination,
+            randomizeRemainingToBottom: prompt.randomizeRemainingToBottom,
             tutorDestination: prompt.tutorDestination,
             legalTutorIds: prompt.legalTutorCardIds,
             acceptOptionalDirectiveIndex: prompt.acceptOptionalDirectiveIndex,
@@ -212,6 +216,17 @@ export function PendingEffectsContainer() {
       )}
     </>
   );
+}
+
+export function pendingOrderingOptions(
+  candidates: readonly { readonly effectId: string; readonly label: string }[],
+  onSelect: (pendingEffectId: string) => void,
+): readonly PendingEffectChoiceOption[] {
+  return candidates.map((candidate, index) => ({
+    index,
+    label: candidate.label,
+    onClick: () => onSelect(candidate.effectId),
+  }));
 }
 
 const TOKEN_PRINTINGS_BY_NAME = new Map(
@@ -250,8 +265,20 @@ function cardDefinitionToPreview(def: Card): GameCardData {
 }
 
 function setOf(def: Card): string | undefined {
+  const selectedPrinting = selectedPrintingOf(def);
+  const selectedSet = selectedPrinting?.set?.code ?? def.set?.code;
+  if (selectedSet) return selectedSet.toLowerCase();
+
   const prefix = def.cardNumber.split("-")[0];
   return prefix ? prefix.toLowerCase() : undefined;
+}
+
+function selectedPrintingOf(def: Card): Card["printings"][number] | undefined {
+  const selectedPrintingId = (def as { selectedPrintingId?: string }).selectedPrintingId;
+  if (!selectedPrintingId) return def.printings?.[0];
+  return (
+    def.printings?.find((printing) => printing.id === selectedPrintingId) ?? def.printings?.[0]
+  );
 }
 
 function subtitleForPreview(def: Card): string {

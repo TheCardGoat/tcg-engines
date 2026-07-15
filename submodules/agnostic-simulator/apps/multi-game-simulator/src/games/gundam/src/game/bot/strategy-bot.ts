@@ -1,6 +1,6 @@
 import {
   asPlayerId,
-  greedyLegalStrategy,
+  getSafeGundamAutomatedActionStrategyOption,
   takeAutomatedActionWithFallback,
   type BotDecisionSink,
   type CandidateStrategy,
@@ -140,7 +140,7 @@ export function attachStrategyBot(
   }
 
   const player = asPlayerId(playerName) as PlayerId;
-  let strategy = options.strategy ?? greedyLegalStrategy;
+  let strategy = options.strategy ?? getSafeGundamAutomatedActionStrategyOption().strategy;
   let speed: BotSpeed = options.speed ?? "balanced";
   let mode: BotPlayMode = options.playMode ?? "auto";
   let timer: ReturnType<typeof setTimeout> | null = null;

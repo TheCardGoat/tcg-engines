@@ -196,7 +196,3 @@ Test animations thoroughly:
 - **Adds value**: Makes interface clearer or more delightful
 
 Remember: Motion should enhance understanding and provide feedback, not just add decoration. Animate with purpose, respect performance constraints, and always consider accessibility. Great animation is invisible - it just makes everything feel right.
-
-## MANUAL MIGRATION REQUIRED
-
-Review unsupported Claude skill fields manually: `args`, `required`, `user-invokable`.

@@ -7,7 +7,7 @@ import {
   type MoveLog,
 } from "../src/logging/index.ts";
 import { CyberpunkTestEngine } from "../src/testing/index.ts";
-import { alphaSatoriSwordOfSaburo } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSatoriSwordOfSaburo } from "@tcg/cyberpunk-cards";
 
 const P1 = createPlayerId("p1");
 const P2 = createPlayerId("p2");
@@ -148,7 +148,7 @@ describe("command move log coverage", () => {
 
   test("sellCard emits a typed card log", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
-      { hand: [alphaSatoriSwordOfSaburo], deck: 10, fixerDice: ["d4"] },
+      { hand: [welcomeToNightCityRetailSatoriSwordOfSaburo], deck: 10, fixerDice: ["d4"] },
       { deck: 10, fixerDice: ["d4"] },
       { skipSetup: false, autoGainGig: false },
     );
@@ -159,11 +159,11 @@ describe("command move log coverage", () => {
     const dieId = choice?.type === "gainGig" ? choice.payload.allowedDieIds[0] : undefined;
     engine.gainGig(dieId as string, { as: active });
 
-    const result = engine.sellCard(alphaSatoriSwordOfSaburo, { as: active });
+    const result = engine.sellCard(welcomeToNightCityRetailSatoriSwordOfSaburo, { as: active });
     const log = result.moveLogs.find((entry) => entry.type === "sellCard");
     expect(log).toMatchObject({
       type: "sellCard",
-      cardName: alphaSatoriSwordOfSaburo.displayName,
+      cardName: welcomeToNightCityRetailSatoriSwordOfSaburo.displayName,
     });
   });
 });

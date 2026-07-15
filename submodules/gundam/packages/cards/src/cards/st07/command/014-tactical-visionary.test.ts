@@ -10,22 +10,6 @@ import {
 import { st07TacticalVisionary014 } from "./014-tactical-visionary.ts";
 
 describe("Tactical Visionary (ST07-014)", () => {
-  it("data encodes a top-3 CB Unit/Pilot tutor", () => {
-    const directive = st07TacticalVisionary014.effects?.[0]?.directives[0];
-
-    if (!directive || !("action" in directive)) throw new Error("Unexpected directive shape");
-    expect(directive.action).toEqual({
-      action: "lookAtTopDeck",
-      count: 3,
-      return: "chooseTop",
-      tutorFilter: {
-        owner: "friendly",
-        cardType: ["unit", "pilot"],
-        attributeFilters: [{ attribute: "trait", comparison: "includes", value: "cb" }],
-      },
-    });
-  });
-
   it("tutors a CB Pilot from the top 3 into hand", () => {
     const cbPilot = createMockPilot({ traits: ["cb"] });
     const nonMatch1 = createMockUnit({ traits: ["zeon"] });
@@ -36,15 +20,23 @@ describe("Tactical Visionary (ST07-014)", () => {
       deck: [nonMatch1, cbPilot, nonMatch2],
     });
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const [firstId, cbPilotId, thirdId] = p1.getCardsInZone("deck");
 
     expectSuccess(p1.playCommand(st07TacticalVisionary014));
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice).toMatchObject({ kind: "deckLook", legalTutorCardIds: [expect.any(String)] });
+    if (choice?.kind !== "deckLook") throw new Error("Expected a deck-look choice");
+    const cbPilotId = choice.legalTutorCardIds[0]!;
     expectSuccess(
       p1.resolveEffect({
-        deckLookAnswers: { 0: { tutorCardId: cbPilotId!, toBottom: [firstId!, thirdId!] } },
+        deckLookAnswers: {
+          [choice.directiveIndex]: {
+            tutorCardId: cbPilotId,
+            toBottom: choice.revealedCardIds.filter((id) => id !== cbPilotId),
+          },
+        },
       }),
     );
 
-    expect(p1.getHand().some((id) => id.includes(`_${cbPilot.cardNumber}_`))).toBe(true);
+    expect(p1.getHand()).toContain(cbPilotId);
   });
 });

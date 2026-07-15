@@ -1,8 +1,9 @@
-import { useEffect, useId, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useId, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import {
   IconArrowBarToDown,
   IconArrowBarToUp,
+  IconKeyboard,
   IconListDetails,
   IconMaximize,
   IconMinus,
@@ -15,6 +16,8 @@ import {
   type PendingChoice,
 } from "@tcg/cyberpunk-engine";
 import {
+  getGearAttachTargets,
+  getProgramSpatialTargets,
   PLAYER_SIDE_TO_ID,
   useBoardMode,
   useEngine,
@@ -30,19 +33,39 @@ import {
 } from "../../engine/attackTriggers";
 import { useMoveSelection, type DirectCardMoveId } from "../GameBoard/MoveSelectionContext";
 import { CardNameToken } from "../CardDisplay/CardNameToken";
-import { choiceModalActionFromInteractionView } from "./choiceModalAction";
+import {
+  choiceActionHasRenderableDrawerContent,
+  choiceModalActionFromInteractionView,
+  getTargetPromptPresentation,
+} from "./choiceModalAction";
+import {
+  buildAdjustGigOptions,
+  type AdjustGigOption as AdjustGigPromptOption,
+} from "../adjustGigOptions";
 import {
   setChoiceModalOpen,
   setChoiceModalMinimized,
+  useChoiceModalExplicitlyClosed,
   useChoiceModalMinimized,
   useChoiceModalOpen,
 } from "./choiceModalState";
+import { showBlockedPassTurnNotification } from "../blockedPassFeedback";
 import classes from "./PromptBanner.module.css";
 
 type BannerPosition = "top" | "bottom";
 
+const GIG_COPY_SOURCE_EVENT = "cyberpunk:gig-copy-source";
+const PASS_CONFIRM_HOTKEY = "Space";
+
+interface GigCopySourceEventDetail {
+  requestId: string;
+  label: string;
+  value: number;
+}
+
 interface PromptBannerProps {
   side: Side;
+  surface?: "desktop" | "mobile";
   compact?: boolean;
   /** When set, the banner highlights the verb that's currently armed. */
   armedVerb?: MoveId | null;
@@ -56,6 +79,10 @@ interface PromptBannerProps {
   onToggleMinimize?: () => void;
   /** Toggle between top and bottom anchors. */
   onTogglePosition?: () => void;
+  /** Temporary desktop-only board placement escape hatch for target prompts. */
+  promptPlacement?: "player" | "rival";
+  /** Move the containing prompt panel between player and rival board areas. */
+  onTogglePromptPlacement?: () => void;
   /** Keep the normal action command row visible outside forced choices. */
   showActionPrompt?: boolean;
 }
@@ -66,7 +93,13 @@ interface HeaderActionsProps {
   onToggleMinimize?: () => void;
   onTogglePosition?: () => void;
   extraAction?: ReactNode;
+  inline?: boolean;
 }
+
+type AdjustGigPromptPayload = Extract<
+  NonNullable<ReturnType<typeof useNativePromptPresentation>["choice"]>,
+  { type: "chooseTarget" }
+>["payload"];
 
 function HeaderActions({
   minimized,
@@ -74,12 +107,16 @@ function HeaderActions({
   onToggleMinimize,
   onTogglePosition,
   extraAction,
+  inline = false,
 }: HeaderActionsProps) {
   if (!onToggleMinimize && !onTogglePosition && !extraAction) {
     return null;
   }
   return (
-    <div className={classes.headerActions} data-testid="prompt-banner-header-actions">
+    <div
+      className={`${classes.headerActions}${inline ? ` ${classes.headerActionsInline}` : ""}`}
+      data-testid="prompt-banner-header-actions"
+    >
       {extraAction}
       {onTogglePosition ? (
         <button
@@ -180,6 +217,7 @@ function pendingChoiceSource(
  */
 export function PromptBanner({
   side,
+  surface = "desktop",
   compact = false,
   armedVerb,
   onArmVerb,
@@ -187,49 +225,124 @@ export function PromptBanner({
   position = "bottom",
   onToggleMinimize,
   onTogglePosition,
+  promptPlacement = "player",
+  onTogglePromptPlacement,
   showActionPrompt = true,
 }: PromptBannerProps) {
   const mode = useBoardMode(side);
   const prompt = useNativePromptPresentation(side);
   const interactionView = useEngineInteractionView(side);
-  const { canUndo, dispatch, matchState } = useEngine();
+  const { canUndo, dispatch, effectCardTargetSelection, matchState, submitEffectCardTargets } =
+    useEngine();
   const moveSelection = useMoveSelection();
   const confirmTitleId = useId();
   const selectedMove =
     moveSelection.selection?.side === side ? moveSelection.selection.moveId : armedVerb;
+  const selectedDirectMove = selectedMove && isDirectCardMove(selectedMove) ? selectedMove : null;
+  const selectedSourceCardId =
+    moveSelection.selection?.side === side ? moveSelection.selection.sourceCardId : undefined;
+  const selectedSourceCard = selectedSourceCardId
+    ? matchState.G.cardIndex[selectedSourceCardId]
+    : undefined;
+  const selectedSourceDef = selectedSourceCard ? defOf(selectedSourceCard) : null;
+  const selectedPlayCardTargeting =
+    selectedDirectMove === "playCard" &&
+    selectedSourceDef !== null &&
+    (selectedSourceDef.type === "program" || selectedSourceDef.type === "gear");
+  const selectedPlayTargetIds =
+    selectedPlayCardTargeting && selectedSourceCardId
+      ? selectedSourceDef.type === "gear"
+        ? getGearAttachTargets({ interactionView }, selectedSourceCardId, "gear")
+        : getProgramSpatialTargets({ matchState, side, interactionView }, selectedSourceCardId)
+      : [];
+  const selectedPlayTargetRequestId =
+    selectedPlayTargetIds.length > 0 && selectedSourceCardId
+      ? ["selected-play-target", side, selectedSourceCardId, selectedPlayTargetIds.join("|")].join(
+          ":",
+        )
+      : null;
   const inSetup = matchState.G.gamePhase === "setup";
   const gamePhase = matchState.G.gamePhase;
   const stealChoice = prompt.choice?.type === "chooseGigsToSteal" ? prompt.choice : null;
   const [selectedStealGigIds, setSelectedStealGigIds] = useState<string[]>([]);
+  const [selectedInlineGigIds, setSelectedInlineGigIds] = useState<string[]>([]);
   const [confirmingPassWithAttackers, setConfirmingPassWithAttackers] = useState(false);
   const shouldConfirmPass =
     gamePhase === "main" &&
     !matchState.G.attackState &&
     interactionViewHasAttackers(interactionView);
-  const modalAction = choiceModalActionFromInteractionView(interactionView.actions, matchState);
-  const targetModalAction = choiceModalActionFromInteractionView(
-    interactionView.actions,
+  const modalAction = choiceModalActionFromInteractionView(interactionView.actions, matchState, {
+    visibleHandOwnerId: PLAYER_SIDE_TO_ID[side],
+  });
+  const targetPromptPresentation = getTargetPromptPresentation({
+    actions: interactionView.actions,
     matchState,
-    { includeSpatialTargets: true },
-  );
+    selectedPlayTargetRequestId,
+    choice: prompt.choice,
+    visibleHandOwnerId: PLAYER_SIDE_TO_ID[side],
+  });
+  const targetModalAction = targetPromptPresentation.action;
+  const targetModalRequestId =
+    targetPromptPresentation.presentation === "drawer" ||
+    targetPromptPresentation.presentation === "spatial"
+      ? targetPromptPresentation.requestId
+      : null;
   const modalMinimized = useChoiceModalMinimized(side, modalAction?.requestId);
-  const targetModalOpen = useChoiceModalOpen(side, targetModalAction?.requestId);
+  const targetModalMinimized = useChoiceModalMinimized(side, targetModalRequestId ?? undefined);
+  const targetModalOpen = useChoiceModalOpen(side, targetModalRequestId ?? undefined);
+  const targetModalExplicitlyClosed = useChoiceModalExplicitlyClosed(
+    side,
+    targetModalRequestId ?? undefined,
+  );
+  const orderedGigCopyActive = isOrderedGigCopyChoice(prompt.choice);
+  const orderedGigCopyRequestId = orderedGigCopyActive
+    ? currentActionRequestId(interactionView, "resolveEffectTarget")
+    : null;
+  const [gigCopySource, setGigCopySource] = useState<GigCopySourceEventDetail | null>(null);
+  const hasTargetModalAction =
+    (targetModalAction &&
+      targetModalAction.id !== "resolveTrigger" &&
+      targetModalAction.id !== "resolveScry" &&
+      choiceActionHasRenderableDrawerContent(targetModalAction)) ||
+    targetPromptPresentation.presentation === "drawer" ||
+    targetPromptPresentation.presentation === "spatial";
   const showTargetModalAction =
-    mode === "select-target" &&
-    targetModalAction !== null &&
-    targetModalAction.id !== "resolveTrigger" &&
-    targetModalAction.id !== "resolveSearchDeck";
-  const targetModalButton =
-    showTargetModalAction && !compact ? (
+    (mode === "select-target" || selectedPlayTargetRequestId !== null) &&
+    targetModalRequestId !== null &&
+    hasTargetModalAction;
+  const targetModalButton = showTargetModalAction ? (
+    <button
+      type="button"
+      className={`${classes.iconButton} ${classes.targetListButton}`}
+      data-testid="prompt-target-modal-open"
+      aria-label={surface === "mobile" ? "Show valid targets" : "Open choice modal"}
+      title={surface === "mobile" ? "Show valid targets" : "Choice Modal"}
+      onClick={() => setChoiceModalOpen(side, targetModalRequestId!, true)}
+    >
+      <IconListDetails size={surface === "mobile" ? 22 : 14} stroke={1.8} />
+    </button>
+  ) : null;
+  const promptPlacementButton =
+    (mode === "select-target" || selectedPlayTargetRequestId !== null) &&
+    onTogglePromptPlacement ? (
       <button
         type="button"
-        className={`${classes.iconButton} ${classes.targetListButton}`}
-        data-testid="prompt-target-modal-open"
-        aria-label="Open choice modal"
-        title="Choice Modal"
-        onClick={() => setChoiceModalOpen(side, targetModalAction!.requestId, true)}
+        className={`${classes.iconButton} ${classes.promptPlacementButton}`}
+        data-testid="prompt-banner-toggle-board-placement"
+        aria-label={
+          promptPlacement === "rival"
+            ? "Move prompt back to your board"
+            : "Move prompt to rival board"
+        }
+        aria-pressed={promptPlacement === "rival"}
+        title={promptPlacement === "rival" ? "Move back to your board" : "Move to rival board"}
+        onClick={onTogglePromptPlacement}
       >
-        <IconListDetails size={14} stroke={1.8} />
+        {promptPlacement === "rival" ? (
+          <IconArrowBarToDown size={14} stroke={1.8} />
+        ) : (
+          <IconArrowBarToUp size={14} stroke={1.8} />
+        )}
       </button>
     ) : null;
   const modalRestoreAction =
@@ -246,13 +359,16 @@ export function PromptBanner({
       </button>
     ) : null;
   const extraAction =
-    targetModalButton || modalRestoreAction ? (
+    promptPlacementButton || targetModalButton || modalRestoreAction ? (
       <>
+        {promptPlacementButton}
         {targetModalButton}
         {modalRestoreAction}
       </>
     ) : null;
   const compactClass = compact ? ` ${classes.compact}` : "";
+  const surfaceClass = surface === "mobile" ? ` ${classes.mobile}` : "";
+  const inlineSelectedPlayActions = selectedPlayCardTargeting && compact && surface === "mobile";
   const headerActions = (
     <HeaderActions
       minimized={minimized}
@@ -260,6 +376,7 @@ export function PromptBanner({
       onToggleMinimize={onToggleMinimize}
       onTogglePosition={onTogglePosition}
       extraAction={extraAction}
+      inline={inlineSelectedPlayActions}
     />
   );
 
@@ -268,16 +385,87 @@ export function PromptBanner({
   }, [stealChoice?.payload.attackerId, stealChoice?.payload.count]);
 
   useEffect(() => {
+    setSelectedInlineGigIds([]);
+  }, [targetModalRequestId]);
+
+  useEffect(() => {
+    if (
+      !showTargetModalAction ||
+      targetPromptPresentation.presentation !== "drawer" ||
+      !targetModalRequestId ||
+      targetModalOpen ||
+      targetModalMinimized ||
+      targetModalExplicitlyClosed
+    ) {
+      return;
+    }
+    setChoiceModalOpen(side, targetModalRequestId, true);
+  }, [
+    showTargetModalAction,
+    side,
+    targetModalExplicitlyClosed,
+    targetPromptPresentation.presentation,
+    targetModalMinimized,
+    targetModalOpen,
+    targetModalRequestId,
+  ]);
+
+  useEffect(() => {
+    if (!orderedGigCopyActive) {
+      setGigCopySource(null);
+      return;
+    }
+
+    const handleGigCopySource = (event: Event) => {
+      const detail = (event as CustomEvent<GigCopySourceEventDetail | null>).detail;
+      if (!detail || detail.requestId !== orderedGigCopyRequestId) {
+        setGigCopySource(null);
+        return;
+      }
+      setGigCopySource(detail);
+    };
+    window.addEventListener(GIG_COPY_SOURCE_EVENT, handleGigCopySource);
+    return () => window.removeEventListener(GIG_COPY_SOURCE_EVENT, handleGigCopySource);
+  }, [orderedGigCopyActive, orderedGigCopyRequestId]);
+
+  useEffect(() => {
     if (!shouldConfirmPass) {
       setConfirmingPassWithAttackers(false);
     }
   }, [shouldConfirmPass]);
 
-  const passPhase = () => {
+  const passPhase = useCallback(() => {
     dispatch({ type: "passPhase", as: PLAYER_SIDE_TO_ID[side] });
     moveSelection.clearSelection();
     onArmVerb?.(null);
-  };
+  }, [dispatch, moveSelection, onArmVerb, side]);
+
+  useEffect(() => {
+    if (!confirmingPassWithAttackers) {
+      return;
+    }
+
+    const onKeyDown = (ev: KeyboardEvent) => {
+      if (ev.altKey || ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.defaultPrevented) {
+        return;
+      }
+      if (ev.key === "Escape") {
+        ev.preventDefault();
+        ev.stopPropagation();
+        setConfirmingPassWithAttackers(false);
+        return;
+      }
+      if (ev.key === " " || ev.code === PASS_CONFIRM_HOTKEY) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        setConfirmingPassWithAttackers(false);
+        passPhase();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown, true);
+    return () => window.removeEventListener("keydown", onKeyDown, true);
+  }, [confirmingPassWithAttackers, passPhase]);
 
   if (mode === "view") {
     // No banner when this side is just observing — the dimmed half-board +
@@ -286,8 +474,12 @@ export function PromptBanner({
   }
 
   if (
-    mode === "select-target" &&
-    ((modalAction && modalAction.id !== "resolveTrigger" && !modalMinimized) || targetModalOpen)
+    (mode === "select-target" || selectedPlayTargetRequestId !== null) &&
+    ((surface !== "mobile" &&
+      modalAction &&
+      modalAction.id !== "resolveTrigger" &&
+      !modalMinimized) ||
+      targetModalOpen)
   ) {
     return null;
   }
@@ -304,11 +496,13 @@ export function PromptBanner({
     const fallbackTitle = inSetup
       ? "Mulligan"
       : mode === "select-target"
-        ? "Choose target"
+        ? prompt.choice?.type === "chooseCardType"
+          ? "Choose card type"
+          : "Choose target"
         : "Your move";
     return (
       <div
-        className={`${classes.banner} ${variantClass} ${classes.bannerMinimized}${compactClass}`}
+        className={`${classes.banner} ${variantClass} ${classes.bannerMinimized}${compactClass}${surfaceClass}`}
         data-side={side}
         data-testid="prompt-banner"
         data-state="minimized"
@@ -341,7 +535,7 @@ export function PromptBanner({
       const allowed = prompt.choice.payload.allowedDieIds;
       return (
         <div
-          className={`${classes.banner} ${classes.bannerAction}${compactClass}`}
+          className={`${classes.banner} ${classes.bannerAction}${compactClass}${surfaceClass}`}
           data-side={side}
           data-testid="prompt-banner"
           data-state="gain-gig"
@@ -407,7 +601,7 @@ export function PromptBanner({
       };
       return (
         <div
-          className={`${classes.banner} ${classes.bannerAction}${compactClass}`}
+          className={`${classes.banner} ${classes.bannerAction}${compactClass}${surfaceClass}`}
           data-side={side}
           data-testid="prompt-banner"
           data-state="steal-gigs"
@@ -447,9 +641,10 @@ export function PromptBanner({
     if (prompt.choice && prompt.choice.type === "chooseTrigger") {
       const canPass = Boolean(prompt.choice.payload.canPass);
       const primaryOption = prompt.choice.payload.options[0];
+      const triggerCopy = triggerChoiceCopy(prompt.choice.payload.options, canPass);
       return (
         <div
-          className={`${classes.banner} ${classes.bannerReaction}${compactClass}`}
+          className={`${classes.banner} ${classes.bannerReaction}${compactClass}${surfaceClass}`}
           data-side={side}
           data-testid="prompt-banner"
           data-state={canPass ? "optional-trigger" : "choose-trigger"}
@@ -458,20 +653,20 @@ export function PromptBanner({
         >
           <div className={classes.reactionSummary}>
             <p className={classes.title} data-testid="prompt-banner-title">
-              {canPass ? "Reaction window" : "Choose trigger"}
+              {triggerCopy.title}
             </p>
             <p className={classes.reactionMessage} data-testid="prompt-banner-message">
-              {canPass && primaryOption ? (
+              {triggerCopy.showSource && primaryOption ? (
                 <>
                   <CardNameToken
                     cardId={primaryOption.sourceCardId}
                     fallbackName={primaryOption.cardName}
                     className={classes.actionCardName}
                   />{" "}
-                  can be played now.
+                  {triggerCopy.message}
                 </>
               ) : (
-                "Pick the next effect to resolve."
+                triggerCopy.message
               )}
             </p>
           </div>
@@ -493,7 +688,10 @@ export function PromptBanner({
                   });
                 }}
               >
-                {option.optional ? `Play ${option.cardName}` : option.cardName}
+                <span className={classes.triggerOptionText}>
+                  {option.optional ? "Use optional ability" : "Resolve ability"}
+                  <span className={classes.triggerOptionDetail}>{option.abilityText}</span>
+                </span>
               </button>
             ))}
             {canPass ? (
@@ -509,7 +707,7 @@ export function PromptBanner({
                   });
                 }}
               >
-                Pass
+                Pass on ability
               </button>
             ) : null}
           </div>
@@ -519,19 +717,68 @@ export function PromptBanner({
     }
 
     const choice = prompt.choice;
-    const orderedGigCopyChoice = isOrderedGigCopyChoice(choice);
+    const orderedGigCopyChoice = orderedGigCopyActive;
+    const adjustGigChoice =
+      choice?.type === "chooseTarget" && choice.payload.type === "adjustGig" ? choice : null;
+    const adjustGigOptions = adjustGigChoice
+      ? buildAdjustGigPromptOptions(adjustGigChoice.payload, interactionView)
+      : [];
+    const inlineGigTargetChoice =
+      surface === "mobile" &&
+      choice?.type === "chooseTarget" &&
+      choice.payload.type === "effectTarget" &&
+      choice.payload.targetKind === "gig"
+        ? choice
+        : null;
+    const inlineGigTargetIds = inlineGigTargetChoice
+      ? (inlineGigTargetChoice.payload.eligibleIds ??
+        inlineGigTargetChoice.payload.cards?.map((card) => card.instanceId) ??
+        [])
+      : [];
+    const inlineGigTargetMin = inlineGigTargetChoice?.payload.min ?? 1;
+    const inlineGigTargetMax = inlineGigTargetChoice?.payload.max ?? inlineGigTargetMin;
+    const canConfirmInlineGigTargets =
+      inlineGigTargetChoice !== null &&
+      selectedInlineGigIds.length >= inlineGigTargetMin &&
+      selectedInlineGigIds.length <= inlineGigTargetMax;
+    const submitInlineGigTargets = (targetIds: string[]) => {
+      dispatch({
+        type: "resolveEffectTarget",
+        targetIds,
+        as: PLAYER_SIDE_TO_ID[side],
+      });
+      setSelectedInlineGigIds([]);
+      if (targetModalRequestId) {
+        setChoiceModalOpen(side, targetModalRequestId, false);
+      }
+    };
+    const chooseInlineGigTarget = (dieId: string) => {
+      if (inlineGigTargetMax <= 1) {
+        submitInlineGigTargets([dieId]);
+        return;
+      }
+      setSelectedInlineGigIds((current) =>
+        current.includes(dieId)
+          ? current.filter((id) => id !== dieId)
+          : current.length >= inlineGigTargetMax
+            ? current
+            : [...current, dieId],
+      );
+    };
     const sentence = describeChoice(prompt);
     const effectTargetCopy = effectTargetChoiceCopy(choice);
     const choiceTitle =
       choice?.type === "chooseTarget" && choice.payload.type === "adjustGig"
         ? "Adjust Gig"
-        : choice?.type === "searchDeck"
+        : choice?.type === "scry"
           ? "Deck search"
           : choice?.type === "chooseCardToPlay"
             ? sentence
-            : orderedGigCopyChoice
-              ? "Choose Gigs"
-              : "Choose target";
+            : choice?.type === "chooseCardType"
+              ? "Choose card type"
+              : orderedGigCopyChoice
+                ? "Choose Gigs"
+                : "Choose target";
     const effectSource =
       choice?.type === "chooseTarget" && choice.payload.type === "effectTarget"
         ? choice.payload.source
@@ -541,6 +788,7 @@ export function PromptBanner({
       effectSource ??
       moveSource ??
       pendingChoiceSource(matchState.G.turnMetadata.pendingChoice, matchState);
+    const displaySourceForTitle = adjustGigChoice ? null : sourceForTitle;
     const titlePrefix = orderedGigCopyChoice
       ? "Choose Gigs for "
       : choice?.type === "chooseTarget" && choice.payload.type === "discardFromHand"
@@ -550,13 +798,16 @@ export function PromptBanner({
           : isOptionalLegendCallChoice(choice)
             ? "Choose Legend to call with "
             : "Choose a target for ";
+    const sourceTitleLabel = displaySourceForTitle
+      ? `${titlePrefix}${displaySourceForTitle.displayName}`
+      : choiceTitle;
     const titleRequirement =
       choice?.type === "chooseTarget" &&
       (choice.payload.type === "effectTarget" || choice.payload.type === "discardFromHand")
         ? (effectTargetCopy?.subtitle ?? sentence)
         : null;
     const declineTargetChoice =
-      choice?.type === "chooseTarget" && choice.payload.canDecline
+      choice?.type === "chooseTarget" && (choice.payload.canDecline || choice.payload.min === 0)
         ? () => {
             dispatch({
               type:
@@ -578,12 +829,19 @@ export function PromptBanner({
             });
           }
         : null;
-    const compactTargetChoice = Boolean(sourceForTitle && !orderedGigCopyChoice && !compact);
+    const stagedTargets =
+      effectCardTargetSelection?.side === side ? effectCardTargetSelection : null;
+    const stagedTargetCount = stagedTargets?.targetIds.length ?? 0;
+    const canSubmitStagedTargets =
+      stagedTargets !== null &&
+      stagedTargetCount >= stagedTargets.min &&
+      stagedTargetCount <= stagedTargets.max;
+    const compactTargetChoice = Boolean(displaySourceForTitle && !orderedGigCopyChoice && !compact);
     return (
       <div
         className={`${classes.banner} ${classes.bannerTarget} ${
           compactTargetChoice ? classes.bannerTargetSlim : ""
-        }${compactClass}`}
+        }${compactClass}${surfaceClass}`}
         data-side={side}
         data-testid="prompt-banner"
         data-state="select-target"
@@ -591,19 +849,16 @@ export function PromptBanner({
         aria-label={`${side} prompt — choose target`}
       >
         <p className={classes.title} data-testid="prompt-banner-title">
-          <span className={classes.titleText}>
-            {sourceForTitle ? (
+          <span className={classes.titleText} aria-label={sourceTitleLabel}>
+            {displaySourceForTitle ? (
               effectTargetCopy?.title ? (
                 effectTargetCopy.title
               ) : (
-                <>
-                  {titlePrefix}
-                  <CardNameToken
-                    cardId={sourceForTitle.cardId}
-                    fallbackName={sourceForTitle.displayName}
-                    className={classes.sourceCardName}
-                  />
-                </>
+                <CardNameToken
+                  cardId={displaySourceForTitle.cardId}
+                  fallbackName={displaySourceForTitle.displayName}
+                  className={classes.sourceCardName}
+                />
               )
             ) : (
               choiceTitle
@@ -611,22 +866,9 @@ export function PromptBanner({
           </span>
         </p>
         {titleRequirement ? (
-          compact && showTargetModalAction ? (
-            <button
-              type="button"
-              className={`${classes.titleMeta} ${classes.iconButton} ${classes.targetListButton} ${classes.targetRequirementButton}`}
-              data-testid="prompt-banner-message"
-              aria-label={`${titleRequirement}. Open choice modal`}
-              title={`${titleRequirement}. Open choice modal`}
-              onClick={() => setChoiceModalOpen(side, targetModalAction!.requestId, true)}
-            >
-              <IconListDetails size={18} stroke={1.9} />
-            </button>
-          ) : (
-            <span className={classes.titleMeta} data-testid="prompt-banner-message">
-              {titleRequirement}
-            </span>
-          )
+          <span className={classes.titleMeta} data-testid="prompt-banner-message">
+            {titleRequirement}
+          </span>
         ) : null}
         {effectSource?.rulesText ? (
           <div className={classes.promptCopy}>
@@ -635,32 +877,122 @@ export function PromptBanner({
             </p>
           </div>
         ) : null}
-        {orderedGigCopyChoice || (!sourceForTitle && !titleRequirement) ? (
+        {orderedGigCopyChoice ||
+        adjustGigChoice ||
+        (!displaySourceForTitle && !titleRequirement) ? (
           <div className={classes.promptCopy}>
             {orderedGigCopyChoice ? (
               <p className={classes.sequenceHint} data-testid="prompt-banner-sequence">
-                First Gig supplies the value. Second Gig changes to match it.
+                {gigCopySource
+                  ? `${gigCopySource.label} showing ${gigCopySource.value} is the source. Choose the Gig to change; smaller dice cap at their max.`
+                  : "First, choose the Gig to copy from. Then choose the Gig that changes."}
               </p>
             ) : null}
-            {!sourceForTitle && !titleRequirement ? (
+            {adjustGigChoice || (!displaySourceForTitle && !titleRequirement) ? (
               <p className={classes.message} data-testid="prompt-banner-message">
                 {sentence}
               </p>
             ) : null}
           </div>
         ) : null}
-        {declineTargetChoice || declineCardToMove ? (
+        {inlineGigTargetIds.length > 0 ||
+        adjustGigOptions.length > 0 ||
+        stagedTargets ||
+        declineTargetChoice ||
+        declineCardToMove ? (
           <div className={classes.verbs} data-testid="prompt-banner-verbs">
-            <button
-              type="button"
-              className={classes.verb}
-              data-testid="prompt-target-pass"
-              onClick={declineTargetChoice ?? declineCardToMove ?? undefined}
-            >
-              {choice?.type === "chooseTarget" && choice.payload.type === "discardFromHand"
-                ? "Skip effect"
-                : "Pass"}
-            </button>
+            {inlineGigTargetIds.map((dieId) => {
+              const selected = selectedInlineGigIds.includes(dieId);
+              const selectionLimitReached =
+                inlineGigTargetMax > 1 &&
+                selectedInlineGigIds.length >= inlineGigTargetMax &&
+                !selected;
+              return (
+                <button
+                  key={dieId}
+                  type="button"
+                  className={`${classes.verb} ${selected ? classes.verbActive : ""}`}
+                  data-testid="prompt-gig-target-option"
+                  data-die-id={dieId}
+                  data-selected={selected ? "true" : "false"}
+                  aria-pressed={selected}
+                  disabled={selectionLimitReached}
+                  onClick={() => chooseInlineGigTarget(dieId)}
+                >
+                  {gigTargetPromptLabel(matchState, dieId, side)}
+                </button>
+              );
+            })}
+            {inlineGigTargetChoice && inlineGigTargetMax > 1 ? (
+              <>
+                <span className={classes.count} data-testid="prompt-gig-target-selection-count">
+                  {selectedInlineGigIds.length}/{inlineGigTargetMax}
+                </span>
+                <button
+                  type="button"
+                  className={classes.verb}
+                  data-testid="prompt-gig-target-confirm"
+                  disabled={!canConfirmInlineGigTargets}
+                  onClick={() => submitInlineGigTargets(selectedInlineGigIds)}
+                >
+                  Confirm
+                </button>
+              </>
+            ) : null}
+            {adjustGigOptions.map((option) => (
+              <button
+                key={`${option.delta}:${option.value}`}
+                type="button"
+                className={classes.verb}
+                data-testid="prompt-adjust-gig-option"
+                data-delta={option.delta}
+                data-value={option.value}
+                aria-label={option.label}
+                onClick={() => {
+                  dispatch({
+                    type: "resolveAdjustGig",
+                    value: option.value,
+                    as: PLAYER_SIDE_TO_ID[side],
+                  });
+                }}
+              >
+                {option.label}
+              </button>
+            ))}
+            {stagedTargets ? (
+              <>
+                <span className={classes.count} data-testid="prompt-target-selection-count">
+                  {stagedTargetCount}/{stagedTargets.max}
+                </span>
+                <button
+                  type="button"
+                  className={classes.verb}
+                  data-testid="prompt-target-confirm"
+                  disabled={!canSubmitStagedTargets}
+                  onClick={() => {
+                    submitEffectCardTargets(side);
+                  }}
+                >
+                  Confirm
+                </button>
+              </>
+            ) : null}
+            {declineTargetChoice || declineCardToMove ? (
+              <button
+                type="button"
+                className={classes.verb}
+                data-testid="prompt-target-pass"
+                onClick={declineTargetChoice ?? declineCardToMove ?? undefined}
+              >
+                {choice?.type === "chooseTarget" &&
+                choice.payload.type === "discardFromHand" &&
+                choice.payload.canDecline
+                  ? "Skip effect"
+                  : choice?.type === "chooseTarget" && choice.payload.min === 0
+                    ? "Take none"
+                    : "Pass"}
+              </button>
+            ) : null}
           </div>
         ) : null}
         {headerActions}
@@ -678,13 +1010,16 @@ export function PromptBanner({
     matchState.G.attackState,
     attackTriggers,
   );
+  const disabledPassReason = verbs.find(
+    (verb) => verb.moveId === "passPhase" && !verb.enabled,
+  )?.disabledReason;
 
   if (inSetup && verbs.length === 0) {
     // Player has decided (mulligan or keep) and is waiting for the opponent
     // to do the same before the game advances to the main phase.
     return (
       <div
-        className={`${classes.banner} ${classes.bannerTarget}${compactClass}`}
+        className={`${classes.banner} ${classes.bannerTarget}${compactClass}${surfaceClass}`}
         data-side={side}
         data-testid="prompt-banner"
         data-state="waiting-mulligan"
@@ -702,20 +1037,11 @@ export function PromptBanner({
     );
   }
 
-  const selectedDirectMove = selectedMove && isDirectCardMove(selectedMove) ? selectedMove : null;
-  const selectedSourceCard = moveSelection.selection?.sourceCardId
-    ? matchState.G.cardIndex[moveSelection.selection.sourceCardId]
-    : undefined;
-  const selectedSourceDef = selectedSourceCard ? defOf(selectedSourceCard) : null;
-  const selectedPlayCardTargeting =
-    selectedDirectMove === "playCard" &&
-    selectedSourceDef !== null &&
-    (selectedSourceDef.type === "program" || selectedSourceDef.type === "gear");
   const showForcedActionPrompt = inSetup || selectedDirectMove !== null;
   if (!showActionPrompt && !showForcedActionPrompt) {
     return null;
   }
-  if (!showForcedActionPrompt && !hasOnlyIdlePromptActions(verbs)) {
+  if (!showForcedActionPrompt && !hasOnlyIdlePromptActions(verbs) && !disabledPassReason) {
     return null;
   }
   const state = inSetup ? "mulligan" : selectedDirectMove ? "select-target" : "select-action";
@@ -733,16 +1059,17 @@ export function PromptBanner({
       Cancel
     </button>
   ) : null;
+  const selectedPlayTargetLabel =
+    selectedPlayCardTargeting && selectedSourceDef
+      ? `Choose a target for ${selectedSourceDef.displayName ?? selectedSourceDef.name}`
+      : undefined;
   const title =
     selectedPlayCardTargeting && selectedSourceDef ? (
-      <>
-        Playing{" "}
-        <CardNameToken
-          cardId={moveSelection.selection?.sourceCardId ?? ""}
-          fallbackName={selectedSourceDef.displayName ?? selectedSourceDef.name}
-          className={classes.sourceCardName}
-        />
-      </>
+      <CardNameToken
+        cardId={moveSelection.selection?.sourceCardId ?? ""}
+        fallbackName={selectedSourceDef.displayName ?? selectedSourceDef.name}
+        className={classes.sourceCardName}
+      />
     ) : inSetup ? (
       "Mulligan"
     ) : selectedDirectMove ? (
@@ -762,22 +1089,31 @@ export function PromptBanner({
           selectedSourceCardId: moveSelection.selection?.sourceCardId,
           inSetup,
           verbs,
+          disabledPassReason,
         });
   const showVerbRow = !selectedPlayCardTargeting;
   return (
     <>
       <div
-        className={`${classes.banner} ${classes.bannerAction} ${
+        className={`${classes.banner} ${
+          selectedPlayCardTargeting ? classes.bannerTarget : classes.bannerAction
+        } ${
           selectedPlayCardTargeting ? classes.selectedPlayPrompt : ""
-        }${compactClass}`}
+        }${compactClass}${surfaceClass}`}
         data-side={side}
         data-testid="prompt-banner"
         data-state={state}
         role="region"
-        aria-label={`${side} prompt — ${inSetup ? "mulligan decision" : "your move"}`}
+        aria-label={`${side} prompt — ${
+          selectedPlayCardTargeting ? "choose target" : inSetup ? "mulligan decision" : "your move"
+        }`}
       >
         <div className={classes.actionSummary}>
-          <p className={classes.title} data-testid="prompt-banner-title">
+          <p
+            className={classes.title}
+            data-testid="prompt-banner-title"
+            aria-label={selectedPlayTargetLabel}
+          >
             {title}
           </p>
           {actionMessage ? (
@@ -807,7 +1143,12 @@ export function PromptBanner({
             {verbs.map((verb) => {
               const enabled = verb.enabled;
               const active = selectedMove === verb.moveId;
-              return (
+              const ariaLabel = verb.disabledReason
+                ? `${verb.label}. ${verb.disabledReason}`
+                : verbAriaLabel(verb.moveId, matchState, matchState.G.attackState, attackTriggers);
+              const blockedPassReason =
+                verb.moveId === "passPhase" && !enabled ? verb.disabledReason : undefined;
+              const button = (
                 <button
                   key={verb.moveId}
                   type="button"
@@ -815,14 +1156,11 @@ export function PromptBanner({
                   disabled={!enabled}
                   data-testid={`prompt-verb-${verb.moveId}`}
                   data-verb={verb.moveId}
+                  data-sim-move-id={verb.moveId}
                   data-armed={active ? "true" : "false"}
-                  aria-label={verbAriaLabel(
-                    verb.moveId,
-                    matchState,
-                    matchState.G.attackState,
-                    attackTriggers,
-                  )}
+                  aria-label={ariaLabel}
                   aria-pressed={active}
+                  title={verb.disabledReason}
                   onClick={() => {
                     if (verb.moveId === "passPhase") {
                       if (shouldConfirmPass) {
@@ -863,12 +1201,31 @@ export function PromptBanner({
                   {verb.label}
                 </button>
               );
+              if (blockedPassReason) {
+                return (
+                  <span
+                    key={verb.moveId}
+                    className={classes.blockedPassHitTarget}
+                    data-testid="prompt-verb-passPhase-hit-target"
+                    title={blockedPassReason}
+                    onClick={() => showBlockedPassTurnNotification(blockedPassReason)}
+                  >
+                    {button}
+                  </span>
+                );
+              }
+              return button;
             })}
+          </div>
+        ) : inlineSelectedPlayActions ? (
+          <div className={classes.selectedPlayActions}>
+            {cancelButton}
+            {headerActions}
           </div>
         ) : (
           cancelButton
         )}
-        {headerActions}
+        {inlineSelectedPlayActions ? null : headerActions}
       </div>
       {confirmingPassWithAttackers
         ? createPortal(
@@ -889,19 +1246,23 @@ export function PromptBanner({
                   <button
                     type="button"
                     className={classes.confirmSecondary}
+                    aria-keyshortcuts="Escape"
                     onClick={() => setConfirmingPassWithAttackers(false)}
                   >
-                    Keep attacking
+                    <span>Keep attacking</span>
+                    <DialogHotkeyHint label="Esc" />
                   </button>
                   <button
                     type="button"
                     className={classes.confirmPrimary}
+                    aria-keyshortcuts="Space"
                     onClick={() => {
                       setConfirmingPassWithAttackers(false);
                       passPhase();
                     }}
                   >
-                    Pass turn
+                    <span>Pass turn</span>
+                    <DialogHotkeyHint label="Space" />
                   </button>
                 </div>
               </div>
@@ -923,6 +1284,15 @@ function isDirectCardMove(moveId: MoveId): moveId is DirectCardMoveId {
     moveId === "attackRival" ||
     moveId === "useBlocker" ||
     moveId === "activateAbility"
+  );
+}
+
+function DialogHotkeyHint({ label }: { label: string }) {
+  return (
+    <kbd className={classes.confirmHotkey} aria-label={`${label} hotkey`}>
+      <IconKeyboard size={12} stroke={2.2} aria-hidden="true" />
+      <span>{label}</span>
+    </kbd>
   );
 }
 
@@ -953,6 +1323,7 @@ interface VerbRow {
   moveId: MoveId;
   label: string;
   enabled: boolean;
+  disabledReason?: string;
 }
 
 interface AttackLabelState {
@@ -1075,11 +1446,13 @@ function actionPromptMessage({
   selectedSourceCardId,
   inSetup,
   verbs,
+  disabledPassReason,
 }: {
   selectedMove: DirectCardMoveId | null;
   selectedSourceCardId?: string;
   inSetup: boolean;
   verbs: readonly VerbRow[];
+  disabledPassReason?: string;
 }): ReactNode | null {
   if (inSetup) {
     return "Keep this hand or draw a fresh opening hand.";
@@ -1087,6 +1460,10 @@ function actionPromptMessage({
 
   if (selectedMove) {
     return selectedMoveMessage(selectedMove, selectedSourceCardId);
+  }
+
+  if (disabledPassReason) {
+    return disabledPassReason;
   }
 
   return hasOnlyIdlePromptActions(verbs)
@@ -1193,7 +1570,7 @@ function collectVerbs(
   // it's not all reachable right now.
   // `passPhase` is suppressed during setup: direct commands still support the
   // legacy escape hatch, but player-facing prompts use mulligan/keepHand.
-  const byId = new Map<string, { enabled: boolean }>();
+  const byId = new Map<string, ReturnType<typeof useEngineInteractionView>["actions"][number]>();
   for (const action of interactionView.actions) {
     byId.set(action.id, action);
   }
@@ -1215,12 +1592,51 @@ function collectVerbs(
       // Move isn't available at all (engine excluded it). Hide entirely.
       return [];
     }
-    return [{ moveId: id, label, enabled: action.enabled }];
+    return [
+      {
+        moveId: id,
+        label,
+        enabled: action.enabled,
+        disabledReason: interactionTextLabel(action.disabledText),
+      },
+    ];
   });
 }
 
 function hasOnlyIdlePromptActions(verbs: readonly VerbRow[]): boolean {
-  return verbs.length > 0 && verbs.every((verb) => verb.moveId === "passPhase");
+  return verbs.length > 0 && verbs.every((verb) => verb.moveId === "passPhase" && verb.enabled);
+}
+
+function interactionTextLabel(
+  text: ReturnType<typeof useEngineInteractionView>["actions"][number]["disabledText"],
+): string | undefined {
+  const label = text?.params?.label;
+  return typeof label === "string" ? label : undefined;
+}
+
+function triggerChoiceCopy(
+  options: readonly { abilityText: string; optional?: boolean }[],
+  canPass: boolean,
+): { title: string; message: string; showSource: boolean } {
+  if (canPass) {
+    return {
+      title: "Optional ability",
+      message: "can resolve now. Use it, or pass to continue the turn.",
+      showSource: true,
+    };
+  }
+  if (options.length === 1) {
+    return {
+      title: "Ability pending",
+      message: "must resolve before the game can continue.",
+      showSource: true,
+    };
+  }
+  return {
+    title: "Choose ability order",
+    message: "Several abilities are waiting. Pick one to resolve next.",
+    showSource: false,
+  };
 }
 
 function describeChoice(prompt: ReturnType<typeof useNativePromptPresentation>): string {
@@ -1238,6 +1654,8 @@ function describeChoice(prompt: ReturnType<typeof useNativePromptPresentation>):
       return "Choose the next trigger to resolve";
     case "chooseCardToPlay":
       return chooseCardToPlayCopy(prompt);
+    case "chooseCardType":
+      return "Choose a card type";
     case "chooseCardToMove":
       if (choice.payload.destination === "trash") {
         return `Choose a card to trash${choice.payload.canDecline ? ", or pass" : ""}`;
@@ -1254,29 +1672,60 @@ function describeChoice(prompt: ReturnType<typeof useNativePromptPresentation>):
       }
       if (choice.payload.type === "effectTarget") {
         if (isOrderedGigCopyChoice(choice)) {
-          return `1 Copy from -> 2 Change${choice.payload.canDecline ? ", or pass" : ""}`;
+          return `1 Copy value from a Gig, then 2 choose the Gig to change${
+            choice.payload.canDecline ? ", or pass" : ""
+          }`;
         }
         const n = choice.payload.min ?? 1;
         const max = choice.payload.max ?? n;
         if (n === 0) {
-          return `Up to ${max} target${max === 1 ? "" : "s"}${choice.payload.canDecline ? ", or pass" : ""}`;
+          return `Choose up to ${max} target${max === 1 ? "" : "s"}, or take none`;
         }
         return `${n} target${n === 1 ? "" : "s"} required${choice.payload.canDecline ? ", or pass" : ""}`;
       }
       if (choice.payload.type === "adjustGig") {
         const max = choice.payload.maxAmount ?? 0;
-        return `Adjust the selected Gig by up to ${max}`;
+        return `Choose the Gig's new value below, or tap the highlighted Gig on the board. Adjust by up to ${max}.`;
       }
       return "Choose a target";
     }
-    case "searchDeck":
-      return `Choose ${searchDeckSelectionText(choice.payload.select)} from top ${
-        choice.payload.lookCount
-      }`;
+    case "scry":
+      return `Choose ${scrySelectionText(choice)} from top ${choice.payload.amount}`;
+    case "revealDestination":
+      return "Choose whether revealed cards go to hand or trash";
     case "gainGig":
       return "Pick a gig die from the fixer area";
   }
   return "Awaiting input…";
+}
+
+function buildAdjustGigPromptOptions(
+  payload: AdjustGigPromptPayload,
+  interactionView: ReturnType<typeof useEngineInteractionView>,
+): AdjustGigPromptOption[] {
+  if (payload.type !== "adjustGig") {
+    return [];
+  }
+  const currentValue = payload.currentValue;
+  const maxFaceValue = payload.maxFaceValue;
+  if (typeof currentValue !== "number" || typeof maxFaceValue !== "number") {
+    return [];
+  }
+
+  const valueInput = interactionView.actions
+    .find((candidate) => candidate.enabled && candidate.id === "resolveAdjustGig")
+    ?.inputs.find((input) => input.kind === "number" && input.id === "value");
+  const inputMin = valueInput?.kind === "number" ? valueInput.min : undefined;
+  const inputMax = valueInput?.kind === "number" ? valueInput.max : undefined;
+  return buildAdjustGigOptions({
+    currentValue,
+    maxFaceValue,
+    maxAmount: payload.maxAmount,
+    direction: payload.direction,
+    chooseUpTo: payload.chooseUpTo,
+    minValue: inputMin,
+    maxValue: inputMax,
+  });
 }
 
 function chooseCardToPlayCopy(prompt: ReturnType<typeof useNativePromptPresentation>): string {
@@ -1298,6 +1747,19 @@ function chooseCardToPlayCopy(prompt: ReturnType<typeof useNativePromptPresentat
 function effectTargetChoiceCopy(
   choice: ReturnType<typeof useNativePromptPresentation>["choice"],
 ): { title: string; subtitle: string } | null {
+  if (
+    choice?.type === "chooseTarget" &&
+    choice.payload.type === "effectTarget" &&
+    choice.payload.targetKind === "gig"
+  ) {
+    const sourceName = choice.payload.source?.displayName;
+    return {
+      title: sourceName ? `Choose a Gig for ${sourceName}` : "Choose a Gig",
+      subtitle: choice.payload.adjustGig
+        ? "Select the Gig you want to change."
+        : "Select the Gig this effect should use.",
+    };
+  }
   if (
     choice?.type !== "chooseTarget" ||
     choice.payload.type !== "effectTarget" ||
@@ -1329,20 +1791,33 @@ function effectTargetChoiceCopy(
   return null;
 }
 
-function searchDeckSelectionText(
-  select: Extract<
-    NonNullable<ReturnType<typeof useNativePromptPresentation>["choice"]>,
-    { type: "searchDeck" }
-  >["payload"]["select"],
-): string {
-  switch (select.kind) {
-    case "all":
-      return "all matches";
-    case "exact":
-      return `${select.amount}`;
-    case "upTo":
-      return `up to ${select.max}`;
+function gigTargetPromptLabel(matchState: MatchState, dieId: string, side: Side): string {
+  const die = matchState.G.gigDice[dieId];
+  if (!die) {
+    return "Gig";
   }
+  const ownerId = Object.entries(matchState.G.players).find(([, player]) =>
+    (player.gigArea as readonly string[]).includes(dieId),
+  )?.[0];
+  const ownerLabel = ownerId === PLAYER_SIDE_TO_ID[side] ? "Your" : "Rival";
+  return `${ownerLabel} ${die.dieType.toUpperCase()}: ${die.faceValue}`;
+}
+
+function scrySelectionText(
+  choice: Extract<
+    NonNullable<ReturnType<typeof useNativePromptPresentation>["choice"]>,
+    { type: "scry" }
+  >,
+): string {
+  const destination =
+    choice.payload.destinations.find((entry) => !entry.remainder) ?? choice.payload.destinations[0];
+  if (!destination) return "cards";
+  if (destination.min !== undefined && destination.max !== undefined) {
+    if (destination.min === destination.max) return `${destination.min}`;
+    if (destination.min === 0) return `up to ${destination.max}`;
+    return `${destination.min}-${destination.max}`;
+  }
+  return "all matches";
 }
 
 function isOrderedGigCopyChoice(
@@ -1359,6 +1834,16 @@ function isOrderedGigCopyChoice(
   const max = choice.payload.max ?? min;
   const text = choice.payload.source?.rulesText?.toLowerCase() ?? "";
   return min === 2 && max === 2 && text.includes("value of another gig");
+}
+
+function currentActionRequestId(
+  interactionView: ReturnType<typeof useEngineInteractionView>,
+  actionId: MoveId,
+): string | null {
+  return (
+    interactionView.actions.find((action) => action.enabled && action.id === actionId)?.requestId ??
+    null
+  );
 }
 
 function isOptionalLegendCallChoice(

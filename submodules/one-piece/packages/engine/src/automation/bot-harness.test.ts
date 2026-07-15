@@ -7,8 +7,9 @@ import {
   eb01MsMonday035,
   op13MonkeyDLuffy001,
 } from "@tcg/op-cards";
-import type { MatchConfig, MatchSeat } from "../types.ts";
-import { runBotMatch } from "./bot-harness.ts";
+import type { MatchConfig, MatchSeat, MatchState, PromptState } from "../types.ts";
+import { resolveBotPromptCommand, runBotMatch } from "./bot-harness.ts";
+import { resolveOnePieceAutomatedActionStrategyOption } from "./strategy-registry.ts";
 import {
   firstLegalStrategy,
   greedyStrategy,
@@ -25,7 +26,8 @@ const DECK_CARDS = [
   eb01Fourtricks025, // cost 3, power 5000
   eb01MsMonday035, // cost 3, power 5000
 ];
-const batchTest = process.env.RUN_OP_BOT_BATCHES === "1" ? test : test.skip;
+const batchTest = test;
+const extendedBatchTest = process.env.RUN_OP_BOT_BATCHES === "1" ? test : test.skip;
 const stressTest = process.env.RUN_OP_BOT_STRESS === "1" ? test : test.skip;
 
 function buildDeck(): string[] {
@@ -171,8 +173,11 @@ function validateDecisionStructure() {
   );
 
   const state = result.finalState;
+  const persistableCommands = result.commandHistory.filter(
+    (command) => command.type !== "chooseJoKenPo",
+  );
   assert.ok(
-    state.commandHistory.length >= result.totalCommands,
+    state.commandHistory.length >= persistableCommands.length,
     "State command history should match",
   );
   assert.ok(state.turnNumber >= 1, "At least one turn should have passed");
@@ -221,15 +226,50 @@ function extractLearnings(batchResults: BatchResult[]): string[] {
 }
 
 describe("One Piece Bot Harness", () => {
+  test("skips optional card-selection prompts", () => {
+    const prompt: PromptState = {
+      id: "optional-counter",
+      kind: "choice",
+      choiceKind: "selectCards",
+      seat: "north",
+      label: "Choose counter cards",
+      details: "Optional counter selection",
+      sourceCardId: null,
+      sourceInstanceId: null,
+      eventId: null,
+      status: "pending",
+      options: [{ id: "card-1", label: "Card 1", value: "card-1" }],
+      minSelections: 0,
+      maxSelections: 5,
+      context: {},
+      resolutionContext: null,
+    };
+
+    assert.deepStrictEqual(resolveBotPromptCommand({} as MatchState, prompt), {
+      type: "resolvePrompt",
+      seat: "north",
+      promptId: "optional-counter",
+      optionId: undefined,
+      selectedIds: [],
+    });
+  });
+
+  test("resolves a promoted registered strategy to its real implementation", () => {
+    const promoted = resolveOnePieceAutomatedActionStrategyOption(undefined, "greedy");
+
+    assert.strictEqual(promoted.id, "greedy");
+    assert.strictEqual(promoted.strategy, greedyStrategy);
+  });
+
   test("validate decision structure", () => {
     const validation = validateDecisionStructure();
     assert.ok(validation.passed, "Decision structure validation passed");
   });
 
   batchTest(
-    "Batch 1: 50 games across strategy matchups",
+    "Batch 1: deterministic smoke batch across strategy matchups",
     () => {
-      const results = runBatch({ games: 50, seedBase: 1000 });
+      const results = runBatch({ games: 5, seedBase: 1000 });
 
       let totalIllegal = 0;
       let totalStuck = 0;
@@ -238,7 +278,7 @@ describe("One Piece Bot Harness", () => {
         totalStuck += result.stuck;
       }
 
-      console.log("=== Batch 1 Results (50 games) ===");
+      console.log("=== Batch 1 Results (5 games per matchup) ===");
       for (const result of results) {
         const [s, n] = result.matchup;
         console.log(
@@ -250,12 +290,12 @@ describe("One Piece Bot Harness", () => {
       console.log("Learnings:", learnings);
 
       assert.strictEqual(totalIllegal, 0, `Expected 0 illegal commands, got ${totalIllegal}`);
-      assert.ok(totalStuck < 10, `Expected <10 stuck games, got ${totalStuck}`);
+      assert.strictEqual(totalStuck, 0, `Expected 0 stuck games, got ${totalStuck}`);
     },
     30000,
   );
 
-  batchTest(
+  extendedBatchTest(
     "Batch 2: 100 games across strategy matchups",
     () => {
       const results = runBatch({ games: 100, seedBase: 2000 });

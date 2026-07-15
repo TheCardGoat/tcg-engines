@@ -14,7 +14,7 @@ describe("Gundam Airmaster (GD02-059)", () => {
     const defender = createMockUnit({ ap: 1, hp: 5 });
     const engine = GundamTestEngine.create(
       { play: [attacker] },
-      { play: [defender, gd02GundamAirmaster059] },
+      { play: [{ card: defender, exhausted: true }, gd02GundamAirmaster059] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);

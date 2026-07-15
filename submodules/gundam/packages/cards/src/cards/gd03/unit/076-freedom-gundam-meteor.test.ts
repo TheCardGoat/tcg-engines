@@ -15,24 +15,44 @@ describe("Freedom Gundam (METEOR) (GD03-076)", () => {
       ap: 2,
       hp: 6,
     });
+    const secondAttacker = createMockUnit({
+      traits: ["triple ship alliance"],
+      ap: 2,
+      hp: 6,
+    });
     const defender = createMockUnit({ hp: 6 });
+    const secondDefender = createMockUnit({ hp: 6 });
     const engine = GundamTestEngine.create(
-      { play: [gd03FreedomGundamMeteor076, attacker] },
-      { play: [{ card: defender, exhausted: true }] },
+      { play: [gd03FreedomGundamMeteor076, attacker, secondAttacker] },
+      {
+        play: [
+          { card: defender, exhausted: true },
+          { card: secondDefender, exhausted: true },
+        ],
+      },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const attackerId = p1.getCardsInZone("battleArea")[1]!;
-    const defenderId = p2.getCardsInZone("battleArea")[0]!;
+    const [, attackerId, secondAttackerId] = p1.getCardsInZone("battleArea");
+    const [defenderId, secondDefenderId] = p2.getCardsInZone("battleArea");
 
     expectSuccess(p1.enterBattle(attackerId, defenderId));
     expectSuccess(p2.passBlock());
     expectSuccess(p2.passBattleAction());
     expectSuccess(p1.passBattleAction());
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
     expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
 
     expect(p2.getCardsInZone("hand")).toContain(defenderId);
     expect(p2.getCardsInZone("battleArea")).not.toContain(defenderId);
+
+    expectSuccess(p1.enterBattle(secondAttackerId!, secondDefenderId!));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.getCardsInZone("battleArea")).toContain(secondDefenderId);
   });
 
   it("does not trigger for a non-Triple Ship Alliance damage source", () => {
@@ -47,7 +67,33 @@ describe("Freedom Gundam (METEOR) (GD03-076)", () => {
     const attackerId = p1.getCardsInZone("battleArea")[1]!;
     const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(engine.resolveCombat({ attackerId, target: defenderId }));
+    expectSuccess(p1.enterBattle(attackerId, defenderId));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getCardsInZone("battleArea")).toContain(defenderId);
+    expect(p2.getCardsInZone("hand")).not.toContain(defenderId);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+  });
+
+  it("may decline to return the damaged enemy Unit", () => {
+    const attacker = createMockUnit({ traits: ["triple ship alliance"], ap: 2, hp: 6 });
+    const defender = createMockUnit({ hp: 6 });
+    const engine = GundamTestEngine.create(
+      { play: [gd03FreedomGundamMeteor076, attacker] },
+      { play: [{ card: defender, exhausted: true }] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[1]!;
+    const defenderId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, defenderId));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: false } }));
 
     expect(p2.getCardsInZone("battleArea")).toContain(defenderId);
     expect(p2.getCardsInZone("hand")).not.toContain(defenderId);

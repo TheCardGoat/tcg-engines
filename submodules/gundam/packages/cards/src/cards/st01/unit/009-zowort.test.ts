@@ -10,25 +10,12 @@ import {
 import { st01Zowort009 } from "./009-zowort.ts";
 
 describe("Zowort (ST01-009)", () => {
-  it("declares Blocker as a keyword effect", () => {
-    expect(st01Zowort009.keywordEffects).toContainEqual({ keyword: "Blocker" });
-  });
-
-  it("declares cantTargetPlayer in card data", () => {
-    const effects = st01Zowort009.effects?.filter((e) => e.type === "constant");
-    const cantTarget = effects?.find(
-      // biome-ignore lint/suspicious/noExplicitAny: card-effect union is structurally tested
-      (e) => (e as any).directives?.[0]?.action?.action === "cantTargetPlayer",
-    );
-    expect(cantTarget).toBeDefined();
-  });
-
-  it("<Blocker> redirects an attack via keywordEffects", () => {
+  it("<Blocker> lets Zowort intercept an attack targeted at another friendly Unit", () => {
     const attacker = createMockUnit({ ap: 2, hp: 5 });
     const defender = createMockUnit({ ap: 1, hp: 3 });
     const engine = GundamTestEngine.create(
       { play: [attacker], deck: 5 },
-      { play: [st01Zowort009, defender], deck: 5 },
+      { play: [st01Zowort009, { card: defender, exhausted: true }], deck: 5 },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
@@ -37,11 +24,13 @@ describe("Zowort (ST01-009)", () => {
     const zowortId = p2.getCardsInZone("battleArea")[0]!;
     const defenderId = p2.getCardsInZone("battleArea")[1]!;
 
-    // Attack the defender (not Zowort).
     expectSuccess(p1.enterBattle(attackerId, defenderId));
-
-    // Zowort should be able to block using its constant Blocker keyword.
     expectSuccess(p2.declareBlock(zowortId));
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getCardZone(zowortId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getDamage(defenderId)).toBe(0);
   });
 
   it("cantTargetPlayer restriction prevents direct attacks", () => {
@@ -50,7 +39,6 @@ describe("Zowort (ST01-009)", () => {
 
     const zowortId = p1.getCardsInZone("battleArea")[0]!;
 
-    // Zowort should NOT be able to attack the player directly.
     expectFailure(p1.enterBattle(zowortId, "direct"), "CANNOT_TARGET_PLAYER");
   });
 });

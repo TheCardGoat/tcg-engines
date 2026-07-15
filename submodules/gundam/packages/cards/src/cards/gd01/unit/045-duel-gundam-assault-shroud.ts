@@ -4,6 +4,7 @@ export const gd01DuelGundamAssaultShroud045: UnitCard = {
   cardNumber: "GD01-045",
   name: "Duel Gundam (Assault Shroud)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["zaft"],
   id: "GD01-045",
@@ -73,6 +74,7 @@ export const gd01DuelGundamAssaultShroud045: UnitCard = {
             action: "lookAtTopDeck",
             count: 3,
             return: "chooseTop",
+            randomizeRemainingToBottom: true,
             tutorDestination: "battleArea",
             tutorFilter: {
               owner: "friendly",

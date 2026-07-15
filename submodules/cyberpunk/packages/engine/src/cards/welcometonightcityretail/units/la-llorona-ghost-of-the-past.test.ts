@@ -13,9 +13,7 @@ describe("La Llorona - Ghost of the Past", () => {
         gigArea: [{ dieType: "d6", faceValue: 2 }],
       },
       {
-        field: [
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
       },
     );
 

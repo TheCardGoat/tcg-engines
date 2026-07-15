@@ -4,6 +4,7 @@ import { LocalEngine } from "../transport/local-engine.ts";
 import { AIPlayer } from "./ai-player.ts";
 import type { AIStrategy, StepResult } from "./types.ts";
 import { assertNever } from "./util/assert-never.ts";
+import { createSemanticCycleDetector, stableBotHash } from "@tcg/bot-core";
 
 export interface RunAutoMatchOptions {
   players: [PlayerSetup, PlayerSetup];
@@ -23,10 +24,31 @@ export interface AutoMatchLogEntry {
 
 export interface AutoMatchResult {
   winnerId: string | null;
-  reason: "winCondition" | "concede" | "deckOut" | "stuck" | "illegal" | "maxSteps";
+  reason:
+    | "winCondition"
+    | "concede"
+    | "deckOut"
+    | "stuck"
+    | "illegal"
+    | "repeatedState"
+    | "maxSteps";
   turnCount: number;
   stepCount: number;
+  /** Stable hash of the terminal public view, excluding transport revision ids. */
+  finalStateHash: string;
+  /** True when the harness converted an automation failure into a real concession. */
+  automationConcessionApplied: boolean;
   log: AutoMatchLogEntry[];
+}
+
+function semanticViewHash(view: unknown): string {
+  return stableBotHash(
+    JSON.parse(
+      JSON.stringify(view, (key, value) =>
+        key === "stateID" || key === "_stateID" ? undefined : value,
+      ),
+    ),
+  );
 }
 
 /**
@@ -55,16 +77,39 @@ export function runAutoMatch(opts: RunAutoMatchOptions): AutoMatchResult {
 
   const maxSteps = opts.maxSteps ?? 5000;
   const log: AutoMatchLogEntry[] = [];
+  const cycleDetector = createSemanticCycleDetector({
+    // Cyberpunk has short turns with repeated public choice shapes across
+    // normal attack/trigger windows. A low threshold misclassifies those as
+    // deadlocks even though the game is still progressing and will end.
+    repeatThreshold: 8,
+    windowSize: 64,
+  });
 
   const probeView = () => engine.getFilteredView(ais[0]!.playerId);
 
   for (let stepIndex = 0; stepIndex < maxSteps; stepIndex++) {
     const view = probeView();
     if (view.gameEnded) break;
+    const fingerprint = semanticViewHash(view);
+    if (cycleDetector.observe(fingerprint).repeated) {
+      return finalize(
+        engine,
+        log,
+        "repeatedState",
+        stepIndex,
+        view.activePlayerId as import("../types/branded.ts").PlayerId,
+      );
+    }
 
     const ai = pickActiveAi(engine, ais, view.activePlayerId);
     if (!ai) {
-      return finalize(engine, log, "stuck", stepIndex, ais[0]!.playerId);
+      return finalize(
+        engine,
+        log,
+        "stuck",
+        stepIndex,
+        view.activePlayerId as import("../types/branded.ts").PlayerId,
+      );
     }
 
     const result = ai.step();
@@ -75,15 +120,22 @@ export function runAutoMatch(opts: RunAutoMatchOptions): AutoMatchResult {
       case "idle":
         continue;
       case "stuck":
-        return finalize(engine, log, "stuck", stepIndex + 1, ais[0]!.playerId);
+        return finalize(engine, log, "stuck", stepIndex + 1, ai.playerId);
       case "illegal":
-        return finalize(engine, log, "illegal", stepIndex + 1, ais[0]!.playerId);
+        return finalize(engine, log, "illegal", stepIndex + 1, ai.playerId);
       default:
         return assertNever(result, "StepResult");
     }
   }
 
-  return finalize(engine, log, "maxSteps", log.length, ais[0]!.playerId);
+  const finalView = probeView();
+  return finalize(
+    engine,
+    log,
+    "maxSteps",
+    log.length,
+    finalView.activePlayerId as import("../types/branded.ts").PlayerId,
+  );
 }
 
 function pickActiveAi(
@@ -108,22 +160,39 @@ function finalize(
   log: AutoMatchLogEntry[],
   fallbackReason: AutoMatchResult["reason"],
   stepCount: number,
-  probePlayerId: import("../types/branded.ts").PlayerId,
+  concedingPlayerId: import("../types/branded.ts").PlayerId,
 ): AutoMatchResult {
-  const view = engine.getFilteredView(probePlayerId);
+  let view = engine.getFilteredView(concedingPlayerId);
+  let automationConcessionApplied = false;
+  if (!view.gameEnded) {
+    const concession = engine.processCommand(
+      {
+        commandID: `automation-concession:${fallbackReason}:${stepCount}`,
+        move: "concede",
+        input: { args: {} },
+      },
+      concedingPlayerId,
+    );
+    automationConcessionApplied = concession.success;
+    view = engine.getFilteredView(concedingPlayerId);
+  }
   const winnerId = view.winnerId;
-  const reason: AutoMatchResult["reason"] = view.gameEnded
-    ? view.winReason === "deckOut"
-      ? "deckOut"
-      : view.winReason === "concede"
-        ? "concede"
-        : "winCondition"
-    : fallbackReason;
+  const reason: AutoMatchResult["reason"] = automationConcessionApplied
+    ? fallbackReason
+    : view.gameEnded
+      ? view.winReason === "deckOut"
+        ? "deckOut"
+        : view.winReason === "concede"
+          ? "concede"
+          : "winCondition"
+      : fallbackReason;
   return {
     winnerId,
     reason,
     turnCount: view.turnNumber,
     stepCount,
+    finalStateHash: semanticViewHash(view),
+    automationConcessionApplied,
     log,
   };
 }

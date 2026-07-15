@@ -10,7 +10,9 @@ import {
 export const progCorporateSurveillanceNoTargetsBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "progCorporateSurveillanceNoTargets",
   label: "Corporate Surveillance - no valid targets",
-  references: ["packages/engine/src/cards/alpha/programs/corporate-surveillance.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/programs/corporate-surveillance.test.ts",
+  ],
   async run(pom) {
     const minotaur = await pom.getCardInZoneByDefinitionId(
       "field",

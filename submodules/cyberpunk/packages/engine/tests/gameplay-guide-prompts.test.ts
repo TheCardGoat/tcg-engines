@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
-  alphaFloorIt,
-  alphaMantisBlades,
-  alphaRuthlessLowlife,
-  alphaVCorporateExile,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFloorIt,
+  welcomeToNightCityRetailMantisBlades,
+  welcomeToNightCityRetailSketchyRipper,
+  theHeistRetailStarterDeckVCorporateExile,
 } from "@tcg/cyberpunk-cards";
 import type { Ability } from "@tcg/cyberpunk-types";
 import {
@@ -106,35 +106,47 @@ describe("Gameplay guide prompt audit", () => {
 
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        hand: [alphaFloorIt, unsellableHandUnit, alphaMantisBlades],
+        hand: [
+          welcomeToNightCityRetailFloorIt,
+          unsellableHandUnit,
+          welcomeToNightCityRetailMantisBlades,
+        ],
         field: [activeUnit],
         legendArea: [
-          { card: alphaVCorporateExile, faceDown: false },
+          { card: theHeistRetailStarterDeckVCorporateExile, faceDown: false },
           { card: callableLegend, faceDown: true },
         ],
         eddies: 8,
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true }, alphaRuthlessLowlife],
+        field: [
+          { card: welcomeToNightCityRetailCorpoSecurity, spent: true },
+          welcomeToNightCityRetailSketchyRipper,
+        ],
       },
     );
 
     expectPromptStatus(engine, "action", { as: P1 });
 
     const sellSpec = expectMoveInputSpec(engine, "sellCard", "selectCard", { as: P1 });
-    expect(sellSpec.candidates).toContain(engine.findCardId(alphaFloorIt, "hand", P1));
-    expect(sellSpec.candidates).toContain(engine.findCardId(alphaMantisBlades, "hand", P1));
+    expect(sellSpec.candidates).toContain(
+      engine.findCardId(welcomeToNightCityRetailFloorIt, "hand", P1),
+    );
+    expect(sellSpec.candidates).toContain(
+      engine.findCardId(welcomeToNightCityRetailMantisBlades, "hand", P1),
+    );
     expect(sellSpec.candidates).not.toContain(engine.findCardId(unsellableHandUnit, "hand", P1));
 
     const playSpec = expectMoveInputSpec(engine, "playCard", "playCard", { as: P1 });
     const playCandidates = playSpec.candidates.map((candidate) => candidate.cardId);
     expect(playCandidates).toContain(engine.findCardId(unsellableHandUnit, "hand", P1));
     const gearCandidate = playSpec.candidates.find(
-      (candidate) => candidate.cardId === engine.findCardId(alphaMantisBlades, "hand", P1),
+      (candidate) =>
+        candidate.cardId === engine.findCardId(welcomeToNightCityRetailMantisBlades, "hand", P1),
     );
     expect(gearCandidate?.attachTargets).toEqual([
       engine.findCardId(activeUnit, "field", P1) as string,
-      engine.findCardId(alphaVCorporateExile, "legendArea", P1) as string,
+      engine.findCardId(theHeistRetailStarterDeckVCorporateExile, "legendArea", P1) as string,
     ]);
 
     const callSpec = expectMoveInputSpec(engine, "callLegend", "selectCard", { as: P1 });
@@ -144,7 +156,7 @@ describe("Gameplay guide prompt audit", () => {
 
     const goSoloSpec = expectMoveInputSpec(engine, "goSolo", "selectCard", { as: P1 });
     expect(goSoloSpec.candidates).toEqual([
-      engine.findCardId(alphaVCorporateExile, "legendArea", P1) as string,
+      engine.findCardId(theHeistRetailStarterDeckVCorporateExile, "legendArea", P1) as string,
     ]);
 
     const abilitySpec = expectMoveInputSpec(engine, "activateAbility", "selectAbility", {
@@ -159,7 +171,7 @@ describe("Gameplay guide prompt audit", () => {
       engine.findCardId(activeUnit, "field", P1) as string,
     ]);
     expect(attackUnitSpec.toCandidates).toEqual([
-      engine.findCardId(alphaCorpoSecurity, "field", P2) as string,
+      engine.findCardId(welcomeToNightCityRetailCorpoSecurity, "field", P2) as string,
     ]);
 
     const attackRivalSpec = expectMoveInputSpec(engine, "attackRival", "selectCard", { as: P1 });
@@ -219,7 +231,7 @@ describe("Gameplay guide prompt audit", () => {
       { field: [attacker] },
       {
         hand: [quickProgram, normalProgram],
-        field: [quickUnit, normalUnit, alphaCorpoSecurity],
+        field: [quickUnit, normalUnit, welcomeToNightCityRetailCorpoSecurity],
         legendArea: [{ card: reactionLegend, faceDown: true }],
         eddies: 5,
       },
@@ -246,7 +258,7 @@ describe("Gameplay guide prompt audit", () => {
 
     const blockerSpec = expectMoveInputSpec(engine, "useBlocker", "selectCard", { as: P2 });
     expect(blockerSpec.candidates).toEqual([
-      engine.findCardId(alphaCorpoSecurity, "field", P2) as string,
+      engine.findCardId(welcomeToNightCityRetailCorpoSecurity, "field", P2) as string,
     ]);
 
     expectMoveInputSpec(engine, "callLegend", "selectCard", { as: P2 });

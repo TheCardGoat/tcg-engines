@@ -1,27 +1,35 @@
 import { describe, it, expect } from "vite-plus/test";
-import { GundamTestEngine, PLAYER_ONE, getEffectiveStats } from "@tcg/gundam-engine";
+import { GundamTestEngine, PLAYER_ONE, PLAYER_TWO, expectSuccess } from "@tcg/gundam-engine";
 import { gd03GundamBarbatos6thForm061 } from "./061-gundam-barbatos-6th-form.ts";
 
 describe("Gundam Barbatos 6th Form (GD03-061)", () => {
-  it("while this Unit has exactly 1 remaining HP, it gains <Repair 3>", () => {
-    const engine = GundamTestEngine.create({ play: [gd03GundamBarbatos6thForm061] });
-    const unitId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
-    engine.getG().damage[unitId] = 3;
+  it("repairs 3 damage at end of turn while it has exactly 1 remaining HP", () => {
+    const engine = GundamTestEngine.create({
+      play: [{ card: gd03GundamBarbatos6thForm061, damage: 3 }],
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const stats = getEffectiveStats(unitId, engine.getG(), framework.cards, framework);
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
 
-    expect(stats.keywords).toContain("Repair");
+    expect(p1.getDamage(unitId)).toBe(0);
   });
 
-  it("does not gain <Repair 3> above 1 remaining HP", () => {
-    const engine = GundamTestEngine.create({ play: [gd03GundamBarbatos6thForm061] });
-    const unitId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
-    engine.getG().damage[unitId] = 2;
+  it("does not repair above 1 remaining HP", () => {
+    const engine = GundamTestEngine.create({
+      play: [{ card: gd03GundamBarbatos6thForm061, damage: 2 }],
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const stats = getEffectiveStats(unitId, engine.getG(), framework.cards, framework);
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
 
-    expect(stats.keywords).not.toContain("Repair");
+    expect(p1.getDamage(unitId)).toBe(2);
   });
 });

@@ -16,7 +16,7 @@ describe("Floor It", () => {
         eddies: 1,
       },
       {
-        field: [{ card: welcomeToNightCityRetailRidingNomad, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailRidingNomad, hasLag: false }],
       },
       { preserveDeckOrder: true },
     );
@@ -36,19 +36,23 @@ describe("Floor It", () => {
     );
   });
 
-  it("plays and resolves without a draw when no rival Unit can be targeted", () => {
+  it("still draws 1 when no rival Unit can be targeted (the Draw is independent of the debuff target)", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       hand: [welcomeToNightCityRetailFloorIt],
       deck: [welcomeToNightCityRetailCorpoSecurity],
       eddies: 1,
     });
 
+    const handBefore = engine.getCardsInZone("hand", P1).length;
+    const deckBefore = engine.getState().G.players[P1].zones.deck.length;
+
     engine.playCard(welcomeToNightCityRetailFloorIt, { as: P1 });
 
+    // No target choice (no rival Unit), but the independent "Draw 1" resolves:
+    // hand is unchanged (played -1, drew +1) and the deck decreased by one.
     engine.expectNoPendingChoice();
-    expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).not.toContain(
-      welcomeToNightCityRetailCorpoSecurity.id,
-    );
+    expect(engine.getCardsInZone("hand", P1)).toHaveLength(handBefore);
+    expect(engine.getState().G.players[P1].zones.deck.length).toBe(deckBefore - 1);
     expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(
       welcomeToNightCityRetailFloorIt.id,
     );

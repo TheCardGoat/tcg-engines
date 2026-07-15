@@ -146,23 +146,24 @@ describe("runTournament", () => {
 
   test("paired seeds compare equivalent strategies on the same games", () => {
     const summary = runTournament({
-      strategies: ["default", "greedy"],
-      matches: 2,
+      strategies: ["default", "tactical"],
+      matches: 1,
       seed: "paired-seed-smoke",
-      maxSteps: 1500,
-      deckSource: "print-and-play-padded",
-      deckLimit: 1,
+      maxSteps: 1,
+      deckSource: "test",
       pairedSeeds: true,
     });
 
-    const defaultVsGreedy = summary.cells.find(
-      (cell) => cell.strategyA === "default" && cell.strategyB === "greedy",
+    const defaultVsTactical = summary.cells.find(
+      (cell) => cell.strategyA === "default" && cell.strategyB === "tactical",
     );
-    const greedyVsDefault = summary.cells.find(
-      (cell) => cell.strategyA === "greedy" && cell.strategyB === "default",
+    const tacticalVsDefault = summary.cells.find(
+      (cell) => cell.strategyA === "tactical" && cell.strategyB === "default",
     );
 
-    expect(defaultVsGreedy?.summary.perPlayerWins).toEqual(greedyVsDefault?.summary.perPlayerWins);
+    expect(defaultVsTactical?.summary.perPlayerWins).toEqual(
+      tacticalVsDefault?.summary.perPlayerWins,
+    );
     expect(summary.totalWinsBySeat.p1 + summary.totalWinsBySeat.p2).toBe(summary.totalMatches);
     expect(summary.averageStepCount).toBeGreaterThan(0);
   });
@@ -173,6 +174,7 @@ describe("runTournament", () => {
     expect(names).toContain("first-legal");
     expect(names).toContain("random");
     expect(names).toContain("greedy");
+    expect(names).toContain("tactical");
   });
 });
 

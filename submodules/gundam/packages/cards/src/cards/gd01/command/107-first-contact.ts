@@ -99,11 +99,7 @@ export const gd01FirstContact107: CommandCard = {
       },
       directives: [
         {
-          action: {
-            action: "placeResource",
-            resourceType: "EX",
-            state: "active",
-          },
+          action: { action: "placeExResource", state: "active" },
         },
       ],
       sourceText: "【Burst】Place 1 EX Resource.",
@@ -117,7 +113,6 @@ export const gd01FirstContact107: CommandCard = {
         {
           action: {
             action: "placeResource",
-            resourceType: "normal",
             state: "rested",
           },
         },

@@ -1,97 +1,104 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  createMockCommand,
   createMockUnit,
   expectFailure,
   expectSuccess,
-  getEffectiveStats,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd03AwakenedPotential118 } from "./118-awakened-potential.ts";
 
-function awakenedPotentialCopy() {
-  return createMockCommand({ name: "Awakened Potential" });
-}
-
 describe("Awakened Potential (GD03-118)", () => {
-  it("has the printed command identity", () => {
-    expect(gd03AwakenedPotential118.type).toBe("command");
-    expect(gd03AwakenedPotential118.cardNumber).toBe("GD03-118");
-  });
+  it("【Burst】 adds the revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd03AwakenedPotential118] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-  it("【Burst】 adds this card to hand", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd03AwakenedPotential118] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.asPlayer(PLAYER_TWO).getHand()).toContain(shieldId);
+    expect(p2.getCardZone(gd03AwakenedPotential118)).toBe(`hand:${PLAYER_TWO}`);
   });
 
   it("【Action】 returns a rested enemy Unit that is Lv.4 or lower to hand", () => {
-    const enemy = { card: createMockUnit({ level: 4 }), exhausted: true };
+    const enemy = createMockUnit({ level: 4 });
     const engine = GundamTestEngine.create(
       { hand: [gd03AwakenedPotential118], resourceArea: activeResources(4) },
-      { play: [enemy] },
+      { play: [{ card: enemy, exhausted: true }] },
     );
-    engine.setPhase("end-phase");
-    engine.setStep("action-step");
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
+    const commandId = p1.getHand()[0]!;
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(p1.playCommand(gd03AwakenedPotential118, { targets: [enemyId] }));
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.playCommand(commandId, { targets: [enemyId] }));
 
     expect(p2.getHand()).toContain(enemyId);
   });
 
-  it("with two Awakened Potential cards in trash, may grant <Blocker> to a friendly Unit", () => {
-    const friendly = createMockUnit({ hp: 4 });
-    const enemy = { card: createMockUnit({ level: 4 }), exhausted: true };
+  it("with two copies in trash, may grant Blocker that can intercept this turn", () => {
+    const blocker = createMockUnit({ hp: 5 });
+    const firstAttacker = createMockUnit({ level: 4, ap: 2, hp: 5 });
+    const secondAttacker = createMockUnit({ level: 4, ap: 2, hp: 5 });
     const engine = GundamTestEngine.create(
       {
         hand: [gd03AwakenedPotential118],
-        trash: [awakenedPotentialCopy(), awakenedPotentialCopy()],
-        play: [friendly],
+        trash: [gd03AwakenedPotential118, gd03AwakenedPotential118],
+        play: [blocker],
         resourceArea: activeResources(4),
       },
-      { play: [enemy] },
+      { play: [firstAttacker, secondAttacker] },
+      { initialActivePlayer: PLAYER_TWO },
     );
-    engine.setPhase("end-phase");
-    engine.setStep("action-step");
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const friendlyId = p1.getCardsInZone("battleArea")[0]!;
-    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+    const blockerId = p1.getCardsInZone("battleArea")[0]!;
+    const [firstAttackerId, secondAttackerId] = p2.getCardsInZone("battleArea");
+    const commandId = p1.getHand()[0]!;
 
-    expectSuccess(p1.playCommand(gd03AwakenedPotential118, { targets: [enemyId, friendlyId] }));
+    expectSuccess(p2.enterBattle(firstAttackerId!, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.playCommand(commandId, { targets: [firstAttackerId!, blockerId] }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
     expectSuccess(p1.resolveEffect({ optionalAnswers: { 1: true } }));
+    expect(p2.getHand()).toContain(firstAttackerId);
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    expect(
-      getEffectiveStats(friendlyId, engine.getG(), framework.cards, framework).keywords,
-    ).toContain("Blocker");
+    expectSuccess(p2.enterBattle(secondAttackerId!, "direct"));
+    expectSuccess(p1.declareBlock(blockerId));
+
+    expect(p1.getBoardView().pendingCombat?.blockerId).toBe(blockerId);
   });
 
-  it("cannot target an active enemy Unit", () => {
+  it("cannot return an active enemy Unit", () => {
     const enemy = createMockUnit({ level: 4 });
     const engine = GundamTestEngine.create(
       { hand: [gd03AwakenedPotential118], resourceArea: activeResources(4) },
       { play: [enemy] },
     );
-    engine.setPhase("end-phase");
-    engine.setStep("action-step");
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const commandId = p1.getHand()[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
-    expectFailure(
-      p1.playCommand(gd03AwakenedPotential118, { targets: [enemyId] }),
-      "INVALID_TARGET",
-    );
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectFailure(p1.playCommand(commandId, { targets: [enemyId] }), "INVALID_TARGET");
   });
 });

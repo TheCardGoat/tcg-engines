@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaArmoredMinotaur,
-  alphaRuthlessLowlife,
-  alphaSecondhandBombus,
-  alphaTBugAmateurPhilosopher,
-  alphaFloorIt,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailSketchyRipper,
+  welcomeToNightCityRetailSecondhandBombus,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
+  welcomeToNightCityRetailFloorIt,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine } from "../../src/testing/index.ts";
 import { DIE_MAX_VALUES, type DieType } from "../../src/types/gig-die.ts";
@@ -31,14 +31,14 @@ describe("Start Phase", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
         {
           field: [
-            { card: alphaArmoredMinotaur, spent: true },
-            { card: alphaRuthlessLowlife, spent: true },
+            { card: embracingPowerRetailStarterDeckMinotaur, spent: true },
+            { card: welcomeToNightCityRetailSketchyRipper, spent: true },
           ],
         },
         {
           field: [
-            { card: alphaSecondhandBombus, spent: true },
-            { card: alphaTBugAmateurPhilosopher, spent: true },
+            { card: welcomeToNightCityRetailSecondhandBombus, spent: true },
+            { card: welcomeToNightCityRetailTBugAmateurPhilosopher, spent: true },
           ],
         },
       );
@@ -84,10 +84,16 @@ describe("Start Phase", () => {
     it("does not affect cards already in ready state", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
         {
-          field: [alphaArmoredMinotaur, { card: alphaRuthlessLowlife, spent: true }],
+          field: [
+            embracingPowerRetailStarterDeckMinotaur,
+            { card: welcomeToNightCityRetailSketchyRipper, spent: true },
+          ],
         },
         {
-          field: [alphaSecondhandBombus, { card: alphaTBugAmateurPhilosopher, spent: true }],
+          field: [
+            welcomeToNightCityRetailSecondhandBombus,
+            { card: welcomeToNightCityRetailTBugAmateurPhilosopher, spent: true },
+          ],
         },
       );
 
@@ -105,14 +111,14 @@ describe("Start Phase", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
         {
           field: [
-            { card: alphaArmoredMinotaur, spent: true },
-            { card: alphaRuthlessLowlife, spent: true },
+            { card: embracingPowerRetailStarterDeckMinotaur, spent: true },
+            { card: welcomeToNightCityRetailSketchyRipper, spent: true },
           ],
         },
         {
           field: [
-            { card: alphaSecondhandBombus, spent: true },
-            { card: alphaTBugAmateurPhilosopher, spent: true },
+            { card: welcomeToNightCityRetailSecondhandBombus, spent: true },
+            { card: welcomeToNightCityRetailTBugAmateurPhilosopher, spent: true },
           ],
         },
       );
@@ -495,14 +501,14 @@ describe("Start Phase", () => {
 
     it("resets turn flags for the player whose turn ended", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaFloorIt],
+        hand: [welcomeToNightCityRetailFloorIt],
         eddies: 0,
       });
 
       const active = engine.getActivePlayerId();
 
       // Sell a card to set soldThisTurn = true
-      engine.sellCard(alphaFloorIt, { as: active });
+      engine.sellCard(welcomeToNightCityRetailFloorIt, { as: active });
       expect(engine.getState().G.players[active as string]!.soldThisTurn).toBe(true);
 
       // Complete the turn (single pass from main ends it)

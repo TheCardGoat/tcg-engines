@@ -9,6 +9,12 @@
   min-height: 0;
 }
 
+.panelMobileDrawer {
+  height: 100%;
+  gap: 10px;
+  padding: 2px 0 0;
+}
+
 .panelCompact {
   gap: 6px;
   max-height: 100%;
@@ -36,6 +42,32 @@
   max-height: 82px;
   gap: 4px;
   padding: 5px 4px;
+}
+
+.panelMobileDrawer .scroll {
+  flex: 1 1 auto;
+  min-height: 180px;
+  max-height: none;
+  gap: 5px;
+  padding: 6px 2px 6px 0;
+  border-inline: 0;
+  border-radius: 0;
+  border-top: 1px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 12%);
+  border-bottom: 1px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 12%);
+  background: transparent;
+}
+
+.panelMobileDrawer .scroll::-webkit-scrollbar {
+  width: 9px;
+}
+
+.panelMobileDrawer .scroll::-webkit-scrollbar-track {
+  background: rgb(var(--simulator-accent-rgb, 245 230 66) / 6%);
+}
+
+.panelMobileDrawer .scroll::-webkit-scrollbar-thumb {
+  background: rgb(var(--simulator-accent-rgb, 245 230 66) / 28%);
+  border-radius: 999px;
 }
 
 .scroll > .bubble + .bubbleGrouped {
@@ -82,6 +114,11 @@
   grid-template-columns: auto minmax(0, 1fr);
   gap: 6px;
   padding: 4px 6px;
+}
+
+.panelMobileDrawer .bubble {
+  gap: 6px;
+  padding: 5px 8px 6px;
 }
 
 .bubblePlayer {
@@ -135,6 +172,10 @@
   display: none;
 }
 
+.panelMobileDrawer .time {
+  display: none;
+}
+
 .presets {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -142,8 +183,15 @@
 }
 
 .panelCompact .presets {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 3px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.panelMobileDrawer .presets {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  padding: 2px 0 4px;
 }
 
 .presetBtn {
@@ -162,12 +210,26 @@
 
 .panelCompact .presetBtn {
   min-width: 0;
-  padding: 5px 4px;
-  font-size: 9px;
-  letter-spacing: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  min-height: 32px;
+  padding: 5px 6px;
+  font-size: 10px;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.panelMobileDrawer .presetBtn {
+  min-width: 0;
+  min-height: 40px;
+  padding: 9px 12px;
+  border-color: rgb(var(--simulator-accent-rgb, 245 230 66) / 18%);
+  background: rgb(var(--simulator-accent-rgb, 245 230 66) / 3%);
+  border-radius: 999px;
+  line-height: 1.15;
+  letter-spacing: 0.03em;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .presetBtn:hover {
@@ -178,10 +240,20 @@
   background: rgb(var(--simulator-accent-rgb, 245 230 66) / 18%);
 }
 
+.presetBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 .inputRow {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 4px;
+}
+
+.panelMobileDrawer .inputRow {
+  margin-top: auto;
+  align-items: stretch;
 }
 
 .input {
@@ -198,6 +270,11 @@
 .panelCompact .input {
   min-width: 0;
   padding: 6px 7px;
+}
+
+.panelMobileDrawer .input {
+  min-height: 42px;
+  padding: 8px 10px;
 }
 
 .input:focus {
@@ -218,11 +295,76 @@
   transition: background 120ms ease;
 }
 
+.panelMobileDrawer .sendBtn {
+  min-width: 78px;
+  min-height: 42px;
+  padding-inline: 12px;
+}
+
 .sendBtn:hover:not(:disabled) {
   background: rgb(var(--simulator-cyan-rgb, 92 246 255) / 16%);
 }
 
 .sendBtn:disabled {
   opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.freeTextGate {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border: 1px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 18%);
+  background: rgb(var(--simulator-accent-rgb, 245 230 66) / 4%);
+  border-radius: 2px;
+}
+
+.panelCompact .freeTextGate {
+  grid-template-columns: 1fr;
+  gap: 5px;
+  padding: 6px 7px;
+}
+
+.panelMobileDrawer .freeTextGate {
+  margin-top: auto;
+  padding: 8px 10px;
+}
+
+.freeTextGateText {
+  min-width: 0;
+  font-size: 10px;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  opacity: 0.72;
+}
+
+.requestBtn {
+  font-family: inherit;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 8px;
+  border: 1px solid rgb(var(--simulator-cyan-rgb, 92 246 255) / 45%);
+  background: rgb(var(--simulator-cyan-rgb, 92 246 255) / 7%);
+  color: rgb(var(--simulator-cyan-rgb, 92 246 255));
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 120ms ease;
+  white-space: nowrap;
+}
+
+.panelMobileDrawer .requestBtn {
+  min-height: 40px;
+  padding-inline: 12px;
+}
+
+.requestBtn:hover:not(:disabled) {
+  background: rgb(var(--simulator-cyan-rgb, 92 246 255) / 15%);
+}
+
+.requestBtn:disabled {
+  opacity: 0.45;
   cursor: not-allowed;
 }

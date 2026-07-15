@@ -1,33 +1,50 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  asPlayerId,
+  createMockBase,
   createMockUnit,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd01Ball015 } from "./015-ball.ts";
+import {
+  passTurnThroughPublicMoves,
+  resolveUnitBattle,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 
 describe("Ball (GD01-015)", () => {
-  it("【Attack】 recovers 1 HP on the lone friendly Unit when this Unit attacks", () => {
-    // Ball (AP 1, HP 1) attacks direct. The Attack trigger auto-picks
-    // the lone friendly — Ball itself — as the recovery target. We
-    // pre-damage Ball so the recoverHP has an observable delta.
-    const defender = createMockUnit({ ap: 1, hp: 5 });
-    const engine = GundamTestEngine.create({ play: [gd01Ball015] }, { play: [defender] });
+  it("offers friendly Units and recovers 1 HP from the Unit chosen when Ball attacks", () => {
+    const ally = createMockUnit({ hp: 4 });
+    const damageDefender = createMockUnit({ ap: 2, hp: 10 });
+    const ballDefender = createMockUnit({ ap: 0, hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        play: [gd01Ball015, ally],
+        baseSection: [createMockBase({ hp: 20 })],
+        deck: 5,
+      },
+      { play: [damageDefender, ballDefender], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const p1Id = asPlayerId(PLAYER_ONE);
-    const p2Id = asPlayerId(PLAYER_TWO);
-    const ballId = engine.getCardsInZone({ zone: "battleArea", playerId: p1Id })[0]!;
-    const defenderId = engine.getCardsInZone({ zone: "battleArea", playerId: p2Id })[0]!;
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [ballId, allyId] = p1.getCardsInZone("battleArea");
+    const [damageDefenderId, ballDefenderId] = p2.getCardsInZone("battleArea");
 
-    engine.getG().damage[ballId] = 1;
-    engine.getG().exhausted[ballId] = false;
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [damageDefenderId!, ballDefenderId!]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+    resolveUnitBattle(engine, PLAYER_ONE, allyId!, damageDefenderId!);
+    expectSuccess(p1.enterBattle(ballId!, ballDefenderId!));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([ballId, allyId]),
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [allyId!] }));
 
-    expectSuccess(p1.enterBattle(ballId, defenderId));
-
-    // Attack trigger recovered 1 HP from Ball — damage cleared.
-    expect(engine.getG().damage[ballId] ?? 0).toBe(0);
+    expect(p1.getDamage(allyId!)).toBe(1);
   });
 });

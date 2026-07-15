@@ -4,6 +4,7 @@ export const gd01ShenlongGundam029: UnitCard = {
   cardNumber: "GD01-029",
   name: "Shenlong Gundam",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-029",
@@ -58,6 +59,7 @@ export const gd01ShenlongGundam029: UnitCard = {
   cost: 4,
   ap: 4,
   hp: 4,
+  linkCondition: "[Chang Wufei]",
   effect:
     "&lt;Breach 4&gt; (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)<br>【Attack】Choose 1 enemy Unit with &lt;Blocker&gt; that is Lv.3 or lower. Destroy it.<br>",
   effects: [

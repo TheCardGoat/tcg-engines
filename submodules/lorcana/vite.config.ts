@@ -8,11 +8,11 @@ export default defineConfig({
     },
     tasks: {
       "ci:check": {
-        command: "bunx turbo run lint check-types test",
+        command: "pnpm exec turbo run lint check-types test",
         cache: false,
       },
       "ci:full": {
-        command: "bunx turbo run lint check-types test && bunx turbo run build",
+        command: "vp run ci:check && pnpm exec turbo run build",
         cache: false,
       },
     },

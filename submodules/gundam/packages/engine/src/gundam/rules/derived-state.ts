@@ -13,6 +13,7 @@ import type {
   UnitCard,
   BaseCard,
   KeywordEffect,
+  KeywordEffectEntry,
   CardColor,
   CardType,
   Zone,
@@ -79,7 +80,11 @@ export function buildTargetResolutionContext(
 ): TargetResolutionContext {
   const allPlayerIds = Object.keys(G.players);
   const opponentPlayerId = allPlayerIds.find((id) => id !== sourcePlayerId) ?? sourcePlayerId;
-  const activePlayerId = framework.state.status.activePlayer as PlayerId;
+  // Card text that checks whose turn it is must follow the turn owner,
+  // not the temporary interaction actor used while a pending prompt is
+  // waiting for the standby player's answer.
+  const activePlayerId = (framework.state.status.turnPlayer ??
+    framework.state.status.activePlayer) as PlayerId;
   const cards = framework.cards;
   const statsFramework = opts?.recursionGuard ? undefined : framework;
 
@@ -220,6 +225,11 @@ export function buildTargetResolutionContext(
           traits.add(effect.payload.trait);
         }
       }
+      if (!opts?.recursionGuard) {
+        for (const trait of getConstantGrantedTraits(card.instanceId as string, G, framework)) {
+          traits.add(trait);
+        }
+      }
       return [...traits];
     },
 
@@ -279,6 +289,66 @@ export function buildTargetResolutionContext(
       return meta?.isToken === true;
     },
   };
+}
+
+function getConstantGrantedTraits(
+  cardId: string,
+  G: ReadonlyGundamG,
+  framework: FrameworkReadAPI,
+): string[] {
+  const granted = new Set<string>();
+  const allCards: RuntimeCard[] = [];
+  for (const playerId of Object.keys(G.players)) {
+    for (const zone of ["battleArea", "baseSection"] as const) {
+      for (const id of framework.zones.getCards({ zone, playerId })) {
+        const card = framework.cards.get(id);
+        if (card) allCards.push(card);
+      }
+    }
+  }
+
+  for (const ownerId of Object.keys(G.players)) {
+    const sourceIds = [
+      ...framework.zones.getCards({ zone: "battleArea", playerId: ownerId }),
+      ...framework.zones.getCards({ zone: "baseSection", playerId: ownerId }),
+    ];
+    for (const sourceId of sourceIds) {
+      const source = framework.cards.getDefinition(sourceId) as Card | undefined;
+      if (!source?.effects?.length) continue;
+      const ctx = buildTargetResolutionContext(G, ownerId, framework, {
+        sourceCardId: sourceId,
+        recursionGuard: true,
+      });
+      const gateUnitId =
+        source.type === "pilot"
+          ? Object.entries(G.pilotAssignments).find(([, pilotId]) => pilotId === sourceId)?.[0]
+          : sourceId;
+      for (const effect of source.effects as CardEffect[]) {
+        if (effect.type !== "constant") continue;
+        const qualification = effect.activation.qualification as AttributeFilter | undefined;
+        if (qualification && gateUnitId) {
+          const pilotId = G.pilotAssignments[gateUnitId];
+          const pilot = pilotId ? framework.cards.get(pilotId) : undefined;
+          if (!pilot || !evaluateAttributeFilter(qualification, pilot, ctx)) continue;
+        }
+        if (
+          effect.activation.conditions?.some(
+            (condition) => !evaluateCondition(condition as EffectCondition, ctx),
+          )
+        ) {
+          continue;
+        }
+        for (const directive of effect.directives) {
+          if (!("action" in directive)) continue;
+          const action = (directive as EffectDirective).action;
+          if (action.action !== "grantTrait") continue;
+          const matches = evaluateTargetFilter(action.target, allCards, ctx);
+          if (matches.includes(cardId as CardInstanceId)) granted.add(action.trait);
+        }
+      }
+    }
+  }
+  return [...granted];
 }
 
 // =============================================================================
@@ -831,6 +901,7 @@ export function getKeywordValue(
   keyword: KeywordEffect,
   G: ReadonlyGundamG,
   cards: CardReadAPI,
+  framework?: FrameworkReadAPI,
 ): number {
   const definition = cards.getDefinition(cardId) as Card | undefined;
   if (!definition) return 0;
@@ -862,17 +933,94 @@ export function getKeywordValue(
   for (const effect of G.continuousEffects) {
     if (effect.targetId !== cardId) continue;
     if (effect.payload.kind === "keyword-grant" && effect.payload.keyword === keyword) {
-      total += 1;
+      total += effect.payload.value ?? 1;
     }
   }
 
   // Meta keyword grants
   const meta = cards.getMeta(cardId) as GundamCardMeta | undefined;
-  if (meta?.grantedKeywords?.includes(keyword)) {
-    total += 1;
+  total +=
+    meta?.grantedKeywordValues?.[keyword] ?? (meta?.grantedKeywords?.includes(keyword) ? 1 : 0);
+
+  if (framework) {
+    const allCards: RuntimeCard[] = [];
+    for (const playerId of Object.keys(G.players)) {
+      for (const zone of ["battleArea", "baseSection"] as const) {
+        for (const id of framework.zones.getCards({ zone, playerId })) {
+          const runtimeCard = cards.get(id);
+          if (runtimeCard) allCards.push(runtimeCard);
+        }
+      }
+    }
+
+    for (const ownerId of Object.keys(G.players)) {
+      const sources = [
+        ...framework.zones.getCards({ zone: "battleArea", playerId: ownerId }),
+        ...framework.zones.getCards({ zone: "baseSection", playerId: ownerId }),
+      ];
+      for (const sourceId of sources) {
+        const sourceDef = cards.getDefinition(sourceId) as Card | undefined;
+        if (!sourceDef?.effects?.length) continue;
+        const ctx = buildTargetResolutionContext(G, ownerId, framework, {
+          sourceCardId: sourceId,
+          recursionGuard: true,
+        });
+        const gateUnitId =
+          sourceDef.type === "pilot"
+            ? Object.entries(G.pilotAssignments).find(([, pilotId]) => pilotId === sourceId)?.[0]
+            : sourceId;
+
+        for (const effect of sourceDef.effects as CardEffect[]) {
+          if (effect.type !== "constant") continue;
+          const qualification = effect.activation.qualification as AttributeFilter | undefined;
+          if (qualification && gateUnitId) {
+            const pilotId = G.pilotAssignments[gateUnitId];
+            const pilot = pilotId ? cards.get(pilotId) : undefined;
+            if (!pilot || !evaluateAttributeFilter(qualification, pilot, ctx)) continue;
+          }
+          if (
+            effect.activation.conditions?.some(
+              (condition) => !evaluateCondition(condition as EffectCondition, ctx),
+            )
+          ) {
+            continue;
+          }
+          for (const directive of effect.directives) {
+            if (!("action" in directive)) continue;
+            const action = (directive as EffectDirective).action;
+            if (action.action !== "grantKeyword" || action.keyword !== keyword) continue;
+            const matchedIds = evaluateTargetFilter(action.target, allCards, ctx);
+            if (matchedIds.includes(cardId as CardInstanceId)) {
+              total += action.keywordValue ?? 1;
+            }
+          }
+        }
+      }
+    }
   }
 
   return total;
+}
+
+const NUMERIC_KEYWORDS: ReadonlySet<KeywordEffect> = new Set(["Repair", "Breach", "Support"]);
+
+/**
+ * Project effective keywords into the same structured shape used by printed
+ * card data. Numeric keyword copies are already combined by `getKeywordValue`
+ * under rules 13-1-1-2, 13-1-2-5, and 13-1-3-2.
+ */
+export function getEffectiveKeywordEffects(
+  cardId: string,
+  G: ReadonlyGundamG,
+  cards: CardReadAPI,
+  framework?: FrameworkReadAPI,
+  effectiveKeywords = getEffectiveStats(cardId, G, cards, framework).keywords,
+): KeywordEffectEntry[] {
+  return effectiveKeywords.map((keyword) =>
+    NUMERIC_KEYWORDS.has(keyword)
+      ? { keyword, value: getKeywordValue(cardId, keyword, G, cards, framework) }
+      : { keyword },
+  );
 }
 
 export function hasRestriction(
@@ -986,8 +1134,9 @@ function makeSupportActivatedEffect(value: number): CardEffect {
 
 /**
  * Whether a unit can declare an attack this turn.
- * Rules: not exhausted, not deployed this turn (unless Link Unit), has not
- * already attacked, no "cannot-attack" restriction.
+ * Rules: not exhausted, not deployed this turn (unless Link Unit), and no
+ * "cannot-attack" restriction. Attack history is not itself a restriction;
+ * a Unit that an effect sets active may attack again.
  *
  * Rule 3-2-4: newly deployed units cannot attack the turn they are deployed.
  * Rule 3-2-6-3: Link Units are exempt — they can attack the turn they are
@@ -1012,7 +1161,6 @@ export function canAttack(
     return false;
   }
 
-  if (G.turnMetadata.attackedThisTurn.includes(cardId)) return false;
   if (hasRestriction(cardId, "cannot-attack", G, cards, framework)) return false;
 
   return true;
@@ -1243,6 +1391,45 @@ export function computeEffectiveCostInHand(
           }
         }
       }
+    }
+  }
+
+  return Math.max(0, cost);
+}
+
+/**
+ * Effective cost for playing a Pilot from hand onto a specific Unit.
+ * Starts with every normal in-hand modifier, then applies the lowest exact
+ * pairing override whose public Unit filter matches the chosen host.
+ */
+export function computeEffectivePilotPairingCost(
+  pilotId: string,
+  unitId: string,
+  playerId: string,
+  G: ReadonlyGundamG,
+  framework: FrameworkReadAPI,
+): number {
+  let cost = computeEffectiveCostInHand(pilotId, playerId, G, framework);
+  const definition = framework.cards.getDefinition(pilotId) as Card | undefined;
+  const unit = framework.cards.get(unitId);
+  if (definition?.type !== "pilot" || !unit) return cost;
+
+  const ctx = buildTargetResolutionContext(G, playerId, framework, {
+    sourceCardId: pilotId,
+  });
+  for (const effect of (definition.effects ?? []) as CardEffect[]) {
+    if (effect.type !== "constant") continue;
+    const conditions = effect.activation.conditions ?? [];
+    if (!conditions.every((condition) => evaluateCondition(condition, ctx))) continue;
+
+    for (const directive of effect.directives) {
+      if (!("action" in directive)) continue;
+      const action = (directive as EffectDirective).action;
+      if (action.action !== "pairingCostOverride") continue;
+      const matches = evaluateTargetFilter(action.unit, [unit], ctx).includes(
+        unitId as CardInstanceId,
+      );
+      if (matches) cost = Math.min(cost, action.cost);
     }
   }
 

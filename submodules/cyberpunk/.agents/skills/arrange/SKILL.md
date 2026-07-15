@@ -1,8 +1,6 @@
 ---
 name: arrange
 description: Improve layout, spacing, and visual rhythm. Fixes monotonous grids, inconsistent spacing, and weak visual hierarchy. Use when the user mentions layout feeling off, spacing issues, visual hierarchy, crowded UI, alignment problems, or wanting better composition.
-user-invocable: true
-argument-hint: "[target]"
 ---
 
 Assess and improve layout and spacing that feels monotonous, crowded, or structurally weak — turning generic arrangements into intentional, rhythmic compositions.
@@ -46,7 +44,7 @@ Analyze what's weak about the current spatial design:
 
 ## Plan Layout Improvements
 
-Consult the [spatial design reference](reference/spatial-design.md) from the frontend-design skill for detailed guidance on grids, rhythm, and container queries.
+Consult the [spatial design reference](../frontend-design/reference/spatial-design.md) from the frontend-design skill for detailed guidance on grids, rhythm, and container queries.
 
 Create a systematic plan:
 

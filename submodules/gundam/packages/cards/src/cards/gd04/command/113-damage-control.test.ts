@@ -4,95 +4,130 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  asPlayerId,
   createMockUnit,
-  expectCardInTrash,
   expectFailure,
   expectSuccess,
-  findStatModifier,
-  getDamageCounter,
-  seedShieldsFromDeck,
+  restedResources,
 } from "@tcg/gundam-engine";
 import { gd04DamageControl113 } from "./113-damage-control.ts";
 
 describe("Damage Control (GD04-113)", () => {
-  it("【Burst】gives an enemy Unit AP-2 during this turn", () => {
-    const enemy = createMockUnit({ ap: 4, hp: 4 });
-    const engine = GundamTestEngine.create({ deck: [gd04DamageControl113] }, { play: [enemy] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
-    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
-    if (!shieldId) throw new Error("seed setup: no shield created");
+  describe("【Burst】Choose 1 enemy Unit. It gets AP-2 during this turn.", () => {
+    function revealBurst() {
+      const attacker = createMockUnit({ name: "Enemy Attacker", ap: 4, hp: 6 });
+      const engine = GundamTestEngine.create(
+        { shieldArea: [gd04DamageControl113] },
+        { play: [attacker] },
+        { initialActivePlayer: PLAYER_TWO },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const shieldId = p1.getCardsInZone("shieldArea")[0]!;
+      const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId, { targets: [enemyId] });
+      expectSuccess(p2.enterBattle(attackerId, "direct"));
+      expectSuccess(p1.passBlock());
+      expectSuccess(p1.passBattleAction());
+      expectSuccess(p2.passBattleAction());
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "optional",
+        sourceCardId: shieldId,
+        directiveIndex: -1,
+      });
 
-    expect(findStatModifier(engine, enemyId, "ap")?.modifier).toBe(-2);
+      return { p1, p2, shieldId, attackerId };
+    }
+
+    it("reduces the chosen enemy Unit's visible AP by 2 when accepted", () => {
+      const { p1, p2, shieldId, attackerId } = revealBurst();
+
+      expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        sourceCardId: shieldId,
+        directiveIndex: 0,
+      });
+      expectSuccess(p1.resolveEffect({ targets: [attackerId] }));
+
+      expect(p2.getVisibleCard(attackerId)).toMatchObject({ effectiveAp: 2 });
+      expect(p1.getCardZone(shieldId)).toBe(`trash:${PLAYER_ONE}`);
+    });
+
+    it("leaves the enemy Unit's AP unchanged when the Burst is declined", () => {
+      const { p1, p2, shieldId, attackerId } = revealBurst();
+
+      expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: false } }));
+
+      expect(p2.getVisibleCard(attackerId)).toMatchObject({ effectiveAp: 4 });
+      expect(p1.getCardZone(shieldId)).toBe(`trash:${PLAYER_ONE}`);
+    });
   });
+
   describe("【Action】Choose 1 of your Units. During this battle, reduce battle damage it receives by 3.", () => {
-    function setup({
-      activePlayer = PLAYER_TWO,
-    }: { activePlayer?: typeof PLAYER_ONE | typeof PLAYER_TWO } = {}) {
+    function setup({ canPay = true } = {}) {
       const defender = createMockUnit({ ap: 1, hp: 8 });
       const attacker = createMockUnit({ ap: 5, hp: 8 });
       const engine = GundamTestEngine.create(
         {
           hand: [gd04DamageControl113],
-          resourceArea: activeResources(3),
+          resourceArea: canPay ? activeResources(3) : restedResources(3),
           play: [{ card: defender, exhausted: true }],
         },
         { play: [attacker] },
+        { initialActivePlayer: PLAYER_TWO },
       );
-      engine.getState().ctx.status.activePlayer = asPlayerId(activePlayer);
-      engine.getState().ctx.status.turnPlayer = asPlayerId(activePlayer);
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
       const defenderId = p1.getCardsInZone("battleArea")[0]!;
       const attackerId = p2.getCardsInZone("battleArea")[0]!;
       const commandId = p1.getHand()[0]!;
-      return { engine, p1, p2, defenderId, attackerId, commandId };
-    }
+      expectSuccess(p2.enterBattle(attackerId, defenderId));
+      expectSuccess(p1.passBlock());
 
-    function reachActionStep(ctx: ReturnType<typeof setup>) {
-      expectSuccess(ctx.p2.enterBattle(ctx.attackerId, ctx.defenderId));
-      expectSuccess(ctx.p1.passBlock());
+      return { p1, p2, defenderId, attackerId, commandId };
     }
 
     it("reduces battle damage the chosen friendly Unit receives by 3 during the current battle", () => {
       const ctx = setup();
-      reachActionStep(ctx);
 
-      expectSuccess(ctx.p1.playCommand(gd04DamageControl113, { targets: [ctx.defenderId] }));
-      expectSuccess(ctx.p1.passBattleAction());
+      expectSuccess(ctx.p1.playCommand(ctx.commandId, { targets: [ctx.defenderId] }));
       expectSuccess(ctx.p2.passBattleAction());
+      expectSuccess(ctx.p1.passBattleAction());
 
-      expect(getDamageCounter(ctx.engine, ctx.defenderId)).toBe(2);
+      expect(ctx.p1.getDamage(ctx.defenderId)).toBe(2);
+      expect(ctx.p1.getCardZone(ctx.commandId)).toBe(`trash:${PLAYER_ONE}`);
     });
 
-    it("moves the command card to trash after resolving during the Action Step", () => {
+    it("cannot target the enemy Unit for the damage reduction", () => {
       const ctx = setup();
-      reachActionStep(ctx);
-
-      expectSuccess(ctx.p1.playCommand(gd04DamageControl113, { targets: [ctx.defenderId] }));
-
-      expectCardInTrash(ctx.engine, ctx.commandId, PLAYER_ONE);
-    });
-
-    it("cannot be played during Main timing because the command clause is Action-only", () => {
-      const ctx = setup({ activePlayer: PLAYER_ONE });
 
       expectFailure(
-        ctx.p1.playCommand(gd04DamageControl113, { targets: [ctx.defenderId] }),
-        "WRONG_TIMING",
-      );
-    });
-
-    it("cannot target an enemy Unit for the damage reduction", () => {
-      const ctx = setup();
-      reachActionStep(ctx);
-
-      expectFailure(
-        ctx.p1.playCommand(gd04DamageControl113, { targets: [ctx.attackerId] }),
+        ctx.p1.playCommand(ctx.commandId, { targets: [ctx.attackerId] }),
         "INVALID_TARGET",
       );
+    });
+
+    it("cannot be played without an active Resource for its cost", () => {
+      const ctx = setup({ canPay: false });
+
+      expectFailure(
+        ctx.p1.playCommand(ctx.commandId, { targets: [ctx.defenderId] }),
+        "INSUFFICIENT_RESOURCES",
+      );
+    });
+
+    it("cannot be played during Main timing because the Command clause is Action-only", () => {
+      const defender = createMockUnit({ hp: 8 });
+      const engine = GundamTestEngine.create({
+        hand: [gd04DamageControl113],
+        play: [defender],
+        resourceArea: activeResources(3),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const commandId = p1.getHand()[0]!;
+      const defenderId = p1.getCardsInZone("battleArea")[0]!;
+
+      expectFailure(p1.playCommand(commandId, { targets: [defenderId] }), "WRONG_TIMING");
     });
   });
 });

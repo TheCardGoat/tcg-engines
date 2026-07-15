@@ -2,6 +2,7 @@ import type { LifecycleContext } from "../../../types/index.ts";
 import type { PlayerId } from "../../../types/branded.ts";
 import { emitGundamEvent } from "../../events.ts";
 import { emitGundamLog, logPhaseEntered } from "../../logging.ts";
+import { endGameIfDeckEmpty } from "../../effects/handlers/draw.ts";
 
 export function drawPhaseOnEnter(ctx: LifecycleContext): void {
   logPhaseEntered(ctx.framework, { phase: "draw-phase" });
@@ -11,11 +12,7 @@ export function drawPhaseOnEnter(ctx: LifecycleContext): void {
 
   const deckCards = ctx.framework.zones.getCards({ zone: "deck", playerId: turnPlayer });
   if (deckCards.length === 0) {
-    const opponentId = ctx.framework.state.playerIds.find((id) => id !== turnPlayer);
-    ctx.framework.events.endGame({
-      winner: opponentId,
-      reason: "Player ran out of cards",
-    });
+    endGameIfDeckEmpty(turnPlayer, ctx.framework);
     return;
   }
 
@@ -39,6 +36,8 @@ export function drawPhaseOnEnter(ctx: LifecycleContext): void {
       category: "system",
     });
   }
+
+  if (endGameIfDeckEmpty(turnPlayer, ctx.framework)) return;
 
   emitGundamEvent(ctx.framework.events, {
     kind: "DRAW_PHASE",

@@ -5,7 +5,8 @@ import type { LorcanaServer } from "../lorcana-server";
 import type { LorcanaProjectedCard } from "../types";
 
 declare module "bun:test" {
-  interface Matchers<T = unknown> {
+  // @ts-expect-error Bun's recursive Matchers<T> type is incompatible with TS 7 when augmented.
+  interface Matchers<T> {
     toBeSuccessfulCommand(): void;
     toBeInZone(expectedZone: string): void;
     toBeInPosition(expectedPosition: number): void;

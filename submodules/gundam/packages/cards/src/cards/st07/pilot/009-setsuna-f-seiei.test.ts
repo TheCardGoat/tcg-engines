@@ -6,21 +6,32 @@ import {
   activeResources,
   createMockUnit,
   expectSuccess,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { st07SetsunaFSeiei009 } from "./009-setsuna-f-seiei.ts";
 
 describe("Setsuna F. Seiei (ST07-009)", () => {
   it("【Burst】Add this card to your hand.", () => {
-    const engine = GundamTestEngine.create({}, { deck: [st07SetsunaFSeiei009] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
-
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `hand:${PLAYER_TWO}`,
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [st07SetsunaFSeiei009] },
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+
+    expect(p2.getHand()).toContain(shieldId);
   });
 
   it("【Attack】gives only this Unit AP+1 during this turn with fewer than 7 CB cards in trash", () => {
@@ -44,11 +55,8 @@ describe("Setsuna F. Seiei (ST07-009)", () => {
     expectSuccess(p1.assignPilot(st07SetsunaFSeiei009, hostId!));
     expectSuccess(p1.enterBattle(hostId!, enemyId));
 
-    const apBuffs = engine
-      .getG()
-      .continuousEffects.filter((entry) => entry.payload.kind === "stat-modifier");
-    expect(apBuffs.some((entry) => entry.targetId === hostId)).toBe(true);
-    expect(apBuffs.some((entry) => entry.targetId === allyId)).toBe(false);
+    expect(p1.getVisibleCard(hostId!)?.effectiveAp).toBe(6);
+    expect(p1.getVisibleCard(allyId!)?.effectiveAp).toBe(2);
   });
 
   it("【Attack】gives all friendly CB Units AP+1 instead with 7 or more CB cards in trash", () => {
@@ -74,10 +82,7 @@ describe("Setsuna F. Seiei (ST07-009)", () => {
     expectSuccess(p1.assignPilot(st07SetsunaFSeiei009, hostId!));
     expectSuccess(p1.enterBattle(hostId!, enemyId));
 
-    const apBuffs = engine
-      .getG()
-      .continuousEffects.filter((entry) => entry.payload.kind === "stat-modifier");
-    expect(apBuffs.some((entry) => entry.targetId === hostId)).toBe(true);
-    expect(apBuffs.some((entry) => entry.targetId === allyId)).toBe(true);
+    expect(p1.getVisibleCard(hostId!)?.effectiveAp).toBe(6);
+    expect(p1.getVisibleCard(allyId!)?.effectiveAp).toBe(3);
   });
 });

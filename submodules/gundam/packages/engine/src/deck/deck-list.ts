@@ -2,12 +2,13 @@ import type { Card } from "@tcg/gundam-types";
 
 /**
  * Official Gundam TCG construction rules: 50-card main deck, 10-card
- * resource deck, max 4 copies of any card by `cardNumber` (except the
- * resource card itself and engine-spawned tokens).
+ * resource deck, one or two main-deck colors, and max 4 copies of any card by
+ * `cardNumber` (except the resource card itself and engine-spawned tokens).
  */
 export const GUNDAM_MAIN_DECK_SIZE = 50;
 export const GUNDAM_RESOURCE_DECK_SIZE = 10;
 export const GUNDAM_MAX_COPIES_PER_CARD = 4;
+export const GUNDAM_MAX_DECK_COLORS = 2;
 
 /**
  * Card numbers the engine creates as tokens (see
@@ -62,6 +63,8 @@ export interface DeckValidationOptions {
   readonly mainDeckSize?: number;
   readonly resourceDeckSize?: number;
   readonly maxCopies?: number;
+  /** Override the color limit for non-player fixtures such as card coverage decks. */
+  readonly maxColors?: number;
 }
 
 function getCard(
@@ -86,12 +89,14 @@ export function validateDeckList(
   const mainSize = options.mainDeckSize ?? GUNDAM_MAIN_DECK_SIZE;
   const resSize = options.resourceDeckSize ?? GUNDAM_RESOURCE_DECK_SIZE;
   const maxCopies = options.maxCopies ?? GUNDAM_MAX_COPIES_PER_CARD;
+  const maxColors = options.maxColors ?? GUNDAM_MAX_DECK_COLORS;
 
   if (!list.name || list.name.trim().length === 0) {
     errors.push("deck must have a non-empty name");
   }
 
   const counts = new Map<string, number>();
+  const colors = new Set<string>();
   let totalMain = 0;
 
   for (const entry of list.cards) {
@@ -118,6 +123,7 @@ export function validateDeckList(
     }
     const existing = counts.get(entry.cardNumber) ?? 0;
     counts.set(entry.cardNumber, existing + entry.count);
+    if (card.color) colors.add(card.color);
     totalMain += entry.count;
   }
 
@@ -129,6 +135,11 @@ export function validateDeckList(
 
   if (totalMain !== mainSize) {
     errors.push(`main deck must have exactly ${mainSize} cards (found ${totalMain})`);
+  }
+  if (colors.size < 1 || colors.size > maxColors) {
+    const colorRule =
+      maxColors === GUNDAM_MAX_DECK_COLORS ? "one or two colors" : `one to ${maxColors} colors`;
+    errors.push(`main deck must use ${colorRule} (found ${colors.size})`);
   }
 
   // The three resource-side rules are independent: the cardNumber can

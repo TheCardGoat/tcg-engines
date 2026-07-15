@@ -2,11 +2,37 @@
 .content {
   background: transparent;
   box-shadow: none;
-  overflow: visible;
+  overflow: hidden;
+  width: 100dvw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
 }
 
 .body {
   padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stage {
+  position: relative;
+  z-index: 0;
+  box-sizing: border-box;
+  display: grid;
+  width: 100%;
+  min-height: 100%;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  place-items: center;
+  pointer-events: none;
+}
+
+.dismissLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: auto;
 }
 
 /* The card itself, sized to the viewport: ~78vw on phones, capped at 420px so
@@ -14,10 +40,12 @@
    card shape regardless of image natural size. */
 .shell {
   position: relative;
+  z-index: 1;
   width: min(82vw, 440px);
   display: flex;
   flex-direction: column;
   gap: 10px;
+  pointer-events: auto;
 }
 
 .image {
@@ -115,24 +143,54 @@
   position: absolute;
   top: -14px;
   right: -14px;
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   background: #07090c;
   border: 2px solid var(--accent, #f5e642);
   color: var(--accent, #f5e642);
   border-radius: 50%;
-  font-size: 22px;
-  line-height: 1;
   font-weight: 700;
   cursor: pointer;
-  display: flex;
+  display: grid;
   align-items: center;
   justify-content: center;
   padding: 0;
-  z-index: 2;
+  z-index: 3;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 82%),
+    0 0 14px color-mix(in srgb, var(--accent, #f5e642) 34%, transparent);
   transition:
     background 0.15s ease,
     transform 0.12s ease;
+}
+
+.close::before {
+  content: attr(data-countdown);
+  position: absolute;
+  inset: -7px;
+  display: grid;
+  place-items: center;
+  border: 2px solid color-mix(in srgb, var(--accent, #f5e642) 70%, transparent);
+  border-radius: inherit;
+  color: #07090c;
+  background: var(--accent, #f5e642);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 10px;
+  line-height: 1;
+  opacity: 0.94;
+  transform: translate(17px, -17px);
+  width: 21px;
+  height: 21px;
+}
+
+.countdown {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .close:hover {
@@ -141,4 +199,91 @@
 
 .close:active {
   transform: scale(0.92);
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  .content {
+    max-height: calc(100dvh - 18px);
+  }
+
+  .shell {
+    width: auto;
+    max-width: min(58dvw, 360px);
+    max-height: calc(100dvh - 18px);
+    align-items: center;
+    gap: 5px;
+  }
+
+  .image {
+    width: auto;
+    height: min(calc(100dvh - 74px), 300px);
+    max-width: min(58dvw, 360px);
+    border-radius: 6px;
+  }
+
+  .meta {
+    width: min(58dvw, 360px);
+    max-width: 100%;
+    gap: 8px;
+  }
+
+  .name {
+    overflow: hidden;
+    font-size: 11px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .zone {
+    flex: 0 0 auto;
+    font-size: 8px;
+  }
+
+  .gallery {
+    width: min(58dvw, 360px);
+    max-width: 100%;
+    padding-bottom: 1px;
+  }
+
+  .thumbnail {
+    min-height: 30px;
+    grid-template-columns: 22px auto;
+    gap: 4px;
+    padding: 3px 6px 3px 3px;
+    font-size: 8px;
+  }
+
+  .thumbnail img {
+    width: 22px;
+  }
+
+  .close {
+    top: 0;
+    right: -34px;
+    width: 32px;
+    height: 32px;
+    border-width: 1px;
+  }
+
+  .close::before {
+    inset: -5px;
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+    transform: translate(14px, -14px);
+  }
+}
+
+@media (orientation: landscape) and (max-height: 340px) {
+  .content {
+    max-height: calc(100dvh - 56px);
+  }
+
+  .shell {
+    max-height: calc(100dvh - 56px);
+  }
+
+  .image {
+    height: min(calc(100dvh - 118px), 220px);
+  }
 }

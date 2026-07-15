@@ -10,6 +10,7 @@ import { createMatchState } from "../state/initial-state.ts";
 import {
   extractCard,
   isFixtureCardState,
+  normalizeGigFixtures,
   type PlayerFixture,
   type FixtureCardEntry,
   type FixtureCardState,
@@ -232,8 +233,14 @@ function applyFixture(
     if (p1Fixture.eddies !== undefined) {
       draft.G.players["p1"]!.eddies = p1Fixture.eddies;
     }
+    if (p1Fixture.spentEddies !== undefined) {
+      draft.G.players["p1"]!.spentEddies = p1Fixture.spentEddies;
+    }
     if (p2Fixture.eddies !== undefined) {
       draft.G.players["p2"]!.eddies = p2Fixture.eddies;
+    }
+    if (p2Fixture.spentEddies !== undefined) {
+      draft.G.players["p2"]!.spentEddies = p2Fixture.spentEddies;
     }
 
     applyGigFixtures(draft, p1Fixture, p2Fixture);
@@ -358,8 +365,9 @@ function applyGigFixtures(
     ["p1", p1Fixture],
     ["p2", p2Fixture],
   ] as const) {
-    if (!fixture.gigArea?.length) continue;
-    for (const entry of fixture.gigArea) {
+    const gigArea = normalizeGigFixtures(fixture.gigArea);
+    if (!gigArea?.length) continue;
+    for (const entry of gigArea) {
       const maxFace = DIE_MAX_VALUES[entry.dieType];
       if (!Number.isInteger(entry.faceValue) || entry.faceValue < 1 || entry.faceValue > maxFace) {
         warnFixture(
@@ -598,7 +606,7 @@ function applyFixtureCardMeta(meta: CardMeta, state: FixtureCardState): void {
   if (state.faceDown !== undefined) meta.faceDown = state.faceDown;
   if (state.damage !== undefined) meta.damage = state.damage;
   if (state.powerModifier !== undefined) meta.powerModifier = state.powerModifier;
-  if (state.playedThisTurn !== undefined) meta.playedThisTurn = state.playedThisTurn;
+  if (state.hasLag !== undefined) meta.hasLag = state.hasLag;
   if (state.hasAttackedThisTurn !== undefined) meta.hasAttackedThisTurn = state.hasAttackedThisTurn;
   if (state.counters !== undefined) meta.counters = state.counters;
   if (state.attachedGearIds !== undefined)

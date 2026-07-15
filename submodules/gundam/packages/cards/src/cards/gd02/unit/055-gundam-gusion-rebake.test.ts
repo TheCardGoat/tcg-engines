@@ -39,7 +39,7 @@ describe("Gundam Gusion Rebake (GD02-055)", () => {
     const defender = createMockUnit({ ap: 1, hp: 5 });
     const engine = GundamTestEngine.create(
       { play: [attacker] },
-      { play: [defender, gd02GundamGusionRebake055] },
+      { play: [{ card: defender, exhausted: true }, gd02GundamGusionRebake055] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);

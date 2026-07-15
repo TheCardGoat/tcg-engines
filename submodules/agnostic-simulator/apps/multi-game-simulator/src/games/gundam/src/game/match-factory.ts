@@ -1,9 +1,7 @@
 import {
   expandDeck,
-  greedyLegalStrategy,
-  passOnlyStrategy,
-  tempoStrategy,
-  type CandidateStrategy,
+  getSafeGundamAutomatedActionStrategyOption,
+  type GundamAutomatedActionStrategyId,
   type DeckList,
 } from "@tcg/gundam-engine";
 import type { Card } from "@tcg/gundam-types";
@@ -18,13 +16,7 @@ import { createDevRuntime, DEV_PLAYER_TWO, type DevRuntime } from "./dev-runtime
  * behaviour. The factory resolves the id to the concrete engine
  * strategy at match-construction time.
  */
-export type OpponentStrategyId = "greedy-legal" | "pass-only" | "tempo";
-
-const STRATEGIES: Readonly<Record<OpponentStrategyId, CandidateStrategy>> = {
-  "greedy-legal": greedyLegalStrategy,
-  "pass-only": passOnlyStrategy,
-  tempo: tempoStrategy,
-};
+export type OpponentStrategyId = GundamAutomatedActionStrategyId;
 
 export interface CreateMatchFromDecksOptions {
   readonly playerDeck: DeckList;
@@ -69,7 +61,7 @@ export function createMatchFromDecks(options: CreateMatchFromDecksOptions): DevR
     },
   });
 
-  const strategy = STRATEGIES[options.opponentStrategy];
+  const strategy = getSafeGundamAutomatedActionStrategyOption(options.opponentStrategy).strategy;
   const bot = attachStrategyBot(dev.runtime, dev.staticResources, DEV_PLAYER_TWO, { strategy });
 
   return { ...dev, bot };

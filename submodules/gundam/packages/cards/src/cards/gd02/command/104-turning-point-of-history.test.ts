@@ -19,13 +19,16 @@ describe("Turning Point of History (GD02-104)", () => {
       const p1 = engine.asPlayer(PLAYER_ONE);
       const handBefore = p1.getHand().length;
       const deckBefore = p1.getCardsInZone("deck").length;
-      const [topId, secondId, thirdId] = p1.getCardsInZone("deck");
 
       expectSuccess(p1.playCommand(gd02TurningPointOfHistory104));
+      const choice = p1.getBoardView().pendingChoice;
+      expect(choice?.kind).toBe("deckLook");
+      if (choice?.kind !== "deckLook") return;
+      const [topId, ...bottomIds] = choice.revealedCardIds;
       expectSuccess(
         p1.resolveEffect({
           deckLookAnswers: {
-            0: { toTop: [topId!], toBottom: [secondId!, thirdId!] },
+            0: { toTop: [topId!], toBottom: bottomIds },
           },
         }),
       );
@@ -43,13 +46,16 @@ describe("Turning Point of History (GD02-104)", () => {
       });
       const p1 = engine.asPlayer(PLAYER_ONE);
       const cmdId = p1.getHand()[0]!;
-      const [topId, secondId, thirdId] = p1.getCardsInZone("deck");
 
       expectSuccess(p1.playCommand(gd02TurningPointOfHistory104));
+      const choice = p1.getBoardView().pendingChoice;
+      expect(choice?.kind).toBe("deckLook");
+      if (choice?.kind !== "deckLook") return;
+      const [topId, ...bottomIds] = choice.revealedCardIds;
       expectSuccess(
         p1.resolveEffect({
           deckLookAnswers: {
-            0: { toTop: [topId!], toBottom: [secondId!, thirdId!] },
+            0: { toTop: [topId!], toBottom: bottomIds },
           },
         }),
       );

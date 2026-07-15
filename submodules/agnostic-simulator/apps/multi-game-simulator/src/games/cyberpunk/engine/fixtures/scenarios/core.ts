@@ -11,7 +11,92 @@ import {
   scenarioSeed,
   skipGainGig,
   startBase,
+  type PlayerFixture,
 } from "./shared";
+
+const mobileLedgerFriendlyLegends = [
+  c.theHeistRetailStarterDeckVCorporateExile,
+  c.welcomeToNightCityRetailVStreetkid,
+  c.welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
+] as const;
+
+const mobileLedgerRivalLegends = [
+  c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe,
+  c.welcomeToNightCityRetailRoycePsychoOnTheEdge,
+  c.welcomeToNightCityRetailPanamPalmerNomadCavalry,
+] as const;
+
+function mobileLedgerPlayer(legendCount: 0 | 1 | 2 | 3, opponent = false): PlayerFixture {
+  const legends = opponent ? mobileLedgerRivalLegends : mobileLedgerFriendlyLegends;
+
+  return {
+    hand: opponent
+      ? [c.welcomeToNightCityRetailHanakoArasakaInAGildedCage]
+      : [c.welcomeToNightCityRetailFloorIt, c.welcomeToNightCityRetailMoxInciters],
+    field: opponent
+      ? [
+          { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true, hasLag: false },
+          { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true, hasLag: false },
+        ]
+      : [
+          { card: c.welcomeToNightCityRetailSketchyRipper, spent: false, hasLag: false },
+          {
+            card: c.welcomeToNightCityRetailElSombreroNLaVenganzaLenta,
+            spent: false,
+            hasLag: false,
+          },
+        ],
+    legendArea: legends.slice(0, legendCount).map((card, index) => ({
+      card,
+      faceDown: legendCount === 3 ? false : index !== 0,
+    })),
+    eddies: opponent ? 5 : 9,
+    gigArea: opponent
+      ? [
+          { dieType: "d6", faceValue: 3 },
+          { dieType: "d4", faceValue: 1 },
+          { dieType: "d12", faceValue: 3 },
+        ]
+      : [
+          { dieType: "d4", faceValue: 4 },
+          { dieType: "d12", faceValue: 12 },
+        ],
+  };
+}
+
+function mobileLedgerScenario(legendCount: 0 | 1 | 2 | 3) {
+  if (legendCount === 0) {
+    return mobileLedgerMixedScenario(0, 0, "mobileLedgerZeroLegends");
+  }
+  if (legendCount === 1) {
+    return mobileLedgerMixedScenario(1, 1, "mobileLedgerOneLegend");
+  }
+  if (legendCount === 2) {
+    return mobileLedgerMixedScenario(2, 2, "mobileLedgerTwoLegends");
+  }
+  return mobileLedgerMixedScenario(3, 3, "mobileLedgerThreeLegends");
+}
+
+function mobileLedgerMixedScenario(
+  friendlyLegendCount: 0 | 1 | 2 | 3,
+  rivalLegendCount: 0 | 1 | 2 | 3,
+  seedId:
+    | "mobileLedgerZeroLegends"
+    | "mobileLedgerOneLegend"
+    | "mobileLedgerTwoLegends"
+    | "mobileLedgerThreeLegends"
+    | "mobileLedgerFriendlyOneRivalThree"
+    | "mobileLedgerFriendlyZeroRivalTwo",
+) {
+  return CyberpunkTestEngine.createWithFixture(
+    mobileLedgerPlayer(friendlyLegendCount),
+    mobileLedgerPlayer(rivalLegendCount, true),
+    {
+      seed: scenarioSeed(seedId),
+      autoGainGig: false,
+    },
+  );
+}
 
 export const coreScenarios: Scenario[] = [
   // ── Core scenarios ──────────────────────────────────────────────────────
@@ -63,7 +148,7 @@ export const coreScenarios: Scenario[] = [
     group: "core",
     label: "Retail bench · programs and target checks",
     description:
-      "P1 hand stages the main retail Programs against mixed friendly and rival boards: low-cost, high-cost, ready, spent, equipped, face-up Legend, and matching Gig values. Use this to quickly validate playable prompts, target highlights, no-target edges, and Program discard behavior across many cards.",
+      "P1 hand stages the main retail Programs against mixed friendly and rival boards: low-cost, high-cost, ready, spent, equipped, face-up Legend, and matching Gig values. The rival Corpo Security is an oversized spent fake defender so T-Bug can attack, be defeated, and exercise her private Legend-look trigger. Use this to quickly validate playable prompts, target highlights, no-target edges, Program discard behavior, and face-down Legend peeks across many cards.",
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
@@ -75,19 +160,21 @@ export const coreScenarios: Scenario[] = [
             c.welcomeToNightCityRetailChromeReverie,
             c.welcomeToNightCityRetailCyberpsychosis,
             c.welcomeToNightCityRetailTakeControl,
+            c.welcomeToNightCityRetailFoolOnTheHill,
           ],
           field: [
+            c.welcomeToNightCityRetailJackedInVoodooBoy,
             {
               card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
               attachedGears: [
                 c.welcomeToNightCityRetailKiroshiOptics,
                 c.welcomeToNightCityRetailDyingNightVSPistol,
               ],
             },
-            { card: c.welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-            { card: c.welcomeToNightCityRetailMoxInciters, spent: true, playedThisTurn: false },
+            { card: c.welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false },
+            { card: c.welcomeToNightCityRetailMoxInciters, spent: true, hasLag: false },
           ],
           legendArea: [
             { card: c.welcomeToNightCityRetailVStreetkid, faceDown: false },
@@ -107,15 +194,22 @@ export const coreScenarios: Scenario[] = [
           ],
         },
         {
+          hand: [c.welcomeToNightCityRetailFoolOnTheHill],
           field: [
-            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false, playedThisTurn: false },
+            {
+              card: c.welcomeToNightCityRetailCorpoSecurity,
+              spent: true,
+              hasLag: false,
+              powerModifier: 10,
+            },
             {
               card: c.welcomeToNightCityRetailSecondhandBombus,
               spent: true,
-              playedThisTurn: false,
+              hasLag: false,
             },
-            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true, playedThisTurn: false },
-            { card: c.welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true, hasLag: false },
+            { card: c.welcomeToNightCityRetailDelamainCab, spent: false, hasLag: false },
+            c.welcomeToNightCityRetailAugmentedNegotiators,
           ],
           legendArea: [
             { card: c.welcomeToNightCityRetailPanamPalmerNomadCavalry, faceDown: false },
@@ -147,28 +241,30 @@ export const coreScenarios: Scenario[] = [
             c.welcomeToNightCityRetailCarnageAtTheColosseum,
             c.welcomeToNightCityRetailBootlegBlackSapphireShow,
             c.welcomeToNightCityRetailPeaceOffering,
+            c.welcomeToNightCityRetailYorinobuArasakaSteelDragon,
+            c.welcomeToNightCityRetailMeredithStoutStoneColdCorpo,
           ],
           field: [
             {
               card: c.welcomeToNightCityRetailJackieWellesRideOrDieChoom,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
             },
             {
               card: c.welcomeToNightCityRetailYorinobuArasakaSteelDragon,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
             },
             {
               card: c.welcomeToNightCityRetailKerryEurodyneTheLastRockerboy,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
               attachedGears: [c.welcomeToNightCityRetailSatoriSwordOfSaburo],
             },
             {
               card: c.welcomeToNightCityRetailEvelynParkerSchemingSiren,
-              spent: true,
-              playedThisTurn: false,
+              spent: false,
+              hasLag: false,
             },
           ],
           legendArea: [
@@ -177,6 +273,7 @@ export const coreScenarios: Scenario[] = [
             { card: c.welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience, faceDown: true },
           ],
           eddies: 10,
+          trash: [c.welcomeToNightCityRetailHanakoArasakaInAGildedCage],
           gigArea: [
             { dieType: "d4", faceValue: 4 },
             { dieType: "d6", faceValue: 5 },
@@ -189,18 +286,18 @@ export const coreScenarios: Scenario[] = [
             {
               card: c.welcomeToNightCityRetailSecondhandBombus,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
             },
-            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false, playedThisTurn: false },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false, hasLag: false },
             {
               card: c.welcomeToNightCityRetailAdamSmasherMetalOverMeat,
               spent: true,
-              playedThisTurn: false,
+              hasLag: false,
             },
             {
               card: c.welcomeToNightCityRetailSandayuOdaHanakoSGuardian,
               spent: true,
-              playedThisTurn: false,
+              hasLag: false,
             },
           ],
           legendArea: [
@@ -238,7 +335,7 @@ export const coreScenarios: Scenario[] = [
             {
               card: c.welcomeToNightCityRetailPlacideVoodooSentinel,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
               attachedGears: [
                 c.welcomeToNightCityRetailMandibularUpgrade,
                 c.welcomeToNightCityRetailKiroshiOptics,
@@ -247,13 +344,13 @@ export const coreScenarios: Scenario[] = [
             {
               card: c.welcomeToNightCityRetailModdedKusanagi,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
               attachedGears: [c.welcomeToNightCityRetailDyingNightVSPistol],
             },
             {
               card: c.welcomeToNightCityRetailMeredithStoutStoneColdCorpo,
               spent: true,
-              playedThisTurn: false,
+              hasLag: false,
             },
           ],
           trash: [
@@ -277,9 +374,9 @@ export const coreScenarios: Scenario[] = [
             {
               card: c.welcomeToNightCityRetailWraithMarauders,
               spent: false,
-              playedThisTurn: false,
+              hasLag: false,
             },
-            { card: c.welcomeToNightCityRetailPsychoSquad, spent: true, playedThisTurn: false },
+            { card: c.welcomeToNightCityRetailPsychoSquad, spent: true, hasLag: false },
           ],
           legendArea: [
             { card: c.welcomeToNightCityRetailRiverWardDetectiveOnTheHunt, faceDown: false },
@@ -294,6 +391,54 @@ export const coreScenarios: Scenario[] = [
         },
         { seed: scenarioSeed("retailGearLegendBench"), autoGainGig: false },
       ),
+  },
+  {
+    id: "mobileLedgerZeroLegends",
+    group: "core",
+    label: "Mobile ledger · zero Legends",
+    description:
+      "Visual fixture for the mobile center ledger with no Legends on either side. Gig dice and Street Cred should take the recovered vertical space.",
+    build: () => mobileLedgerScenario(0),
+  },
+  {
+    id: "mobileLedgerOneLegend",
+    group: "core",
+    label: "Mobile ledger · one Legend",
+    description:
+      "Visual fixture for the mobile center ledger with one Legend on each side. The single Legend should read as a wide slot without crowding the Gig lane.",
+    build: () => mobileLedgerScenario(1),
+  },
+  {
+    id: "mobileLedgerTwoLegends",
+    group: "core",
+    label: "Mobile ledger · two Legends",
+    description:
+      "Visual fixture for the mobile center ledger with two Legends on each side. The slots should split evenly while preserving the compact Gig lane.",
+    build: () => mobileLedgerScenario(2),
+  },
+  {
+    id: "mobileLedgerThreeLegends",
+    group: "core",
+    label: "Mobile ledger · three Legends",
+    description:
+      "Visual fixture for the mobile center ledger with three Legends on each side. The full Legend row should stay compact enough to keep Gig dice visible.",
+    build: () => mobileLedgerScenario(3),
+  },
+  {
+    id: "mobileLedgerFriendlyOneRivalThree",
+    group: "core",
+    label: "Mobile ledger · friendly one, rival three Legends",
+    description:
+      "Mixed-count visual fixture for validating side-specific ledger layouts when the rival side requires the stacked Legend row.",
+    build: () => mobileLedgerMixedScenario(1, 3, "mobileLedgerFriendlyOneRivalThree"),
+  },
+  {
+    id: "mobileLedgerFriendlyZeroRivalTwo",
+    group: "core",
+    label: "Mobile ledger · friendly zero, rival two Legends",
+    description:
+      "Mixed-count visual fixture for validating a score-only friendly lane beside a two-Legend rival lane.",
+    build: () => mobileLedgerMixedScenario(0, 2, "mobileLedgerFriendlyZeroRivalTwo"),
   },
   {
     id: "retailPr2295Cards",
@@ -312,7 +457,16 @@ export const coreScenarios: Scenario[] = [
           field: [
             { card: c.welcomeToNightCityRetailLaLloronaGhostOfThePast, spent: false },
             { card: c.welcomeToNightCityRetailMistyOlszewskiMenderOfBrokenSpirits, spent: false },
-            { card: c.welcomeToNightCityRetailSaulBrightStormrider, spent: false },
+            {
+              card: c.welcomeToNightCityRetailSaulBrightStormrider,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailOverwatchPanamSGift],
+            },
+            {
+              card: c.welcomeToNightCityRetailWraithMarauders,
+              spent: true,
+              hasLag: false,
+            },
           ],
           legendArea: [
             { card: c.welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience, faceDown: false },
@@ -322,7 +476,13 @@ export const coreScenarios: Scenario[] = [
           gigArea: [{ dieType: "d6", faceValue: 2 }],
         },
         {
-          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: true },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience, faceDown: false },
+          ],
           gigArea: [{ dieType: "d4", faceValue: 1 }],
         },
         {

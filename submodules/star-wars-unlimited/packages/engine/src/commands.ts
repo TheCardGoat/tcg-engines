@@ -107,7 +107,7 @@ export function executeTriggeredAbilities(
   }
   for (const delayed of state.delayedEffects) {
     if (!delayed.id.startsWith(`${event.type}-`)) continue;
-    executeEffects(delayed.effects, {
+    executeEffects(delayed.effects ?? [], {
       state,
       playerId,
       sourceId: event.sourceId ?? event.attackerId ?? "",

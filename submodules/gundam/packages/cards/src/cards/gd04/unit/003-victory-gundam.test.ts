@@ -23,13 +23,13 @@ describe("Victory Gundam (GD04-003)", () => {
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
     const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
-    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
-    const handBefore = engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE });
+    const deckBefore = p1.getCardsInZone("deck").length;
+    const handBefore = p1.getHand().length;
 
     expectSuccess(p1.enterBattle(attackerId, defenderId));
 
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore - 1);
-    expect(engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE })).toBe(handBefore + 1);
+    expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore - 1);
+    expect(p1.getHand()).toHaveLength(handBefore + 1);
   });
 
   it("【Attack】 does NOT draw when fewer than 3 (League Militaire) Units are in play", () => {
@@ -45,10 +45,10 @@ describe("Victory Gundam (GD04-003)", () => {
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
     const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
-    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
+    const deckBefore = p1.getCardsInZone("deck").length;
 
     expectSuccess(p1.enterBattle(attackerId, defenderId));
 
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore);
+    expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore);
   });
 });

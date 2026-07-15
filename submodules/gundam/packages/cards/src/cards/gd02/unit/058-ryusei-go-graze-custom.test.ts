@@ -10,65 +10,96 @@
  */
 
 import { describe, expect, it } from "vite-plus/test";
-import type { CardEffect } from "@tcg/gundam-types";
-import { GundamTestEngine, PLAYER_ONE, createMockUnit, expectSuccess } from "@tcg/gundam-engine";
+import {
+  GundamTestEngine,
+  PLAYER_ONE,
+  activeResources,
+  createMockUnit,
+  expectSuccess,
+} from "@tcg/gundam-engine";
 import { gd02RyuseiGoGrazeCustom058 } from "./058-ryusei-go-graze-custom.ts";
 
 describe("Ryusei-Go (Graze Custom Ⅱ) (GD02-058)", () => {
-  const effect = gd02RyuseiGoGrazeCustom058.effects![0] as CardEffect;
-
-  it("deals damage + draws + discards when a friendly target is available", () => {
+  it("damages the chosen friendly Unit, draws 1, then asks which card to discard", () => {
     const friendly = createMockUnit({ ap: 1, hp: 3, level: 1 });
+    const discardOption = createMockUnit({ name: "Discard Option" });
+    const drawnCard = createMockUnit({ name: "Drawn Card" });
+    const remainingDeckCard = createMockUnit({ name: "Remaining Deck Card" });
     const engine = GundamTestEngine.create(
-      { play: [friendly], deck: 10, hand: [createMockUnit()] },
+      {
+        hand: [gd02RyuseiGoGrazeCustom058, discardOption],
+        play: [friendly],
+        deck: [remainingDeckCard, drawnCard],
+        resourceArea: activeResources(3),
+      },
       {},
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const friendlyId = p1.getCardsInZone("battleArea")[0]!;
-    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
-    const handBefore = p1.getHand().length;
+    const discardOptionId = p1.getHand()[1]!;
 
-    engine.getG().pendingEffects.push({
-      id: "ryusei_1",
-      sourceCardId: friendlyId,
-      effectIndex: 0,
-      kind: "triggered",
-      effect,
-      controllerId: PLAYER_ONE,
-      chosenTargets: [friendlyId],
+    expectSuccess(p1.deployUnit(gd02RyuseiGoGrazeCustom058));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([friendlyId]),
+      minTargets: 1,
+      maxTargets: 1,
     });
+    expectSuccess(p1.resolveEffect({ targets: [friendlyId] }));
 
-    expectSuccess(engine.asPlayer(PLAYER_ONE).resolveEffect({}));
+    const discardChoice = p1.getBoardView().pendingChoice;
+    expect(discardChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([discardOptionId]),
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    if (discardChoice?.kind !== "targetSelection") {
+      throw new Error("Expected Ryusei-Go to ask which card to discard after drawing");
+    }
+    expect(discardChoice.legalTargetIds).toHaveLength(2);
+    expectSuccess(p1.resolveEffect({ targets: [discardOptionId] }));
 
-    expect(engine.getG().damage[friendlyId]).toBe(1);
-    // Draw 1 + discard 1: net hand count unchanged, deck -1.
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore - 1);
-    expect(p1.getHand().length).toBe(handBefore);
+    expect(p1.getDamage(friendlyId)).toBe(1);
+    expect(p1.getCardZone(discardOptionId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.handCount).toBe(1);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(1);
   });
 
-  it("skips the draw when no friendly Unit is available (dependsOnPrevious gate)", () => {
-    // No friendly units in play → dealDamage filter (owner: friendly,
-    // cardType: unit) finds zero candidates → dependent draw is skipped.
-    // Discard still runs (it has no dependsOnPrevious gate).
-    const engine = GundamTestEngine.create({ deck: 10, hand: [createMockUnit()] }, {});
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
-    const handBefore = p1.getHand().length;
-
-    engine.getG().pendingEffects.push({
-      id: "ryusei_2",
-      sourceCardId: "no-source",
-      effectIndex: 0,
-      kind: "triggered",
-      effect,
-      controllerId: PLAYER_ONE,
+  it("offers the newly deployed Unit when no other friendly Unit is available", () => {
+    const discardCard = createMockUnit({ name: "Discard Option" });
+    const engine = GundamTestEngine.create({
+      hand: [gd02RyuseiGoGrazeCustom058, discardCard],
+      deck: 2,
+      resourceArea: activeResources(3),
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const sourceId = p1.getHand()[0]!;
+    const discardCardId = p1.getHand()[1]!;
 
-    expectSuccess(engine.asPlayer(PLAYER_ONE).resolveEffect({}));
+    expectSuccess(p1.deployUnit(sourceId));
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("targetSelection");
+    if (choice?.kind !== "targetSelection") {
+      throw new Error("Expected Ryusei-Go to ask which friendly Unit to damage");
+    }
+    expect(choice.legalTargetIds).toEqual([unitId]);
+    expectSuccess(p1.resolveEffect({ targets: [unitId] }));
+    const discardChoice = p1.getBoardView().pendingChoice;
+    expect(discardChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([discardCardId]),
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    if (discardChoice?.kind !== "targetSelection") {
+      throw new Error("Expected Ryusei-Go to ask which card to discard after drawing");
+    }
+    expectSuccess(p1.resolveEffect({ targets: [discardCardId] }));
 
-    // No draw: dealDamage found no target → dependent draw skipped.
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore);
-    // Discard still runs — not gated.
-    expect(p1.getHand().length).toBe(handBefore - 1);
+    expect(p1.getDamage(unitId)).toBe(1);
+    expect(p1.getCardZone(discardCardId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(1);
   });
 });

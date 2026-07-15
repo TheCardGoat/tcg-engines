@@ -223,14 +223,25 @@ describe("runRollout (search/shared)", () => {
     // Verify rollout doesn't crash and produces some terminal verdict (winner
     // id or null draw). The exact verdict is rng-driven; what matters is that
     // it RAN — which requires the choice prompt to be handled.
-    const winner = runRollout(
+    const outcome = runRollout(
       engine,
       activeId as never,
       randomStrategy,
       () => 0.5,
       40, // small step cap; just confirm we get a verdict
     );
-    // null is acceptable (cap hit / draw); a string winner id is also fine.
-    expect(winner === null || typeof winner === "string").toBe(true);
+    expect(["winner", "draw", "automationFailure"]).toContain(outcome.kind);
+  });
+
+  test("treats the rollout step cap as a deterministic loss, not a draw", () => {
+    const { engine, activeId } = makeContext("rollout-step-cap");
+    const outcome = runRollout(engine, activeId, randomStrategy, () => 0.5, 0);
+
+    expect(outcome).toMatchObject({
+      kind: "automationFailure",
+      failedPlayerId: activeId as string,
+      reason: "maxSteps",
+    });
+    expect(outcome.winnerId).not.toBe(activeId as string);
   });
 });

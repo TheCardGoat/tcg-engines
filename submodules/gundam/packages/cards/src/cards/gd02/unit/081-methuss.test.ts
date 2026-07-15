@@ -7,7 +7,6 @@ import {
   activeResources,
   createMockUnit,
   createMockBase,
-  getEffectiveStats,
 } from "@tcg/gundam-engine";
 import { gd02Methuss081 } from "./081-methuss.ts";
 
@@ -23,11 +22,14 @@ describe("Methuss (GD02-081)", () => {
     const p2 = engine.asPlayer(PLAYER_TWO);
     const [enemyId] = p2.getCardsInZone("battleArea");
 
-    expectSuccess(p1.deployUnit(gd02Methuss081, { targets: [enemyId!] }));
+    expectSuccess(p1.deployUnit(gd02Methuss081));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId!] }));
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const stats = getEffectiveStats(enemyId!, engine.getG(), framework.cards, framework);
-    expect(stats.ap).toBe(2);
+    expect(p2.getVisibleCard(enemyId!)?.effectiveAp).toBe(2);
   });
 
   it("【Deploy】If no friendly white Base is in play, the condition gate skips the debuff", () => {
@@ -42,8 +44,6 @@ describe("Methuss (GD02-081)", () => {
 
     expectSuccess(p1.deployUnit(gd02Methuss081));
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const stats = getEffectiveStats(enemyId!, engine.getG(), framework.cards, framework);
-    expect(stats.ap).toBe(4);
+    expect(p2.getVisibleCard(enemyId!)?.effectiveAp).toBe(4);
   });
 });

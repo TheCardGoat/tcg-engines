@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
@@ -6,23 +6,38 @@ import {
   activeResources,
   createMockUnit,
   expectSuccess,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd04HallelujahHaptism090 } from "./090-hallelujah-haptism.ts";
 
 describe("Hallelujah Haptism (GD04-090)", () => {
-  it("【Burst】adds this card to hand", () => {
-    const engine = GundamTestEngine.create({ deck: [gd04HallelujahHaptism090] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
+  it("【Burst】adds this card to hand when its controller accepts the revealed Shield prompt", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1 });
+    const engine = GundamTestEngine.create(
+      { shieldArea: [gd04HallelujahHaptism090] },
+      { play: [attacker] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    expect(engine.asPlayer(PLAYER_ONE).getHand()).toContain(shieldId);
+    expect(p1.getHand()).toContain(shieldId);
   });
 
   describe("【During Link】【Once per Turn】During your turn, when this Unit destroys an enemy Unit with battle damage, look at the top card of your deck. If it is a (CB) card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.", () => {
-    it("adds the top card to hand when it is a CB card", () => {
+    it("adds the looked-at CB card to hand when the player chooses it", () => {
       const host = createMockUnit({
         name: "Hallelujah Host",
         ap: 4,
@@ -30,7 +45,7 @@ describe("Hallelujah Haptism (GD04-090)", () => {
         level: 4,
         cost: 2,
         linkCondition: "[Hallelujah Haptism]",
-      } as unknown as Parameters<typeof createMockUnit>[0]);
+      });
       const fragileEnemy = createMockUnit({ ap: 1, hp: 1 });
       const cbCard = createMockUnit({ name: "CB Reward", traits: ["cb"] });
       const engine = GundamTestEngine.create(
@@ -48,18 +63,26 @@ describe("Hallelujah Haptism (GD04-090)", () => {
       const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p1.assignPilot(gd04HallelujahHaptism090, hostId));
+      expectSuccess(p1.enterBattle(hostId, defenderId));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+      const choice = p1.getBoardView().pendingChoice;
+      if (choice?.kind !== "deckLook") throw new Error("Expected a deck-look choice");
+      expect(choice.revealedCardIds).toHaveLength(1);
+      expect(choice.legalTutorCardIds).toEqual(choice.revealedCardIds);
+      const cbCardId = choice.revealedCardIds[0]!;
+      expectSuccess(
+        p1.resolveEffect({
+          deckLookAnswers: { 0: { tutorCardId: cbCardId } },
+        }),
+      );
 
-      engine.resolveCombat({ attackerId: hostId, target: defenderId });
-
-      const framework = engine.getRuntime().getFrameworkReadAPI();
-      const cbInHand = p1
-        .getHand()
-        .some((id) => framework.cards.getDefinition(id)?.name === "CB Reward");
-      expect(cbInHand).toBe(true);
-      expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(0);
+      expect(p1.getHand()).toContain(cbCardId);
+      expect(p1.getCardsInZone("deck")).toHaveLength(0);
     });
 
-    it("returns the top card to the deck when it is not a CB card", () => {
+    it("returns a non-CB card to the deck", () => {
       const host = createMockUnit({
         name: "Hallelujah Host",
         ap: 4,
@@ -67,7 +90,7 @@ describe("Hallelujah Haptism (GD04-090)", () => {
         level: 4,
         cost: 2,
         linkCondition: "[Hallelujah Haptism]",
-      } as unknown as Parameters<typeof createMockUnit>[0]);
+      });
       const fragileEnemy = createMockUnit({ ap: 1, hp: 1 });
       const nonCbCard = createMockUnit({ name: "Non-CB Card", traits: ["zaft"] });
       const engine = GundamTestEngine.create(
@@ -85,22 +108,35 @@ describe("Hallelujah Haptism (GD04-090)", () => {
       const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p1.assignPilot(gd04HallelujahHaptism090, hostId));
-
-      engine.resolveCombat({ attackerId: hostId, target: defenderId });
+      expectSuccess(p1.enterBattle(hostId, defenderId));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+      const choice = p1.getBoardView().pendingChoice;
+      if (choice?.kind !== "deckLook") throw new Error("Expected a deck-look choice");
+      expect(choice.revealedCardIds).toHaveLength(1);
+      expect(choice.legalTutorCardIds).toEqual([]);
+      const nonCbCardId = choice.revealedCardIds[0]!;
+      expectSuccess(
+        p1.resolveEffect({
+          deckLookAnswers: { 0: { toBottom: [nonCbCardId] } },
+        }),
+      );
 
       expect(p1.getHand()).toHaveLength(0);
-      expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(1);
+      expect(p1.getCardsInZone("deck")).toHaveLength(1);
+      expect(p1.getCardZone(nonCbCardId)).toBe(`deck:${PLAYER_ONE}`);
     });
 
-    it("does not look at the deck when the paired Unit is not linked", () => {
+    it("allows the player to return a CB card to the deck instead of adding it to hand", () => {
       const host = createMockUnit({
-        name: "Wrong Host",
+        name: "Hallelujah Host",
         ap: 4,
         hp: 5,
         level: 4,
         cost: 2,
-        linkCondition: "[Different Pilot]",
-      } as unknown as Parameters<typeof createMockUnit>[0]);
+        linkCondition: "[Hallelujah Haptism]",
+      });
       const fragileEnemy = createMockUnit({ ap: 1, hp: 1 });
       const cbCard = createMockUnit({ name: "CB Reward", traits: ["cb"] });
       const engine = GundamTestEngine.create(
@@ -118,11 +154,105 @@ describe("Hallelujah Haptism (GD04-090)", () => {
       const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p1.assignPilot(gd04HallelujahHaptism090, hostId));
-
-      engine.resolveCombat({ attackerId: hostId, target: defenderId });
+      expectSuccess(p1.enterBattle(hostId, defenderId));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+      const choice = p1.getBoardView().pendingChoice;
+      if (choice?.kind !== "deckLook") throw new Error("Expected a deck-look choice");
+      expect(choice.revealedCardIds).toHaveLength(1);
+      expect(choice.legalTutorCardIds).toEqual(choice.revealedCardIds);
+      const cbCardId = choice.revealedCardIds[0]!;
+      expectSuccess(
+        p1.resolveEffect({
+          deckLookAnswers: { 0: { toBottom: [cbCardId] } },
+        }),
+      );
 
       expect(p1.getHand()).toHaveLength(0);
-      expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(1);
+      expect(p1.getCardsInZone("deck")).toHaveLength(1);
+      expect(p1.getCardZone(cbCardId)).toBe(`deck:${PLAYER_ONE}`);
+    });
+
+    it("still offers the CB reward when both battling Units destroy each other", () => {
+      const host = createMockUnit({
+        name: "Hallelujah Host",
+        ap: 1,
+        hp: 1,
+        level: 4,
+        cost: 2,
+        linkCondition: "[Hallelujah Haptism]",
+      });
+      const fragileEnemy = createMockUnit({ ap: 2, hp: 1 });
+      const cbCard = createMockUnit({ name: "CB Reward", traits: ["cb"] });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [gd04HallelujahHaptism090],
+          play: [host],
+          deck: [cbCard],
+          resourceArea: activeResources(5),
+        },
+        { play: [{ card: fragileEnemy, exhausted: true }] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const hostId = p1.getCardsInZone("battleArea")[0]!;
+      const defenderId = p2.getCardsInZone("battleArea")[0]!;
+
+      expectSuccess(p1.assignPilot(gd04HallelujahHaptism090, hostId));
+      expectSuccess(p1.enterBattle(hostId, defenderId));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+      const choice = p1.getBoardView().pendingChoice;
+      if (choice?.kind !== "deckLook") throw new Error("Expected a deck-look choice");
+      expect(choice.legalTutorCardIds).toEqual(choice.revealedCardIds);
+      const rewardId = choice.revealedCardIds[0]!;
+      expectSuccess(
+        p1.resolveEffect({
+          deckLookAnswers: { 0: { tutorCardId: rewardId } },
+        }),
+      );
+
+      expect(p1.getCardZone(hostId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p2.getCardZone(defenderId)).toBe(`trash:${PLAYER_TWO}`);
+      expect(p1.getHand()).toContain(rewardId);
+    });
+
+    it("does not look at the deck when the paired Unit is not linked", () => {
+      const host = createMockUnit({
+        name: "Wrong Host",
+        ap: 4,
+        hp: 5,
+        level: 4,
+        cost: 2,
+        linkCondition: "[Different Pilot]",
+      });
+      const fragileEnemy = createMockUnit({ ap: 1, hp: 1 });
+      const cbCard = createMockUnit({ name: "CB Reward", traits: ["cb"] });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [gd04HallelujahHaptism090],
+          play: [host],
+          deck: [cbCard],
+          resourceArea: activeResources(5),
+        },
+        { play: [{ card: fragileEnemy, exhausted: true }] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const hostId = p1.getCardsInZone("battleArea")[0]!;
+      const defenderId = p2.getCardsInZone("battleArea")[0]!;
+
+      expectSuccess(p1.assignPilot(gd04HallelujahHaptism090, hostId));
+      expectSuccess(p1.enterBattle(hostId, defenderId));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+      expect(p1.getHand()).toHaveLength(0);
+      expect(p1.getCardsInZone("deck")).toHaveLength(1);
     });
   });
 });

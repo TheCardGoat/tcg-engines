@@ -25,6 +25,7 @@ import {
   welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailTBugAmateurPhilosopher,
   promoLucynaKushinada,
+  welcomeToNightCityRetailRidingNomad,
   welcomeToNightCityRetailAdamSmasherMetalOverMeat,
   welcomeToNightCityRetailAfterpartyAtLizzieS,
   welcomeToNightCityRetailAltCunninghamSoulkillerArchitect,
@@ -42,7 +43,6 @@ import {
   welcomeToNightCityRetailPanamPalmerNomadCavalry,
   welcomeToNightCityRetailPeaceOffering,
   welcomeToNightCityRetailPlacideVoodooSentinel,
-  welcomeToNightCityRetailRidingNomad,
   welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
   welcomeToNightCityRetailRoyceDonTCallMeSimon,
   welcomeToNightCityRetailRoycePsychoOnTheEdge,
@@ -531,7 +531,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
 
     await pom.expectGigCount(CYBERPUNK_P1, 1);
     await pom.expectGigCount(CYBERPUNK_P2, 3);
-    await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, attacker.instanceId, 9);
+    await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, attacker.instanceId, 7);
 
     await pom.attackRival(attacker.instanceId, CYBERPUNK_P1);
     await pom.resolveAttack(CYBERPUNK_P1);
@@ -539,6 +539,11 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.resolveAttack(CYBERPUNK_P1, { gigIdsToSteal: [firstD4.id] });
 
     expectEqual("Gorilla Arms attack cleared", await pom.getAttackState(), null);
+    const extraD4 = expectDefined(
+      "Gorilla Arms extra rival d4",
+      (await pom.getGigDice(CYBERPUNK_P2)).find((die) => die.dieType === "d4"),
+    );
+    await pom.resolveEffectTarget([extraD4.id], CYBERPUNK_P1);
     await pom.expectGigCount(CYBERPUNK_P1, 3);
     await pom.expectGigCount(CYBERPUNK_P2, 1);
     const remainingRivalD4s = (await pom.getGigDice(CYBERPUNK_P2)).filter(
@@ -1120,7 +1125,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
       CYBERPUNK_P1,
       welcomeToNightCityRetailRidingNomad.id,
     );
-    expectEqual("Riding Nomad played this turn", nomad.playedThisTurn, true);
+    expectEqual("Riding Nomad has Lag", nomad.hasLag, true);
     await pom.expectFieldCardGrantedRule(
       CYBERPUNK_P1,
       nomad.instanceId,

@@ -65,10 +65,60 @@ type ListenerView = {
   on(event: string, listener: (...args: unknown[]) => void): unknown;
   off(event: string, listener: (...args: unknown[]) => void): unknown;
   emit(event: string, ...args: unknown[]): unknown;
+  onAny(listener: (event: string, ...args: unknown[]) => void): unknown;
+  offAny(listener: (event: string, ...args: unknown[]) => void): unknown;
 };
 
 function listenerView(socket: GatewaySocket): ListenerView {
   return socket as unknown as ListenerView;
+}
+
+const GATEWAY_PACKET_LOG_STORAGE_KEY = "tcg:gateway-packet-log";
+
+type GatewayPacketDirection = "send" | "receive" | "lifecycle" | "handshake";
+
+interface GatewayPacketLogEntry {
+  direction: GatewayPacketDirection;
+  namespace: string;
+  event: string;
+  socketId?: string | null;
+  payload?: unknown;
+}
+
+function isGatewayPacketLoggingEnabled(): boolean {
+  try {
+    return globalThis.localStorage?.getItem(GATEWAY_PACKET_LOG_STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function redactHandshakeAuth(payload: GatewayHandshakeAuth): Record<string, unknown> {
+  return {
+    hasTicket: Boolean(payload.ticket),
+    hasToken: Boolean(payload.token),
+    requireAuth: payload.requireAuth === true,
+  };
+}
+
+function logGatewayPacket({
+  direction,
+  namespace,
+  event,
+  socketId,
+  payload,
+}: GatewayPacketLogEntry): void {
+  if (!isGatewayPacketLoggingEnabled()) return;
+  const label = `[gateway:${direction}] ${namespace} ${event}`;
+  const body = {
+    at: new Date().toISOString(),
+    namespace,
+    event,
+    socketId,
+    payload,
+  };
+  // eslint-disable-next-line no-console
+  console.log(label, body);
 }
 
 interface SocketEntry {
@@ -167,6 +217,13 @@ export function createGatewayConnectionManager(
       entry.ticketConsumed = true;
       entry.snapshot.ticket = undefined;
     }
+    logGatewayPacket({
+      direction: "handshake",
+      namespace: `/${entry.slug}`,
+      event: "auth",
+      socketId: entry.socket.id ?? null,
+      payload: redactHandshakeAuth(payload),
+    });
     return payload;
   }
 
@@ -183,6 +240,7 @@ export function createGatewayConnectionManager(
         authenticated: false,
         authMethod: null,
         error: "Signed-in gateway credentials are required before connecting.",
+        authFailureReason: "missing_credentials",
       });
       onAnalytics?.("ws_auth_policy_violation", {
         namespace: `/${entry.slug}`,
@@ -214,6 +272,24 @@ export function createGatewayConnectionManager(
     }
   }
 
+  function hasHandshakeCredential(credentials: GatewayCredentials): boolean {
+    return Boolean(credentials.ticket || credentials.token);
+  }
+
+  function transitionToRefreshExhausted(entry: SocketEntry): void {
+    entry.wasRefreshing = false;
+    entry.state.set({
+      status: "disconnected",
+      authStatus: "failed",
+      authFailureReason: "refresh_exhausted",
+      error: "Credential refresh did not restore authenticated access.",
+    });
+    onAnalytics?.("ws_auth_terminal_failure", {
+      namespace: `/${entry.slug}`,
+      reason: "refresh_exhausted",
+    });
+  }
+
   /**
    * Emit a latency probe. Only fires when the socket is live so a probing loop
    * never queues writes against a dormant transport.
@@ -221,7 +297,15 @@ export function createGatewayConnectionManager(
   function emitPing(entry: SocketEntry): void {
     if (entry.destroyed) return;
     if (!entry.socket.connected) return;
-    entry.socket.emit("ping", { t: Date.now() });
+    const payload = { t: Date.now() };
+    logGatewayPacket({
+      direction: "send",
+      namespace: `/${entry.slug}`,
+      event: "ping",
+      socketId: entry.socket.id ?? null,
+      payload,
+    });
+    entry.socket.emit("ping", payload);
   }
 
   /**
@@ -241,18 +325,26 @@ export function createGatewayConnectionManager(
 
     entry.refreshAttempted = true;
     entry.wasRefreshing = true;
-    entry.state.set({ authStatus: "refreshing" });
+    entry.state.set({
+      authStatus: "refreshing",
+      authFailureReason: entry.state.get().authFailureReason ?? "anonymous_welcome",
+    });
     onAnalytics?.("ws_credentials_refresh_attempt", { namespace: `/${entry.slug}` });
 
     const attempt = (async (): Promise<GatewayCredentials> => {
       try {
         const refreshed = await entry.credentials!.refresh();
         mergeRefreshedCredentials(entry, refreshed);
+        const nextCredentials = peekCredentials(entry);
         onAnalytics?.("ws_credentials_refreshed", {
           namespace: `/${entry.slug}`,
           hadTicket: Boolean(refreshed.ticket),
           hadToken: Boolean(refreshed.token),
         });
+        if (nextCredentials.requireAuth && !hasHandshakeCredential(nextCredentials)) {
+          transitionToRefreshExhausted(entry);
+          return refreshed;
+        }
         // disconnect + re-dial on the SAME socket instance (reuse reconnect semantics)
         if (entry.socket.connected) entry.socket.disconnect();
         tryConnect(entry);
@@ -265,6 +357,7 @@ export function createGatewayConnectionManager(
         entry.state.set({
           status: "disconnected",
           authStatus: "failed",
+          authFailureReason: "refresh_failed",
           error: "Credential refresh failed.",
         });
         throw err;
@@ -286,17 +379,44 @@ export function createGatewayConnectionManager(
   function wireInternalHandlers(entry: SocketEntry): void {
     const { socket, state } = entry;
     const manager = socket.io as unknown as SocketManagerLike;
+    const view = listenerView(socket);
+    const namespace = `/${entry.slug}`;
+
+    const onAnyPacket = (event: string, ...args: unknown[]): void => {
+      logGatewayPacket({
+        direction: "receive",
+        namespace,
+        event,
+        socketId: socket.id ?? null,
+        payload: args.length <= 1 ? args[0] : args,
+      });
+    };
+    view.onAny(onAnyPacket);
 
     const onConnect = (): void => {
+      logGatewayPacket({
+        direction: "lifecycle",
+        namespace,
+        event: "connect",
+        socketId: socket.id ?? null,
+      });
       state.set({
         status: "connected",
         connectionId: socket.id ?? null,
         error: null,
+        authFailureReason: null,
       });
     };
     socket.on("connect", onConnect);
 
     const onDisconnect = (reason: unknown): void => {
+      logGatewayPacket({
+        direction: "lifecycle",
+        namespace,
+        event: "disconnect",
+        socketId: socket.id ?? null,
+        payload: reason,
+      });
       state.set({
         status: "disconnected",
         authenticated: false,
@@ -307,7 +427,17 @@ export function createGatewayConnectionManager(
     socket.on("disconnect", onDisconnect);
 
     const onConnectError = (err: Error): void => {
-      state.set({ error: err.message || "Connection error" });
+      logGatewayPacket({
+        direction: "lifecycle",
+        namespace,
+        event: "connect_error",
+        socketId: socket.id ?? null,
+        payload: err.message || "Connection error",
+      });
+      state.set({
+        error: err.message || "Connection error",
+        authFailureReason: "connect_error",
+      });
     };
     socket.on("connect_error", onConnectError);
 
@@ -329,18 +459,11 @@ export function createGatewayConnectionManager(
       if (!authenticated && requireAuth && entry.credentials && !entry.refreshAttempted) {
         // Auth failure on a requireAuth namespace with a controller installed:
         // give the controller a single chance to produce fresh credentials.
+        state.set({ authFailureReason: "anonymous_welcome" });
         void attemptCredentialRefresh(entry);
       } else if (!authenticated && requireAuth && entry.refreshAttempted) {
         // A refresh already ran and the gateway still rejects us — go terminal.
-        state.set({
-          status: "disconnected",
-          authStatus: "failed",
-          error: "Credential refresh did not restore authenticated access.",
-        });
-        onAnalytics?.("ws_auth_terminal_failure", {
-          namespace: `/${entry.slug}`,
-          reason: "refresh_exhausted",
-        });
+        transitionToRefreshExhausted(entry);
       } else if (authenticated) {
         // Successful auth after (possibly) a refresh — reset the one-shot.
         if (entry.wasRefreshing) {
@@ -349,7 +472,9 @@ export function createGatewayConnectionManager(
         }
         entry.refreshAttempted = false;
         if (state.get().authStatus !== "ok") {
-          state.set({ authStatus: "ok" });
+          state.set({ authStatus: "ok", authFailureReason: null });
+        } else if (state.get().authFailureReason !== null) {
+          state.set({ authFailureReason: null });
         }
       }
     };
@@ -374,12 +499,25 @@ export function createGatewayConnectionManager(
     socket.on("heartbeat_ack", onHeartbeatAck);
 
     const onReconnectAttempt = (attempt: unknown): void => {
+      logGatewayPacket({
+        direction: "lifecycle",
+        namespace,
+        event: "reconnect_attempt",
+        socketId: socket.id ?? null,
+        payload: attempt,
+      });
       const next = typeof attempt === "number" ? attempt : entry.state.get().reconnectAttempt + 1;
       state.set({ status: "reconnecting", reconnectAttempt: next });
     };
     manager.on("reconnect_attempt", onReconnectAttempt);
 
     const onReconnect = (): void => {
+      logGatewayPacket({
+        direction: "lifecycle",
+        namespace,
+        event: "reconnect",
+        socketId: socket.id ?? null,
+      });
       state.set({ reconnectAttempt: 0 });
     };
     manager.on("reconnect", onReconnect);
@@ -393,6 +531,7 @@ export function createGatewayConnectionManager(
       () => socket.off("heartbeat_ack", onHeartbeatAck),
       () => manager.off("reconnect_attempt", onReconnectAttempt),
       () => manager.off("reconnect", onReconnect),
+      () => view.offAny(onAnyPacket),
     );
   }
 
@@ -489,6 +628,13 @@ export function createGatewayConnectionManager(
       if (joinOptions.gameProfileId !== undefined) {
         payload.gameProfileId = joinOptions.gameProfileId;
       }
+      logGatewayPacket({
+        direction: "send",
+        namespace: `/${entry.slug}`,
+        event: "join_game",
+        socketId: entry.socket.id ?? null,
+        payload,
+      });
       listenerView(entry.socket).emit("join_game", payload);
       joinedSocketId = socketId;
       joinInFlightSince = now;
@@ -508,6 +654,13 @@ export function createGatewayConnectionManager(
         event: K,
         payload: Parameters<ClientToServerEvents[K]>[0],
       ): void => {
+        logGatewayPacket({
+          direction: "send",
+          namespace: `/${entry.slug}`,
+          event: String(event),
+          socketId: entry.socket.id ?? null,
+          payload,
+        });
         listenerView(entry.socket).emit(event, payload);
       },
       onConnected: (cb) => {
@@ -581,6 +734,13 @@ export function createGatewayConnectionManager(
           if (joinOptions.gameProfileId !== undefined) {
             payload.gameProfileId = joinOptions.gameProfileId;
           }
+          logGatewayPacket({
+            direction: "send",
+            namespace: `/${entry.slug}`,
+            event: "leave_game",
+            socketId: entry.socket.id ?? null,
+            payload,
+          });
           listenerView(entry.socket).emit("leave_game", payload);
         }
         joinOptions = null;
@@ -691,6 +851,17 @@ export function createGatewayConnectionManager(
       // An explicit refresh may supply a brand-new single-use ticket.
       if (credentials.ticket !== undefined) entry.ticketConsumed = false;
       entry.snapshot = mergeCredentials(entry.snapshot, credentials);
+      const next = peekCredentials(entry);
+      const state = entry.state.get();
+      if (
+        next.requireAuth &&
+        (next.ticket || next.token) &&
+        state.status === "connected" &&
+        !state.authenticated
+      ) {
+        entry.socket.disconnect();
+        tryConnect(entry);
+      }
       return;
     }
     const prev = pendingCredentials.get(slug) ?? {};

@@ -203,7 +203,3 @@ Test thoroughly across contexts:
 - **Slow connections**: Test on throttled network
 
 Remember: You're a cross-platform design expert. Make experiences that feel native to each context while maintaining brand and functionality consistency. Adapt intentionally, test thoroughly.
-
-## MANUAL MIGRATION REQUIRED
-
-Review unsupported Claude skill fields manually: `args`, `required`, `user-invokable`.

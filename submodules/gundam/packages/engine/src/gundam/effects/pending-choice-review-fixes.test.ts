@@ -251,30 +251,3 @@ describe("executor clamps chosenTargets to filter.count (PR #94 fix)", () => {
     expect(findStatModifier(engine, enemyIds[1]!, "ap")?.modifier).toBe(-1);
   });
 });
-
-describe("drainPendingEffects halt-on-peers (PR #94 fix)", () => {
-  it("does NOT halt when peers are triggered — falls back to insertion order", () => {
-    const drawOne: CardEffect = {
-      type: "triggered",
-      activation: { timing: ["deploy"] },
-      directives: [{ action: { action: "draw", count: 1 } }],
-      sourceText: "Draw 1.",
-    };
-    const engine = GundamTestEngine.create({ deck: 10 }, {});
-    const before = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
-
-    engine
-      .getG()
-      .pendingEffects.push(
-        makePE({ id: "t1", effect: drawOne, controllerId: PLAYER_ONE, kind: "triggered" }),
-        makePE({ id: "t2", effect: drawOne, controllerId: PLAYER_ONE, kind: "triggered" }),
-      );
-
-    // Drain should resolve both even though they're same-tier same-controller
-    // peers — triggered kinds don't get an ordering halt (no UX window).
-    engine.tickFlow(PLAYER_ONE);
-
-    expect(engine.getG().pendingEffects).toHaveLength(0);
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(before - 2);
-  });
-});

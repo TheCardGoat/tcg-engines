@@ -119,14 +119,9 @@ export const st04StrikeGundam002: UnitCard = {
       directives: [
         {
           action: {
-            action: "draw",
-            count: 1,
-          },
-        },
-        {
-          action: {
-            action: "discard",
-            count: 1,
+            action: "drawThenDiscard",
+            drawCount: 1,
+            discardCount: 1,
           },
         },
       ],

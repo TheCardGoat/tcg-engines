@@ -200,6 +200,30 @@
   white-space: nowrap;
 }
 
+.stealBadge {
+  min-width: 0;
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 6px 2px;
+  border: 1px solid rgb(74 217 255 / 52%);
+  background: linear-gradient(90deg, rgb(74 217 255 / 18%), rgb(74 217 255 / 6%));
+  color: #bff4ff;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-shadow: 0 0 8px rgb(74 217 255 / 38%);
+}
+
+.stealBadge strong {
+  color: #fff8a8;
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
 .versus {
   display: flex;
   align-items: center;

@@ -6,7 +6,6 @@ import {
   activeResources,
   createMockUnit,
   expectSuccess,
-  getEffectiveStats,
 } from "@tcg/gundam-engine";
 import { gd03ZGundamBiosensor071 } from "./071-z-gundam-biosensor.ts";
 
@@ -22,16 +21,23 @@ describe("Z Gundam (Biosensor) (GD03-071)", () => {
           hand: [gd03ZGundamBiosensor071],
           trash: [aeugOne, aeugTwo, nonAeug],
           resourceArea: activeResources(7),
+          deck: 5,
         },
-        { play: [enemy] },
+        { play: [enemy], deck: 5 },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
-      const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p1.deployUnit(gd03ZGundamBiosensor071, { targets: [enemyId] }));
 
-      const framework = engine.getRuntime().getFrameworkReadAPI();
-      expect(getEffectiveStats(enemyId, engine.getG(), framework.cards, framework).ap).toBe(3);
+      expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(3);
+
+      expectSuccess(p1.passPhase());
+      expectSuccess(p2.passActionStep());
+      expectSuccess(p1.passActionStep());
+
+      expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(5);
     });
 
     it("applies no AP reduction when there are no friendly AEUG Unit cards in trash", () => {
@@ -50,8 +56,7 @@ describe("Z Gundam (Biosensor) (GD03-071)", () => {
 
       expectSuccess(p1.deployUnit(gd03ZGundamBiosensor071, { targets: [enemyId] }));
 
-      const framework = engine.getRuntime().getFrameworkReadAPI();
-      expect(getEffectiveStats(enemyId, engine.getG(), framework.cards, framework).ap).toBe(5);
+      expect(engine.asPlayer(PLAYER_TWO).getVisibleCard(enemyId)?.effectiveAp).toBe(5);
     });
   });
 });

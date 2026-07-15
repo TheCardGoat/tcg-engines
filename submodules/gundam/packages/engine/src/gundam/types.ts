@@ -7,7 +7,13 @@
 
 import type { DeepReadonly, MoveDefinition } from "../types/move-types.ts";
 import type { ProjectedTimerView } from "../types/projection.ts";
-import type { CardEffect, CardType, TargetFilter, Zone } from "@tcg/gundam-types";
+import type {
+  CardEffect,
+  CardType,
+  KeywordEffectEntry,
+  TargetFilter,
+  Zone,
+} from "@tcg/gundam-types";
 import type { GundamDomainEvent } from "./events.ts";
 
 export type { TargetFilter };
@@ -78,7 +84,7 @@ export interface TurnMetadata {
 
 export type ContinuousEffectPayload =
   | { kind: "stat-modifier"; stat: "ap" | "hp"; modifier: number }
-  | { kind: "keyword-grant"; keyword: string }
+  | { kind: "keyword-grant"; keyword: string; value?: number }
   | { kind: "trait-grant"; trait: string }
   | { kind: "restriction"; restriction: string }
   /**
@@ -119,7 +125,7 @@ export type ContinuousEffectPayload =
    */
   | {
       kind: "delayed-trigger";
-      eventType: "attackerDestroyedDefender" | "battleDamageDealtToUnit";
+      eventType: "attackerDestroyedDefender" | "battleDamageDealtToUnit" | "turnEnded";
       eventCardFilter: TargetFilter;
       eventSourceFilter?: TargetFilter;
       eventSourceIds?: string[];
@@ -168,11 +174,13 @@ export type PostResolveAction =
  *  - Effects that require a choice halt the flow until the controller
  *    submits a `resolveEffect` move with their selection.
  *
- * Priority ordering follows rule 10-1-6-8 → 10-1-6-5/6:
- *  1. "burst" (rule 10-1-6-8)
- *  2. "triggered" owned by the active player
- *  3. "triggered" owned by the standby player
- *  4. "activated" / "command" in arrival order (own-choice moves)
+ * Priority ordering follows rules management, then rule 10-1-6-8 →
+ * 10-1-6-5/6:
+ *  1. "ruleManagement" (rule 11-1-2)
+ *  2. "burst" (rule 10-1-6-8)
+ *  3. "triggered" owned by the active player
+ *  4. "triggered" owned by the standby player
+ *  5. "activated" / "command" in arrival order (own-choice moves)
  *
  * When a new effect is triggered mid-resolution (rule 10-1-6-7), it is
  * inserted at the **front** of the queue but the current directive
@@ -206,13 +214,35 @@ export interface PendingEffect {
   /**
    * Classification used for priority sorting and reporting.
    *
+   * `ruleManagement` is an internal, player-facing rules choice that must
+   * resolve immediately before triggered-effect follow-up (rule 11-1-2).
+   *
    * `sentinel` is an internal kind used by the move-completion fence
    * (see `enqueueMoveCompletionFence` in pending-effects.ts). It has
    * no card-effect body — `drainPendingEffects` resolves it by
    * running only its `postActions`. Tier-sorted strictly last so it
    * fires after every same-move trigger has settled.
    */
-  kind: "burst" | "triggered" | "activated" | "command" | "sentinel";
+  kind: "ruleManagement" | "burst" | "triggered" | "activated" | "command" | "sentinel";
+  /**
+   * The controller must explicitly accept or decline this entire effect
+   * before any directives execute. Used by 【Burst】, which is optional by
+   * rule even when its printed directives are written imperatively.
+   */
+  optionalActivation?: boolean;
+  /**
+   * The controller explicitly selected this same-tier effect to resolve
+   * next. The marker suppresses a repeated ordering prompt while the engine
+   * asks for that effect's own targets/options, then disappears with the
+   * pending entry when it resolves.
+   */
+  resolutionOrderSelected?: boolean;
+  /**
+   * Trigger-wave priority. Effects created while another effect resolves
+   * receive a newer generation and must finish before any older queue entry,
+   * regardless of Burst/turn-player tier (rule 10-1-6-7 / 10-1-6-8-1).
+   */
+  priorityGeneration?: number;
   /** Triggering event, if any (populated for `kind: "triggered"` / "burst"). */
   trigger?: {
     type: string;
@@ -224,6 +254,8 @@ export interface PendingEffect {
    * play-time per rule 10-1-8-1-1) or by the resolveEffect move.
    */
   chosenTargets?: readonly string[];
+  /** Optional-directive decisions already committed in an earlier prompt step. */
+  committedOptionalAnswers?: Record<number, boolean>;
   /**
    * Data-driven cleanup to run after executeCardEffect completes. See
    * PostResolveAction — used primarily by Command cards to transition
@@ -267,6 +299,14 @@ export type PendingChoicePrompt =
   | PendingChooseOnePrompt
   | PendingDeckLookPrompt;
 
+export interface PendingTargetSelectionGroup {
+  /** Card-instance IDs that satisfy this one mandatory target constraint. */
+  legalTargetIds: readonly string[];
+  /** Inclusive bounds for this group, independent of the aggregate prompt bounds. */
+  minTargets: number;
+  maxTargets: number;
+}
+
 export interface PendingTargetSelectionPrompt {
   kind: "targetSelection";
   /** `PendingEffect.id` this prompt belongs to. */
@@ -283,6 +323,13 @@ export interface PendingTargetSelectionPrompt {
   maxTargets: number;
   /** Card-instance IDs that currently satisfy the filter. */
   legalTargetIds: readonly string[];
+  /**
+   * Independent target constraints in printed directive order. A single-target
+   * effect has one group. Multi-clause effects such as "choose 1 A and 1 B"
+   * expose one group per clause so clients cannot misrender the union as
+   * "choose any 2".
+   */
+  groups: readonly PendingTargetSelectionGroup[];
   /** Human-readable prompt — effect's `sourceText` by default. */
   prompt: string;
 }
@@ -292,7 +339,10 @@ export interface PendingOptionalPrompt {
   effectId: string;
   controllerId: string;
   sourceCardId: string;
-  /** Top-level index of the `optional: true` directive. */
+  /**
+   * Top-level index of the `optional: true` directive. `-1` means the
+   * choice accepts or declines the whole effect (currently 【Burst】).
+   */
   directiveIndex: number;
   /** Human-readable prompt — effect's `sourceText` by default. */
   prompt: string;
@@ -305,6 +355,12 @@ export interface PendingOrderingPrompt {
   controllerId: string;
   /** Same-tier same-controller peers the caller may resolve in any order. */
   candidateEffectIds: readonly string[];
+  /** Player-facing identity for each candidate; IDs alone are not meaningful UI copy. */
+  candidates: readonly {
+    effectId: string;
+    sourceCardId: string;
+    label: string;
+  }[];
   prompt: string;
 }
 
@@ -338,6 +394,8 @@ export interface PendingDeckLookPrompt {
   revealedCardIds: readonly string[];
   returnMode: "topAndBottom" | "chooseTop" | "topOrTrash";
   remainingDestination?: "bottom" | "trash";
+  /** Remaining cards are randomized by the engine; no player ordering input is legal. */
+  randomizeRemainingToBottom: boolean;
   tutorDestination: "hand" | "battleArea";
   legalTutorCardIds: readonly string[];
   /**
@@ -389,6 +447,8 @@ export interface GundamG {
    * never inspected by priority / resolution logic.
    */
   pendingEffectCurrentMoveId?: string;
+  /** Generation assigned to effects spawned by the currently resolving head. */
+  pendingEffectCurrentPriorityGeneration?: number;
   /** Active continuous effects */
   continuousEffects: ContinuousEffectEntry[];
   /** Effects/abilities resolved this turn (for once-per-turn tracking) */
@@ -411,6 +471,8 @@ export interface GundamCardMeta {
   triggerUsesThisTurn?: Record<string, number>;
   /** Keywords temporarily granted to this card */
   grantedKeywords?: string[];
+  /** Aggregated numeric values for granted Repair/Breach/Support keywords. */
+  grantedKeywordValues?: Record<string, number>;
   /** Keywords temporarily removed from this card */
   removedKeywords?: string[];
   /** Permanent AP modifier (from card effects) */
@@ -419,6 +481,8 @@ export interface GundamCardMeta {
   hpModifier?: number;
   /** Whether this card is a token */
   isToken?: boolean;
+  /** Stable printed definition used to hydrate generated tokens in remote viewers. */
+  tokenDefinitionId?: string;
   [key: string]: unknown;
 }
 
@@ -437,6 +501,8 @@ export interface AlterHandArgs {
 
 export interface DeployUnitArgs {
   cardId: string;
+  /** Normal printed payment or an optional card-defined play substitution. */
+  mode?: "normal" | "alternate";
   /** Instance IDs chosen as targets for the unit's deploy triggered effect. */
   targets?: string[];
 }
@@ -605,6 +671,9 @@ export interface GundamRuntimeCard {
   damage: number;
   exhausted: boolean;
   pilotId?: string;
+  /** Effective keywords with their aggregated numeric values for UI/headless clients. */
+  keywordEffects: KeywordEffectEntry[];
+  /** Convenience name-only view for rules checks that do not need numeric values. */
   keywords: string[];
   restrictions: string[];
 }
@@ -617,6 +686,8 @@ export interface GundamPlayerBoardView {
   playerId: string;
   /** Total number of resource cards in the resource area (includes exhausted). */
   resourceCount: number;
+  /** Public count of face-down cards remaining in the Resource Deck. */
+  resourceDeckCount: number;
   handCount: number;
   deckCount: number;
   trashCount: number;

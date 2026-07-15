@@ -9,9 +9,9 @@ import {
   resumeCurrentTrigger,
 } from "../ability-executor.ts";
 import type { ResolutionContext } from "../effects/target-resolver.ts";
-import { defOf } from "../state/lookups.ts";
-import { computeEffectiveCost, consumeCostModifierUse } from "./compute-effective-cost.ts";
+import { computeEffectiveCost } from "./compute-effective-cost.ts";
 import { availableEddies } from "./eddie-resources.ts";
+import { playSelectedCard } from "./play-selected-card.ts";
 
 export interface ResolveCardToPlayInput extends MoveInput {
   args: {
@@ -52,9 +52,6 @@ export const resolveCardToPlayMove: MoveDefinition<ResolveCardToPlayInput> = {
   execute({ state, playerId, input, operations }) {
     const choice = state.G.turnMetadata.pendingChoice as ChooseCardToPlayPendingChoice;
     const { cardId } = input.args;
-    const card = state.G.cardIndex[cardId];
-    if (!card) return;
-
     const {
       free,
       resolvedAttachToId,
@@ -64,51 +61,22 @@ export const resolveCardToPlayMove: MoveDefinition<ResolveCardToPlayInput> = {
       abilityIndex,
       ifEffects,
     } = choice.payload;
-    const def = defOf(card);
-    const eventsBeforePayment = operations.event.getEmittedEvents().length;
+    const result = playSelectedCard({
+      state: state as MatchState,
+      operations,
+      playerId,
+      cardId: cardId as CardInstanceId,
+      free,
+      resolvedAttachToId,
+    });
+    if (!result) return;
 
-    const cost = free
-      ? 0
-      : computeEffectiveCost(state as MatchState, cardId as CardInstanceId, playerId);
-    if (!free) {
-      operations.game.spendEddies(playerId, cost, "playCard");
-      consumeCostModifierUse(state as MatchState, cardId as CardInstanceId, playerId);
-    }
-
-    if (def.type === "gear" && resolvedAttachToId) {
-      operations.zone.moveCard(cardId as CardInstanceId, "field", playerId);
-      operations.card.attachGear(cardId as CardInstanceId, resolvedAttachToId as CardInstanceId);
-    } else if (def.type === "program") {
-      operations.zone.moveCard(cardId as CardInstanceId, "trash", playerId);
-    } else {
-      operations.zone.moveCard(cardId as CardInstanceId, "field", playerId);
-      operations.card.moveAttachedGear(cardId as CardInstanceId, "field");
-      if (def.type === "unit") {
-        operations.card.setPlayedThisTurn(cardId as CardInstanceId, true);
-      }
-    }
-
-    // Clear the old pending choice before emitting cardPlayed so that any new
-    // pendingChoice set by downstream triggers (processEventTriggers below) is
-    // not overwritten by this setPendingChoice(undefined) call.
+    // Clear the old pending choice before processing cardPlayed so that any new
+    // pendingChoice set by downstream triggers is not overwritten.
     operations.game.setPendingChoice(undefined);
 
-    const cardPlayedEvent = {
-      type: "cardPlayed" as const,
-      cardId: cardId as CardInstanceId,
-      playerId,
-      cost,
-    };
-    operations.event.emit(cardPlayedEvent);
-    processCardSpentEventsSince(eventsBeforePayment, state as MatchState, operations);
-    processEventTriggers(cardPlayedEvent, state as MatchState, operations);
-
-    operations.event.emit({
-      type: "actionLog",
-      messageKey: "move.playCard",
-      params: { cardName: def.displayName, cost },
-      playerId,
-    });
+    processCardSpentEventsSince(result.eventsBeforePayment, state as MatchState, operations);
+    processEventTriggers(result.cardPlayedEvent, state as MatchState, operations);
 
     if (
       ifEffects &&

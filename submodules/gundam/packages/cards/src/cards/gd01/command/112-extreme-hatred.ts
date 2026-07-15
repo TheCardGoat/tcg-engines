@@ -53,28 +53,35 @@ export const gd01ExtremeHatred112: CommandCard = {
       directives: [
         {
           action: {
-            action: "rest",
-            target: {
-              owner: "friendly",
-              cardType: "unit",
-              state: "active",
-              count: 2,
+            action: "resolveThenQueue",
+            first: {
+              action: "rest",
+              target: {
+                owner: "friendly",
+                cardType: "unit",
+                state: "active",
+                count: 2,
+              },
+            },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
+                {
+                  action: {
+                    action: "dealDamage",
+                    amount: 3,
+                    target: {
+                      owner: "opponent",
+                      cardType: "unit",
+                      count: 1,
+                    },
+                  },
+                },
+              ],
+              sourceText: "Then, choose 1 enemy Unit. Deal 3 damage to it.",
             },
           },
-        },
-        {
-          action: {
-            action: "dealDamage",
-            amount: 3,
-            target: {
-              owner: "opponent",
-              cardType: "unit",
-              count: 1,
-            },
-          },
-          // "If you do, ..." — only deal damage if the preceding rest
-          // actually rested 2 legal active friendly Units.
-          dependsOnPrevious: true,
         },
       ],
       sourceText:

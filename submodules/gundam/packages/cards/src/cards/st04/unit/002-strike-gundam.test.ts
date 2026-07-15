@@ -1,24 +1,43 @@
 import { describe, it, expect } from "vite-plus/test";
-import { GundamTestEngine, PLAYER_ONE, activeResources, expectSuccess } from "@tcg/gundam-engine";
+import {
+  GundamTestEngine,
+  PLAYER_ONE,
+  activeResources,
+  createMockUnit,
+  expectSuccess,
+} from "@tcg/gundam-engine";
 import { st04StrikeGundam002 } from "./002-strike-gundam.ts";
 
 describe("Strike Gundam (ST04-002)", () => {
-  it("【Deploy】 Draw 1, then discard 1", () => {
+  it("【Deploy】 draws 1, then asks which card from the updated hand to discard", () => {
+    const discardOption = createMockUnit({ name: "Discard Option" });
+    const drawnCard = createMockUnit({ name: "Drawn Card" });
+    const remainingDeckCard = createMockUnit({ name: "Remaining Deck Card" });
     const engine = GundamTestEngine.create({
-      hand: [st04StrikeGundam002],
+      hand: [st04StrikeGundam002, discardOption],
       resourceArea: activeResources(4),
-      deck: 5,
+      deck: [remainingDeckCard, drawnCard],
     });
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const deckKey = `deck:${PLAYER_ONE}`;
-    const trashKey = `trash:${PLAYER_ONE}`;
-    const deckBefore = engine.getState().ctx.zones.private.zoneCards[deckKey]!.length;
-    const trashBefore = engine.getState().ctx.zones.private.zoneCards[trashKey]?.length ?? 0;
+    const discardOptionId = p1.getHand()[1]!;
 
     expectSuccess(p1.deployUnit(st04StrikeGundam002));
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([discardOptionId]),
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    if (choice?.kind !== "targetSelection") {
+      throw new Error("Expected Strike Gundam to ask which card to discard after drawing");
+    }
+    expect(choice.legalTargetIds).toHaveLength(2);
+    expectSuccess(p1.resolveEffect({ targets: [discardOptionId] }));
 
-    // Deploy triggers draw+1 and discard+1: deck -1, trash +1.
-    expect(engine.getState().ctx.zones.private.zoneCards[deckKey]!.length).toBe(deckBefore - 1);
-    expect(engine.getState().ctx.zones.private.zoneCards[trashKey]!.length).toBe(trashBefore + 1);
+    expect(p1.getCardZone(st04StrikeGundam002)).toBe(`battleArea:${PLAYER_ONE}`);
+    expect(p1.getCardZone(discardOptionId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.handCount).toBe(1);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(1);
   });
 });

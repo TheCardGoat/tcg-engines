@@ -16,11 +16,7 @@ import type {
   SimulatorConnectionDiagnosticInput,
   SimulatorConnectionStatus,
 } from "@tcg/game-page-contract/connection-diagnostic";
-import {
-  createLiveMatchSession,
-  type LiveMatchSession,
-  type NormalizedPresenceChange,
-} from "@tcg/game-page-contract";
+import { type NormalizedPresenceChange } from "@tcg/game-page-contract";
 import { buildInteractionSubmissionForActionId } from "@tcg/protocol";
 import {
   buildDiscordRichPresenceMatchUrl,
@@ -29,8 +25,8 @@ import {
   updateDiscordPlayingGamePresence,
 } from "@tcg/shared/discord-rich-presence";
 import { buildGatewaySocketIoUrl, type LiveGatewayMessage } from "../engine/live/liveGateway";
-import type { GatewayHandle } from "@tcg/gateway-client";
-import { getGatewayManager } from "../../../lib/gateway/gateway-manager";
+import type { GatewayConnectionState, GatewayHandle } from "@tcg/gateway-client";
+import { acquireRootGatewayHandle } from "../../../lib/gateway/root-socket";
 import { getAuthSnapshot } from "../auth/auth-store";
 import {
   parseGatewayEvent,
@@ -39,6 +35,7 @@ import {
 } from "../engine/live/liveMessages";
 import {
   applyPresenceChange,
+  applyPresenceDiagnostics,
   applyPresencePlayers,
   connectionUiStatus,
   markLocalConnectionStatus,
@@ -58,7 +55,13 @@ import {
 } from "../engine/live/matchContext";
 import { CYBERPUNK_GAME_SLUG } from "../engine/live/apiOrigin";
 import { apiUrl } from "../../../runtime/gameRuntimeApi";
-import { useSimulatorRoute } from "../../../simulator/providers";
+import {
+  SimulatorLiveConnectionProvider,
+  useSimulatorLiveConnection,
+  useSimulatorRoute,
+  type SimulatorConnectionTelemetrySink,
+  type SimulatorLiveConnectionContextValue,
+} from "../../../simulator/providers";
 import { LiveHttpError, type LiveFeedbackSeverity } from "../engine/live/httpFeedback";
 import { createLiveMatchViewerEngine } from "../engine/live/liveState";
 import {
@@ -70,6 +73,7 @@ import {
   CHAT_PRESETS,
   type CyberpunkTestEngine,
   type ChatMessage,
+  type ChatPresetKey,
   type EngineAction,
   type AnimationScript,
   type GameEvent,
@@ -91,6 +95,19 @@ import {
   type PendingOptimisticMove,
 } from "./livePendingMove";
 import classes from "./Practice.module.css";
+
+type ActiveProposalAction =
+  | "cancel_match"
+  | "undo"
+  | "enable_free_text_chat"
+  | "enable_manual_mode"
+  | "disable_manual_mode";
+
+interface ActiveProposal {
+  actionType: ActiveProposalAction;
+  senderPlayerId: string;
+  deadline: number;
+}
 
 const exchangeDiscordActivityCode: DiscordAuthorizationCodeExchange = async ({
   clientId,
@@ -117,6 +134,8 @@ type LoadState =
       moveLogs: MoveLog[];
       engineEvents: RawEngineEventEntry[];
       chatMessages: ChatMessage[];
+      freeTextEnabled: boolean;
+      freeTextProposalPending: boolean;
     };
 
 interface RemoteEngineLogRecord {
@@ -162,9 +181,13 @@ interface LiveGatewayDiagnosticState {
   socketId?: string;
   authModeLabel?: string;
   authenticated?: boolean;
+  authStatus?: "ok" | "refreshing" | "failed";
+  authFailureReason?: Exclude<GatewayConnectionState["authFailureReason"], null>;
   latencyMs?: number;
   lastPongAt?: string;
   lastPingAt?: string;
+  lastHeartbeatSentAt?: string;
+  lastHeartbeatAckAt?: string;
   reconnectAttempts: number;
   disconnectCount: number;
   lastError?: string;
@@ -206,18 +229,24 @@ export function LiveMatchPage() {
   const [gatewayDiagnostic, setGatewayDiagnostic] = useState<LiveGatewayDiagnosticState>(() =>
     createInitialGatewayDiagnostic(),
   );
+  const [gatewayHandle, setGatewayHandle] = useState<GatewayHandle | null>(null);
   const [syncRequestNonce, setSyncRequestNonce] = useState(0);
   const [pendingOptimisticMove, setPendingOptimisticMove] = useState<PendingOptimisticMove | null>(
     null,
   );
+  const [activeProposal, setActiveProposal] = useState<ActiveProposal | null>(null);
   const handleRef = useRef<GatewayHandle | null>(null);
-  const sessionRef = useRef<LiveMatchSession | null>(null);
+  const liveConnectionRef = useRef<SimulatorLiveConnectionContextValue | null>(null);
   const latestContextRef = useRef<LiveMatchContext | null>(null);
   const gatewayJoinRef = useRef<GatewayJoinState | null>(null);
   const pendingOptimisticMoveRef = useRef<PendingOptimisticMove | null>(null);
   const submittedInteractionMessagesRef = useRef<Map<string, SubmitInteractionPayload>>(new Map());
   const seenLogKeysRef = useRef<Set<string>>(new Set());
   const seenAnimationIdsRef = useRef<Set<string>>(new Set());
+  const previousConnectionStatusRef = useRef<SimulatorConnectionStatus | null>(null);
+  const previousConnectionAuthenticatedRef = useRef(false);
+  const previousConnectionLatencyRef = useRef<number | null>(null);
+  const reconnectNotificationOpenRef = useRef(false);
   const startedAtMsRef = useRef(Date.now());
   const readyContext = loadState.status === "ready" ? loadState.context : null;
   const readyGameId = readyContext?.game.gameId ?? null;
@@ -239,10 +268,11 @@ export function LiveMatchPage() {
     [matchId, readyContext?.game.authority],
   );
   const canRunClientAuthorityPractice = Boolean(
-    readyContext?.game.authority === "client" &&
-    clientAuthorityConfig &&
-    searchPlayerId &&
-    readyContext.game.actorIds?.player === searchPlayerId,
+    canRunClientAuthorityPracticeForContext(
+      readyContext,
+      Boolean(clientAuthorityConfig),
+      contextPlayerId,
+    ),
   );
   const discordClientId =
     import.meta.env.VITE_DISCORD_ACTIVITY_CLIENT_ID ?? import.meta.env.VITE_DISCORD_CLIENT_ID;
@@ -264,9 +294,13 @@ export function LiveMatchPage() {
         socketId: gatewayDiagnostic.socketId,
         authModeLabel: gatewayDiagnostic.authModeLabel,
         authenticated: gatewayDiagnostic.authenticated,
+        authStatus: gatewayDiagnostic.authStatus,
+        authFailureReason: gatewayDiagnostic.authFailureReason,
         latencyMs: gatewayDiagnostic.latencyMs,
         lastPongAt: gatewayDiagnostic.lastPongAt,
         lastPingAt: gatewayDiagnostic.lastPingAt,
+        lastHeartbeatSentAt: gatewayDiagnostic.lastHeartbeatSentAt,
+        lastHeartbeatAckAt: gatewayDiagnostic.lastHeartbeatAckAt,
         reconnectAttempts: gatewayDiagnostic.reconnectAttempts,
         disconnectCount: gatewayDiagnostic.disconnectCount,
         lastError: gatewayDiagnostic.lastError,
@@ -292,6 +326,7 @@ export function LiveMatchPage() {
     setLoadState({ status: "loading" });
     setGatewayJoin(null);
     setPlayerConnections({});
+    setActiveProposal(null);
     setGatewayDiagnostic(createInitialGatewayDiagnostic());
     setSyncRequestNonce(0);
     setPendingOptimisticMove(null);
@@ -323,6 +358,8 @@ export function LiveMatchPage() {
             preparedContext.history?.chatMessages ?? [],
             preparedContext,
           ),
+          freeTextEnabled: preparedContext.history?.freeTextEnabled === true,
+          freeTextProposalPending: false,
         });
       })
       .catch((error) => {
@@ -412,7 +449,7 @@ export function LiveMatchPage() {
       if (needsAuthoritativeSync && context) {
         // Route through the session so the dedup window shared with the
         // heartbeat_ack / move_accepted / state_update paths applies here too.
-        sessionRef.current?.requestStateSyncIfDue(context.game.version);
+        liveConnectionRef.current?.requestStateSyncIfDue(context.game.version);
       }
     },
     [rejectPendingOptimisticMove],
@@ -460,63 +497,24 @@ export function LiveMatchPage() {
     [clearPendingOptimisticMove, rejectPendingOptimisticMove],
   );
 
-  useEffect(() => {
-    if (!readyGameId || (!hasReadyGameState && !canRunClientAuthorityPractice)) {
-      return;
-    }
-
-    const manager = getGatewayManager();
-    // Acquire a handle on the SHARED cyberpunk namespace socket (the root
-    // already holds one for presence). ref-count → 2; releasing this handle on
-    // unmount leaves the root socket open across navigation.
-    const handle: GatewayHandle = manager.acquire(CYBERPUNK_GAME_SLUG);
-    handleRef.current = handle;
-
-    const playerId = contextPlayerId;
-
-    const recordDiagnostic = (
-      patch: Partial<LiveGatewayDiagnosticState>,
-      event?: Omit<ConnectionDiagnosticEvent, "at">,
-    ) => {
+  const recordGatewayDiagnostic = useCallback(
+    (patch: Partial<LiveGatewayDiagnosticState>, event?: Omit<ConnectionDiagnosticEvent, "at">) => {
       setGatewayDiagnostic((current) => updateGatewayDiagnostic(current, patch, event));
-    };
+    },
+    [],
+  );
 
-    recordDiagnostic(
-      {
-        status: handle.getState().status === "connected" ? "connected" : "connecting",
-        endpoint: createGatewayEndpointDiagnostic(),
-        lastError: undefined,
-      },
-      { type: "ticket_request", message: "Acquiring gateway namespace" },
-    );
+  const requestLiveStateSync = useCallback((version: number) => {
+    liveConnectionRef.current?.requestStateSyncIfDue(version);
+  }, []);
 
-    const joinRole: "player" | "spectator" =
-      readyContext?.game.authority === "client" && !canRunClientAuthorityPractice && !playerId
-        ? "spectator"
-        : "player";
-
-    const localSide = () => {
-      const context = latestContextRef.current;
-      return context ? localConnectionSideForContext(context, playerId) : null;
-    };
-
-    const markLocalConnection = (status: "connected" | "reconnecting" | "disconnected") => {
-      setPlayerConnections((current) => markLocalConnectionStatus(current, localSide(), status));
-    };
-
-    // The game event reducer. The session forwards EVERY server event here;
-    // the reducer owns game-state mutations, board rendering signals, and
-    // game-domain diagnostics. Session-owned concerns (presence map,
-    // heartbeat, join lifecycle) are NOT duplicated here.
-    const handleGatewayEvent = (
+  const handleGatewayEvent = useCallback(
+    (
       type: keyof ServerToClientEvents,
       payload: Parameters<ServerToClientEvents[keyof ServerToClientEvents]>[0],
     ) => {
+      const handle = handleRef.current;
       if (type === "presence_change" && payload && typeof payload === "object") {
-        // The session owns the presence map and emits the normalized change
-        // via onPresenceChange (→ derivePresenceChat). The consumer only
-        // mirrors the raw change into its per-side playerConnections view
-        // (used for board rendering).
         setPlayerConnections((current) =>
           applyPresenceChange(current, latestContextRef.current?.game.actorIds, payload),
         );
@@ -526,12 +524,17 @@ export function LiveMatchPage() {
         const droppedPlayerId =
           typeof record.droppedPlayerId === "string" ? record.droppedPlayerId : undefined;
         const dropReason = typeof record.reason === "string" ? record.reason : "disconnect";
+        const normalizedDropReason = dropReason.toLowerCase();
+        const reasonKind =
+          normalizedDropReason.includes("timeout") || normalizedDropReason.includes("timed out")
+            ? "timeout"
+            : "disconnect";
         notifications.show({
           id: `live-match:player-drop-pending:${gameId}:${droppedPlayerId}`,
           color: "yellow",
-          title: "Opponent drop pending",
+          title: reasonKind === "timeout" ? "Opponent timed out" : "Opponent disconnected",
           message:
-            dropReason === "timeout"
+            reasonKind === "timeout"
               ? "Your opponent is being dropped due to timeout."
               : "Your opponent is being dropped due to disconnect.",
         });
@@ -540,9 +543,6 @@ export function LiveMatchPage() {
         handleSubmitInteractionResponse(payload);
       }
       if (type === "heartbeat_ack" && payload && typeof payload === "object") {
-        // heartbeat_ack isn't a LiveGatewayMessage; handle it before
-        // parseGatewayEvent returns null. The session already recorded the
-        // diagnostic; the consumer owns the version-skew reaction.
         const context = latestContextRef.current;
         if (!context) {
           return;
@@ -554,7 +554,7 @@ export function LiveMatchPage() {
         }
         const localVersion = context.game.version;
         if (serverVersion > localVersion) {
-          session.requestStateSyncIfDue(localVersion);
+          requestLiveStateSync(localVersion);
           console.info("[live-match] heartbeat_ack server ahead; requesting state sync", {
             gameId,
             localVersion,
@@ -567,7 +567,10 @@ export function LiveMatchPage() {
         return;
       }
       if (message.type === "gateway_error" || message.type === "error") {
-        recordDiagnostic(
+        if (message.code?.startsWith("proposal_")) {
+          setActiveProposal(null);
+        }
+        recordGatewayDiagnostic(
           {
             lastError: message.message,
           },
@@ -585,7 +588,7 @@ export function LiveMatchPage() {
           typeof message.stateVersion === "number" &&
           message.stateVersion !== pending.localOptimisticStateId
         ) {
-          session.requestStateSyncIfDue(pending.startingVersion);
+          requestLiveStateSync(pending.startingVersion);
           console.info("[live-match] move_accepted version mismatch; requesting state sync", {
             gameId,
             expectedVersion: pending.localOptimisticStateId,
@@ -602,22 +605,26 @@ export function LiveMatchPage() {
       if (message.type === "move_rejected") {
         handleRejectedOptimisticMove(message);
       }
-      if (message.type === "proposal_received" && message.gameId === gameId) {
-        handleProposalReceived(message, handle);
+      if (message.type === "proposal_received" && message.gameId === gameId && handle) {
+        setActiveProposal(activeProposalFromReceived(message));
       }
       if (message.type === "proposal_resolved" && message.gameId === gameId) {
+        setActiveProposal((current) =>
+          current?.actionType === message.actionType ? null : current,
+        );
         handleProposalResolved(message);
       }
       if (message.type === "proposal_expired" && message.gameId === gameId) {
+        setActiveProposal((current) =>
+          current?.actionType === message.actionType ? null : current,
+        );
         handleProposalExpired(message);
       }
       if (message.type === "game_joined") {
-        // The session records the diagnostic and owns the join lifecycle +
-        // presence map. The consumer only keeps the gameId/role pair for the
-        // board's "client-authority joined" gate and the interaction gate.
         const joined = { gameId: message.gameId, role: message.role, nonce: Date.now() };
         gatewayJoinRef.current = joined;
         setGatewayJoin(joined);
+        setActiveProposal(activeProposalFromJoined(message));
         setPlayerConnections((current) =>
           applyPresencePlayers(current, latestContextRef.current?.game.actorIds, message.players),
         );
@@ -626,22 +633,27 @@ export function LiveMatchPage() {
           matchId,
           role: message.role,
           stateVersion: message.stateVersion,
-          socketId: handle.getState().connectionId,
+          socketId: handle?.getState().connectionId,
         });
       }
       if (message.type === "request_state_sync" && message.gameId === gameId) {
-        // The session emits `request_game_state_sync` (with dedup) for server
-        // authority. The consumer only bumps the nonce so the client-authority
-        // practice path pushes its local state.
         setSyncRequestNonce((nonce) => nonce + 1);
       }
       setLoadState((previous) => {
         if (previous.status !== "ready") {
           return previous;
         }
+        const chatPolicy = reduceLiveChatPolicy(
+          {
+            freeTextEnabled: previous.freeTextEnabled,
+            freeTextProposalPending: previous.freeTextProposalPending,
+          },
+          message,
+        );
         if (message.type === "game_chat_history" && message.gameId === gameId) {
           return {
             ...previous,
+            ...chatPolicy,
             chatMessages: remoteChatMessagesForContext(
               parseRemoteChatMessages(message.messages),
               previous.context,
@@ -655,6 +667,7 @@ export function LiveMatchPage() {
           }
           return {
             ...previous,
+            ...chatPolicy,
             chatMessages: mergeRemoteChatMessage(previous.chatMessages, chatMessage),
           };
         }
@@ -668,14 +681,16 @@ export function LiveMatchPage() {
           return previous;
         }
         if (effect.type !== "state") {
-          return previous;
+          return isLiveChatPolicyChanged(previous, chatPolicy)
+            ? { ...previous, ...chatPolicy }
+            : previous;
         }
         if (
           message.type === "state_update" &&
           typeof message.stateVersion === "number" &&
           message.stateVersion > previous.context.game.version + 1
         ) {
-          session.requestStateSyncIfDue(previous.context.game.version);
+          requestLiveStateSync(previous.context.game.version);
           console.info("[live-match] state_update version jump detected; requesting state sync", {
             gameId,
             previousVersion: previous.context.game.version,
@@ -706,6 +721,7 @@ export function LiveMatchPage() {
           moveLogs: nextLogs,
           engineEvents: nextEngineEvents,
           chatMessages: previous.chatMessages,
+          ...chatPolicy,
         };
       });
       if (message.type === "move_rejected") {
@@ -718,22 +734,33 @@ export function LiveMatchPage() {
           attemptedMessage,
           rejection: message,
           joined: gatewayJoinRef.current,
-          socketId: handle.getState().connectionId,
+          socketId: handle?.getState().connectionId,
         });
         if (typeof message.correlationId === "string") {
           submittedInteractionMessagesRef.current.delete(message.correlationId);
         }
       }
-    };
+    },
+    [
+      clearPendingOptimisticMove,
+      gameId,
+      handleRejectedOptimisticMove,
+      handleSubmitInteractionResponse,
+      location.search,
+      matchId,
+      recordGatewayDiagnostic,
+      rejectPendingOptimisticMove,
+      requestLiveStateSync,
+    ],
+  );
 
-    // Localized "X joined/left the match" chat derivation. The session owns
-    // the presence map; this only produces a chat line per change.
-    const derivePresenceChat = (change: NormalizedPresenceChange) => {
+  const derivePresenceChat = useCallback(
+    (change: NormalizedPresenceChange) => {
       const context = latestContextRef.current;
       if (!context) {
         return;
       }
-      const localPlayerId = searchPlayerId ?? resolveLocalPlayerIdFromAuth(context);
+      const localPlayerId = contextPlayerId ?? resolveLocalPlayerIdFromAuth(context);
       if (change.playerId === localPlayerId) {
         return;
       }
@@ -761,69 +788,29 @@ export function LiveMatchPage() {
           return { ...previous, chatMessages: nextChat };
         });
       }
-    };
+    },
+    [contextPlayerId],
+  );
 
-    // Single session call: owns join, presence map, heartbeat, latency, and
-    // connection-state mirroring. The consumer wires its game reducer
-    // (onGameEvent), its chat derivation (onPresenceChange), and its
-    // diagnostic log (onDiagnostic).
-    const session = createLiveMatchSession({
-      handle,
-      gameId,
-      matchId,
-      resolveRole: () => joinRole,
-      resolveGameProfileId: () => playerId ?? undefined,
-      buildHeartbeatPayload: () => {
-        const context = latestContextRef.current;
-        return {
-          game: context ? { gameId, matchId, stateVersion: context.game.version } : undefined,
-          activity: {
-            idle: false,
-            tabVisible: document.visibilityState !== "hidden",
-          },
-        };
-      },
-      heartbeatIntervalMs: 15_000,
-      authority: readyContext?.game.authority,
-      onGameEvent: (event, payload) =>
-        handleGatewayEvent(
-          event,
-          payload as Parameters<ServerToClientEvents[keyof ServerToClientEvents]>[0],
-        ),
-      onPresenceChange: derivePresenceChat,
-      onDiagnostic: (event) => {
-        setGatewayDiagnostic((current) => updateGatewayDiagnostic(current, {}, event));
-      },
-    });
-
-    session.start();
-    sessionRef.current = session;
-
-    // Mirror session-owned state into React state for rendering. The session
-    // owns status/latency/auth/joined/presence; the consumer only mirrors.
-    let prevStatus: SimulatorConnectionStatus | null = null;
-    let prevAuthenticated = false;
-    let prevLatencyMs: number | null = null;
-    let lastNotifiedReconnect = false;
-
-    const unsubSessionState = session.subscribeState((s) => {
+  const handleLiveConnectionState = useCallback(
+    (s: SimulatorLiveConnectionContextValue) => {
+      liveConnectionRef.current = s;
       setGatewayDiagnostic((current) => {
         const patch: Partial<LiveGatewayDiagnosticState> = {
           status: s.status,
           authenticated: s.authenticated,
+          authStatus: s.authStatus,
+          authFailureReason: s.authFailureReason ?? undefined,
           connectionId: s.connectionId ?? undefined,
           socketId: s.connectionId ?? undefined,
           latencyMs: s.latencyMs ?? undefined,
+          lastPingAt: s.lastPingAt ?? undefined,
+          lastPongAt: s.lastPongAt ?? undefined,
+          lastHeartbeatSentAt: s.lastHeartbeatSentAt ?? undefined,
+          lastHeartbeatAckAt: s.lastHeartbeatAckAt ?? undefined,
           authModeLabel: s.authenticated ? "Authenticated" : undefined,
-          // Mirror the gateway's reconnect attempt counter directly — restores
-          // the counter that Patch 4a dropped when it stopped counting events
-          // the session doesn't emit.
           reconnectAttempts: s.reconnectAttempt,
         };
-        // Prefer the live error string from the gateway when present; fall
-        // back to the generic terminal-state message only when disconnected
-        // without a specific error. Skipping the assignment otherwise keeps
-        // the last seen error visible (matches pre-session behavior).
         if (s.error) {
           patch.lastError = s.error;
         } else if (s.status === "disconnected") {
@@ -835,39 +822,46 @@ export function LiveMatchPage() {
         return { ...current, ...patch };
       });
 
+      const context = latestContextRef.current;
+      const side = context ? localConnectionSideForContext(context, contextPlayerId) : null;
+      const markLocalConnection = (status: "connected" | "reconnecting" | "disconnected") => {
+        setPlayerConnections((current) => markLocalConnectionStatus(current, side, status));
+      };
+
+      const previousStatus = previousConnectionStatusRef.current;
+      const previousAuthenticated = previousConnectionAuthenticatedRef.current;
+      const previousLatencyMs = previousConnectionLatencyRef.current;
       // Game-domain per-side connection mirroring for board rendering. The
       // session doesn't know about "sides", so the consumer translates.
-      const wasReady = prevStatus === "connected" && prevAuthenticated;
+      if (context) {
+        setPlayerConnections((current) =>
+          applyPresenceDiagnostics(current, context.game.actorIds, s.presence),
+        );
+      }
+      const wasReady = previousStatus === "connected" && previousAuthenticated;
       const isReady = s.status === "connected" && s.authenticated;
       if (!wasReady && isReady) {
         markLocalConnection("connected");
-      } else if (s.status === "reconnecting" && prevStatus !== "reconnecting") {
+      } else if (s.status === "reconnecting" && previousStatus !== "reconnecting") {
         markLocalConnection("reconnecting");
         gatewayJoinRef.current = null;
         setGatewayJoin((current) => (current?.gameId === gameId ? null : current));
-      } else if (s.status === "disconnected" && prevStatus !== "disconnected") {
+      } else if (s.status === "disconnected" && previousStatus !== "disconnected") {
         markLocalConnection("disconnected");
         gatewayJoinRef.current = null;
         setGatewayJoin((current) => (current?.gameId === gameId ? null : current));
       }
 
-      // Latency sample → per-side heartbeat recording (game-domain).
-      if (s.latencyMs !== null && s.latencyMs !== prevLatencyMs) {
-        const context = latestContextRef.current;
-        const side = context ? localConnectionSideForContext(context, playerId) : null;
-        const now = Date.now();
-        if (side) {
-          setPlayerConnections((current) =>
-            recordLocalConnectionHeartbeat(current, side, now, s.latencyMs as number),
-          );
-        }
+      if (s.latencyMs !== null && s.latencyMs !== previousLatencyMs && side) {
+        const parsedPingAt = s.lastPingAt ? Date.parse(s.lastPingAt) : NaN;
+        const pingAt = Number.isFinite(parsedPingAt) ? parsedPingAt : Date.now();
+        setPlayerConnections((current) =>
+          recordLocalConnectionHeartbeat(current, side, pingAt, s.latencyMs as number),
+        );
       }
 
-      // One-shot "Connection interrupted" notification per reconnect cycle.
-      // The session surfaces the gateway error string, so the message echoes
-      // it when available — restores the context Patch 4a regressed.
-      if (s.status === "reconnecting" && !lastNotifiedReconnect) {
-        lastNotifiedReconnect = true;
+      if (s.status === "reconnecting" && !reconnectNotificationOpenRef.current) {
+        reconnectNotificationOpenRef.current = true;
         showServerFeedbackNotification({
           id: `live-match:gateway-connection:${gameId}`,
           severity: "warning",
@@ -876,44 +870,97 @@ export function LiveMatchPage() {
             ? `${s.error}. Trying to reconnect to the match server.`
             : "Trying to reconnect to the match server.",
         });
-      } else if (s.status === "connected" && prevStatus !== "connected") {
-        lastNotifiedReconnect = false;
+      } else if (s.status === "connected" && previousStatus !== "connected") {
+        reconnectNotificationOpenRef.current = false;
       }
 
-      prevStatus = s.status;
-      prevAuthenticated = s.authenticated;
-      prevLatencyMs = s.latencyMs;
-    });
+      previousConnectionStatusRef.current = s.status;
+      previousConnectionAuthenticatedRef.current = s.authenticated;
+      previousConnectionLatencyRef.current = s.latencyMs;
+    },
+    [contextPlayerId, gameId],
+  );
+
+  useEffect(() => {
+    if (!readyGameId || (!hasReadyGameState && !canRunClientAuthorityPractice)) {
+      setGatewayHandle(null);
+      return;
+    }
+
+    const handle: GatewayHandle = acquireRootGatewayHandle(CYBERPUNK_GAME_SLUG);
+    handleRef.current = handle;
+    setGatewayHandle(handle);
+    liveConnectionRef.current = null;
+    previousConnectionStatusRef.current = null;
+    previousConnectionAuthenticatedRef.current = false;
+    previousConnectionLatencyRef.current = null;
+    reconnectNotificationOpenRef.current = false;
+
+    recordGatewayDiagnostic(
+      {
+        status: handle.getState().status === "connected" ? "connected" : "connecting",
+        endpoint: createGatewayEndpointDiagnostic(),
+        lastError: undefined,
+      },
+      { type: "ticket_request", message: "Acquiring gateway namespace" },
+    );
 
     return () => {
-      session.stop();
-      unsubSessionState();
-      if (sessionRef.current === session) {
-        sessionRef.current = null;
-      }
       if (handleRef.current === handle) {
         handleRef.current = null;
       }
+      setGatewayHandle((current) => (current === handle ? null : current));
+      liveConnectionRef.current = null;
       gatewayJoinRef.current = null;
       setGatewayJoin((current) => (current?.gameId === gameId ? null : current));
-      // Release only THIS handle (ref-count → 1). The root keeps the shared
-      // socket open across navigation.
       handle.release();
     };
   }, [
     canRunClientAuthorityPractice,
-    contextPlayerId,
     gameId,
     hasReadyGameState,
-    handleRejectedOptimisticMove,
-    handleSubmitInteractionResponse,
-    clearPendingOptimisticMove,
-    location.search,
-    matchId,
-    readyContext?.game.authority,
     readyGameId,
-    searchPlayerId,
+    recordGatewayDiagnostic,
   ]);
+
+  const liveJoinRole: "player" | "spectator" =
+    readyContext?.game.authority === "client" && !canRunClientAuthorityPractice && !contextPlayerId
+      ? "spectator"
+      : "player";
+
+  const resolveLiveRole = useCallback(() => liveJoinRole, [liveJoinRole]);
+  const resolveLiveGameProfileId = useCallback(
+    () => contextPlayerId ?? undefined,
+    [contextPlayerId],
+  );
+  const buildLiveHeartbeatPayload = useCallback(() => {
+    const context = latestContextRef.current;
+    return {
+      game: context ? { gameId, matchId, stateVersion: context.game.version } : undefined,
+      activity: {
+        idle: false,
+        tabVisible: document.visibilityState !== "hidden",
+      },
+    };
+  }, [gameId, matchId]);
+  const handleLiveDiagnostic = useCallback(
+    (event: ConnectionDiagnosticEvent) => {
+      recordGatewayDiagnostic({}, event);
+    },
+    [recordGatewayDiagnostic],
+  );
+  const handleLiveGameEvent = useCallback(
+    (event: keyof ServerToClientEvents, payload: unknown) => {
+      handleGatewayEvent(
+        event,
+        payload as Parameters<ServerToClientEvents[keyof ServerToClientEvents]>[0],
+      );
+    },
+    [handleGatewayEvent],
+  );
+  const liveConnectionTelemetrySink = useCallback<SimulatorConnectionTelemetrySink>((event) => {
+    window.dispatchEvent(new CustomEvent("simulator:connection-telemetry", { detail: event }));
+  }, []);
 
   useEffect(() => {
     if (!readyGameId || !hasReadyGameState) {
@@ -1078,6 +1125,11 @@ export function LiveMatchPage() {
       gameId: context.game.gameId,
       actionType: "undo",
     });
+    setActiveProposal({
+      actionType: "undo",
+      senderPlayerId: contextPlayerIdForProposal(context),
+      deadline: Date.now() + 15_000,
+    });
     notifications.show({
       id: `undo-proposal-sent:${context.game.gameId}`,
       color: "blue",
@@ -1085,6 +1137,86 @@ export function LiveMatchPage() {
       message: "Waiting for your opponent to approve the undo.",
     });
     return true;
+  }, []);
+
+  const respondToActiveProposal = useCallback(
+    (accepted: boolean) => {
+      const proposal = activeProposal;
+      const context = latestContextRef.current;
+      const handle = handleRef.current;
+      if (
+        !proposal ||
+        !context?.game.gameId ||
+        !handle ||
+        handle.getState().status !== "connected"
+      ) {
+        notifications.show({
+          color: "red",
+          title: "Gateway unavailable",
+          message: "Reconnect before responding to the request.",
+        });
+        return;
+      }
+      handle.emit(accepted ? "proposal_accept" : "proposal_decline", {
+        gameId: context.game.gameId,
+        actionType: proposal.actionType,
+      });
+    },
+    [activeProposal],
+  );
+
+  const sendRemoteChatPreset = useCallback((presetKey: ChatPresetKey) => {
+    const handle = handleRef.current;
+    const context = latestContextRef.current;
+    if (!handle || handle.getState().status !== "connected" || !context?.game.gameId) {
+      notifications.show({
+        color: "red",
+        title: "Gateway unavailable",
+        message: "Reconnect before sending a message.",
+      });
+      return false;
+    }
+    return emitGatewayChatPreset(handle, context.game.gameId, presetKey);
+  }, []);
+
+  const sendRemoteChatText = useCallback((text: string) => {
+    const handle = handleRef.current;
+    const context = latestContextRef.current;
+    if (!handle || handle.getState().status !== "connected" || !context?.game.gameId) {
+      notifications.show({
+        color: "red",
+        title: "Gateway unavailable",
+        message: "Reconnect before sending a message.",
+      });
+      return false;
+    }
+    return emitGatewayChatText(handle, context.game.gameId, text);
+  }, []);
+
+  const requestRemoteFreeTextChat = useCallback(() => {
+    const handle = handleRef.current;
+    const context = latestContextRef.current;
+    if (!handle || handle.getState().status !== "connected" || !context?.game.gameId) {
+      notifications.show({
+        color: "red",
+        title: "Gateway unavailable",
+        message: "Reconnect before requesting free text.",
+      });
+      return false;
+    }
+    const sent = emitGatewayFreeTextRequest(handle, context.game.gameId);
+    if (sent) {
+      setLoadState((previous) =>
+        previous.status === "ready" ? { ...previous, freeTextProposalPending: true } : previous,
+      );
+      notifications.show({
+        id: `free-text-proposal-sent:${context.game.gameId}`,
+        color: "blue",
+        title: "Free text requested",
+        message: "Waiting for your opponent to approve free text chat.",
+      });
+    }
+    return sent;
   }, []);
 
   const sendPushState = useCallback((payload: PushStatePayload) => {
@@ -1125,13 +1257,16 @@ export function LiveMatchPage() {
     }
     const context = loadState.context;
     const actorIds = context.game.actorIds;
+    const localPlayerId = contextPlayerId ?? resolveLocalPlayerIdFromAuth(context);
+    const canSendHostedChat = Boolean(localPlayerId);
+    const canRequestFreeText = false;
     const clientAuthorityJoined =
       gatewayJoin?.gameId === context.game.gameId && gatewayJoin.role === "player";
     if (
       context.game.authority === "client" &&
       clientAuthorityConfig &&
       actorIds &&
-      searchPlayerId === actorIds.player
+      contextPlayerId === actorIds.player
     ) {
       if (!clientAuthorityJoined) {
         return null;
@@ -1144,8 +1279,15 @@ export function LiveMatchPage() {
           actorIds={actorIds}
           moveLogs={loadState.moveLogs}
           chatMessages={loadState.chatMessages}
+          freeTextEnabled={loadState.freeTextEnabled}
+          freeTextProposalPending={loadState.freeTextProposalPending}
+          canSendChat={canSendHostedChat}
+          canRequestFreeText={canRequestFreeText}
+          sendRemoteChatPreset={sendRemoteChatPreset}
+          sendRemoteChatText={sendRemoteChatText}
+          requestRemoteFreeTextChat={requestRemoteFreeTextChat}
           returnUrl={getMatchmakingReturnUrl(CYBERPUNK_GAME_SLUG, location.search)}
-          playerConnections={playerConnections}
+          playerConnections={playerConnectionsForBoard(context, playerConnections)}
           connectionDiagnostic={connectionDiagnostic}
           syncRequestNonce={syncRequestNonce}
           sendPushState={sendPushState}
@@ -1158,9 +1300,9 @@ export function LiveMatchPage() {
     }
     const viewerOnly = context.game.authority === "client";
     const initialAi = resolveLiveMatchInitialAi(context, location.search);
-    const localPlayerId = searchPlayerId ?? resolveLocalPlayerIdFromAuth(context);
     const humanSide = resolveLiveMatchHumanSide(context, localPlayerId ?? undefined);
     const playerIdentities = playerIdentitiesForContext(context);
+    const boardPlayerConnections = playerConnectionsForBoard(context, playerConnections);
     const returnUrl = getMatchmakingReturnUrl(CYBERPUNK_GAME_SLUG, location.search);
     const nextGameId =
       context.match.status !== "completed" && context.match.currentGameId !== context.game.gameId
@@ -1181,11 +1323,27 @@ export function LiveMatchPage() {
         remoteMoveLogs={loadState.moveLogs}
         remoteEngineEvents={loadState.engineEvents}
         remoteChatMessages={loadState.chatMessages}
+        remoteFreeTextEnabled={loadState.freeTextEnabled}
+        remoteFreeTextProposalPending={loadState.freeTextProposalPending}
+        canSendChat={canSendHostedChat}
+        canRequestFreeText={canRequestFreeText}
+        sendRemoteChatPreset={sendRemoteChatPreset}
+        sendRemoteChatText={sendRemoteChatText}
+        requestRemoteFreeTextChat={requestRemoteFreeTextChat}
         hasPendingRemoteMove={pendingOptimisticMove !== null}
         playerIdentities={playerIdentities}
-        playerConnections={playerConnections}
+        playerConnections={boardPlayerConnections}
         connectionDiagnostic={connectionDiagnostic}
         onClaimRivalDrop={claimRivalDrop}
+        liveMatchSidebar={{
+          matchId: context.match.matchId,
+          gameId: context.game.gameId,
+          localPlayerId: localPlayerId ?? undefined,
+          participants: context.match.participants ?? [],
+          player1Score: context.match.player1Score,
+          player2Score: context.match.player2Score,
+          returnUrl,
+        }}
         remoteReturnUrl={returnUrl}
         postGameContext={{
           gameId: context.game.gameId,
@@ -1214,14 +1372,13 @@ export function LiveMatchPage() {
     remoteDispatch,
     remoteSubmitInteraction,
     requestRemoteUndo,
-    searchPlayerId,
+    requestRemoteFreeTextChat,
+    contextPlayerId,
+    sendRemoteChatPreset,
+    sendRemoteChatText,
     sendPushState,
     syncRequestNonce,
   ]);
-
-  if (board) {
-    return board;
-  }
 
   const returnUrl = getMatchmakingReturnUrl(CYBERPUNK_GAME_SLUG, location.search);
   const title =
@@ -1241,7 +1398,7 @@ export function LiveMatchPage() {
           ? "Joining the gateway before starting the local bot engine."
           : "The game server did not return a playable Cyberpunk state for this game.";
 
-  return (
+  const fallback = (
     <main className={classes.page}>
       <div className={classes.shell}>
         <header className={classes.header}>
@@ -1255,6 +1412,58 @@ export function LiveMatchPage() {
       </div>
     </main>
   );
+  const content = board ?? fallback;
+  const proposalBanner =
+    loadState.status === "ready" ? (
+      <LiveProposalBanner
+        proposal={activeProposal}
+        localPlayerId={contextPlayerId ?? resolveLocalPlayerIdFromAuth(loadState.context)}
+        onAccept={() => respondToActiveProposal(true)}
+        onDecline={() => respondToActiveProposal(false)}
+      />
+    ) : null;
+
+  if (!gatewayHandle || !readyGameId || (!hasReadyGameState && !canRunClientAuthorityPractice)) {
+    return (
+      <>
+        {proposalBanner}
+        {content}
+      </>
+    );
+  }
+
+  return (
+    <SimulatorLiveConnectionProvider
+      handle={gatewayHandle}
+      gameId={gameId}
+      matchId={matchId}
+      resolveRole={resolveLiveRole}
+      resolveGameProfileId={resolveLiveGameProfileId}
+      buildHeartbeatPayload={buildLiveHeartbeatPayload}
+      heartbeatIntervalMs={15_000}
+      authority={readyContext?.game.authority}
+      onGameEvent={handleLiveGameEvent}
+      onPresenceChange={derivePresenceChat}
+      onDiagnostic={handleLiveDiagnostic}
+      telemetrySink={liveConnectionTelemetrySink}
+    >
+      <CyberpunkLiveConnectionBridge onState={handleLiveConnectionState} />
+      {proposalBanner}
+      {content}
+    </SimulatorLiveConnectionProvider>
+  );
+}
+
+function CyberpunkLiveConnectionBridge({
+  onState,
+}: {
+  onState: (state: SimulatorLiveConnectionContextValue) => void;
+}) {
+  const connection = useSimulatorLiveConnection();
+  useEffect(() => {
+    onState(connection);
+  }, [connection, onState]);
+  return null;
 }
 
 interface ClientAuthorityPracticeBoardProps {
@@ -1263,6 +1472,13 @@ interface ClientAuthorityPracticeBoardProps {
   actorIds: NonNullable<LiveMatchContext["game"]["actorIds"]>;
   moveLogs: MoveLog[];
   chatMessages: ChatMessage[];
+  freeTextEnabled: boolean;
+  freeTextProposalPending: boolean;
+  canSendChat: boolean;
+  canRequestFreeText: boolean;
+  sendRemoteChatPreset: (key: ChatPresetKey) => boolean;
+  sendRemoteChatText: (text: string) => boolean;
+  requestRemoteFreeTextChat: () => boolean;
   returnUrl: string;
   playerConnections: PlayerConnectionBySide;
   connectionDiagnostic?: SimulatorConnectionDiagnosticInput;
@@ -1276,6 +1492,13 @@ function ClientAuthorityPracticeBoard({
   actorIds,
   moveLogs,
   chatMessages,
+  freeTextEnabled,
+  freeTextProposalPending,
+  canSendChat,
+  canRequestFreeText,
+  sendRemoteChatPreset,
+  sendRemoteChatText,
+  requestRemoteFreeTextChat,
   returnUrl,
   playerConnections,
   connectionDiagnostic,
@@ -1352,6 +1575,11 @@ function ClientAuthorityPracticeBoard({
     pushCurrentState("sync", undefined, true);
   }, [pushCurrentState, syncRequestNonce]);
 
+  const boardPlayerConnections = useMemo(
+    () => playerConnectionsForBoard(context, playerConnections),
+    [context, playerConnections],
+  );
+
   const handleLocalCommandCommitted = useCallback(
     (commit: LocalCommandCommit) => {
       pushCurrentState(commit.result.processedCommand.move, commit, true);
@@ -1370,8 +1598,15 @@ function ClientAuthorityPracticeBoard({
       autoResolveSingletonCardTargets={false}
       remoteMoveLogs={moveLogs}
       remoteChatMessages={chatMessages}
+      remoteFreeTextEnabled={freeTextEnabled}
+      remoteFreeTextProposalPending={freeTextProposalPending}
+      canSendChat={canSendChat}
+      canRequestFreeText={canRequestFreeText}
+      sendRemoteChatPreset={sendRemoteChatPreset}
+      sendRemoteChatText={sendRemoteChatText}
+      requestRemoteFreeTextChat={requestRemoteFreeTextChat}
       playerIdentities={playerIdentitiesForContext(context)}
-      playerConnections={playerConnections}
+      playerConnections={boardPlayerConnections}
       connectionDiagnostic={connectionDiagnostic}
       onClaimRivalDrop={() => {
         notifications.show({
@@ -1513,6 +1748,35 @@ function playerIdentitiesForContext(context: LiveMatchContext): PlayerIdentityBy
     player: byId.get(actorIds.player),
     opponent: byId.get(actorIds.opponent),
   };
+}
+
+function playerConnectionsForBoard(
+  context: LiveMatchContext,
+  connections: PlayerConnectionBySide,
+): PlayerConnectionBySide {
+  if (!isBotActorId(context.game.actorIds?.opponent)) {
+    return connections;
+  }
+  const opponentConnection = connections.opponent;
+  return {
+    ...connections,
+    opponent: opponentConnection
+      ? {
+          ...opponentConnection,
+          status: "connected",
+          connected: true,
+          disconnectedAt: undefined,
+        }
+      : {
+          status: "connected",
+          connected: true,
+          disconnectedAt: undefined,
+        },
+  };
+}
+
+function isBotActorId(actorId: string | undefined): boolean {
+  return actorId?.startsWith("bot_") === true;
 }
 
 function sideForActorId(context: LiveMatchContext, actorId: string): Side | null {
@@ -1761,7 +2025,7 @@ function remoteChatMessageToLocal(
       kind: "system",
       id,
       timestamp: createdAt,
-      text: message.systemEvent ?? "System message",
+      text: systemChatMessageText(message.systemEvent),
     };
   }
 
@@ -1818,6 +2082,99 @@ function mergeRemoteChatMessage(current: ChatMessage[], message: ChatMessage): C
   return current.concat(message).slice(-REMOTE_MOVE_LOG_LIMIT);
 }
 
+export interface LiveChatPolicyState {
+  freeTextEnabled: boolean;
+  freeTextProposalPending: boolean;
+}
+
+export function reduceLiveChatPolicy(
+  state: LiveChatPolicyState,
+  message: LiveGatewayMessage,
+): LiveChatPolicyState {
+  if (message.type === "game_chat_history") {
+    return {
+      freeTextEnabled: message.freeTextEnabled === true,
+      freeTextProposalPending: state.freeTextProposalPending && message.freeTextEnabled !== true,
+    };
+  }
+
+  if (message.type === "chat_message" && isFreeTextEnabledSystemChatMessage(message.message)) {
+    return { freeTextEnabled: true, freeTextProposalPending: false };
+  }
+
+  if (message.type === "proposal_resolved" && message.actionType === "enable_free_text_chat") {
+    return {
+      freeTextEnabled: state.freeTextEnabled || message.resolution === "accepted",
+      freeTextProposalPending: false,
+    };
+  }
+
+  if (message.type === "proposal_expired" && message.actionType === "enable_free_text_chat") {
+    return { ...state, freeTextProposalPending: false };
+  }
+
+  if (
+    (message.type === "gateway_error" || message.type === "error") &&
+    message.code === "free_text_chat_disabled"
+  ) {
+    return { ...state, freeTextProposalPending: false };
+  }
+
+  return state;
+}
+
+function isFreeTextEnabledSystemChatMessage(value: unknown): boolean {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+  const message = value as { kind?: unknown; systemEvent?: unknown };
+  return message.kind === "system" && message.systemEvent === "free_text_chat_enabled";
+}
+
+function isLiveChatPolicyChanged(
+  previous: LiveChatPolicyState,
+  next: LiveChatPolicyState,
+): boolean {
+  return (
+    previous.freeTextEnabled !== next.freeTextEnabled ||
+    previous.freeTextProposalPending !== next.freeTextProposalPending
+  );
+}
+
+export function emitGatewayChatPreset(
+  handle: Pick<GatewayHandle, "emit"> | null,
+  gameId: string,
+  presetKey: ChatPresetKey,
+): boolean {
+  if (!handle || !gameId) {
+    return false;
+  }
+  handle.emit("send_chat_message", { gameId, presetKey });
+  return true;
+}
+
+export function emitGatewayChatText(
+  handle: Pick<GatewayHandle, "emit"> | null,
+  gameId: string,
+  text: string,
+): boolean {
+  const trimmed = text.trim();
+  if (!handle || !gameId || trimmed.length === 0) {
+    return false;
+  }
+  handle.emit("send_free_text_chat_message", { gameId, text: trimmed });
+  return true;
+}
+
+export function emitGatewayFreeTextRequest(
+  handle: Pick<GatewayHandle, "emit"> | null,
+  gameId: string,
+): boolean {
+  void handle;
+  void gameId;
+  return false;
+}
+
 function stableNumericId(value: string): number {
   const numeric = Number(value);
   if (Number.isSafeInteger(numeric) && numeric > 0) {
@@ -1835,10 +2192,9 @@ export function resolveLiveMatchInitialAi(
   search: string,
 ): { player: null; opponent: ReturnType<typeof getRemoteBotStrategy> } {
   const actorIds = context.game.actorIds;
-  const hasBotOpponent = actorIds?.opponent.startsWith("bot_") === true;
   return {
     player: null,
-    opponent: hasBotOpponent ? getRemoteBotStrategy(search) : null,
+    opponent: isBotActorId(actorIds?.opponent) ? getRemoteBotStrategy(search) : null,
   };
 }
 
@@ -1851,6 +2207,19 @@ export function resolveLiveMatchHumanSide(context: LiveMatchContext, playerId?: 
   // Using interactionView.actorId was wrong for live matches because it
   // flips the board depending on whose turn it is.
   return "player";
+}
+
+export function canRunClientAuthorityPracticeForContext(
+  context: LiveMatchContext | null,
+  hasClientAuthorityConfig: boolean,
+  playerId?: string,
+): boolean {
+  return Boolean(
+    context?.game.authority === "client" &&
+    hasClientAuthorityConfig &&
+    playerId &&
+    context.game.actorIds?.player === playerId,
+  );
 }
 
 function resolveLocalPlayerIdFromAuth(context: LiveMatchContext): string | undefined {
@@ -1964,23 +2333,248 @@ function showMoveRejectedNotification(message: MoveRejectedMessage): void {
   });
 }
 
-function handleProposalReceived(
+function activeProposalFromReceived(
   message: Extract<LiveGatewayMessage, { type: "proposal_received" }>,
-  handle: GatewayHandle | null,
-): void {
-  if (message.actionType !== "undo") {
-    return;
+): ActiveProposal | null {
+  const actionType = parseActiveProposalAction(message.actionType);
+  if (!actionType) {
+    return null;
   }
-  const accepted = window.confirm("Your opponent requested to undo the last move. Approve?");
-  handle?.emit(accepted ? "proposal_accept" : "proposal_decline", {
-    gameId: message.gameId,
-    actionType: "undo",
-  });
+  return {
+    actionType,
+    senderPlayerId: message.senderPlayerId,
+    deadline: message.deadline,
+  };
+}
+
+function activeProposalFromJoined(
+  message: Extract<LiveGatewayMessage, { type: "game_joined" }>,
+): ActiveProposal | null {
+  const proposal = message.pendingProposal;
+  if (!proposal || typeof proposal !== "object") {
+    return null;
+  }
+  const candidate = proposal as {
+    actionType?: unknown;
+    senderPlayerId?: unknown;
+    deadline?: unknown;
+  };
+  const actionType =
+    typeof candidate.actionType === "string"
+      ? parseActiveProposalAction(candidate.actionType)
+      : null;
+  if (
+    !actionType ||
+    typeof candidate.senderPlayerId !== "string" ||
+    typeof candidate.deadline !== "number"
+  ) {
+    return null;
+  }
+  return {
+    actionType,
+    senderPlayerId: candidate.senderPlayerId,
+    deadline: candidate.deadline,
+  };
+}
+
+function parseActiveProposalAction(actionType: string): ActiveProposalAction | null {
+  switch (actionType) {
+    case "cancel_match":
+    case "undo":
+    case "enable_free_text_chat":
+    case "enable_manual_mode":
+    case "disable_manual_mode":
+      return actionType;
+    default:
+      return null;
+  }
+}
+
+function contextPlayerIdForProposal(context: LiveMatchContext): string {
+  return resolveLocalPlayerIdFromAuth(context) ?? context.game.actorIds?.player ?? "";
+}
+
+function proposalCopy(actionType: ActiveProposalAction): {
+  actionLabel: string;
+  requesterTitle: string;
+  requesterMessage: string;
+  responderTitle: string;
+  responderMessage: string;
+  acceptLabel: string;
+  declineLabel: string;
+} {
+  switch (actionType) {
+    case "undo":
+      return {
+        actionLabel: "Undo request",
+        requesterTitle: "Undo requested",
+        requesterMessage: "Waiting for opponent response.",
+        responderTitle: "Opponent requested undo",
+        responderMessage: "Approve or decline the last-move undo request.",
+        acceptLabel: "Accept undo",
+        declineLabel: "Reject",
+      };
+    case "enable_free_text_chat":
+      return {
+        actionLabel: "Free text request",
+        requesterTitle: "Free text requested",
+        requesterMessage: "Waiting for opponent response.",
+        responderTitle: "Opponent requested free text",
+        responderMessage: "Approve or decline free text chat for this match.",
+        acceptLabel: "Accept",
+        declineLabel: "Reject",
+      };
+    case "enable_manual_mode":
+      return {
+        actionLabel: "Manual mode request",
+        requesterTitle: "Manual mode requested",
+        requesterMessage: "Waiting for opponent response.",
+        responderTitle: "Opponent requested manual mode",
+        responderMessage: "Approve or decline board state correction mode.",
+        acceptLabel: "Accept",
+        declineLabel: "Reject",
+      };
+    case "disable_manual_mode":
+      return {
+        actionLabel: "Manual mode request",
+        requesterTitle: "Manual mode update requested",
+        requesterMessage: "Waiting for opponent response.",
+        responderTitle: "Opponent requested manual mode off",
+        responderMessage: "Approve or decline disabling board state correction mode.",
+        acceptLabel: "Accept",
+        declineLabel: "Reject",
+      };
+    case "cancel_match":
+      return {
+        actionLabel: "Cancel request",
+        requesterTitle: "Match cancel requested",
+        requesterMessage: "Waiting for opponent response.",
+        responderTitle: "Opponent requested match cancel",
+        responderMessage: "Approve or decline the match cancellation.",
+        acceptLabel: "Accept",
+        declineLabel: "Reject",
+      };
+  }
+}
+
+function LiveProposalBanner({
+  proposal,
+  localPlayerId,
+  onAccept,
+  onDecline,
+}: {
+  proposal: ActiveProposal | null;
+  localPlayerId: string | undefined;
+  onAccept: () => void;
+  onDecline: () => void;
+}) {
+  if (!proposal) {
+    return null;
+  }
+  const copy = proposalCopy(proposal.actionType);
+  const isRequester = localPlayerId !== undefined && proposal.senderPlayerId === localPlayerId;
+  const secondsRemaining = Math.max(0, Math.ceil((proposal.deadline - Date.now()) / 1000));
+  return (
+    <section className={classes.proposalBanner} aria-live="polite">
+      <div className={classes.proposalBannerText}>
+        <span className={classes.proposalBannerKicker}>{copy.actionLabel}</span>
+        <strong>{isRequester ? copy.requesterTitle : copy.responderTitle}</strong>
+        <span>{isRequester ? copy.requesterMessage : copy.responderMessage}</span>
+      </div>
+      <div className={classes.proposalBannerActions}>
+        <span className={classes.proposalBannerTimer}>{secondsRemaining}s</span>
+        {isRequester ? (
+          <button className={classes.proposalBannerButton} type="button" disabled>
+            Waiting
+          </button>
+        ) : (
+          <>
+            <button className={classes.proposalBannerButton} type="button" onClick={onDecline}>
+              {copy.declineLabel}
+            </button>
+            <button
+              className={`${classes.proposalBannerButton} ${classes.proposalBannerButtonPrimary}`}
+              type="button"
+              onClick={onAccept}
+            >
+              {copy.acceptLabel}
+            </button>
+          </>
+        )}
+      </div>
+    </section>
+  );
+}
+
+export function systemChatMessageText(systemEvent: string | undefined): string {
+  if (systemEvent?.startsWith("Drop claimed:")) {
+    return systemEvent.toLowerCase().includes("timed out")
+      ? "Drop approved: opponent timed out."
+      : "Drop approved: opponent disconnected.";
+  }
+
+  switch (systemEvent) {
+    case "undo_proposed":
+      return "Undo requested.";
+    case "undo_accepted":
+      return "Undo request accepted.";
+    case "undo_declined":
+      return "Undo request rejected.";
+    case "undo_expired":
+      return "Undo request expired.";
+    case "free_text_chat_enabled":
+      return "Free text chat enabled.";
+    case "enable_free_text_chat_proposed":
+      return "Free text chat requested.";
+    case "enable_free_text_chat_declined":
+      return "Free text chat request rejected.";
+    case "enable_free_text_chat_expired":
+      return "Free text chat request expired.";
+    case "cancel_match_proposed":
+      return "Match cancellation requested.";
+    case "cancel_match_accepted":
+      return "Match cancellation accepted.";
+    case "cancel_match_declined":
+      return "Match cancellation rejected.";
+    case "cancel_match_expired":
+      return "Match cancellation request expired.";
+    case "enable_manual_mode_proposed":
+      return "Manual mode requested.";
+    case "enable_manual_mode_accepted":
+      return "Manual mode enabled.";
+    case "enable_manual_mode_declined":
+      return "Manual mode request rejected.";
+    case "enable_manual_mode_expired":
+      return "Manual mode request expired.";
+    case "disable_manual_mode_proposed":
+      return "Manual mode disable requested.";
+    case "disable_manual_mode_accepted":
+      return "Manual mode disabled.";
+    case "disable_manual_mode_declined":
+      return "Manual mode disable request rejected.";
+    case "disable_manual_mode_expired":
+      return "Manual mode disable request expired.";
+    default:
+      return systemEvent ?? "System message";
+  }
 }
 
 function handleProposalResolved(
   message: Extract<LiveGatewayMessage, { type: "proposal_resolved" }>,
 ): void {
+  if (message.actionType === "enable_free_text_chat") {
+    notifications.show({
+      id: `free-text-proposal-resolved:${message.gameId}:${message.resolution}`,
+      color: message.resolution === "accepted" ? "green" : "yellow",
+      title: message.resolution === "accepted" ? "Free text enabled" : "Free text declined",
+      message:
+        message.resolution === "accepted"
+          ? "Free text chat is now enabled for this match."
+          : "The free text chat request was not approved.",
+    });
+    return;
+  }
+
   if (message.actionType !== "undo") {
     return;
   }
@@ -1998,6 +2592,16 @@ function handleProposalResolved(
 function handleProposalExpired(
   message: Extract<LiveGatewayMessage, { type: "proposal_expired" }>,
 ): void {
+  if (message.actionType === "enable_free_text_chat") {
+    notifications.show({
+      id: `free-text-proposal-expired:${message.gameId}`,
+      color: "yellow",
+      title: "Free text request expired",
+      message: "Your opponent did not respond in time.",
+    });
+    return;
+  }
+
   if (message.actionType !== "undo") {
     return;
   }

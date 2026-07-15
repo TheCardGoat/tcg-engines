@@ -9,7 +9,9 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const gearSatoriSwordOfSaburoBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "gearSatoriSwordOfSaburo",
   label: "Satori - draw after winning a fight",
-  references: ["packages/engine/src/cards/alpha/gear/satori-sword-of-saburo.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/gear/satori-sword-of-saburo.test.ts",
+  ],
   async run(pom) {
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",

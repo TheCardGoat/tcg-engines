@@ -4,75 +4,59 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  asPlayerId,
   createMockUnit,
   expectSuccess,
-  getEffectiveStats,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd01CagalliYulaAthha096 } from "./096-cagalli-yula-athha.ts";
 
 describe("Cagalli Yula Athha (GD01-096)", () => {
-  it("【Burst】 Add this card to your hand", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd01CagalliYulaAthha096] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, gd01CagalliYulaAthha096.cardNumber, asPlayerId(PLAYER_TWO));
-
-    engine.fireShieldBurst(shieldId);
-
-    const zone = engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey;
-    expect(zone).toBe(`hand:${PLAYER_TWO}`);
-  });
-
-  it("While this Unit is white, it gains <Blocker>", () => {
-    // Unblocked by:
-    //   (1) PR #122 — pilot cards are iterated by the constant-effect scan.
-    //   (2) self* condition rebind — `selfIsColor` now reads the paired
-    //       unit's color, not the pilot's own color, so "white unit" gates
-    //       fire correctly from the pilot's text.
-    const whiteUnit = createMockUnit({
-      ap: 2,
-      hp: 3,
-      level: 4,
-      cost: 1,
-      color: "white",
-    });
+  it("【Burst】 adds the revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 4 });
     const engine = GundamTestEngine.create(
-      { hand: [whiteUnit, gd01CagalliYulaAthha096], resourceArea: activeResources(5) },
-      {},
+      { play: [attacker] },
+      { shieldArea: [gd01CagalliYulaAthha096] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
-    expectSuccess(p1.deployUnit(whiteUnit));
-    const [unitId] = p1.getCardsInZone("battleArea");
-    expectSuccess(p1.assignPilot(gd01CagalliYulaAthha096, whiteUnit));
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const stats = getEffectiveStats(unitId!, engine.getG(), framework.cards, framework);
-    expect(stats.keywords).toContain("Blocker");
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({ kind: "optional", directiveIndex: -1 });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+
+    expect(p2.getCardZone(gd01CagalliYulaAthha096)).toBe(`hand:${PLAYER_TWO}`);
   });
 
-  it("does NOT gain <Blocker> when the paired unit is not white", () => {
-    const blueUnit = createMockUnit({
-      ap: 2,
-      hp: 3,
-      level: 4,
-      cost: 1,
-      color: "blue",
+  it("grants Blocker while paired with a white Unit", () => {
+    const whiteUnit = createMockUnit({ color: "white", ap: 2, hp: 4 });
+    const engine = GundamTestEngine.create({
+      hand: [gd01CagalliYulaAthha096],
+      play: [whiteUnit],
+      resourceArea: activeResources(4),
     });
-    const engine = GundamTestEngine.create(
-      { hand: [blueUnit, gd01CagalliYulaAthha096], resourceArea: activeResources(5) },
-      {},
-    );
     const p1 = engine.asPlayer(PLAYER_ONE);
-    expectSuccess(p1.deployUnit(blueUnit));
-    const [unitId] = p1.getCardsInZone("battleArea");
-    expectSuccess(p1.assignPilot(gd01CagalliYulaAthha096, blueUnit));
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const stats = getEffectiveStats(unitId!, engine.getG(), framework.cards, framework);
-    expect(stats.keywords).not.toContain("Blocker");
+    expectSuccess(p1.assignPilot(gd01CagalliYulaAthha096, unitId));
+
+    expect(p1.getVisibleCard(unitId)?.keywords).toContain("Blocker");
+  });
+
+  it("does not grant Blocker while paired with a non-white Unit", () => {
+    const blueUnit = createMockUnit({ color: "blue", ap: 2, hp: 4 });
+    const engine = GundamTestEngine.create({
+      hand: [gd01CagalliYulaAthha096],
+      play: [blueUnit],
+      resourceArea: activeResources(4),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(gd01CagalliYulaAthha096, unitId));
+
+    expect(p1.getVisibleCard(unitId)?.keywords).not.toContain("Blocker");
   });
 });

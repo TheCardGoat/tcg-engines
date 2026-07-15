@@ -4,7 +4,6 @@ import {
   PLAYER_ONE,
   activeResources,
   createMockPilot,
-  getEffectiveStats,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { st07GundamVirtue004 } from "./004-gundam-virtue.ts";
@@ -20,8 +19,7 @@ describe("Gundam Virtue (ST07-004)", () => {
     const p1 = engine.asPlayer(PLAYER_ONE);
     const [virtueId] = p1.getCardsInZone("battleArea");
     expectSuccess(p1.assignPilot(tieria, st07GundamVirtue004));
-    const fw = engine.getRuntime().getFrameworkReadAPI();
 
-    expect(getEffectiveStats(virtueId!, engine.getG(), fw.cards, fw).keywords).toContain("Blocker");
+    expect(p1.getVisibleCard(virtueId!)?.keywords).toContain("Blocker");
   });
 });

@@ -32,7 +32,7 @@ describe("Royce - Psycho on the Edge", () => {
           card: welcomeToNightCityRetailRoycePsychoOnTheEdge,
           faceDown: false,
           spent: false,
-          playedThisTurn: false,
+          hasLag: false,
           attachedGears: [
             welcomeToNightCityRetailMantisBlades,
             welcomeToNightCityRetailZetatechFaceplate,

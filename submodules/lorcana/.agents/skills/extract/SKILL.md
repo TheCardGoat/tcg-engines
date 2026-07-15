@@ -86,7 +86,3 @@ Update design system documentation:
 - Update any Storybook or component catalog
 
 Remember: A good design system is a living system. Extract patterns as they emerge, enrich them thoughtfully, and maintain them consistently.
-
-## MANUAL MIGRATION REQUIRED
-
-Review unsupported Claude skill fields manually: `args`, `required`, `user-invokable`.

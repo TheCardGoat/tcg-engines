@@ -1,88 +1,83 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  createMockCommand,
   createMockUnit,
   expectSuccess,
-  findStatModifier,
-  getEffectiveStats,
 } from "@tcg/gundam-engine";
-import type { CommandCard } from "@tcg/gundam-types";
+import { gd03ReccoaSShadow104 } from "../command/104-reccoa-s-shadow.ts";
+import { gd03HumanKarma113 } from "../command/113-human-karma.ts";
 import { gd03GuaizCommanderType038 } from "./038-guaiz-commander-type.ts";
 
-function restCommand(owner: "friendly" | "opponent"): CommandCard {
-  return createMockCommand({
-    effects: [
-      {
-        type: "command",
-        activation: { timing: ["main"] },
-        directives: [
-          {
-            action: {
-              action: "rest",
-              target: { owner, cardType: "unit", count: 1 },
-            },
-          },
-        ],
-        sourceText: "【Main】Rest 1 Unit.",
-      },
-    ],
-  });
-}
-
 describe("GuAIZ (Commander Type) (GD03-038)", () => {
-  it("【Activate･Main】 Support 1 rests this Unit and gives 1 other friendly Unit AP+1", () => {
-    const ally = createMockUnit({ ap: 2 });
-    const engine = GundamTestEngine.create({ play: [gd03GuaizCommanderType038, ally] });
+  it("Support 1 rests GuAIZ and gives another friendly Unit AP+1", () => {
+    const zaftAlly = createMockUnit({ traits: ["zaft"], ap: 2, hp: 5 });
+    const engine = GundamTestEngine.create({ play: [gd03GuaizCommanderType038, zaftAlly] });
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const [guaizId, allyId] = p1.getCardsInZone("battleArea");
+    const [guaizId, zaftAllyId] = p1.getCardsInZone("battleArea");
 
-    expectSuccess(p1.useSupport(guaizId!, allyId!));
+    expectSuccess(p1.useSupport(guaizId!, zaftAllyId!));
 
-    expect(engine.getG().exhausted[guaizId!]).toBe(true);
-    expect(findStatModifier(engine, allyId!, "ap")?.modifier).toBe(1);
+    expect(p1.isExhausted(guaizId!)).toBe(true);
+    expect(p1.getVisibleCard(zaftAllyId!)?.effectiveAp).toBe(3);
   });
 
-  describe("During your turn, when this Unit is rested by an effect, choose 1 of your (ZAFT) Units. It gets AP+2 during this turn.", () => {
-    function effectiveAp(engine: GundamTestEngine, cardId: string): number {
-      const framework = engine.getRuntime().getFrameworkReadAPI();
-      return getEffectiveStats(cardId, engine.getG(), framework.cards, framework).ap;
-    }
-
-    it("gives a friendly ZAFT Unit AP+2 when GuAIZ is rested by an effect during your turn", () => {
-      const command = restCommand("friendly");
-      const zaftAlly = createMockUnit({ traits: ["zaft"], ap: 2 });
-      const engine = GundamTestEngine.create({
-        hand: [command],
+  it("offers a visible ZAFT target choice when a friendly effect rests GuAIZ on its controller's turn", () => {
+    const zaftAlly = createMockUnit({ traits: ["zaft"], ap: 2, hp: 5 });
+    const enemy = createMockUnit({ level: 4, hp: 6 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd03HumanKarma113],
         play: [gd03GuaizCommanderType038, zaftAlly],
         resourceArea: activeResources(4),
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [guaizId] = p1.getCardsInZone("battleArea");
+      },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [guaizId, zaftAllyId] = p1.getCardsInZone("battleArea");
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
-      expectSuccess(p1.playCommand(command, { targets: [guaizId!] }));
+    expectSuccess(p1.playCommand(gd03HumanKarma113, { targets: [guaizId!] }));
+    const ordering = p1.getBoardView().pendingChoice;
+    if (ordering?.kind !== "ordering") throw new Error("Expected triggered-effect ordering");
+    const guaizEffect = ordering.candidates.find((candidate) => candidate.sourceCardId === guaizId);
+    if (!guaizEffect) throw new Error("Expected GuAIZ's rest trigger in the ordering choice");
+    expectSuccess(p1.resolveEffect({ pendingEffectId: guaizEffect.effectId }));
 
-      expect(effectiveAp(engine, guaizId!)).toBe(6);
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([guaizId, zaftAllyId]),
     });
-
-    it("does not trigger when GuAIZ is rested during the opponent's turn", () => {
-      const command = restCommand("opponent");
-      const zaftAlly = createMockUnit({ traits: ["zaft"], ap: 2 });
-      const engine = GundamTestEngine.create(
-        { play: [gd03GuaizCommanderType038, zaftAlly] },
-        { hand: [command], resourceArea: activeResources(4) },
-        { initialActivePlayer: PLAYER_TWO },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const p2 = engine.asPlayer(PLAYER_TWO);
-      const [guaizId, zaftId] = p1.getCardsInZone("battleArea");
-
-      expectSuccess(p2.playCommand(command, { targets: [guaizId!] }));
-
-      expect(effectiveAp(engine, zaftId!)).toBe(2);
+    expectSuccess(p1.resolveEffect({ targets: [zaftAllyId!] }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
     });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+
+    expect(p1.isExhausted(guaizId!)).toBe(true);
+    expect(p1.getVisibleCard(zaftAllyId!)?.effectiveAp).toBe(4);
+    expect(p2.getDamage(enemyId)).toBe(3);
+  });
+
+  it("does not offer the AP+2 choice when an enemy effect rests GuAIZ on the opponent's turn", () => {
+    const zaftAlly = createMockUnit({ traits: ["zaft"], ap: 2, hp: 5 });
+    const engine = GundamTestEngine.create(
+      { play: [gd03GuaizCommanderType038, zaftAlly] },
+      { hand: [gd03ReccoaSShadow104], resourceArea: activeResources(3) },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [guaizId, zaftAllyId] = p1.getCardsInZone("battleArea");
+
+    expectSuccess(p2.playCommand(gd03ReccoaSShadow104, { targets: [guaizId!] }));
+
+    expect(p1.isExhausted(guaizId!)).toBe(true);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getVisibleCard(zaftAllyId!)?.effectiveAp).toBe(2);
   });
 });

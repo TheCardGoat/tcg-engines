@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
-import { IconMaximize, IconMinus, IconWifiOff } from "@tabler/icons-react";
+import { IconClockPause, IconMaximize, IconMinus, IconWifiOff } from "@tabler/icons-react";
 import { useOpponentPresence } from "../../engine/live/useOpponentPresence";
+import { connectionUiStatus } from "../../engine/live/playerConnectionState";
 import type { PlayerConnectionInfo } from "../../engine/sides";
 import classes from "./OpponentDisconnectOverlay.module.css";
 
@@ -9,6 +10,7 @@ interface OpponentDisconnectOverlayProps {
   connection?: PlayerConnectionInfo;
   onClaimDrop?: () => void;
   claimAvailable?: boolean;
+  timeoutExpired?: boolean;
 }
 
 const RING_RADIUS = 38;
@@ -20,10 +22,16 @@ export function OpponentDisconnectOverlay({
   connection,
   onClaimDrop,
   claimAvailable = false,
+  timeoutExpired = false,
 }: OpponentDisconnectOverlayProps) {
-  const { opponentConnected, secondsRemaining, canDrop } = useOpponentPresence(connection);
+  const status = connectionUiStatus(connection);
+  const { secondsRemaining, canDrop } = useOpponentPresence(connection);
   const [minimized, setMinimized] = useState(false);
   const [confirmingDrop, setConfirmingDrop] = useState(false);
+  const opponentDisconnected = variant === "opponent" && status === "disconnected";
+  const timeoutMode = variant === "opponent" && !opponentDisconnected && timeoutExpired;
+  const dropReady = opponentDisconnected ? canDrop : timeoutMode;
+  const canShowDropAction = dropReady && claimAvailable && Boolean(onClaimDrop);
 
   const handleDropClick = useCallback(() => {
     if (confirmingDrop) {
@@ -47,11 +55,10 @@ export function OpponentDisconnectOverlay({
     setMinimized(false);
   }, []);
 
-  // Don't render if opponent is connected (or self is connected)
-  if (variant === "opponent" && opponentConnected) {
+  if (variant === "opponent" && !opponentDisconnected && !timeoutMode) {
     return null;
   }
-  if (variant === "self" && opponentConnected) {
+  if (variant === "self" && status !== "disconnected" && status !== "reconnecting") {
     return null;
   }
 
@@ -64,18 +71,26 @@ export function OpponentDisconnectOverlay({
     return (
       <button
         type="button"
-        className={`${classes.pill} ${canDrop ? classes.pillReady : ""}`}
+        className={`${classes.pill} ${dropReady ? classes.pillReady : ""}`}
         onClick={handleExpand}
-        aria-label="Opponent disconnected - expand options"
+        aria-label={
+          timeoutMode
+            ? "Opponent time expired - expand options"
+            : "Opponent disconnected - expand options"
+        }
       >
         <span className={classes.pillIcon}>
-          {canDrop ? (
+          {timeoutMode ? (
+            <IconClockPause size={14} stroke={2} />
+          ) : canDrop ? (
             <IconWifiOff size={14} stroke={2} />
           ) : (
             <span className={classes.pillCount}>{secondsRemaining}</span>
           )}
         </span>
-        <span className={classes.pillLabel}>{canDrop ? "Disconnected" : "Disconnecting"}</span>
+        <span className={classes.pillLabel}>
+          {timeoutMode ? "Time expired" : canDrop ? "Disconnected" : "Disconnecting"}
+        </span>
         <span className={classes.pillExpand} aria-hidden="true">
           <IconMaximize size={12} stroke={2} />
         </span>
@@ -85,7 +100,9 @@ export function OpponentDisconnectOverlay({
 
   return (
     <div
-      className={`${classes.overlay} ${canDrop && variant === "opponent" ? classes.overlayCanDrop : ""}`}
+      className={`${classes.overlay} ${dropReady && variant === "opponent" ? classes.overlayCanDrop : ""} ${
+        timeoutMode ? classes.overlayTimeout : ""
+      }`}
       role="status"
       aria-live="polite"
     >
@@ -101,40 +118,50 @@ export function OpponentDisconnectOverlay({
               <IconMinus size={14} stroke={2.2} />
             </button>
 
-            <div className={classes.ring}>
-              <svg viewBox="0 0 96 96" className={classes.ringSvg}>
-                <circle
-                  cx="48"
-                  cy="48"
-                  r={RING_RADIUS}
-                  fill="none"
-                  stroke="rgba(255,255,255,0.08)"
-                  strokeWidth="3"
-                />
-                <circle
-                  cx="48"
-                  cy="48"
-                  r={RING_RADIUS}
-                  fill="none"
-                  stroke={canDrop ? "#ff3d8a" : "#f5e642"}
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeDasharray={RING_CIRCUMFERENCE}
-                  strokeDashoffset={ringProgress}
-                  className={classes.ringProgress}
-                  transform="rotate(-90 48 48)"
-                />
-              </svg>
-              <span className={`${classes.ringValue} ${canDrop ? classes.ringValueReady : ""}`}>
-                {canDrop ? <IconWifiOff size={24} stroke={2} /> : secondsRemaining}
-              </span>
-            </div>
+            {timeoutMode ? (
+              <div className={classes.timeoutIcon}>
+                <IconClockPause size={30} stroke={1.8} />
+              </div>
+            ) : (
+              <div className={classes.ring}>
+                <svg viewBox="0 0 96 96" className={classes.ringSvg}>
+                  <circle
+                    cx="48"
+                    cy="48"
+                    r={RING_RADIUS}
+                    fill="none"
+                    stroke="rgba(255,255,255,0.08)"
+                    strokeWidth="3"
+                  />
+                  <circle
+                    cx="48"
+                    cy="48"
+                    r={RING_RADIUS}
+                    fill="none"
+                    stroke={canDrop ? "#ff3d8a" : "#f5e642"}
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeDasharray={RING_CIRCUMFERENCE}
+                    strokeDashoffset={ringProgress}
+                    className={classes.ringProgress}
+                    transform="rotate(-90 48 48)"
+                  />
+                </svg>
+                <span className={`${classes.ringValue} ${canDrop ? classes.ringValueReady : ""}`}>
+                  {canDrop ? <IconWifiOff size={24} stroke={2} /> : secondsRemaining}
+                </span>
+              </div>
+            )}
 
             <span className={classes.label}>
-              {canDrop ? "Opponent has disconnected" : "Opponent disconnected"}
+              {timeoutMode
+                ? "Opponent time expired"
+                : canDrop
+                  ? "Opponent has disconnected"
+                  : "Opponent disconnected"}
             </span>
 
-            {canDrop && claimAvailable && onClaimDrop ? (
+            {canShowDropAction ? (
               <div className={classes.actions}>
                 {confirmingDrop ? (
                   <>
@@ -159,7 +186,7 @@ export function OpponentDisconnectOverlay({
                     className={`${classes.actionButton} ${classes.claimButton}`}
                     onClick={handleDropClick}
                   >
-                    Claim Match
+                    Drop Opponent
                   </button>
                 )}
               </div>

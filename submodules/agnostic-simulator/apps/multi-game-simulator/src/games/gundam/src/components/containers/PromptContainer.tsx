@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
+import { selectModeInputBinding } from "@tcg/gundam-engine";
 
 import { usePending } from "../../game/index.ts";
 import { GamePrompt } from "../ui/GamePrompt.tsx";
@@ -174,15 +175,10 @@ export function PromptContainer() {
       };
     }
     if (step.kind === "selectMode") {
-      // `selectMode` is the picker for activated-ability mode (effect
-      // index) — see `describeProcedure` in
-      // `packages/engine/src/gundam/moves/core/activate-ability.ts`.
-      // Each `modes[i]` has `{id, label}`; clicking a mode feeds
-      // `effectIndex` (as a number) into the pending input, which lets
-      // `describeProcedure` advance to its `confirm` step.
+      const binding = selectModeInputBinding(state.move);
       const modeActions: PromptAction[] = step.modes.map((mode: { id: string; label: string }) => ({
         label: mode.label,
-        onClick: () => provide("effectIndex", Number(mode.id)),
+        onClick: () => provide(binding.key, binding.coerce(mode.id)),
         kind: "primary" as const,
         testId: `game-prompt-mode-${mode.id}`,
       }));

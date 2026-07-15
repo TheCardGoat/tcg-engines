@@ -20,7 +20,7 @@ describe("Meredith Stout - Stone Cold Corpo", () => {
           {
             card: welcomeToNightCityRetailFieldOperator,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
             attachedGears: [welcomeToNightCityRetailDyingNightVSPistol],
           },
         ],

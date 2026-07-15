@@ -11,6 +11,7 @@ function fixture(scenarioId: ScenarioId): CyberpunkE2EFixture {
 /* ── Core / Setup ───────────────────────────────────────────────────────── */
 export const gameStart = fixture("gameStart");
 export const retailCardCatalog = fixture("retailCardCatalog");
+export const retailPr2295Cards = fixture("retailPr2295Cards");
 export const openingMain = fixture("openingMain");
 export const attackStep = fixture("attackStep");
 export const stealGigTest = fixture("stealGigTest");
@@ -18,6 +19,12 @@ export const reactStep = fixture("reactStep");
 export const chooseCardTarget = fixture("chooseCardTarget");
 export const opponentTurn = fixture("opponentTurn");
 export const endGame = fixture("endGame");
+export const mobileLedgerZeroLegends = fixture("mobileLedgerZeroLegends");
+export const mobileLedgerOneLegend = fixture("mobileLedgerOneLegend");
+export const mobileLedgerTwoLegends = fixture("mobileLedgerTwoLegends");
+export const mobileLedgerThreeLegends = fixture("mobileLedgerThreeLegends");
+export const mobileLedgerFriendlyOneRivalThree = fixture("mobileLedgerFriendlyOneRivalThree");
+export const mobileLedgerFriendlyZeroRivalTwo = fixture("mobileLedgerFriendlyZeroRivalTwo");
 
 /* ── Programs ───────────────────────────────────────────────────────────── */
 export const progCorporateSurveillance = fixture("progCorporateSurveillance");

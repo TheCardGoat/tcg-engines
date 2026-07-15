@@ -13,8 +13,8 @@ describe("Daughtress Flyer (GD03-044)", () => {
     expectSuccess(p1.deployUnit(gd03DaughtressFlyer044));
 
     const tokenId = p1.getCardsInZone("battleArea").at(-1)!;
-    const token = engine.getRuntime().getFrameworkReadAPI().cards.getDefinition(tokenId);
-    expect(token?.name).toBe("Daughtress");
-    expect(engine.getG().exhausted[tokenId]).toBe(true);
+    expect(tokenId).not.toBe(p1.getCardsInZone("battleArea")[0]);
+    expect(p1.isExhausted(tokenId)).toBe(true);
+    expect(p1.getVisibleCard(tokenId)).toMatchObject({ effectiveAp: 0, effectiveHp: 1 });
   });
 });

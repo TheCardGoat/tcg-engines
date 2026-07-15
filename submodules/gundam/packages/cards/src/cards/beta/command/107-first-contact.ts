@@ -95,15 +95,13 @@ export const betaFirstContact107: CommandCard = {
     {
       type: "triggered",
       activation: { timing: ["burst"] },
-      directives: [{ action: { action: "placeResource", resourceType: "EX", state: "active" } }],
+      directives: [{ action: { action: "placeExResource", state: "active" } }],
       sourceText: "【Burst】Place 1 EX Resource.",
     },
     {
       type: "command",
       activation: { timing: ["main"] },
-      directives: [
-        { action: { action: "placeResource", resourceType: "normal", state: "rested" } },
-      ],
+      directives: [{ action: { action: "placeResource", state: "rested" } }],
       sourceText: "【Main】Place 1 rested Resource.",
     },
   ] as CardEffect[],

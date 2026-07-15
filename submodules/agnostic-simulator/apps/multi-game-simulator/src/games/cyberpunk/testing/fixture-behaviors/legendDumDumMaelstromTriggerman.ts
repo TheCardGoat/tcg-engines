@@ -10,7 +10,9 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const legendDumDumMaelstromTriggermanBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendDumDumMaelstromTriggerman",
   label: "Dum Dum - call defeats gear to draw four",
-  references: ["packages/engine/src/cards/spoiler/legends/dum-dum-maelstrom-triggerman.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/legends/dum-dum-maelstrom-triggerman.test.ts",
+  ],
   async run(pom) {
     const dumDum = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P1, 0);
     const host = await pom.getCardInZoneByDefinitionId(

@@ -4,6 +4,8 @@ export const gd01Kusanagi129: BaseCard = {
   cardNumber: "GD01-129",
   name: "Kusanagi",
   type: "base",
+  battlefieldZones: ["space"],
+  color: "white",
   traits: ["triple ship alliance", "warship"],
   id: "GD01-129",
   canonicalId: "GD01-129",
@@ -64,24 +66,32 @@ export const gd01Kusanagi129: BaseCard = {
       directives: [
         {
           action: {
-            action: "addShieldToHand",
-            count: 1,
-          },
-        },
-        {
-          action: {
-            action: "returnToHand",
-            target: {
-              owner: "opponent",
-              cardType: "unit",
-              count: 1,
-              attributeFilters: [
+            action: "resolveThenQueue",
+            first: { action: "addShieldToHand", count: 1 },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
                 {
-                  attribute: "hp",
-                  comparison: "lte",
-                  value: 3,
+                  action: {
+                    action: "returnToHand",
+                    target: {
+                      owner: "opponent",
+                      cardType: "unit",
+                      count: 1,
+                      attributeFilters: [
+                        {
+                          attribute: "hp",
+                          comparison: "lte",
+                          value: 3,
+                        },
+                      ],
+                    },
+                  },
                 },
               ],
+              sourceText:
+                "Then, choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand.",
             },
           },
         },

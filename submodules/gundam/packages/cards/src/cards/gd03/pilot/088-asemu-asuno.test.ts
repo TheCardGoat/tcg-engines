@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
@@ -6,69 +6,124 @@ import {
   activeResources,
   createMockUnit,
   expectSuccess,
-  getEffectiveStats,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd03AsemuAsuno088 } from "./088-asemu-asuno.ts";
 
 describe("Asemu Asuno (GD03-088)", () => {
-  it("【Burst】 adds this card to hand", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd03AsemuAsuno088] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
-
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `hand:${PLAYER_TWO}`,
+  it("【Burst】 adds this revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd03AsemuAsuno088] },
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+
+    expect(p2.getCardZone(gd03AsemuAsuno088)).toBe(`hand:${PLAYER_TWO}`);
   });
 
-  it("【During Link】 gives the linked (AGE System) Unit AP+1 and <Breach 1>", () => {
+  it("【During Link】 adds enough AP to destroy a 5-HP defender and Breach its Shield", () => {
     const host = createMockUnit({
       ap: 2,
       hp: 4,
       traits: ["age system"],
       linkCondition: "[Asemu Asuno]",
     });
-    const engine = GundamTestEngine.create({
-      hand: [host, gd03AsemuAsuno088],
-      resourceArea: activeResources(4),
-    });
+    const defender = createMockUnit({ ap: 0, hp: 5 });
+    const shield = createMockUnit({ name: "Enemy Shield" });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd03AsemuAsuno088],
+        play: [host],
+        resourceArea: activeResources(4),
+      },
+      { play: [{ card: defender, exhausted: true }], shieldArea: [shield] },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
-
-    expectSuccess(p1.deployUnit(host));
-    expectSuccess(p1.assignPilot(gd03AsemuAsuno088, host));
+    const p2 = engine.asPlayer(PLAYER_TWO);
     const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const stats = getEffectiveStats(hostId, engine.getG(), framework.cards, framework);
-    expect(stats.ap).toBe(2 + gd03AsemuAsuno088.apBonus + 1);
-    expect(stats.hp).toBe(4 + gd03AsemuAsuno088.hpBonus);
-    expect(stats.keywords).toContain("Breach");
+    expectSuccess(p1.assignPilot(gd03AsemuAsuno088, hostId));
+    expectSuccess(p1.enterBattle(hostId, defenderId));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getCardZone(defenderId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getBoardView().players[PLAYER_TWO]?.shieldCount).toBe(0);
+    expect(p2.getCardsInZone("trash")).toHaveLength(2);
   });
 
-  it("does not grant the during-link bonus to a linked non-(AGE System) Unit", () => {
+  it("does not grant the AP or Breach bonus to a linked non-AGE System Unit", () => {
     const host = createMockUnit({
       ap: 2,
       hp: 4,
       traits: ["earth federation"],
       linkCondition: "[Asemu Asuno]",
     });
-    const engine = GundamTestEngine.create({
-      hand: [host, gd03AsemuAsuno088],
-      resourceArea: activeResources(4),
-    });
+    const defender = createMockUnit({ ap: 0, hp: 5 });
+    const shield = createMockUnit({ name: "Enemy Shield" });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd03AsemuAsuno088],
+        play: [host],
+        resourceArea: activeResources(4),
+      },
+      { play: [{ card: defender, exhausted: true }], shieldArea: [shield] },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
-
-    expectSuccess(p1.deployUnit(host));
-    expectSuccess(p1.assignPilot(gd03AsemuAsuno088, host));
+    const p2 = engine.asPlayer(PLAYER_TWO);
     const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const stats = getEffectiveStats(hostId, engine.getG(), framework.cards, framework);
-    expect(stats.ap).toBe(2 + gd03AsemuAsuno088.apBonus);
-    expect(stats.hp).toBe(4 + gd03AsemuAsuno088.hpBonus);
-    expect(stats.keywords).not.toContain("Breach");
+    expectSuccess(p1.assignPilot(gd03AsemuAsuno088, hostId));
+    expectSuccess(p1.enterBattle(hostId, defenderId));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getCardsInZone("battleArea")).toContain(defenderId);
+    expect(p2.getDamage(defenderId)).toBe(4);
+    expect(p2.getBoardView().players[PLAYER_TWO]?.shieldCount).toBe(1);
+  });
+
+  it("does not grant the AP or Breach bonus to an AGE System Unit that is not linked", () => {
+    const host = createMockUnit({
+      ap: 2,
+      hp: 4,
+      traits: ["age system"],
+      linkCondition: "[Different Pilot]",
+    });
+    const defender = createMockUnit({ ap: 0, hp: 5 });
+    const shield = createMockUnit({ name: "Enemy Shield" });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd03AsemuAsuno088],
+        play: [host],
+        resourceArea: activeResources(4),
+      },
+      { play: [{ card: defender, exhausted: true }], shieldArea: [shield] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const defenderId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(gd03AsemuAsuno088, hostId));
+    expectSuccess(p1.enterBattle(hostId, defenderId));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getDamage(defenderId)).toBe(4);
+    expect(p2.getBoardView().players[PLAYER_TWO]?.shieldCount).toBe(1);
   });
 });

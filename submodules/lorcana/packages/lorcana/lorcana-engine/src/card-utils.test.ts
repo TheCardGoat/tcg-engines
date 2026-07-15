@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import type { CardText, LorcanaCardDefinition } from "@tcg/lorcana-types";
 
-import { getPrintedKeywordTitles, hasKeyword } from "./card-utils";
+import { getPrintedKeywordTitles, getPrintedKeywordValues, hasKeyword } from "./card-utils";
 
 function cardWithText(text: CardText): LorcanaCardDefinition {
   return {
@@ -36,10 +36,11 @@ function cardWithText(text: CardText): LorcanaCardDefinition {
 }
 
 describe("printed keyword text", () => {
-  it("handles legacy raw string text without crashing", () => {
+  it("handles legacy raw string keyword text", () => {
     const card = cardWithText("Singer 5");
 
     expect(getPrintedKeywordTitles(card)).toEqual(["Singer"]);
+    expect(getPrintedKeywordValues(card)).toEqual({ Singer: 5 });
     expect(hasKeyword(card, "Singer")).toBe(true);
   });
 
@@ -56,7 +57,20 @@ describe("printed keyword text", () => {
     ]);
 
     expect(getPrintedKeywordTitles(card)).toEqual(["Resist", "Shift"]);
+    expect(getPrintedKeywordValues(card)).toEqual({ Resist: 1 });
     expect(hasKeyword(card, "Resist")).toBe(true);
     expect(hasKeyword(card, "Shift")).toBe(true);
+  });
+
+  it("matches presence-only structured keyword titles", () => {
+    const card = cardWithText([
+      {
+        title: "Ward",
+        description: "Opponents can't choose this character except to challenge.",
+      },
+    ]);
+
+    expect(getPrintedKeywordTitles(card)).toEqual(["Ward"]);
+    expect(hasKeyword(card, "Ward")).toBe(true);
   });
 });

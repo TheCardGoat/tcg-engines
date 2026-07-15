@@ -1,6 +1,12 @@
 import type { BenchReport } from "./run.ts";
 
-export type FailOn = "non-game-won" | "max-actions" | "concede-failed" | "error-code";
+export type FailOn =
+  | "non-game-won"
+  | "max-actions"
+  | "automation-concession"
+  | "repeated-state"
+  | "concede-failed"
+  | "error-code";
 
 export interface RegressionFinding {
   readonly kind: FailOn;
@@ -21,6 +27,8 @@ export function parseFailOn(raw: string | undefined): readonly FailOn[] {
   const allowed: readonly FailOn[] = [
     "non-game-won",
     "max-actions",
+    "automation-concession",
+    "repeated-state",
     "concede-failed",
     "error-code",
   ];
@@ -54,6 +62,23 @@ export function classifyRegressions(
     findings.push({
       kind: "concede-failed",
       message: `${concedeFailed} match(es) ended with concede-failed`,
+    });
+  }
+
+  const automationConcessions =
+    report.summary.terminationDistribution["automation-concession"] ?? 0;
+  if (enabled.has("automation-concession") && automationConcessions > 0) {
+    findings.push({
+      kind: "automation-concession",
+      message: `${automationConcessions} match(es) ended with an automation concession`,
+    });
+  }
+
+  const repeatedStates = report.summary.terminationDistribution["repeated-state"] ?? 0;
+  if (enabled.has("repeated-state") && repeatedStates > 0) {
+    findings.push({
+      kind: "repeated-state",
+      message: `${repeatedStates} match(es) ended in a repeated semantic state`,
     });
   }
 

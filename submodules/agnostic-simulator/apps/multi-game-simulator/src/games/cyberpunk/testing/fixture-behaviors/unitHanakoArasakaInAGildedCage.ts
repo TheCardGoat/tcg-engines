@@ -19,7 +19,7 @@ export const unitHanakoArasakaInAGildedCageBehavior: CyberpunkFixtureBehavior = 
   scenarioId: "unitHanakoArasakaInAGildedCage",
   label: "Hanako Arasaka - play trigger keeps top-deck cost matches",
   references: [
-    "packages/engine/src/cards/spoiler/units/hanako-arasaka-in-a-gilded-cage.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/hanako-arasaka-in-a-gilded-cage.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

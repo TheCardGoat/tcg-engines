@@ -78,7 +78,7 @@ function actionHasCardCandidate(
       action.inputs.some(
         (input) =>
           input.kind === "entity-selection" &&
-          input.id === "cardId" &&
+          input.role === "source" &&
           input.candidates.some(
             (candidate) => candidate.enabled && candidate.entity.instanceId === cardId,
           ),

@@ -1,3 +1,4 @@
+import { within } from "@testing-library/react";
 import { describe, test } from "vite-plus/test";
 import {
   embracingPowerRetailStarterDeckMinotaur,
@@ -42,7 +43,17 @@ describe("Riding Nomad (Retail) jsdom happy path", () => {
         CYBERPUNK_P1,
         welcomeToNightCityRetailRidingNomad.id,
       );
-      expectEqual("Riding Nomad played this turn", nomad.playedThisTurn, true);
+      expectEqual("Riding Nomad has Lag", nomad.hasLag, true);
+      const nomadCard = view.container.querySelector<HTMLElement>(
+        `[data-testid="card"][data-card-id="${nomad.instanceId}"]`,
+      );
+      if (!nomadCard) {
+        throw new Error("Expected Riding Nomad to be visible on the field.");
+      }
+      within(nomadCard).getByLabelText("ADRENALINE: can attack the turn it's played");
+      if (within(nomadCard).queryByLabelText("Lag: can't attack this turn")) {
+        throw new Error("Expected ADRENALINE to suppress the just-played can't-attack badge.");
+      }
 
       const attackers = await pom.getMoveCandidateIds(CYBERPUNK_P1, "attackUnit");
       const targets = await pom.getMoveTargetCandidateIds(CYBERPUNK_P1, "attackUnit");

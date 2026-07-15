@@ -8,22 +8,27 @@ import {
   createMockPilot,
   createMockUnit,
   expectSuccess,
-  getEffectiveStats,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd03BernardWiseman089 } from "./089-bernard-wiseman.ts";
 
 describe("Bernard Wiseman (GD03-089)", () => {
-  it("【Burst】 adds this card to hand", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd03BernardWiseman089] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
-
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `hand:${PLAYER_TWO}`,
+  it("【Burst】 adds this revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd03BernardWiseman089] },
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+
+    expect(p2.getCardZone(gd03BernardWiseman089)).toBe(`hand:${PLAYER_TWO}`);
   });
 
   describe("Increase this Unit's AP by an amount equal to the number of (Cyclops Team) Pilot cards/Command cards with unique names in your trash.", () => {
@@ -60,8 +65,7 @@ describe("Bernard Wiseman (GD03-089)", () => {
 
       expectSuccess(p1.assignPilot(gd03BernardWiseman089, hostId));
 
-      const framework = engine.getRuntime().getFrameworkReadAPI();
-      expect(getEffectiveStats(hostId, engine.getG(), framework.cards, framework).ap).toBe(4);
+      expect(p1.getVisibleCard(hostId)?.effectiveAp).toBe(4);
     });
 
     it("does not increase AP when no Cyclops Team Pilot or Command cards are in trash", () => {
@@ -77,8 +81,7 @@ describe("Bernard Wiseman (GD03-089)", () => {
 
       expectSuccess(p1.assignPilot(gd03BernardWiseman089, hostId));
 
-      const framework = engine.getRuntime().getFrameworkReadAPI();
-      expect(getEffectiveStats(hostId, engine.getG(), framework.cards, framework).ap).toBe(2);
+      expect(p1.getVisibleCard(hostId)?.effectiveAp).toBe(2);
     });
   });
 });

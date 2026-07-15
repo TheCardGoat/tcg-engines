@@ -4,6 +4,7 @@ export const gd01Gundam001: UnitCard = {
   cardNumber: "GD01-001",
   name: "Gundam",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD01-001",

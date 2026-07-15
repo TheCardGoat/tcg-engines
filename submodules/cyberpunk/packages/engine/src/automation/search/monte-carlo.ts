@@ -4,6 +4,7 @@ import type { AIStrategy, EngineHandle, MoveDecision } from "../types.ts";
 import { greedyStrategy } from "../strategies/greedy.ts";
 import { randomStrategy } from "../strategies/random.ts";
 import { enumerateCandidateActions, runRollout } from "./shared.ts";
+import { createSeededBotRandom } from "@tcg/bot-core";
 
 /**
  * Flat Monte Carlo strategy: for each candidate action, fork the engine,
@@ -51,6 +52,9 @@ export function createMonteCarloStrategy(opts: MonteCarloOptions = {}): AIStrate
       let bestDecision = candidates[0]!;
       let bestScore = Number.NEGATIVE_INFINITY;
       let tiedBest: (MoveDecision & { kind: "command" })[] = [];
+      // Every candidate receives the same rollout random streams. This makes
+      // comparison independent of candidate enumeration order.
+      const evaluationSeed = `mc:${Math.floor(ctx.rng() * 0x1_0000_0000)}`;
 
       for (const decision of candidates) {
         const score = evaluateAction(
@@ -60,7 +64,7 @@ export function createMonteCarloStrategy(opts: MonteCarloOptions = {}): AIStrate
           rolloutsPerAction,
           maxRolloutSteps,
           rolloutStrategy,
-          ctx.rng,
+          evaluationSeed,
         );
         if (score > bestScore) {
           bestScore = score;
@@ -105,11 +109,11 @@ function evaluateAction(
   rollouts: number,
   maxSteps: number,
   rolloutStrategy: AIStrategy,
-  rng: () => number,
+  evaluationSeed: string,
 ): number {
   const probe = engine.fork();
   const command: CommandEnvelope = {
-    commandID: `mc-probe-${rng()}`,
+    commandID: `mc-probe-${actionKey(action)}`,
     move: action.move,
     input: action.args ? { args: action.args } : undefined,
   };
@@ -118,9 +122,10 @@ function evaluateAction(
   let wins = 0;
   for (let i = 0; i < rollouts; i++) {
     const sim = probe.fork();
-    const winner = runRollout(sim, playerId, rolloutStrategy, rng, maxSteps);
-    if (winner === playerId) wins += 1;
-    else if (winner === null) wins += 0.5;
+    const rng = createSeededBotRandom(`${evaluationSeed}/rollout-${i}`);
+    const outcome = runRollout(sim, playerId, rolloutStrategy, rng, maxSteps);
+    if (outcome.winnerId === (playerId as string)) wins += 1;
+    else if (outcome.kind === "draw") wins += 0.5;
   }
   return wins / Math.max(1, rollouts);
 }

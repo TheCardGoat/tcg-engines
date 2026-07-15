@@ -137,3 +137,68 @@
   color: var(--board-text, #f8fbff);
   cursor: pointer;
 }
+
+.mobileTabbed {
+  --mobile-shell-nav-h: 64px;
+}
+
+.mobileTabbed[data-mobile-navigation="none"] {
+  --mobile-shell-nav-h: 0px;
+}
+
+.mobileActionRail {
+  min-height: var(--mobile-shell-nav-h);
+}
+
+.mobileTabButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (orientation: landscape) and (max-height: 340px) {
+  .mobileTabbed {
+    --mobile-shell-nav-h: 48px;
+    gap: 0;
+  }
+
+  .mobileTabbed[data-mobile-navigation="none"] {
+    --mobile-shell-nav-h: 0px;
+  }
+
+  .mobileMainContent {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .mobileActionRail {
+    min-height: var(--mobile-shell-nav-h);
+    border-top-left-radius: 0.625rem;
+    border-top-right-radius: 0.625rem;
+  }
+
+  .mobileTabButton {
+    min-height: 48px;
+    justify-content: center;
+    gap: 0;
+    padding-block: 5px;
+  }
+
+  .mobileTabButton svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .mobileTabLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .mobileTabIndicator {
+    width: 18px;
+    margin-top: 4px;
+  }
+}

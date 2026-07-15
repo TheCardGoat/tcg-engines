@@ -12,7 +12,7 @@ export const unitMeredithStoutStoneColdCorpoBehavior: CyberpunkFixtureBehavior =
   scenarioId: "unitMeredithStoutStoneColdCorpo",
   label: "Meredith Stout - rival gig decrease recovers from trash",
   references: [
-    "packages/engine/src/cards/spoiler/units/meredith-stout-stone-cold-corpo.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/meredith-stout-stone-cold-corpo.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

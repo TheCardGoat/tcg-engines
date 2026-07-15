@@ -1,9 +1,16 @@
 import { describe, expect, it } from "vite-plus/test";
 
-import { getStrategyById } from "../engine";
+import { AI_STRATEGIES, getStrategyById } from "../engine";
 import { resolveFixtureAiOptions } from "./TestFixture.page";
 
 describe("TestFixturePage AI query options", () => {
+  it("exposes unique strategy ids for React option keys", () => {
+    const ids = AI_STRATEGIES.map((strategy) => strategy.id);
+
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(getStrategyById("attack-rival-only")?.id).toBe("attack-rival-only");
+  });
+
   it("uses the default strategy for the opponent seat by default", () => {
     const strategy = getStrategyById("default")?.strategy;
 

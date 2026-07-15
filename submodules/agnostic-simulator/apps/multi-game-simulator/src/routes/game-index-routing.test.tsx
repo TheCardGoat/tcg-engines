@@ -54,12 +54,12 @@ describe("multi-game index routing", () => {
     await waitFor(() => expect(window.location.pathname).toBe("/cyberpunk/simulator/tests"));
   });
 
-  it("uses the real visual fixture index as the Gundam game index", async () => {
+  it("uses the mounted Gundam simulator hub as the Gundam game index", async () => {
     window.history.pushState({}, "", "/gundam");
 
     render(<App initialPath="/gundam" />);
 
-    await waitFor(() => expect(window.location.pathname).toBe("/gundam/simulator/tests"));
+    await waitFor(() => expect(window.location.pathname).toBe("/gundam/simulator"));
   });
 
   it("does not expose a fake Lorcana game fixture route", async () => {

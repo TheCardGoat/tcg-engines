@@ -4,6 +4,7 @@ export const gd01DuelGundam054: UnitCard = {
   cardNumber: "GD01-054",
   name: "Duel Gundam",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["zaft"],
   id: "GD01-054",
@@ -58,6 +59,7 @@ export const gd01DuelGundam054: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 3,
+  linkCondition: "(ZAFT) Trait",
   effect:
     "While this Unit has 5 or more AP, it gains &lt;Breach 3&gt;.<br>\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)<br>",
   effects: [

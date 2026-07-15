@@ -27,6 +27,12 @@ const CARD_KIND: Record<CardType, EntityKind> = {
   resource: "resource",
 };
 
+const RESTABLE_ZONE_BY_CARD_TYPE: Partial<Record<CardType, string>> = {
+  unit: "battleArea",
+  base: "baseSection",
+  resource: "resourceArea",
+};
+
 export interface ToSimulatorEntityOptions {
   readonly ownerId?: string;
   readonly zoneId?: string;
@@ -37,25 +43,25 @@ export function toSimulatorEntity(
   card: GameCardData,
   options: ToSimulatorEntityOptions = {},
 ): SimulatorEntity {
-  const ownerId = options.ownerId ?? ownerIdFromZone(options.zoneId ?? card.zoneId) ?? "unknown";
+  const zoneId = options.zoneId ?? card.zoneId;
+  const ownerId = options.ownerId ?? ownerIdFromZone(zoneId) ?? "unknown";
   const faceDown = card.faceDown === true;
   const id = faceDown
-    ? hiddenEntityId(ownerId, options.zoneId ?? card.zoneId, options.entityIdSuffix)
-    : (card.id ??
-      fallbackEntityId(card, ownerId, options.zoneId ?? card.zoneId, options.entityIdSuffix));
+    ? hiddenEntityId(ownerId, zoneId, options.entityIdSuffix)
+    : (card.id ?? fallbackEntityId(card, ownerId, zoneId, options.entityIdSuffix));
   const dataAttributes = faceDown
     ? {
         "data-card-id": id,
         "data-entity-id": id,
         "data-sim-entity-id": id,
-        "data-sim-zone-id": options.zoneId ?? card.zoneId,
+        "data-sim-zone-id": zoneId,
       }
     : {
         "data-card-id": id,
         "data-entity-id": id,
         "data-sim-entity-id": id,
         "data-card-type": card.cardType,
-        "data-sim-zone-id": options.zoneId ?? card.zoneId,
+        "data-sim-zone-id": zoneId,
       };
 
   return {
@@ -65,7 +71,7 @@ export function toSimulatorEntity(
     kind: faceDown ? "card" : card.cardType ? CARD_KIND[card.cardType] : "card",
     ownerId,
     face: faceDown ? "hidden" : "public",
-    states: statesFor(card),
+    states: statesFor(card, zoneId),
     stats: statsFor(card),
     traits: faceDown ? [] : [...(card.traits ?? [])],
     imageUrl: faceDown ? undefined : imageUrlFor(card),
@@ -126,10 +132,15 @@ function hiddenEntityId(
   return [zoneId ?? ownerId, "hidden-card", suffix].filter((part) => part !== undefined).join(":");
 }
 
-function statesFor(card: GameCardData): EntityState[] {
+function statesFor(card: GameCardData, zoneId: string | undefined): EntityState[] {
   if (card.faceDown) return ["hidden"];
+  if (!card.cardType || RESTABLE_ZONE_BY_CARD_TYPE[card.cardType] !== baseZoneId(zoneId)) return [];
   if (card.exerted) return ["rested"];
   return ["ready"];
+}
+
+function baseZoneId(zoneId: string | undefined): string | undefined {
+  return zoneId?.split(":", 1)[0];
 }
 
 function statsFor(card: GameCardData): SimulatorMetadataItem[] {
@@ -138,7 +149,17 @@ function statsFor(card: GameCardData): SimulatorMetadataItem[] {
   pushStat(stats, "Level", card.level);
   pushStat(stats, "AP", card.ap);
   pushStat(stats, "HP", card.hp);
+  if (card.battlefieldZones?.length) {
+    stats.push({
+      label: "Zone",
+      value: card.battlefieldZones.map(capitalize).join(" / "),
+    });
+  }
   return stats;
+}
+
+function capitalize(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 function pushStat(

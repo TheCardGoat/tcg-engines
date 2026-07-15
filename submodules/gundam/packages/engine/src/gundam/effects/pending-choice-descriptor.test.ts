@@ -2,8 +2,7 @@
  * PR F.1 — Pending-choice descriptor (player-choice UX projection surface).
  *
  * Covers `buildPendingChoicePrompt` and the `GundamBoardView.pendingChoice`
- * wire-up. No move-input changes yet; these tests only exercise the
- * inspection API.
+ * wire-up consumed by player-facing clients.
  */
 
 import { describe, it, expect } from "vite-plus/test";
@@ -116,6 +115,65 @@ describe("Pending choice — descriptor (PR F.1)", () => {
     expect(choice.prompt).toBe("Rest 1 enemy unit.");
   });
 
+  it("preserves independent constraints for a choose-one-A-and-one-B effect", () => {
+    const groupedChoiceEffect: CardEffect = {
+      type: "activated",
+      activation: { timing: ["activate:main"] },
+      directives: [
+        {
+          action: {
+            action: "exile",
+            target: {
+              owner: "friendly",
+              zone: "trash",
+              count: 1,
+              attributeFilters: [{ attribute: "trait", comparison: "includes", value: "group a" }],
+            },
+          },
+        },
+        {
+          action: {
+            action: "exile",
+            target: {
+              owner: "friendly",
+              zone: "trash",
+              count: 1,
+              attributeFilters: [{ attribute: "trait", comparison: "includes", value: "group b" }],
+            },
+          },
+        },
+      ],
+      sourceText: "Choose 1 Group A card and 1 Group B card from trash.",
+    };
+    const groupA1 = createMockUnit({ name: "Group A 1", traits: ["group a"] });
+    const groupA2 = createMockUnit({ name: "Group A 2", traits: ["group a"] });
+    const groupB = createMockUnit({ name: "Group B", traits: ["group b"] });
+    const engine = GundamTestEngine.create({ trash: [groupA1, groupA2, groupB] });
+    const [groupA1Id, groupA2Id, groupBId] = engine.asPlayer(PLAYER_ONE).getCardsInZone("trash");
+    engine.getG().pendingEffects.push(
+      makePending({
+        effect: groupedChoiceEffect,
+        controllerId: PLAYER_ONE,
+        sourceCardId: "src",
+        kind: "activated",
+      }),
+    );
+
+    const choice = engine.getPendingChoice();
+    expect(choice?.kind).toBe("targetSelection");
+    if (choice?.kind !== "targetSelection") return;
+
+    expect(choice).toMatchObject({
+      minTargets: 2,
+      maxTargets: 2,
+      legalTargetIds: [groupA1Id, groupA2Id, groupBId],
+      groups: [
+        { minTargets: 1, maxTargets: 1, legalTargetIds: [groupA1Id, groupA2Id] },
+        { minTargets: 1, maxTargets: 1, legalTargetIds: [groupBId] },
+      ],
+    });
+  });
+
   it("emits an optional prompt for an activated effect with a 'you may' directive", () => {
     const engine = GundamTestEngine.create({ deck: 3 }, {});
     engine.getG().pendingEffects.push(
@@ -139,7 +197,7 @@ describe("Pending choice — descriptor (PR F.1)", () => {
     const top = createMockUnit({ name: "Top" });
     const second = createMockUnit({ name: "Second" });
     const engine = GundamTestEngine.create({ deck: [top, second] }, {});
-    const revealed = engine.asPlayer(PLAYER_ONE).getCardsInZone("deck").slice(0, 2);
+    const revealed = engine.asPlayer(PLAYER_ONE).getCardsInZone("deck").slice(-2).reverse();
 
     engine.getG().pendingEffects.push(
       makePending({
@@ -162,9 +220,10 @@ describe("Pending choice — descriptor (PR F.1)", () => {
   });
 
   it("emits a deckLook prompt for an optional-gated look rider", () => {
+    const discard = createMockUnit({ name: "Discard" });
     const top = createMockUnit({ name: "Top" });
     const second = createMockUnit({ name: "Second" });
-    const engine = GundamTestEngine.create({ deck: [top, second] }, {});
+    const engine = GundamTestEngine.create({ hand: [discard], deck: [top, second] }, {});
 
     engine.getG().pendingEffects.push(
       makePending({

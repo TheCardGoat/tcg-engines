@@ -26,24 +26,11 @@ export default defineConfig({
     tasks: {
       "ci:check": {
         command: 'vp fmt "**/*.{ts,tsx,css}" --check && vp check --no-fmt && bunx turbo run test',
-        input: [
-          { auto: true },
-          "!node_modules/.vite/task-cache/**",
-          "!dist/**",
-          "!*.tsbuildinfo",
-          "!coverage/**",
-        ],
+        cache: false,
       },
       "ci:full": {
-        command:
-          'vp fmt "**/*.{ts,tsx,css}" --check && vp check --no-fmt && bunx turbo run test build',
-        input: [
-          { auto: true },
-          "!node_modules/.vite/task-cache/**",
-          "!dist/**",
-          "!*.tsbuildinfo",
-          "!coverage/**",
-        ],
+        command: "vp run ci:check && bunx turbo run build",
+        cache: false,
       },
       pack: {
         command: "true",

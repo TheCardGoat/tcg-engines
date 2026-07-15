@@ -27,15 +27,25 @@ describe("GQuuuuuuX (Omega Psycommu) (GD02-038)", () => {
       deck: [nonClanUnit, clanUnit, highLevelClanUnit],
     });
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const [nonClanId, clanId, highLevelClanId] = p1.getCardsInZone("deck");
 
     expectSuccess(p1.deployUnit(gd02GquuuuuuxOmegaPsycommu038));
 
-    const battleArea = p1.getCardsInZone("battleArea");
-    const deployedClanId = battleArea.find((id) => id.includes(`_${clanUnit.cardNumber}_`));
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("deckLook");
+    if (choice?.kind !== "deckLook") return;
+    expect(choice.legalTutorCardIds).toEqual([clanId]);
+    expectSuccess(
+      p1.resolveEffect({
+        deckLookAnswers: {
+          0: { tutorCardId: clanId, toBottom: [nonClanId!, highLevelClanId!] },
+        },
+      }),
+    );
 
-    expect(deployedClanId).toBeDefined();
-    expect(p1.getHand().some((id) => id.includes(`_${clanUnit.cardNumber}_`))).toBe(false);
-    expect(engine.getG().turnMetadata.deployedThisTurn).toContain(deployedClanId);
+    const battleArea = p1.getCardsInZone("battleArea");
+    expect(battleArea).toContain(clanId);
+    expect(p1.getHand()).not.toContain(clanId);
   });
 
   it("does not deploy a Unit when the top cards have no matching Clan Lv.4 or lower Unit", () => {

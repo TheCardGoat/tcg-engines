@@ -22,7 +22,12 @@ import {
 import { resolveEffect } from "./effects/handlers/index.ts";
 import type { ResolutionContext } from "./effects/target-resolver.ts";
 import { defOf } from "./state/lookups.ts";
-import { availableEddies } from "./moves/eddie-resources.ts";
+import {
+  abilityCostBindingId,
+  availableEddies,
+  availableEddiesAfterAbilityCosts,
+} from "./moves/eddie-resources.ts";
+import { computeEffectiveCost } from "./moves/compute-effective-cost.ts";
 import { assertNever } from "./types/exhaustive.ts";
 import { privateField } from "./logging/private-field.ts";
 
@@ -106,7 +111,10 @@ export function enqueueEventTriggers(
           if (targets.length < min) {
             // For program play abilities, skip before enqueue (old behaviour).
             // For mandatory abilities, let them through to auto-drain.
-            return !isProgramPlayAbility(cardId, ability, state);
+            return (
+              !isProgramPlayAbility(cardId, ability, state) &&
+              !isOptionalTrigger(state, cardId, ability)
+            );
           }
           return true;
         }
@@ -128,6 +136,10 @@ export function enqueueEventTriggers(
     };
 
     if (ability.conditions?.length && !ability.conditions.every((c) => evaluateCondition(c, ctx))) {
+      continue;
+    }
+
+    if (!abilityHasApplicableEffects(ability, ctx)) {
       continue;
     }
 
@@ -172,7 +184,12 @@ export function continueTriggerResolution(state: MatchState, operations: Operati
 
   while (!state.G.turnMetadata.pendingChoice && !state.G.turnMetadata.currentTrigger) {
     const queue = state.G.turnMetadata.triggerQueue;
-    if (queue.length === 0) return;
+    if (queue.length === 0) {
+      if (resolveAfterTriggerDelayedEffects(state, operations)) {
+        continue;
+      }
+      return;
+    }
 
     const earliest = [...queue].sort((a, b) => a.order - b.order)[0]!;
     const controllerId = earliest.sourcePlayerId;
@@ -207,6 +224,41 @@ export function continueTriggerResolution(state: MatchState, operations: Operati
 
     resolveQueuedTrigger(controllerTriggers[0]!.id, state, operations, { auto: true });
   }
+}
+
+function resolveAfterTriggerDelayedEffects(state: MatchState, operations: Operations): boolean {
+  const bagEntries = state.G.effectBag.filter(
+    (entry) => entry.delayedTiming === "afterTriggerResolution",
+  );
+  if (bagEntries.length === 0) return false;
+
+  for (const entry of bagEntries) {
+    if (!entry.delayedEffects) {
+      operations.game.removeBagEntry(entry.id);
+      continue;
+    }
+
+    const ctx: ResolutionContext = {
+      state,
+      sourceCardId: entry.sourceCardId as CardInstanceId,
+      sourcePlayerId: entry.sourcePlayerId as PlayerId,
+      abilityIndex: -1,
+      contextTargets: {},
+      boundTargets: (entry.resolvedBindings ?? {}) as Record<string, string[]>,
+    };
+    executeAbilityEffects(entry.delayedEffects, ctx, operations);
+    operations.game.removeBagEntry(entry.id);
+
+    if (
+      state.G.turnMetadata.pendingChoice ||
+      state.G.turnMetadata.currentTrigger ||
+      state.G.turnMetadata.triggerQueue.length > 0
+    ) {
+      return true;
+    }
+  }
+
+  return true;
 }
 
 export function passOptionalTriggers(
@@ -346,7 +398,6 @@ export function resumeCurrentTrigger(state: MatchState, operations: Operations):
       targets.length === 1 &&
       min === 1 &&
       max === 1 &&
-      !current.optional &&
       !isProgramPlayAbility(current.sourceCardId, ability, state) &&
       !requiresExplicitSelectableBinding(ability, pendingBinding.id)
     ) {
@@ -372,6 +423,24 @@ export function resumeCurrentTrigger(state: MatchState, operations: Operations):
         contextTargets: current.contextTargets,
         boundTargets: current.boundTargets,
         selectedBindingId: pendingBinding.id,
+        ...(bindingFeedsPaidPlayCard(ability, pendingBinding.id)
+          ? {
+              targetPurpose: "playCard" as const,
+              availableEddiesAfterCosts: availableEddiesAfterAbilityCosts(
+                ability,
+                state,
+                current.sourceCardId,
+                current.sourcePlayerId,
+                current.boundTargets,
+              ),
+              effectiveCostsByCardId: Object.fromEntries(
+                targets.map((targetId) => [
+                  targetId as string,
+                  computeEffectiveCost(state, targetId as CardInstanceId, current.sourcePlayerId),
+                ]),
+              ),
+            }
+          : {}),
       },
     });
     return;
@@ -575,6 +644,9 @@ function passesEventFilter(
 
   if (ability.trigger.event.event === "gigRolled" && event.type === "gigDieRolled") {
     const filter = ability.trigger.event;
+    if (filter.origin !== undefined && event.origin !== filter.origin) {
+      return false;
+    }
     if (filter.player) {
       if (
         filter.player === "friendly" &&
@@ -907,6 +979,13 @@ function emitResolvedEffectLog(
 
   const drawnCount = drawEvents.reduce((sum, event) => sum + event.count, 0);
   const drawnCardIds = drawEvents.flatMap((event) => event.cardIds as unknown as string[]);
+  const drawnCardNames = drawnCardIds
+    .map((cardId) => ctx.state.G.cardIndex[cardId])
+    .filter((card): card is NonNullable<typeof card> => card !== undefined)
+    .map((card) => {
+      const definition = defOf(card);
+      return definition.displayName ?? definition.name;
+    });
   const card = ctx.state.G.cardIndex[ctx.sourceCardId as string];
   const sourceCardName = card ? defOf(card).displayName : "Unknown card";
   const drawPlayerId = drawEvents[0]?.playerId ?? ctx.sourcePlayerId;
@@ -918,6 +997,7 @@ function emitResolvedEffectLog(
       sourceCardName,
       drawnCount,
       drawnCardIds: privateField(drawnCardIds as readonly string[], [drawPlayerId]),
+      drawnCardNames: privateField(drawnCardNames.join(", "), [drawPlayerId]),
     },
     playerId: ctx.sourcePlayerId,
     category: "effect",
@@ -1001,8 +1081,8 @@ function describeConditionFailure(condition: Condition): string {
       return "the target value condition is not true";
     case "attacking":
       return "the required card is not attacking";
-    case "playedThisTurn":
-      return "the required card was not played this turn";
+    case "hasLag":
+      return "the required card does not have Lag";
     case "fightKind":
       return "the attack type condition is not true";
     case "costMatchesGig":
@@ -1051,7 +1131,7 @@ function canPayAbilityCosts(ability: Ability, ctx: ResolutionContext): boolean {
     switch (cost.cost) {
       case "spend": {
         const selection = getSelection(cost.target);
-        if (selection && !ctx.boundTargets[costBindingId(i)]) break;
+        if (selection && !ctx.boundTargets[abilityCostBindingId(i)]) break;
         const targets = resolveCostTargets(cost, i, ctx);
         if (targets.length < (selection?.min ?? 0)) return false;
         for (const id of targets) {
@@ -1126,24 +1206,30 @@ export function abilityHasRequiredEffectTargets(
   // Skip ability if any non-optional effect requires a target but none exist.
   // Also skip if an ifYouDo's optional-with-player-choice doEffect has no valid targets
   // (e.g. Panam: no gear attached → no choice to make → don't spend Panam).
-  return ability.effects.slice(startIndex).every((effect) => {
+  //
+  // Exception: a required targeted effect with zero candidates no-ops at
+  // execution (resolveEffect returns { status: "noAction" }). It should only
+  // gate the ability when there is no other effect that would still resolve —
+  // i.e. the empty-target effect is the sole meaningful outcome. If an
+  // independent effect follows (e.g. Floor It's "Draw 1" after a debuff that
+  // has no target), the trigger still enqueues so the independent effect runs.
+  const effects = ability.effects.slice(startIndex);
+  let hasIndependentResolvable = false;
+  for (const effect of effects) {
+    if (effectResolvesWithoutCardTarget(effect, ability, ctx)) {
+      hasIndependentResolvable = true;
+      break;
+    }
+  }
+  return effects.every((effect) => {
+    // An effect whose conditions fail is inert, so it neither needs a target
+    // nor counts as an independent resolvable outcome.
     if (effect.conditions?.length && !effect.conditions.every((c) => evaluateCondition(c, ctx))) {
       return true;
     }
-    if (effect.optional) return true;
-    if (effect.effect === "searchDeck") {
-      return true;
-    }
-    if (effect.effect === "ifYouDo") {
-      const doEffect = (effect as import("@tcg/cyberpunk-types").IfYouDoEffect).doEffect;
-      if (doEffect.optional && "attachTo" in doEffect && (doEffect as any).attachTo) {
-        if (!("target" in doEffect) || !(doEffect as any).target) return true;
-        return resolveTarget((doEffect as any).target, ctx).length > 0;
-      }
-      return true;
-    }
-    if (!("target" in effect) || !effect.target) return true;
-    const target = effect.target as any;
+    // Effects that resolve without any card target never gate the ability.
+    if (effectResolvesWithoutCardTarget(effect, ability, ctx)) return true;
+    const target = (effect as any).target;
     if (target.selector === "bound") {
       // Declared ability bindings can be evaluated now (selectable ones
       // always pass; others need ≥1 resolved target). Bindings that are NOT
@@ -1155,7 +1241,67 @@ export function abilityHasRequiredEffectTargets(
       if (isSelectableBinding(declared)) return true;
       return resolveTarget(target, ctx).length > 0;
     }
-    return resolveTarget(target, ctx).length > 0;
+    const hasCandidates = resolveTarget(target, ctx).length > 0;
+    // An empty targeted effect doesn't gate the ability when another effect
+    // would still resolve independently; it no-ops per-effect instead.
+    if (!hasCandidates && hasIndependentResolvable) return true;
+    return hasCandidates;
+  });
+}
+
+/**
+ * Whether an effect still resolves when its (possibly empty) card target is
+ * absent — i.e. it has no target, an optional/scry target, a selectable bound
+ * target, or an ifYouDo whose doEffect doesn't require a missing target.
+ *
+ * This is the SINGLE source of truth for "does this effect need a card target?",
+ * shared by the independence pre-scan and the per-effect gate above so the two
+ * never disagree (Floor It: the debuff has no target, but "Draw 1" still fires).
+ */
+function effectResolvesWithoutCardTarget(
+  effect: Effect,
+  ability: Ability,
+  ctx: ResolutionContext,
+): boolean {
+  // An effect whose conditions fail is inert — it neither needs a target nor
+  // counts as an independent resolvable outcome. This must mirror the gate's
+  // conditions branch above so the pre-scan and the gate agree on this axis
+  // (e.g. a draw gated on `targetExists(attacker)` is not independent when the
+  // attacker is absent).
+  if (effect.conditions?.length && !effect.conditions.every((c) => evaluateCondition(c, ctx))) {
+    return false;
+  }
+  if (effect.optional) return true;
+  if (effect.effect === "scry") return true;
+  if (effect.effect === "ifYouDo") {
+    // An ifYouDo only needs a target when its optional doEffect attaches to
+    // an explicit target; otherwise it resolves regardless of any card target.
+    const doEffect = (effect as import("@tcg/cyberpunk-types").IfYouDoEffect).doEffect;
+    if (doEffect.optional && "attachTo" in doEffect && (doEffect as any).attachTo) {
+      if (!("target" in doEffect) || !(doEffect as any).target) return true;
+      return resolveTarget((doEffect as any).target, ctx).length > 0;
+    }
+    return true;
+  }
+  if (!("target" in effect) || !effect.target) return true;
+  const target = effect.target as any;
+  if (target.selector === "bound") {
+    const declared = ability.bindings?.find((binding) => binding.id === target.id);
+    if (!declared) return true;
+    if (isSelectableBinding(declared)) return true;
+  }
+  return false;
+}
+
+function abilityHasApplicableEffects(ability: Ability, ctx: ResolutionContext): boolean {
+  return ability.effects.some((effect) => {
+    if (effect.conditions?.length && !effect.conditions.every((c) => evaluateCondition(c, ctx))) {
+      return false;
+    }
+    if (effect.optional) {
+      return effectHasTarget(effect, ctx);
+    }
+    return true;
   });
 }
 
@@ -1202,11 +1348,22 @@ function isProgramPlayAbility(
   return defOf(card).type === "program";
 }
 
-function requiresExplicitSelectableBinding(ability: Ability, bindingId: string): boolean {
-  if ((ability.bindings ?? []).length <= 1) {
-    return false;
-  }
+function bindingFeedsPaidPlayCard(ability: Ability, bindingId: string): boolean {
   return ability.effects.some((effect) => {
+    if (effect.optional || effect.effect !== "playCard" || effect.free === true) return false;
+    return boundTargetId(effect.target) === bindingId;
+  });
+}
+
+function requiresExplicitSelectableBinding(ability: Ability, bindingId: string): boolean {
+  return ability.effects.some((effect) => {
+    if (
+      effect.effect === "adjustGig" &&
+      "target" in effect &&
+      boundTargetId(effect.target) === bindingId
+    ) {
+      return true;
+    }
     if (effect.effect !== "playCard" && effect.effect !== "attachCard") {
       return false;
     }
@@ -1298,7 +1455,7 @@ function getPendingSelectableCost(
     const cost = costs[i]!;
     if (cost.cost !== "spend") continue;
     if (!getSelection(cost.target)) continue;
-    const bindingId = costBindingId(i);
+    const bindingId = abilityCostBindingId(i);
     if ((boundTargets[bindingId]?.length ?? 0) > 0) continue;
     if (resolveSelectableCostTargets(cost, ctx).length === 0) continue;
     return { cost, bindingId };
@@ -1312,7 +1469,7 @@ function resolveCostTargets(
   ctx: ResolutionContext,
 ): string[] {
   if (getSelection(cost.target)) {
-    return ctx.boundTargets[costBindingId(costIndex)] ?? [];
+    return ctx.boundTargets[abilityCostBindingId(costIndex)] ?? [];
   }
   return resolveTarget(cost.target, ctx);
 }
@@ -1325,10 +1482,6 @@ function resolveSelectableCostTargets(
     const card = ctx.state.G.cardIndex[id as string];
     return card !== undefined && !card.meta.spent;
   });
-}
-
-function costBindingId(costIndex: number): string {
-  return `__cost:${costIndex}`;
 }
 
 function getAbility(

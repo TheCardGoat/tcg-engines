@@ -2,11 +2,11 @@ import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
+  PLAYER_TWO,
   activeResources,
   createMockUnit,
+  expectFailure,
   expectSuccess,
-  getContinuousEffects,
-  hasGrantAttackTargetOption,
 } from "@tcg/gundam-engine";
 import { gd03GundamDeathscytheHell021 } from "./021-gundam-deathscythe-hell.ts";
 
@@ -19,18 +19,50 @@ describe("Gundam Deathscythe Hell (GD03-021)", () => {
         hand: [gd03GundamDeathscytheHell021],
         play: [ally],
         resourceArea: activeResources(8),
+        deck: 5,
       },
-      { play: [activeEnemy] },
+      { play: [activeEnemy], deck: 5 },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
     const allyId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expect(p1.getLegalAttackTargets(allyId)).not.toContain(enemyId);
 
     expectSuccess(p1.deployUnit(gd03GundamDeathscytheHell021, { targets: [allyId] }));
 
-    expect(hasGrantAttackTargetOption(engine, allyId)).toBe(true);
+    expect(p1.getLegalAttackTargets(allyId)).toContain(enemyId);
   });
 
-  it("stores the granted target filter as active enemy Units", () => {
+  it("removes the active-enemy attack option when the turn ends", () => {
+    const ally = createMockUnit({ traits: ["g team"] });
+    const activeEnemy = createMockUnit();
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd03GundamDeathscytheHell021],
+        play: [ally],
+        resourceArea: activeResources(8),
+        deck: 5,
+      },
+      { play: [activeEnemy], deck: 5 },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const allyId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.deployUnit(gd03GundamDeathscytheHell021, { targets: [allyId] }));
+    expect(p1.getLegalAttackTargets(allyId)).toContain(enemyId);
+
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
+
+    expect(p1.getLegalAttackTargets(allyId)).not.toContain(enemyId);
+  });
+
+  it("also grants the option to an Operation Meteor Unit", () => {
     const ally = createMockUnit({ traits: ["operation meteor"] });
     const activeEnemy = createMockUnit();
     const engine = GundamTestEngine.create(
@@ -42,25 +74,16 @@ describe("Gundam Deathscythe Hell (GD03-021)", () => {
       { play: [activeEnemy] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
     const allyId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.deployUnit(gd03GundamDeathscytheHell021, { targets: [allyId] }));
 
-    const grant = getContinuousEffects(engine).find(
-      (effect) =>
-        effect.targetId === allyId && effect.payload.kind === "grant-attack-target-option",
-    );
-    expect(grant?.payload).toMatchObject({
-      kind: "grant-attack-target-option",
-      attackTarget: {
-        owner: "opponent",
-        cardType: "unit",
-        state: "active",
-      },
-    });
+    expect(p1.getLegalAttackTargets(allyId)).toContain(enemyId);
   });
 
-  it("does not grant the option to a friendly Unit outside Operation Meteor/G Team", () => {
+  it("rejects a friendly Unit outside Operation Meteor and G Team", () => {
     const ally = createMockUnit({ traits: ["tekkadan"] });
     const activeEnemy = createMockUnit();
     const engine = GundamTestEngine.create(
@@ -74,8 +97,9 @@ describe("Gundam Deathscythe Hell (GD03-021)", () => {
     const p1 = engine.asPlayer(PLAYER_ONE);
     const allyId = p1.getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(p1.deployUnit(gd03GundamDeathscytheHell021, { targets: [allyId] }));
-
-    expect(hasGrantAttackTargetOption(engine, allyId)).toBe(false);
+    expectFailure(
+      p1.deployUnit(gd03GundamDeathscytheHell021, { targets: [allyId] }),
+      "INVALID_TARGET",
+    );
   });
 });

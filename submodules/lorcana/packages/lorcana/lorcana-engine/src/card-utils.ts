@@ -80,6 +80,13 @@ const PRINTED_KEYWORD_TITLES = new Set([
 const PRINTED_KEYWORD_TITLE_PREFIXES = [...PRINTED_KEYWORD_TITLES].sort(
   (a, b) => b.length - a.length,
 );
+const VALUE_BEARING_PRINTED_KEYWORDS = new Set([
+  "Boost",
+  "Challenger",
+  "Resist",
+  "Singer",
+  "Sing Together",
+]);
 
 /**
  * Helper to get all keyword abilities from a card
@@ -97,24 +104,56 @@ function normalizePrintedKeywordTitle(title: string): string | undefined {
   );
 }
 
-function hasPrintedKeywordText(card: LorcanaCardDefinition, keyword: string): boolean {
-  return getPrintedKeywordTitles(card).includes(keyword);
+function getPrintedKeywordValue(title: string, keyword: string): number | undefined {
+  if (!VALUE_BEARING_PRINTED_KEYWORDS.has(keyword)) {
+    return undefined;
+  }
+
+  const value = title.slice(keyword.length).match(/\+?(\d+)/)?.[1];
+  return value ? Number(value) : undefined;
 }
 
-export function getPrintedKeywordTitles(card: LorcanaCardDefinition): string[] {
+function getPrintedKeywordTextTitles(card: LorcanaCardDefinition): string[] {
   if (typeof card.text === "string") {
-    const keyword = normalizePrintedKeywordTitle(card.text);
-    return keyword ? [keyword] : [];
+    return [card.text];
   }
 
   if (!Array.isArray(card.text)) {
     return [];
   }
 
-  return card.text.flatMap((entry) => {
-    const keyword = normalizePrintedKeywordTitle(entry.title);
+  return card.text.map((entry) => entry.title);
+}
+
+function hasPrintedKeywordText(card: LorcanaCardDefinition, keyword: string): boolean {
+  return getPrintedKeywordTitles(card).includes(keyword);
+}
+
+export function getPrintedKeywordTitles(card: LorcanaCardDefinition): string[] {
+  return getPrintedKeywordTextTitles(card).flatMap((title) => {
+    const keyword = normalizePrintedKeywordTitle(title);
     return keyword ? [keyword] : [];
   });
+}
+
+export function getPrintedKeywordValues(card: LorcanaCardDefinition): Record<string, number> {
+  const values: Record<string, number> = {};
+
+  for (const title of getPrintedKeywordTextTitles(card)) {
+    const keyword = normalizePrintedKeywordTitle(title);
+    if (!keyword) {
+      continue;
+    }
+
+    const value = getPrintedKeywordValue(title, keyword);
+    if (value === undefined) {
+      continue;
+    }
+
+    values[keyword] = (values[keyword] ?? 0) + value;
+  }
+
+  return values;
 }
 
 /**

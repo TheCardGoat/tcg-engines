@@ -4,6 +4,7 @@ export const gd01GundamDeathscythe025: UnitCard = {
   cardNumber: "GD01-025",
   name: "Gundam Deathscythe",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-025",
@@ -76,7 +77,6 @@ export const gd01GundamDeathscythe025: UnitCard = {
         {
           action: {
             action: "placeResource",
-            resourceType: "normal",
             state: "rested",
           },
         },

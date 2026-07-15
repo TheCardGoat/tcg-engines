@@ -109,8 +109,10 @@ export function decisionFromMove(available: AvailableMove, picker: ArgPicker): M
         args: { cardId: pick.cardId, abilityIndex: pick.abilityIndex },
       };
     }
-    case "resolveSearchDeck":
-      return { kind: "stuck", reason: "resolveSearchDeck must come from a resolver" };
+    case "resolveScry":
+      return { kind: "stuck", reason: "resolveScry must come from a resolver" };
+    case "resolveRevealDestination":
+      return { kind: "stuck", reason: "resolveRevealDestination must come from a resolver" };
     case "resolveDiscardFromHand":
       return { kind: "stuck", reason: "resolveDiscardFromHand must come from a resolver" };
     case "resolveAdjustGig":

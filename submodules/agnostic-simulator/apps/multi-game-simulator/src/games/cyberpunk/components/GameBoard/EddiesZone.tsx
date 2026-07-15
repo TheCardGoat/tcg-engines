@@ -86,6 +86,7 @@ export function EddiesZone({
         data-available={availableCount}
         data-total={totalCount}
         data-resource="eddies"
+        data-sim-value={counterLabel}
         data-player-side={side}
       >
         {counterLabel}
@@ -114,7 +115,9 @@ export function EddiesZone({
           </div>
         ))}
       </div>
-      <ZoneBadge position={opponent ? "top" : "bottom"}>Eddies</ZoneBadge>
+      <ZoneBadge position={opponent ? "top" : "bottom"} label="Eddies">
+        Eddies
+      </ZoneBadge>
     </div>
   );
 }

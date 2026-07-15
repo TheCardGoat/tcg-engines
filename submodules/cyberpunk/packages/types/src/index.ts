@@ -418,7 +418,12 @@ export interface MaxGigValue {
   controller: RelativePlayer;
 }
 
-export type NumericValue = number | PerCountValue | MaxGigValue;
+export interface GigValue {
+  type: "gigValue";
+  target: TargetDSL;
+}
+
+export type NumericValue = number | PerCountValue | MaxGigValue | GigValue;
 
 export interface SelfTargetDSL {
   selector: "self";
@@ -511,6 +516,10 @@ export interface GigTargetDSL {
   sides?: DieType | DieType[];
   minValue?: number;
   maxValue?: number;
+  /**
+   * Restrict to dice currently showing their die type's maximum face value.
+   */
+  atMax?: boolean;
   /**
    * Filter dice by the parity of their face value. Used by cards that count
    * "even" or "odd" Gig values (e.g. Jackie Welles — Ride or Die Choom).
@@ -615,8 +624,8 @@ export interface AttackingCondition {
   target: TargetDSL;
 }
 
-export interface PlayedThisTurnCondition {
-  condition: "playedThisTurn";
+export interface LagCondition {
+  condition: "hasLag";
   target: TargetDSL;
 }
 
@@ -726,7 +735,7 @@ export type Condition =
   | OvertimeCondition
   | TargetValueCondition
   | AttackingCondition
-  | PlayedThisTurnCondition
+  | LagCondition
   | HasGigAtMaxValueCondition
   | HasGigPairCondition
   | HasDistinctGigValuesCondition
@@ -843,22 +852,50 @@ export interface LookAtEffect extends EffectBase {
   revealToOpponent: boolean;
 }
 
-export type SearchDeckSelect =
-  | { kind: "upTo"; max: number }
-  | { kind: "exact"; amount: number }
-  | { kind: "all" };
+export type ScryDestinationZone = "hand" | "trash" | "deckTop" | "deckBottom";
+
+export type ScryCardOrdering = "original" | "random" | "playerChoice";
+
+export interface ScryDestination {
+  zone: ScryDestinationZone;
+  min?: number;
+  max?: number;
+  target?: CardTargetDSL;
+  reveal?: boolean;
+  remainder?: boolean;
+  order?: ScryCardOrdering;
+}
+
+export interface ScryEffect extends EffectBase {
+  effect: "scry";
+  player: RelativePlayer;
+  amount: number;
+  destinations: ScryDestination[];
+}
 
 export interface SearchDeckEffect extends EffectBase {
   effect: "searchDeck";
   player: RelativePlayer;
   lookCount: number;
   target: CardTargetDSL;
-  select: SearchDeckSelect;
+  select: { kind: "all" } | { kind: "upTo"; max: number };
   reveal: boolean;
-  destination: "hand" | "trash";
-  remainder: {
-    zone: "deckBottom" | "trash";
-    order?: "random";
+  destination: ScryDestinationZone;
+  remainder?: {
+    zone: ScryDestinationZone;
+    order?: ScryCardOrdering;
+  };
+}
+
+export interface RivalRevealChoiceEffect extends EffectBase {
+  effect: "rivalRevealChoice";
+  player: RelativePlayer;
+  lookCount: number;
+  destinations: ["hand", "trash"];
+  drawIfDestination?: {
+    destination: "hand" | "trash";
+    player: RelativePlayer;
+    amount: number;
   };
 }
 
@@ -867,6 +904,7 @@ export interface DiscardFromHandEffect extends EffectBase {
   player: RelativePlayer;
   amount: number;
   target?: CardTargetDSL;
+  logReason?: "costMatchedFriendlyGig";
 }
 
 export interface MoveCardEffect extends EffectBase {
@@ -941,7 +979,7 @@ export interface IfYouDoEffect extends EffectBase {
 
 export interface DelayedEffect extends EffectBase {
   effect: "delayed";
-  timing: "endOfTurn";
+  timing: "endOfTurn" | "afterTriggerResolution";
   effects: Effect[];
 }
 
@@ -1023,7 +1061,9 @@ export type Effect =
   | ReadyEffect
   | ReadyEddiesEffect
   | LookAtEffect
+  | ScryEffect
   | SearchDeckEffect
+  | RivalRevealChoiceEffect
   | DiscardFromHandEffect
   | MoveCardEffect
   | PlayCardEffect
@@ -1123,6 +1163,7 @@ export interface GigRolledEvent {
   event: "gigRolled";
   player: RelativePlayer;
   target: GigTargetDSL;
+  origin?: "gainGig" | "reroll";
 }
 
 /**

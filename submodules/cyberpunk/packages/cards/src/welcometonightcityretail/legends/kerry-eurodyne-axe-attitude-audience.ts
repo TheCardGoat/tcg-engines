@@ -31,6 +31,7 @@ export const welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience = defineCy
         event: {
           event: "gigRolled",
           player: "friendly",
+          origin: "gainGig",
           target: {
             selector: "gig",
             controller: "friendly",

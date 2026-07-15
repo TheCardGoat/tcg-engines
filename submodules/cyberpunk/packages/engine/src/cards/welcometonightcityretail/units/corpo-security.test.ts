@@ -10,9 +10,7 @@ describe("Corpo Security", () => {
   it("cannot attack even after lag is gone", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        field: [
-          { card: welcomeToNightCityRetailCorpoSecurity, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: false, hasLag: false }],
       },
       {
         gigArea: [{ dieType: "d4", faceValue: 1 }],
@@ -28,9 +26,7 @@ describe("Corpo Security", () => {
         field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: false }],
       },
       {
-        field: [
-          { card: embracingPowerRetailStarterDeckMinotaur, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: false, hasLag: false }],
       },
     );
 
@@ -48,14 +44,14 @@ describe("Corpo Security", () => {
   it("enters play as a normal Unit but still keeps the cantAttack rule", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       hand: [welcomeToNightCityRetailCorpoSecurity],
-      field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false }],
+      field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
       eddies: 2,
     });
 
     engine.playCard(welcomeToNightCityRetailCorpoSecurity, { as: P1 });
 
     const security = engine.getCard(welcomeToNightCityRetailCorpoSecurity, "field", P1);
-    expect(security.meta.playedThisTurn).toBe(true);
+    expect(security.meta.hasLag).toBe(true);
     expect(engine.getEddies(P1)).toBe(0);
     expectNotAttackCandidate(engine, welcomeToNightCityRetailCorpoSecurity, { as: P1 });
   });

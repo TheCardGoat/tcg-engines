@@ -10,7 +10,7 @@ export const unitMt0d12FlatheadBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitMt0d12Flathead",
   label: "MT0D12 Flathead - high Street Cred prevents blocking",
   references: [
-    "packages/engine/src/cards/alpha/units/mt0d12-flathead.test.ts",
+    "packages/engine/src/cards/theheistretailstarterdeck/units/mt0d12-flathead.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

@@ -10,7 +10,7 @@ import {
 export const progFloorItNoTargetsBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "progFloorItNoTargets",
   label: "Floor It - no spent low-cost units",
-  references: ["packages/engine/src/cards/alpha/programs/floor-it.test.ts"],
+  references: ["packages/engine/src/cards/welcometonightcityretail/programs/floor-it.test.ts"],
   async run(pom) {
     const jackie = await pom.getCardInZoneByDefinitionId(
       "field",

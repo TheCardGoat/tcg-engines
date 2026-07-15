@@ -18,6 +18,7 @@ export type { LogLevel } from "./configure-logger.ts";
 export {
   activeResources,
   restedResources,
+  expectUnitCanDeploy,
   findStatModifier,
   countStatModifiers,
   hasKeywordGrant,

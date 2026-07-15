@@ -33,7 +33,7 @@ describe("Cyberpsychosis", () => {
           {
             card: welcomeToNightCityRetailRidingNomad,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
             attachedGears: [
               welcomeToNightCityRetailKiroshiOptics,
               welcomeToNightCityRetailMantisBlades,
@@ -77,7 +77,7 @@ describe("Cyberpsychosis", () => {
   it("does not prompt when no equipped Unit exists", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       hand: [welcomeToNightCityRetailCyberpsychosis],
-      field: [{ card: welcomeToNightCityRetailRidingNomad, spent: false, playedThisTurn: false }],
+      field: [{ card: welcomeToNightCityRetailRidingNomad, spent: false, hasLag: false }],
       eddies: 3,
     });
 

@@ -1,11 +1,5 @@
 import { describe, it, expect } from "vite-plus/test";
-import {
-  GundamTestEngine,
-  PLAYER_ONE,
-  activeResources,
-  expectSuccess,
-  getEffectiveStats,
-} from "@tcg/gundam-engine";
+import { GundamTestEngine, PLAYER_ONE, activeResources, expectSuccess } from "@tcg/gundam-engine";
 import { gd03Balient045 } from "./045-balient.ts";
 import { gd03DaughtressFlyer044 } from "./044-daughtress-flyer.ts";
 
@@ -21,7 +15,14 @@ describe("Balient (GD03-045)", () => {
 
     expectSuccess(p1.deployUnit(gd03DaughtressFlyer044));
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    expect(getEffectiveStats(balientId, engine.getG(), framework.cards, framework).ap).toBe(3);
+    expect(p1.getVisibleCard(balientId)?.effectiveAp).toBe(3);
+  });
+
+  it("keeps its printed AP while no friendly Unit token is in play", () => {
+    const engine = GundamTestEngine.create({ play: [gd03Balient045] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const balientId = p1.getCardsInZone("battleArea")[0]!;
+
+    expect(p1.getVisibleCard(balientId)?.effectiveAp).toBe(2);
   });
 });

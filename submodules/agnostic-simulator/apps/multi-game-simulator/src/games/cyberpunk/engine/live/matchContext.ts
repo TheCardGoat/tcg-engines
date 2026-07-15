@@ -51,6 +51,8 @@ export interface LiveMatchContext {
 export interface LiveMatchParticipant extends PlayerIdentityInfo {
   seat: 1 | 2;
   userId?: string;
+  deckName?: string;
+  deckListId?: string;
 }
 
 export interface LiveMatchOverview {
@@ -318,6 +320,8 @@ function parseParticipants(value: unknown): LiveMatchParticipant[] {
       seat: raw.seat,
       displayName: raw.displayName,
       ...(typeof raw.userId === "string" ? { userId: raw.userId } : {}),
+      ...(typeof raw.deckName === "string" ? { deckName: raw.deckName } : {}),
+      ...(typeof raw.deckListId === "string" ? { deckListId: raw.deckListId } : {}),
       ...(typeof raw.subscriptionTier === "string"
         ? { subscriptionTier: raw.subscriptionTier }
         : {}),

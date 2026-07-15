@@ -6,8 +6,6 @@ import {
   activeResources,
   createMockUnit,
   expectSuccess,
-  seedBaseAsShield,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd04ReineforceJr121 } from "./121-reineforce-jr.ts";
 
@@ -16,10 +14,11 @@ describe("Reineforce Jr. (GD04-121)", () => {
     const engine = GundamTestEngine.create({
       hand: [gd04ReineforceJr121],
       resourceArea: activeResources(3),
+      shieldArea: [createMockUnit({ name: "Shield" })],
       deck: 4,
     });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
 
     expectSuccess(p1.deployBase(gd04ReineforceJr121));
 
@@ -27,15 +26,56 @@ describe("Reineforce Jr. (GD04-121)", () => {
     expect(p1.getCardsInZone("baseSection")).toHaveLength(1);
   });
 
-  it("【Burst】 deploys this card from shield area", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd04ReineforceJr121] });
-    const shieldId = seedBaseAsShield(engine, PLAYER_TWO, gd04ReineforceJr121);
-
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `baseSection:${PLAYER_TWO}`,
+  it("【Burst】 offers its owner the choice to deploy this card after a direct attack", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd04ReineforceJr121] },
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      controllerId: PLAYER_TWO,
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+
+    expect(p2.getCardZone(shieldId)).toBe(`baseSection:${PLAYER_TWO}`);
+  });
+
+  it("【Burst】 leaves this card in trash when its owner declines", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd04ReineforceJr121] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      controllerId: PLAYER_TWO,
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: false } }));
+
+    expect(p2.getCardZone(shieldId)).toBe(`trash:${PLAYER_TWO}`);
   });
 
   it("deploys a Parts token when a friendly League Militaire Unit is in play on your turn", () => {
@@ -44,15 +84,23 @@ describe("Reineforce Jr. (GD04-121)", () => {
       hand: [gd04ReineforceJr121],
       play: [leagueUnit],
       resourceArea: activeResources(3),
+      shieldArea: [createMockUnit({ name: "Shield" })],
       deck: 4,
     });
-    seedShieldsFromDeck(engine, PLAYER_ONE, 1);
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const battleAreaBefore = p1.getCardsInZone("battleArea");
 
     expectSuccess(p1.deployBase(gd04ReineforceJr121));
 
-    const tokenId = p1.getCardsInZone("battleArea").at(-1)!;
-    const token = engine.getRuntime().getFrameworkReadAPI().cards.getDefinition(tokenId);
-    expect(token?.name).toBe("Parts");
+    const tokenId = p1
+      .getCardsInZone("battleArea")
+      .find((cardId) => !battleAreaBefore.includes(cardId));
+    expect(tokenId).toBeDefined();
+    expect(p1.getVisibleCard(tokenId!)).toMatchObject({
+      effectiveAp: 1,
+      effectiveHp: 1,
+      restrictions: ["cannot-target-player"],
+    });
+    expect(p1.getLegalAttackTargets(tokenId!)).not.toContain("direct");
   });
 });

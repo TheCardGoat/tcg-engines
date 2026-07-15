@@ -38,27 +38,30 @@ export const welcomeToNightCityRetailHanakoArasakaInAGildedCage = defineCyberpun
       },
       effects: [
         {
-          effect: "searchDeck",
+          effect: "scry",
           player: "friendly",
-          lookCount: 4,
-          target: {
-            selector: "card",
-            controller: "friendly",
-            zones: ["deck"],
-            costEqualsGigValueOf: {
-              selector: "gig",
-              controller: "friendly",
-              amount: "all",
+          amount: 4,
+          destinations: [
+            {
+              zone: "hand",
+              reveal: true,
+              target: {
+                selector: "card",
+                controller: "friendly",
+                zones: ["deck"],
+                costEqualsGigValueOf: {
+                  selector: "gig",
+                  controller: "friendly",
+                  amount: "all",
+                },
+              },
             },
-          },
-          select: {
-            kind: "all",
-          },
-          reveal: true,
-          destination: "hand",
-          remainder: {
-            zone: "deckBottom",
-          },
+            {
+              zone: "deckBottom",
+              remainder: true,
+              order: "original",
+            },
+          ],
         },
       ],
     },

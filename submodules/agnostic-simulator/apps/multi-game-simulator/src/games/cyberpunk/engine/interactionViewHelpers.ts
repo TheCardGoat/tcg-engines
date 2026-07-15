@@ -103,22 +103,30 @@ export function interactionViewAttachTargets(
   );
 }
 
+export function interactionViewAbilityIndexesForCard(
+  view: EngineInteractionView,
+  cardId: string,
+): number[] {
+  if (!entityInputHasCandidate(view, "activateAbility", "cardId", cardId)) {
+    return [];
+  }
+  const abilityInput = enabledOptionInput(view, "activateAbility", "abilityIndex");
+  return (
+    abilityInput?.options.flatMap((candidate) => {
+      if (!candidate.enabled || candidate.text.params?.cardId !== cardId) {
+        return [];
+      }
+      const abilityIndex = Number(candidate.id);
+      return Number.isInteger(abilityIndex) ? [abilityIndex] : [];
+    }) ?? []
+  );
+}
+
 export function interactionViewAbilityIndexForCard(
   view: EngineInteractionView,
   cardId: string,
 ): number | null {
-  if (!entityInputHasCandidate(view, "activateAbility", "cardId", cardId)) {
-    return null;
-  }
-  const abilityInput = enabledOptionInput(view, "activateAbility", "abilityIndex");
-  const option = abilityInput?.options.find(
-    (candidate) => candidate.enabled && candidate.text.params?.cardId === cardId,
-  );
-  if (!option) {
-    return null;
-  }
-  const abilityIndex = Number(option.id);
-  return Number.isInteger(abilityIndex) ? abilityIndex : null;
+  return interactionViewAbilityIndexesForCard(view, cardId)[0] ?? null;
 }
 
 function hasEnabledPair(

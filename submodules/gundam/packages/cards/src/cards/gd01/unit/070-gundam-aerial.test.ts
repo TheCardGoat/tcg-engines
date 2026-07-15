@@ -1,49 +1,63 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
+  PLAYER_TWO,
   activeResources,
-  restedResources,
   createMockCommand,
+  createMockPilot,
+  createMockUnit,
+  expectFailure,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd01GundamAerial070 } from "./070-gundam-aerial.ts";
+import {
+  passTurnThroughPublicMoves,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 
 describe("Gundam Aerial (GD01-070)", () => {
-  describe("While there are 4 or more Command cards in your trash, this card in your hand gets cost -2.", () => {
-    it("deploys at the reduced cost of 1 when 4+ Command cards are in the trash", () => {
-      // Printed cost 3, reduction -2 → effective cost 1.
-      const engine = GundamTestEngine.create({
-        hand: [gd01GundamAerial070],
+  it("costs 1 with four Commands in trash, links with Suletta, and attacks on the deployment turn", () => {
+    const suletta = createMockPilot({ name: "Suletta Mercury", level: 1, cost: 1 });
+    const enemy = createMockUnit({ hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd01GundamAerial070, suletta],
+        deck: 2,
         trash: [createMockCommand(), createMockCommand(), createMockCommand(), createMockCommand()],
-        // Level 5 required; 4 rested + 1 active = 5 total, 1 active = reduced cost.
-        resourceArea: [...restedResources(4), ...activeResources(1)],
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const resources = p1.getCardsInZone("resourceArea");
+        resourceArea: activeResources(5),
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
+      { play: [enemy] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
 
-      expectSuccess(p1.deployUnit(gd01GundamAerial070));
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [enemyId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
 
-      expect(p1.getCardsInZone("battleArea").length).toBe(1);
-      // The lone active resource should now be exhausted.
-      expect(engine.getG().exhausted[resources[4]!]).toBe(true);
+    expectSuccess(p1.deployUnit(gd01GundamAerial070));
+    const aerialId = p1.getCardsInZone("battleArea")[0]!;
+    expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(1);
+    expectSuccess(p1.assignPilot(suletta, aerialId));
+
+    expectSuccess(p1.enterBattle(aerialId, enemyId));
+  });
+
+  it("requires the printed cost when fewer than four Commands are in trash", () => {
+    const priorDeployment = createMockUnit({ name: "Prior Deployment", level: 1, cost: 4 });
+    const engine = GundamTestEngine.create({
+      hand: [priorDeployment, gd01GundamAerial070],
+      trash: [createMockCommand(), createMockCommand(), createMockCommand()],
+      resourceArea: activeResources(5),
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
 
-    it("requires the full printed cost of 3 when fewer than 4 Command cards are in the trash", () => {
-      // Only 3 commands in trash → condition unmet → printed cost (3) applies.
-      const engine = GundamTestEngine.create({
-        hand: [gd01GundamAerial070],
-        trash: [createMockCommand(), createMockCommand(), createMockCommand()],
-        // Level 5 met, but only 1 active → can't pay printed cost 3.
-        resourceArea: [...restedResources(4), ...activeResources(1)],
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
+    expectSuccess(p1.deployUnit(priorDeployment));
+    expectFailure(p1.deployUnit(gd01GundamAerial070), "INSUFFICIENT_RESOURCES");
 
-      const result = p1.deployUnit(gd01GundamAerial070);
-      expect(result.success).toBe(false);
-      if (!result.success) {
-        expect(result.errorCode).toBe("INSUFFICIENT_RESOURCES");
-      }
-    });
+    expect(p1.getCardsInZone("battleArea")).toHaveLength(1);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.handCount).toBe(1);
   });
 });

@@ -51,8 +51,7 @@ export const gd03GDefenser079: UnitCard = {
       directives: [
         {
           action: {
-            action: "unparsedText",
-            text: "When you rest your Base with one of your Units' effects, you may rest this Unit instead.",
+            action: "substituteBaseRestWithSelf",
           },
         },
       ],

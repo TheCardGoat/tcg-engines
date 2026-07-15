@@ -1,43 +1,75 @@
-import { describe, it, expect } from "vite-plus/test";
-import { GundamTestEngine, PLAYER_ONE, markAsLinkUnit } from "@tcg/gundam-engine";
-import { getEffectiveStats } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
+import { describe, expect, it } from "vite-plus/test";
+import {
+  GundamTestEngine,
+  PLAYER_ONE,
+  PLAYER_TWO,
+  activeResources,
+  createMockPilot,
+  createMockUnit,
+  expectSuccess,
+} from "@tcg/gundam-engine";
 import { gd01DeltaPlus006 } from "./006-delta-plus.ts";
+import {
+  passTurnThroughPublicMoves,
+  resolveUnitBattle,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 
 describe("Delta Plus (GD01-006)", () => {
-  it("<Repair 1> recovers 1 HP at the end of the controller's turn", () => {
-    const engine = GundamTestEngine.create({ play: [{ card: gd01DeltaPlus006 }] });
-    const rt = engine.getRuntime();
-    const unitId = rt.getInstanceIdByDefinition(
-      PLAYER_ONE as PlayerId,
-      gd01DeltaPlus006.cardNumber,
-    )!;
-    engine.getG().damage[unitId] = 2;
+  it("recovers 1 HP at the end of its controller's turn", () => {
+    const defender = createMockUnit({ ap: 2, hp: 10 });
+    const engine = GundamTestEngine.create(
+      { play: [gd01DeltaPlus006], shieldArea: [createMockUnit()], deck: 5 },
+      { play: [defender], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.endTurn();
+    restUnitsByAttackingDirectly(engine, PLAYER_TWO, [defenderId]);
+    passTurnThroughPublicMoves(engine, PLAYER_TWO);
+    resolveUnitBattle(engine, PLAYER_ONE, unitId, defenderId);
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
 
-    expect(engine.getG().damage[unitId]).toBe(1);
+    expect(p1.getDamage(unitId)).toBe(1);
   });
 
-  it("【During Link】This Unit gets HP+1.", () => {
-    const engine = GundamTestEngine.create({ play: [gd01DeltaPlus006] }, { deck: 5 });
-    const rt = engine.getRuntime();
-    const uid = rt.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, gd01DeltaPlus006.cardNumber)!;
-    markAsLinkUnit(engine, uid);
+  it("shows HP 4 after pairing an Earth Federation Pilot that satisfies its Link Condition", () => {
+    const pilot = createMockPilot({
+      traits: ["earth federation"],
+      level: 1,
+      cost: 1,
+      hpBonus: 0,
+    });
+    const engine = GundamTestEngine.create({
+      hand: [pilot],
+      play: [gd01DeltaPlus006],
+      resourceArea: activeResources(4),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
 
-    const fw = rt.getFrameworkReadAPI();
-    const stats = getEffectiveStats(uid, engine.getG(), fw.cards, fw);
-    // Base HP is 3, duringLink gives +1 → effective HP = 4
-    expect(stats.hp).toBe(4);
+    expectSuccess(p1.assignPilot(pilot, unitId));
+
+    expect(p1.getVisibleCard(unitId)).toMatchObject({ effectiveHp: 4 });
   });
 
-  it("not linked → no HP bonus", () => {
-    const engine = GundamTestEngine.create({ play: [gd01DeltaPlus006] }, { deck: 5 });
-    const rt = engine.getRuntime();
-    const uid = rt.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, gd01DeltaPlus006.cardNumber)!;
+  it("keeps HP 3 when paired with a Pilot outside the Earth Federation trait", () => {
+    const pilot = createMockPilot({ traits: ["oz"], level: 1, cost: 1, hpBonus: 0 });
+    const engine = GundamTestEngine.create({
+      hand: [pilot],
+      play: [gd01DeltaPlus006],
+      resourceArea: activeResources(4),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
 
-    const fw = rt.getFrameworkReadAPI();
-    const stats = getEffectiveStats(uid, engine.getG(), fw.cards, fw);
-    expect(stats.hp).toBe(3);
+    expectSuccess(p1.assignPilot(pilot, unitId));
+
+    expect(p1.getVisibleCard(unitId)).toMatchObject({ effectiveHp: 3 });
   });
 });

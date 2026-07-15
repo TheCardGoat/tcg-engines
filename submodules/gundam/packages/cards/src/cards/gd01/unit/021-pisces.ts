@@ -4,6 +4,7 @@ export const gd01Pisces021: UnitCard = {
   cardNumber: "GD01-021",
   name: "Pisces",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "blue",
   traits: ["oz"],
   id: "GD01-021",

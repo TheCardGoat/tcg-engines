@@ -32,6 +32,47 @@ describe("Cyberpunk interaction protocol adapter", () => {
     ]);
   });
 
+  it("projects pass as disabled when must-attack blocks ending the turn", () => {
+    const prompt: PlayerPrompt = {
+      status: "action",
+      choice: null,
+      availableMoves: [
+        {
+          moveId: "attackRival",
+          inputSpec: { type: "selectCard", candidates: ["required_attacker"] },
+        },
+      ],
+    };
+
+    const parsed = EngineInteractionView.parse(
+      buildCyberpunkInteractionView({ actorId: "p2", stateVersion: 12, prompt }),
+    );
+
+    expect(parsed.actions.map((action) => action.id)).toEqual(["attackRival", "passPhase"]);
+    expect(parsed.actions[1]).toMatchObject({
+      id: "passPhase",
+      enabled: false,
+      disabledText: {
+        params: { label: "A Unit must attack before you can pass." },
+      },
+      inputs: [],
+    });
+  });
+
+  it("does not project disabled pass during attack resolution windows", () => {
+    const prompt: PlayerPrompt = {
+      status: "action",
+      choice: null,
+      availableMoves: [{ moveId: "resolveAttack", inputSpec: { type: "none" } }],
+    };
+
+    const parsed = EngineInteractionView.parse(
+      buildCyberpunkInteractionView({ actorId: "p2", stateVersion: 13, prompt }),
+    );
+
+    expect(parsed.actions.map((action) => action.id)).toEqual(["resolveAttack"]);
+  });
+
   it("projects a gain-gig choice as a die selection", () => {
     const prompt: PlayerPrompt = {
       status: "choice",
@@ -49,6 +90,109 @@ describe("Cyberpunk interaction protocol adapter", () => {
       kind: "entity-selection",
       id: "dieId",
       entityKinds: ["die"],
+    });
+  });
+
+  it("projects trigger choices with ability text for user-facing prompts", () => {
+    const prompt: PlayerPrompt = {
+      status: "choice",
+      availableMoves: [],
+      choice: {
+        type: "chooseTrigger",
+        chooserId: "p1",
+        payload: {
+          options: [
+            {
+              triggerId: "trigger-1",
+              sourceCardId: "misty_1",
+              sourcePlayerId: "p1",
+              abilityIndex: 1,
+              abilityText: "At the end of your turn, choose a card type.",
+              cardName: "Misty Olszewski",
+            },
+          ],
+        },
+      },
+    };
+
+    const parsed = EngineInteractionView.parse(
+      buildCyberpunkInteractionView({ actorId: "p1", stateVersion: 7, prompt }),
+    );
+
+    expect(parsed.actions[0]).toMatchObject({
+      id: "resolveTrigger",
+      intent: "choose-option",
+      inputs: [
+        {
+          kind: "option-selection",
+          id: "triggerId",
+          options: [
+            {
+              id: "trigger-1",
+              text: {
+                params: {
+                  abilityText: "At the end of your turn, choose a card type.",
+                  cardName: "Misty Olszewski",
+                  sourceCardId: "misty_1",
+                },
+              },
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  it("projects reveal destination choices as option selections", () => {
+    const prompt: PlayerPrompt = {
+      status: "choice",
+      availableMoves: [],
+      choice: {
+        type: "revealDestination",
+        chooserId: "p2",
+        payload: {
+          player: "p1",
+          destinations: ["hand", "trash"],
+          revealedCardIds: ["card_1", "card_2"],
+          revealedCards: [
+            filteredCard("card_1", "definition_1"),
+            filteredCard("card_2", "definition_2"),
+          ],
+          source: {
+            cardId: "source_1",
+            definitionId: "fool_on_the_hill",
+            displayName: "Fool on the Hill",
+            cardType: "program",
+          },
+          drawIfDestination: { destination: "trash", player: "p1", amount: 2 },
+        },
+      },
+    };
+
+    const parsed = EngineInteractionView.parse(
+      buildCyberpunkInteractionView({ actorId: "p2", stateVersion: 14, prompt }),
+    );
+
+    expect(parsed.actions[0]).toMatchObject({
+      id: "resolveRevealDestination",
+      intent: "choose-option",
+      source: { kind: "card", instanceId: "source_1" },
+      text: {
+        params: {
+          destinationOwnerId: "p1",
+          revealedCount: 2,
+          revealedCardIds: "card_1,card_2",
+          drawAmount: 2,
+          sourceDisplayName: "Fool on the Hill",
+        },
+      },
+    });
+    expect(parsed.actions[0]?.inputs[0]).toMatchObject({
+      kind: "option-selection",
+      id: "destination",
+      min: 1,
+      max: 1,
+      options: [{ id: "hand" }, { id: "trash" }],
     });
   });
 
@@ -106,7 +250,7 @@ describe("Cyberpunk interaction protocol adapter", () => {
             type: "playCard",
             candidates: [
               { cardId: "gear_without_target", attachTargets: [] },
-              { cardId: "gear_with_target", attachTargets: ["unit_1"] },
+              { cardId: "gear_with_target", attachTargets: ["unit_1", "legend_area_1"] },
               { cardId: "program_without_target" },
             ],
           },
@@ -132,7 +276,10 @@ describe("Cyberpunk interaction protocol adapter", () => {
         kind: "entity-selection",
         id: "attachToId",
         role: "target",
-        candidates: [{ entity: { instanceId: "unit_1" } }],
+        candidates: [
+          { entity: { instanceId: "unit_1" } },
+          { entity: { instanceId: "legend_area_1" } },
+        ],
       },
     ]);
   });
@@ -240,4 +387,49 @@ describe("Cyberpunk interaction protocol adapter", () => {
       payload: { pass: false },
     });
   });
+
+  it("translates reveal destination submissions back to native command args", () => {
+    const submission = InteractionSubmission.parse({
+      protocolVersion: 1,
+      stateVersion: 14,
+      requestId: "cyberpunk:14:resolveRevealDestination",
+      actionId: "resolveRevealDestination",
+      values: { destination: "trash" },
+    });
+
+    expect(cyberpunkSubmissionToPayload(submission)).toEqual({
+      moveType: "resolveRevealDestination",
+      payload: { destination: "trash" },
+    });
+  });
 });
+
+function filteredCard(
+  instanceId: string,
+  definitionId: string,
+): PlayerPrompt["choice"] extends {
+  payload: { revealedCards: ReadonlyArray<infer Card> };
+}
+  ? Card
+  : never {
+  return {
+    instanceId,
+    definitionId,
+    zone: "deck",
+    faceDown: false,
+    spent: false,
+    damage: 0,
+    power: 0,
+    effectivePower: 0,
+    cost: 1,
+    type: "unit",
+    classifications: [],
+    hasSellTag: false,
+    attachedGearIds: [],
+    attachedToId: null,
+    hasLag: false,
+    hasAttackedThisTurn: false,
+    grantedRules: [],
+    keywords: [],
+  };
+}

@@ -3,24 +3,67 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
+  createMockUnit,
   expectSuccess,
   activeResources,
-  seedBaseAsShield,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd02Sodon123 } from "./123-sodon.ts";
 
 describe("Sodon (GD02-123)", () => {
   it("【Deploy】 adds 1 shield to hand when deployed", () => {
+    const tokenMaker = createMockUnit({
+      name: "Token Maker",
+      cost: 0,
+      effects: [
+        {
+          type: "triggered",
+          activation: { timing: ["deploy"] },
+          directives: [
+            {
+              action: {
+                action: "deployToken",
+                token: {
+                  name: "Friendly Token",
+                  traits: [],
+                  ap: 1,
+                  hp: 1,
+                  deployState: "active",
+                },
+              },
+            },
+          ],
+          sourceText: "【Deploy】Deploy 1 Unit token.",
+        },
+      ],
+    });
+    const firstShield = createMockUnit({ name: "First Shield" });
+    const secondShield = createMockUnit({ name: "Second Shield" });
     const engine = GundamTestEngine.create(
-      { hand: [gd02Sodon123], resourceArea: activeResources(6), deck: 6 },
+      {
+        hand: [tokenMaker, gd02Sodon123],
+        shieldArea: [firstShield, secondShield],
+        resourceArea: activeResources(6),
+      },
       {},
     );
-    const shieldIds = seedShieldsFromDeck(engine, PLAYER_ONE, 2);
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const [tokenMakerId, sodonId] = p1.getHand();
+    const shieldIds = p1.getCardsInZone("shieldArea");
+
+    expectSuccess(p1.deployUnit(tokenMakerId!));
+    const tokenId = p1.getCardsInZone("battleArea")[1]!;
     const handBefore = p1.getHand().length;
 
-    expectSuccess(p1.deployBase(gd02Sodon123));
+    expectSuccess(p1.deployBase(sodonId!));
+    const ordering = p1.getBoardView().pendingChoice;
+    if (ordering?.kind !== "ordering") throw new Error("Expected Deploy-effect ordering");
+    const sodonEffect = ordering.candidates.find((candidate) => candidate.sourceCardId === sodonId);
+    expectSuccess(p1.resolveEffect({ pendingEffectId: sodonEffect!.effectId }));
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("targetSelection");
+    if (choice?.kind !== "targetSelection") return;
+    expect(choice.legalTargetIds).toEqual([tokenId]);
+    expectSuccess(p1.resolveEffect({ targets: [tokenId] }));
 
     // Top shield enters hand; hand count unchanged (base out, shield in).
     expect(p1.getHand()).toContain(shieldIds[0]);
@@ -32,27 +75,23 @@ describe("Sodon (GD02-123)", () => {
   });
 
   it("【Burst】 Deploy this card — flips Sodon into baseSection on shield destruction", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd02Sodon123] });
-    const shieldId = seedBaseAsShield(engine, PLAYER_TWO, gd02Sodon123);
+    const attacker = createMockUnit({ ap: 1, hp: 3 });
+    const engine = GundamTestEngine.create({ play: [attacker] }, { shieldArea: [gd02Sodon123] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    const finalZone = engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey;
-    expect(finalZone).toBe(`baseSection:${PLAYER_TWO}`);
-  });
-
-  it("chooseAttackTarget unit filter restricts to friendly Unit token", () => {
-    // The card-data `unit` filter now includes `isToken: true` so only
-    // friendly token units are valid targets for the attack-target grant.
-    const cardDef = gd02Sodon123;
-    const deployEffect = cardDef.effects![1];
-    // Second directive is the chooseAttackTarget
-    const chooseDirective = (
-      deployEffect as { directives: Array<{ action?: Record<string, unknown> }> }
-    ).directives[1]!;
-    const action = chooseDirective.action!;
-    expect(action.action).toBe("chooseAttackTarget");
-    const unit = action.unit as { isToken?: boolean };
-    expect(unit.isToken).toBe(true);
+    expect(p2.getCardZone(shieldId)).toBe(`baseSection:${PLAYER_TWO}`);
   });
 });

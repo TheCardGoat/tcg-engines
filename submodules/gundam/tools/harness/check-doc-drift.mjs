@@ -37,7 +37,7 @@ try {
   allowlist = new Set();
 }
 
-const DOC_ROOTS = ["AGENTS.md", "CLAUDE.md", "README.md", "docs", ".claude/skills"];
+const DOC_ROOTS = ["AGENTS.md", "CLAUDE.md", "README.md", "docs", ".agents/skills"];
 const SKIP_DIRS = new Set(["node_modules", "dist", "build", ".vite", ".git"]);
 
 async function* walkDocs(start) {

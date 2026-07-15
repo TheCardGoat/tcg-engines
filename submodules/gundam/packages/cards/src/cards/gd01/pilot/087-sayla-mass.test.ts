@@ -1,59 +1,71 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  asPlayerId,
   createMockUnit,
   expectSuccess,
-  getEffectiveStats,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd01SaylaMass087 } from "./087-sayla-mass.ts";
 
 describe("Sayla Mass (GD01-087)", () => {
-  it("【Burst】Add this card to your hand.", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd01SaylaMass087] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, gd01SaylaMass087.cardNumber, asPlayerId(PLAYER_TWO));
-
-    engine.fireShieldBurst(shieldId);
-
-    const zone = engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey;
-    expect(zone).toBe(`hand:${PLAYER_TWO}`);
-  });
-
-  it("While this Unit is blue, it gains <Repair 1>.", () => {
-    // Pair Sayla with a blue unit → constant effect grants Repair 1.
-    const blueUnit = createMockUnit({
-      ap: 2,
-      hp: 4,
-      level: 3,
-      cost: 1,
-      color: "blue",
-      linkCondition: "[Sayla Mass]",
-    } as unknown as Parameters<typeof createMockUnit>[0]);
-
+  it("【Burst】 adds the revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 4 });
     const engine = GundamTestEngine.create(
-      {
-        hand: [blueUnit, gd01SaylaMass087],
-        resourceArea: activeResources(6),
-        deck: 5,
-      },
-      {},
+      { play: [attacker] },
+      { shieldArea: [gd01SaylaMass087] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(p1.deployUnit(blueUnit));
-    expectSuccess(p1.assignPilot(gd01SaylaMass087, blueUnit));
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({ kind: "optional", directiveIndex: -1 });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
+    expect(p2.getCardZone(gd01SaylaMass087)).toBe(`hand:${PLAYER_TWO}`);
+  });
+
+  it("grants Repair 1 while paired with a blue Unit", () => {
+    const blueUnit = createMockUnit({ color: "blue", ap: 2, hp: 4 });
+    const engine = GundamTestEngine.create({
+      hand: [gd01SaylaMass087],
+      play: [blueUnit],
+      resourceArea: activeResources(3),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
     const unitId = p1.getCardsInZone("battleArea")[0]!;
-    const fw = engine.getRuntime().getFrameworkReadAPI();
-    const stats = getEffectiveStats(unitId, engine.getG(), fw.cards, fw);
-    expect(stats.keywords).toContain("Repair");
+
+    expectSuccess(p1.assignPilot(gd01SaylaMass087, unitId));
+
+    expect(p1.getVisibleCard(unitId)?.keywords).toContain("Repair");
+    expect(p1.getVisibleCard(unitId)?.keywordEffects).toContainEqual({
+      keyword: "Repair",
+      value: 1,
+    });
+    expect(p1.getPilotId(unitId)).toBeDefined();
+  });
+
+  it("does not grant Repair while paired with a non-blue Unit", () => {
+    const greenUnit = createMockUnit({ color: "green", ap: 2, hp: 4 });
+    const engine = GundamTestEngine.create({
+      hand: [gd01SaylaMass087],
+      play: [greenUnit],
+      resourceArea: activeResources(3),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(gd01SaylaMass087, unitId));
+
+    expect(p1.getVisibleCard(unitId)?.keywords).not.toContain("Repair");
+    expect(p1.getVisibleCard(unitId)?.keywordEffects).not.toContainEqual({
+      keyword: "Repair",
+      value: 1,
+    });
   });
 });

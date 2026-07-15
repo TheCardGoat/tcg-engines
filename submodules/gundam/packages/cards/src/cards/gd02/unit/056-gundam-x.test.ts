@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vite-plus/test";
-import { GundamTestEngine, PLAYER_ONE, markAsLinkUnit } from "@tcg/gundam-engine";
+import { GundamTestEngine, PLAYER_ONE, expectSuccess, markAsLinkUnit } from "@tcg/gundam-engine";
 import { gd02GundamX056 } from "./056-gundam-x.ts";
 
 describe("Gundam X (GD02-056)", () => {
@@ -41,6 +41,12 @@ describe("Gundam X (GD02-056)", () => {
     const vultureInTrash = trashBefore[0]!;
 
     engine.destroyUnit(gundamXId);
+
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("targetSelection");
+    if (choice?.kind !== "targetSelection") return;
+    expect(choice.legalTargetIds).toEqual([vultureInTrash]);
+    expectSuccess(p1.resolveEffect({ targets: [vultureInTrash] }));
 
     // The Vulture Lv.5+ card should have moved from trash to hand.
     expect(p1.getHand()).toContain(vultureInTrash);

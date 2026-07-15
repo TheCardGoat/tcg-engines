@@ -1,119 +1,133 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  expectSuccess,
-  expectFailure,
+  activeResources,
+  createMockCommand,
   createMockUnit,
-  createMockResource,
-  seedShieldsFromDeck,
+  expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
-import type { ContinuousEffectEntry, TestCardEntry } from "@tcg/gundam-engine";
 import { gd01CitizensTakeAStand105 } from "./105-citizens-take-a-stand.ts";
 
-function resources(count: number): TestCardEntry[] {
-  return Array.from({ length: count }, () => ({ card: createMockResource(), exhausted: false }));
-}
-
-function makeUnit(): ReturnType<typeof createMockUnit> {
-  return createMockUnit({ ap: 2, hp: 5 });
-}
-
 describe("Citizens, Take a Stand! (GD01-105)", () => {
-  describe("【Main】All your Units get AP+2 during this turn.", () => {
-    it("applies AP+2 to all friendly units", () => {
-      const u1 = makeUnit();
-      const u2 = makeUnit();
-      const engine = GundamTestEngine.create({
-        hand: [gd01CitizensTakeAStand105],
-        resourceArea: resources(4),
-        play: [u1, u2],
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [u1Id, u2Id] = p1.getCardsInZone("battleArea");
+  it("【Burst】 adds the revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd01CitizensTakeAStand105] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-      expectSuccess(p1.playCommand(gd01CitizensTakeAStand105));
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expect(p2.getBoardView().pendingChoice).toMatchObject({ kind: "optional", directiveIndex: -1 });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-      const effects = engine.getG().continuousEffects;
-      const u1Effects = effects.filter((e: ContinuousEffectEntry) => e.targetId === u1Id);
-      const u2Effects = effects.filter((e: ContinuousEffectEntry) => e.targetId === u2Id);
-      expect(u1Effects.length).toBe(1);
-      expect(u1Effects[0]!.payload).toEqual({ kind: "stat-modifier", stat: "ap", modifier: 2 });
-      expect(u2Effects.length).toBe(1);
-      expect(u2Effects[0]!.payload).toEqual({ kind: "stat-modifier", stat: "ap", modifier: 2 });
-    });
-
-    it("does not affect enemy units", () => {
-      const friendlyUnit = makeUnit();
-      const enemyUnit = makeUnit();
-      const engine = GundamTestEngine.create(
-        { hand: [gd01CitizensTakeAStand105], resourceArea: resources(4), play: [friendlyUnit] },
-        { play: [enemyUnit] },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const p2 = engine.asPlayer(PLAYER_TWO);
-      const enemyId = p2.getCardsInZone("battleArea")[0]!;
-
-      expectSuccess(p1.playCommand(gd01CitizensTakeAStand105));
-
-      const effects = engine.getG().continuousEffects;
-      const enemyEffects = effects.filter((e: ContinuousEffectEntry) => e.targetId === enemyId);
-      expect(enemyEffects.length).toBe(0);
-    });
-
-    it("moves the command card to trash after resolution", () => {
-      const engine = GundamTestEngine.create({
-        hand: [gd01CitizensTakeAStand105],
-        resourceArea: resources(4),
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const cmdId = p1.getHand()[0]!;
-
-      expectSuccess(p1.playCommand(gd01CitizensTakeAStand105));
-      const zoneKey = engine.getState().ctx.zones.private.cardIndex[cmdId]?.zoneKey;
-      expect(zoneKey).toBe(`trash:${p1.playerId}`);
-    });
-
-    it("cannot be played during action-phase", () => {
-      const engine = GundamTestEngine.create({
-        hand: [gd01CitizensTakeAStand105],
-        resourceArea: resources(4),
-      });
-      engine.setPhase("end-phase");
-      engine.setStep("action-step");
-      const p1 = engine.asPlayer(PLAYER_ONE);
-
-      const result = p1.playCommand(gd01CitizensTakeAStand105);
-      expectFailure(result, "WRONG_TIMING");
-    });
-
-    it("works with 0 friendly units (no-op, card still moves to trash)", () => {
-      const engine = GundamTestEngine.create({
-        hand: [gd01CitizensTakeAStand105],
-        resourceArea: resources(4),
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const cmdId = p1.getHand()[0]!;
-
-      expectSuccess(p1.playCommand(gd01CitizensTakeAStand105));
-
-      const effects = engine.getG().continuousEffects;
-      expect(effects.length).toBe(0);
-      const zoneKey = engine.getState().ctx.zones.private.cardIndex[cmdId]?.zoneKey;
-      expect(zoneKey).toBe(`trash:${p1.playerId}`);
-    });
+    expect(p2.getCardZone(gd01CitizensTakeAStand105)).toBe(`hand:${PLAYER_TWO}`);
   });
 
-  describe("【Burst】Add this card to your hand.", () => {
-    it("adds this card to hand when burst resolves", () => {
-      const engine = GundamTestEngine.create({}, { deck: [gd01CitizensTakeAStand105] });
-      const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-      if (!shieldId) throw new Error("seed failed");
-      engine.fireShieldBurst(shieldId);
-      expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-        `hand:${PLAYER_TWO}`,
-      );
+  it("【Main】 gives every friendly Unit AP+2 for the turn without affecting enemy Units", () => {
+    const firstFriendly = createMockUnit({ ap: 2, hp: 5 });
+    const secondFriendly = createMockUnit({ ap: 3, hp: 5 });
+    const enemy = createMockUnit({ ap: 4, hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd01CitizensTakeAStand105],
+        play: [firstFriendly, secondFriendly],
+        resourceArea: activeResources(4),
+        deck: 5,
+      },
+      { play: [enemy], deck: 5 },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [firstFriendlyId, secondFriendlyId] = p1.getCardsInZone("battleArea");
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+    const commandId = p1.getHand()[0]!;
+
+    expectSuccess(p1.playCommand(commandId));
+
+    expect(p1.getVisibleCard(firstFriendlyId!)?.effectiveAp).toBe(4);
+    expect(p1.getVisibleCard(secondFriendlyId!)?.effectiveAp).toBe(5);
+    expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(4);
+    expect(p1.getCardZone(commandId)).toBe(`trash:${PLAYER_ONE}`);
+
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
+    expect(p1.getVisibleCard(firstFriendlyId!)?.effectiveAp).toBe(2);
+    expect(p1.getVisibleCard(secondFriendlyId!)?.effectiveAp).toBe(3);
+  });
+
+  it("resolves and moves to trash when no friendly Units are in play", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd01CitizensTakeAStand105],
+      resourceArea: activeResources(4),
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const commandId = p1.getHand()[0]!;
+
+    expectSuccess(p1.playCommand(commandId));
+
+    expect(p1.getCardsInZone("battleArea")).toHaveLength(0);
+    expect(p1.getCardZone(commandId)).toBe(`trash:${PLAYER_ONE}`);
+  });
+
+  it("cannot use its Main effect in a legally reached Action step", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd01CitizensTakeAStand105],
+      resourceArea: activeResources(4),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+
+    expectFailure(p1.playCommand(gd01CitizensTakeAStand105), "WRONG_TIMING");
+  });
+
+  it("cannot be played below its printed Lv.4 requirement", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd01CitizensTakeAStand105],
+      resourceArea: activeResources(3),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+
+    expectFailure(p1.playCommand(gd01CitizensTakeAStand105), "INSUFFICIENT_RESOURCE_LEVEL");
+    expect(p1.getCardZone(gd01CitizensTakeAStand105)).toBe(`hand:${PLAYER_ONE}`);
+  });
+
+  it("cannot pay its printed cost after a legal setup leaves no active Resources", () => {
+    const setup = createMockCommand({
+      name: "Resource Setup",
+      level: 0,
+      cost: 4,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [],
+          sourceText: "【Main】Do nothing.",
+        },
+      ],
+    });
+    const engine = GundamTestEngine.create({
+      hand: [setup, gd01CitizensTakeAStand105],
+      resourceArea: activeResources(4),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [setupId, commandId] = p1.getHand();
+
+    expectSuccess(p1.playCommand(setupId!));
+    expect(p1.getCardsInZone("resourceArea").filter((id) => !p1.isExhausted(id))).toHaveLength(0);
+    expectFailure(p1.playCommand(commandId!), "INSUFFICIENT_RESOURCES");
+    expect(p1.getCardZone(commandId!)).toBe(`hand:${PLAYER_ONE}`);
   });
 });

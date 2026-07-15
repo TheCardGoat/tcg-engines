@@ -13,7 +13,9 @@ import {
 export const progCarnageAtTheColosseumBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "progCarnageAtTheColosseum",
   label: "Carnage At The Colosseum - reduced cost and weaker rival target",
-  references: ["packages/engine/src/cards/spoiler/programs/carnage-at-the-colosseum.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/programs/carnage-at-the-colosseum.test.ts",
+  ],
   async run(pom) {
     const program = expectDefined(
       "Carnage At The Colosseum in hand",

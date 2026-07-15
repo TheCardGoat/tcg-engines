@@ -4,6 +4,7 @@ export const gd01GundamAerialMirasoulFlightUnit082: UnitCard = {
   cardNumber: "GD01-082",
   name: "Gundam Aerial (Mirasoul Flight Unit)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["academy"],
   id: "GD01-082",
@@ -41,6 +42,7 @@ export const gd01GundamAerialMirasoulFlightUnit082: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 3,
+  linkCondition: "[Suletta Mercury]",
   effect:
     "【During Pair】【Activate･Action】【Once per Turn】②：Choose 1 enemy Unit. It gets AP-1 during this battle.<br>",
   effects: [

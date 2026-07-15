@@ -9,7 +9,9 @@ import {
   type ReactNode,
 } from "react";
 import { IconX } from "@tabler/icons-react";
+import { useHasHover } from "../../../../lib/media-query";
 import { CardImage } from "@tcg/simulator-ui";
+import { useCardInspect } from "../GameBoard/CardInspectContext";
 import classes from "./CardPreview.module.css";
 
 const CARD_BACK = "https://r2.tcg.online/public/cyberpunk/cards/back/card-back.webp";
@@ -58,6 +60,8 @@ export function CardPreviewProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<CardPreviewState | null>(null);
   const [imageStatus, setImageStatus] = useState<PreviewImageStatus>("loading");
   const loadedImageUrls = useRef(new Set<string>());
+  const hasHover = useHasHover();
+  const { inspect } = useCardInspect();
   const handleImageLoad = useCallback(() => {
     if (state?.imageUrl) {
       loadedImageUrls.current.add(state.imageUrl);
@@ -69,12 +73,26 @@ export function CardPreviewProvider({ children }: { children: ReactNode }) {
   const value = useMemo<CardPreviewContextValue>(
     () => ({
       show: (next) => {
+        if (!hasHover) {
+          setState(null);
+          inspect({
+            imageUrl: next.imageUrl,
+            name: next.details?.name ?? next.alt,
+            color: next.color,
+          });
+          return;
+        }
         setImageStatus(loadedImageUrls.current.has(next.imageUrl) ? "loaded" : "loading");
         setState(next);
       },
-      hide: () => setState(null),
+      hide: () => {
+        if (!hasHover) {
+          return;
+        }
+        setState(null);
+      },
     }),
-    [],
+    [hasHover, inspect],
   );
 
   return (

@@ -1,17 +1,20 @@
 import { describe, it, expect } from "vite-plus/test";
-import { GundamTestEngine, PLAYER_ONE } from "@tcg/gundam-engine";
+import { GundamTestEngine, PLAYER_ONE, activeResources, expectSuccess } from "@tcg/gundam-engine";
 import { st07GundamExia002 } from "./002-gundam-exia.ts";
 
 describe("Gundam Exia (ST07-002)", () => {
-  it("can be placed in the battle area with its printed stats", () => {
-    const engine = GundamTestEngine.create({ play: [st07GundamExia002] });
+  it("can be deployed with 4 resources by paying 2", () => {
+    const engine = GundamTestEngine.create({
+      hand: [st07GundamExia002],
+      resourceArea: activeResources(4),
+    });
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const unitId = p1.getHand()[0]!;
 
-    expect(p1.getCardsInZone("battleArea")).toHaveLength(1);
-    expect(st07GundamExia002.type).toBe("unit");
-    expect(st07GundamExia002.level).toBe(4);
-    expect(st07GundamExia002.cost).toBe(2);
-    expect(st07GundamExia002.ap).toBe(4);
-    expect(st07GundamExia002.hp).toBe(3);
+    expectSuccess(p1.deployUnit(unitId));
+
+    expect(p1.getCardsInZone("battleArea")).toContain(unitId);
+    expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(2);
+    expect(p1.getVisibleCard(unitId)).toMatchObject({ effectiveAp: 4, effectiveHp: 3 });
   });
 });

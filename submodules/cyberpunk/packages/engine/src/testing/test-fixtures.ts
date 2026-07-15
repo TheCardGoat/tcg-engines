@@ -1,6 +1,6 @@
 import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
 import type { PlayerId } from "../types/branded.ts";
-import type { DieType } from "../types/gig-die.ts";
+import { DIE_MAX_VALUES, STANDARD_GIG_DICE, type DieType } from "../types/gig-die.ts";
 import type { GamePhase, AttackState } from "../types/match-state.ts";
 import type { TimeControlConfig } from "@tcg/engine-core";
 
@@ -14,6 +14,14 @@ export interface GigFixtureEntry {
   source?: "self" | "rival";
 }
 
+/**
+ * A gig fixture entry, or a bare face value (shorthand). A bare number is
+ * auto-expanded into a {@link GigFixtureEntry} whose `dieType` is the smallest
+ * standard die that can show that value (e.g. `6` → d6, `11` → d12, `20` → d20).
+ * This lets tests write `gigArea: [2, 5, 10]` instead of spelling out die types.
+ */
+export type GigFixture = GigFixtureEntry | number;
+
 export type FixtureCardEntry = StructuredCardDefinition | FixtureCardState;
 
 export interface FixtureCardState {
@@ -22,7 +30,7 @@ export interface FixtureCardState {
   faceDown?: boolean;
   damage?: number;
   powerModifier?: number;
-  playedThisTurn?: boolean;
+  hasLag?: boolean;
   hasAttackedThisTurn?: boolean;
   counters?: Record<string, number>;
   attachedGearIds?: string[];
@@ -36,8 +44,36 @@ export interface PlayerFixture {
   trash?: number | FixtureCardEntry[];
   legendArea?: number | FixtureCardEntry[];
   eddies?: number;
+  spentEddies?: number;
   fixerDice?: DieType[];
-  gigArea?: GigFixtureEntry[];
+  gigArea?: GigFixture[];
+}
+
+/**
+ * Smallest standard die (ascending: d4, d6, d8, d10, d12, d20) whose maximum
+ * face value can hold `faceValue`. Falls back to d20 for out-of-range values
+ * (the caller still gets a fixture warning at setup time).
+ */
+function smallestDieForFaceValue(faceValue: number): DieType {
+  for (const dieType of STANDARD_GIG_DICE.slice().reverse()) {
+    if (faceValue <= DIE_MAX_VALUES[dieType]) return dieType;
+  }
+  return "d20";
+}
+
+/**
+ * Normalize the {@link GigFixture} shorthand into full {@link GigFixtureEntry}s.
+ * Bare numbers become entries with an auto-assigned `dieType`.
+ */
+export function normalizeGigFixtures(
+  fixtures: GigFixture[] | undefined,
+): GigFixtureEntry[] | undefined {
+  if (!fixtures?.length) return undefined;
+  return fixtures.map((fixture) =>
+    typeof fixture === "number"
+      ? { dieType: smallestDieForFaceValue(fixture), faceValue: fixture }
+      : fixture,
+  );
 }
 
 export interface TestEngineOptions {

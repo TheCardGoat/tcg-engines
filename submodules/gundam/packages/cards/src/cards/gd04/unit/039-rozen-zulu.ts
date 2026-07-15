@@ -81,25 +81,14 @@ export const gd04RozenZulu039: UnitCard = {
       directives: [
         {
           action: {
-            action: "dealDamage",
+            action: "dealDamageByTargetKeyword",
             amount: 1,
+            keyword: "Repair",
+            keywordAmount: 3,
             target: {
               owner: "opponent",
               cardType: "unit",
               count: 1,
-            },
-          },
-        },
-        {
-          optional: true,
-          action: {
-            action: "dealDamage",
-            amount: 2,
-            target: {
-              owner: "opponent",
-              cardType: "unit",
-              count: 1,
-              hasKeyword: "Repair",
             },
           },
         },

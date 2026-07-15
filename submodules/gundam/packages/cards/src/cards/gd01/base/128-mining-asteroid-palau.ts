@@ -4,6 +4,8 @@ export const gd01MiningAsteroidPalau128: BaseCard = {
   cardNumber: "GD01-128",
   name: "Mining Asteroid Palau",
   type: "base",
+  battlefieldZones: ["space"],
+  color: "red",
   traits: ["neo zeon", "stronghold"],
   id: "GD01-128",
   canonicalId: "GD01-128",

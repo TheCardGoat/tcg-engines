@@ -10,32 +10,38 @@
     ],
     "catalog": {
       "@types/node": "^24",
-      "typescript": "^5",
-      "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-      "vite-plus": "latest",
-      "vitest": "npm:@voidzero-dev/vite-plus-test@latest",
-      "zod": "^4.4.3"
+      "typescript": "npm:@typescript/typescript6@6.0.2",
+      "vite": "npm:@voidzero-dev/vite-plus-core@0.2.4",
+      "vite-plus": "0.2.4",
+      "vitest": "npm:@voidzero-dev/vite-plus-test@0.1.24",
+      "zod": "^4.4.3",
+      "@typescript/native": "npm:typescript@7.0.2",
+      "@typescript/native-preview": "npm:typescript@7.0.2"
     }
   },
   "type": "module",
   "scripts": {
     "ci-check": "vp run ci:check",
+    "ci-check-full": "vp run ci:full",
     "build": "bunx turbo run build",
     "import:card-data": "pnpm --dir packages/cards run import:card-data",
     "prepare": "node -e \"process.exit(process.env.CI?0:1)\" || vp config"
   },
   "devDependencies": {
+    "@typescript/native": "catalog:",
+    "@typescript/native-preview": "catalog:",
     "bun-types": "catalog:",
     "turbo": "^2.9.18",
     "typescript": "catalog:",
     "vite-plus": "catalog:"
   },
   "overrides": {
+    "@voidzero-dev/vite-plus-core": "0.2.4",
     "vite": "catalog:",
     "vitest": "catalog:"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.18.0"
   },
   "packageManager": "pnpm@10.33.0"
 }

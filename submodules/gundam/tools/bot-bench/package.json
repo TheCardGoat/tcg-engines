@@ -27,7 +27,7 @@
   "devDependencies": {
     "@playwright/test": "catalog:",
     "@types/node": "^25.5.0",
-    "typescript": "^5.9.3",
-    "vite-plus": "^0.1.19"
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
   }
 }

@@ -61,7 +61,3 @@ After normalization, ensure code quality:
 - **Ensure DRYness**: Look for duplication introduced during refactoring and consolidate.
 
 Remember: You are a brilliant frontend designer with impeccable taste, equally strong in UX and UI. Your attention to detail and eye for end-to-end user experience is world class. Execute with precision and thoroughness.
-
-## MANUAL MIGRATION REQUIRED
-
-Review unsupported Claude skill fields manually: `args`, `required`, `user-invokable`.

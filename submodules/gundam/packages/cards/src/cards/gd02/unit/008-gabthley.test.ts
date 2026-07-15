@@ -7,7 +7,6 @@ import {
   createMockPilot,
   createMockUnit,
   expectSuccess,
-  getDamageCounter,
 } from "@tcg/gundam-engine";
 import { gd02Gabthley008 } from "./008-gabthley.ts";
 
@@ -28,20 +27,22 @@ describe("Gabthley (GD02-008)", () => {
         resourceArea: activeResources(5),
         deck: 5,
       },
-      { play: [enemy] },
+      { play: [{ card: enemy, exhausted: true }] },
     );
 
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const pilotId = p1.getHand()[0]!;
+    const gabthleyId = p1.getCardsInZone("battleArea")[0]!;
+    const p2 = engine.asPlayer(PLAYER_TWO);
     const p2Cards = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea");
     const enemyId = p2Cards[0]!;
 
-    // Rest the enemy so it qualifies as a target for the whenLinked effect.
-    engine.getG().exhausted[enemyId] = true;
-
-    expectSuccess(p1.assignPilot(pilot, gd02Gabthley008));
+    expectSuccess(p1.assignPilot(pilotId, gabthleyId));
+    expect(p1.getBoardView().pendingChoice?.kind).toBe("targetSelection");
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
 
     // The whenLinked trigger fired and was auto-resolved (single valid
     // target). It dealt 1 damage to the rested enemy unit.
-    expect(getDamageCounter(engine, enemyId)).toBe(1);
+    expect(p2.getDamage(enemyId)).toBe(1);
   });
 });

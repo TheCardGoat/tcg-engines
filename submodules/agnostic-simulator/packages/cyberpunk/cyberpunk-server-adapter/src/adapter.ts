@@ -130,11 +130,20 @@ export const cyberpunkServerAdapter: GameAdapter = {
           unknownEntries.length === 0
             ? "All cards are part of the Cyberpunk Alpha pool"
             : `Unknown cards: ${unknownEntries.map((e) => e.cardId).join(", ")}`,
+        details:
+          unknownEntries.length === 0
+            ? undefined
+            : { cardIds: unknownEntries.map((entry) => entry.cardId) },
       },
       ...deckValidation.issues.map((issue) => ({
         kind: issue.code,
         passed: false,
         message: issue.message,
+        details: {
+          ...(issue.cardId ? { cardId: issue.cardId } : {}),
+          ...(issue.cardName ? { cardName: issue.cardName } : {}),
+          ...(issue.color ? { color: issue.color } : {}),
+        },
       })),
       {
         kind: "deck-size",

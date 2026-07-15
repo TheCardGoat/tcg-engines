@@ -20,7 +20,7 @@ export const unitMamanBrigitteBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitMamanBrigitte",
   label: "Maman Brigitte - discards programs to bottom-deck unequipped unit",
   references: [
-    "packages/engine/src/cards/spoiler/units/maman-brigitte.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/maman-brigitte-spirit-of-death.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

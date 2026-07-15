@@ -15,7 +15,7 @@ describe("V - Corporate Exile (The Heist retail starter)", () => {
     expect(result.success).toBe(true);
     const v = engine.getCard(theHeistRetailStarterDeckVCorporateExile, "field", P1);
     expect(v.meta.spent).toBe(false);
-    expect(v.meta.playedThisTurn).toBe(false);
+    expect(v.meta.hasLag).toBe(false);
     expectAttackCandidate(engine, theHeistRetailStarterDeckVCorporateExile, { as: P1 });
   });
 

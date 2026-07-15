@@ -1,63 +1,126 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
-  asPlayerId,
-  expectSuccess,
-  expectFailure,
+  PLAYER_TWO,
   activeResources,
-  seedShieldsFromDeck,
+  createMockCommand,
+  createMockPilot,
+  createMockUnit,
+  expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd01FirstContact107 } from "./107-first-contact.ts";
+
 describe("First Contact (GD01-107)", () => {
-  it("【Burst】Place 1 EX Resource.", () => {
-    const engine = GundamTestEngine.create({ deck: [gd01FirstContact107] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, gd01FirstContact107.cardNumber, asPlayerId(PLAYER_ONE));
-
+  it("【Burst】 places one active EX Resource after the player accepts the revealed Shield", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
+    const host = createMockUnit({ ap: 2, hp: 4 });
+    const pilot = createMockPilot({ level: 1, cost: 1 });
+    const engine = GundamTestEngine.create(
+      { hand: [pilot], play: [host], shieldArea: [gd01FirstContact107], deck: 5 },
+      { play: [attacker], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
+    );
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const resourcesBefore = p1.getCardsInZone("resourceArea").length;
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional", directiveIndex: -1 });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    // `placeResource` moves the command card itself from its current zone
-    // (trash, after shield-destruction) into the resource area.
-    expect(p1.getCardsInZone("resourceArea").length).toBe(resourcesBefore + 1);
-    expect(p1.getCardsInZone("resourceArea")).toContain(shieldId);
+    const resources = p1.getCardsInZone("resourceArea");
+    expect(resources).toHaveLength(1);
+    const exResourceId = resources[0]!;
+    expect(p1.isExhausted(exResourceId)).toBe(false);
+
+    expectSuccess(p2.passPhase());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.assignPilot(pilot, hostId));
+    expect(p1.getCardsInZone("resourceArea")).not.toContain(exResourceId);
+    expect(p1.getCardsInZone("removalArea")).not.toContain(exResourceId);
+    expect(p1.getCardZone(exResourceId)).toBeUndefined();
+    expect(p1.getPilotId(hostId)).toBeDefined();
   });
 
-  describe("【Main】Place 1 rested Resource.", () => {
-    it("cannot be played during action-phase (main-only timing)", () => {
-      const engine = GundamTestEngine.create({
-        hand: [gd01FirstContact107],
-        resourceArea: activeResources(3),
-      });
-      engine.setPhase("end-phase");
-      engine.setStep("action-step");
-      const p1 = engine.asPlayer(PLAYER_ONE);
-
-      expectFailure(p1.playCommand(gd01FirstContact107), "WRONG_TIMING");
+  it("【Main】 places the top Resource from the resource deck rested and moves the Command to trash", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd01FirstContact107],
+      resourceArea: activeResources(3),
+      resourceDeck: 2,
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const commandId = p1.getHand()[0]!;
+    const existingResources = new Set(p1.getCardsInZone("resourceArea"));
+    const resourceDeckBefore = p1.getBoardView().players[PLAYER_ONE]!.resourceDeckCount;
 
-    it("places the command card as a rested resource in resourceArea", () => {
-      const engine = GundamTestEngine.create({
-        hand: [gd01FirstContact107],
-        resourceArea: activeResources(3),
-      });
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const cmdId = p1.getHand()[0]!;
-      const resourcesBefore = p1.getCardsInZone("resourceArea").length;
+    expectSuccess(p1.playCommand(commandId));
 
-      expectSuccess(p1.playCommand(gd01FirstContact107));
+    const placedResourceId = p1
+      .getCardsInZone("resourceArea")
+      .find((cardId) => !existingResources.has(cardId));
+    expect(placedResourceId).toBeDefined();
+    expect(p1.isExhausted(placedResourceId!)).toBe(true);
+    expect(p1.getBoardView().players[PLAYER_ONE]!.resourceDeckCount).toBe(resourceDeckBefore - 1);
+    expect(p1.getCardZone(commandId)).toBe(`trash:${PLAYER_ONE}`);
+  });
 
-      const resourcesAfter = p1.getCardsInZone("resourceArea");
-      expect(resourcesAfter.length).toBe(resourcesBefore + 1);
-      expect(resourcesAfter).toContain(cmdId);
-      expect(engine.getG().exhausted[cmdId]).toBe(true);
-      expect(p1.getCardsInZone("trash")).not.toContain(cmdId);
+  it("cannot use its Main effect in a legally reached Action step", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd01FirstContact107],
+      resourceArea: activeResources(3),
+      resourceDeck: 2,
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+
+    expectFailure(p1.playCommand(gd01FirstContact107), "WRONG_TIMING");
+  });
+
+  it("cannot be played below its printed Lv.3 requirement", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd01FirstContact107],
+      resourceArea: activeResources(2),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+
+    expectFailure(p1.playCommand(gd01FirstContact107), "INSUFFICIENT_RESOURCE_LEVEL");
+    expect(p1.getCardZone(gd01FirstContact107)).toBe(`hand:${PLAYER_ONE}`);
+  });
+
+  it("cannot pay its printed cost after a legal setup leaves only 2 active Resources", () => {
+    const setup = createMockCommand({
+      name: "Resource Setup",
+      level: 0,
+      cost: 1,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [],
+          sourceText: "【Main】Do nothing.",
+        },
+      ],
+    });
+    const engine = GundamTestEngine.create({
+      hand: [setup, gd01FirstContact107],
+      resourceArea: activeResources(3),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [setupId, commandId] = p1.getHand();
+
+    expectSuccess(p1.playCommand(setupId!));
+    expect(p1.getCardsInZone("resourceArea").filter((id) => !p1.isExhausted(id))).toHaveLength(2);
+    expectFailure(p1.playCommand(commandId!), "INSUFFICIENT_RESOURCES");
+    expect(p1.getCardZone(commandId!)).toBe(`hand:${PLAYER_ONE}`);
   });
 });

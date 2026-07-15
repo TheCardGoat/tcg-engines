@@ -4,6 +4,8 @@ export const gd01NahelArgama123: BaseCard = {
   cardNumber: "GD01-123",
   name: "Nahel Argama",
   type: "base",
+  battlefieldZones: ["space", "earth"],
+  color: "blue",
   traits: ["earth federation", "warship"],
   id: "GD01-123",
   canonicalId: "GD01-123",
@@ -64,24 +66,31 @@ export const gd01NahelArgama123: BaseCard = {
       directives: [
         {
           action: {
-            action: "addShieldToHand",
-            count: 1,
-          },
-        },
-        {
-          action: {
-            action: "rest",
-            target: {
-              owner: "opponent",
-              cardType: "unit",
-              count: 1,
-              attributeFilters: [
+            action: "resolveThenQueue",
+            first: { action: "addShieldToHand", count: 1 },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
                 {
-                  attribute: "hp",
-                  comparison: "lte",
-                  value: 3,
+                  action: {
+                    action: "rest",
+                    target: {
+                      owner: "opponent",
+                      cardType: "unit",
+                      count: 1,
+                      attributeFilters: [
+                        {
+                          attribute: "hp",
+                          comparison: "lte",
+                          value: 3,
+                        },
+                      ],
+                    },
+                  },
                 },
               ],
+              sourceText: "Then, choose 1 enemy Unit with 3 or less HP. Rest it.",
             },
           },
         },

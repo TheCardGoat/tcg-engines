@@ -26,15 +26,11 @@ describe("Reboot Optics", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailRebootOptics],
-        field: [
-          { card: welcomeToNightCityRetailCorpoSecurity, spent: true, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true, hasLag: false }],
         eddies: 2,
       },
       {
-        field: [
-          { card: welcomeToNightCityRetailOffdutyMalfini, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailOffdutyMalfini, spent: false, hasLag: false }],
       },
     );
 
@@ -67,15 +63,11 @@ describe("Reboot Optics", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailRebootOptics],
-        field: [
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
         eddies: 2,
       },
       {
-        field: [
-          { card: welcomeToNightCityRetailOffdutyMalfini, spent: true, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailOffdutyMalfini, spent: true, hasLag: false }],
       },
     );
 

@@ -16,7 +16,7 @@ describe("Jackie Welles — Ride or Die Choom (retail)", () => {
           {
             card: welcomeToNightCityRetailJackieWellesRideOrDieChoom,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         gigArea: [
@@ -55,7 +55,7 @@ describe("Jackie Welles — Ride or Die Choom (retail)", () => {
           {
             card: welcomeToNightCityRetailJackieWellesRideOrDieChoom,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
         gigArea: [
@@ -94,7 +94,7 @@ describe("Jackie Welles — Ride or Die Choom (retail)", () => {
         {
           card: welcomeToNightCityRetailJackieWellesRideOrDieChoom,
           spent: false,
-          playedThisTurn: false,
+          hasLag: false,
         },
       ],
     });
@@ -120,7 +120,7 @@ describe("Jackie Welles — Ride or Die Choom (retail)", () => {
           {
             card: welcomeToNightCityRetailJackieWellesRideOrDieChoom,
             spent: false,
-            playedThisTurn: false,
+            hasLag: false,
           },
         ],
       },

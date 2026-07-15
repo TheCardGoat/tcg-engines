@@ -5,6 +5,7 @@ import {
   getSafeAutomatedActionStrategyOption,
   type CommandResult,
   type AnimationScript,
+  type DecisionDiagnostics,
   type MatchState,
   type MoveLog,
 } from "@tcg/cyberpunk-engine";
@@ -18,6 +19,7 @@ import type {
   AcceptedMoveRecord,
   BotActionOptions,
   BotActionResult,
+  BotDecisionDiagnostics,
   DispatchContext,
   DispatchResult,
   EngineLogRecord,
@@ -41,8 +43,8 @@ import {
  * - `takeAutomatedAction` resolves a named Cyberpunk strategy through the
  *   engine registry and drives it through {@link AIPlayer}, so server-side bot
  *   moves use the same prompt/candidate harness as simulator practice bots.
- * - Undo and forfeit remain unsupported; omitting them keeps the move
- *   processor's "not supported" gateway error intact for those paths.
+ * - Undo remains local-only. Server-authoritative forfeits reuse the engine's
+ *   always-legal concede transition and preserve the platform terminal reason.
  */
 
 export class CyberpunkServerEngine implements ServerGameEngine {
@@ -128,6 +130,36 @@ export class CyberpunkServerEngine implements ServerGameEngine {
       overtimeActive: state.G.overtime === true || state.G.turnMetadata.overtimeActive === true,
       players: players as PublicGameEndSummary["players"],
     };
+  }
+
+  forfeit(winnerId: string, reason: string, context: DispatchContext): DispatchResult {
+    const state = this.engine.getState();
+    const winnerIsSeated = state.ctx.playerIds.some(
+      (playerId) => (playerId as string) === winnerId,
+    );
+    const loserId = state.ctx.playerIds.find((playerId) => (playerId as string) !== winnerId);
+    if (!winnerIsSeated || !loserId) {
+      return {
+        success: false,
+        error: `Cannot forfeit Cyberpunk game to unknown winner ${winnerId}.`,
+        errorCode: "invalid_forfeit_winner",
+        stateID: state.ctx.stateID,
+      };
+    }
+
+    const result = this.engine.processCommand(
+      {
+        commandID: `${context.gameId}:${winnerId}:forfeit:${state.ctx.stateID}`,
+        move: "concede",
+        input: { args: {} },
+      },
+      loserId,
+    );
+    if (result.success) preserveForfeitReason(result, reason);
+    return this.#toDispatchResult(result, context, winnerId, "forfeitGame", {
+      winnerId,
+      reason,
+    });
   }
 
   getInteractionView(actorId: string): EngineInteractionView {
@@ -296,7 +328,10 @@ export class CyberpunkServerEngine implements ServerGameEngine {
         );
         return {
           finalResult: dispatch,
+          strategyId: strategyOption.id,
           selectedCandidate: { family: step.decision.move },
+          decisionDiagnostics: toBotDecisionDiagnostics(step.decision.diagnostics),
+          decisionDurationMs: step.decisionDurationMs,
         };
       }
       case "idle":
@@ -307,6 +342,7 @@ export class CyberpunkServerEngine implements ServerGameEngine {
             errorCode: "bot_idle",
             stateID: this.getStateID(),
           },
+          strategyId: strategyOption.id,
           blocked: { reason: step.reason },
         };
       case "stuck":
@@ -317,6 +353,7 @@ export class CyberpunkServerEngine implements ServerGameEngine {
             errorCode: "bot_stuck",
             stateID: this.getStateID(),
           },
+          strategyId: strategyOption.id,
           blocked: { reason: step.pendingType ?? "strategy-stuck" },
         };
       case "illegal":
@@ -327,7 +364,10 @@ export class CyberpunkServerEngine implements ServerGameEngine {
             errorCode: step.errorCode,
             stateID: this.getStateID(),
           },
+          strategyId: strategyOption.id,
           selectedCandidate: { family: step.decision.move },
+          decisionDiagnostics: toBotDecisionDiagnostics(step.decision.diagnostics),
+          decisionDurationMs: step.decisionDurationMs,
           blocked: { reason: "illegal-command" },
         };
     }
@@ -406,6 +446,42 @@ export class CyberpunkServerEngine implements ServerGameEngine {
   getRawState(): MatchState {
     return this.engine.getState();
   }
+}
+
+function preserveForfeitReason(
+  result: Extract<CommandResult, { success: true }>,
+  reason: string,
+): void {
+  result.state.G.winReason = reason;
+  result.undoable = false;
+
+  const reasonPatch = result.patches.find(
+    (patch) => patch.path.length === 2 && patch.path[0] === "G" && patch.path[1] === "winReason",
+  );
+  if (reasonPatch && reasonPatch.op !== "remove") reasonPatch.value = reason;
+  else result.patches.push({ op: "replace", path: ["G", "winReason"], value: reason });
+
+  for (const event of result.gameEvents) {
+    if (event.type === "gameEnded") event.reason = reason;
+  }
+  for (const log of result.moveLogs) {
+    if (log.type === "gameEnded") log.reason = reason;
+  }
+}
+
+function toBotDecisionDiagnostics(
+  diagnostics: DecisionDiagnostics | undefined,
+): BotDecisionDiagnostics | undefined {
+  if (!diagnostics) return undefined;
+  return {
+    kind: "search",
+    strategyId: diagnostics.strategy,
+    candidateCount: diagnostics.candidateCount,
+    nodesEvaluated: diagnostics.nodesEvaluated,
+    depthReached: diagnostics.depthReached,
+    scoreGap: diagnostics.scoreGap,
+    cutoffReason: diagnostics.cutoffReason,
+  };
 }
 
 function animationPacketsFromResult(params: {

@@ -4,6 +4,7 @@ export const gd01GundamSandrock028: UnitCard = {
   cardNumber: "GD01-028",
   name: "Gundam Sandrock",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-028",
@@ -58,6 +59,7 @@ export const gd01GundamSandrock028: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 4,
+  linkCondition: "[Quatre Raberba Winner]",
   effect: "【Deploy】You may deploy 1 (Maganac Corps) Unit card from your hand.<br>",
   effects: [
     {

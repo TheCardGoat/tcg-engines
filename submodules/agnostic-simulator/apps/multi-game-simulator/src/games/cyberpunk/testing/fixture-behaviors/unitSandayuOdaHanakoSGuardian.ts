@@ -12,7 +12,7 @@ export const unitSandayuOdaHanakoSGuardianBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitSandayuOdaHanakoSGuardian",
   label: "Sandayu Oda - value pairs spend units and allow unit attack",
   references: [
-    "packages/engine/src/cards/spoiler/units/sandayu-oda-hanako-s-guardian.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/sandayu-oda-hanako-s-guardian.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

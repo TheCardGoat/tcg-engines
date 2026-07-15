@@ -7,7 +7,8 @@ import { evaluateCondition, resolveTarget } from "../effects/target-resolver.ts"
 import type { ResolutionContext } from "../effects/target-resolver.ts";
 import { defOf } from "../state/lookups.ts";
 import { isReactStep } from "./is-react-step.ts";
-import { availableEddies } from "./eddie-resources.ts";
+import { availableEddies, availableEddiesAfterAbilityCosts } from "./eddie-resources.ts";
+import { computeEffectiveCost } from "./compute-effective-cost.ts";
 
 export interface ActivateAbilityInput extends MoveInput {
   args: {
@@ -129,11 +130,19 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
     const abilities: Ability[] =
       (cardDef as import("@tcg/cyberpunk-types").StructuredCardDefinition)?.abilities ?? [];
     const ability = abilities[abilityIndex]!;
+    const attachedToCard = card.meta.attachedToId
+      ? state.G.cardIndex[card.meta.attachedToId as string]
+      : undefined;
+    const activateParams = {
+      cardName: cardDef.displayName,
+      ...(attachedToCard ? { attachedToName: defOf(attachedToCard).displayName } : {}),
+    };
+    const messageKey = attachedToCard ? "move.activateAbility.attached" : "move.activateAbility";
 
     operations.event.emit({
       type: "actionLog",
-      messageKey: "move.activateAbility",
-      params: { cardName: cardDef.displayName },
+      messageKey,
+      params: activateParams,
       playerId,
     });
 
@@ -146,8 +155,8 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
       optional: false,
       event: {
         type: "actionLog",
-        messageKey: "move.activateAbility",
-        params: { cardName: cardDef.displayName },
+        messageKey,
+        params: activateParams,
         playerId,
       },
       contextTargets: {},
@@ -199,7 +208,7 @@ export function canPayCosts(
       for (const id of targets) {
         const c = state.G.cardIndex[id as string];
         if (c?.meta.spent) return false;
-        if ((id as string) === (cardId as string) && c?.meta.playedThisTurn) {
+        if ((id as string) === (cardId as string) && c?.meta.hasLag) {
           const cardDef = c ? defOf(c) : undefined;
           // ADRENALINE is attack-scoped; it does not override Lag for self-spend effects.
           if (cardDef?.type === "unit") return false;
@@ -268,35 +277,72 @@ export function canResolveActivatedAbility(
     const min = getSelectionMin(binding.target);
     const max = getSelectionMax(binding.target);
     if (min === 1 && max === 1) {
+      const remainingEddies = availableEddiesAfterAbilityCosts(
+        ability,
+        state,
+        cardId,
+        playerId,
+        ctx.boundTargets,
+      );
       return targets.some((targetId) =>
-        requiredEffectsHaveTargets(ability, {
-          ...ctx,
-          boundTargets: {
-            ...ctx.boundTargets,
-            [binding.id]: [targetId],
+        requiredEffectsHaveTargets(
+          ability,
+          {
+            ...ctx,
+            boundTargets: {
+              ...ctx.boundTargets,
+              [binding.id]: [targetId],
+            },
           },
-        }),
+          remainingEddies,
+        ),
       );
     }
   }
 
-  return requiredEffectsHaveTargets(ability, ctx);
+  return requiredEffectsHaveTargets(
+    ability,
+    ctx,
+    availableEddiesAfterAbilityCosts(ability, state, cardId, playerId, ctx.boundTargets),
+  );
 }
 
-function requiredEffectsHaveTargets(ability: Ability, ctx: ResolutionContext): boolean {
+function requiredEffectsHaveTargets(
+  ability: Ability,
+  ctx: ResolutionContext,
+  remainingEddies: number,
+): boolean {
   for (const effect of ability.effects) {
     if (effect.conditions?.length && !effect.conditions.every((c) => evaluateCondition(c, ctx))) {
       continue;
     }
-    if (effect.optional || effect.effect === "searchDeck") continue;
+    if (effect.optional || effect.effect === "scry") continue;
     if (!("target" in effect) || !effect.target) continue;
 
     const target = effect.target;
     if (target.selector === "bound") {
       const declared = ability.bindings?.find((binding) => binding.id === target.id);
-      if (declared && getSelectionMode(declared.target) === "choose") continue;
+      if (
+        declared &&
+        getSelectionMode(declared.target) === "choose" &&
+        ctx.boundTargets[target.id] === undefined
+      ) {
+        continue;
+      }
     }
-    if (resolveTarget(target, ctx).length === 0) return false;
+    const targets = resolveTarget(target, ctx);
+    if (targets.length === 0) return false;
+    if (effect.effect === "playCard" && effect.free !== true) {
+      const canPayAtLeastOne = targets.some((targetId) => {
+        const card = ctx.state.G.cardIndex[targetId as string];
+        if (!card) return false;
+        return (
+          computeEffectiveCost(ctx.state, targetId as CardInstanceId, ctx.sourcePlayerId) <=
+          remainingEddies
+        );
+      });
+      if (!canPayAtLeastOne) return false;
+    }
   }
 
   return true;

@@ -15,11 +15,14 @@ import {
   questOnlyTestAutomatedActionStrategy,
 } from "./forced-family-strategy";
 import type { AutomatedActionStrategy } from "./types";
+import type { BotInformationPolicy } from "@tcg/bot-core";
+import currentPromotion from "./promotions/current.json" with { type: "json" };
 
 export interface AutomatedActionStrategyOption {
   id: string;
   label: string;
   description: string;
+  informationPolicy: BotInformationPolicy;
   parentStrategyId?: string;
   strategy: AutomatedActionStrategy;
   supportedActorColorPairs?: readonly string[];
@@ -27,7 +30,7 @@ export interface AutomatedActionStrategyOption {
 }
 
 export const DECK_AWARE_LORE_RACE_STRATEGY_ID = "deck-aware-lore-race";
-export const DEFAULT_AUTOMATED_ACTION_STRATEGY_ID = DECK_AWARE_LORE_RACE_STRATEGY_ID;
+export const DEFAULT_AUTOMATED_ACTION_STRATEGY_ID = currentPromotion.promotedStrategyId;
 export const BEST_DECK_AWARE_LORE_RACE_STRATEGY_ID = "best-deck-aware-lore-race";
 export const BEST_DECK_AWARE_ORACLE_LORE_RACE_STRATEGY_ID = "best-deck-aware-oracle-lore-race";
 export const BOARD_CONTROL_LORE_RACE_STRATEGY_ID = "board-control-lore-race";
@@ -37,10 +40,11 @@ export { CHALLENGE_ONLY_TEST_STRATEGY_ID, QUEST_ONLY_TEST_STRATEGY_ID };
 export const AUTOMATED_ACTION_STRATEGIES: readonly AutomatedActionStrategyOption[] = [
   {
     id: DECK_AWARE_LORE_RACE_STRATEGY_ID,
-    label: "Deck-aware lore race",
+    label: "Deck-aware lore race (Oracle information)",
     description:
-      "Uses deck color, matchup, and per-card weighting for mulligans, inking, and target selection.",
+      "Uses deck color, matchup, per-card weighting, and full opponent deck knowledge for mulligans, inking, and target selection.",
     strategy: deckAwareLoreRaceAutomatedActionStrategy,
+    informationPolicy: "oracle",
     supportedActorColorPairs: DECK_AWARE_COLOR_PAIR_IDS,
   },
   {
@@ -50,6 +54,7 @@ export const AUTOMATED_ACTION_STRATEGIES: readonly AutomatedActionStrategyOption
       "Candidate fair-information strategy that uses typed deck dossiers, matchup plans, and card rules without hidden opponent deck access.",
     parentStrategyId: DECK_AWARE_LORE_RACE_STRATEGY_ID,
     strategy: bestDeckAwareLoreRaceAutomatedActionStrategy,
+    informationPolicy: "public",
   },
   {
     id: BEST_DECK_AWARE_ORACLE_LORE_RACE_STRATEGY_ID,
@@ -58,6 +63,7 @@ export const AUTOMATED_ACTION_STRATEGIES: readonly AutomatedActionStrategyOption
       "Candidate strongest-play oracle variant that reuses the typed matchup system while allowing full opponent deck knowledge.",
     parentStrategyId: BEST_DECK_AWARE_LORE_RACE_STRATEGY_ID,
     strategy: bestDeckAwareOracleLoreRaceAutomatedActionStrategy,
+    informationPolicy: "oracle",
   },
   {
     id: BOARD_CONTROL_LORE_RACE_STRATEGY_ID,
@@ -66,6 +72,7 @@ export const AUTOMATED_ACTION_STRATEGIES: readonly AutomatedActionStrategyOption
       "Pressures lore while trading off tempo to remove opposing quest threats and develop stable permanents.",
     parentStrategyId: DECK_AWARE_LORE_RACE_STRATEGY_ID,
     strategy: boardControlLoreRaceAutomatedActionStrategy,
+    informationPolicy: "public",
   },
   {
     id: AGGRESSIVE_BOARD_CONTROL_LORE_RACE_STRATEGY_ID,
@@ -73,6 +80,7 @@ export const AUTOMATED_ACTION_STRATEGIES: readonly AutomatedActionStrategyOption
     description:
       "Reuses the stable opening plan but pushes harder into value trades and mutual-banish challenges to break opposing boards.",
     strategy: aggressiveBoardControlLoreRaceAutomatedActionStrategy,
+    informationPolicy: "public",
   },
   {
     id: QUEST_ONLY_TEST_STRATEGY_ID,
@@ -80,6 +88,7 @@ export const AUTOMATED_ACTION_STRATEGIES: readonly AutomatedActionStrategyOption
     description:
       "Test/debug strategy that forces quest-first gameplay while still using the shared setup, prompt resolution, and target-selection behavior.",
     strategy: questOnlyTestAutomatedActionStrategy,
+    informationPolicy: "public",
     testOnly: true,
   },
   {
@@ -88,6 +97,7 @@ export const AUTOMATED_ACTION_STRATEGIES: readonly AutomatedActionStrategyOption
     description:
       "Test/debug strategy that forces challenge-first gameplay while still using the shared setup, prompt resolution, and target-selection behavior.",
     strategy: challengeOnlyTestAutomatedActionStrategy,
+    informationPolicy: "public",
     testOnly: true,
   },
 ];

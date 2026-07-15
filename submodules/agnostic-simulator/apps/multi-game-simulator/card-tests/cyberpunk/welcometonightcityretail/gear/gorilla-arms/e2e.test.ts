@@ -25,7 +25,7 @@ test("Gorilla Arms (Retail) - steals a rival Gig with an unshared value", async 
 
   await pom.expectGigCount(CYBERPUNK_P1, 1);
   await pom.expectGigCount(CYBERPUNK_P2, 2);
-  await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, attacker.instanceId, 8);
+  await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, attacker.instanceId, 7);
 
   await pom.attackRival(attacker.instanceId, CYBERPUNK_P1);
   await pom.resolveAttack(CYBERPUNK_P1);
@@ -33,6 +33,11 @@ test("Gorilla Arms (Retail) - steals a rival Gig with an unshared value", async 
   await pom.resolveAttack(CYBERPUNK_P1, { gigIdsToSteal: [firstD4.id] });
 
   expectEqual("Gorilla Arms Retail attack cleared", await pom.getAttackState(), null);
+  const extraGig = expectDefined(
+    "Gorilla Arms Retail extra rival gig",
+    (await pom.getGigDice(CYBERPUNK_P2)).find((die) => die.faceValue === 3),
+  );
+  await pom.resolveEffectTarget([extraGig.id], CYBERPUNK_P1);
   await pom.expectGigCount(CYBERPUNK_P1, 3);
   await pom.expectGigCount(CYBERPUNK_P2, 0);
 

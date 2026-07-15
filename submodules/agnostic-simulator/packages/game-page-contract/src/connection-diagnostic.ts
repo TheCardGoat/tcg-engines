@@ -53,9 +53,18 @@ export interface SimulatorConnectionDiagnostic {
     socketId?: string;
     authModeLabel?: string;
     authenticated?: boolean;
+    authStatus?: "ok" | "refreshing" | "failed";
+    authFailureReason?:
+      | "missing_credentials"
+      | "anonymous_welcome"
+      | "connect_error"
+      | "refresh_failed"
+      | "refresh_exhausted";
     latencyMs?: number;
     lastPongAt?: string;
     lastPingAt?: string;
+    lastHeartbeatSentAt?: string;
+    lastHeartbeatAckAt?: string;
     reconnectAttempts?: number;
     disconnectCount?: number;
     lastError?: string;
@@ -128,9 +137,13 @@ function sanitizeConnection(
     socketId: connection.socketId,
     authModeLabel: connection.authModeLabel,
     authenticated: connection.authenticated,
+    authStatus: connection.authStatus,
+    authFailureReason: connection.authFailureReason,
     latencyMs: connection.latencyMs,
     lastPongAt: connection.lastPongAt,
     lastPingAt: connection.lastPingAt,
+    lastHeartbeatSentAt: connection.lastHeartbeatSentAt,
+    lastHeartbeatAckAt: connection.lastHeartbeatAckAt,
     reconnectAttempts: connection.reconnectAttempts,
     disconnectCount: connection.disconnectCount,
     lastError: connection.lastError,

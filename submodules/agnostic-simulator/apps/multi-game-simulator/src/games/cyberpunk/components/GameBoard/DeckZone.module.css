@@ -12,6 +12,13 @@
   animation: zone-pulse 1.4s ease-in-out infinite;
 }
 
+.zone[data-has-reveal="true"] {
+  border-color: rgb(74 217 255 / 62%);
+  box-shadow:
+    inset 0 0 0 1px rgb(74 217 255 / 26%),
+    0 0 18px rgb(74 217 255 / 18%);
+}
+
 @keyframes zone-pulse {
   0%,
   100% {
@@ -56,4 +63,17 @@
   color: var(--neon-yellow, #f5e642);
   text-shadow: 0 1px 3px rgb(0 0 0 / 80%);
   z-index: 2;
+}
+
+.revealShelf {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 6px);
+  z-index: 20;
+  transform: translateY(-50%);
+}
+
+.revealShelfOpponent {
+  right: auto;
+  left: calc(100% + 6px);
 }

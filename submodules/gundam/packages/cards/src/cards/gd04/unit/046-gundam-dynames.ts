@@ -50,14 +50,6 @@ export const gd04GundamDynames046: UnitCard = {
       activation: {
         timing: ["deploy"],
       },
-      // KNOWN LIMITATION: `validateDeployTriggerTargets` validates the
-      // counted dealDamage target before any `optionalAnswers` are read,
-      // so deploying Dynames without preselecting an enemy Lv.3-or-lower
-      // is rejected even when the controller wants to decline the
-      // "may rest" branch. The current test exercises the path where the
-      // controller opts in (and therefore must preselect a target);
-      // declining isn't reachable until the validator becomes
-      // optional-answer-aware.
       directives: [
         {
           action: {

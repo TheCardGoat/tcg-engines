@@ -1,57 +1,145 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
+  activeResources,
+  createMockPilot,
   createMockUnit,
-  getDamageCounter,
+  expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd01Shamblo047 } from "./047-shamblo.ts";
 
 describe("Shamblo (GD01-047)", () => {
-  it("【Attack】 deals 3 damage to an enemy Unit when 2+ other rested friendly Units are in play", () => {
-    const ally1 = createMockUnit({ ap: 1, hp: 3 });
-    const ally2 = createMockUnit({ ap: 1, hp: 3 });
-    // Single enemy unit: serves as both combat target and dealDamage target.
-    const enemy = createMockUnit({ ap: 1, hp: 10, level: 5 });
+  it("links with a Newtype Pilot and offers 3 damage after attacking with two other rested Units", () => {
+    const newtypePilot = createMockPilot({ traits: ["newtype"], level: 1, cost: 1 });
+    const firstAlly = createMockUnit({ hp: 4 });
+    const secondAlly = createMockUnit({ hp: 4 });
+    const enemy = createMockUnit({ hp: 10 });
     const engine = GundamTestEngine.create(
-      { play: [gd01Shamblo047, ally1, ally2] },
+      {
+        hand: [gd01Shamblo047, newtypePilot],
+        deck: 2,
+        play: [firstAlly, secondAlly],
+        resourceArea: activeResources(8),
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
+      {
+        play: [enemy],
+        shieldArea: [
+          createMockUnit({ name: "First Allied Attack Shield" }),
+          createMockUnit({ name: "Second Allied Attack Shield" }),
+        ],
+      },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+    const [firstAllyId, secondAllyId] = p1.getCardsInZone("battleArea");
+
+    expectSuccess(p2.enterBattle(enemyId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p2.passPhase());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.passActionStep());
+
+    expectSuccess(p1.enterBattle(firstAllyId!, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p1.enterBattle(secondAllyId!, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expectSuccess(p1.deployUnit(gd01Shamblo047));
+    const shambloId = p1.getCardsInZone("battleArea").at(-1)!;
+    expectSuccess(p1.assignPilot(newtypePilot, shambloId));
+    expectSuccess(p1.enterBattle(shambloId, enemyId));
+
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+
+    expect(p2.getDamage(enemyId)).toBe(3);
+  });
+
+  it("also links with a Cyber-Newtype Pilot and can attack on the deployment turn", () => {
+    const cyberNewtype = createMockPilot({ traits: ["cyber-newtype"], level: 1, cost: 1 });
+    const enemy = createMockUnit({ hp: 10 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd01Shamblo047, cyberNewtype],
+        deck: 2,
+        resourceArea: activeResources(8),
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
       { play: [enemy] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p2.enterBattle(enemyId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p2.passPhase());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.passActionStep());
+
+    expectSuccess(p1.deployUnit(gd01Shamblo047));
+    const shambloId = p1.getCardsInZone("battleArea")[0]!;
+    expectSuccess(p1.assignPilot(cyberNewtype, shambloId));
+
+    expectSuccess(p1.enterBattle(shambloId, enemyId));
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+  });
+
+  it("does not offer the damage effect with fewer than two other rested Units", () => {
+    const onlyAlly = createMockUnit({ hp: 4 });
+    const enemy = createMockUnit({ hp: 10 });
+    const engine = GundamTestEngine.create(
+      {
+        deck: 2,
+        play: [gd01Shamblo047, onlyAlly],
+        shieldArea: [createMockUnit({ name: "Opening Shield" })],
+      },
+      {
+        play: [enemy],
+        shieldArea: [createMockUnit({ name: "Allied Attack Shield" })],
+      },
+      { initialActivePlayer: PLAYER_TWO },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const shambloId = p1.getCardsInZone("battleArea")[0]!;
-    const [enemyId] = p2.getCardsInZone("battleArea");
+    const onlyAllyId = p1.getCardsInZone("battleArea")[1]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
-    // Rest the two allies so the "2+ other rested" condition is met.
-    const allyIds = p1.getCardsInZone("battleArea").slice(1);
-    for (const id of allyIds) {
-      engine.getG().exhausted[id] = true;
-    }
+    expectSuccess(p2.enterBattle(enemyId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p2.passPhase());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.enterBattle(onlyAllyId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
 
-    engine.resolveCombat({ attackerId: shambloId, target: enemyId! });
+    expectSuccess(p1.enterBattle(shambloId, enemyId));
 
-    // Shamblo AP 6 deals combat damage; attack trigger also deals 3 effect damage.
-    // Total damage on enemy = 6 (combat) + 3 (trigger) = 9.
-    expect(getDamageCounter(engine, enemyId!)).toBe(9);
-  });
-
-  it("【Attack】 does NOT fire when fewer than 2 other rested friendly Units in play", () => {
-    const ally1 = createMockUnit({ ap: 1, hp: 3 });
-    const enemy = createMockUnit({ ap: 1, hp: 10, level: 5 });
-    const engine = GundamTestEngine.create({ play: [gd01Shamblo047, ally1] }, { play: [enemy] });
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const p2 = engine.asPlayer(PLAYER_TWO);
-    const shambloId = p1.getCardsInZone("battleArea")[0]!;
-    const [enemyId] = p2.getCardsInZone("battleArea");
-
-    // Rest the single ally — only 1, need 2+ for condition.
-    const allyId = p1.getCardsInZone("battleArea")[1]!;
-    engine.getG().exhausted[allyId] = true;
-
-    engine.resolveCombat({ attackerId: shambloId, target: enemyId! });
-
-    // Only combat damage (6), no trigger damage.
-    expect(getDamageCounter(engine, enemyId!)).toBe(6);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.getDamage(enemyId)).toBe(0);
   });
 });

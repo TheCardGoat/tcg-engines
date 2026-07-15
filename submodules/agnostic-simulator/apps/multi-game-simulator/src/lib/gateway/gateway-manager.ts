@@ -14,6 +14,13 @@ import type { RuntimeApiEnv } from "../../runtime/gameRuntimeApi";
  */
 let manager: GatewayConnectionManager | null = null;
 
+export type GatewayManagerAnalyticsSink = (
+  event: string,
+  payload?: Record<string, unknown>,
+) => void;
+
+let analyticsSink: GatewayManagerAnalyticsSink | null = null;
+
 function resolveGatewayOrigin(): string {
   const env = import.meta.env as RuntimeApiEnv;
   const explicit = env.VITE_GAME_SERVER_WS_URL ?? env.VITE_GATEWAY_WS_URL;
@@ -25,6 +32,7 @@ export function getGatewayManager(): GatewayConnectionManager {
   if (!manager) {
     manager = createGatewayConnectionManager({
       gatewayOrigin: resolveGatewayOrigin(),
+      onAnalytics: (event, payload) => analyticsSink?.(event, payload),
       // The library owns the latency ping loop. 5s matches the simulator's
       // live-match latency cadence; samples surface via `handle.onLatency`
       // and `state.latencyMs`.
@@ -41,4 +49,9 @@ export function getGatewayManager(): GatewayConnectionManager {
 export function resetGatewayManagerForTests(): void {
   manager?.destroy();
   manager = null;
+  analyticsSink = null;
+}
+
+export function setGatewayManagerAnalyticsSink(sink: GatewayManagerAnalyticsSink | null): void {
+  analyticsSink = sink;
 }

@@ -1,12 +1,19 @@
 import { applyCommand, createMatch, getLegalCommands } from "../core.ts";
 import type { EngineCommand, MatchConfig, MatchSeat, MatchState, PromptState } from "../types.ts";
 import type { OnePieceBotStrategy } from "./bot-strategies.ts";
+import {
+  createSemanticCycleDetector,
+  stableBotHash,
+  type BotTerminationReason,
+} from "@tcg/bot-core";
+import { createRandomAPI } from "@tcg/engine-core";
 
 export interface BotMatchResult {
   winner: MatchSeat | null;
   totalCommands: number;
   illegalCommands: number;
   stuck: boolean;
+  termination: BotTerminationReason;
   finalState: MatchState;
   commandHistory: EngineCommand[];
   logHistory: string[];
@@ -22,7 +29,10 @@ export interface TelemetryEntry {
   illegal: boolean;
 }
 
-function resolvePromptCommand(state: MatchState, prompt: PromptState): EngineCommand | null {
+export function resolveBotPromptCommand(
+  state: MatchState,
+  prompt: PromptState,
+): EngineCommand | null {
   const seat = prompt.seat as MatchSeat;
 
   if (prompt.kind === "judge") {
@@ -41,11 +51,8 @@ function resolvePromptCommand(state: MatchState, prompt: PromptState): EngineCom
     const yesOption = prompt.options.find((o) => o.id === "yes" || o.id === "activate");
     optionId = yesOption?.id ?? prompt.options[0]?.id;
   } else if (prompt.choiceKind === "selectCards" || prompt.choiceKind === "selectTargets") {
-    const count = Math.max(prompt.minSelections, 1);
+    const count = Math.min(prompt.maxSelections, prompt.minSelections);
     selectedIds = prompt.options.slice(0, count).map((o) => o.id);
-    if (prompt.minSelections === 0) {
-      selectedIds = [];
-    }
   } else if (prompt.choiceKind === "costPayment") {
     const count = Math.max(prompt.minSelections, 1);
     selectedIds = prompt.options.slice(0, count).map((o) => o.id);
@@ -64,16 +71,22 @@ function resolvePromptCommand(state: MatchState, prompt: PromptState): EngineCom
   };
 }
 
-function drainPendingPrompts(state: MatchState, telemetry: TelemetryEntry[]): MatchState {
+function drainPendingPrompts(
+  state: MatchState,
+  telemetry: TelemetryEntry[],
+  commandHistory: EngineCommand[],
+): { state: MatchState; illegalCommands: number } {
   let current = state;
+  let illegalCommands = 0;
   for (let safety = 0; safety < 50; safety++) {
     const prompt = current.promptQueue.find((p) => p.status === "pending");
     if (!prompt) break;
 
-    const command = resolvePromptCommand(current, prompt);
+    const command = resolveBotPromptCommand(current, prompt);
     if (!command) break;
 
     const result = applyCommand(current, command);
+    commandHistory.push(command);
     telemetry.push({
       turn: current.turnNumber,
       phase: current.phase,
@@ -85,11 +98,12 @@ function drainPendingPrompts(state: MatchState, telemetry: TelemetryEntry[]): Ma
     });
 
     if (!result.accepted) {
+      illegalCommands++;
       break;
     }
     current = result.state;
   }
-  return current;
+  return { state: current, illegalCommands };
 }
 
 export function runBotMatch(
@@ -102,24 +116,52 @@ export function runBotMatch(
   const commandHistory: EngineCommand[] = [];
   const telemetry: TelemetryEntry[] = [];
   let illegalCommands = 0;
+  let termination: BotTerminationReason = "max-actions";
+  const random = createRandomAPI(String(options.seed ?? config.seed ?? "one-piece-bot"));
+  const cycleDetector = createSemanticCycleDetector();
 
   for (let step = 0; step < maxCommands; step++) {
     if (state.status === "finished") {
+      termination = "rules-win";
       break;
     }
 
-    state = drainPendingPrompts(state, telemetry);
+    const drained = drainPendingPrompts(state, telemetry, commandHistory);
+    state = drained.state;
+    illegalCommands += drained.illegalCommands;
+    if (drained.illegalCommands > 0) {
+      termination = "illegal-command";
+      break;
+    }
 
     if (state.status === "finished") {
+      termination = "rules-win";
       break;
     }
 
-    const legal = getLegalCommands(state);
+    const semanticFingerprint = stableBotHash(
+      JSON.parse(
+        JSON.stringify(state, (key, value) =>
+          key === "idCounter" || key === "commandHistory" || key === "logHistory"
+            ? undefined
+            : value,
+        ),
+      ),
+    );
+    if (cycleDetector.observe(semanticFingerprint).repeated) {
+      termination = "repeated-state";
+      break;
+    }
+
+    const legal =
+      state.status === "setup"
+        ? [...getLegalCommands(state, "south"), ...getLegalCommands(state, "north")]
+        : getLegalCommands(state);
     const pendingPrompts = state.promptQueue.filter((p) => p.status === "pending");
 
     if (pendingPrompts.length > 0) {
       const prompt = pendingPrompts[0]!;
-      const command = resolvePromptCommand(state, prompt);
+      const command = resolveBotPromptCommand(state, prompt);
       if (command) {
         const result = applyCommand(state, command);
         telemetry.push({
@@ -140,15 +182,19 @@ export function runBotMatch(
       }
     }
 
-    const activeSeat = state.activeSeat;
+    const setupActor = legal
+      .map((descriptor) => descriptor.seat)
+      .find((seat): seat is MatchSeat => seat === "south" || seat === "north");
+    const activeSeat = state.status === "setup" && setupActor ? setupActor : state.activeSeat;
     const strategy = strategies[activeSeat];
     const myLegal = legal.filter((c) => c.seat === activeSeat);
 
     if (myLegal.length === 0) {
+      termination = "unsupported-prompt";
       break;
     }
 
-    const chosen = strategy(state, activeSeat, myLegal);
+    const chosen = strategy(state, activeSeat, myLegal, { random: () => random.random() });
     if (!chosen) {
       const endTurn = myLegal.find((c) => c.type === "endTurn");
       if (endTurn) {
@@ -163,11 +209,16 @@ export function runBotMatch(
           reason: result.reason,
           illegal: !result.accepted,
         });
-        if (!result.accepted) illegalCommands++;
+        if (!result.accepted) {
+          illegalCommands++;
+          termination = "illegal-command";
+        }
         commandHistory.push(cmd);
         state = result.state;
+        if (!result.accepted) break;
         continue;
       }
+      termination = "unsupported-prompt";
       break;
     }
 
@@ -183,9 +234,11 @@ export function runBotMatch(
     });
     if (!result.accepted) {
       illegalCommands++;
+      termination = "illegal-command";
     }
     commandHistory.push(chosen);
     state = result.state;
+    if (!result.accepted) break;
   }
 
   const stuck = state.status !== "finished" && state.winner === null;
@@ -195,6 +248,7 @@ export function runBotMatch(
     totalCommands: commandHistory.length,
     illegalCommands,
     stuck,
+    termination,
     finalState: state,
     commandHistory,
     logHistory: state.logHistory.map((l) => l.message),

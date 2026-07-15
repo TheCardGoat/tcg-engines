@@ -6,13 +6,12 @@ describe("Gundam Barbatos 1st Form (GD02-054)", () => {
   it("draws 1 on attack if this Unit is damaged", () => {
     const enemy = createMockUnit({ hp: 5 });
     const engine = GundamTestEngine.create(
-      { play: [gd02GundamBarbatos1stForm054], deck: 5 },
-      { play: [enemy] },
+      { play: [{ card: gd02GundamBarbatos1stForm054, damage: 1 }], deck: 5 },
+      { play: [{ card: enemy, exhausted: true }] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const [barbatosId] = p1.getCardsInZone("battleArea");
     const enemyId = engine.asPlayer("player_two").getCardsInZone("battleArea")[0]!;
-    engine.getG().damage[barbatosId!] = 1;
     const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
 
     expectSuccess(p1.enterBattle(barbatosId!, enemyId));

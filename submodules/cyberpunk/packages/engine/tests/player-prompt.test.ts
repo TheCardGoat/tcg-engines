@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaRuthlessLowlife,
-  alphaCorpoSecurity,
-  alphaRebootOptics,
-  alphaFloorIt,
-  alphaSwordwiseHuscle,
-  alphaArmoredMinotaur,
-  alphaSecondhandBombus,
-  alphaMantisBlades,
-  spoilerCarnageAtTheColosseum,
+  welcomeToNightCityRetailSketchyRipper,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailRebootOptics,
+  welcomeToNightCityRetailFloorIt,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailSecondhandBombus,
+  welcomeToNightCityRetailMantisBlades,
+  welcomeToNightCityRetailCarnageAtTheColosseum,
   welcomeToNightCityRetailMoxInciters,
   welcomeToNightCityRetailOverwatchPanamSGift,
   welcomeToNightCityRetailPanamPalmerNomadCavalry,
@@ -56,7 +56,9 @@ describe("Player Prompt", () => {
 
   describe("status", () => {
     it("returns idle when game is over", () => {
-      const engine = CyberpunkTestEngine.createWithFixture({ hand: [alphaRuthlessLowlife] });
+      const engine = CyberpunkTestEngine.createWithFixture({
+        hand: [welcomeToNightCityRetailSketchyRipper],
+      });
       engine.concede({ as: P1 });
 
       const prompt = engine.getPrompt(P1);
@@ -68,8 +70,8 @@ describe("Player Prompt", () => {
 
     it("returns action for setup phase — both players can act", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { hand: [alphaRuthlessLowlife] },
-        { hand: [alphaSwordwiseHuscle] },
+        { hand: [welcomeToNightCityRetailSketchyRipper] },
+        { hand: [welcomeToNightCityRetailSwordwiseHuscle] },
         { skipSetup: false },
       );
 
@@ -85,7 +87,7 @@ describe("Player Prompt", () => {
 
     it("returns action for active player in main phase", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife],
+        hand: [welcomeToNightCityRetailSketchyRipper],
         eddies: 5,
       });
 
@@ -99,7 +101,7 @@ describe("Player Prompt", () => {
 
     it("returns waiting for non-active player in main phase with concede still available", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife],
+        hand: [welcomeToNightCityRetailSketchyRipper],
         eddies: 5,
       });
 
@@ -115,8 +117,8 @@ describe("Player Prompt", () => {
 
     it("returns action for active player during an attack step", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle] },
-        { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+        { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+        { field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: true }] },
       );
       toAttackPhase(engine);
 
@@ -131,14 +133,21 @@ describe("Player Prompt", () => {
 
     it("returns action for defender in defensive step", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle] },
+        { field: [welcomeToNightCityRetailSwordwiseHuscle] },
         {
-          field: [{ card: alphaRuthlessLowlife, spent: true }, alphaCorpoSecurity],
+          field: [
+            { card: welcomeToNightCityRetailSketchyRipper, spent: true },
+            welcomeToNightCityRetailCorpoSecurity,
+          ],
           eddies: 5,
         },
       );
       toAttackPhase(engine);
-      engine.attackUnit(alphaSwordwiseHuscle, alphaRuthlessLowlife, { as: P1 });
+      engine.attackUnit(
+        welcomeToNightCityRetailSwordwiseHuscle,
+        welcomeToNightCityRetailSketchyRipper,
+        { as: P1 },
+      );
       engine.resolveAttack({ as: P1 }); // offensive → defensive
 
       const prompt = engine.getPrompt(P2);
@@ -152,8 +161,8 @@ describe("Player Prompt", () => {
 
     it("returns waiting for non-active non-defending player", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle] },
-        { field: [{ card: alphaRuthlessLowlife, spent: true }] },
+        { field: [welcomeToNightCityRetailSwordwiseHuscle] },
+        { field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: true }] },
       );
       toAttackPhase(engine);
 
@@ -168,7 +177,7 @@ describe("Player Prompt", () => {
 
     it("concede is always available when game is not ended", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife],
+        hand: [welcomeToNightCityRetailSketchyRipper],
         eddies: 5,
       });
 
@@ -183,7 +192,7 @@ describe("Player Prompt", () => {
   describe("pending choice", () => {
     it("returns choice status when pending choice belongs to this player", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife, alphaSwordwiseHuscle],
+        hand: [welcomeToNightCityRetailSketchyRipper, welcomeToNightCityRetailSwordwiseHuscle],
         eddies: 5,
       });
 
@@ -211,7 +220,7 @@ describe("Player Prompt", () => {
 
     it("returns waiting when pending choice belongs to opponent but concede is still available", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife],
+        hand: [welcomeToNightCityRetailSketchyRipper],
         eddies: 5,
       });
 
@@ -232,7 +241,7 @@ describe("Player Prompt", () => {
 
     it("transforms pending choice payload to plain strings", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife, alphaSwordwiseHuscle],
+        hand: [welcomeToNightCityRetailSketchyRipper, welcomeToNightCityRetailSwordwiseHuscle],
         eddies: 5,
       });
 
@@ -262,7 +271,7 @@ describe("Player Prompt", () => {
     it("playCard candidates include only affordable cards", () => {
       // ruthlessLowlife costs 2, swordwiseHuscle costs 3
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife, alphaSwordwiseHuscle],
+        hand: [welcomeToNightCityRetailSketchyRipper, welcomeToNightCityRetailSwordwiseHuscle],
         eddies: 2,
       });
       engine.spendAllLegends();
@@ -273,16 +282,24 @@ describe("Player Prompt", () => {
       expect(spec!.type).toBe("playCard");
       if (spec!.type === "playCard") {
         const ids = spec!.candidates.map((c) => c.cardId);
-        const lowlifeId = engine.findCardId(alphaRuthlessLowlife, "hand", P1) as string;
+        const lowlifeId = engine.findCardId(
+          welcomeToNightCityRetailSketchyRipper,
+          "hand",
+          P1,
+        ) as string;
         expect(ids).toContain(lowlifeId);
-        const huscleId = engine.findCardId(alphaSwordwiseHuscle, "hand", P1) as string;
+        const huscleId = engine.findCardId(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          "hand",
+          P1,
+        ) as string;
         expect(ids).not.toContain(huscleId);
       }
     });
 
     it("playCard candidates use effective cost modifiers", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [spoilerCarnageAtTheColosseum],
+        hand: [welcomeToNightCityRetailCarnageAtTheColosseum],
         eddies: 4,
         gigArea: [
           { dieType: "d10", faceValue: 10 },
@@ -295,15 +312,19 @@ describe("Player Prompt", () => {
       expect(spec).toBeDefined();
       expect(spec!.type).toBe("playCard");
       if (spec!.type === "playCard") {
-        const carnageId = engine.findCardId(spoilerCarnageAtTheColosseum, "hand", P1) as string;
+        const carnageId = engine.findCardId(
+          welcomeToNightCityRetailCarnageAtTheColosseum,
+          "hand",
+          P1,
+        ) as string;
         expect(spec!.candidates.map((c) => c.cardId)).toContain(carnageId);
       }
     });
 
     it("playCard surfaces gear with their valid attach targets", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        field: [alphaRuthlessLowlife],
-        hand: [alphaMantisBlades],
+        field: [welcomeToNightCityRetailSketchyRipper],
+        hand: [welcomeToNightCityRetailMantisBlades],
         eddies: 10,
       });
 
@@ -312,8 +333,16 @@ describe("Player Prompt", () => {
       expect(spec).toBeDefined();
       expect(spec!.type).toBe("playCard");
       if (spec!.type === "playCard") {
-        const bladeId = engine.findCardId(alphaMantisBlades, "hand", P1) as string;
-        const lowlifeId = engine.findCardId(alphaRuthlessLowlife, "field", P1) as string;
+        const bladeId = engine.findCardId(
+          welcomeToNightCityRetailMantisBlades,
+          "hand",
+          P1,
+        ) as string;
+        const lowlifeId = engine.findCardId(
+          welcomeToNightCityRetailSketchyRipper,
+          "field",
+          P1,
+        ) as string;
         const blade = spec!.candidates.find((c) => c.cardId === bladeId);
         expect(blade).toBeDefined();
         expect(blade!.attachTargets).toEqual([lowlifeId]);
@@ -322,7 +351,7 @@ describe("Player Prompt", () => {
 
     it("playCard omits gear when no friendly unit is on the field", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife, alphaMantisBlades],
+        hand: [welcomeToNightCityRetailSketchyRipper, welcomeToNightCityRetailMantisBlades],
         eddies: 10,
       });
 
@@ -332,17 +361,25 @@ describe("Player Prompt", () => {
       expect(spec!.type).toBe("playCard");
       if (spec!.type === "playCard") {
         const ids = spec!.candidates.map((c) => c.cardId);
-        const lowlifeId = engine.findCardId(alphaRuthlessLowlife, "hand", P1) as string;
+        const lowlifeId = engine.findCardId(
+          welcomeToNightCityRetailSketchyRipper,
+          "hand",
+          P1,
+        ) as string;
         expect(ids).toContain(lowlifeId);
-        const bladeId = engine.findCardId(alphaMantisBlades, "hand", P1) as string;
+        const bladeId = engine.findCardId(
+          welcomeToNightCityRetailMantisBlades,
+          "hand",
+          P1,
+        ) as string;
         expect(ids).not.toContain(bladeId);
       }
     });
 
     it("sellCard candidates include only cards with hasSellTag", () => {
-      // alphaFloorIt has hasSellTag: true, alphaRuthlessLowlife does not
+      // welcomeToNightCityRetailFloorIt has hasSellTag: true, welcomeToNightCityRetailSketchyRipper does not
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaFloorIt, alphaRuthlessLowlife],
+        hand: [welcomeToNightCityRetailFloorIt, welcomeToNightCityRetailSketchyRipper],
         eddies: 5,
       });
 
@@ -351,16 +388,20 @@ describe("Player Prompt", () => {
       expect(spec).toBeDefined();
       expect(spec!.type).toBe("selectCard");
       if (spec!.type === "selectCard") {
-        const floorItId = engine.findCardId(alphaFloorIt, "hand", P1) as string;
+        const floorItId = engine.findCardId(welcomeToNightCityRetailFloorIt, "hand", P1) as string;
         expect(spec!.candidates).toContain(floorItId);
-        const lowlifeId = engine.findCardId(alphaRuthlessLowlife, "hand", P1) as string;
+        const lowlifeId = engine.findCardId(
+          welcomeToNightCityRetailSketchyRipper,
+          "hand",
+          P1,
+        ) as string;
         expect(spec!.candidates).not.toContain(lowlifeId);
       }
     });
 
     it("callLegend candidates include only face-down legends", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife],
+        hand: [welcomeToNightCityRetailSketchyRipper],
         eddies: 5,
       });
 
@@ -382,11 +423,16 @@ describe("Player Prompt", () => {
 
     it("attackUnit returns selectPair with ready attackers and spent defenders", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaSwordwiseHuscle, { card: alphaSecondhandBombus, spent: true }] },
         {
           field: [
-            { card: alphaRuthlessLowlife, spent: true },
-            alphaCorpoSecurity, // not spent
+            welcomeToNightCityRetailSwordwiseHuscle,
+            { card: welcomeToNightCityRetailSecondhandBombus, spent: true },
+          ],
+        },
+        {
+          field: [
+            { card: welcomeToNightCityRetailSketchyRipper, spent: true },
+            welcomeToNightCityRetailCorpoSecurity, // not spent
           ],
         },
       );
@@ -398,29 +444,45 @@ describe("Player Prompt", () => {
       expect(spec!.type).toBe("selectPair");
       if (spec!.type === "selectPair") {
         // Only swordwiseHuscle is ready (secondhandBombus is spent)
-        const huscleId = engine.findCardId(alphaSwordwiseHuscle, "field", P1) as string;
-        const bombusId = engine.findCardId(alphaSecondhandBombus, "field", P1) as string;
+        const huscleId = engine.findCardId(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          "field",
+          P1,
+        ) as string;
+        const bombusId = engine.findCardId(
+          welcomeToNightCityRetailSecondhandBombus,
+          "field",
+          P1,
+        ) as string;
         expect(spec!.fromCandidates).toContain(huscleId);
         expect(spec!.fromCandidates).not.toContain(bombusId);
 
         // Only ruthlessLowlife is a valid defender (spent)
-        const lowlifeId = engine.findCardId(alphaRuthlessLowlife, "field", P2) as string;
-        const corpoId = engine.findCardId(alphaCorpoSecurity, "field", P2) as string;
+        const lowlifeId = engine.findCardId(
+          welcomeToNightCityRetailSketchyRipper,
+          "field",
+          P2,
+        ) as string;
+        const corpoId = engine.findCardId(
+          welcomeToNightCityRetailCorpoSecurity,
+          "field",
+          P2,
+        ) as string;
         expect(spec!.toCandidates).toContain(lowlifeId);
         expect(spec!.toCandidates).not.toContain(corpoId);
       }
     });
 
-    it("attackRival candidates are ready non-summoning-sick units", () => {
+    it("attackRival candidates are ready non-Lagged units", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
         {
           field: [
-            alphaSwordwiseHuscle,
-            { card: alphaSecondhandBombus, spent: true },
-            { card: alphaRuthlessLowlife, playedThisTurn: true },
+            welcomeToNightCityRetailSwordwiseHuscle,
+            { card: welcomeToNightCityRetailSecondhandBombus, spent: true },
+            { card: welcomeToNightCityRetailSketchyRipper, hasLag: true },
           ],
         },
-        { field: [{ card: alphaCorpoSecurity, spent: true }] },
+        { field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }] },
       );
       toAttackPhase(engine);
 
@@ -429,8 +491,12 @@ describe("Player Prompt", () => {
       expect(spec).toBeDefined();
       expect(spec!.type).toBe("selectCard");
       if (spec!.type === "selectCard") {
-        // Only swordwiseHuscle is ready and not summoning-sick
-        const huscleId = engine.findCardId(alphaSwordwiseHuscle, "field", P1) as string;
+        // Only swordwiseHuscle is ready and not Lagged
+        const huscleId = engine.findCardId(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          "field",
+          P1,
+        ) as string;
         expect(spec!.candidates).toContain(huscleId);
         expect(spec!.candidates).toHaveLength(1);
       }
@@ -440,23 +506,31 @@ describe("Player Prompt", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
         {
           hand: [welcomeToNightCityRetailMoxInciters],
-          field: [{ card: alphaCorpoSecurity, spent: true }],
+          field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
           eddies: 3,
         },
         {
           field: [
-            { card: alphaRuthlessLowlife, spent: false, playedThisTurn: false },
-            { card: alphaSwordwiseHuscle, spent: false, playedThisTurn: false },
+            { card: welcomeToNightCityRetailSketchyRipper, spent: false, hasLag: false },
+            { card: welcomeToNightCityRetailSwordwiseHuscle, spent: false, hasLag: false },
           ],
         },
       );
 
       engine.playCard(welcomeToNightCityRetailMoxInciters, { as: P1 });
-      engine.resolveEffectTarget(alphaRuthlessLowlife, { as: P1 });
+      engine.resolveEffectTarget(welcomeToNightCityRetailSketchyRipper, { as: P1 });
       engine.skipToNextPlayerTurn(P1);
 
-      const requiredId = engine.findCardId(alphaRuthlessLowlife, "field", P2) as string;
-      const otherId = engine.findCardId(alphaSwordwiseHuscle, "field", P2) as string;
+      const requiredId = engine.findCardId(
+        welcomeToNightCityRetailSketchyRipper,
+        "field",
+        P2,
+      ) as string;
+      const otherId = engine.findCardId(
+        welcomeToNightCityRetailSwordwiseHuscle,
+        "field",
+        P2,
+      ) as string;
       const directSpec = getInputSpec(engine, P2, "attackRival");
       const unitSpec = getInputSpec(engine, P2, "attackUnit");
 
@@ -475,18 +549,22 @@ describe("Player Prompt", () => {
     it("useBlocker candidates are ready units with blocker rule", () => {
       // ruthlessLowlife (spent, defender), corpoSecurity (blocker, ready), swordwiseHuscle (no blocker, ready)
       const engine = CyberpunkTestEngine.createWithFixture(
-        { field: [alphaArmoredMinotaur] },
+        { field: [embracingPowerRetailStarterDeckMinotaur] },
         {
           field: [
-            { card: alphaRuthlessLowlife, spent: true },
-            alphaCorpoSecurity, // has blocker, ready
-            alphaSwordwiseHuscle, // no blocker, ready
+            { card: welcomeToNightCityRetailSketchyRipper, spent: true },
+            welcomeToNightCityRetailCorpoSecurity, // has blocker, ready
+            welcomeToNightCityRetailSwordwiseHuscle, // no blocker, ready
           ],
           eddies: 5,
         },
       );
       toAttackPhase(engine);
-      engine.attackUnit(alphaArmoredMinotaur, alphaRuthlessLowlife, { as: P1 });
+      engine.attackUnit(
+        embracingPowerRetailStarterDeckMinotaur,
+        welcomeToNightCityRetailSketchyRipper,
+        { as: P1 },
+      );
       engine.resolveAttack({ as: P1 }); // offensive → defensive
 
       const spec = getInputSpec(engine, P2, "useBlocker");
@@ -494,17 +572,25 @@ describe("Player Prompt", () => {
       expect(spec).toBeDefined();
       expect(spec!.type).toBe("selectCard");
       if (spec!.type === "selectCard") {
-        const corpoId = engine.findCardId(alphaCorpoSecurity, "field", P2) as string;
+        const corpoId = engine.findCardId(
+          welcomeToNightCityRetailCorpoSecurity,
+          "field",
+          P2,
+        ) as string;
         expect(spec!.candidates).toContain(corpoId);
         // swordwiseHuscle does not have blocker
-        const huscleId = engine.findCardId(alphaSwordwiseHuscle, "field", P2) as string;
+        const huscleId = engine.findCardId(
+          welcomeToNightCityRetailSwordwiseHuscle,
+          "field",
+          P2,
+        ) as string;
         expect(spec!.candidates).not.toContain(huscleId);
       }
     });
 
     it("resolveCardToPlay candidates match pending choice cardIds", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife, alphaSwordwiseHuscle],
+        hand: [welcomeToNightCityRetailSketchyRipper, welcomeToNightCityRetailSwordwiseHuscle],
         eddies: 5,
       });
 
@@ -576,11 +662,11 @@ describe("Player Prompt", () => {
         {
           legendArea: [{ card: welcomeToNightCityRetailPanamPalmerNomadCavalry, faceDown: false }],
           field: [welcomeToNightCityRetailOverwatchPanamSGift],
-          hand: [alphaRebootOptics],
+          hand: [welcomeToNightCityRetailRebootOptics],
           eddies: 5,
         },
         {
-          field: [{ card: alphaCorpoSecurity, spent: true }],
+          field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
         },
       );
       const gearId = engine.findCardId(welcomeToNightCityRetailOverwatchPanamSGift, "field", P1);
@@ -626,7 +712,7 @@ describe("Player Prompt", () => {
     it("offers activated abilities once required binding targets exist", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
         legendArea: [{ card: welcomeToNightCityRetailDumDumMaelstromTriggerman, faceDown: false }],
-        field: [alphaRuthlessLowlife],
+        field: [welcomeToNightCityRetailSketchyRipper],
         eddies: 2,
       });
       const dumDumId = engine.findCardId(
@@ -648,11 +734,11 @@ describe("Player Prompt", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
         {
           field: [welcomeToNightCityRetailOverwatchPanamSGift],
-          hand: [alphaRuthlessLowlife],
+          hand: [welcomeToNightCityRetailSketchyRipper],
           eddies: 5,
         },
         {
-          field: [{ card: alphaArmoredMinotaur, spent: true }],
+          field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: true }],
         },
       );
       const overwatchId = engine.findCardId(
@@ -670,7 +756,7 @@ describe("Player Prompt", () => {
 
     it("passPhase has inputSpec type none", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife],
+        hand: [welcomeToNightCityRetailSketchyRipper],
         eddies: 5,
       });
 
@@ -682,7 +768,7 @@ describe("Player Prompt", () => {
 
     it("concede has inputSpec type none", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife],
+        hand: [welcomeToNightCityRetailSketchyRipper],
         eddies: 5,
       });
 
@@ -698,7 +784,7 @@ describe("Player Prompt", () => {
   describe("integration", () => {
     it("getFilteredView includes prompt field", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife],
+        hand: [welcomeToNightCityRetailSketchyRipper],
         eddies: 5,
       });
 
@@ -711,7 +797,7 @@ describe("Player Prompt", () => {
 
     it("getFilteredView prompt matches standalone buildPlayerPrompt", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        hand: [alphaRuthlessLowlife],
+        hand: [welcomeToNightCityRetailSketchyRipper],
         eddies: 5,
       });
 

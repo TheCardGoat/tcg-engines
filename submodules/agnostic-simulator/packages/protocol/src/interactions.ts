@@ -106,6 +106,25 @@ const InteractionInputBase = z
     id: z.string().min(1),
     text: InteractionText,
     required: z.boolean().optional(),
+    requiredWhen: z
+      .array(
+        z
+          .object({
+            all: z
+              .array(
+                z
+                  .object({
+                    inputId: z.string().min(1),
+                    value: z.union([z.string(), z.number(), z.boolean()]),
+                  })
+                  .strict(),
+              )
+              .min(1),
+          })
+          .strict(),
+      )
+      .min(1)
+      .optional(),
     validationText: InteractionText.optional(),
   })
   .strict();
@@ -484,7 +503,7 @@ function validateSubmissionValues(
   for (const input of action.inputs) {
     const value = submission.values[input.id];
     if (value === undefined || value === null) {
-      if (!inputAllowsOmission(input)) {
+      if (!inputAllowsOmission(input, submission.values)) {
         issues.push({
           code: "missing_value",
           path: ["values", input.id],
@@ -516,7 +535,13 @@ function validateSubmissionValues(
   }
 }
 
-function inputAllowsOmission(input: InteractionInput): boolean {
+function inputAllowsOmission(
+  input: InteractionInput,
+  values: Readonly<Record<string, InteractionSubmissionValue>>,
+): boolean {
+  if (input.requiredWhen?.some((requirement) => requirementMatches(requirement, values))) {
+    return false;
+  }
   if (input.required === false) return true;
   switch (input.kind) {
     case "entity-selection":
@@ -529,6 +554,18 @@ function inputAllowsOmission(input: InteractionInput): boolean {
     default:
       return assertNeverInteractionInput(input);
   }
+}
+
+function requirementMatches(
+  requirement: NonNullable<InteractionInput["requiredWhen"]>[number],
+  values: Readonly<Record<string, InteractionSubmissionValue>>,
+): boolean {
+  return requirement.all.every((condition) => {
+    const value = values[condition.inputId];
+    return Array.isArray(value)
+      ? typeof condition.value === "string" && value.includes(condition.value)
+      : value === condition.value;
+  });
 }
 
 function validateEntitySelectionInput(

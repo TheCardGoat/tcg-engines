@@ -8,7 +8,9 @@ import {
 export const progIndustrialAssemblyHighCredBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "progIndustrialAssemblyHighCred",
   label: "Industrial Assembly - 7+ Street Cred triggers draw",
-  references: ["packages/engine/src/cards/alpha/programs/industrial-assembly.test.ts"],
+  references: [
+    "packages/engine/src/cards/welcometonightcityretail/programs/industrial-assembly.test.ts",
+  ],
   async run(pom) {
     const targetGig = expectDefined(
       "Industrial Assembly high-credit d8",

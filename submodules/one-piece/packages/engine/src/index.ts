@@ -3,6 +3,15 @@ import "../../cards/src/index.ts";
 export { applyCommand, createMatch, getLegalCommands, replayMatch } from "./core.ts";
 export { cardZoneSummary, projectStateForSeat } from "./projection.ts";
 export { commandFromDescriptor, greedyStrategy } from "./automation/bot-strategies.ts";
+export { resolveBotPromptCommand, runBotMatch } from "./automation/bot-harness.ts";
+export {
+  DEFAULT_ONE_PIECE_AUTOMATED_ACTION_STRATEGY_ID,
+  ONE_PIECE_AUTOMATED_ACTION_STRATEGIES,
+  getOnePieceAutomatedActionStrategyOption,
+  getSafeOnePieceAutomatedActionStrategyOption,
+  resolveOnePieceAutomatedActionStrategyOption,
+  type OnePieceAutomatedActionStrategyOption,
+} from "./automation/strategy-registry.ts";
 export {
   createSt01MirrorPracticeConfig,
   createSt01PlayerConfig,

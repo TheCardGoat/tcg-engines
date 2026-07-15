@@ -4,6 +4,7 @@ export const gd01Mistral078: UnitCard = {
   cardNumber: "GD01-078",
   name: "Mistral",
   type: "unit",
+  battlefieldZones: ["space"],
   color: "white",
   traits: ["earth alliance"],
   id: "GD01-078",

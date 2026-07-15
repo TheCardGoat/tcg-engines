@@ -5,7 +5,6 @@ import {
   PLAYER_TWO,
   createMockUnit,
   expectSuccess,
-  getDamageCounter,
 } from "@tcg/gundam-engine";
 import { st08MesserTypeF01004 } from "./004-messer-type-f01.ts";
 
@@ -23,8 +22,13 @@ describe("Messer Type-F01 (ST08-004)", () => {
       const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p1.enterBattle(attackerId, defenderId));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [defenderId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [defenderId] }));
 
-      expect(getDamageCounter(engine, defenderId)).toBe(1);
+      expect(p2.getDamage(defenderId)).toBe(1);
     });
 
     it("does not deal effect damage when attacking the enemy player directly", () => {
@@ -40,7 +44,8 @@ describe("Messer Type-F01 (ST08-004)", () => {
 
       expectSuccess(p1.enterBattle(attackerId, "direct"));
 
-      expect(getDamageCounter(engine, bystanderId)).toBe(0);
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+      expect(p2.getDamage(bystanderId)).toBe(0);
     });
   });
 });

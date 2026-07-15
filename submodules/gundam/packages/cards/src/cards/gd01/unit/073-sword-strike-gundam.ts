@@ -4,6 +4,7 @@ export const gd01SwordStrikeGundam073: UnitCard = {
   cardNumber: "GD01-073",
   name: "Sword Strike Gundam",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["earth alliance"],
   id: "GD01-073",
@@ -41,6 +42,7 @@ export const gd01SwordStrikeGundam073: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 3,
+  linkCondition: "(Earth Alliance) Trait",
   effect:
     "【During Link】【Attack】Choose 1 enemy Unit with 2 or less HP. Return it to its owner's hand.<br>",
   effects: [

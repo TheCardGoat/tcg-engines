@@ -25,18 +25,50 @@ describe("Gundam Aerial Rebuild (GD04-024)", () => {
     });
     const p1 = engine.asPlayer(PLAYER_ONE);
 
-    const handBefore = engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE });
+    expectSuccess(p1.deployUnit(gd04GundamAerialRebuild024));
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "deckLook") throw new Error("Expected a deck-look choice");
+    expect(choice.revealedCardIds).toHaveLength(3);
+    expect(choice.legalTutorCardIds).toHaveLength(1);
+    const academyTutorId = choice.legalTutorCardIds[0]!;
+    expectSuccess(
+      p1.resolveEffect({
+        deckLookAnswers: {
+          0: {
+            tutorCardId: academyTutorId,
+          },
+        },
+      }),
+    );
+
+    expect(p1.getHand()).toContain(academyTutorId);
+    expect(p1.getCardZone(gd04GundamAerialRebuild024)).toBe(`battleArea:${PLAYER_ONE}`);
+    expect(p1.getCardsInZone("deck")).toHaveLength(2);
+  });
+
+  it("allows the player to return all 3 cards to the bottom without tutoring one", () => {
+    const academyUnit = createMockUnit({ name: "Academy Unit", traits: ["academy"] });
+    const filler1 = createMockUnit({ name: "Filler 1" });
+    const filler2 = createMockUnit({ name: "Filler 2" });
+    const engine = GundamTestEngine.create({
+      hand: [gd04GundamAerialRebuild024],
+      deck: [academyUnit, filler1, filler2],
+      resourceArea: activeResources(7),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
 
     expectSuccess(p1.deployUnit(gd04GundamAerialRebuild024));
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "deckLook") throw new Error("Expected a deck-look choice");
+    expect(choice.revealedCardIds).toHaveLength(3);
+    expect(choice.legalTutorCardIds).toHaveLength(1);
+    expectSuccess(
+      p1.resolveEffect({
+        deckLookAnswers: { 0: {} },
+      }),
+    );
 
-    // -1 (rebuild deployed) + 1 (academy tutored) = 0 net change.
-    expect(engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE })).toBe(handBefore);
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const handIds = p1.getCardsInZone("hand");
-    const academyInHand = handIds.some((id) => {
-      const def = framework.cards.getDefinition(id) as { traits?: readonly string[] } | undefined;
-      return def?.traits?.includes("academy");
-    });
-    expect(academyInHand).toBe(true);
+    expect(p1.getHand()).toHaveLength(0);
+    expect(p1.getCardsInZone("deck")).toHaveLength(3);
   });
 });

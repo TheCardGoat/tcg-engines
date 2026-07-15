@@ -58,7 +58,7 @@ interface FixtureCardState {
   faceDown?: boolean;
   damage?: number;
   powerModifier?: number;
-  playedThisTurn?: boolean;
+  hasLag?: boolean;
   hasAttackedThisTurn?: boolean;
   counters?: Record<string, number>;
   attachedGearIds?: string[];

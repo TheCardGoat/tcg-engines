@@ -4,6 +4,7 @@ export const gd01DuoSLeo042: UnitCard = {
   cardNumber: "GD01-042",
   name: "Duo's Leo",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-042",
@@ -41,6 +42,7 @@ export const gd01DuoSLeo042: UnitCard = {
   cost: 2,
   ap: 2,
   hp: 2,
+  linkCondition: "[Duo Maxwell]",
   effect:
     "This Unit may choose an active enemy Unit that is Lv.2 or lower as its attack target.<br>",
   effects: [

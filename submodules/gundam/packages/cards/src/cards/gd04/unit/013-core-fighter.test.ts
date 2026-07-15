@@ -1,73 +1,89 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
-  asPlayerId,
+  PLAYER_TWO,
   createMockUnit,
-  getEffectiveStats,
+  expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd04CoreFighter013 } from "./013-core-fighter.ts";
 
 describe("Core Fighter (GD04-013)", () => {
-  it("grants <Blocker> to friendly (League Militaire) Unit tokens while this Unit is rested", () => {
-    const lmToken = createMockUnit({ ap: 1, hp: 1, traits: ["league militaire"] });
-    const lmNonToken = createMockUnit({ ap: 1, hp: 1, traits: ["league militaire"] });
-    const nonLmToken = createMockUnit({ ap: 1, hp: 1, traits: ["zeon"] });
+  describe("While this Unit is rested, all your (League Militaire) Unit tokens gain <Blocker>.", () => {
+    it("allows a League Militaire Unit token to block while Core Fighter is rested", () => {
+      const leagueMilitaireToken = createMockUnit({
+        name: "League Militaire Token",
+        traits: ["league militaire"],
+      });
+      const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 4 });
+      const engine = GundamTestEngine.create(
+        {
+          play: [
+            { card: gd04CoreFighter013, exhausted: true },
+            { card: leagueMilitaireToken, isToken: true },
+          ],
+        },
+        { play: [attacker] },
+        { initialActivePlayer: PLAYER_TWO },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const [, tokenId] = p1.getCardsInZone("battleArea");
+      const attackerId = p2.getCardsInZone("battleArea")[0]!;
+      expectSuccess(p2.enterBattle(attackerId, "direct"));
+      expectSuccess(p1.declareBlock(tokenId!));
 
-    const engine = GundamTestEngine.create({
-      play: [gd04CoreFighter013, lmToken, lmNonToken, nonLmToken],
-    });
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const [coreFighterId, lmTokenId, lmNonTokenId, nonLmTokenId] = p1.getCardsInZone("battleArea");
-
-    // Flag the two intended tokens as such — the directive's `isToken: true`
-    // filter excludes the non-token LM unit even though it shares the trait.
-    const state = engine.getState();
-    state.ctx.zones.private.cardMeta[lmTokenId!] = { isToken: true };
-    state.ctx.zones.private.cardMeta[nonLmTokenId!] = { isToken: true };
-
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const keywordsOf = (id: string) =>
-      getEffectiveStats(id, engine.getG(), framework.cards, framework).keywords;
-
-    // Active Core Fighter: condition `selfIsRested` fails — no Blocker grant.
-    expect(keywordsOf(lmTokenId!)).not.toContain("Blocker");
-
-    // Rest Core Fighter — the constant gate now passes and the LM token gains Blocker.
-    engine.getRuntime().runTestMutation(asPlayerId(PLAYER_ONE), ({ G }) => {
-      G.exhausted[coreFighterId!] = true;
+      expect(p1.isExhausted(tokenId!)).toBe(true);
     });
 
-    expect(keywordsOf(lmTokenId!)).toContain("Blocker");
-    // Non-token LM unit unaffected (filter has `isToken: true`).
-    expect(keywordsOf(lmNonTokenId!)).not.toContain("Blocker");
-    // Non-LM token unaffected (filter requires the trait).
-    expect(keywordsOf(nonLmTokenId!)).not.toContain("Blocker");
-  });
+    it("does not grant Blocker while Core Fighter is active", () => {
+      const leagueMilitaireToken = createMockUnit({
+        name: "League Militaire Token",
+        traits: ["league militaire"],
+      });
+      const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 4 });
+      const engine = GundamTestEngine.create(
+        { play: [gd04CoreFighter013, { card: leagueMilitaireToken, isToken: true }] },
+        { play: [attacker] },
+        { initialActivePlayer: PLAYER_TWO },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const [, tokenId] = p1.getCardsInZone("battleArea");
+      const attackerId = p2.getCardsInZone("battleArea")[0]!;
+      expectSuccess(p2.enterBattle(attackerId, "direct"));
 
-  it("removes the Blocker grant when Core Fighter becomes active again", () => {
-    const lmToken = createMockUnit({ ap: 1, hp: 1, traits: ["league militaire"] });
-
-    const engine = GundamTestEngine.create({
-      play: [gd04CoreFighter013, lmToken],
+      expectFailure(p1.declareBlock(tokenId!), "CANNOT_BLOCK_DIRECT");
+      expect(p1.isExhausted(tokenId!)).toBe(false);
     });
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const [coreFighterId, lmTokenId] = p1.getCardsInZone("battleArea");
-    engine.getState().ctx.zones.private.cardMeta[lmTokenId!] = { isToken: true };
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const keywordsOf = (id: string) =>
-      getEffectiveStats(id, engine.getG(), framework.cards, framework).keywords;
+    it("does not grant Blocker to a non-token or to a token without the League Militaire trait", () => {
+      const leagueMilitaireNonToken = createMockUnit({
+        name: "League Militaire Non-Token",
+        traits: ["league militaire"],
+      });
+      const zeonToken = createMockUnit({ name: "Zeon Token", traits: ["zeon"] });
+      const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 4 });
+      const engine = GundamTestEngine.create(
+        {
+          play: [
+            { card: gd04CoreFighter013, exhausted: true },
+            leagueMilitaireNonToken,
+            { card: zeonToken, isToken: true },
+          ],
+        },
+        { play: [attacker] },
+        { initialActivePlayer: PLAYER_TWO },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const [, nonTokenId, zeonTokenId] = p1.getCardsInZone("battleArea");
+      const attackerId = p2.getCardsInZone("battleArea")[0]!;
+      expectSuccess(p2.enterBattle(attackerId, "direct"));
 
-    // Rest, then unrest — the grant must come and go with the gate.
-    engine.getRuntime().runTestMutation(asPlayerId(PLAYER_ONE), ({ G }) => {
-      G.exhausted[coreFighterId!] = true;
+      expectFailure(p1.declareBlock(nonTokenId!), "CANNOT_BLOCK_DIRECT");
+      expectFailure(p1.declareBlock(zeonTokenId!), "CANNOT_BLOCK_DIRECT");
     });
-    expect(keywordsOf(lmTokenId!)).toContain("Blocker");
-
-    engine.getRuntime().runTestMutation(asPlayerId(PLAYER_ONE), ({ G }) => {
-      G.exhausted[coreFighterId!] = false;
-    });
-    expect(keywordsOf(lmTokenId!)).not.toContain("Blocker");
   });
 });

@@ -4,7 +4,6 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  asPlayerId,
   createMockPilot,
   createMockUnit,
   expectFailure,
@@ -19,33 +18,35 @@ describe("Gundam AGE-2 Normal (GD03-019)", () => {
       const pilot = createMockPilot({ name: "Pair Pilot", level: 1, cost: 1 });
       const otherTarget = createMockUnit({ name: "Other Target", hp: 6 });
       const attacker = createMockUnit({ name: "Enemy Attacker", ap: 3, hp: 6 });
+      const transitionDefender = createMockUnit({ name: "Transition Defender", ap: 0, hp: 8 });
       const engine = GundamTestEngine.create(
         {
           hand: paired ? [pilot] : [],
-          play: [
-            { card: gd03GundamAge2Normal019, exhausted: rested },
-            { card: otherTarget, exhausted: true },
-          ],
+          play: [gd03GundamAge2Normal019, { card: otherTarget, exhausted: true }],
           resourceArea: activeResources(5),
+          deck: 5,
         },
-        { play: [attacker] },
+        { play: [attacker, { card: transitionDefender, exhausted: true }], deck: 5 },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
       const [age2Id, otherTargetId] = p1.getCardsInZone("battleArea");
-      const attackerId = p2.getCardsInZone("battleArea")[0]!;
+      const [attackerId, transitionDefenderId] = p2.getCardsInZone("battleArea");
 
       if (paired) {
         expectSuccess(p1.assignPilot(pilot, age2Id!));
       }
-      engine.getState().ctx.status.activePlayer = asPlayerId(PLAYER_TWO);
-      engine.getState().ctx.status.turnPlayer = asPlayerId(PLAYER_TWO);
-      engine.getRuntime().runTestMutation(asPlayerId(PLAYER_ONE), ({ G, framework }) => {
-        G.exhausted[age2Id!] = rested;
-        framework.cards.patchMeta(age2Id!, { exhausted: rested });
-      });
+      if (rested) {
+        expectSuccess(p1.enterBattle(age2Id!, transitionDefenderId!));
+        expectSuccess(p2.passBlock());
+        expectSuccess(p2.passBattleAction());
+        expectSuccess(p1.passBattleAction());
+      }
+      expectSuccess(p1.passPhase());
+      expectSuccess(p2.passActionStep());
+      expectSuccess(p1.passActionStep());
 
-      return { engine, p2, age2Id: age2Id!, otherTargetId: otherTargetId!, attackerId };
+      return { p2, age2Id: age2Id!, otherTargetId: otherTargetId!, attackerId: attackerId! };
     }
 
     it("prevents an enemy Unit from attacking a different rested Unit", () => {
@@ -94,13 +95,10 @@ describe("Gundam AGE-2 Normal (GD03-019)", () => {
 
       const resourcesAfter = p1.getCardsInZone("resourceArea");
       const newResourceId = resourcesAfter.find((id) => !resourcesBefore.includes(id));
-      const framework = engine.getRuntime().getFrameworkReadAPI();
-
       expect(p1.getCardsInZone("battleArea")).toContain(unitId);
       expect(resourcesAfter).toHaveLength(resourcesBefore.length + 1);
       expect(newResourceId).toBeDefined();
-      expect(framework.cards.getDefinition(newResourceId!)?.name).toBe("EX Resource");
-      expect(engine.getG().exhausted[newResourceId!] ?? false).toBe(false);
+      expect(p1.isExhausted(newResourceId!)).toBe(false);
     });
 
     it("does not place an EX Resource when the pairing is not a link", () => {

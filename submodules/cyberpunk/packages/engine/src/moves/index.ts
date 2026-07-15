@@ -15,7 +15,8 @@ import { resolveAttackMove } from "./resolve-attack.ts";
 import { resolveCardToPlayMove } from "./resolve-card-to-play.ts";
 import { resolveCardToMoveMove } from "./resolve-card-to-move.ts";
 import { activateAbilityMove } from "./activate-ability.ts";
-import { resolveSearchDeckMove } from "./resolve-search-deck.ts";
+import { resolveScryMove } from "./resolve-scry.ts";
+import { resolveRevealDestinationMove } from "./resolve-reveal-destination.ts";
 import { resolveDiscardFromHandMove } from "./resolve-discard-from-hand.ts";
 import { resolveAdjustGigMove } from "./resolve-adjust-gig.ts";
 import { resolveStealGigsMove } from "./resolve-steal-gigs.ts";
@@ -45,7 +46,8 @@ export const MOVE_IDS = [
   "resolveCardToPlay",
   "resolveCardToMove",
   "activateAbility",
-  "resolveSearchDeck",
+  "resolveScry",
+  "resolveRevealDestination",
   "resolveDiscardFromHand",
   "resolveAdjustGig",
   "resolveStealGigs",
@@ -73,7 +75,8 @@ export const allMoves: Record<MoveId, MoveDefinition<any>> = {
   resolveCardToPlay: resolveCardToPlayMove,
   resolveCardToMove: resolveCardToMoveMove,
   activateAbility: activateAbilityMove,
-  resolveSearchDeck: resolveSearchDeckMove,
+  resolveScry: resolveScryMove,
+  resolveRevealDestination: resolveRevealDestinationMove,
   resolveDiscardFromHand: resolveDiscardFromHandMove,
   resolveAdjustGig: resolveAdjustGigMove,
   resolveStealGigs: resolveStealGigsMove,
@@ -99,7 +102,8 @@ export {
   resolveCardToPlayMove,
   resolveCardToMoveMove,
   activateAbilityMove,
-  resolveSearchDeckMove,
+  resolveScryMove,
+  resolveRevealDestinationMove,
   resolveDiscardFromHandMove,
   resolveAdjustGigMove,
   resolveStealGigsMove,
@@ -107,3 +111,4 @@ export {
   resolveEffectTargetMove,
   resolveCardTypeChoiceMove,
 };
+export { getProjectedDirectAttackGigStealCount } from "./resolve-attack.ts";

@@ -9,8 +9,8 @@ import {
 } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import type { MatchRuntime, MatchStaticResources } from "@tcg/gundam-engine";
+import type { ServerToClientEvents } from "@tcg/protocol";
 import {
-  createLiveMatchSession,
   stringifySimulatorConnectionDiagnostic,
   type ConnectionDiagnosticEvent,
   type SimulatorConnectionStatus,
@@ -28,8 +28,14 @@ import {
   parseLiveGatewayEvent,
 } from "../src/engine/live/liveGateway.ts";
 import type { GatewayHandle } from "@tcg/gateway-client";
-import { getGatewayManager } from "../../../lib/gateway/gateway-manager.ts";
-import { useSimulatorRoute } from "../../../simulator/providers";
+import { acquireRootGatewayHandle } from "../../../lib/gateway/root-socket.ts";
+import {
+  SimulatorLiveConnectionProvider,
+  useSimulatorLiveConnection,
+  useSimulatorRoute,
+  type SimulatorConnectionTelemetrySink,
+  type SimulatorLiveConnectionContextValue,
+} from "../../../simulator/providers";
 import { reduceLiveGatewayMessage } from "../src/engine/live/liveMessages.ts";
 import {
   createInitialLiveMatchView,
@@ -128,15 +134,31 @@ export function LiveMatchPage() {
   const searchString = useMemo(() => `?${search.toString()}`, [search]);
 
   const [loadState, setLoadState] = useState<LoadState>({ status: "idle" });
+  const [gatewayHandle, setGatewayHandle] = useState<GatewayHandle | null>(null);
   const [connectionStatus, setConnectionStatus] = useState<SimulatorConnectionStatus>("checking");
   const [connectionId, setConnectionId] = useState<string | null>(null);
   const [connectionError, setConnectionError] = useState<string | null>(null);
+  const [connectionAuthenticated, setConnectionAuthenticated] = useState(false);
+  const [connectionAuthStatus, setConnectionAuthStatus] = useState<"ok" | "refreshing" | "failed">(
+    "ok",
+  );
+  const [connectionAuthFailureReason, setConnectionAuthFailureReason] =
+    useState<SimulatorLiveConnectionContextValue["authFailureReason"]>(null);
+  const [connectionLatencyMs, setConnectionLatencyMs] = useState<number | null>(null);
+  const [lastPingAt, setLastPingAt] = useState<string | null>(null);
+  const [lastPongAt, setLastPongAt] = useState<string | null>(null);
+  const [lastHeartbeatSentAt, setLastHeartbeatSentAt] = useState<string | null>(null);
+  const [lastHeartbeatAckAt, setLastHeartbeatAckAt] = useState<string | null>(null);
+  const [reconnectAttempt, setReconnectAttempt] = useState(0);
   const [connectionEvents, setConnectionEvents] = useState<ConnectionDiagnosticEvent[]>([]);
   const [copyFeedback, setCopyFeedback] = useState<"copied" | "failed" | null>(null);
   const handleRef = useRef<GatewayHandle | null>(null);
+  const liveConnectionRef = useRef<SimulatorLiveConnectionContextValue | null>(null);
   const runtimeRef = useRef<MatchRuntime | null>(null);
   const staticResourcesRef = useRef<MatchStaticResources | null>(null);
   const latestViewRef = useRef<LiveMatchView | null>(null);
+  const previousConnectionStatusRef = useRef<SimulatorConnectionStatus | null>(null);
+  const previousConnectionErrorRef = useRef<string | null>(null);
   const startedAtMsRef = useRef(Date.now());
   const discordClientId =
     import.meta.env.VITE_DISCORD_ACTIVITY_CLIENT_ID ?? import.meta.env.VITE_DISCORD_CLIENT_ID;
@@ -156,25 +178,43 @@ export function LiveMatchPage() {
           status: connectionStatus,
           connectionId: connectionId ?? undefined,
           socketId: connectionId ?? undefined,
+          authenticated: connectionAuthenticated,
+          authStatus: connectionAuthStatus,
+          authFailureReason: connectionAuthFailureReason ?? undefined,
           authModeLabel: initialTicket
             ? "Authenticated (ticket)"
             : initialAuthToken
               ? "Authenticated (token)"
               : "Session",
+          latencyMs: connectionLatencyMs ?? undefined,
+          lastPingAt: lastPingAt ?? undefined,
+          lastPongAt: lastPongAt ?? undefined,
+          lastHeartbeatSentAt: lastHeartbeatSentAt ?? undefined,
+          lastHeartbeatAckAt: lastHeartbeatAckAt ?? undefined,
+          reconnectAttempts: reconnectAttempt,
           lastError: connectionError ?? undefined,
         },
         events: connectionEvents,
       }),
     [
       connectionError,
+      connectionAuthenticated,
+      connectionAuthFailureReason,
+      connectionAuthStatus,
       connectionEvents,
       connectionId,
+      connectionLatencyMs,
       connectionStatus,
       gameId,
       initialAuthToken,
       initialTicket,
+      lastHeartbeatAckAt,
+      lastHeartbeatSentAt,
+      lastPingAt,
+      lastPongAt,
       matchId,
       playerId,
+      reconnectAttempt,
     ],
   );
 
@@ -211,40 +251,21 @@ export function LiveMatchPage() {
   );
   const getInteractionView = useCallback(() => latestViewRef.current?.interactionView, []);
 
-  // Open the gateway once we have the required URL params. Re-runs
-  // on matchId/gameId/playerId change (e.g. navigating to a new
-  // match in the same SPA session).
-  useEffect(() => {
-    if (!matchId || !gameId || !playerId) {
-      setLoadState({
-        status: "error",
-        message: "Match URL is missing gameId or playerId.",
-      });
-      return;
-    }
+  const requestLiveStateSync = useCallback((version: number) => {
+    liveConnectionRef.current?.requestStateSyncIfDue(version);
+  }, []);
 
-    // Acquire a handle on the SHARED gundam namespace socket (the root
-    // clientLoader already holds one for presence and installed the
-    // credentials controller). ref-count → 2; releasing this handle on
-    // unmount leaves the root socket open across navigation. The root-socket
-    // owns the ticket: SSR-resolved at load and refreshed on auth failure by
-    // the library-owned credentials controller, so this page no longer
-    // resolves or refreshes gateway tickets itself.
-    const manager = getGatewayManager();
-    const handle: GatewayHandle = manager.acquire("gundam");
-    handleRef.current = handle;
+  const handleLiveGatewayEvent = useCallback(
+    (type: keyof ServerToClientEvents, payload: unknown) => {
+      if (type === "heartbeat_ack" && payload && typeof payload === "object") {
+        const latestView = latestViewRef.current;
+        const stateVersions = (payload as { stateVersions?: Record<string, number> }).stateVersions;
+        const serverVersion = stateVersions?.[gameId];
+        if (latestView && typeof serverVersion === "number" && serverVersion > latestView.version) {
+          requestLiveStateSync(latestView.version);
+        }
+      }
 
-    setConnectionStatus("connecting");
-    setConnectionError(null);
-    setConnectionEvents([
-      { at: new Date().toISOString(), type: "connect_start", message: "Opening Gundam gateway" },
-    ]);
-    setLoadState({
-      status: "connecting",
-      view: createInitialLiveMatchView({ matchId, gameId, playerId }),
-    });
-
-    const handleEvent = (type: string, payload: unknown) => {
       const message = parseLiveGatewayEvent(type, payload);
       if (!message) return;
       appendConnectionEvent(setConnectionEvents, {
@@ -276,7 +297,6 @@ export function LiveMatchPage() {
         if (effect.type === "ignore") return previous;
         latestViewRef.current = effect.view;
 
-        // First state we've seen — bring up the runtime.
         if (previous.status === "connecting") {
           if (!effect.view.state) return previous;
           const { runtime, staticResources } = createLiveMatchViewerEngine(effect.view.state);
@@ -290,85 +310,116 @@ export function LiveMatchPage() {
           };
         }
 
-        // Already ready — overlay onto the existing runtime so the
-        // store's onStateUpdate listener triggers a render.
         if (effect.view.state && runtimeRef.current && staticResourcesRef.current) {
           applyLiveStateUpdate(runtimeRef.current, staticResourcesRef.current, effect.view.state);
         }
         return { ...previous, view: effect.view };
       });
-    };
+    },
+    [gameId, matchId, requestLiveStateSync, searchString],
+  );
 
-    // Single session call: owns join lifecycle, the presence map, latency
-    // probes, and connection-state mirroring. The consumer wires its game
-    // reducer (onGameEvent) and mirrors session state for UI. Gundam has no
-    // session-owned heartbeat — the manager-level loop still runs if
-    // configured, and clean-cut says don't add behavior that wasn't there.
-    const session = createLiveMatchSession({
-      handle,
-      gameId,
-      matchId,
-      resolveRole: () => "player",
-      resolveGameProfileId: () => undefined,
-      onGameEvent: (event, payload) => handleEvent(event, payload),
-    });
+  const handleLiveConnectionState = useCallback((s: SimulatorLiveConnectionContextValue) => {
+    liveConnectionRef.current = s;
+    setConnectionStatus(s.status);
+    setConnectionId(s.connectionId);
+    setConnectionAuthenticated(s.authenticated);
+    setConnectionAuthStatus(s.authStatus);
+    setConnectionAuthFailureReason(s.authFailureReason);
+    setConnectionLatencyMs(s.latencyMs);
+    setLastPingAt(s.lastPingAt);
+    setLastPongAt(s.lastPongAt);
+    setLastHeartbeatSentAt(s.lastHeartbeatSentAt);
+    setLastHeartbeatAckAt(s.lastHeartbeatAckAt);
+    setReconnectAttempt(s.reconnectAttempt);
 
-    session.start();
-
-    // Mirror session-owned state into React state for rendering. The session
-    // owns status/connectionId/error; the consumer only mirrors. Connection-
-    // lifecycle diagnostic events (connect / disconnect / connect_error) are
-    // derived from status transitions because the session forwards session-
-    // level events (game_joined, presence_change, latency, ...) via
-    // onDiagnostic, which Gundam's handleEvent already records per message.
-    let prevStatus: SimulatorConnectionStatus | null = null;
-    let prevError: string | null = null;
-
-    const unsubSessionState = session.subscribeState((s) => {
-      setConnectionStatus(s.status);
-      setConnectionId(s.connectionId);
-
-      if (s.status !== prevStatus) {
-        if (s.status === "connected" && prevStatus !== "connected") {
-          appendConnectionEvent(setConnectionEvents, {
-            type: "connect",
-            message: "Gateway socket connected",
-            details: { socketId: s.connectionId ?? undefined },
-          });
-        }
-        if (s.status === "reconnecting" && prevStatus !== "reconnecting") {
-          appendConnectionEvent(setConnectionEvents, {
-            type: "disconnect",
-            message: "Gateway socket disconnected",
-          });
-        }
-        prevStatus = s.status;
-      }
-
-      // Surface the live gateway error string (and a connect_error diagnostic)
-      // only when the error changes — dedupes repeated state pushes.
-      if (s.error && s.error !== prevError) {
-        setConnectionError(s.error);
+    const prevStatus = previousConnectionStatusRef.current;
+    if (s.status !== prevStatus) {
+      if (s.status === "connected" && prevStatus !== "connected") {
         appendConnectionEvent(setConnectionEvents, {
-          type: "connect_error",
-          message: s.error,
+          type: "connect",
+          message: "Gateway socket connected",
+          details: { socketId: s.connectionId ?? undefined },
         });
       }
-      prevError = s.error;
+      if (s.status === "reconnecting" && prevStatus !== "reconnecting") {
+        appendConnectionEvent(setConnectionEvents, {
+          type: "disconnect",
+          message: "Gateway socket disconnected",
+        });
+      }
+      previousConnectionStatusRef.current = s.status;
+    }
+
+    if (s.error && s.error !== previousConnectionErrorRef.current) {
+      setConnectionError(s.error);
+      appendConnectionEvent(setConnectionEvents, {
+        type: "connect_error",
+        message: s.error,
+      });
+    }
+    previousConnectionErrorRef.current = s.error;
+  }, []);
+
+  const handleLiveDiagnostic = useCallback((event: ConnectionDiagnosticEvent) => {
+    setConnectionEvents((current) => [...current, event].slice(-20));
+  }, []);
+
+  const buildLiveHeartbeatPayload = useCallback(() => {
+    const view = latestViewRef.current;
+    return {
+      game: view ? { gameId, matchId, stateVersion: view.version } : undefined,
+      activity: {
+        idle: false,
+        tabVisible: document.visibilityState !== "hidden",
+      },
+    };
+  }, [gameId, matchId]);
+  const resolveLiveRole = useCallback(() => "player" as const, []);
+  const resolveLiveGameProfileId = useCallback(() => undefined, []);
+
+  const liveConnectionTelemetrySink = useCallback<SimulatorConnectionTelemetrySink>((event) => {
+    window.dispatchEvent(new CustomEvent("simulator:connection-telemetry", { detail: event }));
+  }, []);
+
+  useEffect(() => {
+    if (!matchId || !gameId || !playerId) {
+      setGatewayHandle(null);
+      setLoadState({
+        status: "error",
+        message: "Match URL is missing gameId or playerId.",
+      });
+      return;
+    }
+
+    const handle: GatewayHandle = acquireRootGatewayHandle("gundam");
+    handleRef.current = handle;
+    liveConnectionRef.current = null;
+    previousConnectionStatusRef.current = null;
+    previousConnectionErrorRef.current = null;
+    setGatewayHandle(handle);
+    setConnectionStatus("connecting");
+    setConnectionError(null);
+    setConnectionEvents([
+      { at: new Date().toISOString(), type: "connect_start", message: "Opening Gundam gateway" },
+    ]);
+    const initialView = createInitialLiveMatchView({ matchId, gameId, playerId });
+    latestViewRef.current = initialView;
+    setLoadState({
+      status: "connecting",
+      view: initialView,
     });
 
     return () => {
-      session.stop();
-      unsubSessionState();
       if (handleRef.current === handle) handleRef.current = null;
+      liveConnectionRef.current = null;
       runtimeRef.current = null;
       staticResourcesRef.current = null;
       latestViewRef.current = null;
-      // Release only THIS handle (ref-count → 1). The root keeps the shared
-      // socket open across navigation.
+      setGatewayHandle((current) => (current === handle ? null : current));
       handle.release();
     };
-  }, [gameId, matchId, playerId, searchString]);
+  }, [gameId, matchId, playerId]);
 
   useEffect(() => {
     startedAtMsRef.current = Date.now();
@@ -402,8 +453,8 @@ export function LiveMatchPage() {
     };
   }, [discordClientId, gameId, loadState.status, matchId, playerId]);
 
-  if (loadState.status === "ready") {
-    return (
+  const content =
+    loadState.status === "ready" ? (
       <LiveSimulatorShell
         runtime={loadState.runtime}
         staticResources={loadState.staticResources}
@@ -414,20 +465,51 @@ export function LiveMatchPage() {
         copyDiagnosticJson={copyDiagnosticJson}
         copyFeedback={copyFeedback}
       />
+    ) : (
+      <StatusShell
+        title={loadState.status === "error" ? "Match unavailable" : "Loading match"}
+        message={
+          loadState.status === "error"
+            ? loadState.message
+            : "Waiting for the game server to send the initial state."
+        }
+        returnHref={getMatchmakingReturnUrl(searchString)}
+      />
     );
+
+  if (!gatewayHandle || !matchId || !gameId || !playerId) {
+    return content;
   }
 
   return (
-    <StatusShell
-      title={loadState.status === "error" ? "Match unavailable" : "Loading match"}
-      message={
-        loadState.status === "error"
-          ? loadState.message
-          : "Waiting for the game server to send the initial state."
-      }
-      returnHref={getMatchmakingReturnUrl(searchString)}
-    />
+    <SimulatorLiveConnectionProvider
+      handle={gatewayHandle}
+      gameId={gameId}
+      matchId={matchId}
+      resolveRole={resolveLiveRole}
+      resolveGameProfileId={resolveLiveGameProfileId}
+      buildHeartbeatPayload={buildLiveHeartbeatPayload}
+      heartbeatIntervalMs={15_000}
+      onGameEvent={handleLiveGatewayEvent}
+      onDiagnostic={handleLiveDiagnostic}
+      telemetrySink={liveConnectionTelemetrySink}
+    >
+      <GundamLiveConnectionBridge onState={handleLiveConnectionState} />
+      {content}
+    </SimulatorLiveConnectionProvider>
   );
+}
+
+function GundamLiveConnectionBridge({
+  onState,
+}: {
+  onState: (state: SimulatorLiveConnectionContextValue) => void;
+}) {
+  const connection = useSimulatorLiveConnection();
+  useEffect(() => {
+    onState(connection);
+  }, [connection, onState]);
+  return null;
 }
 
 function StatusShell({

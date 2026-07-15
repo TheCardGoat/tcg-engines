@@ -4,6 +4,7 @@ export const gd01GSkyEasy014: UnitCard = {
   cardNumber: "GD01-014",
   name: "G-Sky Easy",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD01-014",
@@ -41,7 +42,7 @@ export const gd01GSkyEasy014: UnitCard = {
   cost: 2,
   ap: 1,
   hp: 3,
-  linkCondition: "[Amuro Ray]",
+  linkCondition: "(White Base Team) Trait",
   effect: "【During Link】【Activate･Action】【Once per Turn】Choose 1 Unit. It recovers 1 HP.<br>",
   effects: [
     {

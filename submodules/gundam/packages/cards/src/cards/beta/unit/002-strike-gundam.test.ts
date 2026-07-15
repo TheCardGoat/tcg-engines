@@ -1,26 +1,43 @@
 import { describe, it, expect } from "vite-plus/test";
-import { GundamTestEngine, PLAYER_ONE, expectSuccess, activeResources } from "@tcg/gundam-engine";
+import {
+  GundamTestEngine,
+  PLAYER_ONE,
+  activeResources,
+  createMockUnit,
+  expectSuccess,
+} from "@tcg/gundam-engine";
 import { betaStrikeGundam002 } from "./002-strike-gundam.ts";
 
 describe("Strike Gundam (ST04-002)", () => {
-  it("【Deploy】Draw 1. Then, discard 1.", () => {
+  it("【Deploy】 draws 1, then asks which card from the updated hand to discard", () => {
+    const discardOption = createMockUnit({ name: "Discard Option" });
+    const drawnCard = createMockUnit({ name: "Drawn Card" });
+    const remainingDeckCard = createMockUnit({ name: "Remaining Deck Card" });
     const engine = GundamTestEngine.create({
-      hand: [betaStrikeGundam002],
+      hand: [betaStrikeGundam002, discardOption],
       resourceArea: activeResources(4),
-      deck: 5,
+      deck: [remainingDeckCard, drawnCard],
     });
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const deckBefore = p1.getCardsInZone("deck").length;
-    const trashBefore = p1.getCardsInZone("trash").length;
-    const handBefore = p1.getHand().length;
+    const discardOptionId = p1.getHand()[1]!;
 
     expectSuccess(p1.deployUnit(betaStrikeGundam002));
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([discardOptionId]),
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    if (choice?.kind !== "targetSelection") {
+      throw new Error("Expected Strike Gundam to ask which card to discard after drawing");
+    }
+    expect(choice.legalTargetIds).toHaveLength(2);
+    expectSuccess(p1.resolveEffect({ targets: [discardOptionId] }));
 
-    // Unit went to battleArea, deck lost 1 (drawn), one card landed in trash (discarded).
-    expect(p1.getCardsInZone("battleArea").length).toBe(1);
-    expect(p1.getCardsInZone("deck").length).toBe(deckBefore - 1);
-    expect(p1.getCardsInZone("trash").length).toBe(trashBefore + 1);
-    // Net hand size: -1 Strike (played), +1 drawn, -1 discarded = -1.
-    expect(p1.getHand().length).toBe(handBefore - 1);
+    expect(p1.getCardZone(betaStrikeGundam002)).toBe(`battleArea:${PLAYER_ONE}`);
+    expect(p1.getCardZone(discardOptionId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.handCount).toBe(1);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(1);
   });
 });

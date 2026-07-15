@@ -65,6 +65,10 @@ export const attackUnitOnlyStrategy: AIStrategy = createForcedMoveStrategy("atta
   "attackUnit",
 ]);
 
+export const attackRivalOnlyStrategy: AIStrategy = createForcedMoveStrategy("attack-rival-only", [
+  "attackRival",
+]);
+
 export const callLegendOnlyStrategy: AIStrategy = createForcedMoveStrategy("call-legend-only", [
   "callLegend",
 ]);

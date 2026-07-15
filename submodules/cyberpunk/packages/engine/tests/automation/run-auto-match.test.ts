@@ -52,4 +52,19 @@ describe("runAutoMatch", () => {
     const result = run("rand-vs-first", [randomStrategy, firstLegalStrategy]);
     expectResultIsClean(result, "rand-vs-first");
   });
+
+  test("turns a step-cap failure into a deterministic terminal concession", () => {
+    const result = runAutoMatch({
+      players: createTestPlayers(),
+      decks: createTestDecks(),
+      strategies: [firstLegalStrategy, firstLegalStrategy],
+      catalog: createTestCatalog(),
+      seed: "max-step-concession",
+      maxSteps: 1,
+    });
+
+    expect(result.reason).toBe("maxSteps");
+    expect(result.automationConcessionApplied).toBe(true);
+    expect(result.winnerId).not.toBeNull();
+  });
 });

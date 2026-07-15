@@ -170,6 +170,8 @@ export function runBench(options: BenchOptions, onProgress?: (i: number) => void
   const p2Stats = { wins: 0, familyStats: emptyFamilyStats() };
   const terminations: Record<PlayMatchTermination, number> = {
     "game-won": 0,
+    "automation-concession": 0,
+    "repeated-state": 0,
     "max-actions-exceeded": 0,
     "concede-failed": 0,
   };

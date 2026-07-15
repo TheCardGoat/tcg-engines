@@ -38,26 +38,29 @@ export const theHeistRetailStarterDeckViktorVektorSitDownAndRelax = defineCyberp
       },
       effects: [
         {
-          effect: "searchDeck",
+          effect: "scry",
           player: "friendly",
-          lookCount: 5,
-          target: {
-            selector: "card",
-            controller: "friendly",
-            zones: ["deck"],
-            cardTypes: ["gear"],
-            maxCost: 2,
-          },
-          select: {
-            kind: "upTo",
-            max: 2,
-          },
-          reveal: true,
-          destination: "hand",
-          remainder: {
-            zone: "deckBottom",
-            order: "random",
-          },
+          amount: 5,
+          destinations: [
+            {
+              zone: "hand",
+              min: 0,
+              max: 2,
+              reveal: true,
+              target: {
+                selector: "card",
+                controller: "friendly",
+                zones: ["deck"],
+                cardTypes: ["gear"],
+                maxCost: 2,
+              },
+            },
+            {
+              zone: "deckBottom",
+              remainder: true,
+              order: "random",
+            },
+          ],
         },
       ],
     },

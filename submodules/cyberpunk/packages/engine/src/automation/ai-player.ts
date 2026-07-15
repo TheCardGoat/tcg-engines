@@ -54,15 +54,17 @@ export class AIPlayer {
       case "waiting":
         return { kind: "idle", reason: status === "idle" ? "gameEnded" : "waiting" };
       case "choice": {
+        const startedAt = performance.now();
         const decision = this.decideChoice(ctx);
-        return this.dispatch(decision, ctx);
+        return this.dispatch(decision, ctx, performance.now() - startedAt);
       }
       case "action": {
         if (ctx.prompt.availableMoves.length === 0) {
           return { kind: "idle", reason: "noMoves" };
         }
+        const startedAt = performance.now();
         const decision = this.strategy.decideAction(ctx);
-        return this.dispatch(decision, ctx);
+        return this.dispatch(decision, ctx, performance.now() - startedAt);
       }
       default:
         return assertNever(status, "PlayerPromptStatus");
@@ -111,12 +113,17 @@ export class AIPlayer {
     return runResolver(choice, this.strategy, ctx);
   }
 
-  private dispatch(decision: MoveDecision, ctx: DecisionContext): StepResult {
+  private dispatch(
+    decision: MoveDecision,
+    ctx: DecisionContext,
+    decisionDurationMs: number,
+  ): StepResult {
     if (decision.kind === "stuck") {
       return {
         kind: "stuck",
         reason: decision.reason,
         pendingType: ctx.prompt.choice?.type,
+        decisionDurationMs,
       };
     }
     const command: CommandEnvelope = {
@@ -129,11 +136,12 @@ export class AIPlayer {
       return {
         kind: "illegal",
         decision,
+        decisionDurationMs,
         error: result.error,
         errorCode: result.errorCode,
       };
     }
-    return { kind: "acted", decision, result, stateID: result.stateID };
+    return { kind: "acted", decision, decisionDurationMs, result, stateID: result.stateID };
   }
 }
 
@@ -150,8 +158,13 @@ export function runResolver(
 ): MoveDecision {
   const overrides = strategy.decideChoice;
   switch (choice.type) {
-    case "searchDeck":
-      return pick(overrides?.searchDeck, defaultChoiceResolvers.searchDeck)(choice, ctx);
+    case "scry":
+      return pick(overrides?.scry, defaultChoiceResolvers.scry)(choice, ctx);
+    case "revealDestination":
+      return pick(overrides?.revealDestination, defaultChoiceResolvers.revealDestination)(
+        choice,
+        ctx,
+      );
     case "chooseTarget":
       return pick(overrides?.chooseTarget, defaultChoiceResolvers.chooseTarget)(choice, ctx);
     case "chooseEffect":

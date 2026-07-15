@@ -4,6 +4,7 @@ export const gd01GundamHeavyarms034: UnitCard = {
   cardNumber: "GD01-034",
   name: "Gundam Heavyarms",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-034",
@@ -58,6 +59,7 @@ export const gd01GundamHeavyarms034: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 4,
+  linkCondition: "[Trowa Barton]",
   effect:
     "【During Pair】This Unit gains &lt;Breach 3&gt;.<br>\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)<br>",
   effects: [

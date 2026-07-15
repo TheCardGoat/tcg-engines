@@ -138,7 +138,3 @@ If you removed features or options:
 - Note any user feedback to monitor
 
 Remember: You have great taste and judgment. Simplification is an act of confidence - knowing what to keep and courage to remove the rest. As Antoine de Saint-Exupéry said: "Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away."
-
-## MANUAL MIGRATION REQUIRED
-
-Review unsupported Claude skill fields manually: `args`, `required`, `user-invokable`.

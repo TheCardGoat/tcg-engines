@@ -63,27 +63,28 @@ export const gd01ElanCeresEnhancedPersonNumber4098: PilotCard = {
       activation: {
         timing: ["activate:action"],
         restrictions: [{ type: "oncePerTurn" }],
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "opponent",
+            zone: "battleArea",
+            cardType: "unit",
+            comparison: "gte",
+            count: 1,
+            attributeFilters: [{ attribute: "ap", comparison: "lte", value: 1 }],
+          },
+        ],
       },
       directives: [
         {
-          condition: {
-            type: "unitCount",
-            owner: "opponent",
-            comparison: "gte",
-            count: 1,
-          },
-          thenDirectives: [
-            {
-              action: {
-                action: "recoverHP",
-                amount: 1,
-                target: {
-                  owner: "self",
-                  cardType: "unit",
-                },
-              },
+          action: {
+            action: "recoverHP",
+            amount: 1,
+            target: {
+              owner: "self",
+              cardType: "unit",
             },
-          ],
+          },
         },
       ],
       sourceText:

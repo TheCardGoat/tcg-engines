@@ -4,6 +4,7 @@ export const gd01UnicornGundam02BansheeDestroyMode003: UnitCard = {
   cardNumber: "GD01-003",
   name: "Unicorn Gundam 02 Banshee (Destroy Mode)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-003",

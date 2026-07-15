@@ -15,7 +15,7 @@ export const unitAdamSmasherMetalOverMeatBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitAdamSmasherMetalOverMeat",
   label: "Adam Smasher - play trigger defeats every other unit",
   references: [
-    "packages/engine/src/cards/spoiler/units/adam-smasher-metal-over-meat.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/adam-smasher-metal-over-meat.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

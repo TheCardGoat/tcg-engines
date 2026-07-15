@@ -1,115 +1,142 @@
 import { describe, it, expect } from "vite-plus/test";
-import type { CardEffect } from "@tcg/gundam-types";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
+  createMockCommand,
   createMockUnit,
-  executeCardEffect,
   expectSuccess,
-  getDamageCounter,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
 import { gd04RiddheMarcenas098 } from "./098-riddhe-marcenas.ts";
 
-const effectDamage: CardEffect = {
-  type: "command",
-  activation: { timing: ["action"] },
-  directives: [
-    {
-      action: {
-        action: "dealDamage",
-        amount: 4,
-        target: { owner: "any", cardType: "unit", count: 1 },
+function effectDamageCommand() {
+  return createMockCommand({
+    name: "Deal 4 Damage",
+    level: 1,
+    cost: 1,
+    effects: [
+      {
+        type: "command",
+        activation: { timing: ["main"] },
+        directives: [
+          {
+            action: {
+              action: "dealDamage",
+              amount: 4,
+              target: { owner: "any", cardType: "unit", count: 1 },
+            },
+          },
+        ],
+        sourceText: "【Main】Deal 4 damage to 1 Unit.",
       },
-    },
-  ],
-  sourceText: "Deal 4 effect damage to 1 Unit.",
-};
+    ],
+  });
+}
 
 describe("Riddhe Marcenas (GD04-098)", () => {
-  it("【Burst】adds this card to hand", () => {
-    const engine = GundamTestEngine.create({ deck: [gd04RiddheMarcenas098] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
+  it("【Burst】adds this card to hand when its controller accepts the revealed Shield prompt", () => {
+    const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1 });
+    const engine = GundamTestEngine.create(
+      { shieldArea: [gd04RiddheMarcenas098] },
+      { play: [attacker] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      sourceCardId: shieldId,
+      directiveIndex: -1,
+    });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    expect(engine.asPlayer(PLAYER_ONE).getHand()).toContain(shieldId);
+    expect(p1.getHand()).toContain(shieldId);
   });
 
   describe("【During Link】When this Unit receives effect damage from an enemy, reduce it by 2.", () => {
-    function setup(linkCondition = "[Riddhe Marcenas]") {
-      const host = createMockUnit({ name: "Riddhe Host", hp: 10, linkCondition });
-      const enemy = createMockUnit({ name: "Enemy Source", hp: 10 });
+    function setup(linkCondition: string, ...commands: ReturnType<typeof effectDamageCommand>[]) {
+      const host = createMockUnit({ name: "Riddhe Host", hp: 20, linkCondition });
       const engine = GundamTestEngine.create(
         {
           hand: [gd04RiddheMarcenas098],
           play: [host],
           resourceArea: activeResources(4),
+          deck: 3,
         },
-        { play: [enemy] },
+        {
+          hand: commands,
+          resourceArea: activeResources(commands.length),
+          deck: 3,
+        },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
       const hostId = p1.getCardsInZone("battleArea")[0]!;
-      const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p1.assignPilot(gd04RiddheMarcenas098, hostId));
+      expectSuccess(p1.passPhase());
+      expectSuccess(p2.passActionStep());
+      expectSuccess(p1.passActionStep());
 
-      return { engine, hostId, enemyId };
-    }
-
-    function dealEffectDamage(
-      engine: GundamTestEngine,
-      sourcePlayerId: string,
-      sourceCardId: string,
-      targetCardId: string,
-    ) {
-      engine.getRuntime().runTestMutation(sourcePlayerId as PlayerId, ({ G, framework }) => {
-        executeCardEffect(effectDamage, {
-          G,
-          framework,
-          sourcePlayerId,
-          sourceCardId,
-          chosenTargets: [targetCardId],
-        });
-      });
+      return { p1, p2, hostId };
     }
 
     it("reduces enemy effect damage to the linked Unit by 2", () => {
-      const { engine, hostId, enemyId } = setup();
+      const damageCommand = effectDamageCommand();
+      const { p1, p2, hostId } = setup("[Riddhe Marcenas]", damageCommand);
 
-      dealEffectDamage(engine, PLAYER_TWO, enemyId, hostId);
+      expectSuccess(p2.playCommand(damageCommand, { targets: [hostId] }));
 
-      expect(getDamageCounter(engine, hostId)).toBe(2);
+      expect(p1.getDamage(hostId)).toBe(2);
     });
 
     it("does not consume the constant reduction after one damage event", () => {
-      const { engine, hostId, enemyId } = setup();
+      const firstDamage = effectDamageCommand();
+      const secondDamage = effectDamageCommand();
+      const { p1, p2, hostId } = setup("[Riddhe Marcenas]", firstDamage, secondDamage);
 
-      dealEffectDamage(engine, PLAYER_TWO, enemyId, hostId);
-      dealEffectDamage(engine, PLAYER_TWO, enemyId, hostId);
+      expectSuccess(p2.playCommand(firstDamage, { targets: [hostId] }));
+      expectSuccess(p2.playCommand(secondDamage, { targets: [hostId] }));
 
-      expect(getDamageCounter(engine, hostId)).toBe(4);
+      expect(p1.getDamage(hostId)).toBe(4);
     });
 
     it("does not reduce friendly effect damage", () => {
-      const { engine, hostId } = setup();
+      const damageCommand = effectDamageCommand();
+      const host = createMockUnit({
+        name: "Riddhe Host",
+        hp: 10,
+        linkCondition: "[Riddhe Marcenas]",
+      });
+      const engine = GundamTestEngine.create({
+        hand: [gd04RiddheMarcenas098, damageCommand],
+        play: [host],
+        resourceArea: activeResources(4),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const hostId = p1.getCardsInZone("battleArea")[0]!;
 
-      dealEffectDamage(engine, PLAYER_ONE, hostId, hostId);
+      expectSuccess(p1.assignPilot(gd04RiddheMarcenas098, hostId));
+      expectSuccess(p1.playCommand(damageCommand, { targets: [hostId] }));
 
-      expect(getDamageCounter(engine, hostId)).toBe(4);
+      expect(p1.getDamage(hostId)).toBe(4);
     });
 
     it("does not reduce damage while paired but not linked", () => {
-      const { engine, hostId, enemyId } = setup("[Different Pilot]");
+      const damageCommand = effectDamageCommand();
+      const { p1, p2, hostId } = setup("[Different Pilot]", damageCommand);
 
-      dealEffectDamage(engine, PLAYER_TWO, enemyId, hostId);
+      expectSuccess(p2.playCommand(damageCommand, { targets: [hostId] }));
 
-      expect(getDamageCounter(engine, hostId)).toBe(4);
+      expect(p1.getDamage(hostId)).toBe(4);
     });
   });
 });

@@ -14,9 +14,7 @@ describe("Yorinobu Arasaka - Embracing Destruction (box topper retail)", () => {
       {
         hand: [welcomeToNightCityRetailDyingNightVSPistol],
         deck: [welcomeToNightCityRetailCorpoSecurity],
-        field: [
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
         legendArea: [{ card: boxTopperRetailYorinobuArasakaEmbracingDestruction, faceDown: false }],
         gigArea: [{ dieType: "d12", faceValue: 12 }],
       },
@@ -40,7 +38,7 @@ describe("Yorinobu Arasaka - Embracing Destruction (box topper retail)", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         deck: [welcomeToNightCityRetailCorpoSecurity],
-        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false }],
+        field: [{ card: welcomeToNightCityRetailDelamainCab, spent: false, hasLag: false }],
         legendArea: [{ card: boxTopperRetailYorinobuArasakaEmbracingDestruction, faceDown: false }],
         gigArea: [
           { dieType: "d12", faceValue: 12 },
@@ -61,9 +59,7 @@ describe("Yorinobu Arasaka - Embracing Destruction (box topper retail)", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         deck: [welcomeToNightCityRetailCorpoSecurity],
-        field: [
-          { card: welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
-        ],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
         legendArea: [{ card: boxTopperRetailYorinobuArasakaEmbracingDestruction, faceDown: false }],
         gigArea: [
           { dieType: "d12", faceValue: 12 },

@@ -20,10 +20,23 @@ describe("Elmeth (GD02-020)", () => {
       deck: [nonMatch, lalah, createMockUnit()],
     });
     const p1 = engine.asPlayer(PLAYER_ONE);
+    const [nonMatchId, lalahId, fillerId] = p1.getCardsInZone("deck");
 
     expectSuccess(p1.deployUnit(gd02Elmeth020));
 
-    expect(p1.getHand().some((id) => id.includes(`_${lalah.cardNumber}_`))).toBe(true);
+    const choice = p1.getBoardView().pendingChoice;
+    expect(choice?.kind).toBe("deckLook");
+    if (choice?.kind !== "deckLook") return;
+    expect(choice.legalTutorCardIds).toEqual([lalahId]);
+    expectSuccess(
+      p1.resolveEffect({
+        deckLookAnswers: {
+          0: { tutorCardId: lalahId, toBottom: [nonMatchId!, fillerId!] },
+        },
+      }),
+    );
+
+    expect(p1.getHand()).toContain(lalahId);
   });
 
   it("gets AP+2 while linked", () => {
