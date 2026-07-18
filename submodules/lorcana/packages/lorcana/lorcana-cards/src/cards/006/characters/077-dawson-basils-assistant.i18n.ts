@@ -17,4 +17,8 @@ export const dawsonBasilsAssistantI18n: Record<Languages, I18nProperties> = {
     name: "Topson",
     version: "Assistente di Basil",
   },
+  es: {
+    name: "Dawson",
+    version: "Asistente de albahaca",
+  },
 };

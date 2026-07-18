@@ -51,15 +51,15 @@ const laterStateFixtures = [];
 const precommittedHappyPaths = [];
 let inspected = 0;
 
-const STRICT_BEHAVIOR_SETS = new Set(["gd01", "gd03", "gd04"]);
+const STRICT_BEHAVIOR_SETS = new Set(["gd01", "gd02", "gd03", "gd04"]);
 // Sets audited end-to-end for pre-reveal hidden-zone identity reads. Add a set
 // only when its full card fixture suite is migrated to the behavior contract.
-const SHIELD_IDENTITY_SAFE_SETS = new Set(["gd01", "gd03"]);
+const SHIELD_IDENTITY_SAFE_SETS = new Set(["gd01", "gd02", "gd03"]);
 // Sets whose individual test cases have been audited to require both a
 // deterministic fixture and at least one public player move. This closes the
 // loophole where one behavioral test could mask structural siblings in the
 // same file.
-const PER_TEST_BEHAVIOR_SETS = new Set(["gd01"]);
+const PER_TEST_BEHAVIOR_SETS = new Set(["gd01", "gd02"]);
 
 const PUBLIC_PLAYER_MOVE_METHODS = new Set([
   "chooseFirstPlayer",

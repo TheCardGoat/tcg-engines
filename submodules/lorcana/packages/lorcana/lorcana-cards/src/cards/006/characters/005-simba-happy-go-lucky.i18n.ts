@@ -17,4 +17,8 @@ export const simbaHappygoluckyI18n: Record<Languages, I18nProperties> = {
     name: "Simba",
     version: "Spensierato",
   },
+  es: {
+    name: "Simba",
+    version: "Feliz y despreocupado",
+  },
 };

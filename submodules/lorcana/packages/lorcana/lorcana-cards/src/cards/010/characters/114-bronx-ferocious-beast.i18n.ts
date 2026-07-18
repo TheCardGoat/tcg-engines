@@ -55,4 +55,17 @@ export const bronxFerociousBeastI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bronx",
+    version: "Bestia feroz",
+    text: [
+      {
+        title: "Imprudente",
+      },
+      {
+        title: "PIEDRA DE DÍA",
+        description: "Si tienes 3 o más cartas en tu mano, este personaje no puede prepararse.",
+      },
+    ],
+  },
 };

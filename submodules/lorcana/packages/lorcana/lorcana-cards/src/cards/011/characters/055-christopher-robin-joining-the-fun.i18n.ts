@@ -45,4 +45,15 @@ export const christopherRobinJoiningTheFunI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Cristóbal Robin",
+    version: "Unirse a la diversión",
+    text: [
+      {
+        title: "PERDIDO",
+        description:
+          "Si este es tu primer turno y no eres el primer jugador, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+    ],
+  },
 };

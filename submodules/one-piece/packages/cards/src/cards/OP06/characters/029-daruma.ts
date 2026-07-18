@@ -23,10 +23,10 @@ export const op06Daruma029: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Fish-Man New Fish-Man Pirates"],
+  traits: ["Fish-Man", "New Fish-Man Pirates"],
   attribute: "slash",
   effect:
-    "[DON!! x1][When Attacking][Once Per Turn] If your Leader has the [New FIsh-Man Pirates] type, set this Character as active and this Character gains +1000 power during this turn. Then, add 1 card from the top of your Life cards to your hand.",
+    "[DON!! x1][When Attacking][Once Per Turn] If your Leader has the [New Fish-Man Pirates] type, set this Character as active and this Character gains +1000 power during this turn. Then, add 1 card from the top of your Life cards to your hand.",
   effects: {
     effects: [
       {
@@ -38,7 +38,8 @@ export const op06Daruma029: CharacterCard = {
           },
           {
             condition: "leaderTrait",
-            trait: "New FIsh-Man Pirates",
+            trait: "New Fish-Man Pirates",
+            match: "includes",
           },
         ],
         actions: [
@@ -73,6 +74,7 @@ export const op06Daruma029: CharacterCard = {
               amount: 1,
             },
             destination: "hand",
+            position: "top",
           },
         ],
         oncePerTurn: true,

@@ -58,4 +58,18 @@ export const nickWildePersistentInvestigatorEnchantedI18n: Record<Languages, I18
       },
     ],
   },
+  es: {
+    name: "Nick Wilde",
+    version: "Investigador persistente",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "CASO CERRADO",
+        description:
+          "Durante tu turno, cada vez que uno de tus personajes detectives destierre a otro personaje en un desafío, roba una carta.",
+      },
+    ],
+  },
 };

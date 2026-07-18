@@ -62,4 +62,19 @@ export const maidMarianBadmintonAceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Criada mariana",
+    version: "As del bádminton",
+    text: [
+      {
+        title: "BUEN TIRO",
+        description:
+          "Durante el turno de un oponente, siempre que uno de tus personajes aliados resulte dañado, inflige 1 daño al personaje contrario elegido.",
+      },
+      {
+        title: "JUEGO JUSTO",
+        description: "Tus personajes llamados Lady Kluck obtienen Resistencia +1.",
+      },
+    ],
+  },
 };

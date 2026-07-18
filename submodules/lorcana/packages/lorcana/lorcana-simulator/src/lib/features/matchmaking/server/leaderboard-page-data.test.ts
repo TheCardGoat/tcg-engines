@@ -11,7 +11,7 @@ const API_ORIGIN = "https://api.example.test";
 const NOW = new Date("2026-05-27T12:00:00Z");
 
 describe("loadLeaderboardPageData", () => {
-  it("defaults to the active infinity ranked board", async () => {
+  it("defaults to the current core constructed ranked board", async () => {
     const seenUrls: string[] = [];
     const fetchJson = leaderboardFetcher(seenUrls);
 
@@ -24,14 +24,21 @@ describe("loadLeaderboardPageData", () => {
     });
 
     expect(data.tab).toBe("competitive");
-    expect(data.formatId).toBe("infinity");
+    expect(data.formatId).toBe("core-constructed");
+    expect(data.queueMode).toBe("3");
+    expect(data.seasonId).toBe("season_2026_05");
+    expect(data.availableSeasons.map((season) => season.seasonId)).toEqual([
+      "season_2026_05",
+      "season_2026_04",
+    ]);
+    expect(data.availableFormats.map((format) => format.id)).toContain("attack-of-the-vine");
     expect(data.month).toBe("2026-05");
-    expect(seenUrls).toHaveLength(3);
+    expect(seenUrls).toHaveLength(2);
     expect(seenUrls[0]).toContain("/v1/leaderboards/lorcana/page/competitive?");
-    expect(seenUrls[0]).toContain("formatId=infinity");
-    expect(seenUrls[1]).toContain("formatId=core-constructed");
-    expect(seenUrls[2]).toContain("/v1/leaderboards/lorcana/page/casual?");
-    expect(seenUrls[2]).toContain("month=2026-05");
+    expect(seenUrls[0]).toContain("formatId=core-constructed");
+    expect(seenUrls[0]).toContain("mode=3");
+    expect(seenUrls[1]).toContain("/v1/leaderboards/lorcana/page/casual?");
+    expect(seenUrls[1]).toContain("month=2026-05");
   });
 
   it("respects an explicit casual tab", async () => {
@@ -47,7 +54,7 @@ describe("loadLeaderboardPageData", () => {
 
     expect(data.tab).toBe("casual");
     expect(seenUrls).toHaveLength(2);
-    expect(seenUrls[0]).toContain("formatId=infinity");
+    expect(seenUrls[0]).toContain("formatId=core-constructed");
     expect(seenUrls[1]).toContain("/v1/leaderboards/lorcana/page/casual?");
   });
 
@@ -67,6 +74,56 @@ describe("loadLeaderboardPageData", () => {
     expect(seenUrls[0]).toContain("formatId=core-constructed");
   });
 
+  it("allows a persisted queue format that is no longer in the live catalog", async () => {
+    const seenUrls: string[] = [];
+
+    const data = await loadLeaderboardPageData({
+      url: new URL(
+        "https://sim.example.test/matchmaking/leaderboard?formatId=attack-of-the-vine&mode=3",
+      ),
+      apiOrigin: API_ORIGIN,
+      now: NOW,
+      fetchJson: leaderboardFetcher(seenUrls),
+      fetchMatchmakingContext: forbiddenContextFetcher,
+    });
+
+    expect(data.formatId).toBe("attack-of-the-vine");
+    expect(new URL(seenUrls[0]).searchParams.get("formatId")).toBe("attack-of-the-vine");
+  });
+
+  it("forwards an explicit leaderboard season to the ranked request", async () => {
+    const seenUrls: string[] = [];
+
+    const data = await loadLeaderboardPageData({
+      url: new URL("https://sim.example.test/matchmaking/leaderboard?seasonId=season_2026_04"),
+      apiOrigin: API_ORIGIN,
+      now: NOW,
+      fetchJson: leaderboardFetcher(seenUrls),
+      fetchMatchmakingContext: forbiddenContextFetcher,
+    });
+
+    expect(data.seasonId).toBe("season_2026_04");
+    expect(new URL(seenUrls[0]).searchParams.get("seasonId")).toBe("season_2026_04");
+    expect(new URL(seenUrls[1]).searchParams.get("seasonId")).toBeNull();
+  });
+
+  it("selects the requested best-of partition", async () => {
+    const seenUrls: string[] = [];
+
+    const data = await loadLeaderboardPageData({
+      url: new URL("https://sim.example.test/matchmaking/leaderboard?mode=1"),
+      apiOrigin: API_ORIGIN,
+      now: NOW,
+      fetchJson: leaderboardFetcher(seenUrls),
+      fetchMatchmakingContext: forbiddenContextFetcher,
+    });
+
+    expect(data.queueMode).toBe("1");
+    expect(data.competitive?.mode).toBe("1");
+    expect(new URL(seenUrls[0]).searchParams.get("mode")).toBe("1");
+    expect(new URL(seenUrls[1]).searchParams.get("mode")).toBeNull();
+  });
+
   it("forwards region to ranked and casual requests", async () => {
     const seenUrls: string[] = [];
 
@@ -79,7 +136,7 @@ describe("loadLeaderboardPageData", () => {
     });
 
     expect(data.region).toBe("EU");
-    expect(seenUrls).toHaveLength(3);
+    expect(seenUrls).toHaveLength(2);
     expect(
       seenUrls.every((requestUrl) => new URL(requestUrl).searchParams.get("region") === "EU"),
     ).toBeTrue();
@@ -150,17 +207,53 @@ function leaderboardFetcher(seenUrls: string[]): LeaderboardJsonFetcher {
     }
 
     const formatId = url.searchParams.get("formatId") ?? "infinity";
-    return { data: competitiveBoard(formatId, url.searchParams.get("region")) as T };
+    return {
+      data: competitiveBoard(
+        formatId,
+        url.searchParams.get("mode") === "1" ? "1" : "3",
+        url.searchParams.get("region"),
+        url.searchParams.get("seasonId") ?? "season_2026_05",
+      ) as T,
+    };
   };
 }
 
-function competitiveBoard(formatId: string, region: string | null): CompetitiveLeaderboardResponse {
+function competitiveBoard(
+  formatId: string,
+  mode: "1" | "3",
+  region: string | null,
+  seasonId: string,
+): CompetitiveLeaderboardResponse {
   const gamesPlayed = formatId === "infinity" ? 40 : 12;
   return {
     type: "competitive",
     formatId,
+    mode,
     region,
-    seasonId: "season_2026_05",
+    seasonId,
+    availablePartitions: [
+      { seasonId: "season_2026_05", formatId, mode },
+      { seasonId: "season_2026_04", formatId, mode },
+      { seasonId: "season_2026_04", formatId: "attack-of-the-vine", mode: "3" },
+    ],
+    availableSeasons: [
+      {
+        seasonId: "season_2026_05",
+        name: "May 2026",
+        slug: "2026-05",
+        startsAt: "2026-05-01T00:00:00.000Z",
+        endsAt: null,
+        isCurrent: true,
+      },
+      {
+        seasonId: "season_2026_04",
+        name: "April 2026",
+        slug: "2026-04",
+        startsAt: "2026-04-01T00:00:00.000Z",
+        endsAt: "2026-05-01T00:00:00.000Z",
+        isCurrent: false,
+      },
+    ],
     total: formatId === "infinity" ? 12 : 4,
     currentUser: null,
     entries: [

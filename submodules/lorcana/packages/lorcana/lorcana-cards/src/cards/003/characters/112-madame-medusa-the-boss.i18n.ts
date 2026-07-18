@@ -45,4 +45,15 @@ export const madameMedusaTheBossI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora Medusa",
+    version: "El jefe",
+    text: [
+      {
+        title: "ESA MUJER TERRIBLE",
+        description:
+          "Cuando juegues con este personaje, destierra al personaje contrario elegido con 3 {S} o menos.",
+      },
+    ],
+  },
 };

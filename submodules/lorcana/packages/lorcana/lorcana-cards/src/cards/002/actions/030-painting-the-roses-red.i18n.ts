@@ -33,4 +33,8 @@ export const paintingTheRosesRedI18n: Record<Languages, I18nProperties> = {
     name: "Painting the Roses Red",
     text: "Up to 2 chosen characters get -1 {S} this turn. Draw a card.",
   },
+  es: {
+    name: "Pintar las rosas de rojo",
+    text: "Hasta 2 personajes elegidos obtienen -1 {S} este turno. Saca una carta.",
+  },
 };

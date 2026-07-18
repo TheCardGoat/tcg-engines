@@ -70,6 +70,15 @@ export const op14eb04SilversRayleigh108: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "onPlay",
+          },
+        ],
+      },
     ],
   },
   i18n: op14eb04SilversRayleigh108I18n,

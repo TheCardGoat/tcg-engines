@@ -74,4 +74,21 @@ export const daisyDuckParanormalInvestigatorP3ChallengeI18n: Record<Languages, I
       },
     ],
   },
+  es: {
+    name: "Pato margarita",
+    version: "Investigador Paranormal",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "ACONTECIMIENTOS EXTRAÑOS",
+        description:
+          "Mientras este personaje está ejercido, las cartas ejercidas entran en los tinteros de los oponentes.",
+      },
+    ],
+  },
 };

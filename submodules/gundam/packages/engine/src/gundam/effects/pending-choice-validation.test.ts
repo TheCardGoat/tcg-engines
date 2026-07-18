@@ -334,7 +334,8 @@ describe("resolveEffect — deck-look answers", () => {
     const top = createMockUnit({ name: "Top" });
     const second = createMockUnit({ name: "Second" });
     const engine = GundamTestEngine.create({ hand: [handCard], deck: [top, second] }, {});
-    const deckBefore = engine.asPlayer(PLAYER_ONE).getCardsInZone("deck");
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const deckBefore = p1.getBoardView().players[PLAYER_ONE]!.deckCount;
 
     engine.getG().pendingEffects.push(
       makePending({
@@ -344,15 +345,16 @@ describe("resolveEffect — deck-look answers", () => {
       }),
     );
 
-    expectSuccess(
-      engine.asPlayer(PLAYER_ONE).resolveEffect({
-        optionalAnswers: { 0: false },
-      }),
-    );
-    expect(engine.asPlayer(PLAYER_ONE).getCardsInZone("deck")).toEqual(deckBefore);
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      directiveIndex: 0,
+    });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: false } }));
+    expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(deckBefore);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
   });
 
-  it("requires accepting the optional prerequisite when answering its deck-look rider", () => {
+  it("rejects a Deck-look answer before the optional prerequisite is answered", () => {
     const handCard = createMockUnit({ name: "Discard" });
     const top = createMockUnit({ name: "Top" });
     const second = createMockUnit({ name: "Second" });
@@ -371,16 +373,18 @@ describe("resolveEffect — deck-look answers", () => {
       engine.asPlayer(PLAYER_ONE).resolveEffect({
         deckLookAnswers: { 1: { toTop: [topId!], toTrash: [secondId!] } },
       }),
-      "MISSING_DECK_LOOK_OPTIONAL_ACCEPT",
+      "MISSING_OPTIONAL_ANSWER",
     );
   });
 
-  it("accepts an optional-gated deck-look answer when the prerequisite is accepted", () => {
-    const handCard = createMockUnit({ name: "Discard" });
+  it("stages optional acceptance, discard choice, and Deck routing", () => {
+    const handCard = createMockUnit({ name: "First Discard" });
+    const keptCard = createMockUnit({ name: "Kept Discard" });
     const top = createMockUnit({ name: "Top" });
     const second = createMockUnit({ name: "Second" });
-    const engine = GundamTestEngine.create({ hand: [handCard], deck: [top, second] }, {});
-    const [topId, secondId] = engine.asPlayer(PLAYER_ONE).getCardsInZone("deck");
+    const engine = GundamTestEngine.create({ hand: [handCard, keptCard], deck: [top, second] }, {});
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [discardId, keptId] = p1.getHand();
 
     engine.getG().pendingEffects.push(
       makePending({
@@ -390,13 +394,26 @@ describe("resolveEffect — deck-look answers", () => {
       }),
     );
 
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional", directiveIndex: 0 });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
+
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([discardId, keptId]),
+    });
+    expectSuccess(p1.resolveEffect({ targets: [discardId!] }));
+
+    const deckLook = p1.getBoardView().pendingChoice;
+    if (deckLook?.kind !== "deckLook") throw new Error("Expected a staged Deck look");
+    const [topId, secondId] = deckLook.revealedCardIds;
     expectSuccess(
-      engine.asPlayer(PLAYER_ONE).resolveEffect({
-        optionalAnswers: { 0: true },
-        deckLookAnswers: { 1: { toTop: [topId!], toTrash: [secondId!] } },
+      p1.resolveEffect({
+        deckLookAnswers: { [deckLook.directiveIndex]: { toTop: [topId!], toTrash: [secondId!] } },
       }),
     );
-    expect(engine.asPlayer(PLAYER_ONE).getCardsInZone("deck")).toEqual([topId]);
-    expect(engine.asPlayer(PLAYER_ONE).getCardsInZone("trash")).toContain(secondId);
+
+    expect(p1.getCardZone(discardId!)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(keptId!)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(1);
   });
 });

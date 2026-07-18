@@ -41,4 +41,14 @@ export const theBearTerritorialAnimalI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El oso",
+    version: "Animales territoriales",
+    text: [
+      {
+        title: "Furia salvaje",
+        description: "Mientras este personaje tenga daño, obtiene +3 {S}.",
+      },
+    ],
+  },
 };

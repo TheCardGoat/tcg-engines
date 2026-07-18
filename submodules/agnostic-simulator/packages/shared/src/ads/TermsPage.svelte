@@ -14,7 +14,7 @@
 	<title>Terms of Service — {siteName}</title>
 	<meta
 		name="description"
-		content="Terms of Service for {siteName}: the rules that govern your use of our unofficial Disney Lorcana fan simulator, community standards, Premium subscriptions, and disclaimers."
+		content="Terms of Service for {siteName}: rules for the unofficial Disney Lorcana fan simulator, community standards, optional memberships, and legal notices."
 	/>
 </svelte:head>
 
@@ -27,8 +27,9 @@
 		<p>
 			These Terms of Service ("Terms") govern your access to and use of <strong>{siteName}</strong> ("{siteName}",
 			"we", "our", or "us"), available at <a href="https://{siteUrl}">{siteUrl}</a> and related services
-			(the "Service"). By creating an account or using the Service, you agree to these Terms and to our
-			<a href="/privacy-policy">Privacy Policy</a>. If you do not agree, do not use the Service.
+				(the "Service"). By creating an account or using the Service, you agree to these Terms. Our
+				<a href="/privacy-policy">Privacy Policy</a> explains how personal data is processed and is not a
+				separate contract or blanket consent. If you do not agree to these Terms, do not use the Service.
 		</p>
 		<p>
 			The Service is operated by {siteName} with registered address at <strong
@@ -38,15 +39,15 @@
 
 		<h2>2. Unofficial Fan Project &mdash; Intellectual Property</h2>
 		<p>
-			{siteName} is an independent, non-commercial fan project made by fans, for fans. We are <strong
+				{siteName} is an independent, unofficial fan platform made by fans, for fans. We are <strong
 				>not affiliated with, endorsed by, or sponsored by</strong
 			> The Walt Disney Company, Ravensburger AG, or any official Disney Lorcana entity.
 		</p>
 		<p>
 			All Disney Lorcana names, card names, card images, character artwork, logos, and related
 			intellectual property are the property of their respective owners (Disney and Ravensburger).
-			{siteName} makes no claim of ownership over this content and uses it in good faith to enable informal
-			community play. If you are a rights holder and have a concern about content on the Service, please
+				{siteName} makes no claim of ownership over this content. Non-affiliation language does not grant a
+				license or permission from a rights holder. If you have a concern about content on the Service, please
 			contact us at <a href="mailto:{legalEmail}">{legalEmail}</a>.
 		</p>
 		<p>
@@ -145,11 +146,10 @@
 				takes effect at the end of the current billing period; you retain Premium access until then.
 			</li>
 			<li>
-				<strong>Refunds:</strong> Except where required by applicable consumer-protection law (including
-				the EU right of withdrawal where digital-content performance has not yet begun), fees are non-refundable.
-				We may grant discretionary refunds for service outages or billing errors. EU/UK consumers may withdraw
-				from a digital-services purchase within 14 days, unless performance began with your express consent
-				and acknowledgement that the withdrawal right is thereby lost.
+					<strong>Refunds:</strong> Fees are not refunded merely because you stop using the Service. This does
+					not restrict mandatory withdrawal, conformity, price-reduction, termination, reimbursement, or
+					damages rights. EU/UK consumers may have a 14-day withdrawal right for an ongoing digital service;
+					starting the service does not by itself remove every withdrawal right.
 			</li>
 			<li>
 				<strong>Price and feature changes:</strong> We may change Premium pricing or features. We will provide
@@ -157,8 +157,8 @@
 				before the change takes effect.
 			</li>
 			<li>
-				<strong>Taxes:</strong> Prices may exclude applicable taxes, which will be added at checkout where
-				required.
+					<strong>Taxes:</strong> Checkout must show the total recurring price and applicable tax treatment before
+					you order.
 			</li>
 			<li>
 				<strong>Chargebacks:</strong> Initiating a chargeback without first contacting us may result in account
@@ -188,8 +188,8 @@
 		<h2>9. Privacy</h2>
 		<p>
 			Our <a href="/privacy-policy">Privacy Policy</a> describes how we collect, use, and protect your personal
-			information, including cookies, analytics (Google Analytics 4), advertising (Playwire), and your
-			rights under GDPR, UK GDPR, LGPD, and CCPA/CPRA. It is incorporated into these Terms by reference.
+				information, including cookies, analytics (Google Analytics 4), advertising (Playwire), and applicable
+				privacy rights. Consent for optional processing is requested separately where required.
 		</p>
 
 		<h2>10. Third-Party Services</h2>
@@ -283,8 +283,8 @@
 		<h2>19. Miscellaneous</h2>
 		<ul>
 			<li>
-				<strong>Entire agreement:</strong> These Terms and the Privacy Policy constitute the entire agreement
-				between you and {siteName} regarding the Service and supersede any prior agreements.
+					<strong>Entire agreement:</strong> These Terms constitute the entire agreement between you and {siteName}
+					regarding the Service and supersede prior agreements on the same subject. The Privacy Policy is a notice.
 			</li>
 			<li>
 				<strong>Severability:</strong> If any provision is held unenforceable, the remaining provisions

@@ -45,6 +45,19 @@ export const op05BeloBetty002: LeaderCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Revolutionary Army",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "modifyPower",
@@ -57,12 +70,17 @@ export const op05BeloBetty002: LeaderCard = {
               },
               filters: [
                 {
-                  filter: "trait",
-                  value: "Revolutionary Army",
-                },
-                {
-                  filter: "hasTrigger",
-                  value: true,
+                  filter: "anyOf",
+                  groups: [
+                    [
+                      {
+                        filter: "trait",
+                        value: "Revolutionary Army",
+                        match: "includes",
+                      },
+                    ],
+                    [{ filter: "hasTrigger", value: true }],
+                  ],
                 },
               ],
             },

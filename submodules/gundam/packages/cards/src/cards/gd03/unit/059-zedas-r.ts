@@ -53,36 +53,46 @@ export const gd03ZedasR059: UnitCard = {
       directives: [
         {
           action: {
-            action: "exile",
-            target: {
-              owner: "friendly",
-              zone: "trash",
-              count: 1,
-              attributeFilters: [{ attribute: "trait", comparison: "includes", value: "vagan" }],
+            action: "resolveThenQueue",
+            first: {
+              action: "exile",
+              target: {
+                owner: "friendly",
+                zone: "trash",
+                count: 1,
+                attributeFilters: [{ attribute: "trait", comparison: "includes", value: "vagan" }],
+              },
+            },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
+                {
+                  action: {
+                    action: "statModifier",
+                    stat: "ap",
+                    amount: 2,
+                    duration: "thisTurn",
+                    target: {
+                      owner: "friendly",
+                      cardType: "unit",
+                      attributeFilters: [
+                        {
+                          attribute: "trait",
+                          comparison: "includes",
+                          value: "vagan",
+                        },
+                      ],
+                      count: 1,
+                    },
+                  },
+                },
+              ],
+              sourceText:
+                "If you do, choose 1 of your (Vagan) Units. It gets AP+2 during this turn.",
             },
           },
           optional: true,
-        },
-        {
-          action: {
-            action: "statModifier",
-            stat: "ap",
-            amount: 2,
-            duration: "thisTurn",
-            target: {
-              owner: "friendly",
-              cardType: "unit",
-              attributeFilters: [
-                {
-                  attribute: "trait",
-                  comparison: "includes",
-                  value: "vagan",
-                },
-              ],
-              count: 1,
-            },
-          },
-          dependsOnPrevious: true,
         },
       ],
       sourceText:

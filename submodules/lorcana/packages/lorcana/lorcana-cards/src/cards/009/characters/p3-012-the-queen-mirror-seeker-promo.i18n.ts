@@ -45,4 +45,15 @@ export const theQueenMirrorSeekerP3PromoI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "La reina",
+    version: "Buscador de espejos",
+    text: [
+      {
+        title: "CALCULADORA Y VANO",
+        description:
+          "Siempre que este personaje realice una misión, puedes mirar las 3 cartas superiores de tu mazo y volver a colocarlas en cualquier orden.",
+      },
+    ],
+  },
 };

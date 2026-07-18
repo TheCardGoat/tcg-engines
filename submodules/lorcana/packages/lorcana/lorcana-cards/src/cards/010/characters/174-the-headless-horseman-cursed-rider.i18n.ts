@@ -60,4 +60,18 @@ export const theHeadlessHorsemanCursedRiderI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "El jinete sin cabeza",
+    version: "Jinete maldito",
+    text: [
+      {
+        title: "Cambio 5 {I}",
+      },
+      {
+        title: "HORA DE LAS BRUJAS",
+        description:
+          "Cuando juegas con este personaje, cada jugador roba 3 cartas y luego descarta 3 cartas al azar. Elige un personaje contrario y hazle 2 daños por cada carta de acción descartada de esta manera.",
+      },
+    ],
+  },
 };

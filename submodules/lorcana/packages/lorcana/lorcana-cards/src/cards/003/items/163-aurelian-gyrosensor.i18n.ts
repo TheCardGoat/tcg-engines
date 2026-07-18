@@ -41,4 +41,14 @@ export const aurelianGyrosensorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Girosensor Aureliano",
+    text: [
+      {
+        title: "BUSCANDO CONOCIMIENTO",
+        description:
+          "Siempre que uno de tus personajes realice una misión, puedes mirar la carta superior de tu mazo. Colóquelo en la parte superior o inferior de su plataforma.",
+      },
+    ],
+  },
 };

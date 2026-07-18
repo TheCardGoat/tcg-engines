@@ -45,4 +45,15 @@ export const luisaMadrigalNoPressureI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Luisa Madrigal",
+    version: "Sin presión",
+    text: [
+      {
+        title: "ACARGAR LA CARGA",
+        description:
+          "Siempre que este personaje realice una misión, puedes mover hasta 3 puntos de daño del personaje elegido a este personaje.",
+      },
+    ],
+  },
 };

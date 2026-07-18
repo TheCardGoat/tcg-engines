@@ -45,4 +45,15 @@ export const simbaPlayfulPouncerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Simba",
+    version: "Saltador juguetón",
+    text: [
+      {
+        title: "NO TE PARE",
+        description:
+          "UNA OPORTUNIDAD Cuando juegas con este personaje, el personaje contrario elegido obtiene -2 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

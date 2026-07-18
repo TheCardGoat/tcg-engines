@@ -17,4 +17,8 @@ export const bigNoseLovesickPoetI18n: Record<Languages, I18nProperties> = {
     name: "Nasone",
     version: "Poeta Innamorato",
   },
+  es: {
+    name: "Narizota",
+    version: "Poeta enamorado",
+  },
 };

@@ -17,4 +17,8 @@ export const freezeI18n: Record<Languages, I18nProperties> = {
     name: "Freeze",
     text: "Exert chosen opposing character.",
   },
+  es: {
+    name: "Congelar",
+    text: "Ejercer el personaje contrario elegido.",
+  },
 };

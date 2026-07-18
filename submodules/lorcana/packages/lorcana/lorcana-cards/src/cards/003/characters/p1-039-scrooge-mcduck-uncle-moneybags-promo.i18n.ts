@@ -45,4 +45,15 @@ export const scroogeMcduckUncleMoneybagsP1PromoI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Gilito McPato",
+    version: "Tío bolsas de dinero",
+    text: [
+      {
+        title: "BUSCADOR DE TESOROS",
+        description:
+          "Cada vez que este personaje realiza una misión, pagas 1 {I} menos por el siguiente elemento que juegues en este turno.",
+      },
+    ],
+  },
 };

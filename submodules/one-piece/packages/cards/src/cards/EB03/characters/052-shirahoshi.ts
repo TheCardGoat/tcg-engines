@@ -31,12 +31,6 @@ export const eb03Shirahoshi052: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderName",
-            name: "Shirahoshi",
-          },
-        ],
         costs: [
           {
             cost: "trashThisCard",
@@ -53,6 +47,10 @@ export const eb03Shirahoshi052: CharacterCard = {
               },
             },
             position: "top",
+            condition: {
+              condition: "leaderName",
+              name: "Shirahoshi",
+            },
           },
           {
             action: "modifyPower",
@@ -66,6 +64,7 @@ export const eb03Shirahoshi052: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Neptunian",
+                  match: "includes",
                 },
               ],
             },

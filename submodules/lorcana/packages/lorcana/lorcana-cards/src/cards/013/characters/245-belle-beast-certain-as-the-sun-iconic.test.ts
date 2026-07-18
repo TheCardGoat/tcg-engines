@@ -63,6 +63,7 @@ describe("Belle & Beast - Certain as the Sun Iconic", () => {
   it("readies your other characters and prevents them from questing when activated", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
       play: [belleBeastCertainAsTheSunIconic, { card: iconicOtherCharacter, exerted: true }],
+      inkwell: 6,
     });
 
     expect(
@@ -70,6 +71,8 @@ describe("Belle & Beast - Certain as the Sun Iconic", () => {
     ).toBeSuccessfulCommand();
 
     expect(testEngine.asPlayerOne().isExerted(iconicOtherCharacter)).toBe(false);
+    expect(testEngine.asPlayerOne().isExerted(belleBeastCertainAsTheSunIconic)).toBe(false);
+    expect(testEngine.asPlayerOne().getAvailableInk(PLAYER_ONE)).toBe(0);
     expect(testEngine.hasRestriction(iconicOtherCharacter, "cant-quest")).toBe(true);
   });
 });

@@ -45,4 +45,15 @@ export const kidaDiscoveringTheUnknownI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Niño",
+    version: "Descubriendo lo desconocido",
+    text: [
+      {
+        title: "LEER LAS RUNAS",
+        description:
+          "Siempre que este personaje realice una misión, si se pusieron 2 o más cartas en tu descarte este turno, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

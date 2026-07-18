@@ -45,4 +45,15 @@ export const hundredAcreIslandPoohsHomeI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Isla de los Cien Acres",
+    version: "La casa de Pooh",
+    text: [
+      {
+        title: "AMIGOS PARA SIEMPRE",
+        description:
+          "Durante el turno de un oponente, siempre que un personaje sea desterrado aquí, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

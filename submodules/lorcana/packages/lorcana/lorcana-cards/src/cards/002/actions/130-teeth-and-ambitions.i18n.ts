@@ -35,4 +35,8 @@ export const teethAndAmbitionsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dientes y ambiciones",
+    text: "Inflige 2 daños a tu personaje elegido para infligir 2 daños a otro personaje elegido.",
+  },
 };

@@ -4,6 +4,7 @@ export const gd02GundamBarbatos1stForm054: UnitCard = {
   cardNumber: "GD02-054",
   name: "Gundam Barbatos 1st Form",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "purple",
   traits: ["tekkadan", "gundam frame"],
   id: "GD02-054",

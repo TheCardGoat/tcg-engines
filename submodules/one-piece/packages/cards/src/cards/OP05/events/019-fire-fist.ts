@@ -42,6 +42,30 @@ export const op05FireFist019: EventCard = {
             value: -4000,
             duration: "thisTurn",
           },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "power",
+                  comparison: "lte",
+                  value: 0,
+                },
+              ],
+            },
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 2,
+            },
+          },
         ],
       },
       {

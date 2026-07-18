@@ -61,4 +61,19 @@ export const svenLeapingReindeerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sven",
+    version: "Reno saltando",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "Retador +3",
+      },
+      {
+        title: "Evasivo",
+      },
+    ],
+  },
 };

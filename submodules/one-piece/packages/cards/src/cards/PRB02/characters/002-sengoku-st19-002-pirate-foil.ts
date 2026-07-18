@@ -46,10 +46,21 @@ export const prb02SengokuSt19002PirateFoil002: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
+        costs: [
           {
-            condition: "leaderTrait",
-            trait: "Navy",
+            cost: "trashFromHand",
+            amount: 2,
+            filters: [
+              {
+                filter: "color",
+                value: "black",
+              },
+              {
+                filter: "trait",
+                value: "Navy",
+                match: "includes",
+              },
+            ],
           },
         ],
         actions: [
@@ -57,6 +68,11 @@ export const prb02SengokuSt19002PirateFoil002: CharacterCard = {
             action: "draw",
             player: "self",
             amount: 3,
+            condition: {
+              condition: "leaderTrait",
+              trait: "Navy",
+              match: "includes",
+            },
           },
         ],
         optional: true,

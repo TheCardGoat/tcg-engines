@@ -1,16 +1,50 @@
 import type { Action, TargetFilter, Zone } from "@tcg/op-types";
 import { parseZoneList } from "../helpers.ts";
-import { extractTargetFilters } from "../target-parser.ts";
+import { extractTargetFilters, traitAlternativesFilter } from "../target-parser.ts";
 
 // ── AddToLife action parsing ──
 
 type AddToLifeAction = Extract<Action, { action: "addToLife" }>;
+
+export function parseTurnLifeFaceUpAction(
+  text: string,
+): Extract<Action, { action: "turnLifeFaceUp" }> | null {
+  const match =
+    /^turn\s+(\d+)\s+cards?\s+from\s+the\s+(top|bottom)\s+of\s+your\s+Life\s+cards?\s+face-up$/i.exec(
+      text.trim().replace(/\.+$/, ""),
+    );
+  if (!match) return null;
+  return {
+    action: "turnLifeFaceUp",
+    player: "self",
+    count: parseInt(match[1]!, 10),
+    position: match[2]!.toLowerCase() as "top" | "bottom",
+  };
+}
 
 /**
  * Parse an "add up to N card(s) from the top of your deck to the top of your Life cards" action.
  */
 export function parseAddToLifeAction(text: string): AddToLifeAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+
+  const previousCharacterMatch =
+    /^add\s+it\s+to\s+the\s+(top|bottom)\s+of\s+your\s+Life\s+cards?\s+face-(up|down)(?:\s+instead)?$/i.exec(
+      trimmed,
+    );
+  if (previousCharacterMatch) {
+    return {
+      action: "addToLife",
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+      },
+      position: previousCharacterMatch[1]!.toLowerCase() as "top" | "bottom",
+      ...(previousCharacterMatch[2]!.toLowerCase() === "up" && { faceUp: true }),
+      previousActionTargets: true,
+    };
+  }
 
   // Pattern 1: "add up to N card(s) from the top of your deck to the (top|bottom) of your Life cards"
   const deckMatch =
@@ -29,9 +63,9 @@ export function parseAddToLifeAction(text: string): AddToLifeAction | null {
     };
   }
 
-  // Pattern 2: "add up to N [filters] card(s) [with X] from your hand to the (top|bottom) of your Life cards [face-up]"
+  // Pattern 2: "add up to N [filters] card(s) [with a cost of N] from your hand to the (top|bottom) of your Life cards [face-up]"
   const handMatch =
-    /^add\s+up\s+to\s+(\d+)\s+(.+?)\s+cards?\s+(?:with\s+a\s+\[Trigger\]\s+)?from\s+your\s+hand\s+to\s+the\s+(top|bottom)\s+of\s+your\s+Life\s+cards?(?:\s+face-up)?$/i.exec(
+    /^add\s+up\s+to\s+(\d+)\s+(.+?)\s+cards?(?:\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?)?\s+(?:with\s+a\s+\[Trigger\]\s+)?from\s+your\s+hand\s+to\s+the\s+(top|bottom)\s+of\s+your\s+Life\s+cards?(?:\s+face-up)?$/i.exec(
       trimmed,
     );
   if (handMatch) {
@@ -44,7 +78,7 @@ export function parseAddToLifeAction(text: string): AddToLifeAction | null {
     const traitMatch =
       /(?:[[{"\u201c])([^\]}\u201d"]+)(?:[\]}\u201d"])\s+type(?:\s+Character)?/i.exec(filterText);
     if (traitMatch) {
-      filters.push({ filter: "trait", value: traitMatch[1]! });
+      filters.push({ filter: "trait", value: traitMatch[1]!, match: "includes" });
     }
     const catMatch = /\bCharacter\b/i.exec(filterText);
     if (catMatch) {
@@ -52,6 +86,18 @@ export function parseAddToLifeAction(text: string): AddToLifeAction | null {
     }
     if (hasTrigger) {
       filters.push({ filter: "hasTrigger", value: true });
+    }
+    if (handMatch[3]) {
+      filters.push({
+        filter: "cost",
+        comparison:
+          handMatch[4]?.toLowerCase() === "less"
+            ? "lte"
+            : handMatch[4]?.toLowerCase() === "more"
+              ? "gte"
+              : "eq",
+        value: parseInt(handMatch[3], 10),
+      });
     }
 
     return {
@@ -62,7 +108,7 @@ export function parseAddToLifeAction(text: string): AddToLifeAction | null {
         count: { amount: parseInt(handMatch[1]!, 10), upTo: true },
         ...(filters.length > 0 && { filters }),
       },
-      position: handMatch[3]!.toLowerCase() as "top" | "bottom",
+      position: handMatch[5]!.toLowerCase() as "top" | "bottom",
       ...(faceUp && { faceUp: true }),
     };
   }
@@ -84,9 +130,9 @@ export function parseAddToLifeAction(text: string): AddToLifeAction | null {
     };
   }
 
-  // Pattern 4: "add N card(s) from the top of your deck to the (top|bottom) of your Life cards (at the end of this turn)?" (without "up to")
+  // Pattern 4: "add N card(s) from the top of your deck to the (top|bottom) of your Life cards" (without "up to")
   const deckNoUpTo =
-    /^add\s+(\d+)\s+cards?\s+from\s+the\s+top\s+of\s+your\s+deck\s+to\s+the\s+(top|bottom)\s+of\s+your\s+Life\s+cards?(?:\s+at\s+the\s+end\s+of\s+this\s+turn)?$/i.exec(
+    /^add\s+(\d+)\s+cards?\s+from\s+the\s+top\s+of\s+your\s+deck\s+to\s+the\s+(top|bottom)\s+of\s+your\s+Life\s+cards?$/i.exec(
       trimmed,
     );
   if (deckNoUpTo) {
@@ -113,7 +159,10 @@ export function parseAddToLifeAction(text: string): AddToLifeAction | null {
     const faceUp = /face-up$/i.test(trimmed);
     const filterText = charToLifeMatch[3]!;
     const posText = charToLifeMatch[4]!.toLowerCase();
-    const position = (posText === "top or bottom" ? "top" : posText) as "top" | "bottom";
+    const position = (posText === "top or bottom" ? "choice" : posText) as
+      | "top"
+      | "bottom"
+      | "choice";
 
     const { zonesText, filters } = extractTargetFilters(filterText);
 
@@ -125,16 +174,26 @@ export function parseAddToLifeAction(text: string): AddToLifeAction | null {
       );
     if (traitZoneMatch) {
       const bracketRegex = /[[{"\u201c]([^\]}\u201d"]+)[\]}\u201d"]/g;
+      const traits: string[] = [];
       let tMatch;
       while ((tMatch = bracketRegex.exec(zonesText)) !== null) {
         if (tMatch.index < zonesText.indexOf(" type ")) {
-          filters.push({ filter: "trait", value: tMatch[1]! });
+          traits.push(tMatch[1]!);
         }
       }
+      const traitFilter = traitAlternativesFilter(traits, "includes");
+      if (traitFilter) filters.push(traitFilter);
       finalZonesText = traitZoneMatch[1]!;
     }
 
-    const zones = parseZoneList(finalZonesText);
+    let cleanedZonesText = finalZonesText;
+    const otherThanMatch = /^(.+?)\s+other\s+than\s+\[([^\]]+)\]$/i.exec(cleanedZonesText);
+    if (otherThanMatch) {
+      cleanedZonesText = otherThanMatch[1]!;
+      filters.push({ filter: "excludeName", value: otherThanMatch[2]! });
+    }
+
+    const zones = parseZoneList(cleanedZonesText);
     if (!zones) return null;
 
     return {
@@ -160,7 +219,10 @@ export function parseAddToLifeAction(text: string): AddToLifeAction | null {
     const upTo = /up\s+to/i.test(trimmed);
     const filterText = charNoPlayerMatch[2]!;
     const posText = charNoPlayerMatch[3]!.toLowerCase();
-    const position = (posText === "top or bottom" ? "top" : posText) as "top" | "bottom";
+    const position = (posText === "top or bottom" ? "choice" : posText) as
+      | "top"
+      | "bottom"
+      | "choice";
     const face = charNoPlayerMatch[4]?.toLowerCase();
 
     const { zonesText, filters } = extractTargetFilters(filterText);
@@ -171,7 +233,7 @@ export function parseAddToLifeAction(text: string): AddToLifeAction | null {
     return {
       action: "addToLife",
       target: {
-        player: "self",
+        player: "any",
         zones: finalZones as Zone[],
         count: { amount, ...(upTo && { upTo: true }) },
         ...(filters.length > 0 && { filters }),
@@ -196,20 +258,37 @@ type RemoveFromLifeAction = Extract<Action, { action: "removeFromLife" }>;
  * - "trash up to 1 card from the top of your opponent's Life cards"
  * - "Trash up to 1 card from the top of your opponent's Life cards"
  */
-export function parseRemoveFromLifeAction(text: string): RemoveFromLifeAction | null {
+export function parseRemoveFromLifeAction(
+  text: string,
+): RemoveFromLifeAction | Extract<Action, { action: "sequence" }> | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+
+  const untilRemainingMatch =
+    /^trash\s+cards?\s+from\s+the\s+top\s+of\s+your\s+Life\s+cards?\s+until\s+you\s+have\s+(\d+)\s+Life\s+cards?$/i.exec(
+      trimmed,
+    );
+  if (untilRemainingMatch) {
+    return {
+      action: "removeFromLife",
+      player: "self",
+      count: { untilRemaining: parseInt(untilRemainingMatch[1]!, 10) },
+      destination: "trash",
+      position: "top",
+    };
+  }
 
   // "add N card(s) from the top [or bottom] of your Life cards to [your/the owner's] hand"
   const addMatch =
-    /^add\s+(\d+)\s+cards?\s+from\s+the\s+(?:top(?:\s+or\s+bottom)?)\s+of\s+(your|your\s+opponent's)\s+Life\s+cards?\s+to\s+(?:your|the\s+owner[''\u2019]s)\s+hand$/i.exec(
+    /^add\s+(\d+)\s+cards?\s+from\s+the\s+(top(?:\s+or\s+bottom)?)\s+of\s+(your|your\s+opponent's)\s+Life\s+cards?\s+to\s+(?:your|the\s+owner[''\u2019]s)\s+hand$/i.exec(
       trimmed,
     );
   if (addMatch) {
     return {
       action: "removeFromLife",
-      player: /opponent/i.test(addMatch[2]!) ? "opponent" : "self",
+      player: /opponent/i.test(addMatch[3]!) ? "opponent" : "self",
       count: { amount: parseInt(addMatch[1]!, 10) },
       destination: "hand",
+      position: /or\s+bottom/i.test(addMatch[2]!) ? "choice" : "top",
     };
   }
 
@@ -256,6 +335,24 @@ export function parseRemoveFromLifeAction(text: string): RemoveFromLifeAction | 
     };
   }
 
+  // "place up to N card(s) from your opponent's Life area at the bottom of the owner's deck"
+  const deckBottomMatch =
+    /^place\s+(up\s+to\s+)?(\d+)\s+cards?\s+from\s+(your|your\s+opponent[''\u2019]s)\s+Life\s+(?:area|cards?)\s+at\s+the\s+bottom\s+of\s+the\s+owner[''\u2019]s\s+deck$/i.exec(
+      trimmed,
+    );
+  if (deckBottomMatch) {
+    return {
+      action: "removeFromLife",
+      player: /opponent/i.test(deckBottomMatch[3]!) ? "opponent" : "self",
+      count: {
+        amount: parseInt(deckBottomMatch[2]!, 10),
+        ...(deckBottomMatch[1] && { upTo: true }),
+      },
+      destination: "deck",
+      destinationPosition: "bottom",
+    };
+  }
+
   // "trash N card(s) from the top of each of your and your opponent's Life cards"
   const trashEachMatch =
     /^trash\s+(?:up\s+to\s+)?(\d+)\s+cards?\s+from\s+the\s+top\s+of\s+each\s+of\s+your\s+and\s+your\s+opponent[''\u2019]s\s+Life\s+cards?$/i.exec(
@@ -263,10 +360,14 @@ export function parseRemoveFromLifeAction(text: string): RemoveFromLifeAction | 
     );
   if (trashEachMatch) {
     return {
-      action: "removeFromLife",
-      player: "self", // affects both players; model as self for simplicity
-      count: { amount: parseInt(trashEachMatch[1]!, 10) },
-      destination: "trash",
+      action: "sequence",
+      actions: (["self", "opponent"] as const).map((player) => ({
+        action: "removeFromLife" as const,
+        player,
+        count: { amount: parseInt(trashEachMatch[1]!, 10) },
+        destination: "trash" as const,
+        position: "top" as const,
+      })),
     };
   }
 
@@ -276,26 +377,45 @@ export function parseRemoveFromLifeAction(text: string): RemoveFromLifeAction | 
 // ── Life card look/place ──
 
 type RearrangeDeckAction = Extract<Action, { action: "rearrangeDeck" }>;
+type LookAtLifeAction = Extract<Action, { action: "lookAtLife" }>;
+type RearrangeLifeAction = Extract<Action, { action: "rearrangeLife" }>;
 
-export function parseLifeCardLookAction(text: string): RearrangeDeckAction | null {
+export function parseLifeCardLookAction(
+  text: string,
+): LookAtLifeAction | RearrangeDeckAction | RearrangeLifeAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
-  // "Look at up to N card(s) from the top of your or your opponent's Life cards and place it/them at the top or bottom of the Life cards"
-  // Also: "Look at up to N card(s) from the top of your or your opponent's Life cards, and place it at the top or bottom of the Life cards"
+  const moveOneToDeckMatch =
+    /^look\s+at\s+all\s+(?:of\s+)?your\s+Life\s+cards?;?\s*place\s+1\s+card\s+at\s+the\s+top\s+of\s+your\s+deck\s+and\s+place\s+the\s+rest\s+back\s+in\s+your\s+Life\s+area\s+in\s+any\s+order$/i.exec(
+      trimmed,
+    );
+  if (moveOneToDeckMatch) {
+    return {
+      action: "rearrangeLife",
+      player: "self",
+      moveOneToDeckTop: true,
+    };
+  }
+
+  // "Look at up to 1 card from the top of your or your opponent's Life cards and place it at the top or bottom of the Life cards"
+  // LookAtLifeAction models exactly one card, so larger printed amounts remain unparsed.
   const m =
-    /^look\s+at\s+(?:up\s+to\s+)?(\d+)\s+cards?\s+from\s+the\s+top\s+of\s+(?:your(?:\s+or\s+your\s+opponent[''\u2019]s)?|your\s+opponent[''\u2019]s)\s+Life\s+cards?,?\s*(?:and\s+)?place\s+(?:it|them)\s+at\s+the\s+(top\s+or\s+bottom|top|bottom)\s+of\s+(?:the\s+)?Life\s+cards?$/i.exec(
+    /^look\s+at\s+(up\s+to\s+)?(1)\s+card\s+from\s+the\s+top\s+of\s+(your\s+or\s+your\s+opponent[''\u2019]s|your\s+opponent[''\u2019]s|your)\s+Life\s+cards?,?\s*(?:and\s+)?place\s+it\s+at\s+the\s+top\s+or\s+bottom\s+of\s+(?:the\s+)?Life\s+cards?$/i.exec(
       trimmed,
     );
   if (m) {
-    const posText = m[2]!.toLowerCase();
-    const position: "top" | "bottom" | "topOrBottom" =
-      posText === "top or bottom" ? "topOrBottom" : (posText as "top" | "bottom");
+    const ownerText = m[3]!.toLowerCase();
+    const player: "self" | "opponent" | "either" = ownerText.includes(" or ")
+      ? "either"
+      : ownerText.includes("opponent")
+        ? "opponent"
+        : "self";
 
     return {
-      action: "rearrangeDeck",
-      player: "self", // affects life area, not deck, but closest match
-      count: parseInt(m[1]!, 10),
-      position,
+      action: "lookAtLife",
+      player,
+      position: "topOrBottom",
+      ...(m[1] && { upTo: true }),
     };
   }
 
@@ -324,7 +444,7 @@ export function parsePlaceCharacterToLifeAction(text: string): AddToLifeAction |
 
   // "Place up to N of your opponent's Characters with ... at the top or bottom of your opponent's Life cards face-up"
   const m =
-    /^place\s+(?:up\s+to\s+)?(\d+)\s+(?:of\s+)?(your(?:\s+opponent[''\u2019]s)?)\s+(.+?)\s+at\s+the\s+(top\s+or\s+bottom|top|bottom)\s+of\s+(?:your\s+opponent[''\u2019]s|the\s+owner[''\u2019]s|your)\s+Life\s+cards?\s*(?:(face-up|face-down))?$/i.exec(
+    /^place\s+(?:up\s+to\s+)?(\d+)\s+(?:of\s+)?(your(?:\s+opponent[''\u2019]s)?)\s+(.+?)\s+at\s+the\s+(top\s+or\s+bottom|top|bottom)\s+of\s+(?:your\s+opponent[''\u2019]s|the\s+owner[''\u2019]s|your|their)\s+Life\s+cards?\s*(?:(face-up|face-down))?$/i.exec(
       trimmed,
     );
   if (!m) return null;
@@ -334,7 +454,10 @@ export function parsePlaceCharacterToLifeAction(text: string): AddToLifeAction |
   const player = /opponent/i.test(m[2]!) ? "opponent" : "self";
   const filterText = m[3]!;
   const posText = m[4]!.toLowerCase();
-  const position = (posText === "top or bottom" ? "top" : posText) as "top" | "bottom";
+  const position = (posText === "top or bottom" ? "choice" : posText) as
+    | "top"
+    | "bottom"
+    | "choice";
   const faceUp = m[5]?.toLowerCase() === "face-up";
 
   const { zonesText, filters } = extractTargetFilters(filterText);

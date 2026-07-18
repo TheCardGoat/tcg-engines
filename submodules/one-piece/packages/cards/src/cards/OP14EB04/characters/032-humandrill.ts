@@ -31,6 +31,7 @@ export const op14eb04Humandrill032: CharacterCard = {
     effects: [
       {
         trigger: "whenBecomesRested",
+        eventFilter: { targetSelf: true },
         conditions: [
           {
             condition: "turn",

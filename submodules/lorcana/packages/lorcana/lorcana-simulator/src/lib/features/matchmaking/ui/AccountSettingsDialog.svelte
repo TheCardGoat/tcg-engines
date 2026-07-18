@@ -141,7 +141,9 @@
       region = data.region ?? "";
       country = data.country ?? "";
       const settings =
-        settingsResult.status === "fulfilled" ? settingsResult.value.gameplaySettings : undefined;
+        settingsResult.status === "fulfilled"
+          ? (settingsResult.value.playerSettings ?? settingsResult.value.gameplaySettings)
+          : undefined;
       discordPresenceEnabled = settings?.discordPresenceEnabled ?? true;
       savedDiscordPresenceEnabled = discordPresenceEnabled;
     } catch {
@@ -190,7 +192,7 @@
 
       if (discordPresenceEnabled !== savedDiscordPresenceEnabled) {
         await updateUserSettings({
-          gameplaySettings: { discordPresenceEnabled },
+          playerSettings: { discordPresenceEnabled },
         });
         savedDiscordPresenceEnabled = discordPresenceEnabled;
       }

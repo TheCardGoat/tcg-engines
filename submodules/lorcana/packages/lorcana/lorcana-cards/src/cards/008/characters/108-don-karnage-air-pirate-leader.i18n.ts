@@ -57,4 +57,18 @@ export const donKarnageAirPirateLeaderI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Don Karnage",
+    version: "Líder pirata aéreo",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "Burla desdeñosa",
+        description:
+          "Siempre que realizas una acción que no es una canción, el personaje contrario elegido gana Temeridad durante su siguiente turno. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

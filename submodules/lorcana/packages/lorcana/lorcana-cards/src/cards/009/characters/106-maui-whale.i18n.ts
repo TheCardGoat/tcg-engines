@@ -60,4 +60,19 @@ export const mauiWhaleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Maui",
+    version: "Ballena",
+    text: [
+      {
+        title: "ESTA MISIÓN ESTÁ MALDIDA",
+        description: "Este personaje no puede prepararse al comienzo de tu turno.",
+      },
+      {
+        title: "Te cubro la espalda 2",
+        description:
+          "{I} — Listo este personaje. No puede realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

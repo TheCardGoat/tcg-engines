@@ -44,4 +44,15 @@ export const pjPeteCaughtUpInTheMusicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "PJ Pete",
+    version: "Atrapados en la música",
+    text: [
+      {
+        title: "¡GRITAR EN FUERTE!",
+        description:
+          "Cada vez que reproduces una canción, este personaje obtiene +2 {S} este turno.",
+      },
+    ],
+  },
 };

@@ -38,8 +38,60 @@ test("parser builds structured cards from generated source", async () => {
   expect(prm01Cards).toHaveLength(1);
   expect(theHeistRetailStarterDeckCards).toHaveLength(5);
   expect(embracingPowerRetailStarterDeckCards).toHaveLength(5);
-  expect(welcomeToNightCityRetailCards).toHaveLength(71);
-  expect(cards).toHaveLength(138);
+  expect(welcomeToNightCityRetailCards).toHaveLength(76);
+  expect(cards).toHaveLength(143);
+
+  expect(
+    welcomeToNightCityRetailCards
+      .filter((card) =>
+        [
+          "appetite-for-destruction",
+          "hanako-arasaka-daughter-of-the-emperor",
+          "pepe-najarro-working-doubles",
+          "rita-wheeler-no-stupid-questions",
+        ].includes(card.slug),
+      )
+      .map((card) => card.printNumber),
+  ).toEqual(["028", "072", "086", "125"]);
+
+  const appetiteForDestruction = welcomeToNightCityRetailCards.find(
+    (card) => card.slug === "appetite-for-destruction",
+  );
+  expect(appetiteForDestruction?.abilities).toMatchObject([
+    {
+      trigger: { trigger: "play" },
+      effects: [
+        {
+          effect: "grantNextFightWinGigSteal",
+          minPowerMargin: 3,
+          duration: "turn",
+        },
+      ],
+    },
+  ]);
+
+  const hanako = welcomeToNightCityRetailCards.find(
+    (card) => card.slug === "hanako-arasaka-daughter-of-the-emperor",
+  );
+  expect(hanako?.abilities).toMatchObject([
+    {
+      trigger: { trigger: "activated" },
+      costs: [{ cost: "spend", target: { selector: "self" } }],
+      effects: [{ effect: "swapGigs" }],
+    },
+    {
+      trigger: {
+        trigger: "event",
+        event: { event: "turnStarted", player: "friendly" },
+      },
+      effects: [
+        {
+          effect: "forEachFriendlyGigPair",
+          effects: [{ effect: "draw", player: "friendly", amount: 1 }],
+        },
+      ],
+    },
+  ]);
 
   const armoredMinotaur = alphaCards.find((card) => card.slug === "armored-minotaur");
   expect(armoredMinotaur?.abilities).toHaveLength(1);
@@ -274,8 +326,8 @@ test("generator writes set card files and root indexes", async () => {
   expect(result.prm01Cards).toHaveLength(1);
   expect(result.theHeistRetailStarterDeckCards).toHaveLength(5);
   expect(result.embracingPowerRetailStarterDeckCards).toHaveLength(5);
-  expect(result.welcomeToNightCityRetailCards).toHaveLength(71);
-  expect(result.retailCards).toHaveLength(81);
+  expect(result.welcomeToNightCityRetailCards).toHaveLength(76);
+  expect(result.retailCards).toHaveLength(86);
   expect(
     result.alphaCards.find((card) => card.slug === "yorinobu-arasaka-embracing-destruction")?.id,
   ).toBe("stable-existing-yori-id");

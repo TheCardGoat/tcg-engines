@@ -45,4 +45,15 @@ export const genieSupportiveFriendI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Genio",
+    version: "Amigo solidario",
+    text: [
+      {
+        title: "TRES DESEOS",
+        description:
+          "Siempre que este personaje realice una misión, puedes barajar esta carta en tu mazo para robar 3 cartas.",
+      },
+    ],
+  },
 };

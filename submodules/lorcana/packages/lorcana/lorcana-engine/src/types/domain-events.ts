@@ -35,6 +35,8 @@ export interface DynamicAmountEventSnapshot {
   revealWindowIds?: ReadonlyArray<string>;
   /** Card IDs discarded during the current effect sequence (accumulated across multiple discard steps) */
   discardedCardIds?: ReadonlyArray<CardInstanceId>;
+  /** Players already resolved by the currently suspended multi-player discard effect. */
+  discardResolvedPlayerIds?: ReadonlyArray<PlayerId>;
   /** Number of cards drawn during the current effect sequence (accumulated across multiple draw steps) */
   drawnCount?: number;
   /**

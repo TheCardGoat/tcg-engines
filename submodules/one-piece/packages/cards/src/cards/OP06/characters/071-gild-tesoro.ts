@@ -23,7 +23,7 @@ export const op06GildTesoro071: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["FILM Grantesoro"],
+  traits: ["FILM", "Grantesoro"],
   attribute: "special",
   effect:
     "[On Play] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your Leader has the [FILM] type, add up to 2 [FILM] type Character cards with a cost of 4 or less from your trash to your hand.",
@@ -31,12 +31,6 @@ export const op06GildTesoro071: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "FILM",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -57,6 +51,7 @@ export const op06GildTesoro071: CharacterCard = {
                 {
                   filter: "trait",
                   value: "FILM",
+                  match: "includes",
                 },
                 {
                   filter: "cardCategory",
@@ -69,8 +64,14 @@ export const op06GildTesoro071: CharacterCard = {
                 },
               ],
             },
+            condition: {
+              condition: "leaderTrait",
+              trait: "FILM",
+              match: "includes",
+            },
           },
         ],
+        optional: true,
       },
     ],
   },

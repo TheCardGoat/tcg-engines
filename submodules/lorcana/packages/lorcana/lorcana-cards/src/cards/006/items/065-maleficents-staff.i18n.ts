@@ -41,4 +41,14 @@ export const maleficentsStaffI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bastón de Maléfica",
+    text: [
+      {
+        title: "¡VOLVER, TONTOS!",
+        description:
+          "Siempre que uno de los personajes, objetos o ubicaciones de tus oponentes regrese a su mano después del juego, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

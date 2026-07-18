@@ -41,4 +41,14 @@ export const unconventionalToolI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Herramienta no convencional",
+    text: [
+      {
+        title: "SOLUCIONADO EN NINGÚN TIEMPO",
+        description:
+          "Cuando este objeto es desterrado, pagas 2 {I} menos por el siguiente objeto que juegues en este turno.",
+      },
+    ],
+  },
 };

@@ -59,6 +59,7 @@ export const op07Pythagoras105: CharacterCard = {
               {
                 filter: "trait",
                 value: "Egghead",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -79,14 +80,7 @@ export const op07Pythagoras105: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
       },

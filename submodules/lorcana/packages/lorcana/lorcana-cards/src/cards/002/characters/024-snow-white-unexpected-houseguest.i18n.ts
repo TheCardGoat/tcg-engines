@@ -36,4 +36,14 @@ export const snowWhiteUnexpectedHouseguestI18n: Record<Languages, I18nProperties
     version: "Unexpected Houseguest",
     text: "How Do You Do?\\ You pay 1 {I} less to play Seven Dwarfs characters.",
   },
+  es: {
+    name: "Blanco como la nieve",
+    version: "Invitado inesperado",
+    text: [
+      {
+        title: "¿CÓMO ESTÁS?",
+        description: "Pagas 1 {I} menos para interpretar a los personajes de Seven Dwarfs.",
+      },
+    ],
+  },
 };

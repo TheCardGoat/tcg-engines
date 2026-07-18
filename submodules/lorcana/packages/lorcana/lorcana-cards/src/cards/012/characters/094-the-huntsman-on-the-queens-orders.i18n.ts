@@ -21,4 +21,9 @@ export const theHuntsmanOnTheQueensOrdersI18n: Record<Languages, I18nProperties>
     version: "Agli Ordini della Regina",
     text: "<Protetto>",
   },
+  es: {
+    name: "El cazador",
+    version: "Por orden de la reina",
+    text: "Pabellón",
+  },
 };

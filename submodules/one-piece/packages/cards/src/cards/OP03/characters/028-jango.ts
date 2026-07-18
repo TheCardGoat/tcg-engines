@@ -25,7 +25,7 @@ export const op03Jango028: CharacterCard = {
   traits: ["East Blue Black Cat Pirates"],
   attribute: "special",
   effect:
-    "[On Play] Choose one: • Set up to 1 of your [East Blue] type Leader or Character cards with a cost of 6 or less as active. • Rest this Character and up to 1 of your opponent's Characters.",
+    "[On Play] Choose one:\n• Set up to 1 of your {East Blue} type Leader or Character cards with a cost of 6 or less as active.\n• Rest this Character and up to 1 of your opponent's Characters.",
   effects: {
     effects: [
       {
@@ -48,6 +48,7 @@ export const op03Jango028: CharacterCard = {
                       {
                         filter: "trait",
                         value: "East Blue",
+                        match: "includes",
                       },
                       {
                         filter: "cost",
@@ -68,6 +69,17 @@ export const op03Jango028: CharacterCard = {
                       amount: 1,
                     },
                     self: true,
+                  },
+                },
+                {
+                  action: "rest",
+                  target: {
+                    player: "opponent",
+                    zones: ["character"],
+                    count: {
+                      amount: 1,
+                      upTo: true,
+                    },
                   },
                 },
               ],

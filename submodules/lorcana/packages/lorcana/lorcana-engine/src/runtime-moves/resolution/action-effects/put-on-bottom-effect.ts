@@ -7,7 +7,10 @@ import type { ActionResolutionInput, PlayCardExecutionContext } from "./types";
 import { markLastEffectPerformed } from "./event-snapshot-utils";
 import { normalizeSelectedTargets, resolveEffectTargets } from "../../../targeting/runtime";
 import { getCurrentSelectionInput, getEffectTargetSelectionInput } from "./selection-state";
-import { emitTriggeredLorcanaEvent } from "../../../triggered-abilities";
+import {
+  emitTriggeredLorcanaEvent,
+  snapshotTriggeredCandidatesForCard,
+} from "../../../triggered-abilities";
 import { isDiscardZoneKey, recordDiscardExitThisTurn } from "../../state/turn-metrics";
 import { isPlayZoneKey } from "../../../operations/zones";
 
@@ -31,6 +34,7 @@ function putCardOnBottomOfOwnerDeck(
   const fromDiscard = typeof zoneKey === "string" && isDiscardZoneKey(zoneKey);
 
   if (isPlayZoneKey(zoneKey)) {
+    const triggerCandidates = snapshotTriggeredCandidatesForCard(ctx, cardId);
     moveCardOutOfPlayWithStack(
       ctx,
       cardId,
@@ -57,6 +61,7 @@ function putCardOnBottomOfOwnerDeck(
         toZone: "deck-bottom",
         playerId: ownerId,
         subjectCardId: cardId,
+        triggerCandidates,
       },
     );
     return;

@@ -17,4 +17,8 @@ export const glimmerVsGlimmerI18n: Record<Languages, I18nProperties> = {
     name: "Glimmer contro Glimmer",
     text: "Esilia un tuo personaggio a tua scelta per esiliare un personaggio a tua scelta.",
   },
+  es: {
+    name: "Luz tenue contra luz tenue",
+    text: "Destierra tu personaje elegido para desterrar al personaje elegido.",
+  },
 };

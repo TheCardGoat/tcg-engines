@@ -37,6 +37,7 @@ export const op12RoronoaZoro113: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Supernovas",
+            match: "includes",
           },
         ],
         actions: [
@@ -59,6 +60,7 @@ export const op12RoronoaZoro113: CharacterCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -66,6 +68,32 @@ export const op12RoronoaZoro113: CharacterCard = {
               },
             ],
             playState: "rested",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 1,
+                },
+              ],
+            },
+          },
+          {
+            action: "addThisCardToHand",
           },
         ],
       },

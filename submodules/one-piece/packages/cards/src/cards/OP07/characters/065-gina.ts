@@ -39,6 +39,7 @@ export const op07Gina065: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Foxy Pirates",
+                match: "includes",
               },
               {
                 condition: "donFieldComparison",

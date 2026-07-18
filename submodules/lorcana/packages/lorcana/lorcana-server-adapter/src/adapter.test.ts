@@ -67,7 +67,7 @@ describe("lorcanaServerAdapter.validateDeckForFormat", () => {
     });
   });
 
-  it("keeps Set 5 through Set 8 cards legal for Core Constructed", () => {
+  it("rejects old rotation cards for Core Constructed while preserving the historical early-access snapshot", () => {
     const deck = [
       { cardId: "284", quantity: 1 }, // Set 5, Shimmering Skies
       { cardId: "178", quantity: 1 }, // Set 6, Azurite Sea
@@ -78,11 +78,11 @@ describe("lorcanaServerAdapter.validateDeckForFormat", () => {
     const core = lorcanaServerAdapter.validateDeckForFormat("core-constructed", deck);
     const earlyAccess = lorcanaServerAdapter.validateDeckForFormat("attack-of-the-vine", deck);
 
-    expect(core.rules.find((rule) => rule.kind === "CARD_SET")?.passed).toBe(true);
+    expect(core.rules.find((rule) => rule.kind === "CARD_SET")?.passed).toBe(false);
     expect(earlyAccess.rules.find((rule) => rule.kind === "CARD_SET")?.passed).toBe(false);
   });
 
-  it("normalizes legacy stored public ids before format validation", () => {
+  it("normalizes legacy stored public ids before current Core Constructed validation", () => {
     const result = lorcanaServerAdapter.validateDeckForFormat("core-constructed", [
       { cardId: "20T", quantity: 4 },
       { cardId: "5QH", quantity: 4 },
@@ -96,7 +96,7 @@ describe("lorcanaServerAdapter.validateDeckForFormat", () => {
 
     expect(setRule).toBeDefined();
     expect(setRule!.message).not.toContain("Unknown cards not found in catalog");
-    expect(setRule!.passed).toBe(true);
+    expect(setRule!.passed).toBe(false);
   });
 
   it("validates recycled short ids as current cards instead of blocking active decks", () => {
@@ -114,7 +114,7 @@ describe("lorcanaServerAdapter.validateDeckForFormat", () => {
     expect(setRule!.passed).toBe(true);
   });
 
-  it("validates the imported Set 5-12 steel-ruby location deck in Core Constructed", async () => {
+  it("rejects the imported Set 5-12 steel-ruby location deck after Core Constructed rotation", async () => {
     const deckText = `4 Doc - Bold Knight
 4 Seven Dwarfs' Mine - Secure Fortress
 4 Mulan - Disguised Soldier
@@ -142,6 +142,7 @@ describe("lorcanaServerAdapter.validateDeckForFormat", () => {
     expect(resolution.diagnostics.malformedLines).toEqual([]);
     expect(resolution.diagnostics.unresolvedNames).toEqual([]);
     expect(deck).toHaveLength(15);
-    expect(result.valid).toBe(true);
+    expect(result.valid).toBe(false);
+    expect(result.rules.find((rule) => rule.kind === "CARD_SET")?.passed).toBe(false);
   });
 });

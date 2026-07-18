@@ -41,4 +41,14 @@ export const potionOfMightI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Poción de poder",
+    text: [
+      {
+        title: "BREBAJO VIL 1",
+        description:
+          "{I}, destierra este objeto: el personaje elegido obtiene +3 {S} este turno. Si se elige un personaje villano, en su lugar obtiene +4 {S}.",
+      },
+    ],
+  },
 };

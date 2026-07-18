@@ -5,7 +5,7 @@ export const gd02DramaticTurnabout100: CommandCard = {
   name: "Dramatic Turnabout",
   type: "command",
   color: "blue",
-  traits: ["-"],
+  traits: [],
   id: "GD02-100",
   canonicalId: "GD02-100",
   externalIds: { bandai: "gundam:gd02-100" },

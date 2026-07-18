@@ -45,4 +45,15 @@ export const dawsonPuzzlingSleuthI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dawson",
+    version: "Detective desconcertante",
+    text: [
+      {
+        title: "SER SENSIBLE",
+        description:
+          "Una vez durante tu turno, cada vez que pongas una carta en tu tintero, mira la carta superior de tu mazo. Puede colocarlo en la parte superior o inferior de su plataforma.",
+      },
+    ],
+  },
 };

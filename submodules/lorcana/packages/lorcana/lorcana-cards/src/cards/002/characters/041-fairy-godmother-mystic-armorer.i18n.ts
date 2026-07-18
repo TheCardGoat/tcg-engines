@@ -60,4 +60,18 @@ export const fairyGodmotherMysticArmorerI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Hada Madrina",
+    version: "Armero místico",
+    text: [
+      {
+        title: "Shift 2",
+      },
+      {
+        title: "OLVÍDATE DEL ENTRENADOR, AQUÍ ESTÁ",
+        description:
+          'UNA ESPADA Siempre que este personaje realice una misión, tus personajes obtienen Retador +3 y "Cuando este personaje sea desterrado en un desafío, devuelve esta carta a tu mano" este turno. (Obtienen +3 {S} mientras desafían).',
+      },
+    ],
+  },
 };

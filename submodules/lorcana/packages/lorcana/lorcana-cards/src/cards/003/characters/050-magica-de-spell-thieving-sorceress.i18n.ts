@@ -45,4 +45,15 @@ export const magicaDeSpellThievingSorceressI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Magia De Hechizo",
+    version: "Hechicera ladrona",
+    text: [
+      {
+        title: "TELEQUINESIA",
+        description:
+          "{E}: devuelve el objeto elegido con un costo igual o menor que el {S} de este personaje a la mano de su jugador.",
+      },
+    ],
+  },
 };

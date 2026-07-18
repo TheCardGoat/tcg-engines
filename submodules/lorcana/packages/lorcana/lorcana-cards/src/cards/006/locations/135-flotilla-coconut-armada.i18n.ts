@@ -45,4 +45,15 @@ export const flotillaCoconutArmadaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Flotilla",
+    version: "Armada de coco",
+    text: [
+      {
+        title: "PEQUEÑOS LADRONES",
+        description:
+          "Al comienzo de tu turno, si tienes un personaje aquí, todos los oponentes pierden 1 conocimiento y tú ganas un conocimiento igual al conocimiento perdido de esta manera.",
+      },
+    ],
+  },
 };

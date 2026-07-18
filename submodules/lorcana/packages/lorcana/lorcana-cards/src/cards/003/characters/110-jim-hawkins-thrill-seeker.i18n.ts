@@ -17,4 +17,8 @@ export const jimHawkinsThrillSeekerI18n: Record<Languages, I18nProperties> = {
     name: "Jim Hawkins",
     version: "Alla Ricerca del Brivido",
   },
+  es: {
+    name: "Jim Hawkins",
+    version: "Buscador de emociones",
+  },
 };

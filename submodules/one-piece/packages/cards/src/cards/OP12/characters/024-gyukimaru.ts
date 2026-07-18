@@ -33,7 +33,7 @@ export const op12Gyukimaru024: CharacterCard = {
         trigger: "whenAttacking",
         conditions: [
           {
-            condition: "donFieldCount",
+            condition: "givenDonCount",
             player: "self",
             comparison: "gte",
             value: 3,
@@ -57,6 +57,35 @@ export const op12Gyukimaru024: CharacterCard = {
                 },
               ],
             },
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "cardState",
+            target: "this",
+            property: "state",
+            comparison: "eq",
+            value: "active",
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            restriction: "byEffect",
+            byPlayer: "opponent",
           },
         ],
       },

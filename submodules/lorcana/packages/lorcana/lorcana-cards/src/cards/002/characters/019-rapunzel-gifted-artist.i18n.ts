@@ -60,4 +60,18 @@ export const rapunzelGiftedArtistI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rapunzel",
+    version: "Artista talentoso",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "DEJA QUE TU PODER BRILLE",
+        description:
+          "Siempre que elimines 1 o más daños de uno de tus personajes, podrás robar una carta.",
+      },
+    ],
+  },
 };

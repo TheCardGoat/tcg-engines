@@ -41,4 +41,14 @@ export const zeusDefiantGodI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Zeus",
+    version: "Dios desafiante",
+    text: [
+      {
+        title: "HERIDA INMORTAL",
+        description: "Este personaje entra en juego con 4 daños.",
+      },
+    ],
+  },
 };

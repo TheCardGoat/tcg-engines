@@ -21,4 +21,9 @@ export const rabbitFedUpI18n: Record<Languages, I18nProperties> = {
     version: "Stufo",
     text: "<Sfidante> +3",
   },
+  es: {
+    name: "Conejo",
+    version: "Harto",
+    text: "Retador +3",
+  },
 };

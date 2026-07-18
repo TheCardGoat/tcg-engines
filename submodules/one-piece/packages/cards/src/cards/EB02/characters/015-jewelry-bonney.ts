@@ -65,15 +65,20 @@ export const eb02JewelryBonney015: CharacterCard = {
             },
           },
           {
-            action: "setActive",
-            target: {
-              player: "self",
-              zones: ["costArea"],
-              count: {
-                amount: 1,
-                upTo: true,
+            action: "scheduleAtEndOfTurn",
+            actions: [
+              {
+                action: "setActive",
+                target: {
+                  player: "self",
+                  zones: ["costArea"],
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                },
               },
-            },
+            ],
           },
         ],
       },

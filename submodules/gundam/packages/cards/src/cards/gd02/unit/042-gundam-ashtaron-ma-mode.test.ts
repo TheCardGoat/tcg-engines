@@ -1,111 +1,149 @@
-import { describe, it, expect } from "vite-plus/test";
-import type { UnitCard, ResourceCard } from "@tcg/gundam-types";
+import { describe, expect, it } from "vite-plus/test";
 import {
+  activeResources,
+  createMockUnit,
+  expectFailure,
+  expectSuccess,
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  expectSuccess,
-  expectFailure,
 } from "@tcg/gundam-engine";
-import type { TestCardEntry } from "@tcg/gundam-engine";
-import { hasKeywordGrant } from "@tcg/gundam-engine";
 import { gd02GundamAshtaronMaMode042 } from "./042-gundam-ashtaron-ma-mode.ts";
-
-let counter = 0;
-function uid(prefix: string): string {
-  return `${prefix}-${++counter}`;
-}
-
-function makeResource(): ResourceCard {
-  return {
-    cardNumber: uid("GAM-R"),
-    name: "Test Resource",
-    type: "resource",
-    canonicalId: "mock",
-    slug: "mock",
-    printings: [],
-    traits: [],
-    level: 0,
-    cost: 0,
-    keywordEffects: [],
-    rarity: "common",
-  };
-}
-
-function makeUnit(hp: number, traits: string[] = []): UnitCard {
-  return {
-    cardNumber: uid("GAM-U"),
-    name: "Test Unit",
-    type: "unit",
-    canonicalId: "mock",
-    slug: "mock",
-    printings: [],
-    traits,
-    level: 1,
-    cost: 1,
-    keywordEffects: [],
-    rarity: "common",
-    ap: 1,
-    hp,
-  };
-}
-
-function active(card: ResourceCard): TestCardEntry {
-  return { card, exhausted: false };
-}
-
-function resources(count: number): TestCardEntry[] {
-  return Array.from({ length: count }, () => active(makeResource()));
-}
+import { gd02OlbaFrost093 } from "../pilot/093-olba-frost.ts";
 
 describe("Gundam Ashtaron (MA Mode) (GD02-042)", () => {
-  describe("【Deploy】Choose 1 of your (New UNE) Units. It gains <High-Maneuver> during this turn.", () => {
-    it("grants HighManeuver to a chosen friendly New UNE unit on deploy", () => {
-      const newUneUnit = makeUnit(3, ["new une"]);
-      const engine = GundamTestEngine.create(
-        {
-          hand: [gd02GundamAshtaronMaMode042],
-          resourceArea: resources(3),
-          play: [newUneUnit],
-        },
-        {},
-      );
+  describe("Printed Lv.3 and cost 2", () => {
+    it("cannot deploy with only 2 total Resources", () => {
+      const engine = GundamTestEngine.create({
+        hand: [gd02GundamAshtaronMaMode042],
+        resourceArea: activeResources(2),
+      });
       const p1 = engine.asPlayer(PLAYER_ONE);
-      const [unitId] = p1.getCardsInZone("battleArea");
+      const cardId = p1.getHand()[0]!;
 
-      expectSuccess(p1.deployUnit(gd02GundamAshtaronMaMode042, { targets: [unitId!] }));
-      expect(hasKeywordGrant(engine, unitId!, "HighManeuver")).toBe(true);
+      expectFailure(p1.deployUnit(cardId), "INSUFFICIENT_RESOURCE_LEVEL");
+
+      expect(p1.getHand()).toContain(cardId);
+      expect(p1.getCardsInZone("battleArea")).toHaveLength(0);
     });
 
-    it("cannot target a non-New UNE friendly unit", () => {
-      const nonUne = makeUnit(3, ["earth federation"]);
-      const engine = GundamTestEngine.create(
-        {
-          hand: [gd02GundamAshtaronMaMode042],
-          resourceArea: resources(3),
-          play: [nonUne],
-        },
-        {},
-      );
+    it("cannot deploy after a legal play leaves only 1 active Resource", () => {
+      const spender = createMockUnit({ level: 1, cost: 2 });
+      const engine = GundamTestEngine.create({
+        hand: [spender, gd02GundamAshtaronMaMode042],
+        resourceArea: activeResources(3),
+      });
       const p1 = engine.asPlayer(PLAYER_ONE);
-      const [unitId] = p1.getCardsInZone("battleArea");
+      const cardId = p1.getHand()[1]!;
 
-      const result = p1.deployUnit(gd02GundamAshtaronMaMode042, { targets: [unitId!] });
-      expectFailure(result, "INVALID_TARGET");
+      expectSuccess(p1.deployUnit(spender));
+      expectFailure(p1.deployUnit(cardId), "INSUFFICIENT_RESOURCES");
+
+      expect(p1.getHand()).toContain(cardId);
+      expect(p1.getCardsInZone("battleArea")).toHaveLength(1);
+      expect(p1.getCardsInZone("resourceArea").filter((id) => !p1.isExhausted(id))).toHaveLength(1);
     });
+  });
 
-    it("cannot target an enemy unit even if it has the New UNE trait", () => {
-      const enemyUne = makeUnit(3, ["new une"]);
-      const engine = GundamTestEngine.create(
-        { hand: [gd02GundamAshtaronMaMode042], resourceArea: resources(3) },
-        { play: [enemyUne] },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const p2 = engine.asPlayer(PLAYER_TWO);
-      const [enemyId] = p2.getCardsInZone("battleArea");
+  it("grants High-Maneuver to a friendly New UNE Unit and prevents blocking", () => {
+    const newUneUnit = createMockUnit({ traits: ["new une"], hp: 5 });
+    const blocker = createMockUnit({ keywordEffects: [{ keyword: "Blocker" }], hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd02GundamAshtaronMaMode042],
+        play: [newUneUnit],
+        resourceArea: activeResources(3),
+      },
+      { play: [blocker], shieldArea: [createMockUnit({ name: "Shield" })] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const newUneId = p1.getCardsInZone("battleArea")[0]!;
+    const blockerId = p2.getCardsInZone("battleArea")[0]!;
 
-      const result = p1.deployUnit(gd02GundamAshtaronMaMode042, { targets: [enemyId!] });
-      expectFailure(result, "INVALID_TARGET");
+    expectSuccess(p1.deployUnit(gd02GundamAshtaronMaMode042));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([newUneId]),
     });
+    expectSuccess(p1.resolveEffect({ targets: [newUneId] }));
+    expect(p1.getVisibleCard(newUneId)?.keywords).toContain("HighManeuver");
+    expectSuccess(p1.enterBattle(newUneId, "direct"));
+
+    expectFailure(p2.declareBlock(blockerId), "CANNOT_BLOCK_HIGH_MANEUVER");
+  });
+
+  it("does not offer a friendly Unit without the New UNE trait", () => {
+    const nonUne = createMockUnit({ traits: ["earth federation"] });
+    const engine = GundamTestEngine.create({
+      hand: [gd02GundamAshtaronMaMode042],
+      play: [nonUne],
+      resourceArea: activeResources(3),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const nonUneId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.deployUnit(gd02GundamAshtaronMaMode042));
+    const sourceId = p1.getCardsInZone("battleArea")[1]!;
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [sourceId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [sourceId] }));
+
+    expect(p1.getVisibleCard(nonUneId)?.keywords).not.toContain("HighManeuver");
+    expect(p1.getVisibleCard(sourceId)?.keywords).toContain("HighManeuver");
+  });
+
+  it("removes High-Maneuver when the turn ends", () => {
+    const newUneUnit = createMockUnit({ traits: ["new une"] });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd02GundamAshtaronMaMode042],
+        play: [newUneUnit],
+        resourceArea: activeResources(3),
+        deck: 5,
+      },
+      { deck: 5 },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const newUneId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.deployUnit(gd02GundamAshtaronMaMode042));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([newUneId]),
+    });
+    expectSuccess(p1.resolveEffect({ targets: [newUneId] }));
+    expect(p1.getVisibleCard(newUneId)?.keywords).toContain("HighManeuver");
+
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
+
+    expect(p1.getVisibleCard(newUneId)?.keywords).not.toContain("HighManeuver");
+  });
+
+  it("can attack on its deployment turn after pairing Olba Frost", () => {
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd02GundamAshtaronMaMode042, gd02OlbaFrost093],
+        resourceArea: activeResources(3),
+      },
+      { shieldArea: [createMockUnit()] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+
+    expectSuccess(p1.deployUnit(gd02GundamAshtaronMaMode042));
+    const ashtaronId = p1.getCardsInZone("battleArea")[0]!;
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [ashtaronId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [ashtaronId] }));
+    expectSuccess(p1.assignPilot(gd02OlbaFrost093, ashtaronId));
+
+    expectSuccess(p1.enterBattle(ashtaronId, "direct"));
   });
 });

@@ -45,12 +45,17 @@ export const op14eb04Marguerite113: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "trait",
-                value: "Amazon Lily",
-              },
-              {
-                filter: "trait",
-                value: "Kuja Pirates",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Amazon Lily",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Kuja Pirates",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",
@@ -60,6 +65,28 @@ export const op14eb04Marguerite113: CharacterCard = {
             action: "trashFromHand",
             player: "self",
             amount: 1,
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Kuja Pirates",
+          },
+        ],
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+            },
+            self: true,
           },
         ],
       },

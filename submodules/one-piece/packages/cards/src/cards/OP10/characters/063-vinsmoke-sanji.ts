@@ -35,6 +35,7 @@ export const op10VinsmokeSanji063: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "GERMA",
+            match: "includes",
           },
         ],
         actions: [
@@ -49,6 +50,13 @@ export const op10VinsmokeSanji063: CharacterCard = {
               amount: 1,
               upTo: true,
             },
+            revealFilters: [
+              {
+                filter: "trait",
+                value: "GERMA",
+                match: "includes",
+              },
+            ],
             revealDestination: "hand",
             remainderPosition: "bottom",
           },

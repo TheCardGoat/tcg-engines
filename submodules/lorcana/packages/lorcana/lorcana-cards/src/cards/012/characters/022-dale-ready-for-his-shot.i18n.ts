@@ -45,4 +45,15 @@ export const daleReadyForHisShotI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Valle",
+    version: "Listo para su disparo",
+    text: [
+      {
+        title: "TRAJE DE PICO",
+        description:
+          "Durante los desafíos, tus personajes causan daño con su {W} en lugar de su {S}.",
+      },
+    ],
+  },
 };

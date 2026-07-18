@@ -39,12 +39,16 @@ export const op07Itomimizu060: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Foxy Pirates",
+                match: "includes",
               },
               {
                 condition: "notHasCard",
                 player: "self",
                 zone: "field",
                 filters: [
+                  {
+                    filter: "excludeSelf",
+                  },
                   {
                     filter: "name",
                     value: "Itomimizu",

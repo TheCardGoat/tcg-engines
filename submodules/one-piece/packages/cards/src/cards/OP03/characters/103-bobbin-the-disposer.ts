@@ -25,6 +25,5 @@ export const op03BobbinTheDisposer103: CharacterCard = {
   counter: 1000,
   traits: ["Big Mom Pirates"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op03BobbinTheDisposer103I18n,
 };

@@ -21,4 +21,9 @@ export const dashParrSuperSpeedyI18n: Record<Languages, I18nProperties> = {
     version: "Super Veloce",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Dash Parr",
+    version: "Súper veloz",
+    text: "Correr",
+  },
 };

@@ -24,7 +24,9 @@ describe("Gundam DX (GD04-049)", () => {
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const gundamDxId = p1.getCardsInZone("battleArea")[0]!;
-    const shieldIds = p2.getCardsInZone("shieldArea");
+
+    expect(p2.getBoardView().players[PLAYER_TWO]?.shieldCount).toBe(2);
+    expect(p2.getCardsInZone("trash")).toHaveLength(0);
 
     expectSuccess(p1.enterBattle(gundamDxId, "direct"));
     expectSuccess(p2.passBlock());
@@ -32,7 +34,7 @@ describe("Gundam DX (GD04-049)", () => {
     expectSuccess(p1.passBattleAction());
 
     expect(p2.getCardsInZone("shieldArea")).toHaveLength(0);
-    expect(p2.getCardsInZone("trash")).toEqual(expect.arrayContaining(shieldIds));
+    expect(p2.getCardsInZone("trash")).toHaveLength(2);
   });
 
   it("lets the Shield owner choose which simultaneous Burst to resolve first", () => {
@@ -43,7 +45,8 @@ describe("Gundam DX (GD04-049)", () => {
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const gundamDxId = p1.getCardsInZone("battleArea")[0]!;
-    const [destinedBattleId, palaSysId] = p2.getCardsInZone("shieldArea");
+
+    expect(p2.getBoardView().players[PLAYER_TWO]?.shieldCount).toBe(2);
 
     expectSuccess(p1.enterBattle(gundamDxId, "direct"));
     expectSuccess(p2.passBlock());
@@ -55,8 +58,8 @@ describe("Gundam DX (GD04-049)", () => {
       kind: "ordering",
       controllerId: PLAYER_TWO,
       candidates: expect.arrayContaining([
-        expect.objectContaining({ sourceCardId: destinedBattleId }),
-        expect.objectContaining({ sourceCardId: palaSysId }),
+        expect.objectContaining({ label: expect.stringContaining("Destined Battle") }),
+        expect.objectContaining({ label: expect.stringContaining("Pala Sys") }),
       ]),
     });
     if (ordering?.kind !== "ordering") throw new Error("Expected Burst ordering choice");
@@ -65,14 +68,20 @@ describe("Gundam DX (GD04-049)", () => {
     );
     expect(ordering.candidates.map((candidate) => candidate.label).join(" ")).toContain("Pala Sys");
 
-    const palaBurst = ordering.candidates.find((candidate) => candidate.sourceCardId === palaSysId);
+    const palaBurst = ordering.candidates.find((candidate) => candidate.label.includes("Pala Sys"));
+    const destinedBattle = ordering.candidates.find((candidate) =>
+      candidate.label.includes("Destined Battle"),
+    );
+    if (!palaBurst || !destinedBattle) throw new Error("Expected both public Burst choices");
+    const palaSysId = palaBurst.sourceCardId;
+    const destinedBattleId = destinedBattle.sourceCardId;
     expectSuccess(p2.resolveEffect({ pendingEffectId: palaBurst!.effectId }));
 
-    expect(p2.getBoardView().pendingChoice).toMatchObject({
-      kind: "optional",
-      sourceCardId: palaSysId,
-    });
-    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+    const palaChoice = p2.getBoardView().pendingChoice;
+    if (palaChoice?.kind !== "optional" || palaChoice.sourceCardId !== palaSysId) {
+      throw new Error("Expected Pala Sys's public optional Burst choice");
+    }
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [palaChoice.directiveIndex]: true } }));
     expect(p2.getHand()).toContain(palaSysId);
     expect(p2.getBoardView().pendingChoice).toMatchObject({
       kind: "optional",
@@ -108,12 +117,26 @@ describe("Gundam DX (GD04-049)", () => {
 
       expectSuccess(p1.assignPilot(pilot, gundamDxId));
       expectSuccess(p1.enterBattle(gundamDxId, "direct"));
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
-      expectSuccess(p1.resolveEffect({ targets: [...trashIds, targetId] }));
+      const optional = p1.getBoardView().pendingChoice;
+      if (optional?.kind !== "optional") throw new Error("Expected the Vulture exile choice");
+      expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: trashIds,
+        minTargets: 7,
+        maxTargets: 7,
+      });
+      expectSuccess(p1.resolveEffect({ targets: trashIds }));
 
       for (const trashId of trashIds) {
         expect(p1.getCardZone(trashId)).toBe("removalArea");
       }
+      expect(p2.getCardsInZone("battleArea")).toContain(targetId);
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [targetId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [targetId] }));
       expect(p2.getCardsInZone("trash")).toContain(targetId);
     });
 
@@ -138,9 +161,23 @@ describe("Gundam DX (GD04-049)", () => {
 
       expectSuccess(p1.assignPilot(pilot, gundamDxId));
       expectSuccess(p1.enterBattle(gundamDxId, "direct"));
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
-      expectSuccess(p1.resolveEffect({ targets: [...trashIds, targetId] }));
+      const optional = p1.getBoardView().pendingChoice;
+      if (optional?.kind !== "optional") throw new Error("Expected the Vulture exile choice");
+      expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: trashIds,
+        minTargets: 7,
+        maxTargets: 7,
+      });
+      expectSuccess(p1.resolveEffect({ targets: trashIds }));
 
+      expect(p2.getCardsInZone("baseSection")).toContain(targetId);
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [targetId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [targetId] }));
       expect(p2.getCardsInZone("baseSection")).not.toContain(targetId);
       expect(p2.getCardsInZone("trash")).toContain(targetId);
     });
@@ -165,10 +202,39 @@ describe("Gundam DX (GD04-049)", () => {
 
       expectSuccess(p1.assignPilot(pilot, gundamDxId));
       expectSuccess(p1.enterBattle(gundamDxId, "direct"));
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: false } }));
+      const optional = p1.getBoardView().pendingChoice;
+      if (optional?.kind !== "optional") throw new Error("Expected the Vulture exile choice");
+      expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: false } }));
 
       expect(p2.getCardsInZone("battleArea")).toContain(targetId);
       expect(p1.getCardsInZone("trash")).toHaveLength(7);
+    });
+
+    it("does not offer the exile when no enemy Unit or Base is Lv.8 or lower", () => {
+      const pilot = createMockPilot({ name: "Garrod Ran", cost: 1 });
+      const trash = vultureTrash(7);
+      const engine = GundamTestEngine.create(
+        {
+          hand: [pilot],
+          play: [gd04GundamDx049],
+          trash,
+          resourceArea: activeResources(1),
+        },
+        {
+          play: [createMockUnit({ name: "Lv.9 Enemy", level: 9 })],
+          baseSection: [createMockBase({ name: "Lv.9 Base", level: 9 })],
+        },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const gundamDxId = p1.getCardsInZone("battleArea")[0]!;
+      const trashIds = p1.getCardsInZone("trash");
+
+      expectSuccess(p1.assignPilot(pilot, gundamDxId));
+      expectSuccess(p1.enterBattle(gundamDxId, "direct"));
+
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+      expect(p1.getCardsInZone("trash")).toEqual(trashIds);
+      expect(p1.getCardsInZone("removalArea")).toHaveLength(0);
     });
 
     it("does not trigger when attacking an enemy Unit instead of the enemy player", () => {

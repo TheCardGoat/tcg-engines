@@ -17,4 +17,8 @@ export const hansSchemingPrinceI18n: Record<Languages, I18nProperties> = {
     name: "Hans",
     version: "Scheming Prince",
   },
+  es: {
+    name: "Hans",
+    version: "Príncipe intrigante",
+  },
 };

@@ -45,4 +45,15 @@ export const almaMadrigalFamilyMatriarchI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Alma Madrigal",
+    version: "Matriarca familiar",
+    text: [
+      {
+        title: "A LA MESA",
+        description:
+          "Cuando juegas con este personaje, puedes buscar en tu mazo una carta de personaje de Madrigal y revelar esa carta a todos los jugadores. Baraja tu mazo y pon esa carta encima.",
+      },
+    ],
+  },
 };

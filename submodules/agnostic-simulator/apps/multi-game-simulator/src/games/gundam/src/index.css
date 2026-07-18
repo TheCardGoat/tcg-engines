@@ -364,9 +364,12 @@ body.gundam-simulator-active {
   background: rgba(45, 107, 255, 0.1);
 }
 .gundam-ai-control-panel [class*="btnTakeover"] {
-  color: var(--color-hud-danger-deep);
-  border-color: rgba(255, 45, 122, 0.78);
-  background: rgba(255, 45, 122, 0.06);
+  color: var(--color-hud-accent-deep);
+  border-color: rgba(30, 73, 199, 0.72);
+  background: rgba(30, 73, 199, 0.12);
+}
+.gundam-ai-control-panel [class*="btnTakeover"]:hover:not(:disabled) {
+  background: rgba(30, 73, 199, 0.2);
 }
 
 .gundam-zone-primitive {

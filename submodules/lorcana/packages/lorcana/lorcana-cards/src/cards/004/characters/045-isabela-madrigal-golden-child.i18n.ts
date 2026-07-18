@@ -77,4 +77,23 @@ export const isabelaMadrigalGoldenChildI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Isabela Madrigal",
+    version: "Niño dorado",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "LAS SEÑORAS PRIMERO",
+        description:
+          "Durante tu turno, si ningún otro personaje ha realizado una misión este turno, este personaje obtiene +3 {L}.",
+      },
+      {
+        title: "Déjamelo a mí",
+        description:
+          "Siempre que este personaje realice una misión, tus otros personajes no podrán realizar una misión durante el resto de este turno.",
+      },
+    ],
+  },
 };

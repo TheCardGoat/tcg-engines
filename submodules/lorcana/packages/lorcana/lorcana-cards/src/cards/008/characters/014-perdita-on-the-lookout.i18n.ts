@@ -44,4 +44,15 @@ export const perditaOnTheLookoutI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Perdita",
+    version: "Al acecho",
+    text: [
+      {
+        title: "MANTENER VIGILANCIA",
+        description:
+          "Mientras tengas un personaje Cachorro en juego, este personaje obtiene +1 {W}.",
+      },
+    ],
+  },
 };

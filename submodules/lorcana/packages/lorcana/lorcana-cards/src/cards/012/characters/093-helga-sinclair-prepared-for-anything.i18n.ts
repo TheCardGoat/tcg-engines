@@ -45,4 +45,15 @@ export const helgaSinclairPreparedForAnythingI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Helga Sinclair",
+    version: "Preparado para cualquier cosa",
+    text: [
+      {
+        title: "ENTRENAMIENTO DE COMBATE",
+        description:
+          "Siempre que este personaje realice una misión, inflige 1 daño al personaje contrario elegido. Si se pusieron 2 o más cartas en tu descarte este turno, inflige 2 daños en su lugar.",
+      },
+    ],
+  },
 };

@@ -62,6 +62,21 @@ export const op14eb04MsAllSunday084: CharacterCard = {
               amount: 1,
               upTo: true,
             },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+              {
+                filter: "trait",
+                value: "Baroque Works",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
           },
           {
             action: "play",
@@ -73,6 +88,21 @@ export const op14eb04MsAllSunday084: CharacterCard = {
               amount: 1,
               upTo: true,
             },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "eq",
+                value: 1,
+              },
+              {
+                filter: "trait",
+                value: "Baroque Works",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
           },
         ],
       },

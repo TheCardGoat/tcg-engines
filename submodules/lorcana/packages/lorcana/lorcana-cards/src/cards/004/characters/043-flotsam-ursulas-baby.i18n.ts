@@ -64,4 +64,20 @@ export const flotsamUrsulasBabyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pecio",
+    version: 'El "bebé" de Úrsula',
+    text: [
+      {
+        title: "ESCAPE RÁPIDO",
+        description:
+          "Cuando este personaje sea desterrado en un desafío, devuelve esta carta a tu mano.",
+      },
+      {
+        title: "PAR SINIESTRO",
+        description:
+          'Tus personajes llamados Jetsam obtienen "Cuando este personaje sea desterrado en un desafío, devuelve esta carta a tu mano".',
+      },
+    ],
+  },
 };

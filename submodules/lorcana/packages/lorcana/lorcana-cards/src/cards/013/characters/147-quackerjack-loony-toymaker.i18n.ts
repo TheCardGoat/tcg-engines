@@ -45,4 +45,15 @@ export const quackerjackLoonyToymakerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Charlatán",
+    version: "Fabricante de juguetes loco",
+    text: [
+      {
+        title: "DISEÑO MALVADO",
+        description:
+          "Cuando juegues con este personaje y cada vez que realice misiones, pon las 4 primeras cartas de tu mazo en tu descarte. Puedes causar 1 daño al personaje elegido por cada carta de objeto puesta en tu descarte de esta manera.",
+      },
+    ],
+  },
 };

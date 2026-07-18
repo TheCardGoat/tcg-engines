@@ -4,8 +4,8 @@ import { op14eb04BoaHancockOp14112112I18n } from "./112-boa-hancock-op14-112.i18
 export const op14eb04BoaHancockOp14112112: CharacterCard = {
   id: "OP14-112",
   canonicalId: "OP14-112",
-  slug: "boa-hancock-op14-112",
-  name: "Boa Hancock - OP14-112",
+  slug: "boa-hancock/op14-112",
+  name: "Boa Hancock",
   printings: [
     {
       id: "OP14-112",
@@ -39,7 +39,7 @@ export const op14eb04BoaHancockOp14112112: CharacterCard = {
   cost: 9,
   power: 10000,
   trigger: "Play up to 1 Character card with 6000 power or less and a [Trigger] from your hand.",
-  traits: ["Kuja Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Kuja Pirates"],
   attribute: "special",
   artVariants: [
     {
@@ -86,6 +86,37 @@ export const op14eb04BoaHancockOp14112112: CharacterCard = {
               upTo: true,
             },
             destination: "hand",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "hasTrigger",
+                value: true,
+              },
+              {
+                filter: "power",
+                comparison: "lte",
+                value: 6000,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
           },
         ],
       },

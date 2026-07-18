@@ -53,4 +53,17 @@ export const herculesBabyDemigodI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hércules",
+    version: "Bebé semidiós",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "FUERTE COMO SU PAPÁ 3",
+        description: "{I}: inflige 1 daño al personaje dañado elegido.",
+      },
+    ],
+  },
 };

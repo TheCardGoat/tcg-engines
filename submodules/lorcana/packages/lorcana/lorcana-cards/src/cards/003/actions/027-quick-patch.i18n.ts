@@ -17,4 +17,8 @@ export const quickPatchI18n: Record<Languages, I18nProperties> = {
     name: "Riparazione Rapida",
     text: "Rimuovi fino a 3 danni da un luogo a tua scelta.",
   },
+  es: {
+    name: "Parche rápido",
+    text: "Elimina hasta 3 daños de la ubicación elegida.",
+  },
 };

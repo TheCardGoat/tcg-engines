@@ -17,4 +17,8 @@ export const petrifyI18n: Record<Languages, I18nProperties> = {
     name: "Pietrificare",
     text: "Impegna un personaggio avversario a tua scelta.",
   },
+  es: {
+    name: "Petrificar",
+    text: "Ejercer el personaje contrario elegido.",
+  },
 };

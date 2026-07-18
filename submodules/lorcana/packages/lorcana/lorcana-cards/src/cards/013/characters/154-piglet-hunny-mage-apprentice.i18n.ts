@@ -17,4 +17,8 @@ export const pigletHunnyMageApprenticeI18n: Record<Languages, I18nProperties> = 
     name: "Pimpi",
     version: "Apprendista Mago del Miele",
   },
+  es: {
+    name: "Cerdito",
+    version: "Aprendiz de mago cariñoso",
+  },
 };

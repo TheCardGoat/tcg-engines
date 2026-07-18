@@ -45,4 +45,15 @@ export const mamaOdieVoiceOfWisdomI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mamá odie",
+    version: "Voz de la Sabiduría",
+    text: [
+      {
+        title: "ESCUCHA A TU MAMA AHORA",
+        description:
+          "Siempre que este personaje realice una misión, puedes mover hasta 2 contadores de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

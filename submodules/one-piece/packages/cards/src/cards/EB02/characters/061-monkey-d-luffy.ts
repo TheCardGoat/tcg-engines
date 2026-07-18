@@ -58,6 +58,12 @@ export const eb02MonkeyDLuffy061: CharacterCard = {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "returnDon",
+            amount: 2,
+          },
+        ],
         actions: [
           {
             action: "setActive",
@@ -77,10 +83,41 @@ export const eb02MonkeyDLuffy061: CharacterCard = {
               amount: 1,
             },
             destination: "hand",
+            position: "top",
           },
         ],
         optional: true,
         oncePerTurn: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderMulticolored",
+          },
+          {
+            condition: "donFieldCount",
+            player: "opponent",
+            comparison: "gte",
+            value: 5,
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "permanent",
+          },
+        ],
       },
     ],
   },

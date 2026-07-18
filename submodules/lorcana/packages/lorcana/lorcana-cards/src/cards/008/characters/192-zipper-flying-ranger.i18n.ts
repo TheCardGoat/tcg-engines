@@ -65,4 +65,20 @@ export const zipperFlyingRangerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cremallera",
+    version: "Guardabosques volador",
+    text: [
+      {
+        title: "MEJORES COMPAÑEROS",
+        description:
+          "Si tienes un personaje llamado Monterey Jack en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "ARRANCADA",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

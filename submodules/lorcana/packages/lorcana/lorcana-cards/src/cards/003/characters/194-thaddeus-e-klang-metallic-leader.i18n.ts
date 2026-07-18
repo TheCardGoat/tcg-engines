@@ -45,4 +45,15 @@ export const thaddeusEKlangMetallicLeaderI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Thaddeus E. Klang",
+    version: "Líder Metálico",
+    text: [
+      {
+        title: "MIS DIENTES SON MAS AFILADOS",
+        description:
+          "Siempre que este personaje realice una misión mientras se encuentra en una ubicación, puedes infligir 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

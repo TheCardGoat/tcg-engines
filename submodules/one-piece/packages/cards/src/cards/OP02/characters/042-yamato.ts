@@ -23,6 +23,7 @@ export const op02Yamato042: CharacterCard = {
   cost: 4,
   power: 6000,
   traits: ["Land of Wano"],
+  alternateNames: ["Kouzuki Oden"],
   attribute: "strike",
   effect:
     "Also treat this card's name as [Kouzuki Oden] according to the rules. [On Play] Rest up to 1 of your opponent's Characters with a cost of 6 or less.",

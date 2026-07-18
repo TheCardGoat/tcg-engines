@@ -17,4 +17,8 @@ export const ursulasTrickeryI18n: Record<Languages, I18nProperties> = {
     name: "L'Inganno di Ursula",
     text: "Ogni avversario può scegliere e scartare una carta. Per ogni avversario che non lo fa, tu peschi una carta.",
   },
+  es: {
+    name: "El engaño de Úrsula",
+    text: "Cada oponente puede elegir y descartar una carta. Por cada oponente que no lo haga, robas una carta.",
+  },
 };

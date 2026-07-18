@@ -17,4 +17,8 @@ export const performanceReviewI18n: Record<Languages, I18nProperties> = {
     name: "Valutazione delle Prestazioni",
     text: "{E} un tuo personaggio preparato a tua scelta per pescare carte pari al {L} di quel personaggio.",
   },
+  es: {
+    name: "Revisión de desempeño",
+    text: "{E} elige tu personaje listo para robar cartas iguales a {L} de ese personaje.",
+  },
 };

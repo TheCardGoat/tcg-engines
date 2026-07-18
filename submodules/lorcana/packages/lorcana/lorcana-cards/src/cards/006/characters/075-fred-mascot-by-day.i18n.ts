@@ -42,4 +42,14 @@ export const fredMascotByDayI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Fred",
+    version: "Mascota por día",
+    text: [
+      {
+        title: "QUE GENIAL ES ESO",
+        description: "Siempre que este personaje sea desafiado, gana 2 conocimientos.",
+      },
+    ],
+  },
 };

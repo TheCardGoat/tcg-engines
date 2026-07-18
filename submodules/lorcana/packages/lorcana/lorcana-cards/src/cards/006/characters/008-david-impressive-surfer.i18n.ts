@@ -43,4 +43,15 @@ export const davidImpressiveSurferI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "David",
+    version: "Impresionante surfista",
+    text: [
+      {
+        title: "MOSTRANDO",
+        description:
+          "Mientras tengas un personaje llamado Nani en juego, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

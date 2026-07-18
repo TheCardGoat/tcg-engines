@@ -43,6 +43,76 @@ export const op06ButIWillNeverDoubtAWomanSTears057: EventCard = {
             value: 1000,
             duration: "thisTurn",
           },
+          {
+            action: "revealTopDeckCard",
+            player: "self",
+            conditional: {
+              filters: [
+                {
+                  filter: "cardCategory",
+                  value: "character",
+                },
+                {
+                  filter: "cost",
+                  comparison: "eq",
+                  value: 2,
+                },
+              ],
+              actions: [
+                {
+                  action: "play",
+                  source: {
+                    player: "self",
+                    zone: "deck",
+                  },
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                  filters: [
+                    {
+                      filter: "cardCategory",
+                      value: "character",
+                    },
+                    {
+                      filter: "cost",
+                      comparison: "eq",
+                      value: 2,
+                    },
+                  ],
+                  topOnly: true,
+                },
+              ],
+            },
+            finalPosition: "choice",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "eq",
+                value: 2,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+          },
         ],
       },
     ],

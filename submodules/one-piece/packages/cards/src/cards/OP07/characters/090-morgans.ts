@@ -33,6 +33,16 @@ export const op07Morgans090: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
+            action: "trashFromHand",
+            player: "opponent",
+            amount: 1,
+          },
+          {
+            action: "revealFromHand",
+            player: "opponent",
+            amount: "all",
+          },
+          {
             action: "draw",
             player: "opponent",
             amount: 1,

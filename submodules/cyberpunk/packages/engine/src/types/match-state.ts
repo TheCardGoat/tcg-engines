@@ -43,7 +43,8 @@ export type ActiveEffectKind =
   | "grantRule"
   | "costModifier"
   | "defeatAtEndOfTurnIfAttacked"
-  | "preventNextRivalFightDefeat";
+  | "preventNextRivalFightDefeat"
+  | "nextFightWinGigSteal";
 export type ActiveEffectOrigin = "static" | "imperative";
 
 export interface ActiveEffect {
@@ -59,6 +60,7 @@ export interface ActiveEffect {
   playerId?: PlayerId;
   remainingUses?: number;
   triggered?: boolean;
+  minPowerMargin?: number;
   duration: "turn" | "continuous" | "untilSourceNextTurn";
   expiresAtStartOfTurnForPlayerId?: PlayerId;
   origin: ActiveEffectOrigin;

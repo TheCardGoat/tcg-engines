@@ -11,6 +11,29 @@ describe("parseInlineCondition", () => {
   });
 
   describe("leader trait conditions", () => {
+    test("leader power and trait compound", () => {
+      const result = parseInlineCondition(
+        'If your Leader has 7000 power or more and the "Kid Pirates" type, this Character gains [Rush].',
+      );
+
+      expect(result).toEqual({
+        condition: {
+          condition: "compound",
+          operator: "and",
+          conditions: [
+            {
+              condition: "hasCard",
+              player: "self",
+              zone: "leader",
+              filters: [{ filter: "power", comparison: "gte", value: 7000 }],
+            },
+            { condition: "leaderTrait", trait: "Kid Pirates", match: "includes" },
+          ],
+        },
+        remainingText: "this Character gains [Rush].",
+      });
+    });
+
     test('your Leader has the "X" type', () => {
       const result = parseInlineCondition(
         'If your Leader has the "Revolutionary Army" type, draw 1 card.',
@@ -19,6 +42,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Revolutionary Army",
+        match: "includes",
       });
       expect(result!.remainingText).toBe("draw 1 card.");
     });
@@ -31,6 +55,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Water Seven",
+        match: "includes",
       });
     });
 
@@ -42,6 +67,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Donquixote Pirates",
+        match: "includes",
       });
     });
 
@@ -53,6 +79,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Baroque Works",
+        match: "includes",
       });
     });
   });
@@ -70,6 +97,25 @@ describe("parseInlineCondition", () => {
   });
 
   describe("card state conditions", () => {
+    test("colored trait Character with a named exclusion", () => {
+      const result = parseInlineCondition(
+        'If you have a yellow "Supernovas" type Character other than [Scratchmen Apoo], this Character gains [Blocker].',
+      );
+
+      expect(result).not.toBeNull();
+      expect(result!.condition).toEqual({
+        condition: "hasCard",
+        player: "self",
+        zone: "character",
+        filters: [
+          { filter: "color", value: "yellow" },
+          { filter: "trait", value: "Supernovas", match: "includes" },
+          { filter: "excludeName", value: "Scratchmen Apoo" },
+        ],
+      });
+      expect(result!.remainingText).toBe("this Character gains [Blocker].");
+    });
+
     test("this Character has N power or more", () => {
       const result = parseInlineCondition("If this Character has 5000 power or more, draw 1 card.");
       expect(result).not.toBeNull();
@@ -302,6 +348,7 @@ describe("parseInlineCondition", () => {
         player: "self",
         comparison: "gte",
         value: 3,
+        state: "active",
       });
     });
   });
@@ -559,12 +606,10 @@ describe("parseInlineCondition — compound conditions", () => {
       conditions: [
         { condition: "leaderTrait", trait: "Minks" },
         {
-          condition: "zoneCount",
+          condition: "restedCardCount",
           player: "opponent",
-          zone: "field",
           comparison: "gte",
           value: 7,
-          filters: [{ filter: "state", value: "rested" }],
         },
       ],
     });
@@ -798,6 +843,12 @@ describe("parseInlineCondition — replacement conditions", () => {
       condition: "replacement",
       event: "ko",
       targetSelf: false,
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+        filters: [{ filter: "state", value: "rested" }],
+      },
     });
   });
 
@@ -810,6 +861,12 @@ describe("parseInlineCondition — replacement conditions", () => {
       condition: "replacement",
       event: "ko",
       targetSelf: false,
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+        filters: [{ filter: "power", comparison: "gte", value: 5000 }],
+      },
     });
   });
 
@@ -823,6 +880,12 @@ describe("parseInlineCondition — replacement conditions", () => {
       event: "removed",
       targetSelf: false,
       source: "opponentEffect",
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+        filters: [{ filter: "trait", value: "Supernovas", match: "includes" }],
+      },
     });
   });
 
@@ -836,6 +899,11 @@ describe("parseInlineCondition — replacement conditions", () => {
       event: "ko",
       targetSelf: false,
       source: "battle",
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+      },
     });
   });
 });
@@ -859,13 +927,11 @@ describe("parseInlineCondition — additional simple conditions", () => {
       "If your opponent has 7 or more rested cards, this Character gains [Rush].",
     );
     expect(result).not.toBeNull();
-    expect(result!.condition).toMatchObject({
-      condition: "zoneCount",
+    expect(result!.condition).toEqual({
+      condition: "restedCardCount",
       player: "opponent",
-      zone: "field",
       comparison: "gte",
       value: 7,
-      filters: [{ filter: "state", value: "rested" }],
     });
   });
 
@@ -945,12 +1011,35 @@ describe("parseInlineCondition — When patterns", () => {
     });
   });
 
+  test("When you activate an Event", () => {
+    const result = parseInlineCondition("When you activate an Event, draw 1 card.");
+    expect(result).toBeDefined();
+    expect(result!.condition).toEqual({
+      condition: "triggerEvent",
+      event: "whenYouActivateEvent",
+    });
+  });
+
   test("When opponent's Character is returned by your effect", () => {
     const result = parseInlineCondition(
       "When your opponent's Character is returned to the owner's hand by your effect, look at 3 cards from the top of your deck.",
     );
     expect(result).toBeDefined();
-    expect(result!.condition).toEqual({ condition: "triggerEvent", event: "whenLeaving" });
+    expect(result!.condition).toEqual({
+      condition: "triggerEvent",
+      event: "whenLeaving",
+      source: "effect",
+    });
+  });
+
+  test("When a Character is rested by your effect", () => {
+    const result = parseInlineCondition(
+      "If a Character is rested by your effect, draw 1 card from your deck.",
+    );
+    expect(result?.condition).toEqual({
+      condition: "triggerEvent",
+      event: "whenCharacterRestedByEffect",
+    });
   });
 });
 
@@ -1024,8 +1113,8 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
       condition: "compound",
       operator: "or",
       conditions: [
-        { condition: "leaderTrait", trait: "Fish-Man" },
-        { condition: "leaderTrait", trait: "Merfolk" },
+        { condition: "leaderTrait", trait: "Fish-Man", match: "includes" },
+        { condition: "leaderTrait", trait: "Merfolk", match: "includes" },
       ],
     });
   });
@@ -1039,8 +1128,23 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
       condition: "compound",
       operator: "or",
       conditions: [
-        { condition: "leaderTrait", trait: "Shandian Warrior" },
-        { condition: "leaderTrait", trait: "Skypiea" },
+        { condition: "leaderTrait", trait: "Shandian Warrior", match: "includes" },
+        { condition: "leaderTrait", trait: "Skypiea", match: "includes" },
+      ],
+    });
+  });
+
+  test('your Leader has the {X} type or a type including "Y"', () => {
+    const result = parseInlineCondition(
+      'If your Leader has the {Cross Guild} type or a type including "Baroque Works", draw 1 card.',
+    );
+    expect(result).not.toBeNull();
+    expect(result!.condition).toEqual({
+      condition: "compound",
+      operator: "or",
+      conditions: [
+        { condition: "leaderTrait", trait: "Cross Guild", match: "includes" },
+        { condition: "leaderTrait", trait: "Baroque Works", match: "includes" },
       ],
     });
   });
@@ -1053,6 +1157,7 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
     expect(result!.condition).toEqual({
       condition: "leaderTrait",
       trait: "Donquixote Pirates",
+      match: "includes",
     });
   });
 });

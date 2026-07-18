@@ -267,6 +267,10 @@ function actionLogCombatSection(
     context.current = "react";
     return COMBAT_LOG_SECTIONS.react;
   }
+  if ((key === "move.playCard" || key === "move.playCard.gear") && context.open) {
+    context.current = "react";
+    return COMBAT_LOG_SECTIONS.react;
+  }
   if ((key === "move.activateAbility" || key === "move.activateAbility.attached") && context.open) {
     context.current = "react";
     return COMBAT_LOG_SECTIONS.react;

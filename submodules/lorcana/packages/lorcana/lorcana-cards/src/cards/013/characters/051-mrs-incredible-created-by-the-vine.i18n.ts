@@ -45,4 +45,15 @@ export const mrsIncredibleCreatedByTheVineI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Señora increíble",
+    version: "Creado por la vid",
+    text: [
+      {
+        title: "TORRENTE",
+        description:
+          "Cada vez que uno de tus personajes de Floodborn realiza una misión, pagas 1{I} menos por el siguiente personaje que cambies en este turno.",
+      },
+    ],
+  },
 };

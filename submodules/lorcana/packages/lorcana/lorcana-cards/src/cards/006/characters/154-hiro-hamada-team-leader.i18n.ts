@@ -62,4 +62,19 @@ export const hiroHamadaTeamLeaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hiro Hamada",
+    version: "Jefe de equipo",
+    text: [
+      {
+        title: "NECESITO ACTUALIZAR A TODOS USTEDES",
+        description: "Tus otros personajes Inventor obtienen Resistencia +1.",
+      },
+      {
+        title: "FORMA EL FUTURO 2",
+        description:
+          "{I}: mira la carta superior de tu mazo. Colóquelo en la parte superior o inferior de su plataforma.",
+      },
+    ],
+  },
 };

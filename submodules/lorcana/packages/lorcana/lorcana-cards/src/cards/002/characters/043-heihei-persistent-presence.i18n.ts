@@ -44,4 +44,15 @@ export const heiheiPersistentPresenceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Heihei",
+    version: "Presencia persistente",
+    text: [
+      {
+        title: "¡ESTÁ DE VUELTA!",
+        description:
+          "Cuando este personaje sea desterrado en un desafío, devuelve esta carta a tu mano.",
+      },
+    ],
+  },
 };

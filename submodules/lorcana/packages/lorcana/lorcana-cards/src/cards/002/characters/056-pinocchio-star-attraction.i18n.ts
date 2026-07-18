@@ -17,4 +17,8 @@ export const pinocchioStarAttractionI18n: Record<Languages, I18nProperties> = {
     name: "Pinocchio",
     version: "Star Attraction",
   },
+  es: {
+    name: "Pinocho",
+    version: "Atracción de estrellas",
+  },
 };

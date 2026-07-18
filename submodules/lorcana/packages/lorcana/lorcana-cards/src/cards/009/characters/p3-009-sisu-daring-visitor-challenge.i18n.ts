@@ -57,4 +57,18 @@ export const sisuDaringVisitorP3ChallengeI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Sisu",
+    version: "Visitante atrevido",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "¡TRAE EL CALOR!",
+        description:
+          "Cuando juegues con este personaje, destierra al personaje contrario elegido con 1 {S} o menos.",
+      },
+    ],
+  },
 };

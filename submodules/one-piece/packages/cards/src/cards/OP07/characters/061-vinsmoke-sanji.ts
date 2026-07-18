@@ -31,12 +31,6 @@ export const op07VinsmokeSanji061: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "The Vinsmoke Family",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -48,8 +42,14 @@ export const op07VinsmokeSanji061: CharacterCard = {
             action: "draw",
             player: "self",
             amount: 1,
+            condition: {
+              condition: "leaderTrait",
+              trait: "The Vinsmoke Family",
+              match: "includes",
+            },
           },
         ],
+        optional: true,
       },
     ],
   },

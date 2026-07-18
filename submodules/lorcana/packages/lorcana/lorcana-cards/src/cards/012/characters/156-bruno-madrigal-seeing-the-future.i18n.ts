@@ -45,4 +45,15 @@ export const brunoMadrigalSeeingTheFutureI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Bruno madrigal",
+    version: "Ver el futuro",
+    text: [
+      {
+        title: "CAMBIAR EL RESULTADO",
+        description:
+          "Cuando juegas con este personaje, puedes mirar la carta superior del mazo del jugador elegido. Colóquelo en la parte superior o inferior de su plataforma.",
+      },
+    ],
+  },
 };

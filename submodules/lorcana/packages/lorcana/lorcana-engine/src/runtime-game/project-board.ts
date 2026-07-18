@@ -434,7 +434,7 @@ function staticRevealAffectsPlayer(args: {
     target === "EACH_PLAYER" ||
     target === "ALL_PLAYERS" ||
     (target === "CONTROLLER" && sourceControllerId === targetPlayerId) ||
-    (target === "OPPONENT" &&
+    ((target === "OPPONENT" || target === "OPPONENTS") &&
       sourceControllerId !== undefined &&
       sourceControllerId !== targetPlayerId)
   );

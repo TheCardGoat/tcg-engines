@@ -26,5 +26,50 @@ export const op08Pekoms029: CharacterCard = {
   attribute: "strike",
   effect:
     "If this Character is active, your {Minks} type Characters with a cost of 3 or less other than [Pekoms] cannot be K.O.'d by effects.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "cardState",
+            target: "this",
+            property: "state",
+            comparison: "eq",
+            value: "active",
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Minks",
+                  match: "includes",
+                },
+                {
+                  filter: "excludeName",
+                  value: "Pekoms",
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 3,
+                },
+              ],
+            },
+            duration: "permanent",
+            restriction: "byEffect",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op08Pekoms029I18n,
 };

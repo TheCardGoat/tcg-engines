@@ -60,4 +60,18 @@ export const rapunzelEtherealProtectorPD1PromoI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Rapunzel",
+    version: "Protector etéreo",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "¡CLON!",
+        description:
+          "Cada vez que este personaje realiza una misión, si hay una carta debajo de ella, el personaje contrario elegido no puede desafiar hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

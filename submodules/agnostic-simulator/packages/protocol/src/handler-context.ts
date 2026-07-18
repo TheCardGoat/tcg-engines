@@ -1,4 +1,4 @@
-import type { InboxEnvelope } from "./inbox.js";
+import type { EventName, InboxEnvelope } from "./inbox.js";
 import type { ServerToClientEvents } from "./events.js";
 
 /**
@@ -10,10 +10,7 @@ import type { ServerToClientEvents } from "./events.js";
  * `reply` / `broadcast*` are typed against `ServerToClientEvents` so a typo
  * or shape mismatch fails compilation in handlers, not at runtime.
  */
-export interface HandlerContext<
-  E extends keyof import("./events.js").ClientToServerEvents =
-    keyof import("./events.js").ClientToServerEvents,
-> {
+export interface HandlerContext<E extends EventName = EventName> {
   envelope: InboxEnvelope<E>;
 
   /** Unicast back to the originating socket. Routed by the Streams adapter

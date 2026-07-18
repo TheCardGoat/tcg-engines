@@ -655,7 +655,8 @@ function copySharedDataFromBasePrinting(
 
 /**
  * Minimal i18n so generate-cards can emit .i18n.ts before embed-card-i18n runs.
- * Non-English locales mirror English; embed-card-i18n replaces them from API data.
+ * Non-English locales mirror English; the Spanish translation script recognizes an
+ * exactly matching `es` value as an untranslated placeholder and replaces it.
  */
 function buildPlaceholderI18n(
   card: Pick<CanonicalCard, "name" | "version" | "rulesText">,
@@ -665,7 +666,7 @@ function buildPlaceholderI18n(
     ...(card.version ? { version: card.version } : {}),
     ...(card.rulesText ? { text: card.rulesText } : {}),
   };
-  return { en, de: { ...en }, fr: { ...en }, it: { ...en } };
+  return { en, de: { ...en }, fr: { ...en }, it: { ...en }, es: { ...en } };
 }
 
 /**

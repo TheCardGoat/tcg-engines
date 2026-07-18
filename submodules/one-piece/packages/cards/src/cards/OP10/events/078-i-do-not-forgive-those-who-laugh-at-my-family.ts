@@ -48,6 +48,7 @@ export const op10IDoNotForgiveThoseWhoLaughAtMyFamily078: EventCard = {
               {
                 filter: "trait",
                 value: "Donquixote Pirates",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
@@ -77,6 +78,7 @@ export const op10IDoNotForgiveThoseWhoLaughAtMyFamily078: EventCard = {
               {
                 filter: "trait",
                 value: "Donquixote Pirates",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

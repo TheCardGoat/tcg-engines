@@ -23,7 +23,7 @@ export const op14eb04Aladine043: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["The Sun Pirates Merfolk"],
+  traits: ["Merfolk", "The Sun Pirates"],
   attribute: "slash",
   effect:
     "[On Play] Play up to 1 {Fish-Man} or {Merfolk} type Character card with a cost of 3 or less from your hand.\n[On K.O.] Draw 1 card.",
@@ -49,12 +49,17 @@ export const op14eb04Aladine043: CharacterCard = {
                 value: 3,
               },
               {
-                filter: "trait",
-                value: "Fish-Man",
-              },
-              {
-                filter: "trait",
-                value: "Merfolk",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Fish-Man",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Merfolk",
+                  },
+                ],
               },
               {
                 filter: "cardCategory",

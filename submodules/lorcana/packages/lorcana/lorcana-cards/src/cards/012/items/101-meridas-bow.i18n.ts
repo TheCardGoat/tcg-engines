@@ -59,4 +59,17 @@ export const meridasBowI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El Arco de Mérida",
+    text: [
+      {
+        title: "TIRO FÁCIL",
+        description: "Cuando juegas este objeto, inflige 1 daño al personaje elegido.",
+      },
+      {
+        title: "FLECHA FINAL 1",
+        description: "{I}, destierra este objeto: inflige 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

@@ -42,4 +42,14 @@ export const madHatterGraciousHostI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sombrerero Loco",
+    version: "Anfitrión amable",
+    text: [
+      {
+        title: "FIESTA DEL TÉ",
+        description: "Siempre que este personaje sea desafiado, puedes robar una carta.",
+      },
+    ],
+  },
 };

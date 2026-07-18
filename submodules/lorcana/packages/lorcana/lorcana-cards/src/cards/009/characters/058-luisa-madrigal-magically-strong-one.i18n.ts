@@ -21,4 +21,9 @@ export const luisaMadrigalMagicallyStrongOneI18n: Record<Languages, I18nProperti
     version: "Magicamente Forzuta",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Luisa Madrigal",
+    version: "Uno mágicamente fuerte",
+    text: "Correr",
+  },
 };

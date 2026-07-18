@@ -17,4 +17,8 @@ export const befuddleI18n: Record<Languages, I18nProperties> = {
     name: "Befuddle",
     text: "Return chosen character or item with cost 2 or less to their player's hand.",
   },
+  es: {
+    name: "Confundir",
+    text: "Devuelve un personaje u objeto con coste 2 o menos a la mano de su jugador.",
+  },
 };

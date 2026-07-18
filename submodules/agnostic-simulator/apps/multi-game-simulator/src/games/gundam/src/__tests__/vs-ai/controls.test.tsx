@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, expect, it } from "vite-plus/test";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 
@@ -40,5 +40,20 @@ describe("vs-AI · control panel", () => {
     // `getByRole` already throws if the region isn't found — no extra
     // null assertion needed.
     screen.getByRole("region", { name: /ai opponent controls/i });
+  });
+
+  it("offers local diagnostic tools and forwards a restart request", async () => {
+    const user = userEvent.setup();
+    const onRestartScenario = vi.fn();
+    renderSimulator(loadVsAiDemo, { onRestartScenario });
+    await user.click(screen.getByRole("button", { name: /open match panel/i }));
+    await user.click(screen.getByText("Tools"));
+
+    expect(screen.getByTestId("ai-log-snapshot")).toBeTruthy();
+    expect((screen.getByTestId("ai-log-clear") as HTMLButtonElement).disabled).toBe(true);
+    expect((screen.getByTestId("ai-reset-scenario") as HTMLButtonElement).disabled).toBe(false);
+
+    await user.click(screen.getByTestId("ai-reset-scenario"));
+    expect(onRestartScenario).toHaveBeenCalledOnce();
   });
 });

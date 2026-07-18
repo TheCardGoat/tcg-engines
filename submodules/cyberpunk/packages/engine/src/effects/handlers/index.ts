@@ -22,6 +22,8 @@ import type {
   AttachCardEffect,
   RemoveFromGameEffect,
   StealGigEffect,
+  SwapGigsEffect,
+  GrantNextFightWinGigStealEffect,
   TrashFromDeckEffect,
   SellFromDeckEffect,
   IfYouDoEffect,
@@ -1164,8 +1166,12 @@ function handleStealGig(
   // `source.self` / `source.card` trigger filters, so card-driven steals reach
   // gigStolen listeners (e.g. Evelyn Parker, 6th Street Recruits).
   const sourceCard = ctx.state.G.cardIndex[ctx.sourceCardId as string];
+  const explicitThiefId = effect.source
+    ? (resolveTarget(effect.source, ctx)[0] as CardInstanceId | undefined)
+    : undefined;
   const thiefId =
-    sourceCard && sourceCard.meta.attachedToId ? sourceCard.meta.attachedToId : ctx.sourceCardId;
+    explicitThiefId ??
+    (sourceCard && sourceCard.meta.attachedToId ? sourceCard.meta.attachedToId : ctx.sourceCardId);
   for (const id of targets) {
     ops.gig.moveGig(id as GigDieId, ctx.sourcePlayerId, thiefId);
   }
@@ -1193,6 +1199,67 @@ function handleStealGig(
       cardIds: [ctx.sourceCardId as string],
     });
   }
+  return { status: "resolved" };
+}
+
+function handleSwapGigs(
+  effect: SwapGigsEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const friendlyId = resolveTarget(effect.friendly, ctx)[0] as GigDieId | undefined;
+  const rivalId = resolveTarget(effect.rival, ctx)[0] as GigDieId | undefined;
+  if (!friendlyId || !rivalId) return { status: "noAction" };
+
+  const friendlyDie = ctx.state.G.gigDice[friendlyId as string];
+  const rivalDie = ctx.state.G.gigDice[rivalId as string];
+  if (!friendlyDie || !rivalDie) return { status: "noAction" };
+
+  const friendlyPlayer = ctx.state.G.players[friendlyDie.ownerId as string];
+  const rivalPlayer = ctx.state.G.players[rivalDie.ownerId as string];
+  if (!friendlyPlayer || !rivalPlayer || friendlyDie.ownerId === rivalDie.ownerId) {
+    return { status: "noAction" };
+  }
+
+  friendlyPlayer.gigArea = friendlyPlayer.gigArea.filter((id) => id !== friendlyId);
+  rivalPlayer.gigArea = rivalPlayer.gigArea.filter((id) => id !== rivalId);
+  friendlyPlayer.gigArea.push(rivalId);
+  rivalPlayer.gigArea.push(friendlyId);
+  const friendlyOwner = friendlyDie.ownerId;
+  friendlyDie.ownerId = rivalDie.ownerId;
+  rivalDie.ownerId = friendlyOwner;
+
+  for (const [dieId, playerId] of [
+    [friendlyId, friendlyDie.ownerId],
+    [rivalId, rivalDie.ownerId],
+  ] as const) {
+    ops.event.emit({
+      type: "gigDieMoved",
+      dieId,
+      from: "gigArea",
+      to: "gigArea",
+      playerId,
+    });
+  }
+  return { status: "resolved" };
+}
+
+function handleGrantNextFightWinGigSteal(
+  effect: GrantNextFightWinGigStealEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  ops.game.addActiveEffect({
+    id: `e${ctx.state.G.nextEffectId}`,
+    sourceCardId: ctx.sourceCardId,
+    targetCardId: ctx.sourceCardId,
+    kind: "nextFightWinGigSteal",
+    playerId: ctx.sourcePlayerId,
+    minPowerMargin: effect.minPowerMargin,
+    duration: effect.duration,
+    origin: "imperative",
+    abilityIndex: ctx.abilityIndex,
+  });
   return { status: "resolved" };
 }
 
@@ -1662,6 +1729,8 @@ export const effectHandlers: EffectHandlerRegistry = {
   attachCard: handleAttachCard,
   removeFromGame: handleRemoveFromGame,
   stealGig: handleStealGig,
+  swapGigs: handleSwapGigs,
+  grantNextFightWinGigSteal: handleGrantNextFightWinGigSteal,
   trashFromDeck: handleTrashFromDeck,
   sellFromDeck: handleSellFromDeck,
   ifYouDo: handleIfYouDo,
@@ -1718,7 +1787,9 @@ export function resolveEffect(
       if (targets.length < min) return { status: "noAction" };
       ops.game.setPendingChoice({
         type: "chooseTarget",
-        chooserId: ctx.sourcePlayerId,
+        chooserId: selection.chooser
+          ? resolveRelativePlayer(selection.chooser, ctx)
+          : ctx.sourcePlayerId,
         effectId: ctx.state.G.turnMetadata.currentTrigger?.id ?? "",
         payload: {
           type: "effectTarget",

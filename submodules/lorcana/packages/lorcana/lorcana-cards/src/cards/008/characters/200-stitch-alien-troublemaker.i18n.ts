@@ -45,4 +45,15 @@ export const stitchAlienTroublemakerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Puntada",
+    version: "Alborotador alienígena",
+    text: [
+      {
+        title: "¡YO GANO!",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, puedes robar una carta y ganar 1 conocimiento.",
+      },
+    ],
+  },
 };

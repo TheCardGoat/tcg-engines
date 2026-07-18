@@ -57,4 +57,18 @@ export const sourceOfTheVineI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Fuente de la Vid",
+    text: [
+      {
+        title: "SIFÓN",
+        description:
+          "Cada vez que un personaje contrario realiza una misión, obtienes 1 conocimiento a menos que su jugador pague 1 {I}.",
+      },
+      {
+        title: "FLOR RADIANTE",
+        description: "{E}, 2 {I}: Gana 1 conocimiento.",
+      },
+    ],
+  },
 };

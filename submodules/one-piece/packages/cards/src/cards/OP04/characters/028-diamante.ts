@@ -57,6 +57,7 @@ export const op04Diamante028: CharacterCard = {
             player: "self",
             comparison: "gte",
             value: 2,
+            state: "active",
           },
         ],
         actions: [

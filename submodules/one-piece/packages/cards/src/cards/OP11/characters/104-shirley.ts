@@ -36,6 +36,7 @@ export const op11Shirley104: CharacterCard = {
           {
             cost: "turnLifeFaceUp",
             count: 1,
+            faceUp: false,
           },
         ],
         actions: [
@@ -54,10 +55,11 @@ export const op11Shirley104: CharacterCard = {
               {
                 filter: "trait",
                 value: "Fish-Man Island",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
-            remainderPosition: "bottom",
+            remainderPosition: "any",
           },
         ],
         optional: true,

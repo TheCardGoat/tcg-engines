@@ -45,4 +45,15 @@ export const cruellaDeVilJudgmentalTravelerP3PromoI18n: Record<Languages, I18nPr
       },
     ],
   },
+  es: {
+    name: "Cruella De Vil",
+    version: "Viajero crítico",
+    text: [
+      {
+        title: "ESTAS PASADO DE MODA",
+        description:
+          "Siempre que este personaje realice una misión, si jugaste con otro personaje este turno, puedes desterrar al personaje dañado elegido.",
+      },
+    ],
+  },
 };

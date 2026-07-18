@@ -17,4 +17,8 @@ export const mrSnoopsIneptBusinessmanI18n: Record<Languages, I18nProperties> = {
     name: "Signor Snoops",
     version: "Imprenditore Inetto",
   },
+  es: {
+    name: "Sr. fisgones",
+    version: "Empresario inepto",
+  },
 };

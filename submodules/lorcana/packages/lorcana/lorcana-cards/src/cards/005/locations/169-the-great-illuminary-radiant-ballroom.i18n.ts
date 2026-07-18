@@ -42,4 +42,14 @@ export const theGreatIlluminaryRadiantBallroomI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "El gran iluminador",
+    version: "Salón de baile radiante",
+    text: [
+      {
+        title: "Cálida bienvenida",
+        description: "Los personajes con soporte obtienen +1 {L} y +2 {W} mientras estén aquí.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const theTerrorThatFlapsInTheNightI18n: Record<Languages, I18nProperties>
     name: "Il Terrore che Svolazza nella Notte",
     text: "Infliggi 2 danni a un personaggio avversario a tua scelta. Se hai in gioco un personaggio chiamato Darkwing Duck, infliggi invece 3 danni.",
   },
+  es: {
+    name: "El terror que aletea en la noche",
+    text: "Inflige 2 daños al personaje contrario elegido. Si tienes un personaje llamado Darkwing Duck en juego, inflige 3 daños.",
+  },
 };

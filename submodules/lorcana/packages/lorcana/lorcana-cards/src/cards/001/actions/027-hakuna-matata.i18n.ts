@@ -33,4 +33,8 @@ export const hakunaMatataI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hakuna Matata",
+    text: "Elimina hasta 3 daños de cada uno de tus personajes.",
+  },
 };

@@ -21,4 +21,9 @@ export const gastonBaritoneBullyI18n: Record<Languages, I18nProperties> = {
     version: "Baritone Bully",
     text: "<Singer> 5 (This character counts as cost 5 to sing songs.)",
   },
+  es: {
+    name: "Gastón",
+    version: "Matón barítono",
+    text: "Cantante 5",
+  },
 };

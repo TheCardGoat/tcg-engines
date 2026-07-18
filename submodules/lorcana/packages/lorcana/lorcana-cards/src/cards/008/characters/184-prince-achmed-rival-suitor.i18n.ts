@@ -44,4 +44,15 @@ export const princeAchmedRivalSuitorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Príncipe Ahmed",
+    version: "Pretendiente rival",
+    text: [
+      {
+        title: "PROPUESTA NO BIENVENIDA",
+        description:
+          "Cuando juegas con este personaje, puedes ejercer el personaje de Princesa elegido.",
+      },
+    ],
+  },
 };

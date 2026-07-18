@@ -17,4 +17,8 @@ export const smashI18n: Record<Languages, I18nProperties> = {
     name: "Sfasciare",
     text: "Infliggi 3 danni a un personaggio a tua scelta.",
   },
+  es: {
+    name: "Smash",
+    text: "Inflige 3 daños al personaje elegido.",
+  },
 };

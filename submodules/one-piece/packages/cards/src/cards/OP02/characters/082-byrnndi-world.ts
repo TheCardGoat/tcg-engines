@@ -51,6 +51,7 @@ export const op02ByrnndiWorld082: CharacterCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
       },
     ],
   },

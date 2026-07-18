@@ -47,7 +47,7 @@ export const op02Mr2BonKureiBentham064: CharacterCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,
@@ -62,6 +62,22 @@ export const op02Mr2BonKureiBentham064: CharacterCard = {
               ],
             },
             position: "bottom",
+          },
+          {
+            action: "delayed",
+            timing: "endOfThisBattle",
+            actions: [
+              {
+                action: "returnToDeck",
+                target: {
+                  player: "self",
+                  zones: ["character"],
+                  count: { amount: 1 },
+                  self: true,
+                },
+                position: "bottom",
+              },
+            ],
           },
         ],
         optional: true,

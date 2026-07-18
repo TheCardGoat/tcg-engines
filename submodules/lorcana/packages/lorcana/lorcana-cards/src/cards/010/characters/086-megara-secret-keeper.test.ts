@@ -121,8 +121,7 @@ describe("Megara - Secret Keeper", () => {
       expect(testEngine.asPlayerTwo().getCardZone(opponentHandCard)).toBe("hand");
     });
 
-    // TODO: Engine gap - grant-ability with triggered ability inside static with condition not yet supported
-    it.skip("triggers discard ability when challenged if there's a card under Megara", () => {
+    it("triggers discard ability when challenged if there's a card under Megara", () => {
       const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
         {
           play: [{ card: megaraSecretKeeper, exerted: true, cardsUnder: [deckCard] }],

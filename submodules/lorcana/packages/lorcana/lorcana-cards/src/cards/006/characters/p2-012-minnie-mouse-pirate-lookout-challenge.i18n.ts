@@ -45,4 +45,15 @@ export const minnieMousePirateLookoutP2ChallengeI18n: Record<Languages, I18nProp
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Mirador pirata",
+    text: [
+      {
+        title: "¡TIERRA, HO!",
+        description:
+          "Una vez durante tu turno, cada vez que se pone una carta en tu tintero, puedes devolver una carta de ubicación de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

@@ -35,4 +35,8 @@ export const heHurledHisThunderboltI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lanzó su rayo",
+    text: "Inflige 4 daños al personaje elegido. Tus personajes de Deidad obtienen Retador +2 este turno. (Obtienen +2 {S} mientras desafían).",
+  },
 };

@@ -72,6 +72,7 @@ export function SimulatorRouteModule({ routeKind }: SimulatorRouteModuleProps) {
         rootSocketReady={rootData?.rootSocketReady === true}
         simulatorRouteData={routeData ?? null}
         simulatorSettings={rootData?.simulatorSettings ?? null}
+        viewerSettings={rootData?.viewerSettings ?? null}
       >
         <Providers>
           <Page />

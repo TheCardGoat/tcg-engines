@@ -31,12 +31,6 @@ export const op08Milky032: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Minks",
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -52,6 +46,11 @@ export const op08Milky032: CharacterCard = {
                 amount: 1,
                 upTo: true,
               },
+            },
+            condition: {
+              condition: "leaderTrait",
+              trait: "Minks",
+              match: "includes",
             },
           },
         ],

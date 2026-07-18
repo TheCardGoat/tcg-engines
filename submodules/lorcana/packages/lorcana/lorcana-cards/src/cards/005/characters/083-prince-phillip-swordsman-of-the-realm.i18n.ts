@@ -64,4 +64,19 @@ export const princePhillipSwordsmanOfTheRealmI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Príncipe Felipe",
+    version: "Espadachín del reino",
+    text: [
+      {
+        title: "ASESINO DE DRAGONES",
+        description:
+          "Cuando juegues con este personaje, destierra al personaje Dragón contrario elegido.",
+      },
+      {
+        title: "APROVECHANDO LA VENTAJA",
+        description: "Siempre que desafíe a un personaje dañado, prepárelo después del desafío.",
+      },
+    ],
+  },
 };

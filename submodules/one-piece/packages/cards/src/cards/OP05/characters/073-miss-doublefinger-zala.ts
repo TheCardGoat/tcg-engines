@@ -59,16 +59,10 @@ export const op05MissDoublefingerZala073: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
+        optional: true,
       },
     ],
   },

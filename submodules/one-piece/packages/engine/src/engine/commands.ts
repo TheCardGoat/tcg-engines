@@ -1,24 +1,30 @@
 import { getCard } from "../../../cards/src/runtime-catalog.ts";
-import { canAttackWith, legalAttackTargets } from "../battle.ts";
-import { enqueueEffectsForTrigger } from "../effects.ts";
+import { attackHandTrashCost, beginAttack, canAttackWith, legalAttackTargets } from "../battle.ts";
+import {
+  canPayCosts,
+  enqueueEffectsForTrigger,
+  enqueueInPlayEffectsForTrigger,
+  evaluateConditions,
+} from "../effects.ts";
+import { isCardPlayRestricted, isPlayedRestedByPermanentEffect } from "../effects/permanent.ts";
 import { applyJudgeCommand } from "../judge.ts";
 import {
-  baseCost,
   cardName,
   effectBlocksFor,
+  effectBlocksForInstance,
   emitEvent,
   emitLog,
   enqueueResolution,
   getCardForInstance,
-  getCardPower,
+  getCardCost,
   getInstance,
   getPlayer,
-  nextIdentifier,
   otherSeat,
   shuffle,
 } from "../shared.ts";
 import {
-  cleanupTurnEndModifiers,
+  consumeNextPlayCostModifiers,
+  createChoicePrompt,
   drawTopCard,
   formatCardList,
   getOpenCharacterSlots,
@@ -387,12 +393,59 @@ export function applyQueuedCommandMutation(
       emitLog(state, "system", `${getPlayer(state, command.seat).playerName} ends the turn.`, {
         visibility: "public",
       });
-      cleanupTurnEndModifiers(state, state.turnNumber);
-      state.turnNumber += 1;
+      const delayedActions = state.delayedEffectActions.filter(
+        (item) =>
+          item.scheduledBattleId === undefined &&
+          item.controller === command.seat &&
+          item.scheduledTurn === state.turnNumber,
+      );
+      state.delayedEffectActions = state.delayedEffectActions.filter(
+        (item) =>
+          item.scheduledBattleId !== undefined ||
+          item.controller !== command.seat ||
+          item.scheduledTurn !== state.turnNumber,
+      );
+      for (const item of delayedActions) {
+        if (
+          item.sourceZoneChangeCounter !== undefined &&
+          getInstance(state, item.sourceInstanceId).zoneChangeCounter !==
+            item.sourceZoneChangeCounter
+        ) {
+          continue;
+        }
+        enqueueResolution(state, {
+          kind: "effectAction",
+          sourceInstanceId: item.sourceInstanceId,
+          controller: item.controller,
+          action: item.action,
+          previousActionTargetIds: item.previousActionTargetIds,
+        });
+      }
+      for (const controller of [command.seat, otherSeat(command.seat)] as const) {
+        const player = getPlayer(state, controller);
+        for (const instance of Object.values(state.cards)) {
+          if (instance.controller !== controller) {
+            continue;
+          }
+          const isInPlay =
+            (instance.zone === "leader" && player.leaderInstanceId === instance.instanceId) ||
+            (instance.zone === "character" && player.characterArea.includes(instance.instanceId)) ||
+            (instance.zone === "stage" && player.stageArea === instance.instanceId);
+          if (!isInPlay) {
+            continue;
+          }
+          enqueueEffectsForTrigger(
+            state,
+            instance.instanceId,
+            controller,
+            controller === command.seat ? "endOfYourTurn" : "endOfOpponentTurn",
+            undefined,
+          );
+        }
+      }
       enqueueResolution(state, {
-        kind: "beginTurn",
-        seat: otherSeat(command.seat),
-        skipDraw: false,
+        kind: "endTurnFinalize",
+        seat: command.seat,
       });
       accepted = true;
       break;
@@ -406,13 +459,17 @@ export function applyQueuedCommandMutation(
         break;
       }
       const instance = getInstance(state, command.instanceId);
-      if (instance.owner !== command.seat || instance.zone !== "hand") {
+      if (instance.controller !== command.seat || instance.zone !== "hand") {
         reason = "The selected card is not in the active player's hand.";
         break;
       }
       const card = getCard(instance.cardId);
       const player = getPlayer(state, command.seat);
-      const cardCost = card.cardType === "leader" ? 0 : baseCost(card);
+      if (isCardPlayRestricted(state, command.seat, command.instanceId, "hand")) {
+        reason = "A card effect prevents this card from being played.";
+        break;
+      }
+      const cardCost = card.cardType === "leader" ? 0 : getCardCost(state, command.instanceId);
       if (player.activeDon < cardCost) {
         reason = "Not enough active DON!! to pay the cost.";
         break;
@@ -427,6 +484,7 @@ export function applyQueuedCommandMutation(
         }
         player.activeDon -= cardCost;
         player.restedDon += cardCost;
+        consumeNextPlayCostModifiers(state, command.instanceId);
         moveCard(state, command.instanceId, command.seat, "character", {
           slotIndex,
           faceUp: true,
@@ -434,12 +492,17 @@ export function applyQueuedCommandMutation(
           actor: command.seat,
         });
         getInstance(state, command.instanceId).playedOnTurn = state.turnNumber;
+        getInstance(state, command.instanceId).rested = isPlayedRestedByPermanentEffect(
+          state,
+          command.seat,
+          command.instanceId,
+        );
       } else if (card.cardType === "stage") {
         player.activeDon -= cardCost;
         player.restedDon += cardCost;
         const existingStage = player.stageArea;
         if (existingStage) {
-          moveCard(state, existingStage, command.seat, "trash", {
+          moveCard(state, existingStage, getInstance(state, existingStage).owner, "trash", {
             faceUp: true,
             publicKnowledge: true,
             actor: command.seat,
@@ -468,11 +531,23 @@ export function applyQueuedCommandMutation(
           visibility: "public",
         });
         enqueueEffectsForTrigger(state, command.instanceId, command.seat, "main", undefined);
-        moveCard(state, command.instanceId, command.seat, "trash", {
+        moveCard(state, command.instanceId, instance.owner, "trash", {
           faceUp: true,
           publicKnowledge: true,
           actor: command.seat,
         });
+        enqueueInPlayEffectsForTrigger(
+          state,
+          "whenYouActivateEvent",
+          { instanceId: command.instanceId, effectController: command.seat },
+          [command.seat],
+        );
+        enqueueInPlayEffectsForTrigger(
+          state,
+          "whenOpponentActivatesEvent",
+          { instanceId: command.instanceId, effectController: command.seat },
+          [otherSeat(command.seat)],
+        );
         accepted = true;
         break;
       } else {
@@ -491,6 +566,22 @@ export function applyQueuedCommandMutation(
         visibility: "public",
       });
       enqueueEffectsForTrigger(state, command.instanceId, command.seat, "onPlay", undefined);
+      if (card.cardType === "character") {
+        const triggerEvent = {
+          instanceId: command.instanceId,
+          effectController: command.seat,
+          fromZone: "hand" as const,
+        };
+        enqueueInPlayEffectsForTrigger(state, "whenYouPlayCharacter", triggerEvent, [command.seat]);
+        enqueueInPlayEffectsForTrigger(state, "whenOpponentPlaysCharacter", triggerEvent, [
+          otherSeat(command.seat),
+        ]);
+        if (card.trigger || effectBlocksFor(card, "trigger").length > 0) {
+          enqueueInPlayEffectsForTrigger(state, "whenTriggerCharacterPlayed", triggerEvent, [
+            command.seat,
+          ]);
+        }
+      }
       accepted = true;
       break;
     }
@@ -511,7 +602,7 @@ export function applyQueuedCommandMutation(
       }
       const target = getInstance(state, command.targetId);
       if (
-        target.owner !== command.seat ||
+        target.controller !== command.seat ||
         (target.zone !== "leader" && target.zone !== "character")
       ) {
         reason = "DON!! can only be attached to your leader or characters.";
@@ -537,6 +628,10 @@ export function applyQueuedCommandMutation(
           visibility: "public",
         },
       );
+      enqueueInPlayEffectsForTrigger(state, "whenDonGiven", {
+        instanceId: command.targetId,
+        effectController: command.seat,
+      });
       accepted = true;
       break;
     }
@@ -558,46 +653,42 @@ export function applyQueuedCommandMutation(
         reason = "The selected target cannot be attacked.";
         break;
       }
-      const attacker = getInstance(state, command.attackerId);
-      attacker.rested = true;
-      state.battle = {
-        id: nextIdentifier(state, "battle"),
-        attackerId: command.attackerId,
-        originalTargetId: command.targetId,
-        targetId: command.targetId,
-        defendingSeat: otherSeat(command.seat),
-        step: "block",
-        blockerId: null,
-        counterCardIds: [],
-        counterTotal: 0,
-        attackPower: getCardPower(state, command.attackerId),
-        defensePower: getCardPower(state, command.targetId),
-        result: "pending",
-      };
-      emitEvent(state, "attackDeclared", command.seat, {
-        sourceCardId: attacker.cardId,
-        sourceInstanceId: command.attackerId,
-        targetIds: [command.targetId],
-        eventId: state.battle.id,
-        visibility: "public",
-      });
-      emitLog(
-        state,
-        command.seat,
-        `${cardName(getCardForInstance(state, command.attackerId))} attacks ${cardName(getCardForInstance(state, command.targetId))}.`,
-        {
-          sourceCardId: attacker.cardId,
+      const handTrashAmount = attackHandTrashCost(state, command.attackerId);
+      if (handTrashAmount > 0) {
+        const candidateIds = [...getPlayer(state, command.seat).hand];
+        if (candidateIds.length < handTrashAmount) {
+          reason = `The attack requires trashing ${handTrashAmount} card(s) from hand.`;
+          break;
+        }
+        createChoicePrompt(state, {
+          choiceKind: "costPayment",
+          seat: command.seat,
+          label: "Attack cost payment",
+          details: `Choose ${handTrashAmount} card(s) to trash from hand before attacking.`,
+          sourceCardId: getInstance(state, command.attackerId).cardId,
           sourceInstanceId: command.attackerId,
-          targetIds: [command.targetId],
-          eventId: state.battle.id,
-          visibility: "public",
-        },
-      );
-      enqueueEffectsForTrigger(state, command.attackerId, command.seat, "whenAttacking", undefined);
-      enqueueResolution(state, {
-        kind: "battleBlockStep",
-        battleId: state.battle.id,
-      });
+          eventId: null,
+          options: candidateIds.map((instanceId) => ({
+            id: instanceId,
+            label: cardName(getCardForInstance(state, instanceId)),
+            value: instanceId,
+            targetId: instanceId,
+          })),
+          minSelections: handTrashAmount,
+          maxSelections: handTrashAmount,
+          context: { cost: "trashFromHand" },
+          resolutionContext: {
+            intent: "battleAttackHandTrashCost",
+            attackerId: command.attackerId,
+            targetId: command.targetId,
+            controller: command.seat,
+            amount: handTrashAmount,
+            candidateIds,
+          },
+        });
+      } else {
+        beginAttack(state, command.seat, command.attackerId, command.targetId);
+      }
       accepted = true;
       break;
     }
@@ -612,24 +703,68 @@ export function applyQueuedCommandMutation(
       }
       const source = getInstance(state, command.sourceInstanceId);
       if (
-        source.owner !== command.seat ||
+        source.controller !== command.seat ||
         !["leader", "character", "stage"].includes(source.zone)
       ) {
         reason = "The selected source is not controllable from the field.";
         break;
       }
-      const card = getCard(source.cardId);
-      if (!effectBlocksFor(card, command.trigger).length) {
+      const activationBlocks = effectBlocksForInstance(
+        state,
+        command.sourceInstanceId,
+        command.trigger,
+      );
+      if (!activationBlocks.length) {
         reason = "This card does not have that activation timing.";
         break;
       }
-      enqueueEffectsForTrigger(
+      const unusedActivationBlocks = activationBlocks.filter(
+        (block, index) =>
+          !block.oncePerTurn ||
+          !source.usedEffectKeys.includes(block.oncePerTurnKey ?? `${command.trigger}:${index}`),
+      );
+      if (!unusedActivationBlocks.length) {
+        reason = "This effect has already been used this turn.";
+        break;
+      }
+      const conditionEligibleActivationBlocks = unusedActivationBlocks.filter((block) => {
+        const conditions = evaluateConditions(
+          state,
+          command.seat,
+          command.sourceInstanceId,
+          block.conditions,
+        );
+        return !conditions.supported || conditions.matches;
+      });
+      if (!conditionEligibleActivationBlocks.length) {
+        reason = "The activation conditions are not met.";
+        break;
+      }
+      if (
+        !conditionEligibleActivationBlocks.some((block) =>
+          canPayCosts(
+            state,
+            command.seat,
+            command.sourceInstanceId,
+            block.costs,
+            command.trashHandIds,
+          ),
+        )
+      ) {
+        reason = "The activation costs cannot be paid.";
+        break;
+      }
+      const enqueued = enqueueEffectsForTrigger(
         state,
         command.sourceInstanceId,
         command.seat,
         command.trigger,
         command.trashHandIds,
       );
+      if (enqueued === 0) {
+        reason = "This effect has already been used this turn.";
+        break;
+      }
       accepted = true;
       break;
     }

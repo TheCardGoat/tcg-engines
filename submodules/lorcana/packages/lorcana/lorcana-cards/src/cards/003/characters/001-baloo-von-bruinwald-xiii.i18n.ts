@@ -55,4 +55,17 @@ export const balooVonBruinwaldXiiiI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Baloo",
+    version: "von Bruinwald XIII",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "HAGAMOS COMO",
+        description: "UN ÁRBOL Cuando este personaje es desterrado, gana 2 conocimientos.",
+      },
+    ],
+  },
 };

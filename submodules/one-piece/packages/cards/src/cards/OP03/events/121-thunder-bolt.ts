@@ -28,6 +28,13 @@ export const op03ThunderBolt121: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [
+          {
+            cost: "trashLife",
+            amount: 1,
+            position: "top",
+          },
+        ],
         actions: [
           {
             action: "ko",

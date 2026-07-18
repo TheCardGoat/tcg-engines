@@ -20,5 +20,32 @@ export const op14eb04RoronoaZoroPrb02006Sp006: CharacterCard = {
   rarity: "R",
   setId: "OP14EB04",
   artVariants: undefined,
+  effects: {
+    keywords: ["blocker"],
+    replacementEffects: [
+      {
+        replacedEvent: "rested",
+        source: "opponentCharacterEffect",
+        eventFilter: { targetSelf: true },
+        replacementAction: {
+          action: "rest",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: {
+              amount: 1,
+            },
+            filters: [{ filter: "excludeSelf" }],
+          },
+        },
+        conditions: [
+          {
+            condition: "turn",
+            value: "opponent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op14eb04RoronoaZoroPrb02006Sp006I18n,
 };

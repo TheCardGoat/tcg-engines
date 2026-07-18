@@ -17,4 +17,8 @@ export const goonsMaleficentsUnderlingsI18n: Record<Languages, I18nProperties> =
     name: "Goons",
     version: "Maleficent’s Underlings",
   },
+  es: {
+    name: "Matones",
+    version: "Los subordinados de Maléfica",
+  },
 };

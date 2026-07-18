@@ -47,6 +47,63 @@ export const op12UrsaShock096: EventCard = {
                 },
               ],
             },
+            condition: {
+              condition: "notHasCard",
+              player: "self",
+              zone: "character",
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 8,
+                },
+              ],
+            },
+          },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 6,
+                },
+              ],
+            },
+            condition: {
+              condition: "hasCard",
+              player: "self",
+              zone: "character",
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 8,
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+          {
+            action: "trashFromDeck",
+            player: "self",
+            amount: 1,
           },
         ],
       },

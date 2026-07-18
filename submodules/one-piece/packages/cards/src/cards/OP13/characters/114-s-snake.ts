@@ -42,7 +42,7 @@ export const op13SSnake114: CharacterCard = {
     },
   ],
   effect:
-    "[On Play]/[When Attacking] You may turn 1 card from the top of your Life cards face-up: Give up to 1 of your opponent's Characters 2000 power during this turn.",
+    "[On Play]/[When Attacking] You may turn 1 card from the top of your Life cards face-up: Give up to 1 of your opponent's Characters −2000 power during this turn.",
   effects: {
     effects: [
       {
@@ -64,7 +64,7 @@ export const op13SSnake114: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
           },
         ],
@@ -89,8 +89,21 @@ export const op13SSnake114: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
+          },
+        ],
+        optional: true,
+      },
+      {
+        trigger: "trigger",
+        costs: [{ cost: "trashFromHand", amount: 1 }],
+        actions: [
+          {
+            action: "play",
+            source: { player: "self", zone: "hand" },
+            count: { amount: 1 },
+            self: true,
           },
         ],
         optional: true,

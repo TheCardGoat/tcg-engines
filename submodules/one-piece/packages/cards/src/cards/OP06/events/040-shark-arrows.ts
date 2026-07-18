@@ -53,6 +53,15 @@ export const op06SharkArrows040: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
+          },
+        ],
+      },
     ],
   },
   i18n: op06SharkArrows040I18n,

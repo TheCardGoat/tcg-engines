@@ -65,4 +65,20 @@ export const jasmineFearlessPrincessI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jazmín",
+    version: "Princesa intrépida",
+    text: [
+      {
+        title: "DA EL SALTO",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+      {
+        title: "AHORA ES MI OPORTUNIDAD",
+        description:
+          "Elige y descarta una carta: este personaje gana Challenger +3 este turno. (Obtienen +3 {S} mientras desafían).",
+      },
+    ],
+  },
 };

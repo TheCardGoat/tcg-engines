@@ -45,4 +45,15 @@ export const peteCreatedByTheVineI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pete",
+    version: "Creado por la vid",
+    text: [
+      {
+        title: "CRECIMIENTO EXCESIVO ESPINOSO",
+        description:
+          "Tus personajes Floodborn obtienen Challenger +1. (Obtienen +1 {S} mientras desafían).",
+      },
+    ],
+  },
 };

@@ -21,4 +21,9 @@ export const bashfulRidingTheRailsI18n: Record<Languages, I18nProperties> = {
     version: "Sulle Rotaie",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Tímido",
+    version: "Montando los rieles",
+    text: "Evasivo",
+  },
 };

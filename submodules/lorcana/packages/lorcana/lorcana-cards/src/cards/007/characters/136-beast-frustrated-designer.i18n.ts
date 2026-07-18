@@ -44,4 +44,15 @@ export const beastFrustratedDesignerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bestia",
+    version: "Diseñador frustrado",
+    text: [
+      {
+        title: "¡LO HE TENIDO!",
+        description:
+          "{E}, 2 {I}, destierra 2 de tus objetos: inflige 5 daños al personaje elegido.",
+      },
+    ],
+  },
 };

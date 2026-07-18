@@ -17,4 +17,8 @@ export const johnDarlingSophisticatedSwordsmanI18n: Record<Languages, I18nProper
     name: "Gianni Darling",
     version: "Spadaccino Sofisticato",
   },
+  es: {
+    name: "Juan querido",
+    version: "Espadachín sofisticado",
+  },
 };

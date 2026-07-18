@@ -21,4 +21,9 @@ export const skippyEnergeticRabbitI18n: Record<Languages, I18nProperties> = {
     version: "Coniglio Vivace",
     text: "<Protetto>",
   },
+  es: {
+    name: "Saltarín",
+    version: "Conejo Energético",
+    text: "Pabellón",
+  },
 };

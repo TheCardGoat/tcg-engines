@@ -45,4 +45,15 @@ export const merlinCrabI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Esmerejón",
+    version: "Cangrejo",
+    text: [
+      {
+        title: "¡LISTO O NO!",
+        description:
+          "Cuando juegas con este personaje y cuando deja el juego, el personaje elegido gana Challenger +3 este turno. (Obtienen +3 {S} mientras desafían).",
+      },
+    ],
+  },
 };

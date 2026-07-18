@@ -51,6 +51,28 @@ export const eb03Lilith058: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "leaderName",
+            name: "Vegapunk",
+          },
+        ],
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+            },
+            self: true,
+          },
+        ],
+      },
     ],
   },
   i18n: eb03Lilith058I18n,

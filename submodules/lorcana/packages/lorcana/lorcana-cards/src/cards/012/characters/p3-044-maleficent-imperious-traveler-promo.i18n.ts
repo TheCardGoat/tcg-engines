@@ -45,4 +45,15 @@ export const maleficentImperiousTravelerP3PromoI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Pernicioso",
+    version: "Viajero imperioso",
+    text: [
+      {
+        title: "PRESENTA MIS PALABRAS",
+        description:
+          "Siempre que este personaje realice una misión, si jugaste con otro personaje este turno, puedes ejercer el personaje contrario elegido.",
+      },
+    ],
+  },
 };

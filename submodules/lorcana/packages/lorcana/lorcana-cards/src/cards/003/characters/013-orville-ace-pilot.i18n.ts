@@ -17,4 +17,8 @@ export const orvilleAcePilotI18n: Record<Languages, I18nProperties> = {
     name: "Orville",
     version: "Asso del Volo",
   },
+  es: {
+    name: "Orville",
+    version: "Piloto as",
+  },
 };

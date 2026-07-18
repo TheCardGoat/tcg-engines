@@ -21,4 +21,9 @@ export const louieChillNephewI18n: Record<Languages, I18nProperties> = {
     version: "Nipote Tranquillo",
     text: "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
   },
+  es: {
+    name: "Luis",
+    version: "Sobrino tranquilo",
+    text: "Apoyo",
+  },
 };

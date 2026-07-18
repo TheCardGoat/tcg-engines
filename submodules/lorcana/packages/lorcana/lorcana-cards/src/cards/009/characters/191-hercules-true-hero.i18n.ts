@@ -21,4 +21,9 @@ export const herculesTrueHeroI18n: Record<Languages, I18nProperties> = {
     version: "True Hero",
     text: "<Bodyguard> (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
   },
+  es: {
+    name: "Hércules",
+    version: "Verdadero héroe",
+    text: "Guardaespaldas",
+  },
 };

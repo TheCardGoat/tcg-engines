@@ -44,4 +44,15 @@ export const treasureGuardianProtectorOfTheCaveI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Guardián del tesoro",
+    version: "Protector de la cueva",
+    text: [
+      {
+        title: "¿QUIÉN PERTURBA MI SUEÑO?",
+        description:
+          "Este personaje no puede desafiar ni realizar misiones a menos que esté en una ubicación.",
+      },
+    ],
+  },
 };

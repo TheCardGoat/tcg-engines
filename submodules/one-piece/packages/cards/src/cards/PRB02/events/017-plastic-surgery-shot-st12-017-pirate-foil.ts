@@ -57,6 +57,29 @@ export const prb02PlasticSurgeryShotSt12017PirateFoil017: EventCard = {
             value: 2000,
             duration: "thisBattle",
           },
+          {
+            action: "revealTopDeckCard",
+            player: "self",
+            conditional: {
+              filters: [
+                { filter: "cardCategory", value: "character" },
+                { filter: "cost", comparison: "eq", value: 2 },
+              ],
+              actions: [
+                {
+                  action: "play",
+                  source: { player: "self", zone: "deck" },
+                  count: { amount: 1, upTo: true },
+                  filters: [
+                    { filter: "cardCategory", value: "character" },
+                    { filter: "cost", comparison: "eq", value: 2 },
+                  ],
+                  topOnly: true,
+                },
+              ],
+            },
+            finalPosition: "choice",
+          },
         ],
       },
     ],

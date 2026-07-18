@@ -45,4 +45,15 @@ export const drFacilierRemarkableGentlemanI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Dr. Facilier",
+    version: "Caballero notable",
+    text: [
+      {
+        title: "SUEÑOS HECHOS REALIDAD",
+        description:
+          "Cada vez que toques una canción, puedes mirar las 2 cartas superiores de tu mazo. Coloque uno en la parte superior de su plataforma y el otro en la parte inferior.",
+      },
+    ],
+  },
 };

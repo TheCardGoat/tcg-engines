@@ -72,4 +72,21 @@ export const cinderellaStoutheartedC1ChallengeI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Cenicienta",
+    version: "Valiente",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "Resistir +2",
+      },
+      {
+        title: "LA ESPADA CANTADORA",
+        description:
+          "Siempre que toques una canción, este personaje puede desafiar a los personajes listos en este turno.",
+      },
+    ],
+  },
 };

@@ -41,4 +41,14 @@ export const abuWiseSultanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Abu",
+    version: "Sultán sabio",
+    text: [
+      {
+        title: "Gobernante por un día",
+        description: "Cuando este personaje realice una misión, destierralo.",
+      },
+    ],
+  },
 };

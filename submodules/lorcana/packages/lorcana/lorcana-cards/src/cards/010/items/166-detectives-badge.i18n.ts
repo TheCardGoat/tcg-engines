@@ -41,4 +41,14 @@ export const detectivesBadgeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Insignia de detective",
+    text: [
+      {
+        title: "PROTEGER Y SERVIR",
+        description:
+          "{E}, 1 {I}: el personaje elegido obtiene Resistencia +1 y la clasificación de Detective hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

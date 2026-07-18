@@ -49,10 +49,20 @@ export const op12CaptainsAssembled097: EventCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
             remainderPosition: "trash",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
           },
         ],
       },

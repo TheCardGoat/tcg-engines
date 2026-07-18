@@ -20,9 +20,28 @@ describe("DrawAction", () => {
     expect(result.unparsed).toBe("");
   });
 
+  test("preserves an up-to draw count", () => {
+    const result = parseActions("Draw up to 2 cards.");
+    expect(result.parsed).toEqual([{ action: "draw", player: "self", amount: 2, upTo: true }]);
+    expect(result.unparsed).toBe("");
+  });
+
   test("is case-insensitive", () => {
     const result = parseActions("draw 1 card");
     expect(result.parsed).toEqual([{ action: "draw", player: "self", amount: 1 }]);
+  });
+
+  test("draws only until the printed hand size", () => {
+    const result = parseActions("Draw cards so that you have 2 cards in your hand.");
+    expect(result.parsed).toEqual([
+      {
+        action: "draw",
+        player: "self",
+        amount: 2,
+        untilHandSize: 2,
+      },
+    ]);
+    expect(result.unparsed).toBe("");
   });
 });
 
@@ -95,6 +114,19 @@ describe("parseActions — TrashActions", () => {
       });
     });
 
+    test("trash up to 3 cards from your hand", () => {
+      const result = parseActions("trash up to 3 cards from your hand");
+      expect(result.parsed).toEqual([
+        {
+          action: "trashFromHand",
+          player: "self",
+          amount: 3,
+          upTo: true,
+        },
+      ]);
+      expect(result.unparsed).toBe("");
+    });
+
     test("Trash 1 card from your opponent's hand", () => {
       const result = parseActions("Trash 1 card from your opponent's hand");
       expect(result.parsed[0]).toEqual({
@@ -102,6 +134,12 @@ describe("parseActions — TrashActions", () => {
         player: "opponent",
         amount: 1,
       });
+    });
+
+    test("trash all cards from your hand", () => {
+      const result = parseActions("trash all cards from your hand");
+      expect(result.parsed).toEqual([{ action: "trashFromHand", player: "self", amount: "all" }]);
+      expect(result.unparsed).toBe("");
     });
   });
 });
@@ -251,6 +289,24 @@ describe("parseActions — draw with trailing condition", () => {
     ]);
   });
 
+  test("freeze: opponent's rested DON!! cards exclude Characters", () => {
+    const result = parseActions(
+      "Up to 1 of your opponent's rested DON!! cards will not become active in your opponent's next Refresh Phase",
+    );
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "freeze",
+        target: {
+          player: "opponent",
+          zones: ["costArea"],
+          count: { amount: 1, upTo: true },
+          filters: [{ filter: "state", value: "rested" }],
+        },
+      },
+    ]);
+  });
+
   test("freeze: with cost filter", () => {
     const result = parseActions(
       "Up to 2 of your opponent's rested Characters with a cost of 5 or less will not become active in your opponent's next Refresh Phase",
@@ -342,6 +398,7 @@ describe("parseActions — draw with trailing condition", () => {
         action: "playRestriction",
         restriction: "cannotPlay",
         filters: [],
+        sourceZones: ["hand"],
         duration: "thisTurn",
       },
     ]);
@@ -362,22 +419,28 @@ describe("parseActions — draw with trailing condition", () => {
     ]);
   });
 
-  // ── opponentReturnDon action ──
+  // ── returnDon action ──
 
-  test("opponentReturnDon: 1 DON!! card", () => {
+  test("returnDon: opponent returns 1 DON!! card", () => {
     const result = parseActions(
       "Your opponent returns 1 DON!! card from their field to their DON!! deck",
     );
     expect(result.unparsed).toBe("");
-    expect(result.parsed).toEqual([{ action: "opponentReturnDon", amount: 1 }]);
+    expect(result.parsed).toEqual([{ action: "returnDon", player: "opponent", amount: 1 }]);
   });
 
-  test("opponentReturnDon: 2 DON!! cards", () => {
+  test("returnDon: opponent returns 2 DON!! cards", () => {
     const result = parseActions(
       "Your opponent returns 2 DON!! cards from their field to their DON!! deck",
     );
     expect(result.unparsed).toBe("");
-    expect(result.parsed).toEqual([{ action: "opponentReturnDon", amount: 2 }]);
+    expect(result.parsed).toEqual([{ action: "returnDon", player: "opponent", amount: 2 }]);
+  });
+
+  test("returnDon: controller returns 1 DON!! card", () => {
+    const result = parseActions("Return 1 DON!! card from your field to your DON!! deck");
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([{ action: "returnDon", player: "self", amount: 1 }]);
   });
 
   // ── Multi-target modifyPower ──
@@ -512,7 +575,9 @@ describe("parseActions — draw with trailing condition", () => {
     expect(effects!.effects).toHaveLength(1);
     const block = effects!.effects![0]!;
     expect(block.trigger).toBe("onPlay");
-    expect(block.conditions).toEqual([{ condition: "leaderTrait", trait: "Minks" }]);
+    expect(block.conditions).toEqual([
+      { condition: "leaderTrait", trait: "Minks", match: "includes" },
+    ]);
     expect(block.actions).toEqual([
       {
         action: "freeze",
@@ -546,7 +611,7 @@ describe("parseActions — draw with trailing condition", () => {
     });
   });
 
-  test("real card: OP02-085 Magellan — opponentReturnDon", () => {
+  test("real card: OP02-085 Magellan — opponent returnDon", () => {
     const effects = buildCardEffects(
       "[On Play] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Your opponent returns 1 DON!! card from their field to their DON!! deck.",
     );
@@ -555,7 +620,7 @@ describe("parseActions — draw with trailing condition", () => {
     const block = effects!.effects![0]!;
     expect(block.trigger).toBe("onPlay");
     expect(block.costs).toEqual([{ cost: "returnDon", amount: 1 }]);
-    expect(block.actions).toEqual([{ action: "opponentReturnDon", amount: 1 }]);
+    expect(block.actions).toEqual([{ action: "returnDon", player: "opponent", amount: 1 }]);
   });
 
   test("real card: OP02/OP05 Uta — Leader + all Characters gain power with duration", () => {
@@ -590,12 +655,27 @@ describe("parseActions — draw with trailing condition", () => {
     ]);
   });
 
-  test("setActive: at the end of this turn — timing stripped", () => {
+  test("setActive: preserves at-the-end-of-this-turn timing", () => {
     const result = parseActions(
       "set up to 1 of your DON!! cards as active at the end of this turn",
     );
     expect(result.unparsed).toBe("");
-    expect(result.parsed[0]).toMatchObject({ action: "setActive" });
+    expect(result.parsed).toEqual([
+      {
+        action: "delayed",
+        timing: "endOfThisTurn",
+        actions: [
+          {
+            action: "setActive",
+            target: {
+              player: "self",
+              zones: ["costArea"],
+              count: { amount: 1, upTo: true },
+            },
+          },
+        ],
+      },
+    ]);
   });
 
   test("setActive: Set all of your DON!! cards as active", () => {
@@ -667,7 +747,7 @@ describe("parseActions — draw with trailing condition", () => {
     expect(result.unparsed).toBe("");
     expect(result.parsed[0]).toMatchObject({
       action: "addToLife",
-      position: "top",
+      position: "choice",
       faceUp: true,
     });
     expect(result.parsed[0]).toHaveProperty("target.player", "opponent");
@@ -681,8 +761,10 @@ describe("parseActions — draw with trailing condition", () => {
     expect(result.unparsed).toBe("");
     expect(result.parsed[0]).toMatchObject({
       action: "addToLife",
+      position: "choice",
       faceUp: true,
     });
+    expect(result.parsed[0]).toHaveProperty("target.player", "any");
   });
 
   test("addToLife: add 1 card from deck (without 'up to')", () => {
@@ -716,6 +798,7 @@ describe("parseActions — draw with trailing condition", () => {
         player: "self",
         count: { amount: 1 },
         destination: "hand",
+        position: "choice",
       },
     ]);
   });
@@ -795,6 +878,19 @@ describe("parseActions — draw with trailing condition", () => {
     const block = effects!.effects![0]!;
     expect(block.actions).toHaveLength(2);
     expect(block.actions[0]).toMatchObject({ action: "freeze" });
-    expect(block.actions[1]).toMatchObject({ action: "setActive" });
+    expect(block.actions[1]).toEqual({
+      action: "delayed",
+      timing: "endOfThisTurn",
+      actions: [
+        {
+          action: "setActive",
+          target: {
+            player: "self",
+            zones: ["costArea"],
+            count: { amount: 1, upTo: true },
+          },
+        },
+      ],
+    });
   });
 });

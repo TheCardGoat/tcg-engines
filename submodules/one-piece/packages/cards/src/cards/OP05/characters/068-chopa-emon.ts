@@ -23,7 +23,7 @@ export const op05ChopaEmon068: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Animal Straw Hat Crew"],
+  traits: ["Animal", "Straw Hat Crew"],
   attribute: "wisdom",
   effect:
     "[On Play] If you have 8 or more DON!! cards on your field, set up to 1 of your purple [Straw Hat Crew] type Characters with 6000 power or less as active.",
@@ -57,6 +57,7 @@ export const op05ChopaEmon068: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
+                  match: "includes",
                 },
                 {
                   filter: "power",

@@ -46,6 +46,12 @@ export const op01TrafalgarLaw047: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnCharacter",
+            amount: 1,
+          },
+        ],
         actions: [
           {
             action: "play",

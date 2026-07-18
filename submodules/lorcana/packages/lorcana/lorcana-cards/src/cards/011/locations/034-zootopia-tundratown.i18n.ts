@@ -17,4 +17,8 @@ export const zootopiaTundratownI18n: Record<Languages, I18nProperties> = {
     name: "Zootropolis",
     version: "Tundratown",
   },
+  es: {
+    name: "Zootopía",
+    version: "Tundratown",
+  },
 };

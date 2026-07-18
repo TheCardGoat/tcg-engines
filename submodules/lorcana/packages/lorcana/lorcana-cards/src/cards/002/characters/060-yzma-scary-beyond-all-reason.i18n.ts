@@ -60,4 +60,18 @@ export const yzmaScaryBeyondAllReasonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yzma",
+    version: "Aterrador más allá de toda razón",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "IRONÍA CRUEL",
+        description:
+          "Cuando juegues con este personaje, baraja otra carta de personaje elegido en el mazo de su jugador. Ese jugador roba 2 cartas.",
+      },
+    ],
+  },
 };

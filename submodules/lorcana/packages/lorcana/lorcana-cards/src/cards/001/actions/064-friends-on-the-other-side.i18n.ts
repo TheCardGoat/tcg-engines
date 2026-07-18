@@ -33,4 +33,8 @@ export const friendsOnTheOtherSideI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Amigos del otro lado",
+    text: "Roba 2 cartas.",
+  },
 };

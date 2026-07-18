@@ -49,12 +49,17 @@ export const op14eb04HurryUpAndMakeMeThePirateKing097: EventCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
             remainderPosition: "trash",
           },
         ],
+      },
+      {
+        trigger: "trigger",
+        actions: [{ action: "activateEffect", effectTrigger: "main" }],
       },
     ],
   },

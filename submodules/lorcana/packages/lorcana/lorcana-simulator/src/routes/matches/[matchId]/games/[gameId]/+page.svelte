@@ -96,7 +96,10 @@
       return;
     }
     const clientId = env.PUBLIC_DISCORD_ACTIVITY_CLIENT_ID ?? env.PUBLIC_DISCORD_CLIENT_ID;
-    if (data.userSettings?.gameplaySettings?.discordPresenceEnabled === false) {
+    if (
+      (data.userSettings?.resolvedGameplaySettings ?? data.userSettings?.gameplaySettings)
+        ?.discordPresenceEnabled === false
+    ) {
       activePresenceKey = null;
       void clearDiscordPlayingGamePresence({ clientId });
       return;

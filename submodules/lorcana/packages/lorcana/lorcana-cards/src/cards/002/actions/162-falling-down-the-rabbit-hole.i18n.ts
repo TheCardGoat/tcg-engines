@@ -23,4 +23,8 @@ export const fallingDownTheRabbitHoleI18n: Record<Languages, I18nProperties> = {
     name: "Falling Down the Rabbit Hole",
     text: "Each player chooses one of their characters and puts them into their inkwell facedown and exerted.",
   },
+  es: {
+    name: "Cayendo por la madriguera del conejo",
+    text: "Cada jugador elige uno de sus personajes y lo mete en su tintero boca abajo y ejercido.",
+  },
 };

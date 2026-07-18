@@ -60,4 +60,18 @@ export const merlinCompletingHisResearchI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Esmerejón",
+    version: "Completando su investigación",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "LEGADO DEL APRENDIZAJE",
+        description:
+          "Cuando este personaje es desterrado en un desafío, si tenía una carta debajo, roba 2 cartas.",
+      },
+    ],
+  },
 };

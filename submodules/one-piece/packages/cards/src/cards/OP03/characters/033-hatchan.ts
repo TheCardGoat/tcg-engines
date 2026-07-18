@@ -23,10 +23,10 @@ export const op03Hatchan033: CharacterCard = {
   cost: 4,
   power: 4000,
   counter: 2000,
-  trigger: "If your Leader has the [East Blue] type, play this card.",
+  trigger: "If your Leader has the {East Blue} type, play this card.",
   traits: ["Fish-Man Arlong Pirates East Blue"],
   attribute: "slash",
-  effect: "[Trigger] If your Leader has the [East Blue] type, play this card.",
+  effect: "[Trigger] If your Leader has the {East Blue} type, play this card.",
   effects: {
     effects: [
       {
@@ -35,20 +35,10 @@ export const op03Hatchan033: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "East Blue",
+            match: "includes",
           },
         ],
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-          },
-        ],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   },

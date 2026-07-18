@@ -50,4 +50,17 @@ export const redMoonRitualI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ritual de la Luna Roja",
+    text: [
+      {
+        title: "Cantar juntos 7",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 7 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title: "Desterrar al personaje elegido.",
+      },
+    ],
+  },
 };

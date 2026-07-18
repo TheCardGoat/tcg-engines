@@ -73,4 +73,22 @@ export const mauiHalfsharkI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Maui",
+    version: "Medio tiburón",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "¡CHEEEEEOHOOOO!",
+        description:
+          "Siempre que este personaje desafíe a otro personaje, puedes devolver una carta de acción de tu descarte a tu mano.",
+      },
+      {
+        title: "INDICACIÓN",
+        description: "Cada vez que juegas una acción, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

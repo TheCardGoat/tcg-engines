@@ -27,5 +27,37 @@ export const op11KurozumiOrochi085: CharacterCard = {
   attribute: "wisdom",
   effect:
     '[On Play] Add up to 1 "SMILE" type card with a cost of 5 or less from your trash to your hand.',
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        actions: [
+          {
+            action: "returnToHand",
+            target: {
+              player: "self",
+              zones: ["trash"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "SMILE",
+                  match: "includes",
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 5,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
   i18n: op11KurozumiOrochi085I18n,
 };

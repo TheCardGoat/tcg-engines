@@ -17,4 +17,8 @@ export const royalGuardBovineProtectorI18n: Record<Languages, I18nProperties> = 
     name: "Guardia Reale",
     version: "Protettore Bovino",
   },
+  es: {
+    name: "Guardia Real",
+    version: "Protector Bovino",
+  },
 };

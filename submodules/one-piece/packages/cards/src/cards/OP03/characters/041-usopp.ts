@@ -40,7 +40,7 @@ export const op03Usopp041: CharacterCard = {
     },
   ],
   effect:
-    "[Rush] (This card can attack on the turn in which it is played.) [DON!! x1] When this Character's attack deals damage to your opponent's Life, you may trash 7 cards from the top of your deck.",
+    "[Rush] (This card can attack on the turn in which it is played.)\n[DON!! x1] When this Character's attack deals damage to your opponent's Life, you may trash 7 cards from the top of your deck.",
   effects: {
     keywords: ["rush"],
     effects: [
@@ -59,6 +59,7 @@ export const op03Usopp041: CharacterCard = {
             amount: 7,
           },
         ],
+        optional: true,
       },
     ],
   },

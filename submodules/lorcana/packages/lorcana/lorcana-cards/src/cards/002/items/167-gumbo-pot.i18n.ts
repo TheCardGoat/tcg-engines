@@ -32,4 +32,13 @@ export const gumboPotI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Olla de chicle",
+    text: [
+      {
+        title: "LO MEJOR QUE HE PROBADO",
+        description: "{E}: elimina 1 daño de cada uno de hasta 2 personajes elegidos.",
+      },
+    ],
+  },
 };

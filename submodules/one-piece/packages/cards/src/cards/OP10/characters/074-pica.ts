@@ -31,6 +31,10 @@ export const op10Pica074: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "ko",
+        source: "opponentEffect",
+        eventFilter: {
+          targetSelf: true,
+        },
         replacementAction: {
           action: "rest",
           target: {

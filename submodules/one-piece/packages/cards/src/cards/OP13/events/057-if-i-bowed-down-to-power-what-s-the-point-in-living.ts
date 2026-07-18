@@ -28,26 +28,25 @@ export const op13IfIBowedDownToPowerWhatSThePointInLiving057: EventCard = {
     effects: [
       {
         trigger: "main",
-        conditions: [
-          {
-            condition: "lifeCount",
-            player: "self",
-            comparison: "lte",
-            value: 1,
-          },
-        ],
+        costs: [{ cost: "restDon", amount: 1 }],
         actions: [
           {
-            action: "cannotActivate",
+            action: "grantKeyword",
             target: {
-              player: "opponent",
-              zones: ["character"],
+              player: "self",
+              zones: ["leader"],
               count: {
-                amount: "all",
+                amount: 1,
               },
             },
-            keyword: "blocker",
+            keyword: "unblockable",
             duration: "thisTurn",
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 1,
+            },
           },
         ],
         optional: true,

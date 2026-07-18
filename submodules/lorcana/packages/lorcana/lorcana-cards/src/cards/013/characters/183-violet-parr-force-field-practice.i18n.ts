@@ -21,4 +21,9 @@ export const violetParrForceFieldPracticeI18n: Record<Languages, I18nProperties>
     version: "Che Si Allena con i Campi di Forza",
     text: "<Resistere> +1",
   },
+  es: {
+    name: "Violeta Parr",
+    version: "Práctica de campo de fuerza",
+    text: "Resistir +1",
+  },
 };

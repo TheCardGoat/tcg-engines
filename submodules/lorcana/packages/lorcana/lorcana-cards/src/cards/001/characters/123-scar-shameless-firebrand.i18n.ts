@@ -50,4 +50,18 @@ export const scarShamelessFirebrandI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cicatriz",
+    version: "Tizón descarado",
+    text: [
+      {
+        title: "Shift 6",
+      },
+      {
+        title: "DISCURSO CONmovedor",
+        description:
+          "Cuando juegues con este personaje, prepara tus personajes con un coste de 3 o menos. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

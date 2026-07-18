@@ -4,6 +4,7 @@ export const gd02CartaSGrazeRitterGroundType073: UnitCard = {
   cardNumber: "GD02-073",
   name: "Carta's Graze Ritter (Ground Type)",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "white",
   traits: ["gjallarhorn"],
   id: "GD02-073",
@@ -58,6 +59,7 @@ export const gd02CartaSGrazeRitterGroundType073: UnitCard = {
   cost: 3,
   ap: 5,
   hp: 4,
+  linkCondition: "[Carta Issue]",
   effect:
     "During your opponent's turn, the enemy Unit battling this Unit gains &lt;First Strike&gt;.<br>\n(While this Unit is attacking, it deals damage before the enemy Unit.)<br>",
   effects: [

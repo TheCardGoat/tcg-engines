@@ -82,7 +82,13 @@ export function HandZone({
   const renderCount = cards ? cards.length : cardCount;
   const [setZoneElement, zoneWidth] = useElementWidth<HTMLDivElement>();
   const layoutVariant = faceDown ? "opponent" : "player";
-  const playerLayout = computePlayerHandLayout(renderCount, zoneWidth, layoutVariant);
+  const layoutAlignment = faceDown ? "start" : "center";
+  const playerLayout = computePlayerHandLayout(
+    renderCount,
+    zoneWidth,
+    layoutVariant,
+    layoutAlignment,
+  );
   const layout = playerLayout.cards;
   const cardW = playerLayout.cardWidth;
   const variantClass = faceDown ? classes.opponent : classes.player;
@@ -128,6 +134,7 @@ export function HandZone({
       data-side={side}
       data-face-down={faceDown ? "true" : "false"}
       data-hand-layout={layoutVariant}
+      data-hand-alignment={layoutAlignment}
       data-hand-card-width={playerLayout.cardWidth}
       data-count={renderCount}
       data-drop-zone={!faceDown ? zoneName : undefined}
@@ -184,7 +191,7 @@ export function HandZone({
         const leftOffset = Math.round(x - cardW / 2);
         const positionStyle = faceDown
           ? {
-              left: `calc(50% + ${leftOffset}px)`,
+              left: layoutAlignment === "start" ? `${leftOffset}px` : `calc(50% + ${leftOffset}px)`,
               top: `${-y}px`,
             }
           : {

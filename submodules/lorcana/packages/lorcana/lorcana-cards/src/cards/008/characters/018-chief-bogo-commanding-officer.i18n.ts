@@ -45,4 +45,15 @@ export const chiefBogoCommandingOfficerI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Jefe bogo",
+    version: "Oficial al mando",
+    text: [
+      {
+        title: "ENVIANDO RESPALDO",
+        description:
+          "Durante el turno de un oponente, siempre que uno de tus personajes con Bodyguard sea desterrado, puedes revelar la carta superior de tu mazo. Si es una carta de personaje con un coste de 5 o menos, puedes jugar con ese personaje gratis. De lo contrario, colóquelo en la parte superior de su plataforma.",
+      },
+    ],
+  },
 };

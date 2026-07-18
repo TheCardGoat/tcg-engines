@@ -73,4 +73,21 @@ export const omnidroidUltimateIterationI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Omnidroide",
+    version: "Iteración definitiva",
+    text: [
+      {
+        title: "<Mayús> 6 {I}",
+      },
+      {
+        title: "<Resistir> +2",
+      },
+      {
+        title: "Retorno de la inversión",
+        description:
+          "Cuando cambias este personaje, puedes devolver todas las cartas que contiene a tu mano.",
+      },
+    ],
+  },
 };

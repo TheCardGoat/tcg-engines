@@ -45,4 +45,15 @@ export const geppettoSkilledCraftsmanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gepeto",
+    version: "Artesano experto",
+    text: [
+      {
+        title: "BUSCANDO INSPIRACIÓN",
+        description:
+          "Siempre que este personaje realice una misión, puedes elegir y descartar cualquier cantidad de cartas de objeto para obtener 1 conocimiento por cada carta de objeto descartada de esta manera.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const soBeItI18n: Record<Languages, I18nProperties> = {
     name: "Ebbene Sia!",
     text: "Ogni tuo personaggio riceve +1 {S} per questo turno. Puoi esiliare un oggetto a tua scelta.",
   },
+  es: {
+    name: "¡Que así sea!",
+    text: "Cada uno de tus personajes obtiene +1 {S} este turno. Puedes desterrar el objeto elegido.",
+  },
 };

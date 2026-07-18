@@ -58,10 +58,11 @@ export const eb03NicoRobin055: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
+        costs: [
           {
-            condition: "leaderTrait",
-            trait: "Straw Hat Crew",
+            cost: "trashLife",
+            amount: 1,
+            position: "top",
           },
         ],
         actions: [
@@ -76,6 +77,10 @@ export const eb03NicoRobin055: CharacterCard = {
               },
             },
             position: "top",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Straw Hat Crew",
+            },
           },
         ],
         optional: true,
@@ -95,6 +100,7 @@ export const eb03NicoRobin055: CharacterCard = {
             amount: 1,
           },
         ],
+        optional: true,
       },
     ],
   },

@@ -17,4 +17,8 @@ export const copperCreativeStorytellerI18n: Record<Languages, I18nProperties> = 
     name: "Toby",
     version: "Narratore Creativo",
   },
+  es: {
+    name: "Cobre",
+    version: "Narrador Creativo",
+  },
 };

@@ -31,7 +31,7 @@ export const op06Shuraiya009: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["FILM Shipbuilding Town"],
+  traits: ["FILM", "Shipbuilding Town"],
   attribute: "strike",
   artVariants: [
     {
@@ -49,7 +49,7 @@ export const op06Shuraiya009: CharacterCard = {
         trigger: "whenAttacking",
         actions: [
           {
-            action: "setPower",
+            action: "setBasePowerFrom",
             target: {
               player: "self",
               zones: ["character"],
@@ -58,17 +58,25 @@ export const op06Shuraiya009: CharacterCard = {
               },
               self: true,
             },
-            value: 0,
+            source: {
+              player: "opponent",
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+            },
             duration: "untilStartOfNextTurn",
           },
         ],
         oncePerTurn: true,
+        oncePerTurnKey:
+          "shared:whenAttacking|onBlock:this character's base power becomes the same as your opponent's leader until the start of your next turn.",
       },
       {
         trigger: "onBlock",
         actions: [
           {
-            action: "setPower",
+            action: "setBasePowerFrom",
             target: {
               player: "self",
               zones: ["character"],
@@ -77,11 +85,19 @@ export const op06Shuraiya009: CharacterCard = {
               },
               self: true,
             },
-            value: 0,
+            source: {
+              player: "opponent",
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+            },
             duration: "untilStartOfNextTurn",
           },
         ],
         oncePerTurn: true,
+        oncePerTurnKey:
+          "shared:whenAttacking|onBlock:this character's base power becomes the same as your opponent's leader until the start of your next turn.",
       },
     ],
   },

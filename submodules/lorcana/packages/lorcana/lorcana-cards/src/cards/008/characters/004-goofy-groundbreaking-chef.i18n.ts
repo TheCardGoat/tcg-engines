@@ -45,4 +45,15 @@ export const goofyGroundbreakingChefI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "Chef innovador",
+    text: [
+      {
+        title: "MUCHO PARA TODOS",
+        description:
+          "Al final de tu turno, puedes eliminar hasta 1 daño de cada uno de tus otros personajes. Prepara cada personaje al que le hayas quitado daño de esta manera.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const healingGlowI18n: Record<Languages, I18nProperties> = {
     name: "Bagliore Curativo",
     text: "Rimuovi fino a 2 danni da un personaggio a tua scelta.",
   },
+  es: {
+    name: "Resplandor curativo",
+    text: "Elimina hasta 2 daños del personaje elegido.",
+  },
 };

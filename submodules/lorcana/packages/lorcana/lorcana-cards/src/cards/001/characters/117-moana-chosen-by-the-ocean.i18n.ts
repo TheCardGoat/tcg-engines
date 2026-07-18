@@ -43,4 +43,15 @@ export const moanaChosenByTheOceanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Moana",
+    version: "Elegido por el océano",
+    text: [
+      {
+        title: "ESTO NO ES QUIEN ERES",
+        description:
+          "Cuando juegas con este personaje, puedes desterrar al personaje elegido llamado Te Kā.",
+      },
+    ],
+  },
 };

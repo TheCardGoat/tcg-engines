@@ -50,6 +50,23 @@ export const op12IceBlockPheasantPeck057: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+        ],
+        optional: true,
+      },
     ],
   },
   i18n: op12IceBlockPheasantPeck057I18n,

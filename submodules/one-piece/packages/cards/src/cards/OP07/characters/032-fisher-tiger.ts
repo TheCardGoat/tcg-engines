@@ -39,10 +39,12 @@ export const op07FisherTiger032: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Fish-Man",
+                match: "includes",
               },
               {
                 condition: "leaderTrait",
                 trait: "Merfolk",
+                match: "includes",
               },
             ],
           },
@@ -65,6 +67,23 @@ export const op07FisherTiger032: CharacterCard = {
                 },
               ],
             },
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            keyword: "rushCharacter",
+            duration: "permanent",
           },
         ],
       },

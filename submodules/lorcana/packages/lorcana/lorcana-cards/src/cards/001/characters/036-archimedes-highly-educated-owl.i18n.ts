@@ -17,4 +17,8 @@ export const archimedesHighlyEducatedOwlI18n: Record<Languages, I18nProperties> 
     name: "Archimedes",
     version: "Highly Educated Owl",
   },
+  es: {
+    name: "Arquímedes",
+    version: "Búho altamente educado",
+  },
 };

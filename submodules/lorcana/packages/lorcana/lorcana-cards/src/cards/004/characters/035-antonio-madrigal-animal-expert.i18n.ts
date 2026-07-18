@@ -17,4 +17,8 @@ export const antonioMadrigalAnimalExpertI18n: Record<Languages, I18nProperties> 
     name: "Antonio Madrigal",
     version: "Esperto di Animali",
   },
+  es: {
+    name: "Antonio Madrigal",
+    version: "Experto en animales",
+  },
 };

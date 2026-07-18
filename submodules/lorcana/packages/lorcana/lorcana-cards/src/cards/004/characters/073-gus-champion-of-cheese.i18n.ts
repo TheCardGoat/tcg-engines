@@ -17,4 +17,8 @@ export const gusChampionOfCheeseI18n: Record<Languages, I18nProperties> = {
     name: "Gas-Gas",
     version: "Campione del Formaggio",
   },
+  es: {
+    name: "Gus",
+    version: "Campeón del queso",
+  },
 };

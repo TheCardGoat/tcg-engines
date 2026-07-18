@@ -53,4 +53,17 @@ export const iagoGiantSpectralParrotI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yago",
+    version: "Loro espectral gigante",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "Desaparecer",
+        description: "(Cuando un oponente elige este personaje para una acción, destierralo).",
+      },
+    ],
+  },
 };

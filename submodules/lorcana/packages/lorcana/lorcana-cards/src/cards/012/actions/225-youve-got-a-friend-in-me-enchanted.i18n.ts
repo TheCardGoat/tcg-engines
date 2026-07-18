@@ -17,4 +17,8 @@ export const youveGotAFriendInMeEnchantedI18n: Record<Languages, I18nProperties>
     name: "Hai Un Amico In Me",
     text: "Guarda le prime 4 carte del tuo mazzo. Puoi rivelare fino a 2 carte personaggio Giocattolo e aggiungerle alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
   },
+  es: {
+    name: "Tienes un amigo en mí",
+    text: "Mira las 4 primeras cartas de tu mazo. Puedes revelar hasta 2 cartas de personaje de juguete y ponerlas en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+  },
 };

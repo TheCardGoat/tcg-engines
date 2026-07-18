@@ -21,4 +21,9 @@ export const minnieMouseStylishSurferI18n: Record<Languages, I18nProperties> = {
     version: "Stylish Surfer",
     text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Surfista con estilo",
+    text: "Evasivo",
+  },
 };

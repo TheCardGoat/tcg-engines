@@ -52,4 +52,16 @@ export const wendyDarlingAuthorityOnPeterPanI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Wendy querida",
+    version: "Autoridad sobre Peter Pan",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "Apoyo",
+      },
+    ],
+  },
 };

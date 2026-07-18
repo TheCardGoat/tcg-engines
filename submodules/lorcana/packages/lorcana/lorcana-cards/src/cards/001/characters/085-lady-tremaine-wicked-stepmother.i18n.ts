@@ -45,4 +45,15 @@ export const ladyTremaineWickedStepmotherI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Señora tremaine",
+    version: "Madrastra malvada",
+    text: [
+      {
+        title: "¡HAZLO DE NUEVO!",
+        description:
+          "Cuando juegas con este personaje, puedes devolver una carta de acción de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

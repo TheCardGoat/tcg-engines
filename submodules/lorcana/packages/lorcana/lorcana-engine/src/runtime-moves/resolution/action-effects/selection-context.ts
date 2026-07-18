@@ -742,11 +742,6 @@ function buildSearchDeckSelectionContext(
   const currentSelection = normalizeCurrentSelection(args.resolutionInput);
   const currentTargets = currentSelection.targets ?? [];
 
-  // If target already provided, no selection needed
-  if (currentTargets.length > 0) {
-    return undefined;
-  }
-
   const deckCards = args.ctx.framework.zones.getCards({
     zone: "deck",
     playerId: args.cardPlayed.playerId,
@@ -759,6 +754,14 @@ function buildSearchDeckSelectionContext(
       effectRecord as unknown as SearchDeckEffect,
     ),
   );
+
+  // Trigger payloads can carry an unrelated subject in `targets` (for example,
+  // the song that caused Antonio to trigger). Only a target that is actually a
+  // legal deck-search candidate satisfies this selection.
+  const candidateSet = new Set(candidates);
+  if (currentTargets.some((targetId) => candidateSet.has(targetId as CardInstanceId))) {
+    return undefined;
+  }
 
   // 0 or 1 candidate: auto-resolve (no selection needed)
   if (candidates.length <= 1) {
@@ -1421,6 +1424,14 @@ function buildPlayCardSelectionContext(
     canDeclineSelection?: boolean;
   },
 ): TargetResolutionSelectionContext | undefined {
+  // Revealed cards are already identified by eventSnapshot.revealedCardIds.
+  // Building the ordinary hand picker here replaces that deterministic source
+  // with unrelated hand candidates (Dash Parr - Super Fast), and selecting one
+  // of those candidates then resolves to no playable revealed card.
+  if (effectRecord.from === "revealed") {
+    return undefined;
+  }
+
   const sourceZones = getPlayableSourceZones(effectRecord.from);
   const isContextDependent = isContextDependentPlayCardFilter(effectRecord.filter);
 
@@ -1662,6 +1673,25 @@ function buildImmediateSelectionContext(
       : undefined;
   }
 
+  // `for-each-opponent` is an execution wrapper, not a selection step. Inspect
+  // its child so cross-chooser decisions can defer their prompt to the opponent
+  // instead of projecting the child's targets onto the controller's bag entry.
+  if (effectRecord.type === "for-each-opponent") {
+    if (!effectRecord.effect) {
+      return undefined;
+    }
+
+    const childContext = buildImmediateSelectionContext({
+      ...args,
+      effect: effectRecord.effect,
+    });
+    if (args.origin === "bag" && childContext?.chooserId !== args.chooserId) {
+      return undefined;
+    }
+
+    return childContext;
+  }
+
   // Optional "you may": when the inner effect's first prompt is already target-selection
   // (e.g. search-deck), merge into one context with originatesFromOptional instead of
   // optional-selection. Inner prompts that are not target-selection (name-a-card, choice,
@@ -1688,6 +1718,14 @@ function buildImmediateSelectionContext(
       effectRecord,
       args.resolutionInput,
     );
+    // A bag belongs to the triggered ability's controller. When an optional
+    // explicitly belongs to another player, the controller submits a plain
+    // resolveBag and runtime suspends into an opponent-owned pending effect.
+    // Projecting target metadata here would incorrectly ask the controller to
+    // make the opponent's choice.
+    if (args.origin === "bag" && chooserId !== args.chooserId) {
+      return undefined;
+    }
     if (typeof args.resolutionInput.resolveOptional !== "boolean") {
       const immediateContext = effectRecord.effect
         ? buildImmediateSelectionContext({
@@ -1706,6 +1744,7 @@ function buildImmediateSelectionContext(
             immediateContext.autoResolvedSlots.length > 0)) &&
         (args.origin !== "bag" ||
           (immediateContext.targetDsl as unknown[]).length > 0 ||
+          immediateContext.allowedZones.includes("deck") ||
           (immediateContext.playCardEntryModeCandidateIds?.length ?? 0) > 0)
       ) {
         return {

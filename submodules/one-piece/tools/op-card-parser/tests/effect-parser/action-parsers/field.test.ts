@@ -6,6 +6,55 @@ import {
 } from "../../../src/effect-parser/index.ts";
 
 describe("parseActions — RestAction", () => {
+  test("parses a Fish-Man Island or named Shirahoshi Leader replacement payment", () => {
+    const result = parseActions(
+      "You may rest 1 of your [Fish-Man Island] or your [Shirahoshi] Leader instead.",
+    );
+
+    expect(result).toEqual({
+      parsed: [
+        {
+          action: "rest",
+          target: {
+            player: "self",
+            zones: ["leader"],
+            count: { amount: 1 },
+            filters: [
+              {
+                filter: "anyOf",
+                filters: [
+                  { filter: "trait", value: "Fish-Man Island", match: "includes" },
+                  { filter: "name", value: "Shirahoshi" },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+      unparsed: "",
+    });
+  });
+
+  test("plays a different-color Character after a returned Character", () => {
+    const result = parseActions(
+      "play up to 1 Character card with a cost of 2 or less from your hand that is a different color than the returned Character",
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "play",
+        source: { player: "self", zone: "hand" },
+        count: { amount: 1, upTo: true },
+        filters: [
+          { filter: "cost", comparison: "lte", value: 2 },
+          { filter: "cardCategory", value: "character" },
+        ],
+        differentColorFromPreviousCharacter: true,
+      },
+    ]);
+  });
+
   test("parses 'Rest up to 1 of your opponent's Characters'", () => {
     const result = parseActions("Rest up to 1 of your opponent's Characters");
     expect(result.parsed).toEqual([
@@ -89,6 +138,35 @@ describe("parseActions — RestAction", () => {
   });
 
   describe("real card integration", () => {
+    test("OP14-084 preserves filters on both compound trash-play actions", () => {
+      const result = parseActions(
+        'play up to 1 Character card with a type including "Baroque Works" and a cost of 4 or less and up to 1 Character card with a type including "Baroque Works" and a cost of 1 from your trash',
+      );
+      expect(result.parsed).toEqual([
+        {
+          action: "play",
+          source: { player: "self", zone: "trash" },
+          count: { amount: 1, upTo: true },
+          filters: [
+            { filter: "cost", comparison: "lte", value: 4 },
+            { filter: "trait", value: "Baroque Works", match: "includes" },
+            { filter: "cardCategory", value: "character" },
+          ],
+        },
+        {
+          action: "play",
+          source: { player: "self", zone: "trash" },
+          count: { amount: 1, upTo: true },
+          filters: [
+            { filter: "cost", comparison: "eq", value: 1 },
+            { filter: "trait", value: "Baroque Works", match: "includes" },
+            { filter: "cardCategory", value: "character" },
+          ],
+        },
+      ]);
+      expect(result.unparsed).toBe("");
+    });
+
     test("OP01-033 Izo: '[On Play] Rest up to 1 ... cost of 4 or less'", () => {
       const parsed = parseEffectText(
         "[On Play] Rest up to 1 of your opponent's Characters with a cost of 4 or less.",
@@ -389,9 +467,13 @@ describe("parseActions — KoAction", () => {
       expect(seg.triggers).toEqual(["onPlay"]);
       expect(seg.costs).toEqual([{ type: "returnDon", amount: 1 }]);
       const actions = parseActions(seg.rawActionText);
-      // "If you have..." prefix prevents K.O. from parsing as standalone
-      // The K.O. clause is inside a conditional
-      expect(actions.unparsed).toContain("K.O.");
+      expect(actions.parsed[0]).toMatchObject({
+        action: "ko",
+        target: {
+          filters: [{ filter: "basePower", comparison: "lte", value: 6000 }],
+        },
+      });
+      expect(actions.unparsed).toBe("");
     });
 
     test("EB01-037 Mr.9: K.O. after cost prefix", () => {
@@ -430,14 +512,20 @@ describe("parseActions — KoAction", () => {
       const seg = parsed.segments[0]!;
       expect(seg.triggers).toEqual(["onKo"]);
       const actions = parseActions(seg.rawActionText);
-      // "If your Leader's type..." prefix blocks parsing, but k.o. clause is after "and"
-      expect(actions.parsed[0]).toMatchObject({
+      expect(actions.parsed[0]).toEqual({
+        action: "draw",
+        player: "self",
+        amount: 1,
+        condition: { condition: "leaderTrait", trait: "Baroque Works", match: "includes" },
+      });
+      expect(actions.parsed[1]).toMatchObject({
         action: "ko",
         target: {
           zones: ["stage"],
           filters: [{ filter: "cost", comparison: "eq", value: 1 }],
         },
       });
+      expect(actions.unparsed).toBe("");
     });
 
     test("compound: K.O. and draw", () => {
@@ -550,18 +638,27 @@ describe("parseActions — PlayAction", () => {
     test("Play this card", () => {
       const result = parseActions("Play this card");
       expect(result.parsed).toHaveLength(1);
-      expect(result.parsed[0]).toEqual({
-        action: "play",
-        source: { player: "self", zone: "hand" },
-        count: { amount: 1 },
-      });
+      expect(result.parsed[0]).toEqual({ action: "playThisCard" });
       expect(result.unparsed).toBe("");
     });
 
     test("play this card (lowercase)", () => {
       const result = parseActions("play this card");
       expect(result.parsed).toHaveLength(1);
-      expect(result.parsed[0]).toMatchObject({ action: "play" });
+      expect(result.parsed[0]).toEqual({ action: "playThisCard" });
+    });
+
+    test("Play this Character card from trash remains an explicit-source play", () => {
+      const result = parseActions("Play this Character card from your trash");
+      expect(result.parsed).toEqual([
+        {
+          action: "play",
+          source: { player: "self", zone: "trash" },
+          count: { amount: 1 },
+          self: true,
+        },
+      ]);
+      expect(result.unparsed).toBe("");
     });
 
     test("Play up to 1 Character card from your hand", () => {
@@ -657,6 +754,31 @@ describe("parseActions — PlayAction", () => {
         ],
       });
     });
+
+    test("Play one of several named cards with an exact cost", () => {
+      const result = parseActions(
+        "Play up to 1 [Sabo], [Portgas.D.Ace], or [Monkey.D.Luffy] with a cost of 2 from your hand or trash",
+      );
+      expect(result.parsed).toEqual([
+        {
+          action: "play",
+          source: { player: "self", zone: ["hand", "trash"] },
+          count: { amount: 1, upTo: true },
+          filters: [
+            { filter: "cost", comparison: "eq", value: 2 },
+            {
+              filter: "anyOf",
+              filters: [
+                { filter: "name", value: "Sabo" },
+                { filter: "name", value: "Portgas.D.Ace" },
+                { filter: "name", value: "Monkey.D.Luffy" },
+              ],
+            },
+          ],
+        },
+      ]);
+      expect(result.unparsed).toBe("");
+    });
   });
 
   describe("trait filters", () => {
@@ -669,7 +791,7 @@ describe("parseActions — PlayAction", () => {
         action: "play",
         filters: [
           { filter: "cost", comparison: "lte", value: 3 },
-          { filter: "trait", value: "Baroque Works" },
+          { filter: "trait", value: "Baroque Works", match: "includes" },
           { filter: "cardCategory", value: "character" },
         ],
       });
@@ -683,8 +805,13 @@ describe("parseActions — PlayAction", () => {
       const play = result.parsed[0]!;
       expect(play).toMatchObject({ action: "play" });
       const filters = (play as { filters: unknown[] }).filters;
-      expect(filters).toContainEqual({ filter: "trait", value: "FILM" });
-      expect(filters).toContainEqual({ filter: "trait", value: "Straw Hat Crew" });
+      expect(filters).toContainEqual({
+        filter: "anyOf",
+        filters: [
+          { filter: "trait", value: "FILM", match: "includes" },
+          { filter: "trait", value: "Straw Hat Crew", match: "includes" },
+        ],
+      });
       expect(filters).toContainEqual({ filter: "cardCategory", value: "character" });
       expect(filters).toContainEqual({ filter: "cost", comparison: "lte", value: 2 });
     });
@@ -695,8 +822,13 @@ describe("parseActions — PlayAction", () => {
       );
       expect(result.parsed).toHaveLength(1);
       const filters = (result.parsed[0] as { filters: unknown[] }).filters;
-      expect(filters).toContainEqual({ filter: "trait", value: "Fish-Man" });
-      expect(filters).toContainEqual({ filter: "trait", value: "Merfolk" });
+      expect(filters).toContainEqual({
+        filter: "anyOf",
+        filters: [
+          { filter: "trait", value: "Fish-Man", match: "includes" },
+          { filter: "trait", value: "Merfolk", match: "includes" },
+        ],
+      });
     });
   });
 
@@ -774,7 +906,7 @@ describe("parseActions — PlayAction", () => {
         filters: [
           { filter: "excludeName", value: "Daifugo" },
           { filter: "cost", comparison: "lte", value: 3 },
-          { filter: "trait", value: "SMILE" },
+          { filter: "trait", value: "SMILE", match: "includes" },
           { filter: "cardCategory", value: "character" },
         ],
       });
@@ -782,6 +914,21 @@ describe("parseActions — PlayAction", () => {
   });
 
   describe("special filters", () => {
+    test("Play with a minimum cost capped by the opponent's DON!! field", () => {
+      const result = parseActions(
+        "Play up to 1 [Charlotte Katakuri] from your hand with a cost of 3 or more that is equal to or less than the number of DON!! cards on your opponent's field",
+      );
+      expect(result.parsed).toHaveLength(1);
+      expect(result.parsed[0]).toMatchObject({
+        action: "play",
+        filters: [
+          { filter: "cost", comparison: "gte", value: 3 },
+          { filter: "dynamicCost", comparison: "lte", source: "opponentDonCount" },
+          { filter: "name", value: "Charlotte Katakuri" },
+        ],
+      });
+    });
+
     test("Play with 'no base effect'", () => {
       const result = parseActions(
         "play up to 1 Character card with 6000 power or less and no base effect from your hand",
@@ -791,7 +938,7 @@ describe("parseActions — PlayAction", () => {
         action: "play",
       });
       const filters = (result.parsed[0] as { filters: unknown[] }).filters;
-      expect(filters).toContainEqual({ filter: "hasEffectType", value: "onPlay", negate: true });
+      expect(filters).toContainEqual({ filter: "noBaseEffect" });
       expect(filters).toContainEqual({ filter: "power", comparison: "lte", value: 6000 });
       expect(filters).toContainEqual({ filter: "cardCategory", value: "character" });
     });
@@ -817,6 +964,38 @@ describe("parseActions — PlayAction", () => {
         filters: [{ filter: "name", value: "Ice Oni" }],
       });
     });
+  });
+
+  test("parses Gecko Moria's two cards as one grouped play", () => {
+    const result = parseActions(
+      "Choose up to 1 Character card with a cost of 4 or less and up to 1 Character card with a cost of 2 or less from your trash. Play 1 card and play the other card rested.",
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "playGrouped",
+        source: { player: "self", zone: "trash" },
+        groups: [
+          {
+            count: { amount: 1, upTo: true },
+            filters: [
+              { filter: "cost", comparison: "lte", value: 4 },
+              { filter: "cardCategory", value: "character" },
+            ],
+          },
+          {
+            count: { amount: 1, upTo: true },
+            filters: [
+              { filter: "cost", comparison: "lte", value: 2 },
+              { filter: "cardCategory", value: "character" },
+            ],
+          },
+        ],
+        playStates: { single: "active", multiple: ["active", "rested"] },
+        chooseOnPlayOrder: true,
+      },
+    ]);
   });
 
   describe("skips unsupported patterns", () => {
@@ -867,7 +1046,7 @@ describe("parseActions — PlayAction", () => {
         action: "play",
         filters: [
           { filter: "cost", comparison: "lte", value: 2 },
-          { filter: "trait", value: "Donquixote Pirates" },
+          { filter: "trait", value: "Donquixote Pirates", match: "includes" },
           { filter: "cardCategory", value: "character" },
         ],
       });
@@ -886,7 +1065,7 @@ describe("parseActions — PlayAction", () => {
         filters: [
           { filter: "excludeName", value: "Scarlet" },
           { filter: "cost", comparison: "lte", value: 3 },
-          { filter: "trait", value: "Dressrosa" },
+          { filter: "trait", value: "Dressrosa", match: "includes" },
           { filter: "cardCategory", value: "character" },
         ],
       });
@@ -970,8 +1149,13 @@ describe("parseActions — play from hand or trash", () => {
 describe("trashThisCard action", () => {
   test("trash this Character as standalone action with end of turn timing", () => {
     const result = parseActions("trash this Character at the end of this turn");
-    expect(result.parsed).toHaveLength(1);
-    expect(result.parsed[0]).toMatchObject({ action: "trashThisCard" });
+    expect(result.parsed).toEqual([
+      {
+        action: "delayed",
+        timing: "endOfThisTurn",
+        actions: [{ action: "trashThisCard" }],
+      },
+    ]);
     expect(result.unparsed).toBe("");
   });
 

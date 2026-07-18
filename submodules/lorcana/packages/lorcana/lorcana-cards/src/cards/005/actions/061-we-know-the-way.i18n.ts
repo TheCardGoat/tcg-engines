@@ -35,4 +35,8 @@ export const weKnowTheWayI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Conocemos el camino",
+    text: "Baraja la carta elegida de tu descarte en tu mazo. Revela la carta superior de tu mazo. Si tiene el mismo nombre que la carta elegida, podrás jugar la carta revelada gratis. De lo contrario, ponlo en tu mano.",
+  },
 };

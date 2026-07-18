@@ -71,4 +71,21 @@ export const pocahontasMeekoAdventurousFriendsEnchantedI18n: Record<Languages, I
       },
     ],
   },
+  es: {
+    name: "Pocahontas y Meeko",
+    version: "Amigos aventureros",
+    text: [
+      {
+        title: "Shift 2 {I}",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "BIENVENIDO REGRESO",
+        description:
+          "Siempre que este personaje realice una misión, puedes devolver tu personaje elegido con un costo de 1 a tu mano. Si lo haces, podrás interpretar un personaje con coste 1 de forma gratuita.",
+      },
+    ],
+  },
 };

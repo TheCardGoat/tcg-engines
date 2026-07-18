@@ -60,4 +60,18 @@ export const trampDapperRascalI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Vagabundo",
+    version: "Bribón apuesto",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "APACIGUARSE",
+        description:
+          "Durante el turno de un oponente, siempre que uno de tus personajes sea desterrado, puedes robar una carta.",
+      },
+    ],
+  },
 };

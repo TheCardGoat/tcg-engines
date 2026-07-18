@@ -42,6 +42,31 @@ export const op05DragonClaw095: EventCard = {
             value: 4000,
             duration: "thisBattle",
           },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+              ],
+            },
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "trash",
+              comparison: "gte",
+              value: 15,
+            },
+          },
         ],
       },
     ],

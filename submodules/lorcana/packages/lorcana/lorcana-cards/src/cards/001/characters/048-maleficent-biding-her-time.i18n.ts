@@ -17,4 +17,8 @@ export const maleficentBidingHerTimeI18n: Record<Languages, I18nProperties> = {
     name: "Maleficent",
     version: "Biding Her Time",
   },
+  es: {
+    name: "Pernicioso",
+    version: "Esperando su momento",
+  },
 };

@@ -60,4 +60,18 @@ export const almaMadrigalKeeperOfTheFlameI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Alma Madrigal",
+    version: "Guardián de la llama",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "ES SUFICIENTE",
+        description:
+          "Siempre que elimines 1 o más daños de uno de tus personajes, podrás ejercer el personaje contrario elegido.",
+      },
+    ],
+  },
 };

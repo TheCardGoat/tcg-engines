@@ -45,4 +45,15 @@ export const julietaMadrigalExcellentCookI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Julieta Madrigal",
+    version: "Excelente cocinero",
+    text: [
+      {
+        title: "RECETA FIRMA",
+        description:
+          "Cuando juegas con este personaje, puedes eliminar hasta 2 daños del personaje elegido. Si eliminaste el daño de esta manera, puedes robar una carta.",
+      },
+    ],
+  },
 };

@@ -39,4 +39,14 @@ export const ursulasShellNecklaceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Collar de conchas de Úrsula",
+    text: [
+      {
+        title: "¡Ahora canta!",
+        description:
+          "Cada vez que reproduces una canción, puedes pagar 1 {I} para robar una carta.",
+      },
+    ],
+  },
 };

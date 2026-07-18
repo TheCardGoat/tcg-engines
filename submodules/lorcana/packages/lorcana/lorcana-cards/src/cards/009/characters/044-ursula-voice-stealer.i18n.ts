@@ -45,4 +45,15 @@ export const ursulaVoiceStealerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Úrsula",
+    version: "Ladrón de voz",
+    text: [
+      {
+        title: "CANTA PARA MI",
+        description:
+          "Cuando juegues con este personaje, utiliza el personaje listo del oponente elegido. Luego, puedes reproducir una canción con un costo igual o menor que el costo del personaje ejercido de forma gratuita.",
+      },
+    ],
+  },
 };

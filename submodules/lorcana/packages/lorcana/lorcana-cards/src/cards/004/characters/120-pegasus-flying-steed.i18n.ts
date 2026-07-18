@@ -21,4 +21,9 @@ export const pegasusFlyingSteedI18n: Record<Languages, I18nProperties> = {
     version: "Destriero Volante",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Pegaso",
+    version: "Corcel volador",
+    text: "Evasivo",
+  },
 };

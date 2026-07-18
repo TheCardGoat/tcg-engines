@@ -39,4 +39,13 @@ export const fishboneQuillI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pluma de espina de pescado",
+    text: [
+      {
+        title: "ADELANTE Y FIRME",
+        description: "{E}: coloca cualquier carta de tu mano en el tintero boca abajo.",
+      },
+    ],
+  },
 };

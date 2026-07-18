@@ -5,6 +5,7 @@ export const gd02KikerogaMaModeGq033: UnitCard = {
   name: "Kikeroga (MA Mode) (GQ)",
   type: "unit",
   color: "green",
+  battlefieldZones: ["space"],
   traits: ["zeon"],
   id: "GD02-033",
   canonicalId: "GD02-033",
@@ -41,6 +42,7 @@ export const gd02KikerogaMaModeGq033: UnitCard = {
   cost: 4,
   ap: 3,
   hp: 4,
+  linkCondition: "[Challia Bull]",
   effect:
     "While another friendly (Zeon) Link Unit is in play, this Unit gains &lt;Breach 5&gt;.<br>\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)<br>",
   effects: [

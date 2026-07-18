@@ -60,4 +60,18 @@ export const gastonIntellectualPowerhouseI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Gastón",
+    version: "Potencia intelectual",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "CEREBRO DESARROLLADO",
+        description:
+          "Cuando juegues con este personaje, mira las 3 primeras cartas de tu mazo. Puedes poner uno en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

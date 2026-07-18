@@ -45,4 +45,15 @@ export const iagoOutOfReachI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yago",
+    version: "Fuera de alcance",
+    text: [
+      {
+        title: "AUTOCONSERVACIÓN",
+        description:
+          "Mientras tengas otro personaje ejercido en juego, este personaje no puede ser desafiado.",
+      },
+    ],
+  },
 };

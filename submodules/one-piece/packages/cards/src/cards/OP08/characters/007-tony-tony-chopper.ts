@@ -65,12 +65,23 @@ export const op08TonyTonyChopper007: CharacterCard = {
             },
             revealFilters: [
               {
+                filter: "power",
+                comparison: "lte",
+                value: 4000,
+              },
+              {
                 filter: "trait",
                 value: "Animal",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
               },
             ],
             revealDestination: "character",
             remainderPosition: "bottom",
+            playState: "rested",
           },
         ],
       },
@@ -96,12 +107,23 @@ export const op08TonyTonyChopper007: CharacterCard = {
             },
             revealFilters: [
               {
+                filter: "power",
+                comparison: "lte",
+                value: 4000,
+              },
+              {
                 filter: "trait",
                 value: "Animal",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
               },
             ],
             revealDestination: "character",
             remainderPosition: "bottom",
+            playState: "rested",
           },
         ],
       },

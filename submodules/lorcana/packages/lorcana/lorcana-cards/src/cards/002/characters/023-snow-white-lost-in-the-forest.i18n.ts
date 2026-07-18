@@ -45,4 +45,15 @@ export const snowWhiteLostInTheForestI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Blanco como la nieve",
+    version: "Perdido en el bosque",
+    text: [
+      {
+        title: "NO TE HARÉ DAÑO",
+        description:
+          "Cuando juegas con este personaje, puedes eliminar hasta 2 daños del personaje elegido.",
+      },
+    ],
+  },
 };

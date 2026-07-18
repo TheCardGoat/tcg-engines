@@ -17,4 +17,8 @@ export const khanBelovedSteedI18n: Record<Languages, I18nProperties> = {
     name: "Khan",
     version: "Destriero Adorato",
   },
+  es: {
+    name: "Kan",
+    version: "Amado corcel",
+  },
 };

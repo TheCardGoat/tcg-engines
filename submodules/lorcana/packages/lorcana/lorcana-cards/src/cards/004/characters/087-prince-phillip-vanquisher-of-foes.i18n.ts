@@ -71,4 +71,21 @@ export const princePhillipVanquisherOfFoesI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Príncipe Felipe",
+    version: "Vencedor de enemigos",
+    text: [
+      {
+        title: "Shift 6",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "RÁPIDO Y SEGURO",
+        description:
+          "Cuando juegues con este personaje, destierra a todos los personajes dañados del oponente.",
+      },
+    ],
+  },
 };

@@ -25,6 +25,5 @@ export const op01Vergo065: CharacterCard = {
   counter: 1000,
   traits: ["Donquixote Pirates Navy Punk Hazard"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op01Vergo065I18n,
 };

@@ -5,6 +5,7 @@ export const gd02Tallgeese005: UnitCard = {
   name: "Tallgeese",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space", "earth"],
   traits: ["oz"],
   id: "GD02-005",
   canonicalId: "GD02-005",
@@ -58,6 +59,7 @@ export const gd02Tallgeese005: UnitCard = {
   cost: 3,
   ap: 3,
   hp: 4,
+  linkCondition: "(OZ) Trait",
   effect: "【During Link】【Attack】Choose 1 enemy Unit with 2 or less HP. Rest it.<br>",
   effects: [
     {

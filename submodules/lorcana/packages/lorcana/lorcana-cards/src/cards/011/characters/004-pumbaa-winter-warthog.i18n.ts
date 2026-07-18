@@ -43,4 +43,14 @@ export const pumbaaWinterWarthogI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pumba",
+    version: "Jabalí de invierno",
+    text: [
+      {
+        title: "SACUDE LAS COSAS",
+        description: "Cuando juegas con este personaje, cada oponente elige y descarta una carta.",
+      },
+    ],
+  },
 };

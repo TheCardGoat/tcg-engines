@@ -50,7 +50,7 @@ export const op04Pound110: CharacterCard = {
                 },
               ],
             },
-            position: "top",
+            position: "choice",
             faceUp: true,
           },
         ],

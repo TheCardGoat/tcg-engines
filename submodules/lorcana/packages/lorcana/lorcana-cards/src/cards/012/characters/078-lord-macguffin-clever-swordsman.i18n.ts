@@ -45,4 +45,15 @@ export const lordMacguffinCleverSwordsmanI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Señor MacGuffin",
+    version: "Espadachín inteligente",
+    text: [
+      {
+        title: "ESPÉRALA...",
+        description:
+          "Este personaje puede entrar en juego esforzado para causar 3 daños al personaje dañado elegido.",
+      },
+    ],
+  },
 };

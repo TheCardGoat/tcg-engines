@@ -17,4 +17,8 @@ export const moanaDeterminedExplorerI18n: Record<Languages, I18nProperties> = {
     name: "Vaiana",
     version: "Esploratrice Determinata",
   },
+  es: {
+    name: "Moana",
+    version: "Explorador decidido",
+  },
 };

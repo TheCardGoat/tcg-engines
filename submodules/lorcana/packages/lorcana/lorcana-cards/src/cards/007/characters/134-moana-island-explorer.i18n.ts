@@ -57,4 +57,18 @@ export const moanaIslandExplorerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Moana",
+    version: "Explorador de la isla",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "ESPÍRITU AVENTURADOR",
+        description:
+          "Cada vez que este personaje desafía a otro personaje, otro personaje tuyo elegido obtiene +3 {S} este turno.",
+      },
+    ],
+  },
 };

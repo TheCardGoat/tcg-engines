@@ -58,4 +58,18 @@ export const theHornedKingWickedRulerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El rey cornudo",
+    version: "Gobernante malvado",
+    text: [
+      {
+        title: "Shift 2 {I}",
+      },
+      {
+        title: "¡SURGIR!",
+        description:
+          "Siempre que uno de tus otros personajes sea desterrado en un desafío, puedes devolver esa carta a tu mano, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

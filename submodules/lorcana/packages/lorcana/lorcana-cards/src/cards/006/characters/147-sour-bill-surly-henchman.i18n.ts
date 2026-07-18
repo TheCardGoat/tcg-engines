@@ -45,4 +45,15 @@ export const sourBillSurlyHenchmanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Factura agria",
+    version: "Secuaz hosco",
+    text: [
+      {
+        title: "IMPALABLE",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido obtiene -2 {S} este turno.",
+      },
+    ],
+  },
 };

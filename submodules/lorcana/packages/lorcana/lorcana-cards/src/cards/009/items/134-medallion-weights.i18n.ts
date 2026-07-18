@@ -41,4 +41,14 @@ export const medallionWeightsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pesos de medallón",
+    text: [
+      {
+        title: "DISCIPLINA Y FORTALEZA",
+        description:
+          "{E}, 2 {I}: el personaje elegido obtiene +2 {S} este turno. Siempre que desafíen a otro personaje este turno, puedes robar una carta.",
+      },
+    ],
+  },
 };

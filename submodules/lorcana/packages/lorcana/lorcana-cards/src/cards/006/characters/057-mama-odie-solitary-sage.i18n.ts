@@ -45,4 +45,15 @@ export const mamaOdieSolitarySageI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mamá odie",
+    version: "Sabio solitario",
+    text: [
+      {
+        title: "TENGO QUE HACER TODO POR AQUÍ",
+        description:
+          "Cada vez que tocas una canción, puedes mover hasta 2 contadores de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

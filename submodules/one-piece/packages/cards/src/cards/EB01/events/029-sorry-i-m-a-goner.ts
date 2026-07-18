@@ -30,10 +30,31 @@ export const eb01SorryIMAGoner029: EventCard = {
         trigger: "counter",
         actions: [
           {
-            action: "rearrangeDeck",
+            action: "revealTopDeckCard",
             player: "self",
-            count: 1,
-            position: "top",
+            conditional: {
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 4,
+                },
+              ],
+              actions: [
+                {
+                  action: "returnToHand",
+                  target: {
+                    player: "self",
+                    zones: ["character"],
+                    count: {
+                      amount: 1,
+                      upTo: true,
+                    },
+                  },
+                },
+              ],
+            },
+            finalPosition: "bottom",
           },
         ],
       },
@@ -43,7 +64,7 @@ export const eb01SorryIMAGoner029: EventCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

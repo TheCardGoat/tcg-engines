@@ -70,6 +70,7 @@ export const op02Buggy058: CharacterCard = {
               {
                 filter: "trait",
                 value: "Impel Down",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

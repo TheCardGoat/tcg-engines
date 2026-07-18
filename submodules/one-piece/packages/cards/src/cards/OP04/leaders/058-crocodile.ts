@@ -45,6 +45,9 @@ export const op04Crocodile058: LeaderCard = {
     effects: [
       {
         trigger: "whenDonReturned",
+        eventFilter: {
+          causedBy: "self",
+        },
         conditions: [
           {
             condition: "turn",

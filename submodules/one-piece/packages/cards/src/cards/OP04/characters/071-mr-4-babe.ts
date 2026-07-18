@@ -65,6 +65,7 @@ export const op04Mr4Babe071: CharacterCard = {
             duration: "thisBattle",
           },
         ],
+        optional: true,
       },
     ],
   },

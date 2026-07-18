@@ -46,6 +46,13 @@ export const prb02MarshallDTeachSt17005PirateFoil005: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnHandToDeck",
+            amount: 1,
+            position: "top",
+          },
+        ],
         actions: [
           {
             action: "giveDon",

@@ -64,4 +64,20 @@ export const kristoffIcyExplorerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kristoff",
+    version: "Explorador helado",
+    text: [
+      {
+        title: "PROFUNDIDADES OCULTAS",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje llamado Anna en juego, puedes poner una carta del descarte del jugador elegido en la parte inferior de su mazo.",
+      },
+      {
+        title: "GOLPE DE SUERTE",
+        description:
+          "Una vez durante tu turno, cada vez que una carta salga de tu descarte, roba una carta.",
+      },
+    ],
+  },
 };

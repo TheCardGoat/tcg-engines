@@ -53,4 +53,17 @@ export const magicCarpetFlyingRugI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Alfombra mágica",
+    version: "Alfombra voladora",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "ENCUENTRA EL CAMINO",
+        description: "{E}: mueve un personaje tuyo a una ubicación de forma gratuita.",
+      },
+    ],
+  },
 };

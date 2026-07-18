@@ -175,7 +175,7 @@
 .opponentCount {
   position: absolute;
   top: 8px;
-  left: 50%;
+  left: 8px;
   z-index: 220;
   display: inline-grid;
   gap: 2px;
@@ -193,7 +193,7 @@
   line-height: 1;
   text-align: center;
   clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-  transform: translateX(-50%);
+  transform: none;
   pointer-events: none;
 }
 

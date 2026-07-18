@@ -65,4 +65,20 @@ export const mickeyMouseBobCratchitEpicI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Bob Cratchit",
+    text: [
+      {
+        title: "TRABAJO DURO",
+        description:
+          "Siempre que este personaje realice una misión, coloca la carta superior de tu mazo boca abajo debajo de él.",
+      },
+      {
+        title: "UN CORAZÓN DAR",
+        description:
+          "Cuando este personaje es desterrado en un desafío, puedes colocar todas las cartas que estaban debajo de él debajo de otro personaje elegido o ubicación tuya.",
+      },
+    ],
+  },
 };

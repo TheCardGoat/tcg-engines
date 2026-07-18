@@ -46,4 +46,14 @@ export const circleOfLifeEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Círculo de la vida",
+    text: [
+      {
+        title: "Cantar juntos 8",
+        description:
+          "(Cualquier cantidad de personajes tuyos o de tus compañeros de equipo con un costo total de 8 o más puede {E} cantar esta canción gratis). Juega con un personaje de tu descarte de forma gratuita.",
+      },
+    ],
+  },
 };

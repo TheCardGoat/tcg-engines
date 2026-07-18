@@ -41,6 +41,14 @@ export const op06TheArkNoah041: StageCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+      },
     ],
   },
   i18n: op06TheArkNoah041I18n,

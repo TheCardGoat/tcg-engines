@@ -60,4 +60,18 @@ export const beastAggressiveLordI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bestia",
+    version: "Señor agresivo",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "ESO ES MIO",
+        description:
+          "Cada vez que desafía a otro personaje, si hay una carta debajo de este personaje, cada oponente pierde 1 conocimiento y tú ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

@@ -10,9 +10,9 @@ import type { ProjectedTimerView } from "../types/projection.ts";
 import type {
   CardEffect,
   CardType,
+  DamageProtectionArea,
   KeywordEffectEntry,
   TargetFilter,
-  Zone,
 } from "@tcg/gundam-types";
 import type { GundamDomainEvent } from "./events.ts";
 
@@ -100,6 +100,7 @@ export type ContinuousEffectPayload =
       unitFilter?: TargetFilter;
       damageType?: "battle" | "effect";
       sourceCardType?: CardType;
+      source?: "enemy";
     }
   | {
       kind: "damage-reduction";
@@ -110,8 +111,12 @@ export type ContinuousEffectPayload =
     }
   | { kind: "battle-damage-redirect"; redirectToId: string }
   | { kind: "prevent-destroy"; source?: "enemy" }
-  /** Prevents damage from matched units to all cards in the given zone (targetId = owning playerId) */
-  | { kind: "prevent-damage-to-zone"; zone: Zone; unitFilter: TargetFilter }
+  /** Prevents matched Units from damaging cards in the protected area (targetId = owning playerId). */
+  | {
+      kind: "prevent-damage-to-zone";
+      protectedArea: DamageProtectionArea;
+      unitFilter: TargetFilter;
+    }
   /** Forces this card to only attack targets matching attackTarget */
   | { kind: "force-attack-target"; attackTarget: TargetFilter; attackTargetId?: string }
   /** Grants this card the option to also attack targets matching attackTarget (may-choose) */
@@ -193,6 +198,12 @@ export interface PendingEffect {
   /** Card that generated the effect; undefined for engine-synthesised effects. */
   /** Card that generated the effect. Required on every pending effect. */
   sourceCardId: string;
+  /**
+   * Rules identity of the source when the effect entered the queue. A paired
+   * Pilot uses its host Unit here so delayed resolution still evaluates
+   * "this Unit" after destruction cleanup removes the Pair assignment.
+   */
+  sourceIdentityCardId?: string;
   /** Underlying CardEffect (triggered / activated / command). */
   effect: import("@tcg/gundam-types").CardEffect;
   /**
@@ -254,6 +265,12 @@ export interface PendingEffect {
    * play-time per rule 10-1-8-1-1) or by the resolveEffect move.
    */
   chosenTargets?: readonly string[];
+  /**
+   * Target answers committed through successive player-visible prompts,
+   * keyed by top-level directive index. A dependent `If you do` directive
+   * is prompted only after the preceding target choice has been committed.
+   */
+  committedTargetAnswers?: Record<number, readonly string[]>;
   /** Optional-directive decisions already committed in an earlier prompt step. */
   committedOptionalAnswers?: Record<number, boolean>;
   /**
@@ -398,11 +415,6 @@ export interface PendingDeckLookPrompt {
   randomizeRemainingToBottom: boolean;
   tutorDestination: "hand" | "battleArea";
   legalTutorCardIds: readonly string[];
-  /**
-   * Optional directive that must be accepted for this deck-look directive
-   * to execute (for "You may ... If you do, look..." effects).
-   */
-  acceptOptionalDirectiveIndex?: number;
 }
 
 // =============================================================================

@@ -45,4 +45,15 @@ export const almaMadrigalAcceptingGrandmotherI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Alma Madrigal",
+    version: "Aceptando a la abuela",
+    text: [
+      {
+        title: "EL MILAGRO ERES TÚ",
+        description:
+          "Una vez durante tu turno, cada vez que uno o más de tus personajes canten una canción, puedes preparar esos personajes.",
+      },
+    ],
+  },
 };

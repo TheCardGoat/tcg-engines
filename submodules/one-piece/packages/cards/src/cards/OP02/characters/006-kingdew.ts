@@ -25,6 +25,5 @@ export const op02Kingdew006: CharacterCard = {
   counter: 1000,
   traits: ["Whitebeard Pirates"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op02Kingdew006I18n,
 };

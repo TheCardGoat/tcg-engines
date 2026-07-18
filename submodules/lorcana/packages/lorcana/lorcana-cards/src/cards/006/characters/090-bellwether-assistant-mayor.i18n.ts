@@ -45,4 +45,15 @@ export const bellwetherAssistantMayorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Manso",
+    version: "Asistente de alcalde",
+    text: [
+      {
+        title: "EL MIEDO SIEMPRE FUNCIONA",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, el personaje contrario elegido gana Temerario durante su siguiente turno. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

@@ -39,14 +39,32 @@ export const op07Atlas098: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
+            action: "playThisCard",
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "lifeComparison",
+            selfComparison: "lt",
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
               player: "self",
-              zone: "hand",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
             },
-            count: {
-              amount: 1,
-            },
+            duration: "permanent",
+            restriction: "inBattle",
           },
         ],
       },

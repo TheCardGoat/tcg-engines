@@ -45,4 +45,15 @@ export const mrsPottsEnchantedTeapotI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora potts",
+    version: "Tetera encantada",
+    text: [
+      {
+        title: "SALDRÁ TODO BIEN",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje llamado Lumiere o Cogsworth en juego, puedes robar una carta.",
+      },
+    ],
+  },
 };

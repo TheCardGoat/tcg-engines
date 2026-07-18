@@ -42,16 +42,24 @@ export const op05WhenYouReAtSeaYouFightAgainstPirates076: EventCard = {
             },
             revealFilters: [
               {
-                filter: "trait",
-                value: "Straw Hat Crew",
-              },
-              {
-                filter: "trait",
-                value: "Kid Pirates",
-              },
-              {
-                filter: "trait",
-                value: "Heart Pirates",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Straw Hat Crew",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Kid Pirates",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Heart Pirates",
+                    match: "includes",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

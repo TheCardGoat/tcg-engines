@@ -45,4 +45,15 @@ export const castleWyvernAboveTheCloudsI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Castillo wyvern",
+    version: "Por encima de las nubes",
+    text: [
+      {
+        title: "PROTEGE ESTE CASTILLO",
+        description:
+          "Los personajes obtienen Retador +1 y Resistencia +1 mientras están aquí. (Obtienen +1 {S} mientras desafían. El daño que se les inflige se reduce en 1).",
+      },
+    ],
+  },
 };

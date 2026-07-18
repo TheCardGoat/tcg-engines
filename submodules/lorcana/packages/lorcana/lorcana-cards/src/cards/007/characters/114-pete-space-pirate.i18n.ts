@@ -60,4 +60,18 @@ export const peteSpacePirateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pete",
+    version: "Pirata espacial",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "ESQUEMA ESPANTOSO",
+        description:
+          "Mientras este personaje está esforzado, los personajes contrarios no pueden esforzarse para cantar canciones y tus personajes Piratas obtienen Resistencia +1.",
+      },
+    ],
+  },
 };

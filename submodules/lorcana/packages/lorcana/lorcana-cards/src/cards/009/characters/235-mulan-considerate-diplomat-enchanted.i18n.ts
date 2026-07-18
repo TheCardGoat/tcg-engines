@@ -45,4 +45,15 @@ export const mulanConsiderateDiplomatEnchantedI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Mulán",
+    version: "Diplomático considerado",
+    text: [
+      {
+        title: "INVITACIÓN IMPERIAL",
+        description:
+          "Siempre que este personaje realice una misión, mira las 4 cartas superiores de tu mazo. Puedes revelar una carta de personaje de Princesa y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

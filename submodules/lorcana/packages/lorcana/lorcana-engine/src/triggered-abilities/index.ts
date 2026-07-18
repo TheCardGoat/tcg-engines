@@ -330,6 +330,7 @@ const LEAVE_PLAY_EVENTS: BufferedTriggeredEvent[] = [
   "banish-in-challenge",
   "return-to-hand",
   "ink",
+  "move",
 ];
 
 function expandTriggerEvent(raw: string | undefined): BufferedTriggeredEvent[] {
@@ -521,6 +522,20 @@ function collectTriggeredCandidatesFromCard(args: {
     | undefined;
   const temporaryAbilityEntries = Object.entries(meta?.temporaryAbilities ?? {});
   const currentTurn = getCurrentTurn(ctx);
+  const grantedTriggerAbilities =
+    zone === "play"
+      ? (getOrBuildMoveRegistry(ctx).byTarget.get(sourceId) ?? [])
+          .filter(
+            (entry) =>
+              (entry.kind === "grant-ability" || entry.kind === "grant-abilities-while-here") &&
+              (entry.payload.ability as { type?: unknown } | undefined)?.type === "triggered",
+          )
+          .map((entry) => ({
+            ability: entry.payload.ability as TriggeredAbilityDefinition,
+            grantingSourceId: entry.sourceId,
+            grantingAbilityIndex: entry.abilityIndex,
+          }))
+      : [];
   // Use the full derived card projection to check for Support. The cards API now projects from
   // a plain state snapshot (no Mutative proxy overhead), so this correctly handles Support granted
   // via conditional static abilities (e.g., "characters with strength ≥ N gain Support").
@@ -529,6 +544,7 @@ function collectTriggeredCandidatesFromCard(args: {
 
   if (
     triggerAbilities.length === 0 &&
+    grantedTriggerAbilities.length === 0 &&
     temporaryAbilityEntries.length === 0 &&
     !(hasDerivedSupport && !hasPrintedSupportTriggeredAbility)
   ) {
@@ -561,6 +577,35 @@ function collectTriggeredCandidatesFromCard(args: {
       resolutionInput: {},
     });
   });
+
+  grantedTriggerAbilities.forEach(
+    ({ ability, grantingSourceId, grantingAbilityIndex }, grantedIndex) => {
+      const sourceZones = ability.sourceZones ?? ["play"];
+      if (!sourceZones.includes(zone)) {
+        return;
+      }
+
+      const abilityId =
+        ability.id ??
+        `${grantingSourceId}:granted-trigger:${grantingAbilityIndex}:${sourceId}:${grantedIndex}`;
+      candidates.push({
+        abilityId,
+        controllerId,
+        sourceId,
+        cardPlayed: sourcePayload,
+        ability: {
+          id: abilityId,
+          name: ability.name,
+          trigger: ability.trigger,
+          sourceZones: ability.sourceZones,
+          condition: ability.condition,
+          effect: ability.effect,
+          ...(ability.autoResolve === true ? { autoResolve: true } : {}),
+        },
+        resolutionInput: {},
+      });
+    },
+  );
 
   if (hasDerivedSupport && !hasPrintedSupportTriggeredAbility && zone === "play") {
     candidates.push({
@@ -1520,6 +1565,18 @@ function triggerMatchesEvent(
   ].flatMap((entry) => expandTriggerEvent(entry));
 
   if (supportedEvents.length === 0 || !supportedEvents.includes(event.event)) {
+    return false;
+  }
+
+  if (
+    trigger.event === "leave-play" &&
+    event.event === "move" &&
+    !(
+      event.fromZone?.startsWith("play") &&
+      event.toZone !== "play" &&
+      !event.toZone?.startsWith("location")
+    )
+  ) {
     return false;
   }
 

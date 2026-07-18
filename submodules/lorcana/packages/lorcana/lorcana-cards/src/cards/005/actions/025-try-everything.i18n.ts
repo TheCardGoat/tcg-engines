@@ -35,4 +35,8 @@ export const tryEverythingI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pruébalo todo",
+    text: "Elimina hasta 3 daños del personaje elegido y prepáralo. No pueden realizar misiones ni desafíos durante el resto de este turno.",
+  },
 };

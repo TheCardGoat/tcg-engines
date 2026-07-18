@@ -33,4 +33,8 @@ export const fourDozenEggsP1PromoI18n: Record<Languages, I18nProperties> = {
     name: "Four Dozen Eggs",
     text: "Your characters gain <Resist> +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)",
   },
+  es: {
+    name: "Cuatro docenas de huevos",
+    text: "Tus personajes obtienen Resistencia +2 hasta el comienzo de tu siguiente turno.",
+  },
 };

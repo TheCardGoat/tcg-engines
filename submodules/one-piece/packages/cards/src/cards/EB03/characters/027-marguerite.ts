@@ -34,7 +34,7 @@ export const eb03Marguerite027: CharacterCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "both",
               zones: ["character"],
               count: {
                 amount: 1,

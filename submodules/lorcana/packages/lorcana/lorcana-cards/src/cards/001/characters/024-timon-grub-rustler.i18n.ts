@@ -45,4 +45,15 @@ export const timonGrubRustlerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Timon",
+    version: "Ladrón de comida",
+    text: [
+      {
+        title: "Sabe a pollo",
+        description:
+          "Cuando juegas con este personaje, puedes eliminar hasta 1 daño del personaje elegido.",
+      },
+    ],
+  },
 };

@@ -65,4 +65,20 @@ export const gustavTheGiantTerrorOfTheKingdomI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Gustavo el gigante",
+    version: "Terror del Reino",
+    text: [
+      {
+        title: "TODO ATADO",
+        description:
+          "Este personaje entra en juego agotado y no puede prepararse al comienzo de tu turno.",
+      },
+      {
+        title: "LIBRE",
+        description:
+          "Durante tu turno, cada vez que uno de tus otros personajes destierre a otro personaje en un desafío, puedes preparar a este personaje.",
+      },
+    ],
+  },
 };

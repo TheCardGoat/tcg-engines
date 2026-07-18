@@ -2,6 +2,211 @@ import { expect, test, describe } from "vite-plus/test";
 import { parseActions, parseEffectText } from "../../../src/effect-parser/index.ts";
 
 describe("parseActions", () => {
+  test("schedules the Character played by the preceding action to return to its owner's deck", () => {
+    const result = parseActions(
+      'Draw 1 card and play up to 1 "SWORD" type Character card with a cost of 8 or less other than [Helmeppo] from your trash. Then, place the 1 Character played by this effect at the bottom of the owner\'s deck at the end of this turn.',
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      { action: "draw", player: "self", amount: 1 },
+      expect.objectContaining({
+        action: "play",
+        source: { player: "self", zone: "trash" },
+        filters: expect.arrayContaining([
+          { filter: "trait", value: "SWORD", match: "includes" },
+          { filter: "cost", comparison: "lte", value: 8 },
+          { filter: "excludeName", value: "Helmeppo" },
+        ]),
+      }),
+      {
+        action: "delayed",
+        timing: "endOfThisTurn",
+        actions: [
+          {
+            action: "returnToDeck",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+            },
+            position: "bottom",
+            previousActionTargets: true,
+          },
+        ],
+      },
+    ]);
+  });
+
+  test("preserves cost guessing as the gate for every matching action", () => {
+    const result = parseActions(
+      "Choose a cost and reveal 1 card from the top of your opponent's deck. If the revealed card has the chosen cost, K.O. up to 1 of your opponent's Characters with a base cost of 3 or less. Then, add up to 1 DON!! card from your DON!! deck and rest it.",
+    );
+
+    expect(result).toEqual({
+      parsed: [
+        {
+          action: "guessTopDeckCost",
+          player: "opponent",
+          onMatch: [
+            {
+              action: "ko",
+              target: {
+                player: "opponent",
+                zones: ["character"],
+                count: { amount: 1, upTo: true },
+                filters: [{ filter: "baseCost", comparison: "lte", value: 3 }],
+              },
+            },
+            {
+              action: "addDon",
+              count: { amount: 1, upTo: true },
+              state: "rested",
+            },
+          ],
+        },
+      ],
+      unparsed: "",
+    });
+  });
+
+  test("trashes the top Life card of both players", () => {
+    const result = parseActions(
+      "Trash 1 card from the top of each of your and your opponent's Life cards.",
+    );
+
+    expect(result).toEqual({
+      parsed: [
+        {
+          action: "sequence",
+          actions: [
+            {
+              action: "removeFromLife",
+              player: "self",
+              count: { amount: 1 },
+              destination: "trash",
+              position: "top",
+            },
+            {
+              action: "removeFromLife",
+              player: "opponent",
+              count: { amount: 1 },
+              destination: "trash",
+              position: "top",
+            },
+          ],
+        },
+      ],
+      unparsed: "",
+    });
+  });
+
+  test("moves the replaced Character to face-down Life", () => {
+    const result = parseActions("You may add it to the top of your Life cards face-down instead.");
+
+    expect(result).toEqual({
+      parsed: [
+        {
+          action: "addToLife",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: { amount: 1 },
+          },
+          position: "top",
+          previousActionTargets: true,
+        },
+      ],
+      unparsed: "",
+    });
+  });
+
+  test("looks privately at the opponent's top deck card", () => {
+    expect(parseActions("Look at 1 card from the top of your opponent's deck.")).toEqual({
+      parsed: [{ action: "lookAtTopDeckCard", player: "opponent" }],
+      unparsed: "",
+    });
+  });
+
+  test("preserves a leading power action before a complete search continuation", () => {
+    const result = parseActions(
+      "Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, look at 3 cards from the top of your deck; reveal up to 1 [Donquixote Pirates] type Character card and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toMatchObject([
+      { action: "modifyPower", value: 4000, duration: "thisBattle" },
+      {
+        action: "search",
+        lookCount: 3,
+        revealFilters: [
+          { filter: "trait", value: "Donquixote Pirates", match: "includes" },
+          { filter: "cardCategory", value: "character" },
+        ],
+        remainderPosition: "bottom",
+      },
+    ]);
+  });
+
+  test("preserves a cost-gated top-deck reveal, conditional action, and final position", () => {
+    const result = parseActions(
+      "Reveal 1 card from the top of your deck. If the revealed card has a cost of 4 or more, return up to 1 of your Characters to the owner's hand. Then, place the revealed card at the bottom of your deck.",
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "revealTopDeckCard",
+        player: "self",
+        conditional: {
+          filters: [{ filter: "cost", comparison: "gte", value: 4 }],
+          actions: [
+            {
+              action: "returnToHand",
+              target: {
+                player: "self",
+                zones: ["character"],
+                count: { amount: 1, upTo: true },
+              },
+            },
+          ],
+        },
+        finalPosition: "bottom",
+      },
+    ]);
+  });
+
+  test("splits self power and all-trait cost modifiers joined by comma-and", () => {
+    expect(
+      parseActions(
+        'this Character gains +1000 power, and all of your Characters with a type including "Baroque Works" gain +2 cost',
+      ).parsed,
+    ).toEqual([
+      {
+        action: "modifyPower",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: { amount: 1 },
+          self: true,
+        },
+        value: 1000,
+        duration: "permanent",
+      },
+      {
+        action: "modifyCost",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: { amount: "all" },
+          filters: [{ filter: "trait", value: "Baroque Works", match: "includes" }],
+        },
+        value: 2,
+        duration: undefined,
+      },
+    ]);
+  });
+
   describe("non-draw/rest/ko actions stay unparsed", () => {
     test("returns full text as unparsed for unknown actions", () => {
       const result = parseActions("Look at the top 5 cards of your deck");
@@ -17,6 +222,44 @@ describe("parseActions", () => {
   });
 
   describe("real card integration", () => {
+    test("OP02-064 Mr.2: schedules the dependent self-return at the end of the battle", () => {
+      const actions = parseActions(
+        "Place up to 1 Character with a cost of 2 or less at the bottom of the owner's deck. Then, at the end of this battle, place this Character at the bottom of the owner's deck.",
+      );
+
+      expect(actions).toEqual({
+        parsed: [
+          {
+            action: "returnToDeck",
+            target: {
+              player: "any",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 2 }],
+            },
+            position: "bottom",
+          },
+          {
+            action: "delayed",
+            timing: "endOfThisBattle",
+            actions: [
+              {
+                action: "returnToDeck",
+                target: {
+                  player: "self",
+                  zones: ["character"],
+                  count: { amount: 1 },
+                  self: true,
+                },
+                position: "bottom",
+              },
+            ],
+          },
+        ],
+        unparsed: "",
+      });
+    });
+
     test("EB01-023 Edward Weevil: '[On Play] Draw 1 card.'", () => {
       const effectText = "[On Play] Draw 1 card.";
       const parsed = parseEffectText(effectText);
@@ -47,6 +290,58 @@ describe("parseActions", () => {
       expect(actions.unparsed).toBe("");
     });
 
+    test("EB04-011 Scaled Neptunian: derives draw and trash amounts from matching Characters", () => {
+      const actions = parseActions(
+        "Draw a card for each of your {Neptunian} type Characters. Then, trash the same number of cards from your hand.",
+      );
+      const amountFromTarget = {
+        player: "self",
+        zones: ["character"],
+        count: { amount: "all" },
+        filters: [{ filter: "trait", value: "Neptunian", match: "includes" }],
+      };
+      expect(actions.parsed).toEqual([
+        { action: "draw", player: "self", amount: 0, amountFromTarget },
+        {
+          action: "trashFromHand",
+          player: "self",
+          amount: 0,
+          amountFromPreviousActionTargets: true,
+        },
+      ]);
+      expect(actions.unparsed).toBe("");
+    });
+
+    test("EB04-013 Carrot: keeps two Minks Characters and the Leader as separate targets", () => {
+      const parsed = parseEffectText(
+        "[On Play] If your Leader has the {Minks} type, set up to 2 of your {Minks} type Characters and your Leader as active.",
+      );
+      const actions = parseActions(parsed.segments[0]!.rawActionText);
+
+      expect(actions.parsed).toEqual([
+        {
+          action: "setActive",
+          condition: { condition: "leaderTrait", trait: "Minks", match: "includes" },
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: { amount: 2, upTo: true },
+            filters: [{ filter: "trait", value: "Minks", match: "includes" }],
+          },
+        },
+        {
+          action: "setActive",
+          condition: { condition: "leaderTrait", trait: "Minks", match: "includes" },
+          target: {
+            player: "self",
+            zones: ["leader"],
+            count: { amount: 1 },
+          },
+        },
+      ]);
+      expect(actions.unparsed).toBe("");
+    });
+
     test("OP14EB04-051 Hatchan: '[DON!! x2] [On K.O.] Draw 1 card.'", () => {
       const parsed = parseEffectText("[DON!! x2] [On K.O.] Draw 1 card.");
       expect(parsed.segments).toHaveLength(1);
@@ -63,13 +358,22 @@ describe("parseActions", () => {
         "[On Play] If you have 3 or less Life cards, draw 2 cards. Then, give up to 1 rested DON!! card to your Leader.",
       );
       expect(parsed.segments).toHaveLength(1);
-      const actions = parseActions(parsed.segments[0]!.rawActionText);
-      // ". Then, " split produces two clauses:
-      // 1. "If you have 3 or less Life cards, draw 2 cards" — unparsed (if prefix)
-      // 2. "give up to 1 rested DON!! card to your Leader" — parsed as giveDon
-      expect(actions.parsed).toHaveLength(1);
-      expect(actions.parsed[0]).toMatchObject({ action: "giveDon" });
-      expect(actions.unparsed).toContain("draw 2 cards");
+      const segment = parsed.segments[0]!;
+      const actions = parseActions(segment.rawActionText);
+      expect(actions.parsed).toHaveLength(2);
+      expect(actions.parsed[0]).toEqual({
+        action: "draw",
+        player: "self",
+        amount: 2,
+        condition: {
+          condition: "lifeCount",
+          player: "self",
+          comparison: "lte",
+          value: 3,
+        },
+      });
+      expect(actions.parsed[1]).toMatchObject({ action: "giveDon" });
+      expect(actions.unparsed).toBe("");
     });
   });
 
@@ -123,6 +427,27 @@ describe("splitActionClauses — up to fix", () => {
   });
 });
 
+describe("parseActions — mixed DON!! and Character rest", () => {
+  test("emits one mixed-zone choice with Character-only cost filtering", () => {
+    const result = parseActions(
+      "rest up to 1 of your opponent's DON!! cards or Characters with a cost of 6 or less",
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "rest",
+        target: {
+          player: "opponent",
+          zones: ["costArea", "character"],
+          count: { amount: 1, upTo: true },
+          filters: [{ filter: "cost", comparison: "lte", value: 6 }],
+        },
+      },
+    ]);
+  });
+});
+
 describe("parseActions — [Trigger] suffix stripping", () => {
   test("strips '. [Trigger]' suffix from action text", () => {
     const result = parseActions(
@@ -155,6 +480,28 @@ describe("parseActions — [Trigger] suffix stripping", () => {
 });
 
 describe("parseActions — sentence splitting", () => {
+  test("keeps an all-deck named reveal before its explicit shuffle", () => {
+    const result = parseActions(
+      "Reveal up to 1 [Kurozumi Higurashi] from your deck and add it to your hand. Then, shuffle your deck.",
+    );
+
+    expect(result).toEqual({
+      parsed: [
+        {
+          action: "search",
+          lookCount: 0,
+          source: { player: "self", zone: "deck" },
+          revealCount: { amount: 1, upTo: true },
+          revealFilters: [{ filter: "name", value: "Kurozumi Higurashi" }],
+          revealDestination: "hand",
+          remainderPosition: "bottom",
+        },
+        { action: "shuffleDeck", player: "self" },
+      ],
+      unparsed: "",
+    });
+  });
+
   test("K.O. then This Character gains keyword", () => {
     const result = parseActions(
       "K.O. up to 1 of your opponent's Characters with a cost of 6 or less. This Character gains [Rush] during this turn.",
@@ -166,5 +513,27 @@ describe("parseActions — sentence splitting", () => {
       keyword: "rush",
       duration: "thisTurn",
     });
+  });
+});
+
+describe("parseActions — Trigger source movement", () => {
+  test("keeps an explicit add-this-card-to-hand instruction", () => {
+    const result = parseActions(
+      "K.O. up to 1 of your opponent's Characters with a cost of 1 or less and add this card to your hand.",
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "ko",
+        target: {
+          player: "opponent",
+          zones: ["character"],
+          count: { amount: 1, upTo: true },
+          filters: [{ filter: "cost", comparison: "lte", value: 1 }],
+        },
+      },
+      { action: "addThisCardToHand" },
+    ]);
   });
 });

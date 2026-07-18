@@ -23,4 +23,8 @@ export const walkThePlankI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "¡Camina por la tabla!",
+    text: 'Tus personajes piratas obtienen "{E} - Destierra al personaje dañado elegido" este turno.',
+  },
 };

@@ -58,6 +58,12 @@ export const op09MonkeyDLuffy119: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnDon",
+            minimumAmount: 1,
+          },
+        ],
         actions: [
           {
             action: "draw",

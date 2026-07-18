@@ -21,4 +21,9 @@ export const abuBoldHelmsmanI18n: Record<Languages, I18nProperties> = {
     version: "Timoniere Audace",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Abu",
+    version: "Timonel audaz",
+    text: "Correr",
+  },
 };

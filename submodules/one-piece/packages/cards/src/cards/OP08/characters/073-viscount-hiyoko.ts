@@ -66,7 +66,12 @@ export const op08ViscountHiyoko073: CharacterCard = {
               },
             ],
           },
+          {
+            action: "shuffleDeck",
+            player: "self",
+          },
         ],
+        optional: true,
       },
     ],
   },

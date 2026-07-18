@@ -44,6 +44,7 @@ export const op03BellMere051: CharacterCard = {
             amount: 7,
           },
         ],
+        optional: true,
       },
       {
         trigger: "onKo",
@@ -54,6 +55,7 @@ export const op03BellMere051: CharacterCard = {
             amount: 3,
           },
         ],
+        optional: true,
       },
     ],
   },

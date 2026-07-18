@@ -45,4 +45,15 @@ export const pascalInquisitivePetI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pascal",
+    version: "Mascota curiosa",
+    text: [
+      {
+        title: "TÁCTICAS COLORIDAS",
+        description:
+          "Cuando juegues con este personaje, mira las 3 primeras cartas de tu mazo y colócalas en cualquier orden.",
+      },
+    ],
+  },
 };

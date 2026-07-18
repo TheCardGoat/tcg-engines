@@ -50,4 +50,8 @@ export const wrongLeverEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "¡Palanca equivocada!",
+    text: "Elige uno:\n- Devuelve el personaje elegido a la mano de su jugador.\n- ¡Pon un tirón de la palanca! carta de tu pila de descarte en la parte inferior de tu mazo para colocar el personaje elegido en la parte inferior del mazo de su propietario.",
+  },
 };

@@ -59,4 +59,18 @@ export const bagheeraGuardianJaguarI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bagheera",
+    version: "Jaguar Guardián",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "DEBES SER VALIENTE",
+        description:
+          "Cuando este personaje es desterrado durante el turno de un oponente, inflige 2 daños a cada personaje contrario.",
+      },
+    ],
+  },
 };

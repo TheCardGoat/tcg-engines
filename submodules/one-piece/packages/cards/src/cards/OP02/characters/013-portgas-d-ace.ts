@@ -72,6 +72,24 @@ export const op02PortgasDAce013: CharacterCard = {
             value: -3000,
             duration: "thisTurn",
           },
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "thisTurn",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Whitebeard Pirates",
+              match: "includes",
+            },
+          },
         ],
       },
     ],

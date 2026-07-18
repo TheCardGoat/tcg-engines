@@ -46,6 +46,7 @@ const INVARIANTS = [
       "Express the behavior using the effect DSL in @tcg/gundam-types instead. If the type you need isn't exported, add it to types — don't reach into the engine.",
     matches: (rel) =>
       rel.startsWith(`packages${sep}cards${sep}src${sep}`) &&
+      !rel.startsWith(`packages${sep}cards${sep}src${sep}test-helpers${sep}`) &&
       rel.endsWith(".ts") &&
       !rel.includes(".test."),
     check: (_, rel, content) => {

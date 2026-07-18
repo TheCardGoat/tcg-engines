@@ -45,4 +45,15 @@ export const luckyRuntOfTheLitterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Afortunado",
+    version: "Enano de la camada",
+    text: [
+      {
+        title: "SIGUE MI VOZ",
+        description:
+          "Siempre que este personaje realice una misión, mira las 2 cartas superiores de tu mazo. Puedes revelar cualquier cantidad de cartas de personaje de Cachorro y ponerlas en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

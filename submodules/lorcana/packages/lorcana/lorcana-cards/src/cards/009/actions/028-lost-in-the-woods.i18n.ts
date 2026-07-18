@@ -35,4 +35,8 @@ export const lostInTheWoodsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Perdido en el bosque",
+    text: "Todos los personajes contrarios obtienen -2 {S} hasta el comienzo de tu siguiente turno.",
+  },
 };

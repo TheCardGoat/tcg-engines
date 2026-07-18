@@ -17,4 +17,8 @@ export const pigletVerySmallAnimalI18n: Record<Languages, I18nProperties> = {
     name: "Pimpi",
     version: "Animale Molto Piccolo",
   },
+  es: {
+    name: "Cerdito",
+    version: "Animal muy pequeño",
+  },
 };

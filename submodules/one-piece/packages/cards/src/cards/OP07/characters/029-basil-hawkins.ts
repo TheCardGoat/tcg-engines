@@ -42,9 +42,35 @@ export const op07BasilHawkins029: CharacterCard = {
   effect:
     "If your Leader has the [Supernovas] type, this Character gains [Blocker]. (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [Once Per Turn] If this Character would be removed from the field by your opponent's effect, you may rest 1 of your opponent's Characters instead.",
   effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Supernovas",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
     replacementEffects: [
       {
         replacedEvent: "removeFromField",
+        source: "opponentEffect",
+        eventFilter: { targetSelf: true },
         replacementAction: {
           action: "rest",
           target: {

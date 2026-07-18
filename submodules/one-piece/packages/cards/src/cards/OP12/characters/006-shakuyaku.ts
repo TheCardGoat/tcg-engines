@@ -45,8 +45,26 @@ export const op12Shakuyaku006: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "name",
-                value: "Monkey.D.Luffy",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "name",
+                    value: "Monkey.D.Luffy",
+                  },
+                  {
+                    filter: "allOf",
+                    filters: [
+                      {
+                        filter: "color",
+                        value: "red",
+                      },
+                      {
+                        filter: "cardCategory",
+                        value: "event",
+                      },
+                    ],
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

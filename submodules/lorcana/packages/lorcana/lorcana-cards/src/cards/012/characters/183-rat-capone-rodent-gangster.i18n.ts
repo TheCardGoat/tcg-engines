@@ -41,4 +41,14 @@ export const ratCaponeRodentGangsterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rata capone",
+    version: "Gángster roedor",
+    text: [
+      {
+        title: "¡SHADAAP!",
+        description: "Si bien este personaje no tiene daño, obtiene +3 {S}.",
+      },
+    ],
+  },
 };

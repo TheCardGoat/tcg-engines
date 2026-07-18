@@ -54,4 +54,17 @@ export const hiddenInkcasterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lanzatintas oculto",
+    text: [
+      {
+        title: "TINTA FRESCA",
+        description: "Cuando juegues este objeto, roba una carta.",
+      },
+      {
+        title: "TESORO INESPERADO",
+        description: "Todas las cartas en tu mano cuentan como {IW}.",
+      },
+    ],
+  },
 };

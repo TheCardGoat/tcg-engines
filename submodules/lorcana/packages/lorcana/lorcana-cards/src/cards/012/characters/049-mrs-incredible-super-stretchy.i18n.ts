@@ -66,4 +66,20 @@ export const mrsIncredibleSuperStretchyI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Señora increíble",
+    version: "Súper elástico",
+    text: [
+      {
+        title: "PENSAMIENTO FLEXIBLE",
+        description: "Al comienzo de tu turno, puedes elegir uno:",
+      },
+      {
+        title: "• Este personaje gana Evasivo hasta el comienzo de tu próximo turno.",
+      },
+      {
+        title: "• Este personaje obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

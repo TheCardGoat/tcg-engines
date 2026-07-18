@@ -17,4 +17,8 @@ export const mauiDemigodP1I18n: Record<Languages, I18nProperties> = {
     name: "Maui",
     version: "Demigod",
   },
+  es: {
+    name: "Maui",
+    version: "Semidiós",
+  },
 };

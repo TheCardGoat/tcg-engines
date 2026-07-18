@@ -23,7 +23,7 @@ export const op04Tom061: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Fish-Man Water Seven"],
+  traits: ["Fish-Man", "Water Seven"],
   attribute: "wisdom",
   effect:
     "[Activate:Main] You may trash this Character: If your Leader has the [Water Seven] type, add up to 1 DON!! card from your DON!! deck and rest it.",
@@ -31,12 +31,6 @@ export const op04Tom061: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Water Seven",
-          },
-        ],
         costs: [
           {
             cost: "trashThisCard",
@@ -50,6 +44,11 @@ export const op04Tom061: CharacterCard = {
               upTo: true,
             },
             state: "rested",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Water Seven",
+              match: "includes",
+            },
           },
         ],
         optional: true,

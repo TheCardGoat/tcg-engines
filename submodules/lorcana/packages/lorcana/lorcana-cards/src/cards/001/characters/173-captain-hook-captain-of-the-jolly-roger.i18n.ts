@@ -45,4 +45,15 @@ export const captainHookCaptainOfTheJollyRogerI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Capitán Garfio",
+    version: "Capitán del Jolly Roger",
+    text: [
+      {
+        title: "¡DOBLE EL POLVO!",
+        description:
+          "Cuando juegues con este personaje, podrás devolver una carta de acción llamada ¡Dispara los cañones! desde tu descarte a tu mano.",
+      },
+    ],
+  },
 };

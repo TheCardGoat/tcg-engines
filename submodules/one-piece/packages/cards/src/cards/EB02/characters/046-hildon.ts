@@ -26,7 +26,7 @@ export const eb02Hildon046: CharacterCard = {
   traits: ["Thriller Bark Pirates"],
   attribute: "wisdom",
   effect:
-    "[On Play] Trash 2 cards from the top of your deck and give up to 1 of your opponent's Characters 1 cost during this turn.",
+    "[On Play] Trash 2 cards from the top of your deck and give up to 1 of your opponent's Characters −1 cost during this turn.",
   effects: {
     effects: [
       {
@@ -47,7 +47,7 @@ export const eb02Hildon046: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 1,
+            value: -1,
             duration: "thisTurn",
           },
         ],

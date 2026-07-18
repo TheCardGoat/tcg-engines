@@ -17,4 +17,8 @@ export const herculesHeroInTrainingI18n: Record<Languages, I18nProperties> = {
     name: "Hercules",
     version: "Hero in Training",
   },
+  es: {
+    name: "Hércules",
+    version: "Héroe en entrenamiento",
+  },
 };

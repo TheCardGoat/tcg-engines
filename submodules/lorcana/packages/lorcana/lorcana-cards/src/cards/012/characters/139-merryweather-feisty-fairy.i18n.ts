@@ -21,4 +21,9 @@ export const merryweatherFeistyFairyI18n: Record<Languages, I18nProperties> = {
     version: "Fata Grintosa",
     text: "<Protetto>",
   },
+  es: {
+    name: "Feliz tiempo",
+    version: "Hada luchadora",
+    text: "Pabellón",
+  },
 };

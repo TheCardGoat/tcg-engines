@@ -17,4 +17,8 @@ export const denahiAvengingBrotherI18n: Record<Languages, I18nProperties> = {
     name: "Denahi",
     version: "Fratello Vendicatore",
   },
+  es: {
+    name: "Denahi",
+    version: "Hermano vengador",
+  },
 };

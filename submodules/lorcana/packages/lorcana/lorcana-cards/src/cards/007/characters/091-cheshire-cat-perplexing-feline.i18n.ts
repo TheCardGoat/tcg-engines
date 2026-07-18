@@ -45,4 +45,15 @@ export const cheshireCatPerplexingFelineI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Gato de cheshire",
+    version: "Felino desconcertante",
+    text: [
+      {
+        title: "Sonrisa loca",
+        description:
+          "Cuando juegas con este personaje, puedes causar 2 daños al personaje dañado elegido.",
+      },
+    ],
+  },
 };

@@ -49,4 +49,16 @@ export const mauiHeroToAllI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Maui",
+    version: "Héroe para todos",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "Imprudente",
+      },
+    ],
+  },
 };

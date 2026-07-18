@@ -4,6 +4,7 @@ export const gd02GaelioSSchwalbeGraze082: UnitCard = {
   cardNumber: "GD02-082",
   name: "Gaelio's Schwalbe Graze",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["gjallarhorn"],
   id: "GD02-082",
@@ -41,6 +42,7 @@ export const gd02GaelioSSchwalbeGraze082: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 3,
+  linkCondition: "[Gaelio Bauduin]",
   effect:
     "While you have another (Gjallarhorn) Unit in play, this Unit gains &lt;Blocker&gt;.<br>\n(Rest this Unit to change the attack target to it.)<br>",
   effects: [

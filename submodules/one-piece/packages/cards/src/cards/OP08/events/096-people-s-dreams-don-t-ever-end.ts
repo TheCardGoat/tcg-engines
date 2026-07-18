@@ -34,6 +34,20 @@ export const op08PeopleSDreamsDonTEverEnd096: EventCard = {
             player: "self",
             amount: 1,
           },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: { amount: 1, upTo: true },
+            },
+            value: 5000,
+            duration: "thisBattle",
+            condition: {
+              condition: "previousActionTarget",
+              filters: [{ filter: "cost", comparison: "gte", value: 6 }],
+            },
+          },
         ],
       },
       {

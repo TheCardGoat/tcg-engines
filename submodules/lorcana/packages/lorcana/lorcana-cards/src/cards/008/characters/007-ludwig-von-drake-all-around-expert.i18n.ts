@@ -65,4 +65,20 @@ export const ludwigVonDrakeAllaroundExpertI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Ludwig Von Drake",
+    version: "Experto en todos los aspectos",
+    text: [
+      {
+        title: "MENTE SUPERIOR",
+        description:
+          "Cuando juegas con este personaje, el oponente elegido revela su mano y descarta una carta que no sea de personaje de tu elección.",
+      },
+      {
+        title: "LEGADO DURADERO",
+        description:
+          "Cuando este personaje sea desterrado, puedes poner esta carta en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

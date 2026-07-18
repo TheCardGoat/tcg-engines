@@ -45,4 +45,15 @@ export const mirabelMadrigalCuriousChildI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Mirabel Madrigal",
+    version: "Niño curioso",
+    text: [
+      {
+        title: "ERES",
+        description:
+          "UNA MARAVILLA Cuando juegas con este personaje, puedes revelar una carta de canción en tu mano para ganar 1 conocimiento.",
+      },
+    ],
+  },
 };

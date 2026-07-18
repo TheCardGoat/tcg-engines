@@ -7,7 +7,13 @@
 
 import { describe, it, expect } from "vite-plus/test";
 import type { CardEffect } from "@tcg/gundam-types";
-import { GundamTestEngine, PLAYER_ONE, PLAYER_TWO, createMockUnit } from "../../index.ts";
+import {
+  GundamTestEngine,
+  PLAYER_ONE,
+  PLAYER_TWO,
+  createMockUnit,
+  expectSuccess,
+} from "../../index.ts";
 import type { PendingEffect } from "../types.ts";
 
 const restOpponentUnitEffect: CardEffect = {
@@ -219,27 +225,28 @@ describe("Pending choice — descriptor (PR F.1)", () => {
     expect(choice.tutorDestination).toBe("hand");
   });
 
-  it("emits a deckLook prompt for an optional-gated look rider", () => {
+  it("asks for the optional prerequisite before revealing its dependent Deck look", () => {
     const discard = createMockUnit({ name: "Discard" });
     const top = createMockUnit({ name: "Top" });
     const second = createMockUnit({ name: "Second" });
-    const engine = GundamTestEngine.create({ hand: [discard], deck: [top, second] }, {});
-
-    engine.getG().pendingEffects.push(
-      makePending({
-        effect: optionalDeckLookEffect,
-        controllerId: PLAYER_ONE,
-        sourceCardId: "src",
-        kind: "activated",
-      }),
+    const source = createMockUnit({
+      name: "Optional Look Source",
+      effects: [optionalDeckLookEffect],
+    });
+    const engine = GundamTestEngine.create(
+      { hand: [discard], play: [source], deck: [top, second] },
+      {},
     );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const sourceId = p1.getCardsInZone("battleArea")[0]!;
 
-    const choice = engine.getPendingChoice();
-    expect(choice?.kind).toBe("deckLook");
-    if (choice?.kind !== "deckLook") return;
+    expectSuccess(p1.activateAbility(sourceId, 0));
 
-    expect(choice.directiveIndex).toBe(1);
-    expect(choice.acceptOptionalDirectiveIndex).toBe(0);
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "optional",
+      controllerId: PLAYER_ONE,
+      directiveIndex: 0,
+    });
   });
 
   it("returns undefined when the priority head is a triggered effect that auto-picks", () => {

@@ -21,4 +21,9 @@ export const tiggerWonderfulThingI18n: Record<Languages, I18nProperties> = {
     version: "Pieno di Elettricità",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Tigre",
+    version: "Cosa maravillosa",
+    text: "Evasivo",
+  },
 };

@@ -41,4 +41,14 @@ export const arielsGrottoASecretPlaceEnchantedI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Gruta de Ariel",
+    version: "Un lugar secreto",
+    text: [
+      {
+        title: "BUSQUEDA DEL TESORO",
+        description: "Mientras tengas 3 o más elementos en juego, esta ubicación obtiene +2 {L}.",
+      },
+    ],
+  },
 };

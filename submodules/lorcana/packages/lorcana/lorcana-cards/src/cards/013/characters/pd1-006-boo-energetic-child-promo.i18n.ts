@@ -57,4 +57,18 @@ export const booEnergeticChildPD1PromoI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Abucheo",
+    version: "Niño enérgico",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "¡TASTROFE INFANTIL!",
+        description:
+          "Siempre que este personaje desafíe a otro personaje con 3 {S} o menos, destierra a ese personaje. (No se inflige ningún daño en ese desafío).",
+      },
+    ],
+  },
 };

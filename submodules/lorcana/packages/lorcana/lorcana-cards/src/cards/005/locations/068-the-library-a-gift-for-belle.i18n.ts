@@ -43,4 +43,15 @@ export const theLibraryAGiftForBelleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La biblioteca",
+    version: "Un regalo para Bella",
+    text: [
+      {
+        title: "PERDIDO EN",
+        description:
+          "UN LIBRO Siempre que un personaje sea desterrado mientras estás aquí, puedes robar una carta.",
+      },
+    ],
+  },
 };

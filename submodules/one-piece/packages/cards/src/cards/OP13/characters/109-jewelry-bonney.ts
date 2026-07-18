@@ -28,5 +28,28 @@ export const op13JewelryBonney109: CharacterCard = {
   attribute: "special",
   effect:
     "If this Character would be removed from the field by your opponent's effect, you may turn 1 card from the top of your Life cards face-up instead.",
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          { action: "draw", player: "self", amount: 2 },
+          { action: "trashFromHand", player: "self", amount: 1 },
+        ],
+      },
+    ],
+    replacementEffects: [
+      {
+        replacedEvent: "removeFromField",
+        source: "opponentEffect",
+        replacementAction: {
+          action: "turnLifeFaceUp",
+          player: "self",
+          count: 1,
+          position: "top",
+        },
+      },
+    ],
+  },
   i18n: op13JewelryBonney109I18n,
 };

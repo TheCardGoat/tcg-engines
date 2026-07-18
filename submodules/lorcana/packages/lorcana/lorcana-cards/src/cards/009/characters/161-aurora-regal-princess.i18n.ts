@@ -17,4 +17,8 @@ export const auroraRegalPrincessI18n: Record<Languages, I18nProperties> = {
     name: "Aurora",
     version: "Principessa Regale",
   },
+  es: {
+    name: "Aurora",
+    version: "Princesa real",
+  },
 };

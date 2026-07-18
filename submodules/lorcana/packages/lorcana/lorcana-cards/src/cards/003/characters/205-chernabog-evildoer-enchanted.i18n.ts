@@ -65,4 +65,20 @@ export const chernabogEvildoerEnchantedI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Chernabog",
+    version: "Malhechor",
+    text: [
+      {
+        title: "EL PODER DEL MAL",
+        description:
+          "Por cada carta de personaje que descartes, pagas 1 {I} menos para jugar con este personaje.",
+      },
+      {
+        title: "CONVOCAR A LOS ESPÍRITUS",
+        description:
+          "Cuando juegues con este personaje, baraja todas las cartas de personaje de tu descarte en tu mazo.",
+      },
+    ],
+  },
 };

@@ -26,4 +26,8 @@ export const theMostDiabolicalSchemeI18n: Record<Languages, I18nProperties> = {
     name: "The Most Diabolical Scheme",
     text: "Banish chosen Villain of yours to banish chosen character.",
   },
+  es: {
+    name: "El plan más diabólico",
+    text: "Destierra al villano elegido para desterrar al personaje elegido.",
+  },
 };

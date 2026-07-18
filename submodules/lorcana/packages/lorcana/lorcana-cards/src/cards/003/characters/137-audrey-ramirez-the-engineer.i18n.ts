@@ -56,4 +56,17 @@ export const audreyRamirezTheEngineerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Audrey Ramírez",
+    version: "El ingeniero",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "PIEZAS DE REPUESTO",
+        description: "Siempre que este personaje realice una misión, prepara uno de tus objetos.",
+      },
+    ],
+  },
 };

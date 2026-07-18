@@ -31,12 +31,6 @@ export const op03Zambai063: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Water Seven",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -48,8 +42,14 @@ export const op03Zambai063: CharacterCard = {
             action: "draw",
             player: "self",
             amount: 1,
+            condition: {
+              condition: "leaderTrait",
+              trait: "Water Seven",
+              match: "includes",
+            },
           },
         ],
+        optional: true,
       },
     ],
   },

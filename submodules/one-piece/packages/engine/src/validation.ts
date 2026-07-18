@@ -20,7 +20,7 @@ function validateLinearZone(
       errors.push(`Instance ${instanceId} in ${seat} ${zone} at index ${index} is missing.`);
       continue;
     }
-    if (instance.owner !== seat || instance.zone !== zone || instance.zoneIndex !== index) {
+    if (instance.controller !== seat || instance.zone !== zone || instance.zoneIndex !== index) {
       errors.push(`Instance ${instanceId} is inconsistent in ${seat} ${zone} at index ${index}.`);
     }
   }
@@ -71,7 +71,7 @@ export function validateState(state: MatchState): string[] {
       errors.push(`Leader ${player.leaderInstanceId} is missing for ${seat}.`);
       continue;
     }
-    if (leader.owner !== seat || leader.zone !== "leader" || leader.zoneIndex !== 0) {
+    if (leader.controller !== seat || leader.zone !== "leader" || leader.zoneIndex !== 0) {
       errors.push(`Leader ${player.leaderInstanceId} is inconsistent for ${seat}.`);
     }
 
@@ -82,7 +82,7 @@ export function validateState(state: MatchState): string[] {
         errors.push(`Stage ${player.stageArea} is missing for ${seat}.`);
         continue;
       }
-      if (stage.owner !== seat || stage.zone !== "stage" || stage.zoneIndex !== 0) {
+      if (stage.controller !== seat || stage.zone !== "stage" || stage.zoneIndex !== 0) {
         errors.push(`Stage ${player.stageArea} is inconsistent for ${seat}.`);
       }
     }
@@ -98,7 +98,7 @@ export function validateState(state: MatchState): string[] {
         continue;
       }
       if (
-        instance.owner !== seat ||
+        instance.controller !== seat ||
         instance.zone !== "character" ||
         instance.zoneIndex !== index
       ) {
@@ -120,11 +120,19 @@ export function validateState(state: MatchState): string[] {
   }
 
   for (const [instanceId, instance] of Object.entries(state.cards)) {
-    if (!memberships.has(instanceId) && instance.zone !== "leader") {
+    if (
+      !memberships.has(instanceId) &&
+      instance.zone !== "leader" &&
+      instance.zone !== "resolution"
+    ) {
       errors.push(`Instance ${instanceId} is not present in any owning zone.`);
     }
     const expectedZone: CardZone = instance.zone;
-    if (!["leader", "deck", "hand", "life", "character", "stage", "trash"].includes(expectedZone)) {
+    if (
+      !["leader", "deck", "hand", "life", "character", "stage", "trash", "resolution"].includes(
+        expectedZone,
+      )
+    ) {
       errors.push(`Instance ${instanceId} has invalid zone ${expectedZone}.`);
     }
   }

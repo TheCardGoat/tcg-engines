@@ -53,4 +53,17 @@ export const halfHexwellCrownI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Media corona Hexwell",
+    text: [
+      {
+        title: "UN HALLAZGO INESPERADO",
+        description: "{E}, 2 {I} — Roba una carta.",
+      },
+      {
+        title: "UN PODER PELIGROSO",
+        description: "{E}, 2 {I}, Descartar una carta: ejerce el personaje elegido.",
+      },
+    ],
+  },
 };

@@ -53,6 +53,9 @@ export const op08BlackMaria074: CharacterCard = {
             zone: "character",
             filters: [
               {
+                filter: "excludeSelf",
+              },
+              {
                 filter: "name",
                 value: "Black Maria",
               },
@@ -67,6 +70,18 @@ export const op08BlackMaria074: CharacterCard = {
               upTo: true,
             },
             state: "rested",
+          },
+          {
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "returnDon",
+                player: "self",
+                amount: 0,
+                untilSameCountAsOpponent: true,
+              },
+            ],
           },
         ],
         oncePerTurn: true,

@@ -54,4 +54,17 @@ export const dashParrLavaRunnerP3PromoI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Dash Parr",
+    version: "Corredor de lava",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "TIEMPO RÉCORD",
+        description: "Este personaje puede realizar misiones en el turno que ha jugado.",
+      },
+    ],
+  },
 };

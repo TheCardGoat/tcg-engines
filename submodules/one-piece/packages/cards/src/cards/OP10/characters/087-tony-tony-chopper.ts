@@ -31,17 +31,37 @@ export const op10TonyTonyChopper087: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "handCount",
-            player: "opponent",
-            comparison: "gte",
-            value: 5,
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
+          },
+          {
+            cost: "restCards",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Dressrosa",
+                match: "includes",
+              },
+              {
+                filter: "anyOf",
+                groups: [
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "leader",
+                    },
+                  ],
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "stage",
+                    },
+                  ],
+                ],
+              },
+            ],
           },
         ],
         actions: [
@@ -49,6 +69,12 @@ export const op10TonyTonyChopper087: CharacterCard = {
             action: "trashFromHand",
             player: "opponent",
             amount: 1,
+            condition: {
+              condition: "handCount",
+              player: "opponent",
+              comparison: "gte",
+              value: 5,
+            },
           },
           {
             action: "trashFromDeck",

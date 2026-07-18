@@ -59,4 +59,18 @@ export const winnieThePoohPigletHunnyMagesEnchantedI18n: Record<Languages, I18nP
       },
     ],
   },
+  es: {
+    name: "Winnie the Pooh y Cochinillo",
+    version: "Magos cariñosos",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "MEZCLA MÁGICA",
+        description:
+          "Este personaje obtiene +1 {L} por cada tipo de tinta diferente de personaje que tengas en juego.",
+      },
+    ],
+  },
 };

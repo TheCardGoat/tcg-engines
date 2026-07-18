@@ -45,4 +45,15 @@ export const donaldDuckGhostHunterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Cazador de fantasmas",
+    text: [
+      {
+        title: "AUMENTAR",
+        description:
+          "UN RUCKUS Cuando juegas con este personaje, el personaje detective elegido gana Challenger +2 este turno. (Obtienen +2 {S} mientras desafían).",
+      },
+    ],
+  },
 };

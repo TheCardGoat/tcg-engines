@@ -45,4 +45,15 @@ export const cinderellaKnightInTrainingP1PromoI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Cenicienta",
+    version: "Caballero en entrenamiento",
+    text: [
+      {
+        title: "TEN CORAJE",
+        description:
+          "Cuando juegas con este personaje, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

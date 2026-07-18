@@ -17,4 +17,8 @@ export const swordplayI18n: Record<Languages, I18nProperties> = {
     name: "Abilità con la Spada",
     text: "Un personaggio a tua scelta ottiene <Sfidante> +3 per questo turno. (Riceve +3 {S} mentre sta sfidando.)",
   },
+  es: {
+    name: "Esgrima",
+    text: "El personaje elegido gana Challenger +3 este turno. (Obtienen +3 {S} mientras desafían).",
+  },
 };

@@ -45,4 +45,15 @@ export const theHornedKingTriumphantGhoulEpicI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "El rey cornudo",
+    version: "Ghoul triunfante",
+    text: [
+      {
+        title: "GRANDES MAQUINACIONES",
+        description:
+          "Durante tu turno, si 1 o más cartas han salido del descarte de un jugador este turno, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

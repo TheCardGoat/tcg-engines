@@ -25,6 +25,5 @@ export const op02GeckoMoria054: CharacterCard = {
   counter: 1000,
   traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
   attribute: "special",
-  effect: "NULL",
   i18n: op02GeckoMoria054I18n,
 };

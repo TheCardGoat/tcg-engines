@@ -48,42 +48,22 @@ export const op09MonkeyDLuffy036: CharacterCard = {
         ],
         actions: [
           {
-            action: "choice",
-            options: [
-              [
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["costArea", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
                 {
-                  action: "rest",
-                  target: {
-                    player: "opponent",
-                    zones: ["costArea"],
-                    count: {
-                      amount: 1,
-                      upTo: true,
-                    },
-                  },
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 6,
                 },
               ],
-              [
-                {
-                  action: "rest",
-                  target: {
-                    player: "opponent",
-                    zones: ["character"],
-                    count: {
-                      amount: 1,
-                      upTo: true,
-                    },
-                    filters: [
-                      {
-                        filter: "cost",
-                        comparison: "lte",
-                        value: 6,
-                      },
-                    ],
-                  },
-                },
-              ],
-            ],
+            },
           },
         ],
       },

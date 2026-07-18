@@ -41,4 +41,14 @@ export const poisonedAppleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Manzana envenenada",
+    text: [
+      {
+        title: "TOMA UN MORDIDO... 1",
+        description:
+          "{I}, desterrar este elemento: ejerce el personaje elegido. Si se elige un personaje de Princesa, destierrala en su lugar.",
+      },
+    ],
+  },
 };

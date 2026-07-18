@@ -31,21 +31,6 @@ export const op14eb04GroggyMonsters033: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "zoneCount",
-            player: "self",
-            zone: "character",
-            comparison: "gte",
-            value: 3,
-            filters: [
-              {
-                filter: "trait",
-                value: "Foxy Pirates",
-              },
-            ],
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -70,8 +55,23 @@ export const op14eb04GroggyMonsters033: CharacterCard = {
                 },
               ],
             },
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "character",
+              comparison: "gte",
+              value: 3,
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Foxy Pirates",
+                  match: "includes",
+                },
+              ],
+            },
           },
         ],
+        optional: true,
       },
     ],
   },

@@ -35,6 +35,7 @@ export const eb02RoronoaZoro019: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Straw Hat Crew",
+            match: "includes",
           },
         ],
         actions: [
@@ -55,6 +56,34 @@ export const eb02RoronoaZoro019: CharacterCard = {
                 },
               ],
             },
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "opponent",
+            zone: "character",
+            comparison: "gte",
+            value: 2,
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "rushCharacter",
+            duration: "permanent",
           },
         ],
       },

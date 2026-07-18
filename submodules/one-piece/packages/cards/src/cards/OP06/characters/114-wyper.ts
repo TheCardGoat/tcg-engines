@@ -30,6 +30,16 @@ export const op06Wyper114: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnCharacterToDeck",
+            amount: 1,
+            position: "bottom",
+            player: "both",
+            zones: ["stage"],
+            filters: [{ filter: "cost", comparison: "eq", value: 1 }],
+          },
+        ],
         actions: [
           {
             action: "search",
@@ -44,12 +54,18 @@ export const op06Wyper114: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "trait",
-                value: "Upper Yard",
-              },
-              {
-                filter: "trait",
-                value: "Shandian Warrior",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "name",
+                    value: "Upper Yard",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Shandian Warrior",
+                    match: "includes",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

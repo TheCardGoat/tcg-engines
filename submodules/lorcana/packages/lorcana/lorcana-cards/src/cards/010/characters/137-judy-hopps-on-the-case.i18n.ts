@@ -45,4 +45,15 @@ export const judyHoppsOnTheCaseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Judy Hopps",
+    version: "Sobre el caso",
+    text: [
+      {
+        title: "PISTAS OCULTAS",
+        description:
+          "Cuando juegas con este personaje, si tienes otro personaje de detective en juego, puedes poner el objeto elegido en el tintero de su jugador boca abajo y ejercerlo.",
+      },
+    ],
+  },
 };

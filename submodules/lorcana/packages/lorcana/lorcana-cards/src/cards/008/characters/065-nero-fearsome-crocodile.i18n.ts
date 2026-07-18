@@ -45,4 +45,15 @@ export const neroFearsomeCrocodileI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nerón",
+    version: "Cocodrilo temible",
+    text: [
+      {
+        title: "Y MEDIO",
+        description:
+          "{E}: mueve 1 contador de daño de este personaje al personaje contrario elegido.",
+      },
+    ],
+  },
 };

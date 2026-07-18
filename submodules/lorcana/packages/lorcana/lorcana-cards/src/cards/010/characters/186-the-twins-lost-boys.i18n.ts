@@ -45,4 +45,15 @@ export const theTwinsLostBoysI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Los gemelos",
+    version: "Chicos perdidos",
+    text: [
+      {
+        title: "DOS POR UNO",
+        description:
+          "Cuando juegas con este personaje, si tienes una ubicación en juego, puedes causar 2 daños al personaje elegido.",
+      },
+    ],
+  },
 };

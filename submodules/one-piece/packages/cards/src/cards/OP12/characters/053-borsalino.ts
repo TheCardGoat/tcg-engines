@@ -38,6 +38,7 @@ export const op12Borsalino053: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Navy",
+            match: "includes",
           },
         ],
         actions: [
@@ -73,6 +74,10 @@ export const op12Borsalino053: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "removeFromField",
+        source: "opponentEffect",
+        eventFilter: {
+          targetSelf: true,
+        },
         replacementAction: {
           action: "trashFromHand",
           player: "self",

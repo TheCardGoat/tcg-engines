@@ -32,13 +32,14 @@ export const op01CrescentCutlass089: EventCard = {
           {
             condition: "leaderTrait",
             trait: "The Seven Warlords of the Sea",
+            match: "includes",
           },
         ],
         actions: [
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

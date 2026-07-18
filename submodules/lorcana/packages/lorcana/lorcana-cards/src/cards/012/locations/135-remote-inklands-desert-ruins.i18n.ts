@@ -60,4 +60,18 @@ export const remoteInklandsDesertRuinsI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Tintas remotas",
+    version: "Ruinas del desierto",
+    text: [
+      {
+        title: "VIENTOS EROSIONANTES",
+        description: "Al comienzo de tu turno, coloca la carta superior de tu mazo en tu descarte.",
+      },
+      {
+        title: "EXPEDICIÓN EXITOSA",
+        description: "Los personajes obtienen +2 {S} mientras están aquí.",
+      },
+    ],
+  },
 };

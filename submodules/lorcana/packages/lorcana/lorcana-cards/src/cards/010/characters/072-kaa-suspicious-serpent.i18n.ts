@@ -21,4 +21,9 @@ export const kaaSuspiciousSerpentI18n: Record<Languages, I18nProperties> = {
     version: "Serpente Sospettoso",
     text: "<Protetto>",
   },
+  es: {
+    name: "Kaa",
+    version: "Serpiente sospechosa",
+    text: "Pabellón",
+  },
 };

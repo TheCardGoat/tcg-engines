@@ -21,4 +21,9 @@ export const kingLouieKingOfSwingI18n: Record<Languages, I18nProperties> = {
     version: "Il Re dello Swing",
     text: "<Melodioso> 6",
   },
+  es: {
+    name: "Rey Luis",
+    version: "Rey del swing",
+    text: "Cantante 6",
+  },
 };

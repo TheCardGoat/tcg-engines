@@ -57,6 +57,7 @@ export const op03RobLucci071: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

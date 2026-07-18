@@ -17,4 +17,8 @@ export const shereKhanKeeneyedHunterI18n: Record<Languages, I18nProperties> = {
     name: "Shere Khan",
     version: "Cacciatore dallo Sguardo Acuto",
   },
+  es: {
+    name: "Shere Khan",
+    version: "Cazador de ojos agudos",
+  },
 };

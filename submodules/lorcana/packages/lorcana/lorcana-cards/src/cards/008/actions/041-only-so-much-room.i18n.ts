@@ -17,4 +17,8 @@ export const onlySoMuchRoomI18n: Record<Languages, I18nProperties> = {
     name: "Una Data Quantità",
     text: "Fai riprendere in mano al suo giocatore un personaggio a tua scelta con 2 {S} o inferiore. Riprendi in mano una carta personaggio dai tuoi scarti.",
   },
+  es: {
+    name: "Sólo hay mucho espacio",
+    text: "Devuelve el personaje elegido con 2 {S} o menos a la mano de su jugador. Devuelve una carta de personaje de tu descarte a tu mano.",
+  },
 };

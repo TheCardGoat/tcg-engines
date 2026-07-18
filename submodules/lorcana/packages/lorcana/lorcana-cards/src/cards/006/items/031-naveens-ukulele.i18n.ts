@@ -41,4 +41,14 @@ export const naveensUkuleleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El ukelele de Naveen",
+    text: [
+      {
+        title: "HAZLO CANTAR 1",
+        description:
+          "{I}, desterrar este objeto: el personaje elegido cuenta como si tuviera un costo de +3 para cantar canciones este turno.",
+      },
+    ],
+  },
 };

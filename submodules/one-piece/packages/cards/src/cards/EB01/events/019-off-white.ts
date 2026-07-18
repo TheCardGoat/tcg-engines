@@ -42,6 +42,31 @@ export const eb01OffWhite019: EventCard = {
             value: 4000,
             duration: "thisBattle",
           },
+          {
+            action: "search",
+            lookCount: 3,
+            source: {
+              player: "self",
+              zone: "deck",
+            },
+            revealCount: {
+              amount: 1,
+              upTo: true,
+            },
+            revealFilters: [
+              {
+                filter: "trait",
+                value: "Donquixote Pirates",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+            revealDestination: "hand",
+            remainderPosition: "bottom",
+          },
         ],
       },
     ],

@@ -211,7 +211,15 @@ for (const set of sets) {
     }
 
     // Parse effects from effect text
-    const effectText = card.i18n.en.effect;
+    const printedEffect = card.i18n.en.effect;
+    const effectText = [
+      printedEffect,
+      card.trigger && !/\[Trigger\]/i.test(printedEffect ?? "")
+        ? `[Trigger] ${card.trigger}`
+        : undefined,
+    ]
+      .filter((text): text is string => Boolean(text))
+      .join("\n");
     if (effectText) {
       const effects = buildCardEffects(effectText);
       if (effects) {

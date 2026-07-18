@@ -17,4 +17,8 @@ export const magicalMaidFeatherDusterI18n: Record<Languages, I18nProperties> = {
     name: "Domestica Magica",
     version: "Spolverina",
   },
+  es: {
+    name: "Doncella mágica",
+    version: "Plumero",
+  },
 };

@@ -44,4 +44,15 @@ export const sneezyStartlinglyLoudI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Estornudo",
+    version: "Sorprendentemente ruidoso",
+    text: [
+      {
+        title: "GESUNDHEIT",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

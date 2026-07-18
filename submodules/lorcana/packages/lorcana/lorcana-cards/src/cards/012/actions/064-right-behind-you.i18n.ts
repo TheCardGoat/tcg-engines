@@ -17,4 +17,8 @@ export const rightBehindYouI18n: Record<Languages, I18nProperties> = {
     name: "Ci Siamo Qui Noi",
     text: "Pesca una carta. Se hai in gioco un personaggio Sette Nani e un personaggio Principessa, puoi giocare un personaggio Sette Nani gratis.",
   },
+  es: {
+    name: "Justo detrás de ti",
+    text: "Saca una carta. Si tienes un personaje de los Siete Enanitos y un personaje de Princesa en juego, puedes jugar con un personaje de los Siete Enanos de forma gratuita.",
+  },
 };

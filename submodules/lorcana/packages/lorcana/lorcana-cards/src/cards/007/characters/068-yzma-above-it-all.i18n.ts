@@ -72,4 +72,21 @@ export const yzmaAboveItAllI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yzma",
+    version: "Por encima de todo",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "VOLVER AL TRABAJO",
+        description:
+          "Siempre que otro personaje sea desterrado en un desafío, devuelve esa carta a la mano de su jugador, luego ese jugador descarta una carta al azar.",
+      },
+    ],
+  },
 };

@@ -37,4 +37,13 @@ export const theSorcerersSpellbookI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El libro de hechizos del hechicero",
+    text: [
+      {
+        title: "CONOCIMIENTO",
+        description: "{E}, 1 {I}: Gana 1 conocimiento.",
+      },
+    ],
+  },
 };

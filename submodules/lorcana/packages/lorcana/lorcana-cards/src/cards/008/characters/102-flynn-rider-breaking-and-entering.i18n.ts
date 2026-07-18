@@ -45,4 +45,15 @@ export const flynnRiderBreakingAndEnteringI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Jinete Flynn",
+    version: "Allanamiento de morada",
+    text: [
+      {
+        title: "ESTO ES",
+        description:
+          "UN DÍA MUY GRANDE Siempre que este personaje sea desafiado, el jugador desafiante puede elegir y descartar una carta. Si no lo hacen, ganas 2 conocimientos.",
+      },
+    ],
+  },
 };

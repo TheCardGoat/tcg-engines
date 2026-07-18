@@ -73,4 +73,22 @@ export const woodyHelpingAFriendI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Leñoso",
+    version: "Ayudando a un amigo",
+    text: [
+      {
+        title: "¡AFÉRRATE!",
+        description:
+          "Cuando interpretes a este personaje, elige uno de los siguientes. Si tienes otro personaje de juguete en juego, elige ambos:",
+      },
+      {
+        title:
+          "• Puedes devolver a tu mano una carta de personaje con coste 2 o menos de tu descarte.",
+      },
+      {
+        title: "• Puedes interpretar un personaje con coste 2 o menos de forma gratuita.",
+      },
+    ],
+  },
 };

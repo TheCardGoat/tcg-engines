@@ -17,4 +17,8 @@ export const liloMakingAWishI18n: Record<Languages, I18nProperties> = {
     name: "Lilo",
     version: "Making a Wish",
   },
+  es: {
+    name: "Lilo",
+    version: "Pidiendo un deseo",
+  },
 };

@@ -17,4 +17,8 @@ export const friendOwlCantankerousNeighborI18n: Record<Languages, I18nProperties
     name: "Amico Gufo",
     version: "Vicino Irascibile",
   },
+  es: {
+    name: "Amigo búho",
+    version: "Vecino cascarrabias",
+  },
 };

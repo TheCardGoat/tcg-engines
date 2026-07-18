@@ -21,4 +21,9 @@ export const dashParrDodgeballDynamoI18n: Record<Languages, I18nProperties> = {
     version: "Turbine del Dodgeball",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Dash Parr",
+    version: "Dinamo de balón prisionero",
+    text: "Evasivo",
+  },
 };

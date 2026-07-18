@@ -68,9 +68,7 @@ export const op02DiableJambeVenaisonShoot046: EventCard = {
             },
             filters: [
               {
-                filter: "hasEffectType",
-                value: "onPlay",
-                negate: true,
+                filter: "noBaseEffect",
               },
               {
                 filter: "cost",

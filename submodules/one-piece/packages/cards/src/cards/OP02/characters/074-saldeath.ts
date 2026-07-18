@@ -27,5 +27,24 @@ export const op02Saldeath074: CharacterCard = {
   attribute: "wisdom",
   effect:
     "Your [Blugori] gains [Blocker]. (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
+  effects: {
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: "all" },
+              filters: [{ filter: "name", value: "Blugori" }],
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op02Saldeath074I18n,
 };

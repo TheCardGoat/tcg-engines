@@ -57,4 +57,17 @@ export const rhinoPowerHamsterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rinoceronte",
+    version: "Hámster de poder",
+    text: [
+      {
+        title: "Shift 2",
+      },
+      {
+        title: "BOLA ÉPICA DE IMPRESIONANTE",
+        description: "Mientras este personaje no sufre daño, obtiene Resistencia +2.",
+      },
+    ],
+  },
 };

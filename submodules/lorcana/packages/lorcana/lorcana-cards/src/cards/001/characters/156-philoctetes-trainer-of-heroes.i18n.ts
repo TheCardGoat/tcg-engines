@@ -21,4 +21,9 @@ export const philoctetesTrainerOfHeroesI18n: Record<Languages, I18nProperties> =
     version: "Trainer of Heroes",
     text: "<Support> (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
   },
+  es: {
+    name: "Filoctetes",
+    version: "Entrenador de héroes",
+    text: "Apoyo",
+  },
 };

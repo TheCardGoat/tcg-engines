@@ -65,4 +65,20 @@ export const wasabiMethodicalEngineerP2ChallengeI18n: Record<Languages, I18nProp
       },
     ],
   },
+  es: {
+    name: "Wasabi",
+    version: "Ingeniero Metódico",
+    text: [
+      {
+        title: "HOJAS DE FURIA",
+        description:
+          "Cuando juegas con este personaje, puedes desterrar el objeto elegido. Su jugador gana 1 conocimiento.",
+      },
+      {
+        title: "REFLEJOS RÁPIDOS",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

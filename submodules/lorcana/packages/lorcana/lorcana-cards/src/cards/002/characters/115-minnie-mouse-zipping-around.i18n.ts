@@ -17,4 +17,8 @@ export const minnieMouseZippingAroundI18n: Record<Languages, I18nProperties> = {
     name: "Minnie Mouse",
     version: "Zipping Around",
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Correr alrededor",
+  },
 };

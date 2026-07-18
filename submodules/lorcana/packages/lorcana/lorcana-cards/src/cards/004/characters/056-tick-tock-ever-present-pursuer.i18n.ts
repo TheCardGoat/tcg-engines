@@ -21,4 +21,9 @@ export const ticktockEverpresentPursuerI18n: Record<Languages, I18nProperties> =
     version: "Inseguitore Onnipresente",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Tic-tac",
+    version: "Perseguidor siempre presente",
+    text: "Evasivo",
+  },
 };

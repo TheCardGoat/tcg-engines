@@ -17,4 +17,8 @@ export const ghostlyTaleI18n: Record<Languages, I18nProperties> = {
     name: "Storie di Fantasmi",
     text: "Impegna tutti i personaggi avversari con 2 {S} o inferiore.",
   },
+  es: {
+    name: "Cuento fantasmal",
+    text: "Ejercita a todos los personajes opuestos con 2 {S} o menos.",
+  },
 };

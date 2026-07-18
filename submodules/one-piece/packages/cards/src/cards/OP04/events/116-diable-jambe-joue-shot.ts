@@ -42,6 +42,29 @@ export const op04DiableJambeJoueShot116: EventCard = {
             value: 6000,
             duration: "thisBattle",
           },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 2,
+                },
+              ],
+            },
+            condition: {
+              condition: "totalLifeCount",
+              comparison: "lte",
+              value: 4,
+            },
+          },
         ],
       },
       {

@@ -58,4 +58,18 @@ export const magicBroomBrigadeCommanderI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Escoba magica",
+    version: "Comandante de brigada",
+    text: [
+      {
+        title: "Resistir +1",
+      },
+      {
+        title: "EJÉRCITO DE ESCOBAS",
+        description:
+          "Este personaje obtiene +2 {S} por cada otro personaje llamado Magic Broom que tengas en juego.",
+      },
+    ],
+  },
 };

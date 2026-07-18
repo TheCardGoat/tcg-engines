@@ -61,6 +61,7 @@ export const op05EmporioEnergyHormone018: EventCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -92,6 +93,7 @@ export const op05EmporioEnergyHormone018: EventCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

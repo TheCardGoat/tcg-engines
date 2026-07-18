@@ -6,6 +6,7 @@ import {
   createMockUnit,
   createStaticResources,
   type CandidateStrategy,
+  type BotDecisionSink,
   type MatchStaticResources,
   type Player,
   type PlayerId,
@@ -68,6 +69,7 @@ export interface DevRuntimeBotHandle {
   setMode(mode: "auto" | "step" | "paused"): void;
   setSpeed(speed: "fast" | "balanced" | "slow"): void;
   setStrategy(strategy: CandidateStrategy): void;
+  subscribeDecisions(listener: BotDecisionSink): () => void;
   stepOnce(): TakeAutomatedActionWithFallbackResult | undefined;
   dispose(): void;
 }

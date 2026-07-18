@@ -68,4 +68,19 @@ export const liloStitchFunlovingFriendsIconicI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Lilo y puntada",
+    version: "Amigos amantes de la diversión",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "Resistir +1",
+      },
+      {
+        title: "Apoyo",
+      },
+    ],
+  },
 };

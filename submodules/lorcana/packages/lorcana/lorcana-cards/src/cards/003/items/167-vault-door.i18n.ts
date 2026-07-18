@@ -38,4 +38,13 @@ export const vaultDoorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Puerta de la bóveda",
+    text: [
+      {
+        title: "SELLADO",
+        description: "Tus ubicaciones y personajes en las ubicaciones obtienen Resistencia +1.",
+      },
+    ],
+  },
 };

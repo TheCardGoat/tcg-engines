@@ -75,18 +75,18 @@ export const op05MonkeyDLuffy119: CharacterCard = {
               },
               filters: [
                 {
-                  filter: "excludeName",
-                  value: "__self__",
+                  filter: "excludeSelf",
                 },
               ],
-              self: false,
             },
             position: "bottom",
+            order: "any",
           },
           {
             action: "extraTurn",
           },
         ],
+        optional: true,
       },
       {
         trigger: "activateMain",

@@ -57,4 +57,18 @@ export const pinocchioStringsAttachedEpicI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Pinocho",
+    version: "Cuerdas atadas",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "TENGO QUE MANTENER MUCHO SILENCIO",
+        description:
+          "Una vez durante tu turno, cada vez que prepares este personaje, puedes robar una carta.",
+      },
+    ],
+  },
 };

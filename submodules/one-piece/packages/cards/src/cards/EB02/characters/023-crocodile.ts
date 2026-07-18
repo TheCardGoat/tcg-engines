@@ -31,6 +31,11 @@ export const eb02Crocodile023: CharacterCard = {
     effects: [
       {
         trigger: "whenLeaving",
+        eventFilter: {
+          player: "opponent",
+          causedBy: "self",
+          toZone: "hand",
+        },
         conditions: [
           {
             condition: "turn",

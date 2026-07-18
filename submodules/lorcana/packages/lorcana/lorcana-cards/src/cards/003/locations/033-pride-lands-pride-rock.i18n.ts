@@ -61,4 +61,19 @@ export const prideLandsPrideRockI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tierras del Orgullo",
+    version: "Roca del orgullo",
+    text: [
+      {
+        title: "TODOS ESTAMOS CONECTADOS",
+        description: "Los personajes obtienen +2 {W} mientras están aquí.",
+      },
+      {
+        title: "LEÓN CASA",
+        description:
+          "Si tienes un personaje de Príncipe o Rey aquí, pagas 1 {I} menos para interpretar personajes.",
+      },
+    ],
+  },
 };

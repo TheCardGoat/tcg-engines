@@ -60,4 +60,18 @@ export const rafikiEtherealGuideI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rafiki",
+    version: "Guía etérea",
+    text: [
+      {
+        title: "Shift 7",
+      },
+      {
+        title: "SINTONIZACIÓN ASTRAL",
+        description:
+          "Durante tu turno, siempre que se ponga una carta en tu tintero, podrás robar una carta.",
+      },
+    ],
+  },
 };

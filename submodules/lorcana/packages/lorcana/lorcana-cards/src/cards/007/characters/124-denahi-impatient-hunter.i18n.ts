@@ -50,4 +50,16 @@ export const denahiImpatientHunterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Denahi",
+    version: "Cazador impaciente",
+    text: [
+      {
+        title: "Imprudente",
+      },
+      {
+        title: "Resistir +2",
+      },
+    ],
+  },
 };

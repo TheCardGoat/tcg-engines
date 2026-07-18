@@ -45,4 +45,15 @@ export const maxLoyalSheepdogI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Máx.",
+    version: "Perro pastor leal",
+    text: [
+      {
+        title: "AQUI NIÑO",
+        description:
+          "Si tienes un personaje llamado Príncipe Eric en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+    ],
+  },
 };

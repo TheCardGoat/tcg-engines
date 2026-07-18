@@ -28,11 +28,11 @@ export const op06MonkeyDLuffy013: CharacterCard = {
   color: ["red"],
   rarity: "R",
   setId: "OP06",
-  cost: 3,
+  cost: 2,
   power: 3000,
   counter: 1000,
   trigger: "Activate this card's [On Play] effect.",
-  traits: ["FILM Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "strike",
   artVariants: [
     {
@@ -63,10 +63,20 @@ export const op06MonkeyDLuffy013: CharacterCard = {
               {
                 filter: "trait",
                 value: "FILM",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "onPlay",
           },
         ],
       },

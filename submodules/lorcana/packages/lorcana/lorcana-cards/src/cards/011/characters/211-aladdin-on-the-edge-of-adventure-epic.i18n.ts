@@ -45,4 +45,15 @@ export const aladdinOnTheEdgeOfAdventureEpicI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Aladino",
+    version: "Al borde de la aventura",
+    text: [
+      {
+        title: "RÁPIDO EN SUS PIES",
+        description:
+          "Cada vez que juegas una acción, este personaje gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

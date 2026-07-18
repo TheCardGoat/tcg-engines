@@ -60,6 +60,7 @@ export const op13Shanks028: CharacterCard = {
             action: "playRestriction",
             restriction: "cannotPlay",
             filters: [],
+            sourceZones: ["hand"],
             duration: "thisTurn",
           },
         ],

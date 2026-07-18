@@ -53,10 +53,12 @@ export const op02Magellan085: CharacterCard = {
         ],
         actions: [
           {
-            action: "opponentReturnDon",
+            action: "returnDon",
+            player: "opponent",
             amount: 1,
           },
         ],
+        optional: true,
       },
       {
         trigger: "onKo",
@@ -68,7 +70,8 @@ export const op02Magellan085: CharacterCard = {
         ],
         actions: [
           {
-            action: "opponentReturnDon",
+            action: "returnDon",
+            player: "opponent",
             amount: 2,
           },
         ],

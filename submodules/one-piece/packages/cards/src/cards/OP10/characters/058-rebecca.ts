@@ -46,24 +46,85 @@ export const op10Rebecca058: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "existsOnField",
-            zone: "character",
-            filters: [
-              {
-                filter: "cost",
-                comparison: "gte",
-                value: 8,
-              },
-            ],
-          },
-        ],
         actions: [
           {
             action: "draw",
             player: "self",
             amount: 1,
+            condition: {
+              condition: "existsOnField",
+              zone: "character",
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 8,
+                },
+              ],
+            },
+          },
+          {
+            action: "revealFromHand",
+            player: "self",
+            amount: 2,
+            upTo: true,
+            filters: [
+              {
+                filter: "excludeName",
+                value: "Rebecca",
+              },
+              {
+                filter: "trait",
+                value: "Dressrosa",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 7,
+              },
+            ],
+            thenActions: [
+              {
+                action: "playGrouped",
+                source: {
+                  player: "self",
+                  zone: "hand",
+                },
+                groups: [
+                  {
+                    count: {
+                      amount: 1,
+                      upTo: true,
+                    },
+                  },
+                  {
+                    count: {
+                      amount: 1,
+                      upTo: true,
+                    },
+                    filters: [
+                      {
+                        filter: "cost",
+                        comparison: "lte",
+                        value: 4,
+                      },
+                    ],
+                  },
+                ],
+                playStates: {
+                  single: "active",
+                  multiple: ["active", "rested"],
+                  byGroup: true,
+                },
+                chooseOnPlayOrder: true,
+                previousActionTargets: true,
+              },
+            ],
           },
         ],
       },

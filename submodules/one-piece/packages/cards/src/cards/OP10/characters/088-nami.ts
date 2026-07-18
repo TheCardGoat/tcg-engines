@@ -35,6 +35,34 @@ export const op10Nami088: CharacterCard = {
           {
             cost: "restThisCard",
           },
+          {
+            cost: "restCards",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Dressrosa",
+                match: "includes",
+              },
+              {
+                filter: "anyOf",
+                groups: [
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "leader",
+                    },
+                  ],
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "stage",
+                    },
+                  ],
+                ],
+              },
+            ],
+          },
         ],
         actions: [
           {

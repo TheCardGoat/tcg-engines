@@ -57,4 +57,18 @@ export const drBushrootEvilBotanistI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dr. Bushroot",
+    version: "Botánico malvado",
+    text: [
+      {
+        title: "<Guardián>",
+      },
+      {
+        title: "Lo justo es lo justo",
+        description:
+          "Siempre que se desafía a este personaje, el oponente elegido elige y descarta una carta.",
+      },
+    ],
+  },
 };

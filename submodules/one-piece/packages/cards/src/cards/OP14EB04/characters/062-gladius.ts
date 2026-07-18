@@ -26,7 +26,7 @@ export const op14eb04Gladius062: CharacterCard = {
   traits: ["Donquixote Pirates"],
   attribute: "special",
   effect:
-    "[On K.O.] DON!! 1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): K.O. or rest up to 1 of your opponent's Characters with a base power of 6000 or less.",
+    "[On K.O.] DON!! −1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): K.O. or rest up to 1 of your opponent's Characters with a base power of 6000 or less.",
   effects: {
     effects: [
       {

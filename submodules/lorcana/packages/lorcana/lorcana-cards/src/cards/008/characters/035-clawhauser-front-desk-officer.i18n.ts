@@ -52,4 +52,16 @@ export const clawhauserFrontDeskOfficerI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Garrahauser",
+    version: "Oficial de recepción",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "Cantante 4",
+      },
+    ],
+  },
 };

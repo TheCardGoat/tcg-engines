@@ -17,4 +17,8 @@ export const chienpoSnowWarriorI18n: Record<Languages, I18nProperties> = {
     name: "Chien-Po",
     version: "Guerriero delle Nevi",
   },
+  es: {
+    name: "Chien Po",
+    version: "Guerrero de la nieve",
+  },
 };

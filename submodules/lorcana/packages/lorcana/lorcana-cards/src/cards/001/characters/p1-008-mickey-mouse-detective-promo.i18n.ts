@@ -45,4 +45,15 @@ export const mickeyMouseDetectiveP1PromoI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Detective",
+    text: [
+      {
+        title: "CONSEGUIR",
+        description:
+          "UNA PISTA Cuando juegas con este personaje, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

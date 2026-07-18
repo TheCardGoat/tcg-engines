@@ -17,4 +17,8 @@ export const theHorsemanStrikesI18n: Record<Languages, I18nProperties> = {
     name: "Il Cavaliere Colpisce!",
     text: "Pesca una carta. Puoi esiliare un personaggio a tua scelta con <Sfuggente>.",
   },
+  es: {
+    name: "¡El jinete ataca!",
+    text: "Saca una carta. Puedes desterrar al personaje elegido con Evasivo.",
+  },
 };

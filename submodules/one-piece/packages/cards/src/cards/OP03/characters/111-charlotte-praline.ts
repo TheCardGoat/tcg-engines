@@ -25,6 +25,5 @@ export const op03CharlottePraline111: CharacterCard = {
   counter: 1000,
   traits: ["The Sun Pirates Merfolk"],
   attribute: "wisdom",
-  effect: "NULL",
   i18n: op03CharlottePraline111I18n,
 };

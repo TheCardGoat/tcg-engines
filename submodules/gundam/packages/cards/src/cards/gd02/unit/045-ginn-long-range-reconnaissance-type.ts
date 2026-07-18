@@ -4,6 +4,7 @@ export const gd02GinnLongRangeReconnaissanceType045: UnitCard = {
   cardNumber: "GD02-045",
   name: "GINN Long-Range Reconnaissance Type",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["zaft"],
   id: "GD02-045",
@@ -60,7 +61,7 @@ export const gd02GinnLongRangeReconnaissanceType045: UnitCard = {
                 value: 5,
               },
               {
-                type: "selfIsAttacking",
+                type: "isAttackingUnit",
               },
             ],
           },

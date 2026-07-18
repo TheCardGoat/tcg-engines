@@ -44,4 +44,14 @@ export const dumptruckKarnagesSecondMateI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Camión volquete",
+    version: "Segundo oficial de Karnage",
+    text: [
+      {
+        title: "DÉJAME EN ELLOS",
+        description: "Cuando juegas con este personaje, puedes causar 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

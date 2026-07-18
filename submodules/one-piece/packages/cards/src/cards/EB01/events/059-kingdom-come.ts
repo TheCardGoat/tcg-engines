@@ -40,6 +40,15 @@ export const eb01KingdomCome059: EventCard = {
               },
             },
           },
+          {
+            action: "removeFromLife",
+            player: "self",
+            count: {
+              untilRemaining: 1,
+            },
+            destination: "trash",
+            position: "top",
+          },
         ],
       },
       {

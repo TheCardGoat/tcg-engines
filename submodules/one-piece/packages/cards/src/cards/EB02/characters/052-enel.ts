@@ -45,14 +45,6 @@ export const eb02Enel052: CharacterCard = {
     effects: [
       {
         trigger: "whenAttacking",
-        conditions: [
-          {
-            condition: "lifeCount",
-            player: "self",
-            comparison: "lte",
-            value: 1,
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -71,6 +63,12 @@ export const eb02Enel052: CharacterCard = {
               },
             },
             position: "top",
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 1,
+            },
           },
           {
             action: "modifyPower",
@@ -87,6 +85,32 @@ export const eb02Enel052: CharacterCard = {
           },
         ],
         optional: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Sky Island",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "permanent",
+          },
+        ],
       },
     ],
   },

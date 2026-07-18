@@ -44,4 +44,14 @@ export const andysRoomHomeBaseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La habitación de Andy",
+    version: "Base de operaciones",
+    text: [
+      {
+        title: "EL FAVORITO DE ANDY",
+        description: "Si bien solo tienes 1 personaje aquí, obtienen +2 {W} y +1 {L}.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const grandmotherWillowAncientAdvisorEpicI18n: Record<Languages, I18nProp
       },
     ],
   },
+  es: {
+    name: "Abuela sauce",
+    version: "Asesor antiguo",
+    text: [
+      {
+        title: "ALLANAR EL CAMINO",
+        description:
+          "Una vez durante tu turno, pagas 1 {I} menos por el siguiente personaje que juegues en este turno.",
+      },
+    ],
+  },
 };

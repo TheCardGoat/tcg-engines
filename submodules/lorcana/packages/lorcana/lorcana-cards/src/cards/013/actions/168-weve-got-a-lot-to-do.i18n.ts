@@ -35,4 +35,8 @@ export const weveGotALotToDoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "¡Tenemos mucho que hacer!",
+    text: "Coloque el elemento o ubicación elegido en el tintero de su jugador boca abajo y ejerza.",
+  },
 };

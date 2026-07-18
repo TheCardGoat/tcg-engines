@@ -41,4 +41,14 @@ export const jasmineVineExpertI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jazmín",
+    version: "Experto en vid",
+    text: [
+      {
+        title: "RECURSOS COMPARTIDOS",
+        description: "Cuando juegas con este personaje, cada jugador roba una carta.",
+      },
+    ],
+  },
 };

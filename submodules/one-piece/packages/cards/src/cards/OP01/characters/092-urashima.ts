@@ -25,6 +25,5 @@ export const op01Urashima092: CharacterCard = {
   counter: 1000,
   traits: ["Land of Wano"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op01Urashima092I18n,
 };

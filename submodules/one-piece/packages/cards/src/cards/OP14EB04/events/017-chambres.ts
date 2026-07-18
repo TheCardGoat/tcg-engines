@@ -30,7 +30,7 @@ export const op14eb04Chambres017: EventCard = {
         trigger: "main",
         actions: [
           {
-            action: "setPower",
+            action: "swapBasePower",
             target: {
               player: "opponent",
               zones: ["character"],
@@ -45,7 +45,6 @@ export const op14eb04Chambres017: EventCard = {
                 },
               ],
             },
-            value: 0,
             duration: "thisTurn",
           },
         ],

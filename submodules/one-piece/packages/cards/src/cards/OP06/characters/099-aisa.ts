@@ -33,10 +33,10 @@ export const op06Aisa099: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
-            action: "rearrangeDeck",
-            player: "self",
-            count: 1,
+            action: "lookAtLife",
+            player: "either",
             position: "topOrBottom",
+            upTo: true,
           },
         ],
       },

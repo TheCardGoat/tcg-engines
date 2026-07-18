@@ -17,4 +17,8 @@ export const powerSurgeI18n: Record<Languages, I18nProperties> = {
     name: "Scarica di Energia",
     text: "Ogni giocatore aggiunge le prime 2 carte del suo mazzo al suo calamaio, a faccia in giù e impegnate.",
   },
+  es: {
+    name: "Sobretensión",
+    text: "Cada jugador coloca las 2 primeras cartas de su mazo en su tintero boca abajo y las ejerce.",
+  },
 };

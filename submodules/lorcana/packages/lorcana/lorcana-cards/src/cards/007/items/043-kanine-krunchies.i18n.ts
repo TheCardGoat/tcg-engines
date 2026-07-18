@@ -37,4 +37,13 @@ export const kanineKrunchiesI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Krunchies Kanine",
+    text: [
+      {
+        title: "PUEDES SER",
+        description: "UN CAMPEÓN TAMBIÉN Tus personajes Cachorros obtienen +1 {W}.",
+      },
+    ],
+  },
 };

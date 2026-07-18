@@ -45,4 +45,15 @@ export const ellieFredricksenAdventurePartnerI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Ellie Fredricksen",
+    version: "Compañero de aventuras",
+    text: [
+      {
+        title: "siempre contigo",
+        description:
+          "Cuando este personaje sea desterrado, puedes poner esta carta en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

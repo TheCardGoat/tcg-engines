@@ -45,4 +45,15 @@ export const honeyLemonChemicalGeniusI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Miel limón",
+    version: "Genio químico",
+    text: [
+      {
+        title: "AQUÍ ESTÁ LA MEJOR PARTE",
+        description:
+          "Cuando juegas con este personaje, puedes pagar 2 {I} para que cada oponente elija y descarte una carta.",
+      },
+    ],
+  },
 };

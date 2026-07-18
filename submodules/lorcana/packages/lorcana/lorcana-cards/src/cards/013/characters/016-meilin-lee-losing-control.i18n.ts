@@ -45,4 +45,15 @@ export const meilinLeeLosingControlI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Meilin Lee",
+    version: "Perdiendo el control",
+    text: [
+      {
+        title: "PODER DEL PANDA ROJO",
+        description:
+          "Cuando juegues con este personaje, mira las 4 cartas superiores de tu mazo. Puedes revelar una carta de personaje de Red Panda o una carta de canción y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

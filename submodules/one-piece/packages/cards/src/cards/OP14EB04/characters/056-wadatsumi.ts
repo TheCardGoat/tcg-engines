@@ -23,9 +23,48 @@ export const op14eb04Wadatsumi056: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 2000,
-  traits: ["Fish-Man The Sun Pirates"],
+  traits: ["Fish-Man", "The Sun Pirates"],
   attribute: "strike",
   effect:
     "This Character cannot attack.\nWhen a card is trashed from your hand by an effect, this Character's effect is negated during this turn.",
+  effects: {
+    effects: [
+      {
+        trigger: "whenCardTrashedFromHandByEffect",
+        actions: [
+          {
+            action: "negateEffects",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "thisTurn",
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "cannotAttack",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op14eb04Wadatsumi056I18n,
 };

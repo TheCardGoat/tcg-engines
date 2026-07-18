@@ -1,6 +1,7 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import type { ClientLoaderFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { isPlayableGameSlug, type PlayableGameSlug } from "@tcg/protocol";
+import { CanonicalUserSettingsSchema, type CanonicalUserSettings } from "@tcg/game-page-contract";
 import type { GatewayTicket } from "@tcg/simulator-runtime/gateway";
 import type { SessionResult } from "@tcg/shared/auth";
 
@@ -123,8 +124,8 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
     matchId: gatewayTicketMatchId,
     playerId: gatewayTicketPlayerId,
   });
-  const simulatorSettings = auth?.session
-    ? await fetchSimulatorSettings({ request, env: process.env })
+  const settingsBootstrap = auth?.session
+    ? await fetchViewerSettings({ request, env: process.env })
     : null;
   return {
     auth,
@@ -132,7 +133,8 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
     gameSlug,
     gatewayTicket,
     simulatorRouteData,
-    simulatorSettings,
+    simulatorSettings: settingsBootstrap?.simulatorSettings ?? null,
+    viewerSettings: settingsBootstrap?.viewerSettings ?? null,
     urlGatewayCredentials,
   };
 }
@@ -163,12 +165,14 @@ export default function Root() {
 }
 
 interface UserSettingsResponse {
+  playerSettings?: CanonicalUserSettings["playerSettings"];
+  gameSettings?: CanonicalUserSettings["gameSettings"];
   gameplaySettings?: {
     soundVolume?: number;
   };
 }
 
-async function fetchSimulatorSettings({
+async function fetchViewerSettings({
   request,
   env,
   fetcher = fetch,
@@ -176,7 +180,10 @@ async function fetchSimulatorSettings({
   request: Request;
   env: NodeJS.ProcessEnv;
   fetcher?: typeof fetch;
-}): Promise<SimulatorSettings | null> {
+}): Promise<{
+  viewerSettings: CanonicalUserSettings | null;
+  simulatorSettings: SimulatorSettings | null;
+} | null> {
   try {
     const response = await fetcher(apiUrl("platform", "/users/me/settings", env), {
       headers: forwardedRequestHeaders(request),
@@ -185,8 +192,18 @@ async function fetchSimulatorSettings({
       return null;
     }
     const body = (await response.json()) as UserSettingsResponse;
-    const soundVolume = body.gameplaySettings?.soundVolume;
-    return soundVolume === undefined ? null : normalizeSimulatorSettings({ soundVolume });
+    const parsed = CanonicalUserSettingsSchema.safeParse({
+      playerSettings: body.playerSettings ?? {},
+      gameSettings: body.gameSettings ?? {},
+    });
+    const viewerSettings = parsed.success ? parsed.data : null;
+    const soundVolume =
+      viewerSettings?.playerSettings.soundVolume ?? body.gameplaySettings?.soundVolume;
+    return {
+      viewerSettings,
+      simulatorSettings:
+        soundVolume === undefined ? null : normalizeSimulatorSettings({ soundVolume }),
+    };
   } catch {
     return null;
   }

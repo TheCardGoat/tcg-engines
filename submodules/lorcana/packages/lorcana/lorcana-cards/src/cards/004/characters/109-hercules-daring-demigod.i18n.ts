@@ -49,4 +49,16 @@ export const herculesDaringDemigodI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hércules",
+    version: "Semidiós atrevido",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "Imprudente",
+      },
+    ],
+  },
 };

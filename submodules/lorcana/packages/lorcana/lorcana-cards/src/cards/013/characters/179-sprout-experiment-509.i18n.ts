@@ -58,4 +58,18 @@ export const sproutExperiment509I18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Brotar",
+    version: "Experimento 509",
+    text: [
+      {
+        title: "<Resistir> +1",
+      },
+      {
+        title: "Mal botánico",
+        description:
+          "Cuando juegas con este personaje, puedes elegir y descartar una carta de personaje Alien o una carta de ubicación de tu mano. Si lo haces, inflige 2 daños al personaje elegido.",
+      },
+    ],
+  },
 };

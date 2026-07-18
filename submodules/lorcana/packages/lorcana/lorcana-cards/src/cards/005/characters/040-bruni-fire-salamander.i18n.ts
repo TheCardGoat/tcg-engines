@@ -53,4 +53,17 @@ export const bruniFireSalamanderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bruñido",
+    version: "Salamandra de fuego",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "REGALO DE DESPEDIDA",
+        description: "Cuando este personaje es desterrado, puedes robar una carta.",
+      },
+    ],
+  },
 };

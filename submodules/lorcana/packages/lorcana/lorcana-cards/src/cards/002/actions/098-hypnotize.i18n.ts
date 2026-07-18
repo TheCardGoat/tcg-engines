@@ -25,4 +25,8 @@ export const hypnotizeI18n: Record<Languages, I18nProperties> = {
     name: "Ipnotizzare",
     text: "Ogni avversario sceglie e scarta una carta. Pesca una carta.",
   },
+  es: {
+    name: "Hipnotizar",
+    text: "Cada oponente elige y descarta una carta. Saca una carta.",
+  },
 };

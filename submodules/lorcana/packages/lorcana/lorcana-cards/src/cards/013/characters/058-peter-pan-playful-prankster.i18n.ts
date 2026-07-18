@@ -45,4 +45,15 @@ export const peterPanPlayfulPranksterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Peter Pan",
+    version: "Bromista juguetón",
+    text: [
+      {
+        title: "Quédate ahí",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido no puede estar listo al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

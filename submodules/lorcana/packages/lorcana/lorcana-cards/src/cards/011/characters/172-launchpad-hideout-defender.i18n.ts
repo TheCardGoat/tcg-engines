@@ -42,4 +42,14 @@ export const launchpadHideoutDefenderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Plataforma de lanzamiento",
+    version: "Defensor del escondite",
+    text: [
+      {
+        title: "GUARDIA DE PIE",
+        description: "Tus ubicaciones obtienen Resistencia +1.",
+      },
+    ],
+  },
 };

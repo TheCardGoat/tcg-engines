@@ -41,4 +41,14 @@ export const musketeerTabardI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tabardo de mosquetero",
+    text: [
+      {
+        title: "TODOS PARA UNO Y UNO PARA TODOS",
+        description:
+          "Siempre que uno de tus personajes con Bodyguard sea desterrado, podrás robar una carta.",
+      },
+    ],
+  },
 };

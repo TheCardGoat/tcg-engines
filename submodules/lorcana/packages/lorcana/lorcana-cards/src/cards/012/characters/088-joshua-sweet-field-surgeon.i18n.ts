@@ -45,4 +45,15 @@ export const joshuaSweetFieldSurgeonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Josué dulce",
+    version: "Cirujano de campo",
+    text: [
+      {
+        title: "SIN PACIENCIA",
+        description:
+          "Siempre que se desafía a este personaje, el oponente elegido elige y descarta una carta.",
+      },
+    ],
+  },
 };

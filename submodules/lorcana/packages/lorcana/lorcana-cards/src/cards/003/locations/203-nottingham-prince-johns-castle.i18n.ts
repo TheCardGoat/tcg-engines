@@ -17,4 +17,8 @@ export const nottinghamPrinceJohnsCastleI18n: Record<Languages, I18nProperties> 
     name: "Nottingham",
     version: "Castello del Principe Giovanni",
   },
+  es: {
+    name: "Nottingham",
+    version: "Castillo del Príncipe Juan",
+  },
 };

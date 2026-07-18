@@ -45,4 +45,15 @@ export const elsasIcePalacePlaceOfSolitudeC1ChallengeI18n: Record<Languages, I18
       },
     ],
   },
+  es: {
+    name: "Palacio de Hielo de Elsa",
+    version: "Lugar de soledad",
+    text: [
+      {
+        title: "INVIERNO ETERNO",
+        description:
+          "Cuando juegues en este lugar, elige un personaje ejercido. Mientras esta ubicación esté en juego, ese personaje no puede prepararse al comienzo de su turno.",
+      },
+    ],
+  },
 };

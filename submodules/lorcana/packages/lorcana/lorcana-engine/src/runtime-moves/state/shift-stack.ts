@@ -25,7 +25,7 @@ function zoneFromZoneKey(zoneKey: string | undefined): string {
     return "unknown";
   }
 
-  return zoneKey.includes(":") ? zoneKey.split(":", 1)[0] ?? zoneKey : zoneKey;
+  return zoneKey.includes(":") ? (zoneKey.split(":", 1)[0] ?? zoneKey) : zoneKey;
 }
 
 export function getStackedCardIds(
@@ -95,9 +95,17 @@ export function attachAdditionalShiftTarget(
   const additionalCardsUnder = [oldTopId, ...getCardsUnder(oldTopMeta)];
   const newTopMeta = ctx.cards.getMeta(String(newTopId)) as LorcanaCardMeta | undefined;
   const cardsUnder = [...getCardsUnder(newTopMeta), ...additionalCardsUnder];
+  const inheritsExertedState = newTopMeta?.state === "exerted" || oldTopMeta?.state === "exerted";
+  const inheritsDryingState = Boolean(newTopMeta?.isDrying || oldTopMeta?.isDrying);
+  const inheritedDamage = Number(newTopMeta?.damage ?? 0) + Number(oldTopMeta?.damage ?? 0);
 
   ctx.framework.zones.moveCard(oldTopId, { zone: "limbo", playerId: ownerId });
-  ctx.cards.patchMeta(String(newTopId), { cardsUnder });
+  ctx.cards.patchMeta(String(newTopId), {
+    cardsUnder,
+    state: inheritsExertedState ? "exerted" : newTopMeta?.state,
+    isDrying: inheritsDryingState,
+    damage: inheritedDamage,
+  });
 
   for (const underCardId of additionalCardsUnder) {
     ctx.cards.setMeta(String(underCardId), {
@@ -182,7 +190,24 @@ export function moveCardOutOfPlayWithStack(
 ): CardInstanceId[] {
   const movedCardIds = getStackedCardIds(ctx, cardId);
   const startIndex = options?.index;
-  const replacementMetaPatches = new Map<CardInstanceId, Partial<LorcanaCardMeta>>();
+  const topOwnerId =
+    (ctx.framework.zones.getCardOwner(cardId) as PlayerId | undefined) ??
+    (destinationZoneRef.playerId as PlayerId | undefined);
+  const topSourceZoneKey = ctx.framework.zones.getCardZone(cardId);
+  let replacedStackEvent: Extract<ReplacementEvent, { kind: "zone-change" }> | undefined;
+
+  if (topOwnerId) {
+    const zoneChangeEvent: Extract<ReplacementEvent, { kind: "zone-change" }> = {
+      kind: "zone-change",
+      eventId: `zone-change:${cardId}:${zoneFromZoneKey(topSourceZoneKey)}:${destinationZoneRef.zone}`,
+      controllerId: topOwnerId,
+      cardId,
+      playerId: topOwnerId,
+      fromZone: zoneFromZoneKey(topSourceZoneKey),
+      toZone: destinationZoneRef.zone,
+    };
+    replacedStackEvent = applyReplacementEffects(ctx, zoneChangeEvent);
+  }
 
   // Before moving, check if any card in the stack is a location.
   // Characters at that location need their association cleared.
@@ -197,48 +222,27 @@ export function moveCardOutOfPlayWithStack(
     const ownerId =
       (ctx.framework.zones.getCardOwner(movedCardId) as PlayerId | undefined) ??
       (destinationZoneRef.playerId as PlayerId | undefined);
-    const sourceZoneKey = ctx.framework.zones.getCardZone(movedCardId);
-    let replacedEvent: Extract<ReplacementEvent, { kind: "zone-change" }> | undefined;
-    if (ownerId) {
-      const zoneChangeEvent: Extract<ReplacementEvent, { kind: "zone-change" }> = {
-        kind: "zone-change",
-        eventId: `zone-change:${movedCardId}:${zoneFromZoneKey(sourceZoneKey)}:${destinationZoneRef.zone}`,
-        controllerId: ownerId,
-        cardId: movedCardId,
-        playerId: ownerId,
-        fromZone: zoneFromZoneKey(sourceZoneKey),
-        toZone: destinationZoneRef.zone,
-      };
-      replacedEvent = applyReplacementEffects(ctx, zoneChangeEvent);
-    }
     const moveZoneRef = {
-      zone: replacedEvent?.toZone ?? destinationZoneRef.zone,
+      zone: replacedStackEvent?.toZone ?? destinationZoneRef.zone,
       playerId: ownerId ?? destinationZoneRef.playerId,
     };
     const moveOptions =
-      replacedEvent?.position === "bottom"
+      replacedStackEvent?.position === "bottom"
         ? { index: 0 }
         : startIndex === undefined
           ? undefined
           : { index: startIndex + index };
     ctx.framework.zones.moveCard(movedCardId, moveZoneRef, moveOptions);
     const metaPatch: Partial<LorcanaCardMeta> = {};
-    if (replacedEvent?.replacementState) {
-      metaPatch.state = replacedEvent.replacementState;
+    if (replacedStackEvent?.replacementState) {
+      metaPatch.state = replacedStackEvent.replacementState;
     }
-    if (replacedEvent?.replacementPublicFaceState) {
-      metaPatch.publicFaceState = replacedEvent.replacementPublicFaceState;
+    if (replacedStackEvent?.replacementPublicFaceState) {
+      metaPatch.publicFaceState = replacedStackEvent.replacementPublicFaceState;
     }
-    if (Object.keys(metaPatch).length > 0) {
-      replacementMetaPatches.set(movedCardId, metaPatch);
-    }
-  }
-
-  for (const movedCardId of movedCardIds) {
     ctx.cards.clearMeta(String(movedCardId));
-    const replacementMetaPatch = replacementMetaPatches.get(movedCardId);
-    if (replacementMetaPatch) {
-      ctx.cards.patchMeta(String(movedCardId), replacementMetaPatch);
+    if (Object.keys(metaPatch).length > 0) {
+      ctx.cards.patchMeta(String(movedCardId), metaPatch);
     }
   }
 

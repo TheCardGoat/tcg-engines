@@ -42,24 +42,48 @@ export const op07DemonicAuraNineSwordStyleAsuraDemonNineFlash036: EventCard = {
             value: 3000,
             duration: "thisTurn",
           },
+        ],
+      },
+      {
+        trigger: "main",
+        costs: [
+          {
+            cost: "restCards",
+            amount: 1,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+              {
+                filter: "cost",
+                comparison: "gte",
+                value: 3,
+              },
+            ],
+          },
+        ],
+        actions: [
           {
             action: "rest",
             target: {
-              player: "self",
+              player: "opponent",
               zones: ["character"],
               count: {
                 amount: 1,
+                upTo: true,
               },
               filters: [
                 {
                   filter: "cost",
-                  comparison: "gte",
-                  value: 3,
+                  comparison: "lte",
+                  value: 5,
                 },
               ],
             },
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

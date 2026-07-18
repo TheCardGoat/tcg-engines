@@ -42,21 +42,38 @@ export const op05Enel098: LeaderCard = {
   effect:
     "[Opponent's Turn][Once Per Turn] When your number of Life cards becomes 0, add 1 card from the top of your deck to the top of your Life cards. Then, trash 1 card from your hand.",
   effects: {
-    permanentEffects: [
+    effects: [
       {
+        trigger: "whenLifeRemoved",
         conditions: [
           {
             condition: "turn",
             value: "opponent",
           },
+          {
+            condition: "lifeCount",
+            player: "self",
+            comparison: "eq",
+            value: 0,
+          },
         ],
         actions: [
+          {
+            action: "addToLife",
+            target: {
+              player: "self",
+              zones: ["deck"],
+              count: { amount: 1 },
+            },
+            position: "top",
+          },
           {
             action: "trashFromHand",
             player: "self",
             amount: 1,
           },
         ],
+        oncePerTurn: true,
       },
     ],
   },

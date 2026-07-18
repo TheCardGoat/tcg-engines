@@ -41,4 +41,14 @@ export const fieldOfIceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Campo de hielo",
+    text: [
+      {
+        title: "DEFENSA HELADA",
+        description:
+          "Siempre que juegas con un personaje, este obtiene Resistencia +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

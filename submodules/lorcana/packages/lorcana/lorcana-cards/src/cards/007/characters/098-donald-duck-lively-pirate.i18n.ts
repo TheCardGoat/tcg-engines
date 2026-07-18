@@ -45,4 +45,15 @@ export const donaldDuckLivelyPirateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Pirata animado",
+    text: [
+      {
+        title: "PATO DE ACCIÓN",
+        description:
+          "Siempre que este personaje sea desafiado, puedes devolver a tu mano una carta de acción que no sea una carta de canción de tu descarte.",
+      },
+    ],
+  },
 };

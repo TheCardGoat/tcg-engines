@@ -45,4 +45,15 @@ export const snugglyDucklingDisreputablePubI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Patito acurrucado",
+    version: "Pub de mala reputación",
+    text: [
+      {
+        title: "ALboroto de rutina",
+        description:
+          "Siempre que un personaje con 3 {S} o más desafíe a otro personaje mientras está aquí, gana 1 conocimiento. Si el personaje desafiante tiene 6 {S} o más, gana 3 conocimientos.",
+      },
+    ],
+  },
 };

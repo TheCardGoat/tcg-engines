@@ -31,12 +31,6 @@ export const op11LittleSadi063: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Impel Down",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -61,8 +55,14 @@ export const op11LittleSadi063: CharacterCard = {
                 },
               ],
             },
+            condition: {
+              condition: "leaderTrait",
+              trait: "Impel Down",
+              match: "includes",
+            },
           },
         ],
+        optional: true,
       },
     ],
   },

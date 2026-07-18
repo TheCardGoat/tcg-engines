@@ -63,4 +63,20 @@ export const shenziHeadHyenaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Shenzi",
+    version: "Hiena cabeza",
+    text: [
+      {
+        title: "Quédate para cenar",
+        description:
+          "Este personaje obtiene +1 {S} por cada otro personaje de Hiena que tengas en juego.",
+      },
+      {
+        title: "¿QUÉ TENEMOS AQUÍ?",
+        description:
+          "Siempre que uno de tus personajes Hiena desafíe a un personaje dañado, gana 2 conocimientos.",
+      },
+    ],
+  },
 };

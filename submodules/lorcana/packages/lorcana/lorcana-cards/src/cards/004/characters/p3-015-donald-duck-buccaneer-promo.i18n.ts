@@ -45,4 +45,15 @@ export const donaldDuckBuccaneerP3PromoI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Bucanero",
+    text: [
+      {
+        title: "FIESTA DE EMBARQUE",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a un personaje en un desafío, tus otros personajes obtienen +1 {L} este turno.",
+      },
+    ],
+  },
 };

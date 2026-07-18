@@ -56,7 +56,7 @@ export const op14eb04Carrot013: CharacterCard = {
             action: "setActive",
             target: {
               player: "self",
-              zones: ["character", "leader"],
+              zones: ["character"],
               count: {
                 amount: 2,
                 upTo: true,
@@ -65,8 +65,19 @@ export const op14eb04Carrot013: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Minks",
+                  match: "includes",
                 },
               ],
+            },
+          },
+          {
+            action: "setActive",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
             },
           },
         ],

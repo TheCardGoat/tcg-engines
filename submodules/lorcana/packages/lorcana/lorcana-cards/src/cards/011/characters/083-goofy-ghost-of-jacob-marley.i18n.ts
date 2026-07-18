@@ -60,4 +60,18 @@ export const goofyGhostOfJacobMarleyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "Fantasma de Jacob Marley",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "GRAVE RESULTADO",
+        description:
+          "Cuando este personaje es desterrado, cada oponente elige y descarta una carta por cada carta que estaba debajo de él.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const littleJohnLoyalFriendI18n: Record<Languages, I18nProperties> = {
     name: "Little John",
     version: "Loyal Friend",
   },
+  es: {
+    name: "Pequeño juan",
+    version: "Amigo leal",
+  },
 };

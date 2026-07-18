@@ -54,4 +54,16 @@ export const princeNaveenVigilantFirstMateI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Príncipe naveen",
+    version: "Primer oficial vigilante",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "Guardaespaldas",
+      },
+    ],
+  },
 };

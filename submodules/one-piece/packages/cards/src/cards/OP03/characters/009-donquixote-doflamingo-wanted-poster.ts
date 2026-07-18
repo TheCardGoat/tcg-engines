@@ -33,7 +33,7 @@ export const op03DonquixoteDoflamingoWantedPoster009: CharacterCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

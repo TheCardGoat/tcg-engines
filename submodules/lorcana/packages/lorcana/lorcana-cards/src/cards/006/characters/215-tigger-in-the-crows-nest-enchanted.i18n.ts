@@ -57,4 +57,18 @@ export const tiggerInTheCrowsNestEnchantedI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Tigre",
+    version: "En el nido del cuervo",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "LAVA TUS HEBILLAS",
+        description:
+          "Cada vez que juegas una acción, este personaje obtiene +1 {S} y +1 {L} este turno.",
+      },
+    ],
+  },
 };

@@ -41,4 +41,14 @@ export const stolenScimitarI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cimitarra robada",
+    text: [
+      {
+        title: "BARRA OBLICUA",
+        description:
+          "{E}: el personaje elegido obtiene +1 {S} este turno. Si se elige un personaje llamado Aladdin, obtiene +2 {S}.",
+      },
+    ],
+  },
 };

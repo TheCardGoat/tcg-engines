@@ -45,4 +45,15 @@ export const theColonelOldSheepdogI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El coronel",
+    version: "Viejo perro pastor",
+    text: [
+      {
+        title: "LOS TENEMOS SUPERADOS EN NÚMERO",
+        description:
+          "Mientras tengas 3 o más personajes Cachorro en juego, este personaje obtiene +2 {S} y +2 {L}.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const fanTheFlamesI18n: Record<Languages, I18nProperties> = {
     name: "Fan the Flames",
     text: "Ready chosen character. They can't quest for the rest of this turn.",
   },
+  es: {
+    name: "Avivar las llamas",
+    text: "Personaje elegido listo. No pueden realizar misiones durante el resto de este turno.",
+  },
 };

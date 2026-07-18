@@ -84,6 +84,7 @@ export const op02Zephyr072: LeaderCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
       },
     ],
   },

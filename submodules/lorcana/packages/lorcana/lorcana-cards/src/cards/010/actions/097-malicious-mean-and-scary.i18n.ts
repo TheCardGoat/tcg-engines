@@ -17,4 +17,8 @@ export const maliciousMeanAndScaryI18n: Record<Languages, I18nProperties> = {
     name: "È un Piacere Spaventare",
     text: "Metti 1 segnalino danno su ogni personaggio avversario.",
   },
+  es: {
+    name: "Malicioso, malo y aterrador",
+    text: "Pon 1 contador de daño en cada personaje contrario.",
+  },
 };

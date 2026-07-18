@@ -33,6 +33,15 @@ export const op05Conis104: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
+            action: "returnToDeck",
+            target: {
+              player: "self",
+              zones: ["stage"],
+              count: { amount: 1 },
+            },
+            position: "bottom",
+          },
+          {
             action: "draw",
             player: "self",
             amount: 1,

@@ -45,4 +45,15 @@ export const plutoCleverCluefinderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Plutón",
+    version: "Buscador de pistas inteligente",
+    text: [
+      {
+        title: "EN EL CAMINO",
+        description:
+          "{E}: si tienes un personaje de detective en juego, devuelve a tu mano una carta de objeto de tu descarte. De lo contrario, colóquelo en la parte superior de su plataforma.",
+      },
+    ],
+  },
 };

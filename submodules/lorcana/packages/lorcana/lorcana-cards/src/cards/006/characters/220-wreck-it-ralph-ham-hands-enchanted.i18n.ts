@@ -45,4 +45,15 @@ export const wreckitRalphHamHandsEnchantedI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Ralph el demoledor",
+    version: "Manos De Jamón",
+    text: [
+      {
+        title: "ARRUINO COSAS",
+        description:
+          "Siempre que este personaje realice una misión, puedes desterrar el elemento o la ubicación elegidos para obtener 2 conocimientos.",
+      },
+    ],
+  },
 };

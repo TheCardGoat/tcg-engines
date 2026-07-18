@@ -61,4 +61,19 @@ export const scarFinallyKingEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cicatriz",
+    version: "Finalmente rey",
+    text: [
+      {
+        title: "SER AGRADECIDO",
+        description: "Tus personajes aliados obtienen +1 {S}.",
+      },
+      {
+        title: "Quédate conmigo",
+        description:
+          "Al final de tu turno, si este personaje está agotado, puedes robar cartas iguales a {S} del personaje aliado tuyo elegido. Si lo haces, elige y descarta 2 cartas y destierra ese personaje.",
+      },
+    ],
+  },
 };

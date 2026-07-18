@@ -17,4 +17,8 @@ export const faLiMulansMotherI18n: Record<Languages, I18nProperties> = {
     name: "Fa Li",
     version: "Madre di Mulan",
   },
+  es: {
+    name: "Fa Li",
+    version: "La madre de Mulán",
+  },
 };

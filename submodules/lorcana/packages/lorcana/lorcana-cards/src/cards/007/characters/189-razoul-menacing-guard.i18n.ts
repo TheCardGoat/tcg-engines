@@ -45,4 +45,15 @@ export const razoulMenacingGuardI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Razoul",
+    version: "Guardia amenazante",
+    text: [
+      {
+        title: "MIS PEDIDOS VIENEN DE JAFAR",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje llamado Jafar en juego, puedes desterrar el objeto elegido.",
+      },
+    ],
+  },
 };

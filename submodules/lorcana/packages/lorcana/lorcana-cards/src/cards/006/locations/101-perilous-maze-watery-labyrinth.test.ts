@@ -6,6 +6,7 @@ import { perilousMazeWateryLabyrinth } from "./101-perilous-maze-watery-labyrint
 const discardFodderI18n = {
   en: { name: "Discard Fodder" },
   de: { name: "Discard Fodder" },
+  es: { name: "Discard Fodder" },
   fr: { name: "Discard Fodder" },
   it: { name: "Discard Fodder" },
 };

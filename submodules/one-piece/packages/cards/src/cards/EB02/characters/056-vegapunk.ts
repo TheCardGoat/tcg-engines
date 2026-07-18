@@ -72,6 +72,7 @@ export const eb02Vegapunk056: CharacterCard = {
               {
                 filter: "trait",
                 value: "Scientist",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -80,6 +81,18 @@ export const eb02Vegapunk056: CharacterCard = {
             ],
             revealDestination: "character",
             remainderPosition: "bottom",
+          },
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: 1,
+            condition: {
+              condition: "zoneCount",
+              player: "opponent",
+              zone: "character",
+              comparison: "lte",
+              value: 2,
+            },
           },
         ],
       },

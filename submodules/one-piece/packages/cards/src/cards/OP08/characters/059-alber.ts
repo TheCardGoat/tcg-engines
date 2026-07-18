@@ -31,24 +31,6 @@ export const op08Alber059: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "compound",
-            operator: "and",
-            conditions: [
-              {
-                condition: "leaderTrait",
-                trait: "Animal Kingdom Pirates",
-              },
-              {
-                condition: "donFieldCount",
-                player: "self",
-                comparison: "eq",
-                value: 10,
-              },
-            ],
-          },
-        ],
         costs: [
           {
             cost: "trashThisCard",
@@ -76,6 +58,23 @@ export const op08Alber059: CharacterCard = {
                 value: "King",
               },
             ],
+            condition: {
+              condition: "compound",
+              operator: "and",
+              conditions: [
+                {
+                  condition: "leaderTrait",
+                  trait: "Animal Kingdom Pirates",
+                  match: "includes",
+                },
+                {
+                  condition: "donFieldCount",
+                  player: "self",
+                  comparison: "eq",
+                  value: 10,
+                },
+              ],
+            },
           },
         ],
         optional: true,

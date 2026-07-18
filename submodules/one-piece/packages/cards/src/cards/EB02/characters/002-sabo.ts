@@ -50,6 +50,7 @@ export const eb02Sabo002: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Revolutionary Army",
+                  match: "includes",
                 },
                 {
                   filter: "excludeName",

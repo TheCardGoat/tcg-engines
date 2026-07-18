@@ -45,4 +45,15 @@ export const clarabelleContentedWallflowerI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Clarabelle",
+    version: "Alhelí contento",
+    text: [
+      {
+        title: "UN PASO ATRÁS",
+        description:
+          "Cuando juegas con este personaje, si un oponente tiene más cartas en su mano que tú, puedes robar una carta.",
+      },
+    ],
+  },
 };

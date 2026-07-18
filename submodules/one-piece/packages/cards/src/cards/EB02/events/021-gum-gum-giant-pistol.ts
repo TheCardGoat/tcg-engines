@@ -43,6 +43,7 @@ export const eb02GumGumGiantPistol021: EventCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
+                  match: "includes",
                 },
               ],
             },
@@ -57,7 +58,30 @@ export const eb02GumGumGiantPistol021: EventCard = {
               count: {
                 amount: 1,
               },
-              self: true,
+            },
+            previousActionTargets: true,
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+              ],
             },
           },
         ],

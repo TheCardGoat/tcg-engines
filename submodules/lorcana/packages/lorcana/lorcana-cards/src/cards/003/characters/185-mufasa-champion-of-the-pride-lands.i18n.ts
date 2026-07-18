@@ -17,4 +17,8 @@ export const mufasaChampionOfThePrideLandsI18n: Record<Languages, I18nProperties
     name: "Mufasa",
     version: "Campione delle Terre del Branco",
   },
+  es: {
+    name: "Mufasa",
+    version: "Campeón de las Tierras del Reino",
+  },
 };

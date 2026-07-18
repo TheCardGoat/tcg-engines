@@ -49,6 +49,7 @@ export const op02Squard009: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Whitebeard Pirates",
+            match: "includes",
           },
         ],
         actions: [

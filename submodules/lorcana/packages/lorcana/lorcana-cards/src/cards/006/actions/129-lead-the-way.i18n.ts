@@ -17,4 +17,8 @@ export const leadTheWayI18n: Record<Languages, I18nProperties> = {
     name: "Fare Strada",
     text: "I tuoi personaggi ricevono +2 {S} per questo turno.",
   },
+  es: {
+    name: "Lidera el camino",
+    text: "Tus personajes obtienen +2 {S} este turno.",
+  },
 };

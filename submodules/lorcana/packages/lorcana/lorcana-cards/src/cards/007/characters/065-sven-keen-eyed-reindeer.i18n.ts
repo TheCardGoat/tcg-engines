@@ -56,4 +56,18 @@ export const svenKeeneyedReindeerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sven",
+    version: "Reno de ojos agudos",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "BRILLO FORMIDABLE",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene -3 {S} este turno.",
+      },
+    ],
+  },
 };

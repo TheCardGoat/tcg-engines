@@ -29,5 +29,26 @@ export const op07Jinbe102: CharacterCard = {
   attribute: "strike",
   effect:
     "[Trigger] Return up to 1 of your opponent's Characters with a cost of 4 or less to the owner's hand and add this card to your hand.",
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "returnToHand",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 4 }],
+            },
+          },
+          {
+            action: "addThisCardToHand",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op07Jinbe102I18n,
 };

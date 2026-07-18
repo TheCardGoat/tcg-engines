@@ -40,7 +40,7 @@ export const op02Smoker093: LeaderCard = {
     },
   ],
   effect:
-    "[DON!! x1] [Activate:Main] [Once Per Turn] Give up to 1o of your opponent's Characters -1 cost during this turn. Then, if there is a Character with a cost of 0, this Leader gains +1000 power during this turn.",
+    "[DON!! x1] [Activate:Main] [Once Per Turn] Give up to 1 of your opponent's Characters -1 cost during this turn. Then, if there is a Character with a cost of 0, this Leader gains +1000 power during this turn.",
   effects: {
     effects: [
       {
@@ -64,6 +64,35 @@ export const op02Smoker093: LeaderCard = {
             },
             value: -1,
             duration: "thisTurn",
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: { amount: 1 },
+              self: true,
+            },
+            value: 1000,
+            duration: "thisTurn",
+            condition: {
+              condition: "compound",
+              operator: "or",
+              conditions: [
+                {
+                  condition: "existsOnField",
+                  player: "self",
+                  zone: "character",
+                  filters: [{ filter: "cost", comparison: "eq", value: 0 }],
+                },
+                {
+                  condition: "existsOnField",
+                  player: "opponent",
+                  zone: "character",
+                  filters: [{ filter: "cost", comparison: "eq", value: 0 }],
+                },
+              ],
+            },
           },
         ],
         oncePerTurn: true,

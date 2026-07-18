@@ -17,4 +17,8 @@ export const dangerousPlanI18n: Record<Languages, I18nProperties> = {
     name: "Piano Pericoloso",
     text: "Pesca 2 carte. Poi scarta una carta a caso.",
   },
+  es: {
+    name: "Plan peligroso",
+    text: "Roba 2 cartas. Luego, descarta una carta al azar.",
+  },
 };

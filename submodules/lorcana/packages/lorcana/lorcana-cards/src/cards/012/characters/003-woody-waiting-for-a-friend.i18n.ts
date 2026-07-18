@@ -17,4 +17,8 @@ export const woodyWaitingForAFriendI18n: Record<Languages, I18nProperties> = {
     name: "Woody",
     version: "In Attesa di un Amico",
   },
+  es: {
+    name: "Leñoso",
+    version: "Esperando a un amigo",
+  },
 };

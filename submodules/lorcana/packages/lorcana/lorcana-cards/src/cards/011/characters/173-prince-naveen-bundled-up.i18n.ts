@@ -17,4 +17,8 @@ export const princeNaveenBundledUpI18n: Record<Languages, I18nProperties> = {
     name: "Principe Naveen",
     version: "Infagottato",
   },
+  es: {
+    name: "Príncipe naveen",
+    version: "Abrigado",
+  },
 };

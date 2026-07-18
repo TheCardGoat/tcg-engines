@@ -43,12 +43,11 @@ export const op11AncientWeaponPoseidon037: EventCard = {
             },
             revealFilters: [
               {
-                filter: "trait",
-                value: "Neptunian",
-              },
-              {
-                filter: "trait",
-                value: "Fish-Man Island",
+                filter: "anyOf",
+                groups: [
+                  [{ filter: "trait", value: "Neptunian", match: "includes" }],
+                  [{ filter: "trait", value: "Fish-Man Island", match: "includes" }],
+                ],
               },
               {
                 filter: "cardCategory",
@@ -59,6 +58,10 @@ export const op11AncientWeaponPoseidon037: EventCard = {
             remainderPosition: "bottom",
           },
         ],
+      },
+      {
+        trigger: "trigger",
+        actions: [{ action: "draw", player: "self", amount: 1 }],
       },
     ],
   },

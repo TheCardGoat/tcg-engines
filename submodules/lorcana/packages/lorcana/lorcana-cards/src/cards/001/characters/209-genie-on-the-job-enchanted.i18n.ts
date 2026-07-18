@@ -57,4 +57,18 @@ export const genieOnTheJobEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Genio",
+    version: "En el trabajo",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "DESAPARECER",
+        description:
+          "Cuando juegas con este personaje, puedes devolver el personaje elegido a la mano de su jugador.",
+      },
+    ],
+  },
 };

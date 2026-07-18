@@ -25,7 +25,7 @@ export const op10Mocha015: CharacterCard = {
   counter: 2000,
   traits: ["Punk Hazard"],
   attribute: "strike",
-  effect: "[On Play] Give up to 1 of your opponent's Characters 1000 power during this turn.",
+  effect: "[On Play] Give up to 1 of your opponent's Characters −1000 power during this turn.",
   effects: {
     effects: [
       {
@@ -41,7 +41,7 @@ export const op10Mocha015: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 1000,
+            value: -1000,
             duration: "thisTurn",
           },
         ],

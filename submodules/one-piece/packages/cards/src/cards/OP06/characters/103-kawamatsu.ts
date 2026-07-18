@@ -22,7 +22,7 @@ export const op06Kawamatsu103: CharacterCard = {
   setId: "OP06",
   cost: 3,
   power: 5000,
-  traits: ["Fish-Man Land of Wano The Akazaya Nine"],
+  traits: ["Fish-Man", "Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[When Attacking] You may trash 2 cards from your hand: Add up to 1 of your Characters with 0 power to the top or bottom of the owner's Life cards face-up.",
@@ -54,7 +54,7 @@ export const op06Kawamatsu103: CharacterCard = {
                 },
               ],
             },
-            position: "top",
+            position: "choice",
             faceUp: true,
           },
         ],

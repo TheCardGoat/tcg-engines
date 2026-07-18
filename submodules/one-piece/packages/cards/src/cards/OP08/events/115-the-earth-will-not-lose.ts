@@ -32,6 +32,7 @@ export const op08TheEarthWillNotLose115: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Shandian Warrior",
+            match: "includes",
           },
         ],
         actions: [

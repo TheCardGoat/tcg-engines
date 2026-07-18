@@ -45,4 +45,15 @@ export const madHatterEccentricHostI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sombrerero Loco",
+    version: "Anfitrión excéntrico",
+    text: [
+      {
+        title: "TENEMOS QUE INVESTIGAR ESTO",
+        description:
+          "Siempre que este personaje realice una misión, puedes mirar la carta superior del mazo del jugador elegido. Ponlo encima de su mazo o en su descarte.",
+      },
+    ],
+  },
 };

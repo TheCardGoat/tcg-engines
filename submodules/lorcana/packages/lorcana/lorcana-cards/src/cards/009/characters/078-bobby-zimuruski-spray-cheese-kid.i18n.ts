@@ -45,4 +45,15 @@ export const bobbyZimuruskiSprayCheeseKidI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Bobby Zimuruski",
+    version: "Niño con queso en spray",
+    text: [
+      {
+        title: "TAN CURSO",
+        description:
+          "Cuando juegas con este personaje, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

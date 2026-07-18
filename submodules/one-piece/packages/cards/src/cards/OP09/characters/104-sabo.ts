@@ -56,6 +56,36 @@ export const op09Sabo104: CharacterCard = {
             position: "top",
             faceUp: true,
           },
+          {
+            action: "removeFromLife",
+            player: "self",
+            count: {
+              amount: 1,
+            },
+            destination: "hand",
+            position: "choice",
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "gte",
+              value: 2,
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "leaderMulticolored",
+          },
+        ],
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 2,
+          },
         ],
       },
     ],

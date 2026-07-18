@@ -17,4 +17,8 @@ export const findersKeepersP2ChallengeI18n: Record<Languages, I18nProperties> = 
     name: "Chi Trova Tiene",
     text: "Pesca 3 carte.",
   },
+  es: {
+    name: "Buscadores Guardianes",
+    text: "Roba 3 cartas.",
+  },
 };

@@ -42,6 +42,17 @@ export const op14eb04PentaChromaticString077: EventCard = {
             value: 4000,
             duration: "thisBattle",
           },
+          {
+            action: "addDon",
+            count: { amount: 1, upTo: true },
+            state: "rested",
+            condition: {
+              condition: "existsOnField",
+              player: "opponent",
+              zone: "character",
+              filters: [{ filter: "power", comparison: "gte", value: 6000 }],
+            },
+          },
         ],
       },
     ],

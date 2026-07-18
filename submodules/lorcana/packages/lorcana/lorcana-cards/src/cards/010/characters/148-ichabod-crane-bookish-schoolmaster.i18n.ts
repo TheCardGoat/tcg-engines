@@ -45,4 +45,15 @@ export const ichabodCraneBookishSchoolmasterI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Grúa Ichabod",
+    version: "Maestro de escuela libresco",
+    text: [
+      {
+        title: "BIEN LEIDO",
+        description:
+          "Siempre que este personaje realice una misión, si has jugado con un personaje con un coste de 5 o más este turno, coloca la carta superior de tu mazo en tu tintero boca abajo y ejerce.",
+      },
+    ],
+  },
 };

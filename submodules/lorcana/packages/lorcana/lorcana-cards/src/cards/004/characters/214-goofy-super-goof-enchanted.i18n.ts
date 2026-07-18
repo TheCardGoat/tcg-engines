@@ -55,4 +55,17 @@ export const goofySuperGoofEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "Súper tonto",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "SÚPER PODERES DEL MANÍ",
+        description: "Siempre que este personaje desafíe a otro personaje, gana 2 conocimientos.",
+      },
+    ],
+  },
 };

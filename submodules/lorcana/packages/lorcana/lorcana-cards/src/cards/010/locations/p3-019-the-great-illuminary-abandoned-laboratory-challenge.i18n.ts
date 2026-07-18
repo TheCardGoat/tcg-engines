@@ -45,4 +45,14 @@ export const theGreatIlluminaryAbandonedLaboratoryP3ChallengeI18n: Record<
       },
     ],
   },
+  es: {
+    name: "El gran iluminador",
+    version: "Laboratorio abandonado",
+    text: [
+      {
+        title: "DESCUBRIMIENTO SORPRENDENTE",
+        description: 'Los personajes obtienen "Z{E} — Roba una carta" mientras están aquí.',
+      },
+    ],
+  },
 };

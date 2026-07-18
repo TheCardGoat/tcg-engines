@@ -56,6 +56,7 @@ export const op05DonquixoteDoflamingo029: CharacterCard = {
             },
           },
         ],
+        optional: true,
         oncePerTurn: true,
       },
     ],

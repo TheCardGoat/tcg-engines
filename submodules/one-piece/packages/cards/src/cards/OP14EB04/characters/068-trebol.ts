@@ -36,6 +36,10 @@ export const op14eb04Trebol068: CharacterCard = {
             condition: "turn",
             value: "opponent",
           },
+          {
+            condition: "leaderTrait",
+            trait: "Donquixote Pirates",
+          },
         ],
         actions: [
           {

@@ -46,6 +46,7 @@ export const op06Gion044: CharacterCard = {
               count: {
                 amount: 1,
               },
+              chosenBy: "opponent",
             },
             position: "bottom",
           },

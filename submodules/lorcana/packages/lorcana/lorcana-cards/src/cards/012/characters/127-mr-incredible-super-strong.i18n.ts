@@ -77,4 +77,24 @@ export const mrIncredibleSuperStrongI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señor increíble",
+    version: "Súper fuerte",
+    text: [
+      {
+        title: "Shift 3 {I}",
+        description:
+          "(Puedes pagar 3 {I} para jugar esto encima de uno de tus personajes llamado Mr. Incredible).",
+      },
+      {
+        title: "SIEMPRE UNIDOS",
+        description: "Este personaje obtiene +2 {S} por cada otro personaje que tengas en juego.",
+      },
+      {
+        title: "¡HAGAMOS ESTO!",
+        description:
+          "Siempre que uno de tus súper personajes desafíe a otro personaje, roba una carta.",
+      },
+    ],
+  },
 };

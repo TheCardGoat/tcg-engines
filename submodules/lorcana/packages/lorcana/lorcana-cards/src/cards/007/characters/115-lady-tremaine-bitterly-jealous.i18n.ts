@@ -45,4 +45,15 @@ export const ladyTremaineBitterlyJealousI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Señora tremaine",
+    version: "Amargamente celoso",
+    text: [
+      {
+        title: "ESO ES SUFICIENTE",
+        description:
+          "{E}: devuelve el personaje dañado elegido a la mano de su jugador. Luego, cada oponente descarta una carta al azar.",
+      },
+    ],
+  },
 };

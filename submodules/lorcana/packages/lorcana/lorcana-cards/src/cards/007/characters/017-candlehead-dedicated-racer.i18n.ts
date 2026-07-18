@@ -45,4 +45,15 @@ export const candleheadDedicatedRacerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cabeza de vela",
+    version: "Corredor dedicado",
+    text: [
+      {
+        title: "GANAR NO LO ES TODO",
+        description:
+          "Cuando este personaje es desterrado, puedes eliminar hasta 2 daños del personaje elegido.",
+      },
+    ],
+  },
 };

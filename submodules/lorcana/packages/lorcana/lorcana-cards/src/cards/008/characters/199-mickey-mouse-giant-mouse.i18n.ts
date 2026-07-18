@@ -58,4 +58,18 @@ export const mickeyMouseGiantMouseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Ratón gigante",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "LA ESTRELLA MÁS GRANDE DE LA HISTORIA",
+        description:
+          "Cuando este personaje sea desterrado, inflige 5 daños a cada personaje contrario.",
+      },
+    ],
+  },
 };

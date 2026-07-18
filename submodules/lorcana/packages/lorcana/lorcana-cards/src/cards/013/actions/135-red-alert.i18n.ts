@@ -17,4 +17,8 @@ export const redAlertI18n: Record<Languages, I18nProperties> = {
     name: "Allarme Rosso",
     text: "Esilia un personaggio a tua scelta con 3 {S} o inferiore. Se hai in gioco un personaggio Mostro, un avversario a tua scelta perde 1 leggenda.",
   },
+  es: {
+    name: "Alerta roja",
+    text: "Destierra al personaje elegido con 3 {S} o menos. Si tienes un personaje Monstruo en juego, el oponente elegido pierde 1 conocimiento.",
+  },
 };

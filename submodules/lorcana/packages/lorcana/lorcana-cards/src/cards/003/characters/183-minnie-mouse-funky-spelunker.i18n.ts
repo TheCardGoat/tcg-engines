@@ -41,4 +41,14 @@ export const minnieMouseFunkySpelunkerI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Espeleólogo funky",
+    text: [
+      {
+        title: "VIAJE",
+        description: "Mientras este personaje está en una ubicación, obtiene +2 {S}.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const yzmaOnEdgeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yzma",
+    version: "Nervioso",
+    text: [
+      {
+        title: "¿POR QUÉ TENEMOS ESA PALANCA?",
+        description:
+          "Cuando juegas con este personaje, si tienes una carta llamada ¡Tira de la palanca! ¡En tu descarte, puedes buscar en tu mazo una carta llamada Wrong Lever! y revela esa carta a todos los jugadores. Pon esa carta en tu mano y baraja tu mazo.",
+      },
+    ],
+  },
 };

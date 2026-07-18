@@ -44,4 +44,15 @@ export const vincenzoSantoriniTheExplosivesExpertI18n: Record<Languages, I18nPro
       },
     ],
   },
+  es: {
+    name: "Vicente Santorini",
+    version: "El experto en explosivos",
+    text: [
+      {
+        title: "SOLO ME GUSTA HACER VOLAR LAS COSAS",
+        description:
+          "Cuando juegas con este personaje, puedes causar 3 daños al personaje elegido.",
+      },
+    ],
+  },
 };

@@ -45,21 +45,6 @@ export const op07Foxy059: LeaderCard = {
     effects: [
       {
         trigger: "whenAttacking",
-        conditions: [
-          {
-            condition: "zoneCount",
-            player: "self",
-            zone: "character",
-            comparison: "gte",
-            value: 3,
-            filters: [
-              {
-                filter: "trait",
-                value: "Foxy Pirates",
-              },
-            ],
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -71,9 +56,9 @@ export const op07Foxy059: LeaderCard = {
             action: "freeze",
             target: {
               player: "opponent",
-              zones: ["leader", "character"],
+              zones: ["leader"],
               count: {
-                amount: 2,
+                amount: 1,
                 upTo: true,
               },
               filters: [
@@ -83,8 +68,54 @@ export const op07Foxy059: LeaderCard = {
                 },
               ],
             },
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "character",
+              comparison: "gte",
+              value: 3,
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Foxy Pirates",
+                  match: "includes",
+                },
+              ],
+            },
+          },
+          {
+            action: "freeze",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "state",
+                  value: "rested",
+                },
+              ],
+            },
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "character",
+              comparison: "gte",
+              value: 3,
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Foxy Pirates",
+                  match: "includes",
+                },
+              ],
+            },
           },
         ],
+        optional: true,
       },
     ],
   },

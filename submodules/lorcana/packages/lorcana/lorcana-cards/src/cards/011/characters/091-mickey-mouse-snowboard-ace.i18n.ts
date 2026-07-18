@@ -45,4 +45,15 @@ export const mickeyMouseSnowboardAceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "As del snowboard",
+    text: [
+      {
+        title: "PENDIENTE RESBALADIZA",
+        description:
+          "Cuando juegas con este personaje y cuando deja el juego, cada oponente elige y descarta una carta.",
+      },
+    ],
+  },
 };

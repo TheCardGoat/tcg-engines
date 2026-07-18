@@ -24,5 +24,39 @@ export const op04CorridaColiseum096: StageCard = {
   traits: ["Dressrosa"],
   effect:
     "If your Leader has the [Dressrosa] type, your [Dressrosa] type Characters can attack Characters on the turn in which they are played.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Dressrosa",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Dressrosa",
+                  match: "includes",
+                },
+              ],
+            },
+            keyword: "rushCharacter",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op04CorridaColiseum096I18n,
 };

@@ -14,6 +14,16 @@ const floodbornAlly = createMockCharacter({
 });
 
 describe("Hera - Created by the Vine", () => {
+  it("gains 1 lore when you play Hera herself", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [heraCreatedByTheVine],
+      inkwell: heraCreatedByTheVine.cost,
+    });
+
+    expect(testEngine.asPlayerOne().playCard(heraCreatedByTheVine)).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().getLore(PLAYER_ONE)).toBe(1);
+  });
+
   it("gains 1 lore when you play another Floodborn character", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
       play: [heraCreatedByTheVine],

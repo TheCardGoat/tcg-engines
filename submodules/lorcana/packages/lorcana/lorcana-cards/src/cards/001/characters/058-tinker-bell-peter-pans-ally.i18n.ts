@@ -48,4 +48,18 @@ export const tinkerBellPeterPansAllyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Campanita",
+    version: "El aliado de Peter Pan",
+    text: [
+      {
+        title: "<Evasivo>",
+      },
+      {
+        title: "Leal y devoto",
+        description:
+          "Tus personajes llamados Peter Pan obtienen <Challenger> +1. (Obtienen +1 {S} mientras desafían).",
+      },
+    ],
+  },
 };

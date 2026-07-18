@@ -45,4 +45,15 @@ export const sugarRushSpeedwayFinishLineEnchantedI18n: Record<Languages, I18nPro
       },
     ],
   },
+  es: {
+    name: "Circuito Sugar Rush",
+    version: "Línea de meta",
+    text: [
+      {
+        title: "¡TRÁELO A CASA, PEQUEÑO!",
+        description:
+          "Cuando mueves un personaje aquí desde otra ubicación, puedes desterrar esta ubicación para obtener 3 conocimientos y robar 3 cartas.",
+      },
+    ],
+  },
 };

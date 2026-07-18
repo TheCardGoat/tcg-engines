@@ -44,4 +44,15 @@ export const liloSnowArtistI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lilo",
+    version: "Artista de nieve",
+    text: [
+      {
+        title: "INSPIRACIÓN CREATIVA",
+        description:
+          "Mientras tengas un personaje llamado Stitch en juego, este personaje obtiene +1 {L}.",
+      },
+    ],
+  },
 };

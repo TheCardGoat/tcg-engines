@@ -42,9 +42,34 @@ export const op11Koby001: LeaderCard = {
   effect:
     'Your "SWORD" type Characters can attack Characters on the turn in which they are played.\n[Once Per Turn] If your "Navy" type Character with 7000 base power or less would be removed from the field by your opponent\'s effect, you may place 3 cards from your trash at the bottom of your deck in any order instead.',
   effects: {
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: "all" },
+              filters: [{ filter: "trait", value: "SWORD", match: "includes" }],
+            },
+            keyword: "rushCharacter",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
     replacementEffects: [
       {
-        replacedEvent: "removeFromField",
+        replacedEvent: "ko",
+        eventFilter: {
+          player: "self",
+          causedBy: "opponent",
+          filters: [
+            { filter: "trait", value: "Navy", match: "includes" },
+            { filter: "basePower", comparison: "lte", value: 7000 },
+          ],
+        },
         replacementAction: {
           action: "returnToDeck",
           target: {

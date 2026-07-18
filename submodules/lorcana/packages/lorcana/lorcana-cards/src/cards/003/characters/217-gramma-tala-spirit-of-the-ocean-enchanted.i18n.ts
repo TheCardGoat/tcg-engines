@@ -58,4 +58,17 @@ export const grammaTalaSpiritOfTheOceanEnchantedI18n: Record<Languages, I18nProp
       },
     ],
   },
+  es: {
+    name: "Abuela tala",
+    version: "Espíritu del océano",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "¿SABES QUIÉN ERES?",
+        description: "Cada vez que se pone una carta en tu tintero, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

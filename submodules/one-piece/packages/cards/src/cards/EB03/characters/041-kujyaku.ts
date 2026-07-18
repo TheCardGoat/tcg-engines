@@ -45,6 +45,19 @@ export const eb03Kujyaku041: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Navy",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "draw",
@@ -76,6 +89,7 @@ export const eb03Kujyaku041: CharacterCard = {
                 {
                   filter: "trait",
                   value: "SWORD",
+                  match: "includes",
                 },
                 {
                   filter: "cost",

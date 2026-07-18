@@ -39,4 +39,13 @@ export const merlinsCarpetbagI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La bolsa de alfombra de Merlín",
+    text: [
+      {
+        title: "BOLSILLO DE HOCKEY",
+        description: "{E}, 1 {I}: devuelve una carta de objeto de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

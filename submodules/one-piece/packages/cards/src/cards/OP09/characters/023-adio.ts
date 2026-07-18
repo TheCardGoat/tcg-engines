@@ -49,6 +49,7 @@ export const op09Adio023: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "ODYSSEY",
+            match: "includes",
           },
         ],
         actions: [
@@ -67,6 +68,12 @@ export const op09Adio023: CharacterCard = {
       },
       {
         trigger: "onOpponentAttack",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 1,
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

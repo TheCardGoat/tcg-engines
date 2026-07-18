@@ -45,4 +45,15 @@ export const julietaMadrigalCaringBakerI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Julieta Madrigal",
+    version: "Panadero cariñoso",
+    text: [
+      {
+        title: "RECETA RESTAURANTE",
+        description:
+          "Cuando juegas con este personaje y cada vez que realiza misiones, puedes eliminar hasta 1 daño del personaje o ubicación elegidos.",
+      },
+    ],
+  },
 };

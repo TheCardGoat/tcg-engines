@@ -44,4 +44,15 @@ export const mirabelMadrigalFamilyGathererP2ChallengeI18n: Record<Languages, I18
       },
     ],
   },
+  es: {
+    name: "Mirabel Madrigal",
+    version: "Recolector familiar",
+    text: [
+      {
+        title: "NO SIN MI FAMILIA",
+        description:
+          "No puedes jugar con este personaje a menos que tengas 5 o más personajes en juego.",
+      },
+    ],
+  },
 };

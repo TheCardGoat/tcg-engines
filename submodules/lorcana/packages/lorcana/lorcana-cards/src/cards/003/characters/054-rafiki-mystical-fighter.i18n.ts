@@ -57,4 +57,18 @@ export const rafikiMysticalFighterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rafiki",
+    version: "Luchador místico",
+    text: [
+      {
+        title: "Retador +3",
+      },
+      {
+        title: "HABILIDADES ANTIGUAS",
+        description:
+          "Siempre que desafía a un personaje de Hiena, este personaje no sufre ningún daño por el desafío.",
+      },
+    ],
+  },
 };

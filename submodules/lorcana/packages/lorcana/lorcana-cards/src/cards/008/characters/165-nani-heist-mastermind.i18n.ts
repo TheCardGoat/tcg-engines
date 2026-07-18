@@ -64,4 +64,19 @@ export const naniHeistMastermindI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nani",
+    version: "Cerebro del atraco",
+    text: [
+      {
+        title: "SIGUE EL PLAN",
+        description: "{E}: otro personaje elegido obtiene Resistencia +2 este turno.",
+      },
+      {
+        title: "Depende de ti, LILO",
+        description:
+          "Tus personajes llamados Lilo obtienen apoyo. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+      },
+    ],
+  },
 };

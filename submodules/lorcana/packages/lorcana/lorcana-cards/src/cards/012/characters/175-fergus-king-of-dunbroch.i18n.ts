@@ -21,4 +21,9 @@ export const fergusKingOfDunbrochI18n: Record<Languages, I18nProperties> = {
     version: "Re di DunBroch",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Fergus",
+    version: "Rey de DunBroch",
+    text: "Guardaespaldas",
+  },
 };

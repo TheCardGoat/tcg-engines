@@ -156,25 +156,6 @@ export function hasPreventDamage(engine: GundamTestEngine, targetId: string): bo
 }
 
 /**
- * True if `playerId` has a `prevent-damage-to-zone` continuous effect for the
- * named zone.
- */
-export function hasPreventDamageToZone(
-  engine: GundamTestEngine,
-  playerId: string,
-  zone: string,
-): boolean {
-  return engine
-    .getG()
-    .continuousEffects.some(
-      (entry) =>
-        entry.targetId === playerId &&
-        entry.payload.kind === "prevent-damage-to-zone" &&
-        entry.payload.zone === zone,
-    );
-}
-
-/**
  * True if `targetId` has a `force-attack-target` continuous effect.
  */
 export function hasForceAttackTarget(engine: GundamTestEngine, targetId: string): boolean {

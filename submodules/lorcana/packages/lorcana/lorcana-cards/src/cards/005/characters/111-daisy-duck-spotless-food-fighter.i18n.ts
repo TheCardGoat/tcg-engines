@@ -21,4 +21,9 @@ export const daisyDuckSpotlessFoodfighterI18n: Record<Languages, I18nProperties>
     version: "Combattente Senza Macchia",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Pato margarita",
+    version: "Luchador de comida impecable",
+    text: "Evasivo",
+  },
 };

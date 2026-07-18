@@ -45,4 +45,15 @@ export const dellaDuckReturningMotherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato della",
+    version: "Madre que regresa",
+    text: [
+      {
+        title: "AQUÍ PARA AYUDAR",
+        description:
+          "Cuando juegas con este personaje, puedes preparar el personaje elegido con Boost. Si lo haces, no podrán realizar misiones ni desafíos durante el resto de este turno.",
+      },
+    ],
+  },
 };

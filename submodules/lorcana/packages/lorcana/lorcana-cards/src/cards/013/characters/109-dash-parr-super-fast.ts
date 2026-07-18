@@ -70,6 +70,7 @@ export const dashParrSuperFast: CharacterCard = {
             {
               type: "or",
               chooser: "CONTROLLER",
+              optionLabels: ["Play the revealed card", "Put it into your discard"],
               options: [
                 {
                   type: "play-card",

@@ -45,4 +45,15 @@ export const ramaVigilantFatherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rama",
+    version: "Padre vigilante",
+    text: [
+      {
+        title: "PROTECCIÓN DEL PAQUETE",
+        description:
+          "Siempre que juegues con otro personaje con 5 {S} o más, podrás preparar este personaje. Si lo haces, no podrá realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

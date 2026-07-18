@@ -45,4 +45,15 @@ export const missBiancaUnwaveringAgentI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Señorita blanca",
+    version: "Agente inquebrantable",
+    text: [
+      {
+        title: "TENER",
+        description:
+          "UN POCO DE FE Si tienes un personaje aliado en juego, pagas 2 {I} menos para interpretar a este personaje.",
+      },
+    ],
+  },
 };

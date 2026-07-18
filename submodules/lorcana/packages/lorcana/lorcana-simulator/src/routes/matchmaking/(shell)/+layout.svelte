@@ -95,6 +95,7 @@
       isAuthenticated={controller.auth.isAuthenticated}
       isAuthLoading={controller.auth.isLoading}
       user={controller.auth.user}
+      selectedLocale={controller.playerSettings.selectedLocale}
       onSelectLane={() => {}}
       onResumeMatch={() => controller.handleRejoinMatch()}
       onOpenSignIn={() => controller.openSignInDialog()}
@@ -105,6 +106,7 @@
       onOpenAccountSettings={() => {
         controller.accountSettingsOpen = true;
       }}
+      onLocaleSelection={controller.playerSettings.handleLocaleSelection}
     />
 
     {@render children()}

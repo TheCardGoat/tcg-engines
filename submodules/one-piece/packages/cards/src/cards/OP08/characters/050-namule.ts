@@ -48,6 +48,7 @@ export const op08Namule050: CharacterCard = {
               },
             },
             position: "any",
+            order: "any",
           },
         ],
       },

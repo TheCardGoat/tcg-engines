@@ -36,4 +36,14 @@ export const grumpyBadtemperedI18n: Record<Languages, I18nProperties> = {
     version: "Bad-Tempered",
     text: "There's Trouble A-Brewin'\\ Your other Seven Dwarfs characters get +1 {S}.",
   },
+  es: {
+    name: "Gruñón",
+    version: "De mal humor",
+    text: [
+      {
+        title: "HAY PROBLEMAS A-BREWIN '",
+        description: "Tus otros personajes de los Siete Enanitos obtienen +1 {S}.",
+      },
+    ],
+  },
 };

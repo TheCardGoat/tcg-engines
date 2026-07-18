@@ -61,4 +61,19 @@ export const peterPanNeverLandPranksterI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Peter Pan",
+    version: "El bromista del país de Nunca Jamás",
+    text: [
+      {
+        title: "MIRA INOCENTE",
+        description: "Este personaje entra en juego ejercido.",
+      },
+      {
+        title: "NO PUEDO TOMAR",
+        description:
+          "¿UNA BROMA? Mientras este personaje esté ejercido, cada jugador contrario no puede obtener conocimientos a menos que uno de sus personajes haya desafiado este turno.",
+      },
+    ],
+  },
 };

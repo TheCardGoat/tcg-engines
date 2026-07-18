@@ -37,6 +37,13 @@ export const op03CharlotteOven105: CharacterCard = {
             amount: 1,
           },
         ],
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [{ filter: "hasTrigger", value: true }],
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

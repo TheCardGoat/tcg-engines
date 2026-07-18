@@ -136,6 +136,42 @@ const fixtureLoaderRegistry = createFixtureLoaderRegistry(
         ),
     },
     {
+      id: "user-reports-meilin-sing-together",
+      name: "User Report QA - Meilin Sing Together",
+      description:
+        "Manual QA for Meilin - Lead Vocalist with the real Under the Sea and Circle of Life cards.",
+      load: () =>
+        loadAndValidateFixture("user-reports-meilin-sing-together", () =>
+          import("./user-report-fixes.js").then(
+            (module) => module.userReportsMeilinSingTogetherFixture,
+          ),
+        ),
+    },
+    {
+      id: "user-reports-darkwing-launchpad-shift",
+      name: "User Report QA - Darkwing and Launchpad Shift",
+      description:
+        "Manual QA for shifting St. Canard's Finest onto Darkwing Duck, Launchpad, or Morph.",
+      load: () =>
+        loadAndValidateFixture("user-reports-darkwing-launchpad-shift", () =>
+          import("./user-report-fixes.js").then(
+            (module) => module.userReportsDarkwingLaunchpadShiftFixture,
+          ),
+        ),
+    },
+    {
+      id: "user-reports-mickey-minnie-duo-shift",
+      name: "User Report QA - Mickey and Minnie Duo Shift",
+      description:
+        "Manual QA for Duo Shift state inheritance and moving the complete stack to the inkwell.",
+      load: () =>
+        loadAndValidateFixture("user-reports-mickey-minnie-duo-shift", () =>
+          import("./user-report-fixes.js").then(
+            (module) => module.userReportsMickeyMinnieDuoShiftFixture,
+          ),
+        ),
+    },
+    {
       id: "challenge-keywords",
       name: "Challenge Keywords",
       description:

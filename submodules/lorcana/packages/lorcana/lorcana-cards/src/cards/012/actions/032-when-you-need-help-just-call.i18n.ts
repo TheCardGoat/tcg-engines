@@ -35,4 +35,8 @@ export const whenYouNeedHelpJustCallI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cuando necesite ayuda, simplemente llame",
+    text: "Si un oponente tiene más personajes en juego que tú, puedes jugar con un personaje con un coste de 4 o menos de forma gratuita.",
+  },
 };

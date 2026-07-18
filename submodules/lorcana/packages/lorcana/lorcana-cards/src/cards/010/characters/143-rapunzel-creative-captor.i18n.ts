@@ -45,4 +45,15 @@ export const rapunzelCreativeCaptorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rapunzel",
+    version: "Captor creativo",
+    text: [
+      {
+        title: "ensnarl",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido obtiene -3 {S} este turno.",
+      },
+    ],
+  },
 };

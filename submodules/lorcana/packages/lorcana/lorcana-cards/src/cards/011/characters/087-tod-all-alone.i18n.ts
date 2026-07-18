@@ -17,4 +17,8 @@ export const todAllAloneI18n: Record<Languages, I18nProperties> = {
     name: "Red",
     version: "Tutto Solo",
   },
+  es: {
+    name: "Tod",
+    version: "Solo",
+  },
 };

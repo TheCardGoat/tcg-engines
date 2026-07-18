@@ -60,4 +60,18 @@ export const robinHoodEphemeralArcherEpicI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Robin Hood",
+    version: "Arquero efímero",
+    text: [
+      {
+        title: "Impulsar 1 {I}",
+      },
+      {
+        title: "DISPARO EXPERTO",
+        description:
+          "Siempre que este personaje realice una misión, si hay una carta debajo de él, inflige 1 daño a hasta 2 personajes elegidos.",
+      },
+    ],
+  },
 };

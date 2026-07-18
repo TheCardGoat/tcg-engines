@@ -60,4 +60,18 @@ export const snowWhiteWellWisherEnchantedI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Blanco como la nieve",
+    version: "Bien deseoso",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "LOS DESEOS SE HACEN REALIDAD",
+        description:
+          "Siempre que este personaje realice una misión, puedes devolver una carta de personaje de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

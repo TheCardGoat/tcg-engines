@@ -40,7 +40,7 @@ export const op14eb04RoronoaZoroOp14015015: CharacterCard = {
     },
   ],
   effect:
-    "[Rush] (This card can attack on the turn in which it is played.) [When Attacking] Give up to 1 of your opponent's Characters -1000 power during this turn.",
+    "[Rush] (This card can attack on the turn in which it is played.) [When Attacking] Give up to 1 of your opponent's Characters −1000 power during this turn.",
   effects: {
     keywords: ["rush"],
     effects: [

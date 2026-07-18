@@ -27,5 +27,48 @@ export const op10ScratchmenApoo108: CharacterCard = {
   attribute: "ranged",
   effect:
     'If you have a yellow "Supernovas" type Character other than [Scratchmen Apoo], this Character gains [Blocker].',
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "hasCard",
+            player: "self",
+            zone: "character",
+            filters: [
+              {
+                filter: "color",
+                value: "yellow",
+              },
+              {
+                filter: "trait",
+                value: "Supernovas",
+                match: "includes",
+              },
+              {
+                filter: "excludeName",
+                value: "Scratchmen Apoo",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op10ScratchmenApoo108I18n,
 };

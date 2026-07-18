@@ -23,9 +23,43 @@ export const op06BearKing012: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["FILM Trump Pirates"],
+  traits: ["FILM", "Trump Pirates"],
   attribute: "strike",
   effect:
     "If your opponent has a Leader or Character with a base power of 6000 or more, this Character cannot be K.O.'d in battle.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "compound",
+            operator: "or",
+            conditions: [
+              {
+                condition: "hasCard",
+                player: "opponent",
+                zone: "leader",
+                filters: [{ filter: "basePower", comparison: "gte", value: 6000 }],
+              },
+              {
+                condition: "hasCard",
+                player: "opponent",
+                zone: "character",
+                filters: [{ filter: "basePower", comparison: "gte", value: 6000 }],
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
+            duration: "permanent",
+            restriction: "inBattle",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op06BearKing012I18n,
 };

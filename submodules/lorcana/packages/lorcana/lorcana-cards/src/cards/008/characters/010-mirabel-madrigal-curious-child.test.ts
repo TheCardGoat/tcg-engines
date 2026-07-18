@@ -13,6 +13,13 @@ const testSong = createMockSong({
   text: "A song for testing reveal.",
 });
 
+const secondTestSong = createMockSong({
+  id: "mirabel-second-test-song",
+  name: "Mirabel Second Test Song",
+  cost: 4,
+  text: "Another song for testing reveal.",
+});
+
 describe("Mirabel Madrigal - Curious Child", () => {
   describe("YOU ARE A WONDER - When you play this character, you may reveal a song card in your hand to gain 1 lore.", () => {
     it("gains 1 lore when you reveal a song card from your hand", () => {
@@ -42,6 +49,42 @@ describe("Mirabel Madrigal - Curious Child", () => {
       expect(testEngine.getLore(PLAYER_ONE)).toBe(loreBefore + 1);
       // The song should still be in hand (reveal, not discard)
       expect(testEngine.asPlayerOne().getCardZone(testSong)).toBe("hand");
+    });
+
+    it("publishes both songs as selectable candidates in the optional prompt", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+        hand: [testSong, secondTestSong, mirabelMadrigalCuriousChild],
+        inkwell: mirabelMadrigalCuriousChild.cost,
+        deck: 1,
+      });
+
+      expect(
+        testEngine.asPlayerOne().playCard(mirabelMadrigalCuriousChild),
+      ).toBeSuccessfulCommand();
+
+      const [bagEffect] = testEngine.asPlayerOne().getBagEffects();
+      const selectionContext = bagEffect?.selectionContext;
+      expect(selectionContext?.kind).toBe("target-selection");
+      if (selectionContext?.kind !== "target-selection") {
+        throw new Error("Expected Mirabel to publish a song selection prompt");
+      }
+
+      const firstSongId = testEngine.findCardInstanceId(testSong, "hand", PLAYER_ONE);
+      const secondSongId = testEngine.findCardInstanceId(secondTestSong, "hand", PLAYER_ONE);
+      expect(selectionContext.allowedZones).toContain("hand");
+      expect(selectionContext.cardCandidateIds).toEqual(
+        expect.arrayContaining([firstSongId, secondSongId]),
+      );
+      expect(selectionContext.minSelections).toBe(1);
+      expect(selectionContext.maxSelections).toBe(1);
+
+      expect(
+        testEngine.asPlayerOne().resolvePendingByCard(mirabelMadrigalCuriousChild, {
+          resolveOptional: true,
+          targets: [secondTestSong],
+        }),
+      ).toBeSuccessfulCommand();
+      expect(testEngine.getLore(PLAYER_ONE)).toBe(1);
     });
 
     it("does not gain lore when the optional ability is declined", () => {

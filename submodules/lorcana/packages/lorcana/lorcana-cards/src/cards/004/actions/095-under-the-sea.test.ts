@@ -1,5 +1,10 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaMultiplayerTestEngine, PLAYER_TWO } from "@tcg/lorcana-engine/testing";
+import {
+  LorcanaMultiplayerTestEngine,
+  PLAYER_ONE,
+  PLAYER_TWO,
+  createMockCharacter,
+} from "@tcg/lorcana-engine/testing";
 import {
   arielOnHumanLegs,
   minnieMouseBelovedPrincess,
@@ -86,5 +91,22 @@ describe("Under the Sea", () => {
 
     expect(testEngine.asPlayerTwo().getCardZone(simbaProtectiveCub)).toBe("deck");
     expect(testEngine.asPlayerTwo().getCardZone(minnieMouseBelovedPrincess)).toBe("deck");
+  });
+
+  it("can use characters with Ward to pay its Sing Together cost", () => {
+    const wardSinger = createMockCharacter({
+      id: "under-the-sea-ward-singer",
+      name: "Ward Singer",
+      cost: 4,
+      abilities: [{ type: "keyword", keyword: "Ward" }],
+    });
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [underTheSea],
+      play: [wardSinger, wardSinger],
+    });
+    const singers = testEngine.getCardInstanceIdsInZone("play", PLAYER_ONE);
+
+    expect(testEngine.asPlayerOne().playSongTogether(underTheSea, singers)).toBeSuccessfulCommand();
+    expect(singers.every((singer) => testEngine.asPlayerOne().isExerted(singer))).toBe(true);
   });
 });

@@ -17,4 +17,8 @@ export const genieInvestigativeMindI18n: Record<Languages, I18nProperties> = {
     name: "Genio",
     version: "Mente Indagatrice",
   },
+  es: {
+    name: "Genio",
+    version: "Mente investigadora",
+  },
 };

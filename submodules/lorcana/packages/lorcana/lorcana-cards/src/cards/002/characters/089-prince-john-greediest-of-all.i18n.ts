@@ -57,4 +57,18 @@ export const princeJohnGreediestOfAllI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Príncipe juan",
+    version: "El más codicioso de todos",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "TE CONDENO",
+        description:
+          "Siempre que tu oponente descarte 1 o más cartas, puedes robar una carta por cada carta descartada.",
+      },
+    ],
+  },
 };

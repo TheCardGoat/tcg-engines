@@ -18,7 +18,11 @@ import type { ClientToServerEvents } from "./events.js";
  * but it lets handlers read the slug without re-deriving from socket
  * data and makes the envelope self-describing on the wire.
  */
-export type EventName = keyof ClientToServerEvents;
+/** Client events forwarded to the Redis gameplay inbox. Gateway-local room controls are excluded. */
+export type EventName = Exclude<
+  keyof ClientToServerEvents,
+  "subscribe_matchmaking_dashboard" | "unsubscribe_matchmaking_dashboard"
+>;
 export type PayloadOf<E extends EventName> = Parameters<ClientToServerEvents[E]>[0];
 
 export interface InboxEnvelopeBase {

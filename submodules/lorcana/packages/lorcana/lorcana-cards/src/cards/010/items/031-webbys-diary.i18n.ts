@@ -41,4 +41,14 @@ export const webbysDiaryI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El diario de Webby",
+    text: [
+      {
+        title: "ÚLTIMA ENTRADA",
+        description:
+          "Siempre que coloques una carta debajo de uno de tus personajes o ubicaciones, puedes pagar 1 {I} para robar una carta.",
+      },
+    ],
+  },
 };

@@ -35,4 +35,8 @@ export const reflectionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Reflexión",
+    text: "Mira las 3 primeras cartas de tu mazo. Vuelve a colocarlos en la parte superior de tu plataforma en cualquier orden.",
+  },
 };

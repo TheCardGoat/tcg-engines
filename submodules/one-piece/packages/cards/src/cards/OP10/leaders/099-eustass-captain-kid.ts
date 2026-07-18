@@ -41,5 +41,40 @@ export const op10EustassCaptainKid099: LeaderCard = {
   ],
   effect:
     '[End of Your Turn] You may turn 1 card from the top of your Life cards face-up: Set up to 1 of your "Supernovas" type Characters with a cost of 3 to 8 as active. That Character gains [Blocker] until the end of your opponent\'s next turn.',
+  effects: {
+    effects: [
+      {
+        trigger: "endOfYourTurn",
+        costs: [{ cost: "turnLifeFaceUp", count: 1 }],
+        actions: [
+          {
+            action: "setActive",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [
+                { filter: "trait", value: "Supernovas", match: "includes" },
+                { filter: "cost", comparison: "gte", value: 3 },
+                { filter: "cost", comparison: "lte", value: 8 },
+              ],
+            },
+          },
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+            },
+            keyword: "blocker",
+            duration: "untilEndOfOpponentNextTurn",
+            previousActionTargets: true,
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
   i18n: op10EustassCaptainKid099I18n,
 };

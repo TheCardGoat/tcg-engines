@@ -33,14 +33,85 @@ export const op12IWillMakeWhitebeardTheKingOfThePirates058: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Whitebeard Pirates",
+            match: "includes",
           },
         ],
         actions: [
           {
-            action: "rearrangeDeck",
+            action: "revealTopDeckCard",
             player: "self",
-            count: 1,
-            position: "top",
+            conditional: {
+              filters: [
+                {
+                  filter: "cardCategory",
+                  value: "character",
+                },
+                {
+                  filter: "trait",
+                  value: "Whitebeard Pirates",
+                  match: "includes",
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 9,
+                },
+              ],
+              actions: [
+                {
+                  action: "play",
+                  source: {
+                    player: "self",
+                    zone: "deck",
+                  },
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                  filters: [
+                    {
+                      filter: "cardCategory",
+                      value: "character",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Whitebeard Pirates",
+                      match: "includes",
+                    },
+                    {
+                      filter: "cost",
+                      comparison: "lte",
+                      value: 9,
+                    },
+                  ],
+                  topOnly: true,
+                },
+                {
+                  action: "grantKeyword",
+                  target: {
+                    player: "self",
+                    zones: ["character"],
+                    count: {
+                      amount: 1,
+                    },
+                  },
+                  keyword: "rush",
+                  duration: "thisTurn",
+                  previousActionTargets: true,
+                },
+              ],
+            },
+            finalPosition: "top",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
           },
         ],
       },

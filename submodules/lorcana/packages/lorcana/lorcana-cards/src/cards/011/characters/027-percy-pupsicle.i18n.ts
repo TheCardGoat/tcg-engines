@@ -41,4 +41,14 @@ export const percyPupsicleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Percy",
+    version: "Cachorro",
+    text: [
+      {
+        title: "BAÑO DE HIELO",
+        description: "Este personaje no puede desafiar.",
+      },
+    ],
+  },
 };

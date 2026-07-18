@@ -67,6 +67,37 @@ export const op09NicoRobin107: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 3,
+              },
+              {
+                filter: "color",
+                value: "yellow",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
   i18n: op09NicoRobin107I18n,

@@ -17,4 +17,8 @@ export const deVilManorCruellasEstateI18n: Record<Languages, I18nProperties> = {
     name: "Villa De Mon",
     version: "Dimora di Crudelia",
   },
+  es: {
+    name: "Mansión De Vil",
+    version: "La finca de Cruella",
+  },
 };

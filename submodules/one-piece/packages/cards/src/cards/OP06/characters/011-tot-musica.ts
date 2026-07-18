@@ -35,6 +35,12 @@ export const op06TotMusica011: CharacterCard = {
           {
             cost: "restCards",
             amount: 1,
+            filters: [
+              {
+                filter: "name",
+                value: "Uta",
+              },
+            ],
           },
         ],
         actions: [

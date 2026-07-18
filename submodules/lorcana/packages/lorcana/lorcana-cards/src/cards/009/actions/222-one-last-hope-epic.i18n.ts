@@ -35,4 +35,8 @@ export const oneLastHopeEpicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Una última esperanza",
+    text: "El personaje elegido gana Resistencia +2 hasta el comienzo de tu siguiente turno. Si se elige un personaje héroe, también puede desafiar a los personajes listos este turno.",
+  },
 };

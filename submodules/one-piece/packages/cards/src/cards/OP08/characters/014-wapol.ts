@@ -26,7 +26,7 @@ export const op08Wapol014: CharacterCard = {
   traits: ["Drum Kingdom"],
   attribute: "strike",
   effect:
-    "[DON!! x1] [When Attacking] Give up to 1 of your opponent's Characters 2000 power during this turn. Then, this Character gains +2000 power until the end of your opponent's next turn.",
+    "[DON!! x1] [When Attacking] Give up to 1 of your opponent's Characters −2000 power during this turn. Then, this Character gains +2000 power until the end of your opponent's next turn.",
   effects: {
     effects: [
       {
@@ -48,7 +48,7 @@ export const op08Wapol014: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
           },
           {

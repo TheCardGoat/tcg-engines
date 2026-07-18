@@ -45,4 +45,15 @@ export const yelanaNorthuldraLeaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yelana",
+    version: "Líder de Northuldra",
+    text: [
+      {
+        title: "SÓLO CONFIAMOS EN LA NATURALEZA",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido gana Challenger +2 este turno. (Obtienen +2 {S} mientras desafían).",
+      },
+    ],
+  },
 };

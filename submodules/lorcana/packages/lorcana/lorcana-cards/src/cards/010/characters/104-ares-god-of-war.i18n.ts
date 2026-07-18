@@ -57,4 +57,18 @@ export const aresGodOfWarI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ares",
+    version: "Dios de la guerra",
+    text: [
+      {
+        title: "Imprudente",
+      },
+      {
+        title: "LLAMADO A LA BATALLA",
+        description:
+          "Una vez durante tu turno, cada vez que coloques una carta debajo de uno de tus personajes o ubicaciones, podrás preparar el personaje elegido. Si lo haces, ese personaje no podrá realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

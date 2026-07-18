@@ -594,29 +594,31 @@ describe("validateDeckForFormat", () => {
       expect(LORCANA_FORMATS["archazias-island"].requiredRotationState).toBeUndefined();
     });
 
-    it("infinity excludes Set 13 during early access", () => {
+    it("infinity includes Set 13 after early access", () => {
       expect(LORCANA_FORMATS.infinity.allowedSets).toContain("WUN");
-      expect(LORCANA_FORMATS.infinity.allowedSets).not.toContain("013");
+      expect(LORCANA_FORMATS.infinity.allowedSets).toContain("013");
     });
 
-    it("core-constructed keeps the pre-Set 13 rotation window during early access", () => {
+    it("core-constructed uses the Set 13 rotation window", () => {
       expect(LORCANA_FORMATS["core-constructed"].allowedSets).toEqual([
-        "SSK",
-        "AZS",
-        "ARC",
-        "ROJ",
         "FAB",
         "WIW",
         "WSP",
         "WUN",
+        "013",
       ]);
-      expect(LORCANA_FORMATS["core-constructed"].allowedSets).toContain("ROJ");
+      expect(LORCANA_FORMATS["core-constructed"].allowedSets).not.toContain("ROJ");
       expect(LORCANA_FORMATS["core-constructed"].allowedSets).toContain("WUN");
-      expect(LORCANA_FORMATS["core-constructed"].allowedSets).not.toContain("013");
-      expect(LORCANA_FORMATS["core-constructed"].excludedSets).toEqual(["013"]);
+      expect(LORCANA_FORMATS["core-constructed"].allowedSets).toContain("013");
+      expect(LORCANA_FORMATS["core-constructed"].excludedSets).toEqual([
+        "SSK",
+        "AZS",
+        "ARC",
+        "ROJ",
+      ]);
     });
 
-    it("Set 13 cards are legal only in the early-access queue during early access", () => {
+    it("Set 13 cards are legal in normal constructed queues after early access", () => {
       const lookup = buildLookup({
         wun: card("wun", {
           sets: ["WUN"] as LorcanaSetCode[],
@@ -633,20 +635,34 @@ describe("validateDeckForFormat", () => {
       ];
 
       const infinity = validateDeckForFormat(deckCards, lookup, LORCANA_FORMATS.infinity);
-      expect(infinity.rules.find((r) => r.kind === "CARD_SET")?.passed).toBe(false);
+      expect(infinity.rules.find((r) => r.kind === "CARD_SET")?.passed).toBe(true);
 
       const cc = validateDeckForFormat(deckCards, lookup, LORCANA_FORMATS["core-constructed"]);
-      expect(cc.rules.find((r) => r.kind === "CARD_SET")?.passed).toBe(false);
+      expect(cc.rules.find((r) => r.kind === "CARD_SET")?.passed).toBe(true);
 
-      const earlyAccess = validateDeckForFormat(
-        deckCards,
-        lookup,
-        LORCANA_FORMATS["attack-of-the-vine"],
+      const set13DeckCards: DeckCard[] = Array.from({ length: 15 }, (_, index) => ({
+        cardId: `atv-${index}`,
+        quantity: 4,
+      }));
+      const set13Lookup = buildLookup(
+        Object.fromEntries(
+          set13DeckCards.map((entry) => [
+            entry.cardId,
+            card(entry.cardId, {
+              sets: ["013"] as LorcanaSetCode[],
+              rotationStates: ["CoreConstructed"],
+            }),
+          ]),
+        ),
       );
-      expect(earlyAccess.rules.find((r) => r.kind === "CARD_SET")?.passed).toBe(true);
+
+      expect(getDeckFormats(set13DeckCards, set13Lookup, [
+        LORCANA_FORMATS["core-constructed"],
+        LORCANA_FORMATS.infinity,
+      ])).toEqual(["core-constructed", "infinity"]);
     });
 
-    it("core-constructed still accepts Set 5-8 cards before the Set 13 rotation", () => {
+    it("core-constructed rejects cards that only belong to the previous rotation window", () => {
       const lookup = buildLookup({
         roj: card("roj", {
           sets: ["ROJ"] as LorcanaSetCode[],
@@ -665,13 +681,13 @@ describe("validateDeckForFormat", () => {
       const result = validateDeckForFormat(deckCards, lookup, LORCANA_FORMATS["core-constructed"]);
       const setRule = result.rules.find((r) => r.kind === "CARD_SET");
 
-      expect(setRule?.passed).toBe(true);
+      expect(setRule?.passed).toBe(false);
     });
 
     it("core-constructed accepts older printings when the canonical card also has a current legal printing", () => {
       const lookup = buildLookup({
         reprint: card("reprint", {
-          sets: ["TFC", "ROJ"] as LorcanaSetCode[],
+          sets: ["TFC", "FAB"] as LorcanaSetCode[],
           rotationStates: ["CoreConstructed"],
         }),
         fab: card("fab", {
@@ -691,9 +707,9 @@ describe("validateDeckForFormat", () => {
 
     it("getDeckFormats can limit detection to supplied formats", () => {
       const lookup = buildLookup({
-        ssk: card("ssk", { sets: ["SSK"] as LorcanaSetCode[] }),
+        fab: card("fab", { sets: ["FAB"] as LorcanaSetCode[] }),
       });
-      const deckCards: DeckCard[] = [{ cardId: "ssk", quantity: 1 }];
+      const deckCards: DeckCard[] = [{ cardId: "fab", quantity: 1 }];
       const core = coreFormat({ minDeckSize: 1 });
       const history = historyFormat({ allowedSets: ["TFC"] as LorcanaSetCode[], minDeckSize: 1 });
 

@@ -30,6 +30,14 @@ describe("GX-Bit (GD03-062)", () => {
 
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
+      legalTargetIds: [gxBitId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [gxBitId] }));
+
+    expect(p1.getCardsInZone("battleArea")).toContain(gxBitId);
+    expect(engine.asPlayer(PLAYER_TWO).getDamage(enemyId)).toBe(0);
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
       legalTargetIds: [enemyId],
     });
     expectSuccess(p1.resolveEffect({ targets: [enemyId] }));

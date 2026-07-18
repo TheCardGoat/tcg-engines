@@ -26,7 +26,7 @@ export const op08Dalton008: CharacterCard = {
   traits: ["Drum Kingdom"],
   attribute: "slash",
   effect:
-    "[On Play] Give up to 1 of your opponent's Characters 1000 power during this turn. [DON!! x1] [Activate: Main] [Once Per Turn] You may add 1 card from the top of your Life cards to your hand: This Character gains [Rush] during this turn. (This card can attack on the turn in which it is played.)",
+    "[On Play] Give up to 1 of your opponent's Characters −1000 power during this turn. [DON!! x1] [Activate: Main] [Once Per Turn] You may add 1 card from the top of your Life cards to your hand: This Character gains [Rush] during this turn. (This card can attack on the turn in which it is played.)",
   effects: {
     effects: [
       {
@@ -42,7 +42,7 @@ export const op08Dalton008: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 1000,
+            value: -1000,
             duration: "thisTurn",
           },
         ],
@@ -53,6 +53,13 @@ export const op08Dalton008: CharacterCard = {
           {
             condition: "donAttached",
             amount: 1,
+          },
+        ],
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "top",
           },
         ],
         actions: [

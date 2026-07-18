@@ -60,4 +60,18 @@ export const ladyTremaineImperiousQueenEnchantedI18n: Record<Languages, I18nProp
       },
     ],
   },
+  es: {
+    name: "Señora tremaine",
+    version: "Reina imperiosa",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "PODER PARA GOBERNAR POR FIN",
+        description:
+          "Cuando juegas con este personaje, cada oponente elige y destierra a uno de sus personajes.",
+      },
+    ],
+  },
 };

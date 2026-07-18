@@ -30,6 +30,7 @@ export const op09Marco052: CharacterCard = {
     effects: [
       {
         trigger: "onKo",
+        source: "opponentEffect",
         conditions: [
           {
             condition: "turn",
@@ -52,6 +53,7 @@ export const op09Marco052: CharacterCard = {
             count: {
               amount: 1,
             },
+            self: true,
             playState: "rested",
           },
         ],

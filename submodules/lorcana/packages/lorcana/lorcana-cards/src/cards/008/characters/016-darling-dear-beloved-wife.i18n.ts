@@ -44,4 +44,15 @@ export const darlingDearBelovedWifeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Querida querida",
+    version: "Amada esposa",
+    text: [
+      {
+        title: "QUE DULCE",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene +2 {L} este turno.",
+      },
+    ],
+  },
 };

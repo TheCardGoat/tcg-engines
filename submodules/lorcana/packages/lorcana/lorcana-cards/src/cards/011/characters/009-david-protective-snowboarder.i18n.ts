@@ -21,4 +21,9 @@ export const davidProtectiveSnowboarderI18n: Record<Languages, I18nProperties> =
     version: "Snowboarder Protettivo",
     text: "<Guardiano>",
   },
+  es: {
+    name: "David",
+    version: "Snowboarder protector",
+    text: "Guardaespaldas",
+  },
 };

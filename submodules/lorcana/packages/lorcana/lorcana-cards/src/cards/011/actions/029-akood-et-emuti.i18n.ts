@@ -35,4 +35,8 @@ export const akoodEtEmutiI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Akood y Emuti",
+    text: "Pagas 2 {I} menos por el siguiente personaje que juegues en este turno. Saca una carta.",
+  },
 };

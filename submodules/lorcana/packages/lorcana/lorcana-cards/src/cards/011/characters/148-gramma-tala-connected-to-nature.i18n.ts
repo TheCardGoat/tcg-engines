@@ -44,4 +44,15 @@ export const grammaTalaConnectedToNatureI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Abuela tala",
+    version: "Conectado con la naturaleza",
+    text: [
+      {
+        title: "REGALO DE LOS ANCESTROS",
+        description:
+          "Por cada carta en tu tintero, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+    ],
+  },
 };

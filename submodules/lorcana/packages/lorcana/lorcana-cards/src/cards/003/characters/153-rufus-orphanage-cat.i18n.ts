@@ -45,4 +45,15 @@ export const rufusOrphanageCatI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rufo",
+    version: "Gato del orfanato",
+    text: [
+      {
+        title: "DEMASIADO VIEJO PARA PERSEGUIR RATONES",
+        description:
+          "Cuando este personaje sea desterrado, puedes poner esta carta en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

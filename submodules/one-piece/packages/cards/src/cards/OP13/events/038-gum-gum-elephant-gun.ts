@@ -49,14 +49,42 @@ export const op13GumGumElephantGun038: EventCard = {
             },
           },
           {
-            action: "setActive",
+            action: "scheduleAtEndOfTurn",
+            actions: [
+              {
+                action: "setActive",
+                target: {
+                  player: "self",
+                  zones: ["costArea"],
+                  count: {
+                    amount: 2,
+                    upTo: true,
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "rest",
             target: {
-              player: "self",
-              zones: ["costArea"],
+              player: "opponent",
+              zones: ["character"],
               count: {
-                amount: 2,
+                amount: 1,
                 upTo: true,
               },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 5,
+                },
+              ],
             },
           },
         ],

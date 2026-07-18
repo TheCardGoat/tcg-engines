@@ -45,4 +45,15 @@ export const cursedMerfolkUrsulasHandiworkP3ChallengeI18n: Record<Languages, I18
       },
     ],
   },
+  es: {
+    name: "Tritones malditos",
+    version: "La obra de Úrsula",
+    text: [
+      {
+        title: "POBRES ALMAS",
+        description:
+          "Siempre que se desafía a este personaje, cada oponente elige y descarta una carta.",
+      },
+    ],
+  },
 };

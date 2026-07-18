@@ -59,4 +59,18 @@ export const kristoffReindeerKeeperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kristoff",
+    version: "Guardián de renos",
+    text: [
+      {
+        title: "CANCIÓN DEL REBAJO",
+        description:
+          "Por cada carta de canción de tu descarte, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "Guardaespaldas",
+      },
+    ],
+  },
 };

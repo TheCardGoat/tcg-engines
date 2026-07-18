@@ -45,14 +45,6 @@ export const op12NicoRobin087: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "handCount",
-            player: "opponent",
-            comparison: "gte",
-            value: 5,
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -64,9 +56,63 @@ export const op12NicoRobin087: CharacterCard = {
             action: "trashFromHand",
             player: "opponent",
             amount: 2,
+            condition: {
+              condition: "handCount",
+              player: "opponent",
+              comparison: "gte",
+              value: 5,
+            },
           },
         ],
         optional: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "compound",
+            operator: "or",
+            conditions: [
+              {
+                condition: "leaderName",
+                name: "Koala",
+              },
+              {
+                condition: "leaderName",
+                name: "Monkey.D.Luffy",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 3,
+            duration: "permanent",
+          },
+        ],
       },
     ],
   },

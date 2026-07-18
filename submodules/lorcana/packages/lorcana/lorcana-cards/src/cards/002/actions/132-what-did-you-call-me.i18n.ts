@@ -17,4 +17,8 @@ export const whatDidYouCallMeI18n: Record<Languages, I18nProperties> = {
     name: "What Did You Call Me?",
     text: "Chosen damaged character gets +3 {S} this turn.",
   },
+  es: {
+    name: "¿Cómo me llamaste?",
+    text: "El personaje dañado elegido obtiene +3 {S} este turno.",
+  },
 };

@@ -87,6 +87,13 @@ export function buildTargetResolutionContext(
     framework.state.status.activePlayer) as PlayerId;
   const cards = framework.cards;
   const statsFramework = opts?.recursionGuard ? undefined : framework;
+  const isPairedCommandPilot = (card: RuntimeCard): boolean => {
+    const definition = card.definition as Card;
+    return (
+      definition.type === "command" &&
+      Object.values(G.pilotAssignments).some((pilotId) => pilotId === card.instanceId)
+    );
+  };
 
   // Rule 3-3-9-1: text printed on a pilot card belongs to the pilot, but
   // "this Unit" in that text refers to the paired unit. When the source is
@@ -125,7 +132,14 @@ export function buildTargetResolutionContext(
     const attackerId = pendingCombat.attackerId as CardInstanceId;
     ids.add(attackerId);
     const defenderIds: CardInstanceId[] = [];
-    if (pendingCombat.target !== "direct") {
+    // A declared blocker becomes the actual opposing combatant even when
+    // the attack originally targeted the player. Keep `target` unchanged
+    // for attack history, but project target legality from `blockerId`.
+    if (pendingCombat.blockerId) {
+      const blockerId = pendingCombat.blockerId as CardInstanceId;
+      ids.add(blockerId);
+      defenderIds.push(blockerId);
+    } else if (pendingCombat.target !== "direct") {
       const t = pendingCombat.target as CardInstanceId;
       ids.add(t);
       defenderIds.push(t);
@@ -164,7 +178,7 @@ export function buildTargetResolutionContext(
     currentBattleParticipantIds,
     deployedThisTurnIds: new Set(G.turnMetadata.deployedThisTurn as CardInstanceId[]),
     battleOpponents,
-    isDirectAttack: pendingCombat?.target === "direct",
+    isDirectAttack: pendingCombat?.target === "direct" && pendingCombat.blockerId === undefined,
 
     getCardsInZone(playerId: PlayerId, zone: Zone): readonly RuntimeCard[] {
       const ids = framework.zones.getCards({ zone, playerId: playerId as string });
@@ -188,6 +202,11 @@ export function buildTargetResolutionContext(
     },
 
     getCardType(card: RuntimeCard): CardType {
+      // Rules 3-4-6-3/4: a Command played through its Pilot text is a
+      // Pilot while it is paired. Generic conditions and target filters
+      // must see that public in-play identity rather than the card's
+      // hand-facing Command type.
+      if (isPairedCommandPilot(card)) return "pilot";
       return (card.definition as Card).type as CardType;
     },
 
@@ -234,7 +253,11 @@ export function buildTargetResolutionContext(
     },
 
     getCardName(card: RuntimeCard): string {
-      return (card.definition as Card).name;
+      const definition = card.definition as Card;
+      if (isPairedCommandPilot(card) && definition.type === "command") {
+        return definition.pilotName ?? definition.name;
+      }
+      return definition.name;
     },
 
     getCardKeywords(card: RuntimeCard): readonly KeywordEffect[] {

@@ -17,4 +17,8 @@ export const higginsUndercoverOfficerI18n: Record<Languages, I18nProperties> = {
     name: "Higgins",
     version: "Agente Sotto Copertura",
   },
+  es: {
+    name: "Higgins",
+    version: "Oficial encubierto",
+  },
 };

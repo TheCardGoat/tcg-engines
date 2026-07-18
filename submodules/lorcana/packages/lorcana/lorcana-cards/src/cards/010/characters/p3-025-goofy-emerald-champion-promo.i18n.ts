@@ -64,4 +64,19 @@ export const goofyEmeraldChampionP3PromoI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "Campeón Esmeralda",
+    text: [
+      {
+        title: "INCLUSO EL PUNTUACIÓN",
+        description:
+          "Siempre que uno de tus otros personajes Esmeralda sea desafiado y desterrado, destierra al personaje desafiante.",
+      },
+      {
+        title: "PROPORCIONAR COBERTURA",
+        description: "Tus otros personajes Esmeralda ganan Protección.",
+      },
+    ],
+  },
 };

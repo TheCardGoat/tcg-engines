@@ -5,6 +5,7 @@ export const gd02GundamAge1Titus031: UnitCard = {
   name: "Gundam AGE-1 Titus",
   type: "unit",
   color: "green",
+  battlefieldZones: ["space", "earth"],
   traits: ["earth federation", "age system"],
   id: "GD02-031",
   canonicalId: "GD02-031",
@@ -41,6 +42,7 @@ export const gd02GundamAge1Titus031: UnitCard = {
   cost: 2,
   ap: 2,
   hp: 4,
+  linkCondition: "[Flit Asuno]",
   effect: "While you are Lv.7 or higher, this Unit gets AP+2.<br>",
   effects: [
     {

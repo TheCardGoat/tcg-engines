@@ -31,6 +31,10 @@ export const op10Franky034: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "ko",
+        source: "battle",
+        eventFilter: {
+          targetSelf: true,
+        },
         replacementAction: {
           action: "removeFromLife",
           player: "self",
@@ -38,6 +42,7 @@ export const op10Franky034: CharacterCard = {
             amount: 1,
           },
           destination: "hand",
+          position: "top",
         },
         oncePerTurn: true,
       },

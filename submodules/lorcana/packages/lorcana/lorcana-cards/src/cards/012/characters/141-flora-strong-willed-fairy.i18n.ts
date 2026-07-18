@@ -45,4 +45,15 @@ export const floraStrongwilledFairyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Flora",
+    version: "Hada de voluntad fuerte",
+    text: [
+      {
+        title: "REFUGIO LUMINOSO",
+        description:
+          "Cuando juegas con este personaje, tus otros personajes obtienen Resistencia +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

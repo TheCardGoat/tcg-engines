@@ -49,6 +49,7 @@ export const eb01JustShutUpAndComeWithUs009: EventCard = {
               {
                 filter: "trait",
                 value: "Animal",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

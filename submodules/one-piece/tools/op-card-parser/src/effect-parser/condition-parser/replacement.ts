@@ -1,4 +1,5 @@
 import type { Condition } from "@tcg/op-types";
+import { parseTarget } from "../target-parser.ts";
 
 export function parseReplacementEvent(text: string): "ko" | "removed" | "rested" {
   const lower = text.toLowerCase();
@@ -113,19 +114,61 @@ export function parseNonSelfReplacementCondition(text: string): Condition | null
   const t = text.trim();
   let m: RegExpExecArray | null;
 
-  // your ... would be K.O.'d/removed/rested [by ...]
+  // "you have a green Character ... that would be removed ..."
   m =
-    /^your\s+.+\s+would\s+be\s+(K\.O\.\u2019?'?d|removed\s+from\s+the\s+field|rested)(?:\s+(.+))?$/i.exec(
+    /^you\s+have\s+(?:a\s+)?(.+?)\s+that\s+would\s+be\s+(K\.O\.\u2019?'?d|removed\s+from\s+the\s+field|rested)(?:\s+(.+))?$/i.exec(
       t,
     );
   if (m) {
-    const event = parseReplacementEvent(m[1]!);
-    const source = parseReplacementSource(m[2]);
+    const event = parseReplacementEvent(m[2]!);
+    const source = parseReplacementSource(m[3]);
+    const target = parseTarget(`1 of your ${m[1]!}`);
     return {
       condition: "replacement",
       event,
       targetSelf: false,
       ...(source && { source }),
+      ...(target && { target }),
+    };
+  }
+
+  // your Character [Name] would be K.O.'d/removed/rested [by ...]
+  m =
+    /^your\s+Character\s+\[([^\]]+)\]\s+would\s+be\s+(K\.O\.\u2019?'?d|removed\s+from\s+the\s+field|rested)(?:\s+(.+))?$/i.exec(
+      t,
+    );
+  if (m) {
+    const event = parseReplacementEvent(m[2]!);
+    const source = parseReplacementSource(m[3]);
+    return {
+      condition: "replacement",
+      event,
+      targetSelf: false,
+      ...(source && { source }),
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+        filters: [{ filter: "name", value: m[1]! }],
+      },
+    };
+  }
+
+  // your ... would be K.O.'d/removed/rested [by ...]
+  m =
+    /^your\s+(.+?)\s+would\s+be\s+(K\.O\.\u2019?'?d|removed\s+from\s+the\s+field|rested)(?:\s+(.+))?$/i.exec(
+      t,
+    );
+  if (m) {
+    const event = parseReplacementEvent(m[2]!);
+    const source = parseReplacementSource(m[3]);
+    const target = parseTarget(`1 of your ${m[1]!}`);
+    return {
+      condition: "replacement",
+      event,
+      targetSelf: false,
+      ...(source && { source }),
+      ...(target && { target }),
     };
   }
 
@@ -142,6 +185,11 @@ export function parseNonSelfReplacementCondition(text: string): Condition | null
       event,
       targetSelf: false,
       ...(source && { source }),
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+      },
     };
   }
 

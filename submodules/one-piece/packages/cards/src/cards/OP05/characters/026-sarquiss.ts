@@ -41,6 +41,17 @@ export const op05Sarquiss026: CharacterCard = {
           {
             cost: "restCards",
             amount: 1,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+              {
+                filter: "cost",
+                comparison: "gte",
+                value: 3,
+              },
+            ],
           },
         ],
         actions: [

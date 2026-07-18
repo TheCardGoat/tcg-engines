@@ -21,4 +21,9 @@ export const naniProtectiveSisterI18n: Record<Languages, I18nProperties> = {
     version: "Sorella Protettiva",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Nani",
+    version: "Hermana protectora",
+    text: "Guardaespaldas",
+  },
 };

@@ -41,4 +41,14 @@ export const lastCannonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Último cañón",
+    text: [
+      {
+        title: "ARMATE 1",
+        description:
+          "{I}, desterrar este objeto: el personaje elegido obtiene Challenger +3 este turno. (Obtienen +3 {S} mientras desafían).",
+      },
+    ],
+  },
 };

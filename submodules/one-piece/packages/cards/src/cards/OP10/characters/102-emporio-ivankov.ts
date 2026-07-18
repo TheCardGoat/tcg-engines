@@ -45,6 +45,7 @@ export const op10EmporioIvankov102: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Revolutionary Army",
+                  match: "includes",
                 },
               ],
             },
@@ -58,6 +59,7 @@ export const op10EmporioIvankov102: CharacterCard = {
               amount: 1,
             },
             destination: "hand",
+            position: "top",
           },
         ],
         oncePerTurn: true,

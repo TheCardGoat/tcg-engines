@@ -17,4 +17,8 @@ export const chipTheTeacupGentleSoulI18n: Record<Languages, I18nProperties> = {
     name: "Chip the Teacup",
     version: "Gentle Soul",
   },
+  es: {
+    name: "Chip la taza de té",
+    version: "Alma gentil",
+  },
 };

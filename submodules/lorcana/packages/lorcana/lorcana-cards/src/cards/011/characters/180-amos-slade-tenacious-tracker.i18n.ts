@@ -26,4 +26,14 @@ export const amosSladeTenaciousTrackerI18n: Record<Languages, I18nProperties> = 
     version: "Inseguitore Tenace",
     text: "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
   },
+  es: {
+    name: "Amos Slade",
+    version: "Rastreador tenaz",
+    text: [
+      {
+        title: "Alerta",
+        description: "(Este personaje puede desafiar como si tuviera Evasivo).",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const theBeastIsMineI18n: Record<Languages, I18nProperties> = {
     name: "The Beast is Mine!",
     text: "Chosen character gains <Reckless> during their next turn. (They can't quest and must challenge if able.)",
   },
+  es: {
+    name: "¡La Bestia es Mía!",
+    text: "El personaje elegido gana Temerario durante su próximo turno. (No pueden realizar misiones y deben desafiar si pueden).",
+  },
 };

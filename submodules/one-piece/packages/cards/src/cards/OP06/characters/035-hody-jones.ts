@@ -65,6 +65,7 @@ export const op06HodyJones035: CharacterCard = {
               amount: 1,
             },
             destination: "hand",
+            position: "top",
           },
         ],
       },

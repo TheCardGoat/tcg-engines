@@ -44,4 +44,15 @@ export const banzaiTauntingHyenaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Banzai",
+    version: "Hiena burlona",
+    text: [
+      {
+        title: "AQUÍ GATITO, GATITO, GATITO",
+        description:
+          "Cuando juegas con este personaje, puedes ejercer el personaje dañado elegido.",
+      },
+    ],
+  },
 };

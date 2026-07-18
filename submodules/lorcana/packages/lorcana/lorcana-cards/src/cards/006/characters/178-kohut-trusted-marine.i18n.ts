@@ -17,4 +17,8 @@ export const kohutTrustedMarineI18n: Record<Languages, I18nProperties> = {
     name: "Kohut",
     version: "Marine Fidato",
   },
+  es: {
+    name: "Kohut",
+    version: "Marino de confianza",
+  },
 };

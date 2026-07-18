@@ -45,4 +45,15 @@ export const johnSmithSnowTrackerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Juan Smith",
+    version: "Rastreador de nieve",
+    text: [
+      {
+        title: "SIGUE LAS PISTAS",
+        description:
+          "Al final de tu turno, si este personaje está ejercido y ninguno de tus personajes desafió este turno, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

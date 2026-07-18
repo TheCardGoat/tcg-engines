@@ -45,4 +45,15 @@ export const jafarNewlyCrownedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jafar",
+    version: "Recién coronado",
+    text: [
+      {
+        title: "ESTO NO ESTÁ HECHO AÚN",
+        description:
+          "Durante el turno de un oponente, siempre que uno de tus personajes de Ilusión sea desterrado, puedes devolver esa carta a tu mano.",
+      },
+    ],
+  },
 };

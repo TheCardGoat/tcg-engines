@@ -17,4 +17,8 @@ export const visitingChristmasPastI18n: Record<Languages, I18nProperties> = {
     name: "Verso i Natali Passati",
     text: "Aggiungi un qualsiasi numero di carte da sotto i tuoi personaggi e luoghi al tuo calamaio, a faccia in giù e impegnate.",
   },
+  es: {
+    name: "Visitando la Navidad pasada",
+    text: "Coloque cualquier cantidad de cartas debajo de sus personajes y ubicaciones en su tintero boca abajo y ejerza.",
+  },
 };

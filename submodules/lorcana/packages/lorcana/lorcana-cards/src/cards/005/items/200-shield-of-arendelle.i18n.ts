@@ -41,4 +41,14 @@ export const shieldOfArendelleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Escudo de Arendelle",
+    text: [
+      {
+        title: "CAMBIAR",
+        description:
+          "Destierra este objeto: el personaje elegido obtiene Resistencia +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -65,4 +65,20 @@ export const trampEnterprisingDogI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Vagabundo",
+    version: "Perro emprendedor",
+    text: [
+      {
+        title: "Oye, PIDGE",
+        description:
+          "Si tienes un personaje llamado Lady en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "NO HAY TIEMPO PARA GRISES",
+        description:
+          "Cuando juegas con este personaje, tu personaje elegido obtiene +1 {S} este turno por cada otro personaje que tengas en juego.",
+      },
+    ],
+  },
 };

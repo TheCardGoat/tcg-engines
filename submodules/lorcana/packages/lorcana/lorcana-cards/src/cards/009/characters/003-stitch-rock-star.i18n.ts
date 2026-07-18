@@ -30,4 +30,18 @@ export const stitchRockStarI18n: Record<Languages, I18nProperties> = {
     version: "Rock Star",
     text: "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Stitch.) \\Adoring Fans\\ Whenever you play a character with cost 2 or less, you may exert them to draw a card.",
   },
+  es: {
+    name: "Puntada",
+    version: "Estrella de rock",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "ADORANDO A LOS FANS",
+        description:
+          "Siempre que juegues con un personaje con coste 2 o menos, puedes obligarlo a robar una carta.",
+      },
+    ],
+  },
 };

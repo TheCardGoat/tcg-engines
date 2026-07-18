@@ -17,4 +17,8 @@ export const bagheeraCautiousExplorerI18n: Record<Languages, I18nProperties> = {
     name: "Bagheera",
     version: "Esploratore Cauto",
   },
+  es: {
+    name: "Bagheera",
+    version: "Explorador cauteloso",
+  },
 };

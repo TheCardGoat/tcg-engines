@@ -41,4 +41,14 @@ export const discardedArmorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Armadura descartada",
+    text: [
+      {
+        title: "Equipo encontrado",
+        description:
+          "{E}: si descartaste una carta este turno, tu personaje elegido gana <Resistir> +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -58,4 +58,18 @@ export const pigletSturdySwordsmanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cerdito",
+    version: "Espadachín robusto",
+    text: [
+      {
+        title: "Resistir +1",
+      },
+      {
+        title: "YA NO ES TAN PEQUEÑO",
+        description:
+          "Si bien no tienes cartas en la mano, este personaje puede desafiar a los personajes listos.",
+      },
+    ],
+  },
 };

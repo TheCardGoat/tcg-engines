@@ -17,4 +17,8 @@ export const kidaAtlanteanI18n: Record<Languages, I18nProperties> = {
     name: "Kida",
     version: "Atlantidese",
   },
+  es: {
+    name: "Niño",
+    version: "Atlante",
+  },
 };

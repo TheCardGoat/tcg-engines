@@ -54,4 +54,17 @@ export const snowFortI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Fuerte de nieve",
+    text: [
+      {
+        title: "EL TERRENO ALTO",
+        description: "Tus personajes obtienen +1 {S}.",
+      },
+      {
+        title: "BARRICADA",
+        description: "Durante los turnos de los oponentes, tus personajes obtienen Resistencia +1.",
+      },
+    ],
+  },
 };

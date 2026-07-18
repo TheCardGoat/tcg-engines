@@ -45,4 +45,15 @@ export const honeymarenNorthuldraGuideI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Mielen",
+    version: "Guía de Northuldra",
+    text: [
+      {
+        title: "CUENTO DEL QUINTO ESPÍRITU",
+        description:
+          "Cuando juegas con este personaje, si un oponente tiene un personaje ejercido en juego, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

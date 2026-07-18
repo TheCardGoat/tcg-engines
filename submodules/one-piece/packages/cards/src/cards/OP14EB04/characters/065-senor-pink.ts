@@ -32,7 +32,8 @@ export const op14eb04SenorPink065: CharacterCard = {
         trigger: "onKo",
         actions: [
           {
-            action: "opponentReturnDon",
+            action: "returnDon",
+            player: "opponent",
             amount: 1,
           },
         ],

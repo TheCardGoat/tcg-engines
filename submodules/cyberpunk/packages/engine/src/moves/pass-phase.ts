@@ -182,24 +182,22 @@ function finishEndTurn(
 
   operations.game.setPhase("start");
 
+  operations.game.cleanupEffectsExpiringAtTurnStart(opponentId);
+
+  // The 7+ Gig/deck-out check fires at the turn-start boundary before card
+  // triggers can draw or otherwise change the state used by the win check.
+  // During overtime, majority decides the game instead.
+  if (maybeEndForTurnStart(state, opponentId, playerId, operations, state.G.overtime)) {
+    return;
+  }
+
   const turnStartedEvent = {
     type: "turnStarted" as const,
     playerId: opponentId,
     turnNumber: currentTurn + 1,
   };
   operations.event.emit(turnStartedEvent);
-  // Invariant: every emitted event has its triggers processed. No card uses a
-  // turnStarted trigger today, but establish the invariant so future
-  // turn-start triggers fire.
   processEventTriggers(turnStartedEvent, state, operations);
-
-  operations.game.cleanupEffectsExpiringAtTurnStart(opponentId);
-
-  // The 7+ gig win check fires at the turn-start boundary before ready/draw/gain.
-  // During overtime, majority decides the game instead.
-  if (maybeEndForTurnStart(state, opponentId, playerId, operations, state.G.overtime)) {
-    return;
-  }
 
   // Start phase begins.
   // Step 1: READY SPENT CARDS.

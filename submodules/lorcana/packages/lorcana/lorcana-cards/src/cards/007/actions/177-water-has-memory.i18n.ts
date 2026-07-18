@@ -17,4 +17,8 @@ export const waterHasMemoryI18n: Record<Languages, I18nProperties> = {
     name: "L'Acqua Ha Memoria",
     text: "Guarda le prime 4 carte del mazzo di un giocatore a tua scelta. Mettine una in cima al suo mazzo e il resto in fondo al suo mazzo in qualsiasi ordine.",
   },
+  es: {
+    name: "El agua tiene memoria",
+    text: "Mira las 4 primeras cartas del mazo del jugador elegido. Coloque uno en la parte superior de su plataforma y el resto en la parte inferior de su plataforma en cualquier orden.",
+  },
 };

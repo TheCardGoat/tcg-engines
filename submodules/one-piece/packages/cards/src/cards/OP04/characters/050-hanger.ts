@@ -36,6 +36,9 @@ export const op04Hanger050: CharacterCard = {
             cost: "trashFromHand",
             amount: 1,
           },
+          {
+            cost: "restThisCard",
+          },
         ],
         actions: [
           {

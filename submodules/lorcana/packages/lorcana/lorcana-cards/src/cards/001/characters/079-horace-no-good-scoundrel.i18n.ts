@@ -17,4 +17,8 @@ export const horaceNogoodScoundrelI18n: Record<Languages, I18nProperties> = {
     name: "Orazio",
     version: "Losca Canaglia",
   },
+  es: {
+    name: "Horacio",
+    version: "Sinvergüenza inútil",
+  },
 };

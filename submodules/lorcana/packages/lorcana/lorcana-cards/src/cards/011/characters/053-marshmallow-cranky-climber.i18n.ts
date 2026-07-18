@@ -45,4 +45,15 @@ export const marshmallowCrankyClimberI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Malvavisco",
+    version: "Escalador malhumorado",
+    text: [
+      {
+        title: "Explosión helada",
+        description:
+          "Siempre que este personaje realiza una misión, cada oponente no puede preparar más de 1 de sus personajes al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

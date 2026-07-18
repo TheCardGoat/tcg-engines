@@ -45,4 +45,15 @@ export const honeyLemonCostumedCatalystI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Miel limón",
+    version: "Catalizador disfrazado",
+    text: [
+      {
+        title: "¡HAGAMOS ESTO!",
+        description:
+          "Siempre que juegues con un personaje Floodborn, si usaste Shift para jugarlo, puedes devolver el personaje elegido a la mano de su jugador.",
+      },
+    ],
+  },
 };

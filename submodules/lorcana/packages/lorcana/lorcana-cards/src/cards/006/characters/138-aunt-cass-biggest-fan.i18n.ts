@@ -45,4 +45,15 @@ export const auntCassBiggestFanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tía cass",
+    version: "Mayor fan",
+    text: [
+      {
+        title: "ENCANTADO DE AYUDARLE",
+        description:
+          "Siempre que este personaje realiza una misión, el personaje Inventor elegido obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

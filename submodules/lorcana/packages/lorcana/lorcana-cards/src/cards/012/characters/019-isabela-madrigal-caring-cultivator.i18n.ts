@@ -57,4 +57,18 @@ export const isabelaMadrigalCaringCultivatorI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Isabela Madrigal",
+    version: "Cultivador solidario",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "NO HAGAS MAL",
+        description:
+          "Cada vez que eliminas el daño de uno de tus personajes, obtienes 1 conocimiento por cada daño eliminado.",
+      },
+    ],
+  },
 };

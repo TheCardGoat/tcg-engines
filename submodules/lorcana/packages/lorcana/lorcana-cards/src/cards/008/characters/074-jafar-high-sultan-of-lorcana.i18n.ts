@@ -45,4 +45,15 @@ export const jafarHighSultanOfLorcanaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jafar",
+    version: "Alto Sultán de Lorcana",
+    text: [
+      {
+        title: "PODER OSCURO",
+        description:
+          "Siempre que este personaje realice una misión, puedes robar una carta, luego elegir y descartar una carta. Si una carta de personaje de Ilusión se descarta de esta manera, puedes jugar con ese personaje de forma gratuita.",
+      },
+    ],
+  },
 };

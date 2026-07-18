@@ -26,7 +26,7 @@ export const op03Blamenco011: CharacterCard = {
   traits: ["Whitebeard Pirates"],
   attribute: "strike",
   effect:
-    "[DON!! x1] [When Attacking] Give up to 1 of your opponent's Characters -2000 power during this turn.",
+    "[DON!! x1] [When Attacking] Give up to 1 of your opponent's Characters −2000 power during this turn.",
   effects: {
     effects: [
       {

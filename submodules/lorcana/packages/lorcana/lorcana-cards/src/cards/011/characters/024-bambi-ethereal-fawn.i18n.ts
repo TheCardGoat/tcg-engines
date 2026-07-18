@@ -60,4 +60,18 @@ export const bambiEtherealFawnI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bambi",
+    version: "Cervatillo etéreo",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "¡VEN A VER!",
+        description:
+          "Durante tu turno, siempre que este personaje se esfuerce, revela una cantidad de cartas de la parte superior de tu mazo igual a la cantidad de cartas debajo de él. Pon todas las cartas de personaje reveladas en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

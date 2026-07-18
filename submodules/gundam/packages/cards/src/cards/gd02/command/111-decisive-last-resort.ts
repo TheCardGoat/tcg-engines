@@ -5,7 +5,7 @@ export const gd02DecisiveLastResort111: CommandCard = {
   name: "Decisive Last Resort",
   type: "command",
   color: "purple",
-  traits: ["-"],
+  traits: [],
   id: "GD02-111",
   canonicalId: "GD02-111",
   externalIds: { bandai: "gundam:gd02-111" },
@@ -73,32 +73,49 @@ export const gd02DecisiveLastResort111: CommandCard = {
       type: "command",
       activation: {
         timing: ["main"],
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "opponent",
+            zone: "battleArea",
+            cardType: "unit",
+            comparison: "gte",
+            count: 1,
+          },
+        ],
       },
       directives: [
         {
           action: {
-            action: "exile",
-            target: {
-              owner: "friendly",
-              cardType: "unit",
-              count: 6,
-              zone: "trash",
-              attributeFilters: [{ attribute: "color", comparison: "eq", value: "purple" }],
+            action: "resolveThenQueue",
+            first: {
+              action: "exile",
+              target: {
+                owner: "friendly",
+                cardType: "unit",
+                count: 6,
+                zone: "trash",
+                attributeFilters: [{ attribute: "color", comparison: "eq", value: "purple" }],
+              },
+            },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
+                {
+                  action: {
+                    action: "destroy",
+                    target: {
+                      owner: "opponent",
+                      cardType: "unit",
+                      count: 1,
+                    },
+                  },
+                },
+              ],
+              sourceText: "Choose 1 enemy Unit. Destroy it.",
             },
           },
-        },
-        {
-          action: {
-            action: "destroy",
-            target: {
-              owner: "opponent",
-              cardType: "unit",
-              count: 1,
-            },
-          },
-          // "If you do, ..." — only destroy if the preceding exile
-          // actually landed 6 purple Unit cards from trash.
-          dependsOnPrevious: true,
         },
       ],
       sourceText:

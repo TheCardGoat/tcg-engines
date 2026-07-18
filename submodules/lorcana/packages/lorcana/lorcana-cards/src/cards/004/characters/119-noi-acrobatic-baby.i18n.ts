@@ -45,4 +45,15 @@ export const noiAcrobaticBabyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Noi",
+    version: "Bebé acrobático",
+    text: [
+      {
+        title: "TRABAJO DE PIES ELEGANTE",
+        description:
+          "Cada vez que juegas una acción, este personaje no recibe daño de los desafíos este turno.",
+      },
+    ],
+  },
 };

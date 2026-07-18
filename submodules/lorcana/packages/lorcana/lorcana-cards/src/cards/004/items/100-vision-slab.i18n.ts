@@ -56,4 +56,18 @@ export const visionSlabI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Losa de visión",
+    text: [
+      {
+        title: "PELIGRO REVELADO",
+        description:
+          "Al comienzo de tu turno, si un personaje contrario tiene daño, gana 1 conocimiento.",
+      },
+      {
+        title: "¡ATRAPADO!",
+        description: "Los contadores de daño no se pueden eliminar.",
+      },
+    ],
+  },
 };

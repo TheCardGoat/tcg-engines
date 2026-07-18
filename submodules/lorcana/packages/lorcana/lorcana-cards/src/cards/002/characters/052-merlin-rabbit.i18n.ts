@@ -44,4 +44,15 @@ export const merlinRabbitI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Esmerejón",
+    version: "Conejo",
+    text: [
+      {
+        title: "¡HOPPITY CADERA!",
+        description:
+          "Cuando juegas con este personaje y cuando deja el juego, puedes robar una carta.",
+      },
+    ],
+  },
 };

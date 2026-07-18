@@ -55,6 +55,7 @@ export const op03Adio002: CharacterCard = {
               ],
             },
             keyword: "blocker",
+            requiresKeyword: true,
             duration: "thisBattle",
           },
         ],

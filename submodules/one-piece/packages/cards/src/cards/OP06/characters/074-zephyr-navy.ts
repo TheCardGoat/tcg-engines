@@ -49,7 +49,27 @@ export const op06ZephyrNavy074: CharacterCard = {
             },
             duration: "thisTurn",
           },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "power",
+                  comparison: "lte",
+                  value: 5000,
+                },
+              ],
+            },
+            previousActionTargets: true,
+          },
         ],
+        optional: true,
       },
     ],
   },

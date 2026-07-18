@@ -72,4 +72,21 @@ export const mickeyMousePlayfulSorcererD23I18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Hechicero juguetón",
+    text: [
+      {
+        title: "<Mayús> 3",
+      },
+      {
+        title: "<Resistir> +1",
+      },
+      {
+        title: "Barrer",
+        description:
+          "Cuando juegues con este personaje, inflige daño al personaje elegido igual a la cantidad de personajes de Escoba que tengas en juego.",
+      },
+    ],
+  },
 };

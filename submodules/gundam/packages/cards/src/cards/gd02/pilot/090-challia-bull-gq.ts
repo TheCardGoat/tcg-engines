@@ -94,7 +94,18 @@ export const gd02ChalliaBullGq090: PilotCard = {
     },
     {
       type: "constant",
-      activation: {},
+      activation: {
+        conditions: [
+          {
+            type: "unitCount",
+            owner: "friendly",
+            comparison: "gte",
+            count: 1,
+            hasKeyword: "HighManeuver",
+            excludeSelf: true,
+          },
+        ],
+      },
       directives: [
         {
           action: {

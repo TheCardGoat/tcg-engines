@@ -45,4 +45,15 @@ export const magicBroomBucketBrigadeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Escoba magica",
+    version: "Brigada de cubos",
+    text: [
+      {
+        title: "BARRER",
+        description:
+          "Cuando juegas con este personaje, puedes barajar una carta de cualquier descarte en el mazo de su jugador.",
+      },
+    ],
+  },
 };

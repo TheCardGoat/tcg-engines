@@ -60,4 +60,18 @@ export const madamMimRivalOfMerlinI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora mim",
+    version: "Rival de Merlín",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "HORRIBLE Y SOMBRÍO",
+        description:
+          "{E}: juega con un personaje con un coste de 4 o menos de forma gratuita. Ganan Rush. Al final del turno, destiérralos. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

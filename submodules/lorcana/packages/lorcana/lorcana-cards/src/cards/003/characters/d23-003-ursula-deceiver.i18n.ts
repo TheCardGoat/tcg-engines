@@ -45,4 +45,15 @@ export const ursulaDeceiverD23I18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Úrsula",
+    version: "Engañador",
+    text: [
+      {
+        title: "Ni siquiera te lo perderás",
+        description:
+          "Cuando juegas con este personaje, el oponente elegido revela su mano y descarta una carta de canción de tu elección.",
+      },
+    ],
+  },
 };

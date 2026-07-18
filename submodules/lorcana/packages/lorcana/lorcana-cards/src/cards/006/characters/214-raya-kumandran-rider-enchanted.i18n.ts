@@ -45,4 +45,15 @@ export const rayaKumandranRiderEnchantedI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Raya",
+    version: "Jinete Kumandra",
+    text: [
+      {
+        title: "VAMOS, HAGAMOS ESTO",
+        description:
+          "Una vez durante tu turno, cada vez que se coloca una carta en tu tintero, puedes preparar otro personaje tuyo elegido. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

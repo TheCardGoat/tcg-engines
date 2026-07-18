@@ -39,7 +39,7 @@ export const op11HonestyImpact018: EventCard = {
     },
   ],
   effect:
-    "[Main] Give up to 1 of your opponent's Characters 4000 power during this turn. Then, K.O. up to 1 of your opponent's Characters with 6000 power or less.",
+    "[Main] Give up to 1 of your opponent's Characters −4000 power during this turn. Then, K.O. up to 1 of your opponent's Characters with 6000 power or less.",
   effects: {
     effects: [
       {
@@ -55,7 +55,7 @@ export const op11HonestyImpact018: EventCard = {
                 upTo: true,
               },
             },
-            value: 4000,
+            value: -4000,
             duration: "thisTurn",
           },
           {
@@ -74,6 +74,20 @@ export const op11HonestyImpact018: EventCard = {
                   value: 6000,
                 },
               ],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "power", comparison: "lte", value: 6000 }],
             },
           },
         ],

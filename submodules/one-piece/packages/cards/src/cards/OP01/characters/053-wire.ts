@@ -25,6 +25,5 @@ export const op01Wire053: CharacterCard = {
   counter: 1000,
   traits: ["Kid Pirates"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op01Wire053I18n,
 };

@@ -53,6 +53,22 @@ export const op14eb04StriveToSurpassMeRoronoaZoro036: EventCard = {
         ],
         optional: true,
       },
+      {
+        trigger: "trigger",
+        costs: [{ cost: "restCards", amount: 1 }],
+        actions: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "basePower", comparison: "lte", value: 7000 }],
+            },
+          },
+        ],
+        optional: true,
+      },
     ],
   },
   i18n: op14eb04StriveToSurpassMeRoronoaZoro036I18n,

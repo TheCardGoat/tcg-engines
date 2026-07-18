@@ -1,113 +1,129 @@
-import { describe, it, expect } from "vite-plus/test";
-import type { UnitCard, ResourceCard } from "@tcg/gundam-types";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  expectSuccess,
+  activeResources,
+  createMockUnit,
   expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
-import type { TestCardEntry } from "@tcg/gundam-engine";
-import { findStatModifier } from "@tcg/gundam-engine";
 import { gd02GalbaldyBeta014 } from "./014-galbaldy-beta.ts";
-
-let counter = 0;
-function uid(prefix: string): string {
-  return `${prefix}-${++counter}`;
-}
-
-function makeResource(): ResourceCard {
-  return {
-    cardNumber: uid("GB-R"),
-    name: "Test Resource",
-    type: "resource",
-    canonicalId: "mock",
-    slug: "mock",
-    printings: [],
-    traits: [],
-    level: 0,
-    cost: 0,
-    keywordEffects: [],
-    rarity: "common",
-  };
-}
-
-function makeUnit(hp: number, traits: string[] = []): UnitCard {
-  return {
-    cardNumber: uid("GB-U"),
-    name: "Test Unit",
-    type: "unit",
-    canonicalId: "mock",
-    slug: "mock",
-    printings: [],
-    traits,
-    level: 1,
-    cost: 1,
-    keywordEffects: [],
-    rarity: "common",
-    ap: 1,
-    hp,
-  };
-}
-
-function active(card: ResourceCard): TestCardEntry {
-  return { card, exhausted: false };
-}
-
-function resources(count: number): TestCardEntry[] {
-  return Array.from({ length: count }, () => active(makeResource()));
-}
 
 describe("Galbaldy Beta (GD02-014)", () => {
   describe("【Deploy】Choose 1 of your (Titans) Units. It gets AP+1 during this turn.", () => {
-    it("applies AP+1 to a chosen friendly Titans unit on deploy", () => {
-      const titansUnit = makeUnit(3, ["titans"]);
-      const engine = GundamTestEngine.create(
-        {
-          hand: [gd02GalbaldyBeta014],
-          resourceArea: resources(2),
-          play: [titansUnit],
-        },
-        {},
-      );
+    it("shows the eligible Titans Units and gives the chosen ally AP+1", () => {
+      const ally = createMockUnit({ traits: ["titans"], ap: 3 });
+      const engine = GundamTestEngine.create({
+        hand: [gd02GalbaldyBeta014],
+        play: [ally],
+        resourceArea: activeResources(2),
+      });
       const p1 = engine.asPlayer(PLAYER_ONE);
-      const [unitId] = p1.getCardsInZone("battleArea");
+      const allyId = p1.getCardsInZone("battleArea")[0]!;
 
-      expectSuccess(p1.deployUnit(gd02GalbaldyBeta014, { targets: [unitId!] }));
-      const mod = findStatModifier(engine, unitId!, "ap");
-      expect(mod).toBeDefined();
-      expect(mod!.modifier).toBe(1);
+      expectSuccess(p1.deployUnit(gd02GalbaldyBeta014));
+      const sourceId = p1.getCardsInZone("battleArea")[1]!;
+      const targetChoice = p1.getBoardView().pendingChoice;
+      if (targetChoice?.kind !== "targetSelection") {
+        throw new Error("Expected a visible Titans target choice");
+      }
+      expect(targetChoice.legalTargetIds).toEqual(expect.arrayContaining([allyId, sourceId]));
+      expectSuccess(p1.resolveEffect({ targets: [allyId] }));
+
+      expect(p1.getVisibleCard(allyId)?.effectiveAp).toBe(4);
+      expect(p1.getVisibleCard(sourceId)?.effectiveAp).toBe(3);
     });
 
-    it("cannot target a non-Titans friendly unit", () => {
-      const nonTitans = makeUnit(3, ["earth federation"]);
+    it("does not offer a non-Titans ally or an enemy Titans Unit", () => {
+      const nonTitans = createMockUnit({ traits: ["earth federation"], ap: 3 });
+      const enemyTitans = createMockUnit({ traits: ["titans"], ap: 3 });
       const engine = GundamTestEngine.create(
         {
           hand: [gd02GalbaldyBeta014],
-          resourceArea: resources(2),
           play: [nonTitans],
+          resourceArea: activeResources(2),
         },
-        {},
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const [unitId] = p1.getCardsInZone("battleArea");
-
-      const result = p1.deployUnit(gd02GalbaldyBeta014, { targets: [unitId!] });
-      expectFailure(result, "INVALID_TARGET");
-    });
-
-    it("cannot target an enemy unit even if it has the Titans trait", () => {
-      const enemyTitans = makeUnit(3, ["titans"]);
-      const engine = GundamTestEngine.create(
-        { hand: [gd02GalbaldyBeta014], resourceArea: resources(2) },
         { play: [enemyTitans] },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
-      const [enemyId] = p2.getCardsInZone("battleArea");
+      const nonTitansId = p1.getCardsInZone("battleArea")[0]!;
+      const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
-      const result = p1.deployUnit(gd02GalbaldyBeta014, { targets: [enemyId!] });
-      expectFailure(result, "INVALID_TARGET");
+      expectSuccess(p1.deployUnit(gd02GalbaldyBeta014));
+      const sourceId = p1.getCardsInZone("battleArea")[1]!;
+      const targetChoice = p1.getBoardView().pendingChoice;
+      if (targetChoice?.kind !== "targetSelection") {
+        throw new Error("Expected a visible Titans target choice");
+      }
+      expect(targetChoice.legalTargetIds).toEqual([sourceId]);
+      expectSuccess(p1.resolveEffect({ targets: [sourceId] }));
+
+      expect(p1.getVisibleCard(nonTitansId)?.effectiveAp).toBe(3);
+      expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(3);
+    });
+
+    it("removes the AP bonus when the turn ends", () => {
+      const ally = createMockUnit({ traits: ["titans"], ap: 3 });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [gd02GalbaldyBeta014],
+          play: [ally],
+          resourceArea: activeResources(2),
+          deck: 5,
+        },
+        { deck: 5 },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const allyId = p1.getCardsInZone("battleArea")[0]!;
+
+      expectSuccess(p1.deployUnit(gd02GalbaldyBeta014));
+      const targetChoice = p1.getBoardView().pendingChoice;
+      if (targetChoice?.kind !== "targetSelection") {
+        throw new Error("Expected a visible Titans target choice");
+      }
+      expect(targetChoice.legalTargetIds).toContain(allyId);
+      expectSuccess(p1.resolveEffect({ targets: [allyId] }));
+      expect(p1.getVisibleCard(allyId)?.effectiveAp).toBe(4);
+      expectSuccess(p1.passPhase());
+      expectSuccess(p2.passActionStep());
+      expectSuccess(p1.passActionStep());
+
+      expect(p1.getVisibleCard(allyId)?.effectiveAp).toBe(3);
+    });
+
+    it("cannot deploy below Lv.2", () => {
+      const engine = GundamTestEngine.create({
+        hand: [gd02GalbaldyBeta014],
+        resourceArea: activeResources(1),
+      });
+
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const cardId = p1.getHand()[0]!;
+
+      expectFailure(p1.deployUnit(cardId), "INSUFFICIENT_RESOURCE_LEVEL");
+
+      expect(p1.getHand()).toContain(cardId);
+      expect(p1.getCardsInZone("battleArea")).toHaveLength(0);
+    });
+
+    it("cannot deploy after another legal play leaves only 1 active Resource", () => {
+      const spender = createMockUnit({ level: 1, cost: 1 });
+      const engine = GundamTestEngine.create({
+        hand: [spender, gd02GalbaldyBeta014],
+        resourceArea: activeResources(2),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+
+      expectSuccess(p1.deployUnit(spender));
+      const cardId = p1.getHand()[0]!;
+
+      expectFailure(p1.deployUnit(cardId), "INSUFFICIENT_RESOURCES");
+
+      expect(p1.getHand()).toContain(cardId);
+      expect(p1.getCardsInZone("battleArea")).toHaveLength(1);
     });
   });
 });

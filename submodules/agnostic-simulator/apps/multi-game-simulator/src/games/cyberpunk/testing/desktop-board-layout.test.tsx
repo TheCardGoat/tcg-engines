@@ -60,10 +60,14 @@ describe("Cyberpunk desktop board layout", () => {
       expect(opponentHand!.closest('[class*="handTop"]')).not.toBeNull();
       expect(playerHand!.closest('[class*="handBottom"]')).not.toBeNull();
       expect(opponentHand!.dataset.handLayout).toBe("opponent");
+      expect(opponentHand!.dataset.handAlignment).toBe("start");
       expect(playerHand!.dataset.handLayout).toBe("player");
+      expect(playerHand!.dataset.handAlignment).toBe("center");
       expect(Number(playerHand!.dataset.handCardWidth)).toBeGreaterThan(
         Number(opponentHand!.dataset.handCardWidth),
       );
+      expect(container.querySelector('[data-testid="player-hand-dock"]')).not.toBeNull();
+      expect(container.querySelector('[data-testid="opponent-hand-overlay"]')).not.toBeNull();
     } finally {
       view.unmount();
     }
@@ -78,13 +82,38 @@ describe("Cyberpunk desktop board layout", () => {
       "opponent",
     );
 
-    expect(HAND_SIZE_MULTIPLIERS.player).toBe(1.25);
+    expect(HAND_SIZE_MULTIPLIERS.player).toBe(1.05);
     expect(HAND_SIZE_MULTIPLIERS.opponent).toBe(0.75);
     expect(playerLayout.cardWidth).toBeGreaterThan(opponentLayout.cardWidth);
     expect(Number.isInteger(playerLayout.cardWidth)).toBe(true);
     expect(Number.isInteger(opponentLayout.cardWidth)).toBe(true);
     expectIntegerLayout(playerLayout.cards);
     expectIntegerLayout(opponentLayout.cards);
+  });
+
+  test("rival hand can grow from its safe left edge while the player hand stays centered", () => {
+    const cardCount = 5;
+    const opponentLayout = computePlayerHandLayout(
+      cardCount,
+      DEFAULT_PLAYER_ZONE_WIDTH,
+      "opponent",
+      "start",
+    );
+    const playerLayout = computePlayerHandLayout(
+      cardCount,
+      DEFAULT_PLAYER_ZONE_WIDTH,
+      "player",
+      "center",
+    );
+
+    expect(opponentLayout.cards[0]!.x).toBe(Math.round(opponentLayout.cardWidth / 2));
+    expect(opponentLayout.cards.at(-1)!.x).toBeGreaterThan(opponentLayout.cards[0]!.x);
+    expect(playerLayout.cards[0]!.x).toBeLessThan(0);
+    expect(playerLayout.cards.at(-1)!.x).toBeGreaterThan(0);
+    expect(Math.min(...playerLayout.cards.map((card) => card.y))).toBeGreaterThan(0);
+    expect(Math.max(...playerLayout.cards.map((card) => card.y))).toBeGreaterThan(
+      Math.min(...playerLayout.cards.map((card) => card.y)),
+    );
   });
 
   test("priority lane follows the player with priority for both human seats", async () => {

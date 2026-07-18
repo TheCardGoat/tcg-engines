@@ -30,10 +30,11 @@ export const op09EustassCaptainKid075: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
+        costs: [
           {
-            condition: "leaderTrait",
-            trait: "Kid Pirates",
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "top",
           },
         ],
         actions: [
@@ -44,6 +45,11 @@ export const op09EustassCaptainKid075: CharacterCard = {
               upTo: true,
             },
             state: "active",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Kid Pirates",
+              match: "includes",
+            },
           },
         ],
         optional: true,

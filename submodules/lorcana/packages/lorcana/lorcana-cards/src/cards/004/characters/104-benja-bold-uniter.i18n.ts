@@ -17,4 +17,8 @@ export const benjaBoldUniterI18n: Record<Languages, I18nProperties> = {
     name: "Benja",
     version: "Unificatore Audace",
   },
+  es: {
+    name: "Benja",
+    version: "Unificador audaz",
+  },
 };

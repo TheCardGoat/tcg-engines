@@ -32,7 +32,7 @@ export const op05ItSAWasteOfHumanLife058: EventCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "self",
+              player: "both",
               zones: ["character"],
               count: {
                 amount: "all",
@@ -47,6 +47,18 @@ export const op05ItSAWasteOfHumanLife058: EventCard = {
             },
             position: "bottom",
           },
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: 0,
+            untilHandSize: 5,
+          },
+          {
+            action: "trashFromHand",
+            player: "opponent",
+            amount: 0,
+            untilHandSize: 5,
+          },
         ],
       },
       {
@@ -55,7 +67,7 @@ export const op05ItSAWasteOfHumanLife058: EventCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "self",
+              player: "both",
               zones: ["character"],
               count: {
                 amount: "all",

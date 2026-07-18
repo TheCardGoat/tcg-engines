@@ -21,4 +21,9 @@ export const fixitFelixJrTrustyBuilderI18n: Record<Languages, I18nProperties> = 
     version: "Costruttore Fidato",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Repararlo Félix, Jr.",
+    version: "Constructor confiable",
+    text: "Guardaespaldas",
+  },
 };

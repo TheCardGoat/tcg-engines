@@ -21,4 +21,9 @@ export const joshuaSweetTheDoctorI18n: Record<Languages, I18nProperties> = {
     version: "Il Dottore",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Josué dulce",
+    version: "El medico",
+    text: "Guardaespaldas",
+  },
 };

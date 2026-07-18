@@ -45,4 +45,15 @@ export const taffytaMuttonfudgeCrowdFavoriteI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Dulce de cordero Taffyta",
+    version: "Favorito del público",
+    text: [
+      {
+        title: "ESPECTACULAR",
+        description:
+          "Cuando juegas con este personaje, si tienes una ubicación en juego, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

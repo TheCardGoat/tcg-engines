@@ -43,4 +43,15 @@ export const todCleverFoxI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tod",
+    version: "Zorro inteligente",
+    text: [
+      {
+        title: "Resolución de problemas",
+        description:
+          "Cuando juegues con este personaje, roba 2 cartas, luego elige y descarta una carta.",
+      },
+    ],
+  },
 };

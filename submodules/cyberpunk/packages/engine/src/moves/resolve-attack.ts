@@ -100,16 +100,42 @@ function executeFight(
   const defenderName = state.G.cardIndex[attack.defenderId as string]
     ? getDefinitionFor(state.G, attack.defenderId as string).displayName
     : "";
+  const prevention = consumeNextRivalFightProtection(state, operations, attack);
+  const messageKey = fightMessageKey(result, prevention !== undefined);
 
   operations.event.emit({
     type: "actionLog",
-    messageKey:
-      `move.resolveAttack.fight.${result}` as import("../types/game-events.ts").ActionLogMessageKey,
-    params: { attackerName, defenderName, attackerPower, defenderPower },
+    messageKey,
+    params: {
+      attackerName,
+      defenderName,
+      attackerPower,
+      defenderPower,
+      ...(prevention ? { sourceCardName: prevention.sourceCardName } : {}),
+    },
     playerId,
   });
 
-  executeDefeat(state, playerId, operations, { ...attack, fightResult: result });
+  executeDefeat(
+    state,
+    playerId,
+    operations,
+    { ...attack, fightResult: result },
+    prevention?.cardId,
+  );
+}
+
+function fightMessageKey(
+  result: FightResult,
+  defeatWasPrevented: boolean,
+): import("../types/game-events.ts").ActionLogMessageKey {
+  if (defeatWasPrevented && result === "attackerWins") {
+    return "move.resolveAttack.fight.attackerWins.prevented";
+  }
+  if (defeatWasPrevented && result === "mutual") {
+    return "move.resolveAttack.fight.mutual.prevented";
+  }
+  return `move.resolveAttack.fight.${result}` as import("../types/game-events.ts").ActionLogMessageKey;
 }
 
 function removeFromGameIfGoSolo(
@@ -134,11 +160,12 @@ function executeDefeat(
   playerId: PlayerId,
   operations: import("../operations/index.ts").Operations,
   attack: AttackState,
+  protectedCardId: string | undefined,
 ) {
   const result = attack.fightResult ?? "mutual";
   const defenderId = attack.defenderId;
-  const protectedCardId = consumeNextRivalFightProtection(state, operations, attack);
-
+  const attackerPower = getEffectivePower(state, attack.attackerId as string);
+  const defenderPower = defenderId ? getEffectivePower(state, defenderId as string) : 0;
   if (
     (result === "attackerWins" || result === "mutual") &&
     defenderId &&
@@ -189,16 +216,70 @@ function executeDefeat(
     playerId,
   };
   operations.event.emit(fightResolvedEvent);
+  scheduleGigStealsForDecisiveFightWin(
+    state,
+    operations,
+    attack,
+    result,
+    attackerPower - defenderPower,
+  );
   processEventTriggers(fightResolvedEvent, state, operations);
 
   operations.game.setAttackState(null);
+}
+
+function scheduleGigStealsForDecisiveFightWin(
+  state: MatchState,
+  operations: import("../operations/index.ts").Operations,
+  attack: AttackState,
+  result: FightResult,
+  powerMargin: number,
+): void {
+  if (result !== "attackerWins") return;
+
+  const attacker = state.G.cardIndex[attack.attackerId as string];
+  const effects = state.G.activeEffects.filter(
+    (candidate) =>
+      candidate.kind === "nextFightWinGigSteal" &&
+      candidate.playerId === attacker?.controllerId &&
+      powerMargin >= (candidate.minPowerMargin ?? 3),
+  );
+  for (const effect of effects) {
+    if (!effect.playerId) continue;
+    operations.game.removeActiveEffect(effect.id);
+    operations.game.addBagEntry({
+      id: `fight-steal-${effect.id}`,
+      // Keep the Program as the displayed effect source while binding the
+      // winning Unit separately as the thief for gigStolen event filters.
+      sourceCardId: effect.sourceCardId,
+      sourcePlayerId: effect.playerId,
+      effectIndex: 0,
+      abilityText:
+        "The next time a friendly Unit wins a fight by 3+ power this turn, it also steals a Gig.",
+      suspended: false,
+      delayedTiming: "afterTriggerResolution",
+      delayedEffects: [
+        {
+          effect: "stealGig",
+          target: {
+            selector: "gig",
+            controller: "rival",
+            amount: 1,
+            selection: { mode: "choose", min: 1, max: 1 },
+          },
+          source: { selector: "bound", id: "winningUnit" },
+        },
+      ],
+      resolvedBindings: { winningUnit: [attack.attackerId as string] },
+    });
+  }
 }
 
 function consumeNextRivalFightProtection(
   state: MatchState,
   operations: import("../operations/index.ts").Operations,
   attack: AttackState,
-): string | undefined {
+): { cardId: string; sourceCardName: string } | undefined {
   const defenderId = attack.defenderId;
   if (!defenderId) return undefined;
 
@@ -219,7 +300,14 @@ function consumeNextRivalFightProtection(
   if (attackerIsFriendly || !defenderIsFriendly) return undefined;
 
   operations.game.removeActiveEffect(protection.id);
-  return defenderId as string;
+  const sourceCard = state.G.cardIndex[protection.sourceCardId as string];
+  const sourceDefinition = sourceCard
+    ? getDefinitionFor(state.G, protection.sourceCardId as string)
+    : null;
+  return {
+    cardId: defenderId as string,
+    sourceCardName: sourceDefinition?.displayName ?? sourceDefinition?.name ?? "the active effect",
+  };
 }
 
 function executeSteal(

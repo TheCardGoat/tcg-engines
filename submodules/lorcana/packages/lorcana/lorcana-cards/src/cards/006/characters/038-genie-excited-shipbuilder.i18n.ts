@@ -17,4 +17,8 @@ export const genieExcitedShipbuilderI18n: Record<Languages, I18nProperties> = {
     name: "Genio",
     version: "Costruttore Navale Entusiasta",
   },
+  es: {
+    name: "Genio",
+    version: "Constructor naval emocionado",
+  },
 };

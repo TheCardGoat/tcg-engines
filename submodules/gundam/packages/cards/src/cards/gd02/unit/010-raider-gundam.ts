@@ -5,6 +5,7 @@ export const gd02RaiderGundam010: UnitCard = {
   name: "Raider Gundam",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space", "earth"],
   traits: ["earth alliance"],
   id: "GD02-010",
   canonicalId: "GD02-010",
@@ -41,6 +42,7 @@ export const gd02RaiderGundam010: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 4,
+  linkCondition: "(Biological CPU) Trait",
   effect: "【Once per Turn】When this Unit receives enemy effect damage, draw 1.<br>",
   effects: [
     {

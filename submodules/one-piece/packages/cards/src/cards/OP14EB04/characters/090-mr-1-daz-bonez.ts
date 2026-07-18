@@ -68,6 +68,55 @@ export const op14eb04Mr1DazBonez090: CharacterCard = {
         ],
       },
     ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "compound",
+            operator: "or",
+            conditions: [
+              {
+                condition: "existsOnField",
+                zone: "character",
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "eq",
+                    value: 0,
+                  },
+                ],
+              },
+              {
+                condition: "existsOnField",
+                zone: "character",
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "gte",
+                    value: 8,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "rushCharacter",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
   },
   i18n: op14eb04Mr1DazBonez090I18n,
 };

@@ -68,4 +68,20 @@ export const cheshireCatFromTheShadowsI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Gato de cheshire",
+    version: "De las sombras",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "SONRISA MALVADA",
+        description: "{E}: destierra al personaje dañado elegido.",
+      },
+    ],
+  },
 };

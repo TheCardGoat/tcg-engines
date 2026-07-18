@@ -21,4 +21,9 @@ export const ryderFleetfootedInfiltratorI18n: Record<Languages, I18nProperties> 
     version: "Infiltratore dal Piede Lesto",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Ryder",
+    version: "Infiltrado de pies ligeros",
+    text: "Evasivo",
+  },
 };

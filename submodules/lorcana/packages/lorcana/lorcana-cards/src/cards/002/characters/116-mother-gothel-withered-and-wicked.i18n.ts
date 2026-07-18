@@ -41,4 +41,14 @@ export const motherGothelWitheredAndWickedI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Madre Gothel",
+    version: "Marchito y malvado",
+    text: [
+      {
+        title: "¡¿QUÉ HAS HECHO?!",
+        description: "Este personaje entra en juego con 3 daños.",
+      },
+    ],
+  },
 };

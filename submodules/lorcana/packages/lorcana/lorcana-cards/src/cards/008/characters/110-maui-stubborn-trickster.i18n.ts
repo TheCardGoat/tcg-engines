@@ -63,4 +63,9 @@ export const mauiStubbornTricksterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Maui",
+    version: "Embaucador testarudo",
+    text: "AÚN NO HE TERMINADO Cuando este personaje sea desterrado, elige uno:\n- Pon 2 contadores de daño en todos los personajes contrarios.\n- Desterrar todos los elementos opuestos.\n- Desterrar todos los lugares opuestos.",
+  },
 };

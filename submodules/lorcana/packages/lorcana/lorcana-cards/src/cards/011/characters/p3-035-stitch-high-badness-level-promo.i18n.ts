@@ -45,4 +45,15 @@ export const stitchHighBadnessLevelP3PromoI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Puntada",
+    version: "Alto nivel de maldad",
+    text: [
+      {
+        title: "AMPLIFICADO",
+        description:
+          "Mientras tengas un personaje llamado Lilo en juego, este personaje obtiene Challenger +3. (Obtienen +3 {S} mientras desafían).",
+      },
+    ],
+  },
 };

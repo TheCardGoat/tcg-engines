@@ -55,4 +55,17 @@ export const thunderboltWonderDogI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rayo",
+    version: "Perro maravilla",
+    text: [
+      {
+        title: "Cambio de cachorro 3",
+        description: "(Puedes pagar 3 {I} para jugar esto encima de uno de tus personajes Puppy).",
+      },
+      {
+        title: "Guardaespaldas",
+      },
+    ],
+  },
 };

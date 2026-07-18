@@ -21,4 +21,9 @@ export const tukTukWreckingBallI18n: Record<Languages, I18nProperties> = {
     version: "Wrecking Ball",
     text: "<Reckless> (This character can't quest and must challenge each turn if able.)",
   },
+  es: {
+    name: "Tuk-tuk",
+    version: "Bola de demolición",
+    text: "Imprudente",
+  },
 };

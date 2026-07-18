@@ -45,4 +45,15 @@ export const queenOfHeartsImpatientTravelerI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Reina de corazones",
+    version: "Viajero impaciente",
+    text: [
+      {
+        title: "MANDO REAL",
+        description:
+          "Siempre que este personaje realice una misión, si jugaste con otro personaje este turno, el personaje elegido gana Rush este turno. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

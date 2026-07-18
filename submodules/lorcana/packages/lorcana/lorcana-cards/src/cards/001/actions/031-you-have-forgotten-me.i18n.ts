@@ -17,4 +17,8 @@ export const youHaveForgottenMeI18n: Record<Languages, I18nProperties> = {
     name: "You Have Forgotten Me",
     text: "Each opponent chooses and discards 2 cards.",
   },
+  es: {
+    name: "Me has olvidado",
+    text: "Cada oponente elige y descarta 2 cartas.",
+  },
 };

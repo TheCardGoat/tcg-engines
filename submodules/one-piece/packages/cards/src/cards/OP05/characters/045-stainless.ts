@@ -36,12 +36,15 @@ export const op05Stainless045: CharacterCard = {
             cost: "trashFromHand",
             amount: 1,
           },
+          {
+            cost: "restThisCard",
+          },
         ],
         actions: [
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

@@ -33,6 +33,9 @@ export const op06KingdomOfGerma079: StageCard = {
             cost: "trashFromHand",
             amount: 1,
           },
+          {
+            cost: "restThisCard",
+          },
         ],
         actions: [
           {
@@ -46,6 +49,13 @@ export const op06KingdomOfGerma079: StageCard = {
               amount: 1,
               upTo: true,
             },
+            revealFilters: [
+              {
+                filter: "trait",
+                value: "GERMA",
+                match: "includes",
+              },
+            ],
             revealDestination: "hand",
             remainderPosition: "bottom",
           },

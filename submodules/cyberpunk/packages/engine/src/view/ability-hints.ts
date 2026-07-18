@@ -184,6 +184,7 @@ function rolesForEffect(effect: Effect): AbilityRoleHint[] {
     case "rerollGig":
       return ["gigManipulation"];
     case "stealGig":
+    case "swapGigs":
       return ["gigPressure"];
     case "modifyPower":
     case "multiplyPower":
@@ -191,6 +192,7 @@ function rolesForEffect(effect: Effect): AbilityRoleHint[] {
     case "ready":
     case "defeatAtEndOfTurnIfAttacks":
     case "revealTopCardAndModifyPowerByCost":
+    case "grantNextFightWinGigSteal":
       return ["combat"];
     case "preventNextRivalFightDefeat":
       return ["protection"];

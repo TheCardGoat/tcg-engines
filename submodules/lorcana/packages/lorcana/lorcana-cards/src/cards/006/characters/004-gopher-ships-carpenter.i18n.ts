@@ -17,4 +17,8 @@ export const gopherShipsCarpenterI18n: Record<Languages, I18nProperties> = {
     name: "Castor",
     version: "Carpentiere della Nave",
   },
+  es: {
+    name: "Ardilla de tierra",
+    version: "Carpintero de barco",
+  },
 };

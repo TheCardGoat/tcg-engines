@@ -49,4 +49,16 @@ export const goofyFlyingGoofI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "Tontería voladora",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "Evasivo",
+      },
+    ],
+  },
 };

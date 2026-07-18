@@ -45,4 +45,15 @@ export const yzmaExasperatedSchemerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yzma",
+    version: "Conspirador exasperado",
+    text: [
+      {
+        title: "¿CÓMO DEBE",
+        description:
+          "¿LO HAGO? Cuando juegas con este personaje, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

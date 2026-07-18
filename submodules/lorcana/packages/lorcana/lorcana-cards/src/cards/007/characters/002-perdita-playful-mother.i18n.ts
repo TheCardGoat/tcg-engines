@@ -64,4 +64,19 @@ export const perditaPlayfulMotherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Perdita",
+    version: "Madre juguetona",
+    text: [
+      {
+        title: "¿QUIÉN ES EL SIGUIENTE?",
+        description:
+          "Cada vez que este personaje realiza una misión, pagas 2 {I} menos por el próximo personaje Cachorro que juegues en este turno.",
+      },
+      {
+        title: "NO TENGAS MIEDO",
+        description: "Tus personajes Cachorro ganan Protección.",
+      },
+    ],
+  },
 };

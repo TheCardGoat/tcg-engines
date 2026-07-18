@@ -471,6 +471,19 @@ describe("preventDamage", () => {
 });
 
 describe("preventDamageToZone", () => {
+  test("Friendly Shields means only face-down Shields, not the Base section", () => {
+    const [effect] = parseEffect(
+      "While this Unit is rested, friendly Shields can't receive battle damage from enemy Units.",
+    );
+    expect(effect.directives[0]).toMatchObject({
+      action: {
+        action: "preventDamageToZone",
+        protectedArea: { kind: "zone", zone: "shieldArea" },
+        unitFilter: { owner: "opponent", cardType: "unit" },
+      },
+    });
+  });
+
   test("Shield area cards can't receive damage from enemy Units that are Lv.4 or lower", () => {
     // preventDamageToZone is only reachable inside a timing block
     const [effect] = parseEffect(
@@ -482,7 +495,7 @@ describe("preventDamageToZone", () => {
     expect(dmgZoneStep).toMatchObject({
       action: {
         action: "preventDamageToZone",
-        zone: "shieldArea",
+        protectedArea: { kind: "shieldArea" },
         unitFilter: { attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }] },
       },
     });

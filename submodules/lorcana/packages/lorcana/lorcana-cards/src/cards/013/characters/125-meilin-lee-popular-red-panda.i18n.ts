@@ -60,4 +60,20 @@ export const meilinLeePopularRedPandaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Meilin Lee",
+    version: "Panda rojo popular",
+    text: [
+      {
+        title: "Turno Temporal 3 {I}",
+        description:
+          "(Puedes pagar 3 {I} para jugar esto encima de uno de tus personajes llamado Meilin Lee. Al final de tu turno, elimina todo el daño de este personaje y devuelve solo esta carta a tu mano).",
+      },
+      {
+        title: "REINA DEL KARAOKE",
+        description:
+          "Una vez durante tu turno, cada vez que este personaje cante una canción, gana 3 conocimientos.",
+      },
+    ],
+  },
 };

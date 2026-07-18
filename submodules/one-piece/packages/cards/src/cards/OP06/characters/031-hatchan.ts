@@ -25,9 +25,55 @@ export const op06Hatchan031: CharacterCard = {
   counter: 1000,
   trigger:
     "Play up to 1 [Fish-Man] or [Merfolk] type Character card with a cost of 3 or less from your hand.",
-  traits: ["Fish-Man Former Arlong Pirates"],
+  traits: ["Fish-Man", "Former Arlong Pirates"],
   attribute: "slash",
   effect:
     "[Trigger] Play up to 1 [Fish-Man] or [Merfolk] type Character card with a cost of 3 or less from your hand.",
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 3,
+              },
+              {
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Fish-Man",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Merfolk",
+                    match: "includes",
+                  },
+                ],
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   i18n: op06Hatchan031I18n,
 };

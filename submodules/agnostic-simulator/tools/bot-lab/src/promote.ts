@@ -1,7 +1,6 @@
 import {
   BOT_CORE_SCHEMA_VERSION,
   BOT_PRODUCTION_MINIMUM_BLOCKS,
-  botEvaluationReportV1Schema,
   buildPairedSchedule,
   classifyPromotion,
   isHardBotFailure,
@@ -12,6 +11,7 @@ import {
   type BotMatchRecordV1,
   type BotPromotionRecordV1,
 } from "@tcg/bot-core";
+import { botEvaluationReportV1Schema } from "@tcg/bot-core/schemas";
 
 import type { BotLabAdapter, BotLabPromotionWrite } from "./adapter.ts";
 

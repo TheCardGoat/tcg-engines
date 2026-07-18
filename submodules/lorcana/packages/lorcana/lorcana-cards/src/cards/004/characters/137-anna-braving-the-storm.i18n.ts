@@ -43,4 +43,14 @@ export const annaBravingTheStormI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ana",
+    version: "Desafiando la tormenta",
+    text: [
+      {
+        title: "NACÍ LISTO",
+        description: "Si tienes otro personaje héroe en juego, este personaje obtiene +1 {L}.",
+      },
+    ],
+  },
 };

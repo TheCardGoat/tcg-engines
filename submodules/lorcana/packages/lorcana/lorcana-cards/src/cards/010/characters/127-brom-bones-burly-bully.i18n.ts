@@ -45,4 +45,15 @@ export const bromBonesBurlyBullyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Huesos de bromo",
+    version: "Matón corpulento",
+    text: [
+      {
+        title: "áspero y caído",
+        description:
+          "Siempre que este personaje desafía a un personaje con 2 {S} o menos, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

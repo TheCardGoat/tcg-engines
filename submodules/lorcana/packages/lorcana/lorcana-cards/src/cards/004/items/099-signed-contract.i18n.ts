@@ -39,4 +39,13 @@ export const signedContractI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Contrato firmado",
+    text: [
+      {
+        title: "LETRA PEQUEÑA",
+        description: "Siempre que un oponente toque una canción, puedes robar una carta.",
+      },
+    ],
+  },
 };

@@ -25,4 +25,8 @@ export const motherKnowsBestI18n: Record<Languages, I18nProperties> = {
     name: "Mother Knows Best",
     text: "Return chosen character to their player's hand.",
   },
+  es: {
+    name: "La madre sabe mejor",
+    text: "Devuelve el personaje elegido a la mano de su jugador.",
+  },
 };

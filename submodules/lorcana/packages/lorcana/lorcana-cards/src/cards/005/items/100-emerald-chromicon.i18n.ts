@@ -41,4 +41,14 @@ export const emeraldChromiconI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cromicon esmeralda",
+    text: [
+      {
+        title: "LUZ ESMERALDA",
+        description:
+          "Durante los turnos de los oponentes, cada vez que uno de tus personajes sea desterrado, puedes devolver el personaje elegido a la mano de su jugador.",
+      },
+    ],
+  },
 };

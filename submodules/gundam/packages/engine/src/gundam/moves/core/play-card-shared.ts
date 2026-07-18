@@ -40,6 +40,7 @@ import {
 } from "../../effects/target-legality.ts";
 import { evaluateCondition, evaluateTargetFilter } from "../../../runtime/target-dsl.ts";
 import { emitGundamLog } from "../../logging.ts";
+import { handleUnitDefeated } from "../../effects/handlers/combat.ts";
 import { rejectWithKey } from "./validation-error.ts";
 
 /** Maximum total resource cards allowed in resource area (Rule 4-4-2) */
@@ -310,8 +311,8 @@ export function payCost(
   }
 
   // `destroySelf` MUST run last. Printed costs like "Destroy this Unit：
-  // ..." (GD02-011 Moebius Peacemaker Team) read naturally as "pay the
-  // rest of the cost, then send yourself to the trash". Executing it
+  // ..." (GD02-011 Moebius Peacemaker Team) are still destruction: they
+  // fire 【Destroyed】 effects and move a paired Pilot with the Unit. Executing it
   // after `restSelf` / `payResources` / `discardCount` /
   // `restFriendlyUnits` ensures those observable side effects happen
   // on the source card before it leaves play, rather than being
@@ -322,10 +323,16 @@ export function payCost(
   // zones regardless). The card's controller for the effect is the
   // `playerId` passed in, but the trash destination is the source
   // card's _owner_ (rule 5-2-2: cards return to their owner's zone on
-  // leaving play) — mirrors the pattern used by handleUnitDefeated.
+  // leaving play). Route through the same destruction/cleanup path as
+  // damage and direct destroy effects so the cost cannot orphan a Pair or
+  // silently skip public triggers (rules 3-3-6, 5-10, and 13-2-8).
   if (cost.destroySelf) {
-    const ownerId = (framework.cards.getOwner(sourceCardId) as string | undefined) ?? playerId;
-    framework.zones.moveCard(sourceCardId, { zone: "trash", playerId: ownerId });
+    handleUnitDefeated(sourceCardId, {
+      G,
+      sourcePlayerId: playerId,
+      sourceCardId,
+      framework,
+    });
   }
 
   return paidResources;

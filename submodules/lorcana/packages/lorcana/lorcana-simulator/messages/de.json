@@ -636,5 +636,8 @@
   "sim.postGame.sidebar.navigationAria": "Post-game navigation",
   "sim.postGame.sidebar.gameOf": "Game {current} of {total}",
   "sim.postGame.sidebar.goToNextGame": "Go to Next Game →",
-  "sim.player.report.openAria": "Spieler melden"
+  "sim.player.report.openAria": "Spieler melden",
+  "sim.itemZone.showEarlierAria": "Zeige {count, plural, one {# früheres Item} other {# frühere Items}}",
+  "sim.itemZone.showLaterAria": "Zeige {count, plural, one {# späteres Item} other {# spätere Items}}",
+  "sim.itemZone.resizeAria": "Passe Tintenfass- und Item-Zonen an, aktuell {percent} Prozent"
 }

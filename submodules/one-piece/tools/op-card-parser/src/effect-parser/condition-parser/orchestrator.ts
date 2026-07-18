@@ -5,6 +5,39 @@ import { parseCountCondition } from "./counts.ts";
 import { parseCardStateCondition } from "./card-state.ts";
 import { parseReplacementCondition, parseNonSelfReplacementCondition } from "./replacement.ts";
 
+function parseConditionChain(text: string): Condition | null {
+  const jointLifeCount = /^(.*?)\s+and\s+(you\s+and\s+your\s+opponent\s+have\s+.+)$/i.exec(text);
+  if (jointLifeCount) {
+    const conditions = [
+      parseConditionText(jointLifeCount[1]!.trim()),
+      parseConditionText(jointLifeCount[2]!.trim()),
+    ];
+    if (conditions.every((condition) => condition !== null)) {
+      return {
+        condition: "compound",
+        operator: "and",
+        conditions: conditions as Condition[],
+      };
+    }
+  }
+  const playerCountPrefix =
+    "(?:you\\s+and\\s+your\\s+opponent\\s+have|(?:you|your\\s+opponent)\\s+(?:have|has))";
+  const normalized = text.replace(new RegExp(`,\\s+(?=${playerCountPrefix}\\b)`, "gi"), " and ");
+  const parts = normalized.split(new RegExp(`\\s+and\\s+(?=${playerCountPrefix}\\b)`, "i"));
+  if (parts.length === 1) {
+    return parseConditionText(text);
+  }
+  const conditions = parts.map((part) => parseConditionText(part.trim()));
+  if (conditions.some((condition) => condition === null)) {
+    return null;
+  }
+  return {
+    condition: "compound",
+    operator: "and",
+    conditions: conditions as Condition[],
+  };
+}
+
 /**
  * Extract an "If <condition>, <actions>" or "When <event>, <actions>" prefix
  * from action text.
@@ -20,12 +53,16 @@ export function parseInlineCondition(text: string): InlineConditionResult | null
     let remaining = activatedWhenMatch[2]!;
     // Try parsing as a known event trigger
     const event = parseWhenEvent(eventText);
-    // If remaining still starts with "If X, ..." or "You may ...", strip it for the action text
-    const nestedIf = /^If\s+.+?,\s+/i.exec(remaining);
-    if (nestedIf) {
-      remaining = remaining.slice(nestedIf[0].length).trim();
+    // Preserve nested conditions for the builder. Keep the optional marker on
+    // the opponent-rest reaction so its joined self-trash payment remains
+    // distinguishable from a mandatory action.
+    if (
+      !/^this\s+Character\s+is\s+rested\s+by\s+your\s+opponent[''\u2019]s\s+effect$/i.test(
+        eventText,
+      )
+    ) {
+      remaining = remaining.replace(/^You\s+may\s+/i, "").trim();
     }
-    remaining = remaining.replace(/^You\s+may\s+/i, "").trim();
     if (event) {
       return { condition: { condition: "triggerEvent", event }, remainingText: remaining };
     }
@@ -48,7 +85,7 @@ export function parseInlineCondition(text: string): InlineConditionResult | null
     for (let ci = commaPositions.length - 1; ci >= 0; ci--) {
       const condText = afterIf.slice(0, commaPositions[ci]!).trim();
       let remaining = afterIf.slice(commaPositions[ci]! + 1).trim();
-      const condition = parseConditionText(condText);
+      const condition = parseConditionChain(condText);
       if (condition) {
         // Check for compound condition: "and <condition2>, <action>"
         const andCondMatch = /^and\s+(.+?),\s+(.+)$/is.exec(remaining);
@@ -74,16 +111,38 @@ export function parseInlineCondition(text: string): InlineConditionResult | null
     let remaining = whenMatch[2]!;
     const event = parseWhenEvent(eventText);
     if (!event) return null;
-    // Handle nested "if Y, Z" after the event — strip condition prefix
-    const nestedIf = /^if\s+.+?,\s+/i.exec(remaining);
-    if (nestedIf) {
-      remaining = remaining.slice(nestedIf[0].length).trim();
-      remaining = remaining.replace(/^you\s+may\s+/i, "").trim();
-    }
-    return { condition: { condition: "triggerEvent", event }, remainingText: remaining };
+    const source = /by\s+your\s+opponent[''\u2019]s\s+Character[''\u2019]s\s+effect$/i.test(
+      eventText,
+    )
+      ? "opponentCharacterEffect"
+      : /by\s+your\s+opponent[''\u2019]s\s+effect$/i.test(eventText)
+        ? "opponentEffect"
+        : /by\s+your\s+effect$/i.test(eventText)
+          ? "effect"
+          : undefined;
+    // Preserve a nested "if Y, Z" so the builder can parse it as a second
+    // inline condition after extracting this event trigger.
+    return {
+      condition: { condition: "triggerEvent", event, ...(source && { source }) },
+      remainingText: remaining,
+    };
   }
 
-  // "At the end of a battle in which X, Y" — battle-end condition
+  // "At the end of a battle in which this Character battles X, Y" is a
+  // timing trigger. Target constraints are promoted to the block event filter
+  // by the effect builder.
+  const battleEndMatch =
+    /^At\s+the\s+end\s+of\s+a\s+battle\s+in\s+which\s+this\s+Character\s+battles\s+your\s+opponent[''\u2019]s\s+Character(?:\s+with\s+.+)?,\s+(.+)$/is.exec(
+      text,
+    );
+  if (battleEndMatch) {
+    return {
+      condition: { condition: "triggerEvent", event: "endOfBattle" },
+      remainingText: battleEndMatch[1]!,
+    };
+  }
+
+  // "At the end of a battle in which X, Y" — generic battle-end condition
   const atEndMatch = /^At\s+the\s+end\s+of\s+(.+?),\s+(.+)$/is.exec(text);
   if (atEndMatch) {
     const cond = parseConditionText(atEndMatch[1]!);
@@ -111,6 +170,10 @@ export function parseInlineCondition(text: string): InlineConditionResult | null
 export function parseWhenEvent(text: string): EffectTrigger | null {
   const t = text.trim().replace(/\.+$/, "");
 
+  if (/^a\s+card\s+is\s+trashed\s+from\s+your\s+hand\s+by\s+an\s+effect$/i.test(t)) {
+    return "whenCardTrashedFromHandByEffect";
+  }
+
   // "this Character/Leader's attack deals damage to your opponent's Life"
   if (
     /^this\s+(?:Character|Leader)[''\u2019]s\s+attack\s+deals\s+damage\s+to\s+your\s+opponent[''\u2019]s\s+Life$/i.test(
@@ -118,6 +181,10 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
     )
   )
     return "whenDealsDamage";
+
+  if (/^you\s+deal\s+damage\s+to\s+your\s+opponent[''\u2019]s\s+Life$/i.test(t)) {
+    return "whenYouDealDamage";
+  }
 
   // "this Character battles and K.O.'s your opponent's Character"
   if (
@@ -146,22 +213,22 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
   // "you/your opponent activates an Event (or [Trigger])?"
   if (/^your\s+opponent\s+activates\s+an\s+Event(?:\s+or\s+\[Trigger\])?$/i.test(t))
     return "whenOpponentActivatesEvent";
-  if (/^you\s+activate\s+an\s+Event$/i.test(t)) return "whenOpponentActivatesEvent"; // reuse trigger type
+  if (/^you\s+activate\s+an\s+Event$/i.test(t)) return "whenYouActivateEvent";
 
   // "your opponent activates [Blocker] or an Event"
   if (/^your\s+opponent\s+activates\s+\[Blocker\]\s+or\s+an\s+Event$/i.test(t))
     return "whenBlockerActivated";
 
-  // "a card is removed from your or your opponent's Life cards"
+  // "a card is removed from your, your opponent's, or either player's Life cards"
   if (
-    /^a\s+card\s+is\s+removed\s+from\s+(?:your\s+or\s+your\s+opponent[''\u2019]s|your)\s+Life\s+cards?$/i.test(
+    /^a\s+card\s+is\s+removed\s+from\s+(?:your\s+or\s+your\s+opponent[''\u2019]s|your\s+opponent[''\u2019]s|your)\s+Life\s+cards?$/i.test(
       t,
     )
   )
-    return "whenDealsDamage";
+    return "whenLifeRemoved";
 
   // "your opponent plays a Character with a base cost of N or more" (with optional "or when..." compound)
-  if (/^your\s+opponent\s+plays\s+a\s+Character/i.test(t)) return "onPlay";
+  if (/^your\s+opponent\s+plays\s+a\s+Character/i.test(t)) return "whenOpponentPlaysCharacter";
 
   // "your opponent's Character is returned to the owner's hand by your effect"
   if (
@@ -220,15 +287,15 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
   if (/^you\s+play\s+a\s+Character\b/i.test(t)) return "onPlay";
 
   // "you activate an Event"
-  if (/^you\s+activate\s+an\s+Event$/i.test(t)) return "whenOpponentActivatesEvent"; // Reuse
+  if (/^you\s+activate\s+an\s+Event$/i.test(t)) return "whenYouActivateEvent";
 
   // "you draw a card outside of your Draw Phase"
   if (/^you\s+draw\s+a\s+card\s+outside\s+of\s+your\s+Draw\s+Phase$/i.test(t))
-    return "whenDealsDamage"; // Reuse
+    return "whenCardDrawn";
 
   // "a card is added to your hand from your Life"
   if (/^a\s+card\s+is\s+added\s+to\s+your\s+hand\s+from\s+your\s+Life$/i.test(t))
-    return "whenDealsDamage"; // Reuse
+    return "whenLifeAddedToHand";
 
   // "N or more DON!! cards on your field are returned to your DON!! deck"
   if (
@@ -239,11 +306,12 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
     return "whenDonReturned";
 
   // "a Character is rested by your effect"
-  if (/^a\s+Character\s+is\s+rested\s+by\s+your\s+effect$/i.test(t)) return "whenLeaving"; // Reuse
+  if (/^a\s+Character\s+is\s+rested\s+by\s+your\s+effect$/i.test(t))
+    return "whenCharacterRestedByEffect";
 
   // "your X type Character is removed from the field by your opponent's effect"
   if (
-    /^your\s+.+?\s+type\s+Character\s+is\s+removed\s+from\s+the\s+field\s+by\s+your\s+opponent[''\u2019]s\s+effect$/i.test(
+    /^your\s+(?:.+?\s+type\s+Character|Character\s+with\s+a\s+type\s+including\s+["\u201c][^"\u201d]+["\u201d])\s+is\s+removed\s+from\s+the\s+field\s+by\s+(?:an|your\s+opponent[''\u2019]s)\s+effect$/i.test(
       t,
     )
   )
@@ -256,7 +324,12 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
   if (/^you\s+take\s+damage/i.test(t)) return "whenDealsDamage";
 
   // "this Character becomes rested"
-  if (/^this\s+Character\s+becomes\s+rested$/i.test(t)) return "whenLeaving"; // Reuse
+  if (
+    /^this\s+Character\s+becomes\s+rested(?:\s+by\s+your\s+opponent[''\u2019]s\s+Character[''\u2019]s\s+effect)?$/i.test(
+      t,
+    )
+  )
+    return "whenBecomesRested";
 
   return null;
 }
@@ -268,6 +341,29 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
 export function parseConditionText(text: string): Condition | null {
   const single = parseSingleCondition(text);
   if (single) return single;
+
+  const leaderPowerAndTrait =
+    /^(your Leader has \d+ power(?:\s+or\s+(?:more|less))?)\s+and\s+the\s+([""[{][^""\]}]+[""\]}])\s+type$/i.exec(
+      text.trim(),
+    );
+  if (leaderPowerAndTrait) {
+    const power = parseSingleCondition(leaderPowerAndTrait[1]!);
+    const trait = parseSingleCondition(`your Leader has the ${leaderPowerAndTrait[2]!} type`);
+    if (power && trait) {
+      return { condition: "compound", operator: "and", conditions: [power, trait] };
+    }
+  }
+
+  const leaderTraitAndState = /^(your Leader has .+? type)\s+and\s+is\s+(active|rested)$/i.exec(
+    text.trim(),
+  );
+  if (leaderTraitAndState) {
+    const trait = parseSingleCondition(leaderTraitAndState[1]!);
+    const state = parseCardStateCondition(`your Leader is ${leaderTraitAndState[2]!}`);
+    if (trait && state) {
+      return { condition: "compound", operator: "and", conditions: [trait, state] };
+    }
+  }
 
   // Compound "and": split on " and " followed by condition-starting words
   const compound = parseCompoundCondition(text);
@@ -281,6 +377,15 @@ export function parseConditionText(text: string): Condition | null {
  * Parse a single (non-compound) condition clause.
  */
 function parseSingleCondition(text: string): Condition | null {
+  if (
+    /^this\s+Character\s+is\s+rested\s+by\s+your\s+opponent[''\u2019]s\s+effect$/i.test(text.trim())
+  ) {
+    return {
+      condition: "triggerEvent",
+      event: "whenBecomesRested",
+      source: "opponentEffect",
+    };
+  }
   return (
     parseLeaderCondition(text) ??
     parseCountCondition(text) ??

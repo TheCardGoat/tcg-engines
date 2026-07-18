@@ -22,7 +22,7 @@ export const op05Morley016: CharacterCard = {
   setId: "OP05",
   cost: 3,
   power: 5000,
-  traits: ["Giant Revolutionary Army"],
+  traits: ["Giant", "Revolutionary Army"],
   attribute: "special",
   effect:
     "[When Attacking] If this Character has 7000 power or more, your opponent cannot activate [Blocker] during this battle. [Trigger] You may trash 1 card from your hand: If your Leader is multicolored, play this card.",
@@ -56,11 +56,6 @@ export const op05Morley016: CharacterCard = {
       },
       {
         trigger: "trigger",
-        conditions: [
-          {
-            condition: "leaderMulticolored",
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -69,13 +64,9 @@ export const op05Morley016: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
+            action: "playThisCard",
+            condition: {
+              condition: "leaderMulticolored",
             },
           },
         ],

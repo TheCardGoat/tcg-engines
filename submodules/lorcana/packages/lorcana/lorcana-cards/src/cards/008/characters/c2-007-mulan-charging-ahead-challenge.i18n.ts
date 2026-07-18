@@ -73,4 +73,22 @@ export const mulanChargingAheadC2ChallengeI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Mulán",
+    version: "Cargando hacia adelante",
+    text: [
+      {
+        title: "Imprudente",
+      },
+      {
+        title: "ARRANCADA",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+      {
+        title: "LARGO ALCANCE",
+        description: "Este personaje puede desafiar a los personajes listos.",
+      },
+    ],
+  },
 };

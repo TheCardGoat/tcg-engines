@@ -45,4 +45,15 @@ export const buckySquirrelSqueakTutorP1PromoI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Bucky",
+    version: "Tutor de chirrido de ardilla",
+    text: [
+      {
+        title: "CHIRRIDO",
+        description:
+          "Siempre que juegas con un personaje Floodborn, si usaste Shift para jugarlo, cada oponente elige y descarta una carta.",
+      },
+    ],
+  },
 };

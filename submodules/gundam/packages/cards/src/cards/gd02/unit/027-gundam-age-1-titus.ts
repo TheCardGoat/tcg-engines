@@ -5,6 +5,7 @@ export const gd02GundamAge1Titus027: UnitCard = {
   name: "Gundam AGE-1 Titus",
   type: "unit",
   color: "green",
+  battlefieldZones: ["space", "earth"],
   traits: ["earth federation", "age system"],
   id: "GD02-027",
   canonicalId: "GD02-027",
@@ -41,6 +42,7 @@ export const gd02GundamAge1Titus027: UnitCard = {
   cost: 4,
   ap: 5,
   hp: 5,
+  linkCondition: "[Flit Asuno]",
   effect:
     "&lt;Breach 3&gt; (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)<br>",
   keywordEffects: [{ keyword: "Breach", value: 3 }],

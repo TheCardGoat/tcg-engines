@@ -45,4 +45,15 @@ export const tianaRestaurantOwnerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tiana",
+    version: "Dueño del restaurante",
+    text: [
+      {
+        title: "RESERVA ESPECIAL",
+        description:
+          "Siempre que un personaje tuyo es desafiado mientras este personaje está ejercido, el personaje desafiante obtiene -3 {S} este turno a menos que su jugador pague 3 {I}.",
+      },
+    ],
+  },
 };

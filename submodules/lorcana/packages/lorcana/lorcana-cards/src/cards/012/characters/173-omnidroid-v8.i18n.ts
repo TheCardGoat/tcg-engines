@@ -17,4 +17,8 @@ export const omnidroidV8I18n: Record<Languages, I18nProperties> = {
     name: "Omnidroide",
     version: "V.8",
   },
+  es: {
+    name: "Omnidroide",
+    version: "V.8",
+  },
 };

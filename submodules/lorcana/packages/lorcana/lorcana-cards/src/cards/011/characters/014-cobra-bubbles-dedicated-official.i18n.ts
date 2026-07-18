@@ -45,4 +45,15 @@ export const cobraBubblesDedicatedOfficialI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Burbujas de cobra",
+    version: "Oficial dedicado",
+    text: [
+      {
+        title: "AURA DE AUTORIDAD",
+        description:
+          "Siempre que este personaje realiza una misión, el personaje contrario elegido no puede desafiar y debe realizar una misión durante su próximo turno si puede.",
+      },
+    ],
+  },
 };

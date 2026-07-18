@@ -57,4 +57,17 @@ export const donaldDuckPerfectGentlemanI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Caballero perfecto",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "PERMÍTAME",
+        description: "Al comienzo de tu turno, cada jugador puede robar una carta.",
+      },
+    ],
+  },
 };

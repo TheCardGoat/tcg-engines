@@ -45,4 +45,15 @@ export const princePhillipDragonslayerI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Príncipe Felipe",
+    version: "Cazador de dragones",
+    text: [
+      {
+        title: "HEROÍSMO",
+        description:
+          "Cuando este personaje desafía y es desterrado, puedes desterrar al personaje desafiado.",
+      },
+    ],
+  },
 };

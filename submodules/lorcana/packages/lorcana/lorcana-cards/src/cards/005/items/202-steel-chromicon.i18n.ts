@@ -37,4 +37,13 @@ export const steelChromiconI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cromicón de acero",
+    text: [
+      {
+        title: "LUZ DE ACERO",
+        description: "{E}: inflige 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

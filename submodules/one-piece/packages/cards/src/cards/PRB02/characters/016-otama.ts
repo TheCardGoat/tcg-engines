@@ -42,6 +42,11 @@ export const prb02Otama016: CharacterCard = {
           {
             cost: "restThisCard",
           },
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
         ],
         actions: [
           {

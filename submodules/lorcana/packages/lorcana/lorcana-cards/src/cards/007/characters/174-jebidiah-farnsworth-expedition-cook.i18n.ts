@@ -60,4 +60,18 @@ export const jebidiahFarnsworthExpeditionCookI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Jebidiah Farnsworth",
+    version: "Cocinero de expedición",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "TENGO TUS CUATRO GRUPOS DE ALIMENTOS BÁSICOS",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido gana Resistencia +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

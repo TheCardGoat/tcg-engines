@@ -60,4 +60,18 @@ export const pinocchioOnTheRunI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pinocho",
+    version: "En la carrera",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "ESCUCHA TU CONCIENCIA",
+        description:
+          "Cuando juegas con este personaje, puedes devolver el personaje u objeto elegido con un coste de 3 o menos a la mano de su jugador.",
+      },
+    ],
+  },
 };

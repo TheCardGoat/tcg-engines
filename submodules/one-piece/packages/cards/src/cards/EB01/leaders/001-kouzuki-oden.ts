@@ -42,6 +42,26 @@ export const eb01KouzukiOden001: LeaderCard = {
   effect:
     "All of your [Land of Wano] type Character cards without a Counter have a +1000 Counter, according to the rules.[DON!! x1] [When Attacking] If you have a [Land of Wano] type Character with a cost of 5 or more, this Leader gains +1000 power until the start of your next turn.",
   effects: {
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "modifyCounter",
+            target: {
+              player: "self",
+              zones: ["hand"],
+              count: { amount: "all" },
+              filters: [
+                { filter: "cardCategory", value: "character" },
+                { filter: "trait", value: "Land of Wano", match: "includes" },
+                { filter: "counter", comparison: "eq", value: 0 },
+              ],
+            },
+            value: 1000,
+          },
+        ],
+      },
+    ],
     effects: [
       {
         trigger: "whenAttacking",
@@ -58,6 +78,7 @@ export const eb01KouzukiOden001: LeaderCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
+                match: "includes",
               },
               {
                 filter: "cost",

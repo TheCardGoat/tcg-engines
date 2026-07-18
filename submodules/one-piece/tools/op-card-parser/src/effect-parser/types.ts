@@ -6,12 +6,29 @@ export type ParsedCondition =
 
 export type RawCost =
   | { type: "restDon"; amount: number }
-  | { type: "returnDon"; amount: number }
+  | { type: "returnDon"; amount: number; minimumAmount?: never }
+  | { type: "returnDon"; minimumAmount: number; amount?: never }
   | { type: "trashFromHand"; raw: string }
+  | { type: "trashFromDeck"; amount: number; position: "top" }
+  | { type: "trashLife"; amount: number; position: "top" | "bottom" | "choice" }
   | { type: "restThisCard" }
   | { type: "trashThisCard" }
-  | { type: "turnLifeFaceUp"; count: number }
+  | { type: "returnThisToHand" }
+  | { type: "returnThisToDeck"; position: "top" | "bottom" }
+  | { type: "returnThisAndHandToDeck"; handAmount: number; position: "top" | "bottom" }
+  | { type: "turnLifeFaceUp"; count: number; faceUp: boolean }
+  | { type: "returnCharacter"; raw: string }
+  | { type: "returnCharacterToDeck"; raw: string }
+  | { type: "returnFromTrashToDeck"; raw: string }
+  | { type: "returnHandToDeck"; amount: number; position: "top" | "bottom" }
+  | { type: "addLifeToHand"; amount: number; position: "top" | "bottom" | "choice" }
+  | { type: "revealFromHand"; raw: string }
   | { type: "restCards"; raw: string }
+  | { type: "trashCharacter"; raw: string }
+  | { type: "koCharacter"; raw: string }
+  | { type: "playCard"; raw: string }
+  | { type: "trashCard"; raw: string }
+  | { type: "modifyLeaderPower"; value: number; duration: "thisTurn"; requiresActive?: boolean }
   | { type: "unknown"; raw: string };
 
 export interface RawEffectSegment {
@@ -29,6 +46,8 @@ export interface RawEffectSegment {
   rawActionText: string;
   /** For "Choose one:" patterns, the individual bullet items */
   choiceItems?: string[];
+  /** Action text printed after the final choice bullet and resolved after the choice */
+  postChoiceActionText?: string;
 }
 
 export interface ParsedEffectText {

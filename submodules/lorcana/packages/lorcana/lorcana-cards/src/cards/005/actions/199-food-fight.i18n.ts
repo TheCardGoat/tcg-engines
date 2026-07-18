@@ -23,4 +23,8 @@ export const foodFightI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "¡Pelea de comida!",
+    text: 'Tus personajes obtienen "{E}, 1 {I} — Inflige 1 daño al personaje elegido" este turno.',
+  },
 };

@@ -45,4 +45,15 @@ export const annaEagerAcolyteI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ana",
+    version: "Acólito ansioso",
+    text: [
+      {
+        title: "PODERES CRECIENTES",
+        description:
+          "Cuando juegas con este personaje, cada oponente elige y ejerce uno de sus personajes listos.",
+      },
+    ],
+  },
 };

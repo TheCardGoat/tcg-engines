@@ -47,49 +47,52 @@ export const op06GeckoMoria086: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
-            action: "play",
+            action: "playGrouped",
             source: {
               player: "self",
               zone: "trash",
             },
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            filters: [
+            groups: [
               {
-                filter: "cost",
-                comparison: "lte",
-                value: 4,
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 4,
+                  },
+                  {
+                    filter: "cardCategory",
+                    value: "character",
+                  },
+                ],
               },
               {
-                filter: "cardCategory",
-                value: "character",
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 2,
+                  },
+                  {
+                    filter: "cardCategory",
+                    value: "character",
+                  },
+                ],
               },
             ],
-          },
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "trash",
+            playStates: {
+              single: "active",
+              multiple: ["active", "rested"],
             },
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            filters: [
-              {
-                filter: "cost",
-                comparison: "lte",
-                value: 2,
-              },
-              {
-                filter: "cardCategory",
-                value: "character",
-              },
-            ],
-            playState: "rested",
+            chooseOnPlayOrder: true,
           },
         ],
       },

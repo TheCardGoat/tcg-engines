@@ -5,6 +5,7 @@ export const gd02GundamVirsago037: UnitCard = {
   name: "Gundam Virsago",
   type: "unit",
   color: "red",
+  battlefieldZones: ["space", "earth"],
   traits: ["new une"],
   id: "GD02-037",
   canonicalId: "GD02-037",

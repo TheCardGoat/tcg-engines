@@ -45,4 +45,15 @@ export const royalGuardOctopusSoldierI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Guardia Real",
+    version: "Soldado pulpo",
+    text: [
+      {
+        title: "MUY ARMADO",
+        description:
+          "Cada vez que robas una carta, este personaje gana Challenger +1 este turno. (Obtienen +1 {S} mientras desafían).",
+      },
+    ],
+  },
 };

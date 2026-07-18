@@ -58,4 +58,18 @@ export const theGlassSlipperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La zapatilla de cristal",
+    text: [
+      {
+        title: "PAR PERFECTO",
+        description: "Solo puedes tener 2 copias de The Glass Slipper en tu mazo.",
+      },
+      {
+        title: "BUSCAR EL REINO",
+        description:
+          "Destierra este objeto, {E} uno de tus personajes Príncipe: busca en tu mazo una carta de personaje Princesa y muéstrala a todos los jugadores. Pon esa carta en tu mano y baraja tu mazo.",
+      },
+    ],
+  },
 };

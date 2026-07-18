@@ -3,6 +3,16 @@ import { requestJson, requestVoid } from "$lib/data/transport/http-client.js";
 import type { ServerGameplaySettings } from "./player-settings-store.svelte.js";
 
 export interface UserSettingsResponse {
+  playerSettings?: ServerGameplaySettings;
+  gameSettings?: {
+    lorcana?: {
+      visual?: { cardBackId?: string; playmatId?: string };
+      simulator?: Pick<
+        ServerGameplaySettings,
+        "primaryClickAction" | "cardInfoMode" | "priorityNudgeEnabled"
+      >;
+    };
+  };
   visualSettings?: {
     cardBack?: string;
     playmat?: string;
@@ -18,9 +28,8 @@ export interface UserSettingsResponse {
 }
 
 interface UpdateUserVisualSettingsPayload {
-  visualSettings: {
-    cardBack?: string;
-    playmat?: string;
+  gameSettings: {
+    lorcana: { visual: { cardBackId?: string; playmatId?: string } };
   };
 }
 
@@ -33,7 +42,8 @@ export async function fetchUserSettings(): Promise<UserSettingsResponse> {
 }
 
 export async function updateUserSettings(payload: {
-  gameplaySettings: Partial<ServerGameplaySettings>;
+  playerSettings?: Partial<ServerGameplaySettings>;
+  gameSettings?: UserSettingsResponse["gameSettings"];
 }): Promise<void> {
   await requestVoid(
     `${getApiOrigin()}/v1/users/me/settings`,
@@ -49,18 +59,12 @@ export async function updateUserSettings(payload: {
 export async function updateUserVisualSettings(
   payload: UpdateUserVisualSettingsPayload,
 ): Promise<void> {
-  const lorcanaVisualSettings = payload.visualSettings;
   await requestVoid(
     `${getApiOrigin()}/v1/users/me/settings`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        visualSettings: lorcanaVisualSettings,
-        gameVisualSettings: {
-          lorcana: lorcanaVisualSettings,
-        },
-      }),
+      body: JSON.stringify(payload),
     },
     "Failed to save visual settings",
   );

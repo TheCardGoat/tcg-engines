@@ -55,4 +55,17 @@ export const cobraBubblesFormerCiaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Burbujas de cobra",
+    version: "Ex CIA",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "PIENSA EN LO QUE ES MEJOR 2",
+        description: "{I}: roba una carta, luego elige y descarta una carta.",
+      },
+    ],
+  },
 };

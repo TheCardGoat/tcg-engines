@@ -60,4 +60,18 @@ export const peteGhostOfChristmasFutureI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Pete",
+    version: "Fantasma del futuro navideño",
+    text: [
+      {
+        title: "Impulsar 1 {I}",
+      },
+      {
+        title: "MIRADA PRESENTIENDA",
+        description:
+          "Siempre que este personaje realice una misión, mira una cantidad de cartas de la parte superior de tu mazo igual a la cantidad de cartas debajo de él. Pon uno en tu mano y coloca el resto en el fondo de tu mazo en cualquier orden.",
+      },
+    ],
+  },
 };

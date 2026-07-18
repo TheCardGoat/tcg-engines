@@ -54,4 +54,18 @@ export const nothingWeWontDoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nada que no haremos",
+    text: [
+      {
+        title: "Cantar juntos 8",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 8 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title:
+          "Prepara todos tus personajes. Durante el resto de este turno, no reciben daño de los desafíos y no pueden realizar misiones.",
+      },
+    ],
+  },
 };

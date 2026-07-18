@@ -17,4 +17,8 @@ export const grandCouncilwomanGalacticAuthorityI18n: Record<Languages, I18nPrope
     name: "Gran Consigliera",
     version: "Autorità Galattica",
   },
+  es: {
+    name: "Gran Concejal",
+    version: "Autoridad Galáctica",
+  },
 };

@@ -21,4 +21,9 @@ export const fidgetRatigansHenchmanI18n: Record<Languages, I18nProperties> = {
     version: "Ratigan's Henchman",
     text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
+  es: {
+    name: "Agitarse",
+    version: "El secuaz de Ratigan",
+    text: "Evasivo",
+  },
 };

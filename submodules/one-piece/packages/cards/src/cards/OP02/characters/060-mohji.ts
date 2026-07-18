@@ -25,6 +25,5 @@ export const op02Mohji060: CharacterCard = {
   counter: 1000,
   traits: ["Buggy Pirates"],
   attribute: "wisdom",
-  effect: "NULL",
   i18n: op02Mohji060I18n,
 };

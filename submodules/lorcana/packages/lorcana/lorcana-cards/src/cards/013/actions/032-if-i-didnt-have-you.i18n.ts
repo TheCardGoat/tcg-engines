@@ -33,4 +33,8 @@ export const ifIDidntHaveYouI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Si no te tuviera",
+    text: "Tú y otro jugador elegido roban 2 cartas cada uno.",
+  },
 };

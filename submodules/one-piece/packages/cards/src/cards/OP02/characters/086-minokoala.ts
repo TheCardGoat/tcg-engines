@@ -51,6 +51,7 @@ export const op02Minokoala086: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Impel Down",
+            match: "includes",
           },
         ],
         actions: [

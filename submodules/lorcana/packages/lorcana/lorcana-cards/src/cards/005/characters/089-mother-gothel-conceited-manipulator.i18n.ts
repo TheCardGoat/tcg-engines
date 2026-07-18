@@ -45,4 +45,15 @@ export const motherGothelConceitedManipulatorI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Madre Gothel",
+    version: "Manipulador engreído",
+    text: [
+      {
+        title: "MADRE SABE MEJOR",
+        description:
+          "Cuando juegas con este personaje, puedes pagar 3 {I} para devolver el personaje elegido a la mano de su jugador.",
+      },
+    ],
+  },
 };

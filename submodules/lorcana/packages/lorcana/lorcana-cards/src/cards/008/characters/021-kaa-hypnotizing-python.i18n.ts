@@ -45,4 +45,15 @@ export const kaaHypnotizingPythonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kaa",
+    version: "Hipnotizando a Python",
+    text: [
+      {
+        title: "MÍRAME A LOS OJOS",
+        description:
+          "Cada vez que este personaje realiza una misión, el personaje contrario elegido obtiene -2 {S} y obtiene Reckless hasta el comienzo de tu siguiente turno. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const magicBroomAerialCleanerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Escoba magica",
+    version: "Limpiador aéreo",
+    text: [
+      {
+        title: "ALADO PARA",
+        description:
+          "UN DÍA Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

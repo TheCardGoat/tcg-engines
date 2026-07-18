@@ -45,4 +45,15 @@ export const sirPellinoreSeasonedKnightI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Señor Pellinore",
+    version: "Caballero experimentado",
+    text: [
+      {
+        title: "CÓDIGO DE HONOR",
+        description:
+          "Siempre que este personaje realice una misión, tus otros personajes obtienen apoyo este turno. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+      },
+    ],
+  },
 };

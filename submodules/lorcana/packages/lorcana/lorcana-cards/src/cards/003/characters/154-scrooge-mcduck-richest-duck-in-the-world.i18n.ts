@@ -65,4 +65,20 @@ export const scroogeMcduckRichestDuckInTheWorldI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Gilito McPato",
+    version: "El pato más rico del mundo",
+    text: [
+      {
+        title: "¡ME VOY A CASA!",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+      {
+        title: "NO ME HICE RICO SER ESTÚPIDO",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, podrás jugar un objeto gratis.",
+      },
+    ],
+  },
 };

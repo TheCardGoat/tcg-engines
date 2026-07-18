@@ -25,6 +25,5 @@ export const op01Babanuki107: CharacterCard = {
   counter: 1000,
   traits: ["Animal Kingdom Pirates SMILE"],
   attribute: "ranged",
-  effect: "NULL",
   i18n: op01Babanuki107I18n,
 };

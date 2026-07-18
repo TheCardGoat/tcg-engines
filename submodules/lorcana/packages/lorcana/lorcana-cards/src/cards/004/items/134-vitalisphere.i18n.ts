@@ -41,4 +41,14 @@ export const vitalisphereI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Vitalisferio",
+    text: [
+      {
+        title: "EXTRACTO DE RUBÍ 1",
+        description:
+          "{I}, destierra este objeto: el personaje elegido gana Rush y obtiene +2 {S} este turno. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

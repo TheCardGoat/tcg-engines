@@ -60,4 +60,18 @@ export const winnieThePoohHunnyPirateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Winnie el pooh",
+    version: "Pirata cariñoso",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "SOMOS PIRATAS, VERÁS",
+        description:
+          "Cada vez que este personaje realiza una misión, pagas 1 {I} menos por el próximo personaje pirata que juegues en este turno.",
+      },
+    ],
+  },
 };

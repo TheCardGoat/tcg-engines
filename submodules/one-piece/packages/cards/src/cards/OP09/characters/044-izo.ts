@@ -45,8 +45,19 @@ export const op09Izo044: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "trait",
-                value: "Land of Wano",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Land of Wano",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Whitebeard Pirates",
+                    match: "includes",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

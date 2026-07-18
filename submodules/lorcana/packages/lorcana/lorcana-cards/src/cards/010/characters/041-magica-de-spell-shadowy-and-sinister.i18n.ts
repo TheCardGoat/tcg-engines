@@ -45,4 +45,15 @@ export const magicaDeSpellShadowyAndSinisterI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Magia De Hechizo",
+    version: "Sombrío y siniestro",
+    text: [
+      {
+        title: "ENCANTAMIENTO OSCURO",
+        description:
+          "Cuando juegas con este personaje, puedes barajar una carta del descarte del jugador elegido en su mazo.",
+      },
+    ],
+  },
 };

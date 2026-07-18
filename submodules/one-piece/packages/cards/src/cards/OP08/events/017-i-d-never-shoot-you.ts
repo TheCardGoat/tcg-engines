@@ -23,7 +23,7 @@ export const op08IDNeverShootYou017: EventCard = {
   cost: 2,
   traits: ["Drum Kingdom"],
   effect:
-    "[Counter] Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, give up to 1 of your opponent's Leader or Character cards 1000 power during this turn. [Trigger] Up to 1 of your Leader or Character cards gains +1000 power during this turn.",
+    "[Counter] Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, give up to 1 of your opponent's Leader or Character cards −1000 power during this turn. [Trigger] Up to 1 of your Leader or Character cards gains +1000 power during this turn.",
   effects: {
     effects: [
       {
@@ -52,7 +52,7 @@ export const op08IDNeverShootYou017: EventCard = {
                 upTo: true,
               },
             },
-            value: 1000,
+            value: -1000,
             duration: "thisTurn",
           },
         ],

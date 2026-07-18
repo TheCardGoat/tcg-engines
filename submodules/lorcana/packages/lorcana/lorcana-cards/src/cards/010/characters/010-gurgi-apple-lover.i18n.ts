@@ -45,4 +45,15 @@ export const gurgiAppleLoverI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gurgi",
+    version: "Amante de la manzana",
+    text: [
+      {
+        title: "FELIZ DÍA",
+        description:
+          "Cuando juegas con este personaje, puedes eliminar hasta 2 daños del personaje elegido.",
+      },
+    ],
+  },
 };

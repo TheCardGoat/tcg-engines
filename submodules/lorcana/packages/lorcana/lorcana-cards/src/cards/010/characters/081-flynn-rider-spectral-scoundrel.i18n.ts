@@ -61,4 +61,20 @@ export const flynnRiderSpectralScoundrelI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Jinete Flynn",
+    version: "Sinvergüenza espectral",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+        description:
+          "(Una vez durante tu turno, puedes pagar 2 {I} para poner la carta superior de tu mazo boca abajo debajo de este personaje).",
+      },
+      {
+        title: "TOMARÉ ESO",
+        description:
+          "Siempre que este personaje tenga al menos una carta debajo, obtiene +2 {S} y +1 {L}.",
+      },
+    ],
+  },
 };

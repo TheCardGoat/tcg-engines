@@ -41,4 +41,14 @@ export const naniNoWorriesI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nani",
+    version: "No hay problema",
+    text: [
+      {
+        title: "TÓMALO CON CALMA",
+        description: "Si bien este personaje no tiene daño, obtiene +1 {L}.",
+      },
+    ],
+  },
 };

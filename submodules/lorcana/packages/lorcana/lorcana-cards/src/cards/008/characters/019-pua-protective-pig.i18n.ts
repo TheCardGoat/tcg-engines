@@ -55,4 +55,17 @@ export const puaProtectivePigI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Puá",
+    version: "Cerdo protector",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "FRUTA GRATIS",
+        description: "Cuando este personaje es desterrado, puedes robar una carta.",
+      },
+    ],
+  },
 };

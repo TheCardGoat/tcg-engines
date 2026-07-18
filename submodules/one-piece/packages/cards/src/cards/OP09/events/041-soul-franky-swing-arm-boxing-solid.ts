@@ -43,6 +43,44 @@ export const op09SoulFrankySwingArmBoxingSolid041: EventCard = {
             value: 2000,
             duration: "thisBattle",
           },
+          {
+            action: "setActive",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 2, upTo: true },
+              filters: [{ filter: "state", value: "rested" }],
+            },
+            condition: {
+              condition: "compound",
+              operator: "and",
+              conditions: [
+                { condition: "leaderTrait", trait: "ODYSSEY", match: "includes" },
+                {
+                  condition: "zoneCount",
+                  player: "self",
+                  zone: "character",
+                  comparison: "gte",
+                  value: 2,
+                  filters: [{ filter: "state", value: "rested" }],
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 4 }],
+            },
+          },
         ],
       },
     ],

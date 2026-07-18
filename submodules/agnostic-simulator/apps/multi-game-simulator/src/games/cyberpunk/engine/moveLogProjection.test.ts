@@ -433,6 +433,58 @@ describe("projectMoveLogEntries", () => {
     expect(entries[2]?.message).toBe("Fight: Modded Kusanagi (11) defeated Psycho Squad (6).");
   });
 
+  test("groups QUICK program play and resolution in the React section", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const moveLogs: MoveLogEntry[] = [
+      {
+        id: 1,
+        side: "player",
+        log: {
+          type: "attackUnit",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+          attackerId: ATTACKER_ID,
+          defenderId: DEFENDER_ID,
+          attackerName: "Modded Kusanagi",
+          defenderName: "Psycho Squad",
+        },
+      },
+      {
+        id: 2,
+        side: "opponent",
+        log: {
+          type: "action",
+          messageKey: "move.playCard",
+          params: { cardName: "Reboot Optics", cost: 2 },
+          playerId: P2,
+          timestamp: 0,
+          turnNumber: 1,
+        } as unknown as MoveLog,
+      },
+      {
+        id: 3,
+        side: "opponent",
+        log: {
+          type: "action",
+          messageKey: "trigger.autoResolved",
+          params: {
+            cardName: "Reboot Optics",
+            abilityText:
+              "The next time a rival Unit fights this turn, it doesn't defeat the opposing friendly Unit.",
+          },
+          playerId: P2,
+          timestamp: 0,
+          turnNumber: 1,
+        } as unknown as MoveLog,
+      },
+    ];
+
+    expect(
+      projectMoveLogEntries(matchState, moveLogs, "player").map((entry) => entry.section?.id),
+    ).toEqual(["attack", "react", "react"]);
+  });
+
   test("projects array and private action log name params as card references", () => {
     const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
     const log: MoveLog = {

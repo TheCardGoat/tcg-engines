@@ -55,4 +55,16 @@ export const maximusPalaceHorseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Máximo",
+    version: "Caballo de palacio",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "Apoyo",
+      },
+    ],
+  },
 };

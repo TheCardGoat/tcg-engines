@@ -56,4 +56,18 @@ export const olafHappyPassengerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Olaf",
+    version: "Pasajero feliz",
+    text: [
+      {
+        title: "LIMPIE EL CAMINO",
+        description:
+          "Por cada personaje ejercido que los oponentes tengan en juego, pagas 1 {I} menos para jugar con este personaje.",
+      },
+      {
+        title: "Evasivo",
+      },
+    ],
+  },
 };

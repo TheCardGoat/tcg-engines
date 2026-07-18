@@ -39,4 +39,15 @@ export const sneezyVeryAllergicI18n: Record<Languages, I18nProperties> = {
     version: "Very Allergic",
     text: "Ah-choo!\\ Whenever you play this character or another Seven Dwarfs character, you may give chosen character -1 {S} this turn.",
   },
+  es: {
+    name: "Estornudo",
+    version: "Muy alérgico",
+    text: [
+      {
+        title: "¡AH-CHOO!",
+        description:
+          "Siempre que juegues con este personaje u otro personaje de los Siete Enanitos, puedes darle al personaje elegido -1 {S} este turno.",
+      },
+    ],
+  },
 };

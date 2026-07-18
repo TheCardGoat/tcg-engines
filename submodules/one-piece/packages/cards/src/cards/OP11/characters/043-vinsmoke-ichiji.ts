@@ -31,7 +31,37 @@ export const op11VinsmokeIchiji043: CharacterCard = {
     effects: [
       {
         trigger: "onOpponentAttack",
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "character",
+            comparison: "eq",
+            value: 0,
+            filters: [
+              {
+                filter: "trait",
+                value: "GERMA",
+                match: "includes",
+                negate: true,
+              },
+            ],
+          },
+        ],
         actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: 1000,
+            duration: "thisBattle",
+          },
           {
             action: "trashFromDeck",
             player: "self",

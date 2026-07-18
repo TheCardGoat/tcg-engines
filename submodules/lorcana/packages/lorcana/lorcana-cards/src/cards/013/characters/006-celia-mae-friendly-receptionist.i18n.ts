@@ -45,4 +45,15 @@ export const celiaMaeFriendlyReceptionistI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Celia Mae",
+    version: "Recepcionista amigable",
+    text: [
+      {
+        title: "POR FAVOR ESPERA",
+        description:
+          "Cuando juegas con este personaje, puedes pagar 1 {I} para preparar tu personaje elegido. No pueden realizar misiones ni desafíos durante el resto de este turno.",
+      },
+    ],
+  },
 };

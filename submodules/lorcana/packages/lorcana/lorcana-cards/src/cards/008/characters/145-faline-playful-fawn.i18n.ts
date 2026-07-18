@@ -57,4 +57,18 @@ export const falinePlayfulFawnI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Falina",
+    version: "Cervatillo juguetón",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "AMIGO PRECOZ",
+        description:
+          "Mientras tengas un personaje en juego con más {S} que cada personaje contrario, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

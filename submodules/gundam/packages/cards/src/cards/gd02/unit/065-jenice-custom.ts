@@ -4,6 +4,7 @@ export const gd02JeniceCustom065: UnitCard = {
   cardNumber: "GD02-065",
   name: "Jenice Custom",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "purple",
   traits: ["vulture"],
   id: "GD02-065",

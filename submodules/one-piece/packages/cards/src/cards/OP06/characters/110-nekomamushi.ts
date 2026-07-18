@@ -28,6 +28,24 @@ export const op06Nekomamushi110: CharacterCard = {
   attribute: "slash",
   effect: "[DON!! x2] This Character can also attack your opponent's active Characters.",
   effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "lifeCount",
+            player: "opponent",
+            comparison: "lte",
+            value: 3,
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+      },
+    ],
     permanentEffects: [
       {
         conditions: [

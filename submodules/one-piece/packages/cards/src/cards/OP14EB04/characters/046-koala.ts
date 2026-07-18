@@ -48,12 +48,17 @@ export const op14eb04Koala046: CharacterCard = {
               },
               filters: [
                 {
-                  filter: "trait",
-                  value: "Fish-Man",
-                },
-                {
-                  filter: "trait",
-                  value: "Merfolk",
+                  filter: "anyOf",
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "Fish-Man",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Merfolk",
+                    },
+                  ],
                 },
               ],
             },

@@ -17,4 +17,8 @@ export const billyBonesKeeperOfTheMapI18n: Record<Languages, I18nProperties> = {
     name: "Billy Bones",
     version: "Custode della Mappa",
   },
+  es: {
+    name: "Huesos de billy",
+    version: "Guardián del mapa",
+  },
 };

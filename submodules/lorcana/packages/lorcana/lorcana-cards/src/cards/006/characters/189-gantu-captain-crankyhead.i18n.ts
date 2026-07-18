@@ -17,4 +17,8 @@ export const gantuCaptainCrankyheadI18n: Record<Languages, I18nProperties> = {
     name: "Gantu",
     version: "Capitano Irritabile",
   },
+  es: {
+    name: "Gantu",
+    version: "Capitán Crankyhead",
+  },
 };

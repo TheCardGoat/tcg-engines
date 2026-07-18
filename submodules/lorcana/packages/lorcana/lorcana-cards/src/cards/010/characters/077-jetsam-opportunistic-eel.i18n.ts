@@ -45,4 +45,15 @@ export const jetsamOpportunisticEelI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Echazón",
+    version: "Anguila oportunista",
+    text: [
+      {
+        title: "EMBOSCADA DESDE LO PROFUNDO",
+        description:
+          "Cuando juegues con este personaje, inflige 3 daños al personaje dañado contrario elegido.",
+      },
+    ],
+  },
 };

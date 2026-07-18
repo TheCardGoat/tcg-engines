@@ -39,6 +39,7 @@ export const op08MontBlancNoland109: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Shandian Warrior",
+                match: "includes",
               },
               {
                 condition: "hasCard",

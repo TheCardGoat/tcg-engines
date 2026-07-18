@@ -17,4 +17,8 @@ export const liShangSeasonedStrategistI18n: Record<Languages, I18nProperties> = 
     name: "Li Shang",
     version: "Stratega Esperto",
   },
+  es: {
+    name: "Li Shang",
+    version: "Estratega experimentado",
+  },
 };

@@ -51,6 +51,7 @@ export const op10Trebol070: CharacterCard = {
             },
             duration: "untilEndOfOpponentNextTurn",
             restriction: "byEffect",
+            byPlayer: "opponent",
           },
         ],
       },

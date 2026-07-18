@@ -17,4 +17,8 @@ export const stitchProtectorOfFrogsI18n: Record<Languages, I18nProperties> = {
     name: "Stitch",
     version: "Protettore delle Rane",
   },
+  es: {
+    name: "Puntada",
+    version: "Protector de Ranas",
+  },
 };

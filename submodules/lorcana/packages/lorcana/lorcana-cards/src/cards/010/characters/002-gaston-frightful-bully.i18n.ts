@@ -60,4 +60,18 @@ export const gastonFrightfulBullyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gastón",
+    version: "Matón espantoso",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "¡SUPERA ESO!",
+        description:
+          "Siempre que este personaje realiza una misión, si hay una carta debajo de él, el personaje contrario elegido no puede desafiar y debe realizar una misión si puede durante su próximo turno.",
+      },
+    ],
+  },
 };

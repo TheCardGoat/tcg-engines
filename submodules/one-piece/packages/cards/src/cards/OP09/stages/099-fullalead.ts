@@ -33,6 +33,9 @@ export const op09Fullalead099: StageCard = {
             cost: "trashFromHand",
             amount: 1,
           },
+          {
+            cost: "restThisCard",
+          },
         ],
         actions: [
           {
@@ -50,6 +53,7 @@ export const op09Fullalead099: StageCard = {
               {
                 filter: "trait",
                 value: "Blackbeard Pirates",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

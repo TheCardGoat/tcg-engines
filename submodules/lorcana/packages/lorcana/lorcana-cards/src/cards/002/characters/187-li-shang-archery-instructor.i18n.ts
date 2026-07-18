@@ -45,4 +45,15 @@ export const liShangArcheryInstructorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Li Shang",
+    version: "Instructor de tiro con arco",
+    text: [
+      {
+        title: "LECCIÓN DE TIRO CON ARCO",
+        description:
+          "Siempre que este personaje realice una misión, tus personajes obtienen Evasión este turno. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

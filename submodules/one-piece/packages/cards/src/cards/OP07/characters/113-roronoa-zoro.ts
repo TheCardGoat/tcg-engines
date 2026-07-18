@@ -29,5 +29,29 @@ export const op07RoronoaZoro113: CharacterCard = {
   attribute: "slash",
   effect:
     "[Trigger] If your Leader has the [Egghead] type, rest up to 1 of your opponent's Leader or Character cards.",
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Egghead",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["leader", "character"],
+              count: { amount: 1, upTo: true },
+            },
+          },
+        ],
+      },
+    ],
+  },
   i18n: op07RoronoaZoro113I18n,
 };

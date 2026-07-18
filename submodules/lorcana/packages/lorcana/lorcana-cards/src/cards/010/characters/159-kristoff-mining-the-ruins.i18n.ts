@@ -60,4 +60,18 @@ export const kristoffMiningTheRuinsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kristoff",
+    version: "Minando las ruinas",
+    text: [
+      {
+        title: "Impulsar 1 {I}",
+      },
+      {
+        title: "VALE LA MINERIA",
+        description:
+          "Siempre que este personaje realice una misión, si hay una carta debajo de él, coloca la carta superior de tu mazo en tu tintero boca abajo y ejerce.",
+      },
+    ],
+  },
 };

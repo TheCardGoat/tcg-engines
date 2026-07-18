@@ -44,4 +44,14 @@ export const isisVanderchillIceQueenOfStCanardI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Isis Vanderchill",
+    version: "Reina de Hielo de San Canard",
+    text: [
+      {
+        title: "RELAJARSE",
+        description: "Cuando juegues con este personaje, ejerce el personaje contrario elegido.",
+      },
+    ],
+  },
 };

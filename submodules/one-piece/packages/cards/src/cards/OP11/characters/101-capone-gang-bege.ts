@@ -44,6 +44,43 @@ export const op11CaponeGangBege101: CharacterCard = {
     '[Blocker]\n[Once Per Turn] If your "Supernovas" type Character other than [Capone"Gang"Bege] would be removed from the field by your opponent\'s effect, you may add it to the top of your Life cards face-down instead.',
   effects: {
     keywords: ["blocker"],
+    replacementEffects: [
+      {
+        replacedEvent: "removeFromField",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "trait",
+              value: "Supernovas",
+              match: "includes",
+            },
+            {
+              filter: "excludeName",
+              value: 'Capone"Gang"Bege',
+            },
+          ],
+        },
+        source: "opponentEffect",
+        replacementAction: {
+          action: "addToLife",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: {
+              amount: 1,
+            },
+          },
+          position: "top",
+          previousActionTargets: true,
+        },
+        oncePerTurn: true,
+      },
+    ],
   },
   i18n: op11CaponeGangBege101I18n,
 };

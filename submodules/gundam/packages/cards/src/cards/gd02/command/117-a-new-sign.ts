@@ -5,7 +5,7 @@ export const gd02ANewSign117: CommandCard = {
   name: "A New Sign",
   type: "command",
   color: "white",
-  traits: ["-"],
+  traits: [],
   id: "GD02-117",
   canonicalId: "GD02-117",
   externalIds: { bandai: "gundam:gd02-117" },

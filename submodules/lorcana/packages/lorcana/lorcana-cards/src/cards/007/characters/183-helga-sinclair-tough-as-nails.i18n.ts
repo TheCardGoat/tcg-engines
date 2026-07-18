@@ -57,4 +57,18 @@ export const helgaSinclairToughAsNailsI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Helga Sinclair",
+    version: "Duro como las uñas",
+    text: [
+      {
+        title: "Retador +3 (mientras desafía, este personaje obtiene +3 {S}).",
+      },
+      {
+        title: "REFLEJOS RÁPIDOS",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

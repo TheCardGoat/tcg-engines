@@ -11,7 +11,13 @@ export function parseKeywords(text: string): Keyword[] {
     if (!kw) continue;
     // Skip if preceded by reference context ("a card with a [Blocker]")
     const before = text.slice(0, match.index);
-    if (KEYWORD_REFERENCE_PREFIX.test(before)) continue;
+    if (KEYWORD_REFERENCE_PREFIX.test(before) || /activate\s+the\s+$/i.test(before)) continue;
+    const clauseStart = Math.max(
+      before.lastIndexOf("."),
+      before.lastIndexOf("\n"),
+      before.lastIndexOf(":"),
+    );
+    if (/\bgains?\s+[^.:\n]*$/i.test(before.slice(clauseStart + 1))) continue;
     keywords.add(kw);
   }
   return [...keywords];

@@ -39,7 +39,7 @@ export const op07MegatonNineTailsRush078: EventCard = {
             action: "setActive",
             target: {
               player: "self",
-              zones: ["leader", "character", "stage", "costArea"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
                 upTo: true,

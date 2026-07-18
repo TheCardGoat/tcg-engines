@@ -17,4 +17,8 @@ export const peteRottenGuyI18n: Record<Languages, I18nProperties> = {
     name: "Gambadilegno",
     version: "Spregevole Fino al Midollo",
   },
+  es: {
+    name: "Pete",
+    version: "Chico podrido",
+  },
 };

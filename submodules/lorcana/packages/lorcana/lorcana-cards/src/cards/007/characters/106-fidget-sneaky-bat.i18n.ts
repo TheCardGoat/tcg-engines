@@ -57,4 +57,18 @@ export const fidgetSneakyBatI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Agitarse",
+    version: "Murciélago astuto",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "YO ME CUIDÉ DE TODO",
+        description:
+          "Cada vez que este personaje realiza una misión, otro personaje tuyo elegido obtiene Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

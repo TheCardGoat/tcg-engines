@@ -41,4 +41,14 @@ export const elsaExploringTheUnknownEpicI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Elsa",
+    version: "Explorando lo desconocido",
+    text: [
+      {
+        title: "MIRAR MÁS DE CERCA",
+        description: "Cuando juegas con este personaje, puedes robar una carta.",
+      },
+    ],
+  },
 };

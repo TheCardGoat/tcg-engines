@@ -103,6 +103,30 @@ export const gd02FlitAsuno088: PilotCard = {
             action: "lookAtTopDeck",
             count: 3,
             return: "chooseTop",
+            randomizeRemainingToBottom: true,
+            tutorFilter: {
+              owner: "friendly",
+              attributeFilters: [
+                {
+                  attribute: "or",
+                  filters: [
+                    {
+                      attribute: "and",
+                      filters: [
+                        { attribute: "cardType", comparison: "eq", value: "unit" },
+                        { attribute: "color", comparison: "eq", value: "green" },
+                        {
+                          attribute: "trait",
+                          comparison: "includes",
+                          value: "earth federation",
+                        },
+                      ],
+                    },
+                    { attribute: "name", comparison: "includes", value: "AGE Device" },
+                  ],
+                },
+              ],
+            },
           },
         },
       ],

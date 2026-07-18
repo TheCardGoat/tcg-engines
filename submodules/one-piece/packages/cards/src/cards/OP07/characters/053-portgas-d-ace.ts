@@ -48,6 +48,7 @@ export const op07PortgasDAce053: CharacterCard = {
               },
             },
             position: "any",
+            order: "any",
           },
         ],
       },

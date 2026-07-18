@@ -45,4 +45,15 @@ export const dangHuTalonChiefI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dang Hu",
+    version: "Jefe Garra",
+    text: [
+      {
+        title: "ES MEJOR HABLAR RÁPIDO",
+        description:
+          "Tus otros personajes villanos obtienen apoyo. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+      },
+    ],
+  },
 };

@@ -53,4 +53,17 @@ export const sapphireChromiconI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cromicón de zafiro",
+    text: [
+      {
+        title: "ENCENDIDO",
+        description: "Este objeto entra en juego ejercido.",
+      },
+      {
+        title: "LUZ DE ZAFIRO",
+        description: "{E}, 2 {I}, destierra uno de tus objetos: gana 2 conocimientos.",
+      },
+    ],
+  },
 };

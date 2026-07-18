@@ -70,4 +70,20 @@ export const plutoDeterminedDefenderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Plutón",
+    version: "Defensor decidido",
+    text: [
+      {
+        title: "Cambio 5 {I}",
+      },
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "perro guardián",
+        description: "Al comienzo de tu turno, elimina hasta 3 daños de este personaje.",
+      },
+    ],
+  },
 };

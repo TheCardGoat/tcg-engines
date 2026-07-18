@@ -65,4 +65,20 @@ export const ursulaDealMakerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Úrsula",
+    version: "Hacedor de tratos",
+    text: [
+      {
+        title: "TODA LA GANGA",
+        description:
+          "Cuando juegas con este personaje y cada vez que realiza misiones, otro personaje elegido obtiene +1 {L} este turno.",
+      },
+      {
+        title: "POR CIERTO",
+        description:
+          "Al final de tu turno, si este personaje está ejercido, coloca el personaje tuyo elegido en tu tintero boca abajo y ejercítalo.",
+      },
+    ],
+  },
 };

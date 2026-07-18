@@ -17,4 +17,8 @@ export const copperBigDogI18n: Record<Languages, I18nProperties> = {
     name: "Toby",
     version: "Cagnolone",
   },
+  es: {
+    name: "Cobre",
+    version: "Perro grande",
+  },
 };

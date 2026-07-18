@@ -32,7 +32,7 @@ export const op03ThreeThousandWorlds057: EventCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,
@@ -56,7 +56,7 @@ export const op03ThreeThousandWorlds057: EventCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

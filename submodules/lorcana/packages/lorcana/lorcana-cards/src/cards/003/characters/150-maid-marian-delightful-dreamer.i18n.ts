@@ -44,4 +44,15 @@ export const maidMarianDelightfulDreamerI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Criada mariana",
+    version: "Encantador soñador",
+    text: [
+      {
+        title: "SEÑORA ALTA",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene -2 {S} este turno.",
+      },
+    ],
+  },
 };

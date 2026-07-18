@@ -45,4 +45,15 @@ export const goGoTomagoMechanicalEngineerI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Ve, ve, tomago",
+    version: "Ingeniero Mecánico",
+    text: [
+      {
+        title: "¡NECESITO ESTO!",
+        description:
+          "Cuando juegas con un personaje Floodborn en esta carta, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercitarla.",
+      },
+    ],
+  },
 };

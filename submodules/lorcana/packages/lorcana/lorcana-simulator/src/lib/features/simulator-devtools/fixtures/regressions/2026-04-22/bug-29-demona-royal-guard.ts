@@ -11,7 +11,10 @@ export const bug29DemonaRoyalGuard = createFixture({
     "Demona – Scourge of the Wyvern Clan in play with Royal Guard – Octopus Soldier also in play and ready; exercise Demona's activated ability to draw and grant Challenger to the Royal Guard.",
   playerOne: {
     hand: [donaldDuckStruttingHisStuff, demonaScourgeOfTheWyvernClan],
-    play: [demonaScourgeOfTheWyvernClan, royalGuardOctopusSoldier],
+    play: [
+      { card: demonaScourgeOfTheWyvernClan, isDrying: false },
+      { card: royalGuardOctopusSoldier, isDrying: false },
+    ],
     inkwell: 6,
     deck: [heiheiBoatSnack, peteBadGuy, donaldDuckStruttingHisStuff],
   },

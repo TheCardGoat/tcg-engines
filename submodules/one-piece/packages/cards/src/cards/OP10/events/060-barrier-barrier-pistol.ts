@@ -51,6 +51,10 @@ export const op10BarrierBarrierPistol060: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [{ action: "activateEffect", effectTrigger: "main" }],
+      },
     ],
   },
   i18n: op10BarrierBarrierPistol060I18n,

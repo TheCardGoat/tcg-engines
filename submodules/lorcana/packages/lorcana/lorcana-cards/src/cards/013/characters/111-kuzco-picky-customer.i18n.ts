@@ -17,4 +17,8 @@ export const kuzcoPickyCustomerI18n: Record<Languages, I18nProperties> = {
     name: "Kuzco",
     version: "Cliente Esigente",
   },
+  es: {
+    name: "Kuzco",
+    version: "Cliente quisquilloso",
+  },
 };

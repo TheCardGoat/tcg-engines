@@ -60,4 +60,18 @@ export const scarEerilyPreparedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cicatriz",
+    version: "Inquietantemente preparado",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "SUPERVIVENCIA DEL MÁS APTO",
+        description:
+          "Cada vez que pones una carta debajo de este personaje, el personaje contrario elegido obtiene -5 {S} este turno.",
+      },
+    ],
+  },
 };

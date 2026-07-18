@@ -45,4 +45,15 @@ export const nickWildeSoggyFoxI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nick Wilde",
+    version: "Zorro empapado",
+    text: [
+      {
+        title: "AGRADABLE TENER",
+        description:
+          "UN SOCIO Mientras tengas otro personaje con apoyo en juego, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

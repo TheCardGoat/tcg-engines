@@ -21,4 +21,9 @@ export const eilonwyPrincessOfLlyrI18n: Record<Languages, I18nProperties> = {
     version: "Principessa di Llyr",
     text: "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
   },
+  es: {
+    name: "Eilonwy",
+    version: "Princesa de Llyr",
+    text: "Apoyo",
+  },
 };

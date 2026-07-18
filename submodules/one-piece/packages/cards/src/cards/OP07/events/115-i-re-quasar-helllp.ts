@@ -71,6 +71,15 @@ export const op07IReQuasarHelllp115: EventCard = {
                 comparison: "lte",
                 value: 5,
               },
+              {
+                filter: "trait",
+                value: "Egghead",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
             ],
           },
         ],

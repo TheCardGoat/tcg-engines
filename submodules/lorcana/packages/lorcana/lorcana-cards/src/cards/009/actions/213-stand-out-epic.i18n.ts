@@ -35,4 +35,8 @@ export const standOutEpicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Destacar",
+    text: "El personaje elegido obtiene +3 {S} y gana Evasivo hasta el comienzo de tu siguiente turno.",
+  },
 };

@@ -21,4 +21,9 @@ export const feliciaAlwaysHungryI18n: Record<Languages, I18nProperties> = {
     version: "Always Hungry",
     text: "<Reckless> (This character can't quest and must challenge each turn if able.)",
   },
+  es: {
+    name: "Felicia",
+    version: "Siempre hambriento",
+    text: "Imprudente",
+  },
 };

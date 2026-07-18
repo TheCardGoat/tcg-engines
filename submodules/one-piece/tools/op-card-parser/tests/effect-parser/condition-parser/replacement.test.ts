@@ -130,6 +130,30 @@ describe("parseInlineCondition — replacement conditions", () => {
       condition: "replacement",
       event: "ko",
       targetSelf: false,
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+        filters: [{ filter: "state", value: "rested" }],
+      },
+    });
+  });
+
+  test("non-self: named Character would be K.O.'d by an effect", () => {
+    const result = parseInlineCondition(
+      "If your Character [Bonk Punch] would be K.O.'d by an effect, you may trash this Character instead.",
+    );
+    expect(result?.condition).toEqual({
+      condition: "replacement",
+      event: "ko",
+      targetSelf: false,
+      source: "effect",
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+        filters: [{ filter: "name", value: "Bonk Punch" }],
+      },
     });
   });
 
@@ -142,6 +166,34 @@ describe("parseInlineCondition — replacement conditions", () => {
       condition: "replacement",
       event: "ko",
       targetSelf: false,
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+        filters: [{ filter: "power", comparison: "gte", value: 5000 }],
+      },
+    });
+  });
+
+  test("non-self: an attribute Character with a cost cap other than this Character", () => {
+    const result = parseInlineCondition(
+      "If your (Slash) attribute Character with a cost of 5 or less other than this Character would be K.O.'d by your opponent's effect, you may rest this Character instead.",
+    );
+    expect(result?.condition).toEqual({
+      condition: "replacement",
+      event: "ko",
+      targetSelf: false,
+      source: "opponentEffect",
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+        filters: [
+          { filter: "attribute", value: "slash" },
+          { filter: "excludeSelf" },
+          { filter: "cost", comparison: "lte", value: 5 },
+        ],
+      },
     });
   });
 
@@ -155,6 +207,12 @@ describe("parseInlineCondition — replacement conditions", () => {
       event: "removed",
       targetSelf: false,
       source: "opponentEffect",
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+        filters: [{ filter: "trait", value: "Supernovas", match: "includes" }],
+      },
     });
   });
 
@@ -168,6 +226,11 @@ describe("parseInlineCondition — replacement conditions", () => {
       event: "ko",
       targetSelf: false,
       source: "battle",
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+      },
     });
   });
 });

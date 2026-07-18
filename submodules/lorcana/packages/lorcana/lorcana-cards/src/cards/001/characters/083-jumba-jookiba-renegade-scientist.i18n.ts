@@ -17,4 +17,8 @@ export const jumbaJookibaRenegadeScientistI18n: Record<Languages, I18nProperties
     name: "Jumba Jookiba",
     version: "Renegade Scientist",
   },
+  es: {
+    name: "Jumba Jookiba",
+    version: "Científico renegado",
+  },
 };

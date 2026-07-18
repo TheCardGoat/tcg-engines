@@ -31,22 +31,41 @@ export const op11CognacMamaMash081: EventCard = {
         trigger: "main",
         actions: [
           {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "baseCost",
-                  comparison: "lte",
-                  value: 8,
+            action: "guessTopDeckCost",
+            player: "opponent",
+            onMatch: [
+              {
+                action: "ko",
+                target: {
+                  player: "opponent",
+                  zones: ["character"],
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                  filters: [
+                    {
+                      filter: "baseCost",
+                      comparison: "lte",
+                      value: 8,
+                    },
+                  ],
                 },
-              ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "addDon",
+            count: {
+              amount: 1,
+              upTo: true,
             },
+            state: "active",
           },
         ],
       },

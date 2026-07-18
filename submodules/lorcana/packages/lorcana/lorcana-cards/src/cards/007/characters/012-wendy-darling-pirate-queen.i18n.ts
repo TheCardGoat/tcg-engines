@@ -57,4 +57,18 @@ export const wendyDarlingPirateQueenI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Wendy querida",
+    version: "Reina pirata",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "NO CUENTAS CUENTOS",
+        description:
+          "Siempre que uno de tus otros personajes sea desterrado, puedes eliminar todo el daño del personaje elegido.",
+      },
+    ],
+  },
 };

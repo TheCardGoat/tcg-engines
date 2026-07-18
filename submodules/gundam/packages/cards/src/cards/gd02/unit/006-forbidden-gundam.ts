@@ -5,6 +5,7 @@ export const gd02ForbiddenGundam006: UnitCard = {
   name: "Forbidden Gundam",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space", "earth"],
   traits: ["earth alliance"],
   id: "GD02-006",
   canonicalId: "GD02-006",
@@ -75,6 +76,7 @@ export const gd02ForbiddenGundam006: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 4,
+  linkCondition: "(Biological CPU) Trait",
   effect:
     "&lt;Blocker&gt; (Rest this Unit to change the attack target to it.)<br>During your turn, this Unit can't receive battle damage from enemy Units that are Lv.2 or lower.<br>",
   effects: [

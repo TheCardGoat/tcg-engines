@@ -60,4 +60,18 @@ export const maleficentFormidableQueenI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Pernicioso",
+    version: "Reina formidable",
+    text: [
+      {
+        title: "Shift 6",
+      },
+      {
+        title: "ESCUCHEN BIEN TODOS USTEDES",
+        description:
+          "Cuando juegas con este personaje, por cada uno de tus personajes llamado Maléfica en juego, devuelve un personaje, objeto o ubicación del oponente elegido con un coste de 3 o menos a la mano de su jugador.",
+      },
+    ],
+  },
 };

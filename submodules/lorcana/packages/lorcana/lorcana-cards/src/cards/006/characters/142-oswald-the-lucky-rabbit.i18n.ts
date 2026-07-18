@@ -45,4 +45,15 @@ export const oswaldTheLuckyRabbitI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Osvaldo",
+    version: "El conejo afortunado",
+    text: [
+      {
+        title: "OPORTUNIDAD FAVORABLE",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, puedes revelar la carta superior de tu mazo. Si es una carta de objeto, puedes jugar ese objeto gratis y entra en juego ejercido. De lo contrario, colóquelo en el fondo de su plataforma.",
+      },
+    ],
+  },
 };

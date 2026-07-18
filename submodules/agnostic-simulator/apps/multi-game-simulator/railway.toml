@@ -23,6 +23,7 @@ builder = "DOCKERFILE"
 dockerfilePath = "submodules/agnostic-simulator/apps/multi-game-simulator/Dockerfile"
 
 watchPatterns = [
+  "railway-deploy-trigger.txt",
   "submodules/agnostic-simulator/apps/multi-game-simulator/**",
   "submodules/agnostic-simulator/packages/cyberpunk/**",
   "submodules/agnostic-simulator/packages/engine-core/**",

@@ -45,4 +45,15 @@ export const montereyJackWatchfulRangerI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Jack monterrey",
+    version: "Guardabosques vigilante",
+    text: [
+      {
+        title: "VISTA DE PÁJARO",
+        description:
+          "Cuando juegas con este personaje, puedes revelar la carta superior de tu mazo. Si es una carta de personaje, puedes ponerla en tu mano. De lo contrario, colóquelo en el fondo de su plataforma.",
+      },
+    ],
+  },
 };

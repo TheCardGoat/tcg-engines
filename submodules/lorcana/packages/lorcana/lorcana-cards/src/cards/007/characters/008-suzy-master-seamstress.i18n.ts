@@ -17,4 +17,8 @@ export const suzyMasterSeamstressI18n: Record<Languages, I18nProperties> = {
     name: "Suzy",
     version: "Maestra Sarta",
   },
+  es: {
+    name: "Susy",
+    version: "Maestra costurera",
+  },
 };

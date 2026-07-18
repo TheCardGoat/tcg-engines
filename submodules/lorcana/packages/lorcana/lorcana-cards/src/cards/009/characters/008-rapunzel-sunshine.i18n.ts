@@ -41,4 +41,14 @@ export const rapunzelSunshineI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rapunzel",
+    version: "Luz solar",
+    text: [
+      {
+        title: "PELO MÁGICO",
+        description: "{E}: elimina hasta 2 daños del personaje elegido.",
+      },
+    ],
+  },
 };

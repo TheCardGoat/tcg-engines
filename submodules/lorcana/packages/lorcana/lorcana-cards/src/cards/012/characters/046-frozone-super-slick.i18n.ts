@@ -21,4 +21,9 @@ export const frozoneSuperSlickI18n: Record<Languages, I18nProperties> = {
     version: "Super Agile",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Frozono",
+    version: "Súper resbaladizo",
+    text: "Evasivo",
+  },
 };

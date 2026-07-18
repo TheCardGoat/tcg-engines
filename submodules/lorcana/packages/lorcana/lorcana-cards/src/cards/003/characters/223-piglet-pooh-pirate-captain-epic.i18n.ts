@@ -45,4 +45,14 @@ export const pigletPoohPirateCaptainEpicI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Cerdito",
+    version: "Capitán Pirata Pooh",
+    text: [
+      {
+        title: "¡Y YO SOY EL CAPITÁN!",
+        description: "Mientras tengas 2 o más personajes en juego, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

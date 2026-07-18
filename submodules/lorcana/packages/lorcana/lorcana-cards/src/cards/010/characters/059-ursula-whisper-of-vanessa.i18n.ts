@@ -60,4 +60,17 @@ export const ursulaWhisperOfVanessaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Úrsula",
+    version: "Susurro de Vanessa",
+    text: [
+      {
+        title: "Impulsar 1 {I}",
+      },
+      {
+        title: "Hechizo resbaladizo",
+        description: "Mientras haya una carta bajo este personaje, obtiene +1 {L} y gana Evasivo.",
+      },
+    ],
+  },
 };

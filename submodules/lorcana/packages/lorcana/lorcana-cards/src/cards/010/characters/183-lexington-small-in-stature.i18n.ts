@@ -56,4 +56,18 @@ export const lexingtonSmallInStatureI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lexington",
+    version: "Pequeño en estatura",
+    text: [
+      {
+        title: "Alerta",
+        description: "(Este personaje puede desafiar como si tuviera Evasivo).",
+      },
+      {
+        title: "PIEDRA DE DÍA",
+        description: "Si tienes 3 o más cartas en tu mano, este personaje no puede prepararse.",
+      },
+    ],
+  },
 };

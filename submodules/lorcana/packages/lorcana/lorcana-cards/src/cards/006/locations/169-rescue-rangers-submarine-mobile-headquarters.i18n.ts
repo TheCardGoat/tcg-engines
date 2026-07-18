@@ -45,4 +45,15 @@ export const rescueRangersSubmarineMobileHeadquartersI18n: Record<Languages, I18
       },
     ],
   },
+  es: {
+    name: "Submarino de los guardabosques de rescate",
+    version: "Sede Móvil",
+    text: [
+      {
+        title: "SESIÓN DE PLANIFICACIÓN",
+        description:
+          "Al comienzo de tu turno, si tienes un personaje aquí, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const hadesLordOfTheDeadI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Infierno",
+    version: "Señor de los muertos",
+    text: [
+      {
+        title: "COLECTOR DE ALMAS",
+        description:
+          "Siempre que uno de tus otros personajes sea desterrado durante el turno del oponente, gana 2 conocimientos.",
+      },
+    ],
+  },
 };

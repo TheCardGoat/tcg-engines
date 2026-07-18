@@ -23,7 +23,7 @@ export const op06CountBattler075: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["FILM Crown Island"],
+  traits: ["FILM", "Crown Island"],
   attribute: "special",
   effect:
     "[On Play] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Rest up to 2 of your opponent's Characters with a cost of 2 or less.",
@@ -57,6 +57,7 @@ export const op06CountBattler075: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

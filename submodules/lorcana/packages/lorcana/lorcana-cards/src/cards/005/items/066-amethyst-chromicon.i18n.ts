@@ -37,4 +37,13 @@ export const amethystChromiconI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cromicon Amatista",
+    text: [
+      {
+        title: "LUZ AMATISTA",
+        description: "{E}: cada jugador puede robar una carta.",
+      },
+    ],
+  },
 };

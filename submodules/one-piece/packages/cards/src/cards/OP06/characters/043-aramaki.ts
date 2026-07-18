@@ -51,6 +51,19 @@ export const op06Aramaki043: CharacterCard = {
             cost: "trashFromHand",
             amount: 1,
           },
+          {
+            cost: "returnCharacterToDeck",
+            amount: 1,
+            position: "bottom",
+            player: "both",
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 2,
+              },
+            ],
+          },
         ],
         actions: [
           {

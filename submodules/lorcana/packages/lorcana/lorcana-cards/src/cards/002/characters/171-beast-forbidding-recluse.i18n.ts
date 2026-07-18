@@ -43,4 +43,14 @@ export const beastForbiddingRecluseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bestia",
+    version: "Reclusa prohibitiva",
+    text: [
+      {
+        title: "NO ERES BIENVENIDO AQUÍ",
+        description: "Cuando juegas con este personaje, puedes causar 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

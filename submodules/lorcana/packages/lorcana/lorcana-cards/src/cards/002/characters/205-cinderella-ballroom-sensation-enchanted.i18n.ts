@@ -21,4 +21,9 @@ export const cinderellaBallroomSensationEnchantedI18n: Record<Languages, I18nPro
     version: "Ballroom Sensation",
     text: "<Singer> 3 (This character counts as cost 3 to sing songs.)",
   },
+  es: {
+    name: "Cenicienta",
+    version: "Sensación de salón de baile",
+    text: "Cantante 3",
+  },
 };

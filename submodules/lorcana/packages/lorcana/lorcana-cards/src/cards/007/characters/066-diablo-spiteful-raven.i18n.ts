@@ -49,4 +49,16 @@ export const diabloSpitefulRavenI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Diablos",
+    version: "Cuervo rencoroso",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "Retador +2 (Mientras desafía, este personaje obtiene +2 {S})",
+      },
+    ],
+  },
 };

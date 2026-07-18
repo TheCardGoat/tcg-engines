@@ -17,4 +17,8 @@ export const packTacticsI18n: Record<Languages, I18nProperties> = {
     name: "Pack Tactics",
     text: "Gain 1 lore for each damaged character opponents have in play.",
   },
+  es: {
+    name: "Tácticas de manada",
+    text: "Gana 1 conocimiento por cada personaje dañado que los oponentes tengan en juego.",
+  },
 };

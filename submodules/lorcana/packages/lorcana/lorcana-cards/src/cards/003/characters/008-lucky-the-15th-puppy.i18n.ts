@@ -65,4 +65,20 @@ export const luckyThe15thPuppyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Afortunado",
+    version: "El decimoquinto cachorro",
+    text: [
+      {
+        title: "BUENO COMO NUEVO",
+        description:
+          "{E}: revela las 3 primeras cartas de tu mazo. Puedes poner en tu mano cada carta de personaje con coste 2 o menos. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+      {
+        title: "AMOR DE JÓVENES",
+        description:
+          "Siempre que este personaje realice una misión, si tienes 4 o más personajes en juego, tus otros personajes obtienen +1 {L} este turno.",
+      },
+    ],
+  },
 };

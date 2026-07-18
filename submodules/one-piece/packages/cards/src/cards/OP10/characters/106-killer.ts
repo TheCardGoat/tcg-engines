@@ -34,6 +34,7 @@ export const op10Killer106: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Supernovas",
+            match: "includes",
           },
         ],
         actions: [
@@ -50,12 +51,11 @@ export const op10Killer106: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "trait",
-                value: "Supernovas",
-              },
-              {
-                filter: "trait",
-                value: "Kid Pirates",
+                filter: "anyOf",
+                filters: [
+                  { filter: "trait", value: "Supernovas", match: "includes" },
+                  { filter: "trait", value: "Kid Pirates", match: "includes" },
+                ],
               },
             ],
             revealDestination: "hand",

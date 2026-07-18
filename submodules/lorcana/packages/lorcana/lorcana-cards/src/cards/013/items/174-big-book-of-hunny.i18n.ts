@@ -41,4 +41,14 @@ export const bigBookOfHunnyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gran libro de la miel",
+    text: [
+      {
+        title: "INVOCAR CARIÑO",
+        description:
+          "{E}, 2 {I}: revela la carta superior de tu mazo. Si es una carta de Hunny, ponla en tu mano. De lo contrario, colóquelo en el fondo de su plataforma.",
+      },
+    ],
+  },
 };

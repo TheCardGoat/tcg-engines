@@ -60,4 +60,18 @@ export const stitchAlienBuccaneerP2PromoI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Puntada",
+    version: "Bucanero alienígena",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "LISTO PARA LA ACCIÓN",
+        description:
+          "Cuando juegas con este personaje, si usaste Shift para jugar con él, puedes poner una carta de acción de tu descarte en la parte superior de tu mazo.",
+      },
+    ],
+  },
 };

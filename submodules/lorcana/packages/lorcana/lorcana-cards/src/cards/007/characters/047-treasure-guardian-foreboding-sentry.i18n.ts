@@ -45,4 +45,15 @@ export const treasureGuardianForebodingSentryI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Guardián del tesoro",
+    version: "Centinela premonitorio",
+    text: [
+      {
+        title: "TESORO NO CONTADO",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje de Ilusión en juego, puedes robar una carta.",
+      },
+    ],
+  },
 };

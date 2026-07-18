@@ -42,4 +42,14 @@ export const launchpadExceptionalPilotI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Plataforma de lanzamiento",
+    version: "Piloto excepcional",
+    text: [
+      {
+        title: "MUY AISLADO",
+        description: "Cuando juegas con este personaje, puedes desterrar la ubicación elegida.",
+      },
+    ],
+  },
 };

@@ -41,4 +41,14 @@ export const jafarKeeperOfSecretsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jafar",
+    version: "Guardián de los secretos",
+    text: [
+      {
+        title: "MARAVILLAS OCULTAS",
+        description: "Este personaje obtiene +1 {S} por cada carta en tu mano.",
+      },
+    ],
+  },
 };

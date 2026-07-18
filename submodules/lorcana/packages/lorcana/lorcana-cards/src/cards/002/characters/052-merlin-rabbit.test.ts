@@ -8,6 +8,7 @@ import {
 import { merlinRabbit } from "./052-merlin-rabbit";
 import { letItGo } from "../../001/actions/163-let-it-go";
 import { madamMimFox } from "./046-madam-mim-fox";
+import { underTheSea } from "../../004/actions/095-under-the-sea";
 
 const drawnCard = createMockCharacter({
   id: "merlin-rabbit-drawn-card",
@@ -92,6 +93,28 @@ describe("Merlin - Rabbit", () => {
       expect(bagEffect).toBeDefined();
       expect(testEngine.asPlayerOne().resolvePendingByCard(merlinRabbit)).toBeSuccessfulCommand();
 
+      expect(testEngine.asPlayerOne().getCardZone(drawnCard)).toBe("hand");
+    });
+
+    it("draws a card when Merlin leaves play for the bottom of the deck", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+        {
+          play: [merlinRabbit],
+          deck: [drawnCard],
+        },
+        {
+          hand: [underTheSea],
+          inkwell: underTheSea.cost,
+        },
+      );
+
+      expect(testEngine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerTwo().playCard(underTheSea)).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerOne().getCardZone(merlinRabbit)).toBe("deck");
+      expect(testEngine.asPlayerOne().getBagCount()).toBe(1);
+      expect(
+        testEngine.asPlayerOne().resolvePendingByCard(merlinRabbit, { resolveOptional: true }),
+      ).toBeSuccessfulCommand();
       expect(testEngine.asPlayerOne().getCardZone(drawnCard)).toBe("hand");
     });
 

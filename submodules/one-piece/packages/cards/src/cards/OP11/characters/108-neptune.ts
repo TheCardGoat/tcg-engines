@@ -30,10 +30,11 @@ export const op11Neptune108: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
+        costs: [
           {
-            condition: "leaderName",
-            name: "Shirahoshi",
+            cost: "turnLifeFaceUp",
+            count: 1,
+            faceUp: false,
           },
         ],
         actions: [
@@ -46,6 +47,13 @@ export const op11Neptune108: CharacterCard = {
             action: "trashFromHand",
             player: "self",
             amount: 1,
+          },
+        ],
+        optional: true,
+        conditions: [
+          {
+            condition: "leaderName",
+            name: "Shirahoshi",
           },
         ],
       },

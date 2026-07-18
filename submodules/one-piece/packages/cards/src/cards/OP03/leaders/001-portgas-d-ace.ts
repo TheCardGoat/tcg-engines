@@ -41,5 +41,74 @@ export const op03PortgasDAce001: LeaderCard = {
   ],
   effect:
     "When this Leader attacks or is attacked, you may trash any number of Event or Stage cards from your hand. This Leader gains +1000 power during this battle for every card trashed.",
+  effects: {
+    effects: [
+      {
+        trigger: "whenAttacking",
+        actions: [
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: "all",
+            upTo: true,
+            filters: [
+              {
+                filter: "anyOf",
+                groups: [
+                  [{ filter: "cardCategory", value: "event" }],
+                  [{ filter: "cardCategory", value: "stage" }],
+                ],
+              },
+            ],
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: { amount: 1 },
+              self: true,
+            },
+            value: 0,
+            valuePerPreviousActionTarget: 1000,
+            duration: "thisBattle",
+          },
+        ],
+      },
+      {
+        trigger: "onOpponentAttack",
+        eventFilter: { targetSelf: true },
+        actions: [
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: "all",
+            upTo: true,
+            filters: [
+              {
+                filter: "anyOf",
+                groups: [
+                  [{ filter: "cardCategory", value: "event" }],
+                  [{ filter: "cardCategory", value: "stage" }],
+                ],
+              },
+            ],
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: { amount: 1 },
+              self: true,
+            },
+            value: 0,
+            valuePerPreviousActionTarget: 1000,
+            duration: "thisBattle",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op03PortgasDAce001I18n,
 };

@@ -45,4 +45,15 @@ export const jafarRoyalVizierI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jafar",
+    version: "Visir real",
+    text: [
+      {
+        title: "NO CONFÍO EN ÉL, SEÑOR",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

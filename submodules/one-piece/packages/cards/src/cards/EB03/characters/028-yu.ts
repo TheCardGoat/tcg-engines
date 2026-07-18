@@ -41,14 +41,6 @@ export const eb03Yu028: CharacterCard = {
       },
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "handCount",
-            player: "self",
-            comparison: "lte",
-            value: 4,
-          },
-        ],
         costs: [
           {
             cost: "trashThisCard",
@@ -59,6 +51,12 @@ export const eb03Yu028: CharacterCard = {
             action: "draw",
             player: "self",
             amount: 2,
+            condition: {
+              condition: "handCount",
+              player: "self",
+              comparison: "lte",
+              value: 4,
+            },
           },
         ],
         optional: true,

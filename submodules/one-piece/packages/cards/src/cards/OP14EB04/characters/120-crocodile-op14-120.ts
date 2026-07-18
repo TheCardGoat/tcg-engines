@@ -4,8 +4,8 @@ import { op14eb04CrocodileOp14120120I18n } from "./120-crocodile-op14-120.i18n.t
 export const op14eb04CrocodileOp14120120: CharacterCard = {
   id: "OP14-120",
   canonicalId: "OP14-120",
-  slug: "crocodile-op14-120",
-  name: "Crocodile - OP14-120",
+  slug: "crocodile/op14-120",
+  name: "Crocodile",
   printings: [
     {
       id: "OP14-120",
@@ -30,7 +30,7 @@ export const op14eb04CrocodileOp14120120: CharacterCard = {
   setId: "OP14EB04",
   cost: 8,
   power: 10000,
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   attribute: "special",
   artVariants: [
     {
@@ -40,7 +40,7 @@ export const op14eb04CrocodileOp14120120: CharacterCard = {
     },
   ],
   effect:
-    "[On Play] up to 1 of your opponent's Characters with a cost of 9 or less cannot attack until the end of your opponent's next End Phase. Then, if your opponent has a Character 1ith a cost of 0 or with a cost of 8 or more, draw 1 card.\n[On K.O.] You may trash 1 card from your hand: Play this Character card from your trash.",
+    "[On Play] Up to 1 of your opponent's Characters with a cost of 9 or less cannot attack until the end of your opponent's next End Phase. Then, if your opponent has a Character with a cost of 0 or with a cost of 8 or more, draw 1 card.\n[On K.O.] You may trash 1 card from your hand: Play this Character card from your trash.",
   effects: {
     effects: [
       {
@@ -65,6 +65,41 @@ export const op14eb04CrocodileOp14120120: CharacterCard = {
             },
             duration: "untilEndOfOpponentNextEndPhase",
           },
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+            condition: {
+              condition: "compound",
+              operator: "or",
+              conditions: [
+                {
+                  condition: "hasCard",
+                  player: "opponent",
+                  zone: "character",
+                  filters: [
+                    {
+                      filter: "cost",
+                      comparison: "eq",
+                      value: 0,
+                    },
+                  ],
+                },
+                {
+                  condition: "hasCard",
+                  player: "opponent",
+                  zone: "character",
+                  filters: [
+                    {
+                      filter: "cost",
+                      comparison: "gte",
+                      value: 8,
+                    },
+                  ],
+                },
+              ],
+            },
+          },
         ],
       },
       {
@@ -85,6 +120,7 @@ export const op14eb04CrocodileOp14120120: CharacterCard = {
             count: {
               amount: 1,
             },
+            self: true,
           },
         ],
         optional: true,

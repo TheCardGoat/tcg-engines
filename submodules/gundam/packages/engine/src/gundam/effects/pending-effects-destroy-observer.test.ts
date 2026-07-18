@@ -3,6 +3,8 @@
 import { describe, it, expect } from "vite-plus/test";
 import type { CardEffect, UnitCard } from "@tcg/gundam-types";
 import {
+  activeResources,
+  createMockPilot,
   createMockUnit,
   expectSuccess,
   GundamTestEngine,
@@ -77,6 +79,74 @@ function makeQualifiedOnDestroyUnit(maxLevel: number, ownLevel: number): UnitCar
   };
 }
 
+/**
+ * Destroyed ability whose qualification describes the paired Pilot rather
+ * than the dying Unit. This is the interaction printed on GD02-056.
+ */
+function makePilotQualifiedOnDestroyUnit(requiredTrait: string): UnitCard {
+  const effect: CardEffect = {
+    type: "triggered",
+    activation: {
+      timing: ["destroyed"],
+      qualification: { attribute: "trait", comparison: "includes", value: requiredTrait },
+      conditions: [{ type: "duringPair" }],
+    },
+    directives: [{ action: { action: "draw", count: 1 } }],
+    sourceText: `【During Pair·(${requiredTrait}) Pilot】【Destroyed】Draw 1.`,
+  };
+  return {
+    cardNumber: `TEST-PILOT-QUAL-DESTROY-${requiredTrait}`,
+    name: "Pilot-Qualified Destroy Unit",
+    type: "unit",
+    canonicalId: "mock",
+    slug: "mock",
+    printings: [],
+    traits: [],
+    level: 1,
+    cost: 1,
+    ap: 1,
+    hp: 1,
+    keywordEffects: [],
+    rarity: "common",
+    effects: [effect],
+  };
+}
+
+function destroyPairedUnitInCombat(pilotTraits: string[]) {
+  const unit = makePilotQualifiedOnDestroyUnit("vulture");
+  const pilot = createMockPilot({
+    name: "Paired Pilot",
+    traits: pilotTraits,
+    level: 0,
+    cost: 0,
+  });
+  const attacker = createMockUnit({ name: "Destroying Unit", ap: 5, hp: 5 });
+  const engine = GundamTestEngine.create(
+    {
+      hand: [pilot],
+      play: [{ card: unit, exhausted: true }],
+      resourceArea: activeResources(1),
+      deck: 5,
+    },
+    { play: [attacker], deck: 5 },
+  );
+  const p1 = engine.asPlayer(PLAYER_ONE);
+  const p2 = engine.asPlayer(PLAYER_TWO);
+  const unitId = p1.getCardsInZone("battleArea")[0]!;
+  const attackerId = p2.getCardsInZone("battleArea")[0]!;
+
+  expectSuccess(p1.assignPilot(pilot, unitId));
+  expectSuccess(p1.passPhase());
+  expectSuccess(p2.passActionStep());
+  expectSuccess(p1.passActionStep());
+  expectSuccess(p2.enterBattle(attackerId, unitId));
+  expectSuccess(p1.passBlock());
+  expectSuccess(p1.passBattleAction());
+  expectSuccess(p2.passBattleAction());
+
+  return { p1, unitId };
+}
+
 describe("Destroyed qualification", () => {
   it("draws when the destroyed Unit itself satisfies the printed qualification", () => {
     const unitDef = makeQualifiedOnDestroyUnit(3, 2);
@@ -118,6 +188,22 @@ describe("Destroyed qualification", () => {
     expectSuccess(p1.passBlock());
     expectSuccess(p1.passBattleAction());
     expectSuccess(p2.passBattleAction());
+
+    expect(p1.getCardsInZone("trash")).toContain(unitId);
+    expect(p1.getCardsInZone("deck")).toHaveLength(5);
+    expect(p1.getHand()).toHaveLength(0);
+  });
+
+  it("draws when the destroyed Unit was paired with a qualifying Pilot", () => {
+    const { p1, unitId } = destroyPairedUnitInCombat(["vulture"]);
+
+    expect(p1.getCardsInZone("trash")).toContain(unitId);
+    expect(p1.getCardsInZone("deck")).toHaveLength(4);
+    expect(p1.getHand()).toHaveLength(1);
+  });
+
+  it("does not draw when the paired Pilot lacks the printed qualification", () => {
+    const { p1, unitId } = destroyPairedUnitInCombat(["earth federation"]);
 
     expect(p1.getCardsInZone("trash")).toContain(unitId);
     expect(p1.getCardsInZone("deck")).toHaveLength(5);

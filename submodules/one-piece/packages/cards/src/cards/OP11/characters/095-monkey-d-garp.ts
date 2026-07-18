@@ -45,6 +45,20 @@ export const op11MonkeyDGarp095: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 3,
+            position: "bottom",
+            filters: [
+              {
+                filter: "trait",
+                value: "Navy",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "giveDon",
@@ -60,6 +74,35 @@ export const op11MonkeyDGarp095: CharacterCard = {
               upTo: true,
             },
             donState: "rested",
+          },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 7,
+                },
+              ],
+            },
+            condition: {
+              condition: "existsOnField",
+              zone: "character",
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 9,
+                },
+              ],
+            },
           },
         ],
         optional: true,

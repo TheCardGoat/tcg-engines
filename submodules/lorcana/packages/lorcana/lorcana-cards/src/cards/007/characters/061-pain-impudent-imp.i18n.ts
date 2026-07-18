@@ -17,4 +17,8 @@ export const painImpudentImpI18n: Record<Languages, I18nProperties> = {
     name: "Pena",
     version: "Diavoletto Impudente",
   },
+  es: {
+    name: "Dolor",
+    version: "Diablillo imprudente",
+  },
 };

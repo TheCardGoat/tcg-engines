@@ -52,4 +52,16 @@ export const herculesBelovedHeroI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hércules",
+    version: "Amado héroe",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "Resistir +1",
+      },
+    ],
+  },
 };

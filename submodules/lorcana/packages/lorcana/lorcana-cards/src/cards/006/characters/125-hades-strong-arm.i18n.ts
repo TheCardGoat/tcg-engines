@@ -44,4 +44,15 @@ export const hadesStrongArmI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Infierno",
+    version: "Brazo fuerte",
+    text: [
+      {
+        title: "¿QUÉ VAS A HACER?",
+        description:
+          "{E}, 3 {I}, destierra a uno de tus personajes: destierra al personaje elegido.",
+      },
+    ],
+  },
 };

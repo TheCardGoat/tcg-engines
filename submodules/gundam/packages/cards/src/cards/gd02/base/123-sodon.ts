@@ -4,6 +4,7 @@ export const gd02Sodon123: BaseCard = {
   cardNumber: "GD02-123",
   name: "Sodon",
   type: "base",
+  color: "green",
   traits: ["zeon", "warship"],
   id: "GD02-123",
   canonicalId: "GD02-123",
@@ -39,6 +40,7 @@ export const gd02Sodon123: BaseCard = {
   level: 3,
   cost: 2,
   hp: 5,
+  battlefieldZones: ["space", "earth"],
   effect:
     "【Burst】Deploy this card.<br>【Deploy】Add 1 of your Shields to your hand. Then, choose 1 friendly Unit token. During this turn, it may choose an active enemy Unit with 5 or less AP as its attack target.<br>",
   effects: [
@@ -64,32 +66,40 @@ export const gd02Sodon123: BaseCard = {
       directives: [
         {
           action: {
-            action: "addShieldToHand",
-            count: 1,
-          },
-        },
-        {
-          action: {
-            action: "chooseAttackTarget",
-            unit: {
-              owner: "friendly",
-              cardType: "unit",
-              count: 1,
-              isToken: true,
-            },
-            attackTarget: {
-              owner: "opponent",
-              cardType: "unit",
-              state: "active",
-              attributeFilters: [
+            action: "resolveThenQueue",
+            first: { action: "addShieldToHand", count: 1 },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
                 {
-                  attribute: "ap",
-                  comparison: "lte",
-                  value: 5,
+                  action: {
+                    action: "chooseAttackTarget",
+                    unit: {
+                      owner: "friendly",
+                      cardType: "unit",
+                      count: 1,
+                      isToken: true,
+                    },
+                    attackTarget: {
+                      owner: "opponent",
+                      cardType: "unit",
+                      state: "active",
+                      attributeFilters: [
+                        {
+                          attribute: "ap",
+                          comparison: "lte",
+                          value: 5,
+                        },
+                      ],
+                    },
+                    duration: "thisTurn",
+                  },
                 },
               ],
+              sourceText:
+                "Then, choose 1 friendly Unit token. During this turn, it may choose an active enemy Unit with 5 or less AP as its attack target.",
             },
-            duration: "thisTurn",
           },
         },
       ],

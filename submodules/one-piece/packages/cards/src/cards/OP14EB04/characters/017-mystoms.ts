@@ -57,6 +57,7 @@ export const op14eb04Mystoms017: CharacterCard = {
               {
                 filter: "trait",
                 value: "Minks",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -84,6 +85,7 @@ export const op14eb04Mystoms017: CharacterCard = {
               {
                 filter: "trait",
                 value: "Minks",
+                match: "includes",
               },
             ],
           },

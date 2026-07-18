@@ -57,4 +57,18 @@ export const _4townHottestBandOfTheYearI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "4*Ciudad",
+    version: "La banda más popular del año",
+    text: [
+      {
+        title: "<Cantante> 5",
+      },
+      {
+        title: "Actuación estrella",
+        description:
+          "Siempre que este personaje cante una canción con <Sing Together>, roba una carta.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const hueyReliableLeaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Huey",
+    version: "Líder confiable",
+    text: [
+      {
+        title: "CONOZCO EL CAMINO",
+        description:
+          "Cada vez que este personaje realiza una misión, pagas 1 {I} menos por el siguiente personaje que juegues en este turno.",
+      },
+    ],
+  },
 };

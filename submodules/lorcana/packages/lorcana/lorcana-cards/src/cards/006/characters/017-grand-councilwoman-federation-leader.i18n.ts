@@ -45,4 +45,15 @@ export const grandCouncilwomanFederationLeaderI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Gran Concejal",
+    version: "Líder de la Federación",
+    text: [
+      {
+        title: "¡ENCUÉNTRALO!",
+        description:
+          "Siempre que este personaje realice una misión, tus otros personajes alienígenas obtienen +1 {L} este turno.",
+      },
+    ],
+  },
 };

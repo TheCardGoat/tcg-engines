@@ -52,6 +52,10 @@ export const op01KurozumiOrochi098: CharacterCard = {
             revealDestination: "hand",
             remainderPosition: "bottom",
           },
+          {
+            action: "shuffleDeck",
+            player: "self",
+          },
         ],
       },
     ],

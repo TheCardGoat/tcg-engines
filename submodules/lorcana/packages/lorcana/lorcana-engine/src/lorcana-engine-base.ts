@@ -4730,9 +4730,9 @@ export abstract class LorcanaEngineBase {
           }
 
           const selectableCosts = this.getSelectableCostsForShift(clientPlayerId, card);
-          if (!this.hasSufficientSelectableCosts(selectableCosts)) {
-            return false;
-          }
+          const availableSelectableCosts = this.hasSufficientSelectableCosts(selectableCosts)
+            ? selectableCosts
+            : [];
 
           const playCandidates = playerBoard.play.map((pid) => pid as CardInstanceId);
           const shiftTargets = resolveShiftTargetCandidates(
@@ -4741,7 +4741,12 @@ export abstract class LorcanaEngineBase {
             (cid) => this.getCardDefinitionByInstanceId(cid) as LorcanaCard,
           );
           if (
-            this.selectDiscoverableShiftTargetGroup(id, shiftRules, shiftTargets, selectableCosts)
+            this.selectDiscoverableShiftTargetGroup(
+              id,
+              shiftRules,
+              shiftTargets,
+              availableSelectableCosts,
+            )
           ) {
             shiftCardIds.push(id);
             return true;
@@ -5180,9 +5185,9 @@ export abstract class LorcanaEngineBase {
           clientPlayerId,
           definition as LorcanaCard,
         );
-        if (!this.hasSufficientSelectableCosts(selectableCosts)) {
-          return [];
-        }
+        const availableSelectableCosts = this.hasSufficientSelectableCosts(selectableCosts)
+          ? selectableCosts
+          : [];
 
         const playerBoard = board.players[clientPlayerId];
         if (!playerBoard) return [];
@@ -5193,7 +5198,7 @@ export abstract class LorcanaEngineBase {
           playCandidates,
           (id) => this.getCardDefinitionByInstanceId(id) as LorcanaCard,
         );
-        const hasDeckBottomShiftCost = selectableCosts.some(
+        const hasDeckBottomShiftCost = availableSelectableCosts.some(
           (cost) => cost.kind === "putOnDeckBottom",
         );
 
@@ -5202,7 +5207,7 @@ export abstract class LorcanaEngineBase {
             cardId,
             shiftRules,
             validTargets,
-            selectableCosts,
+            availableSelectableCosts,
           );
           if (!discoverableGroup) {
             return [];
@@ -5211,7 +5216,9 @@ export abstract class LorcanaEngineBase {
           return validTargets.map((targetId) => ({
             kind: "card",
             cardId: targetId,
-            ...(selectableCosts.length > 0 ? { selectableCosts } : {}),
+            ...(availableSelectableCosts.length > 0
+              ? { selectableCosts: availableSelectableCosts }
+              : {}),
           }));
         }
 
@@ -5224,11 +5231,13 @@ export abstract class LorcanaEngineBase {
           }
 
           // Validate the full shift move
-          if (this.canDiscoverShiftPlay(cardId, targetId, selectableCosts)) {
+          if (this.canDiscoverShiftPlay(cardId, targetId, availableSelectableCosts)) {
             options.push({
               kind: "card",
               cardId: targetId,
-              ...(selectableCosts.length > 0 ? { selectableCosts } : {}),
+              ...(availableSelectableCosts.length > 0
+                ? { selectableCosts: availableSelectableCosts }
+                : {}),
             });
           }
         }
@@ -5394,12 +5403,6 @@ export abstract class LorcanaEngineBase {
           state: staticAbilityState,
           cardId: id,
           restriction: "cant-sing",
-          registry: songPlayRegistry,
-        }) ||
-        hasStaticCardRestriction({
-          state: staticAbilityState,
-          cardId: id,
-          restriction: "cant-sing-without-sing-together",
           registry: songPlayRegistry,
         }) ||
         this.hasTemporaryRestriction(id, "cant-sing")

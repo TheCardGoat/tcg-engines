@@ -17,4 +17,8 @@ export const littleJohnCampCookI18n: Record<Languages, I18nProperties> = {
     name: "Little John",
     version: "Cuoco da Campo",
   },
+  es: {
+    name: "Pequeño juan",
+    version: "Cocinero de campamento",
+  },
 };

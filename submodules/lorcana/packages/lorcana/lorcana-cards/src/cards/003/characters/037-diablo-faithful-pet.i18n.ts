@@ -45,4 +45,15 @@ export const diabloFaithfulPetI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Diablos",
+    version: "Mascota fiel",
+    text: [
+      {
+        title: "BUSCANDO AURORAS",
+        description:
+          "Siempre que interpretes a un personaje llamado Maléfica, puedes mirar la carta superior de tu mazo. Colóquelo en la parte superior o inferior de su plataforma.",
+      },
+    ],
+  },
 };

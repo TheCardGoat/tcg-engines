@@ -21,4 +21,9 @@ export const teKTheBurningOneI18n: Record<Languages, I18nProperties> = {
     version: "L'Incandescente",
     text: "<Attaccabrighe>",
   },
+  es: {
+    name: "Te Ka",
+    version: "El Ardiente",
+    text: "Imprudente",
+  },
 };

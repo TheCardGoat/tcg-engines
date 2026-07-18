@@ -76,6 +76,7 @@ export const gd03RiboColony124: BaseCard = {
       activation: {
         timing: ["whenPaired"],
         qualification: { attribute: "level", comparison: "lte", value: 3 },
+        conditions: [{ type: "eventPlayerIsSelf" }],
         restrictions: [{ type: "oncePerTurn" }],
       },
       directives: [

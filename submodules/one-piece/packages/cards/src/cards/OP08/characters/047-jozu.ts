@@ -31,11 +31,22 @@ export const op08Jozu047: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnCharacter",
+            amount: 1,
+            filters: [
+              {
+                filter: "excludeSelf",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

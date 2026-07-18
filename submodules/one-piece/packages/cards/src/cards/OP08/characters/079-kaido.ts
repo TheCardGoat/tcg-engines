@@ -45,11 +45,6 @@ export const op08Kaido079: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "playedThisTurn",
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -73,6 +68,9 @@ export const op08Kaido079: CharacterCard = {
                   value: 7,
                 },
               ],
+            },
+            condition: {
+              condition: "playedThisTurn",
             },
           },
           {

@@ -60,4 +60,18 @@ export const fredGiantsizedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Fred",
+    version: "Tamaño gigante",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "ME GUSTA HACIA DONDE VA ESTO",
+        description:
+          "Siempre que este personaje realice una misión, revela las cartas de la parte superior de tu mazo hasta que reveles una carta de personaje Floodborn. Pon esa carta en tu mano y baraja el resto en tu mazo.",
+      },
+    ],
+  },
 };

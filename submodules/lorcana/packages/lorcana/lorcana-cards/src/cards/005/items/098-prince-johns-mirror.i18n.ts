@@ -61,4 +61,19 @@ export const princeJohnsMirrorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El espejo del príncipe Juan",
+    text: [
+      {
+        title: "Te ves real",
+        description:
+          "Si tienes un personaje llamado Príncipe Juan en juego, pagas 1 {I} menos para jugar este artículo.",
+      },
+      {
+        title: "UN SENTIMIENTO DE PODER",
+        description:
+          "Al final del turno de cada oponente, si tiene más de 3 cartas en la mano, se descarta hasta tener 3 cartas en la mano.",
+      },
+    ],
+  },
 };

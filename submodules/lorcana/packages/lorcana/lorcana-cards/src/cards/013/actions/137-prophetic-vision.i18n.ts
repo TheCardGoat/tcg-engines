@@ -17,4 +17,8 @@ export const propheticVisionI18n: Record<Languages, I18nProperties> = {
     name: "Visione Profetica",
     text: "Mescola il tuo mazzo, poi rivela la prima carta. Se è una carta azione, puoi giocarla gratis. Altrimenti, mettila in fondo al tuo mazzo, poi ogni avversario perde 1 leggenda e tu ottieni 1 leggenda.",
   },
+  es: {
+    name: "Visión Profética",
+    text: "Baraja tu mazo y luego revela la carta superior. Si es una carta de acción, puedes jugarla gratis. De lo contrario, colócalo en la parte inferior de tu mazo, luego cada oponente pierde 1 conocimiento y tú ganas 1 conocimiento.",
+  },
 };

@@ -61,4 +61,19 @@ export const mortyFieldmouseTinyTimI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratón de campo morty",
+    version: "Pequeño tim",
+    text: [
+      {
+        title: "ESPÍRITU DE VACACIONES",
+        description:
+          "Una vez durante tu turno, cada vez que coloques una carta debajo de uno de tus otros personajes, coloca la carta superior de tu mazo boca abajo debajo de este personaje.",
+      },
+      {
+        title: "ALEGRÍA DE VACACIONES",
+        description: "Este personaje obtiene +1 {L} por cada carta debajo de él.",
+      },
+    ],
+  },
 };

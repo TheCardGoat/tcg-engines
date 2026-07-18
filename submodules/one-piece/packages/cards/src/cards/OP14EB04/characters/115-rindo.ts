@@ -4,7 +4,7 @@ import { op14eb04Rindo115I18n } from "./115-rindo.i18n.ts";
 export const op14eb04Rindo115: CharacterCard = {
   id: "OP14-115",
   canonicalId: "OP14-115",
-  slug: "rindo",
+  slug: "rindo/op14-115",
   name: "Rindo",
   printings: [
     {
@@ -50,6 +50,33 @@ export const op14eb04Rindo115: CharacterCard = {
               },
             },
             position: "top",
+          },
+          {
+            action: "dealDamage",
+            player: "self",
+            amount: 1,
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Kuja Pirates",
+          },
+        ],
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+            },
+            self: true,
           },
         ],
       },

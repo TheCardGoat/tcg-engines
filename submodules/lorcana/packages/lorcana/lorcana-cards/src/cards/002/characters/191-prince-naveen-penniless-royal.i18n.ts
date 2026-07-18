@@ -17,4 +17,8 @@ export const princeNaveenPennilessRoyalI18n: Record<Languages, I18nProperties> =
     name: "Prince Naveen",
     version: "Penniless Royal",
   },
+  es: {
+    name: "Príncipe naveen",
+    version: "Real sin un centavo",
+  },
 };

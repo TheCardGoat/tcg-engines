@@ -42,4 +42,14 @@ export const drCalicoGreeneyedManI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dr. Calicó",
+    version: "Hombre de ojos verdes",
+    text: [
+      {
+        title: "ESTAS COMENZANDO A MOLESTARME",
+        description: "Mientras este personaje no sufre daño, obtiene Resistencia +2.",
+      },
+    ],
+  },
 };

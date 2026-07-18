@@ -72,4 +72,21 @@ export const jafarStrikingIllusionistEnchantedI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Jafar",
+    version: "Ilusionista sorprendente",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "PODER MÁS ALLÁ DE LA MEDIDA",
+        description:
+          "Durante tu turno, mientras este personaje está ejercido, cada vez que robas una carta, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

@@ -53,6 +53,7 @@ export const op10Hack051: CharacterCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

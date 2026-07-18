@@ -45,4 +45,15 @@ export const merryweatherGoodFairyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Feliz tiempo",
+    version: "Buena hada",
+    text: [
+      {
+        title: "RAYO DE ESPERANZA",
+        description:
+          "Cuando juegas con este personaje, puedes pagar 1 {I} para darle al personaje elegido +2 {S} este turno.",
+      },
+    ],
+  },
 };

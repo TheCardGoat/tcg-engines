@@ -41,7 +41,7 @@ export const op03Marco013: CharacterCard = {
     },
   ],
   effect:
-    "[Your Turn] [On Play] K.O. up to 1 of your opponent's Characters with 3000 power or less. [On K.O.] You may trash 1 Event from your hand",
+    "[Your Turn] [On Play] K.O. up to 1 of your opponent's Characters with 3000 power or less.\n[On K.O.] You may trash 1 Event from your hand: You may play this Character card from your trash rested.",
   effects: {
     effects: [
       {
@@ -75,10 +75,9 @@ export const op03Marco013: CharacterCard = {
       },
       {
         trigger: "onKo",
-        actions: [
+        costs: [
           {
-            action: "trashFromHand",
-            player: "self",
+            cost: "trashFromHand",
             amount: 1,
             filters: [
               {
@@ -88,6 +87,21 @@ export const op03Marco013: CharacterCard = {
             ],
           },
         ],
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+            },
+            self: true,
+            playState: "rested",
+          },
+        ],
+        optional: true,
       },
     ],
   },

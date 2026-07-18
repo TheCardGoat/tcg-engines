@@ -60,7 +60,20 @@ export const op12JewelryBonney118: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        conditions: [
+          {
+            condition: "restedCardCount",
+            player: "self",
+            comparison: "gte",
+            value: 8,
+          },
+        ],
         actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 2,
+          },
           {
             action: "trashFromHand",
             player: "self",

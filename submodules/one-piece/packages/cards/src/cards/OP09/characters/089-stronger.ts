@@ -31,16 +31,13 @@ export const op09Stronger089: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Blackbeard Pirates",
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
             amount: 1,
+          },
+          {
+            cost: "trashThisCard",
           },
         ],
         actions: [
@@ -48,6 +45,24 @@ export const op09Stronger089: CharacterCard = {
             action: "draw",
             player: "self",
             amount: 1,
+            condition: {
+              condition: "leaderTrait",
+              trait: "Blackbeard Pirates",
+              match: "includes",
+            },
+          },
+          {
+            action: "modifyCost",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: -2,
+            duration: "thisTurn",
           },
         ],
         optional: true,

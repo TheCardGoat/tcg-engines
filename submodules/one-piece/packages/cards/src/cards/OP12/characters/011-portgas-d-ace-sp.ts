@@ -6,6 +6,7 @@ export const op12PortgasDAceSp011: CharacterCard = {
   canonicalId: "ST13-011",
   slug: "portgas-d-ace-sp/st13-011",
   name: "Portgas.D.Ace (SP)",
+  alternateNames: ["Portgas.D.Ace"],
   printings: [
     {
       id: "ST13-011",

@@ -57,4 +57,18 @@ export const beastSnowfieldTroublemakerP3PromoI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Bestia",
+    version: "Alborotador del campo nevado",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "MANIOBRA DINÁMICA",
+        description:
+          "Siempre que este personaje desafía, si está en un lugar, no recibe daño del desafío.",
+      },
+    ],
+  },
 };

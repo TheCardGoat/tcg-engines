@@ -63,6 +63,20 @@ export const op06ONami101: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 5 }],
+            },
+          },
+        ],
+      },
     ],
   },
   i18n: op06ONami101I18n,

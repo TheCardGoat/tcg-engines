@@ -58,4 +58,18 @@ export const goofyGalumphingGumshoeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "Zapato de goma galopante",
+    text: [
+      {
+        title: "Cambio 5 {I}",
+      },
+      {
+        title: "BÚSQUEDA CALIENTE",
+        description:
+          "Cuando juegas con este personaje y cada vez que realiza misiones, cada personaje contrario obtiene -1 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

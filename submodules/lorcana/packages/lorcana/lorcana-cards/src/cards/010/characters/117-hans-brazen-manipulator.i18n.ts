@@ -61,4 +61,19 @@ export const hansBrazenManipulatorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hans",
+    version: "Manipulador descarado",
+    text: [
+      {
+        title: "EMPUJANDO POR EL PODER",
+        description: "Los personajes del Rey y la Reina no pueden realizar misiones.",
+      },
+      {
+        title: "INFLUENCIA CRECIENTE",
+        description:
+          "Al comienzo de tu turno, si un oponente tiene 2 o más personajes listos en juego, gana 2 conocimientos.",
+      },
+    ],
+  },
 };

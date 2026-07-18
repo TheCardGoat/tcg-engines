@@ -26,4 +26,14 @@ export const drHamstervielEvilObserverI18n: Record<Languages, I18nProperties> = 
     version: "Malvagio Osservatore",
     text: "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
   },
+  es: {
+    name: "Dr. Hámsterviel",
+    version: "Observador malvado",
+    text: [
+      {
+        title: "Alerta",
+        description: "(Este personaje puede desafiar como si tuviera Evasivo).",
+      },
+    ],
+  },
 };

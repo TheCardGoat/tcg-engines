@@ -45,4 +45,15 @@ export const kashekimWiseKingI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kashekim",
+    version: "Rey sabio",
+    text: [
+      {
+        title: "FUERZA EN LA MEMORIA",
+        description:
+          "Al final de tu turno, si se pusieron 2 o más cartas en tu descarte este turno, puedes poner la carta superior de tu mazo en tu tintero boca abajo.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const deweyLovableShowoffI18n: Record<Languages, I18nProperties> = {
     name: "Quo",
     version: "Amabile Spaccone",
   },
+  es: {
+    name: "Dewey",
+    version: "Presumido adorable",
+  },
 };

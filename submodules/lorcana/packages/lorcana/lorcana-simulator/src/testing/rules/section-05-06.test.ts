@@ -51,6 +51,16 @@ const playedThisTurnAbilityLocation: LocationCard = {
         },
       ],
     },
+    es: {
+      name: "Training Yard",
+      version: "Open Field",
+      text: [
+        {
+          title: "OPEN FOR BUSINESS",
+          description: "{E} - Gain 1 lore.",
+        },
+      ],
+    },
     fr: {
       name: "Training Yard",
       version: "Open Field",

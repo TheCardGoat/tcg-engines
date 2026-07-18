@@ -45,4 +45,15 @@ export const calhounBattletestedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Calhoun",
+    version: "Probado en batalla",
+    text: [
+      {
+        title: "VENTAJA TÁCTICA",
+        description:
+          "Cuando juegas con este personaje, puedes elegir y descartar una carta para darle al personaje contrario elegido -3 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -58,4 +58,18 @@ export const containmentUnitI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Unidad de Contención",
+    text: [
+      {
+        title: "TE TENGO AHORA",
+        description:
+          "Cuando juegues este objeto, elige un personaje. No pueden desafiar ni realizar misiones mientras este objeto esté en juego.",
+      },
+      {
+        title: "FUENTE DE ENERGÍA",
+        description: "Al comienzo de tu turno, elige y descarta una carta o destierra este objeto.",
+      },
+    ],
+  },
 };

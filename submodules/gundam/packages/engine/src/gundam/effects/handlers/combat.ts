@@ -2,7 +2,7 @@
  * Combat / damage effect handlers
  */
 
-import type { CardEffect } from "@tcg/gundam-types";
+import type { Card, CardEffect } from "@tcg/gundam-types";
 import type { CardInstanceId } from "../../../types/branded.ts";
 import type { FrameworkReadAPI, FrameworkWriteAPI } from "../../../types/move-types.ts";
 import type { EffectExecutionContext } from "../executor.ts";
@@ -26,6 +26,19 @@ import {
   hasDamagePreventionFor,
 } from "../../lifecycle/battle-phase/combat/damage-prevention.ts";
 import { enqueueShieldAreaCardDestroyedByUnitDamageTrigger } from "../../lifecycle/battle-phase/combat/shield-area-destroy-event.ts";
+
+type CardLeaveContext = Pick<EffectExecutionContext, "G" | "framework">;
+
+/**
+ * The complete context destruction management is allowed to depend on.
+ * Keeping this narrower than EffectExecutionContext makes any future field
+ * dependency a type error at cost and battle call sites instead of an
+ * accidental undefined read.
+ */
+export type DestructionContext = Pick<
+  EffectExecutionContext,
+  "G" | "sourcePlayerId" | "sourceCardId" | "framework" | "battleDestroyBreachValue"
+>;
 
 export function isDestructionPreventedFor(
   cardId: string,
@@ -56,6 +69,7 @@ export function handleDealDamageAction(
   // Rule 5-5-5: damage of 0 is not dealt — no counter, no event, no trigger.
   if (amount <= 0) return;
   for (const cardId of targetIds) {
+    const targetZone = ctx.framework.zones.getCardZone(cardId as string)?.split(":")[0];
     // Check effect-damage prevention: continuous effects with
     // `damageType: "effect"` (or no damageType restriction) can block
     // damage dealt by card effects (dealDamage actions). The source is
@@ -93,7 +107,10 @@ export function handleDealDamageAction(
     });
 
     const damagedOwnerId = ctx.framework.cards.getOwner(cardId as string) as string | undefined;
-    if (damagedOwnerId && ctx.sourcePlayerId) {
+    // A face-down card in the shield section is a Shield, not the Unit,
+    // Pilot, Command, or Base printed underneath it (rule 4-6-4-2). Do not
+    // expose or activate that hidden card's ordinary damage-received effects.
+    if (targetZone !== "shieldArea" && damagedOwnerId && ctx.sourcePlayerId) {
       const dmgEvent = {
         type: "anyEffectDamageReceived" as const,
         cardId: cardId as string,
@@ -109,7 +126,12 @@ export function handleDealDamageAction(
 
     // Reactive trigger: "When this Unit receives enemy effect damage"
     // Fire when the damage source belongs to the opponent of the damaged card.
-    if (damagedOwnerId && ctx.sourcePlayerId && damagedOwnerId !== ctx.sourcePlayerId) {
+    if (
+      targetZone !== "shieldArea" &&
+      damagedOwnerId &&
+      ctx.sourcePlayerId &&
+      damagedOwnerId !== ctx.sourcePlayerId
+    ) {
       const dmgEvent = {
         type: "effectDamageReceived" as const,
         cardId: cardId as string,
@@ -128,15 +150,99 @@ export function handleDealDamageAction(
       });
     }
 
-    // Check defeat
-    const stats = getEffectiveStats(cardId as string, ctx.G, ctx.framework.cards, ctx.framework);
-    if (ctx.G.damage[cardId as string]! >= stats.hp) {
-      handleUnitDefeated(cardId as string, ctx);
-    }
+    handleDamageDestruction(cardId as string, targetZone, ctx);
   }
 }
 
-export function handleUnitDefeated(cardId: string, ctx: EffectExecutionContext): void {
+/**
+ * Apply immediate destruction management after effect damage (rules 5-5-2,
+ * 5-10, and 11-3). A card's printed type is not enough here: any face-down
+ * card in the shield section is a 1 HP Shield, while a deployed Base uses its
+ * Base HP and a Unit in the battle area uses its Unit HP.
+ */
+function handleDamageDestruction(
+  cardId: string,
+  zone: string | undefined,
+  ctx: EffectExecutionContext,
+): void {
+  const ownerId = ctx.framework.cards.getOwner(cardId) as string | undefined;
+  if (!ownerId) return;
+
+  if (zone === "shieldArea") {
+    // Rule 4-6-4-2 / 11-3-1-1: every Shield has exactly 1 HP, regardless
+    // of the card definition hidden beneath it.
+    if ((ctx.G.damage[cardId] ?? 0) < 1) return;
+    handleShieldDestroyedByEffectDamage(cardId, ownerId, ctx);
+    return;
+  }
+
+  const stats = getEffectiveStats(cardId, ctx.G, ctx.framework.cards, ctx.framework);
+  if ((ctx.G.damage[cardId] ?? 0) < stats.hp) return;
+
+  if (zone === "baseSection") {
+    handleBaseDestroyed(cardId, ownerId, ctx);
+    enqueueShieldAreaCardDestroyedBySourceUnit(cardId, ownerId, ctx);
+    return;
+  }
+
+  handleUnitDefeated(cardId, ctx);
+}
+
+function handleShieldDestroyedByEffectDamage(
+  shieldId: string,
+  ownerId: string,
+  ctx: EffectExecutionContext,
+): void {
+  // The existing direct-attack path uses the trash zone while the optional
+  // Burst is pending. Preserve that runtime convention while publishing the
+  // reveal through the same Shield-destruction event and public log.
+  ctx.framework.zones.moveCard(shieldId, { zone: "trash", playerId: ownerId });
+  delete ctx.G.damage[shieldId];
+
+  enqueueShieldAreaCardDestroyedBySourceUnit(shieldId, ownerId, ctx);
+  emitGundamEvent(ctx.framework.events, {
+    kind: "SHIELD_REMOVED",
+    payload: { cardId: shieldId, playerId: ownerId },
+  });
+  logShieldRemoved(ctx.framework, {
+    cardId: shieldId,
+    playerId: ownerId,
+    sourceCardId: ctx.sourceCardId,
+  });
+  enqueueOwnCardTriggers(
+    ctx.G,
+    {
+      type: "shieldDestroyed",
+      cardId: shieldId,
+      playerId: ownerId,
+      destroyedBy: ctx.sourcePlayerId,
+    },
+    shieldId,
+    ownerId,
+    ctx.framework,
+  );
+}
+
+function enqueueShieldAreaCardDestroyedBySourceUnit(
+  destroyedCardId: string,
+  defenderPlayerId: string,
+  ctx: EffectExecutionContext,
+): void {
+  if (!ctx.sourceCardId || !ctx.sourcePlayerId) return;
+  const sourceDefinition = ctx.framework.cards.getDefinition(ctx.sourceCardId) as Card | undefined;
+  if (sourceDefinition?.type !== "unit") return;
+
+  enqueueShieldAreaCardDestroyedByUnitDamageTrigger(
+    ctx.G,
+    ctx.sourceCardId,
+    destroyedCardId,
+    ctx.sourcePlayerId,
+    defenderPlayerId,
+    ctx.framework,
+  );
+}
+
+export function handleUnitDefeated(cardId: string, ctx: DestructionContext): void {
   const ownerId = ctx.framework.cards.getOwner(cardId) as string | undefined;
   if (!ownerId) return;
 
@@ -530,7 +636,7 @@ export function handleExileAction(
 // Internal Helpers
 // =============================================================================
 
-export function cleanupCardOnLeave(cardId: string, ctx: EffectExecutionContext): void {
+export function cleanupCardOnLeave(cardId: string, ctx: CardLeaveContext): void {
   delete ctx.G.damage[cardId];
   delete ctx.G.exhausted[cardId];
 
@@ -562,7 +668,7 @@ export function cleanupCardOnLeave(cardId: string, ctx: EffectExecutionContext):
 export function handleBaseDestroyed(
   baseId: string,
   ownerId: string,
-  ctx: EffectExecutionContext,
+  ctx: DestructionContext,
 ): void {
   const destroyEvent = {
     type: "unitDestroyed" as const,

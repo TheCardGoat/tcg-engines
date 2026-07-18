@@ -17,4 +17,8 @@ export const viranaFangChiefI18n: Record<Languages, I18nProperties> = {
     name: "Virana",
     version: "Fang Chief",
   },
+  es: {
+    name: "Viraña",
+    version: "Jefe colmillo",
+  },
 };

@@ -62,4 +62,19 @@ export const archimedesResourcefulOwlI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Arquímedes",
+    version: "Búho ingenioso",
+    text: [
+      {
+        title: "NO NECESITAS ESO",
+        description: "Cuando juegas con este personaje, puedes desterrar el objeto elegido.",
+      },
+      {
+        title: "AHORA ESO NO ES MAL",
+        description:
+          "Durante tu turno, siempre que un objeto sea desterrado, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

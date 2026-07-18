@@ -39,4 +39,13 @@ export const spaghettiDinnerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cena de espagueti",
+    text: [
+      {
+        title: "COMIDA FINA",
+        description: "{E}, 1 {I}: si tienes 2 o más personajes en juego, obtienes 1 conocimiento.",
+      },
+    ],
+  },
 };

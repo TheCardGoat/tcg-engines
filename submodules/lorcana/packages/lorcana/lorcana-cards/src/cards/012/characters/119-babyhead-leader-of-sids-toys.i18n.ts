@@ -65,4 +65,20 @@ export const babyheadLeaderOfSidsToysI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cabecita",
+    version: "Líder de Sid's Toys",
+    text: [
+      {
+        title: "APRIETE LOS TORNILLOS",
+        description:
+          "Siempre que pagues 2 {I} o menos para jugar una carta, el personaje elegido obtiene +2 {S} este turno.",
+      },
+      {
+        title: "PIEZAS DE REPUESTO",
+        description:
+          "Durante tu turno, cada vez que uno de tus otros personajes sea desterrado, roba una carta.",
+      },
+    ],
+  },
 };

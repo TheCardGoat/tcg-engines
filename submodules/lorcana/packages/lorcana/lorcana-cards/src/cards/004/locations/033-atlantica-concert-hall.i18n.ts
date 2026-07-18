@@ -44,4 +44,15 @@ export const atlanticaConcertHallI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Atlántica",
+    version: "Sala de conciertos",
+    text: [
+      {
+        title: "ACÚSTICA SUBACUÁTICA",
+        description:
+          "Los personajes cuentan con un costo de +2 para cantar canciones mientras están aquí.",
+      },
+    ],
+  },
 };

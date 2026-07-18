@@ -25,5 +25,32 @@ export const op03Buggy032: CharacterCard = {
   traits: ["Buggy Pirates East Blue"],
   attribute: "slash",
   effect: 'This Character cannot be K.O.\'d in battle by "Slash" attribute cards.',
+  effects: {
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            restriction: "inBattle",
+            byFilter: [
+              {
+                filter: "attribute",
+                value: "slash",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   i18n: op03Buggy032I18n,
 };

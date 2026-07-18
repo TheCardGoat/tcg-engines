@@ -26,6 +26,17 @@ describe("parseInlineCondition", () => {
         value: 3,
       });
     });
+
+    test("you have exactly N Life cards", () => {
+      const result = parseInlineCondition("If you have 0 Life cards, draw 1 card.");
+      expect(result).not.toBeNull();
+      expect(result!.condition).toEqual({
+        condition: "lifeCount",
+        player: "self",
+        comparison: "eq",
+        value: 0,
+      });
+    });
   });
 
   describe("hand count conditions", () => {
@@ -107,6 +118,33 @@ describe("parseInlineCondition", () => {
       });
     });
 
+    test("you have N or more rested cards", () => {
+      const result = parseInlineCondition(
+        "If you have 8 or more rested cards, this Leader gains +1000 power.",
+      );
+      expect(result?.condition).toEqual({
+        condition: "restedCardCount",
+        player: "self",
+        comparison: "gte",
+        value: 8,
+      });
+    });
+
+    test("you have N or more included-type Characters", () => {
+      const result = parseInlineCondition(
+        "If you have 3 or more {Neptunian} type Characters, draw 1 card.",
+      );
+      expect(result).not.toBeNull();
+      expect(result!.condition).toEqual({
+        condition: "zoneCount",
+        player: "self",
+        zone: "character",
+        comparison: "gte",
+        value: 3,
+        filters: [{ filter: "trait", value: "Neptunian", match: "includes" }],
+      });
+    });
+
     test("you have N or less cards in your deck", () => {
       const result = parseInlineCondition(
         "If you have 20 or less cards in your deck, draw 1 card.",
@@ -151,6 +189,18 @@ describe("parseInlineCondition", () => {
   });
 
   describe("DON!! field count conditions", () => {
+    test("total given DON!! counts only attached DON!!", () => {
+      const result = parseInlineCondition(
+        "If you have a total of 2 or more given DON!! cards, draw 1 card.",
+      );
+      expect(result?.condition).toEqual({
+        condition: "givenDonCount",
+        player: "self",
+        comparison: "gte",
+        value: 2,
+      });
+    });
+
     test("you have N or more DON!! cards on your field", () => {
       const result = parseInlineCondition(
         "If you have 8 or more DON!! cards on your field, draw 2 cards.",
@@ -183,11 +233,23 @@ describe("parseInlineCondition", () => {
         player: "self",
         comparison: "gte",
         value: 3,
+        state: "active",
       });
     });
   });
 
   describe("DON!! field comparison conditions", () => {
+    test("number of DON!! on your field is at least two less than opponent's", () => {
+      const result = parseInlineCondition(
+        "If the number of DON!! cards on your field is at least 2 less than the number on your opponent's field, this Character gains [Blocker].",
+      );
+      expect(result?.condition).toEqual({
+        condition: "donFieldComparison",
+        selfComparison: "lte",
+        difference: 2,
+      });
+    });
+
     test("number of DON!! on your field is equal to or less than opponent's", () => {
       const result = parseInlineCondition(
         "If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, draw 1 card.",
@@ -389,12 +451,10 @@ describe("parseInlineCondition — compound conditions", () => {
       conditions: [
         { condition: "leaderTrait", trait: "Minks" },
         {
-          condition: "zoneCount",
+          condition: "restedCardCount",
           player: "opponent",
-          zone: "field",
           comparison: "gte",
           value: 7,
-          filters: [{ filter: "state", value: "rested" }],
         },
       ],
     });

@@ -45,4 +45,15 @@ export const merlinTurtleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Esmerejón",
+    version: "Tortuga",
+    text: [
+      {
+        title: "DAME TIEMPO PARA PENSAR",
+        description:
+          "Cuando juegues con este personaje y cuando deje el juego, mira las 2 cartas superiores de tu mazo. Coloque uno en la parte superior de su plataforma y el otro en la parte inferior.",
+      },
+    ],
+  },
 };

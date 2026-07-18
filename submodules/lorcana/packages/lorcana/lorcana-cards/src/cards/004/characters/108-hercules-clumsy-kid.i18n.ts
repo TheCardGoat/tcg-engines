@@ -21,4 +21,9 @@ export const herculesClumsyKidI18n: Record<Languages, I18nProperties> = {
     version: "Ragazzino Impacciato",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Hércules",
+    version: "Niño torpe",
+    text: "Correr",
+  },
 };

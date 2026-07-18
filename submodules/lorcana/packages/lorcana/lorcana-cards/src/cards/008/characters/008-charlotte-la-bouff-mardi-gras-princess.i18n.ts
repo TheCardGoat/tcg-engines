@@ -17,4 +17,8 @@ export const charlotteLaBouffMardiGrasPrincessI18n: Record<Languages, I18nProper
     name: "Charlotte La Bouff",
     version: "Principessa del Martedì Grasso",
   },
+  es: {
+    name: "Charlotte La Bouff",
+    version: "Princesa de carnaval",
+  },
 };

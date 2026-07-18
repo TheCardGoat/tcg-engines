@@ -71,7 +71,46 @@ export const op05IBid500Million096: EventCard = {
                   },
                 },
               ],
+              [
+                {
+                  action: "addToLife",
+                  target: {
+                    player: "opponent",
+                    zones: ["character"],
+                    count: {
+                      amount: 1,
+                      upTo: true,
+                    },
+                    filters: [
+                      {
+                        filter: "cost",
+                        comparison: "lte",
+                        value: 1,
+                      },
+                    ],
+                  },
+                  position: "choice",
+                  faceUp: true,
+                },
+              ],
             ],
+          },
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+            condition: {
+              condition: "hasCard",
+              player: "self",
+              zone: "character",
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Celestial Dragons",
+                  match: "includes",
+                },
+              ],
+            },
           },
         ],
       },

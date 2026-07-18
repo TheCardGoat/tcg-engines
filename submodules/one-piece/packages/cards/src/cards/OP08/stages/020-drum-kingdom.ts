@@ -45,6 +45,7 @@ export const op08DrumKingdom020: StageCard = {
                 {
                   filter: "trait",
                   value: "Drum Kingdom",
+                  match: "includes",
                 },
               ],
             },

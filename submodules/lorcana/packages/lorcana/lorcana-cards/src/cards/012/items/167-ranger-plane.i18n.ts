@@ -60,4 +60,18 @@ export const rangerPlaneI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Avión guardabosques",
+    text: [
+      {
+        title: "APOYO AÉREO",
+        description:
+          "Tus personajes obtienen apoyo. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+      },
+      {
+        title: "GRAN ASCENSOR",
+        description: "{E}: el personaje elegido con 10 {S} o más obtiene +3 {L} este turno.",
+      },
+    ],
+  },
 };

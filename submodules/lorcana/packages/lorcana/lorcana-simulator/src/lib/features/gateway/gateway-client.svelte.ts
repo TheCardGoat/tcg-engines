@@ -97,9 +97,9 @@ export class GatewayClientStore {
     };
   }
 
-  /** Send a JSON message over the WebSocket. */
-  send(message: object): void {
-    this.client.send(message);
+  /** Send a JSON message over the WebSocket. Returns false when no socket is open. */
+  send(message: object): boolean {
+    return this.client.send(message);
   }
 
   /** Send a message and return a Promise that resolves with the correlated server response. */

@@ -45,4 +45,15 @@ export const madHatterUnrulyEccentricI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sombrerero Loco",
+    version: "Excéntrico rebelde",
+    text: [
+      {
+        title: "REGALO DE NO CUMPLEAÑOS",
+        description:
+          "Siempre que un personaje dañado desafíe a otro personaje, puedes robar una carta.",
+      },
+    ],
+  },
 };

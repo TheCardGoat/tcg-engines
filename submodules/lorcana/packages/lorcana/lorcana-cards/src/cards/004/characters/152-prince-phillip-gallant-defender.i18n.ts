@@ -60,4 +60,18 @@ export const princePhillipGallantDefenderI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Príncipe Felipe",
+    version: "Defensor valiente",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "MEJOR DEFENSA",
+        description:
+          "Cada vez que uno de tus personajes es elegido para Apoyo, obtiene Resistencia +1 este turno.",
+      },
+    ],
+  },
 };

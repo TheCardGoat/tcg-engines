@@ -17,4 +17,8 @@ export const sirEctorCastleLordI18n: Record<Languages, I18nProperties> = {
     name: "Sir Ettore",
     version: "Signore del Castello",
   },
+  es: {
+    name: "Señor éctor",
+    version: "Señor del castillo",
+  },
 };

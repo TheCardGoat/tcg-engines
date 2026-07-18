@@ -26,5 +26,32 @@ export const op12Morley093: CharacterCard = {
   traits: ["Giant Revolutionary Army"],
   attribute: "special",
   effect: 'If your Leader has the "Revolutionary Army" type, this Character gains +4 cost.',
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Revolutionary Army",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 4,
+          },
+        ],
+      },
+    ],
+  },
   i18n: op12Morley093I18n,
 };

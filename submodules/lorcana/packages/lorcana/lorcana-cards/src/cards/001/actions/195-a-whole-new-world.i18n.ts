@@ -31,4 +31,8 @@ export const aWholeNewWorldI18n: Record<Languages, I18nProperties> = {
     name: "A Whole New World",
     text: "Each player discards their hand and draws 7 cards.",
   },
+  es: {
+    name: "Un mundo completamente nuevo",
+    text: "Cada jugador descarta su mano y roba 7 cartas.",
+  },
 };

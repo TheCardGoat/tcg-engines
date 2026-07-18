@@ -17,4 +17,8 @@ export const monstroWhaleOfAWhaleI18n: Record<Languages, I18nProperties> = {
     name: "Balena",
     version: "Grande Come una Casa",
   },
+  es: {
+    name: "Monstruo",
+    version: "Ballena de ballena",
+  },
 };

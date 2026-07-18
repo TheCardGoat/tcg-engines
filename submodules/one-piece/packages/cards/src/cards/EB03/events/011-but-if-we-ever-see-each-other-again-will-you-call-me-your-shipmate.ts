@@ -21,7 +21,7 @@ export const eb03ButIfWeEverSeeEachOtherAgainWillYouCallMeYourShipmate011: Event
   rarity: "C",
   setId: "EB03",
   cost: 1,
-  trigger: "Give up to 1 of your opponent's Characters 2000 power during this turn.",
+  trigger: "Give up to 1 of your opponent's Characters −2000 power during this turn.",
   traits: ["Alabasta"],
   effect:
     "[Counter] If your Leader is [Nefeltari Vivi], up to 1 of your Leader or Character cards gains +4000 power during this battle.",
@@ -48,6 +48,24 @@ export const eb03ButIfWeEverSeeEachOtherAgainWillYouCallMeYourShipmate011: Event
             },
             value: 4000,
             duration: "thisBattle",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: -2000,
+            duration: "thisTurn",
           },
         ],
       },

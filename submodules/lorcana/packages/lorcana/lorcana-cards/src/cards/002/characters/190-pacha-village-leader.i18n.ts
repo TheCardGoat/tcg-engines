@@ -17,4 +17,8 @@ export const pachaVillageLeaderI18n: Record<Languages, I18nProperties> = {
     name: "Pacha",
     version: "Village Leader",
   },
+  es: {
+    name: "Pachá",
+    version: "Líder de la aldea",
+  },
 };

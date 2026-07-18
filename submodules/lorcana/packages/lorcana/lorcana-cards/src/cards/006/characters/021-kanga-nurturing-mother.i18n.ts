@@ -45,4 +45,15 @@ export const kangaNurturingMotherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kanga",
+    version: "Madre cariñosa",
+    text: [
+      {
+        title: "SANO Y SALVO",
+        description:
+          "Siempre que este personaje realice una misión, elige un personaje tuyo y ese personaje no podrá ser desafiado hasta el comienzo de tu próximo turno.",
+      },
+    ],
+  },
 };

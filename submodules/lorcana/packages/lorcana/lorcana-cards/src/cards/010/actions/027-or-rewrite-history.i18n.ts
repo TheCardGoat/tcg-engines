@@ -33,4 +33,8 @@ export const orRewriteHistoryI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "¡O reescribir la historia!",
+    text: "Devuelve una carta de personaje de tu descarte a tu mano.",
+  },
 };

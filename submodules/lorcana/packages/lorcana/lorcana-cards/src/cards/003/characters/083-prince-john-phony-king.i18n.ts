@@ -45,4 +45,15 @@ export const princeJohnPhonyKingI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Príncipe juan",
+    version: "Rey falso",
+    text: [
+      {
+        title: "RECOGER PAGOS",
+        description:
+          "Cada vez que este personaje realiza una misión, cada oponente con más conocimientos que tú pierde 2 conocimientos.",
+      },
+    ],
+  },
 };

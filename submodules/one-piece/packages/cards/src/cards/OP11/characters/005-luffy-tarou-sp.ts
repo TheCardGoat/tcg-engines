@@ -25,7 +25,7 @@ export const op11LuffyTarouSp005: CharacterCard = {
   traits: ["Straw Hat Crew"],
   attribute: "strike",
   effect:
-    '[On Play] DON!! 1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Play up to 1 purple "Straw Hat Crew" type Character card with a cost of 5 or less from your hand.',
+    '[On Play] DON!! −1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Play up to 1 purple "Straw Hat Crew" type Character card with a cost of 5 or less from your hand.',
   effects: {
     effects: [
       {
@@ -60,6 +60,7 @@ export const op11LuffyTarouSp005: CharacterCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -68,6 +69,7 @@ export const op11LuffyTarouSp005: CharacterCard = {
             ],
           },
         ],
+        optional: true,
       },
     ],
   },

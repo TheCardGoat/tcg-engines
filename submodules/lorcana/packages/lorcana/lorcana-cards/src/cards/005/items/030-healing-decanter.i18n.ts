@@ -37,4 +37,13 @@ export const healingDecanterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Decantador curativo",
+    text: [
+      {
+        title: "ESENCIA RENOVADORA",
+        description: "{E}: elimina hasta 2 daños del personaje elegido.",
+      },
+    ],
+  },
 };

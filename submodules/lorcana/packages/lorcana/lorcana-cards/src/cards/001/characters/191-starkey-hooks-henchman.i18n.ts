@@ -43,4 +43,15 @@ export const starkeyHooksHenchmanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Estrella",
+    version: "El secuaz de Hook",
+    text: [
+      {
+        title: "Sí, sí, capitán.",
+        description:
+          "Mientras tengas un personaje Capitán en juego, este personaje obtiene +1 {L}.",
+      },
+    ],
+  },
 };

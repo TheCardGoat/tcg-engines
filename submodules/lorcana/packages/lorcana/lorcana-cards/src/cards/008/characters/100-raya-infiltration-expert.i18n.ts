@@ -45,4 +45,15 @@ export const rayaInfiltrationExpertI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Raya",
+    version: "Experto en infiltración",
+    text: [
+      {
+        title: "TÁCTICAS NO CONVENCIONALES",
+        description:
+          "Siempre que este personaje realice una misión, puedes pagar 2 {I} para preparar otro personaje elegido.",
+      },
+    ],
+  },
 };

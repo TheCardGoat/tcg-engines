@@ -17,4 +17,8 @@ export const rafikiShamanOfTheSavannaI18n: Record<Languages, I18nProperties> = {
     name: "Rafiki",
     version: "Sciamano della Savana",
   },
+  es: {
+    name: "Rafiki",
+    version: "Chamán de la Sabana",
+  },
 };

@@ -40,4 +40,14 @@ export const plateArmorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Armadura de placas",
+    text: [
+      {
+        title: "BIEN DISEÑADO",
+        description:
+          "{E}: el personaje elegido obtiene Resistencia +2 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const daleMischievousRangerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Valle",
+    version: "Guardabosques travieso",
+    text: [
+      {
+        title: "Locos por las bromas",
+        description:
+          "Cuando juegas con este personaje, puedes poner las 3 primeras cartas de tu mazo en tu descarte para darle al personaje elegido -3 {S} hasta el comienzo de tu próximo turno.",
+      },
+    ],
+  },
 };

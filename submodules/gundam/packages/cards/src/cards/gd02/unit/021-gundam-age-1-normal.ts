@@ -5,6 +5,7 @@ export const gd02GundamAge1Normal021: UnitCard = {
   name: "Gundam AGE-1 Normal",
   type: "unit",
   color: "green",
+  battlefieldZones: ["space", "earth"],
   traits: ["earth federation", "age system"],
   id: "GD02-021",
   canonicalId: "GD02-021",

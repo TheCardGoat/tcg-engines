@@ -28,10 +28,12 @@ export const op14eb04EverWhite076: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [{ cost: "restDon", amount: 2 }],
         conditions: [
           {
             condition: "leaderTrait",
             trait: "Donquixote Pirates",
+            match: "includes",
           },
         ],
         actions: [

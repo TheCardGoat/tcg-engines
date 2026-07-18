@@ -1,5 +1,6 @@
 import {
   getCyberpunkCanonicalForCardId,
+  getMergedCyberpunkCards,
   structuredCards as cyberpunkStructuredCards,
 } from "@tcg/cyberpunk-cards";
 import {
@@ -21,6 +22,11 @@ import {
   cyberpunkSerializeEngine,
 } from "./cyberpunk-engine-lifecycle";
 import { CYBERPUNK_RUNTIME_FINGERPRINT } from "./runtime-fingerprint";
+
+const cyberpunkCardsByPublicId = new Map(cyberpunkStructuredCards.map((card) => [card.id, card]));
+for (const card of getMergedCyberpunkCards()) {
+  cyberpunkCardsByPublicId.set(card.canonicalId, card);
+}
 
 /**
  * Server-side {@link GameAdapter} for Cyberpunk. Implements the same
@@ -65,7 +71,7 @@ export const cyberpunkServerAdapter: GameAdapter = {
   },
 
   getCardById(publicId: string): CardSummary | null {
-    const card = cyberpunkStructuredCards.find((candidate) => candidate.id === publicId);
+    const card = cyberpunkCardsByPublicId.get(publicId);
     if (!card) return null;
     return {
       publicId,
@@ -94,18 +100,22 @@ export const cyberpunkServerAdapter: GameAdapter = {
       throw new Error(`Unknown Cyberpunk format: ${formatId}`);
     }
 
-    const cardsById = new Map(cyberpunkStructuredCards.map((card) => [card.id, card]));
-    const unknownEntries = deck.filter((entry) => !cardsById.has(entry.cardId));
+    // Deck identity v2+ projects Cyberpunk cards to their stable canonical
+    // slug. The raw runtime catalog remains keyed by per-printing UUIDs, so
+    // validate against both shapes. The merged view supplies the authoritative
+    // card data for canonical ids, while the raw view keeps legacy UUID decks
+    // playable during the migration.
+    const unknownEntries = deck.filter((entry) => !cyberpunkCardsByPublicId.has(entry.cardId));
     const totalCount = deck.reduce((sum, entry) => sum + entry.quantity, 0);
     const legends: CyberpunkDeckValidationEntry[] = [];
     const mainDeck: CyberpunkDeckValidationEntry[] = [];
 
     for (const entry of deck) {
-      const card = cardsById.get(entry.cardId);
+      const card = cyberpunkCardsByPublicId.get(entry.cardId);
       if (!card) continue;
       const validationEntry = {
         card: {
-          id: card.id,
+          id: entry.cardId,
           name: card.name,
           displayName: card.displayName,
           type: card.type,

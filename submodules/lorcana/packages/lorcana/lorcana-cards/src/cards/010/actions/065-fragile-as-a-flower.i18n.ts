@@ -35,4 +35,8 @@ export const fragileAsAFlowerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Frágil como una flor",
+    text: "Saca una carta. Ejerce el personaje elegido con coste 2 o menos. No pueden prepararse al comienzo de su siguiente turno.",
+  },
 };

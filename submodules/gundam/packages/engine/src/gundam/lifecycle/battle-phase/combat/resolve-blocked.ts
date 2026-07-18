@@ -9,6 +9,7 @@ import { handleUnitDefeated } from "../../../effects/handlers/combat.ts";
 import type { BattleEffCtx } from "./types.ts";
 import { hasDamagePreventionFor } from "./damage-prevention.ts";
 import { applyBattleDamage } from "./apply-damage.ts";
+import { enqueueAttackerDestroyedDefenderTrigger } from "./unit-destroy-event.ts";
 
 export function resolveBlockedBattle(
   g: GundamG,
@@ -59,7 +60,16 @@ export function resolveBlockedBattle(
     }
 
     if (isDefeated(blockerId, g, ctx.framework.cards)) {
+      const defeatedPairedPilotId = g.pilotAssignments[blockerId];
       handleUnitDefeated(blockerId, attackerDestroyCtx);
+      enqueueAttackerDestroyedDefenderTrigger(
+        g,
+        attackerId,
+        blockerId,
+        attackerPlayerId,
+        ctx,
+        defeatedPairedPilotId,
+      );
       return;
     }
 
@@ -88,7 +98,16 @@ export function resolveBlockedBattle(
     }
 
     if (isDefeated(blockerId, g, ctx.framework.cards)) {
+      const defeatedPairedPilotId = g.pilotAssignments[blockerId];
       handleUnitDefeated(blockerId, attackerDestroyCtx);
+      enqueueAttackerDestroyedDefenderTrigger(
+        g,
+        attackerId,
+        blockerId,
+        attackerPlayerId,
+        ctx,
+        defeatedPairedPilotId,
+      );
     }
     return;
   }
@@ -100,10 +119,31 @@ export function resolveBlockedBattle(
     applyBattleDamage(g, ctx.framework, blockerId, attackerStats.ap, attackerId);
   }
 
-  if (isDefeated(attackerId, g, ctx.framework.cards)) {
+  const attackerDefeated = isDefeated(attackerId, g, ctx.framework.cards);
+  const blockerDefeated = isDefeated(blockerId, g, ctx.framework.cards);
+
+  // Publish before either combatant leaves play when both are destroyed so
+  // the attacking Unit and defeated Blocker's Pair state remain available to
+  // battle-destruction triggers. This mirrors direct Unit combat.
+  if (attackerDefeated && blockerDefeated) {
+    enqueueAttackerDestroyedDefenderTrigger(g, attackerId, blockerId, attackerPlayerId, ctx);
+  }
+
+  if (attackerDefeated) {
     handleUnitDefeated(attackerId, blockerCtx);
   }
-  if (isDefeated(blockerId, g, ctx.framework.cards)) {
+  if (blockerDefeated) {
+    const defeatedPairedPilotId = g.pilotAssignments[blockerId];
     handleUnitDefeated(blockerId, attackerDestroyCtx);
+    if (!attackerDefeated) {
+      enqueueAttackerDestroyedDefenderTrigger(
+        g,
+        attackerId,
+        blockerId,
+        attackerPlayerId,
+        ctx,
+        defeatedPairedPilotId,
+      );
+    }
   }
 }

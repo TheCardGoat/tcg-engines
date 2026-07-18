@@ -60,4 +60,18 @@ export const gadgetHackwrenchBrilliantBosunI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Llave para hackear gadgets",
+    version: "Contramaestre brillante",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "MECÁNICAMENTE EXPERTOS",
+        description:
+          "Mientras tengas 3 o más elementos en juego, pagas 1 {I} menos para jugar con personajes de Inventor.",
+      },
+    ],
+  },
 };

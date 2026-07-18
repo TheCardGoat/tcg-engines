@@ -4,6 +4,7 @@ export const gd02GaZowmnSleeves050: UnitCard = {
   cardNumber: "GD02-050",
   name: "Ga-Zowmn (Sleeves)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["neo zeon"],
   id: "GD02-050",

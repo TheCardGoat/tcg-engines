@@ -21,4 +21,9 @@ export const donaldDuckStruttingHisStuffI18n: Record<Languages, I18nProperties> 
     version: "Strutting His Stuff",
     text: "<Ward> (Opponents can't choose this character except to challenge.)",
   },
+  es: {
+    name: "Pato donald",
+    version: "Pavoneándose sus cosas",
+    text: "Pabellón",
+  },
 };

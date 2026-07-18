@@ -35,4 +35,8 @@ export const iveGotADreamI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tengo un sueño",
+    text: "Listo tu personaje elegido en una ubicación. No pueden realizar misiones durante el resto de este turno. Obtén conocimientos equivalentes al {L} de esa ubicación.",
+  },
 };

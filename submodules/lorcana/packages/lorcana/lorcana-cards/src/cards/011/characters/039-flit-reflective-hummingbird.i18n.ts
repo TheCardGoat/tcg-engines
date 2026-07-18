@@ -45,4 +45,15 @@ export const flitReflectiveHummingbirdI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Revolotear",
+    version: "Colibrí reflectante",
+    text: [
+      {
+        title: "¡ESTAR ATENTO!",
+        description:
+          "Cuando juegas con este personaje, mueve hasta 1 daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

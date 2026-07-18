@@ -58,4 +58,18 @@ export const minnieMouseMusicalArtistI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Artista musical",
+    text: [
+      {
+        title: "Cantante 3",
+      },
+      {
+        title: "SÉQUITO",
+        description:
+          "Siempre que juegues un personaje con Bodyguard, puedes eliminar hasta 2 daños del personaje elegido.",
+      },
+    ],
+  },
 };

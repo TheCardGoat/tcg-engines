@@ -61,4 +61,19 @@ export const ursulaEricsBrideI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Úrsula",
+    version: "La novia de Eric",
+    text: [
+      {
+        title:
+          "Turno: descarta una carta de canción (puedes descartar una carta de canción para jugarla encima de uno de tus personajes llamado Ursula).",
+      },
+      {
+        title: "EL DISEÑO DE VANESSA",
+        description:
+          "Cada vez que este personaje realiza una misión, el oponente elegido revela su mano y descarta una carta que no sea de personaje de tu elección.",
+      },
+    ],
+  },
 };

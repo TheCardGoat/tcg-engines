@@ -21,4 +21,9 @@ export const mchornIcecoldOfficerI18n: Record<Languages, I18nProperties> = {
     version: "Agente Gelido",
     text: "<Guardiano>",
   },
+  es: {
+    name: "McHorn",
+    version: "Oficial helado",
+    text: "Guardaespaldas",
+  },
 };

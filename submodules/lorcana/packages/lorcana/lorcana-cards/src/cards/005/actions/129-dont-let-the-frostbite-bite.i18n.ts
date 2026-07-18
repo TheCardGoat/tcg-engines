@@ -35,4 +35,8 @@ export const dontLetTheFrostbiteBiteI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "No dejes que te muerda la congelación",
+    text: "Prepara todos tus personajes. No pueden realizar misiones durante el resto de este turno.",
+  },
 };

@@ -28,12 +28,6 @@ export const op14eb04IceTime028: EventCard = {
     effects: [
       {
         trigger: "main",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Navy",
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -59,6 +53,11 @@ export const op14eb04IceTime028: EventCard = {
               ],
             },
             duration: "untilEndOfOpponentNextEndPhase",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Navy",
+              match: "includes",
+            },
           },
         ],
         optional: true,

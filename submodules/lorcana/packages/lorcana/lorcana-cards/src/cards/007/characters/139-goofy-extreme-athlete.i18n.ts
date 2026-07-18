@@ -57,4 +57,18 @@ export const goofyExtremeAthleteI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "Atleta extremo",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "PODER DE ESTRELLA",
+        description:
+          "Cada vez que este personaje desafía a otro personaje, tus otros personajes obtienen +1 {L} este turno.",
+      },
+    ],
+  },
 };

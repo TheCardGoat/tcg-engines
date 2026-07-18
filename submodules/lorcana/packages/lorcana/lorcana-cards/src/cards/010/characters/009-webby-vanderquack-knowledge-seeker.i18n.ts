@@ -45,4 +45,15 @@ export const webbyVanderquackKnowledgeSeekerI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Webby Vanderquack",
+    version: "Buscador de conocimiento",
+    text: [
+      {
+        title: "HE LEÍDO SOBRE ESTO",
+        description:
+          "Mientras tengas un personaje o ubicación en juego con una carta debajo, este personaje obtiene +1 {L}.",
+      },
+    ],
+  },
 };

@@ -1,4 +1,4 @@
-import type { ServerLoadEvent } from "@sveltejs/kit";
+import { isRedirect, redirect, type ServerLoadEvent } from "@sveltejs/kit";
 import { getApiOrigin } from "$lib/config/public-url-config.js";
 import { getServerApiOrigin } from "$lib/server/fetch-with-cf.js";
 import { ServerJsonError, serverJson, serverJsonOrNull } from "$lib/data/server/server-json.js";
@@ -50,9 +50,20 @@ export interface GameContextGame {
 import type { ServerGameplaySettings } from "$lib/features/settings/player-settings-store.svelte.js";
 
 export interface UserSettingsPayload {
+  playerSettings?: ServerGameplaySettings;
+  gameSettings?: {
+    lorcana?: {
+      visual?: { cardBackId?: string; playmatId?: string };
+      simulator?: Pick<
+        ServerGameplaySettings,
+        "primaryClickAction" | "cardInfoMode" | "priorityNudgeEnabled"
+      >;
+    };
+  };
   visualSettings?: { cardBack?: string; playmat?: string };
   gameplaySettings?: ServerGameplaySettings;
   theme?: string;
+  resolvedGameplaySettings?: ServerGameplaySettings;
 }
 
 export type GameSubMode = "bot" | "human-vs-human";
@@ -101,12 +112,24 @@ export async function load(event: ServerLoadEvent): Promise<GamePageData> {
     ]);
 
     if (contextResult.status !== "fulfilled") {
+      const contextStatus =
+        contextResult.reason instanceof ServerJsonError ? contextResult.reason.status : null;
+
+      if (contextStatus === 404) {
+        const replay = await serverJsonOrNull<{ gameId: string }>(
+          `${generalApi}/v1/games/lorcana/play/replays/${encodeURIComponent(gameId)}`,
+          { method: "GET", headers },
+        );
+        if (replay) {
+          redirect(303, `/replay/${encodeURIComponent(gameId)}`);
+        }
+      }
+
       console.error("[game-page-server] context fetch failed {*}", {
         matchId,
         gameId,
         contextUrl,
-        status:
-          contextResult.reason instanceof ServerJsonError ? contextResult.reason.status : null,
+        status: contextStatus,
         statusText:
           contextResult.reason instanceof ServerJsonError ? contextResult.reason.statusText : null,
         error: contextResult.reason instanceof Error ? contextResult.reason.message : "unknown",
@@ -123,8 +146,18 @@ export async function load(event: ServerLoadEvent): Promise<GamePageData> {
     }
 
     const ctx = contextResult.value;
-    const userSettings =
+    const rawUserSettings =
       settingsResult.status === "fulfilled" ? (settingsResult.value ?? undefined) : undefined;
+    const userSettings = rawUserSettings
+      ? {
+          ...rawUserSettings,
+          resolvedGameplaySettings: {
+            ...rawUserSettings.gameplaySettings,
+            ...rawUserSettings.playerSettings,
+            ...rawUserSettings.gameSettings?.lorcana?.simulator,
+          },
+        }
+      : undefined;
     // Detect bot match server-side: match type is practice_vs_bot, or any participant without a userId is a bot seat.
     const gameSubMode: GameSubMode =
       ctx.match.matchType === "practice_vs_bot" ||
@@ -145,6 +178,7 @@ export async function load(event: ServerLoadEvent): Promise<GamePageData> {
 
     return response;
   } catch (error) {
+    if (isRedirect(error)) throw error;
     console.error("[game-page-server] context fetch error {*}", {
       matchId,
       gameId,

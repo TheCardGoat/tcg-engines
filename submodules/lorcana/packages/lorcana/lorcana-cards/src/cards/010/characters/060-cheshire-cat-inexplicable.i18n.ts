@@ -60,4 +60,18 @@ export const cheshireCatInexplicableI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gato de cheshire",
+    version: "Inexplicable",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "ES MUY DIVERTIDO",
+        description:
+          "Siempre que coloques una carta debajo de este personaje, puedes mover hasta 2 contadores de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

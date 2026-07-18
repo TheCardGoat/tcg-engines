@@ -45,4 +45,15 @@ export const woodyLeaderOfTheToysI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Leñoso",
+    version: "Líder de los juguetes",
+    text: [
+      {
+        title: "VAMOS A CASA",
+        description:
+          "Cuando juegues con este personaje, mira las 4 cartas superiores de tu mazo. Puedes revelar una carta de personaje de juguete o una carta de ubicación llamada Habitación de Andy y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

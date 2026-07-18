@@ -72,4 +72,17 @@ export const balooCarefreeBearI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Baloo",
+    version: "Oso despreocupado",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title:
+          "SIGUE CON ELLO Cuando juegues con este personaje, elige uno:\n- Cada jugador roba una carta.\n- Cada jugador elige y descarta una carta.",
+      },
+    ],
+  },
 };

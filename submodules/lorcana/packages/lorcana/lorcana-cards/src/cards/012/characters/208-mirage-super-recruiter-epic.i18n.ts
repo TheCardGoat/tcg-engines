@@ -45,4 +45,15 @@ export const mirageSuperRecruiterEpicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Espejismo",
+    version: "Súper Reclutador",
+    text: [
+      {
+        title: "ARREGLO COMERCIAL",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje de súper o héroe en juego, puedes robar una carta.",
+      },
+    ],
+  },
 };

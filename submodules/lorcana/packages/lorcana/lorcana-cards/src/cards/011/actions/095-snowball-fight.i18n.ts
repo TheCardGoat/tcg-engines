@@ -17,4 +17,8 @@ export const snowballFightI18n: Record<Languages, I18nProperties> = {
     name: "Battaglia di Palle di Neve",
     text: "Ogni avversario sceglie e scarta una carta. Se hai in gioco un personaggio con <Sfuggente>, ottieni 1 leggenda.",
   },
+  es: {
+    name: "Pelea de bolas de nieve",
+    text: "Cada oponente elige y descarta una carta. Si tienes un personaje con Evasivo en juego, gana 1 conocimiento.",
+  },
 };

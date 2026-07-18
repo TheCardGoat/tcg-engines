@@ -4,6 +4,7 @@ export const gd02DaughtressCommand044: UnitCard = {
   cardNumber: "GD02-044",
   name: "Daughtress Command",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["new une"],
   id: "GD02-044",

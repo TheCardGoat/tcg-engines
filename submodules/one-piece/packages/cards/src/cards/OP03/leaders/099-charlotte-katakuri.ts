@@ -53,6 +53,12 @@ export const op03CharlotteKatakuri099: LeaderCard = {
         ],
         actions: [
           {
+            action: "lookAtLife",
+            player: "either",
+            position: "topOrBottom",
+            upTo: true,
+          },
+          {
             action: "modifyPower",
             target: {
               player: "self",

@@ -17,4 +17,8 @@ export const isabelaMadrigalKindCultivatorI18n: Record<Languages, I18nProperties
     name: "Isabela Madrigal",
     version: "Gentile Coltivatrice",
   },
+  es: {
+    name: "Isabela Madrigal",
+    version: "Cultivador amable",
+  },
 };

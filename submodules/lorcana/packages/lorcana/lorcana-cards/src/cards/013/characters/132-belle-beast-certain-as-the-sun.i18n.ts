@@ -78,4 +78,23 @@ export const belleBeastCertainAsTheSunI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Bella y Bestia",
+    version: "Cierto como el sol",
+    text: [
+      {
+        title: "Cambio 6 {I}",
+      },
+      {
+        title: "DANZA INSPIRADORA",
+        description:
+          "Siempre que este personaje realice una misión, prepara todas las cartas en tu tintero.",
+      },
+      {
+        title: "AUDIENCIA APRECIATIVA 6",
+        description:
+          "{I} — Prepara a tus otros personajes. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

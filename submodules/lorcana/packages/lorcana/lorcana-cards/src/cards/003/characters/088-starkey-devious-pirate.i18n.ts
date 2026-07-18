@@ -17,4 +17,8 @@ export const starkeyDeviousPirateI18n: Record<Languages, I18nProperties> = {
     name: "Dente Duro",
     version: "Subdolo Pirata",
   },
+  es: {
+    name: "Estrella",
+    version: "Pirata tortuoso",
+  },
 };

@@ -17,4 +17,8 @@ export const magicalManeuversI18n: Record<Languages, I18nProperties> = {
     name: "Manovre Magiche",
     text: "Riprendi in mano un tuo personaggio a tua scelta. Impegna un personaggio a tua scelta.",
   },
+  es: {
+    name: "Maniobras mágicas",
+    text: "Devuelve el personaje tuyo elegido a tu mano. Ejercer el personaje elegido.",
+  },
 };

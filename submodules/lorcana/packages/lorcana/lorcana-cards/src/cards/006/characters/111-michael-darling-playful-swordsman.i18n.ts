@@ -17,4 +17,8 @@ export const michaelDarlingPlayfulSwordsmanI18n: Record<Languages, I18nPropertie
     name: "Michele Darling",
     version: "Spadaccino Giocoso",
   },
+  es: {
+    name: "Miguel querido",
+    version: "Espadachín juguetón",
+  },
 };

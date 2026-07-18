@@ -53,6 +53,15 @@ export const eb02Uuuuus058: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
+          },
+        ],
+      },
     ],
   },
   i18n: eb02Uuuuus058I18n,

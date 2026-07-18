@@ -26,7 +26,7 @@ export const op07BoaSandersonia050: CharacterCard = {
   traits: ["Kuja Pirates"],
   attribute: "strike",
   effect:
-    "[On Play] If you have 2 or more [Amazon Lily] or [Kuja Pirates] type Characters on your field, return up to 1 of your opponent's Characters with a cost of 3 or less to the owner's hand.",
+    "[On Play] If you have 2 or more {Amazon Lily} or {Kuja Pirates} type Characters on your field, return up to 1 of your opponent's Characters with a cost of 3 or less to the owner's hand.",
   effects: {
     effects: [
       {
@@ -40,12 +40,19 @@ export const op07BoaSandersonia050: CharacterCard = {
             value: 2,
             filters: [
               {
-                filter: "trait",
-                value: "Amazon Lily",
-              },
-              {
-                filter: "trait",
-                value: "Kuja Pirates",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Amazon Lily",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Kuja Pirates",
+                    match: "includes",
+                  },
+                ],
               },
             ],
           },

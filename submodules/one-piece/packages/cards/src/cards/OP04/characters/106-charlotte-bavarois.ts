@@ -37,18 +37,7 @@ export const op04CharlotteBavarois106: CharacterCard = {
             amount: 1,
           },
         ],
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-          },
-        ],
+        actions: [{ action: "playThisCard" }],
         optional: true,
       },
     ],

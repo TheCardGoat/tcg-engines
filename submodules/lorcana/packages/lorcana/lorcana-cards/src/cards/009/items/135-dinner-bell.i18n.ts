@@ -41,4 +41,14 @@ export const dinnerBellI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sonido para la comida",
+    text: [
+      {
+        title: "SABES LO QUE PASA",
+        description:
+          "{E}, 2 {I}: roba cartas equivalentes al daño del personaje tuyo elegido y luego destiérralas.",
+      },
+    ],
+  },
 };

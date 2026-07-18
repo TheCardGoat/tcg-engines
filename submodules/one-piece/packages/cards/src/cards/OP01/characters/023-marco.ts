@@ -25,6 +25,5 @@ export const op01Marco023: CharacterCard = {
   counter: 1000,
   traits: ["Former Whitebeard Pirates"],
   attribute: "special",
-  effect: "NULL",
   i18n: op01Marco023I18n,
 };

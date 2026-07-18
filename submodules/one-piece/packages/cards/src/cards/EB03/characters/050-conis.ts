@@ -21,7 +21,8 @@ export const eb03Conis050: CharacterCard = {
   rarity: "C",
   setId: "EB03",
   cost: 2,
-  traits: ["1000"],
+  counter: 1000,
+  traits: ["Sky Island"],
   attribute: "wisdom",
   effect:
     "[On Play] Up to 1 of your {Sky Island} type Characters gains [Double Attack] during this turn.\n(This card deals 2 damage.)",
@@ -43,6 +44,7 @@ export const eb03Conis050: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Sky Island",
+                  match: "includes",
                 },
               ],
             },

@@ -69,8 +69,12 @@ export const prb02PortgasDAcePrb02018018: CharacterCard = {
                 value: 2,
               },
               {
-                filter: "name",
-                value: "Sabo",
+                filter: "anyOf",
+                filters: [
+                  { filter: "name", value: "Sabo" },
+                  { filter: "name", value: "Portgas.D.Ace" },
+                  { filter: "name", value: "Monkey.D.Luffy" },
+                ],
               },
             ],
           },

@@ -239,7 +239,7 @@
       readModel={practiceOrchestrator.readModel}
       playerSettings={playerVisualSettings}
       {playerMetadataMap}
-      serverGameplaySettings={data.userSettings?.gameplaySettings}
+      serverGameplaySettings={data.userSettings?.resolvedGameplaySettings ?? data.userSettings?.gameplaySettings}
       postGameGameId={data.gameId}
       isAuthenticated={authSession.isAuthenticated}
       {matchChatController}

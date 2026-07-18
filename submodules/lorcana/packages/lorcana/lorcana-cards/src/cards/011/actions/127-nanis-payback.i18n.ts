@@ -17,4 +17,8 @@ export const nanisPaybackI18n: Record<Languages, I18nProperties> = {
     name: "La Rivincita di Nani",
     text: "Ogni avversario perde leggenda pari al danno su un tuo personaggio a tua scelta, fino a un massimo di 4 leggenda ciascuno. Pesca una carta.",
   },
+  es: {
+    name: "La venganza de Nani",
+    text: "Cada oponente pierde una cantidad de conocimientos igual al daño causado al personaje tuyo elegido, hasta un máximo de 4 conocimientos cada uno. Saca una carta.",
+  },
 };

@@ -55,4 +55,17 @@ export const gizmoduckSuitedUpI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gizmoduck",
+    version: "Equipado",
+    text: [
+      {
+        title: "Resistir +1",
+      },
+      {
+        title: "BLATHERSKITE BLATHERSKITE",
+        description: "Este personaje puede desafiar a personajes ya dañados.",
+      },
+    ],
+  },
 };

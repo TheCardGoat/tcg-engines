@@ -37,4 +37,13 @@ export const rubyChromiconI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cromicon rubí",
+    text: [
+      {
+        title: "LUZ RUBÍ",
+        description: "{E}: el personaje elegido obtiene +1 {S} este turno.",
+      },
+    ],
+  },
 };

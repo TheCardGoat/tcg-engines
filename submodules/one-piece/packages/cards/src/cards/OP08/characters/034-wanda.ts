@@ -51,6 +51,7 @@ export const op08Wanda034: CharacterCard = {
               {
                 filter: "trait",
                 value: "Minks",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

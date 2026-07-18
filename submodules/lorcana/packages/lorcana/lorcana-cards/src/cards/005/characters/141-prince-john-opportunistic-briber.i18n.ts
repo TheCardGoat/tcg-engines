@@ -44,4 +44,14 @@ export const princeJohnOpportunisticBriberI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Príncipe juan",
+    version: "Sobornador oportunista",
+    text: [
+      {
+        title: "LOS IMPUESTOS NUNCA ME FALLAN",
+        description: "Cada vez que juegas un objeto, este personaje obtiene +2 {S} este turno.",
+      },
+    ],
+  },
 };

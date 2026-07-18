@@ -21,4 +21,9 @@ export const hermesHarriedMessengerI18n: Record<Languages, I18nProperties> = {
     version: "Messaggero Stressato",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Hermes",
+    version: "Mensajero acosado",
+    text: "Correr",
+  },
 };

@@ -45,4 +45,15 @@ export const basilTenaciousMouseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Albahaca",
+    version: "Ratón tenaz",
+    text: [
+      {
+        title: "MANTENGA SU TERRENO",
+        description:
+          "Siempre que juegas con otro personaje detective, este personaje obtiene Resistencia +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

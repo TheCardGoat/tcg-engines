@@ -17,4 +17,8 @@ export const lafayetteSleepyBassetHoundI18n: Record<Languages, I18nProperties> =
     name: "Lafayette",
     version: "Bassotto Assonnato",
   },
+  es: {
+    name: "Lafayette",
+    version: "Basset Hound soñoliento",
+  },
 };

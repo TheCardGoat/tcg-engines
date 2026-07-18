@@ -25,6 +25,5 @@ export const op03Genzo046: CharacterCard = {
   counter: 1000,
   traits: ["East Blue"],
   attribute: "wisdom",
-  effect: "NULL",
   i18n: op03Genzo046I18n,
 };

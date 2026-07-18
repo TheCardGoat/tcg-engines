@@ -55,4 +55,17 @@ export const lythosRockTitanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Litos",
+    version: "Titán de roca",
+    text: [
+      {
+        title: "Resistir +2",
+      },
+      {
+        title: "PIEL DE PIEDRA",
+        description: "{E}: el personaje elegido obtiene Resistencia +2 este turno.",
+      },
+    ],
+  },
 };

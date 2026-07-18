@@ -41,4 +41,14 @@ export const tritonDiscerningKingI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tritón",
+    version: "Rey exigente",
+    text: [
+      {
+        title: "CONSIGNA A LAS PROFUNDIDADES",
+        description: "{E}, destierra uno de tus objetos: gana 3 conocimientos.",
+      },
+    ],
+  },
 };

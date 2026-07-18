@@ -41,4 +41,14 @@ export const jumboPopI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pop gigante",
+    text: [
+      {
+        title: "AQUÍ TIENES",
+        description:
+          "Destierra este objeto: elimina hasta 2 daños de cada uno de tus personajes. Saca una carta.",
+      },
+    ],
+  },
 };

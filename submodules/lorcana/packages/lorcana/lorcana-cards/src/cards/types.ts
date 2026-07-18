@@ -9,7 +9,7 @@ export type CardType = "character" | "action" | "item" | "location";
 
 export type InkType = "amber" | "amethyst" | "emerald" | "ruby" | "sapphire" | "steel";
 
-export type Languages = "en" | "de" | "fr" | "it";
+export type Languages = "en" | "de" | "fr" | "it" | "es";
 
 export interface AbilityDefinition {
   id?: string;

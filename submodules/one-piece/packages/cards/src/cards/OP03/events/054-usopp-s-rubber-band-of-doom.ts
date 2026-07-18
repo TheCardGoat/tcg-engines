@@ -43,9 +43,14 @@ export const op03UsoppSRubberBandOfDoom054: EventCard = {
             duration: "thisBattle",
           },
           {
-            action: "trashFromDeck",
-            player: "self",
-            amount: 1,
+            action: "optional",
+            actions: [
+              {
+                action: "trashFromDeck",
+                player: "self",
+                amount: 1,
+              },
+            ],
           },
         ],
       },
@@ -58,9 +63,14 @@ export const op03UsoppSRubberBandOfDoom054: EventCard = {
             amount: 1,
           },
           {
-            action: "trashFromDeck",
-            player: "self",
-            amount: 1,
+            action: "optional",
+            actions: [
+              {
+                action: "trashFromDeck",
+                player: "self",
+                amount: 1,
+              },
+            ],
           },
         ],
       },

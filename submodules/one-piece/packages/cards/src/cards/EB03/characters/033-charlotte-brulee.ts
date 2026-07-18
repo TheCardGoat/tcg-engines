@@ -31,10 +31,18 @@ export const eb03CharlotteBrulee033: CharacterCard = {
     effects: [
       {
         trigger: "whenDonReturned",
+        eventFilter: {
+          causedBy: "self",
+        },
         conditions: [
           {
             condition: "turn",
             value: "opponent",
+          },
+          {
+            condition: "leaderTrait",
+            trait: "Big Mom Pirates",
+            match: "includes",
           },
         ],
         actions: [

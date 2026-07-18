@@ -17,4 +17,8 @@ export const magicCarpetAmazingFlierI18n: Record<Languages, I18nProperties> = {
     name: "Tappeto Magico",
     version: "Asso del Volo",
   },
+  es: {
+    name: "Alfombra mágica",
+    version: "Aviador increíble",
+  },
 };

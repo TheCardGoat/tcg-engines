@@ -77,7 +77,7 @@ CR version pinned: **2.0.1**, effective **2026-02-05**.
 - **scope**: Engine work on turn transitions, opponent-choice triggered effects, multiplayer flow.
 - **evidence**: CR `1.3.4.1`, `3.3.2.1`, `3.4.1.1`, `3.4.2`, `7.7.4.5`. Cursed Merfolk repro 2026-03-28.
 - **verification**: `bun test packages/lorcana/lorcana-engine/src/runtime-moves/moves/turn/pass-turn.test.ts`
-- **last_checked**: 2026-04-27
+- **last_checked**: 2026-07-15
 - **cross-ref**: `lorcana-cards` PR-06.
 
 ### PR-09 — vanish-only-on-action-resolution-be-chosen
@@ -98,13 +98,13 @@ CR version pinned: **2.0.1**, effective **2026-02-05**.
 
 ## Candidates
 
-### C-01 — sing-trigger-bag-flush-timing
-
-- **pattern**: Sing triggers must be flushed to the bag only after the song's pending effect fully resolves, never mid-action. Engine already implements correctly; codifying as a Promoted Rule needs a dedicated runtime test (currently inferred from `play-card.ts` call-site placement).
-- **hits**: 1 (most recent: 2026-03-27)
-- **promote_when**: a dedicated test exists for the flush-timing invariant.
-- **demote_at**: 2026-06-20
+(none)
 
 ## Observations
 
-(none new since the migration sweep — observations from individual section work folded into Promoted Rules during the 2026-04-27 migration. New observations land here as section specs and engine work generate them.)
+### O-2026-07-15-cross-chooser-bag-selection
+
+- **signal**: A `for-each-opponent` bag entry projected its opponent-owned child selection onto the controller's bag prompt instead of deferring it to the opponent.
+- **impact**: Bag selection-context builders must suppress child prompts whose chooser differs from the bag resolver so runtime can suspend into the chooser-owned pending effect.
+- **verification**: `bun test packages/lorcana/lorcana-engine/src/runtime-moves/resolution/action-effects/selection-context.test.ts`
+- **candidate_for**: new

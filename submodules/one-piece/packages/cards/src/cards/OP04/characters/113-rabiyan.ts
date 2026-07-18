@@ -24,25 +24,14 @@ export const op04Rabiyan113: CharacterCard = {
   power: 3000,
   counter: 1000,
   trigger: "Play this card.",
-  traits: ["Big Mom Pirates Homies"],
+  traits: ["Big Mom Pirates", "Homies"],
   attribute: "special",
   effect: "[Trigger] Play this card.",
   effects: {
     effects: [
       {
         trigger: "trigger",
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-          },
-        ],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   },

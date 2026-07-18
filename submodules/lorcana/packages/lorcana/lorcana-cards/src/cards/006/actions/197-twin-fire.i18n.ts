@@ -17,4 +17,8 @@ export const twinFireI18n: Record<Languages, I18nProperties> = {
     name: "Fuoco Gemello",
     text: "Infliggi 2 danni a un personaggio a tua scelta. Poi, puoi scegliere e scartare una carta per infliggere 2 danni a un altro personaggio a tua scelta.",
   },
+  es: {
+    name: "Fuego gemelo",
+    text: "Inflige 2 daños al personaje elegido. Luego, puedes elegir y descartar una carta para causar 2 daños a otro personaje elegido.",
+  },
 };

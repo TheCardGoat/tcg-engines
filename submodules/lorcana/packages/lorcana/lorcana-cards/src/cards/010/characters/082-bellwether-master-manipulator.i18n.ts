@@ -45,4 +45,15 @@ export const bellwetherMasterManipulatorI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Manso",
+    version: "Manipulador maestro",
+    text: [
+      {
+        title: "VENDETTA",
+        description:
+          "Cuando este personaje sea desafiado y desterrado, pon 1 contador de daño en cada personaje contrario.",
+      },
+    ],
+  },
 };

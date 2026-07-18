@@ -58,4 +58,18 @@ export const cinderellaMelodyWeaverI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cenicienta",
+    version: "Melodía tejedora",
+    text: [
+      {
+        title: "Cantante 9",
+      },
+      {
+        title: "HERMOSA VOZ",
+        description:
+          "Cada vez que este personaje canta una canción, tus otros personajes Princesa obtienen +1 {L} este turno.",
+      },
+    ],
+  },
 };

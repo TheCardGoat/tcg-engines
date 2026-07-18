@@ -78,12 +78,11 @@ export const eb03NefeltariVivi024: CharacterCard = {
                 value: 5,
               },
               {
-                filter: "trait",
-                value: "Alabasta",
-              },
-              {
-                filter: "trait",
-                value: "Straw Hat Crew",
+                filter: "anyOf",
+                groups: [
+                  [{ filter: "trait", value: "Alabasta", match: "includes" }],
+                  [{ filter: "trait", value: "Straw Hat Crew", match: "includes" }],
+                ],
               },
               {
                 filter: "cardCategory",

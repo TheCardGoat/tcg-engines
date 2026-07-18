@@ -5,7 +5,7 @@ export const gd02TurningPointOfHistory104: CommandCard = {
   name: "Turning Point of History",
   type: "command",
   color: "green",
-  traits: ["-"],
+  traits: [],
   id: "GD02-104",
   canonicalId: "GD02-104",
   externalIds: { bandai: "gundam:gd02-104" },
@@ -91,10 +91,16 @@ export const gd02TurningPointOfHistory104: CommandCard = {
           },
         },
         {
-          action: {
-            action: "draw",
+          condition: {
+            type: "cardInZone",
+            owner: "friendly",
+            zone: "battleArea",
+            cardType: "pilot",
+            comparison: "gte",
             count: 1,
+            hasTrait: "newtype",
           },
+          thenDirectives: [{ action: { action: "draw", count: 1 } }],
         },
       ],
       sourceText:

@@ -35,4 +35,8 @@ export const wellSaveOurVillageI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Salvaremos nuestra aldea",
+    text: "Tus personajes y ubicaciones obtienen Resistencia +1 hasta el comienzo de tu siguiente turno.",
+  },
 };

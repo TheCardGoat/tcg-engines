@@ -34,7 +34,7 @@ export const op01Jinbe071: CharacterCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,
@@ -64,6 +64,7 @@ export const op01Jinbe071: CharacterCard = {
             count: {
               amount: 1,
             },
+            self: true,
           },
         ],
       },

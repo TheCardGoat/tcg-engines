@@ -35,4 +35,8 @@ export const youveGotSomePunchI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tienes algo de ponche",
+    text: "El personaje elegido gana Rush y Challenger +2 este turno. (Pueden desafiar el turno en el que se juega. Obtienen +2 de fuerza mientras desafían).",
+  },
 };

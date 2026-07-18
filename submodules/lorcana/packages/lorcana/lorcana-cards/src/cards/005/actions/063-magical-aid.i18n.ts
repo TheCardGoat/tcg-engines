@@ -17,4 +17,8 @@ export const magicalAidI18n: Record<Languages, I18nProperties> = {
     name: "Aiuto Magico",
     text: 'Un personaggio a tua scelta ottiene <Sfidante> +3 e "Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta" per questo turno. (Riceve +3 {S} mentre sta sfidando.)',
   },
+  es: {
+    name: "Ayuda mágica",
+    text: 'El personaje elegido gana Challenger +3 y "Cuando este personaje sea desterrado en un desafío, devuelve esta carta a tu mano" este turno. (Obtienen +3 {S} mientras desafían).',
+  },
 };

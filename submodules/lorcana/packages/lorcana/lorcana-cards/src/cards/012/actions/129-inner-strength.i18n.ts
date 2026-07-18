@@ -17,4 +17,8 @@ export const innerStrengthI18n: Record<Languages, I18nProperties> = {
     name: "Forza Interiore",
     text: "Un personaggio a tua scelta riceve +1 {S} per questo turno. Pesca una carta.",
   },
+  es: {
+    name: "Fuerza interior",
+    text: "El personaje elegido obtiene +1 {S} este turno. Saca una carta.",
+  },
 };

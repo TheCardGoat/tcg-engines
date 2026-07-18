@@ -70,4 +70,21 @@ export const rayaUnstoppableForceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Raya",
+    version: "Fuerza imparable",
+    text: [
+      {
+        title: "Retador +2",
+      },
+      {
+        title: "Resistir +2",
+      },
+      {
+        title: "LE DISTE LO MEJOR",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, podrás robar una carta.",
+      },
+    ],
+  },
 };

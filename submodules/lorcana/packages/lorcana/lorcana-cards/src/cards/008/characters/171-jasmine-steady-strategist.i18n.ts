@@ -60,4 +60,18 @@ export const jasmineSteadyStrategistI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jazmín",
+    version: "Estratega estable",
+    text: [
+      {
+        title: "Shift 2",
+      },
+      {
+        title: "SIEMPRE PLANIFICANDO",
+        description:
+          "Siempre que este personaje realice una misión, mira las 3 cartas superiores de tu mazo. Puedes revelar una carta de personaje de Aliado y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

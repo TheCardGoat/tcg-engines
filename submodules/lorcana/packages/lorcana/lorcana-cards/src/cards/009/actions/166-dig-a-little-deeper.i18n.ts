@@ -50,4 +50,14 @@ export const digALittleDeeperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Profundiza un poco más",
+    text: [
+      {
+        title: "Cantar juntos 8",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un coste total de 8 o más puede {E} cantar esta canción gratis). Mira las 7 primeras cartas de tu mazo. Pon 2 en tu mano y el resto en la parte inferior de tu mazo en cualquier orden.",
+      },
+    ],
+  },
 };

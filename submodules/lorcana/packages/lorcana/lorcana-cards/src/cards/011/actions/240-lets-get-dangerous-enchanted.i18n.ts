@@ -23,4 +23,8 @@ export const letsGetDangerousEnchantedI18n: Record<Languages, I18nProperties> = 
     name: "Dagli Addosso, Duck",
     text: "Ogni giocatore mescola il suo mazzo e poi rivela la prima carta. Ogni giocatore che ha rivelato una carta personaggio può giocare quel personaggio gratis. Altrimenti, metti le carte rivelate in fondo al mazzo dei loro giocatori.",
   },
+  es: {
+    name: "Pongámonos peligrosos",
+    text: "Cada jugador baraja su mazo y luego revela la carta superior. Cada jugador que revele una carta de personaje puede jugar con ese personaje de forma gratuita. De lo contrario, coloque las cartas reveladas en la parte inferior del mazo de su jugador.",
+  },
 };

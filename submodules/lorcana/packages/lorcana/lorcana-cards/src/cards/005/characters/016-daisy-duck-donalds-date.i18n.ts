@@ -45,4 +45,15 @@ export const daisyDuckDonaldsDateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato margarita",
+    version: "La cita de Donald",
+    text: [
+      {
+        title: "GRAN PREMIO",
+        description:
+          "Cada vez que este personaje realiza una misión, cada oponente revela la carta superior de su mazo. Si es una carta de personaje, pueden ponerla en su mano. De lo contrario, lo ponen en el fondo de su plataforma.",
+      },
+    ],
+  },
 };

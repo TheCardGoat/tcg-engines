@@ -64,4 +64,20 @@ export const minnieMouseStorytellerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Cuentista",
+    text: [
+      {
+        title: "REUNIRSE ALREDEDOR",
+        description:
+          "Siempre que juegas con un personaje, este personaje obtiene +1 {L} este turno.",
+      },
+      {
+        title: "SOLO UNO MAS",
+        description:
+          "Cada vez que este personaje realiza una misión, el personaje contrario elegido pierde {S} igual al {L} de este personaje hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

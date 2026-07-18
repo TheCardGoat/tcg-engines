@@ -58,4 +58,18 @@ export const gazelleBalladSingerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gacela",
+    version: "Cantante de balada",
+    text: [
+      {
+        title: "Cantante 7",
+      },
+      {
+        title: "FAVORITO DE LA MULTITUD",
+        description:
+          "Cuando juegas con este personaje, puedes colocar una carta de canción de tu descarte en la parte superior de tu mazo.",
+      },
+    ],
+  },
 };

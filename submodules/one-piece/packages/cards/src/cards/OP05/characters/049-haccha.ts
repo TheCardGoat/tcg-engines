@@ -22,7 +22,7 @@ export const op05Haccha049: CharacterCard = {
   setId: "OP05",
   cost: 6,
   power: 7000,
-  traits: ["Animal Kingdom Pirates Giant"],
+  traits: ["Giant", "Animal Kingdom Pirates"],
   attribute: "strike",
   effect:
     "[DON!! x1][When Attacking] Return up to 1 Character with a cost of 3 or less to the owner's hand.",
@@ -40,7 +40,7 @@ export const op05Haccha049: CharacterCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

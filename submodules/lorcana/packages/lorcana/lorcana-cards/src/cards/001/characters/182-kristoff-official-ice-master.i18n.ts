@@ -17,4 +17,8 @@ export const kristoffOfficialIceMasterI18n: Record<Languages, I18nProperties> = 
     name: "Kristoff",
     version: "Official Ice Master",
   },
+  es: {
+    name: "Kristoff",
+    version: "Maestro de hielo oficial",
+  },
 };

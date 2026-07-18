@@ -55,4 +55,17 @@ export const pawpsicleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Patapsícula",
+    text: [
+      {
+        title: "POP GRANDE",
+        description: "Cuando juegas este objeto, puedes robar una carta.",
+      },
+      {
+        title: "ESO ES SECOYA",
+        description: "Desterrar este objeto: elimina hasta 2 puntos de daño del personaje elegido.",
+      },
+    ],
+  },
 };

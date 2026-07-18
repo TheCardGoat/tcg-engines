@@ -45,4 +45,15 @@ export const mulanImperialSoldierI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mulán",
+    version: "Soldado imperial",
+    text: [
+      {
+        title: "LIDERAR CON EL EJEMPLO",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, tus otros personajes obtienen +1 {L} este turno.",
+      },
+    ],
+  },
 };

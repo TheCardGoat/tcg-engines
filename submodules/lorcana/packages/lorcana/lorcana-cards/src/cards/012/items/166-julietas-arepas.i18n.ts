@@ -60,4 +60,18 @@ export const julietasArepasI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Arepas de Julieta",
+    text: [
+      {
+        title: "CURA SABROSA",
+        description:
+          "Al comienzo de tu turno, si tienes un personaje de Madrigal en juego, elimina hasta 2 puntos de daño del personaje elegido.",
+      },
+      {
+        title: "ESO HIZO EL TRUCO",
+        description: "{E}: si eliminaste el daño de un personaje este turno, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

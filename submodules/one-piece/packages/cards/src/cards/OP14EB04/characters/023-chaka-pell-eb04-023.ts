@@ -31,6 +31,14 @@ export const op14eb04ChakaPellEb04023023: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "modifyLeaderPower",
+            value: -5000,
+            duration: "thisTurn",
+            requiresActive: true,
+          },
+        ],
         actions: [
           {
             action: "draw",

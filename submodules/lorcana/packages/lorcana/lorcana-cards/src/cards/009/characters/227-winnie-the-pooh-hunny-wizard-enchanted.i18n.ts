@@ -17,4 +17,8 @@ export const winnieThePoohHunnyWizardEnchantedI18n: Record<Languages, I18nProper
     name: "Winnie the Pooh",
     version: "Mago del Miele",
   },
+  es: {
+    name: "Winnie el pooh",
+    version: "Mago cariñoso",
+  },
 };

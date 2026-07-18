@@ -45,4 +45,15 @@ export const friarTuckPriestOfNottinghamI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Fray Tuck",
+    version: "Sacerdote de Nottingham",
+    text: [
+      {
+        title: "TÚ, SINBRUJO LADRÓN",
+        description:
+          "Cuando juegas con este personaje, el jugador o jugadores con más cartas en su mano elige y descarta una carta.",
+      },
+    ],
+  },
 };

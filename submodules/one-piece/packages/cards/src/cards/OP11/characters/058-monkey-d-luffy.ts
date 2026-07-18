@@ -29,6 +29,32 @@ export const op11MonkeyDLuffy058: CharacterCard = {
     "If you have 5 or more cards in your hand, this Character cannot attack.\n[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
   effects: {
     keywords: ["blocker"],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "handCount",
+            player: "self",
+            comparison: "gte",
+            value: 5,
+          },
+        ],
+        actions: [
+          {
+            action: "cannotAttack",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
   },
   i18n: op11MonkeyDLuffy058I18n,
 };

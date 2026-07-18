@@ -5,7 +5,7 @@ export const gd02MomentaryRespite112: CommandCard = {
   name: "Momentary Respite",
   type: "command",
   color: "purple",
-  traits: ["-"],
+  traits: [],
   id: "GD02-112",
   canonicalId: "GD02-112",
   externalIds: { bandai: "gundam:gd02-112" },

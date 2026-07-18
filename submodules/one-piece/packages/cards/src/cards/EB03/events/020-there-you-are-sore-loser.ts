@@ -21,6 +21,7 @@ export const eb03ThereYouAreSoreLoser020: EventCard = {
   rarity: "C",
   setId: "EB03",
   cost: 1,
+  trigger: "Set up to 1 of your Characters as active.",
   traits: ["FILM"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +2000 power during this battle. Then, if you have 2 or more {FILM} type Characters, that card gains an additional +2000 power during this battle.",
@@ -41,6 +42,50 @@ export const eb03ThereYouAreSoreLoser020: EventCard = {
             },
             value: 2000,
             duration: "thisBattle",
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: 2000,
+            duration: "thisBattle",
+            previousActionTargets: true,
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "character",
+              comparison: "gte",
+              value: 2,
+              filters: [
+                {
+                  filter: "trait",
+                  value: "FILM",
+                  match: "includes",
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "setActive",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
           },
         ],
       },

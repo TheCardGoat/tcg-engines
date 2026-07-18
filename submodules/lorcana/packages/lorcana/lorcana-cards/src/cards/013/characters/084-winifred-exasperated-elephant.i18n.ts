@@ -21,4 +21,9 @@ export const winifredExasperatedElephantI18n: Record<Languages, I18nProperties> 
     version: "Elefantessa Esasperata",
     text: "<Protetto>",
   },
+  es: {
+    name: "Winifred",
+    version: "Elefante exasperado",
+    text: "Pabellón",
+  },
 };

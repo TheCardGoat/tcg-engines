@@ -45,4 +45,15 @@ export const launchpadTrustySidekickI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Plataforma de lanzamiento",
+    version: "Compañero de confianza",
+    text: [
+      {
+        title: "¿QUÉ NECESITAS?",
+        description:
+          "{E}: roba una carta. Luego, elige y descarta una carta a menos que tengas un personaje llamado Darkwing Duck en juego.",
+      },
+    ],
+  },
 };

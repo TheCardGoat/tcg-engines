@@ -51,6 +51,7 @@ export const op01PageOne112: CharacterCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
         oncePerTurn: true,
       },
     ],

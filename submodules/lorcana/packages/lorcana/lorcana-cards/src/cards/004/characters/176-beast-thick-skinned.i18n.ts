@@ -21,4 +21,9 @@ export const beastThickskinnedI18n: Record<Languages, I18nProperties> = {
     version: "Dalla Scorza Dura",
     text: "<Resistere> +1",
   },
+  es: {
+    name: "Bestia",
+    version: "De piel gruesa",
+    text: "Resistir +1",
+  },
 };

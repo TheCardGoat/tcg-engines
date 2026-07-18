@@ -64,6 +64,8 @@ export const gd02Valedictorian105: CommandCard = {
               owner: "opponent",
               cardType: "unit",
             },
+            damageType: "battle",
+            duration: "thisBattle",
           },
         },
       ],

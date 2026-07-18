@@ -55,4 +55,17 @@ export const calhounHardnosedLeaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Calhoun",
+    version: "Líder duro",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "BOTÍN",
+        description: "Cuando este personaje es desterrado, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

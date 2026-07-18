@@ -43,6 +43,7 @@ export const op10DivineDeparture019: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [{ cost: "restDon", amount: 5 }],
         actions: [
           {
             action: "ko",

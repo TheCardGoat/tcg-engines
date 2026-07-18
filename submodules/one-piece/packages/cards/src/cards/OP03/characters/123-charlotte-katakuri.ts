@@ -49,7 +49,7 @@ export const op03CharlotteKatakuri123: CharacterCard = {
           {
             action: "addToLife",
             target: {
-              player: "self",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,
@@ -63,7 +63,7 @@ export const op03CharlotteKatakuri123: CharacterCard = {
                 },
               ],
             },
-            position: "top",
+            position: "choice",
             faceUp: true,
           },
         ],

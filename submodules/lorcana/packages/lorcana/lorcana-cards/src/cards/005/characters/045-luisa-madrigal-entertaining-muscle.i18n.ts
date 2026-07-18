@@ -17,4 +17,8 @@ export const luisaMadrigalEntertainingMuscleI18n: Record<Languages, I18nProperti
     name: "Luisa Madrigal",
     version: "Muscoli Spettacolari",
   },
+  es: {
+    name: "Luisa Madrigal",
+    version: "Músculo entretenido",
+  },
 };

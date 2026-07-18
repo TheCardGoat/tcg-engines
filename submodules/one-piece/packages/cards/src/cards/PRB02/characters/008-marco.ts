@@ -30,7 +30,7 @@ export const prb02Marco008: CharacterCard = {
   setId: "PRB02",
   cost: 4,
   power: 6000,
-  traits: ["Former Whitebeard Pirates Land of Wano"],
+  traits: ["Land of Wano", "Former Whitebeard Pirates"],
   attribute: "special",
   artVariants: [
     {

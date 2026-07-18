@@ -130,6 +130,17 @@ describe("raw gateway websocket contract", () => {
         moveType: "playCard",
       },
       {
+        type: "push_state:response",
+        correlationId: "c_push",
+        status: "ok",
+        data: {
+          gameId: "g_1",
+          stateVersion: 8,
+          matchId: "m_1",
+          matchCompleted: true,
+        },
+      },
+      {
         type: "state_sync",
         gameId: "g_1",
         stateVersion: 8,
@@ -180,6 +191,21 @@ describe("raw gateway websocket contract", () => {
     for (const message of standaloneClientMessages) {
       expect(GatewayClientMessage.parse(message)).toEqual(message);
     }
+  });
+
+  test("push_state accepts only non-empty correlation ids when confirmation is requested", () => {
+    const message = {
+      type: "push_state",
+      gameId: "g_1",
+      state: {},
+      version: 8,
+      moveType: "return",
+      actorId: "p_1",
+      correlationId: "c_push",
+    };
+
+    expect(GatewayClientMessage.parse(message)).toEqual(message);
+    expect(() => GatewayClientMessage.parse({ ...message, correlationId: "" })).toThrow();
   });
 
   test("standalone contract stays aligned with the gateway ingress schemas it mirrors", () => {

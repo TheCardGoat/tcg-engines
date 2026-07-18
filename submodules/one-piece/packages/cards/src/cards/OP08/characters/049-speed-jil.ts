@@ -26,17 +26,40 @@ export const op08SpeedJil049: CharacterCard = {
   traits: ["Whitebeard Pirates"],
   attribute: "slash",
   effect:
-    '[On Play] Reveal 1 card from the top of your deck and place it at the top or bottom of your deck. If the revealed card\'s type includes "Whitebeard Piratess", this Character gains [Rush] during this turn. (This card can attack on the turn in which it is played.)',
+    '[On Play] Reveal 1 card from the top of your deck and place it at the top or bottom of your deck. If the revealed card\'s type includes "Whitebeard Pirates", this Character gains [Rush] during this turn. (This card can attack on the turn in which it is played.)',
   effects: {
     effects: [
       {
         trigger: "onPlay",
         actions: [
           {
-            action: "rearrangeDeck",
+            action: "revealTopDeckCard",
             player: "self",
-            count: 1,
-            position: "top",
+            conditional: {
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Whitebeard Pirates",
+                  match: "includes",
+                },
+              ],
+              actions: [
+                {
+                  action: "grantKeyword",
+                  target: {
+                    player: "self",
+                    zones: ["character"],
+                    count: {
+                      amount: 1,
+                    },
+                    self: true,
+                  },
+                  keyword: "rush",
+                  duration: "thisTurn",
+                },
+              ],
+            },
+            finalPosition: "choice",
           },
         ],
       },

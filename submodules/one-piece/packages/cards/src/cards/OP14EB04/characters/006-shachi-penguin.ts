@@ -26,7 +26,7 @@ export const op14eb04ShachiPenguin006: CharacterCard = {
   traits: ["Heart Pirates"],
   attribute: "ranged",
   effect:
-    "[When Attacking] If this Character has 5000 power or more, give up to 1 of your opponent's Characters 2000 power during this turn.",
+    "[When Attacking] If this Character has 5000 power or more, give up to 1 of your opponent's Characters \u22122000 power during this turn.",
   effects: {
     effects: [
       {
@@ -51,7 +51,7 @@ export const op14eb04ShachiPenguin006: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
           },
         ],

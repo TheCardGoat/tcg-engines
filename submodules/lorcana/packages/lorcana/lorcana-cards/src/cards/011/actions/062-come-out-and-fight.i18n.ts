@@ -17,4 +17,8 @@ export const comeOutAndFightI18n: Record<Languages, I18nProperties> = {
     name: "Vieni Fuori e Combatti!",
     text: "Metti tutte le carte sotto a un personaggio, un oggetto o un luogo a tua scelta in fondo al mazzo del suo giocatore, in ordine casuale. Pesca una carta.",
   },
+  es: {
+    name: "¡Sal y lucha!",
+    text: "Coloque todas las cartas del personaje, elemento o ubicación elegidos en la parte inferior del mazo de su jugador en un orden aleatorio. Saca una carta.",
+  },
 };

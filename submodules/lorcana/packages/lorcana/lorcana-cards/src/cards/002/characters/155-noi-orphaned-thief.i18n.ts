@@ -45,4 +45,15 @@ export const noiOrphanedThiefI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Noi",
+    version: "Ladrón huérfano",
+    text: [
+      {
+        title: "AL ESCONDITE",
+        description:
+          "Mientras tengas un objeto en juego, este personaje gana Resistencia +1 y Protección. (El daño infligido a este personaje se reduce en 1. Los oponentes no pueden elegir este personaje excepto para desafiarlo).",
+      },
+    ],
+  },
 };

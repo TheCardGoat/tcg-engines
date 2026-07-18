@@ -102,10 +102,14 @@ export const enMessages: Record<ActionLogMessageKey, string> = {
   "move.useBlocker": "React: {blockerName} used BLOCKER to redirect {attackerName}.",
   "move.resolveAttack.fight.attackerWins":
     "Fight: {attackerName} ({attackerPower}) defeated {defenderName} ({defenderPower}).",
+  "move.resolveAttack.fight.attackerWins.prevented":
+    "Fight: {attackerName} ({attackerPower}) beat {defenderName} ({defenderPower}), but {sourceCardName} prevented {defenderName}'s defeat.",
   "move.resolveAttack.fight.defenderWins":
     "Fight: {defenderName} ({defenderPower}) defeated {attackerName} ({attackerPower}).",
   "move.resolveAttack.fight.mutual":
     "Fight: both Units were defeated ({attackerName} {attackerPower}, {defenderName} {defenderPower}).",
+  "move.resolveAttack.fight.mutual.prevented":
+    "Fight: {attackerName} and {defenderName} tied ({attackerPower}), but {sourceCardName} prevented {defenderName}'s defeat.",
   "move.resolveAttack.direct":
     "Steal: {attackerName} stole {count} Gig(s) at {attackerPower} power.",
   "move.turnEnded": "Turn {turnNumber} ended.",

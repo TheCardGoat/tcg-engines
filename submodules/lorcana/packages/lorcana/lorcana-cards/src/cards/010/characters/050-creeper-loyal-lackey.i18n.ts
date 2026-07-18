@@ -17,4 +17,8 @@ export const creeperLoyalLackeyI18n: Record<Languages, I18nProperties> = {
     name: "Rospus",
     version: "Scagnozzo Leale",
   },
+  es: {
+    name: "Enredadera",
+    version: "Lacayo leal",
+  },
 };

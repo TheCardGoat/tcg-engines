@@ -88,7 +88,7 @@ export const st02PeacefulTimbre013: CommandCard = {
         {
           action: {
             action: "preventDamageToZone",
-            zone: "shieldArea",
+            protectedArea: { kind: "shieldArea" },
             unitFilter: {
               owner: "opponent",
               cardType: "unit",

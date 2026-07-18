@@ -50,6 +50,45 @@ export const op07MonkeyDLuffy091: CharacterCard = {
               ],
             },
           },
+          {
+            action: "returnToDeck",
+            target: {
+              player: "self",
+              zones: ["trash"],
+              count: {
+                amount: "all",
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cardCategory",
+                  value: "character",
+                },
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 4,
+                },
+              ],
+            },
+            position: "bottom",
+            order: "any",
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 0,
+            valuePerPreviousActionTarget: 1000,
+            previousActionTargetGroupSize: 3,
+            duration: "thisTurn",
+          },
         ],
       },
     ],

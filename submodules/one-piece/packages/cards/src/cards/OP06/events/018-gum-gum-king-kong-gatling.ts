@@ -43,6 +43,54 @@ export const op06GumGumKingKongGatling018: EventCard = {
             value: 3000,
             duration: "thisTurn",
           },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: 1000,
+            duration: "thisTurn",
+            condition: {
+              condition: "hasCard",
+              player: "opponent",
+              zone: "character",
+              filters: [
+                {
+                  filter: "power",
+                  comparison: "gte",
+                  value: 7000,
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "power",
+                  comparison: "lte",
+                  value: 5000,
+                },
+              ],
+            },
+          },
         ],
       },
     ],

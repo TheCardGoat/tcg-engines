@@ -45,4 +45,15 @@ export const sevenDwarfsMineSecureFortressI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "La mina de los siete enanitos",
+    version: "Fortaleza segura",
+    text: [
+      {
+        title: "DEFENSA DE MONTAÑA",
+        description:
+          "Durante tu turno, la primera vez que mueves un personaje aquí, puedes causar 1 daño al personaje elegido. Si el personaje movido es un Caballero, inflige 2 daños en su lugar.",
+      },
+    ],
+  },
 };

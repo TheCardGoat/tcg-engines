@@ -40,4 +40,14 @@ export const rlsLegacysCannonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cañón del legado de RLS",
+    text: [
+      {
+        title: "¡BA-BOOM!",
+        description:
+          "{E}, 2 {I}, Descarta una carta: inflige 2 daños al personaje o ubicación elegidos.",
+      },
+    ],
+  },
 };

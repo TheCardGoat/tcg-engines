@@ -17,4 +17,8 @@ export const morganaMacawberSelfcenteredSpellcasterI18n: Record<Languages, I18nP
     name: "Morgana Macawber",
     version: "Incantatrice Egocentrica",
   },
+  es: {
+    name: "Morgana Guacamayo",
+    version: "Lanzador de conjuros egocéntrico",
+  },
 };

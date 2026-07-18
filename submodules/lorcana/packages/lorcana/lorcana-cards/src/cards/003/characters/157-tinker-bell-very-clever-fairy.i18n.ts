@@ -45,4 +45,15 @@ export const tinkerBellVeryCleverFairyI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Campanita",
+    version: "Hada muy inteligente",
+    text: [
+      {
+        title: "PUEDO USAR ESO",
+        description:
+          "Siempre que uno de tus objetos sea desterrado, puedes poner esa carta en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

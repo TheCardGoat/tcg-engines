@@ -5,6 +5,7 @@ export const gd02Gquuuuuux034: UnitCard = {
   name: "GQuuuuuuX",
   type: "unit",
   color: "green",
+  battlefieldZones: ["space", "earth"],
   traits: ["zeon"],
   id: "GD02-034",
   canonicalId: "GD02-034",

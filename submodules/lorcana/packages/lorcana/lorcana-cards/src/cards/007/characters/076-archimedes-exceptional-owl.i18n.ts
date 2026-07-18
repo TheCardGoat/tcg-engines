@@ -45,4 +45,15 @@ export const archimedesExceptionalOwlI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Arquímedes",
+    version: "Búho excepcional",
+    text: [
+      {
+        title: "MÁS PARA APRENDER",
+        description:
+          "Siempre que un oponente elija este personaje para una acción o habilidad, puedes robar una carta.",
+      },
+    ],
+  },
 };

@@ -17,6 +17,7 @@ export const eb02Sogeking024: CharacterCard = {
     },
   ],
   cardType: "character",
+  alternateNames: ["Usopp"],
   color: ["blue"],
   rarity: "C",
   setId: "EB02",
@@ -51,7 +52,7 @@ export const eb02Sogeking024: CharacterCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "both",
               zones: ["character"],
               count: {
                 amount: 1,

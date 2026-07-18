@@ -37,4 +37,13 @@ export const juniorWoodchuckGuidebookI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Guía de marmotas jóvenes",
+    text: [
+      {
+        title: "EL LIBRO LO SABE TODO",
+        description: "{E}, 1 {I}, destierra este objeto: roba 2 cartas.",
+      },
+    ],
+  },
 };

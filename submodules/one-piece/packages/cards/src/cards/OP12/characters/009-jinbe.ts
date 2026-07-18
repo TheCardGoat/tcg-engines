@@ -31,6 +31,18 @@ export const op12Jinbe009: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "revealFromHand",
+            amount: 2,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "event",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "grantKeyword",

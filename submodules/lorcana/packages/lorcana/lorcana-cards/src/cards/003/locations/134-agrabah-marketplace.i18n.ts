@@ -17,4 +17,8 @@ export const agrabahMarketplaceI18n: Record<Languages, I18nProperties> = {
     name: "Agrabah",
     version: "Mercato",
   },
+  es: {
+    name: "Agraba",
+    version: "Mercado",
+  },
 };

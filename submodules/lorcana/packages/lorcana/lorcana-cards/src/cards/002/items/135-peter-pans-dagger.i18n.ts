@@ -17,4 +17,8 @@ export const peterPansDaggerI18n: Record<Languages, I18nProperties> = {
     name: "Peter Pan's Dagger",
     text: "Your characters with <Evasive> get +1 {S}.",
   },
+  es: {
+    name: "La daga de Peter Pan",
+    text: "Tus personajes con Evasivo obtienen +1 {S}.",
+  },
 };

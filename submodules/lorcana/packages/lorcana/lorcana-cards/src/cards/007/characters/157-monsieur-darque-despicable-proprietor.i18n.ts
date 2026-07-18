@@ -45,4 +45,15 @@ export const monsieurDarqueDespicableProprietorI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Señor D'Arque",
+    version: "Propietario despreciable",
+    text: [
+      {
+        title: "HE VENIDO A RECOGER",
+        description:
+          "Siempre que este personaje realice una misión, puedes desterrar un objeto tuyo elegido para robar una carta.",
+      },
+    ],
+  },
 };

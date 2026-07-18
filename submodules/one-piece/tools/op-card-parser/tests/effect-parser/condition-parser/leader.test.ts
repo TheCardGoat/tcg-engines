@@ -11,6 +11,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Revolutionary Army",
+        match: "includes",
       });
       expect(result!.remainingText).toBe("draw 1 card.");
     });
@@ -23,6 +24,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Water Seven",
+        match: "includes",
       });
     });
 
@@ -34,6 +36,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Donquixote Pirates",
+        match: "includes",
       });
     });
 
@@ -45,6 +48,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Baroque Works",
+        match: "includes",
       });
     });
   });
@@ -58,6 +62,21 @@ describe("parseInlineCondition", () => {
         name: "Shirahoshi",
       });
       expect(result!.remainingText).toBe("draw 2 cards.");
+    });
+  });
+
+  describe("leader attribute conditions", () => {
+    test("your Leader has the (Slash) attribute", () => {
+      const result = parseInlineCondition(
+        "If your Leader has the (Slash) attribute, this Character gains +1000 power.",
+      );
+
+      expect(result).not.toBeNull();
+      expect(result!.condition).toEqual({
+        condition: "leaderAttribute",
+        attribute: "slash",
+      });
+      expect(result!.remainingText).toBe("this Character gains +1000 power.");
     });
   });
 
@@ -82,8 +101,8 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
       condition: "compound",
       operator: "or",
       conditions: [
-        { condition: "leaderTrait", trait: "Fish-Man" },
-        { condition: "leaderTrait", trait: "Merfolk" },
+        { condition: "leaderTrait", trait: "Fish-Man", match: "includes" },
+        { condition: "leaderTrait", trait: "Merfolk", match: "includes" },
       ],
     });
   });
@@ -97,8 +116,23 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
       condition: "compound",
       operator: "or",
       conditions: [
-        { condition: "leaderTrait", trait: "Shandian Warrior" },
-        { condition: "leaderTrait", trait: "Skypiea" },
+        { condition: "leaderTrait", trait: "Shandian Warrior", match: "includes" },
+        { condition: "leaderTrait", trait: "Skypiea", match: "includes" },
+      ],
+    });
+  });
+
+  test('your Leader has the {X} type or a type including "Y"', () => {
+    const result = parseInlineCondition(
+      'If your Leader has the {Cross Guild} type or a type including "Baroque Works", draw 1 card.',
+    );
+    expect(result).not.toBeNull();
+    expect(result!.condition).toEqual({
+      condition: "compound",
+      operator: "or",
+      conditions: [
+        { condition: "leaderTrait", trait: "Cross Guild", match: "includes" },
+        { condition: "leaderTrait", trait: "Baroque Works", match: "includes" },
       ],
     });
   });
@@ -111,6 +145,7 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
     expect(result!.condition).toEqual({
       condition: "leaderTrait",
       trait: "Donquixote Pirates",
+      match: "includes",
     });
   });
 });

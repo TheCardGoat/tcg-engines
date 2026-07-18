@@ -53,6 +53,36 @@ export const op06YouReTheOneWhoShouldDisappear115: EventCard = {
         ],
         optional: true,
       },
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "lifeCount",
+            player: "self",
+            comparison: "eq",
+            value: 0,
+          },
+        ],
+        actions: [
+          {
+            action: "addToLife",
+            target: {
+              player: "self",
+              zones: ["deck"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            position: "top",
+          },
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: 1,
+          },
+        ],
+      },
     ],
   },
   i18n: op06YouReTheOneWhoShouldDisappear115I18n,

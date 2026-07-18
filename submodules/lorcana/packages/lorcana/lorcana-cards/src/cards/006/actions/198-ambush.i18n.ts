@@ -17,4 +17,8 @@ export const ambushI18n: Record<Languages, I18nProperties> = {
     name: "Imboscata!",
     text: "{E} uno dei tuoi personaggi per infliggere danno pari alla sua {S} a un personaggio a tua scelta.",
   },
+  es: {
+    name: "¡Emboscada!",
+    text: "{E} uno de tus personajes para causar daño igual a su {S} al personaje elegido.",
+  },
 };

@@ -45,4 +45,15 @@ export const kakamoraLongrangeSpecialistI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Kakamora",
+    version: "Especialista de largo alcance",
+    text: [
+      {
+        title: "UNA PEQUEÑA AYUDA",
+        description:
+          "Cuando juegas con este personaje, si tienes otro personaje pirata en juego, puedes causar 1 daño al personaje o ubicación elegida.",
+      },
+    ],
+  },
 };

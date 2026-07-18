@@ -55,4 +55,17 @@ export const cinderellaGentleAndKindI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cenicienta",
+    version: "Gentil y amable",
+    text: [
+      {
+        title: "Cantante 5",
+      },
+      {
+        title: "UN SUEÑO MARAVILLOSO",
+        description: "{E}: Elimina hasta 3 daños del personaje Princesa elegido.",
+      },
+    ],
+  },
 };

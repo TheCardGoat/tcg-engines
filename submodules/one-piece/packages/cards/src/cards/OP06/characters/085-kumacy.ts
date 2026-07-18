@@ -51,6 +51,16 @@ export const op06Kumacy085: CharacterCard = {
               self: true,
             },
             value: 1000,
+            valuePerCardGroup: {
+              size: 5,
+              target: {
+                player: "self",
+                zones: ["trash"],
+                count: {
+                  amount: "all",
+                },
+              },
+            },
             duration: "permanent",
           },
         ],

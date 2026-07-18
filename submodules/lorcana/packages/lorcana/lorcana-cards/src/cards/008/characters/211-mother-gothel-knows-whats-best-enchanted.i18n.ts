@@ -45,4 +45,15 @@ export const motherGothelKnowsWhatsBestEnchantedI18n: Record<Languages, I18nProp
       },
     ],
   },
+  es: {
+    name: "Madre Gothel",
+    version: "Sabe qué es mejor",
+    text: [
+      {
+        title: "MIRA LO QUE HAS HECHO",
+        description:
+          'Cuando juegas con este personaje, puedes causar 2 daños a otro personaje tuyo elegido para darle a ese personaje Retador +1 y "Cuando este personaje sea desterrado en un desafío, devuelve esta carta a tu mano" este turno. (Obtienen +1 {S} mientras desafían).',
+      },
+    ],
+  },
 };

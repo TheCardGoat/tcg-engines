@@ -45,4 +45,15 @@ export const theCoachmanGreedyDeceiverI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "El cochero",
+    version: "Engañador codicioso",
+    text: [
+      {
+        title: "PASEO SALVAJE",
+        description:
+          "Mientras 2 o más personajes tuyos están ejercidos, este personaje obtiene +2 {S} y gana Evasivo.",
+      },
+    ],
+  },
 };

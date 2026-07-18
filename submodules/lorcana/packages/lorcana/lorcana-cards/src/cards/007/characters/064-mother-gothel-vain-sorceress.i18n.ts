@@ -45,4 +45,15 @@ export const motherGothelVainSorceressI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Madre Gothel",
+    version: "Hechicera vanidosa",
+    text: [
+      {
+        title: "AHORA ME HAS MOLESTE",
+        description:
+          "Siempre que uno de tus personajes desafíe, puedes mover 1 contador de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

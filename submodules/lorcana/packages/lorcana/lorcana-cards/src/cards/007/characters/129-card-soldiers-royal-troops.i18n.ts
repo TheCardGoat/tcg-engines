@@ -43,4 +43,14 @@ export const cardSoldiersRoyalTroopsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Soldados de cartas",
+    version: "Tropas reales",
+    text: [
+      {
+        title: "TOMAR PUNTO",
+        description: "Mientras un personaje dañado esté en juego, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

@@ -63,4 +63,20 @@ export const scroogeMcduckEbenezerScroogeI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Gilito McPato",
+    version: "Ebenezer Scrooge",
+    text: [
+      {
+        title: "PAGO VENCIDO",
+        description:
+          "Cada vez que este personaje realiza una misión, cada oponente pierde 1 conocimiento. Roba una carta por cada saber perdido de esta manera.",
+      },
+      {
+        title: "JUICIO HIPOTECARIO",
+        description:
+          "Al final de tu turno, si un oponente tiene 0 conocimientos, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

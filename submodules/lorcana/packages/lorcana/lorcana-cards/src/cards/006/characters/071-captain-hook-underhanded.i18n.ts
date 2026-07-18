@@ -60,4 +60,19 @@ export const captainHookUnderhandedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Capitán Garfio",
+    version: "Turbia",
+    text: [
+      {
+        title: "INSPIRA TEMOR",
+        description:
+          "Mientras este personaje esté ejercido, los personajes Piratas oponentes no pueden realizar misiones.",
+      },
+      {
+        title: "SUPERIOR",
+        description: "Siempre que este personaje sea desafiado, roba una carta.",
+      },
+    ],
+  },
 };

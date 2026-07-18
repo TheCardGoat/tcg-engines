@@ -25,6 +25,5 @@ export const op03Kumadori082: CharacterCard = {
   counter: 1000,
   traits: ["CP9"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op03Kumadori082I18n,
 };

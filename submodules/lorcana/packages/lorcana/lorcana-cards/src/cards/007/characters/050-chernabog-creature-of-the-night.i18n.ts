@@ -45,4 +45,15 @@ export const chernabogCreatureOfTheNightI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Chernabog",
+    version: "Criatura de la noche",
+    text: [
+      {
+        title: "REVELO DE MEDIANOCHE",
+        description:
+          "Cuando juegas con este personaje, cada oponente elige y ejerce uno de sus personajes listos. No pueden prepararse al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

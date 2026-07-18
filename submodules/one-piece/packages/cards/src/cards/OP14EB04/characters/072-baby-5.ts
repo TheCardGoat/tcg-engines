@@ -26,7 +26,7 @@ export const op14eb04Baby5072: CharacterCard = {
   traits: ["Donquixote Pirates"],
   attribute: "special",
   effect:
-    "[On Play] Add up to 1 DON!! card from your DON!! deck and set it as active.\n[On K.O.] DON!! 1: Add up to 1 card from the top of your deck to the top of your Life cards.",
+    "[On Play] Add up to 1 DON!! card from your DON!! deck and set it as active.\n[On K.O.] DON!! −1: Add up to 1 card from the top of your deck to the top of your Life cards.",
   effects: {
     effects: [
       {

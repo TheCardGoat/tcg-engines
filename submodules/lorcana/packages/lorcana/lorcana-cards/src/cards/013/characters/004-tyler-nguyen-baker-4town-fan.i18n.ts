@@ -17,4 +17,8 @@ export const tylerNguyenbaker4townFanI18n: Record<Languages, I18nProperties> = {
     name: "Tyler Nguyen-Baker",
     version: "Fan dei 4*Town",
   },
+  es: {
+    name: "Tyler Nguyen-Baker",
+    version: "4 * ventilador de la ciudad",
+  },
 };

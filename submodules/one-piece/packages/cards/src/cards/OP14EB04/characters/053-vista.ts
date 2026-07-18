@@ -45,7 +45,7 @@ export const op14eb04Vista053: CharacterCard = {
         ],
         actions: [
           {
-            action: "setPower",
+            action: "setBasePowerFrom",
             target: {
               player: "self",
               zones: ["character"],
@@ -54,8 +54,14 @@ export const op14eb04Vista053: CharacterCard = {
               },
               self: true,
             },
-            value: 0,
-            duration: "thisTurn",
+            source: {
+              player: "self",
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+            },
+            duration: "permanent",
           },
         ],
       },

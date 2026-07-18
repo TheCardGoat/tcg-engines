@@ -17,4 +17,8 @@ export const mickeyMouseSteamboatPilotI18n: Record<Languages, I18nProperties> = 
     name: "Mickey Mouse",
     version: "Steamboat Pilot",
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Piloto de barco de vapor",
+  },
 };

@@ -55,6 +55,7 @@ export const op02Hannyabal083: CharacterCard = {
               {
                 filter: "trait",
                 value: "Impel Down",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

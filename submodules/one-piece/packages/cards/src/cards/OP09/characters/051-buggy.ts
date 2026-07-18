@@ -71,6 +71,32 @@ export const op09Buggy051: CharacterCard = {
             },
             position: "bottom",
           },
+          {
+            action: "returnToDeck",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            position: "bottom",
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "character",
+              comparison: "lt",
+              value: 5,
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 5,
+                },
+              ],
+            },
+          },
         ],
       },
     ],

@@ -61,4 +61,19 @@ export const aliceGrowingGirlI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Alicia",
+    version: "Niña en crecimiento",
+    text: [
+      {
+        title: "BUEN CONSEJO",
+        description:
+          "Tus otros personajes obtienen apoyo. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+      },
+      {
+        title: "¿QUÉ HIZO?",
+        description: "¿SÍ? Mientras este personaje tenga 10 {S} o más, obtiene +4 {L}.",
+      },
+    ],
+  },
 };

@@ -49,10 +49,20 @@ export const op13TheFiveEldersAreAtYourService096: EventCard = {
               {
                 filter: "trait",
                 value: "Celestial Dragons",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
             remainderPosition: "trash",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
           },
         ],
       },

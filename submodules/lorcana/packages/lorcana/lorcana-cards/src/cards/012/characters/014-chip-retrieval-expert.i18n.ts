@@ -61,4 +61,19 @@ export const chipRetrievalExpertI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Chip",
+    version: "Experto en recuperación",
+    text: [
+      {
+        title: "¡AHÍ ESTÁS!",
+        description:
+          "Cuando juegas con este personaje, puedes devolver a tu mano una carta de personaje con 4 {W} o más de tu descarte.",
+      },
+      {
+        title: "ATENCIÓN AMISTOSA",
+        description: "Tus personajes llamados Dale obtienen +1 {W}.",
+      },
+    ],
+  },
 };

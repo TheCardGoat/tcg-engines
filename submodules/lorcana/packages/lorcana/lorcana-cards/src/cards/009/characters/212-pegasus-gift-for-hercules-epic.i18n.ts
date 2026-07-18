@@ -21,4 +21,9 @@ export const pegasusGiftForHerculesEpicI18n: Record<Languages, I18nProperties> =
     version: "Dono per Ercole",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Pegaso",
+    version: "Regalo para Hércules",
+    text: "Evasivo",
+  },
 };

@@ -33,26 +33,35 @@ export const op07PerfumeFemur057: EventCard = {
             action: "modifyPower",
             target: {
               player: "self",
-              zones: ["character"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
                 upTo: true,
               },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "The Seven Warlords of the Sea",
+                  match: "includes",
+                },
+              ],
             },
             value: 2000,
             duration: "thisTurn",
           },
           {
-            action: "cannotActivate",
+            action: "grantKeyword",
             target: {
-              player: "opponent",
-              zones: ["character"],
+              player: "self",
+              zones: ["leader", "character"],
               count: {
-                amount: "all",
+                amount: 1,
+                upTo: true,
               },
             },
-            keyword: "blocker",
+            keyword: "unblockable",
             duration: "thisTurn",
+            previousActionTargets: true,
           },
         ],
       },

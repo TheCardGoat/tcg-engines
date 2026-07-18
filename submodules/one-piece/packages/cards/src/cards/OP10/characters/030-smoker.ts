@@ -58,6 +58,12 @@ export const op10Smoker030: CharacterCard = {
               },
             },
           },
+          {
+            action: "cannotSetDonActive",
+            player: "self",
+            source: "characterEffects",
+            duration: "thisTurn",
+          },
         ],
       },
     ],

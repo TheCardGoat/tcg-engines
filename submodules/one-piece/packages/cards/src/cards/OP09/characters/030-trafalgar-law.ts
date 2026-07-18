@@ -26,11 +26,17 @@ export const op09TrafalgarLaw030: CharacterCard = {
   traits: ["Heart Pirates Supernovas ODYSSEY"],
   attribute: "slash",
   effect:
-    '[On Play] You may return 1 of your Characters to the owner\'s hand: Play up to 1 "ODYSSEY" type Character card with a cost of 3 or less other than [Trafalgar Law] from your hand.',
+    "[On Play] You may return 1 of your Characters to the owner's hand: Play up to 1 {ODYSSEY} type Character card with a cost of 3 or less other than [Trafalgar Law] from your hand.",
   effects: {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnCharacter",
+            amount: 1,
+          },
+        ],
         actions: [
           {
             action: "play",
@@ -55,6 +61,7 @@ export const op09TrafalgarLaw030: CharacterCard = {
               {
                 filter: "trait",
                 value: "ODYSSEY",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

@@ -62,6 +62,7 @@ export const op07Sengoku046: CharacterCard = {
               {
                 filter: "trait",
                 value: "The Seven Warlords of the Sea",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

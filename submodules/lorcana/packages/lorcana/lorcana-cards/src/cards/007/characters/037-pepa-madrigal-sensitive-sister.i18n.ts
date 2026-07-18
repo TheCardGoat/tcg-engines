@@ -44,4 +44,15 @@ export const pepaMadrigalSensitiveSisterI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Pepa Madrigal",
+    version: "Hermana sensible",
+    text: [
+      {
+        title: "CIELOS DESPEJADOS, CIELOS DESPEJADOS",
+        description:
+          "Siempre que uno o más de tus personajes canten una canción, ganan 1 conocimiento.",
+      },
+    ],
+  },
 };

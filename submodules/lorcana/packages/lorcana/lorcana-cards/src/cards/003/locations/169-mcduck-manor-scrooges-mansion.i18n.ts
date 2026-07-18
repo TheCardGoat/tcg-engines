@@ -17,4 +17,8 @@ export const mcduckManorScroogesMansionI18n: Record<Languages, I18nProperties> =
     name: "Villa de' Paperoni",
     version: "Residenza di Paperone",
   },
+  es: {
+    name: "Mansión McDuck",
+    version: "La mansión de Scrooge",
+  },
 };

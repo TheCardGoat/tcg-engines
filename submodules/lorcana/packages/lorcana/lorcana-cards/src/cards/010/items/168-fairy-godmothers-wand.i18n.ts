@@ -41,4 +41,14 @@ export const fairyGodmothersWandI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Varita del Hada Madrina",
+    text: [
+      {
+        title: "SOLO HASTA LA MEDIANOCHE",
+        description:
+          "Durante tu turno, cada vez que pones una carta en tu tintero, tu personaje Princesa elegido gana Protección hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

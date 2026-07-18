@@ -17,4 +17,8 @@ export const bambiPrinceOfTheForestI18n: Record<Languages, I18nProperties> = {
     name: "Bambi",
     version: "Principe della Foresta",
   },
+  es: {
+    name: "Bambi",
+    version: "Príncipe del bosque",
+  },
 };

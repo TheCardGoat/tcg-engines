@@ -60,4 +60,18 @@ export const donaldDuckMusketeerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Mosquetero",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "¡MANTÉNGASE ALERTA!",
+        description:
+          "Durante tu turno, tus personajes Mosqueteros obtienen Evasión. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

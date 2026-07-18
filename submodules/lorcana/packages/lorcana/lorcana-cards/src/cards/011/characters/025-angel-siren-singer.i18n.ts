@@ -58,4 +58,18 @@ export const angelSirenSingerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ángel",
+    version: "Cantante de sirena",
+    text: [
+      {
+        title: "PERDIDO",
+        description:
+          "Si este es tu primer turno y no eres el primer jugador, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "Cantante 3",
+      },
+    ],
+  },
 };

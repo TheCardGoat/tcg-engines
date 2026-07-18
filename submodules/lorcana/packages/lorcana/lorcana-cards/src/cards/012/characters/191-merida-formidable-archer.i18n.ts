@@ -65,4 +65,20 @@ export const meridaFormidableArcherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mérida",
+    version: "Arquero formidable",
+    text: [
+      {
+        title: "CARJAL COMPLETO",
+        description:
+          "Cuando juegas con este personaje, puedes devolver a tu mano una carta de acción llamada Tres Flechas de tu descarte.",
+      },
+      {
+        title: "OBJETIVO FIJO",
+        description:
+          "Siempre que una de tus acciones cause daño a un personaje contrario, inflige 2 daños a ese personaje.",
+      },
+    ],
+  },
 };

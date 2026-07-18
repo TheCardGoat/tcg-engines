@@ -74,9 +74,7 @@ export const eb03UtaSp003: CharacterCard = {
             },
             filters: [
               {
-                filter: "hasEffectType",
-                value: "onPlay",
-                negate: true,
+                filter: "noBaseEffect",
               },
               {
                 filter: "power",

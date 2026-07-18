@@ -23,4 +23,8 @@ export const theReturnOfHerculesI18n: Record<Languages, I18nProperties> = {
     name: "Il Ritorno di Ercole",
     text: "Ogni giocatore può rivelare una carta personaggio dalla sua mano e giocarla gratis.",
   },
+  es: {
+    name: "El regreso de Hércules",
+    text: "Cada jugador puede revelar una carta de personaje de su mano y jugarla gratis.",
+  },
 };

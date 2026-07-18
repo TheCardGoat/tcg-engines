@@ -5,7 +5,7 @@ export const gd02ThatOneLooksALotStronger108: CommandCard = {
   name: "That One Looks A Lot Stronger?",
   type: "command",
   color: "red",
-  traits: ["-"],
+  traits: [],
   id: "GD02-108",
   canonicalId: "GD02-108",
   externalIds: { bandai: "gundam:gd02-108" },

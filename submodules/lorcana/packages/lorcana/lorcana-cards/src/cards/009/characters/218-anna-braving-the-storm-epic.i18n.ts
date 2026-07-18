@@ -43,4 +43,15 @@ export const annaBravingTheStormEpicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ana",
+    version: "Desafiando la tormenta",
+    text: [
+      {
+        title: "NACÍ LISTO",
+        description:
+          "Mientras tengas otro personaje héroe en juego, este personaje obtiene +1 {L}.",
+      },
+    ],
+  },
 };

@@ -42,11 +42,12 @@ export const op07KeepOut018: EventCard = {
                 {
                   filter: "trait",
                   value: "Revolutionary Army",
+                  match: "includes",
                 },
               ],
             },
             value: 2000,
-            duration: "permanent",
+            duration: "untilEndOfYourNextTurn",
           },
         ],
       },

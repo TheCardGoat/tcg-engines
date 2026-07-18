@@ -17,4 +17,8 @@ export const puaDisgruntledPigI18n: Record<Languages, I18nProperties> = {
     name: "Pua",
     version: "Maiale Contrariato",
   },
+  es: {
+    name: "Puá",
+    version: "Cerdo descontento",
+  },
 };

@@ -27,5 +27,50 @@ export const op08Thatch045: CharacterCard = {
   attribute: "slash",
   effect:
     "If this Character would be removed from the field by your opponent's effect or K.O.'d, trash this Character and draw 1 card instead.",
+  effects: {
+    replacementEffects: [
+      {
+        replacedEvent: "removeFromField",
+        source: "opponentEffect",
+        eventFilter: {
+          targetSelf: true,
+        },
+        replacementAction: {
+          action: "sequence",
+          actions: [
+            {
+              action: "trashThisCard",
+            },
+            {
+              action: "draw",
+              player: "self",
+              amount: 1,
+            },
+          ],
+        },
+        mandatory: true,
+      },
+      {
+        replacedEvent: "ko",
+        eventFilter: {
+          targetSelf: true,
+        },
+        replacementAction: {
+          action: "sequence",
+          actions: [
+            {
+              action: "trashThisCard",
+            },
+            {
+              action: "draw",
+              player: "self",
+              amount: 1,
+            },
+          ],
+        },
+        mandatory: true,
+      },
+    ],
+  },
   i18n: op08Thatch045I18n,
 };

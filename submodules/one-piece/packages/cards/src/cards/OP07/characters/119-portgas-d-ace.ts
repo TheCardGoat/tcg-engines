@@ -58,6 +58,23 @@ export const op07PortgasDAce119: CharacterCard = {
             },
             position: "top",
           },
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "thisTurn",
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 2,
+            },
+          },
         ],
       },
     ],

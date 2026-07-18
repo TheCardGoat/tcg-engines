@@ -34,4 +34,8 @@ export const healWhatHasBeenHurtI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sanar lo que ha sido herido",
+    text: "Elimina hasta 3 daños del personaje elegido. Saca una carta.",
+  },
 };

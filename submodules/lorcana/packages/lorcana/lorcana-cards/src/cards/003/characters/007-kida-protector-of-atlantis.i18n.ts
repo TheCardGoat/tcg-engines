@@ -60,4 +60,18 @@ export const kidaProtectorOfAtlantisI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Niño",
+    version: "Protector de la Atlántida",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "QUIZÁS PODEMOS SALVAR NUESTRO FUTURO",
+        description:
+          "Cuando juegas con este personaje, todos los personajes obtienen -3 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

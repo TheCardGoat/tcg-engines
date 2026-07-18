@@ -22,7 +22,7 @@ export const op04Cavendish081: CharacterCard = {
   setId: "OP04",
   cost: 5,
   power: 6000,
-  traits: ["Beautiful Pirates Dressrosa"],
+  traits: ["Beautiful Pirates", "Dressrosa"],
   attribute: "slash",
   effect:
     "[DON!! x1] This Character can also attack active Characters. [When Attacking] You may rest your Leader: K.O. up to 1 of your opponent's Characters with a cost of 1 or less. Then, trash 2 cards from the top of your deck.",
@@ -30,6 +30,18 @@ export const op04Cavendish081: CharacterCard = {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "restCards",
+            amount: 1,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "leader",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "ko",

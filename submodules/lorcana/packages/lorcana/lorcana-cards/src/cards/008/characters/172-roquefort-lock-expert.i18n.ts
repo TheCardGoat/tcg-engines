@@ -45,4 +45,15 @@ export const roquefortLockExpertI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Roquefort",
+    version: "Experto en bloqueo",
+    text: [
+      {
+        title: "CUSTODIA",
+        description:
+          "Siempre que este personaje realice una misión, puedes colocar el objeto elegido en el tintero de su jugador boca abajo y ejercerlo.",
+      },
+    ],
+  },
 };

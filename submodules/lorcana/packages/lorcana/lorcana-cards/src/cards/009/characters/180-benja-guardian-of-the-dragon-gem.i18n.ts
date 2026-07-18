@@ -42,4 +42,15 @@ export const benjaGuardianOfTheDragonGemI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Benja",
+    version: "Guardián de la gema del dragón",
+    text: [
+      {
+        title: "TENEMOS",
+        description:
+          "UNA ELECCIÓN Cuando juegas con este personaje, puedes desterrar el objeto elegido.",
+      },
+    ],
+  },
 };

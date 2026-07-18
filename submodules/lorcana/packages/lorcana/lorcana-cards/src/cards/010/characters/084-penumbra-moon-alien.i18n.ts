@@ -17,4 +17,8 @@ export const penumbraMoonAlienI18n: Record<Languages, I18nProperties> = {
     name: "Penumbra",
     version: "Aliena Lunare",
   },
+  es: {
+    name: "Penumbra",
+    version: "Extraterrestre luna",
+  },
 };

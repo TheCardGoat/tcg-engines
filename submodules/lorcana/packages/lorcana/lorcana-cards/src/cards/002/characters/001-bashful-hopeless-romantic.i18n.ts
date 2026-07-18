@@ -45,4 +45,15 @@ export const bashfulHopelessRomanticI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tímido",
+    version: "Romántico sin esperanza",
+    text: [
+      {
+        title: "¡OH, DIOS!",
+        description:
+          "Este personaje no puede realizar misiones a menos que tengas otro personaje de los Siete Enanitos en juego.",
+      },
+    ],
+  },
 };

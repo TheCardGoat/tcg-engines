@@ -26,5 +26,25 @@ export const op11BulgeEyedNeptunian027: CharacterCard = {
   attribute: "strike",
   effect:
     "If your Leader is [Shirahoshi], this Character can attack Characters on the turn in which it is played.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [{ condition: "leaderName", name: "Shirahoshi" }],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            keyword: "rushCharacter",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op11BulgeEyedNeptunian027I18n,
 };

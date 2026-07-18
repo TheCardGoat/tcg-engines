@@ -17,4 +17,8 @@ export const chargeI18n: Record<Languages, I18nProperties> = {
     name: "Carica!",
     text: "Un personaggio a tua scelta ottiene <Sfidante> +2 e <Resistere> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando. Il danno che gli viene inflitto è ridotto di 2.)",
   },
+  es: {
+    name: "¡Cargar!",
+    text: "El personaje elegido obtiene Retador +2 y Resistencia +2 este turno. (Obtienen +2 {S} mientras desafían. El daño que se les inflige se reduce en 2).",
+  },
 };

@@ -44,4 +44,15 @@ export const aladdinDoingHisPartI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Aladino",
+    version: "Haciendo su parte",
+    text: [
+      {
+        title: "Limpiarlo",
+        description:
+          "Cuando juegas con este personaje, puedes pagar 1 {I} para desterrar el objeto elegido.",
+      },
+    ],
+  },
 };

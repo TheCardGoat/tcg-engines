@@ -41,4 +41,14 @@ export const roseLanternI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Linterna rosa",
+    text: [
+      {
+        title: "PÉTALOS MÍSTICOS",
+        description:
+          "{E}, 2 {I}: mueve 1 contador de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

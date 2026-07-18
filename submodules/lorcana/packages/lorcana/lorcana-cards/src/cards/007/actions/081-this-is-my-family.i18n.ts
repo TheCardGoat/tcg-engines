@@ -33,4 +33,8 @@ export const thisIsMyFamilyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Esta es mi familia",
+    text: "Gana 1 conocimiento. Saca una carta.",
+  },
 };

@@ -65,4 +65,20 @@ export const charlesMuntzObsessiveExplorerI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Carlos Muntz",
+    version: "Explorador obsesivo",
+    text: [
+      {
+        title: "Equipo útil",
+        description:
+          "Siempre que juegues un objeto, mira la carta superior de tu mazo. Colóquelo en la parte superior o inferior de su plataforma.",
+      },
+      {
+        title: "¡Encuentra ese pájaro!",
+        description:
+          "Siempre que este personaje realice una misión, mira la carta superior de tu mazo. Si es una carta de personaje llamada Kevin, puedes revelarla y ponerla en tu mano para ganar 3 conocimientos. De lo contrario, colóquelo en la parte superior o inferior de su plataforma.",
+      },
+    ],
+  },
 };

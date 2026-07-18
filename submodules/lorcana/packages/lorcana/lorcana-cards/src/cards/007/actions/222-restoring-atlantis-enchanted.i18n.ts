@@ -17,4 +17,8 @@ export const restoringAtlantisEnchantedI18n: Record<Languages, I18nProperties> =
     name: "Ricostruire Atlantide",
     text: "I tuoi personaggi non possono essere sfidati fino all'inizio del tuo prossimo turno.",
   },
+  es: {
+    name: "Restaurando la Atlántida",
+    text: "Tus personajes no pueden ser desafiados hasta el comienzo de tu próximo turno.",
+  },
 };

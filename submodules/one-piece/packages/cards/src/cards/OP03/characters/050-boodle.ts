@@ -39,6 +39,7 @@ export const op03Boodle050: CharacterCard = {
             amount: 1,
           },
         ],
+        optional: true,
       },
     ],
   },

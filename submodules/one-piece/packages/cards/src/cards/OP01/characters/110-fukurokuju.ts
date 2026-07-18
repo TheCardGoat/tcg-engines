@@ -25,6 +25,5 @@ export const op01Fukurokuju110: CharacterCard = {
   counter: 1000,
   traits: ["Animal Kingdom Pirates Land of Wano"],
   attribute: "special",
-  effect: "NULL",
   i18n: op01Fukurokuju110I18n,
 };

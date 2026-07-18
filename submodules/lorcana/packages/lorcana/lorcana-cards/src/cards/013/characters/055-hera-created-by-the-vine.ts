@@ -41,6 +41,22 @@ export const heraCreatedByTheVine: CharacterCard = {
   classifications: ["Floodborn", "Queen", "Deity", "Vineling"],
   abilities: [
     {
+      id: "TBN-1-self",
+      name: "MYSTICAL BOON",
+      type: "triggered",
+      trigger: {
+        event: "play",
+        on: "SELF",
+        timing: "whenever",
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+        target: "CONTROLLER",
+      },
+      text: "MYSTICAL BOON Whenever you play this or another Floodborn character, gain 1 lore.",
+    },
+    {
       id: "TBN-1",
       name: "MYSTICAL BOON",
       type: "triggered",

@@ -65,4 +65,20 @@ export const lennyToyBinocularsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lenny",
+    version: "Binoculares de juguete",
+    text: [
+      {
+        title: "LLEVAR",
+        description:
+          "UNA BUENA MIRADA Cuando juegas con este personaje, el oponente elegido revela su mano y descarta una carta de acción de tu elección.",
+      },
+      {
+        title: "VIENDO RÁPIDO",
+        description:
+          "Una vez durante tu turno, cada vez que juegues una acción, puedes preparar este personaje.",
+      },
+    ],
+  },
 };

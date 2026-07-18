@@ -51,8 +51,26 @@ export const op07MaskedDeuce013: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "name",
-                value: "Portgas.D.Ace",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "name",
+                    value: "Portgas.D.Ace",
+                  },
+                  {
+                    filter: "allOf",
+                    filters: [
+                      {
+                        filter: "color",
+                        value: "red",
+                      },
+                      {
+                        filter: "cardCategory",
+                        value: "event",
+                      },
+                    ],
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

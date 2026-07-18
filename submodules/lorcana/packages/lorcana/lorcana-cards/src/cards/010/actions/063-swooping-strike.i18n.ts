@@ -17,4 +17,8 @@ export const swoopingStrikeI18n: Record<Languages, I18nProperties> = {
     name: "Attacco in Picchiata",
     text: "Ogni avversario sceglie e impegna uno dei suoi personaggi preparati.",
   },
+  es: {
+    name: "Golpe en picada",
+    text: "Cada oponente elige y ejerce uno de sus personajes preparados.",
+  },
 };

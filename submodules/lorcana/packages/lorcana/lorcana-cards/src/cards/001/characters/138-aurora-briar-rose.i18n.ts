@@ -43,4 +43,15 @@ export const auroraBriarRoseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Aurora",
+    version: "Gavanza",
+    text: [
+      {
+        title: "BELLEZA QUE DESARMA",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene -2 {S} este turno.",
+      },
+    ],
+  },
 };

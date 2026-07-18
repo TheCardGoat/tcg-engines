@@ -17,4 +17,8 @@ export const candyDriftI18n: Record<Languages, I18nProperties> = {
     name: "Drift Candito",
     text: "Pesca una carta. Un tuo personaggio a tua scelta riceve +5 {S} per questo turno. Alla fine del tuo turno, esilialo.",
   },
+  es: {
+    name: "Deriva del caramelo",
+    text: "Saca una carta. El personaje elegido tuyo obtiene +5 {S} este turno. Al final de tu turno, destiérralos.",
+  },
 };

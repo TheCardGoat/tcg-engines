@@ -17,4 +17,8 @@ export const stealFromTheRichI18n: Record<Languages, I18nProperties> = {
     name: "Steal from the Rich",
     text: "Whenever one of your characters quests this turn, each opponent loses 1 lore.",
   },
+  es: {
+    name: "Robar a los ricos",
+    text: "Cada vez que uno de tus personajes realiza una misión este turno, cada oponente pierde 1 conocimiento.",
+  },
 };

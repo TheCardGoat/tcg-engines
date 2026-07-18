@@ -17,4 +17,8 @@ export const nalaMischievousCubI18n: Record<Languages, I18nProperties> = {
     name: "Nala",
     version: "Cucciola Monella",
   },
+  es: {
+    name: "Nala",
+    version: "Cachorro travieso",
+  },
 };

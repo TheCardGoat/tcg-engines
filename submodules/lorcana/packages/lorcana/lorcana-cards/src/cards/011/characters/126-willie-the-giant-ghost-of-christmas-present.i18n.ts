@@ -60,4 +60,18 @@ export const willieTheGiantGhostOfChristmasPresentI18n: Record<Languages, I18nPr
       },
     ],
   },
+  es: {
+    name: "Willie el gigante",
+    version: "Fantasma del regalo de Navidad",
+    text: [
+      {
+        title: "Impulsar 3 {I}",
+      },
+      {
+        title: "EL ALIMENTO DE LA GENEROSIDAD",
+        description:
+          "Este personaje no puede realizar misiones ni desafíos a menos que le pongas una carta debajo este turno.",
+      },
+    ],
+  },
 };

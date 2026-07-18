@@ -41,4 +41,14 @@ export const hydrosIceTitanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hidros",
+    version: "Titán de hielo",
+    text: [
+      {
+        title: "VENTISCA",
+        description: "{E}: ejerce el carácter elegido.",
+      },
+    ],
+  },
 };

@@ -60,4 +60,18 @@ export const clarabelleLightOnHerHoovesEnchantedI18n: Record<Languages, I18nProp
       },
     ],
   },
+  es: {
+    name: "Clarabelle",
+    version: "Luz en sus cascos",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "MANTÉNGASE EN EL PASO",
+        description:
+          "Al final de tu turno, si el oponente elegido tiene más cartas en su mano que tú, puedes robar cartas hasta tener el mismo número.",
+      },
+    ],
+  },
 };

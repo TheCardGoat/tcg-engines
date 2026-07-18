@@ -50,6 +50,7 @@ export const op09GeckoMoria085: CharacterCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

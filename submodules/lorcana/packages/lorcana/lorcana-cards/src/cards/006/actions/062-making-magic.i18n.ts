@@ -17,4 +17,8 @@ export const makingMagicI18n: Record<Languages, I18nProperties> = {
     name: "Fare una Magia",
     text: "Sposta 1 segnalino danno da un personaggio a tua scelta a un personaggio avversario a tua scelta. Pesca una carta.",
   },
+  es: {
+    name: "Haciendo magia",
+    text: "Mueve 1 contador de daño del personaje elegido al personaje contrario elegido. Saca una carta.",
+  },
 };

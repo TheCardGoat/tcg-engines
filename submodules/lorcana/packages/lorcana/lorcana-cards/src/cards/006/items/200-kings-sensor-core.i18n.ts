@@ -58,4 +58,18 @@ export const kingsSensorCoreI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Núcleo del sensor del rey",
+    text: [
+      {
+        title: "SÍMBOLO DE REALEZA",
+        description: "Tus personajes Príncipe y Rey obtienen Resistencia +1.",
+      },
+      {
+        title: "BÚSQUEDA REAL",
+        description:
+          "{E}, 2 {I}: revela la carta superior de tu mazo. Si es una carta de personaje Príncipe o Rey, puedes poner esa carta en tu mano. De lo contrario, colóquelo en la parte superior de su plataforma.",
+      },
+    ],
+  },
 };

@@ -80,6 +80,7 @@ export const op01Queen097: CharacterCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
       },
     ],
   },

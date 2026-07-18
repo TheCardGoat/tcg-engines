@@ -42,4 +42,14 @@ export const hiroHamadaFutureChampionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hiro Hamada",
+    version: "Futuro campeón",
+    text: [
+      {
+        title: "HISTORIA DE ORIGEN",
+        description: "Cuando juegas con un personaje Floodborn en esta carta, roba una carta.",
+      },
+    ],
+  },
 };

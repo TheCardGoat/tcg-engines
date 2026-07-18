@@ -17,4 +17,8 @@ export const rememberWhoYouAreI18n: Record<Languages, I18nProperties> = {
     name: "Ricordati Chi Sei",
     text: "Se un avversario a tua scelta ha più carte in mano di te, pesca carte finché non ne hai lo stesso numero.",
   },
+  es: {
+    name: "Recuerda quién eres",
+    text: "Si el oponente elegido tiene más cartas en la mano que tú, roba cartas hasta que tengas el mismo número.",
+  },
 };

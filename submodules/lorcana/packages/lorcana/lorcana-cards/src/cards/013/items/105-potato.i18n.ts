@@ -37,4 +37,13 @@ export const potatoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Papa",
+    text: [
+      {
+        title: "LLENO DE POTENCIAL",
+        description: "Este objeto entra en juego ejercido.",
+      },
+    ],
+  },
 };

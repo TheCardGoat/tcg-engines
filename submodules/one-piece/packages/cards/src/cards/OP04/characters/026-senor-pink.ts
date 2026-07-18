@@ -30,12 +30,6 @@ export const op04SenorPink026: CharacterCard = {
     effects: [
       {
         trigger: "whenAttacking",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Donquixote Pirates",
-          },
-        ],
         costs: [
           {
             cost: "restDon",
@@ -60,19 +54,36 @@ export const op04SenorPink026: CharacterCard = {
                 },
               ],
             },
+            condition: {
+              condition: "leaderTrait",
+              trait: "Donquixote Pirates",
+              match: "includes",
+            },
           },
           {
-            action: "setActive",
-            target: {
-              player: "self",
-              zones: ["costArea"],
-              count: {
-                amount: 1,
-                upTo: true,
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "setActive",
+                target: {
+                  player: "self",
+                  zones: ["costArea"],
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                },
               },
+            ],
+            condition: {
+              condition: "leaderTrait",
+              trait: "Donquixote Pirates",
+              match: "includes",
             },
           },
         ],
+        optional: true,
       },
     ],
   },

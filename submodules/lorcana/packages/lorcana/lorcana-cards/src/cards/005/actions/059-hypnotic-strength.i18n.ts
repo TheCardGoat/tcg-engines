@@ -17,4 +17,8 @@ export const hypnoticStrengthI18n: Record<Languages, I18nProperties> = {
     name: "Forza Ipnotica",
     text: "Pesca una carta. Un personaggio a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
   },
+  es: {
+    name: "Fuerza hipnótica",
+    text: "Saca una carta. El personaje elegido gana Challenger +2 este turno. (Obtienen +2 {S} mientras desafían).",
+  },
 };

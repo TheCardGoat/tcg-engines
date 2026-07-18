@@ -60,4 +60,18 @@ export const shereKhanFierceAndFuriousI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Shere Khan",
+    version: "Feroz y furioso",
+    text: [
+      {
+        title: "Cambio 5 {I}",
+      },
+      {
+        title: "FURIA SALVAJE 1",
+        description:
+          "{I}, inflige 1 daño a este personaje: prepara a este personaje. No puede realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

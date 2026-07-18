@@ -60,4 +60,18 @@ export const jasmineRoyalCommodoreI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jazmín",
+    version: "Comodoro real",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "GOBERNANTE DE LOS MARES",
+        description:
+          "Cuando juegues con este personaje, si usaste Shift para interpretarlo, devuelve todos los demás personajes ejercidos a las manos de sus jugadores.",
+      },
+    ],
+  },
 };

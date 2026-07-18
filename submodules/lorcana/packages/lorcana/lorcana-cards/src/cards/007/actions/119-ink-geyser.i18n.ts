@@ -23,4 +23,8 @@ export const inkGeyserI18n: Record<Languages, I18nProperties> = {
     name: "Geyser d'Inchiostro",
     text: "Ogni giocatore impegna tutte le carte del suo calamaio. Poi ogni giocatore con più di 3 carte nel suo calamaio riprende in mano carte a caso dal suo calamaio finché non ha 3 carte nel suo calamaio.",
   },
+  es: {
+    name: "Géiser de tinta",
+    text: "Cada jugador ejerce todas las cartas en su tintero. Luego cada jugador con más de 3 cartas en su tintero devuelve cartas al azar de su tintero a su mano hasta tener 3 cartas en su tintero.",
+  },
 };

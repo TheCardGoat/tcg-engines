@@ -43,7 +43,23 @@ export const op09MurderAtTheSteamBath059: EventCard = {
             value: 3000,
             duration: "thisBattle",
           },
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: 2,
+            upTo: true,
+          },
+          {
+            action: "trashFromDeck",
+            player: "self",
+            amount: 0,
+            amountFromPreviousActionTargets: true,
+          },
         ],
+      },
+      {
+        trigger: "trigger",
+        actions: [{ action: "draw", player: "self", amount: 1 }],
       },
     ],
   },

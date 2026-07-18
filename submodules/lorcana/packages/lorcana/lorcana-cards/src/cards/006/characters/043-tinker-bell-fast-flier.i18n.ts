@@ -21,4 +21,9 @@ export const tinkerBellFastFlierI18n: Record<Languages, I18nProperties> = {
     version: "Ali Rapide",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Campanita",
+    version: "Viajero rápido",
+    text: "Evasivo",
+  },
 };

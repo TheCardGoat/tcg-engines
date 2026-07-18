@@ -60,4 +60,18 @@ export const elsaSpiritOfWinterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Elsa",
+    version: "Espíritu de invierno",
+    text: [
+      {
+        title: "Cambio 6 {I}",
+      },
+      {
+        title: "CONGELACIÓN PROFUNDA",
+        description:
+          "Cuando juegues con este personaje, ejerce hasta 2 personajes elegidos. No pueden prepararse al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

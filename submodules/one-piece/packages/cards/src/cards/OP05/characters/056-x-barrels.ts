@@ -31,6 +31,19 @@ export const op05XBarrels056: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnCharacterToDeck",
+            amount: 1,
+            position: "bottom",
+            player: "self",
+            filters: [
+              {
+                filter: "excludeSelf",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "draw",

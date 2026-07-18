@@ -21,4 +21,9 @@ export const kitCloudkickerSpunkyBearCubI18n: Record<Languages, I18nProperties> 
     version: "Intrepido Orsetto",
     text: "<Protetto>",
   },
+  es: {
+    name: "Kit pateador de nubes",
+    version: "Cachorro de oso valiente",
+    text: "Pabellón",
+  },
 };

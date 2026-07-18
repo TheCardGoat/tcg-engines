@@ -41,4 +41,14 @@ export const myAdventureBookI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mi libro de aventuras",
+    text: [
+      {
+        title: "Nuevos recuerdos",
+        description:
+          "{E}, 1 {I}: revela la carta superior de tu mazo. Si es una carta que no es un personaje o una carta de personaje llamada Kevin, ponla en tu mano. De lo contrario, colóquelo en el fondo de su plataforma.",
+      },
+    ],
+  },
 };

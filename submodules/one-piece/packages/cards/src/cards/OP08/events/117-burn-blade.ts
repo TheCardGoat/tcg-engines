@@ -28,6 +28,7 @@ export const op08BurnBlade117: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [{ cost: "trashLife", amount: 1, position: "top" }],
         actions: [
           {
             action: "ko",
@@ -52,6 +53,7 @@ export const op08BurnBlade117: EventCard = {
       },
       {
         trigger: "trigger",
+        costs: [{ cost: "addLifeToHand", amount: 1, position: "top" }],
         actions: [
           {
             action: "addToLife",

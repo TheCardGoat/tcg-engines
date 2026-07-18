@@ -45,4 +45,15 @@ export const hadesLordOfTheUnderworldI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Infierno",
+    version: "Señor del inframundo",
+    text: [
+      {
+        title: "BIEN DE ALMAS",
+        description:
+          "Cuando juegues con este personaje, devuelve a tu mano una carta de personaje de tu descarte.",
+      },
+    ],
+  },
 };

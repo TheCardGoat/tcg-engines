@@ -57,4 +57,18 @@ export const duckworthGhostButlerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Patoworth",
+    version: "Mayordomo fantasma",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "ACTO FINAL",
+        description:
+          "Durante tu turno, cuando este personaje sea desterrado, puedes poner la carta superior de tu mazo boca abajo debajo de uno de tus personajes o ubicaciones con Boost.",
+      },
+    ],
+  },
 };

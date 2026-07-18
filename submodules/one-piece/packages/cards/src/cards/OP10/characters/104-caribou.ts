@@ -42,6 +42,7 @@ export const op10Caribou104: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Supernovas",
+                match: "includes",
               },
               {
                 condition: "lifeCount",

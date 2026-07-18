@@ -35,4 +35,8 @@ export const heffalumpsAndWoozlesI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Heffalumps y Woozles",
+    text: "El personaje contrario elegido no puede realizar misiones durante su próximo turno. Saca una carta.",
+  },
 };

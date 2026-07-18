@@ -27,5 +27,34 @@ export const op07Pickles069: CharacterCard = {
   attribute: "strike",
   effect:
     "If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, your [Foxy Pirates] type Characters other than [Pickles] cannot be K.O.'d by your opponent's effects.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "donFieldComparison",
+            selfComparison: "lte",
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: "all" },
+              filters: [
+                { filter: "trait", value: "Foxy Pirates", match: "includes" },
+                { filter: "excludeName", value: "Pickles" },
+              ],
+            },
+            duration: "permanent",
+            restriction: "byEffect",
+            byPlayer: "opponent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op07Pickles069I18n,
 };

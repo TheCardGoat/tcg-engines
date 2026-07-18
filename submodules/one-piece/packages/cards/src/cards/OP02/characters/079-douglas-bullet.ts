@@ -57,6 +57,7 @@ export const op02DouglasBullet079: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

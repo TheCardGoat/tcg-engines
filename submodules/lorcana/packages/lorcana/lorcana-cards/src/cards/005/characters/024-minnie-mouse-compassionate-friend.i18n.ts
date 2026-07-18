@@ -45,4 +45,15 @@ export const minnieMouseCompassionateFriendI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Amigo compasivo",
+    text: [
+      {
+        title: "REPARARLOS",
+        description:
+          "Siempre que este personaje realice una misión, puedes eliminar hasta 2 daños del personaje elegido.",
+      },
+    ],
+  },
 };

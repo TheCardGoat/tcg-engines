@@ -17,4 +17,8 @@ export const swingIntoActionI18n: Record<Languages, I18nProperties> = {
     name: "Lanciarsi in Azione",
     text: "Un personaggio a tua scelta ottiene <Lesto> per questo turno. (Può sfidare nel turno in cui viene giocato.)",
   },
+  es: {
+    name: "Ponte en acción",
+    text: "El personaje elegido gana Rush este turno. (Pueden desafiar el turno en el que se juega).",
+  },
 };

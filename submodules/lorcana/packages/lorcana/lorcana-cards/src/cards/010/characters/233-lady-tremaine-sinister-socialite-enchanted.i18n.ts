@@ -58,4 +58,18 @@ export const ladyTremaineSinisterSocialiteEnchantedI18n: Record<Languages, I18nP
       },
     ],
   },
+  es: {
+    name: "Señora tremaine",
+    version: "Socialité siniestro",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "ESQUEMAS EXPEDIENTES",
+        description:
+          "Siempre que este personaje realice una misión, si has puesto una carta debajo de ella este turno, puedes jugar una acción con costo 5 o menos de tu descarte de forma gratuita, luego poner esa carta de acción en la parte inferior de tu mazo en lugar de en tu descarte.",
+      },
+    ],
+  },
 };

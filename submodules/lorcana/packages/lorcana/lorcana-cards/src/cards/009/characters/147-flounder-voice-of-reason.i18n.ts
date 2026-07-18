@@ -17,4 +17,8 @@ export const flounderVoiceOfReasonI18n: Record<Languages, I18nProperties> = {
     name: "Flounder",
     version: "Voce della Ragione",
   },
+  es: {
+    name: "Platija",
+    version: "Voz de la razón",
+  },
 };

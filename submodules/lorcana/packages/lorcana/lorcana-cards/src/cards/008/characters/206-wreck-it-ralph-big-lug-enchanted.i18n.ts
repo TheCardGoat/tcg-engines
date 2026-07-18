@@ -60,4 +60,18 @@ export const wreckitRalphBigLugEnchantedI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Ralph el demoledor",
+    version: "Terminal grande",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "DE VUELTA AL CAMINO",
+        description:
+          "Cuando juegas con este personaje y cada vez que realiza una misión, puedes devolver a tu mano una carta de personaje de corredor con un costo de 6 o menos de tu descarte. Si lo haces, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

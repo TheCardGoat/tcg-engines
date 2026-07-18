@@ -53,4 +53,17 @@ export const donaldDuckNotAgainI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "¡Otra vez no!",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "¡POOEY!",
+        description: "Este personaje obtiene +1 {L} por cada 1 daño que sufre.",
+      },
+    ],
+  },
 };

@@ -45,6 +45,7 @@ export const progCarnageAtTheColosseumRetail = fixture("progCarnageAtTheColosseu
 export const progChromeReverieRetail = fixture("progChromeReverieRetail");
 export const progCyberpsychosisRetail = fixture("progCyberpsychosisRetail");
 export const progPeaceOfferingRetail = fixture("progPeaceOfferingRetail");
+export const progLiveWithTheAftermathRetail = fixture("progLiveWithTheAftermathRetail");
 
 /* ── Gear ───────────────────────────────────────────────────────────────── */
 export const gearDyingNightHighCred = fixture("gearDyingNightHighCred");
@@ -182,6 +183,7 @@ export const unitRoyceDonTCallMeSimonLowCredRetail = fixture(
 );
 export const unitSandayuOdaHanakoSGuardianRetail = fixture("unitSandayuOdaHanakoSGuardianRetail");
 export const unitWraithMaraudersRetail = fixture("unitWraithMaraudersRetail");
+export const unitOctantRetail = fixture("unitOctantRetail");
 export const unitTheHeistDexterDeshawnOneLastChance = fixture(
   "unitTheHeistDexterDeshawnOneLastChance",
 );

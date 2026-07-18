@@ -45,4 +45,17 @@ export const jetsamUrsulasSpyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Echazón",
+    version: "La espía de Úrsula",
+    text: [
+      {
+        title: "<Evasivo>",
+      },
+      {
+        title: "Deslizamiento siniestro",
+        description: "Tus personajes llamados Flotsam obtienen Evasividad.",
+      },
+    ],
+  },
 };

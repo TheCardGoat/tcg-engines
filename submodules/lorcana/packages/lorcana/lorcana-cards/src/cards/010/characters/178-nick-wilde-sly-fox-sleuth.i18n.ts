@@ -17,4 +17,8 @@ export const nickWildeSlyFoxSleuthI18n: Record<Languages, I18nProperties> = {
     name: "Nick Wilde",
     version: "Astuto Investigatore Volpe",
   },
+  es: {
+    name: "Nick Wilde",
+    version: "Detective zorro astuto",
+  },
 };

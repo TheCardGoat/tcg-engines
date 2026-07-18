@@ -58,6 +58,11 @@ export const prb02EdwardNewgateSt13004PirateFoil004: CharacterCard = {
             },
             position: "top",
           },
+          {
+            action: "rearrangeLife",
+            player: "self",
+            moveOneToDeckTop: true,
+          },
         ],
       },
     ],

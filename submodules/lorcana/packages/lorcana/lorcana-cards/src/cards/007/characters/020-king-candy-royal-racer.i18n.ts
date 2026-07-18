@@ -45,4 +45,15 @@ export const kingCandyRoyalRacerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rey caramelo",
+    version: "Corredor real",
+    text: [
+      {
+        title: "DULCE VENGANZA",
+        description:
+          "Cada vez que uno de tus otros personajes de Racer es desterrado, cada oponente elige y destierra a uno de sus personajes.",
+      },
+    ],
+  },
 };

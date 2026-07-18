@@ -57,4 +57,18 @@ export const vinePodI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Vaina de vid",
+    text: [
+      {
+        title: "CÁSCARA FRÁGIL",
+        description: "Este objeto entra en juego ejercido.",
+      },
+      {
+        title: "REGENERADO",
+        description:
+          "{E}, 1{I}: destierra a tu personaje elegido. Puedes interpretar un personaje con el mismo nombre que ese personaje de forma gratuita.",
+      },
+    ],
+  },
 };

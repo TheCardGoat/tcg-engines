@@ -40,7 +40,7 @@ export const op03CharlottePerospero113: CharacterCard = {
     },
   ],
   effect:
-    "[On K.O.] Look at 3 cards from the top of your deck; reveal up to 1 [Big Mom Pirates] type card and add it to your hand. Then, place the rest at the bottom of your deck in any order. [Trigger] You may trash 1 card from your hand: Play this card.",
+    "[On K.O.] Look at 3 cards from the top of your deck; reveal up to 1 {Big Mom Pirates} type card and add it to your hand. Then, place the rest at the bottom of your deck in any order. [Trigger] You may trash 1 card from your hand: Play this card.",
   effects: {
     effects: [
       {
@@ -61,6 +61,7 @@ export const op03CharlottePerospero113: CharacterCard = {
               {
                 filter: "trait",
                 value: "Big Mom Pirates",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
@@ -78,14 +79,7 @@ export const op03CharlottePerospero113: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
         optional: true,

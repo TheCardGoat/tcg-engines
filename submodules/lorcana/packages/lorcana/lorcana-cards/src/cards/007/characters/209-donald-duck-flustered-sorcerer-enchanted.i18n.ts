@@ -41,4 +41,14 @@ export const donaldDuckFlusteredSorcererEnchantedI18n: Record<Languages, I18nPro
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Hechicero nervioso",
+    text: [
+      {
+        title: "¡OFUSCAR!",
+        description: "Los oponentes necesitan 25 conocimientos para ganar el juego.",
+      },
+    ],
+  },
 };

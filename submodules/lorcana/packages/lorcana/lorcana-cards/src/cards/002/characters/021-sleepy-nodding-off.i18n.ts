@@ -41,4 +41,14 @@ export const sleepyNoddingOffI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Somnoliento",
+    version: "Cabeceando",
+    text: [
+      {
+        title: "¡BOSTEZO!",
+        description: "Este personaje entra en juego ejercido.",
+      },
+    ],
+  },
 };

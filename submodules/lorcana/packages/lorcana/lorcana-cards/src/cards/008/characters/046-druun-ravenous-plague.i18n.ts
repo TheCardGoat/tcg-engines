@@ -21,4 +21,9 @@ export const druunRavenousPlagueI18n: Record<Languages, I18nProperties> = {
     version: "Flagello Famelico",
     text: "<Sfidante> +4",
   },
+  es: {
+    name: "Druun",
+    version: "Plaga voraz",
+    text: "Retador +4",
+  },
 };

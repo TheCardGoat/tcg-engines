@@ -57,4 +57,18 @@ export const scroogeMcduckReformedEbenezerI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Gilito McPato",
+    version: "Ebenezer reformado",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "DIFUNDIENDO ALEGRÍA",
+        description:
+          "Cuando juegas con este personaje, puedes colocar una carta de la parte superior de tu mazo boca abajo debajo de cada uno de tus otros personajes. Si lo haces, esos personajes ganan Protección hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

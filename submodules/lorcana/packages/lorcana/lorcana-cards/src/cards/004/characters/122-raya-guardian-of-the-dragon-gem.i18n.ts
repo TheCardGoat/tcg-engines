@@ -45,4 +45,15 @@ export const rayaGuardianOfTheDragonGemI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Raya",
+    version: "Guardián de la gema del dragón",
+    text: [
+      {
+        title: "TENEMOS QUE UNIRNOS",
+        description:
+          "Cuando juegues con este personaje, prepara tu personaje elegido en una ubicación. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

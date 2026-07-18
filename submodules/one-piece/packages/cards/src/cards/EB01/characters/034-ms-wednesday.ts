@@ -47,12 +47,6 @@ export const eb01MsWednesday034: CharacterCard = {
     effects: [
       {
         trigger: "onOpponentAttack",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Baroque Works",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -62,6 +56,11 @@ export const eb01MsWednesday034: CharacterCard = {
         actions: [
           {
             action: "addDon",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Baroque Works",
+              match: "includes",
+            },
             count: {
               amount: 1,
               upTo: true,

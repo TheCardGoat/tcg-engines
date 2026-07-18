@@ -17,4 +17,8 @@ export const sirKayUnrulyKnightI18n: Record<Languages, I18nProperties> = {
     name: "Ser Caio",
     version: "Cavaliere Indisciplinato",
   },
+  es: {
+    name: "Señor kay",
+    version: "Caballero rebelde",
+  },
 };

@@ -41,4 +41,14 @@ export const amethystCoilI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bobina de amatista",
+    text: [
+      {
+        title: "TOQUE MÁGICO",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, puedes mover 1 contador de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

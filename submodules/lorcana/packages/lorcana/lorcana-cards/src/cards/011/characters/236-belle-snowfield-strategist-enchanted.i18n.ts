@@ -45,4 +45,15 @@ export const belleSnowfieldStrategistEnchantedI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Beldad",
+    version: "Estratega del campo nevado",
+    text: [
+      {
+        title: "STOCK DE INVIERNO",
+        description:
+          "Siempre que uno de tus personajes sea desterrado, puedes poner esa carta de tu descarte en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

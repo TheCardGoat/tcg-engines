@@ -56,6 +56,16 @@ export const op09GumGumLightning077: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "addDon",
+            count: { amount: 1, upTo: true },
+            state: "active",
+          },
+        ],
+      },
     ],
   },
   i18n: op09GumGumLightning077I18n,

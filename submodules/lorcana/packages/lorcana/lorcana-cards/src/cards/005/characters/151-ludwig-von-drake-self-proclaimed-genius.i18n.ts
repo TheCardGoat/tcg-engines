@@ -17,4 +17,8 @@ export const ludwigVonDrakeSelfproclaimedGeniusI18n: Record<Languages, I18nPrope
     name: "Pico de Paperis",
     version: "Sedicente Genio",
   },
+  es: {
+    name: "Ludwig von Drake",
+    version: "Genio autoproclamado",
+  },
 };

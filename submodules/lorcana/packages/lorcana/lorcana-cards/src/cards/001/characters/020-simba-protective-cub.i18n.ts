@@ -21,4 +21,9 @@ export const simbaProtectiveCubI18n: Record<Languages, I18nProperties> = {
     version: "Protective Cub",
     text: "<Bodyguard> (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
   },
+  es: {
+    name: "Simba",
+    version: "Cachorro protector",
+    text: "Guardaespaldas",
+  },
 };

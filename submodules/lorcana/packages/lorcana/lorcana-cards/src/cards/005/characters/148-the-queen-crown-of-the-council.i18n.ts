@@ -57,4 +57,18 @@ export const theQueenCrownOfTheCouncilI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "La reina",
+    version: "Corona del Consejo",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "REUNIÓN DE LOS MALVADOS",
+        description:
+          "Cuando juegues con este personaje, mira las 3 primeras cartas de tu mazo. Puedes revelar cualquier cantidad de cartas de personaje llamadas La Reina y ponerlas en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

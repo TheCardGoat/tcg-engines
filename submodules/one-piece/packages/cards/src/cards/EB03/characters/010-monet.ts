@@ -44,6 +44,30 @@ export const eb03Monet010: CharacterCard = {
               amount: 1,
               upTo: true,
             },
+            revealFilters: [
+              {
+                filter: "anyOf",
+                groups: [
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "character",
+                    },
+                    {
+                      filter: "power",
+                      comparison: "lte",
+                      value: 1000,
+                    },
+                  ],
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "event",
+                    },
+                  ],
+                ],
+              },
+            ],
             revealDestination: "hand",
             remainderPosition: "bottom",
           },

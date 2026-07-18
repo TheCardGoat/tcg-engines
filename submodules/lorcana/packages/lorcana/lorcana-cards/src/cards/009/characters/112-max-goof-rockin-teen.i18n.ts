@@ -54,4 +54,17 @@ export const maxGoofRockinTeenI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tonto máximo",
+    version: "Adolescente rockero",
+    text: [
+      {
+        title: "Cantante 5",
+      },
+      {
+        title: "SOLO QUIERO QUEDARME EN CASA",
+        description: "Este personaje no puede moverse a lugares.",
+      },
+    ],
+  },
 };

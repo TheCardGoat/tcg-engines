@@ -41,4 +41,14 @@ export const absorbingBloomI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Flor absorbente",
+    text: [
+      {
+        title: "Metamorfosis",
+        description:
+          "{E}, 1 {I}: si un personaje fue desterrado en un desafío este turno, roba una carta.",
+      },
+    ],
+  },
 };

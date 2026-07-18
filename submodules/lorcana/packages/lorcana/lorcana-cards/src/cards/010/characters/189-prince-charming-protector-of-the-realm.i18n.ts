@@ -55,4 +55,17 @@ export const princeCharmingProtectorOfTheRealmI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Príncipe azul",
+    version: "Protector del reino",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "PRESENCIA PROTECTORA",
+        description: "En cada turno, solo un personaje puede desafiar.",
+      },
+    ],
+  },
 };

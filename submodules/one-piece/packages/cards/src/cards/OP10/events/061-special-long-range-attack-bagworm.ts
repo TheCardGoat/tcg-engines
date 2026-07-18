@@ -55,6 +55,20 @@ export const op10SpecialLongRangeAttackBagworm061: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "returnToHand",
+            target: {
+              player: "both",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 2 }],
+            },
+          },
+        ],
+      },
     ],
   },
   i18n: op10SpecialLongRangeAttackBagworm061I18n,

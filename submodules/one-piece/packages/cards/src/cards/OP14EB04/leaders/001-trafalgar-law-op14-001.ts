@@ -5,7 +5,7 @@ export const op14eb04TrafalgarLawOp14001001: LeaderCard = {
   id: "OP14-001",
   canonicalId: "OP14-001",
   slug: "trafalgar-law-op14-001",
-  name: "Trafalgar Law - OP14-001",
+  name: "Trafalgar Law",
   printings: [
     {
       id: "OP14-001",
@@ -47,15 +47,23 @@ export const op14eb04TrafalgarLawOp14001001: LeaderCard = {
         trigger: "activateMain",
         actions: [
           {
-            action: "setPower",
+            action: "swapBasePower",
             target: {
               player: "self",
               zones: ["character"],
               count: {
                 amount: 2,
               },
+              filters: [
+                {
+                  filter: "anyOf",
+                  groups: [
+                    [{ filter: "trait", value: "Supernovas", match: "includes" }],
+                    [{ filter: "trait", value: "Heart Pirates", match: "includes" }],
+                  ],
+                },
+              ],
             },
-            value: 0,
             duration: "thisTurn",
           },
         ],

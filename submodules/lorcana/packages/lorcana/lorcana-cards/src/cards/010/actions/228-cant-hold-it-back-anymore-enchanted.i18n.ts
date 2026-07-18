@@ -17,4 +17,8 @@ export const cantHoldItBackAnymoreEnchantedI18n: Record<Languages, I18nPropertie
     name: "Che Il Cuore Mi Guidi un Po'",
     text: "Impegna un personaggio avversario a tua scelta. Sposta tutti i segnalini danno da tutti gli altri personaggi a quel personaggio.",
   },
+  es: {
+    name: "No puedo contenerlo más",
+    text: "Ejercer el personaje contrario elegido. Mueve todos los contadores de daño de todos los demás personajes a ese personaje.",
+  },
 };

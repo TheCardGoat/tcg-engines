@@ -45,4 +45,15 @@ export const colonelHathiOnTheMarchI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Coronel Hathi",
+    version: "En la marcha",
+    text: [
+      {
+        title: "Hup, dos, tres, cuatro",
+        description:
+          "Siempre que este personaje realice una misión, puedes trasladarlo a una de tus ubicaciones de forma gratuita.",
+      },
+    ],
+  },
 };

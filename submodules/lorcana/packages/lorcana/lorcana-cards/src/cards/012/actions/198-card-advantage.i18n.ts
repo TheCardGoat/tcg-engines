@@ -17,4 +17,8 @@ export const cardAdvantageI18n: Record<Languages, I18nProperties> = {
     name: "Vantaggio di Carte",
     text: "Se un personaggio avversario è stato esiliato in una sfida in questo turno, pesca 2 carte.",
   },
+  es: {
+    name: "Ventaja de la tarjeta",
+    text: "Si un personaje contrario fue desterrado en un desafío este turno, roba 2 cartas.",
+  },
 };

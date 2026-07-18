@@ -23,7 +23,7 @@ export const op06VinsmokeSora063: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 2000,
-  traits: ["The Vinsmoke Family Kingdom of GERMA"],
+  traits: ["The Vinsmoke Family", "Kingdom of GERMA"],
   attribute: "wisdom",
   effect:
     "[On Play] You may trash 1 card from your hand: If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, add up to 1 [The Vinsmoke Family] type Character card with 4000 power or less from your trash to your hand.",
@@ -31,12 +31,6 @@ export const op06VinsmokeSora063: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "donFieldComparison",
-            selfComparison: "lte",
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -57,6 +51,7 @@ export const op06VinsmokeSora063: CharacterCard = {
                 {
                   filter: "trait",
                   value: "The Vinsmoke Family",
+                  match: "includes",
                 },
                 {
                   filter: "cardCategory",
@@ -68,6 +63,10 @@ export const op06VinsmokeSora063: CharacterCard = {
                   value: 4000,
                 },
               ],
+            },
+            condition: {
+              condition: "donFieldComparison",
+              selfComparison: "lte",
             },
           },
         ],

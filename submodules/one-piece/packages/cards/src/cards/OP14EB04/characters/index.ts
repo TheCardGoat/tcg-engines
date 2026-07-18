@@ -11,6 +11,7 @@ export { op14eb04DonquixoteDoflamingoOp14069069 } from "./069-donquixote-doflami
 export { op14eb04Megalo018 } from "./018-megalo.ts";
 export { op14eb04KikunojoOp14023023 } from "./023-kikunojo-op14-023.ts";
 export { op14eb04GeckoMoriaOp14104104 } from "./104-gecko-moria-op14-104.ts";
+export { op14eb04GorgonSisters105 } from "./105-gorgon-sisters.ts";
 export { op14eb04Absalom100 } from "./100-absalom.ts";
 export { op14eb04Ran114 } from "./114-ran.ts";
 export { op14eb04Nami031 } from "./031-nami.ts";

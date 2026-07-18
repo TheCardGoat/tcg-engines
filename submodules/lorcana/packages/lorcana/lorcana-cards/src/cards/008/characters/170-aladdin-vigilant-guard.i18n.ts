@@ -59,4 +59,18 @@ export const aladdinVigilantGuardI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Aladino",
+    version: "Guardia Vigilante",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "PASO SEGURO",
+        description:
+          "Siempre que uno de tus personajes aliados realice una misión, puedes eliminar hasta 2 daños de este personaje.",
+      },
+    ],
+  },
 };

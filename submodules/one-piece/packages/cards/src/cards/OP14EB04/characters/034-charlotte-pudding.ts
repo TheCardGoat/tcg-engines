@@ -32,21 +32,6 @@ export const op14eb04CharlottePudding034: CharacterCard = {
     effects: [
       {
         trigger: "onOpponentAttack",
-        conditions: [
-          {
-            condition: "zoneCount",
-            player: "self",
-            zone: "trash",
-            comparison: "gte",
-            value: 4,
-            filters: [
-              {
-                filter: "cardCategory",
-                value: "event",
-              },
-            ],
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -66,6 +51,19 @@ export const op14eb04CharlottePudding034: CharacterCard = {
             },
             value: 2000,
             duration: "thisBattle",
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "trash",
+              comparison: "gte",
+              value: 4,
+              filters: [
+                {
+                  filter: "cardCategory",
+                  value: "event",
+                },
+              ],
+            },
           },
         ],
         optional: true,

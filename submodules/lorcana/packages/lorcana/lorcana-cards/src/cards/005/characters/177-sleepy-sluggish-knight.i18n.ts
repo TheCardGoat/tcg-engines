@@ -21,4 +21,9 @@ export const sleepySluggishKnightI18n: Record<Languages, I18nProperties> = {
     version: "Cavaliere Sonnolento",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Somnoliento",
+    version: "Caballero lento",
+    text: "Guardaespaldas",
+  },
 };

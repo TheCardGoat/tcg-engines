@@ -1,12 +1,28 @@
-import { beforeEach, describe, expect, it, mock } from "bun:test";
+import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test";
 
 import type {
   LobbyMatchResultResponse,
   LobbyRoomResponse,
 } from "@/features/matchmaking/api/lobby-api.js";
+import type { MatchmakingCatalogQueue } from "@/features/matchmaking/api/matchmaking-api.js";
 import type { MatchmakingContext, ProfileDeckSummary } from "../api/player-context-api.js";
 
 const testGlobals = globalThis as any;
+const localStorageValues = new Map<string, string>();
+const originalLocalStorage = testGlobals.localStorage;
+
+const localStorage = {
+  getItem: (key: string): string | null => localStorageValues.get(key) ?? null,
+  setItem: (key: string, value: string): void => {
+    localStorageValues.set(key, value);
+  },
+  removeItem: (key: string): void => {
+    localStorageValues.delete(key);
+  },
+  clear: (): void => {
+    localStorageValues.clear();
+  },
+};
 
 testGlobals.$state = Object.assign(<T>(value: T): T => value, {
   eager: <T>(value: T): T => value,
@@ -323,6 +339,8 @@ class FakeQueueStatsStore {
 
 class FakePlayerSettingsStore {
   initialize = mock(() => {});
+  initializeFromServer = mock(() => {});
+  initializeVisualSettingsFromServer = mock(() => {});
   selectedLocale = "en";
   skipActionConfirmation = false;
   hotkeyMode = "none";
@@ -343,6 +361,7 @@ class FakePlayerSettingsStore {
   selectedCardBack = "default";
   handlePlaymatChange = mock(() => {});
   handleCardBackChange = mock(() => {});
+  setSaveToServer = mock(() => {});
   setSaveVisualSettingsToServer = mock(() => {});
 }
 
@@ -350,7 +369,29 @@ const { createMatchmakingLobbyController } =
   await import("./useMatchmakingLobbyController.svelte.ts");
 
 describe("createMatchmakingLobbyController", () => {
+  const fetchMatchmakingCatalog = mock(
+    async (): Promise<MatchmakingCatalogQueue[]> => [
+      {
+        queueId: "mmq_test",
+        displayName: "Infinity Casual BO1",
+        formatId: "infinity",
+        mode: "1",
+        matchType: "casual" as const,
+        availability: "available" as const,
+        unavailableReason: null,
+        season: {
+          seasonId: "season_test",
+          name: "Test",
+          slug: "test",
+          startsAt: "2026-07-12T00:00:00.000Z",
+          endsAt: "2026-10-02T00:00:00.000Z",
+        },
+      },
+    ],
+  );
   beforeEach(() => {
+    testGlobals.localStorage = localStorage;
+    localStorageValues.clear();
     fetchDeckListSnapshotByDeckListId.mockClear();
     importDeckForProfile.mockClear();
     importLegacyDecksForProfile.mockClear();
@@ -372,6 +413,14 @@ describe("createMatchmakingLobbyController", () => {
     authSession.isLoading = false;
   });
 
+  afterEach(() => {
+    if (originalLocalStorage === undefined) {
+      delete testGlobals.localStorage;
+    } else {
+      testGlobals.localStorage = originalLocalStorage;
+    }
+  });
+
   function createController() {
     return createMatchmakingLobbyController(
       {
@@ -390,6 +439,7 @@ describe("createMatchmakingLobbyController", () => {
         trackEvent,
         openWindow,
         fetchGatewayTicket,
+        fetchMatchmakingCatalog,
         authSession: authSession as never,
         GatewayClientStore: FakeGatewayClientStore as never,
         MatchmakingPlayerContextState: FakePlayerContextState as never,
@@ -651,6 +701,7 @@ describe("createMatchmakingLobbyController", () => {
         importDeckForProfile,
         importLegacyDecksForProfile,
         fetchDeckListSnapshotByDeckListId: fetchDeckListSnapshotByDeckListId as never,
+        fetchMatchmakingCatalog,
         trackEvent,
         openWindow,
         fetchGatewayTicket,
@@ -688,7 +739,61 @@ describe("createMatchmakingLobbyController", () => {
     });
   });
 
-  it("snaps queue mode to BO3 when switching to ranked from a BO1 selection", () => {
+  it("does not select Testing when the loaded catalog has no available Testing queue", async () => {
+    fetchMatchmakingCatalog.mockResolvedValueOnce([
+      {
+        queueId: "mmq_core_casual_bo1",
+        displayName: "Core Casual BO1",
+        formatId: "core-constructed",
+        mode: "1",
+        matchType: "casual",
+        availability: "available",
+        unavailableReason: null,
+        season: null,
+      },
+    ]);
+    const controller = createControllerWithFlags({
+      testingQueueEnabled: true,
+      rankedEnabled: false,
+    });
+    await controller.initialize();
+
+    controller.selectMatchType("testing");
+
+    expect(controller.queue.selectedMatchType).toBe("casual");
+    expect(trackEvent).not.toHaveBeenCalledWith("matchmaking_match_type_select", {
+      matchType: "testing",
+    });
+  });
+
+  it("falls back from a persisted Testing selection when the catalog has no Testing queue", async () => {
+    localStorageValues.set(
+      "tcg.matchmaking.prefs",
+      JSON.stringify({ format: "core-constructed", mode: "1", matchType: "testing" }),
+    );
+    fetchMatchmakingCatalog.mockResolvedValueOnce([
+      {
+        queueId: "mmq_core_casual_bo1",
+        displayName: "Core Casual BO1",
+        formatId: "core-constructed",
+        mode: "1",
+        matchType: "casual",
+        availability: "available",
+        unavailableReason: null,
+        season: null,
+      },
+    ]);
+    const controller = createControllerWithFlags({
+      testingQueueEnabled: true,
+      rankedEnabled: false,
+    });
+
+    await controller.initialize();
+
+    expect(controller.queue.selectedMatchType).toBe("casual");
+  });
+
+  it("retains BO1 when switching to ranked before the catalog is loaded", () => {
     const controller = createControllerWithFlags({ rankedEnabled: true });
     controller.selectMatchType("casual");
     controller.selectQueueMode("1");
@@ -697,40 +802,163 @@ describe("createMatchmakingLobbyController", () => {
     controller.selectMatchType("ranked");
 
     expect(controller.queue.selectedMatchType).toBe("ranked");
-    expect(controller.queue.selectedQueueMode).toBe("3");
+    expect(controller.queue.selectedQueueMode).toBe("1");
   });
 
-  it("keeps Early Access available outside ranked and falls back when ranked is selected", () => {
+  it("restores persisted ranked BO1 preferences until the catalog is loaded", () => {
+    localStorageValues.set(
+      "tcg.matchmaking.prefs",
+      JSON.stringify({ format: "infinity", mode: "1", matchType: "ranked" }),
+    );
+
+    const controller = createControllerWithFlags({ rankedEnabled: true });
+
+    expect(controller.queue.selectedMatchType).toBe("ranked");
+    expect(controller.queue.selectedQueueMode).toBe("1");
+  });
+
+  it("does not expose Early Access without a catalog queue", () => {
     const controller = createControllerWithFlags({
       rankedEnabled: true,
       testingQueueEnabled: true,
     });
 
-    expect(controller.queue.queueCards.map((card) => card.definition.format)).toContain(
-      "attack-of-the-vine",
-    );
-
-    controller.selectQueueFormat("attack-of-the-vine");
-    expect(controller.queue.activeQueueFormat).toBe("attack-of-the-vine");
-    expect(controller.queue.joinLabel).toContain("Early Access");
-
-    controller.selectMatchType("ranked");
-
-    expect(controller.queue.selectedMatchType).toBe("ranked");
-    expect(controller.queue.activeQueueFormat).not.toBe("attack-of-the-vine");
     expect(controller.queue.queueCards.map((card) => card.definition.format)).not.toContain(
       "attack-of-the-vine",
     );
   });
 
-  it("rejects selectQueueMode('1') while ranked is selected", () => {
-    const controller = createControllerWithFlags({ rankedEnabled: true });
-    controller.selectMatchType("ranked");
-    expect(controller.queue.selectedQueueMode).toBe("3");
+  it("exposes and selects only queues that the catalog marks available", async () => {
+    fetchMatchmakingCatalog.mockResolvedValueOnce([
+      {
+        queueId: "mmq_infinity_casual_bo1",
+        displayName: "Infinity Casual BO1",
+        formatId: "infinity",
+        mode: "1",
+        matchType: "casual",
+        availability: "unavailable",
+        unavailableReason: "Queue is not enabled.",
+        season: null,
+      },
+      {
+        queueId: "mmq_aotv_casual_bo1",
+        displayName: "Attack of the Vine Casual BO1",
+        formatId: "attack-of-the-vine",
+        mode: "1",
+        matchType: "casual",
+        availability: "available",
+        unavailableReason: null,
+        season: {
+          seasonId: "season-aotv",
+          name: "Attack of the Vine",
+          slug: "aotv",
+          startsAt: "2026-07-12T00:00:00.000Z",
+          endsAt: "2026-10-02T00:00:00.000Z",
+        },
+      },
+    ]);
+    const controller = createController();
 
+    await controller.initialize();
+
+    expect(controller.queue.queueCards.map((card) => card.definition.format)).toEqual([
+      "attack-of-the-vine",
+    ]);
+    expect(controller.queue.queueCards[0]?.isSelected).toBe(true);
+
+    controller.selectQueueFormat("infinity");
+
+    expect(controller.queue.queueCards[0]?.isSelected).toBe(true);
+    expect(trackEvent).not.toHaveBeenCalledWith("matchmaking_format_select", {
+      format: "infinity",
+    });
+  });
+
+  it("selects an available ranked BO1 partition", async () => {
+    fetchMatchmakingCatalog.mockResolvedValueOnce([
+      {
+        queueId: "mmq_infinity_ranked_bo1",
+        displayName: "Infinity Ranked BO1",
+        formatId: "infinity",
+        mode: "1",
+        matchType: "ranked",
+        availability: "available",
+        unavailableReason: null,
+        season: null,
+      },
+      {
+        queueId: "mmq_infinity_ranked_bo3",
+        displayName: "Infinity Ranked BO3",
+        formatId: "infinity",
+        mode: "3",
+        matchType: "ranked",
+        availability: "available",
+        unavailableReason: null,
+        season: null,
+      },
+    ]);
+    const controller = createControllerWithFlags({ rankedEnabled: true });
+    await controller.initialize();
+    controller.selectMatchType("ranked");
+    controller.selectQueueMode("1");
+
+    expect(controller.queue.selectedQueueMode).toBe("1");
+    expect(trackEvent).toHaveBeenCalledWith("matchmaking_mode_select", { mode: "1" });
+  });
+
+  it("uses the selected queue's season and keeps unavailable modes unselected", async () => {
+    fetchMatchmakingCatalog.mockResolvedValueOnce([
+      {
+        queueId: "mmq_infinity_casual_bo1",
+        displayName: "Infinity Casual BO1",
+        formatId: "infinity",
+        mode: "1",
+        matchType: "casual",
+        availability: "available",
+        unavailableReason: null,
+        season: {
+          seasonId: "season-casual",
+          name: "Casual Season",
+          slug: "casual-season",
+          startsAt: "2026-07-12T00:00:00.000Z",
+          endsAt: "2026-10-03T00:00:00.000Z",
+        },
+      },
+      {
+        queueId: "mmq_infinity_ranked_bo3",
+        displayName: "Infinity Ranked BO3",
+        formatId: "infinity",
+        mode: "3",
+        matchType: "ranked",
+        availability: "available",
+        unavailableReason: null,
+        season: {
+          seasonId: "season-ranked",
+          name: "Ranked Season",
+          slug: "ranked-season",
+          startsAt: "2026-07-12T00:00:00.000Z",
+          endsAt: "2026-10-03T00:00:00.000Z",
+        },
+      },
+    ]);
+    const controller = createControllerWithFlags({ rankedEnabled: true });
+
+    expect(controller.queue.season).toBeNull();
+
+    await controller.initialize();
+    controller.selectQueueMode("1");
+
+    expect(controller.queue.season?.name).toBe("Casual Season");
+
+    controller.selectMatchType("ranked");
+
+    expect(controller.queue.season?.name).toBe("Ranked Season");
+
+    trackEvent.mockClear();
     controller.selectQueueMode("1");
 
     expect(controller.queue.selectedQueueMode).toBe("3");
+    expect(trackEvent).not.toHaveBeenCalledWith("matchmaking_mode_select", { mode: "1" });
   });
 
   it("passes selected bot fixture and strategy into AI quick-play URL", async () => {

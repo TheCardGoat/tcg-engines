@@ -44,4 +44,14 @@ export const gadgetHackwrenchCreativeThinkerI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Llave para hackear gadgets",
+    version: "Pensador creativo",
+    text: [
+      {
+        title: "IDEA GENIAL",
+        description: "Cada vez que juegas un objeto, este personaje obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

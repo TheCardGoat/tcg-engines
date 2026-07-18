@@ -17,4 +17,8 @@ export const peteFreebooterI18n: Record<Languages, I18nProperties> = {
     name: "Gambadilegno",
     version: "Filibustiere",
   },
+  es: {
+    name: "Pete",
+    version: "Filibustero",
+  },
 };

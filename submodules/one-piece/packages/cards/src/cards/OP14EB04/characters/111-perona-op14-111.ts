@@ -4,8 +4,8 @@ import { op14eb04PeronaOp14111111I18n } from "./111-perona-op14-111.i18n.ts";
 export const op14eb04PeronaOp14111111: CharacterCard = {
   id: "OP14-111",
   canonicalId: "OP14-111",
-  slug: "perona-op14-111",
-  name: "Perona - OP14-111",
+  slug: "perona/op14-111",
+  name: "Perona",
   printings: [
     {
       id: "OP14-111",
@@ -91,6 +91,38 @@ export const op14eb04PeronaOp14111111: CharacterCard = {
               ],
             },
             duration: "untilEndOfOpponentNextEndPhase",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+              {
+                filter: "trait",
+                value: "Thriller Bark Pirates",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+            playState: "rested",
           },
         ],
       },

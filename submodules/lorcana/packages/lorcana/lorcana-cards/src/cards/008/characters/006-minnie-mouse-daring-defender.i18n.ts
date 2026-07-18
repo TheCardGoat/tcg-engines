@@ -55,4 +55,17 @@ export const minnieMouseDaringDefenderI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Defensor atrevido",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "VERDADERO VALOR",
+        description: "Este personaje obtiene +1 {S} por cada daño que sufre.",
+      },
+    ],
+  },
 };

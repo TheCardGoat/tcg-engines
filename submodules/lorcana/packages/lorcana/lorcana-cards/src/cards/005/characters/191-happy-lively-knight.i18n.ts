@@ -45,4 +45,15 @@ export const happyLivelyKnightI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Feliz",
+    version: "Caballero animado",
+    text: [
+      {
+        title: "ARRANCADA",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

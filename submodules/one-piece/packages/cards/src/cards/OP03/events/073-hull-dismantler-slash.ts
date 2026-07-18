@@ -28,12 +28,6 @@ export const op03HullDismantlerSlash073: EventCard = {
     effects: [
       {
         trigger: "main",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Water Seven",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -57,6 +51,11 @@ export const op03HullDismantlerSlash073: EventCard = {
                   value: 2,
                 },
               ],
+            },
+            condition: {
+              condition: "leaderTrait",
+              trait: "Water Seven",
+              match: "includes",
             },
           },
         ],

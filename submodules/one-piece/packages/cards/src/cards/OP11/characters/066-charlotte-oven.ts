@@ -38,30 +38,36 @@ export const op11CharlotteOven066: CharacterCard = {
         ],
         actions: [
           {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "baseCost",
-                  comparison: "lte",
-                  value: 3,
+            action: "guessTopDeckCost",
+            player: "opponent",
+            onMatch: [
+              {
+                action: "ko",
+                target: {
+                  player: "opponent",
+                  zones: ["character"],
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                  filters: [
+                    {
+                      filter: "baseCost",
+                      comparison: "lte",
+                      value: 3,
+                    },
+                  ],
                 },
-              ],
-            },
-          },
-          {
-            action: "addDon",
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            state: "rested",
+              },
+              {
+                action: "addDon",
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                state: "rested",
+              },
+            ],
           },
         ],
         optional: true,

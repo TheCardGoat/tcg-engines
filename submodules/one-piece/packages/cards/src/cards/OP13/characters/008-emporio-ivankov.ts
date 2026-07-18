@@ -27,5 +27,30 @@ export const op13EmporioIvankov008: CharacterCard = {
   attribute: "special",
   effect:
     "If your \"Revolutionary Army\" type Character would be K.O.'d by your opponent's effect, you may trash this Character instead.",
+  effects: {
+    replacementEffects: [
+      {
+        replacedEvent: "ko",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "trait",
+              value: "Revolutionary Army",
+              match: "includes",
+            },
+          ],
+        },
+        source: "opponentEffect",
+        replacementAction: {
+          action: "trashThisCard",
+        },
+      },
+    ],
+  },
   i18n: op13EmporioIvankov008I18n,
 };

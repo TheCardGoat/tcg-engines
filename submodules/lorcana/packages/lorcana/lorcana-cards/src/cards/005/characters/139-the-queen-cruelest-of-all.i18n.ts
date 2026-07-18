@@ -21,4 +21,9 @@ export const theQueenCruelestOfAllI18n: Record<Languages, I18nProperties> = {
     version: "La Più Crudele del Reame",
     text: "<Protetto>",
   },
+  es: {
+    name: "La reina",
+    version: "El más cruel de todos",
+    text: "Pabellón",
+  },
 };

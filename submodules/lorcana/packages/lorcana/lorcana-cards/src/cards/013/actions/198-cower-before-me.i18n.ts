@@ -17,4 +17,8 @@ export const cowerBeforeMeI18n: Record<Languages, I18nProperties> = {
     name: "Prostratevi Davanti a Me!",
     text: "Fino a 2 personaggi avversari a tua scelta non possono sfidare durante il loro prossimo turno.",
   },
+  es: {
+    name: "¡Acobardense ante mí!",
+    text: "Hasta 2 personajes contrarios elegidos no pueden desafiar durante su próximo turno.",
+  },
 };

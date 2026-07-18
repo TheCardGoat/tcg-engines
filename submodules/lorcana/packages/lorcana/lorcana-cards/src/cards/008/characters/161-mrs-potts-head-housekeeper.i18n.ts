@@ -41,4 +41,14 @@ export const mrsPottsHeadHousekeeperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora potts",
+    version: "Jefe de limpieza",
+    text: [
+      {
+        title: "LIMPIAR",
+        description: "{E}, destierra uno de tus objetos: roba una carta.",
+      },
+    ],
+  },
 };

@@ -57,4 +57,18 @@ export const zipperAstuteDecoyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cremallera",
+    version: "Señuelo astuto",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "EJECUTAR INTERFERENCIA",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, otro personaje elegido gana Resistencia +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

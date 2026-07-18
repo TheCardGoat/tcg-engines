@@ -50,12 +50,19 @@ export const op11CaponeGangBege048: CharacterCard = {
                 value: 2,
               },
               {
-                filter: "trait",
-                value: "Firetank Pirates",
-              },
-              {
-                filter: "trait",
-                value: "Straw Hat Crew",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Firetank Pirates",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Straw Hat Crew",
+                    match: "includes",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

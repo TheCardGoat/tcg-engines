@@ -45,4 +45,15 @@ export const luciferCunningCatI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lucifer",
+    version: "Gato astuto",
+    text: [
+      {
+        title: "ATRAPADOR DE RATONES",
+        description:
+          "Cuando juegas con este personaje, cada oponente elige y descarta 2 cartas o 1 carta de acción.",
+      },
+    ],
+  },
 };

@@ -121,13 +121,21 @@ export class GatewayClient {
     return this._state;
   }
 
-  /** Send a JSON message over the WebSocket. */
-  send(message: object): void {
-    if (this.ws?.readyState === WebSocket.OPEN) {
-      if (import.meta.env.DEV && !DEBUG_MESSAGE_TYPES.has((message as { type: string }).type)) {
-        console.debug("[WS ⬆ SEND]", message);
-      }
+  /** Send a JSON message over the WebSocket. Returns false when no socket is open. */
+  send(message: object): boolean {
+    if (this.ws?.readyState !== WebSocket.OPEN) {
+      return false;
+    }
+
+    if (import.meta.env.DEV && !DEBUG_MESSAGE_TYPES.has((message as { type: string }).type)) {
+      console.debug("[WS ⬆ SEND]", message);
+    }
+
+    try {
       this.ws.send(JSON.stringify(message));
+      return true;
+    } catch {
+      return false;
     }
   }
 
@@ -150,12 +158,10 @@ export class GatewayClient {
         reject,
         timeoutHandle,
       });
-      try {
-        this.send({ ...message, correlationId });
-      } catch (err) {
+      if (!this.send({ ...message, correlationId })) {
         clearTimeout(timeoutHandle);
         this.pendingAcks.delete(correlationId);
-        throw err;
+        reject("disconnected");
       }
     });
   }

@@ -51,6 +51,16 @@ export const op01Smiley072: CharacterCard = {
               self: true,
             },
             value: 1000,
+            valuePerCardGroup: {
+              size: 1,
+              target: {
+                player: "self",
+                zones: ["hand"],
+                count: {
+                  amount: "all",
+                },
+              },
+            },
             duration: "permanent",
           },
         ],

@@ -21,4 +21,9 @@ export const pegasusSearchingHighAndLowI18n: Record<Languages, I18nProperties> =
     version: "Che Cerca in Cielo e in Terra",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Pegaso",
+    version: "Buscando alto y bajo",
+    text: "Evasivo",
+  },
 };

@@ -32,6 +32,7 @@ export const op03AirDoor094: EventCard = {
           {
             condition: "leaderTrait",
             trait: "CP",
+            match: "includes",
           },
         ],
         actions: [
@@ -46,6 +47,22 @@ export const op03AirDoor094: EventCard = {
               amount: 1,
               upTo: true,
             },
+            revealFilters: [
+              {
+                filter: "trait",
+                value: "CP",
+                match: "includes",
+              },
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 5,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
             revealDestination: "character",
             remainderPosition: "trash",
           },

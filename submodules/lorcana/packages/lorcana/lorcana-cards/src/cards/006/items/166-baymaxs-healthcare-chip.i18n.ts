@@ -65,4 +65,20 @@ export const baymaxsHealthcareChipI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Chip sanitario de Baymax",
+    text: [
+      {
+        title: "10,000 TRÁMITES MÉDICOS",
+        description: "{E} — Elige uno:",
+      },
+      {
+        title: "* Elimina hasta 1 daño del personaje elegido.",
+      },
+      {
+        title:
+          "* Si tienes un personaje Robot en juego, elimina hasta 3 daños del personaje elegido.",
+      },
+    ],
+  },
 };

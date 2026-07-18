@@ -21,4 +21,9 @@ export const luisaMadrigalPushingThroughI18n: Record<Languages, I18nProperties> 
     version: "Caparbia",
     text: "<Sfidante> +2",
   },
+  es: {
+    name: "Luisa Madrigal",
+    version: "Empujando a través",
+    text: "Retador +2",
+  },
 };

@@ -54,4 +54,18 @@ export const lookAtThisFamilyEnchantedI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Mira esta familia",
+    text: [
+      {
+        title: "Cantar juntos 7",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 7 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title:
+          "Mira las 5 primeras cartas de tu mazo. Puedes revelar hasta 2 cartas de personaje y ponerlas en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

@@ -69,6 +69,7 @@ export const op06Hyouzou034: CharacterCard = {
               amount: 1,
             },
             destination: "hand",
+            position: "top",
           },
         ],
         oncePerTurn: true,

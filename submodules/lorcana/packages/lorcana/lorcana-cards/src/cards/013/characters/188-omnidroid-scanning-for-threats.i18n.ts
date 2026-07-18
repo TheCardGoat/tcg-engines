@@ -41,4 +41,14 @@ export const omnidroidScanningForThreatsI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Omnidroide",
+    version: "Escaneo en busca de amenazas",
+    text: [
+      {
+        title: "Configuración de fábrica",
+        description: "Si bien este personaje no tiene daño, obtiene +2 {S}.",
+      },
+    ],
+  },
 };

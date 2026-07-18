@@ -60,4 +60,18 @@ export const chichaDedicatedMotherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Chicha",
+    version: "Madre dedicada",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "UNO EN CAMINO",
+        description:
+          "Durante tu turno, cuando pones una carta en tu tintero, si es la segunda carta que pones en tu tintero este turno, puedes robar una carta.",
+      },
+    ],
+  },
 };

@@ -58,4 +58,18 @@ export const arielSpectacularSingerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ariel",
+    version: "Espectacular cantante",
+    text: [
+      {
+        title: "Cantante 5",
+      },
+      {
+        title: "DEBUT MUSICAL",
+        description:
+          "Cuando juegues con este personaje, mira las 4 cartas superiores de tu mazo. Puedes revelar una tarjeta de canción y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

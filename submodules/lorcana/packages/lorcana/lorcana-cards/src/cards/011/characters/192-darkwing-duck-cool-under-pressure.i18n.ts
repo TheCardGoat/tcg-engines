@@ -73,4 +73,22 @@ export const darkwingDuckCoolUnderPressureI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Pato Ala Oscura",
+    version: "Enfriar bajo presión",
+    text: [
+      {
+        title: "Cambio 5 {I}",
+      },
+      {
+        title: "¡TOMA ESO!",
+        description:
+          "Durante tu turno, siempre que un objeto sea desterrado, puedes pagar 1 {I} para causar 2 daños al personaje elegido.",
+      },
+      {
+        title: "¡CUIDADO CON LOS MALVADOS!",
+        description: "Este personaje puede desafiar a los personajes villanos preparados.",
+      },
+    ],
+  },
 };

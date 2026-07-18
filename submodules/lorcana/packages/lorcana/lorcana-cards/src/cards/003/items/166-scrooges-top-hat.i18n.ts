@@ -40,4 +40,13 @@ export const scroogesTopHatI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El sombrero de copa de Scrooge",
+    text: [
+      {
+        title: "EXPERIENCIA EMPRESARIAL",
+        description: "{E}: pagas 1 {I} menos por el siguiente artículo que juegues en este turno.",
+      },
+    ],
+  },
 };

@@ -57,4 +57,18 @@ export const donaldDuckRubyChampionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Campeón Rubí",
+    text: [
+      {
+        title: "ALTA ENERGÍA",
+        description: "Tus otros personajes de Ruby obtienen +1 {S}.",
+      },
+      {
+        title: "PODEROSA RECOMPENSA",
+        description: "Tus otros personajes Ruby con 7 {S} o más obtienen +1 {L}.",
+      },
+    ],
+  },
 };

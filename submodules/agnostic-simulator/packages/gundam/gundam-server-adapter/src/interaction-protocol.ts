@@ -486,17 +486,6 @@ function deckLookAction(
   const common: InteractionInput[] = [pendingEffectInput(choice.effectId)];
   const promptText = { key: "gundam.choice.deckLook", params: { prompt: choice.prompt } };
 
-  if (choice.acceptOptionalDirectiveIndex !== undefined) {
-    common.push({
-      kind: "boolean",
-      id: `optionalAnswers.${choice.acceptOptionalDirectiveIndex}`,
-      text: { key: "gundam.choice.optional", params: { prompt: choice.prompt } },
-      required: true,
-      trueText: { key: "gundam.choice.yes" },
-      falseText: { key: "gundam.choice.no" },
-    });
-  }
-
   if (choice.legalTutorCardIds.length > 0) {
     common.push(
       entityInput(

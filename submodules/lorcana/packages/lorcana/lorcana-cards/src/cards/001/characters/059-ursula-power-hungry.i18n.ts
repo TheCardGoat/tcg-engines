@@ -45,4 +45,15 @@ export const ursulaPowerHungryI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Úrsula",
+    version: "Hambre de poder",
+    text: [
+      {
+        title: "¡ES DEMASIADO FÁCIL!",
+        description:
+          "Cuando juegas con este personaje, cada oponente pierde 1 conocimiento. Puedes robar una carta por cada conocimiento perdido de esta manera.",
+      },
+    ],
+  },
 };

@@ -71,4 +71,21 @@ export const powerlineWorldsGreatestRockStarEnchantedI18n: Record<Languages, I18
       },
     ],
   },
+  es: {
+    name: "Línea eléctrica",
+    version: "La estrella de rock más grande del mundo",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "Cantante 9",
+      },
+      {
+        title: "TRITURAR",
+        description:
+          "Una vez durante tu turno, cada vez que este personaje cante una canción, mira las 4 cartas superiores de tu mazo. Puedes revelar una carta de canción con un coste de 9 o menos y reproducirla gratis. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

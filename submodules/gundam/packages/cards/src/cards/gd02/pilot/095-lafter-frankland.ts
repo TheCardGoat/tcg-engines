@@ -77,6 +77,7 @@ export const gd02LafterFrankland095: PilotCard = {
                 target: {
                   owner: "self",
                   cardType: "unit",
+                  attributeFilters: [{ attribute: "level", comparison: "lte", value: 5 }],
                 },
               },
             },

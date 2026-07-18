@@ -17,4 +17,8 @@ export const evilComesPreparedI18n: Record<Languages, I18nProperties> = {
     name: "Il Male È Sempre in Agguato",
     text: "Prepara un tuo personaggio a tua scelta. Non può andare all'avventura per il resto di questo turno. Se quel personaggio è un Cattivo, ottieni 1 leggenda.",
   },
+  es: {
+    name: "El mal viene preparado",
+    text: "Listo tu personaje elegido. No pueden realizar misiones durante el resto de este turno. Si se elige un personaje villano, gana 1 conocimiento.",
+  },
 };

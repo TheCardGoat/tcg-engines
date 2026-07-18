@@ -45,4 +45,15 @@ export const aliceCourageousKeyholderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Alicia",
+    version: "Llavero valiente",
+    text: [
+      {
+        title: "ESTA SALIDA",
+        description:
+          "Cuando juegas con este personaje, es posible que ya hayas elegido tu personaje dañado. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

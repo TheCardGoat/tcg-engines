@@ -61,4 +61,19 @@ export const grandmaWuFierceRedPandaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Abuela wu",
+    version: "Panda rojo feroz",
+    text: [
+      {
+        title:
+          "<Cambio temporal> 4 {I} (Puedes pagar 4 {I} para jugar esto encima de uno de tus personajes llamado Grandma Wu. Al final de tu turno, elimina todo el daño de este personaje y devuelve solo esta carta a tu mano).",
+      },
+      {
+        title: "Cargo intimidante",
+        description:
+          "Cada vez que este personaje desafía a otro personaje, ganas 2 conocimientos y cada oponente pierde 2 conocimientos.",
+      },
+    ],
+  },
 };

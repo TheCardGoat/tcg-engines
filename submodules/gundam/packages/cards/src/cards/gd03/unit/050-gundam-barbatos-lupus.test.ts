@@ -30,22 +30,36 @@ describe("Gundam Barbatos Lupus (GD03-050)", () => {
     const trashIds = p1.getCardsInZone("trash");
     const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(p1.activateAbility(unitId, 0, { targets: [...trashIds, enemyId] }));
+    expectSuccess(p1.activateAbility(unitId, 0));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: trashIds,
+      minTargets: 3,
+      maxTargets: 3,
+    });
+    expectSuccess(p1.resolveEffect({ targets: trashIds }));
 
     expect(p1.getCardsInZone("trash")).toHaveLength(0);
     for (const trashId of trashIds) expect(p1.getCardZone(trashId)).toBe("removalArea");
+    expect(p2.getDamage(enemyId)).toBe(0);
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
     expect(p2.getDamage(enemyId)).toBe(2);
   });
 
   it("rejects a trash card without the Tekkadan or Teiwaz trait", () => {
     const eligibleA = createMockUnit({ traits: ["tekkadan"] });
     const eligibleB = createMockUnit({ traits: ["teiwaz"] });
+    const eligibleC = createMockUnit({ traits: ["tekkadan"] });
     const wrongTrait = createMockUnit({ traits: ["cb"] });
     const enemy = createMockUnit({ hp: 5 });
     const engine = GundamTestEngine.create(
       {
         play: [gd03GundamBarbatosLupus050],
-        trash: [eligibleA, eligibleB, wrongTrait],
+        trash: [eligibleA, eligibleB, eligibleC, wrongTrait],
         resourceArea: activeResources(7),
       },
       { play: [enemy] },
@@ -56,8 +70,13 @@ describe("Gundam Barbatos Lupus (GD03-050)", () => {
     const trashIds = p1.getCardsInZone("trash");
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
+    expectSuccess(p1.activateAbility(unitId, 0));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: trashIds.slice(0, 3),
+    });
     expectFailure(
-      p1.activateAbility(unitId, 0, { targets: [...trashIds, enemyId] }),
+      p1.resolveEffect({ targets: [trashIds[0]!, trashIds[1]!, trashIds[3]!] }),
       "ILLEGAL_TARGET",
     );
 

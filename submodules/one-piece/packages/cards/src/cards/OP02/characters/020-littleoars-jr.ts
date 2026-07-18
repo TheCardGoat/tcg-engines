@@ -25,6 +25,5 @@ export const op02LittleoarsJr020: CharacterCard = {
   counter: 1000,
   traits: ["Giant Whitebeard Pirates Allies"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op02LittleoarsJr020I18n,
 };

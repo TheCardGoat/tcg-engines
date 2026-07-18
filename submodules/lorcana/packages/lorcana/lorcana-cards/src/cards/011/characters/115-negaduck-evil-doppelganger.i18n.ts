@@ -17,4 +17,8 @@ export const negaduckEvilDoppelgangerI18n: Record<Languages, I18nProperties> = {
     name: "Negaduck",
     version: "Sosia Malvagio",
   },
+  es: {
+    name: "Negaduck",
+    version: "Doble malvado",
+  },
 };

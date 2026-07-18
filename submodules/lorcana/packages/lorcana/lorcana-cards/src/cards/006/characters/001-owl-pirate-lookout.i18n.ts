@@ -45,4 +45,15 @@ export const owlPirateLookoutI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Búho",
+    version: "Mirador pirata",
+    text: [
+      {
+        title: "BIEN VISTO",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, el personaje contrario elegido obtiene -1 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -42,13 +42,23 @@ export const op08BurnBazooka116: EventCard = {
             value: 4000,
             duration: "thisBattle",
           },
+        ],
+      },
+      {
+        trigger: "counter",
+        optional: true,
+        costs: [{ cost: "addLifeToHand", amount: 1, position: "choice" }],
+        actions: [
           {
-            action: "removeFromLife",
-            player: "self",
-            count: {
-              amount: 1,
+            action: "addToLife",
+            target: {
+              player: "self",
+              zones: ["hand"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "trait", value: "Shandian Warrior", match: "includes" }],
             },
-            destination: "hand",
+            position: "top",
+            faceUp: true,
           },
         ],
       },

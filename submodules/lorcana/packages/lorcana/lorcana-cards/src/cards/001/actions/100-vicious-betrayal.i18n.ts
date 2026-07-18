@@ -17,4 +17,8 @@ export const viciousBetrayalI18n: Record<Languages, I18nProperties> = {
     name: "Vicious Betrayal",
     text: "Chosen character gets +2 {S} this turn. If a Villain character is chosen, they get +3 {S} instead.",
   },
+  es: {
+    name: "Traición viciosa",
+    text: "El personaje elegido obtiene +2 {S} este turno. Si se elige un personaje villano, en su lugar obtiene +3 {S}.",
+  },
 };

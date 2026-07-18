@@ -57,4 +57,18 @@ export const goGoTomagoDartingDynamoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ve, ve, tomago",
+    version: "Dínamo de lanzamiento",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "DEJA DE LLORAR MUJER ARRIBA",
+        description:
+          "Cuando juegas con este personaje, puedes pagar 2 {I} para obtener una sabiduría equivalente al daño causado al personaje contrario elegido.",
+      },
+    ],
+  },
 };

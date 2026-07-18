@@ -26,7 +26,7 @@ export const op11Streusen074: CharacterCard = {
   traits: ["Big Mom Pirates"],
   attribute: "slash",
   effect:
-    "[Activate: Main] [Once Per Turn] DON!! 1, You may rest this Character: Choose a cost and reveal 1 card from the top of your opponent's deck. If the revealed card has the chosen cost, rest up to 1 of your opponent's Characters with a cost of 4 or less.",
+    "[Activate: Main] [Once Per Turn] DON!! −1, You may rest this Character: Choose a cost and reveal 1 card from the top of your opponent's deck. If the revealed card has the chosen cost, rest up to 1 of your opponent's Characters with a cost of 4 or less.",
   effects: {
     effects: [
       {
@@ -42,22 +42,28 @@ export const op11Streusen074: CharacterCard = {
         ],
         actions: [
           {
-            action: "rest",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 4,
+            action: "guessTopDeckCost",
+            player: "opponent",
+            onMatch: [
+              {
+                action: "rest",
+                target: {
+                  player: "opponent",
+                  zones: ["character"],
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                  filters: [
+                    {
+                      filter: "cost",
+                      comparison: "lte",
+                      value: 4,
+                    },
+                  ],
                 },
-              ],
-            },
+              },
+            ],
           },
         ],
         optional: true,

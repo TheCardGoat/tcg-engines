@@ -93,9 +93,30 @@ Schema: [`schema.md`](./schema.md). Demoted/expired entries: [`archive.md`](./ar
 - **promote_when**: stable across the next two audit batches without contradiction.
 - **demote_at**: 2026-06-20
 
+### C-04 — team-name-shift-targets
+
+- **pattern**: A team card whose Shift reminder text names alternatives must use `shift("Name A or Name B", cost)` rather than plain `shift(cost)`, which only permits an exact same-name base.
+- **hits**: 2 (most recent: 2026-07-15)
+- **promote_when**: ≥3 distinct team cards need the explicit alternative-name target.
+- **demote_at**: 2026-09-13
+
 ## Observations
 
 Recent observations move to `archive.md` after 30 days unless they back a Candidate or Promoted Rule. The full prior log lives in [`archive.md`](./archive.md).
+
+### O-2026-07-13-team-name-shift-targets
+
+- **signal**: Winnie the Pooh & Piglet - Hunny Mages was authored with plain `shift(3)`, so Shift only targeted exact same-name cards instead of the printed Winnie the Pooh or Piglet bases. Existing set 13 examples use structured `shift("Name A or Name B", cost)` for team cards with either-name Shift.
+- **impact**: Future ampersand/team-name Shift reports should compare the ability helper's structured target string against printed reminder text before changing engine target resolution.
+- **verification**: `bun test packages/lorcana/lorcana-cards/src/cards/013/characters/062-winnie-the-pooh-piglet-hunny-mages.test.ts`; `bun run --cwd packages/lorcana/lorcana-cards check-types`
+- **candidate_for**: new
+
+### O-2026-07-15-carl-russell-shift-targets
+
+- **signal**: Carl Fredricksen & Russell - Intrepid Explorers likewise used plain `shift(4)`, which rejected the printed Carl Fredricksen or Russell bases. `shift("Carl Fredricksen or Russell", 4)` uses the existing named-alternative resolver, and regression tests now cover both bases. Darkwing Duck & Launchpad already used this shape and passes both target cases.
+- **impact**: Reinforces that team-name Shift defects are card-authoring drift, not an engine support gap, when the named-alternative resolver is already present.
+- **verification**: `bun test packages/lorcana/lorcana-cards/src/cards/013/characters/098-carl-fredricksen-russell-intrepid-explorers.test.ts packages/lorcana/lorcana-cards/src/cards/013/characters/165-darkwing-duck-launchpad-st-canards-finest.test.ts`; `bun run --cwd packages/lorcana/lorcana-cards check-types`
+- **candidate_for**: C-04
 
 ### O-2026-05-24-partial-mandatory-target-selection
 

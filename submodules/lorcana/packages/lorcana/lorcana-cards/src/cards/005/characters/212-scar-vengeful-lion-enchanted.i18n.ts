@@ -57,4 +57,18 @@ export const scarVengefulLionEnchantedI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Cicatriz",
+    version: "León vengativo",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "LA VIDA NO ES JUSTA, ¿CIERTO?",
+        description:
+          "Siempre que uno de tus personajes desafíe a un personaje dañado, puedes robar una carta.",
+      },
+    ],
+  },
 };

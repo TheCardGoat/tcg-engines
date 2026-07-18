@@ -45,4 +45,15 @@ export const kenaiBigBrotherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kenai",
+    version: "Gran Hermano",
+    text: [
+      {
+        title: "HERMANOS PARA SIEMPRE",
+        description:
+          "Mientras este personaje esté ejercido, tus personajes llamados Koda no pueden ser desafiados.",
+      },
+    ],
+  },
 };

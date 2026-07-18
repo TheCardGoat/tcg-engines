@@ -1,16 +1,21 @@
 // @vitest-environment jsdom
 
-import { describe, test } from "vite-plus/test";
+import { describe, expect, test } from "vite-plus/test";
 import {
   embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
   embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
   embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
+  welcomeToNightCityRetailAppetiteForDestruction,
+  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailFieldOperator,
+  welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor,
   welcomeToNightCityRetailIndustrialAssembly,
   welcomeToNightCityRetailOverTheEdge,
+  welcomeToNightCityRetailPepeNajarroWorkingDoubles,
+  welcomeToNightCityRetailRitaWheelerNoStupidQuestions,
   welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch,
 } from "@tcg/cyberpunk-cards";
-import { CYBERPUNK_P1 } from "../../../../cyberpunk-simulator-pom";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../../../../cyberpunk-simulator-pom";
 import { ensureJsdomAnimationSupport } from "../../../../fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
 import {
   createTestingLibraryCyberpunkSimulatorPom,
@@ -78,6 +83,44 @@ describe("new retail card abilities visual fixture", () => {
         CYBERPUNK_P1,
         welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch.id,
       );
+      await pom.getCardInZoneByDefinitionId(
+        "hand",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailAppetiteForDestruction.id,
+      );
+      const hanako = await pom.getCardInZoneByDefinitionId(
+        "legendArea",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor.id,
+      );
+      await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailPepeNajarroWorkingDoubles.id,
+      );
+      await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailRitaWheelerNoStupidQuestions.id,
+      );
+      const corpoSecurity = await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P2,
+        welcomeToNightCityRetailCorpoSecurity.id,
+      );
+      expect(
+        view.container.querySelector(
+          `[data-testid="active-effects-rail"] [data-source-card-id="${corpoSecurity.instanceId}"]`,
+        ),
+      ).toBeNull();
+
+      await pom.activateAbility(hanako.instanceId, 0, CYBERPUNK_P1);
+      const resolvingCard = view.container.querySelector<HTMLElement>(
+        '[data-testid="resolving-program"]',
+      );
+      if (!resolvingCard?.textContent?.includes("Legend ability")) {
+        throw new Error("Expected Hanako's activated ability overlay to say Legend ability.");
+      }
     } finally {
       view.unmount();
     }

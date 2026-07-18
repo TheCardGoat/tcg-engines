@@ -17,4 +17,8 @@ export const akelaWolfPackElderI18n: Record<Languages, I18nProperties> = {
     name: "Akela",
     version: "Anziano del Branco di Lupi",
   },
+  es: {
+    name: "Akela",
+    version: "Anciano de la manada de lobos",
+  },
 };

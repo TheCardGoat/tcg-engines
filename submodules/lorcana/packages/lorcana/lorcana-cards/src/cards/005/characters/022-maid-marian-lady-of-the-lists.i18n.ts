@@ -45,4 +45,15 @@ export const maidMarianLadyOfTheListsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Criada mariana",
+    version: "Dama de las listas",
+    text: [
+      {
+        title: "SI LE AGRADE A LA SEÑORA",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido obtiene -5 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

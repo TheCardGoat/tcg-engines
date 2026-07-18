@@ -25,6 +25,5 @@ export const op05Sterry083: CharacterCard = {
   counter: 1000,
   traits: ["Goa Kingdom"],
   attribute: "wisdom",
-  effect: "NULL",
   i18n: op05Sterry083I18n,
 };

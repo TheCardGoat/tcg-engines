@@ -17,4 +17,8 @@ export const mulanArmoredFighterI18n: Record<Languages, I18nProperties> = {
     name: "Mulan",
     version: "Combattente Corazzata",
   },
+  es: {
+    name: "Mulán",
+    version: "Luchador blindado",
+  },
 };

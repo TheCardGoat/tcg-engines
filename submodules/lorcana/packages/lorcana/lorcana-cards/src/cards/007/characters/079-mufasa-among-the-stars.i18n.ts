@@ -65,4 +65,19 @@ export const mufasaAmongTheStarsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mufasa",
+    version: "Entre las estrellas",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "Resistir +1",
+      },
+    ],
+  },
 };

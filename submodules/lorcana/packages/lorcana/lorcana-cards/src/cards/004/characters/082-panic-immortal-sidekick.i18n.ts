@@ -45,4 +45,15 @@ export const panicImmortalSidekickI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pánico",
+    version: "Compañero inmortal",
+    text: [
+      {
+        title: "INFORMES PARA EL DEBER",
+        description:
+          "Mientras este personaje esté ejercido, si tienes un personaje llamado Pain en juego, tus personajes villanos no podrán ser desafiados.",
+      },
+    ],
+  },
 };

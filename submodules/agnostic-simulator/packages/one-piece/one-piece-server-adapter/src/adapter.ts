@@ -87,11 +87,26 @@ export const onePieceServerAdapter: GameAdapter = {
       if (!hasCard(entry.cardId)) return false;
       return getCard(entry.cardId).cardType === "leader";
     }).length;
+    const copiesByCanonicalId = new Map<string, number>();
+    for (const entry of deck) {
+      const canonicalId = onePieceCanonicalByPublicId.get(entry.cardId) ?? entry.cardId;
+      copiesByCanonicalId.set(
+        canonicalId,
+        (copiesByCanonicalId.get(canonicalId) ?? 0) + entry.quantity,
+      );
+    }
+    const overCopyLimit = [...copiesByCanonicalId].filter(([canonicalId, quantity]) => {
+      if (quantity <= 4 || !hasCard(canonicalId)) return false;
+      return !getCard(canonicalId).effects?.deckBuildingRules?.some(
+        (rule) => rule.rule === "unlimitedCopies",
+      );
+    });
+    const copyLimitPassed = overCopyLimit.length === 0;
 
     return {
       formatId,
       label: "Standard",
-      valid: totalCount > 0 && leaderCount === 1,
+      valid: totalCount > 0 && leaderCount === 1 && copyLimitPassed,
       rules: [
         {
           kind: "deck-size",
@@ -106,6 +121,16 @@ export const onePieceServerAdapter: GameAdapter = {
             leaderCount === 1
               ? "Deck has exactly 1 leader"
               : `Deck must have exactly 1 leader (found ${leaderCount})`,
+        },
+        {
+          kind: "copy-limit",
+          passed: copyLimitPassed,
+          message: copyLimitPassed
+            ? "No card exceeds its allowed copy limit"
+            : `Copy limit exceeded: ${overCopyLimit
+                .map(([canonicalId, quantity]) => `${canonicalId} x${quantity}`)
+                .join(", ")}`,
+          details: overCopyLimit.map(([canonicalId, quantity]) => ({ canonicalId, quantity })),
         },
       ],
     };

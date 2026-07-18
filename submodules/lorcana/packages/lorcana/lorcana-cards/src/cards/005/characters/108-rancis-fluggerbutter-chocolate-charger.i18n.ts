@@ -17,4 +17,8 @@ export const rancisFluggerbutterChocolateChargerI18n: Record<Languages, I18nProp
     name: "Rancis Fluggerbutter",
     version: "Velocista di Cioccolato",
   },
+  es: {
+    name: "Rancis Fluggerbutter",
+    version: "Cargador de chocolate",
+  },
 };

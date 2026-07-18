@@ -72,4 +72,21 @@ export const darkwingDuckLaunchpadStCanardsFinestEnchantedI18n: Record<Languages
         },
       ],
     },
+    es: {
+      name: "Pato Darkwing y plataforma de lanzamiento",
+      version: "Lo mejor de St. Canard",
+      text: [
+        {
+          title: "<Mayús> 5 {I}",
+        },
+        {
+          title: "<Guardián>",
+        },
+        {
+          title: "Postura de victoria",
+          description:
+            "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, gana 2 conocimientos.",
+        },
+      ],
+    },
   };

@@ -45,4 +45,15 @@ export const fangRiverCityI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Colmillo",
+    version: "Ciudad del río",
+    text: [
+      {
+        title: "RODEADO DE AGUA",
+        description:
+          "Los personajes obtienen protección y evasión mientras están aquí. (Los oponentes no pueden elegirlos excepto para desafiarlos. Solo los personajes con Evasivo pueden desafiarlos).",
+      },
+    ],
+  },
 };

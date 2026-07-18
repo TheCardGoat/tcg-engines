@@ -45,4 +45,15 @@ export const goofyDeterminedTravelerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "Viajero decidido",
+    text: [
+      {
+        title: "ROCAS QUE CAEN",
+        description:
+          "Siempre que este personaje realice una misión, si jugaste con otro personaje este turno, puedes causar 1 daño al personaje o ubicación elegida.",
+      },
+    ],
+  },
 };

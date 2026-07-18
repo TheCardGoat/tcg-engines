@@ -34,4 +34,8 @@ export const iWontGiveInI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "No me rendiré",
+    text: "Devuelve a tu mano una carta de personaje con coste 2 o menos de tu descarte.",
+  },
 };

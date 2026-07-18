@@ -45,4 +45,15 @@ export const henryJWaternooseIiiChiefExecutiveOfficerI18n: Record<Languages, I18
       },
     ],
   },
+  es: {
+    name: "Henry J. Waternoose III",
+    version: "Director ejecutivo",
+    text: [
+      {
+        title: "La conclusión",
+        description:
+          "Si bien tienes más cartas en tu tintero que cada jugador contrario, este personaje obtiene +2 {L} y gana <Ward>.",
+      },
+    ],
+  },
 };

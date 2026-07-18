@@ -33,10 +33,37 @@ export const op04Nami011: CharacterCard = {
         trigger: "whenAttacking",
         actions: [
           {
-            action: "rearrangeDeck",
+            action: "revealTopDeckCard",
             player: "self",
-            count: 1,
-            position: "top",
+            conditional: {
+              filters: [
+                {
+                  filter: "cardCategory",
+                  value: "character",
+                },
+                {
+                  filter: "basePower",
+                  comparison: "gte",
+                  value: 6000,
+                },
+              ],
+              actions: [
+                {
+                  action: "modifyPower",
+                  target: {
+                    player: "self",
+                    zones: ["character"],
+                    count: {
+                      amount: 1,
+                    },
+                    self: true,
+                  },
+                  value: 3000,
+                  duration: "thisTurn",
+                },
+              ],
+            },
+            finalPosition: "bottom",
           },
         ],
       },

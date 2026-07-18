@@ -45,4 +45,15 @@ export const antoniosJaguarFaithfulCompanionI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "El jaguar de Antonio",
+    version: "Fiel compañero",
+    text: [
+      {
+        title: "¿QUIERES IR A DÓNDE?",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje llamado Antonio Madrigal en juego, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

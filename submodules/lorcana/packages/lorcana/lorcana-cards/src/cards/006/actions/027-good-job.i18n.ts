@@ -17,4 +17,8 @@ export const goodJobI18n: Record<Languages, I18nProperties> = {
     name: "Ben fatto!",
     text: "Un personaggio a tua scelta riceve +1 {L} per questo turno.",
   },
+  es: {
+    name: "¡Buen trabajo!",
+    text: "El personaje elegido obtiene +1 {L} este turno.",
+  },
 };

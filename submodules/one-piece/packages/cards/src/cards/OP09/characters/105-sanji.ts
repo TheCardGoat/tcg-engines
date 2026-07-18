@@ -29,5 +29,38 @@ export const op09Sanji105: CharacterCard = {
   attribute: "strike",
   effect:
     '[Trigger] If your Leader has the "Egghead" type, add up to 1 card from the top of your deck to the top of your Life cards. Then, trash 2 cards from your hand.',
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Egghead",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "addToLife",
+            target: {
+              player: "self",
+              zones: ["deck"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            position: "top",
+          },
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: 2,
+          },
+        ],
+      },
+    ],
+  },
   i18n: op09Sanji105I18n,
 };

@@ -46,6 +46,13 @@ export const op09Koala103: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
+        ],
         actions: [
           {
             action: "play",
@@ -66,10 +73,18 @@ export const op09Koala103: CharacterCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
                 value: "character",
+              },
+            ],
+            thenActions: [
+              {
+                action: "draw",
+                player: "self",
+                amount: 1,
               },
             ],
           },

@@ -45,4 +45,15 @@ export const peteWrestlingChampI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pete",
+    version: "Campeón de lucha libre",
+    text: [
+      {
+        title: "RE-PETE",
+        description:
+          "{E}: revela la carta superior de tu mazo. Si es una carta de personaje llamada Pete, puedes jugarla gratis.",
+      },
+    ],
+  },
 };

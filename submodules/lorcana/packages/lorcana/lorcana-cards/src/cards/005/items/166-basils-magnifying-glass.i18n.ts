@@ -41,4 +41,14 @@ export const basilsMagnifyingGlassI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lupa de albahaca",
+    text: [
+      {
+        title: "ENCUENTRA LO QUE ESTÁ OCULTO",
+        description:
+          "{E}, 2 {I}: mira las 3 primeras cartas de tu mazo. Puedes revelar una carta de objeto y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

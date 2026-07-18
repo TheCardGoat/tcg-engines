@@ -21,4 +21,9 @@ export const sheriffOfNottinghamVineSlayerI18n: Record<Languages, I18nProperties
     version: "Sterminatore di Viticci",
     text: "<Sfidante> +3",
   },
+  es: {
+    name: "Sheriff de Nottingham",
+    version: "Asesino de vid",
+    text: "Retador +3",
+  },
 };

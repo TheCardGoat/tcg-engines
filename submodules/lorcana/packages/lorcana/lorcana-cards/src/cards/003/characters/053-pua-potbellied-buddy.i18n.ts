@@ -44,4 +44,14 @@ export const puaPotbelliedBuddyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Puá",
+    version: "Amigo barrigón",
+    text: [
+      {
+        title: "SIEMPRE AHI",
+        description: "Cuando este personaje sea desterrado, puedes barajar esta carta en tu mazo.",
+      },
+    ],
+  },
 };

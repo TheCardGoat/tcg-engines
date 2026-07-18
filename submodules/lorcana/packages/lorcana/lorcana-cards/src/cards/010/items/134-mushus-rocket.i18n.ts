@@ -60,4 +60,18 @@ export const mushusRocketI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El cohete de Mushu",
+    text: [
+      {
+        title: "NECESITO POTENCIA DE FUEGO",
+        description:
+          "Cuando juegas este objeto, el personaje elegido gana Rush este turno. (Pueden desafiar el turno en el que se juega).",
+      },
+      {
+        title: "ENGANCHE UN VIAJE 2",
+        description: "{I}, destierra este objeto: el personaje elegido gana Rush este turno.",
+      },
+    ],
+  },
 };

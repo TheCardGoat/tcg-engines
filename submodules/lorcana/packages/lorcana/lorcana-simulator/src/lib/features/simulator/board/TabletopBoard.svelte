@@ -2176,6 +2176,13 @@ $effect(() => {
     transform: translateY(var(--hand-tuck-distance));
   }
 
+  /* A dense item shelf needs a clear interaction band. Only move the desktop
+     hands farther toward the screen edges while that shelf has real overflow. */
+  :global(.tabletop-container:has(.item-scroll-button--desktop)) {
+    --top-hand-screen-offset: -4.5rem;
+    --bottom-hand-screen-offset: 4.5rem;
+  }
+
   .desktop-hand-toggle {
     position: absolute;
     left: 50%;

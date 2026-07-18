@@ -65,4 +65,20 @@ export const trampStreetsmartDogI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Vagabundo",
+    version: "Perro callejero",
+    text: [
+      {
+        title: "AHORA ES",
+        description:
+          "UNA FIESTA Por cada personaje que tengas en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "¿CÓMO ESTÁN LAS Elecciones?",
+        description:
+          "Cuando juegas con este personaje, puedes robar una carta por cada otro personaje que tengas en juego, luego elegir y descartar esa cantidad de cartas.",
+      },
+    ],
+  },
 };

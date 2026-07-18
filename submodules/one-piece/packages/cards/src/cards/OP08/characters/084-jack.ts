@@ -83,6 +83,24 @@ export const op08Jack084: CharacterCard = {
         optional: true,
       },
     ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 4,
+          },
+        ],
+      },
+    ],
   },
   i18n: op08Jack084I18n,
 };

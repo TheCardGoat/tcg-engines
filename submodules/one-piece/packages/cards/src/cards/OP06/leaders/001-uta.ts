@@ -45,6 +45,13 @@ export const op06Uta001: LeaderCard = {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [{ filter: "trait", value: "FILM", match: "includes" }],
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

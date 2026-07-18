@@ -31,12 +31,6 @@ export const op08DrHiriluk016: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderName",
-            name: "Tony Tony.Chopper",
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -60,6 +54,10 @@ export const op08DrHiriluk016: CharacterCard = {
             },
             value: 2000,
             duration: "thisTurn",
+            condition: {
+              condition: "leaderName",
+              name: "Tony Tony.Chopper",
+            },
           },
         ],
         optional: true,

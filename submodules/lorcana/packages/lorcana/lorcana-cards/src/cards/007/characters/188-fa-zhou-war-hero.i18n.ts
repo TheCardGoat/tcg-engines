@@ -45,4 +45,15 @@ export const faZhouWarHeroI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Fa Zhou",
+    version: "Héroe de guerra",
+    text: [
+      {
+        title: "EJERCICIOS DE ENTRENAMIENTO",
+        description:
+          "Siempre que uno de tus personajes desafíe a otro personaje, si es el segundo desafío de este turno, gana 3 conocimientos.",
+      },
+    ],
+  },
 };

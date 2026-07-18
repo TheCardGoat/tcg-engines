@@ -62,4 +62,20 @@ export const mrSmeeCaptainOfTheJollyRogerI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Señor smee",
+    version: "Capitán del Jolly Roger",
+    text: [
+      {
+        title: "Shift 4",
+        description:
+          "(Puedes pagar 4 {I} para jugar esto encima de uno de tus personajes llamado Sr. Smee).",
+      },
+      {
+        title: "LEVANTE LOS COLORES",
+        description:
+          "Cuando juegas con este personaje, puedes infligir daño al personaje elegido igual al número de tus otros personajes piratas en juego.",
+      },
+    ],
+  },
 };

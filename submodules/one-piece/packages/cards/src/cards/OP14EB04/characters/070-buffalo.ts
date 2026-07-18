@@ -29,6 +29,34 @@ export const op14eb04Buffalo070: CharacterCard = {
     "When this Character becomes rested by your opponent's Character's effect, you may return 1 DON!! card from your field to your DON!! deck. If you do, set this Character as active.\n[Blocker]",
   effects: {
     keywords: ["blocker"],
+    effects: [
+      {
+        trigger: "whenBecomesRested",
+        eventFilter: { targetSelf: true },
+        source: "opponentCharacterEffect",
+        actions: [
+          {
+            action: "returnDon",
+            player: "self",
+            amount: 1,
+            thenActions: [
+              {
+                action: "setActive",
+                target: {
+                  player: "self",
+                  zones: ["character"],
+                  count: {
+                    amount: 1,
+                  },
+                  self: true,
+                },
+              },
+            ],
+          },
+        ],
+        optional: true,
+      },
+    ],
   },
   i18n: op14eb04Buffalo070I18n,
 };

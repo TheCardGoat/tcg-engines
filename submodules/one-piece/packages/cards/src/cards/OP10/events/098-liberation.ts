@@ -57,6 +57,38 @@ export const op10Liberation098: EventCard = {
               ],
             },
           },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "baseCost", comparison: "lte", value: 4 }],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "negateEffects",
+            target: {
+              player: "opponent",
+              zones: ["leader"],
+              count: { amount: 1, upTo: true },
+            },
+            duration: "thisTurn",
+          },
+          {
+            action: "negateEffects",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+            },
+            duration: "thisTurn",
+          },
         ],
       },
     ],

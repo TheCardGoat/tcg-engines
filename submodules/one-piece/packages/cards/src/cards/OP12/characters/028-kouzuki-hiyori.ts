@@ -31,10 +31,13 @@ export const op12KouzukiHiyori028: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
+        costs: [
           {
-            condition: "leaderName",
-            name: "Roronoa Zoro",
+            cost: "restDon",
+            amount: 1,
+          },
+          {
+            cost: "restThisCard",
           },
         ],
         actions: [
@@ -51,12 +54,34 @@ export const op12KouzukiHiyori028: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "attribute",
-                value: "slash",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "attribute",
+                    value: "slash",
+                  },
+                  {
+                    filter: "allOf",
+                    filters: [
+                      {
+                        filter: "color",
+                        value: "green",
+                      },
+                      {
+                        filter: "cardCategory",
+                        value: "event",
+                      },
+                    ],
+                  },
+                ],
               },
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",
+            condition: {
+              condition: "leaderName",
+              name: "Roronoa Zoro",
+            },
           },
         ],
         optional: true,

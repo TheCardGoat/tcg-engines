@@ -45,4 +45,15 @@ export const liloBundledUpI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lilo",
+    version: "Abrigado",
+    text: [
+      {
+        title: "CAPAS EXTRA",
+        description:
+          "Durante el turno de cada oponente, la primera vez que este personaje recibiría daño, en su lugar no recibe daño.",
+      },
+    ],
+  },
 };

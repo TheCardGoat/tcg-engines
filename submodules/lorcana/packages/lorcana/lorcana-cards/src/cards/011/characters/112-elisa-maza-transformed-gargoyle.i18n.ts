@@ -62,4 +62,18 @@ export const elisaMazaTransformedGargoyleI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Elisa Maza",
+    version: "Gárgola transformada",
+    text: [
+      {
+        title: "SIEMPRE FUERTE",
+        description: "El {S} de tus personajes no se puede reducir por debajo de su valor impreso.",
+      },
+      {
+        title: "PIEDRA DE DÍA",
+        description: "Si tienes 3 o más cartas en tu mano, este personaje no puede prepararse.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const bashfulAdoringKnightI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tímido",
+    version: "Caballero adorador",
+    text: [
+      {
+        title: "IMPRESIONAR A LA PRINCESA",
+        description:
+          "Mientras tengas un personaje llamado Blancanieves en juego, este personaje gana Guardaespaldas. (Un personaje contrario que desafíe a uno de tus personajes debe elegir uno con Bodyguard si puede).",
+      },
+    ],
+  },
 };

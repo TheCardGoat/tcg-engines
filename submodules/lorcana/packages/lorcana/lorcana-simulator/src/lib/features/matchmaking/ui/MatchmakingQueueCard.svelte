@@ -25,9 +25,9 @@
   import Layers from '@lucide/svelte/icons/layers';
   import Loader from '@lucide/svelte/icons/loader-circle';
   import LogIn from '@lucide/svelte/icons/log-in';
-  import Swords from '@lucide/svelte/icons/swords';
   import Timer from '@lucide/svelte/icons/timer';
   import ShieldAlert from '@lucide/svelte/icons/shield-alert';
+  import Swords from '@lucide/svelte/icons/swords';
   import Trophy from '@lucide/svelte/icons/trophy';
   import Users from '@lucide/svelte/icons/users';
   import WifiOff from '@lucide/svelte/icons/wifi-off';
@@ -42,6 +42,7 @@
     wsConnected: boolean;
     selectedQueueMode: QueueStatsMode;
     selectedMatchType: 'ranked' | 'casual' | 'testing';
+    season?: { name: string; startsAt: string; endsAt: string | null } | null;
     rankedEnabled: boolean;
     testingEnabled: boolean;
     cards: QueueCardView[];
@@ -65,7 +66,12 @@
     opponentAccepted: boolean;
     acceptTimeRemainingMs: number;
     colorPreferenceCount: number;
-    modeStats: ReadonlyArray<{ mode: QueueStatsMode; inQueue: number; liveMatches: number }>;
+    modeStats: ReadonlyArray<{
+      mode: QueueStatsMode;
+      available: boolean;
+      inQueue: number;
+      liveMatches: number;
+    }>;
     matchTypeStats: ReadonlyArray<{
       matchType: 'ranked' | 'casual';
       inQueue: number;
@@ -91,6 +97,7 @@
     wsConnected,
     selectedQueueMode,
     selectedMatchType,
+    season = null,
     rankedEnabled,
     testingEnabled,
     cards,
@@ -146,6 +153,20 @@
 
   function formatLabel(format: QueueStatsFormat): string {
     return m[queueFormatLabelKey(format)]({});
+  }
+
+  function formatSeasonDate(iso: string): string {
+    return new Intl.DateTimeFormat(undefined, {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }).format(new Date(iso));
+  }
+  function formatSeasonEndDate(iso: string): string {
+    const date = new Date(iso);
+    date.setUTCDate(date.getUTCDate() - 1);
+    return formatSeasonDate(date.toISOString());
   }
 </script>
 
@@ -262,8 +283,18 @@
     {/if}
   </div>
 
-  <!-- BO1 / BO3 selector — hidden for ranked (BO3 only) -->
-  {#if selectedMatchType !== 'ranked'}
+  {#if season}
+    <p class="px-1 text-center text-xs text-slate-400">
+      {m['sim.matchmaking.matchmaking.seasonSchedule']({
+        season: season.name,
+        startsAt: formatSeasonDate(season.startsAt),
+        endsAt: season.endsAt
+          ? formatSeasonEndDate(season.endsAt)
+          : m['sim.matchmaking.matchmaking.seasonOngoing']({}),
+      })}
+    </p>
+  {/if}
+
   <div class="flex items-center justify-end gap-3">
     <div
       class="inline-flex w-full rounded-full border border-white/10 bg-black/35 p-1 sm:w-auto"
@@ -282,10 +313,12 @@
                   'min-w-[6rem] rounded-full px-3 py-2 text-sm font-semibold transition-colors',
                   isActive
                     ? 'bg-white text-slate-950'
-                    : 'text-slate-300 hover:bg-white/8 hover:text-white',
+                    : ms.available
+                      ? 'text-slate-300 hover:bg-white/8 hover:text-white'
+                      : 'cursor-not-allowed text-slate-500 opacity-60',
                 )}
                 aria-selected={isActive}
-                disabled={selectionDisabled}
+                disabled={selectionDisabled || !ms.available}
                 {...props}
                 onclick={() => onSelectQueueMode(ms.mode)}
               >
@@ -318,7 +351,6 @@
       {/each}
     </div>
   </div>
-  {/if}
 
   <div class="space-y-4">
       {#if status === 'match_found'}
@@ -653,8 +685,6 @@
                   <!-- Format icon — purely decorative -->
                   {#if card.definition.format === 'infinity'}
                     <InfinityIcon class="size-8 shrink-0 text-sky-300/50" aria-hidden="true" />
-                  {:else if card.definition.format === 'attack-of-the-vine'}
-                    <Swords class="size-8 shrink-0 text-emerald-300/50" aria-hidden="true" />
                   {:else}
                     <Layers class="size-8 shrink-0 text-amber-300/50" aria-hidden="true" />
                   {/if}
@@ -898,7 +928,7 @@
 
                             <div class="rounded-lg border border-sky-300/15 bg-sky-400/8 px-3 py-2 text-xs text-sky-100/85">
                               {#if journey.bracket === 'placement'}
-                                Complete 20 ranked games in this format to reveal MMR.
+                                Complete {journey.progressMax} ranked games in this format to reveal MMR.
                               {:else if journey.mmrToMaster != null && journey.mmrToMaster > 0}
                                 Master needs 80 wins and 1800 MMR. Your wins are ready; keep climbing MMR.
                               {:else if journey.nextBracketLabel}

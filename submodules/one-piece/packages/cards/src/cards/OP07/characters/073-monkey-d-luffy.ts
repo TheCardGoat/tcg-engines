@@ -30,15 +30,6 @@ export const op07MonkeyDLuffy073: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "zoneCount",
-            player: "opponent",
-            zone: "character",
-            comparison: "gte",
-            value: 3,
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -55,6 +46,13 @@ export const op07MonkeyDLuffy073: CharacterCard = {
                 amount: 1,
               },
               self: true,
+            },
+            condition: {
+              condition: "zoneCount",
+              player: "opponent",
+              zone: "character",
+              comparison: "gte",
+              value: 3,
             },
           },
         ],

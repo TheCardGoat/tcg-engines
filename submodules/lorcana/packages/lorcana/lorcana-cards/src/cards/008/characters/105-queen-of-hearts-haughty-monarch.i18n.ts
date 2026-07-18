@@ -45,4 +45,15 @@ export const queenOfHeartsHaughtyMonarchI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Reina de corazones",
+    version: "Monarca altivo",
+    text: [
+      {
+        title: "¡CUENTA DESCUENTO!",
+        description:
+          "Mientras haya 5 o más personajes con daño en juego, este personaje obtiene +3 {L}.",
+      },
+    ],
+  },
 };

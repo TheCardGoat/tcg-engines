@@ -28,4 +28,19 @@ export const ratigansMarvelousTrapI18n: Record<Languages, I18nProperties> = {
     name: "Ratigan's Marvelous Trap",
     text: "Snap! Boom! Twang! Banish this item — Each opponent loses 2 lore.",
   },
+  es: {
+    name: "La maravillosa trampa de Ratigan",
+    text: [
+      {
+        title: "¡QUEBRAR!",
+      },
+      {
+        title: "¡AUGE!",
+      },
+      {
+        title: "¡TAÑIDO!",
+        description: "Desterrar este objeto: cada oponente pierde 2 conocimientos.",
+      },
+    ],
+  },
 };

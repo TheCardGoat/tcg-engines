@@ -57,4 +57,18 @@ export const theMusesProclaimersOfHeroesI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Las musas",
+    version: "Proclamadores de héroes",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "LA VERDAD DEL EVANGELIO",
+        description:
+          "Siempre que reproduzcas una canción, podrás devolver el personaje elegido con 2 {S} o menos a la mano de su jugador.",
+      },
+    ],
+  },
 };

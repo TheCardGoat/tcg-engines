@@ -44,4 +44,15 @@ export const petePirateScoundrelI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pete",
+    version: "Sinvergüenza pirata",
+    text: [
+      {
+        title: "ROBO Y SAQUEO",
+        description:
+          "Siempre que realices una acción que no sea una canción, podrás desterrar el elemento elegido.",
+      },
+    ],
+  },
 };

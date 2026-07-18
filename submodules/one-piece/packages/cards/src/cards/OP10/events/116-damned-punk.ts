@@ -31,6 +31,12 @@ export const op10DamnedPunk116: EventCard = {
         trigger: "main",
         actions: [
           {
+            action: "lookAtLife",
+            player: "either",
+            position: "topOrBottom",
+            upTo: true,
+          },
+          {
             action: "ko",
             target: {
               player: "opponent",
@@ -48,6 +54,13 @@ export const op10DamnedPunk116: EventCard = {
               ],
             },
           },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          { action: "draw", player: "self", amount: 2 },
+          { action: "trashFromHand", player: "self", amount: 1 },
         ],
       },
     ],

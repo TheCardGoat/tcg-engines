@@ -17,4 +17,8 @@ export const plutoMickeysCleverFriendI18n: Record<Languages, I18nProperties> = {
     name: "Pluto",
     version: "Amico Sveglio di Topolino",
   },
+  es: {
+    name: "Plutón",
+    version: "El amigo inteligente de Mickey",
+  },
 };

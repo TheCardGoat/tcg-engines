@@ -37,6 +37,19 @@ export const op14eb04GeckoMoriaOp14080080: LeaderCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "koCharacter",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Thriller Bark Pirates",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

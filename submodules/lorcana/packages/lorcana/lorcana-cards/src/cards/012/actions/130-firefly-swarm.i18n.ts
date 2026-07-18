@@ -61,4 +61,19 @@ export const fireflySwarmI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Enjambre de luciérnagas",
+    text: [
+      {
+        title: "Elige uno:",
+      },
+      {
+        title: "• Destierra al personaje elegido con 2 {S} o menos.",
+      },
+      {
+        title:
+          "• Si 2 o más cartas fueron puestas en tu descarte este turno, destierra al personaje elegido.",
+      },
+    ],
+  },
 };

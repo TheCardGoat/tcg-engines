@@ -65,4 +65,20 @@ export const eeyoreInTheWayEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Eeyore",
+    version: "En la vía",
+    text: [
+      {
+        title: "GRACIAS POR NOTIFICARME",
+        description:
+          "Por cada personaje ejercido en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "LO LAMENTO",
+        description:
+          "Cuando juegas con este personaje, para cada jugador contrario, puedes elegir un personaje suyo. No pueden prepararse al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

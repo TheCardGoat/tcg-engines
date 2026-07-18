@@ -45,4 +45,15 @@ export const hadesRuthlessTyrantI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Infierno",
+    version: "Tirano despiadado",
+    text: [
+      {
+        title: "CORTO DE PACIENCIA",
+        description:
+          "Cuando juegas con este personaje y cada vez que realiza misiones, puedes infligir 2 daños a otro personaje tuyo elegido para robar 2 cartas.",
+      },
+    ],
+  },
 };

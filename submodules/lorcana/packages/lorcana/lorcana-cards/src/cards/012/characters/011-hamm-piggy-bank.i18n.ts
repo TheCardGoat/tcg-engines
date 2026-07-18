@@ -44,4 +44,14 @@ export const hammPiggyBankI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hamm",
+    version: "Hucha",
+    text: [
+      {
+        title: "CAMBIO SUELTO",
+        description: "{E}: pagas 1 {I} menos por el siguiente personaje que juegues en este turno.",
+      },
+    ],
+  },
 };

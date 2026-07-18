@@ -41,4 +41,14 @@ export const inkAmplifierI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Amplificador de tinta",
+    text: [
+      {
+        title: "CAPTURA DE ENERGÍA",
+        description:
+          "Siempre que un oponente roba una carta durante su turno, si es la segunda carta que roba este turno, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

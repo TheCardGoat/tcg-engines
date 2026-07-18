@@ -65,6 +65,7 @@ export const op09Lim037: CharacterCard = {
               {
                 filter: "trait",
                 value: "ODYSSEY",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

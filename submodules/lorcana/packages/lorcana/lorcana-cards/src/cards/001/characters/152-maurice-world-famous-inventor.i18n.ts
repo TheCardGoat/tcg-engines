@@ -51,4 +51,19 @@ export const mauriceWorldfamousInventorI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Mauricio",
+    version: "Inventor de fama mundial",
+    text: [
+      {
+        title: "dale",
+        description:
+          "UNA PRUEBA Cada vez que este personaje realiza una misión, pagas 2 {I} menos por el siguiente elemento que juegues en este turno.",
+      },
+      {
+        title: "¡Funciona!",
+        description: "Cada vez que juegas un objeto, puedes robar una carta.",
+      },
+    ],
+  },
 };

@@ -32,14 +32,6 @@ export const op09Lindbergh114: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "lifeCount",
-            player: "self",
-            comparison: "lte",
-            value: 5,
-          },
-        ],
         actions: [
           {
             action: "ko",
@@ -57,6 +49,24 @@ export const op09Lindbergh114: CharacterCard = {
                   value: 2000,
                 },
               ],
+            },
+            condition: {
+              condition: "totalLifeCount",
+              comparison: "lte",
+              value: 5,
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "playThisCard",
+            condition: {
+              condition: "totalLifeCount",
+              comparison: "lte",
+              value: 5,
             },
           },
         ],

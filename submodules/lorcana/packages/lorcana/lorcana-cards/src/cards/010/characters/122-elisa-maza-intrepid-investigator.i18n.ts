@@ -45,4 +45,15 @@ export const elisaMazaIntrepidInvestigatorI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Elisa Maza",
+    version: "Investigador intrépido",
+    text: [
+      {
+        title: "DETALLE ESPECIAL",
+        description:
+          "Mientras tengas 2 o más personajes en juego con 5 {S} o más, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

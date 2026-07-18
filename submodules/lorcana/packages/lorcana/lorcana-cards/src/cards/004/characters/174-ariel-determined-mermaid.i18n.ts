@@ -45,4 +45,15 @@ export const arielDeterminedMermaidI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ariel",
+    version: "Sirena decidida",
+    text: [
+      {
+        title: "QUIERO MAS",
+        description:
+          "Siempre que toques una canción, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

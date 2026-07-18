@@ -17,4 +17,8 @@ export const maleficentExultantSpellcasterI18n: Record<Languages, I18nProperties
     name: "Malefica",
     version: "Incantatrice Entusiasta",
   },
+  es: {
+    name: "Pernicioso",
+    version: "Lanzador de conjuros exultante",
+  },
 };

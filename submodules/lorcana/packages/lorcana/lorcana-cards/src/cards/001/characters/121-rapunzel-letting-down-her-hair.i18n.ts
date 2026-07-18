@@ -42,4 +42,14 @@ export const rapunzelLettingDownHerHairI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Rapunzel",
+    version: "Soltándose el pelo",
+    text: [
+      {
+        title: "ENREDO",
+        description: "Cuando juegas con este personaje, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

@@ -37,4 +37,13 @@ export const bindingContractI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Contrato vinculante",
+    text: [
+      {
+        title: "POR TODA LA ETERNIDAD",
+        description: "{E}, {E} uno de tus personajes: ejerce el personaje elegido.",
+      },
+    ],
+  },
 };

@@ -25,6 +25,5 @@ export const op03Namule007: CharacterCard = {
   counter: 1000,
   traits: ["Fish-Man Whitebeard Pirates"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op03Namule007I18n,
 };

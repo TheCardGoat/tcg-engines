@@ -41,4 +41,14 @@ export const beastGraciousPrinceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bestia",
+    version: "Príncipe bondadoso",
+    text: [
+      {
+        title: "TARJETA DE BAILE COMPLETA",
+        description: "Tus personajes Princesa obtienen +1 {S} y +1 {W}.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const theBitterwoodUndergroundForestI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "El bosque amargo",
+    version: "Bosque subterráneo",
+    text: [
+      {
+        title: "REUNIR RECURSOS",
+        description:
+          "Una vez durante tu turno, cada vez que muevas un personaje con 5 {S} o más aquí, podrás robar una carta.",
+      },
+    ],
+  },
 };

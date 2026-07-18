@@ -31,16 +31,30 @@ export const op12DonquixoteRosinante048: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "removeFromField",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: { amount: 1 },
+          filters: [
+            { filter: "color", value: "blue" },
+            { filter: "trait", value: "Navy", match: "includes" },
+          ],
+        },
+        source: "opponentEffect",
         replacementAction: {
-          action: "rest",
-          target: {
-            player: "self",
-            zones: ["character"],
-            count: {
-              amount: 1,
+          action: "sequence",
+          actions: [
+            {
+              action: "rest",
+              target: {
+                player: "self",
+                zones: ["character"],
+                count: { amount: 1 },
+                self: true,
+              },
             },
-            self: true,
-          },
+            { action: "trashFromHand", player: "self", amount: 1 },
+          ],
         },
         conditions: [
           {

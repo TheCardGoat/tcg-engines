@@ -96,6 +96,30 @@ describe("Cyberpunk mobile portrait board", () => {
     }
   });
 
+  test("reserves attached-gear space from the field card width, not the field width", async () => {
+    ensureJsdomAnimationSupport();
+    installResizeObserverStub();
+
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "progCyberpsychosis",
+      layout: "mobile",
+    });
+
+    try {
+      const equippedUnit = await waitFor(() =>
+        requiredElement<HTMLElement>(
+          view.container,
+          '[data-testid="field-unit"][data-gear-count="2"]',
+        ),
+      );
+
+      expect(equippedUnit.style.getPropertyValue("--attached-gear-count")).toBe("2");
+      expect(equippedUnit.style.getPropertyValue("--attached-gear-space")).toBe("");
+    } finally {
+      view.unmount();
+    }
+  });
+
   test("keeps practice sidebar AI tools available from the mobile top rail", async () => {
     ensureJsdomAnimationSupport();
     installResizeObserverStub();

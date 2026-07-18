@@ -41,4 +41,14 @@ export const gadgetsGogglesI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gafas de Gadget",
+    text: [
+      {
+        title: "VISIÓN MEJORADA",
+        description:
+          "{E}, 1 {I}: mira las 2 cartas superiores de tu mazo. Coloque uno en la parte superior de su plataforma y el otro en la parte inferior.",
+      },
+    ],
+  },
 };

@@ -57,6 +57,7 @@ export const op07BigBun070: CharacterCard = {
               {
                 filter: "trait",
                 value: "Foxy Pirates",
+                match: "includes",
               },
             ],
           },

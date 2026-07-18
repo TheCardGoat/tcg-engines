@@ -64,4 +64,20 @@ export const alienTrueBelieverEnchantedI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Extranjero",
+    version: "Verdadero creyente",
+    text: [
+      {
+        title: "SOMOS UNO",
+        description:
+          "Este personaje obtiene +1 {S} por cada otro personaje de juguete que tengas en juego.",
+      },
+      {
+        title: "HA SIDO ELEGIDO",
+        description:
+          "Durante tu turno, cuando este personaje sea desterrado, devuelve a tu mano otra carta de personaje llamada Alien de tu descarte.",
+      },
+    ],
+  },
 };

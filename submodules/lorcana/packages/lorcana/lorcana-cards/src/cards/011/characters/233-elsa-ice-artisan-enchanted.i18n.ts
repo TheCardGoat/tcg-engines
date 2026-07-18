@@ -73,4 +73,22 @@ export const elsaIceArtisanEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Elsa",
+    version: "Artesano del hielo",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "INVIERNO SIN FIN",
+        description:
+          "Cuando juegas con este personaje y cada vez que juegas en una ubicación, puedes ejercer el personaje elegido con 3 {S} o menos.",
+      },
+      {
+        title: "LLAMADA DISTANCIA",
+        description: "Mientras este personaje está en una ubicación, obtiene +3 {L}.",
+      },
+    ],
+  },
 };

@@ -1,120 +1,121 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  expectSuccess,
   activeResources,
   createMockUnit,
-  seedBaseAsShield,
-  seedShieldsFromDeck,
+  expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd02Gwadan125 } from "./125-gwadan.ts";
 
 describe("Gwadan (GD02-125)", () => {
-  it("【Deploy】 adds 1 shield to hand when deployed", () => {
-    const engine = GundamTestEngine.create(
-      { hand: [gd02Gwadan125], resourceArea: activeResources(6), deck: 6 },
-      {},
-    );
-    const shieldIds = seedShieldsFromDeck(engine, PLAYER_ONE, 2);
+  it("【Burst】 deploys the revealed Shield into its owner's Base section", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 5 });
+    const engine = GundamTestEngine.create({ play: [attacker] }, { shieldArea: [gd02Gwadan125] });
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const handBefore = p1.getHand().length;
-
-    expectSuccess(p1.deployBase(gd02Gwadan125));
-
-    // Top shield enters hand; hand count unchanged (base out, shield in).
-    expect(p1.getHand()).toContain(shieldIds[0]);
-    expect(p1.getHand().length).toBe(handBefore);
-    expect(engine.getCardsInZone({ zone: "shieldArea", playerId: PLAYER_ONE })).toEqual([
-      shieldIds[1],
-    ]);
-    expect(engine.getCardsInZone({ zone: "baseSection", playerId: PLAYER_ONE }).length).toBe(1);
-  });
-
-  it("【Burst】 Deploy this card — flips Gwadan into baseSection on shield destruction", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd02Gwadan125] });
-    const shieldId = seedBaseAsShield(engine, PLAYER_TWO, gd02Gwadan125);
     const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
-
-    expect(p2.getCardZone(shieldId)).toBe(`baseSection:${PLAYER_TWO}`);
-  });
-
-  it("【Deploy】 lets the player discard the newly added red Shield, then draw 1", () => {
-    const redShield = createMockUnit({ color: "red", name: "Newly Added Red Shield" });
-    const drawOne = createMockUnit({ name: "Draw One" });
-    const keepInDeck = createMockUnit({ name: "Keep In Deck" });
-    const engine = GundamTestEngine.create(
-      {
-        hand: [gd02Gwadan125],
-        resourceArea: activeResources(6),
-        deck: [redShield, drawOne, keepInDeck],
-      },
-      {},
-    );
-    const [redShieldId] = seedShieldsFromDeck(engine, PLAYER_ONE, 1);
-    if (!redShieldId) throw new Error("Expected a seeded Shield");
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
-
-    expectSuccess(p1.deployBase(gd02Gwadan125));
-    expect(p1.getHand()).toEqual([redShieldId]);
-    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
-    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
-    expect(p1.getBoardView().pendingChoice).toMatchObject({
-      kind: "targetSelection",
-      legalTargetIds: [redShieldId],
-      minTargets: 1,
-      maxTargets: 1,
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    const burstPrompt = p2.getBoardView().pendingChoice;
+    if (burstPrompt?.kind !== "optional") {
+      throw new Error("Expected a visible Gwadan Burst choice");
+    }
+    expect(burstPrompt).toMatchObject({
+      controllerId: PLAYER_TWO,
+      prompt: "【Burst】Deploy this card.",
     });
-    expectSuccess(p1.resolveEffect({ targets: [redShieldId] }));
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [burstPrompt.directiveIndex]: true } }));
 
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore - 1);
-    expect(p1.getCardZone(redShieldId)).toBe(`trash:${PLAYER_ONE}`);
-    expect(p1.getHand()).toHaveLength(1);
-    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.getCardZone(gd02Gwadan125)).toBe(`baseSection:${PLAYER_TWO}`);
   });
 
-  it("【Deploy】 on owner's turn — cannot discard a non-red card to draw", () => {
-    const blueCard = createMockUnit({ color: "blue", name: "Blue Card" });
-    const engine = GundamTestEngine.create(
-      { hand: [gd02Gwadan125, blueCard], resourceArea: activeResources(6), deck: 6 },
-      {},
-    );
-    seedShieldsFromDeck(engine, PLAYER_ONE, 2);
+  it("adds a Shield, lets the player discard a red card, and then draws one", () => {
+    const redCard = createMockUnit({ name: "Red Card", color: "red" });
+    const blueCard = createMockUnit({ name: "Blue Card", color: "blue" });
+    const returnedShield = createMockUnit({ name: "Returned Shield", color: "green" });
+    const engine = GundamTestEngine.create({
+      hand: [gd02Gwadan125, redCard, blueCard],
+      shieldArea: [returnedShield],
+      resourceArea: activeResources(4),
+      deck: 3,
+    });
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
-    const trashBefore = p1.getCardsInZone("trash").length;
+    const [, redCardId, blueCardId] = p1.getHand();
 
     expectSuccess(p1.deployBase(gd02Gwadan125));
+    expect(p1.getCardZone(returnedShield)).toBe(`hand:${PLAYER_ONE}`);
+    const optional = p1.getBoardView().pendingChoice;
+    if (optional?.kind !== "optional") throw new Error("Expected the optional red discard");
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
+    const discardChoice = p1.getBoardView().pendingChoice;
+    if (discardChoice?.kind !== "targetSelection") {
+      throw new Error("Expected a visible red-card discard choice");
+    }
+    expect(discardChoice.legalTargetIds).toEqual([redCardId]);
+    expect(discardChoice.legalTargetIds).not.toContain(blueCardId);
+    expectSuccess(p1.resolveEffect({ targets: [redCardId!] }));
 
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore);
-    expect(p1.getCardsInZone("trash").length).toBe(trashBefore);
-    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getCardZone(redCardId!)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(blueCardId!)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(2);
+    expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(2);
   });
 
-  it("【Deploy】 on owner's turn — declining the discard also skips the draw", () => {
-    const redCard = createMockUnit({ color: "red", name: "Declined Red Discard" });
-    const engine = GundamTestEngine.create(
-      { hand: [gd02Gwadan125, redCard], resourceArea: activeResources(6), deck: 6 },
-      {},
-    );
-    seedShieldsFromDeck(engine, PLAYER_ONE, 2);
+  it("lets the player decline the red discard without drawing", () => {
+    const redCard = createMockUnit({ color: "red" });
+    const engine = GundamTestEngine.create({
+      hand: [gd02Gwadan125, redCard],
+      shieldArea: [createMockUnit({ name: "Shield" })],
+      resourceArea: activeResources(4),
+      deck: 3,
+    });
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
-    const trashBefore = p1.getCardsInZone("trash").length;
     const redCardId = p1.getHand()[1]!;
 
     expectSuccess(p1.deployBase(gd02Gwadan125));
-    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
-    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: false } }));
+    const optional = p1.getBoardView().pendingChoice;
+    if (optional?.kind !== "optional") throw new Error("Expected the optional red discard");
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: false } }));
 
-    // Discard declined → `dependsOnPrevious` draw also skipped.
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore);
-    expect(p1.getCardsInZone("trash").length).toBe(trashBefore);
     expect(p1.getCardZone(redCardId)).toBe(`hand:${PLAYER_ONE}`);
-    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(3);
+  });
+
+  it("cannot be deployed below its printed Lv.4", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd02Gwadan125],
+      resourceArea: activeResources(3),
+    });
+
+    expectFailure(
+      engine.asPlayer(PLAYER_ONE).deployBase(gd02Gwadan125),
+      "INSUFFICIENT_RESOURCE_LEVEL",
+    );
+    expect(engine.asPlayer(PLAYER_ONE).getCardZone(gd02Gwadan125)).toBe(`hand:${PLAYER_ONE}`);
+  });
+
+  it("cannot pay its printed cost after a legal deployment exhausts all Resources", () => {
+    const resourceSpender = createMockUnit({
+      name: "Resource Spender",
+      level: 0,
+      cost: 4,
+    });
+    const engine = GundamTestEngine.create({
+      hand: [resourceSpender, gd02Gwadan125],
+      resourceArea: activeResources(4),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [resourceSpenderId, gwadanId] = p1.getHand();
+
+    expectSuccess(p1.deployUnit(resourceSpenderId!));
+    expect(p1.getCardsInZone("resourceArea").filter((id) => !p1.isExhausted(id))).toHaveLength(0);
+    expectFailure(p1.deployBase(gwadanId!), "INSUFFICIENT_RESOURCES");
+    expect(p1.getCardZone(gwadanId!)).toBe(`hand:${PLAYER_ONE}`);
   });
 });

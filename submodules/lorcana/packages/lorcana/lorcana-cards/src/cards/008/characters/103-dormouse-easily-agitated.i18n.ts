@@ -45,4 +45,15 @@ export const dormouseEasilyAgitatedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lirón",
+    version: "Fácilmente agitado",
+    text: [
+      {
+        title: "MUY RUDO DE VERDAD",
+        description:
+          "Cuando juegas con este personaje, puedes poner 1 contador de daño en el personaje elegido.",
+      },
+    ],
+  },
 };

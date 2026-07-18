@@ -387,6 +387,20 @@ export interface RevealInkwellEffect {
   target: PlayerTarget;
 }
 
+/** Definition-level filters that can be evaluated while a card remains in a deck. */
+export type SearchDeckFilter =
+  | { type: "and"; filters: SearchDeckFilter[] }
+  | { type: "or"; filters: SearchDeckFilter[] }
+  | { type: "not"; filter: SearchDeckFilter }
+  | { type: "card-type"; value: CardType }
+  | { type: "has-classification"; classification: string }
+  | { type: "has-name"; name: string }
+  | {
+      type: "cost-comparison";
+      comparison: "eq" | "ne" | "gt" | "gte" | "lt" | "lte";
+      value: number;
+    };
+
 /**
  * Search deck effect
  */
@@ -401,6 +415,8 @@ export interface SearchDeckEffect {
   cardName?: string;
   classification?: string;
   maxCost?: number;
+  /** Optional composable definition filters for deck searches. */
+  filters?: SearchDeckFilter[];
   putInto?: "hand" | "top-of-deck" | "play";
   /** Alias for putInto: "top-of-deck" */
   putOnTop?: boolean;

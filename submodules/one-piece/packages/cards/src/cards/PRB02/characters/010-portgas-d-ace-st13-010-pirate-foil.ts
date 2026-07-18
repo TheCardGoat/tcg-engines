@@ -6,6 +6,7 @@ export const prb02PortgasDAceSt13010PirateFoil010: CharacterCard = {
   canonicalId: "ST13-010",
   slug: "portgas-d-ace-st13-010-pirate-foil",
   name: "Portgas.D.Ace - ST13-010 (Pirate Foil)",
+  alternateNames: ["Portgas.D.Ace"],
   printings: [
     {
       id: "ST13-010",

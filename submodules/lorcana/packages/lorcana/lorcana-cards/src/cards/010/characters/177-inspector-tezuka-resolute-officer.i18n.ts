@@ -21,4 +21,9 @@ export const inspectorTezukaResoluteOfficerI18n: Record<Languages, I18nPropertie
     version: "Agente Risoluta",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Inspector tezuka",
+    version: "Oficial resuelto",
+    text: "Guardaespaldas",
+  },
 };

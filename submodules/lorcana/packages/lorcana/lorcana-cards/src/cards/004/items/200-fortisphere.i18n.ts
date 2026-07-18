@@ -57,4 +57,18 @@ export const fortisphereI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Fortisfera",
+    text: [
+      {
+        title: "INGENIOSO",
+        description: "Cuando juegas este objeto, puedes robar una carta.",
+      },
+      {
+        title: "EXTRACTO DE ACERO 1",
+        description:
+          "{I}, destierra este objeto: tu personaje elegido obtiene Guardaespaldas hasta el comienzo de tu siguiente turno. (Un personaje contrario que desafíe a uno de tus personajes debe elegir uno con Bodyguard si puede).",
+      },
+    ],
+  },
 };

@@ -27,5 +27,29 @@ export const op09Monster012: CharacterCard = {
   attribute: "strike",
   effect:
     "If your Character [Bonk Punch] would be K.O.'d by an effect, you may trash this Character instead.",
+  effects: {
+    replacementEffects: [
+      {
+        replacedEvent: "ko",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "name",
+              value: "Bonk Punch",
+            },
+          ],
+        },
+        source: "effect",
+        replacementAction: {
+          action: "trashThisCard",
+        },
+      },
+    ],
+  },
   i18n: op09Monster012I18n,
 };

@@ -29,6 +29,7 @@ testGlobals.$effect = Object.assign(
 const joinMatchmakingQueue = mock();
 const leaveMatchmakingQueue = mock();
 const getMatchmakingStatus = mock();
+const fetchMatchmakingCatalog = mock(async () => []);
 const trackEvent = mock();
 const goto = mock();
 
@@ -45,6 +46,7 @@ mock.module("../api/matchmaking-api.js", () => ({
   joinMatchmakingQueue,
   leaveMatchmakingQueue,
   getMatchmakingStatus,
+  fetchMatchmakingCatalog,
   forfeitMatch: mock(),
   MatchmakingJoinError,
 }));

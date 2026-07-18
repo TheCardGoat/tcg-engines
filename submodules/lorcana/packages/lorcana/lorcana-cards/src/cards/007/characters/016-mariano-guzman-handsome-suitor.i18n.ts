@@ -45,4 +45,15 @@ export const marianoGuzmanHandsomeSuitorI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Mariano Guzmán",
+    version: "Pretendiente guapo",
+    text: [
+      {
+        title: "TE VEO",
+        description:
+          "Mientras tengas un personaje llamado Dolores Madrigal en juego, este personaje obtiene +1 {L}.",
+      },
+    ],
+  },
 };

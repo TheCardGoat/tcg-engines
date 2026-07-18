@@ -46,4 +46,18 @@ export const beastWolfsbaneI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bestia",
+    version: "Acónito",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "RUGIDO",
+        description:
+          "Cuando juegues con este personaje, ejerce todos los personajes dañados del oponente.",
+      },
+    ],
+  },
 };

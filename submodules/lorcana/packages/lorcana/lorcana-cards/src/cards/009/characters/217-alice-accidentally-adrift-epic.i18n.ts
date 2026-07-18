@@ -65,4 +65,20 @@ export const aliceAccidentallyAdriftEpicI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Alicia",
+    version: "Accidentalmente a la deriva",
+    text: [
+      {
+        title: "LAVADO",
+        description:
+          "Cuando juegas con este personaje, puedes poner el objeto elegido en el tintero de su jugador boca abajo y ejercerlo.",
+      },
+      {
+        title: "HACIENDO ONDAS",
+        description:
+          "Siempre que este personaje realiza una misión, el personaje contrario elegido obtiene -2 {S} este turno.",
+      },
+    ],
+  },
 };

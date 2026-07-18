@@ -61,4 +61,19 @@ export const abuIllusoryPachydermI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Abu",
+    version: "Paquidermo ilusorio",
+    text: [
+      {
+        title: "Desaparecer",
+        description: "(Cuando un oponente elige este personaje para una acción, destierralo).",
+      },
+      {
+        title: "AGARRANDO EL TRONCO",
+        description:
+          "Cada vez que este personaje realice una misión, obtendrás un conocimiento igual al {L} del personaje contrario elegido.",
+      },
+    ],
+  },
 };

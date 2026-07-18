@@ -47,6 +47,112 @@
     #07090c;
 }
 
+.effectSide {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+}
+
+.rivalEffectSide {
+  grid-area: rival;
+}
+
+.friendlyEffectSide {
+  grid-area: friendly;
+}
+
+.activeEffectsRail {
+  display: grid;
+  grid-template-columns: 12px auto;
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: "label cards";
+  flex: 0 0 auto;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  width: max-content;
+  padding: 1px 2px;
+  border-inline: 1px solid rgb(245 230 66 / 22%);
+  background: linear-gradient(180deg, rgb(245 230 66 / 8%), transparent 55%);
+}
+
+.rivalEffectsRail {
+  order: -1;
+}
+
+.friendlyEffectsRail {
+  grid-template-columns: auto 12px;
+  grid-template-areas: "cards label";
+}
+
+.activeEffectsRailTitle {
+  grid-area: label;
+  align-self: stretch;
+  color: rgb(245 230 66 / 88%);
+  font-family: Rajdhani, sans-serif;
+  font-size: clamp(7px, 0.58cqw, 9px);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  transform: scaleY(0.55);
+  transform-origin: center;
+  writing-mode: vertical-rl;
+}
+
+.friendlyEffectsRail .activeEffectsRailTitle {
+  transform: rotate(180deg) scaleY(0.55);
+}
+
+.activeEffectsRailCards {
+  display: flex;
+  grid-area: cards;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+  overflow: visible;
+}
+
+.friendlyEffectsRail .activeEffectsRailCards {
+  flex-direction: row-reverse;
+}
+
+.activeEffectCard {
+  width: auto;
+  flex: 0 0 auto;
+  height: 100%;
+  aspect-ratio: 5 / 7;
+  border: 1px solid rgb(74 217 255 / 64%);
+  background: rgb(5 8 12 / 94%);
+}
+
+.effectSide > .gigLane {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.activeEffectCard[data-tone="rival"] {
+  border-color: rgb(255 61 138 / 70%);
+}
+
+.activeEffectImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.activeEffectImage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 .row.gigsOnly.spaciousGigs.attackGigs {
   --combat-hud-half-width: clamp(310px, 34cqw, 350px);
   --gig-score-w: clamp(58px, 6.6cqw, 70px);
@@ -90,6 +196,7 @@
 }
 
 .mobileLedgerSide {
+  position: relative;
   display: grid;
   grid-template-rows: minmax(0, var(--mobile-ledger-legends-h)) var(--mobile-ledger-gig-h);
   gap: var(--mobile-ledger-gap);
@@ -98,6 +205,64 @@
   min-width: 0;
   min-height: 0;
   overflow: hidden;
+}
+
+.mobileActiveEffects {
+  position: absolute;
+  z-index: 12;
+  top: 2px;
+  display: grid;
+  grid-template-columns: 18px;
+  grid-template-rows: 8px 25px;
+  width: 21px;
+  min-height: 33px;
+  border: 1px solid rgb(74 217 255 / 70%);
+  background: rgb(5 8 12 / 96%);
+  box-shadow: 0 0 10px rgb(74 217 255 / 18%);
+}
+
+.mobileActiveEffects[data-tone="friendly"] {
+  left: 2px;
+}
+
+.mobileActiveEffects[data-tone="rival"] {
+  right: 2px;
+  border-color: rgb(255 61 138 / 70%);
+  box-shadow: 0 0 10px rgb(255 61 138 / 18%);
+}
+
+.mobileActiveEffectsLabel {
+  color: #f5e642;
+  font-family: Rajdhani, sans-serif;
+  font-size: 7px;
+  font-weight: 900;
+  line-height: 8px;
+  text-align: center;
+}
+
+.mobileActiveEffectImage {
+  width: 18px;
+  border: 0;
+}
+
+.mobileActiveEffectImage img {
+  border: 0;
+}
+
+.mobileActiveEffectsCount {
+  position: absolute;
+  right: -5px;
+  bottom: -4px;
+  display: grid;
+  min-width: 12px;
+  height: 12px;
+  place-items: center;
+  border: 1px solid #07090c;
+  border-radius: 999px;
+  background: #f5e642;
+  color: #07090c;
+  font-size: 7px;
+  font-weight: 900;
 }
 
 .mobileLedgerSide[data-tone="rival"] {

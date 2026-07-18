@@ -60,4 +60,18 @@ export const calhounCourageousRescuerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Calhoun",
+    version: "Rescatador valiente",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "¡VOLVER A POSICIONES DE INICIO!",
+        description:
+          "Siempre que este personaje desafíe a otro personaje, puedes devolver una carta de personaje de Corredor de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

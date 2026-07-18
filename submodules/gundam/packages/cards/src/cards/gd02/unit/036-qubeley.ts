@@ -5,6 +5,7 @@ export const gd02Qubeley036: UnitCard = {
   name: "Qubeley",
   type: "unit",
   color: "red",
+  battlefieldZones: ["space", "earth"],
   traits: ["neo zeon"],
   id: "GD02-036",
   canonicalId: "GD02-036",
@@ -104,12 +105,10 @@ export const gd02Qubeley036: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["attack"],
-        qualification: {
-          attribute: "trait",
-          comparison: "includes",
-          value: "neo zeon",
-        },
-        conditions: [{ type: "duringPair" }],
+        conditions: [
+          { type: "duringPair" },
+          { type: "selfPairedPilotHasTrait", trait: "neo zeon" },
+        ],
       },
       directives: [
         {

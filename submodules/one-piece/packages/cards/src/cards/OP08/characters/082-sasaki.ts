@@ -26,23 +26,36 @@ export const op08Sasaki082: CharacterCard = {
   traits: ["Animal Kingdom Pirates"],
   attribute: "slash",
   effect:
-    "[Activate:Main] Rest 1 of your DON!! cards and you may rest this Character: Give up to 1 of your opponent's Characters 2 cost during this turn.",
+    "[Activate:Main] Rest 1 of your DON!! cards and you may rest this Character: Give up to 1 of your opponent's Characters −2 cost during this turn.",
   effects: {
     effects: [
       {
         trigger: "activateMain",
-        actions: [
+        costs: [
           {
-            action: "rest",
-            target: {
-              player: "self",
-              zones: ["costArea"],
-              count: {
-                amount: 1,
-              },
-            },
+            cost: "restDon",
+            amount: 1,
+          },
+          {
+            cost: "restThisCard",
           },
         ],
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: -2,
+            duration: "thisTurn",
+          },
+        ],
+        optional: true,
       },
     ],
   },

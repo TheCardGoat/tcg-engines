@@ -45,4 +45,15 @@ export const fflewddurFflamLucklessBardI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Fflewddur Fflam",
+    version: "Bardo desafortunado",
+    text: [
+      {
+        title: "Persiguiendo aventuras",
+        description:
+          "Cuando juegas con este personaje, si uno de tus personajes realizó una misión este turno, roba una carta.",
+      },
+    ],
+  },
 };

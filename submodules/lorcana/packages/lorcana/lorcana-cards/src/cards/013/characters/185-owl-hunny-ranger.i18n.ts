@@ -45,4 +45,15 @@ export const owlHunnyRangerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Búho",
+    version: "Miel guardabosques",
+    text: [
+      {
+        title: "ALIANZA HUNNY",
+        description:
+          "Mientras tengas otro personaje Hunny en juego, este personaje gana Resistencia +2.",
+      },
+    ],
+  },
 };

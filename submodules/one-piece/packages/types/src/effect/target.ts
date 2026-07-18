@@ -4,6 +4,7 @@ import type {
   EffectTrigger,
   Keyword,
   Player,
+  TargetPlayer,
   TargetCount,
   Zone,
 } from "./primitives.ts";
@@ -22,6 +23,7 @@ export type TargetFilter =
   | BaseCostFilter
   | PowerFilter
   | BasePowerFilter
+  | CounterFilter
   | ColorFilter
   | CardCategoryFilter
   | StateFilter
@@ -30,7 +32,9 @@ export type TargetFilter =
   | HasEffectTypeFilter
   | PlayerFilter
   | DynamicCostFilter
-  | NoBaseEffectFilter;
+  | NoBaseEffectFilter
+  | AnyOfFilter
+  | AllOfFilter;
 
 export interface NameFilter {
   filter: "name";
@@ -48,13 +52,15 @@ export interface ExcludeSelfFilter {
 
 export interface TraitFilter {
   filter: "trait";
-  value: string;
+  value: string | string[];
+  match?: "exact" | "includes";
   negate?: boolean;
 }
 
 export interface AttributeFilter {
   filter: "attribute";
   value: OPAttribute;
+  negate?: boolean;
 }
 
 export interface CostFilter {
@@ -77,6 +83,12 @@ export interface PowerFilter {
 
 export interface BasePowerFilter {
   filter: "basePower";
+  comparison: Comparison;
+  value: number;
+}
+
+export interface CounterFilter {
+  filter: "counter";
   comparison: Comparison;
   value: number;
 }
@@ -132,6 +144,23 @@ export interface NoBaseEffectFilter {
   filter: "noBaseEffect";
 }
 
+export type AnyOfFilter =
+  | {
+      filter: "anyOf";
+      /** At least one nested filter must match against the same candidate card. */
+      filters: TargetFilter[];
+    }
+  | {
+      filter: "anyOf";
+      /** Each group is ANDed internally; a candidate matches when any group matches. */
+      groups: TargetFilter[][];
+    };
+
+export interface AllOfFilter {
+  filter: "allOf";
+  filters: TargetFilter[];
+}
+
 // ──────────────────────────────────────────────
 // Target
 // ──────────────────────────────────────────────
@@ -143,7 +172,7 @@ export interface TotalConstraint {
 }
 
 export interface Target {
-  player: Player;
+  player: TargetPlayer;
   zones: Zone[];
   count: TargetCount;
   filters?: TargetFilter[];

@@ -45,4 +45,15 @@ export const kitCloudkickerToughGuyP1PromoI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Kit pateador de nubes",
+    version: "Chico duro",
+    text: [
+      {
+        title: "SKYSURF",
+        description:
+          "Cuando juegas con este personaje, puedes devolver el personaje contrario elegido con 2 {S} o menos a la mano de su jugador.",
+      },
+    ],
+  },
 };

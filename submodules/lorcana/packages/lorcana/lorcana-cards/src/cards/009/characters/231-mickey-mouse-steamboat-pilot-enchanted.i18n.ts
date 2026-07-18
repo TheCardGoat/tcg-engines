@@ -17,4 +17,8 @@ export const mickeyMouseSteamboatPilotEnchantedI18n: Record<Languages, I18nPrope
     name: "Mickey Mouse",
     version: "Steamboat Pilot",
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Piloto de barco de vapor",
+  },
 };

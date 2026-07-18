@@ -26,7 +26,7 @@ export const op11NicoRobin009: CharacterCard = {
   traits: ["Straw Hat Crew"],
   attribute: "strike",
   effect:
-    "[DON!! x2] [When Attacking] Give up to 1 of your opponent's Characters 2000 power until the end of your opponent's next turn.",
+    "[DON!! x2] [When Attacking] Give up to 1 of your opponent's Characters −2000 power until the end of your opponent's next turn.",
   effects: {
     effects: [
       {
@@ -48,7 +48,7 @@ export const op11NicoRobin009: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "untilEndOfOpponentNextTurn",
           },
         ],

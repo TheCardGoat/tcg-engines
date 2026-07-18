@@ -5,6 +5,7 @@ export const gd02Gabthley008: UnitCard = {
   name: "Gabthley",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space", "earth"],
   traits: ["titans"],
   id: "GD02-008",
   canonicalId: "GD02-008",
@@ -41,7 +42,7 @@ export const gd02Gabthley008: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 3,
-  linkCondition: "[Jerid Messa]",
+  linkCondition: "(Titans) Trait",
   effect: "【When Linked】Choose 1 rested enemy Unit. Deal 1 damage to it.<br>",
   effects: [
     {

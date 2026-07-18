@@ -1,79 +1,131 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  expectSuccess,
   activeResources,
-  seedBaseAsShield,
-  seedShieldsFromDeck,
+  createMockUnit,
+  expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
+import { passTurnThroughPublicMoves } from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 import { gd02Diva124 } from "./124-diva.ts";
 
 describe("Diva (GD02-124)", () => {
-  it("【Deploy】 adds 1 shield to hand when deployed", () => {
-    const engine = GundamTestEngine.create(
-      { hand: [gd02Diva124], resourceArea: activeResources(6), deck: 6 },
-      {},
-    );
-    const shieldIds = seedShieldsFromDeck(engine, PLAYER_ONE, 2);
+  it("【Burst】 deploys the revealed Shield into its owner's Base section", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 5 });
+    const engine = GundamTestEngine.create({ play: [attacker] }, { shieldArea: [gd02Diva124] });
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const handBefore = p1.getHand().length;
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    const burstPrompt = p2.getBoardView().pendingChoice;
+    if (burstPrompt?.kind !== "optional") {
+      throw new Error("Expected a visible Diva Burst choice");
+    }
+    expect(burstPrompt).toMatchObject({
+      controllerId: PLAYER_TWO,
+      prompt: "【Burst】Deploy this card.",
+    });
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [burstPrompt.directiveIndex]: true } }));
+
+    expect(p2.getCardZone(gd02Diva124)).toBe(`baseSection:${PLAYER_TWO}`);
+  });
+
+  it("adds a Shield and gives only friendly green Earth Federation Units AP+1 at Lv.7", () => {
+    const eligible = createMockUnit({
+      name: "Eligible",
+      ap: 2,
+      color: "green",
+      traits: ["earth federation"],
+    });
+    const wrongColor = createMockUnit({
+      name: "Wrong Color",
+      ap: 3,
+      color: "blue",
+      traits: ["earth federation"],
+    });
+    const wrongTrait = createMockUnit({
+      name: "Wrong Trait",
+      ap: 4,
+      color: "green",
+      traits: ["zeon"],
+    });
+    const returnedShield = createMockUnit({ name: "Returned Shield" });
+    const engine = GundamTestEngine.create({
+      hand: [gd02Diva124],
+      play: [eligible, wrongColor, wrongTrait],
+      shieldArea: [returnedShield],
+      resourceArea: activeResources(7),
+      deck: 3,
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [eligibleId, wrongColorId, wrongTraitId] = p1.getCardsInZone("battleArea");
 
     expectSuccess(p1.deployBase(gd02Diva124));
 
-    // Top shield enters hand; hand count unchanged (base out, shield in).
-    expect(p1.getHand()).toContain(shieldIds[0]);
-    expect(p1.getHand().length).toBe(handBefore);
-    expect(engine.getCardsInZone({ zone: "shieldArea", playerId: PLAYER_ONE })).toEqual([
-      shieldIds[1],
-    ]);
-    expect(engine.getCardsInZone({ zone: "baseSection", playerId: PLAYER_ONE }).length).toBe(1);
+    expect(p1.getCardZone(returnedShield)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getVisibleCard(eligibleId!)?.effectiveAp).toBe(3);
+    expect(p1.getVisibleCard(wrongColorId!)?.effectiveAp).toBe(3);
+    expect(p1.getVisibleCard(wrongTraitId!)?.effectiveAp).toBe(4);
+    expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(1);
+
+    passTurnThroughPublicMoves(engine, PLAYER_ONE);
+    expect(p1.getVisibleCard(eligibleId!)?.effectiveAp).toBe(2);
   });
 
-  it("【Burst】 Deploy this card — flips Diva into baseSection on shield destruction", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd02Diva124] });
-    const shieldId = seedBaseAsShield(engine, PLAYER_TWO, gd02Diva124);
+  it("does not grant AP below Lv.7", () => {
+    const eligible = createMockUnit({
+      ap: 2,
+      color: "green",
+      traits: ["earth federation"],
+    });
+    const engine = GundamTestEngine.create({
+      hand: [gd02Diva124],
+      play: [eligible],
+      resourceArea: activeResources(6),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const eligibleId = p1.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+    expectSuccess(p1.deployBase(gd02Diva124));
 
-    const finalZone = engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey;
-    expect(finalZone).toBe(`baseSection:${PLAYER_TWO}`);
+    expect(p1.getVisibleCard(eligibleId)?.effectiveAp).toBe(2);
   });
 
-  it("card data encodes AP+1 as a constant effect with isTurn + playerLevel gates", () => {
-    // Previously encoded as a deploy-triggered permanent statModifier with a
-    // unit-level attribute filter. Now correctly split into a separate constant
-    // effect with isTurn(friendly) + playerLevel(gte 7) activation conditions.
-    const cardDef = gd02Diva124;
-    // effects[0] = burst, effects[1] = deploy (addShieldToHand), effects[2] = constant AP+1
-    const constantEffect = cardDef.effects![2] as {
-      type: string;
-      activation: { timing?: string[]; conditions?: Array<{ type: string }> };
-      directives: Array<{ action?: Record<string, unknown> }>;
-    };
-    expect(constantEffect.type).toBe("constant");
-    expect(constantEffect.activation.timing).toBeUndefined();
-    expect(constantEffect.activation.conditions).toContainEqual({
-      type: "isTurn",
-      whose: "friendly",
+  it("cannot be deployed below its printed Lv.3", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd02Diva124],
+      resourceArea: activeResources(2),
     });
-    expect(constantEffect.activation.conditions).toContainEqual({
-      type: "playerLevel",
-      comparison: "gte",
-      value: 7,
+
+    expectFailure(
+      engine.asPlayer(PLAYER_ONE).deployBase(gd02Diva124),
+      "INSUFFICIENT_RESOURCE_LEVEL",
+    );
+    expect(engine.asPlayer(PLAYER_ONE).getCardZone(gd02Diva124)).toBe(`hand:${PLAYER_ONE}`);
+  });
+
+  it("cannot pay its printed cost after a legal deployment exhausts all Resources", () => {
+    const resourceSpender = createMockUnit({
+      name: "Resource Spender",
+      level: 0,
+      cost: 3,
     });
-    const action = constantEffect.directives[0]!.action!;
-    expect(action.action).toBe("statModifier");
-    expect(action.stat).toBe("ap");
-    expect(action.amount).toBe(1);
-    const target = action.target as {
-      owner: string;
-      cardType: string;
-      attributeFilters: Array<{ value: string }>;
-    };
-    expect(target.owner).toBe("friendly");
-    expect(target.cardType).toBe("unit");
-    expect(target.attributeFilters![0]!.value).toBe("earth federation");
+    const engine = GundamTestEngine.create({
+      hand: [resourceSpender, gd02Diva124],
+      resourceArea: activeResources(3),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [resourceSpenderId, divaId] = p1.getHand();
+
+    expectSuccess(p1.deployUnit(resourceSpenderId!));
+    expect(p1.getCardsInZone("resourceArea").filter((id) => !p1.isExhausted(id))).toHaveLength(0);
+    expectFailure(p1.deployBase(divaId!), "INSUFFICIENT_RESOURCES");
+    expect(p1.getCardZone(divaId!)).toBe(`hand:${PLAYER_ONE}`);
   });
 });

@@ -17,4 +17,8 @@ export const tangleI18n: Record<Languages, I18nProperties> = {
     name: "Tangle",
     text: "Each opponent loses 1 lore.",
   },
+  es: {
+    name: "Enredo",
+    text: "Cada oponente pierde 1 conocimiento.",
+  },
 };

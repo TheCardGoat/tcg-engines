@@ -35,4 +35,8 @@ export const soMuchToGiveI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hay mucho que dar",
+    text: "Saca una carta. El personaje elegido gana Guardaespaldas hasta el comienzo de tu siguiente turno. (Un personaje contrario que desafíe a uno de tus personajes debe elegir uno con Bodyguard si puede).",
+  },
 };

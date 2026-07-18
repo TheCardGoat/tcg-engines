@@ -5,7 +5,7 @@ export const op14eb04Mr2BonKureiBentham091: CharacterCard = {
   id: "OP14-091",
   canonicalId: "OP14-091",
   slug: "mr-2-bon-kurei-bentham/op14-091",
-  name: "Mr.2.Bon.Kurei (Bentham)",
+  name: "Mr.2.Bon.Kurei(Bentham)",
   printings: [
     {
       id: "OP14-091",
@@ -41,7 +41,7 @@ export const op14eb04Mr2BonKureiBentham091: CharacterCard = {
     },
   ],
   effect:
-    '[On K.O.] Play up to 1 Character card with a type including "Baroque Works" and a cost of 5 or less other than [Mr.2.Bon.Kurei.(Bentham)] from your hand or trash.',
+    '[On K.O.] Play up to 1 Character card with a type including "Baroque Works" and a cost of 5 or less other than [Mr.2.Bon.Kurei(Bentham)] from your hand or trash.',
   effects: {
     effects: [
       {
@@ -60,7 +60,20 @@ export const op14eb04Mr2BonKureiBentham091: CharacterCard = {
             filters: [
               {
                 filter: "excludeName",
-                value: "Mr.2.Bon.Kurei.(Bentham)",
+                value: "Mr.2.Bon.Kurei(Bentham)",
+              },
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 5,
+              },
+              {
+                filter: "trait",
+                value: "Baroque Works",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
               },
             ],
           },

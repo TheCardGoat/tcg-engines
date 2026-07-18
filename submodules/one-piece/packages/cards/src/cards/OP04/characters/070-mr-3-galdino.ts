@@ -52,6 +52,7 @@ export const op04Mr3Galdino070: CharacterCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
         oncePerTurn: true,
       },
     ],

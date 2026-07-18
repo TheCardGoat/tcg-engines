@@ -45,4 +45,15 @@ export const maleficentVexedPartygoerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pernicioso",
+    version: "Fiestero molesto",
+    text: [
+      {
+        title: "QUE SITUACION TAN INCOMODA",
+        description:
+          "Siempre que este personaje realice una misión, puedes elegir y descartar una carta para devolver el personaje, objeto o ubicación elegidos con un coste de 3 o menos a la mano de su jugador.",
+      },
+    ],
+  },
 };

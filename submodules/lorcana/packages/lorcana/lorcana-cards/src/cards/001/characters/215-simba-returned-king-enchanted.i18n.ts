@@ -57,4 +57,18 @@ export const simbaReturnedKingEnchantedI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Simba",
+    version: "Rey regresado",
+    text: [
+      {
+        title: "Retador +4",
+      },
+      {
+        title: "SALTAR",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

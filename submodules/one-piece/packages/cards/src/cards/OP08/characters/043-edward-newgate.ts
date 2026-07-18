@@ -40,7 +40,7 @@ export const op08EdwardNewgate043: CharacterCard = {
     },
   ],
   effect:
-    "[On Play] If your Leader's type includes \"Whitebeard Piratess\" and you have 2 or less Life cards, select all of your opponent's Characters on their field. Until the end of your opponent's next turn, none of the selected Characters can attack unless your opponent trashes 2 cards from their hand whenever they attack.",
+    "[On Play] If your Leader's type includes \"Whitebeard Pirates\" and you have 2 or less Life cards, select all of your opponent's Characters on their field. Until the end of your opponent's next turn, none of the selected Characters can attack unless your opponent trashes 2 cards from their hand whenever they attack.",
   effects: {
     effects: [
       {
@@ -52,7 +52,8 @@ export const op08EdwardNewgate043: CharacterCard = {
             conditions: [
               {
                 condition: "leaderTrait",
-                trait: "Whitebeard Piratess",
+                trait: "Whitebeard Pirates",
+                match: "includes",
               },
               {
                 condition: "lifeCount",
@@ -74,6 +75,7 @@ export const op08EdwardNewgate043: CharacterCard = {
               },
             },
             duration: "untilEndOfOpponentNextTurn",
+            unlessTrashFromHand: 2,
           },
         ],
       },

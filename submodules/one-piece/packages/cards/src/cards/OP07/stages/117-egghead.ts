@@ -40,7 +40,7 @@ export const op07Egghead117: StageCard = {
           {
             action: "setActive",
             target: {
-              player: "opponent",
+              player: "self",
               zones: ["character"],
               count: {
                 amount: 1,
@@ -50,6 +50,7 @@ export const op07Egghead117: StageCard = {
                 {
                   filter: "trait",
                   value: "Egghead",
+                  match: "includes",
                 },
                 {
                   filter: "cost",
@@ -65,14 +66,7 @@ export const op07Egghead117: StageCard = {
         trigger: "trigger",
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
       },

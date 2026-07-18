@@ -64,4 +64,20 @@ export const basilUndercoverDetectiveI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Albahaca",
+    version: "Detective encubierto",
+    text: [
+      {
+        title: "INCAPACITAR",
+        description:
+          "Cuando juegas con este personaje, puedes devolver el personaje elegido a la mano de su jugador.",
+      },
+      {
+        title: "INTERFERIR",
+        description:
+          "Cada vez que este personaje realiza una misión, el oponente elegido descarta una carta al azar.",
+      },
+    ],
+  },
 };

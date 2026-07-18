@@ -17,4 +17,8 @@ export const mertleEdmondsLilosRivalI18n: Record<Languages, I18nProperties> = {
     name: "Mertle Edmonds",
     version: "Rivale di Lilo",
   },
+  es: {
+    name: "Mertle Edmonds",
+    version: "El rival de Lilo",
+  },
 };

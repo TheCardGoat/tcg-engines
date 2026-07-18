@@ -1,6 +1,7 @@
 import type { CardInstanceId } from "#core";
 import type { SearchDeckEffect } from "@tcg/lorcana-types";
 import type { CardPlayedPayload } from "../../../types";
+import { compareOperator } from "../../../rules/operator-utils";
 import type { ActionResolutionInput, PlayCardExecutionContext } from "./types";
 
 type CardDefinitionLike = {
@@ -10,6 +11,38 @@ type CardDefinitionLike = {
   cost?: number;
   name?: string;
 };
+
+type SearchDeckComposableFilter = NonNullable<SearchDeckEffect["filters"]>[number];
+
+function matchesComposableFilter(
+  definition: CardDefinitionLike,
+  filter: SearchDeckComposableFilter,
+): boolean {
+  switch (filter.type) {
+    case "and":
+      return filter.filters.every((nested) => matchesComposableFilter(definition, nested));
+    case "or":
+      return filter.filters.some((nested) => matchesComposableFilter(definition, nested));
+    case "not":
+      return !matchesComposableFilter(definition, filter.filter);
+    case "card-type":
+      return definition.cardType === filter.value;
+    case "has-classification":
+      return (definition.classifications ?? []).includes(filter.classification);
+    case "has-name":
+      return definition.name === filter.name;
+    case "cost-comparison": {
+      const cost = definition.cost;
+      const value = filter.value;
+      if (cost === undefined || typeof value !== "number") return false;
+      return compareOperator(cost, filter.comparison, value);
+    }
+    default:
+      // Hidden-zone searches must never broaden because persisted or malformed
+      // data contains a filter this resolver does not understand.
+      return false;
+  }
+}
 
 export function isSearchDeckEffect(effect: unknown): effect is SearchDeckEffect {
   return (
@@ -60,6 +93,13 @@ export function matchesSearchFilter(
     if (cardCost === undefined || cardCost > effect.maxCost) {
       return false;
     }
+  }
+
+  if (
+    effect.filters &&
+    !effect.filters.every((filter) => matchesComposableFilter(definition, filter))
+  ) {
+    return false;
   }
 
   return true;

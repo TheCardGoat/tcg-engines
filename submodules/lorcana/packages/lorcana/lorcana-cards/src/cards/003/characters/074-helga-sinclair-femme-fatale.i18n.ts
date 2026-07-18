@@ -60,4 +60,18 @@ export const helgaSinclairFemmeFataleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Helga Sinclair",
+    version: "Mujer fatal",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "ESTO LO CAMBIA TODO",
+        description:
+          "Siempre que este personaje realice una misión, puedes infligir 3 daños al personaje dañado elegido.",
+      },
+    ],
+  },
 };

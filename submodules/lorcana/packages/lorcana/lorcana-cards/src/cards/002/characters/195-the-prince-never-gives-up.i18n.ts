@@ -53,4 +53,16 @@ export const thePrinceNeverGivesUpI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El principe",
+    version: "Nunca se rinde",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "Resistir +1",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const rapunzelGiftedWithHealingC1ChallengeI18n: Record<Languages, I18nPro
       },
     ],
   },
+  es: {
+    name: "Rapunzel",
+    version: "Dotado de curación",
+    text: [
+      {
+        title: "BRILLO Y BRILLO",
+        description:
+          "Cuando juegues con este personaje, elimina hasta 3 daños de uno de tus personajes. Roba una carta por cada daño eliminado de esta manera.",
+      },
+    ],
+  },
 };

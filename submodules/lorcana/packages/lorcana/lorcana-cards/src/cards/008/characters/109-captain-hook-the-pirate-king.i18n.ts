@@ -60,4 +60,18 @@ export const captainHookThePirateKingI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Capitán Garfio",
+    version: "El rey pirata",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "¡DALES TODO LO QUE TIENES!",
+        description:
+          "Una vez durante tu turno, cada vez que un personaje contrario resulta dañado, tus personajes piratas obtienen +2 {S} y obtienen Resistencia +2 este turno.",
+      },
+    ],
+  },
 };

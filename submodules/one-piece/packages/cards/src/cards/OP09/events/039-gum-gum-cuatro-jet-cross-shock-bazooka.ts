@@ -37,6 +37,7 @@ export const op09GumGumCuatroJetCrossShockBazooka039: EventCard = {
               {
                 condition: "leaderTrait",
                 trait: "ODYSSEY",
+                match: "includes",
               },
               {
                 condition: "zoneCount",
@@ -67,6 +68,23 @@ export const op09GumGumCuatroJetCrossShockBazooka039: EventCard = {
             },
             value: 2000,
             duration: "thisTurn",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [
+                { filter: "state", value: "rested" },
+                { filter: "cost", comparison: "lte", value: 4 },
+              ],
+            },
           },
         ],
       },

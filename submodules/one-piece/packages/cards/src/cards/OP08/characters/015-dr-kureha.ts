@@ -41,7 +41,7 @@ export const op08DrKureha015: CharacterCard = {
     },
   ],
   effect:
-    "[On Play] Look at 4 cards from the top of your deck; reveal up to 1 [Tony Tony.Chopper] or [Drum Kingdom] type card other than [Dr.Kureha] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
+    "[On Play] Look at 4 cards from the top of your deck; reveal up to 1 [Tony Tony.Chopper] or {Drum Kingdom} type card other than [Dr.Kureha] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
   effects: {
     effects: [
       {
@@ -64,12 +64,18 @@ export const op08DrKureha015: CharacterCard = {
                 value: "Dr.Kureha",
               },
               {
-                filter: "trait",
-                value: "Tony Tony.Chopper",
-              },
-              {
-                filter: "trait",
-                value: "Drum Kingdom",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "name",
+                    value: "Tony Tony.Chopper",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Drum Kingdom",
+                    match: "includes",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

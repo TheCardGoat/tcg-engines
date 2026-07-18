@@ -21,4 +21,9 @@ export const rajahDevotedProtectorI18n: Record<Languages, I18nProperties> = {
     version: "Protettore Devoto",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Raja",
+    version: "Protector devoto",
+    text: "Guardaespaldas",
+  },
 };

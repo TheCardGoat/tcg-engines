@@ -35,4 +35,8 @@ export const itsGonnaBeGreatI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "¡Va a ser genial!",
+    text: "Personaje elegido listo. No pueden realizar misiones durante el resto de este turno.",
+  },
 };

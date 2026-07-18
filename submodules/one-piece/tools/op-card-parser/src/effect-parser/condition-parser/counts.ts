@@ -5,6 +5,52 @@ export function parseCountCondition(text: string): Condition | null {
   const t = text;
   let m: RegExpExecArray | null;
 
+  m =
+    /^the\s+number\s+of\s+cards\s+in\s+your\s+hand\s+is\s+at\s+least\s+(\d+)\s+less\s+than\s+the\s+number\s+in\s+your\s+opponent[''\u2019]s\s+hand$/i.exec(
+      t,
+    );
+  if (m) {
+    return {
+      condition: "compareHands",
+      selfComparison: "lte",
+      difference: parseInt(m[1]!, 10),
+    };
+  }
+
+  if (/^all\s+of\s+your\s+DON!!\s+cards?\s+are\s+rested$/i.test(t)) {
+    return {
+      condition: "compound",
+      operator: "and",
+      conditions: [
+        {
+          condition: "activeDonCount",
+          comparison: "eq",
+          value: 0,
+        },
+        {
+          condition: "givenDonCount",
+          player: "self",
+          comparison: "eq",
+          value: 0,
+        },
+      ],
+    };
+  }
+
+  // Life count (either player exact): either you or your opponent has N Life cards
+  m = /^either\s+you\s+or\s+your\s+opponent\s+ha(?:ve|s)\s+(\d+)\s+Life\s+cards?$/i.exec(t);
+  if (m) {
+    const value = parseInt(m[1]!, 10);
+    return {
+      condition: "compound",
+      operator: "or",
+      conditions: [
+        { condition: "lifeCount", player: "self", comparison: "eq", value },
+        { condition: "lifeCount", player: "opponent", comparison: "eq", value },
+      ],
+    };
+  }
+
   // Life count: you/your opponent have/has N or less/more Life cards
   m = /^(your opponent|you)\s+ha(?:ve|s)\s+(\d+)\s+or\s+(less|more)\s+Life\s+cards?$/i.exec(t);
   if (m) {
@@ -12,6 +58,17 @@ export function parseCountCondition(text: string): Condition | null {
       condition: "lifeCount",
       player: m[1]!.toLowerCase() === "you" ? "self" : "opponent",
       comparison: parseComparison(m[3]),
+      value: parseInt(m[2]!, 10),
+    };
+  }
+
+  // Life count (exact): you/your opponent have/has N Life cards
+  m = /^(your opponent|you)\s+ha(?:ve|s)\s+(\d+)\s+Life\s+cards?$/i.exec(t);
+  if (m) {
+    return {
+      condition: "lifeCount",
+      player: m[1]!.toLowerCase() === "you" ? "self" : "opponent",
+      comparison: "eq",
       value: parseInt(m[2]!, 10),
     };
   }
@@ -40,6 +97,16 @@ export function parseCountCondition(text: string): Condition | null {
 
   // Zone count (rested characters): you have N or more rested Characters
   // Must be before generic characters to avoid shadowing
+  m = /^you\s+have\s+(\d+)\s+or\s+(less|more)\s+rested\s+cards?$/i.exec(t);
+  if (m) {
+    return {
+      condition: "restedCardCount",
+      player: "self",
+      comparison: parseComparison(m[2]),
+      value: parseInt(m[1]!, 10),
+    };
+  }
+
   m = /^you\s+have\s+(\d+)\s+or\s+(less|more)\s+rested\s+Characters$/i.exec(t);
   if (m) {
     return {
@@ -61,6 +128,51 @@ export function parseCountCondition(text: string): Condition | null {
       zone: "character",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
+    };
+  }
+
+  // Zone count (characters with base cost): you have N or more Characters with a base cost of M or more
+  m =
+    /^you\s+have\s+(\d+)\s+or\s+(less|more)\s+Characters?\s+with\s+a\s+base\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?$/i.exec(
+      t,
+    );
+  if (m) {
+    return {
+      condition: "zoneCount",
+      player: "self",
+      zone: "character",
+      comparison: parseComparison(m[2]),
+      value: parseInt(m[1]!, 10),
+      filters: [
+        {
+          filter: "baseCost",
+          comparison: m[4] ? parseComparison(m[4]) : ("eq" as const),
+          value: parseInt(m[3]!, 10),
+        },
+      ],
+    };
+  }
+
+  // Negated full-field threshold. Because a player can have at most 5 Characters,
+  // "do not have 5" is equivalent to having fewer than 5 matching Characters.
+  m =
+    /^you\s+do\s+not\s+have\s+5\s+Characters\s+with\s+a\s+cost\s+of\s+(\d+)\s+or\s+(less|more)$/i.exec(
+      t,
+    );
+  if (m) {
+    return {
+      condition: "zoneCount",
+      player: "self",
+      zone: "character",
+      comparison: "lt",
+      value: 5,
+      filters: [
+        {
+          filter: "cost",
+          comparison: parseComparison(m[2]),
+          value: parseInt(m[1]!, 10),
+        },
+      ],
     };
   }
 
@@ -90,7 +202,7 @@ export function parseCountCondition(text: string): Condition | null {
       value: parseInt(m[1]!, 10),
       filters: [
         { filter: "state", value: "rested" as const },
-        { filter: "trait", value: m[3]! },
+        { filter: "trait", value: m[3]!, match: "includes" },
       ],
     };
   }
@@ -107,7 +219,7 @@ export function parseCountCondition(text: string): Condition | null {
       zone: "character",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
-      filters: [{ filter: "trait", value: m[3]! }],
+      filters: [{ filter: "trait", value: m[3]!, match: "includes" }],
     };
   }
 
@@ -229,6 +341,19 @@ export function parseCountCondition(text: string): Condition | null {
       player: "self",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
+      state: "active",
+    };
+  }
+
+  // DON!! field count (rested): you have N or more rested DON!! cards
+  m = /^you\s+have\s+(\d+)\s+or\s+(less|more)\s+rested\s+DON!!\s+cards?$/i.exec(t);
+  if (m) {
+    return {
+      condition: "donFieldCount",
+      player: "self",
+      comparison: parseComparison(m[2]),
+      value: parseInt(m[1]!, 10),
+      state: "rested",
     };
   }
 
@@ -249,13 +374,34 @@ export function parseCountCondition(text: string): Condition | null {
   // Opponent rested cards/Characters: your opponent has N or more rested cards/Characters
   m = /^your\s+opponent\s+has\s+(\d+)\s+or\s+(less|more)\s+rested\s+(cards?|Characters?)$/i.exec(t);
   if (m) {
+    if (/^cards?$/i.test(m[3]!)) {
+      return {
+        condition: "restedCardCount",
+        player: "opponent",
+        comparison: parseComparison(m[2]),
+        value: parseInt(m[1]!, 10),
+      };
+    }
     return {
       condition: "zoneCount",
       player: "opponent",
-      zone: /^Characters?$/i.test(m[3]!) ? "character" : "field",
+      zone: "character",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
       filters: [{ filter: "state", value: "rested" as const }],
+    };
+  }
+
+  // DON!! field gap: the number on your field is at least N less/more than the opponent's
+  m =
+    /^the\s+number\s+of\s+DON!!\s+cards?\s+on\s+your\s+field\s+is\s+at\s+least\s+(\d+)\s+(less|more)\s+than\s+the\s+number\s+on\s+your\s+opponent's\s+field$/i.exec(
+      t,
+    );
+  if (m) {
+    return {
+      condition: "donFieldComparison",
+      selfComparison: m[2]!.toLowerCase() === "less" ? "lte" : "gte",
+      difference: parseInt(m[1]!, 10),
     };
   }
 
@@ -292,8 +438,7 @@ export function parseCountCondition(text: string): Condition | null {
     );
   if (m) {
     return {
-      condition: "lifeCount",
-      player: "self",
+      condition: "totalLifeCount",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
     };
@@ -339,7 +484,7 @@ export function parseCountCondition(text: string): Condition | null {
       zone: "character",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
-      filters: [{ filter: "trait", value: m[3]! }],
+      filters: [{ filter: "trait", value: m[3]!, match: "includes" }],
     };
   }
 
@@ -356,8 +501,13 @@ export function parseCountCondition(text: string): Condition | null {
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
       filters: [
-        { filter: "trait", value: m[3]! },
-        { filter: "trait", value: m[4]! },
+        {
+          filter: "anyOf",
+          filters: [
+            { filter: "trait", value: m[3]!, match: "includes" },
+            { filter: "trait", value: m[4]!, match: "includes" },
+          ],
+        },
       ],
     };
   }
@@ -408,6 +558,37 @@ export function parseCountCondition(text: string): Condition | null {
       zone: "character",
       comparison: "eq",
       value: 0,
+      filters: [{ filter: "trait", value: m[1]!, match: "includes", negate: true }],
+    };
+  }
+
+  // Only type on field: you only have [X] type Characters
+  m =
+    /^you\s+only\s+have\s+Characters?\s+with\s+a\s+type\s+including\s+["\u201c]([^"\u201d]+)["\u201d]$/i.exec(
+      t,
+    );
+  if (m) {
+    return {
+      condition: "zoneCount",
+      player: "self",
+      zone: "character",
+      comparison: "eq",
+      value: 0,
+      filters: [{ filter: "trait", value: m[1]!, match: "includes", negate: true }],
+    };
+  }
+
+  m =
+    /^you\s+only\s+have\s+(?:[[{"\u201c])([^\]}\u201d"]+)(?:[\]}\u201d"])\s+type\s+Characters?$/i.exec(
+      t,
+    );
+  if (m) {
+    return {
+      condition: "zoneCount",
+      player: "self",
+      zone: "character",
+      comparison: "eq",
+      value: 0,
       filters: [{ filter: "trait", value: m[1]!, negate: true }],
     };
   }
@@ -432,7 +613,7 @@ export function parseCountCondition(text: string): Condition | null {
   m = /^you\s+have\s+a\s+total\s+of\s+(\d+)\s+or\s+(more|less)\s+given\s+DON!!\s+cards?$/i.exec(t);
   if (m) {
     return {
-      condition: "donFieldCount",
+      condition: "givenDonCount",
       player: "self",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),

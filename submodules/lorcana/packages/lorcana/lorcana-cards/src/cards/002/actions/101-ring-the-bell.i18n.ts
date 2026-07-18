@@ -17,4 +17,8 @@ export const ringTheBellI18n: Record<Languages, I18nProperties> = {
     name: "Ring the Bell",
     text: "Banish chosen damaged character.",
   },
+  es: {
+    name: "Tocar el timbre",
+    text: "Desterrar al personaje dañado elegido.",
+  },
 };

@@ -45,4 +45,15 @@ export const bullseyeLoyalHorseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Diana",
+    version: "Caballo leal",
+    text: [
+      {
+        title: "VAMOS A MONTAR",
+        description:
+          "Si tienes un personaje llamado Woody o Jessie en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+    ],
+  },
 };

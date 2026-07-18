@@ -45,4 +45,15 @@ export const mullinsSeasonedShipmateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mullins",
+    version: "Compañero de barco experimentado",
+    text: [
+      {
+        title: "CAER EN LÍNEA",
+        description:
+          "Mientras tengas un personaje llamado Sr. Smee en juego, este personaje gana Resistencia +1.",
+      },
+    ],
+  },
 };

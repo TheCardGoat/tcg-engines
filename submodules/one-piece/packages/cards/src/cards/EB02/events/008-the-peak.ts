@@ -53,6 +53,15 @@ export const eb02ThePeak008: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
+          },
+        ],
+      },
     ],
   },
   i18n: eb02ThePeak008I18n,

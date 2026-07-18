@@ -17,4 +17,8 @@ export const bounPrecociousEntrepreneurI18n: Record<Languages, I18nProperties> =
     name: "Boun",
     version: "Precocious Entrepreneur",
   },
+  es: {
+    name: "Rebote",
+    version: "Emprendedor precoz",
+  },
 };

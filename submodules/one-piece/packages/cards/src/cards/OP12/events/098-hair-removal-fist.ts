@@ -43,6 +43,52 @@ export const op12HairRemovalFist098: EventCard = {
             value: 2000,
             duration: "thisBattle",
           },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: 2000,
+            duration: "thisBattle",
+            previousActionTargets: true,
+            condition: {
+              condition: "hasCard",
+              player: "self",
+              zone: "character",
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Revolutionary Army",
+                  match: "includes",
+                },
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 8,
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+          {
+            action: "trashFromDeck",
+            player: "self",
+            amount: 1,
+          },
         ],
       },
     ],

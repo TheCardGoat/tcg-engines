@@ -21,4 +21,9 @@ export const peterPanFearlessFighterI18n: Record<Languages, I18nProperties> = {
     version: "Fearless Fighter",
     text: "<Rush> (This character can challenge the turn they're played.)",
   },
+  es: {
+    name: "Peter Pan",
+    version: "Luchador intrépido",
+    text: "Correr",
+  },
 };

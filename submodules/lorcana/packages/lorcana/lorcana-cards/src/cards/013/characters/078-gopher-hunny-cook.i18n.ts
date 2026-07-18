@@ -61,4 +61,19 @@ export const gopherHunnyCookI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ardilla de tierra",
+    version: "Cocinero cariñoso",
+    text: [
+      {
+        title: "Por el agujero",
+        description: "Este personaje puede entrar en juego agotado.",
+      },
+      {
+        title: "Comida fortificante",
+        description:
+          "Durante el turno de un oponente, mientras este personaje está ejercido, tus otros personajes Hunny obtienen <Resistencia> +1.",
+      },
+    ],
+  },
 };

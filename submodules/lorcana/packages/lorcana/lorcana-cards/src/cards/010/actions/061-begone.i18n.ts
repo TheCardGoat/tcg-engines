@@ -17,4 +17,8 @@ export const begoneI18n: Record<Languages, I18nProperties> = {
     name: "Sparisci!",
     text: "Fai riprendere in mano al suo giocatore un personaggio, un oggetto o un luogo a tua scelta con costo 3 o inferiore.",
   },
+  es: {
+    name: "¡Vete!",
+    text: "Devuelve el personaje, objeto o ubicación elegido con un coste de 3 o menos a la mano del jugador.",
+  },
 };

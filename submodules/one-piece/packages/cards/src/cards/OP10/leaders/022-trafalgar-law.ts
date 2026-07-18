@@ -41,5 +41,58 @@ export const op10TrafalgarLaw022: LeaderCard = {
   ],
   effect:
     '[DON!! x1] [Activate: Main] [Once Per Turn] If the total cost of your Characters is 5 or more, you may return 1 of your Characters to the owner\'s hand: Reveal 1 card from the top of your Life cards. If that card is a "Supernovas" type Character card with a cost of 5 or less, you may play that card.',
+  effects: {
+    effects: [
+      {
+        trigger: "activateMain",
+        conditions: [
+          {
+            condition: "donAttached",
+            amount: 1,
+          },
+          {
+            condition: "zoneValueTotal",
+            player: "self",
+            zone: "character",
+            property: "cost",
+            comparison: "gte",
+            value: 5,
+          },
+        ],
+        costs: [
+          {
+            cost: "returnCharacter",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "revealFromLife",
+            player: "self",
+            conditionalPlay: {
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Supernovas",
+                  match: "includes",
+                },
+                {
+                  filter: "cardCategory",
+                  value: "character",
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 5,
+                },
+              ],
+            },
+          },
+        ],
+        optional: true,
+        oncePerTurn: true,
+      },
+    ],
+  },
   i18n: op10TrafalgarLaw022I18n,
 };

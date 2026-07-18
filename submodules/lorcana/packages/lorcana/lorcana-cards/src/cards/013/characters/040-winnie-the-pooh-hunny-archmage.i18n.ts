@@ -45,4 +45,15 @@ export const winnieThePoohHunnyArchmageI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Winnie el pooh",
+    version: "Archimago cariñoso",
+    text: [
+      {
+        title: "PEGARSE",
+        description:
+          "Mientras tengas 2 o más personajes de Hunny en juego, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

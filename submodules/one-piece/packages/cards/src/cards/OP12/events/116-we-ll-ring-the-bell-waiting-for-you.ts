@@ -25,5 +25,62 @@ export const op12WeLlRingTheBellWaitingForYou116: EventCard = {
   traits: ["Sky Island Shandian Warrior Jaya"],
   effect:
     '[Main] Look at 5 cards from the top of your deck; reveal a total of up to 2 "Shandian Warrior" type Character cards or [Mont Blanc Noland] and add them to your hand. Then, place the rest at the bottom of your deck in any order.',
+  effects: {
+    effects: [
+      {
+        trigger: "main",
+        actions: [
+          {
+            action: "search",
+            lookCount: 5,
+            source: {
+              player: "self",
+              zone: "deck",
+            },
+            revealCount: {
+              amount: 2,
+              upTo: true,
+            },
+            revealFilters: [
+              {
+                filter: "anyOf",
+                groups: [
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "character",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Shandian Warrior",
+                      match: "includes",
+                    },
+                  ],
+                  [
+                    {
+                      filter: "name",
+                      value: "Mont Blanc Noland",
+                    },
+                  ],
+                ],
+              },
+            ],
+            revealDestination: "hand",
+            remainderPosition: "bottom",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+        ],
+      },
+    ],
+  },
   i18n: op12WeLlRingTheBellWaitingForYou116I18n,
 };

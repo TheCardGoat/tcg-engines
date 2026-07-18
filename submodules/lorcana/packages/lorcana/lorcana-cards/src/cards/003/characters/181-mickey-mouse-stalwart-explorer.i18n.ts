@@ -41,4 +41,15 @@ export const mickeyMouseStalwartExplorerI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Explorador incondicional",
+    text: [
+      {
+        title: "TOMAMOS",
+        description:
+          "UNA MIRADA Este personaje obtiene +1 {S} por cada ubicación que tengas en juego.",
+      },
+    ],
+  },
 };

@@ -59,4 +59,17 @@ export const aladdinIntrepidCommanderP2PromoI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Aladino",
+    version: "Comandante intrépido",
+    text: [
+      {
+        title: "Shift 2",
+      },
+      {
+        title: "RECUERDA TU ENTRENAMIENTO",
+        description: "Cuando juegas con este personaje, tus personajes obtienen +2 {S} este turno.",
+      },
+    ],
+  },
 };

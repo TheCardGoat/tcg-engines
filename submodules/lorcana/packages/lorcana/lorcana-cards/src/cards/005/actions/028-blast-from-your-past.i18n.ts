@@ -35,4 +35,8 @@ export const blastFromYourPastI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Explosión de tu pasado",
+    text: "Nombra una tarjeta. Devuelve a tu mano todas las cartas de personaje con ese nombre de tu descarte.",
+  },
 };

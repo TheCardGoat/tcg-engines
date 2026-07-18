@@ -65,4 +65,20 @@ export const brunoMadrigalOasisOracleEpicI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Bruno madrigal",
+    version: "Oráculo Oasis",
+    text: [
+      {
+        title: "ENCUENTRA ESA VISIÓN",
+        description:
+          "Una vez durante tu turno, cada vez que elimines el daño de uno de tus personajes, puedes mirar las 2 cartas superiores de tu mazo. Pon uno en tu mano y el otro en el fondo de tu mazo.",
+      },
+      {
+        title: "ESTARAS BIEN",
+        description:
+          "Siempre que este personaje realice una misión, puedes eliminar todo el daño del personaje elegido.",
+      },
+    ],
+  },
 };

@@ -62,4 +62,20 @@ export const herculesMightyLeaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hércules",
+    version: "Poderoso líder",
+    text: [
+      {
+        title: "SIEMPRE VIGILANTE",
+        description:
+          "A este personaje no se le puede hacer daño a menos que esté siendo desafiado.",
+      },
+      {
+        title: "SIEMPRE VALIENTE",
+        description:
+          "Mientras este personaje está ejercido, tus otros personajes héroes no pueden recibir daño a menos que estén siendo desafiados.",
+      },
+    ],
+  },
 };

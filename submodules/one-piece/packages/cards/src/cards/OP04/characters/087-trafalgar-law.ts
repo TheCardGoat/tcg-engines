@@ -23,8 +23,7 @@ export const op04TrafalgarLaw087: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Heart Pirates Dressrosa"],
+  traits: ["Dressrosa", "Heart Pirates"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op04TrafalgarLaw087I18n,
 };

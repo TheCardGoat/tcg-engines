@@ -61,4 +61,19 @@ export const queensSensorCoreI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Núcleo del sensor de la reina",
+    text: [
+      {
+        title: "SÍMBOLO DE NOBLEZA",
+        description:
+          "Al comienzo de tu turno, si tienes un personaje de Princesa o Reina en juego, gana 1 conocimiento.",
+      },
+      {
+        title: "BÚSQUEDA REAL",
+        description:
+          "{E}, 2 {I}: revela la carta superior de tu mazo. Si es una carta de personaje de Princesa o Reina, puedes ponerla en tu mano. De lo contrario, colóquelo en la parte superior de su plataforma.",
+      },
+    ],
+  },
 };

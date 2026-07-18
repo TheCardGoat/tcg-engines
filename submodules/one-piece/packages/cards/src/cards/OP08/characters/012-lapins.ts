@@ -26,7 +26,7 @@ export const op08Lapins012: CharacterCard = {
   traits: ["Animal Drum Kingdom"],
   attribute: "strike",
   effect:
-    "[DON!! x2] [When Attacking] If your Leader has the [Drum Kingdom] type, K.O. up to 1 of your opponent's Characters with 4000 power or less.",
+    "[DON!! x2] [When Attacking] If your Leader has the {Drum Kingdom} type, K.O. up to 1 of your opponent's Characters with 4000 power or less.",
   effects: {
     effects: [
       {
@@ -39,6 +39,7 @@ export const op08Lapins012: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Drum Kingdom",
+            match: "includes",
           },
         ],
         actions: [

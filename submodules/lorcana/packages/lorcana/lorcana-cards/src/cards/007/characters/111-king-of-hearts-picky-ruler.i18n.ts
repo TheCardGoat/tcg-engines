@@ -42,4 +42,14 @@ export const kingOfHeartsPickyRulerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rey de corazones",
+    version: "Regla quisquillosa",
+    text: [
+      {
+        title: "ESTADO OBJETIVO",
+        description: "Los personajes dañados no pueden desafiar a tus personajes.",
+      },
+    ],
+  },
 };

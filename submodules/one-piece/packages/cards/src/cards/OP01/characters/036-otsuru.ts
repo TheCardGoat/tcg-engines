@@ -25,6 +25,5 @@ export const op01Otsuru036: CharacterCard = {
   counter: 1000,
   traits: ["Land of Wano"],
   attribute: "wisdom",
-  effect: "NULL",
   i18n: op01Otsuru036I18n,
 };

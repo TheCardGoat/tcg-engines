@@ -43,4 +43,15 @@ export const mrSnoopsBetrayedPartnerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sr. fisgones",
+    version: "Socio traicionado",
+    text: [
+      {
+        title: "¡LADRÓN TRAITORIO!",
+        description:
+          "Durante tu turno, cuando este personaje sea desterrado, podrás robar una carta.",
+      },
+    ],
+  },
 };

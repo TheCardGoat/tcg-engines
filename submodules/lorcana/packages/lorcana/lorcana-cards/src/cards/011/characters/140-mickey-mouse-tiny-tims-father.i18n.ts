@@ -17,4 +17,8 @@ export const mickeyMouseTinyTimsFatherI18n: Record<Languages, I18nProperties> = 
     name: "Topolino",
     version: "Papà del Piccolo Tim",
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "El padre del pequeño Tim",
+  },
 };

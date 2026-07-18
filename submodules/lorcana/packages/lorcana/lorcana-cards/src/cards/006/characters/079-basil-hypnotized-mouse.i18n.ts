@@ -21,4 +21,9 @@ export const basilHypnotizedMouseI18n: Record<Languages, I18nProperties> = {
     version: "Topo Ipnotizzato",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Albahaca",
+    version: "Ratón hipnotizado",
+    text: "Evasivo",
+  },
 };

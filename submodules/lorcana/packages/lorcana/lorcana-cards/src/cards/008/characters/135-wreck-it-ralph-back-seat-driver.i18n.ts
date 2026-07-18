@@ -44,4 +44,15 @@ export const wreckitRalphBackSeatDriverI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Ralph el demoledor",
+    version: "Conductor del asiento trasero",
+    text: [
+      {
+        title: "CARGADO",
+        description:
+          "Cuando juegas con este personaje, el personaje Racer elegido obtiene +4 {S} este turno.",
+      },
+    ],
+  },
 };

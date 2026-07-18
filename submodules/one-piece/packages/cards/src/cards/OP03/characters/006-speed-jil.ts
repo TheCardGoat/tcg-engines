@@ -25,6 +25,5 @@ export const op03SpeedJil006: CharacterCard = {
   counter: 1000,
   traits: ["Whitebeard Pirates"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op03SpeedJil006I18n,
 };

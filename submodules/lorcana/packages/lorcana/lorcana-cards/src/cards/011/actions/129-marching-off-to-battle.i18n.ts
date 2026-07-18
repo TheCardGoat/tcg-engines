@@ -33,4 +33,8 @@ export const marchingOffToBattleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Marchando hacia la batalla",
+    text: "Si un personaje fue desterrado este turno, roba 2 cartas.",
+  },
 };

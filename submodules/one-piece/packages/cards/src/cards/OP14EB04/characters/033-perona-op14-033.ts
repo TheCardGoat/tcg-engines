@@ -64,7 +64,7 @@ export const op14eb04PeronaOp14033033: CharacterCard = {
                 },
               ],
             },
-            duration: "untilEndOfOpponentNextTurn",
+            duration: "untilEndOfOpponentNextEndPhase",
           },
         ],
       },

@@ -23,7 +23,7 @@ export const op13MeteorFist020: EventCard = {
   cost: 3,
   trigger: "Activate this card's [Main] effect.",
   traits: ["Navy"],
-  effect: "[Main] Give up to 1 of your opponent's Characters 5000 power during this turn.",
+  effect: "[Main] Give up to 1 of your opponent's Characters −5000 power during this turn.",
   effects: {
     effects: [
       {
@@ -39,8 +39,17 @@ export const op13MeteorFist020: EventCard = {
                 upTo: true,
               },
             },
-            value: 5000,
+            value: -5000,
             duration: "thisTurn",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
           },
         ],
       },

@@ -45,4 +45,15 @@ export const annaHeirToArendelleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ana",
+    version: "Heredero de Arendelle",
+    text: [
+      {
+        title: "CORAZÓN AMOROSO",
+        description:
+          "Cuando juegues con este personaje, si tienes un personaje llamado Elsa en juego, elige un personaje contrario. El personaje elegido no está listo al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

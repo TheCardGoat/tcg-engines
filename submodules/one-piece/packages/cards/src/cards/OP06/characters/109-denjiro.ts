@@ -28,6 +28,24 @@ export const op06Denjiro109: CharacterCard = {
   effect:
     "[DON!! x2] If your opponent has 3 or less Life cards, this Character cannot be K.O.'d by effects.",
   effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "lifeCount",
+            player: "opponent",
+            comparison: "lte",
+            value: 3,
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+      },
+    ],
     permanentEffects: [
       {
         conditions: [

@@ -61,4 +61,19 @@ export const darkwingsChairSetI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Juego de sillas de Darkwing",
+    text: [
+      {
+        title: "ENTRADA SECRETA",
+        description:
+          "Cuando juegas este objeto, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercerla.",
+      },
+      {
+        title: "GIRO REPENTINO",
+        description:
+          "{E}, destierra este objeto: elimina hasta 2 daños del personaje elegido. Si se elige un personaje llamado Darkwing Duck, elimina hasta 4 daños.",
+      },
+    ],
+  },
 };

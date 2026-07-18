@@ -40,4 +40,13 @@ export const heartOfAtlantisI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Corazón de la Atlántida",
+    text: [
+      {
+        title: "DADOR DE VIDA",
+        description: "{E}: pagas 2 {I} menos por el siguiente personaje que juegues en este turno.",
+      },
+    ],
+  },
 };

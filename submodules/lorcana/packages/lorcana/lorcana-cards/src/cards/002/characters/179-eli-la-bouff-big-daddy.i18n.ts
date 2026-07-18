@@ -17,4 +17,8 @@ export const eliLaBouffBigDaddyI18n: Record<Languages, I18nProperties> = {
     name: "Eli La Bouff",
     version: "Big Daddy",
   },
+  es: {
+    name: "Eli La Bouff",
+    version: "Gran papi",
+  },
 };

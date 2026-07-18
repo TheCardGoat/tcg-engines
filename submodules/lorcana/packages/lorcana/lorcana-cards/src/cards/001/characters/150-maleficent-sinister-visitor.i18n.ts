@@ -17,4 +17,8 @@ export const maleficentSinisterVisitorI18n: Record<Languages, I18nProperties> = 
     name: "Maleficent",
     version: "Sinister Visitor",
   },
+  es: {
+    name: "Pernicioso",
+    version: "Visitante siniestro",
+  },
 };

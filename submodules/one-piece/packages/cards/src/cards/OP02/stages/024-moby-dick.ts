@@ -30,14 +30,66 @@ export const op02MobyDick024: StageCard = {
         trigger: "trigger",
         actions: [
           {
-            action: "play",
-            source: {
+            action: "playThisCard",
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "turn",
+            value: "your",
+          },
+          {
+            condition: "lifeCount",
+            player: "self",
+            comparison: "lte",
+            value: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
               player: "self",
-              zone: "hand",
+              zones: ["leader", "character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "name",
+                  value: "Edward.Newgate",
+                },
+              ],
             },
-            count: {
-              amount: 1,
+            value: 2000,
+            duration: "permanent",
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Whitebeard Pirates",
+                  match: "includes",
+                },
+                {
+                  filter: "excludeName",
+                  value: "Edward.Newgate",
+                },
+              ],
             },
+            value: 2000,
+            duration: "permanent",
           },
         ],
       },

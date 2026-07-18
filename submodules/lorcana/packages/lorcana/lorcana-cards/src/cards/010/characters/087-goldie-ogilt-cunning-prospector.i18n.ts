@@ -65,4 +65,20 @@ export const goldieOgiltCunningProspectorI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Goldie O'Gilt",
+    version: "Prospector astuto",
+    text: [
+      {
+        title: "PUENTE DE RECLAMACIÓN",
+        description:
+          "Cuando juegas con este personaje, el oponente elegido revela su mano y descarta una carta de ubicación de tu elección.",
+      },
+      {
+        title: "HUELGA ORO",
+        description:
+          "Siempre que este personaje realice una misión, puedes colocar una carta de ubicación del descarte del jugador elegido en la parte inferior de su mazo para ganar 1 conocimiento.",
+      },
+    ],
+  },
 };

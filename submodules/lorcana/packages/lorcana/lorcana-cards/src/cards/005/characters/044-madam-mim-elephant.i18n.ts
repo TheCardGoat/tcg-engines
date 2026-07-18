@@ -65,4 +65,20 @@ export const madamMimElephantI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora mim",
+    version: "Elefante",
+    text: [
+      {
+        title: "UN PEQUEÑO JUEGO",
+        description:
+          "Cuando juegues con este personaje, destiérralo o devuelve a tu mano otro personaje tuyo elegido.",
+      },
+      {
+        title: "MOVIMIENTO DISTINTO",
+        description:
+          "Al comienzo de tu turno, puedes mover hasta 2 contadores de daño de este personaje al personaje contrario elegido.",
+      },
+    ],
+  },
 };

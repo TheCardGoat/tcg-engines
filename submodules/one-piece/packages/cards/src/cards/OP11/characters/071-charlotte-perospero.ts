@@ -38,17 +38,23 @@ export const op11CharlottePerospero071: CharacterCard = {
         ],
         actions: [
           {
-            action: "draw",
-            player: "self",
-            amount: 1,
-          },
-          {
-            action: "addDon",
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            state: "active",
+            action: "guessTopDeckCost",
+            player: "opponent",
+            onMatch: [
+              {
+                action: "draw",
+                player: "self",
+                amount: 1,
+              },
+              {
+                action: "addDon",
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                state: "active",
+              },
+            ],
           },
         ],
         optional: true,

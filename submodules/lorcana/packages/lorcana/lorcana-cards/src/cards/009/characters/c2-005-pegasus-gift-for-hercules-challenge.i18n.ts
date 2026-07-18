@@ -21,4 +21,9 @@ export const pegasusGiftForHerculesC2ChallengeI18n: Record<Languages, I18nProper
     version: "Dono per Ercole",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Pegaso",
+    version: "Regalo para Hércules",
+    text: "Evasivo",
+  },
 };

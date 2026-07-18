@@ -4,9 +4,13 @@ import type { CardPlayedPayload } from "../../../types";
 import type { ActionResolutionInput, PlayCardExecutionContext } from "./types";
 import { normalizeSelectedTargets, resolveEffectTargets } from "../../../targeting/runtime";
 import { getEffectTargetSelectionInput } from "./selection-state";
-import { emitTriggeredLorcanaEvent } from "../../effects/triggered-abilities";
+import {
+  emitTriggeredLorcanaEvent,
+  snapshotTriggeredCandidatesForCard,
+} from "../../effects/triggered-abilities";
 import { isGainLoreEffect, resolveGainLoreEffect } from "./gain-lore-effect";
 import { isSlotted } from "../../../targeting/slotted-targets";
+import { runGameStateCheck } from "../../state/game-state-check";
 
 export function isMoveToLocationEffect(effect: unknown): effect is MoveToLocationEffect {
   return (
@@ -127,6 +131,7 @@ export function resolveMoveToLocationEffect(
       ...currentMeta,
       atLocationId: locationId,
     });
+    const triggerCandidates = snapshotTriggeredCandidatesForCard(ctx, characterId);
 
     emitTriggeredLorcanaEvent(
       ctx,
@@ -144,12 +149,17 @@ export function resolveMoveToLocationEffect(
         playerId: cardPlayed.playerId,
         subjectCardId: characterId,
         triggerSourceCardId: cardPlayed.cardId,
+        triggerCandidates,
         eventSnapshot: {
           subjectAtLocationId: locationId,
         },
       },
     );
     movedCount++;
+  }
+
+  if (movedCount > 0) {
+    runGameStateCheck(ctx, { reasonCardId: cardPlayed.cardId });
   }
 
   // Execute forEach sub-effects once per character moved

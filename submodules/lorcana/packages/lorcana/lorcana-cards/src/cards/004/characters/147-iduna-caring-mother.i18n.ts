@@ -45,4 +45,15 @@ export const idunaCaringMotherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Iduna",
+    version: "Madre cariñosa",
+    text: [
+      {
+        title: "AMOR DURADERO",
+        description:
+          "Cuando este personaje sea desterrado, puedes poner esta carta en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

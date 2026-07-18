@@ -57,4 +57,18 @@ export const robinHoodTimelyContestantI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Robin Hood",
+    version: "Concursante oportuno",
+    text: [
+      {
+        title: "¡ETIQUETAME!",
+        description:
+          "Por cada 1 daño en personajes contrarios, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "Pabellón",
+      },
+    ],
+  },
 };

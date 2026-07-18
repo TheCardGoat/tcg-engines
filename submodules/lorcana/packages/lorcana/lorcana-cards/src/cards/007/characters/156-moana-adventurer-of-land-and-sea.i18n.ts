@@ -17,4 +17,8 @@ export const moanaAdventurerOfLandAndSeaI18n: Record<Languages, I18nProperties> 
     name: "Vaiana",
     version: "Avventuriera per Terra e per Mare",
   },
+  es: {
+    name: "Moana",
+    version: "Aventurero de tierra y mar",
+  },
 };

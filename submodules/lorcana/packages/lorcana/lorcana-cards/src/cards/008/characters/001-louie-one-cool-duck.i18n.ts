@@ -44,4 +44,15 @@ export const louieOneCoolDuckI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Luis",
+    version: "Un pato fresco",
+    text: [
+      {
+        title: "SALTAR LA TRAMPA",
+        description:
+          "Mientras se desafía a este personaje, el personaje desafiante obtiene -1 {S}.",
+      },
+    ],
+  },
 };

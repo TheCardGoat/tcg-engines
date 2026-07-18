@@ -60,4 +60,18 @@ export const elsaIceMakerC2ChallengeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Elsa",
+    version: "Máquina de hielo",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "PARED DE INVIERNO",
+        description:
+          "Siempre que este personaje realice una misión, puedes ejercer el personaje elegido. Si lo haces y tienes un personaje llamado Anna en juego, el personaje elegido no podrá estar listo al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

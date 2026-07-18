@@ -60,4 +60,18 @@ export const theQueenConceitedRulerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La reina",
+    version: "Gobernante engreído",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "CONVOCATORIA REAL",
+        description:
+          "Al comienzo de tu turno, puedes elegir y descartar una carta de personaje de Princesa o Reina para devolver una carta de personaje de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

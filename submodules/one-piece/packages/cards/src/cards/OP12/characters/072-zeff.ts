@@ -27,5 +27,33 @@ export const op12Zeff072: CharacterCard = {
   attribute: "strike",
   effect:
     "When a DON!! card on your field is returned to your DON!! deck, if your Leader is [Sanji], this Character gains [Rush] during this turn.\n(This card can attack on the turn in which it is played.)",
+  effects: {
+    effects: [
+      {
+        trigger: "whenDonReturned",
+        conditions: [
+          {
+            condition: "leaderName",
+            name: "Sanji",
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "thisTurn",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op12Zeff072I18n,
 };

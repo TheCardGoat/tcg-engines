@@ -48,6 +48,26 @@ export const op01Arlong063: CharacterCard = {
             player: "opponent",
             amount: 1,
             chosenBy: "self",
+            ifRevealedCardMatches: {
+              filters: [
+                {
+                  filter: "cardCategory",
+                  value: "event",
+                },
+              ],
+              actions: [
+                {
+                  action: "removeFromLife",
+                  player: "opponent",
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                  destination: "deck",
+                  destinationPosition: "bottom",
+                },
+              ],
+            },
           },
         ],
         optional: true,

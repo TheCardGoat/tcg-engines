@@ -46,7 +46,7 @@ export const op09Shanks004: CharacterCard = {
   setId: "OP09",
   cost: 10,
   power: 12000,
-  traits: ["The Four Emperors Red-Haired Pirates"],
+  traits: ["The Four Emperors", "Red-Haired Pirates"],
   attribute: "slash",
   artVariants: [
     {
@@ -66,9 +66,25 @@ export const op09Shanks004: CharacterCard = {
     },
   ],
   effect:
-    "Give all of your opponent's Characters 1000 power.\n[Rush] (This card can attack on the turn in which it is played.)",
+    "Give all of your opponent's Characters −1000 power.\n[Rush] (This card can attack on the turn in which it is played.)",
   effects: {
     keywords: ["rush"],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: "all" },
+            },
+            value: -1000,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
   },
   i18n: op09Shanks004I18n,
 };

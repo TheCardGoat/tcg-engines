@@ -54,4 +54,16 @@ export const balooFriendAndGuardianI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Baloo",
+    version: "Amigo y guardián",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "Apoyo",
+      },
+    ],
+  },
 };

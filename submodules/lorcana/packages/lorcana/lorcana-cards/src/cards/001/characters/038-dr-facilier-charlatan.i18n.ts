@@ -21,4 +21,9 @@ export const drFacilierCharlatanI18n: Record<Languages, I18nProperties> = {
     version: "Charlatan",
     text: "<Challenger> +2 (While challenging, this character gets +2 {S}.)",
   },
+  es: {
+    name: "Dr. Facilier",
+    version: "Charlatán",
+    text: "Retador +2",
+  },
 };

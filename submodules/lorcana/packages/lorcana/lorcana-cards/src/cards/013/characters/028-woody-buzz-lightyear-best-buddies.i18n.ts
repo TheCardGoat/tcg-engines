@@ -79,4 +79,23 @@ export const woodyBuzzLightyearBestBuddiesI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Woody y Buzz Lightyear",
+    version: "Mejores amigos",
+    text: [
+      {
+        title: "Cambio 5 {I}",
+      },
+      {
+        title: "HASTA EL INFINITO...",
+        description:
+          "Cuando juegas con este personaje, si el oponente elegido tiene más cartas en su mano que tú, roba cartas hasta que tengas el mismo número....",
+      },
+      {
+        title: "¡Y MÁS ALLÁ!",
+        description:
+          "Siempre que este personaje realice una misión, puedes jugar una carta con un coste de 2 o menos de forma gratuita.",
+      },
+    ],
+  },
 };

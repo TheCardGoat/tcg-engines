@@ -40,7 +40,7 @@ export const op13PortgasDAce002: LeaderCard = {
     },
   ],
   effect:
-    "[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Give up to 1 of your opponent's Leader or Character cards 2000 power during this battle.\n[DON!! x1] [Once Per Turn] When you take damage or your Character with 6000 base power or more is K.O.'d, draw 1 card.",
+    "[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Give up to 1 of your opponent's Leader or Character cards −2000 power during this battle.\n[DON!! x1] [Once Per Turn] When you take damage or your Character with 6000 base power or more is K.O.'d, draw 1 card.",
   effects: {
     effects: [
       {
@@ -62,7 +62,7 @@ export const op13PortgasDAce002: LeaderCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisBattle",
           },
         ],
@@ -70,7 +70,8 @@ export const op13PortgasDAce002: LeaderCard = {
         oncePerTurn: true,
       },
       {
-        trigger: "whenDealsDamage",
+        trigger: "whenYouTakeDamage",
+        eventFilter: { targetSelf: true },
         conditions: [
           {
             condition: "donAttached",
@@ -85,6 +86,21 @@ export const op13PortgasDAce002: LeaderCard = {
           },
         ],
         oncePerTurn: true,
+        oncePerTurnKey: "ace-damage-or-character-ko",
+      },
+      {
+        trigger: "whenCharacterKod",
+        eventFilter: {
+          player: "self",
+          filters: [
+            { filter: "cardCategory", value: "character" },
+            { filter: "basePower", comparison: "gte", value: 6000 },
+          ],
+        },
+        conditions: [{ condition: "donAttached", amount: 1 }],
+        actions: [{ action: "draw", player: "self", amount: 1 }],
+        oncePerTurn: true,
+        oncePerTurnKey: "ace-damage-or-character-ko",
       },
     ],
   },

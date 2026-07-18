@@ -65,4 +65,20 @@ export const yenSidPowerfulSorcererEpicI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Yen sid",
+    version: "Hechicero poderoso",
+    text: [
+      {
+        title: "INTERVENCIÓN OPORTUNA",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje llamado Escoba Mágica en juego, puedes robar una carta.",
+      },
+      {
+        title: "ESTUDIO ARCANO",
+        description:
+          "Mientras tengas 2 o más personajes de Broom en juego, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

@@ -83,6 +83,7 @@ export const op14eb04EustassCaptainKidEb04039039: CharacterCard = {
               {
                 filter: "trait",
                 value: "Kid Pirates",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

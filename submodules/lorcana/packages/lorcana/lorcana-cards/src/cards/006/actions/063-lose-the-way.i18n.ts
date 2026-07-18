@@ -17,4 +17,8 @@ export const loseTheWayI18n: Record<Languages, I18nProperties> = {
     name: "Perdersi",
     text: "Impegna un personaggio a tua scelta. Poi, puoi scegliere e scartare una carta. Se lo fai, il personaggio impegnato non può prepararsi all'inizio del suo prossimo turno.",
   },
+  es: {
+    name: "Perder el camino",
+    text: "Ejercer el personaje elegido. Luego, puedes elegir y descartar una carta. Si lo haces, el personaje ejercido no podrá prepararse al comienzo de su siguiente turno.",
+  },
 };

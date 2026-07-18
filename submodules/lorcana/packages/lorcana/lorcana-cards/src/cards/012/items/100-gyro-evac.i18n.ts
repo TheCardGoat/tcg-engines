@@ -58,4 +58,18 @@ export const gyroevacI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gyro-Evac",
+    text: [
+      {
+        title: "Llévala arriba",
+        description:
+          "{E}, 1 {I}: tu personaje elegido gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+      {
+        title: "Aterrizaje forzoso",
+        description: "{E}, destierra este objeto: cada jugador pierde 2 conocimientos.",
+      },
+    ],
+  },
 };

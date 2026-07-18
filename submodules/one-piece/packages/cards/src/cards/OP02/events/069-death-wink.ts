@@ -46,6 +46,7 @@ export const op02DeathWink069: EventCard = {
             action: "draw",
             player: "self",
             amount: 2,
+            untilHandSize: 2,
           },
         ],
       },
@@ -55,7 +56,7 @@ export const op02DeathWink069: EventCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

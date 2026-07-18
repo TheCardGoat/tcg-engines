@@ -33,9 +33,17 @@ export interface SimulatorAppProps {
   readonly staticResources: MatchStaticResources;
   readonly viewerId: ViewerId;
   readonly bot?: DevRuntimeBotHandle;
+  /** Rebuild a local VS-AI scenario from its original configuration. */
+  readonly onRestartScenario?: () => void;
 }
 
-export function SimulatorApp({ runtime, staticResources, viewerId, bot }: SimulatorAppProps) {
+export function SimulatorApp({
+  runtime,
+  staticResources,
+  viewerId,
+  bot,
+  onRestartScenario,
+}: SimulatorAppProps) {
   const layoutMode = useLayoutMode();
   const isMobile = layoutMode === "mobile";
 
@@ -72,7 +80,17 @@ export function SimulatorApp({ runtime, staticResources, viewerId, bot }: Simula
               <DualModeProvider>
                 <CardInspectProvider>
                   <GundamSharedAnimationLayer>
-                    {bot ? <VsAiProvider bot={bot}>{matchTree}</VsAiProvider> : matchTree}
+                    {bot ? (
+                      <VsAiProvider
+                        bot={bot}
+                        runtime={runtime}
+                        onRestartScenario={onRestartScenario}
+                      >
+                        {matchTree}
+                      </VsAiProvider>
+                    ) : (
+                      matchTree
+                    )}
                   </GundamSharedAnimationLayer>
                   <CardHoverPreview />
                   <CardInspectDialog />

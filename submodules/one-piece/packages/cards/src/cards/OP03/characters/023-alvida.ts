@@ -25,6 +25,6 @@ export const op03Alvida023: CharacterCard = {
   counter: 1000,
   traits: ["East Blue Alvida Pirates"],
   attribute: "strike",
-  effect: "NULL",
+  effect: "",
   i18n: op03Alvida023I18n,
 };

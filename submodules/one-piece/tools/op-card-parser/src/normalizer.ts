@@ -75,11 +75,17 @@ function parseColors(raw: string, cardId: string): OPColor[] {
   });
 }
 
-function parseAttribute(raw: string | null, cardId: string): OPAttribute | undefined {
+function parseAttribute(
+  raw: string | null,
+  cardId: string,
+): OPAttribute | OPAttribute[] | undefined {
   if (!raw || isNullValue(raw)) return undefined;
-  const attr = ATTRIBUTE_MAP[raw.trim().toLowerCase()];
-  if (!attr) throw new NormalizationError(cardId, "attribute", `unknown attribute "${raw}"`);
-  return attr;
+  const attributes = raw.split("/").map((part) => {
+    const attr = ATTRIBUTE_MAP[part.trim().toLowerCase()];
+    if (!attr) throw new NormalizationError(cardId, "attribute", `unknown attribute "${part}"`);
+    return attr;
+  });
+  return attributes.length === 1 ? attributes[0] : attributes;
 }
 
 function parseRarity(raw: string, cardId: string): OPRarity {

@@ -43,5 +43,26 @@ export const op04CaponeGangBege100: CharacterCard = {
   ],
   effect:
     "[Trigger] Up to 1 of your opponent's Leader or Character cards cannot attack during this turn.",
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "cannotAttack",
+            target: {
+              player: "opponent",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            duration: "thisTurn",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op04CaponeGangBege100I18n,
 };

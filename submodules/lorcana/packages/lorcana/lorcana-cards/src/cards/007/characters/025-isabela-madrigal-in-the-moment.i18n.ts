@@ -45,4 +45,15 @@ export const isabelaMadrigalInTheMomentI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Isabela Madrigal",
+    version: "En el momento",
+    text: [
+      {
+        title: "ESTOY CANSADO DE LO PERFECTO",
+        description:
+          "Cada vez que uno de tus personajes canta una canción, este personaje no puede ser desafiado hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

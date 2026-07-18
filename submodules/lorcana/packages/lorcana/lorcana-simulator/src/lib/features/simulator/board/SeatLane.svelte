@@ -88,6 +88,12 @@ const hasItemsInPlay = $derived.by(() =>
 		.some((card) => card.cardType === "item"),
 );
 const showSeparateItemZone = $derived(layoutMode !== "mobile" && hasItemsInPlay);
+const BAR_ZONE_SPLIT_MINIMUM = 30;
+const BAR_ZONE_SPLIT_MAXIMUM = 70;
+let barZoneSplit = $state(50);
+let isResizingBarZones = $state(false);
+let barZoneContainerEl = $state<HTMLDivElement | null>(null);
+let barZoneResizerEl = $state<HTMLButtonElement | null>(null);
 const playZoneExcludedCardTypes = $derived.by(
 	(): Array<"item"> => (layoutMode === "mobile" ? [] : ["item"]),
 );
@@ -148,6 +154,53 @@ function handleLoreIncrement(): void {
 function handleLoreDecrement(): void {
 	if (!manualMode || !ownerId) return;
 	manualMode.setLore(ownerId, Math.max(0, lore - 1));
+}
+
+function updateBarZoneSplit(clientX: number, container: HTMLElement): void {
+	const bounds = container.getBoundingClientRect();
+	if (bounds.width <= 0) return;
+
+	const split = ((clientX - bounds.left) / bounds.width) * 100;
+	barZoneSplit = Math.min(BAR_ZONE_SPLIT_MAXIMUM, Math.max(BAR_ZONE_SPLIT_MINIMUM, split));
+}
+
+function handleBarZoneResizeStart(event: PointerEvent): void {
+	if (event.button !== 0 || !barZoneContainerEl || !barZoneResizerEl) return;
+
+	event.preventDefault();
+	barZoneResizerEl.setPointerCapture(event.pointerId);
+	isResizingBarZones = true;
+	updateBarZoneSplit(event.clientX, barZoneContainerEl);
+}
+
+function handleBarZoneResizeMove(event: PointerEvent): void {
+	if (isResizingBarZones && barZoneContainerEl) {
+		updateBarZoneSplit(event.clientX, barZoneContainerEl);
+	}
+}
+
+function handleBarZoneResizeEnd(event: PointerEvent): void {
+	isResizingBarZones = false;
+	if (barZoneResizerEl?.hasPointerCapture(event.pointerId)) {
+		barZoneResizerEl.releasePointerCapture(event.pointerId);
+	}
+}
+
+function handleBarZoneResizeKeydown(event: KeyboardEvent): void {
+	const step = event.shiftKey ? 10 : 5;
+	if (event.key === "ArrowLeft") {
+		event.preventDefault();
+		barZoneSplit = Math.max(BAR_ZONE_SPLIT_MINIMUM, barZoneSplit - step);
+	} else if (event.key === "ArrowRight") {
+		event.preventDefault();
+		barZoneSplit = Math.min(BAR_ZONE_SPLIT_MAXIMUM, barZoneSplit + step);
+	} else if (event.key === "Home") {
+		event.preventDefault();
+		barZoneSplit = BAR_ZONE_SPLIT_MINIMUM;
+	} else if (event.key === "End") {
+		event.preventDefault();
+		barZoneSplit = BAR_ZONE_SPLIT_MAXIMUM;
+	}
 }
 
 // Card-based moves require selecting a specific card — always disabled in context menu
@@ -481,7 +534,12 @@ function confirmPendingAction(): void {
         <div class="seat-lane__section seat-lane__section--bar">
           <div class="bar-zones">
             <div class="bar-zones__center-viewport" data-board-scroll-sync>
-              <div class="bar-zones__center-content" class:bar-zones__center-content--with-items={showSeparateItemZone}>
+              <div
+                class="bar-zones__center-content"
+                class:bar-zones__center-content--with-items={showSeparateItemZone}
+                style={`--bar-zone-split: ${barZoneSplit}%`}
+                bind:this={barZoneContainerEl}
+              >
                 <div class="bar-zone-shell bar-zone-shell--inkwell">
                   <InkwellZone
                     {isOpponent}
@@ -493,6 +551,19 @@ function confirmPendingAction(): void {
                 </div>
 
                 {#if showSeparateItemZone}
+                  <button
+                    type="button"
+                    class="bar-zone-resizer"
+                    aria-label={m["sim.itemZone.resizeAria"]({ percent: Math.round(barZoneSplit) })}
+                    data-current-split={Math.round(barZoneSplit)}
+                    data-testid={`bar-zone-resizer-${playerSide}`}
+                    bind:this={barZoneResizerEl}
+                    onpointerdown={handleBarZoneResizeStart}
+                    onpointermove={handleBarZoneResizeMove}
+                    onpointerup={handleBarZoneResizeEnd}
+                    onpointercancel={handleBarZoneResizeEnd}
+                    onkeydown={handleBarZoneResizeKeydown}
+                  ></button>
                   <div class="bar-zone-shell bar-zone-shell--items">
                     <ItemZone
                       {layoutMode}
@@ -1201,6 +1272,48 @@ function confirmPendingAction(): void {
     flex: 1 1 0;
   }
 
+  .bar-zones__center-content--with-items .bar-zone-shell--inkwell {
+    flex: 0 1 var(--bar-zone-split);
+  }
+
+  .bar-zone-resizer {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 0.7rem;
+    align-self: stretch;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    cursor: col-resize;
+    touch-action: none;
+  }
+
+  .bar-zone-resizer::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.18rem;
+    height: 2.4rem;
+    border-radius: 999px;
+    background: rgba(191, 219, 254, 0.45);
+    box-shadow: 0 0 0 1px rgba(11, 25, 46, 0.72);
+    content: "";
+    transform: translate(-50%, -50%);
+    transition: background 150ms ease, box-shadow 150ms ease;
+  }
+
+  .bar-zone-resizer:hover::before,
+  .bar-zone-resizer:focus-visible::before {
+    background: rgba(147, 197, 253, 0.96);
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.28);
+  }
+
+  .bar-zone-resizer:focus-visible {
+    outline: none;
+  }
+
   .bar-zone-shell--inkwell {
     padding: 0;
   }
@@ -1280,7 +1393,7 @@ function confirmPendingAction(): void {
     --item-zone-card-width: calc(var(--item-zone-card-height) * var(--bar-row-card-aspect));
     --item-grid-gap: 0.25rem;
     --item-container-padding: 0;
-    padding: 0;
+    padding: var(--item-zone-shell-padding, 0);
     border: none;
     border-radius: calc(var(--bar-shell-radius) - 2px);
     background: transparent;

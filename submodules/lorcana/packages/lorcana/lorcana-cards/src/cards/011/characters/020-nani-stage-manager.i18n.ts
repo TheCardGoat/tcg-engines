@@ -45,4 +45,15 @@ export const naniStageManagerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nani",
+    version: "Director de escena",
+    text: [
+      {
+        title: "ESA ES TU SEÑAL",
+        description:
+          "Cuando juegues con este personaje, mira las 4 cartas superiores de tu mazo. Puedes revelar una carta de personaje con coste 2 o menos y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

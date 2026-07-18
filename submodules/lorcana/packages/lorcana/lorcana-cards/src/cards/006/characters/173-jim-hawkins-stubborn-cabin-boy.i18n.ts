@@ -45,4 +45,15 @@ export const jimHawkinsStubbornCabinBoyI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Jim Hawkins",
+    version: "Grumete testarudo",
+    text: [
+      {
+        title: "¡VEN AQUÍ, VEN AQUÍ, VEN AQUÍ!",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, este personaje obtiene Challenger +2 este turno.",
+      },
+    ],
+  },
 };

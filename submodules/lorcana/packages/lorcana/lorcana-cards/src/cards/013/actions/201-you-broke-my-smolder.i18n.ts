@@ -17,4 +17,8 @@ export const youBrokeMySmolderI18n: Record<Languages, I18nProperties> = {
     name: "Sguardo Che Conquista Appannato",
     text: "Scarta la tua mano. Pesca 2 carte.",
   },
+  es: {
+    name: "Rompiste mi ardor",
+    text: "Descarta tu mano. Roba 2 cartas.",
+  },
 };

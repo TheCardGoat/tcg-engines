@@ -17,4 +17,8 @@ export const maleficentVengefulSorceressI18n: Record<Languages, I18nProperties> 
     name: "Malefica",
     version: "Incantatrice Vendicativa",
   },
+  es: {
+    name: "Pernicioso",
+    version: "Hechicera vengativa",
+  },
 };

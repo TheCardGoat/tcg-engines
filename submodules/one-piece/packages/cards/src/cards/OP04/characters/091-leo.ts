@@ -23,7 +23,7 @@ export const op04Leo091: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Dressrosa The Tontattas"],
+  traits: ["The Tontattas", "Dressrosa"],
   attribute: "strike",
   effect:
     "[On Play] You may rest your 1 Leader: If your Leader has the [Dressrosa] type, K.O. up to 1 of your opponent's Characters with a cost of 1 or less. Then, trash 2 cards from the top of your deck.",
@@ -31,10 +31,16 @@ export const op04Leo091: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
+        costs: [
           {
-            condition: "leaderTrait",
-            trait: "Dressrosa",
+            cost: "restCards",
+            amount: 1,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "leader",
+              },
+            ],
           },
         ],
         actions: [
@@ -54,6 +60,11 @@ export const op04Leo091: CharacterCard = {
                   value: 1,
                 },
               ],
+            },
+            condition: {
+              condition: "leaderTrait",
+              trait: "Dressrosa",
+              match: "includes",
             },
           },
           {

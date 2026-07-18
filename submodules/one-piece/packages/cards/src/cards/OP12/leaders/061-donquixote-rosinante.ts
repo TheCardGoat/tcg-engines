@@ -40,7 +40,7 @@ export const op12DonquixoteRosinante061: LeaderCard = {
     },
   ],
   effect:
-    "[Once Per Turn] If your [Trafalgar Law] would be K.O.'d, you may add 1 card from the top of your Life cards to your hand instead.\n[Activate: Main] [Once Per Turn] DON!! 1: The next time you play [Trafalgar Law] with a cost of 4 or more from your hand during this turn, the cost will be reduced by 2.",
+    "[Once Per Turn] If your [Trafalgar Law] would be K.O.'d, you may add 1 card from the top of your Life cards to your hand instead.\n[Activate: Main] [Once Per Turn] DON!! −1: The next time you play [Trafalgar Law] with a cost of 4 or more from your hand during this turn, the cost will be reduced by 2.",
   effects: {
     effects: [
       {
@@ -58,13 +58,14 @@ export const op12DonquixoteRosinante061: LeaderCard = {
               player: "self",
               zones: ["hand"],
               count: {
-                amount: 1,
+                amount: "all",
               },
               filters: [
                 {
-                  filter: "trait",
+                  filter: "name",
                   value: "Trafalgar Law",
                 },
+                { filter: "cardCategory", value: "character" },
                 {
                   filter: "cost",
                   comparison: "gte",
@@ -74,6 +75,7 @@ export const op12DonquixoteRosinante061: LeaderCard = {
             },
             value: -2,
             duration: "thisTurn",
+            consumeOnPlay: true,
           },
         ],
         oncePerTurn: true,
@@ -82,6 +84,11 @@ export const op12DonquixoteRosinante061: LeaderCard = {
     replacementEffects: [
       {
         replacedEvent: "ko",
+        eventFilter: {
+          player: "self",
+          filters: [{ filter: "name", value: "Trafalgar Law" }],
+        },
+        conditions: [{ condition: "lifeCount", player: "self", comparison: "gte", value: 1 }],
         replacementAction: {
           action: "removeFromLife",
           player: "self",

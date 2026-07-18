@@ -64,4 +64,20 @@ export const mingLeeProudParentI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ming Lee",
+    version: "Padre orgulloso",
+    text: [
+      {
+        title: "MAYOR VENTILADOR",
+        description:
+          "Si tienes un personaje llamado Meilin Lee en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "SIGUE LA MÚSICA",
+        description:
+          "Si tocaste una canción este turno, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+    ],
+  },
 };

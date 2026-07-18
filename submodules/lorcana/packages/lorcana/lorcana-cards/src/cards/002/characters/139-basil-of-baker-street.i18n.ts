@@ -21,4 +21,9 @@ export const basilOfBakerStreetI18n: Record<Languages, I18nProperties> = {
     version: "Di Baker Street",
     text: "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
   },
+  es: {
+    name: "Albahaca",
+    version: "De la calle Baker",
+    text: "Apoyo",
+  },
 };

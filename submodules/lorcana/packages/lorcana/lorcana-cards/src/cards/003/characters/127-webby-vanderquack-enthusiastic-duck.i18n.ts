@@ -17,4 +17,8 @@ export const webbyVanderquackEnthusiasticDuckI18n: Record<Languages, I18nPropert
     name: "Gaia Vanderquack",
     version: "Papera Entusiasta",
   },
+  es: {
+    name: "Webby Vanderquack",
+    version: "Pato entusiasta",
+  },
 };

@@ -48,7 +48,23 @@ export const hiroHamadaRoboticsProdigy: CharacterCard = {
         ink: 2,
       },
       effect: {
-        putInto: "hand",
+        filters: [
+          {
+            type: "or",
+            filters: [
+              { type: "card-type", value: "item" },
+              {
+                type: "and",
+                filters: [
+                  { type: "card-type", value: "character" },
+                  { type: "has-classification", classification: "Robot" },
+                ],
+              },
+            ],
+          },
+        ],
+        putInto: "top-of-deck",
+        reveal: true,
         shuffle: true,
         type: "search-deck",
       },

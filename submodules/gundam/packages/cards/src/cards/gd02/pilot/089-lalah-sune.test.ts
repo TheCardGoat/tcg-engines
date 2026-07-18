@@ -1,70 +1,129 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
+  createMockCommand,
+  createMockPilot,
   createMockUnit,
+  expectFailure,
   expectSuccess,
-  getEffectiveStats,
-  markAsLinkUnit,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
 import { gd02LalahSune089 } from "./089-lalah-sune.ts";
 
 describe("Lalah Sune (GD02-089)", () => {
-  it("【Burst】Add this card to your hand", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd02LalahSune089] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
-
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `hand:${PLAYER_TWO}`,
-    );
-  });
-
-  it("【When Paired】grants <Breach 1> to a friendly (Zeon) Link Unit", () => {
-    // The printed "other" qualifier is not encoded in card data — any
-    // friendly (Zeon) Link Unit is eligible.
-    const zeonLink = createMockUnit({
-      name: "Zeon Link",
-      ap: 2,
-      hp: 4,
-      level: 3,
-      cost: 2,
-      traits: ["zeon"],
-    });
-    const pairedUnit = createMockUnit({
-      ap: 2,
-      hp: 4,
-      level: 3,
-      cost: 2,
-      traits: ["zeon"],
-    });
-
+  it("【Burst】 adds the revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
     const engine = GundamTestEngine.create(
-      {
-        hand: [gd02LalahSune089],
-        play: [zeonLink, pairedUnit],
-        resourceArea: activeResources(6),
-        deck: 5,
-      },
-      {},
+      { play: [attacker] },
+      { shieldArea: [gd02LalahSune089] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const [zeonLinkId, pairedId] = p1.getCardsInZone("battleArea");
-    markAsLinkUnit(engine, zeonLinkId!);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(p1.assignPilot(gd02LalahSune089, pairedId!));
-
-    if (engine.getPendingChoice()) {
-      expectSuccess(p1.resolveEffect({ targets: [zeonLinkId!] }));
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    const burstChoice = p2.getBoardView().pendingChoice;
+    if (burstChoice?.kind !== "optional") {
+      throw new Error("Expected Lalah Sune's visible Burst choice");
     }
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [burstChoice.directiveIndex]: true } }));
 
-    const framework = engine.getRuntime().getFrameworkReadAPI();
-    const stats = getEffectiveStats(zeonLinkId!, engine.getG(), framework.cards, framework);
-    expect(stats.keywords).toContain("Breach");
+    expect(p2.getCardZone(gd02LalahSune089)).toBe(`hand:${PLAYER_TWO}`);
+  });
+
+  it("grants Breach 1 to the chosen other Zeon Link Unit for the turn", () => {
+    const host = createMockUnit({ name: "Lalah Host" });
+    const linkTarget = createMockUnit({
+      name: "Zeon Link Target",
+      traits: ["zeon"],
+      linkCondition: "[Link Pilot]",
+    });
+    const linkPilot = createMockPilot({ name: "Link Pilot", level: 1, cost: 1 });
+    const engine = GundamTestEngine.create({
+      hand: [linkPilot, gd02LalahSune089],
+      play: [host, linkTarget],
+      resourceArea: activeResources(4),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [hostId, linkTargetId] = p1.getCardsInZone("battleArea");
+
+    expectSuccess(p1.assignPilot(linkPilot, linkTargetId!));
+    expectSuccess(p1.assignPilot(gd02LalahSune089, hostId!));
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "targetSelection") {
+      throw new Error("Expected a visible choice of another Zeon Link Unit");
+    }
+    expect(choice.legalTargetIds).toEqual([linkTargetId]);
+    expectSuccess(p1.resolveEffect({ targets: [linkTargetId!] }));
+
+    expect(p1.getVisibleCard(linkTargetId!)?.keywordEffects).toContainEqual({
+      keyword: "Breach",
+      value: 1,
+    });
+    expect(p1.getVisibleCard(hostId!)?.keywords).not.toContain("Breach");
+  });
+
+  it("does not offer an unlinked Zeon Unit or a linked non-Zeon Unit", () => {
+    const host = createMockUnit({ name: "Lalah Host" });
+    const unlinkedZeon = createMockUnit({ traits: ["zeon"] });
+    const nonZeonLink = createMockUnit({
+      traits: ["aeug"],
+      linkCondition: "[Link Pilot]",
+    });
+    const linkPilot = createMockPilot({ name: "Link Pilot", level: 1, cost: 1 });
+    const engine = GundamTestEngine.create({
+      hand: [linkPilot, gd02LalahSune089],
+      play: [host, unlinkedZeon, nonZeonLink],
+      resourceArea: activeResources(4),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [hostId, unlinkedZeonId, nonZeonLinkId] = p1.getCardsInZone("battleArea");
+
+    expectSuccess(p1.assignPilot(linkPilot, nonZeonLinkId!));
+    expectSuccess(p1.assignPilot(gd02LalahSune089, hostId!));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getVisibleCard(unlinkedZeonId!)?.keywords).not.toContain("Breach");
+    expect(p1.getVisibleCard(nonZeonLinkId!)?.keywords).not.toContain("Breach");
+  });
+
+  it("requires both its printed Lv.3 and one active Resource to be paired", () => {
+    const lowLevel = GundamTestEngine.create({
+      hand: [gd02LalahSune089],
+      play: [createMockUnit({ name: "Low-Level Host" })],
+      resourceArea: activeResources(2),
+    });
+    const lowP1 = lowLevel.asPlayer(PLAYER_ONE);
+    const lowHostId = lowP1.getCardsInZone("battleArea")[0]!;
+
+    expectFailure(lowP1.assignPilot(gd02LalahSune089, lowHostId), "INSUFFICIENT_RESOURCE_LEVEL");
+    expect(lowP1.getCardZone(gd02LalahSune089)).toBe(`hand:${PLAYER_ONE}`);
+    expect(lowP1.getPilotId(lowHostId)).toBeUndefined();
+
+    const setup = createMockCommand({
+      name: "Exhaust All Resources",
+      level: 0,
+      cost: 3,
+      effects: [
+        { type: "command", activation: { timing: ["main"] }, directives: [], sourceText: "" },
+      ],
+    });
+    const insufficient = GundamTestEngine.create({
+      hand: [setup, gd02LalahSune089],
+      play: [createMockUnit({ name: "Cost-Gate Host" })],
+      resourceArea: activeResources(3),
+    });
+    const p1 = insufficient.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.playCommand(setup));
+    expectFailure(p1.assignPilot(gd02LalahSune089, hostId), "INSUFFICIENT_RESOURCES");
+    expect(p1.getCardZone(gd02LalahSune089)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getPilotId(hostId)).toBeUndefined();
   });
 });

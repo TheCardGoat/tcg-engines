@@ -60,4 +60,19 @@ export const theNephewsPiggyBankI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La alcancía de los sobrinos",
+    text: [
+      {
+        title: "TRABAJO INTERIOR",
+        description:
+          "Si tienes un personaje llamado Pato Donald en juego, pagas 1 {I} menos para jugar este artículo.",
+      },
+      {
+        title: "SALDAR",
+        description:
+          "{E}: el personaje elegido obtiene -1 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

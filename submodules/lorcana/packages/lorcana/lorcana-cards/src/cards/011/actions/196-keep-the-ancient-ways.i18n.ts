@@ -35,4 +35,8 @@ export const keepTheAncientWaysI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mantenga las costumbres antiguas",
+    text: "Los oponentes no pueden realizar acciones ni elementos hasta el comienzo de tu siguiente turno.",
+  },
 };

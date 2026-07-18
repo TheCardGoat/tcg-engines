@@ -44,4 +44,14 @@ export const doloresMadrigalHearsEverythingI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Dolores Madrigal",
+    version: "Escucha todo",
+    text: [
+      {
+        title: "SIN SECRETOS",
+        description: "Cuando juegues con este personaje, mira la mano del oponente elegido.",
+      },
+    ],
+  },
 };

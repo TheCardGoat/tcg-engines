@@ -41,4 +41,14 @@ export const queenOfHeartsLosingHerTemperI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Reina de corazones",
+    version: "Perdiendo los estribos",
+    text: [
+      {
+        title: "DOLOR REAL",
+        description: "Mientras este personaje tenga daño, obtiene +3 {S}.",
+      },
+    ],
+  },
 };

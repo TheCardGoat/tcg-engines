@@ -83,4 +83,24 @@ export const mauisFishHookI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Anzuelo de Maui",
+    text: [
+      {
+        title: "¡ES HORA DE MAUI!",
+        description:
+          "Si tienes un personaje llamado Maui en juego, puedes usar la habilidad Shapeshift de este objeto de forma gratuita.",
+      },
+      {
+        title: "CAMBIO DE FORMA",
+        description: "{E}, 2 {I} — Elige uno:",
+      },
+      {
+        title: "• El personaje elegido gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+      {
+        title: "• El personaje elegido obtiene +3 {S} este turno.",
+      },
+    ],
+  },
 };

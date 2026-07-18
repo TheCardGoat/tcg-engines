@@ -61,4 +61,19 @@ export const hamishHubertHarrisMakingMischiefI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Hamish, Hubert y Harris",
+    version: "Hacer travesuras",
+    text: [
+      {
+        title: "MANTENTE TRANQUILO",
+        description: "Este personaje puede entrar en juego agotado.",
+      },
+      {
+        title: "TRAMPA INTELIGENTE",
+        description:
+          "Al final de tu turno, si este personaje está agotado, el personaje contrario elegido no podrá estar listo al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

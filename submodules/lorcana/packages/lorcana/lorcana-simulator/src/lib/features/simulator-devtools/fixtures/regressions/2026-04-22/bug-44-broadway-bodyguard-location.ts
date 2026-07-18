@@ -10,15 +10,15 @@ export const bug44BroadwayBodyguardLocationFixture = createFixture({
   description:
     "Broadway - Sturdy and Strong (Bodyguard) in play alongside an owned location. Opposing side has a ready attacker so we can verify that locations can still be challenged directly despite the Bodyguard being present.",
   playerOne: {
+    play: [{ card: peteBadGuy, exerted: false, isDrying: false }],
+    inkwell: 3,
+    deck: [donaldDuckStruttingHisStuff],
+  },
+  playerTwo: {
     play: [broadwaySturdyAndStrong, castleWyvernAboveTheClouds],
     inkwell: 5,
     deck: [donaldDuckStruttingHisStuff, grammaTalaStoryteller],
     hand: [grammaTalaStoryteller],
-  },
-  playerTwo: {
-    play: [{ card: peteBadGuy, exerted: false }],
-    inkwell: 3,
-    deck: [donaldDuckStruttingHisStuff],
   },
   seed: "bug-44-broadway-bodyguard-location",
   skipPreGame: true,

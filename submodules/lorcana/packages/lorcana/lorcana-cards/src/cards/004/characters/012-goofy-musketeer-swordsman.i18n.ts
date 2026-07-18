@@ -45,4 +45,15 @@ export const goofyMusketeerSwordsmanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "Mosquetero espadachín",
+    text: [
+      {
+        title: "ES GAWRSH!",
+        description:
+          "Siempre que interpretes a un personaje con Bodyguard, prepara este personaje. No puede realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

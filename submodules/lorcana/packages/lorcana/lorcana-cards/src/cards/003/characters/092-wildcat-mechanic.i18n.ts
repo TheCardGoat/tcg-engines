@@ -53,4 +53,17 @@ export const wildcatMechanicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gato montés",
+    version: "Mecánico",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "DESMONTAR",
+        description: "{E}: destierra el elemento elegido.",
+      },
+    ],
+  },
 };

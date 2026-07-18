@@ -59,4 +59,18 @@ export const fairyGodmotherMagicalBenefactorI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Hada Madrina",
+    version: "Benefactor mágico",
+    text: [
+      {
+        title: "Impulsar 3 {I}",
+      },
+      {
+        title: "IMPRESIONANTE TRANSFORMACIÓN",
+        description:
+          "Siempre que coloques una carta debajo de este personaje, puedes desterrar al personaje contrario elegido. Si lo haces, su jugador puede revelar la carta superior de su mazo. Si esa carta es una carta de personaje o de objeto, pueden jugarla gratis. De lo contrario, lo ponen en el fondo de su plataforma.",
+      },
+    ],
+  },
 };

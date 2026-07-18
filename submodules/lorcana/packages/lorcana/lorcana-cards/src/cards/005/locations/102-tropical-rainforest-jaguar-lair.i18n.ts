@@ -45,4 +45,15 @@ export const tropicalRainforestJaguarLairI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Selva Tropical",
+    version: "Guarida del jaguar",
+    text: [
+      {
+        title: "HORA DE MERIENDA",
+        description:
+          "Los personajes dañados del oponente ganan Temerario. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const marchHareHarebrainedEccentricI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Liebre de marzo",
+    version: "Excéntrico descabellado",
+    text: [
+      {
+        title: "ENCENDER LAS VELAS",
+        description:
+          "Cuando juegas con este personaje, puedes causar 2 daños al personaje dañado elegido.",
+      },
+    ],
+  },
 };

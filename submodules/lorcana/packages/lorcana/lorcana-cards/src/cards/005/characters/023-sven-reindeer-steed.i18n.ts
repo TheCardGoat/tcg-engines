@@ -45,4 +45,15 @@ export const svenReindeerSteedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sven",
+    version: "Corcel de reno",
+    text: [
+      {
+        title: "JUEGOS DE RENOS",
+        description:
+          "Cuando juegas con este personaje, es posible que tengas listo el personaje elegido. No pueden realizar misiones ni desafíos durante el resto de este turno.",
+      },
+    ],
+  },
 };

@@ -51,6 +51,29 @@ export const op06Saga006: CharacterCard = {
             value: 1000,
             duration: "untilStartOfNextTurn",
           },
+          {
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "trashFromField",
+                target: {
+                  player: "self",
+                  zones: ["character"],
+                  count: {
+                    amount: 1,
+                  },
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "FILM",
+                      match: "includes",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
         ],
       },
     ],

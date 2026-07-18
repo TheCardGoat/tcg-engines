@@ -45,4 +45,15 @@ export const kuzcoTemporaryWhaleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kuzco",
+    version: "Ballena temporal",
+    text: [
+      {
+        title: "NO DIGAS",
+        description:
+          "UNA PALABRA Una vez durante tu turno, cada vez que se coloca una carta en tu tintero, puedes devolver el personaje, elemento o ubicación elegidos con un costo de 2 o menos a la mano de su jugador, luego ese jugador roba una carta.",
+      },
+    ],
+  },
 };

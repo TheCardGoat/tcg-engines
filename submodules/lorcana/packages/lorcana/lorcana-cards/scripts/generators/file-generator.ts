@@ -719,7 +719,7 @@ export type InkType =
   | "sapphire"
   | "steel";
 
-export type Languages = "en" | "de" | "fr" | "it";
+export type Languages = "en" | "de" | "fr" | "it" | "es";
 
 export interface AbilityDefinition {
   id?: string;

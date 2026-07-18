@@ -45,4 +45,15 @@ export const peteBornToCheatI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pete",
+    version: "Nacido para hacer trampa",
+    text: [
+      {
+        title: "¡TE GOLPEO!",
+        description:
+          "Siempre que este personaje realice una misión mientras tenga 5 {S} o más, devuelve el personaje elegido con 2 {S} o menos a la mano de su jugador.",
+      },
+    ],
+  },
 };

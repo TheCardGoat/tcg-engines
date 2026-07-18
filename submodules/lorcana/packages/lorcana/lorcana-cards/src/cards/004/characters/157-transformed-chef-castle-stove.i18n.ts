@@ -44,4 +44,15 @@ export const transformedChefCastleStoveI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Chef transformado",
+    version: "Estufa del castillo",
+    text: [
+      {
+        title: "UNA OBRA MAESTRA CULINARIA",
+        description:
+          "Cuando juegas con este personaje, eliminas hasta 2 daños del personaje elegido.",
+      },
+    ],
+  },
 };

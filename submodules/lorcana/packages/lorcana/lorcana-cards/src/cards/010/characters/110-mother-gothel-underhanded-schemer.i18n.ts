@@ -43,4 +43,14 @@ export const motherGothelUnderhandedSchemerI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Madre Gothel",
+    version: "Planificador encubierto",
+    text: [
+      {
+        title: "ALGUIEN TIENE QUE USARLO",
+        description: "Si un personaje fue desterrado este turno, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

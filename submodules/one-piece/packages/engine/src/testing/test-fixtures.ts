@@ -201,7 +201,7 @@ function buildConfig(
 function clearPlayerZones(state: MatchState, seat: MatchSeat): string[] {
   const player = state.players[seat];
   const instanceIds = Object.values(state.cards)
-    .filter((instance) => instance.owner === seat && instance.zone !== "leader")
+    .filter((instance) => instance.controller === seat && instance.zone !== "leader")
     .map((instance) => instance.instanceId);
 
   player.deck = [];
@@ -242,6 +242,7 @@ function applyCardState(
   instance.controller = seat;
   instance.zone = zone;
   instance.zoneIndex = zoneIndex;
+  instance.zoneChangeCounter = 0;
   instance.rested = entry.rested ?? false;
   instance.attachedDon = entry.attachedDon ?? 0;
   instance.playedOnTurn = entry.playedOnTurn ?? null;

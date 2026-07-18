@@ -17,4 +17,8 @@ export const cauldronBornMindlessHordeI18n: Record<Languages, I18nProperties> = 
     name: "Nati dalla Pentola",
     version: "Orda Dissennata",
   },
+  es: {
+    name: "Caldero nacido",
+    version: "Horda sin sentido",
+  },
 };

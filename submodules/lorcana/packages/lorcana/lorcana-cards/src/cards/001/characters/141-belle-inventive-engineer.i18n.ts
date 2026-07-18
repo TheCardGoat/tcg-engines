@@ -45,4 +45,15 @@ export const belleInventiveEngineerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Beldad",
+    version: "Ingeniero inventivo",
+    text: [
+      {
+        title: "GITANO",
+        description:
+          "Cada vez que este personaje realiza una misión, pagas 1 {I} menos por el siguiente elemento que juegues en este turno.",
+      },
+    ],
+  },
 };

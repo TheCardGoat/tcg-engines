@@ -55,4 +55,17 @@ export const plutoGuardDogI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Plutón",
+    version: "Perro guardián",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "BRAVO",
+        description: "Si bien este personaje no tiene daño, obtiene +4 {S}.",
+      },
+    ],
+  },
 };

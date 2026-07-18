@@ -53,18 +53,32 @@ export const op14eb04DonquixoteDoflamingoOp14060060: LeaderCard = {
         ],
         actions: [
           {
-            action: "attackRestriction",
-            restriction: "cannotAttackOtherThan",
+            action: "changeBattleTarget",
             target: {
               player: "self",
               zones: ["leader", "character"],
               count: {
                 amount: 1,
               },
+              filters: [
+                {
+                  filter: "anyOf",
+                  groups: [
+                    [{ filter: "cardCategory", value: "leader" }],
+                    [
+                      {
+                        filter: "trait",
+                        value: "Donquixote Pirates",
+                        match: "includes",
+                      },
+                    ],
+                  ],
+                },
+              ],
             },
-            duration: "thisBattle",
           },
         ],
+        optional: true,
         oncePerTurn: true,
       },
     ],

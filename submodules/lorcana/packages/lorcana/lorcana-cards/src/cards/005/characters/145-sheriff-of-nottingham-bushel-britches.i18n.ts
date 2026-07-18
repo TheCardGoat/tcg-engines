@@ -59,4 +59,18 @@ export const sheriffOfNottinghamBushelBritchesI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Sheriff de Nottingham",
+    version: "Calzones de bushel",
+    text: [
+      {
+        title: "TODO AYUDA",
+        description:
+          "Por cada objeto que tengas en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "Apoyo",
+      },
+    ],
+  },
 };

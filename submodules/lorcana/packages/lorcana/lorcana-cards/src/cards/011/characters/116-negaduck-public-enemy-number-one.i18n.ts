@@ -57,4 +57,18 @@ export const negaduckPublicEnemyNumberOneI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Negaduck",
+    version: "Enemigo público número uno",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "DEDOS PEGAJOSOS",
+        description:
+          "Siempre que este personaje desafía a otro personaje, cada oponente pierde 1 conocimiento y tú ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

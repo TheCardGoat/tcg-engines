@@ -17,4 +17,8 @@ export const bestiesAssembleI18n: Record<Languages, I18nProperties> = {
     name: "BFF a Rapporto!",
     text: "Guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
   },
+  es: {
+    name: "¡Mejores amigas, reúnanse!",
+    text: "Mira las 4 primeras cartas de tu mazo. Puedes revelar una carta de personaje y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+  },
 };

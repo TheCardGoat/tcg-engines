@@ -57,4 +57,18 @@ export const tiggerHunnyBarbarianI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tigre",
+    version: "Bárbaro cariñoso",
+    text: [
+      {
+        title: "Imprudente",
+      },
+      {
+        title: "CARGA PROTECTORA",
+        description:
+          "Una vez durante tu turno, cada vez que este personaje desafíe a otro personaje, puedes preparar el personaje Hunny elegido. Si lo haces, ese personaje no podrá realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

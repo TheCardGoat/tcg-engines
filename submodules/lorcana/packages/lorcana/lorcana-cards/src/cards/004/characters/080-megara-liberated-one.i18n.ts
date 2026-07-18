@@ -56,4 +56,17 @@ export const megaraLiberatedOneI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mégara",
+    version: "Liberado",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "LA GENTE SIEMPRE HACE LOCAS",
+        description: "Siempre que interpretes a un personaje llamado Hércules, puedes prepararlo.",
+      },
+    ],
+  },
 };

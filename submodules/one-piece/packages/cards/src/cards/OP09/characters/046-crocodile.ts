@@ -64,8 +64,37 @@ export const op09Crocodile046: CharacterCard = {
                 value: 5,
               },
               {
-                filter: "trait",
-                value: "Cross Guild",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "allOf",
+                    filters: [
+                      {
+                        filter: "trait",
+                        value: "Cross Guild",
+                        match: "includes",
+                      },
+                      {
+                        filter: "cardCategory",
+                        value: "character",
+                      },
+                    ],
+                  },
+                  {
+                    filter: "allOf",
+                    filters: [
+                      {
+                        filter: "trait",
+                        value: "Baroque Works",
+                        match: "includes",
+                      },
+                      {
+                        filter: "cardCategory",
+                        value: "character",
+                      },
+                    ],
+                  },
+                ],
               },
             ],
           },

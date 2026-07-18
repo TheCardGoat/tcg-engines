@@ -41,4 +41,14 @@ export const theLampI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La lámpara",
+    text: [
+      {
+        title: "BIEN O MAL",
+        description:
+          "Desterrar este objeto: si tienes un personaje llamado Jafar en juego, roba 2 cartas. Si tienes un personaje llamado Genio en juego, devuelve el personaje elegido con un coste de 4 o menos a la mano de su jugador.",
+      },
+    ],
+  },
 };

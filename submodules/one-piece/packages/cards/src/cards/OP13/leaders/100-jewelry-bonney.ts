@@ -69,6 +69,7 @@ export const op13JewelryBonney100: LeaderCard = {
           },
         ],
         oncePerTurn: true,
+        optional: true,
       },
     ],
   },

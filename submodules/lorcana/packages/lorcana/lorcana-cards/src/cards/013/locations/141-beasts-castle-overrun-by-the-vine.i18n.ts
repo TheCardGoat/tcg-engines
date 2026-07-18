@@ -45,4 +45,15 @@ export const beastsCastleOverrunByTheVineI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Castillo de la Bestia",
+    version: "Invadido por la vid",
+    text: [
+      {
+        title: "Amenaza inminente",
+        description:
+          "Tus personajes Floodborn obtienen <Rush>. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

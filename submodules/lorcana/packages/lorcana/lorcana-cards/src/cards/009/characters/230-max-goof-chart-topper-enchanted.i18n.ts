@@ -59,4 +59,18 @@ export const maxGoofChartTopperEnchantedI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Tonto máximo",
+    version: "Gráfico superior",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "ÉXITO NÚMERO UNO",
+        description:
+          "Siempre que este personaje realice una misión, puedes jugar gratis una carta de canción con un coste de 4 o menos de tu descarte y luego ponerla en la parte inferior de tu mazo en lugar de en tu descarte.",
+      },
+    ],
+  },
 };

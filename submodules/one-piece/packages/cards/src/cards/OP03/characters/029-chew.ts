@@ -26,7 +26,7 @@ export const op03Chew029: CharacterCard = {
   traits: ["Fish-Man Arlong Pirates East Blue"],
   attribute: "ranged",
   effect:
-    "[On Play] K.O. up to 1 of your opponent's rested Characters with a cost of 4 or less. [Trigger] Play this card.",
+    "[On Play] K.O. up to 1 of your opponent's rested Characters with a cost of 4 or less.\n[Trigger] Play this card.",
   effects: {
     effects: [
       {
@@ -58,18 +58,7 @@ export const op03Chew029: CharacterCard = {
       },
       {
         trigger: "trigger",
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-          },
-        ],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   },

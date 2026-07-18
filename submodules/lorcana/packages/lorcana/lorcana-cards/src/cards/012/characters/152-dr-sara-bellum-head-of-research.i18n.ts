@@ -45,4 +45,15 @@ export const drSaraBellumHeadOfResearchI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Dra. Sara Bellum",
+    version: "Jefe de Investigación",
+    text: [
+      {
+        title: "ESCRUTINIO CIENTÍFICO",
+        description:
+          "Cuando juegues con este personaje, mira la carta superior de tu mazo. Colóquelo en la parte superior o inferior de su plataforma.",
+      },
+    ],
+  },
 };

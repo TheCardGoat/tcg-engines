@@ -60,4 +60,19 @@ export const pachaEmperorsGuideI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pachá",
+    version: "Guía del Emperador",
+    text: [
+      {
+        title: "SUMINISTROS ÚTILES",
+        description: "Al comienzo de tu turno, si tienes un objeto en juego, gana 1 conocimiento.",
+      },
+      {
+        title: "DIRECCIONES PERFECTAS",
+        description:
+          "Al comienzo de tu turno, si tienes una ubicación en juego, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

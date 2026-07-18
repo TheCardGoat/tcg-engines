@@ -21,4 +21,9 @@ export const kaaSecretiveSnakeEpicI18n: Record<Languages, I18nProperties> = {
     version: "Serpente sulle Sue",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Kaa",
+    version: "Serpiente secreta",
+    text: "Evasivo",
+  },
 };

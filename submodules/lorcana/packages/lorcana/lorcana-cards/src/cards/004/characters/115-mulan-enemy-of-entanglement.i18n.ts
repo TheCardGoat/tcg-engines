@@ -44,4 +44,14 @@ export const mulanEnemyOfEntanglementI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mulán",
+    version: "Enemigo del enredo",
+    text: [
+      {
+        title: "TIEMPO DE BRILLAR",
+        description: "Cada vez que juegas una acción, este personaje obtiene +2 {S} este turno.",
+      },
+    ],
+  },
 };

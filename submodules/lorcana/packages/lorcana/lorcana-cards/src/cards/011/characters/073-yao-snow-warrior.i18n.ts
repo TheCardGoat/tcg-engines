@@ -42,4 +42,14 @@ export const yaoSnowWarriorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yao",
+    version: "Guerrero de la nieve",
+    text: [
+      {
+        title: "Ooh, tengo miedo",
+        description: "Durante los turnos de los oponentes, este personaje gana Resistencia +2.",
+      },
+    ],
+  },
 };

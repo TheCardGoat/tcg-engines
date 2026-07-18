@@ -40,7 +40,7 @@ export const op05Pica032: CharacterCard = {
     },
   ],
   effect:
-    "[End of Your Turn] (1): Set this Character as active. [Once Per Turn] If this Character would be K.O.'d, you may rest up to 1 of your Characters with a cost of 3 or more other than [Pica] instead.",
+    "[End of Your Turn] (1): Set this Character as active. [Once Per Turn] If this Character would be K.O.'d, you may rest 1 of your Characters with a cost of 3 or more other than [Pica] instead.",
   effects: {
     effects: [
       {
@@ -64,11 +64,15 @@ export const op05Pica032: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
     replacementEffects: [
       {
         replacedEvent: "ko",
+        eventFilter: {
+          targetSelf: true,
+        },
         replacementAction: {
           action: "rest",
           target: {
@@ -76,7 +80,6 @@ export const op05Pica032: CharacterCard = {
             zones: ["character"],
             count: {
               amount: 1,
-              upTo: true,
             },
             filters: [
               {

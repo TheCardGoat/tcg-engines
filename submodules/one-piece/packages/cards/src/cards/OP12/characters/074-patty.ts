@@ -31,10 +31,16 @@ export const op12Patty074: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
+        costs: [
           {
-            condition: "leaderName",
-            name: "Sanji",
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "event",
+              },
+            ],
           },
         ],
         actions: [
@@ -45,6 +51,10 @@ export const op12Patty074: CharacterCard = {
               upTo: true,
             },
             state: "active",
+            condition: {
+              condition: "leaderName",
+              name: "Sanji",
+            },
           },
         ],
         optional: true,

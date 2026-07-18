@@ -17,4 +17,8 @@ export const prepareToBoardI18n: Record<Languages, I18nProperties> = {
     name: "Prepararsi all'Abbordaggio!",
     text: "Un personaggio a tua scelta riceve +2 {S} per questo turno. Se viene scelto un personaggio Pirata, riceve invece +3 {S}.",
   },
+  es: {
+    name: "¡Prepárate para abordar!",
+    text: "El personaje elegido obtiene +2 {S} este turno. Si se elige un personaje pirata, en su lugar obtiene +3 {S}.",
+  },
 };

@@ -31,6 +31,7 @@ export const op13Koala081: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [{ cost: "returnTrashToDeck", amount: 1, position: "bottom" }],
         actions: [
           {
             action: "giveDon",
@@ -50,6 +51,23 @@ export const op13Koala081: CharacterCard = {
         ],
         optional: true,
         oncePerTurn: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [{ condition: "leaderTrait", trait: "Revolutionary Army" }],
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            value: 3,
+          },
+        ],
       },
     ],
   },

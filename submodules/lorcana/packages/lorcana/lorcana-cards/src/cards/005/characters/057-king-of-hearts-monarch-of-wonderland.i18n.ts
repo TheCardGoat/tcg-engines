@@ -44,4 +44,15 @@ export const kingOfHeartsMonarchOfWonderlandI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Rey de corazones",
+    version: "Monarca del país de las maravillas",
+    text: [
+      {
+        title: "COMPLACER A LA REINA",
+        description:
+          "{E}: el personaje ejercido elegido no puede estar listo al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

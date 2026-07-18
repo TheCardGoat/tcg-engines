@@ -45,4 +45,15 @@ export const rapunzelEscapingTheTowerP4ChallengeI18n: Record<Languages, I18nProp
       },
     ],
   },
+  es: {
+    name: "Rapunzel",
+    version: "Escapando de la torre",
+    text: [
+      {
+        title: "LA LLAMADA DE LA AVENTURA",
+        description:
+          "Una vez durante tu turno, puedes descartar una carta para darle a este personaje +1 {L} y Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

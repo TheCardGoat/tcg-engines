@@ -27,4 +27,15 @@ export const sunYeeRedPandaSpiritI18n: Record<Languages, I18nProperties> = {
     version: "Spirito del Panda Rosso",
     text: "<Trasformazione Temporanea Panda Rosso> 2 {I} (Puoi pagare 2 {I} per giocare questa carta sopra a uno dei tuoi personaggi Panda Rosso. Alla fine del tuo turno, rimuovi tutto il danno da questo personaggio e riprendi in mano solo questa carta.)",
   },
+  es: {
+    name: "Sol ye",
+    version: "Espíritu del panda rojo",
+    text: [
+      {
+        title: "Cambio temporal de Panda Rojo 2 {I}",
+        description:
+          "(Puedes pagar 2 {I} para jugar esto encima de uno de tus personajes del Panda Rojo. Al final de tu turno, elimina todo el daño de este personaje y devuelve solo esta carta a tu mano).",
+      },
+    ],
+  },
 };

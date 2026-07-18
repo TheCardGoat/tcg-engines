@@ -42,6 +42,39 @@ export const op11AfterAllTheseYearsIMLosingMyEdge097: EventCard = {
             value: 1000,
             duration: "thisBattle",
           },
+          {
+            action: "returnToHand",
+            target: {
+              player: "self",
+              zones: ["trash"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cardCategory",
+                  value: "character",
+                },
+                {
+                  filter: "color",
+                  value: "black",
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 3,
+                },
+              ],
+            },
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "trash",
+              comparison: "gte",
+              value: 10,
+            },
+          },
         ],
       },
     ],

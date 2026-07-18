@@ -32,6 +32,11 @@ export const eb02MerryGo060: StageCard = {
           {
             cost: "restThisCard",
           },
+          {
+            cost: "turnLifeFaceUp",
+            count: 1,
+            faceUp: true,
+          },
         ],
         actions: [
           {
@@ -47,6 +52,7 @@ export const eb02MerryGo060: StageCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
+                  match: "includes",
                 },
               ],
             },

@@ -17,4 +17,8 @@ export const sisuWiseFriendI18n: Record<Languages, I18nProperties> = {
     name: "Sisu",
     version: "Amica Saggia",
   },
+  es: {
+    name: "Sisu",
+    version: "Amigo sabio",
+  },
 };

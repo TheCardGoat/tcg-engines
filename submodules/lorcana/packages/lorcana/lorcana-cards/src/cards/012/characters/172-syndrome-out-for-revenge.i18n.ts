@@ -57,4 +57,18 @@ export const syndromeOutForRevengeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Síndrome",
+    version: "En busca de venganza",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "¡ME TENGO MONOLOGANDO!",
+        description:
+          "Siempre que este personaje realice una misión, devuelve a tu mano una carta de personaje de Robot de tu descarte. Luego, puedes jugar o cambiar un personaje Robot con un costo de 8 o menos de forma gratuita.",
+      },
+    ],
+  },
 };

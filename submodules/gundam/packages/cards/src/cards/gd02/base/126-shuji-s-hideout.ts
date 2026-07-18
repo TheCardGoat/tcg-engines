@@ -4,6 +4,7 @@ export const gd02ShujiSHideout126: BaseCard = {
   cardNumber: "GD02-126",
   name: "Shuji's Hideout",
   type: "base",
+  color: "red",
   traits: ["clan", "stronghold"],
   id: "GD02-126",
   canonicalId: "GD02-126",
@@ -39,6 +40,7 @@ export const gd02ShujiSHideout126: BaseCard = {
   level: 3,
   cost: 1,
   hp: 5,
+  battlefieldZones: ["space"],
   effect:
     "【Burst】Deploy this card.<br>【Deploy】Add 1 of your Shields to your hand.<br>\n【Destroyed】Choose 1 enemy Unit that is Lv.4 or lower. Deal 1 damage to it.<br>",
   effects: [

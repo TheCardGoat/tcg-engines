@@ -2,6 +2,20 @@ import { expect, test, describe } from "vite-plus/test";
 import { parseInlineCondition, parseEffectText } from "../../../src/effect-parser/index.ts";
 
 describe("parseInlineCondition", () => {
+  test("parses a card trashed from hand by an effect as an event trigger", () => {
+    expect(
+      parseInlineCondition(
+        "When a card is trashed from your hand by an effect, this Character gains [Rush] during this turn.",
+      ),
+    ).toEqual({
+      condition: {
+        condition: "triggerEvent",
+        event: "whenCardTrashedFromHandByEffect",
+      },
+      remainingText: "this Character gains [Rush] during this turn.",
+    });
+  });
+
   test("returns null for text without If prefix", () => {
     expect(parseInlineCondition("draw 1 card")).toBeNull();
   });
@@ -12,6 +26,30 @@ describe("parseInlineCondition", () => {
 });
 
 describe("parseInlineCondition — When patterns", () => {
+  test("a card is removed from either player's Life", () => {
+    const result = parseInlineCondition(
+      "When a card is removed from your or your opponent's Life cards, draw 1 card.",
+    );
+
+    expect(result?.condition).toEqual({
+      condition: "triggerEvent",
+      event: "whenLifeRemoved",
+    });
+    expect(result?.remainingText).toBe("draw 1 card.");
+  });
+
+  test("a card is removed from only the opponent's Life", () => {
+    const result = parseInlineCondition(
+      "When a card is removed from your opponent's Life cards, draw 2 cards.",
+    );
+
+    expect(result?.condition).toEqual({
+      condition: "triggerEvent",
+      event: "whenLifeRemoved",
+    });
+    expect(result?.remainingText).toBe("draw 2 cards.");
+  });
+
   test("When this Character's attack deals damage to opponent's Life", () => {
     const result = parseInlineCondition(
       "When this Character's attack deals damage to your opponent's Life, you may trash 7 cards from the top of your deck.",
@@ -19,6 +57,18 @@ describe("parseInlineCondition — When patterns", () => {
     expect(result).toBeDefined();
     expect(result!.condition).toEqual({ condition: "triggerEvent", event: "whenDealsDamage" });
     expect(result!.remainingText).toBe("you may trash 7 cards from the top of your deck.");
+  });
+
+  test("When you deal damage to opponent's Life", () => {
+    const result = parseInlineCondition(
+      "When you deal damage to your opponent's Life, you may trash 3 cards from the top of your deck.",
+    );
+
+    expect(result?.condition).toEqual({
+      condition: "triggerEvent",
+      event: "whenYouDealDamage",
+    });
+    expect(result?.remainingText).toBe("you may trash 3 cards from the top of your deck.");
   });
 
   test("When this Character is K.O.'d", () => {
@@ -49,16 +99,58 @@ describe("parseInlineCondition — When patterns", () => {
     });
   });
 
+  test("When you activate an Event", () => {
+    const result = parseInlineCondition("When you activate an Event, draw 1 card.");
+    expect(result).toBeDefined();
+    expect(result!.condition).toEqual({
+      condition: "triggerEvent",
+      event: "whenYouActivateEvent",
+    });
+  });
+
   test("When opponent's Character is returned by your effect", () => {
     const result = parseInlineCondition(
       "When your opponent's Character is returned to the owner's hand by your effect, look at 3 cards from the top of your deck.",
     );
     expect(result).toBeDefined();
-    expect(result!.condition).toEqual({ condition: "triggerEvent", event: "whenLeaving" });
+    expect(result!.condition).toEqual({
+      condition: "triggerEvent",
+      event: "whenLeaving",
+      source: "effect",
+    });
+  });
+
+  test("When a Character is rested by your effect", () => {
+    const result = parseInlineCondition(
+      "If a Character is rested by your effect, draw 1 card from your deck.",
+    );
+    expect(result?.condition).toEqual({
+      condition: "triggerEvent",
+      event: "whenCharacterRestedByEffect",
+    });
+  });
+
+  test("When a card is added to your hand from your Life", () => {
+    expect(
+      parseInlineCondition(
+        "When a card is added to your hand from your Life, this Character gains +2000 power during this turn.",
+      )?.condition,
+    ).toEqual({
+      condition: "triggerEvent",
+      event: "whenLifeAddedToHand",
+    });
   });
 });
 
 describe("parseWhenEvent — new entries", () => {
+  test("whenBecomesRested: this Character becomes rested", () => {
+    const result = parseInlineCondition("When this Character becomes rested, draw 1 card.");
+    expect(result?.condition).toEqual({
+      condition: "triggerEvent",
+      event: "whenBecomesRested",
+    });
+  });
+
   test("whenCharacterKod: a Character is K.O.'d produces inline condition", () => {
     const result = parseEffectText(
       "[Once Per Turn] When a Character is K.O.'d, draw 1 card and trash 1 card from your hand.",

@@ -17,4 +17,8 @@ export const rescueRangersAwayI18n: Record<Languages, I18nProperties> = {
     name: "Agenti Speciali all'Attacco!",
     text: "Conta il numero di personaggi che hai in gioco. Un personaggio a tua scelta perde {S} pari a quel numero fino all'inizio del tuo prossimo turno.",
   },
+  es: {
+    name: "¡Rescata a los Rangers!",
+    text: "Cuenta el número de personajes que tienes en juego. El personaje elegido pierde {S} igual a ese número hasta el comienzo de tu siguiente turno.",
+  },
 };

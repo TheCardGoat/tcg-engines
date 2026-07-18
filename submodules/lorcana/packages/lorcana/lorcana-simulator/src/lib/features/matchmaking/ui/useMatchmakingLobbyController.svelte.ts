@@ -44,7 +44,11 @@ import {
   getLobbyRoomStatus,
   type LobbyRoomResponse,
 } from "@/features/matchmaking/api/lobby-api.js";
-import type { MatchmakingStatusResponse } from "@/features/matchmaking/api/matchmaking-api.js";
+import {
+  fetchMatchmakingCatalog,
+  type MatchmakingCatalogQueue,
+  type MatchmakingStatusResponse,
+} from "@/features/matchmaking/api/matchmaking-api.js";
 import { QueueStatsStore } from "@/features/matchmaking/state/queue-stats.svelte.js";
 import type {
   QueueStatsFormat,
@@ -53,7 +57,11 @@ import type {
 } from "@/features/matchmaking/api/queue-stats-api.js";
 import { colorMaskToInks } from "@/features/deck-vault/color-mask.js";
 import type { LeaderboardResponse } from "@/features/matchmaking/api/leaderboard-api.js";
-import { updateUserVisualSettings } from "@/features/settings/user-settings-api.js";
+import {
+  fetchUserSettings,
+  updateUserSettings,
+  updateUserVisualSettings,
+} from "@/features/settings/user-settings-api.js";
 
 import { buildAiQuickPlayUrl } from "../ai-quick-play-url.js";
 import { DECK_FIXTURES } from "@/features/simulator-devtools/deck-fixtures/index.js";
@@ -87,6 +95,7 @@ type FetchDeckListSnapshotByDeckListIdLike = typeof fetchDeckListSnapshotByDeckL
 type TrackEventLike = typeof trackEvent;
 type OpenWindowLike = (url: string, target?: string, features?: string) => Window | null;
 type FetchGatewayTicketLike = typeof fetchGatewayTicket;
+type FetchMatchmakingCatalogLike = typeof fetchMatchmakingCatalog;
 type AuthSessionLike = typeof authSession;
 type GatewayClientStoreCtor = typeof GatewayClientStore;
 type PlayerContextCtor = typeof MatchmakingPlayerContextState;
@@ -247,6 +256,7 @@ type ControllerDeps = {
   trackEvent: TrackEventLike;
   openWindow: OpenWindowLike;
   fetchGatewayTicket: FetchGatewayTicketLike;
+  fetchMatchmakingCatalog: FetchMatchmakingCatalogLike;
   authSession: AuthSessionLike;
   GatewayClientStore: GatewayClientStoreCtor;
   MatchmakingPlayerContextState: PlayerContextCtor;
@@ -267,6 +277,7 @@ const DEFAULT_DEPS: ControllerDeps = {
   trackEvent,
   openWindow: (url, target, features) => globalThis.open(url, target, features),
   fetchGatewayTicket,
+  fetchMatchmakingCatalog,
   authSession,
   GatewayClientStore,
   MatchmakingPlayerContextState,
@@ -349,6 +360,7 @@ export interface MatchmakingLobbyController {
     readonly status: MatchmakingStatus;
     readonly selectedQueueMode: QueueStatsMode;
     readonly selectedMatchType: "ranked" | "casual" | "testing";
+    readonly season: { name: string; startsAt: string; endsAt: string | null } | null;
     readonly rankedEnabled: boolean;
     readonly testingQueueEnabled: boolean;
     readonly queueCards: QueueCardView[];
@@ -367,6 +379,7 @@ export interface MatchmakingLobbyController {
     readonly queuedAiError: string | null;
     readonly modeStats: ReadonlyArray<{
       readonly mode: QueueStatsMode;
+      readonly available: boolean;
       readonly inQueue: number;
       readonly liveMatches: number;
     }>;
@@ -469,6 +482,7 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
   practiceLoading = $state(false);
   practiceError = $state<string | null>(null);
   playerStats = $state<PlayerStats | null>(null);
+  matchmakingCatalog = $state<MatchmakingCatalogQueue[]>([]);
   selectedQueueFormat = $state<QueueStatsFormat>(
     restoreSupportedQueueFormat(loadMatchmakingPrefs().format),
   );
@@ -504,9 +518,6 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     if (persistedMatchType && (persistedMatchType !== "ranked" || this.rankedEnabled)) {
       this.selectedMatchType = persistedMatchType;
     }
-    if (this.selectedMatchType === "ranked" && this.selectedQueueMode === "1") {
-      this.selectedQueueMode = "3";
-    }
     this.#ensureSupportedQueueFormat();
     this.#initialRoomCode = options.initialRoomCode ?? options.initialLobbyRoom?.roomCode ?? null;
     this.#initialLobbyRoom = options.initialLobbyRoom ?? null;
@@ -530,6 +541,9 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     this.liveMatchesStore = new deps.LiveMatchesStore(options.initialLiveMatches ?? null);
     this.queueStatsStore = new deps.QueueStatsStore(options.initialQueueStats ?? null);
     this.playerSettings = new deps.PlayerSettingsStore();
+    this.playerSettings.setSaveToServer((update) => {
+      updateUserSettings(update).catch(() => {});
+    });
     this.playerSettings.setSaveVisualSettingsToServer((update) => {
       updateUserVisualSettings(update).catch(() => {});
     });
@@ -604,14 +618,30 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
       status: this.queueStore.status,
       selectedQueueMode: this.selectedQueueMode,
       selectedMatchType: this.selectedMatchType,
+      season:
+        this.matchmakingCatalog.find(
+          (queue) =>
+            queue.formatId === this.selectedQueueFormat &&
+            queue.mode === this.selectedQueueMode &&
+            queue.matchType === this.selectedMatchType &&
+            queue.availability === "available",
+        )?.season ?? null,
       rankedEnabled: this.rankedEnabled,
       testingQueueEnabled: this.#isTestingQueueEnabled(),
-      queueCards: QUEUE_CARD_DEFINITIONS.filter((definition) =>
-        isQueuePartitionSupported(
-          definition.format,
-          this.selectedQueueMode,
-          this.selectedMatchType,
-        ),
+      queueCards: QUEUE_CARD_DEFINITIONS.filter(
+        (definition) =>
+          isQueuePartitionSupported(
+            definition.format,
+            this.selectedQueueMode,
+            this.selectedMatchType,
+          ) &&
+          this.matchmakingCatalog.some(
+            (queue) =>
+              queue.formatId === definition.format &&
+              queue.mode === this.selectedQueueMode &&
+              queue.matchType === this.selectedMatchType &&
+              queue.availability === "available",
+          ),
       ).map((definition) => {
         const selectedDeck = this.playerContext.selectedDeck;
         const isRanked = this.selectedMatchType === "ranked";
@@ -664,6 +694,7 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
       queuedAiError: this.queuedAiError,
       modeStats: (["1", "3"] as const).map((mode) => ({
         mode,
+        available: this.matchmakingCatalog.length === 0 || this.#isQueueModeAvailable(mode),
         inQueue: this.queueStatsStore.totalInQueue(mode, this.selectedMatchType),
         liveMatches: this.queueStatsStore.totalLiveMatches(mode, this.selectedMatchType),
       })),
@@ -854,12 +885,33 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     initSoundService();
     this.playerSettings.initialize();
     await this.playerContext.initialize();
+    this.matchmakingCatalog = await this.#deps.fetchMatchmakingCatalog().catch(() => []);
+    this.#ensureSupportedMatchType();
+    this.#ensureSupportedQueueMode();
+    this.#ensureSupportedQueueFormat();
 
     if (this.playerContext.needsOnboarding) {
       this.showOnboardingDialog = true;
     }
 
     if (this.#deps.authSession.isAuthenticated) {
+      const settings = await fetchUserSettings().catch(() => null);
+      if (settings) {
+        const lorcana = settings.gameSettings?.lorcana;
+        this.playerSettings.initializeFromServer({
+          ...settings.gameplaySettings,
+          ...settings.playerSettings,
+          ...lorcana?.simulator,
+        });
+        this.playerSettings.initializeVisualSettingsFromServer(
+          lorcana?.visual
+            ? {
+                cardBack: lorcana.visual.cardBackId,
+                playmat: lorcana.visual.playmatId,
+              }
+            : (settings.gameVisualSettings?.lorcana ?? settings.visualSettings),
+        );
+      }
       this.#deps.fetchPlayerStats().then(
         (stats) => {
           this.playerStats = stats;
@@ -1089,10 +1141,12 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     if (this.selectionDisabled) {
       return;
     }
-    if (mode === "1" && this.selectedMatchType === "ranked") {
+    // Do not move the UI into a partition without an available catalog queue.
+    // Before the catalog loads, retain the user's selection so initialization
+    // can reconcile it once the available queues are known.
+    if (this.matchmakingCatalog.length > 0 && !this.#isQueueModeAvailable(mode)) {
       return;
     }
-
     this.selectedQueueMode = mode;
     this.#ensureSupportedQueueFormat();
     this.#deps.trackEvent("matchmaking_mode_select", { mode });
@@ -1108,11 +1162,12 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     if (matchType === "testing" && !this.#isTestingQueueEnabled()) {
       return;
     }
+    if (this.matchmakingCatalog.length > 0 && !this.#isMatchTypeAvailable(matchType)) {
+      return;
+    }
 
     this.selectedMatchType = matchType;
-    if (matchType === "ranked" && this.selectedQueueMode === "1") {
-      this.selectedQueueMode = "3";
-    }
+    this.#ensureSupportedQueueMode();
     this.#ensureSupportedQueueFormat();
     this.#deps.trackEvent("matchmaking_match_type_select", { matchType });
   }
@@ -1124,12 +1179,92 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     if (!isQueuePartitionSupported(format, this.selectedQueueMode, this.selectedMatchType)) {
       return;
     }
+    if (!this.#isQueueFormatAvailable(format)) {
+      return;
+    }
 
     this.selectedQueueFormat = format;
     this.#deps.trackEvent("matchmaking_format_select", { format });
   }
 
+  #isQueueFormatAvailable(format: QueueStatsFormat): boolean {
+    return this.matchmakingCatalog.some(
+      (queue) =>
+        queue.formatId === format &&
+        queue.mode === this.selectedQueueMode &&
+        queue.matchType === this.selectedMatchType &&
+        queue.availability === "available",
+    );
+  }
+
+  #isMatchTypeAvailable(matchType: "ranked" | "casual" | "testing"): boolean {
+    return this.matchmakingCatalog.some(
+      (queue) =>
+        queue.matchType === matchType &&
+        queue.availability === "available" &&
+        QUEUE_CARD_DEFINITIONS.some((definition) => definition.format === queue.formatId),
+    );
+  }
+
+  #ensureSupportedMatchType(): void {
+    if (
+      this.matchmakingCatalog.length === 0 ||
+      this.#isMatchTypeAvailable(this.selectedMatchType)
+    ) {
+      return;
+    }
+    const fallback = (["casual", "ranked", "testing"] as const).find((matchType) =>
+      this.#isMatchTypeAvailable(matchType),
+    );
+    if (fallback) {
+      this.selectedMatchType = fallback;
+    }
+  }
+
+  #isQueueModeAvailable(mode: QueueStatsMode): boolean {
+    return this.matchmakingCatalog.some(
+      (queue) =>
+        queue.mode === mode &&
+        queue.matchType === this.selectedMatchType &&
+        queue.availability === "available" &&
+        QUEUE_CARD_DEFINITIONS.some((definition) => definition.format === queue.formatId),
+    );
+  }
+
+  #ensureSupportedQueueMode(): void {
+    if (
+      this.matchmakingCatalog.length === 0 ||
+      this.#isQueueModeAvailable(this.selectedQueueMode)
+    ) {
+      return;
+    }
+    const fallback = (["3", "1"] as const).find((mode) => this.#isQueueModeAvailable(mode));
+    if (fallback) {
+      this.selectedQueueMode = fallback;
+    }
+  }
+
   #ensureSupportedQueueFormat(): void {
+    const catalogFormats = this.matchmakingCatalog
+      .filter(
+        (queue) =>
+          queue.mode === this.selectedQueueMode &&
+          queue.matchType === this.selectedMatchType &&
+          queue.availability === "available",
+      )
+      .map((queue) =>
+        QUEUE_CARD_DEFINITIONS.find((definition) => definition.format === queue.formatId),
+      )
+      .filter((definition): definition is (typeof QUEUE_CARD_DEFINITIONS)[number] =>
+        Boolean(definition),
+      )
+      .map((definition) => definition.format);
+    if (catalogFormats.length > 0) {
+      if (!catalogFormats.includes(this.selectedQueueFormat)) {
+        this.selectedQueueFormat = catalogFormats[0]!;
+      }
+      return;
+    }
     if (
       isQueuePartitionSupported(
         this.selectedQueueFormat,
@@ -1170,8 +1305,24 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
       return;
     }
 
+    const catalog = await this.#deps.fetchMatchmakingCatalog().catch(() => []);
+    if (catalog.length > 0) this.matchmakingCatalog = catalog;
+    const queue = catalog.find(
+      (candidate) =>
+        candidate.formatId === this.selectedQueueFormat &&
+        candidate.mode === this.selectedQueueMode &&
+        candidate.matchType === this.selectedMatchType &&
+        candidate.availability === "available",
+    );
+    if (!queue) {
+      this.queueStore.error = m["sim.matchmaking.queue.joinUnavailable"]();
+      this.#deps.trackEvent("queue_join_blocked", { reason: "queue_unavailable" });
+      return;
+    }
+
     await this.queueStore.join({
       gameProfileId: activeProfile.gameProfileId,
+      queueId: queue.queueId,
       format: this.selectedQueueFormat,
       mode: this.selectedQueueMode,
       matchType: this.selectedMatchType,

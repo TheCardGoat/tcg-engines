@@ -49,6 +49,7 @@ export const prb02GeckoMoria013: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Thriller Bark Pirates",
+            match: "includes",
           },
         ],
         actions: [

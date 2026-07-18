@@ -66,7 +66,12 @@ export const op08CountNiwatori071: CharacterCard = {
               },
             ],
           },
+          {
+            action: "shuffleDeck",
+            player: "self",
+          },
         ],
+        optional: true,
       },
     ],
   },

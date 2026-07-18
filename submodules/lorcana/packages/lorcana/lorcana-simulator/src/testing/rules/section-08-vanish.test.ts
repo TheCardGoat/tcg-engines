@@ -38,6 +38,10 @@ function createMockActionCard(params: {
         name: params.name,
         text: params.text,
       },
+      es: {
+        name: params.name,
+        text: params.text,
+      },
       fr: {
         name: params.name,
         text: params.text,

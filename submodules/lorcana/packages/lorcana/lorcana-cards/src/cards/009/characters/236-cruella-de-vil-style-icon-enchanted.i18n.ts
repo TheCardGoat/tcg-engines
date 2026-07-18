@@ -64,4 +64,20 @@ export const cruellaDeVilStyleIconEnchantedI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Cruella De Vil",
+    version: "Icono de estilo",
+    text: [
+      {
+        title: "FUERA DE TEMPORADA",
+        description:
+          "Una vez durante tu turno, siempre que un personaje con coste 2 o menos sea desterrado, coloca la carta superior de tu mazo en tu tintero boca abajo y ejerce.",
+      },
+      {
+        title: "COMENTARIO INSULTANTE",
+        description:
+          "Durante tu turno, cada personaje contrario con coste 2 o menos obtiene -1 {S}.",
+      },
+    ],
+  },
 };

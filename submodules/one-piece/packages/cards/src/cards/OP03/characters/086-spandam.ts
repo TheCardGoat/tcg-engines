@@ -50,6 +50,7 @@ export const op03Spandam086: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "CP",
+            match: "includes",
           },
         ],
         actions: [
@@ -68,6 +69,11 @@ export const op03Spandam086: CharacterCard = {
               {
                 filter: "excludeName",
                 value: "Spandam",
+              },
+              {
+                filter: "trait",
+                value: "CP",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

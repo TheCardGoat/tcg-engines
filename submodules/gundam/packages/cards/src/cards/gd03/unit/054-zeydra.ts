@@ -54,31 +54,51 @@ export const gd03Zeydra054: UnitCard = {
           comparison: "includes",
           value: "X-Rounder",
         },
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "opponent",
+            zone: "battleArea",
+            cardType: "unit",
+            comparison: "gte",
+            count: 1,
+            attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+          },
+        ],
       },
       directives: [
         {
           action: {
-            action: "exile",
-            target: {
-              owner: "friendly",
-              zone: "trash",
-              count: 4,
-              attributeFilters: [{ attribute: "trait", comparison: "includes", value: "Vagan" }],
+            action: "resolveThenQueue",
+            first: {
+              action: "exile",
+              target: {
+                owner: "friendly",
+                zone: "trash",
+                count: 4,
+                attributeFilters: [{ attribute: "trait", comparison: "includes", value: "Vagan" }],
+              },
+            },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
+                {
+                  action: {
+                    action: "destroy",
+                    target: {
+                      owner: "opponent",
+                      cardType: "unit",
+                      count: 1,
+                      attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+                    },
+                  },
+                },
+              ],
+              sourceText: "If you do, choose 1 enemy Unit that is Lv.4 or lower. Destroy it.",
             },
           },
           optional: true,
-        },
-        {
-          action: {
-            action: "destroy",
-            target: {
-              owner: "opponent",
-              cardType: "unit",
-              count: 1,
-              attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
-            },
-          },
-          dependsOnPrevious: true,
         },
       ],
       sourceText:

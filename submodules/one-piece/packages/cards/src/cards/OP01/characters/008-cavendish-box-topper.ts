@@ -32,11 +32,17 @@ export const op01CavendishBoxTopper008: CharacterCard = {
     },
   ],
   effect:
-    "[On Play] You may add 1 card from your Life area to your hand: This Character gains [Rush] during this turn. (This card can attack on the turn in which it is played.)",
+    "[On Play] You may add 1 card from the top of your Life cards to your hand: This Character gains [Rush] during this turn. (This card can attack on the turn in which it is played.)",
   effects: {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+          },
+        ],
         actions: [
           {
             action: "grantKeyword",

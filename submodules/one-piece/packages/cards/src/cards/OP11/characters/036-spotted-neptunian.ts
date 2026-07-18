@@ -51,8 +51,18 @@ export const op11SpottedNeptunian036: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "trait",
-                value: "Neptunian",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Neptunian",
+                    match: "includes",
+                  },
+                  {
+                    filter: "name",
+                    value: "Shirahoshi",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

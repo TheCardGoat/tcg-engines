@@ -75,6 +75,21 @@ export const eb03Nami053: CharacterCard = {
             },
             donState: "rested",
           },
+          {
+            action: "removeFromLife",
+            player: "opponent",
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            destination: "hand",
+            condition: {
+              condition: "lifeCount",
+              player: "opponent",
+              comparison: "gte",
+              value: 3,
+            },
+          },
         ],
       },
       {

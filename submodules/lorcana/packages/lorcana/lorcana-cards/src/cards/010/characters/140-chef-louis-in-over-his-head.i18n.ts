@@ -17,4 +17,8 @@ export const chefLouisInOverHisHeadI18n: Record<Languages, I18nProperties> = {
     name: "Chef Louis",
     version: "Con l'Acqua alla Gola",
   },
+  es: {
+    name: "Chef Luis",
+    version: "Sobre su cabeza",
+  },
 };

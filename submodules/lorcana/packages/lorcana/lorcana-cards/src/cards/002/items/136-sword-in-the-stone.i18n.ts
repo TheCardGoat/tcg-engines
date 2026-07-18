@@ -17,4 +17,8 @@ export const swordInTheStoneI18n: Record<Languages, I18nProperties> = {
     name: "Sword in the Stone",
     text: "{E}, 2 {I} — Chosen character gets +1 {S} this turn for each 1 damage on them.",
   },
+  es: {
+    name: "Espada en la piedra",
+    text: "{E}, 2 {I}: el personaje elegido obtiene +1 {S} este turno por cada 1 daño que reciba.",
+  },
 };

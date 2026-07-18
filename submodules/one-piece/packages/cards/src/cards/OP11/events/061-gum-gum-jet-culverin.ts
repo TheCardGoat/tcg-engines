@@ -51,6 +51,30 @@ export const op11GumGumJetCulverin061: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "returnToDeck",
+            target: {
+              player: "both",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 1,
+                },
+              ],
+            },
+            position: "bottom",
+          },
+        ],
+      },
     ],
   },
   i18n: op11GumGumJetCulverin061I18n,

@@ -35,4 +35,8 @@ export const goTheDistanceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Recorrer la distancia",
+    text: "Ya has elegido tu personaje dañado. No pueden realizar misiones durante el resto de este turno. Saca una carta.",
+  },
 };

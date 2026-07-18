@@ -17,4 +17,8 @@ export const mrIncredibleBobParrI18n: Record<Languages, I18nProperties> = {
     name: "Mr. Incredibile",
     version: "Bob Parr",
   },
+  es: {
+    name: "Señor increíble",
+    version: "Bob Parr",
+  },
 };

@@ -64,7 +64,7 @@ export const op05Ulti043: CharacterCard = {
               upTo: true,
             },
             revealDestination: "hand",
-            remainderPosition: "bottom",
+            remainderPosition: "any",
           },
         ],
       },

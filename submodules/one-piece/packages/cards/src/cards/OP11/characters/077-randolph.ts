@@ -51,6 +51,7 @@ export const op11Randolph077: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Big Mom Pirates",
+                  match: "includes",
                 },
               ],
             },

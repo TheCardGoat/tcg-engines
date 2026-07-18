@@ -35,6 +35,7 @@ export const op07NicoRobin104: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Egghead",
+            match: "includes",
           },
         ],
         actions: [

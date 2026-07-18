@@ -45,4 +45,15 @@ export const nanaDarlingFamilyPetI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nana",
+    version: "Querida mascota familiar",
+    text: [
+      {
+        title: "NIÑERA",
+        description:
+          "Siempre que juegues con un personaje Floodborn, podrás eliminar todo el daño del personaje elegido.",
+      },
+    ],
+  },
 };

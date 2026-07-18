@@ -17,4 +17,8 @@ export const everybodysGotAWeaknessI18n: Record<Languages, I18nProperties> = {
     name: "Tutti al Mondo Hanno una Debolezza",
     text: "Sposta 1 segnalino danno da ogni personaggio danneggiato che hai in gioco a un personaggio avversario a tua scelta. Pesca una carta per ogni segnalino danno che hai spostato in questo modo.",
   },
+  es: {
+    name: "Todo el mundo tiene una debilidad",
+    text: "Mueve 1 contador de daño de cada personaje dañado que tengas en juego al personaje contrario elegido. Roba una carta por cada contador de daño movido de esta manera.",
+  },
 };

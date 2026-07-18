@@ -26,4 +26,14 @@ export const launchpadSkyPatrolI18n: Record<Languages, I18nProperties> = {
     version: "Pattuglia del Cielo",
     text: "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
   },
+  es: {
+    name: "Plataforma de lanzamiento",
+    version: "Patrulla del cielo",
+    text: [
+      {
+        title: "Alerta",
+        description: "(Este personaje puede desafiar como si tuviera Evasivo).",
+      },
+    ],
+  },
 };

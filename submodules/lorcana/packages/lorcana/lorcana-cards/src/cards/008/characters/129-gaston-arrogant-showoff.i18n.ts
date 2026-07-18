@@ -45,4 +45,15 @@ export const gastonArrogantShowoffI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gastón",
+    version: "Alarde arrogante",
+    text: [
+      {
+        title: "SEPARARSE",
+        description:
+          "Cuando juegas con este personaje, puedes desterrar uno de tus elementos para darle al personaje elegido +2 {S} este turno.",
+      },
+    ],
+  },
 };

@@ -31,12 +31,6 @@ export const op01Komurasaki042: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderName",
-            name: "Kouzuki Oden",
-          },
-        ],
         costs: [
           {
             cost: "restDon",
@@ -57,6 +51,7 @@ export const op01Komurasaki042: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
+                  match: "includes",
                 },
                 {
                   filter: "cost",
@@ -65,8 +60,13 @@ export const op01Komurasaki042: CharacterCard = {
                 },
               ],
             },
+            condition: {
+              condition: "leaderName",
+              name: "Kouzuki Oden",
+            },
           },
         ],
+        optional: true,
       },
     ],
   },

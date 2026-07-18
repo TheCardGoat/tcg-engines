@@ -26,20 +26,13 @@ export const op07TrafalgarLawTr010: CharacterCard = {
   traits: ["Heart Pirates"],
   attribute: "slash",
   effect:
-    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your opponent has 7 or more cards in their hand, trash 2 cards from your opponent's hand.",
+    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] DON!! −1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your opponent has 7 or more cards in their hand, trash 2 cards from your opponent's hand.",
   effects: {
     keywords: ["blocker"],
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "handCount",
-            player: "opponent",
-            comparison: "gte",
-            value: 7,
-          },
-        ],
+        optional: true,
         costs: [
           {
             cost: "returnDon",
@@ -50,7 +43,14 @@ export const op07TrafalgarLawTr010: CharacterCard = {
           {
             action: "trashFromHand",
             player: "opponent",
+            chosenBy: "self",
             amount: 2,
+            condition: {
+              condition: "handCount",
+              player: "opponent",
+              comparison: "gte",
+              value: 7,
+            },
           },
         ],
       },

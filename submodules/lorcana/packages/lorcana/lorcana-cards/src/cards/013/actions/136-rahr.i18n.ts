@@ -17,4 +17,8 @@ export const rahrI18n: Record<Languages, I18nProperties> = {
     name: "ROAR!",
     text: "Un personaggio a tua scelta riceve +3 {S} per questo turno.",
   },
+  es: {
+    name: "RAHR!",
+    text: "El personaje elegido obtiene +3 {S} este turno.",
+  },
 };

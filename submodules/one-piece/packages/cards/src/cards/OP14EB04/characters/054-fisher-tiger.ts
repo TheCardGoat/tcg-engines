@@ -20,10 +20,10 @@ export const op14eb04FisherTiger054: CharacterCard = {
   color: ["blue"],
   rarity: "UC",
   setId: "OP14EB04",
-  cost: 4,
+  cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Fish-Man The Sun Pirates"],
+  traits: ["Fish-Man", "The Sun Pirates"],
   attribute: "strike",
   effect:
     "[On Play] If your Leader has the {Fish-Man} type, draw 3 cards.\n[End of Your Turn] Trash cards from your hand until you have 5 cards in your hand.",
@@ -49,9 +49,9 @@ export const op14eb04FisherTiger054: CharacterCard = {
         trigger: "endOfYourTurn",
         actions: [
           {
-            action: "trashFromHand",
+            action: "trashFromHandUntil",
             player: "self",
-            amount: 5,
+            handSize: 5,
           },
         ],
       },

@@ -31,11 +31,31 @@ export const op07RobLucci093: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 3,
+            position: "bottom",
+          },
+        ],
         actions: [
           {
             action: "trashFromHand",
             player: "opponent",
             amount: 1,
+          },
+          {
+            action: "returnToDeck",
+            target: {
+              player: "opponent",
+              zones: ["trash"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              chosenBy: "self",
+            },
+            position: "bottom",
           },
         ],
         optional: true,

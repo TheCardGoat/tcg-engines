@@ -17,4 +17,8 @@ export const johnSilverTerrorOfTheRealmI18n: Record<Languages, I18nProperties> =
     name: "John Silver",
     version: "Terrore del Reame",
   },
+  es: {
+    name: "Juan Plata",
+    version: "Terror del reino",
+  },
 };

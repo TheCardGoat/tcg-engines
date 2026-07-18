@@ -52,6 +52,23 @@ export const op11LordOfTheCoast028: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [
+                { filter: "state", value: "rested" },
+                { filter: "cost", comparison: "lte", value: 3 },
+              ],
+            },
+          },
+        ],
+      },
     ],
   },
   i18n: op11LordOfTheCoast028I18n,

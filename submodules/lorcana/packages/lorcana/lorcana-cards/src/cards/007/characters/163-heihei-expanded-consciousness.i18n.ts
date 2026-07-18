@@ -73,4 +73,21 @@ export const heiheiExpandedConsciousnessI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Heihei",
+    version: "Conciencia Expandida",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "Resistir +1",
+      },
+      {
+        title: "DESPEJA TU MENTE",
+        description:
+          "Cuando juegues con este personaje, coloca todas las cartas de tu mano en tu tintero boca abajo y ejerce.",
+      },
+    ],
+  },
 };

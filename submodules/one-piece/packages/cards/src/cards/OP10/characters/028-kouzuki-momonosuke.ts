@@ -33,6 +33,10 @@ export const op10KouzukiMomonosuke028: CharacterCard = {
         trigger: "activateMain",
         costs: [
           {
+            cost: "restDon",
+            amount: 2,
+          },
+          {
             cost: "trashThisCard",
           },
         ],
@@ -52,6 +56,7 @@ export const op10KouzukiMomonosuke028: CharacterCard = {
               {
                 filter: "trait",
                 value: "The Akazaya Nine",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

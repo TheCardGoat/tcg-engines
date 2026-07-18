@@ -57,6 +57,15 @@ export const op11JaguarDSaul075: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "onPlay",
+          },
+        ],
+      },
     ],
   },
   i18n: op11JaguarDSaul075I18n,

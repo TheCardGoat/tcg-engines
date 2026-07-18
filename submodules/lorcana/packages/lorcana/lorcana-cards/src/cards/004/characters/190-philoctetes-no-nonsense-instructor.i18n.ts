@@ -62,4 +62,19 @@ export const philoctetesNononsenseInstructorI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Filoctetes",
+    version: "Instructor sensato",
+    text: [
+      {
+        title: "DEBES MANTENERTE ENFOCADO",
+        description:
+          "Tus personajes héroes obtienen Challenger +1. (Obtienen +1 {S} mientras desafían).",
+      },
+      {
+        title: "PROMOTOR DESVERGAZADO",
+        description: "Siempre que juegues con un personaje héroe, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

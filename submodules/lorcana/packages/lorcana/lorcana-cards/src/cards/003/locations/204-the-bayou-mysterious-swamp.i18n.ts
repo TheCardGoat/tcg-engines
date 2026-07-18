@@ -45,4 +45,15 @@ export const theBayouMysteriousSwampI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El pantano",
+    version: "Pantano Misterioso",
+    text: [
+      {
+        title: "MUÉSTRAME EL CAMINO",
+        description:
+          "Siempre que un personaje realice una misión mientras esté aquí, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

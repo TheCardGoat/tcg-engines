@@ -45,4 +45,15 @@ export const flowerShySkunkI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Flor",
+    version: "Zorrillo tímido",
+    text: [
+      {
+        title: "BUSCANDO AMIGOS",
+        description:
+          "Siempre que juegues con otro personaje, mira la carta superior de tu mazo. Colóquelo en la parte superior o inferior de su plataforma.",
+      },
+    ],
+  },
 };

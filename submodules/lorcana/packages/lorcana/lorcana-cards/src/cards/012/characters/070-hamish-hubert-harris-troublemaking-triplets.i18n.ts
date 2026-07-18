@@ -21,4 +21,9 @@ export const hamishHubertHarrisTroublemakingTripletsI18n: Record<Languages, I18n
     version: "Trio di Combinaguai",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Hamish, Hubert y Harris",
+    version: "Trillizos problemáticos",
+    text: "Evasivo",
+  },
 };

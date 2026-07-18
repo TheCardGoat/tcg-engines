@@ -65,4 +65,20 @@ export const bouncingDuckySidsToyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Patito rebotando",
+    version: "El juguete de Sid",
+    text: [
+      {
+        title: "JUGUETES RECHAZADOS",
+        description:
+          "Por cada carta de personaje de juguete que descartes, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "REUTILIZADO",
+        description:
+          "Cuando juegues con este personaje, coloca todas las cartas de personaje de juguete de tu descarte en la parte inferior de tu mazo en cualquier orden.",
+      },
+    ],
+  },
 };

@@ -47,10 +47,22 @@ type CurrentCardQaCaseInput = readonly [
 const CURRENT_CARD_QA_CASE_INPUTS = [
   ["promo", "lucyna-kushinada", ["legendLucynaKushinada"], "Promo legend hydration."],
   [
+    "welcometonightcityretail",
+    "live-with-the-aftermath",
+    ["progLiveWithTheAftermathRetail"],
+    "Each player selects and defeats one of their Units.",
+  ],
+  [
     "PRM01",
     "rebecca-having-a-moment",
     ["legendRebeccaHavingAMomentPrm01"],
     "No-text promo Legend call.",
+  ],
+  [
+    "welcometonightcityretail",
+    "octant",
+    ["unitOctantRetail"],
+    "8+ Gig cost reduction, floored at 1.",
   ],
   [
     "boxtoppersretail",

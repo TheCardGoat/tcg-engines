@@ -28,6 +28,28 @@ export const op10RoronoaZoro113: CharacterCard = {
   attribute: "slash",
   effect: "If you have less Life cards than your opponent, this Character gains [Rush].",
   effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Supernovas",
+              match: "includes",
+            },
+          },
+        ],
+        optional: true,
+      },
+    ],
     permanentEffects: [
       {
         conditions: [

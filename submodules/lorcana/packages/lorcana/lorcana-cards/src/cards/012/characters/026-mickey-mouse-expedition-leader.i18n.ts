@@ -61,4 +61,19 @@ export const mickeyMouseExpeditionLeaderI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Líder de expedición",
+    text: [
+      {
+        title: "LARGO VIAJE",
+        description: "Este personaje puede entrar en juego agotado.",
+      },
+      {
+        title: "CAMINO SECRETO",
+        description:
+          "Mientras este personaje está ejercido, cada vez que uno de tus otros personajes realiza una misión, el personaje contrario elegido obtiene -2 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -53,4 +53,17 @@ export const jetsamRiffraffI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Echazón",
+    version: "Chusma",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "PAR ESPECTACULAR",
+        description: "Tus personajes llamados Flotsam ganan Ward.",
+      },
+    ],
+  },
 };

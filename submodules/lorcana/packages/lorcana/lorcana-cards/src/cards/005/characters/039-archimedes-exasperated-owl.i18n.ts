@@ -21,4 +21,9 @@ export const archimedesExasperatedOwlI18n: Record<Languages, I18nProperties> = {
     version: "Gufo Esasperato",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Arquímedes",
+    version: "Búho exasperado",
+    text: "Evasivo",
+  },
 };

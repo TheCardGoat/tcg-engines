@@ -45,4 +45,15 @@ export const goldenHarpEnchanterOfTheLandI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Arpa dorada",
+    version: "Encantador de la tierra",
+    text: [
+      {
+        title: "ROBADO",
+        description:
+          "Al final de tu turno, si no tocaste una canción este turno, destierra a este personaje.",
+      },
+    ],
+  },
 };

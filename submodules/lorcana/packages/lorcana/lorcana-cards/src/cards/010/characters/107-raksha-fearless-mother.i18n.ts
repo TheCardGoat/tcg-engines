@@ -45,4 +45,15 @@ export const rakshaFearlessMotherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Raksha",
+    version: "Madre intrépida",
+    text: [
+      {
+        title: "EN PATRULLA",
+        description:
+          "Una vez durante tu turno, puedes pagar 1 {I} menos para mover este personaje a una ubicación.",
+      },
+    ],
+  },
 };

@@ -20,6 +20,8 @@ export type ExternalSource =
   | "cultureInvariantId"
   | "lorcast"
   | "tcgPlayer"
+  | "tcgcsv"
+  | "cardNexus"
   | "bandai";
 
 export const EXTERNAL_SOURCES = [
@@ -27,6 +29,8 @@ export const EXTERNAL_SOURCES = [
   "cultureInvariantId",
   "lorcast",
   "tcgPlayer",
+  "tcgcsv",
+  "cardNexus",
   "bandai",
 ] as const satisfies readonly ExternalSource[];
 

@@ -34,8 +34,8 @@ export function buildOnePieceAnimations({
         const toCard = cardId ? toState.cards[cardId] : undefined;
         const fromZone = cardZone(event.payload.fromZone) ?? fromCard?.zone;
         const toZone = cardZone(event.payload.toZone) ?? toCard?.zone;
-        const fromOwner = matchSeat(event.payload.fromOwner) ?? fromCard?.owner;
-        const toOwner = matchSeat(event.payload.toOwner) ?? toCard?.owner;
+        const fromOwner = matchSeat(event.payload.fromOwner) ?? fromCard?.controller;
+        const toOwner = matchSeat(event.payload.toOwner) ?? toCard?.controller;
         if (!cardId || !fromZone || !toZone || !fromOwner || !toOwner) {
           break;
         }
@@ -123,6 +123,7 @@ function cardZone(value: unknown): CardZone | undefined {
     case "character":
     case "stage":
     case "trash":
+    case "resolution":
       return value;
     default:
       return undefined;

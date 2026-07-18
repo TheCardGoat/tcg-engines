@@ -17,4 +17,8 @@ export const theSultanPlayfulMonarchI18n: Record<Languages, I18nProperties> = {
     name: "Il Sultano",
     version: "Sovrano Giocoso",
   },
+  es: {
+    name: "El sultán",
+    version: "Monarca juguetona",
+  },
 };

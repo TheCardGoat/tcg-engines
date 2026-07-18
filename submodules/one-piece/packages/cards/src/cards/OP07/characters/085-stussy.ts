@@ -40,11 +40,17 @@ export const op07Stussy085: CharacterCard = {
     },
   ],
   effect:
-    "[On Play]You may trash 1 of your Characters: K.O. up to 1 of your opponent's Characters.",
+    "[On Play] You may trash 1 of your Characters: K.O. up to 1 of your opponent's Characters.",
   effects: {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashCharacter",
+            amount: 1,
+          },
+        ],
         actions: [
           {
             action: "ko",

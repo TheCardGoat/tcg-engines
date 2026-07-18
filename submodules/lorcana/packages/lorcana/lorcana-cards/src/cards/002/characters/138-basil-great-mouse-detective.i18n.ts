@@ -60,4 +60,18 @@ export const basilGreatMouseDetectiveI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Albahaca",
+    version: "Gran detective de ratones",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "SIEMPRE HAY",
+        description:
+          "UNA OPORTUNIDAD Si usaste Shift para jugar con este personaje, puedes robar 2 cartas cuando entre en juego.",
+      },
+    ],
+  },
 };

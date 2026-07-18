@@ -28,7 +28,71 @@ export const op09CatarinaDevon084: CharacterCard = {
   effect:
     '[Activate: Main] [Once Per Turn] If your Leader has the "Blackbeard Pirates" type, this Character gains [Double Attack], [Banish] or [Blocker] until the end of your opponent\'s next turn.',
   effects: {
-    keywords: ["banish", "blocker"],
+    effects: [
+      {
+        trigger: "activateMain",
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Blackbeard Pirates",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "choice",
+            options: [
+              [
+                {
+                  action: "grantKeyword",
+                  target: {
+                    player: "self",
+                    zones: ["character"],
+                    count: {
+                      amount: 1,
+                    },
+                    self: true,
+                  },
+                  keyword: "doubleAttack",
+                  duration: "untilEndOfOpponentNextTurn",
+                },
+              ],
+              [
+                {
+                  action: "grantKeyword",
+                  target: {
+                    player: "self",
+                    zones: ["character"],
+                    count: {
+                      amount: 1,
+                    },
+                    self: true,
+                  },
+                  keyword: "banish",
+                  duration: "untilEndOfOpponentNextTurn",
+                },
+              ],
+              [
+                {
+                  action: "grantKeyword",
+                  target: {
+                    player: "self",
+                    zones: ["character"],
+                    count: {
+                      amount: 1,
+                    },
+                    self: true,
+                  },
+                  keyword: "blocker",
+                  duration: "untilEndOfOpponentNextTurn",
+                },
+              ],
+            ],
+          },
+        ],
+        oncePerTurn: true,
+      },
+    ],
   },
   i18n: op09CatarinaDevon084I18n,
 };

@@ -60,4 +60,19 @@ export const buzzsArmI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El brazo de Buzz",
+    text: [
+      {
+        title: "PIEZA FALTANTE",
+        description:
+          "Si un personaje llamado Buzz Lightyear fue desterrado este turno, puedes jugar este objeto gratis.",
+      },
+      {
+        title: "SE REQUIERE ALGUNO MONTAJE",
+        description:
+          "{E}: pagas 1 {I} menos por la siguiente acción o elemento que juegues este turno.",
+      },
+    ],
+  },
 };

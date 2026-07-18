@@ -28,6 +28,13 @@ export const op06MeteorStrikeOfLove017: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "top",
+          },
+        ],
         actions: [
           {
             action: "modifyPower",
@@ -47,6 +54,13 @@ export const op06MeteorStrikeOfLove017: EventCard = {
       },
       {
         trigger: "counter",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "top",
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

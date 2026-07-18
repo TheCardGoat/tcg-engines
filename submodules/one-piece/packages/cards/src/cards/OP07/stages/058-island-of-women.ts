@@ -28,16 +28,13 @@ export const op07IslandOfWomen058: StageCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Kuja Pirates",
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
             amount: 1,
+          },
+          {
+            cost: "restThisCard",
           },
         ],
         actions: [
@@ -52,14 +49,26 @@ export const op07IslandOfWomen058: StageCard = {
               },
               filters: [
                 {
-                  filter: "trait",
-                  value: "Amazon Lily",
-                },
-                {
-                  filter: "trait",
-                  value: "Kuja Pirates",
+                  filter: "anyOf",
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "Amazon Lily",
+                      match: "includes",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Kuja Pirates",
+                      match: "includes",
+                    },
+                  ],
                 },
               ],
+            },
+            condition: {
+              condition: "leaderTrait",
+              trait: "Kuja Pirates",
+              match: "includes",
             },
           },
         ],

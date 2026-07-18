@@ -58,6 +58,30 @@ export const op06BlackBug077: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "returnToDeck",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+              ],
+            },
+            position: "bottom",
+          },
+        ],
+      },
     ],
   },
   i18n: op06BlackBug077I18n,

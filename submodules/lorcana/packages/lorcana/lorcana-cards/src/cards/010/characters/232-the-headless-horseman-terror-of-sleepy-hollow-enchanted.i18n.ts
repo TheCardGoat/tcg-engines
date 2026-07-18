@@ -68,4 +68,20 @@ export const theHeadlessHorsemanTerrorOfSleepyHollowEnchantedI18n: Record<
       },
     ],
   },
+  es: {
+    name: "El jinete sin cabeza",
+    version: "El terror de Sleepy Hollow",
+    text: [
+      {
+        title: "NO DEJA RASTRO",
+        description:
+          "Cuando juegues con este personaje, destierra al personaje contrario elegido con 2 {S} o menos.",
+      },
+      {
+        title: "GANANDO FUERZA",
+        description:
+          "Durante tu turno, cada vez que un personaje contrario es desterrado, cada uno de tus personajes obtiene +1 {S} este turno.",
+      },
+    ],
+  },
 };

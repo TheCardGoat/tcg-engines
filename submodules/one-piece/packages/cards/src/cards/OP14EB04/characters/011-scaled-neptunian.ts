@@ -37,11 +37,26 @@ export const op14eb04ScaledNeptunian011: CharacterCard = {
             action: "draw",
             player: "self",
             amount: 0,
+            amountFromTarget: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Neptunian",
+                  match: "includes",
+                },
+              ],
+            },
           },
           {
             action: "trashFromHand",
             player: "self",
             amount: 0,
+            amountFromPreviousActionTargets: true,
           },
         ],
       },

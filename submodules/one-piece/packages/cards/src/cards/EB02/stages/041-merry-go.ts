@@ -32,6 +32,7 @@ export const eb02MerryGo041: StageCard = {
           {
             condition: "leaderTrait",
             trait: "Straw Hat Crew",
+            match: "includes",
           },
         ],
         actions: [
@@ -44,12 +45,6 @@ export const eb02MerryGo041: StageCard = {
       },
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "donFieldComparison",
-            selfComparison: "lte",
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -69,11 +64,16 @@ export const eb02MerryGo041: StageCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
+                  match: "includes",
                 },
               ],
             },
             value: 2,
             duration: "untilEndOfOpponentNextTurn",
+            condition: {
+              condition: "donFieldComparison",
+              selfComparison: "lte",
+            },
           },
         ],
         optional: true,

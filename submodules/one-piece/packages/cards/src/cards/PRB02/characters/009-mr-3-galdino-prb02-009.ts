@@ -31,7 +31,7 @@ export const prb02Mr3GaldinoPrb02009009: CharacterCard = {
   cost: 2,
   power: 1000,
   counter: 1000,
-  traits: ["Former Baroque Works Cross Guild"],
+  traits: ["Cross Guild", "Former Baroque Works"],
   attribute: "special",
   artVariants: [
     {
@@ -44,6 +44,28 @@ export const prb02Mr3GaldinoPrb02009009: CharacterCard = {
     "This effect can be activated when this Character is rested by your opponent's effect. You may trash this Character and draw 2 cards.[Blocker]",
   effects: {
     keywords: ["blocker"],
+    effects: [
+      {
+        trigger: "whenBecomesRested",
+        source: "opponentEffect",
+        eventFilter: {
+          targetSelf: true,
+        },
+        costs: [
+          {
+            cost: "trashThisCard",
+          },
+        ],
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 2,
+          },
+        ],
+        optional: true,
+      },
+    ],
   },
   i18n: prb02Mr3GaldinoPrb02009009I18n,
 };

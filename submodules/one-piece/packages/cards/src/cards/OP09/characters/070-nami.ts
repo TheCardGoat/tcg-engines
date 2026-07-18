@@ -31,6 +31,12 @@ export const op09Nami070: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnDon",
+            minimumAmount: 1,
+          },
+        ],
         actions: [
           {
             action: "giveDon",

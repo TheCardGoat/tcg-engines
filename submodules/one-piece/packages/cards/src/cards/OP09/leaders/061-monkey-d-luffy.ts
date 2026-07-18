@@ -45,6 +45,7 @@ export const op09MonkeyDLuffy061: LeaderCard = {
     effects: [
       {
         trigger: "whenDonReturned",
+        eventFilter: { minimumAmount: 2 },
         conditions: [
           {
             condition: "turn",
@@ -59,6 +60,14 @@ export const op09MonkeyDLuffy061: LeaderCard = {
               upTo: true,
             },
             state: "active",
+          },
+          {
+            action: "addDon",
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            state: "rested",
           },
         ],
         oncePerTurn: true,

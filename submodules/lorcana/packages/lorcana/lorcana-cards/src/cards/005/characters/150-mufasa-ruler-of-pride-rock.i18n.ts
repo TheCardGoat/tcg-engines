@@ -64,4 +64,20 @@ export const mufasaRulerOfPrideRockI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mufasa",
+    version: "Gobernante de Pride Rock",
+    text: [
+      {
+        title: "UN DELICADO EQUILIBRIO",
+        description:
+          "Cuando juegues con este personaje, utiliza todas las cartas de tu tintero y luego devuelve 2 cartas al azar de tu tintero a tu mano.",
+      },
+      {
+        title: "TODO LO QUE TOCA LA LUZ",
+        description:
+          "Siempre que este personaje realice una misión, prepara todas las cartas en tu tintero.",
+      },
+    ],
+  },
 };

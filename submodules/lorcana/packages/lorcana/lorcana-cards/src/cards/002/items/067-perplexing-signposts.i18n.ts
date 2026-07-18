@@ -39,4 +39,13 @@ export const perplexingSignpostsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señales desconcertantes",
+    text: [
+      {
+        title: "AL PAÍS DE LAS MARAVILLAS",
+        description: "Destierra este objeto: devuelve el personaje tuyo elegido a tu mano.",
+      },
+    ],
+  },
 };

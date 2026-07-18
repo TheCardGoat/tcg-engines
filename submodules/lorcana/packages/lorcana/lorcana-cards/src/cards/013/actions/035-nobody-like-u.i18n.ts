@@ -50,4 +50,17 @@ export const nobodyLikeUI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nadie como tú",
+    text: [
+      {
+        title: "Cantar juntos 5",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un coste total de 5 o más puede esforzarse para cantar esta canción de forma gratuita).",
+      },
+      {
+        title: "Juega gratis con un personaje que cueste 4 o menos.",
+      },
+    ],
+  },
 };

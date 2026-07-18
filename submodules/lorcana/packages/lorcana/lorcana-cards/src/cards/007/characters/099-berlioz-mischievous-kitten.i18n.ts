@@ -17,4 +17,8 @@ export const berliozMischievousKittenI18n: Record<Languages, I18nProperties> = {
     name: "Bizet",
     version: "Gattino Monello",
   },
+  es: {
+    name: "Berlioz",
+    version: "Gatito travieso",
+  },
 };

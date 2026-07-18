@@ -17,4 +17,8 @@ export const ifItsNotBaroqueI18n: Record<Languages, I18nProperties> = {
     name: "If it’s Not Baroque",
     text: "Return an item card from your discard to your hand.",
   },
+  es: {
+    name: "Si no es barroco",
+    text: "Devuelve una carta de objeto de tu descarte a tu mano.",
+  },
 };

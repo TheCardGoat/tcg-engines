@@ -5,6 +5,7 @@ export const gd02Byarlant004: UnitCard = {
   name: "Byarlant",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space", "earth"],
   traits: ["titans"],
   id: "GD02-004",
   canonicalId: "GD02-004",
@@ -41,6 +42,7 @@ export const gd02Byarlant004: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 3,
+  linkCondition: "[Jerid Messa]",
   effect:
     "【When Paired】Choose 1 rested enemy Unit with 3 or less HP. It won't be set as active during the start phase of your opponent's next turn.<br>",
   effects: [

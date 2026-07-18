@@ -34,7 +34,7 @@ export const op11MermanCombatUltramarine116: EventCard = {
           {
             action: "addToLife",
             target: {
-              player: "self",
+              player: "both",
               zones: ["character"],
               count: {
                 amount: 1,
@@ -48,7 +48,32 @@ export const op11MermanCombatUltramarine116: EventCard = {
                 },
               ],
             },
-            position: "top",
+            position: "choice",
+            faceUp: true,
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "addToLife",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+              ],
+            },
+            position: "choice",
             faceUp: true,
           },
         ],

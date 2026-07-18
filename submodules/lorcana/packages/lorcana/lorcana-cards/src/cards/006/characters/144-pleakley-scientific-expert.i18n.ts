@@ -45,4 +45,15 @@ export const pleakleyScientificExpertI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pleakley",
+    version: "Experto científico",
+    text: [
+      {
+        title: "INFORMES PARA EL DEBER",
+        description:
+          "Cuando juegues con este personaje, coloca tu personaje elegido en tu tintero boca abajo y ejercítalo.",
+      },
+    ],
+  },
 };

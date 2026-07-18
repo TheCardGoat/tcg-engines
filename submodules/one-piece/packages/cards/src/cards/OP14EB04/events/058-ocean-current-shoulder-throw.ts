@@ -28,6 +28,7 @@ export const op14eb04OceanCurrentShoulderThrow058: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [{ cost: "restDon", amount: 3 }],
         actions: [
           {
             action: "play",
@@ -48,6 +49,7 @@ export const op14eb04OceanCurrentShoulderThrow058: EventCard = {
               {
                 filter: "trait",
                 value: "Fish-Man",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -58,7 +60,7 @@ export const op14eb04OceanCurrentShoulderThrow058: EventCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "both",
               zones: ["character"],
               count: {
                 amount: 1,

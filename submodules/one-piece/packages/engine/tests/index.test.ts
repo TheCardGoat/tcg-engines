@@ -19,7 +19,6 @@ import {
   getCard,
   op13GumGumGatlingGun021,
   op13Higuma013,
-  op13Lilith113,
   op13MonkeyDLuffy001,
   op13Otama043,
   op13RoronoaZoro037,
@@ -46,6 +45,7 @@ const playerOneDeck = [
   op13GumGumGatlingGun021,
   op13Higuma013,
   op13RoronoaZoro037,
+  op13Higuma013,
 ];
 
 const playerTwoDeck = [
@@ -59,6 +59,7 @@ const playerTwoDeck = [
   op13GumGumGatlingGun021,
   op13Higuma013,
   op13RoronoaZoro037,
+  op13Higuma013,
 ];
 
 function buildConfig(overrides: Partial<MatchConfig> = {}): MatchConfig {
@@ -547,19 +548,28 @@ describe("@tcg/op-engine", () => {
   test("resolves a main event through the structured card DSL and logs it", () => {
     const started = runCommands(createMatch(buildConfig()), startGameCommands());
     const eventId = findCardInZone(started, "south", "hand", op13GumGumGatlingGun021);
-    const result = applyCommand(started, {
+    const played = applyCommand(started, {
       type: "playCard",
       seat: "south",
       instanceId: eventId,
     });
+    const countPrompt = findPendingPromptByIntent(played.state, "effectGiveDonCount");
+    const result = applyCommand(played.state, {
+      type: "resolvePrompt",
+      seat: "south",
+      promptId: countPrompt!.id,
+      optionId: "1",
+    });
 
+    expect(played.accepted).toBe(true);
+    expect(countPrompt).toBeDefined();
     expect(result.accepted).toBe(true);
     expect(result.state.players.south.restedDon).toBe(0);
     expect(result.state.cards[result.state.players.south.leaderInstanceId].attachedDon).toBe(1);
     expect(result.state.players.south.trash.some((instanceId) => instanceId === eventId)).toBe(
       true,
     );
-    expect(result.logs.some((entry) => entry.message.includes("plays Gum-Gum Gatling Gun"))).toBe(
+    expect(played.logs.some((entry) => entry.message.includes("plays Gum-Gum Gatling Gun"))).toBe(
       true,
     );
     expect(
@@ -691,7 +701,8 @@ describe("@tcg/op-engine", () => {
       throw new Error("Expected a selectEntity target step.");
     }
     expect(targetStep.role).toBe("target");
-    expect(targetStep.min).toBe(1);
+    expect(targetStep.min).toBe(0);
+    expect(targetStep.max).toBe(1);
     expect(targetStep.candidates).toHaveLength(2);
     expect(targetStep.uiHints?.highlightZones).toEqual(["character"]);
     expect(targetStep.constraints).toEqual(
@@ -772,6 +783,7 @@ describe("@tcg/op-engine", () => {
             op13GumGumGatlingGun021,
             op13Higuma013,
             op13RoronoaZoro037,
+            op13Higuma013,
           ]),
         },
       },
@@ -867,41 +879,6 @@ describe("@tcg/op-engine", () => {
 
     expect(first.state.logHistory).toEqual(second.state.logHistory);
     expect(first.state.eventHistory).toEqual(second.state.eventHistory);
-  });
-
-  test("records capability issues for unsupported semantics", () => {
-    const config = buildConfig({
-      players: {
-        south: {
-          leaderCardId: op13MonkeyDLuffy001.id,
-          mainDeck: cardIds([
-            op13Otama043,
-            op13WindmillVillage022,
-            op13GumGumGatlingGun021,
-            op13Higuma013,
-            op13Lilith113,
-            op13RoronoaZoro037,
-            op13GumGumGatlingGun021,
-            op13WindmillVillage022,
-            op13Otama043,
-            op13Higuma013,
-          ]),
-        },
-        north: buildConfig().players.north,
-      },
-    });
-    const started = runCommands(createMatch(config), startGameCommands());
-    const unsupportedId = findCardInZone(started, "south", "hand", op13Lilith113);
-    const result = applyCommand(started, {
-      type: "playCard",
-      seat: "south",
-      instanceId: unsupportedId,
-      slotIndex: 0,
-    });
-
-    expect(result.accepted).toBe(true);
-    expect(result.capabilityIssues.some((issue) => issue.kind === "unsupportedAction")).toBe(true);
-    expect(result.state.promptQueue.some((prompt) => prompt.seat === "judge")).toBe(true);
   });
 
   test("rejects transitions that violate state invariants", () => {

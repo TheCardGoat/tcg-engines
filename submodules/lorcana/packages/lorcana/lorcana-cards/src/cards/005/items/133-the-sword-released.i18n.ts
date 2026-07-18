@@ -41,4 +41,14 @@ export const theSwordReleasedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La espada liberada",
+    text: [
+      {
+        title: "PODER NOMBRADO",
+        description:
+          "Al comienzo de tu turno, si tienes un personaje en juego con más {S} que cada personaje contrario en juego, cada oponente pierde 1 conocimiento y tú ganas un conocimiento igual al conocimiento perdido.",
+      },
+    ],
+  },
 };

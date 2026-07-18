@@ -41,7 +41,7 @@ export const op03CharlottePudding112: CharacterCard = {
     },
   ],
   effect:
-    "[On Play] Look at 4 cards from the top of your deck; reveal up to 1 [Sanji] or [Big Mom Pirates] type card other than [Charlotte Pudding] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
+    "[On Play] Look at 4 cards from the top of your deck; reveal up to 1 [Sanji] or {Big Mom Pirates} type card other than [Charlotte Pudding] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
   effects: {
     effects: [
       {
@@ -64,12 +64,18 @@ export const op03CharlottePudding112: CharacterCard = {
                 value: "Charlotte Pudding",
               },
               {
-                filter: "trait",
-                value: "Sanji",
-              },
-              {
-                filter: "trait",
-                value: "Big Mom Pirates",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "name",
+                    value: "Sanji",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Big Mom Pirates",
+                    match: "includes",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

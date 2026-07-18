@@ -42,9 +42,22 @@ export const op12SilversRayleigh001: LeaderCard = {
   effect:
     "Under the rules of this game, you cannot include cards with a cost of 5 or more in your deck.\n[Activate: Main] [Once Per Turn] You may reveal 2 Events from your hand: Up to 1 of your Characters with 4000 base power or less gains +2000 power during this turn.",
   effects: {
+    deckBuildingRules: [
+      {
+        rule: "cannotInclude",
+        filters: [{ filter: "cost", comparison: "gte", value: 5 }],
+      },
+    ],
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "revealFromHand",
+            amount: 2,
+            filters: [{ filter: "cardCategory", value: "event" }],
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

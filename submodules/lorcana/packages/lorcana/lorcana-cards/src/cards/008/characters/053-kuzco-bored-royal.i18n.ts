@@ -45,4 +45,15 @@ export const kuzcoBoredRoyalI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kuzco",
+    version: "Aburrido real",
+    text: [
+      {
+        title: "RESPIRACIÓN DE LLAMA",
+        description:
+          "Cuando juegas con este personaje, puedes devolver el personaje, objeto o ubicación elegidos con un coste de 2 o menos a la mano del jugador.",
+      },
+    ],
+  },
 };

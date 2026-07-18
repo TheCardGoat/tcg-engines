@@ -44,4 +44,15 @@ export const beastFierceDefenderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bestia",
+    version: "Defensor feroz",
+    text: [
+      {
+        title: "Amor formidable",
+        description:
+          "Mientras tengas un personaje llamado Bella en juego, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

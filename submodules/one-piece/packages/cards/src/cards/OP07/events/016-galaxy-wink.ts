@@ -42,6 +42,7 @@ export const op07GalaxyWink016: EventCard = {
                 {
                   filter: "trait",
                   value: "Revolutionary Army",
+                  match: "includes",
                 },
               ],
             },

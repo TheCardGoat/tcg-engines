@@ -45,4 +45,15 @@ export const carlsHouseFlyingHighI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La casa de Carl",
+    version: "Volando alto",
+    text: [
+      {
+        title: "Día de mudanza",
+        description:
+          "Una vez durante tu turno, puedes mover el personaje elegido desde aquí a otra ubicación de forma gratuita. Si lo haces, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const superRelocationProgramI18n: Record<Languages, I18nProperties> = {
     name: "Programma Protezione Supereroi",
     text: "Riprendi in mano un tuo personaggio a tua scelta. Se hai ripreso in mano un personaggio Eroe in questo modo, pesca 2 carte.",
   },
+  es: {
+    name: "Programa de súper reubicación",
+    text: "Devuelve el personaje tuyo elegido a tu mano. Si devolviste un personaje héroe de esta manera, roba 2 cartas.",
+  },
 };

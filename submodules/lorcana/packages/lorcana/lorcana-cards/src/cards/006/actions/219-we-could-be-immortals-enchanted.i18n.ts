@@ -35,4 +35,8 @@ export const weCouldBeImmortalsEnchantedI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Podríamos ser inmortales",
+    text: "Tus personajes Inventor obtienen Resistencia +6 este turno. Luego, coloca esta carta en tu tintero boca abajo y ejerce presión.",
+  },
 };

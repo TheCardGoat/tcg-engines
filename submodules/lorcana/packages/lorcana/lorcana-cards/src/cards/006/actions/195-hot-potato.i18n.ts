@@ -47,4 +47,8 @@ export const hotPotatoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Patata caliente",
+    text: "Elige uno:\n- Inflige 2 daños al personaje elegido.\n- Desterrar el objeto elegido.",
+  },
 };

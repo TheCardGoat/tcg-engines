@@ -45,4 +45,15 @@ export const maximusRelentlessStallionI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Máximo",
+    version: "Semental implacable",
+    text: [
+      {
+        title: "Sin escapatoria",
+        description:
+          "Si descartaste una carta este turno, este personaje gana <Challenger> +2 y puede desafiar a los personajes listos este turno. (Obtienen +2 {S} mientras desafían).",
+      },
+    ],
+  },
 };

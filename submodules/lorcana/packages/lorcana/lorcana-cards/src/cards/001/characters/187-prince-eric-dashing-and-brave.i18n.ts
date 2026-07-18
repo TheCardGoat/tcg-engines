@@ -21,4 +21,9 @@ export const princeEricDashingAndBraveI18n: Record<Languages, I18nProperties> = 
     version: "Dashing and Brave",
     text: "<Challenger> +2 (While challenging, this character gets +2 {S}.)",
   },
+  es: {
+    name: "Príncipe eric",
+    version: "Apuesto y valiente",
+    text: "Retador +2",
+  },
 };

@@ -45,4 +45,15 @@ export const mickeyMouseExperiencedTravelerI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Viajero experimentado",
+    text: [
+      {
+        title: "ILUMINANDO EL CAMINO",
+        description:
+          "Siempre que este personaje realice una misión, si jugaste con otro personaje este turno, puedes robar una carta.",
+      },
+    ],
+  },
 };

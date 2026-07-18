@@ -45,4 +45,15 @@ export const johnSilverAlienPirateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Juan Plata",
+    version: "Pirata alienígena",
+    text: [
+      {
+        title: "ELIGE TUS LUCHAS",
+        description:
+          "Cuando juegas con este personaje y cada vez que realiza misiones, el personaje contrario elegido obtiene Temeridad durante su próximo turno. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

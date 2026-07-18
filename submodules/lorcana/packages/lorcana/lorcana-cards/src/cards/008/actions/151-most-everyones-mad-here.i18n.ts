@@ -17,4 +17,8 @@ export const mostEveryonesMadHereI18n: Record<Languages, I18nProperties> = {
     name: "Sono Quasi Tutti Matti Qui",
     text: "Ottieni leggenda pari al danno su un personaggio a tua scelta, poi esilialo.",
   },
+  es: {
+    name: "Casi todo el mundo está enojado aquí",
+    text: "Obtén conocimientos equivalentes al daño causado al personaje elegido y luego destierralos.",
+  },
 };

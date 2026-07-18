@@ -17,4 +17,8 @@ export const onYourFeetNowI18n: Record<Languages, I18nProperties> = {
     name: "In Piedi, Adesso!",
     text: "Prepara tutti i tuoi personaggi e infliggi 1 danno a ciascuno di loro. Non possono andare all'avventura per il resto di questo turno.",
   },
+  es: {
+    name: "¡En tus pies! ¡Ahora!",
+    text: "Prepara a todos tus personajes e inflige 1 daño a cada uno de ellos. No pueden realizar misiones durante el resto de este turno.",
+  },
 };

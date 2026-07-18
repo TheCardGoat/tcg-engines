@@ -45,4 +45,15 @@ export const plutoVigilantTravelerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Plutón",
+    version: "Viajero vigilante",
+    text: [
+      {
+        title: "CUIDADO CON EL PERRO",
+        description:
+          "Siempre que este personaje realice una misión, si jugaste con otro personaje este turno, el personaje contrario elegido obtiene -1 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -49,4 +49,16 @@ export const jebidiahFarnsworthCookieI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jebidiah Farnsworth",
+    version: "Galleta",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "Imprudente",
+      },
+    ],
+  },
 };

@@ -55,4 +55,17 @@ export const demonaBetrayerOfTheClanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Demonio",
+    version: "Traidor del clan",
+    text: [
+      {
+        title: "Retador +2",
+      },
+      {
+        title: "PIEDRA DE DÍA",
+        description: "Si tienes 3 o más cartas en tu mano, este personaje no puede prepararse.",
+      },
+    ],
+  },
 };

@@ -35,4 +35,8 @@ export const intoTheUnknownEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hacia lo desconocido",
+    text: "Coloque el personaje ejercido elegido en el tintero de su jugador boca abajo y ejerza.",
+  },
 };

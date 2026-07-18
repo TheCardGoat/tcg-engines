@@ -21,4 +21,9 @@ export const zazuAdvisorToMufasaI18n: Record<Languages, I18nProperties> = {
     version: "Consigliere di Mufasa",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Zazú",
+    version: "Asesor de Mufasa",
+    text: "Evasivo",
+  },
 };

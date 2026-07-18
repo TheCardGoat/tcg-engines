@@ -38,6 +38,9 @@ export const eb02Buggy018: CharacterCard = {
             zone: "character",
             filters: [
               {
+                filter: "excludeSelf",
+              },
+              {
                 filter: "name",
                 value: "Buggy",
               },
@@ -57,6 +60,29 @@ export const eb02Buggy018: CharacterCard = {
             },
             keyword: "doubleAttack",
             duration: "thisTurn",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+              ],
+            },
           },
         ],
       },

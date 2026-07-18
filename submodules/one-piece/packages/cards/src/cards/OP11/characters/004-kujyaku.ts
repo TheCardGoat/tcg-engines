@@ -60,8 +60,13 @@ export const op11Kujyaku004: CharacterCard = {
             },
             revealFilters: [
               {
+                filter: "excludeName",
+                value: "Kujyaku",
+              },
+              {
                 filter: "trait",
                 value: "Navy",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

@@ -17,4 +17,8 @@ export const minnieMouseAlwaysClassyI18n: Record<Languages, I18nProperties> = {
     name: "Minni",
     version: "Sempre Elegante",
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Siempre con clase",
+  },
 };

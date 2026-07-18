@@ -61,6 +61,9 @@ export const eb01Cavendish012: CharacterCard = {
                 zone: "character",
                 filters: [
                   {
+                    filter: "excludeSelf",
+                  },
+                  {
                     filter: "name",
                     value: "Cavendish",
                   },
@@ -99,6 +102,9 @@ export const eb01Cavendish012: CharacterCard = {
                 player: "self",
                 zone: "character",
                 filters: [
+                  {
+                    filter: "excludeSelf",
+                  },
                   {
                     filter: "name",
                     value: "Cavendish",

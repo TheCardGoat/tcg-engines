@@ -45,4 +45,15 @@ export const chacaJuniorChipmunkI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Chaca",
+    version: "Ardilla joven",
+    text: [
+      {
+        title: "En connivencia",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje llamado Tipo en juego, el personaje contrario elegido gana Temerario durante su próximo turno. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

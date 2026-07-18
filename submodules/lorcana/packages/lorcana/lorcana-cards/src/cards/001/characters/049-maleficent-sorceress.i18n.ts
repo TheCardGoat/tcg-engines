@@ -41,4 +41,14 @@ export const maleficentSorceressI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pernicioso",
+    version: "Hechicera",
+    text: [
+      {
+        title: "¡Lanza mi hechizo!",
+        description: "Cuando juegas con este personaje, puedes robar una carta.",
+      },
+    ],
+  },
 };

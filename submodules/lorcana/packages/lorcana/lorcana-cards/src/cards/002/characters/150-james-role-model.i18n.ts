@@ -45,4 +45,15 @@ export const jamesRoleModelI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jaime",
+    version: "Modelo a seguir",
+    text: [
+      {
+        title: "NUNCA, NUNCA PIERDAS DE VISTA",
+        description:
+          "Cuando este personaje sea desterrado, puedes poner esta carta en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

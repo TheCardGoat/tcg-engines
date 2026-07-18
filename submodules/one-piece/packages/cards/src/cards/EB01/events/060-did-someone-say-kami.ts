@@ -23,7 +23,7 @@ export const eb01DidSomeoneSayKami060: EventCard = {
   cost: 4,
   traits: ["Sky Island"],
   effect:
-    "[Main] Play up to 1 [Enel] with a cost of 7 or less life from your hand or trash. Then, trash cards from the top of your Life cards until you have 1 Life card. [Trigger] Draw 2 cards and trash 1 card from your hand.",
+    "[Main] Play up to 1 [Enel] with a cost of 7 or less from your hand or trash. Then, trash cards from the top of your Life cards until you have 1 Life card. [Trigger] Draw 2 cards and trash 1 card from your hand.",
   effects: {
     effects: [
       {
@@ -41,10 +41,24 @@ export const eb01DidSomeoneSayKami060: EventCard = {
             },
             filters: [
               {
+                filter: "cost",
+                comparison: "lte",
+                value: 7,
+              },
+              {
                 filter: "name",
                 value: "Enel",
               },
             ],
+          },
+          {
+            action: "removeFromLife",
+            player: "self",
+            count: {
+              untilRemaining: 1,
+            },
+            destination: "trash",
+            position: "top",
           },
         ],
       },

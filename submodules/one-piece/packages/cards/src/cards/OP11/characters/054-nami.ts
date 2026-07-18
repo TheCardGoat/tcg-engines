@@ -68,6 +68,7 @@ export const op11Nami054: CharacterCard = {
               },
             },
             position: "any",
+            order: "any",
           },
         ],
       },

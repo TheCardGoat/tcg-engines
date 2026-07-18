@@ -63,4 +63,19 @@ export const goliathClanLeaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Goliat",
+    version: "Líder del clan",
+    text: [
+      {
+        title: "Anochecer hasta el amanecer",
+        description:
+          "Al final del turno de cada jugador, si tiene más de 2 cartas en la mano, elige y descarta cartas hasta tener 2. Si tiene menos de 2 cartas en la mano, roba hasta tener 2.",
+      },
+      {
+        title: "PIEDRA DE DÍA",
+        description: "Si tienes 3 o más cartas en tu mano, este personaje no puede prepararse.",
+      },
+    ],
+  },
 };

@@ -21,9 +21,9 @@ export const op14eb04Oars101: CharacterCard = {
   rarity: "C",
   setId: "OP14EB04",
   cost: 8,
-  power: 1000,
+  power: 10000,
   counter: 1000,
-  traits: ["Giant Thriller Bark Pirates"],
+  traits: ["Giant", "Thriller Bark Pirates"],
   attribute: "strike",
   i18n: op14eb04Oars101I18n,
 };

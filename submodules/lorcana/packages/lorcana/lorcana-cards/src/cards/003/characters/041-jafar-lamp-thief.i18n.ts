@@ -45,4 +45,15 @@ export const jafarLampThiefI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jafar",
+    version: "Ladrón de lámparas",
+    text: [
+      {
+        title: "YO SOY TU MAESTRO AHORA",
+        description:
+          "Cuando juegues con este personaje, mira las 2 cartas superiores de tu mazo. Coloque uno en la parte superior de su plataforma y el otro en la parte inferior.",
+      },
+    ],
+  },
 };

@@ -54,6 +54,7 @@ export const op11Smoker005: CharacterCard = {
               {
                 filter: "attribute",
                 value: "special",
+                negate: true,
               },
             ],
           },

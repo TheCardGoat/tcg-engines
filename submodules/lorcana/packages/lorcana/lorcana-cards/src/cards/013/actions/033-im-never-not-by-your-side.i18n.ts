@@ -53,4 +53,17 @@ export const imNeverNotByYourSideI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nunca estoy a tu lado",
+    text: [
+      {
+        title:
+          "<Cantad juntos> 5 (Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 5 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title:
+          "Elimina hasta 4 daños en total de cualquier número de tus personajes. Obtienes 1 conocimiento por cada daño eliminado de esta manera.",
+      },
+    ],
+  },
 };

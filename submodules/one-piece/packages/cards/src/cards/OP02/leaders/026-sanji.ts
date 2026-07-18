@@ -45,6 +45,24 @@ export const op02Sanji026: LeaderCard = {
     effects: [
       {
         trigger: "whenYouPlayCharacter",
+        eventFilter: {
+          player: "self",
+          fromZone: "hand",
+          filters: [
+            {
+              filter: "noBaseEffect",
+            },
+          ],
+        },
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "character",
+            comparison: "lte",
+            value: 3,
+          },
+        ],
         actions: [
           {
             action: "setActive",

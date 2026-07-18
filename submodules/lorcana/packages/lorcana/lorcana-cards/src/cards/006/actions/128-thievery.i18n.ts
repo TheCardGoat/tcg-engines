@@ -17,4 +17,8 @@ export const thieveryI18n: Record<Languages, I18nProperties> = {
     name: "Furto",
     text: "Un avversario a tua scelta perde 1 leggenda. Ottieni 1 leggenda.",
   },
+  es: {
+    name: "Robo",
+    text: "El oponente elegido pierde 1 conocimiento. Gana 1 conocimiento.",
+  },
 };

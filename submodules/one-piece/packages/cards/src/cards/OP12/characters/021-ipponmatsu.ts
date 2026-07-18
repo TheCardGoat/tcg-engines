@@ -29,6 +29,44 @@ export const op12Ipponmatsu021: CharacterCard = {
     "If your Leader has the (Slash) attribute and you have 6 or more rested DON!! cards, this Character cannot be rested by your opponent's effects.[Blocker]",
   effects: {
     keywords: ["blocker"],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "compound",
+            operator: "and",
+            conditions: [
+              {
+                condition: "leaderAttribute",
+                attribute: "slash",
+              },
+              {
+                condition: "donFieldCount",
+                player: "self",
+                comparison: "gte",
+                value: 6,
+                state: "rested",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeRested",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            byPlayer: "opponent",
+          },
+        ],
+      },
+    ],
   },
   i18n: op12Ipponmatsu021I18n,
 };

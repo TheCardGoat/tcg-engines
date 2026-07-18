@@ -60,4 +60,18 @@ export const kronkHeadOfSecurityI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kronk",
+    version: "Jefe de seguridad",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "¿ESTÁS EN LA LISTA?",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, puedes jugar con un personaje con coste 5 o menos de forma gratuita.",
+      },
+    ],
+  },
 };

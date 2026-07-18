@@ -172,7 +172,6 @@ export {
   hasKeywordGrant,
   hasContinuousRestriction,
   hasPreventDamage,
-  hasPreventDamageToZone,
   hasForceAttackTarget,
   hasGrantAttackTargetOption,
   getContinuousEffects,

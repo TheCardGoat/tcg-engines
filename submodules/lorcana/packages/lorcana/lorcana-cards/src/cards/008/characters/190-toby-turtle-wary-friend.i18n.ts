@@ -42,4 +42,14 @@ export const tobyTurtleWaryFriendI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tortuga toby",
+    version: "Amigo cauteloso",
+    text: [
+      {
+        title: "CÁSCARA DURA",
+        description: "Mientras este personaje está ejercido, gana Resistencia +1.",
+      },
+    ],
+  },
 };

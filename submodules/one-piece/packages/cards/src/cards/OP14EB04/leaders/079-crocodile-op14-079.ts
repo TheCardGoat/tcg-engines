@@ -30,7 +30,7 @@ export const op14eb04CrocodileOp14079079: LeaderCard = {
   setId: "OP14EB04",
   power: 5000,
   life: 5,
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   attribute: "special",
   artVariants: [
     {
@@ -42,9 +42,38 @@ export const op14eb04CrocodileOp14079079: LeaderCard = {
   effect:
     "All of your opponent's Characters cannot be removed from the field by your effects.\n[Activate: Main] [Once Per Turn] You may K.O. 1 of your Characters with a type including \"Baroque Works\": Give up to 1 of your opponent's Characters -10 cost during this turn. Then, you may trash 2 cards from the top of your deck.",
   effects: {
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "cannotBeRemoved",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: "all" },
+            },
+            duration: "permanent",
+            bySource: "ownEffect",
+          },
+        ],
+      },
+    ],
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "koCharacter",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Baroque Works",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "modifyCost",
@@ -60,9 +89,17 @@ export const op14eb04CrocodileOp14079079: LeaderCard = {
             duration: "thisTurn",
           },
           {
-            action: "trashFromDeck",
-            player: "self",
-            amount: 2,
+            action: "choice",
+            options: [
+              [
+                {
+                  action: "trashFromDeck",
+                  player: "self",
+                  amount: 2,
+                },
+              ],
+              [],
+            ],
           },
         ],
         optional: true,

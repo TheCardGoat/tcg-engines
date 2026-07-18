@@ -21,4 +21,9 @@ export const gastonArrogantHunterP1PromoI18n: Record<Languages, I18nProperties> 
     version: "Arrogant Hunter",
     text: "<Reckless> (This character can't quest and must challenge each turn if able.)",
   },
+  es: {
+    name: "Gastón",
+    version: "Cazador arrogante",
+    text: "Imprudente",
+  },
 };

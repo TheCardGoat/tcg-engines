@@ -45,4 +45,15 @@ export const merlinShapeshifterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Esmerejón",
+    version: "Cambiaformas",
+    text: [
+      {
+        title: "BATALLA DE INGENIO",
+        description:
+          "Siempre que uno de tus otros personajes regrese a tu mano después del juego, este personaje obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

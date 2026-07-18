@@ -17,4 +17,8 @@ export const launchI18n: Record<Languages, I18nProperties> = {
     name: "Launch",
     text: "Banish chosen item of yours to deal 5 damage to chosen character.",
   },
+  es: {
+    name: "Lanzamiento",
+    text: "Destierra el objeto tuyo elegido para causar 5 daños al personaje elegido.",
+  },
 };

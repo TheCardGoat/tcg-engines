@@ -59,4 +59,18 @@ export const theSorcerersTowerWondrousWorkspaceI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "La torre del hechicero",
+    version: "Maravilloso espacio de trabajo",
+    text: [
+      {
+        title: "ARMARIO DE ESCOBAS",
+        description: "Tus personajes llamados Magic Broom pueden moverse aquí de forma gratuita.",
+      },
+      {
+        title: "PODER MÁGICO",
+        description: "Los personajes obtienen +1 {L} mientras están aquí.",
+      },
+    ],
+  },
 };

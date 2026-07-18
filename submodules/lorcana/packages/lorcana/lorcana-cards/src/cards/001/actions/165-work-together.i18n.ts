@@ -17,4 +17,8 @@ export const workTogetherI18n: Record<Languages, I18nProperties> = {
     name: "Work Together",
     text: "Chosen character gains <Support> this turn. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
   },
+  es: {
+    name: "Trabajar juntos",
+    text: "El personaje elegido gana Apoyo este turno. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+  },
 };

@@ -71,6 +71,7 @@ export const eb02Sengoku044: CharacterCard = {
               {
                 filter: "trait",
                 value: "Navy",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

@@ -44,6 +44,17 @@ export const op13Sabo004: LeaderCard = {
   effects: {
     permanentEffects: [
       {
+        conditions: [{ condition: "lifeCount", player: "self", comparison: "gte", value: 4 }],
+        actions: [
+          {
+            action: "modifyPower",
+            target: { player: "self", zones: ["leader"], count: { amount: "all" } },
+            value: 1000,
+            duration: "permanent",
+          },
+        ],
+      },
+      {
         conditions: [
           {
             condition: "donAttached",

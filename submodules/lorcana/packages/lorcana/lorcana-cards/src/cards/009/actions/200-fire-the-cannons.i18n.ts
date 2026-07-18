@@ -17,4 +17,8 @@ export const fireTheCannonsI18n: Record<Languages, I18nProperties> = {
     name: "Fire the Cannons!",
     text: "Deal 2 damage to chosen character.",
   },
+  es: {
+    name: "¡Disparen los cañones!",
+    text: "Inflige 2 daños al personaje elegido.",
+  },
 };

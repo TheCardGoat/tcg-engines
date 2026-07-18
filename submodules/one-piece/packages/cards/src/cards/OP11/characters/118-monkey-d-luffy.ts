@@ -69,7 +69,7 @@ export const op11MonkeyDLuffy118: CharacterCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

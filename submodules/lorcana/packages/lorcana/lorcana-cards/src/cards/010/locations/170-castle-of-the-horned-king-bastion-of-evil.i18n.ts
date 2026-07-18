@@ -45,4 +45,15 @@ export const castleOfTheHornedKingBastionOfEvilI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Castillo del Rey Cornudo",
+    version: "Bastión del mal",
+    text: [
+      {
+        title: "EN LA OSCURIDAD",
+        description:
+          "Una vez durante tu turno, cada vez que un personaje realiza una misión mientras estás aquí, puedes preparar el objeto elegido.",
+      },
+    ],
+  },
 };

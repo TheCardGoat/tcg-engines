@@ -39,6 +39,7 @@ export const op12Karasu085: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Revolutionary Army",
+                match: "includes",
               },
               {
                 condition: "handCount",
@@ -54,6 +55,31 @@ export const op12Karasu085: CharacterCard = {
             action: "trashFromHand",
             player: "opponent",
             amount: 1,
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Revolutionary Army",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 3,
           },
         ],
       },

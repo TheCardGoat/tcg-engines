@@ -17,4 +17,8 @@ export const tritonsDecreeI18n: Record<Languages, I18nProperties> = {
     name: "Decreto di Tritone",
     text: "Ogni avversario sceglie uno dei suoi personaggi e gli infligge 2 danni.",
   },
+  es: {
+    name: "Decreto de Tritón",
+    text: "Cada oponente elige uno de sus personajes y le inflige 2 daños.",
+  },
 };

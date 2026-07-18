@@ -17,4 +17,8 @@ export const liShangImperialCaptainI18n: Record<Languages, I18nProperties> = {
     name: "Li Shang",
     version: "Capitano Imperiale",
   },
+  es: {
+    name: "Li Shang",
+    version: "Capitán Imperial",
+  },
 };

@@ -32,6 +32,7 @@ export const op04FlappingThread037: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Donquixote Pirates",
+            match: "includes",
           },
         ],
         actions: [

@@ -57,4 +57,18 @@ export const taranMagicallyArmedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Taran",
+    version: "Armado mágicamente",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "DEBILITAR EL CALDERO",
+        description:
+          "Cuando juegues con este personaje, coloca hasta 2 cartas del descarte del jugador elegido en la parte inferior de su mazo en cualquier orden.",
+      },
+    ],
+  },
 };

@@ -41,4 +41,14 @@ export const chemPurseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Monedero químico",
+    text: [
+      {
+        title: "AQUÍ ESTÁ LA MEJOR PARTE",
+        description:
+          "Siempre que juegas con un personaje, si usaste Shift para jugarlo, obtiene +4 {S} este turno.",
+      },
+    ],
+  },
 };

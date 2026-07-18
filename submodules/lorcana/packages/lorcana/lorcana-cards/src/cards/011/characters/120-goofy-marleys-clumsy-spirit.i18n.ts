@@ -45,4 +45,15 @@ export const goofyMarleysClumsySpiritI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "El espíritu torpe de Marley",
+    text: [
+      {
+        title: "PREPÁRATE",
+        description:
+          "Cuando juegas con este personaje, es posible que tengas listo el personaje elegido. Si lo haces, no podrán realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

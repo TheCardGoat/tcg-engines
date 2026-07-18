@@ -36,6 +36,9 @@ export const eb02Blueno047: CharacterCard = {
             cost: "trashFromHand",
             amount: 1,
           },
+          {
+            cost: "trashThisCard",
+          },
         ],
         actions: [
           {
@@ -52,6 +55,20 @@ export const eb02Blueno047: CharacterCard = {
               {
                 filter: "excludeName",
                 value: "Blueno",
+              },
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 5,
+              },
+              {
+                filter: "trait",
+                value: "CP",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
               },
             ],
           },

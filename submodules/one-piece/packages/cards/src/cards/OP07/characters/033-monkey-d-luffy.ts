@@ -27,5 +27,37 @@ export const op07MonkeyDLuffy033: CharacterCard = {
   attribute: "strike",
   effect:
     "If you have 3 or more Characters, your Characters with a cost of 3 or less other than [Monkey.D.Luffy] cannot be K.O.'d by your opponent's effects.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "character",
+            comparison: "gte",
+            value: 3,
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: "all" },
+              filters: [
+                { filter: "excludeName", value: "Monkey.D.Luffy" },
+                { filter: "cost", comparison: "lte", value: 3 },
+              ],
+            },
+            duration: "permanent",
+            restriction: "byEffect",
+            byPlayer: "opponent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op07MonkeyDLuffy033I18n,
 };

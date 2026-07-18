@@ -56,4 +56,17 @@ export const mickeyMouseMusketeerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Mosquetero",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "TODOS PARA UNO",
+        description: "Tus otros personajes de Mosquetero obtienen +1 {S}.",
+      },
+    ],
+  },
 };

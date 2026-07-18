@@ -25,6 +25,5 @@ export const op04Kuro023: CharacterCard = {
   counter: 1000,
   traits: ["East Blue Black Cat Pirates"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op04Kuro023I18n,
 };

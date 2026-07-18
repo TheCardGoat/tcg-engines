@@ -17,4 +17,8 @@ export const owlLogicalLecturerI18n: Record<Languages, I18nProperties> = {
     name: "Owl",
     version: "Logical Lecturer",
   },
+  es: {
+    name: "Búho",
+    version: "Profesor de lógica",
+  },
 };

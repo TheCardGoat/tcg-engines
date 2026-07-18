@@ -44,4 +44,14 @@ export const casaMadrigalCasitaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Casa Madrigal",
+    version: "Casita",
+    text: [
+      {
+        title: "NUESTRA CASA",
+        description: "Al comienzo de tu turno, si tienes un personaje aquí, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

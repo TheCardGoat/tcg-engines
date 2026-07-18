@@ -28,6 +28,7 @@ export const op08BiscuitWarrior072: CharacterCard = {
   effect:
     "Under the rules of this game, you may have any number of this card in your deck. [Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
   effects: {
+    deckBuildingRules: [{ rule: "unlimitedCopies" }],
     keywords: ["blocker"],
   },
   i18n: op08BiscuitWarrior072I18n,

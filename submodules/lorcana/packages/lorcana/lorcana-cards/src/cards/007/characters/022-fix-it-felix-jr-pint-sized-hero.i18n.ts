@@ -45,4 +45,15 @@ export const fixitFelixJrPintsizedHeroI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Repararlo Félix, Jr.",
+    version: "Héroe del tamaño de una pinta",
+    text: [
+      {
+        title: "PONNOS A TRABAJAR",
+        description:
+          "Siempre que devuelvas una carta de personaje de Corredor de tu descarte a tu mano, podrás preparar el personaje de Corredor elegido. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

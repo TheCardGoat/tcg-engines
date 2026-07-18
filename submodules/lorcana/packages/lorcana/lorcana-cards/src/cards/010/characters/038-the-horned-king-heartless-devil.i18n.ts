@@ -17,4 +17,8 @@ export const theHornedKingHeartlessDevilI18n: Record<Languages, I18nProperties> 
     name: "Re Cornelius",
     version: "Demonio Spietato",
   },
+  es: {
+    name: "El rey cornudo",
+    version: "Diablo sin corazón",
+  },
 };

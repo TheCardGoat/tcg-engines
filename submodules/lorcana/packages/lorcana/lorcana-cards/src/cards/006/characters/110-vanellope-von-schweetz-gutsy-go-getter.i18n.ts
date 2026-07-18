@@ -45,4 +45,15 @@ export const vanellopeVonSchweetzGutsyGogetterI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Vanellope von Schweetz",
+    version: "Ambiciosa y valiente",
+    text: [
+      {
+        title: "TAN LISTO COMO NUNCA LO ESTARÉ",
+        description:
+          "Al comienzo de tu turno, si este personaje está en una ubicación, roba una carta y gana 1 conocimiento.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const wakeUpAliceI18n: Record<Languages, I18nProperties> = {
     name: "Alice, Svegliati!",
     text: "Fai tornare in mano al suo giocatore un personaggio danneggiato a tua scelta.",
   },
+  es: {
+    name: "¡Despierta, Alicia!",
+    text: "Devuelve el personaje dañado elegido a la mano de su jugador.",
+  },
 };

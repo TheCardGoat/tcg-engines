@@ -43,4 +43,14 @@ export const dalmatianPuppyTailWaggerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cachorro dálmata",
+    version: "Meneo de cola",
+    text: [
+      {
+        title: "¿DE DÓNDE VIENEN TODOS?",
+        description: "Puedes tener hasta 99 copias de Dalmatian Puppy – Tail Wagger en tu mazo.",
+      },
+    ],
+  },
 };

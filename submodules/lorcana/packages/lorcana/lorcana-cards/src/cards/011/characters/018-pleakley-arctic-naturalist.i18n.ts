@@ -45,4 +45,15 @@ export const pleakleyArcticNaturalistI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pleakley",
+    version: "Naturalista ártico",
+    text: [
+      {
+        title: "SEÑALES DE VIDA",
+        description:
+          "Cuando juegas con este personaje, si tienes otro personaje Alien en juego, roba una carta.",
+      },
+    ],
+  },
 };

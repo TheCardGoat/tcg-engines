@@ -45,4 +45,15 @@ export const ladyTremaineOverbearingMatriarchI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Señora tremaine",
+    version: "Matriarca autoritaria",
+    text: [
+      {
+        title: "NO PARA TI",
+        description:
+          "Cuando juegas con este personaje, cada oponente con más conocimientos que tú pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

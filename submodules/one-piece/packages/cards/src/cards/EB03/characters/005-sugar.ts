@@ -57,6 +57,7 @@ export const eb03Sugar005: CharacterCard = {
               {
                 filter: "trait",
                 value: "Donquixote Pirates",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

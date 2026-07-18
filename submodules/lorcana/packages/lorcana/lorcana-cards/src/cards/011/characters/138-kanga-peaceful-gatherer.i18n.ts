@@ -57,4 +57,17 @@ export const kangaPeacefulGathererI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kanga",
+    version: "Recolector pacífico",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "AYUDA ADICIONAL",
+        description: "Mientras haya una carta debajo de este personaje, obtiene +1 {L}.",
+      },
+    ],
+  },
 };

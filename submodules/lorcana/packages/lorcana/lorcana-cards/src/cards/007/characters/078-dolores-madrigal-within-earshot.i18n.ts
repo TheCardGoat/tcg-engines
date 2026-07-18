@@ -45,4 +45,15 @@ export const doloresMadrigalWithinEarshotI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Dolores Madrigal",
+    version: "Al alcance del oído",
+    text: [
+      {
+        title: "te escucho",
+        description:
+          "Cada vez que uno de tus personajes canta una canción, el oponente elegido revela su mano.",
+      },
+    ],
+  },
 };

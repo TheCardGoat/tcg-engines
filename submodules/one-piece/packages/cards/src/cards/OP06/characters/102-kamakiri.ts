@@ -31,6 +31,16 @@ export const op06Kamakiri102: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnCharacterToDeck",
+            amount: 1,
+            position: "bottom",
+            player: "both",
+            zones: ["stage"],
+            filters: [{ filter: "cost", comparison: "eq", value: 1 }],
+          },
+        ],
         actions: [
           {
             action: "ko",

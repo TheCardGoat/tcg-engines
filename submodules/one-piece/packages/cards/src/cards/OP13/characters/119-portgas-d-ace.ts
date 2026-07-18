@@ -117,6 +117,35 @@ export const op13PortgasDAce119: CharacterCard = {
                 },
               ],
             },
+            thenActions: [
+              {
+                action: "play",
+                source: { player: "opponent", zone: "hand" },
+                count: { amount: 1, upTo: true },
+                filters: [
+                  { filter: "cost", comparison: "lte", value: 4 },
+                  { filter: "cardCategory", value: "character" },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [{ condition: "lifeCount", player: "self", comparison: "lte", value: 3 }],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "permanent",
           },
         ],
       },

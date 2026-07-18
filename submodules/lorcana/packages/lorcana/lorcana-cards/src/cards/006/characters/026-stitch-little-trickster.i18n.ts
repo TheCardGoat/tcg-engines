@@ -41,4 +41,14 @@ export const stitchLittleTricksterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Puntada",
+    version: "Pequeño embaucador",
+    text: [
+      {
+        title: "¿NECESITAS UNA MANO? 1",
+        description: "{I}: este personaje obtiene +1 {S} este turno.",
+      },
+    ],
+  },
 };

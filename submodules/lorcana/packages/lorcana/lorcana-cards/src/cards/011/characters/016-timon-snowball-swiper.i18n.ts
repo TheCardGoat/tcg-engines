@@ -45,4 +45,15 @@ export const timonSnowballSwiperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Timon",
+    version: "Limpiador de bolas de nieve",
+    text: [
+      {
+        title: "DEshazte de eso",
+        description:
+          "Cuando juegas con este personaje, el oponente elegido revela su mano y descarta una carta que no sea de personaje de tu elección.",
+      },
+    ],
+  },
 };

@@ -42,6 +42,56 @@ export const eb02WithoutYourHelpICanTBecomeTheKingOfThePirates059: EventCard = {
             value: 1000,
             duration: "thisBattle",
           },
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 5,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+              {
+                filter: "anyOf",
+                groups: [
+                  [
+                    {
+                      filter: "color",
+                      value: "yellow",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Straw Hat Crew",
+                      match: "includes",
+                    },
+                  ],
+                  [
+                    {
+                      filter: "name",
+                      value: "Sanji",
+                    },
+                  ],
+                ],
+              },
+            ],
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 1,
+            },
+          },
         ],
       },
     ],

@@ -26,7 +26,7 @@ export const op09TonyTonyChopper029: CharacterCard = {
   traits: ["Animal Straw Hat Crew ODYSSEY"],
   attribute: "strike",
   effect:
-    '[End of Your Turn] Set up to 1 of your "ODYSSEY" type Characters with a cost of 4 or less as active.',
+    "[End of Your Turn] Set up to 1 of your {ODYSSEY} type Characters with a cost of 4 or less as active.",
   effects: {
     effects: [
       {
@@ -45,6 +45,7 @@ export const op09TonyTonyChopper029: CharacterCard = {
                 {
                   filter: "trait",
                   value: "ODYSSEY",
+                  match: "includes",
                 },
                 {
                   filter: "cost",

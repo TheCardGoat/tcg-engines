@@ -41,4 +41,14 @@ export const mickeyMouseTrumpeterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Trompetista",
+    text: [
+      {
+        title: "SUENA LA LLAMADA",
+        description: "{E}, 2 {I}: juega con un personaje gratis.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const flixMadrigalFunlovingFamilyManI18n: Record<Languages, I18nPropertie
     name: "Félix Madrigal",
     version: "Parente Mattacchione",
   },
+  es: {
+    name: "Félix Madrigal",
+    version: "Hombre de familia amante de la diversión",
+  },
 };

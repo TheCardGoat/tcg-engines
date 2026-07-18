@@ -59,4 +59,18 @@ export const simbaSonOfMufasaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Simba",
+    version: "Hijo de mufasa",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "RUGIDO TEMIBLE",
+        description:
+          "Cuando juegas con este personaje, puedes desterrar el elemento o ubicación elegidos.",
+      },
+    ],
+  },
 };

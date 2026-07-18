@@ -53,4 +53,18 @@ export const beyondTheHorizonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Más allá del horizonte",
+    text: [
+      {
+        title: "Cantar juntos 7",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 7 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title:
+          "Elige cualquier número de jugadores. Descartan sus manos y roban 3 cartas cada uno.",
+      },
+    ],
+  },
 };

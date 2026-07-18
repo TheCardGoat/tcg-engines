@@ -45,4 +45,15 @@ export const panicUnderworldImpI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pánico",
+    version: "Diablillo del inframundo",
+    text: [
+      {
+        title: "PUEDO MANEJARLO",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene +2 {S} este turno. Si el personaje elegido se llama Pain, obtiene +4 {S}.",
+      },
+    ],
+  },
 };

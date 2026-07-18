@@ -21,4 +21,9 @@ export const liShangSolemnSonI18n: Record<Languages, I18nProperties> = {
     version: "Figlio Solenne",
     text: "<Sfidante> +2",
   },
+  es: {
+    name: "Li Shang",
+    version: "Hijo solemne",
+    text: "Retador +2",
+  },
 };

@@ -45,4 +45,15 @@ export const mickeyMouseFriendlyFaceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Cara amigable",
+    text: [
+      {
+        title: "¡ME ALEGRO DE QUE ESTÉS AQUÍ!",
+        description:
+          "Cada vez que este personaje realiza una misión, pagas 3 {I} menos por el siguiente personaje que juegues en este turno.",
+      },
+    ],
+  },
 };

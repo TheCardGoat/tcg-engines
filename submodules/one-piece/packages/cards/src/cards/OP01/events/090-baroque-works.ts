@@ -48,6 +48,7 @@ export const op01BaroqueWorks090: EventCard = {
               {
                 filter: "trait",
                 value: "Baroque Works",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

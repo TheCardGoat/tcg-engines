@@ -45,4 +45,15 @@ export const woodyTownSheriffI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Leñoso",
+    version: "Sheriff de la ciudad",
+    text: [
+      {
+        title: "Avanzar",
+        description:
+          "Cuando juegas con este personaje, hasta el comienzo de tu siguiente turno, el personaje contrario elegido no puede desafiar y debe realizar misiones si puede.",
+      },
+    ],
+  },
 };

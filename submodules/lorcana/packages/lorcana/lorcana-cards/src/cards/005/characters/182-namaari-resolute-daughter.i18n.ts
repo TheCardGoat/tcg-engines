@@ -57,4 +57,17 @@ export const namaariResoluteDaughterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Namari",
+    version: "Hija resuelta",
+    text: [
+      {
+        title:
+          "NO TENGO OTRA OPCIÓN Por cada personaje contrario desterrado en un desafío este turno, pagas 2 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "Resistir +3",
+      },
+    ],
+  },
 };

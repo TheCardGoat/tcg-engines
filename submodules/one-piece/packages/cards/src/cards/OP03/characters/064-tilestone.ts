@@ -35,6 +35,7 @@ export const op03Tilestone064: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Galley-La Company",
+            match: "includes",
           },
         ],
         actions: [

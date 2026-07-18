@@ -35,4 +35,8 @@ export const mightSolveAMysteryI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Podría resolver un misterio",
+    text: "Mira las 4 primeras cartas de tu mazo. Puedes revelar hasta 1 carta de personaje y hasta 1 carta de objeto y ponerlas en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+  },
 };

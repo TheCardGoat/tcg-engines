@@ -39,14 +39,24 @@ export const op10Usopp081: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
+                match: "includes",
               },
               {
-                filter: "cardCategory",
-                value: "leader",
-              },
-              {
-                filter: "cardCategory",
-                value: "stage",
+                filter: "anyOf",
+                groups: [
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "leader",
+                    },
+                  ],
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "stage",
+                    },
+                  ],
+                ],
               },
             ],
           },

@@ -45,4 +45,15 @@ export const aliceTeaAlchemistI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Alicia",
+    version: "Alquimista del té",
+    text: [
+      {
+        title: "MÁS CURIOSO Y MÁS CURIOSO",
+        description:
+          "{E}: ejerce el personaje contrario elegido y todos los demás personajes contrarios con el mismo nombre.",
+      },
+    ],
+  },
 };

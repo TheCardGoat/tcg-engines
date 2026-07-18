@@ -45,4 +45,15 @@ export const bernardOverpreparedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bernardo",
+    version: "Sobre preparado",
+    text: [
+      {
+        title: "BAJA ALLÍ E INVESTIGA",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje aliado en juego, puedes robar una carta.",
+      },
+    ],
+  },
 };

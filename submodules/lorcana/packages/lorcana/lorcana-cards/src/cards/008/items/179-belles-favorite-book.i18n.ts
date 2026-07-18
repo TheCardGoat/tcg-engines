@@ -41,4 +41,14 @@ export const bellesFavoriteBookI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El libro favorito de Bella",
+    text: [
+      {
+        title: "CAPÍTULO TRES",
+        description:
+          "{E}, destierra uno de tus otros objetos: coloca la carta superior de tu mazo en tu tintero boca abajo y ejercítala.",
+      },
+    ],
+  },
 };

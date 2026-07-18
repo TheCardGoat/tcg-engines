@@ -45,4 +45,15 @@ export const sarabiProtectingThePrideI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sarabi",
+    version: "Protegiendo el orgullo",
+    text: [
+      {
+        title: "gruñido temible",
+        description:
+          "{E}: el personaje contrario elegido obtiene -4 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

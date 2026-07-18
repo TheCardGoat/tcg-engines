@@ -2,7 +2,7 @@ import { describe, expect, it } from "bun:test";
 import { render } from "svelte/server";
 
 import MatchmakingQueueCard from "./MatchmakingQueueCard.test-host.svelte";
-import type { RankJourneyView } from "./matchmaking-lobby.constants";
+import { PLACEMENT_THRESHOLD, type RankJourneyView } from "./matchmaking-lobby.constants";
 
 const placementJourney = (gamesPlayed: number): RankJourneyView => ({
   bracket: "placement",
@@ -16,11 +16,11 @@ const placementJourney = (gamesPlayed: number): RankJourneyView => ({
   nextWinsRequired: null,
   winsToNext: null,
   mmrToMaster: null,
-  progressLabel: `${gamesPlayed}/20 placement games`,
+  progressLabel: `${gamesPlayed}/${PLACEMENT_THRESHOLD} placement games`,
   progressValue: gamesPlayed,
-  progressMax: 20,
-  progressPercent: (gamesPlayed / 20) * 100,
-  primaryGoal: `${20 - gamesPlayed} games to reveal MMR`,
+  progressMax: PLACEMENT_THRESHOLD,
+  progressPercent: (gamesPlayed / PLACEMENT_THRESHOLD) * 100,
+  primaryGoal: `${PLACEMENT_THRESHOLD - gamesPlayed} games to reveal MMR`,
 });
 
 const silverJourney: RankJourneyView = {
@@ -104,8 +104,8 @@ const baseProps = {
   onSkipCountdown: () => {},
   colorPreferenceCount: 0,
   modeStats: [
-    { mode: "1" as const, inQueue: 12, liveMatches: 4 },
-    { mode: "3" as const, inQueue: 5, liveMatches: 2 },
+    { mode: "1" as const, available: true, inQueue: 12, liveMatches: 4 },
+    { mode: "3" as const, available: true, inQueue: 5, liveMatches: 2 },
   ],
   matchTypeStats: [
     { matchType: "ranked" as const, inQueue: 0, liveMatches: 0 },
@@ -168,8 +168,8 @@ describe("MatchmakingQueueCard", () => {
     });
 
     expect(body).toContain("Placement");
-    expect(body).toContain("0/20 placement games");
-    expect(body).toContain("20 games to reveal MMR");
+    expect(body).toContain("0/10 placement games");
+    expect(body).toContain("10 games to reveal MMR");
   });
 
   it("does not render placement indicator on casual queues (placementGamesPlayed null)", () => {
@@ -184,7 +184,7 @@ describe("MatchmakingQueueCard", () => {
     expect(body).not.toContain("placement games");
   });
 
-  it("renders N/20 placement progress when player has some ranked games but no mmr yet", () => {
+  it("renders N/10 placement progress when player has some ranked games but no mmr yet", () => {
     const { body } = render(MatchmakingQueueCard, {
       props: {
         ...baseProps,
@@ -201,8 +201,8 @@ describe("MatchmakingQueueCard", () => {
     });
 
     expect(body).toContain("Placement");
-    expect(body).toContain("7/20 placement games");
-    expect(body).toContain("13 games to reveal MMR");
+    expect(body).toContain("7/10 placement games");
+    expect(body).toContain("3 games to reveal MMR");
   });
 
   it("renders bracket progress and MMR once placement is complete", () => {
@@ -248,13 +248,13 @@ describe("MatchmakingQueueCard", () => {
     expect(body).toContain(">Ranked<");
   });
 
-  it("hides the BO1/BO3 selector entirely when ranked is selected", () => {
+  it("shows both BO1 and BO3 tabs when ranked is selected", () => {
     const { body } = render(MatchmakingQueueCard, {
       props: { ...baseProps, selectedMatchType: "ranked" as const },
     });
 
-    expect(body).not.toContain(">BO1<");
-    expect(body).not.toContain(">BO3<");
+    expect(body).toContain(">BO1<");
+    expect(body).toContain(">BO3<");
   });
 
   it("shows both BO1 and BO3 tabs in casual", () => {
@@ -264,6 +264,22 @@ describe("MatchmakingQueueCard", () => {
 
     expect(body).toContain(">BO1<");
     expect(body).toContain(">BO3<");
+  });
+
+  it("shows the selected queue's season schedule", () => {
+    const { body } = render(MatchmakingQueueCard, {
+      props: {
+        ...baseProps,
+        season: {
+          name: "Attack of the Vine - Ranked",
+          startsAt: "2026-07-12T00:00:00.000Z",
+          endsAt: "2026-10-03T00:00:00.000Z",
+        },
+      },
+    });
+
+    expect(body).toContain("Attack of the Vine - Ranked");
+    expect(body).toContain("Oct 2, 2026");
   });
 
   it("renders elapsed and remaining queue timers with the leave-queue CTA while queued", () => {

@@ -61,4 +61,19 @@ export const namaariSinglemindedRivalI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Namari",
+    version: "Rival decidido",
+    text: [
+      {
+        title: "VENTAJA ESTRATÉGICA",
+        description:
+          "Cuando juegas con este personaje y al comienzo de tu turno, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+      {
+        title: "ENFOQUE EXTREMO",
+        description: "Este personaje obtiene +1 {S} por cada carta de tu descarte.",
+      },
+    ],
+  },
 };

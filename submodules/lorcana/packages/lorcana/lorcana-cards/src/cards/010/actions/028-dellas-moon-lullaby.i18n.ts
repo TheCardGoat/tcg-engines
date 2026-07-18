@@ -35,4 +35,8 @@ export const dellasMoonLullabyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Canción de cuna de la luna de Della",
+    text: "El personaje contrario elegido obtiene -2 {S} hasta el comienzo de tu siguiente turno. Saca una carta.",
+  },
 };

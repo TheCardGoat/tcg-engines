@@ -73,4 +73,22 @@ export const diabloDevotedHeraldI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Diablos",
+    version: "Heraldo devoto",
+    text: [
+      {
+        title:
+          "Turno: descarta una carta de acción (puedes descartar una carta de acción para jugarla encima de uno de tus personajes llamado Diablo).",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "CÍRCULO A LO LARGO Y ANCHO",
+        description:
+          "Durante el turno de cada oponente, siempre que robe una carta mientras este personaje está ejercido, tú puedes robar una carta.",
+      },
+    ],
+  },
 };

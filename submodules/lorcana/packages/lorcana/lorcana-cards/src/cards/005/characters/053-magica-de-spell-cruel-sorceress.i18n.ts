@@ -45,4 +45,15 @@ export const magicaDeSpellCruelSorceressI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Magia De Hechizo",
+    version: "Hechicera cruel",
+    text: [
+      {
+        title: "JUGAR CON PODER",
+        description:
+          "Durante los turnos de los oponentes, si un efecto te haría descartar una o más cartas de tu mano, no descartas.",
+      },
+    ],
+  },
 };

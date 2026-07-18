@@ -3,7 +3,7 @@ import type { MatchmakingContext } from "../api/player-context-api.js";
 export type LeaderboardTab = "competitive" | "casual";
 
 export interface LeaderboardFormatOption {
-  id: "infinity" | "core-constructed";
+  id: string;
   labelKey: string;
 }
 
@@ -32,11 +32,27 @@ export interface CasualLeaderboardEntry {
   currentStreak: number;
 }
 
+export interface LeaderboardSeasonOption {
+  seasonId: string;
+  name: string;
+  slug: string;
+  startsAt: string;
+  endsAt: string | null;
+  isCurrent: boolean;
+}
+
 export interface CompetitiveLeaderboardResponse {
   type: "competitive";
   formatId: string;
+  mode: LeaderboardQueueMode;
   region: string | null;
   seasonId: string | null;
+  availableSeasons: LeaderboardSeasonOption[];
+  availablePartitions: Array<{
+    seasonId: string;
+    formatId: string;
+    mode: LeaderboardQueueMode;
+  }>;
   entries: CompetitiveLeaderboardEntry[];
   total: number;
   currentUser: { rank: number; mmr: number } | null;
@@ -59,7 +75,10 @@ export interface LeaderboardFetchError {
 export interface LeaderboardPageData {
   tab: LeaderboardTab;
   formatId: LeaderboardFormatOption["id"];
+  queueMode: LeaderboardQueueMode;
   availableFormats: LeaderboardFormatOption[];
+  seasonId: string | null;
+  availableSeasons: LeaderboardSeasonOption[];
   region: string | null;
   month: string;
   competitive: CompetitiveLeaderboardResponse | null;
@@ -85,15 +104,17 @@ export interface LoadLeaderboardPageDataOptions {
 }
 
 export const LEADERBOARD_PAGE_SIZE = 50;
-export const RANKED_PLACEMENT_GAMES = 20;
+export const DEFAULT_LEADERBOARD_FORMAT_ID: LeaderboardFormatOption["id"] = "core-constructed";
+export type LeaderboardQueueMode = "1" | "3";
 
 export const LORCANA_LEADERBOARD_FORMATS: LeaderboardFormatOption[] = [
   { id: "infinity", labelKey: "sim.leaderboard.format.infinity" },
   { id: "core-constructed", labelKey: "sim.leaderboard.format.coreConstructed" },
 ];
 
-function isLeaderboardFormat(value: string | null): value is LeaderboardFormatOption["id"] {
-  return LORCANA_LEADERBOARD_FORMATS.some((format) => format.id === value);
+function normalizeLeaderboardFormat(value: string | null): string | null {
+  const normalized = value?.trim() ?? "";
+  return /^[a-z0-9][a-z0-9._-]{0,127}$/.test(normalized) ? normalized : null;
 }
 
 export function currentUtcMonth(date: Date): string {
@@ -116,6 +137,8 @@ export function competitiveLeaderboardUrl(
   apiOrigin: string,
   options: {
     formatId: string;
+    mode: LeaderboardQueueMode;
+    seasonId: string | null;
     region: string | null;
     gameProfileId: string | null;
   },
@@ -123,6 +146,8 @@ export function competitiveLeaderboardUrl(
   const params = new URLSearchParams();
   appendCommonParams(params, options);
   params.set("formatId", options.formatId);
+  params.set("mode", options.mode);
+  if (options.seasonId) params.set("seasonId", options.seasonId);
   return `${apiOrigin}/v1/leaderboards/lorcana/page/competitive?${params.toString()}`;
 }
 
@@ -154,10 +179,10 @@ export async function loadLeaderboardPageData({
   const requestedTab = url.searchParams.get("tab");
   let tab: LeaderboardTab = requestedTab === "casual" ? "casual" : "competitive";
   const region = url.searchParams.get("region") || null;
-  const requestedFormatId = url.searchParams.get("formatId");
-  let formatId: LeaderboardFormatOption["id"] = isLeaderboardFormat(requestedFormatId)
-    ? requestedFormatId
-    : "infinity";
+  const requestedFormatId = normalizeLeaderboardFormat(url.searchParams.get("formatId"));
+  const formatId = requestedFormatId ?? DEFAULT_LEADERBOARD_FORMAT_ID;
+  const queueMode: LeaderboardQueueMode = url.searchParams.get("mode") === "1" ? "1" : "3";
+  const requestedSeasonId = url.searchParams.get("seasonId") || null;
   const month = currentUtcMonth(now);
   const requestInit = cookie ? { headers: { cookie } } : undefined;
   const context = cookie
@@ -175,6 +200,8 @@ export async function loadLeaderboardPageData({
   const competitiveUrlFor = (nextFormatId: string) =>
     competitiveLeaderboardUrl(resolvedApiOrigin, {
       formatId: nextFormatId,
+      mode: queueMode,
+      seasonId: requestedSeasonId,
       region,
       gameProfileId,
     });
@@ -182,80 +209,33 @@ export async function loadLeaderboardPageData({
 
   let competitive: CompetitiveLeaderboardResponse | null = null;
   let casual: CasualLeaderboardResponse | null = null;
-  const hasExplicitQueue = url.searchParams.has("tab") || url.searchParams.has("formatId");
-
-  if (hasExplicitQueue) {
-    [competitive, casual] = await Promise.all([
-      safeJson<CompetitiveLeaderboardResponse>(competitiveUrlFor(formatId)),
-      safeJson<CasualLeaderboardResponse>(casualUrl),
-    ]);
-  } else {
-    const [competitiveResults, casualResult] = await Promise.all([
-      Promise.all(
-        LORCANA_LEADERBOARD_FORMATS.map(async (format, order) => ({
-          formatId: format.id,
-          order,
-          board: await safeJson<CompetitiveLeaderboardResponse>(competitiveUrlFor(format.id)),
-        })),
-      ),
-      safeJson<CasualLeaderboardResponse>(casualUrl),
-    ]);
-
-    casual = casualResult;
-    const candidates = [
-      ...competitiveResults.map((result) => ({
-        tab: "competitive" as const,
-        formatId: result.formatId,
-        matchVolume: matchVolume(result.board),
-        totalPlayers: result.board?.total ?? result.board?.entries.length ?? 0,
-        board: result.board,
-        order: result.order,
-      })),
-      {
-        tab: "casual" as const,
-        formatId,
-        matchVolume: matchVolume(casual),
-        totalPlayers: casual?.total ?? casual?.entries.length ?? 0,
-        board: casual,
-        order: competitiveResults.length,
-      },
-    ];
-    const selected = candidates
-      .filter((candidate) => candidate.board !== null)
-      .sort(
-        (a, b) =>
-          b.matchVolume - a.matchVolume || b.totalPlayers - a.totalPlayers || a.order - b.order,
-      )[0];
-
-    if (selected) {
-      tab = selected.tab;
-      formatId = selected.formatId;
-    }
-
-    competitive =
-      competitiveResults.find((result) => result.formatId === formatId)?.board ??
-      competitiveResults[0]?.board ??
-      null;
-  }
+  [competitive, casual] = await Promise.all([
+    safeJson<CompetitiveLeaderboardResponse>(competitiveUrlFor(formatId)),
+    safeJson<CasualLeaderboardResponse>(casualUrl),
+  ]);
+  const seasonId = competitive?.seasonId ?? requestedSeasonId;
+  const knownFormatIds = new Set(LORCANA_LEADERBOARD_FORMATS.map((format) => format.id));
+  const partitionFormats = (competitive?.availablePartitions ?? [])
+    .map((partition) => partition.formatId)
+    .filter(
+      (partitionFormatId, index, all) =>
+        !knownFormatIds.has(partitionFormatId) && all.indexOf(partitionFormatId) === index,
+    )
+    .map((partitionFormatId) => ({ id: partitionFormatId, labelKey: partitionFormatId }));
 
   return {
     tab,
     formatId,
-    availableFormats: LORCANA_LEADERBOARD_FORMATS,
+    queueMode,
+    availableFormats: [...LORCANA_LEADERBOARD_FORMATS, ...partitionFormats],
+    seasonId,
+    availableSeasons: competitive?.availableSeasons ?? [],
     region,
     month,
     competitive,
     casual,
     errors,
   };
-}
-
-function matchVolume(board: CompetitiveLeaderboardResponse | CasualLeaderboardResponse | null) {
-  if (!board) return 0;
-  if (board.type === "competitive") {
-    return board.entries.reduce((sum, entry) => sum + entry.gamesPlayed, 0);
-  }
-  return board.entries.reduce((sum, entry) => sum + entry.gamesPlayedMonth, 0);
 }
 
 async function defaultFetchJson<T>(url: string, init?: RequestInit): Promise<JsonResult<T>> {

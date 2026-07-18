@@ -28,12 +28,6 @@ export const op10PunkHazard021: StageCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderName",
-            name: "Caesar Clown",
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -54,6 +48,10 @@ export const op10PunkHazard021: StageCard = {
               upTo: true,
             },
             donState: "rested",
+            condition: {
+              condition: "leaderName",
+              name: "Caesar Clown",
+            },
           },
         ],
         optional: true,

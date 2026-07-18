@@ -6,6 +6,7 @@ export const prb02JinbePrb02007007: CharacterCard = {
   canonicalId: "PRB02-007",
   slug: "jinbe-prb02-007",
   name: "Jinbe - PRB02-007",
+  alternateNames: ["Jinbe"],
   printings: [
     {
       id: "PRB02-007",
@@ -31,7 +32,7 @@ export const prb02JinbePrb02007007: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Fish-Man The Seven Warlords of the Sea The Sun Pirates"],
+  traits: ["Fish-Man", "The Seven Warlords of the Sea", "The Sun Pirates"],
   attribute: "strike",
   artVariants: [
     {
@@ -41,7 +42,7 @@ export const prb02JinbePrb02007007: CharacterCard = {
     },
   ],
   effect:
-    '[On Play] Look at 5 cards from the top of your deck; reveal up to 1 "The Seven Warlords of the Sea" type card other than [Jinbe] and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
+    '[On Play] Look at 5 cards from the top of your deck; reveal up to 1 "The Seven Warlords of the Sea" type card other than [Jinbe] and add it to your hand. Then, place the rest at the bottom of your deck in any order.[When Attacking] Place up to 1 Character with a cost of 1 or less at the bottom of the owner\'s deck.',
   effects: {
     effects: [
       {
@@ -66,10 +67,26 @@ export const prb02JinbePrb02007007: CharacterCard = {
               {
                 filter: "trait",
                 value: "The Seven Warlords of the Sea",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",
+          },
+        ],
+      },
+      {
+        trigger: "whenAttacking",
+        actions: [
+          {
+            action: "returnToDeck",
+            target: {
+              player: "any",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 1 }],
+            },
+            position: "bottom",
           },
         ],
       },

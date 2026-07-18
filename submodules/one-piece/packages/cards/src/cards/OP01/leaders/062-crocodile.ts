@@ -50,20 +50,22 @@ export const op01Crocodile062: LeaderCard = {
             condition: "donAttached",
             amount: 1,
           },
+          {
+            condition: "handCount",
+            player: "self",
+            comparison: "lte",
+            value: 4,
+          },
         ],
         actions: [
           {
             action: "draw",
             player: "self",
             amount: 1,
-            condition: {
-              condition: "handCount",
-              player: "self",
-              comparison: "lte",
-              value: 4,
-            },
           },
         ],
+        optional: true,
+        oncePerTurn: true,
       },
     ],
   },

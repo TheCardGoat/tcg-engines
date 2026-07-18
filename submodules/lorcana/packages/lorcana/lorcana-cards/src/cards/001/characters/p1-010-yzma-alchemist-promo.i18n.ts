@@ -45,4 +45,15 @@ export const yzmaAlchemistP1PromoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yzma",
+    version: "Alquimista",
+    text: [
+      {
+        title: "ESTAS EXCUSADO",
+        description:
+          "Siempre que este personaje realice una misión, mira la carta superior de tu mazo. Colóquelo en la parte superior o inferior de su plataforma.",
+      },
+    ],
+  },
 };

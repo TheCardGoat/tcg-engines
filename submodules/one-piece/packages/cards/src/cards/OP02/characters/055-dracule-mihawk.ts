@@ -25,6 +25,5 @@ export const op02DraculeMihawk055: CharacterCard = {
   counter: 1000,
   traits: ["The Seven Warlords of the Sea"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op02DraculeMihawk055I18n,
 };

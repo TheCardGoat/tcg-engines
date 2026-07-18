@@ -32,7 +32,17 @@ export const op06NegativeHollow097: EventCard = {
           {
             action: "trashFromHand",
             player: "opponent",
+            chosenBy: "self",
             amount: 1,
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
           },
         ],
       },

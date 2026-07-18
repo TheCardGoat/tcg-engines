@@ -17,4 +17,8 @@ export const rabbitReluctantHostI18n: Record<Languages, I18nProperties> = {
     name: "Tappo",
     version: "Padrone di Casa Riluttante",
   },
+  es: {
+    name: "Conejo",
+    version: "Anfitrión reacio",
+  },
 };

@@ -31,10 +31,9 @@ export const op08Aphelandra041: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
+        costs: [
           {
-            condition: "leaderTrait",
-            trait: "Kuja Pirates",
+            cost: "returnThisToHand",
           },
         ],
         actions: [
@@ -56,6 +55,11 @@ export const op08Aphelandra041: CharacterCard = {
               ],
             },
             position: "bottom",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Kuja Pirates",
+              match: "includes",
+            },
           },
         ],
         optional: true,

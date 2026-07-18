@@ -41,4 +41,14 @@ export const chifuImperialAdvisorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Chi-fu",
+    version: "Asesor Imperial",
+    text: [
+      {
+        title: "DEMASIADO CUIDADOSO",
+        description: "Si bien este personaje no tiene daño, obtiene +2 {L}.",
+      },
+    ],
+  },
 };

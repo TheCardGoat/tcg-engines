@@ -17,4 +17,8 @@ export const scroogeMcduckAfficionadoOfAntiquitiesI18n: Record<Languages, I18nPr
     name: "Paperon de' Paperoni",
     version: "Aficionado di Antichità",
   },
+  es: {
+    name: "Gilito McPato",
+    version: "Aficionado a las antigüedades",
+  },
 };

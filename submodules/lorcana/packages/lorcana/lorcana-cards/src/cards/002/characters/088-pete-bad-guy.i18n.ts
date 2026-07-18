@@ -71,4 +71,21 @@ export const peteBadGuyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pete",
+    version: "Chico malo",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "¡TOMA ESO!",
+        description: "Cada vez que juegas una acción, este personaje obtiene +2 {S} este turno.",
+      },
+      {
+        title: "¿QUIÉN ES EL SIGUIENTE?",
+        description: "Mientras este personaje tenga 7 {S} o más, obtiene +2 {L}.",
+      },
+    ],
+  },
 };

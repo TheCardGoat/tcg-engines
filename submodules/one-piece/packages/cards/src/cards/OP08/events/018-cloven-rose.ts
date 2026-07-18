@@ -23,7 +23,7 @@ export const op08ClovenRose018: EventCard = {
   cost: 2,
   traits: ["Animal Straw Hat Crew Drum Kingdom"],
   effect:
-    "[Main] Up to 3 of your Characters gain +1000 power during this turn. Then, give up to 1 of your opponent's Characters 2000 power during this turn. [Trigger] Give up to 1 of your opponent's Leader or Character cards 3000 power during this turn.",
+    "[Main] Up to 3 of your Characters gain +1000 power during this turn. Then, give up to 1 of your opponent's Characters −2000 power during this turn. [Trigger] Give up to 1 of your opponent's Leader or Character cards −3000 power during this turn.",
   effects: {
     effects: [
       {
@@ -52,7 +52,7 @@ export const op08ClovenRose018: EventCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
           },
         ],
@@ -70,7 +70,7 @@ export const op08ClovenRose018: EventCard = {
                 upTo: true,
               },
             },
-            value: 3000,
+            value: -3000,
             duration: "thisTurn",
           },
         ],

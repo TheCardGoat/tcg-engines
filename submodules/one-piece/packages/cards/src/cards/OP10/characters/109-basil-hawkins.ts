@@ -43,6 +43,13 @@ export const op10BasilHawkins109: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          { action: "draw", player: "self", amount: 2 },
+          { action: "trashFromHand", player: "self", amount: 1 },
+        ],
+      },
     ],
   },
   i18n: op10BasilHawkins109I18n,

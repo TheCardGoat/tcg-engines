@@ -28,4 +28,16 @@ export const sisuInHerElementI18n: Record<Languages, I18nProperties> = {
     version: "Nel Suo Elemento",
     text: "<Sfidante> +2",
   },
+  es: {
+    name: "Sisu",
+    version: "En su elemento",
+    text: [
+      {
+        title: "Retador +2",
+      },
+      {
+        title: ".",
+      },
+    ],
+  },
 };

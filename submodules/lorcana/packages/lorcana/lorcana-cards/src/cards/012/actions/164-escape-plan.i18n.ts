@@ -54,4 +54,17 @@ export const escapePlanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Plan de escape",
+    text: [
+      {
+        title:
+          "No puedes realizar esta acción a menos que se hayan puesto 2 o más cartas en tu descarte este turno.",
+      },
+      {
+        title:
+          "Cada jugador elige 2 de sus personajes y los mete en su tintero boca abajo y ejercidos.",
+      },
+    ],
+  },
 };

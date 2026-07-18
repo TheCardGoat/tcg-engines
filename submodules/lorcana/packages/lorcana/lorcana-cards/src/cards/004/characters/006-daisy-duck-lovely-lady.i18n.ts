@@ -17,4 +17,8 @@ export const daisyDuckLovelyLadyI18n: Record<Languages, I18nProperties> = {
     name: "Paperina",
     version: "Adorabile Dama",
   },
+  es: {
+    name: "Pato margarita",
+    version: "Encantadora dama",
+  },
 };

@@ -34,6 +34,18 @@ test("lookup helpers return a known generated card", () => {
   expect(card?.printNumber).toBe(rawCard?.print_number);
 });
 
+test("July retail cards retain their beta printings", () => {
+  for (const slug of [
+    "appetite-for-destruction",
+    "hanako-arasaka-daughter-of-the-emperor",
+    "pepe-najarro-working-doubles",
+    "rita-wheeler-no-stupid-questions",
+  ]) {
+    const card = getStructuredCardBySlug(slug);
+    expect(card?.printings.map((printing) => printing.setCode)).toContain("welcometonightcitybeta");
+  }
+});
+
 test("structured set exports expose parsed abilities", () => {
   expect(promoCards).toHaveLength(1);
   expect(structuredCards.length).toBeGreaterThan(0);

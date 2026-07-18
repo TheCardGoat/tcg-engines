@@ -17,4 +17,8 @@ export const desperatePlanI18n: Record<Languages, I18nProperties> = {
     name: "Piano Disperato",
     text: "Se non hai carte in mano, pesca finché non hai 3 carte in mano. Altrimenti, scegli e scarta un qualsiasi numero di carte, poi pesca altrettante carte.",
   },
+  es: {
+    name: "Plan desesperado",
+    text: "Si no tienes cartas en tu mano, roba hasta tener 3 cartas en tu mano. De lo contrario, elige y descarta cualquier cantidad de cartas, luego roba esa cantidad de cartas.",
+  },
 };

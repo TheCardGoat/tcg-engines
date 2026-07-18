@@ -31,11 +31,30 @@ export const op10GodThread079: EventCard = {
         trigger: "main",
         actions: [
           {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 5 }],
+            },
+          },
+          {
             action: "addDon",
             count: {
               amount: 1,
               upTo: true,
             },
+            state: "active",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "addDon",
+            count: { amount: 1, upTo: true },
             state: "active",
           },
         ],

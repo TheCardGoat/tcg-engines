@@ -25,6 +25,5 @@ export const op01Komachiyo010: CharacterCard = {
   counter: 1000,
   traits: ["Animal Land of Wano"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op01Komachiyo010I18n,
 };

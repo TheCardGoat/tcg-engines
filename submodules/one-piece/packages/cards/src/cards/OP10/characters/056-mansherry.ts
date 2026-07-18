@@ -39,10 +39,40 @@ export const op10Mansherry056: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
+                match: "includes",
               },
               {
-                filter: "cardCategory",
-                value: "leader",
+                filter: "anyOf",
+                groups: [
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "leader",
+                    },
+                  ],
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "stage",
+                    },
+                  ],
+                ],
+              },
+            ],
+          },
+          {
+            cost: "returnCharacter",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Dressrosa",
+                match: "includes",
+              },
+              {
+                filter: "cost",
+                comparison: "gte",
+                value: 4,
               },
             ],
           },

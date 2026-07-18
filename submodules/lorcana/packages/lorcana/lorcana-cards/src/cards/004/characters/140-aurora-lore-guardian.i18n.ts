@@ -77,4 +77,22 @@ export const auroraLoreGuardianI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Aurora",
+    version: "Guardián de la tradición",
+    text: [
+      {
+        title: "Shift 2",
+      },
+      {
+        title: "CONSERVADOR",
+        description: "Los oponentes no pueden elegir tus elementos para habilidades o efectos.",
+      },
+      {
+        title: "INVENTARIO REAL",
+        description:
+          "{E} uno de tus objetos: mira la carta superior de tu mazo y colócala en la parte superior o inferior de tu mazo.",
+      },
+    ],
+  },
 };

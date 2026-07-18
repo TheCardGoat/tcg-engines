@@ -10,6 +10,7 @@ import { sugarRushSpeedwayFinishLine } from "./035-sugar-rush-speedway-finish-li
 const startingLineI18n = {
   en: { name: "Sugar Rush Speedway", version: "Starting Line" },
   de: { name: "Sugar Rush Speedway", version: "Starting Line" },
+  es: { name: "Sugar Rush Speedway", version: "Starting Line" },
   fr: { name: "Sugar Rush Speedway", version: "Starting Line" },
   it: { name: "Sugar Rush Speedway", version: "Starting Line" },
 };

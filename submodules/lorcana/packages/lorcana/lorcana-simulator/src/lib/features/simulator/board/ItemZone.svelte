@@ -13,6 +13,7 @@ import {
 	useLorcanaSidebarPresenter,
 } from "@/features/simulator/context/game-context.svelte.js";
 import { useSimulatorCardContext } from "@/features/simulator/context/simulator-card-context.svelte.js";
+import { m } from "$lib/i18n/messages.js";
 import {
 	countHiddenScrollableItems,
 	getInitialHiddenItemsToRight,
@@ -64,9 +65,8 @@ const actionActivatableCardIds = $derived.by(() => {
 let itemContainerEl = $state<HTMLDivElement | null>(null);
 let hiddenItemsToLeft = $state(0);
 let hiddenItemsToRight = $state(0);
-const showMobileItemControls = $derived(
-	layoutMode === "mobile" && items.length > 0,
-);
+const hasItemOverflow = $derived(hiddenItemsToLeft > 0 || hiddenItemsToRight > 0);
+const showItemControls = $derived(items.length > 0 && hasItemOverflow);
 
 function getScrollableItemCards(): HTMLElement[] {
 	if (!itemContainerEl) {
@@ -79,7 +79,7 @@ function getScrollableItemCards(): HTMLElement[] {
 }
 
 function updateHiddenItems(): void {
-	if (layoutMode !== "mobile" || !itemContainerEl) {
+	if (!itemContainerEl) {
 		hiddenItemsToLeft = 0;
 		hiddenItemsToRight = 0;
 		return;
@@ -119,6 +119,26 @@ function scrollItems(direction: "left" | "right"): void {
 	});
 }
 
+function scrollItemIntoView(cardEl: HTMLElement): void {
+	if (!itemContainerEl) {
+		return;
+	}
+
+	const left = cardEl.offsetLeft;
+	const right = left + cardEl.offsetWidth;
+	const viewportLeft = itemContainerEl.scrollLeft;
+	const viewportRight = viewportLeft + itemContainerEl.clientWidth;
+
+	if (left < viewportLeft) {
+		itemContainerEl.scrollTo({ left, behavior: "smooth" });
+	} else if (right > viewportRight) {
+		itemContainerEl.scrollTo({
+			left: right - itemContainerEl.clientWidth,
+			behavior: "smooth",
+		});
+	}
+}
+
 function handleDirectItemSelection(selectedCard: LorcanaCardSnapshot, event: MouseEvent): boolean {
 	if (sidebar.actionSelectionSession || sidebar.resolutionSelectionSession) {
 		return false;
@@ -136,7 +156,7 @@ function handleDirectItemSelection(selectedCard: LorcanaCardSnapshot, event: Mou
 }
 
 $effect(() => {
-	if (layoutMode !== "mobile" || !itemContainerEl) {
+	if (!itemContainerEl) {
 		hiddenItemsToLeft = 0;
 		hiddenItemsToRight = getInitialHiddenItemsToRight(layoutMode, items.length);
 		return;
@@ -171,6 +191,7 @@ $effect(() => {
 <div
 	class="item-zone"
 	class:item-zone--opponent={isOpponent}
+	class:item-zone--scrollable={showItemControls}
 	data-layout-mode={layoutMode}
 	data-player-seat={seat}
 	data-player-side={playerSide}
@@ -184,12 +205,21 @@ $effect(() => {
   {/if}
 
   <div class="item-zone-cards">
-    <div class="item-cards" bind:this={itemContainerEl}>
+    <div
+      class="item-cards"
+      bind:this={itemContainerEl}
+      data-testid={`item-scroll-container-${playerSide}`}
+    >
       {#each items as card (card.cardId)}
         {@const actionState = sidebar.getActionSessionCardState(card.cardId)}
         {@const isActionPlayable = actionPlayableCardIds.has(card.cardId)}
         {@const isActionActivatable = actionActivatableCardIds.has(card.cardId)}
-        <div class="item-card">
+        <div
+          class="item-card"
+          onfocusin={(event) => {
+            scrollItemIntoView(event.currentTarget);
+          }}
+        >
           <LorcanaCard
             {card}
             onSelect={(selectedCard, event) => handleDirectItemSelection(selectedCard, event)}
@@ -217,31 +247,41 @@ $effect(() => {
     </div>
   </div>
 
-  {#if showMobileItemControls && hiddenItemsToLeft > 0}
+  {#if showItemControls}
     <button
       type="button"
       class="mobile-item-scroll-button mobile-item-scroll-button--left"
-      aria-label="Scroll items left"
+      class:item-scroll-button--desktop={layoutMode !== "mobile"}
+      aria-label={m["sim.itemZone.showEarlierAria"]({ count: hiddenItemsToLeft })}
+      disabled={hiddenItemsToLeft === 0}
       data-testid={`item-scroll-left-${playerSide}`}
       onclick={() => {
         scrollItems("left");
       }}
     >
       <ChevronLeftIcon class="size-4" />
+      {#if hiddenItemsToLeft > 0}
+        <span class="item-scroll-button__count" aria-hidden="true">{hiddenItemsToLeft}</span>
+      {/if}
     </button>
   {/if}
 
-  {#if showMobileItemControls && hiddenItemsToRight > 0}
+  {#if showItemControls}
     <button
       type="button"
       class="mobile-item-scroll-button mobile-item-scroll-button--right"
-      aria-label="Scroll items right"
+      class:item-scroll-button--desktop={layoutMode !== "mobile"}
+      aria-label={m["sim.itemZone.showLaterAria"]({ count: hiddenItemsToRight })}
+      disabled={hiddenItemsToRight === 0}
       data-testid={`item-scroll-right-${playerSide}`}
       onclick={() => {
         scrollItems("right");
       }}
     >
       <ChevronRightIcon class="size-4" />
+      {#if hiddenItemsToRight > 0}
+        <span class="item-scroll-button__count" aria-hidden="true">{hiddenItemsToRight}</span>
+      {/if}
     </button>
   {/if}
 </div>
@@ -268,7 +308,8 @@ $effect(() => {
     position: relative;
     display: flex;
     align-items: stretch;
-    padding: var(--item-container-padding);
+    box-sizing: border-box;
+    padding: var(--item-zone-shell-padding, var(--item-container-padding));
     width: 100%;
     height: 100%;
     min-width: 70px;
@@ -284,6 +325,10 @@ $effect(() => {
     --item-accent: rgba(249, 197, 170, 0.88);
 
     background: linear-gradient(180deg, rgba(74, 34, 27, 0.78) 0%, rgba(34, 16, 13, 0.9) 100%);
+  }
+
+  .item-zone--scrollable {
+    --item-zone-shell-padding: var(--item-container-padding) 1.8rem;
   }
 
   .item-counter {
@@ -313,7 +358,7 @@ $effect(() => {
 
   .item-zone-cards {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     width: 100%;
     flex: 1 1 auto;
     min-height: 0;
@@ -326,21 +371,23 @@ $effect(() => {
 
   .item-cards {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     flex-direction: row;
     flex: 1 1 auto;
-    min-width: 100%;
+    min-width: 0;
     min-height: var(--item-card-height);
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: var(--item-grid-gap);
-    width: max-content;
+    width: 100%;
     height: auto;
     padding: 6px 0 0;
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: thin;
     scrollbar-color: rgba(243, 210, 129, 0.55) rgba(0, 0, 0, 0.18);
+    scroll-padding-inline: 1.8rem;
+    scroll-snap-type: x proximity;
   }
 
   .item-card {
@@ -350,6 +397,7 @@ $effect(() => {
     transition: filter 150ms ease;
     overflow: visible;
     border-radius: 0.55rem;
+    scroll-snap-align: start;
   }
 
   .item-card :global(a[data-slot="hover-card-trigger"]) {
@@ -376,6 +424,66 @@ $effect(() => {
     display: none;
   }
 
+  .item-zone:not([data-layout-mode="mobile"]) .item-scroll-button--desktop {
+    position: absolute;
+    top: 50%;
+    z-index: 12;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 2.5rem;
+    border: 1px solid rgba(243, 210, 129, 0.34);
+    border-radius: 999px;
+    background: rgba(23, 17, 8, 0.96);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.32);
+    color: #fff1cf;
+    transform: translateY(-50%);
+    pointer-events: auto;
+    cursor: pointer;
+    transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+  }
+
+  .item-zone:not([data-layout-mode="mobile"]) .item-scroll-button--desktop:hover:not(:disabled) {
+    border-color: rgba(255, 230, 160, 0.78);
+    background: rgba(64, 46, 12, 0.98);
+  }
+
+  .mobile-item-scroll-button:focus-visible {
+    outline: 2px solid rgba(255, 230, 160, 0.96);
+    outline-offset: 2px;
+  }
+
+  .item-zone:not([data-layout-mode="mobile"]) .mobile-item-scroll-button--left {
+    left: 0.2rem;
+  }
+
+  .item-zone:not([data-layout-mode="mobile"]) .mobile-item-scroll-button--right {
+    right: 0.2rem;
+  }
+
+  .item-scroll-button__count {
+    position: absolute;
+    right: -0.35rem;
+    bottom: -0.25rem;
+    display: grid;
+    min-width: 1rem;
+    height: 1rem;
+    place-items: center;
+    border: 1px solid rgba(255, 234, 179, 0.34);
+    border-radius: 999px;
+    background: rgba(73, 50, 12, 0.98);
+    color: #fff6dd;
+    font-size: 0.58rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mobile-item-scroll-button:disabled {
+    opacity: 0.38;
+    box-shadow: none;
+  }
+
   @media (max-width: 900px) {
     .item-zone {
       --item-container-padding: 4px;
@@ -395,7 +503,11 @@ $effect(() => {
         --item-zone-card-width,
         calc(var(--item-card-height) * var(--item-card-aspect))
       );
-      padding-inline: 0.1rem;
+      --item-zone-shell-padding: 0.1rem;
+    }
+
+    .item-zone[data-layout-mode="mobile"].item-zone--scrollable {
+      --item-zone-shell-padding: 0.1rem 1.75rem;
     }
 
     .item-zone[data-layout-mode="mobile"] .item-zone-cards {
@@ -420,7 +532,6 @@ $effect(() => {
       overscroll-behavior-x: contain;
       padding: 6px 0.8rem 0;
       scrollbar-width: none;
-      scroll-snap-type: x proximity;
     }
 
     .item-zone[data-layout-mode="mobile"] .item-cards::-webkit-scrollbar {

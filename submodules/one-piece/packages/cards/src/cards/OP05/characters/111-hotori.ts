@@ -31,6 +31,14 @@ export const op05Hotori111: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "playCard",
+            amount: 1,
+            zones: ["hand"],
+            filters: [{ filter: "name", value: "Kotori" }],
+          },
+        ],
         actions: [
           {
             action: "addToLife",
@@ -49,7 +57,7 @@ export const op05Hotori111: CharacterCard = {
                 },
               ],
             },
-            position: "top",
+            position: "choice",
             faceUp: true,
           },
         ],

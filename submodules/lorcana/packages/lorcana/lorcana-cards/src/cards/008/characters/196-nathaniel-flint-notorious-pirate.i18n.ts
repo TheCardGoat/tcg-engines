@@ -45,4 +45,15 @@ export const nathanielFlintNotoriousPirateI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Nathaniel Flint",
+    version: "Pirata notorio",
+    text: [
+      {
+        title: "INSTINTO DEPREDADOR",
+        description:
+          "No puedes jugar con este personaje a menos que un personaje contrario haya sido dañado este turno.",
+      },
+    ],
+  },
 };

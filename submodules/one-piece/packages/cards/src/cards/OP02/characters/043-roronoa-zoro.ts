@@ -25,6 +25,5 @@ export const op02RoronoaZoro043: CharacterCard = {
   counter: 1000,
   traits: ["Film Straw Hat Crew Supernovas"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op02RoronoaZoro043I18n,
 };

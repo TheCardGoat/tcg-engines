@@ -17,4 +17,8 @@ export const windstormI18n: Record<Languages, I18nProperties> = {
     name: "Tempesta di Vento",
     text: "Infliggi 1 danno a ogni personaggio e luogo avversario. Poi, infliggi 2 danni a ogni personaggio avversario con <Sfuggente> e a ogni luogo avversario con <Sfuggente>.",
   },
+  es: {
+    name: "Tormenta de viento",
+    text: "Inflige 1 daño a cada personaje y ubicación oponentes. Luego, inflige 2 daños a cada personaje contrario con Evasivo y a cada ubicación opuesta con Evasivo.",
+  },
 };

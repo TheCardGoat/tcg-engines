@@ -27,5 +27,44 @@ export const op10Bian053: CharacterCard = {
   attribute: "slash",
   effect:
     'If you have a "The Tontattas" type Character other than [Bian], this Character gains [Blocker].',
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "hasCard",
+            player: "self",
+            zone: "character",
+            filters: [
+              {
+                filter: "trait",
+                value: "The Tontattas",
+                match: "includes",
+              },
+              {
+                filter: "excludeName",
+                value: "Bian",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op10Bian053I18n,
 };

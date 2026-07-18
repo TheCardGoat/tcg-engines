@@ -44,4 +44,14 @@ export const nalaUndauntedLionessI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nala",
+    version: "Leona impávida",
+    text: [
+      {
+        title: "DESVÍO DETERMINADO",
+        description: "Si bien este personaje no tiene daño, obtiene +1 {L} y gana Resistencia +1.",
+      },
+    ],
+  },
 };

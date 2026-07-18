@@ -60,4 +60,18 @@ export const princeEricUrsulasGroomI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Príncipe eric",
+    version: "El novio de Úrsula",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "BAJO EL HECHIZO DE VANESSA",
+        description:
+          "Mientras tengas un personaje llamado Ursula en juego, este personaje gana Guardaespaldas y obtiene +2 {W}. (Un personaje contrario que desafíe a uno de tus personajes debe elegir uno con Bodyguard si puede).",
+      },
+    ],
+  },
 };

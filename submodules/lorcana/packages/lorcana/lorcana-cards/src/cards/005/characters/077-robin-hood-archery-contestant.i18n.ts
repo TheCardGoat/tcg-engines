@@ -45,4 +45,15 @@ export const robinHoodArcheryContestantI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Robin Hood",
+    version: "Concursante de tiro con arco",
+    text: [
+      {
+        title: "TIRO CON TRUCO",
+        description:
+          "Cuando juegas con este personaje, si un oponente tiene un personaje dañado en juego, obtienes 1 conocimiento.",
+      },
+    ],
+  },
 };

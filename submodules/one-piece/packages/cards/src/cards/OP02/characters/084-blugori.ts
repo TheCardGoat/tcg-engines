@@ -25,6 +25,5 @@ export const op02Blugori084: CharacterCard = {
   counter: 1000,
   traits: ["Animal Impel Down"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op02Blugori084I18n,
 };

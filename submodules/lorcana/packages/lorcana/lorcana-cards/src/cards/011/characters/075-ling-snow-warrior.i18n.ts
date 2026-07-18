@@ -41,4 +41,14 @@ export const lingSnowWarriorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Abadejo",
+    version: "Guerrero de la nieve",
+    text: [
+      {
+        title: "CONSTRUCCIÓN DE MÚSCULOS 1",
+        description: "{I}: el personaje elegido obtiene +1 {S} este turno.",
+      },
+    ],
+  },
 };

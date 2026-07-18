@@ -4,7 +4,7 @@ import { op14eb04Ran114I18n } from "./114-ran.i18n.ts";
 export const op14eb04Ran114: CharacterCard = {
   id: "OP14-114",
   canonicalId: "OP14-114",
-  slug: "ran",
+  slug: "ran/op14-114",
   name: "Ran",
   printings: [
     {
@@ -56,6 +56,28 @@ export const op14eb04Ran114: CharacterCard = {
           },
         ],
         oncePerTurn: true,
+      },
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Kuja Pirates",
+          },
+        ],
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+            },
+            self: true,
+          },
+        ],
       },
     ],
   },

@@ -59,6 +59,7 @@ export const op14eb04Tashigi029: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "removeFromField",
+        source: "opponentEffect",
         replacementAction: {
           action: "rest",
           target: {

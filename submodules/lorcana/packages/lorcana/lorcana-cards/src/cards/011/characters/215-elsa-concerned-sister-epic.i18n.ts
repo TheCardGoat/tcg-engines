@@ -45,4 +45,15 @@ export const elsaConcernedSisterEpicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Elsa",
+    version: "Hermana preocupada",
+    text: [
+      {
+        title: "DESPEJA EL CAMINO",
+        description:
+          "Cuando juegas con este personaje, pagas 2 {I} menos por la siguiente ubicación en la que juegues este turno.",
+      },
+    ],
+  },
 };

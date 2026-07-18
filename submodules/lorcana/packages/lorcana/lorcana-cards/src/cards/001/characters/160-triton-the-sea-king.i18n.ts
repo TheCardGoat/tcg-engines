@@ -17,4 +17,8 @@ export const tritonTheSeaKingI18n: Record<Languages, I18nProperties> = {
     name: "Tritone",
     version: "Il Re del Mare",
   },
+  es: {
+    name: "Tritón",
+    version: "El rey del mar",
+  },
 };

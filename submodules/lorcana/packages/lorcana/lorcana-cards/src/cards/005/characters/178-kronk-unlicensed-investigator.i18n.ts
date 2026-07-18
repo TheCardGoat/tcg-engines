@@ -21,4 +21,9 @@ export const kronkUnlicensedInvestigatorI18n: Record<Languages, I18nProperties> 
     version: "Investigatore Senza Licenza",
     text: "<Sfidante> +1",
   },
+  es: {
+    name: "Kronk",
+    version: "Investigador sin licencia",
+    text: "Retador +1",
+  },
 };

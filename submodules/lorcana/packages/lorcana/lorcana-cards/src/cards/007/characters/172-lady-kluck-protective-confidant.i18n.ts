@@ -51,4 +51,16 @@ export const ladyKluckProtectiveConfidantI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Señora kluck",
+    version: "Confidente protector",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "Pabellón",
+      },
+    ],
+  },
 };

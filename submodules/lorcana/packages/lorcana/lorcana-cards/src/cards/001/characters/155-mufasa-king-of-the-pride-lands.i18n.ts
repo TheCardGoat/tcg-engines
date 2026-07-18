@@ -17,4 +17,8 @@ export const mufasaKingOfThePrideLandsI18n: Record<Languages, I18nProperties> = 
     name: "Mufasa",
     version: "King of the Pride Lands",
   },
+  es: {
+    name: "Mufasa",
+    version: "Rey de las Tierras del Reino",
+  },
 };

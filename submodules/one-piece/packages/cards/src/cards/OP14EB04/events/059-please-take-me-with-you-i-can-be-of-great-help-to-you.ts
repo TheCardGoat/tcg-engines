@@ -55,6 +55,20 @@ export const op14eb04PleaseTakeMeWithYouICanBeOfGreatHelpToYou059: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "returnToHand",
+            target: {
+              player: "both",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 4 }],
+            },
+          },
+        ],
+      },
     ],
   },
   i18n: op14eb04PleaseTakeMeWithYouICanBeOfGreatHelpToYou059I18n,

@@ -45,4 +45,15 @@ export const genieSatisfiedDragonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Genio",
+    version: "Dragón satisfecho",
+    text: [
+      {
+        title: "CAPTADOR DE ERRORES",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

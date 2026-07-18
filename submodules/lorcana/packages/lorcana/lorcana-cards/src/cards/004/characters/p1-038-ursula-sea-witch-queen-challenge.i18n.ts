@@ -76,4 +76,22 @@ export const ursulaSeaWitchQueenP1ChallengeI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Úrsula",
+    version: "Reina Bruja del Mar",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "AHORA",
+        description:
+          "¡YO SOY EL GOBERNANTE! Siempre que este personaje realice una misión, ejerce el personaje elegido.",
+      },
+      {
+        title: "¡ME ESCUCHARÁS!",
+        description: "Otros personajes no pueden esforzarse para cantar canciones.",
+      },
+    ],
+  },
 };

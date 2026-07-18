@@ -17,4 +17,8 @@ export const fairyShipRoyalVesselI18n: Record<Languages, I18nProperties> = {
     name: "Nave Fatata",
     version: "Vascello Reale",
   },
+  es: {
+    name: "Barco de hadas",
+    version: "Buque Real",
+  },
 };

@@ -65,4 +65,20 @@ export const liloCausingAnUproarI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lilo",
+    version: "Causando un alboroto",
+    text: [
+      {
+        title: "¡TIEMPO DE PISO!",
+        description:
+          "Durante tu turno, si has jugado 3 o más acciones este turno, puedes jugar este personaje gratis.",
+      },
+      {
+        title: "RAAAWR!",
+        description:
+          "Cuando juegues con este personaje, tendrás listo el personaje elegido. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const theQueenHatefulRivalI18n: Record<Languages, I18nProperties> = {
     name: "Regina",
     version: "Rivale Rancorosa",
   },
+  es: {
+    name: "La reina",
+    version: "Rival odioso",
+  },
 };

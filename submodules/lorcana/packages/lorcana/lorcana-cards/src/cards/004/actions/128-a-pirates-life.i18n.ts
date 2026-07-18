@@ -49,4 +49,16 @@ export const aPiratesLifeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La vida de un pirata",
+    text: [
+      {
+        title:
+          "<Sing Together> 6 (Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 6 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title: "Cada oponente pierde 2 conocimientos. Obtienes 2 conocimientos.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const heroWorkI18n: Record<Languages, I18nProperties> = {
     name: "Lavoro da Eroi",
     text: 'I tuoi personaggi ricevono +1 {S} per questo turno. I tuoi personaggi Eroe ottengono "Ogni volta che questo personaggio sfida un altro personaggio, ogni avversario perde 1 leggenda e tu ottieni 1 leggenda" per questo turno.',
   },
+  es: {
+    name: "Trabajo de héroe",
+    text: 'Tus personajes obtienen +1 {S} este turno. Tus personajes héroe ganan "Siempre que este personaje desafíe a otro personaje, cada oponente pierde 1 conocimiento y tú ganas 1 conocimiento" este turno.',
+  },
 };

@@ -45,4 +45,15 @@ export const snowWhiteFairheartedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Blanco como la nieve",
+    version: "Justo de corazón",
+    text: [
+      {
+        title: "LÍDER NATURAL",
+        description:
+          "Este personaje obtiene Resistencia +1 por cada otro personaje Caballero que tengas en juego.",
+      },
+    ],
+  },
 };

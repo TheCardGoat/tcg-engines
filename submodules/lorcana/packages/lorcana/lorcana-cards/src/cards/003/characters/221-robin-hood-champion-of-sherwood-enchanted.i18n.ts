@@ -78,4 +78,22 @@ export const robinHoodChampionOfSherwoodEnchantedI18n: Record<Languages, I18nPro
       },
     ],
   },
+  es: {
+    name: "Robin Hood",
+    version: "Campeón de Sherwood",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "COMBATIENTE HABILIDADO",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, gana 2 conocimientos.",
+      },
+      {
+        title: "EL BIEN DE LOS DEMAS",
+        description: "Cuando este personaje es desterrado en un desafío, puedes robar una carta.",
+      },
+    ],
+  },
 };

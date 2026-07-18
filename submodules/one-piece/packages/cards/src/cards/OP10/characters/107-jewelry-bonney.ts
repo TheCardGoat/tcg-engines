@@ -29,6 +29,50 @@ export const op10JewelryBonney107: CharacterCard = {
     '[Blocker]\n[On Play] You may add 1 card from the top or bottom of your Life cards to your hand: Add up to 1 "Supernovas" type Character card with a cost of 5 from your hand to the top of your Life cards face-up.',
   effects: {
     keywords: ["blocker"],
+    effects: [
+      {
+        trigger: "onPlay",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
+        ],
+        actions: [
+          {
+            action: "addToLife",
+            target: {
+              player: "self",
+              zones: ["hand"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Supernovas",
+                  match: "includes",
+                },
+                {
+                  filter: "cardCategory",
+                  value: "character",
+                },
+                {
+                  filter: "cost",
+                  comparison: "eq",
+                  value: 5,
+                },
+              ],
+            },
+            position: "top",
+            faceUp: true,
+          },
+        ],
+        optional: true,
+      },
+    ],
   },
   i18n: op10JewelryBonney107I18n,
 };

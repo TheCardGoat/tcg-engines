@@ -57,4 +57,18 @@ export const goofyExpertShipwrightP3PromoI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "Carpintero experto",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "DISEÑO INTELIGENTE",
+        description:
+          "Cada vez que este personaje realiza una misión, el personaje elegido gana Protección hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

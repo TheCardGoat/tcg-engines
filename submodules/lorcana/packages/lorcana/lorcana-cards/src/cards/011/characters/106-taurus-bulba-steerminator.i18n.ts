@@ -17,4 +17,8 @@ export const taurusBulbaSteerminatorI18n: Record<Languages, I18nProperties> = {
     name: "Toros Bulba",
     version: "Sterminatore",
   },
+  es: {
+    name: "Bulbo de tauro",
+    version: "Direccionador",
+  },
 };

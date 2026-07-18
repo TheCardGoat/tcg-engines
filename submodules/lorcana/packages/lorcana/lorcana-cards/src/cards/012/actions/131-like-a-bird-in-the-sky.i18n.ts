@@ -35,4 +35,8 @@ export const likeABirdInTheSkyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Como un pájaro en el cielo",
+    text: "El personaje elegido obtiene +1 {L} y gana Evasivo hasta el comienzo de tu siguiente turno.",
+  },
 };

@@ -21,4 +21,9 @@ export const missBiancaRescueAidSocietyAgentI18n: Record<Languages, I18nProperti
     version: "Agente della Società Internazionale di Salvataggio",
     text: "<Melodioso> 4",
   },
+  es: {
+    name: "Señorita blanca",
+    version: "Agente de la sociedad de ayuda de rescate",
+    text: "Cantante 4",
+  },
 };

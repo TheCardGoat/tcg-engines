@@ -45,4 +45,15 @@ export const olafRecappingTheStoryI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Olaf",
+    version: "Recapitulando la historia",
+    text: [
+      {
+        title: "CUENTO SIN FIN",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido obtiene -1 {S} este turno.",
+      },
+    ],
+  },
 };

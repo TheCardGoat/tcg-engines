@@ -48,6 +48,7 @@ export const op02Jozu008: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Whitebeard Pirates",
+                match: "includes",
               },
             ],
           },

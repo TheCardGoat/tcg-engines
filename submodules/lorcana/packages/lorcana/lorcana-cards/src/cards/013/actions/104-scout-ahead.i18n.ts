@@ -17,4 +17,8 @@ export const scoutAheadI18n: Record<Languages, I18nProperties> = {
     name: "Ricognizione",
     text: "Se un avversario ha più leggenda di te, ottieni 2 leggenda.",
   },
+  es: {
+    name: "Explorar adelante",
+    text: "Si un oponente tiene más conocimientos que tú, gana 2 conocimientos.",
+  },
 };

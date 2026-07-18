@@ -21,4 +21,9 @@ export const generalLiHeadOfTheImperialArmyI18n: Record<Languages, I18nPropertie
     version: "Comandante dell'Esercito Imperiale",
     text: "<Resistere> +1",
   },
+  es: {
+    name: "General Li",
+    version: "Jefe del ejército imperial",
+    text: "Resistir +1",
+  },
 };

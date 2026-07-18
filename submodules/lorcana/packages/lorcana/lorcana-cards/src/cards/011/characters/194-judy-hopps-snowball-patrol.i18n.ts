@@ -58,4 +58,18 @@ export const judyHoppsSnowballPatrolI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Judy Hopps",
+    version: "Patrulla de bolas de nieve",
+    text: [
+      {
+        title: "PERDIDO",
+        description:
+          "Si este es tu primer turno y no eres el primer jugador, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "Resistir +1",
+      },
+    ],
+  },
 };

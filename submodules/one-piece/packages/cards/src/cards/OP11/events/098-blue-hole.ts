@@ -29,7 +29,21 @@ export const op11BlueHole098: EventCard = {
     effects: [
       {
         trigger: "main",
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "deck",
+            comparison: "gte",
+            value: 3,
+          },
+        ],
         actions: [
+          {
+            action: "trashFromDeck",
+            player: "self",
+            amount: 3,
+          },
           {
             action: "ko",
             target: {
@@ -50,6 +64,24 @@ export const op11BlueHole098: EventCard = {
           },
         ],
         optional: true,
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: 1000,
+            duration: "thisTurn",
+          },
+        ],
       },
     ],
   },

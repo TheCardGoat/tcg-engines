@@ -33,6 +33,9 @@ export const op02ImpelDown092: StageCard = {
             cost: "trashFromHand",
             amount: 1,
           },
+          {
+            cost: "restThisCard",
+          },
         ],
         actions: [
           {
@@ -50,6 +53,7 @@ export const op02ImpelDown092: StageCard = {
               {
                 filter: "trait",
                 value: "Impel Down",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

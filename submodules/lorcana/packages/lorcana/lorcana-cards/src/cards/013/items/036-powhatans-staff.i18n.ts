@@ -41,4 +41,14 @@ export const powhatansStaffI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bastón de Powhatan",
+    text: [
+      {
+        title: "DAR UN PASO",
+        description:
+          "{E}, 1{I}: el siguiente personaje que juegues en este turno entra en juego ejercido y obtiene Guardaespaldas hasta el comienzo de tu siguiente turno. (Un personaje contrario que desafíe a uno de tus personajes debe elegir uno con Bodyguard si puede).",
+      },
+    ],
+  },
 };

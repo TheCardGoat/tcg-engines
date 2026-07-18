@@ -35,4 +35,8 @@ export const imStillHereI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Todavía estoy aquí",
+    text: "El personaje elegido gana Resistencia +2 hasta el comienzo de tu siguiente turno. Saca una carta.",
+  },
 };

@@ -37,4 +37,13 @@ export const eyeOfTheFatesI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ojo de los destinos",
+    text: [
+      {
+        title: "VER EL FUTURO",
+        description: "{E}: el personaje elegido obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

@@ -39,6 +39,7 @@ export const op03PeepleyLulu067: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Galley-La Company",
+            match: "includes",
           },
         ],
         actions: [

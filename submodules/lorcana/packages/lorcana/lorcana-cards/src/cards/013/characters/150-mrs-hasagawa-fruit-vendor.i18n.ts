@@ -17,4 +17,8 @@ export const mrsHasagawaFruitVendorI18n: Record<Languages, I18nProperties> = {
     name: "Signora Hasagawa",
     version: "Fruttivendola",
   },
+  es: {
+    name: "Sra. Hasagawa",
+    version: "Vendedor de frutas",
+  },
 };

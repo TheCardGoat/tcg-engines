@@ -57,4 +57,18 @@ export const theMagicFeatherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La pluma mágica",
+    text: [
+      {
+        title: "¡AHORA PUEDES VOLAR!",
+        description:
+          "Cuando juegues este objeto, elige un personaje tuyo. Mientras este objeto esté en juego, ese personaje gana Evasivo.",
+      },
+      {
+        title: "CONECTADO A TIERRA 3",
+        description: "{I}: devuelve este objeto a tu mano.",
+      },
+    ],
+  },
 };

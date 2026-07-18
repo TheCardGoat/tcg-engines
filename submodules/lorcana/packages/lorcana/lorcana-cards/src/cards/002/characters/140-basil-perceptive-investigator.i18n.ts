@@ -17,4 +17,8 @@ export const basilPerceptiveInvestigatorI18n: Record<Languages, I18nProperties> 
     name: "Basil",
     version: "Perceptive Investigator",
   },
+  es: {
+    name: "Albahaca",
+    version: "Investigador perceptivo",
+  },
 };

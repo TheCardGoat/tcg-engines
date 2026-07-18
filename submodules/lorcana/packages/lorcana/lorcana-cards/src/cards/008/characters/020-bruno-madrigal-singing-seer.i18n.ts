@@ -60,4 +60,18 @@ export const brunoMadrigalSingingSeerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bruno madrigal",
+    version: "Vidente cantante",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "FUTURO BRILLANTE",
+        description:
+          "Siempre que este personaje cante una canción, podrás robar una carta por cada personaje que tengas en juego.",
+      },
+    ],
+  },
 };

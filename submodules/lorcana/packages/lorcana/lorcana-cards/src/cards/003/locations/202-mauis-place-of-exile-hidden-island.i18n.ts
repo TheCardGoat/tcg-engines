@@ -42,4 +42,14 @@ export const mauisPlaceOfExileHiddenIslandI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "El lugar de exilio de Maui",
+    version: "Isla escondida",
+    text: [
+      {
+        title: "AISLADO",
+        description: "Los personajes obtienen Resistencia +1 mientras están aquí.",
+      },
+    ],
+  },
 };

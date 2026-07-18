@@ -23,7 +23,7 @@ export const op06VanderDeckenIx033: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Fish-Man Flying Pirates"],
+  traits: ["Fish-Man", "Flying Pirates"],
   attribute: "ranged",
   effect:
     '[On Play] You may trash 1 "Fish-Man" type card from your hand or 1 [The Ark Noah] from your hand or field: K.O. up to 1 of your opponent\'s rested Characters.',
@@ -31,6 +31,22 @@ export const op06VanderDeckenIx033: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashCard",
+            amount: 1,
+            options: [
+              {
+                zones: ["hand"],
+                filters: [{ filter: "trait", value: "Fish-Man", match: "includes" }],
+              },
+              {
+                zones: ["hand", "stage"],
+                filters: [{ filter: "name", value: "The Ark Noah" }],
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "ko",

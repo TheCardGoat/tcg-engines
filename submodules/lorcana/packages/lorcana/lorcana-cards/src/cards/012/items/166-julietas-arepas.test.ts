@@ -75,6 +75,30 @@ describe("Julieta's Arepas", () => {
 
       expect(testEngine.asPlayerOne()).toHaveDamage({ card: damagedAlly, value: 3 });
     });
+
+    it("can resolve for zero when no character has damage", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+        {
+          play: [julietasArepas, madrigalAlly],
+          deck: 2,
+        },
+        {
+          deck: 2,
+        },
+      );
+
+      expect(testEngine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerTwo().passTurn()).toBeSuccessfulCommand();
+
+      expect(testEngine.asPlayerOne().getBagCount()).toBe(1);
+      expect(
+        testEngine.asPlayerOne().resolvePendingByCard(julietasArepas, {
+          targets: [madrigalAlly],
+          amount: 0,
+        }),
+      ).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerOne().getBagCount()).toBe(0);
+    });
   });
 
   describe("THAT DID THE TRICK - {E} — If you removed damage from a character this turn, gain 1 lore.", () => {

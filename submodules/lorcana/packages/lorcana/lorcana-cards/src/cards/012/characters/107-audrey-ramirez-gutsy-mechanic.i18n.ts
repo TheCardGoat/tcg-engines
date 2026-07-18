@@ -21,4 +21,9 @@ export const audreyRamirezGutsyMechanicI18n: Record<Languages, I18nProperties> =
     version: "Meccanica Grintosa",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Audrey Ramírez",
+    version: "Mecánico valiente",
+    text: "Correr",
+  },
 };

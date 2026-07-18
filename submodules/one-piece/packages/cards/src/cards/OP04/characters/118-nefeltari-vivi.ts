@@ -41,6 +41,29 @@ export const op04NefeltariVivi118: CharacterCard = {
     },
   ],
   effect:
-    "All of your red Characters with a cost of 3 or more other than this Character gain [Rush]. (This card can attack on the turn in which it is played.",
+    "All of your red Characters with a cost of 3 or more other than this Character gain [Rush]. (This card can attack on the turn in which it is played.)",
+  effects: {
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: "all" },
+              filters: [
+                { filter: "color", value: "red" },
+                { filter: "cost", comparison: "gte", value: 3 },
+                { filter: "excludeSelf" },
+              ],
+            },
+            keyword: "rush",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op04NefeltariVivi118I18n,
 };

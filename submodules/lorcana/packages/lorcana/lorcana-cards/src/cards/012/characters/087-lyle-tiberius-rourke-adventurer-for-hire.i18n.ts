@@ -65,4 +65,20 @@ export const lyleTiberiusRourkeAdventurerForHireI18n: Record<Languages, I18nProp
       },
     ],
   },
+  es: {
+    name: "Lyle Tiberius Rourke",
+    version: "Aventurero de alquiler",
+    text: [
+      {
+        title: "OJO POR EL VALOR",
+        description:
+          "Cuando juegas con este personaje, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+      {
+        title: "TRUCOS SUCIOOS",
+        description:
+          "Al final de tu turno, si 2 o más cartas fueron puestas en tu descarte este turno, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

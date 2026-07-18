@@ -60,4 +60,18 @@ export const littleJohnResourcefulOutlawI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Pequeño juan",
+    version: "Forajido ingenioso",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "Está bien, pez gordo",
+        description:
+          "Mientras este personaje está ejercido, tus personajes con Bodyguard obtienen Resistencia +1 y obtienen +1 {L}.",
+      },
+    ],
+  },
 };

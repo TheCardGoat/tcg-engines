@@ -26,6 +26,7 @@ import type {
 } from "@tcg/gundam-types";
 import { exbpExBase001, exrpExResource003 } from "@tcg/gundam-token-data";
 import type { CardInstanceId, PlayerId } from "../../types/branded.ts";
+import type { RuntimeCard } from "../../types/base-card.ts";
 import type { FrameworkWriteAPI } from "../../types/move-types.ts";
 import type {
   GundamG,
@@ -99,6 +100,8 @@ export interface EffectExecutionContext {
   sourcePlayerId: string;
   /** Card whose effect is firing (undefined for anonymous effects) */
   sourceCardId?: string;
+  /** Rules identity captured when a queued paired-Pilot effect triggered. */
+  sourceIdentityCardId?: string;
   /** Current structured effect being executed. */
   currentEffect?: CardEffect;
   /** Top-level directive index currently being executed. */
@@ -115,6 +118,8 @@ export interface EffectExecutionContext {
    * that Command card is not possible if that target cannot be chosen."
    */
   chosenTargets?: readonly string[];
+  /** Player target answers captured for each staged top-level directive. */
+  chosenTargetsByDirective?: Record<number, readonly string[]>;
   /** Last target ids resolved by the previous executed action in this directive list. */
   previousResolvedTargets?: readonly string[];
   /**
@@ -169,6 +174,8 @@ export interface EffectExecutionContext {
     playerId?: string;
     eventSourceCardId?: string;
     pairedPilotId?: string;
+    defeatedCardId?: string;
+    defeatedPairedPilotId?: string;
     paidResources?: number;
     paidExResources?: number;
     damagedBy?: string;
@@ -209,7 +216,9 @@ function targetResolutionOptions(ctx: EffectExecutionContext): {
   return {
     sourceCardId: ctx.sourceCardId,
     eventSourceCardId: ctx.triggerContext?.eventSourceCardId,
-    ...(destroyedHostForPilot ? { selfIdentityCardId: destroyedHostForPilot } : {}),
+    ...((ctx.sourceIdentityCardId ?? destroyedHostForPilot)
+      ? { selfIdentityCardId: ctx.sourceIdentityCardId ?? destroyedHostForPilot }
+      : {}),
   };
 }
 
@@ -277,6 +286,26 @@ export function executeCardEffect(
         if (matches.length === 0) return false;
         continue;
       }
+      if (condition.type === "eventDefeatedCardMatches") {
+        const defeatedCardId = ctx.triggerContext?.defeatedCardId;
+        if (!defeatedCardId) return false;
+        const defeatedCard = ctx.framework.cards.get(defeatedCardId);
+        if (!defeatedCard) return false;
+        const defeatedPairedPilotId = ctx.triggerContext?.defeatedPairedPilotId;
+        const eventCtx = {
+          ...tgtCtx,
+          getPairedPilotId: (card: RuntimeCard) =>
+            card.instanceId === defeatedCardId
+              ? (defeatedPairedPilotId as CardInstanceId | undefined)
+              : tgtCtx.getPairedPilotId(card),
+        };
+        const target: TargetFilter = {
+          ...condition.target,
+          zone: condition.target.zone ?? eventCtx.getCardZone(defeatedCard),
+        };
+        if (evaluateTargetFilter(target, [defeatedCard], eventCtx).length === 0) return false;
+        continue;
+      }
       if (condition.type === "eventPlayerIsSelf") {
         if (triggerPlayerId(ctx) !== ctx.sourcePlayerId) return false;
         continue;
@@ -326,6 +355,7 @@ export function executeCardEffect(
 }
 
 function sourceIdentityCardId(ctx: EffectExecutionContext): string | undefined {
+  if (ctx.sourceIdentityCardId) return ctx.sourceIdentityCardId;
   if (!ctx.sourceCardId) return undefined;
   const sourceDef = ctx.framework.cards.getDefinition(ctx.sourceCardId) as Card | undefined;
   if (sourceDef?.type !== "pilot") return ctx.sourceCardId;
@@ -431,7 +461,11 @@ export function executeDirectives(
       // otherwise default to running the directive (pre-PR-F.2 behaviour).
       if (effDirective.optional) {
         const answer = ctx.optionalAnswers?.[idx];
-        if (answer === false || !dependentDirectiveChainCanResolve(directives, i, ctx)) {
+        if (
+          answer === false ||
+          !preflightResolved(effDirective.action, ctx) ||
+          !dependentDirectiveChainCanResolve(directives, i, ctx)
+        ) {
           prevResolved = false;
           continue;
         }
@@ -440,9 +474,10 @@ export function executeDirectives(
         // when the target set is empty is preserved for parity with
         // pre-change behaviour (handlers no-op on empty lists); the
         // preflight probe is read-only.
-        const resolved = preflightResolved(effDirective.action, ctx);
+        let resolved = false;
         try {
           ctx.currentDirectiveIndex = idx;
+          resolved = preflightResolved(effDirective.action, ctx);
           executeAction(effDirective.action, ctx);
         } finally {
           ctx.currentDirectiveIndex = undefined;
@@ -452,9 +487,10 @@ export function executeDirectives(
         continue;
       }
 
-      const resolved = preflightResolved(effDirective.action, ctx);
+      let resolved = false;
       try {
         ctx.currentDirectiveIndex = idx;
+        resolved = preflightResolved(effDirective.action, ctx);
         executeAction(effDirective.action, ctx);
       } finally {
         ctx.currentDirectiveIndex = undefined;
@@ -500,6 +536,13 @@ function preflightResolved(action: EffectAction, ctx: EffectExecutionContext): b
     targetResolutionOptions(ctx),
   );
   switch (action.action) {
+    case "resolveThenQueue":
+      // The continuation is valid only when its prerequisite action can
+      // actually resolve. This matters especially for optional sequences:
+      // if the first target pool is empty, treating the unanswerable option
+      // as accepted would enqueue a later prompt without paying its printed
+      // prerequisite.
+      return preflightResolved(action.first, ctx);
     case "dealDamageEventSource":
       return eventSourceMatches(action.sourceFilter, ctx, tgtCtx);
     case "recoverHPEventCard":
@@ -607,8 +650,8 @@ function preflightResolved(action: EffectAction, ctx: EffectExecutionContext): b
       return targets.length >= min;
     }
     case "discard": {
-      if (!action.filter) return true;
       const handCards = tgtCtx.getCardsInZone(ctx.sourcePlayerId as PlayerId, "hand");
+      if (!action.filter) return handCards.length >= action.count;
       const eligibleCards = evaluateTargetFilter(
         { ...action.filter, owner: "friendly", zone: "hand" },
         handCards,
@@ -652,6 +695,10 @@ function resolveActionTargets(
   tgtCtx: ReturnType<typeof buildTargetResolutionContext>,
 ): ReturnType<typeof evaluateTargetFilter> {
   const candidates = evaluateTargetFilter(filter, gatherAllCards(tgtCtx), tgtCtx);
+  const chosenTargets =
+    ctx.currentDirectiveIndex === undefined
+      ? ctx.chosenTargets
+      : (ctx.chosenTargetsByDirective?.[ctx.currentDirectiveIndex] ?? ctx.chosenTargets);
   // Rule 10-3-3 (PR F.4): honour the filter's `count`. The pre-F.4
   // executor returned every matching candidate, which silently violated
   // effects like "Choose 1 enemy Unit" — they applied to every enemy
@@ -665,7 +712,7 @@ function resolveActionTargets(
   //   Defense-in-depth — resolveEffect.validate enforces count on
   //   user-supplied targets, but a play-time committer shouldn't be
   //   able to over-apply either.
-  if (ctx.chosenTargets === undefined || filter.owner === "self" || filter.count === "all") {
+  if (chosenTargets === undefined || filter.owner === "self" || filter.count === "all") {
     // `owner: "self"` targets are never player-chosen — they resolve
     // uniquely to the source card. Intersecting with `chosenTargets`
     // (which carries the enemy-unit targets for a *different* directive
@@ -677,9 +724,7 @@ function resolveActionTargets(
     return clampToFilterCount(candidates, filter);
   }
   const candidateSet = new Set<string>(candidates as readonly string[]);
-  const intersected = (ctx.chosenTargets as readonly string[]).filter((id) =>
-    candidateSet.has(id),
-  ) as typeof candidates;
+  const intersected = chosenTargets.filter((id) => candidateSet.has(id)) as typeof candidates;
   return clampToFilterCount(intersected, filter);
 }
 
@@ -793,18 +838,42 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     }
 
     case "resolveThenQueue": {
-      executeAction(action.first, ctx);
-      if (ctx.framework.state.status.gameEnded) break;
-      if (action.condition) {
-        const updatedTargetContext = buildTargetResolutionContext(
-          ctx.G,
-          ctx.sourcePlayerId,
-          ctx.framework,
-          targetResolutionOptions(ctx),
-        );
-        if (!evaluateCondition(action.condition, updatedTargetContext)) break;
+      const prerequisiteResolved = preflightResolved(action.first, ctx);
+      const previousGeneration = ctx.G.pendingEffectCurrentPriorityGeneration;
+      const reserveGeneration = () => {
+        const next = (ctx.G.eventCounters.pendingEffectPriorityGeneration ?? 0) + 1;
+        ctx.G.eventCounters.pendingEffectPriorityGeneration = next;
+        return next;
+      };
+      // The continuation belongs to the currently resolving wave. Anything
+      // the prerequisite itself enqueues is a child of that continuation and
+      // must settle first. Give those nested choices a newer generation, then
+      // restore the continuation's generation before enqueueing it. This also
+      // keeps the continuation ahead of unrelated entries from older waves.
+      const followUpGeneration = previousGeneration ?? reserveGeneration();
+      const prerequisiteGeneration = reserveGeneration();
+      try {
+        ctx.G.pendingEffectCurrentPriorityGeneration = prerequisiteGeneration;
+        executeAction(action.first, ctx);
+        ctx.G.pendingEffectCurrentPriorityGeneration = followUpGeneration;
+        if (ctx.framework.state.status.gameEnded) break;
+        // Mandatory effects still perform as much as possible (rule 10-1-3),
+        // but an incomplete prerequisite cannot unlock the staged "If you
+        // do" continuation (rule 5-20-1).
+        if (!prerequisiteResolved) break;
+        if (action.condition) {
+          const updatedTargetContext = buildTargetResolutionContext(
+            ctx.G,
+            ctx.sourcePlayerId,
+            ctx.framework,
+            targetResolutionOptions(ctx),
+          );
+          if (!evaluateCondition(action.condition, updatedTargetContext)) break;
+        }
+        enqueueFollowUpEffect(ctx, action.followUp, { resolutionOrderSelected: true });
+      } finally {
+        ctx.G.pendingEffectCurrentPriorityGeneration = previousGeneration;
       }
-      enqueueFollowUpEffect(ctx, action.followUp, { resolutionOrderSelected: true });
       break;
     }
 
@@ -1745,6 +1814,7 @@ function handlePreventiveAction(
             unitFilter: action.unitFilter,
             damageType: action.damageType,
             sourceCardType: action.sourceCardType,
+            source: action.source,
           },
           cardId as string,
           // Honor card-data `duration` when supplied — most cards print
@@ -1853,9 +1923,13 @@ function handlePreventiveAction(
     }
 
     case "preventDamageToZone": {
-      // Zone-level protection — targetId is the source player who owns the zone
+      // Area-level protection — targetId is the source player who owns the area.
       pushPreventiveEffect(
-        { kind: "prevent-damage-to-zone", zone: action.zone, unitFilter: action.unitFilter },
+        {
+          kind: "prevent-damage-to-zone",
+          protectedArea: action.protectedArea,
+          unitFilter: action.unitFilter,
+        },
         ctx.sourcePlayerId,
         mapDuration(action.duration),
         ctx,

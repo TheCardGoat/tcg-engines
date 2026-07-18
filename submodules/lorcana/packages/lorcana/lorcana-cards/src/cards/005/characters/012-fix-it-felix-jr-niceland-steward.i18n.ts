@@ -56,4 +56,17 @@ export const fixitFelixJrNicelandStewardI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Repararlo Félix, Jr.",
+    version: "Mayordomo de Nicelandia",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "CONSTRUYENDO JUNTOS",
+        description: "Tus ubicaciones obtienen +2 {W}.",
+      },
+    ],
+  },
 };

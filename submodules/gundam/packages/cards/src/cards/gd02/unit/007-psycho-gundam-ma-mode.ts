@@ -5,6 +5,7 @@ export const gd02PsychoGundamMaMode007: UnitCard = {
   name: "Psycho Gundam (MA Mode)",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space", "earth"],
   traits: ["titans"],
   id: "GD02-007",
   canonicalId: "GD02-007",
@@ -41,6 +42,7 @@ export const gd02PsychoGundamMaMode007: UnitCard = {
   cost: 3,
   ap: 3,
   hp: 4,
+  linkCondition: "(Cyber-Newtype) Trait",
   effect:
     "&lt;Repair 2&gt; (At the end of your turn, this Unit recovers the specified number of HP.)<br>",
   keywordEffects: [{ keyword: "Repair", value: 2 }],

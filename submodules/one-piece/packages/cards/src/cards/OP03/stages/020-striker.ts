@@ -28,12 +28,6 @@ export const op03Striker020: StageCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderName",
-            name: "Portgas.D.Ace",
-          },
-        ],
         costs: [
           {
             cost: "restDon",
@@ -63,6 +57,10 @@ export const op03Striker020: StageCard = {
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",
+            condition: {
+              condition: "leaderName",
+              name: "Portgas.D.Ace",
+            },
           },
         ],
         optional: true,

@@ -41,4 +41,14 @@ export const retrosphereI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Retrosfera",
+    text: [
+      {
+        title: "EXTRACTO DE AMATISTA 2",
+        description:
+          "{I}, desterrar este objeto: devuelve el personaje, objeto o ubicación elegido con un coste de 3 o menos a la mano del jugador.",
+      },
+    ],
+  },
 };

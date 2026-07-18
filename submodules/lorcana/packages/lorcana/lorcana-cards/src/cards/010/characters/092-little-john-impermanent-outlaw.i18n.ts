@@ -57,4 +57,17 @@ export const littleJohnImpermanentOutlawI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Pequeño juan",
+    version: "Forajido impermanente",
+    text: [
+      {
+        title: "Impulsar 3 {I}",
+      },
+      {
+        title: "LISTO PARA RASSLE",
+        description: "Siempre que pongas una carta debajo de este personaje, prepáralo.",
+      },
+    ],
+  },
 };

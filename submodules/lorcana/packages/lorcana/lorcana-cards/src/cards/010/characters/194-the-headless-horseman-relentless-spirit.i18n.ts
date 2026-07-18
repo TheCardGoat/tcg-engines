@@ -21,4 +21,9 @@ export const theHeadlessHorsemanRelentlessSpiritI18n: Record<Languages, I18nProp
     version: "Spirito Implacabile",
     text: "<Guardiano>",
   },
+  es: {
+    name: "El jinete sin cabeza",
+    version: "Espíritu implacable",
+    text: "Guardaespaldas",
+  },
 };

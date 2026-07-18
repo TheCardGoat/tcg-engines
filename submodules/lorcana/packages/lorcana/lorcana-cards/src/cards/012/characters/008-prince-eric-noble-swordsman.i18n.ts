@@ -17,4 +17,8 @@ export const princeEricNobleSwordsmanI18n: Record<Languages, I18nProperties> = {
     name: "Principe Eric",
     version: "Nobile Spadaccino",
   },
+  es: {
+    name: "Príncipe eric",
+    version: "Noble espadachín",
+  },
 };

@@ -28,6 +28,7 @@ export const op13NeverExistedInTheFirstPlace098: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [{ cost: "restDon", amount: 1 }],
         conditions: [
           {
             condition: "leaderName",

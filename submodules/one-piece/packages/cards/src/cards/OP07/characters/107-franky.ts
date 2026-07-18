@@ -53,14 +53,7 @@ export const op07Franky107: CharacterCard = {
             amount: 1,
           },
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
             condition: {
               condition: "lifeCount",
               player: "self",

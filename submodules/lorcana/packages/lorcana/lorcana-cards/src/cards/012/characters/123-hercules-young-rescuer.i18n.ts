@@ -45,4 +45,15 @@ export const herculesYoungRescuerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hércules",
+    version: "Joven salvador",
+    text: [
+      {
+        title: "SACRIFICIO HEROICO",
+        description:
+          "Cuando juegas con este personaje, puedes descartar tu mano. Si lo haces, devuelve una carta de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

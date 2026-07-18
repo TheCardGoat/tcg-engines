@@ -48,4 +48,18 @@ export const captainHookRuthlessPirateI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Capitán Garfio",
+    version: "Pirata despiadado",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "¡COBARDE!",
+        description:
+          "Mientras este personaje está ejercido, los personajes oponentes con Evasivo obtienen Imprudente. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

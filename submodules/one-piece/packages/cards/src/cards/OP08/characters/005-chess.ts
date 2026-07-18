@@ -26,7 +26,7 @@ export const op08Chess005: CharacterCard = {
   traits: ["Drum Kingdom"],
   attribute: "ranged",
   effect:
-    "[On Play] Give up to 1 of your opponent's Characters 2000 power during this turn. Then, if you don't have [Kuromarimo], play up to 1 [Kuromarimo] from your hand.",
+    "[On Play] Give up to 1 of your opponent's Characters −2000 power during this turn. Then, if you don't have [Kuromarimo], play up to 1 [Kuromarimo] from your hand.",
   effects: {
     effects: [
       {
@@ -42,8 +42,36 @@ export const op08Chess005: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
+          },
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "name",
+                value: "Kuromarimo",
+              },
+            ],
+            condition: {
+              condition: "notHasCard",
+              player: "self",
+              zone: "field",
+              filters: [
+                {
+                  filter: "name",
+                  value: "Kuromarimo",
+                },
+              ],
+            },
           },
         ],
       },

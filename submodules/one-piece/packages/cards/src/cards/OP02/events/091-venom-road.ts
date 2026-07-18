@@ -51,7 +51,8 @@ export const op02VenomRoad091: EventCard = {
         ],
         actions: [
           {
-            action: "opponentReturnDon",
+            action: "returnDon",
+            player: "opponent",
             amount: 1,
           },
         ],

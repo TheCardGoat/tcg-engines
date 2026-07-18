@@ -27,6 +27,7 @@ export type {
   ChooseOneDirective,
   ChooseOneOption,
   ConditionalDirective,
+  DamageProtectionArea,
   Directive,
   EffectAction,
   EffectActivation,

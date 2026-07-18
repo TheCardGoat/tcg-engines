@@ -9,7 +9,9 @@
   import { cn } from '$lib/utils.js';
   import ConnectionStatus from '@/features/gateway/ui/ConnectionStatus.svelte';
   import UserProfileMenu from './UserProfileMenu.svelte';
+  import MatchmakingLanguageMenu from './MatchmakingLanguageMenu.svelte';
   import type { GatewayClientStore } from '@/features/gateway/gateway-client.svelte.js';
+  import type { SupportedLocale } from '@/features/settings/player-settings-store.svelte.js';
   import type { LobbyLane } from './matchmaking-lobby.constants.js';
   import {
     COMMUNITY_DISCORD_URL,
@@ -38,12 +40,14 @@
     isAuthenticated: boolean;
     isAuthLoading: boolean;
     user: AuthUser | null;
+    selectedLocale: SupportedLocale;
     onSelectLane: (lane: LobbyLane) => void;
     onResumeMatch: () => void | Promise<void>;
     onOpenSignIn: () => void;
     onSignedOut: () => void;
     onOpenSettings: () => void;
     onOpenAccountSettings: () => void;
+    onLocaleSelection: (locale: SupportedLocale) => void;
   }
 
   let {
@@ -55,12 +59,14 @@
     isAuthenticated,
     isAuthLoading,
     user,
+    selectedLocale,
     onSelectLane,
     onResumeMatch,
     onOpenSignIn,
     onSignedOut,
     onOpenSettings,
     onOpenAccountSettings,
+    onLocaleSelection,
   }: Props = $props();
 
   const isDeckVault = $derived(page.url.pathname.includes('/deck-vault'));
@@ -265,6 +271,9 @@
             {m['sim.auth.signIn.headerButton']({})}
           </Button>
         {/if}
+
+        <span class={HERO_NAV_DIVIDER_CLASS} aria-hidden="true"></span>
+        <MatchmakingLanguageMenu {selectedLocale} {onLocaleSelection} />
       </div>
 
       <div

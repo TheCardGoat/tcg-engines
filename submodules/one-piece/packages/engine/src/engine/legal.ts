@@ -1,5 +1,15 @@
-import { canAttackWith, legalAttackTargets } from "../battle.ts";
-import { baseCost, cardName, effectBlocksFor, getCardForInstance, getPlayer } from "../shared.ts";
+import { attackHandTrashCost, canAttackWith, legalAttackTargets } from "../battle.ts";
+import { canPayCosts } from "../effects/actions.ts";
+import { evaluateConditions } from "../effects/conditions.ts";
+import { isCardPlayRestricted } from "../effects/permanent.ts";
+import {
+  cardName,
+  effectBlocksFor,
+  effectBlocksForInstance,
+  getCardCost,
+  getCardForInstance,
+  getPlayer,
+} from "../shared.ts";
 import { getOpenCharacterSlots } from "../state.ts";
 import type { LegalCommandDescriptor, MatchSeat, MatchState } from "../types.ts";
 import { hasPendingNonJudgePrompt } from "./shared.ts";
@@ -120,8 +130,11 @@ export function getLegalCommands(
 
   for (const instanceId of player.hand) {
     const card = getCardForInstance(state, instanceId);
-    const cost = baseCost(card);
+    const cost = getCardCost(state, instanceId);
     if (player.activeDon < cost || card.cardType === "leader") {
+      continue;
+    }
+    if (isCardPlayRestricted(state, viewer, instanceId, "hand")) {
       continue;
     }
     if (card.cardType === "event" && effectBlocksFor(card, "main").length === 0) {
@@ -162,6 +175,9 @@ export function getLegalCommands(
     if (!canAttackWith(state, viewer, attackerId)) {
       continue;
     }
+    if (attackHandTrashCost(state, attackerId) > player.hand.length) {
+      continue;
+    }
     legal.push({
       type: "declareAttack",
       seat: viewer,
@@ -184,8 +200,16 @@ export function getLegalCommands(
         issue.kind === "unsupportedCost" &&
         issue.code.startsWith("cost:activateMain:"),
     );
-    const hasUnusedActivation = effectBlocksFor(card, "activateMain").some(
-      (_block, index) => !instance?.usedEffectKeys.includes(`activateMain:${index}`),
+    const hasUnusedActivation = effectBlocksForInstance(state, instanceId, "activateMain").some(
+      (block, index) => {
+        const conditions = evaluateConditions(state, viewer, instanceId, block.conditions);
+        return (
+          (!block.oncePerTurn ||
+            !instance?.usedEffectKeys.includes(block.oncePerTurnKey ?? `activateMain:${index}`)) &&
+          (!conditions.supported || conditions.matches) &&
+          canPayCosts(state, viewer, instanceId, block.costs, undefined)
+        );
+      },
     );
     if (hasUnusedActivation && !hasUnsupportedActivationCost) {
       legal.push({

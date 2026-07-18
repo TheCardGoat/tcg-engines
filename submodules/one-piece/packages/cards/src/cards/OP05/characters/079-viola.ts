@@ -40,6 +40,7 @@ export const op05Viola079: CharacterCard = {
               count: {
                 amount: 3,
               },
+              chosenBy: "opponent",
             },
             position: "bottom",
           },

@@ -66,38 +66,75 @@ export const gd04GundamDx049: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["attack"],
-        conditions: [{ type: "duringPair" }, { type: "isAttackingPlayer" }],
+        conditions: [
+          { type: "duringPair" },
+          { type: "isAttackingPlayer" },
+          {
+            type: "or",
+            conditions: [
+              {
+                type: "cardInZone",
+                owner: "opponent",
+                zone: "battleArea",
+                cardType: "unit",
+                comparison: "gte",
+                count: 1,
+                attributeFilters: [{ attribute: "level", comparison: "lte", value: 8 }],
+              },
+              {
+                type: "cardInZone",
+                owner: "opponent",
+                zone: "baseSection",
+                cardType: "base",
+                comparison: "gte",
+                count: 1,
+                attributeFilters: [{ attribute: "level", comparison: "lte", value: 8 }],
+              },
+            ],
+          },
+        ],
       },
       directives: [
         {
           action: {
-            action: "exile",
-            target: {
-              owner: "friendly",
-              zone: "trash",
-              count: 7,
-              attributeFilters: [{ attribute: "trait", comparison: "includes", value: "vulture" }],
+            action: "resolveThenQueue",
+            first: {
+              action: "exile",
+              target: {
+                owner: "friendly",
+                zone: "trash",
+                count: 7,
+                attributeFilters: [
+                  { attribute: "trait", comparison: "includes", value: "vulture" },
+                ],
+              },
+            },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
+                {
+                  action: {
+                    action: "destroy",
+                    target: {
+                      owner: "opponent",
+                      cardType: ["unit", "base"],
+                      attributeFilters: [
+                        {
+                          attribute: "level",
+                          comparison: "lte",
+                          value: 8,
+                        },
+                      ],
+                      count: 1,
+                    },
+                  },
+                },
+              ],
+              sourceText: "If you do, choose 1 enemy Unit/Base that is Lv.8 or lower. Destroy it.",
             },
           },
           optional: true,
-        },
-        {
-          action: {
-            action: "destroy",
-            target: {
-              owner: "opponent",
-              cardType: ["unit", "base"],
-              attributeFilters: [
-                {
-                  attribute: "level",
-                  comparison: "lte",
-                  value: 8,
-                },
-              ],
-              count: 1,
-            },
-          },
-          dependsOnPrevious: true,
         },
       ],
       sourceText:

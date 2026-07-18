@@ -41,5 +41,39 @@ export const op01KouzukiOden031: LeaderCard = {
   ],
   effect:
     '[Activate:Main] [Once Per Turn] You can trash 1 "Land of Wano" type card from your hand: Set up to 2 of your DON!! cards as active.',
+  effects: {
+    effects: [
+      {
+        trigger: "activateMain",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Land of Wano",
+                match: "includes",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "setActive",
+            target: {
+              player: "self",
+              zones: ["costArea"],
+              count: {
+                amount: 2,
+                upTo: true,
+              },
+            },
+          },
+        ],
+        oncePerTurn: true,
+      },
+    ],
+  },
   i18n: op01KouzukiOden031I18n,
 };

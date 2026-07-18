@@ -4,8 +4,8 @@ import { op14eb04DraculeMihawkManga119I18n } from "./119-dracule-mihawk-manga.i1
 export const op14eb04DraculeMihawkManga119: CharacterCard = {
   id: "OP14-119",
   canonicalId: "OP14-119",
-  slug: "dracule-mihawk-manga",
-  name: "Dracule Mihawk (Manga)",
+  slug: "dracule-mihawk/op14-119",
+  name: "Dracule Mihawk",
   printings: [
     {
       id: "OP14-119",
@@ -45,11 +45,12 @@ export const op14eb04DraculeMihawkManga119: CharacterCard = {
     },
   ],
   effect:
-    "[Your Turn] When this Character becomes rested, up to 1 of your opponent's Characters with a cost of 9 or less cannot be rested until the end of your opponent's next End Phase.[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Character cards gains +2000 power during this battle.",
+    "[Your Turn] When this Character becomes rested, up to 1 of your opponent's Characters with a cost of 9 or less cannot be rested until the end of your opponent's next End Phase.\n[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Character cards gains +2000 power during this battle.",
   effects: {
     effects: [
       {
         trigger: "whenBecomesRested",
+        eventFilter: { targetSelf: true },
         conditions: [
           {
             condition: "turn",
@@ -74,7 +75,7 @@ export const op14eb04DraculeMihawkManga119: CharacterCard = {
                 },
               ],
             },
-            duration: "untilEndOfOpponentNextTurn",
+            duration: "untilEndOfOpponentNextEndPhase",
           },
         ],
       },

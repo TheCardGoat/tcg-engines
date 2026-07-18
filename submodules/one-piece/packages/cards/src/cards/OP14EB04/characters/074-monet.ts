@@ -23,7 +23,7 @@ export const op14eb04Monet074: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Donquixote Pirates Punk Hazard"],
+  traits: ["Punk Hazard", "Donquixote Pirates"],
   attribute: "special",
   artVariants: [
     {

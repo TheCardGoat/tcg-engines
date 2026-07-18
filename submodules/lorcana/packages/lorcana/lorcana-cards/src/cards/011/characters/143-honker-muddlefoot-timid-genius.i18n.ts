@@ -42,4 +42,14 @@ export const honkerMuddlefootTimidGeniusI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Honker Pie Muddle",
+    version: "Genio tímido",
+    text: [
+      {
+        title: "¡TEN CUIDADO!",
+        description: "Tus personajes llamados Darkwing Duck obtienen Resistencia +1.",
+      },
+    ],
+  },
 };

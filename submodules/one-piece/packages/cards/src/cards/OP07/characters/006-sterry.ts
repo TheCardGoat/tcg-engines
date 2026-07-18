@@ -31,6 +31,14 @@ export const op07Sterry006: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "modifyLeaderPower",
+            value: -5000,
+            duration: "thisTurn",
+            requiresActive: true,
+          },
+        ],
         actions: [
           {
             action: "draw",

@@ -65,4 +65,20 @@ export const kuzcoSelfishEmperorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kuzco",
+    version: "Emperador egoísta",
+    text: [
+      {
+        title: "REEMPLAZO",
+        description:
+          "Cuando juegas con este personaje, puedes colocar el objeto o la ubicación elegidos en el tintero del jugador boca abajo y ejercerlo.",
+      },
+      {
+        title: "POR INVITACIÓN SÓLO 4",
+        description:
+          "{I}: Tus otros personajes obtienen Resistencia +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

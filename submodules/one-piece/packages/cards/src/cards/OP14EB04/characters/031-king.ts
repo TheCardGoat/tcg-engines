@@ -60,6 +60,9 @@ export const op14eb04King031: CharacterCard = {
                 zone: "character",
                 filters: [
                   {
+                    filter: "excludeSelf",
+                  },
+                  {
                     filter: "name",
                     value: "King",
                   },
@@ -77,8 +80,26 @@ export const op14eb04King031: CharacterCard = {
             },
             state: "active",
           },
+          {
+            action: "addDon",
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            state: "rested",
+          },
         ],
         oncePerTurn: true,
+      },
+    ],
+    replacementEffects: [
+      {
+        replacedEvent: "ko",
+        replacementAction: {
+          action: "returnDon",
+          player: "self",
+          amount: 1,
+        },
       },
     ],
   },

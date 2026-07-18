@@ -23,7 +23,7 @@ export const op01Overheat086: EventCard = {
   cost: 2,
   traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
   effect:
-    "[Counter] Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, return up to 1 active Character with a cost of 3 or less to the owner's hand. [Trigger] Return up to 1 card with a cost of 4 or less to the owner's hand.  This card has been officially errata'd.",
+    "[Counter] Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, return up to 1 active Character with a cost of 3 or less to the owner's hand. [Trigger] Return up to 1 Character with a cost of 4 or less to the owner's hand.  This card has been officially errata'd.",
   effects: {
     effects: [
       {
@@ -42,6 +42,28 @@ export const op01Overheat086: EventCard = {
             value: 4000,
             duration: "thisBattle",
           },
+          {
+            action: "returnToHand",
+            target: {
+              player: "any",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "state",
+                  value: "active",
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 3,
+                },
+              ],
+            },
+          },
         ],
       },
       {
@@ -50,8 +72,8 @@ export const op01Overheat086: EventCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
-              zones: ["leader", "character", "stage", "costArea"],
+              player: "any",
+              zones: ["character"],
               count: {
                 amount: 1,
                 upTo: true,

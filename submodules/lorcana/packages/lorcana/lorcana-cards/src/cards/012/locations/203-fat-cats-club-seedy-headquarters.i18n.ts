@@ -17,4 +17,8 @@ export const fatCatsClubSeedyHeadquartersI18n: Record<Languages, I18nProperties>
     name: "Club di Gattolardo",
     version: "Losco Quartier Generale",
   },
+  es: {
+    name: "Club del gato gordo",
+    version: "Sede sórdida",
+  },
 };

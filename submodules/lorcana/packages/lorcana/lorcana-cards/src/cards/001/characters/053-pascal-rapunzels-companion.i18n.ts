@@ -44,4 +44,14 @@ export const pascalRapunzelsCompanionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pascal",
+    version: "El compañero de Rapunzel",
+    text: [
+      {
+        title: "Camuflaje",
+        description: "Mientras tengas otro personaje en juego, este personaje gana Evasivo.",
+      },
+    ],
+  },
 };

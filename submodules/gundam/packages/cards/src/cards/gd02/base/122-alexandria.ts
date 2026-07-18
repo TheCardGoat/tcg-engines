@@ -4,6 +4,7 @@ export const gd02Alexandria122: BaseCard = {
   cardNumber: "GD02-122",
   name: "Alexandria",
   type: "base",
+  color: "blue",
   traits: ["titans", "warship"],
   id: "GD02-122",
   canonicalId: "GD02-122",
@@ -39,6 +40,7 @@ export const gd02Alexandria122: BaseCard = {
   level: 3,
   cost: 2,
   hp: 5,
+  battlefieldZones: ["space"],
   effect:
     "【Burst】Deploy this card.<br>【Deploy】Add 1 of your Shields to your hand. Then, choose 1 rested enemy Unit that is Lv.4 or lower. Deal 1 damage to it.<br>",
   effects: [
@@ -64,20 +66,28 @@ export const gd02Alexandria122: BaseCard = {
       directives: [
         {
           action: {
-            action: "addShieldToHand",
-            count: 1,
-          },
-        },
-        {
-          action: {
-            action: "dealDamage",
-            amount: 1,
-            target: {
-              owner: "opponent",
-              cardType: "unit",
-              state: "rested",
-              count: { min: 0, max: 1 },
-              attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+            action: "resolveThenQueue",
+            first: { action: "addShieldToHand", count: 1 },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
+                {
+                  action: {
+                    action: "dealDamage",
+                    amount: 1,
+                    target: {
+                      owner: "opponent",
+                      cardType: "unit",
+                      state: "rested",
+                      count: 1,
+                      attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+                    },
+                  },
+                },
+              ],
+              sourceText:
+                "Then, choose 1 rested enemy Unit that is Lv.4 or lower. Deal 1 damage to it.",
             },
           },
         },

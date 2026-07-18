@@ -17,4 +17,8 @@ export const wendyDarlingTalentedSailorI18n: Record<Languages, I18nProperties> =
     name: "Wendy Darling",
     version: "Marinaia Talentuosa",
   },
+  es: {
+    name: "Wendy querida",
+    version: "Marinero talentoso",
+  },
 };

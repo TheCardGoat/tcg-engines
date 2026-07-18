@@ -35,4 +35,8 @@ export const poorUnfortunateSoulsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pobres almas desafortunadas",
+    text: "Devuelve el personaje, objeto o ubicación elegido con un coste de 2 o menos a la mano del jugador.",
+  },
 };

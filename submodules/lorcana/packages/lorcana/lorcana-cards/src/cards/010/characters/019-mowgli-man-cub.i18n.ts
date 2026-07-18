@@ -45,4 +45,15 @@ export const mowgliManCubI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mowgli",
+    version: "Hombre cachorro",
+    text: [
+      {
+        title: "TENER",
+        description:
+          "UNA MEJOR MIRADA Cuando juegas con este personaje, el oponente elegido revela su mano y descarta una carta que no sea de personaje de su elección.",
+      },
+    ],
+  },
 };

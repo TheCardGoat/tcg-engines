@@ -37,6 +37,17 @@ export const op08ItSToDieFor076: EventCard = {
             },
             state: "active",
           },
+          {
+            action: "addDon",
+            count: { amount: 1, upTo: true },
+            state: "active",
+            condition: {
+              condition: "hasCard",
+              player: "opponent",
+              zone: "character",
+              filters: [{ filter: "power", comparison: "gte", value: 6000 }],
+            },
+          },
         ],
       },
     ],

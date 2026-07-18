@@ -45,4 +45,15 @@ export const johnSilverShipsCookI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Juan Plata",
+    version: "Cocinero del barco",
+    text: [
+      {
+        title: "PIEZA DE HARDWARE",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido no puede desafiar durante su próximo turno.",
+      },
+    ],
+  },
 };

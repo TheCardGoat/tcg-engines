@@ -45,20 +45,37 @@ export const op02Helmeppo113: CharacterCard = {
             value: -2,
             duration: "thisTurn",
           },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 2000,
+            duration: "thisBattle",
+            condition: {
+              condition: "existsOnField",
+              zone: "character",
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "eq",
+                  value: 0,
+                },
+              ],
+            },
+          },
         ],
       },
       {
         trigger: "trigger",
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
       },

@@ -17,4 +17,8 @@ export const henWensVisionsI18n: Record<Languages, I18nProperties> = {
     name: "Visioni di Ewy",
     text: "Guarda le prime 4 carte del tuo mazzo. Mettine 1 in cima al tuo mazzo e il resto in fondo in qualsiasi ordine.",
   },
+  es: {
+    name: "Las visiones de Hen Wen",
+    text: "Mira las 4 primeras cartas de tu mazo. Coloque 1 en la parte superior de su plataforma y el resto en la parte inferior en cualquier orden.",
+  },
 };

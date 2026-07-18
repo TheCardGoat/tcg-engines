@@ -17,4 +17,8 @@ export const kodaSmallishBearI18n: Record<Languages, I18nProperties> = {
     name: "Koda",
     version: "Orsetto Cosetto",
   },
+  es: {
+    name: "Koda",
+    version: "Oso pequeño",
+  },
 };

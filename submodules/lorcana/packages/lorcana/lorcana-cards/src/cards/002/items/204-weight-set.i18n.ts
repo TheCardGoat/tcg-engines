@@ -41,4 +41,14 @@ export const weightSetI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Juego de pesas",
+    text: [
+      {
+        title: "CAPACITACIÓN",
+        description:
+          "Siempre que juegues con un personaje con 4 {S} o más, puedes pagar 1 {I} para robar una carta.",
+      },
+    ],
+  },
 };

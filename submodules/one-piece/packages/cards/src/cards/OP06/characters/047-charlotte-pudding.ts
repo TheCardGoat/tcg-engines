@@ -33,20 +33,9 @@ export const op06CharlottePudding047: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
-            action: "returnToDeck",
-            target: {
-              player: "opponent",
-              zones: ["hand"],
-              count: {
-                amount: "all",
-              },
-            },
-            position: "any",
-          },
-          {
-            action: "draw",
+            action: "redrawHand",
             player: "opponent",
-            amount: 5,
+            drawCount: 5,
           },
         ],
       },

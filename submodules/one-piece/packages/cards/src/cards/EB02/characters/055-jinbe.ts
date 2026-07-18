@@ -29,5 +29,41 @@ export const eb02Jinbe055: CharacterCard = {
   attribute: "strike",
   effect:
     '[Trigger] If your Leader has the "Fish-Man" or "Merfolk" type and you have 2 or less Life cards, play this card.',
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "compound",
+            operator: "or",
+            conditions: [
+              {
+                condition: "leaderTrait",
+                trait: "Fish-Man",
+                match: "includes",
+              },
+              {
+                condition: "leaderTrait",
+                trait: "Merfolk",
+                match: "includes",
+              },
+            ],
+          },
+          {
+            condition: "lifeCount",
+            player: "self",
+            comparison: "lte",
+            value: 2,
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+      },
+    ],
+  },
   i18n: eb02Jinbe055I18n,
 };

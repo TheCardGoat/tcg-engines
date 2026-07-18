@@ -41,4 +41,14 @@ export const goofyKlutzySkierI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "Esquiador torpe",
+    text: [
+      {
+        title: "YAAAAAA-HOO-HOO-HOO-HOOEY",
+        description: "{E}, Destierra este personaje: destierra al personaje elegido.",
+      },
+    ],
+  },
 };

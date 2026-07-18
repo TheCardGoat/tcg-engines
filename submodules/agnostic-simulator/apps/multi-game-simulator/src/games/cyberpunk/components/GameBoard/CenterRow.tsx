@@ -38,6 +38,7 @@ import {
   useCardView,
   useSideZones,
   WIN_GIG_THRESHOLD,
+  type CardActiveEffectView,
   type GigDieView,
   type MoveLogEntry,
   type Side,
@@ -1425,6 +1426,38 @@ export function CenterRow({
   const rivalSide = otherSide(humanSide);
   const friendly = useSideZones(humanSide);
   const rival = useSideZones(rivalSide);
+  const temporaryEffects = useMemo(
+    () =>
+      collectTemporaryEffects([
+        {
+          ownerSide: rivalSide,
+          cards: [rival.field, rival.legendArea],
+          playerEffects: rival.activeEffects,
+        },
+        {
+          ownerSide: humanSide,
+          cards: [friendly.field, friendly.legendArea],
+          playerEffects: friendly.activeEffects,
+        },
+      ]),
+    [
+      friendly.activeEffects,
+      friendly.field,
+      friendly.legendArea,
+      humanSide,
+      rival.activeEffects,
+      rival.field,
+      rival.legendArea,
+      rivalSide,
+    ],
+  );
+  const showActiveEffectsRail = gigsOnly && spaciousGigs && temporaryEffects.length > 0;
+  const rivalTemporaryEffects = temporaryEffects.filter((effect) => effect.ownerSide === rivalSide);
+  const friendlyTemporaryEffects = temporaryEffects.filter(
+    (effect) => effect.ownerSide === humanSide,
+  );
+  const hasRivalEffects = showActiveEffectsRail && rivalTemporaryEffects.length > 0;
+  const hasFriendlyEffects = showActiveEffectsRail && friendlyTemporaryEffects.length > 0;
   const stealChoice = stealChoiceContextFromInteractionViews({
     humanSide,
     interactionViews,
@@ -1709,6 +1742,9 @@ export function CenterRow({
               data-legend-count={mobileLedger.friendlyLegendCount ?? undefined}
               data-side-layout={mobileLedger.friendlyLayout}
             >
+              {friendlyTemporaryEffects.length > 0 ? (
+                <MobileActiveEffectsStack effects={friendlyTemporaryEffects} tone="friendly" />
+              ) : null}
               {friendlyThreeLegendLayout ? (
                 <div className={classes.mobileLedgerLegendCred}>
                   <div
@@ -1795,6 +1831,9 @@ export function CenterRow({
               data-legend-count={mobileLedger.rivalLegendCount ?? undefined}
               data-side-layout={mobileLedger.rivalLayout}
             >
+              {rivalTemporaryEffects.length > 0 ? (
+                <MobileActiveEffectsStack effects={rivalTemporaryEffects} tone="rival" />
+              ) : null}
               <GigLane
                 label="Rival Gigs"
                 side="rival"
@@ -1887,112 +1926,213 @@ export function CenterRow({
           <ClockDisplay />
         </div>
       )}
-      <GigLane
-        label="Rival Gigs"
-        side="rival"
-        ownerSide={rivalSide}
-        gridClass={classes.rival}
-        badgeClass={classes.gigBadgeRival}
-        badgePosition="top"
-        dice={rival.gigArea}
-        streetCred={rival.streetCred}
-        interactive={
-          (stealChoice !== null && rival.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
-          rivalEffectGigActive ||
-          rivalAdjustGigActive ||
-          rivalSoftAdjustActive
-        }
-        interactiveDieIds={
-          stealChoice
-            ? eligibleStealIds
-            : adjustGigChoice
+      <div className={`${classes.effectSide} ${classes.rivalEffectSide}`}>
+        {hasRivalEffects ? (
+          <ActiveEffectsRail effects={rivalTemporaryEffects} tone="rival" />
+        ) : null}
+        <GigLane
+          label="Rival Gigs"
+          side="rival"
+          ownerSide={rivalSide}
+          gridClass={classes.rival}
+          badgeClass={classes.gigBadgeRival}
+          badgePosition="top"
+          dice={rival.gigArea}
+          streetCred={rival.streetCred}
+          interactive={
+            (stealChoice !== null && rival.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
+            rivalEffectGigActive ||
+            rivalAdjustGigActive ||
+            rivalSoftAdjustActive
+          }
+          interactiveDieIds={
+            stealChoice
+              ? eligibleStealIds
+              : adjustGigChoice
+                ? eligibleAdjustGigIds
+                : eligibleEffectGigIds
+          }
+          selectedDieIds={
+            rivalAdjustGigActive
               ? eligibleAdjustGigIds
-              : eligibleEffectGigIds
-        }
-        selectedDieIds={
-          rivalAdjustGigActive
-            ? eligibleAdjustGigIds
-            : rivalSoftAdjustActive || rivalEffectGigActive
-              ? selectedEffectGigIdSet
-              : selectedStealIdSet
-        }
-        selectionPrompt={
-          stealChoice !== null && rival.gigArea.some((die) => eligibleStealIds.has(die.id))
-            ? stealSelectionPrompt
-            : rivalEffectGigActive
-              ? effectGigSelectionPrompt
-              : undefined
-        }
-        logHighlightedDieId={logHighlightedGigId}
-        adjustChoice={
-          rivalAdjustGigActive
-            ? adjustGigChoice?.control
-            : rivalSoftAdjustActive
-              ? softAdjustControl
-              : null
-        }
-        selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
-        onDieClick={
-          stealChoice ? handleStealDieClick : effectGigChoice ? handleEffectGigClick : undefined
-        }
-        onAdjustGig={handleAdjustGigValue}
-      />
+              : rivalSoftAdjustActive || rivalEffectGigActive
+                ? selectedEffectGigIdSet
+                : selectedStealIdSet
+          }
+          selectionPrompt={
+            stealChoice !== null && rival.gigArea.some((die) => eligibleStealIds.has(die.id))
+              ? stealSelectionPrompt
+              : rivalEffectGigActive
+                ? effectGigSelectionPrompt
+                : undefined
+          }
+          logHighlightedDieId={logHighlightedGigId}
+          adjustChoice={
+            rivalAdjustGigActive
+              ? adjustGigChoice?.control
+              : rivalSoftAdjustActive
+                ? softAdjustControl
+                : null
+          }
+          selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
+          onDieClick={
+            stealChoice ? handleStealDieClick : effectGigChoice ? handleEffectGigClick : undefined
+          }
+          onAdjustGig={handleAdjustGigValue}
+        />
+      </div>
       {resolvingCard ? <ResolvingCardAnchor card={resolvingCard} /> : null}
-      <GigLane
-        label="Friendly Gigs"
-        side="friendly"
-        ownerSide={humanSide}
-        gridClass={classes.friendly}
-        badgeClass={classes.gigBadgeFriendly}
-        badgePosition="bottom"
-        dice={friendly.gigArea}
-        streetCred={friendly.streetCred}
-        interactive={
-          (stealChoice !== null && friendly.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
-          friendlyEffectGigActive ||
-          friendlyAdjustGigActive ||
-          friendlySoftAdjustActive
-        }
-        interactiveDieIds={
-          stealChoice
-            ? eligibleStealIds
-            : adjustGigChoice
+      <div className={`${classes.effectSide} ${classes.friendlyEffectSide}`}>
+        <GigLane
+          label="Friendly Gigs"
+          side="friendly"
+          ownerSide={humanSide}
+          gridClass={classes.friendly}
+          badgeClass={classes.gigBadgeFriendly}
+          badgePosition="bottom"
+          dice={friendly.gigArea}
+          streetCred={friendly.streetCred}
+          interactive={
+            (stealChoice !== null &&
+              friendly.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
+            friendlyEffectGigActive ||
+            friendlyAdjustGigActive ||
+            friendlySoftAdjustActive
+          }
+          interactiveDieIds={
+            stealChoice
+              ? eligibleStealIds
+              : adjustGigChoice
+                ? eligibleAdjustGigIds
+                : eligibleEffectGigIds
+          }
+          selectedDieIds={
+            friendlyAdjustGigActive
               ? eligibleAdjustGigIds
-              : eligibleEffectGigIds
-        }
-        selectedDieIds={
-          friendlyAdjustGigActive
-            ? eligibleAdjustGigIds
-            : friendlySoftAdjustActive || friendlyEffectGigActive
-              ? selectedEffectGigIdSet
-              : selectedStealIdSet
-        }
-        selectionPrompt={
-          stealChoice !== null && friendly.gigArea.some((die) => eligibleStealIds.has(die.id))
-            ? stealSelectionPrompt
-            : friendlyEffectGigActive
-              ? effectGigSelectionPrompt
-              : undefined
-        }
-        logHighlightedDieId={logHighlightedGigId}
-        adjustChoice={
-          friendlyAdjustGigActive
-            ? adjustGigChoice?.control
-            : friendlySoftAdjustActive
-              ? softAdjustControl
-              : null
-        }
-        selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
-        onDieClick={
-          stealChoice ? handleStealDieClick : effectGigChoice ? handleEffectGigClick : undefined
-        }
-        onAdjustGig={handleAdjustGigValue}
-      />
+              : friendlySoftAdjustActive || friendlyEffectGigActive
+                ? selectedEffectGigIdSet
+                : selectedStealIdSet
+          }
+          selectionPrompt={
+            stealChoice !== null && friendly.gigArea.some((die) => eligibleStealIds.has(die.id))
+              ? stealSelectionPrompt
+              : friendlyEffectGigActive
+                ? effectGigSelectionPrompt
+                : undefined
+          }
+          logHighlightedDieId={logHighlightedGigId}
+          adjustChoice={
+            friendlyAdjustGigActive
+              ? adjustGigChoice?.control
+              : friendlySoftAdjustActive
+                ? softAdjustControl
+                : null
+          }
+          selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
+          onDieClick={
+            stealChoice ? handleStealDieClick : effectGigChoice ? handleEffectGigClick : undefined
+          }
+          onAdjustGig={handleAdjustGigValue}
+        />
+        {hasFriendlyEffects ? (
+          <ActiveEffectsRail effects={friendlyTemporaryEffects} tone="friendly" />
+        ) : null}
+      </div>
       {!gigsOnly && (
         <div className={`${classes.cell} ${classes.pass}`}>
           <PassTurnControl />
         </div>
       )}
+    </div>
+  );
+}
+
+type CenterActiveEffect = CardActiveEffectView & { ownerSide: Side };
+
+export function collectTemporaryEffects(
+  sides: ReadonlyArray<{
+    ownerSide: Side;
+    cards: ReadonlyArray<ReadonlyArray<{ activeEffects: readonly CardActiveEffectView[] }>>;
+    playerEffects: readonly CardActiveEffectView[];
+  }>,
+): CenterActiveEffect[] {
+  const effects = new Map<string, CenterActiveEffect>();
+  for (const { ownerSide, cards, playerEffects } of sides) {
+    for (const effect of playerEffects) {
+      if (effect.isTemporary) effects.set(effect.id, { ...effect, ownerSide });
+    }
+    for (const card of cards.flat()) {
+      for (const effect of card.activeEffects) {
+        if (effect.isTemporary) effects.set(effect.id, { ...effect, ownerSide });
+      }
+    }
+  }
+  return [...effects.values()];
+}
+
+function ActiveEffectsRail({
+  effects,
+  tone,
+}: {
+  effects: readonly CenterActiveEffect[];
+  tone: "rival" | "friendly";
+}) {
+  return (
+    <section
+      className={`${classes.activeEffectsRail} ${tone === "rival" ? classes.rivalEffectsRail : classes.friendlyEffectsRail}`}
+      data-testid={`active-effects-rail-${tone}`}
+      aria-label={`${tone === "rival" ? "Rival" : "Your"} active effects`}
+    >
+      <span className={classes.activeEffectsRailTitle}>Active effects</span>
+      <div className={classes.activeEffectsRailCards}>
+        {effects.map((effect) => (
+          <div
+            key={effect.id}
+            className={classes.activeEffectCard}
+            data-tone={tone}
+            data-effect-kind={effect.effectKind}
+            data-source-card-id={effect.sourceCardId}
+            title={effect.detail}
+          >
+            <CardImage
+              className={classes.activeEffectImage}
+              imageUrl={effect.sourceImageUrl}
+              alt={effect.sourceName}
+              previewDetails={{ name: effect.sourceName }}
+            />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function MobileActiveEffectsStack({
+  effects,
+  tone,
+}: {
+  effects: readonly CenterActiveEffect[];
+  tone: "rival" | "friendly";
+}) {
+  const firstEffect = effects[0]!;
+  return (
+    <div
+      className={classes.mobileActiveEffects}
+      data-testid={`mobile-active-effects-${tone}`}
+      data-tone={tone}
+      aria-label={`${tone === "rival" ? "Rival" : "Your"} active effects: ${effects.length}`}
+    >
+      <span className={classes.mobileActiveEffectsLabel}>FX</span>
+      <CardImage
+        className={classes.mobileActiveEffectImage}
+        imageUrl={firstEffect.sourceImageUrl}
+        alt={firstEffect.sourceName}
+        previewDetails={{ name: firstEffect.sourceName }}
+        inspectOnTap
+      />
+      {effects.length > 1 ? (
+        <span className={classes.mobileActiveEffectsCount}>+{effects.length - 1}</span>
+      ) : null}
     </div>
   );
 }
@@ -2224,11 +2364,33 @@ function resolvingCardFromCurrentTrigger(
   if (!currentTrigger) {
     return null;
   }
+  const card = cardIndex[currentTrigger.sourceCardId as string];
+  const label = currentTrigger.id.startsWith("activated-")
+    ? activatedAbilityLabel(card)
+    : currentTrigger.event.type === "blockerActivated"
+      ? "Blocker trigger"
+      : undefined;
   return resolvingCardFromSourceCardId(
     currentTrigger.sourceCardId as string,
     cardIndex,
-    currentTrigger.event.type === "blockerActivated" ? { label: "Blocker trigger" } : {},
+    label ? { label } : {},
   );
+}
+
+function activatedAbilityLabel(card: CardInstance | undefined): string | undefined {
+  if (!card) {
+    return undefined;
+  }
+  switch (defOf(card).type) {
+    case "gear":
+      return "Gear ability";
+    case "legend":
+      return "Legend ability";
+    case "unit":
+      return "Unit ability";
+    default:
+      return undefined;
+  }
 }
 
 function resolvingSourceActionLabel(
@@ -2239,17 +2401,7 @@ function resolvingSourceActionLabel(
   if (!card || triggerLabelForCard(card)) {
     return undefined;
   }
-  const def = defOf(card);
-  switch (def.type) {
-    case "gear":
-      return "Gear ability";
-    case "legend":
-      return "Legend ability";
-    case "unit":
-      return "Unit ability";
-    default:
-      return undefined;
-  }
+  return activatedAbilityLabel(card);
 }
 
 function isResolvingSourceActionId(actionId: string): boolean {

@@ -45,4 +45,15 @@ export const namaariHeirOfFangI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Namari",
+    version: "Heredero de colmillo",
+    text: [
+      {
+        title: "LUCHA CON DOS ARMAS",
+        description:
+          "Durante tu turno, siempre que este personaje cause daño a otro personaje en un desafío, tú puedes causar la misma cantidad de daño a otro personaje elegido.",
+      },
+    ],
+  },
 };

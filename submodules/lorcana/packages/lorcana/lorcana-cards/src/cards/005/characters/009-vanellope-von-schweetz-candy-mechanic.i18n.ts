@@ -45,4 +45,15 @@ export const vanellopeVonSchweetzCandyMechanicI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Vanellope von Schweetz",
+    version: "Mecánico de dulces",
+    text: [
+      {
+        title: "TIENES QUE PAGAR PARA JUGAR",
+        description:
+          "Cada vez que este personaje realiza una misión, el personaje contrario elegido obtiene -1 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

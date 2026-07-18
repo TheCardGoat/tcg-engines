@@ -71,6 +71,10 @@ export const op10Room117: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [{ action: "draw", player: "self", amount: 1 }],
+      },
     ],
   },
   i18n: op10Room117I18n,

@@ -17,4 +17,8 @@ export const simbaScrappyCubI18n: Record<Languages, I18nProperties> = {
     name: "Simba",
     version: "Cucciolo Spelacchiato",
   },
+  es: {
+    name: "Simba",
+    version: "Cachorro chatarra",
+  },
 };

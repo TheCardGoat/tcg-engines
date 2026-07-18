@@ -6,6 +6,7 @@ import {
 } from "@tcg/lorcana-engine";
 import "../../testing/public-env";
 import { m } from "$lib/i18n/messages.js";
+import { setLocale } from "../paraglide/runtime.js";
 
 import { LorcanaSidebarPresenter } from "@/features/simulator/presenters/sidebar-presenter.svelte.js";
 import type { LorcanaGameContextValue } from "@/features/simulator/context/game-context.svelte.js";
@@ -141,6 +142,7 @@ function createGameContextStub(
 const originalLocalStorage = globalThis.localStorage;
 
 afterEach(() => {
+  setLocale("en", { reload: false });
   if (originalLocalStorage) {
     globalThis.localStorage = originalLocalStorage;
     return;
@@ -296,6 +298,45 @@ describe("LorcanaSidebarPresenter", () => {
     presenter.initializeLocale();
 
     expect(presenter.showRawLogRegistryJson).toBe(true);
+  });
+
+  it("rebuilds game presentation when restoring a locally saved language", () => {
+    const storage = new MemoryStorage();
+    storage.setItem("lorcana.simulator.playerLocale", "es");
+    globalThis.localStorage = storage;
+
+    let localeRebuilds = 0;
+    const presenter = new LorcanaSidebarPresenter(
+      createGameContextStub({
+        handleLocaleChanged: () => {
+          localeRebuilds += 1;
+        },
+      }),
+    );
+
+    presenter.initializeLocale();
+
+    expect(presenter.selectedLocale).toBe("es");
+    expect(localeRebuilds).toBe(1);
+  });
+
+  it("rebuilds game presentation when restoring a server-saved language", () => {
+    const storage = new MemoryStorage();
+    globalThis.localStorage = storage;
+
+    let localeRebuilds = 0;
+    const presenter = new LorcanaSidebarPresenter(
+      createGameContextStub({
+        handleLocaleChanged: () => {
+          localeRebuilds += 1;
+        },
+      }),
+    );
+
+    presenter.initializeFromServer({ selectedLocale: "de" });
+
+    expect(presenter.selectedLocale).toBe("de");
+    expect(localeRebuilds).toBe(1);
   });
 
   it("defaults skip action confirmation to disabled when no value is stored", () => {

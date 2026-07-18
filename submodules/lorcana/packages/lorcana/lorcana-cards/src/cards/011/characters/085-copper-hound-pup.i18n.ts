@@ -43,4 +43,14 @@ export const copperHoundPupI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cobre",
+    version: "Cachorro de sabueso",
+    text: [
+      {
+        title: "ENCONTRADO YA",
+        description: "Cuando juegas con este personaje, el jugador elegido revela su mano.",
+      },
+    ],
+  },
 };

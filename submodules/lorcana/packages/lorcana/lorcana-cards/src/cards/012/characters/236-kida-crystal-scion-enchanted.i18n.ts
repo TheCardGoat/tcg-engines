@@ -77,4 +77,23 @@ export const kidaCrystalScionEnchantedI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Niño",
+    version: "Vástago de cristal",
+    text: [
+      {
+        title: "Cambio 6 {I}",
+      },
+      {
+        title: "INUNDACIÓN DE PODER",
+        description:
+          "Cuando juegas con este personaje, cada jugador puede poner hasta 5 cartas de su descarte en su tintero boca abajo y ejercidas.",
+      },
+      {
+        title: "EL CAMINO REVELADO 7",
+        description:
+          "{I}: mira las 2 cartas superiores de tu mazo. Pon uno en tu mano y el otro en el fondo de tu mazo.",
+      },
+    ],
+  },
 };

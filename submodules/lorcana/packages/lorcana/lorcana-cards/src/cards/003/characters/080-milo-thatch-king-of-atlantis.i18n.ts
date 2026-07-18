@@ -60,4 +60,18 @@ export const miloThatchKingOfAtlantisI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Milo Paja",
+    version: "Rey de la Atlántida",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "LLEVALOS POR SORPRESA",
+        description:
+          "Cuando este personaje sea desterrado, devuelve todos los personajes contrarios a las manos de sus jugadores.",
+      },
+    ],
+  },
 };

@@ -5,6 +5,7 @@ export const gd02GquuuuuuxOmegaPsycommu038: UnitCard = {
   name: "GQuuuuuuX (Omega Psycommu)",
   type: "unit",
   color: "red",
+  battlefieldZones: ["space", "earth"],
   traits: ["clan"],
   id: "GD02-038",
   canonicalId: "GD02-038",
@@ -90,6 +91,7 @@ export const gd02GquuuuuuxOmegaPsycommu038: UnitCard = {
             action: "lookAtTopDeck",
             count: 3,
             return: "chooseTop",
+            randomizeRemainingToBottom: true,
             tutorDestination: "battleArea",
             tutorFilter: {
               owner: "friendly",

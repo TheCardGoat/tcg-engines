@@ -26,7 +26,7 @@ export const op07BoaMarigold052: CharacterCard = {
   traits: ["Kuja Pirates"],
   attribute: "slash",
   effect:
-    "[On Play] If you have 2 or more [Amazon Lily] or [Kuja Pirates] type Characters on your field, place up to 1 Character with a cost of 2 or less at the bottom of the owner's deck.",
+    "[On Play] If you have 2 or more {Amazon Lily} or {Kuja Pirates} type Characters on your field, place up to 1 Character with a cost of 2 or less at the bottom of the owner's deck.",
   effects: {
     effects: [
       {
@@ -40,12 +40,19 @@ export const op07BoaMarigold052: CharacterCard = {
             value: 2,
             filters: [
               {
-                filter: "trait",
-                value: "Amazon Lily",
-              },
-              {
-                filter: "trait",
-                value: "Kuja Pirates",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Amazon Lily",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Kuja Pirates",
+                    match: "includes",
+                  },
+                ],
               },
             ],
           },
@@ -54,7 +61,7 @@ export const op07BoaMarigold052: CharacterCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

@@ -41,4 +41,14 @@ export const thumperYoungBunnyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Golpeador",
+    version: "Conejito joven",
+    text: [
+      {
+        title: "¡TU PUEDES HACERLO!",
+        description: "{E}: el personaje elegido obtiene +3 este turno.",
+      },
+    ],
+  },
 };

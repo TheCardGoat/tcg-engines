@@ -25,6 +25,5 @@ export const op02Sphinx088: CharacterCard = {
   counter: 1000,
   traits: ["Animal Impel Down"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op02Sphinx088I18n,
 };

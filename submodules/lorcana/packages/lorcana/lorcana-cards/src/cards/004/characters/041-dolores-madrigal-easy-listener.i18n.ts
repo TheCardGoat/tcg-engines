@@ -45,4 +45,15 @@ export const doloresMadrigalEasyListenerI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Dolores Madrigal",
+    version: "Oyente fácil",
+    text: [
+      {
+        title: "INFORMANTE MÁGICO",
+        description:
+          "Cuando juegas con este personaje, si un oponente tiene un personaje ejercido en juego, puedes robar una carta.",
+      },
+    ],
+  },
 };

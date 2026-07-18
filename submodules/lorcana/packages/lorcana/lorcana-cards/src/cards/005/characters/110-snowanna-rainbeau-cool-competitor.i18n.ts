@@ -21,4 +21,9 @@ export const snowannaRainbeauCoolCompetitorI18n: Record<Languages, I18nPropertie
     version: "Avversaria Glaciale",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Snowanna Rainbeau",
+    version: "Competidor genial",
+    text: "Correr",
+  },
 };

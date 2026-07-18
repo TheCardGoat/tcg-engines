@@ -25,11 +25,17 @@ export const op09BuildingSnake008: CharacterCard = {
   traits: ["Red-Haired Pirates"],
   attribute: "slash",
   effect:
-    "[Activate: Main] You may place this Character at the bottom of the owner's deck: Give up to 1 of your opponent's Characters 3000 power during this turn.",
+    "[Activate: Main] You may place this Character at the bottom of the owner's deck: Give up to 1 of your opponent's Characters −3000 power during this turn.",
   effects: {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnThisToDeck",
+            position: "bottom",
+          },
+        ],
         actions: [
           {
             action: "modifyPower",
@@ -41,7 +47,7 @@ export const op09BuildingSnake008: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 3000,
+            value: -3000,
             duration: "thisTurn",
           },
         ],

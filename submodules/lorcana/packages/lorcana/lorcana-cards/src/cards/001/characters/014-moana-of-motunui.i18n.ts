@@ -45,4 +45,15 @@ export const moanaOfMotunuiI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Moana",
+    version: "De Motunui",
+    text: [
+      {
+        title: "PODEMOS ARREGLARLO",
+        description:
+          "Siempre que este personaje realice una misión, puedes preparar a tus otros personajes de Princesa. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

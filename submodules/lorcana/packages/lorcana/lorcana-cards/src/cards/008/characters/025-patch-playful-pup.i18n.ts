@@ -56,4 +56,18 @@ export const patchPlayfulPupI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Parche",
+    version: "Cachorro juguetón",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "CACHORRO LADRANDO",
+        description:
+          "Mientras tengas otro personaje Cachorro en juego, este personaje obtiene +1 {L}.",
+      },
+    ],
+  },
 };

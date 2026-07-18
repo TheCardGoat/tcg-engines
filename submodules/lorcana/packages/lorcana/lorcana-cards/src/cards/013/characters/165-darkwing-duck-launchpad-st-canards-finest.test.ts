@@ -7,8 +7,14 @@ import {
 import { darkwingDuckLaunchpadStCanardsFinest } from "./165-darkwing-duck-launchpad-st-canards-finest";
 
 const darkwingShiftBase = createMockCharacter({
-  id: "darkwing-launchpad-shift-base",
-  name: "Darkwing Duck & Launchpad",
+  id: "darkwing-shift-base",
+  name: "Darkwing Duck",
+  cost: 3,
+});
+
+const launchpadShiftBase = createMockCharacter({
+  id: "launchpad-shift-base",
+  name: "Launchpad",
   cost: 3,
 });
 
@@ -21,13 +27,16 @@ const weakDefender = createMockCharacter({
 });
 
 describe("Darkwing Duck & Launchpad - St. Canard's Finest", () => {
-  it("can be played using Shift 5", () => {
+  it.each([
+    ["Darkwing Duck", darkwingShiftBase],
+    ["Launchpad", launchpadShiftBase],
+  ])("can be played using Shift 5 on %s", (_name: string, shiftBase: typeof darkwingShiftBase) => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
       hand: [darkwingDuckLaunchpadStCanardsFinest],
-      play: [darkwingShiftBase],
+      play: [shiftBase],
       inkwell: 5,
     });
-    const shiftTarget = testEngine.findCardInstanceId(darkwingShiftBase, "play", PLAYER_ONE);
+    const shiftTarget = testEngine.findCardInstanceId(shiftBase, "play", PLAYER_ONE);
 
     expect(
       testEngine.asPlayerOne().playCard(darkwingDuckLaunchpadStCanardsFinest, {

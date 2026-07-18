@@ -26,7 +26,7 @@ export const op03Carne045: CharacterCard = {
   traits: ["East Blue"],
   attribute: "slash",
   effect:
-    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [Opponent's Turn] If you have 20 or less cards in your deck, this Character gains +3000 power.",
+    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[Opponent's Turn] If you have 20 or less cards in your deck, this Character gains +3000 power.",
   effects: {
     keywords: ["blocker"],
     permanentEffects: [

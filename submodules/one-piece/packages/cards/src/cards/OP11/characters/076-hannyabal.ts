@@ -36,6 +36,7 @@ export const op11Hannyabal076: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Impel Down",
+            match: "includes",
           },
         ],
         actions: [
@@ -58,6 +59,7 @@ export const op11Hannyabal076: CharacterCard = {
               {
                 filter: "trait",
                 value: "Impel Down",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

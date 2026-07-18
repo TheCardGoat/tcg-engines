@@ -407,6 +407,8 @@ function onePieceZoneSuffix(
       return "stage";
     case "trash":
       return "trash";
+    case "resolution":
+      return "resolution";
   }
 }
 

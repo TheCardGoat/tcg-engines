@@ -70,27 +70,22 @@ export function queueFormatLabelKey(format: QueueStatsFormat): QueueCardDefiniti
   switch (format) {
     case "infinity":
       return "sim.matchmaking.matchmaking.formats.infinity";
-    case "attack-of-the-vine":
-      return "sim.matchmaking.matchmaking.formats.earlyAccess";
     case "core-constructed":
       return "sim.matchmaking.matchmaking.formats.ccROF";
+    case "attack-of-the-vine":
+      return "sim.matchmaking.matchmaking.formats.earlyAccess";
     default: {
-      const exhaustive: never = format;
-      return exhaustive;
+      return "sim.matchmaking.matchmaking.formats.infinity";
     }
   }
 }
 
 export function isQueuePartitionSupported(
-  format: QueueStatsFormat,
-  mode: QueueStatsMode,
-  matchType: "ranked" | "casual" | "testing",
+  _format: QueueStatsFormat,
+  _mode: QueueStatsMode,
+  _matchType: "ranked" | "casual" | "testing",
 ): boolean {
-  if (format !== "attack-of-the-vine") {
-    return true;
-  }
-
-  return matchType === "casual" || (matchType === "testing" && mode === "1");
+  return true;
 }
 
 export function firstSupportedQueueFormat(
@@ -105,7 +100,7 @@ export function firstSupportedQueueFormat(
 }
 
 /** Number of ranked matches required before a player's MMR is considered established. */
-export const PLACEMENT_THRESHOLD = 20;
+export const PLACEMENT_THRESHOLD = 10;
 
 export const MASTER_MMR_THRESHOLD = 1800;
 

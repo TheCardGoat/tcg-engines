@@ -17,4 +17,8 @@ export const breakFreeI18n: Record<Languages, I18nProperties> = {
     name: "Liberarsi",
     text: "Infliggi 1 danno a un tuo personaggio a tua scelta. Ottiene <Lesto> e riceve +1 {S} per questo turno. (Può sfidare nel turno in cui viene giocato.)",
   },
+  es: {
+    name: "Libérate",
+    text: "Inflige 1 daño al personaje tuyo elegido. Obtienen Rush y obtienen +1 {S} este turno. (Pueden desafiar el turno en el que se juega).",
+  },
 };

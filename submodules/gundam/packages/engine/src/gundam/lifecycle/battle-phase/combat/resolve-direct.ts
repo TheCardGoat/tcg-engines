@@ -8,45 +8,12 @@ import {
 import { emitGundamEvent } from "../../../events.ts";
 import { logShieldRemoved, logUnitDefeated } from "../../../logging.ts";
 import { handleUnitDefeated } from "../../../effects/handlers/combat.ts";
-import {
-  enqueueObserverTriggers,
-  enqueueOwnCardTriggers,
-} from "../../../effects/pending-effects.ts";
+import { enqueueOwnCardTriggers } from "../../../effects/pending-effects.ts";
 import type { BattleEffCtx } from "./types.ts";
 import { hasDamagePreventionFor, hasZoneDamagePreventionFor } from "./damage-prevention.ts";
 import { applyBattleDamage } from "./apply-damage.ts";
 import { enqueueShieldAreaCardDestroyedByUnitDamageTrigger } from "./shield-area-destroy-event.ts";
-
-/**
- * Enqueue the `attackerDestroyedDefender` trigger on the *attacker* card
- * after its battle damage destroys the defender. Card text reading
- * "when this Unit destroys an enemy Unit with battle damage, do X"
- * keys on this event (timing string `"onDestroyByBattle"`).
- *
- * Called only from the unit-vs-unit battle-damage paths in this module
- * — i.e. paths where the attacker reduces the defender to 0 HP via AP.
- * Effect-damage destruction (e.g. dealDamage actions) deliberately does
- * NOT fire this event — those don't satisfy the "with battle damage"
- * predicate and would mis-fire cards like Gundam Kyrios (GD03-022).
- */
-function enqueueAttackerDestroyedDefenderTrigger(
-  g: GundamG,
-  attackerId: string,
-  defenderId: string,
-  attackerPlayerId: string,
-  ctx: BattleEffCtx,
-): void {
-  const event = {
-    type: "attackerDestroyedDefender" as const,
-    cardId: attackerId,
-    sourceCardId: attackerId,
-    defeatedCardId: defenderId,
-    ownerId: attackerPlayerId,
-    playerId: attackerPlayerId,
-  };
-  enqueueOwnCardTriggers(g, event, attackerId, attackerPlayerId, ctx.framework);
-  enqueueObserverTriggers(g, event, ctx.framework, attackerId);
-}
+import { enqueueAttackerDestroyedDefenderTrigger } from "./unit-destroy-event.ts";
 
 export function resolveDirectBattle(
   g: GundamG,
@@ -243,8 +210,16 @@ export function resolveDirectBattle(
         applyBattleDamage(g, ctx.framework, target, attackerStats.ap, attackerId) &&
         isDefeated(target, g, ctx.framework.cards)
       ) {
+        const defeatedPairedPilotId = g.pilotAssignments[target];
         handleUnitDefeated(target, battleDestroyCtx);
-        enqueueAttackerDestroyedDefenderTrigger(g, attackerId, target, attackerPlayerId, ctx);
+        enqueueAttackerDestroyedDefenderTrigger(
+          g,
+          attackerId,
+          target,
+          attackerPlayerId,
+          ctx,
+          defeatedPairedPilotId,
+        );
       }
       return;
     }
@@ -278,8 +253,16 @@ export function resolveDirectBattle(
         applyBattleDamage(g, ctx.framework, target, attackerStats.ap, attackerId) &&
         isDefeated(target, g, ctx.framework.cards)
       ) {
+        const defeatedPairedPilotId = g.pilotAssignments[target];
         handleUnitDefeated(target, battleDestroyCtx);
-        enqueueAttackerDestroyedDefenderTrigger(g, attackerId, target, attackerPlayerId, ctx);
+        enqueueAttackerDestroyedDefenderTrigger(
+          g,
+          attackerId,
+          target,
+          attackerPlayerId,
+          ctx,
+          defeatedPairedPilotId,
+        );
         return;
       }
       if (
@@ -303,8 +286,16 @@ export function resolveDirectBattle(
         applyBattleDamage(g, ctx.framework, target, attackerStats.ap, attackerId) &&
         isDefeated(target, g, ctx.framework.cards)
       ) {
+        const defeatedPairedPilotId = g.pilotAssignments[target];
         handleUnitDefeated(target, battleDestroyCtx);
-        enqueueAttackerDestroyedDefenderTrigger(g, attackerId, target, attackerPlayerId, ctx);
+        enqueueAttackerDestroyedDefenderTrigger(
+          g,
+          attackerId,
+          target,
+          attackerPlayerId,
+          ctx,
+          defeatedPairedPilotId,
+        );
       }
       return;
     }
@@ -328,9 +319,17 @@ export function resolveDirectBattle(
       handleUnitDefeated(attackerId, targetDefeatCtx);
     }
     if (targetDefeated) {
+      const defeatedPairedPilotId = g.pilotAssignments[target];
       handleUnitDefeated(target, battleDestroyCtx);
       if (!attackerDefeated) {
-        enqueueAttackerDestroyedDefenderTrigger(g, attackerId, target, attackerPlayerId, ctx);
+        enqueueAttackerDestroyedDefenderTrigger(
+          g,
+          attackerId,
+          target,
+          attackerPlayerId,
+          ctx,
+          defeatedPairedPilotId,
+        );
       }
     }
   }

@@ -49,12 +49,19 @@ export const op02NicoRobin037: CharacterCard = {
                 value: 2,
               },
               {
-                filter: "trait",
-                value: "FILM",
-              },
-              {
-                filter: "trait",
-                value: "Straw Hat Crew",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "FILM",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Straw Hat Crew",
+                    match: "includes",
+                  },
+                ],
               },
               {
                 filter: "cardCategory",

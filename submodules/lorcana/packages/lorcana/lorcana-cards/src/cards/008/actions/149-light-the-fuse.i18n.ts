@@ -17,4 +17,8 @@ export const lightTheFuseI18n: Record<Languages, I18nProperties> = {
     name: "Accendere la Miccia",
     text: "Infliggi 1 danno a un personaggio a tua scelta per ogni personaggio impegnato che hai in gioco.",
   },
+  es: {
+    name: "Enciende el fusible",
+    text: "Inflige 1 daño al personaje elegido por cada personaje ejercido que tengas en juego.",
+  },
 };

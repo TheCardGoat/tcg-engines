@@ -27,5 +27,36 @@ export const op01KurozumiSemimaru099: CharacterCard = {
   attribute: "special",
   effect:
     "Kurozumi Clan type Characters other than your [Kurozumi Semimaru] cannot be K.O.'d in battle.",
+  effects: {
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Kurozumi Clan",
+                  match: "includes",
+                },
+                {
+                  filter: "excludeName",
+                  value: "Kurozumi Semimaru",
+                },
+              ],
+            },
+            duration: "permanent",
+            restriction: "inBattle",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op01KurozumiSemimaru099I18n,
 };

@@ -43,4 +43,14 @@ export const captainHookConnivingPirateI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Capitán Garfio",
+    version: "Pirata intrigante",
+    text: [
+      {
+        title: "tener en ti",
+        description: "Siempre que este personaje desafíe a otro personaje, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

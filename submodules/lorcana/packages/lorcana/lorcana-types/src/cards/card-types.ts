@@ -22,7 +22,7 @@ import type { InkType } from "./ink-types";
 export const CARD_TYPES = ["character", "action", "item", "location"] as const;
 export type CardType = (typeof CARD_TYPES)[number];
 
-export const LANGUAGES = ["en", "de", "fr", "it"] as const;
+export const LANGUAGES = ["en", "de", "fr", "it", "es"] as const;
 export type Languages = (typeof LANGUAGES)[number];
 
 /** Action subtypes */

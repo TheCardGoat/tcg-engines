@@ -41,4 +41,14 @@ export const scepterOfArendelleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cetro de Arendelle",
+    text: [
+      {
+        title: "DOMINIO",
+        description:
+          "{E}: el personaje elegido obtiene apoyo este turno. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+      },
+    ],
+  },
 };

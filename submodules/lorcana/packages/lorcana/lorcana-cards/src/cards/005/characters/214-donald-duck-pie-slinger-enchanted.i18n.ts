@@ -78,4 +78,23 @@ export const donaldDuckPieSlingerEnchantedI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Hondero de pastel",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "TARTA HUMILDE",
+        description:
+          "Cuando juegas con este personaje, si usaste Shift para jugar con él, cada oponente pierde 2 conocimientos.",
+      },
+      {
+        title: "PATO ERRANTE",
+        description:
+          "Mientras un oponente tenga 10 o más conocimientos, este personaje obtiene +6 {S}.",
+      },
+    ],
+  },
 };

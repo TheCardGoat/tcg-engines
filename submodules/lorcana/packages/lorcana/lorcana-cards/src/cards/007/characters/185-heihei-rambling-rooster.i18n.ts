@@ -17,4 +17,8 @@ export const heiheiRamblingRoosterI18n: Record<Languages, I18nProperties> = {
     name: "Heihei",
     version: "Gallo Sconclusionato",
   },
+  es: {
+    name: "Heihei",
+    version: "Gallo errante",
+  },
 };

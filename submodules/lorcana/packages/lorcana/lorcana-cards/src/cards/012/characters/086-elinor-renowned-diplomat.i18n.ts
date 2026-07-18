@@ -45,4 +45,15 @@ export const elinorRenownedDiplomatI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Elinor",
+    version: "Diplomático de renombre",
+    text: [
+      {
+        title: "ESFUERZOS COORDINADOS",
+        description:
+          "Al final de tu turno, si tienes 3 o más personajes ejercidos en juego, inflige 1 daño al personaje contrario elegido, gana 1 conocimiento y roba una carta.",
+      },
+    ],
+  },
 };

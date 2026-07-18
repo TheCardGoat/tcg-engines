@@ -42,6 +42,7 @@ export const op01Mr1DazBonez083: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Baroque Works",
+            match: "includes",
           },
         ],
         actions: [
@@ -56,6 +57,22 @@ export const op01Mr1DazBonez083: CharacterCard = {
               self: true,
             },
             value: 1000,
+            valuePerCardGroup: {
+              size: 2,
+              target: {
+                player: "self",
+                zones: ["trash"],
+                count: {
+                  amount: "all",
+                },
+                filters: [
+                  {
+                    filter: "cardCategory",
+                    value: "event",
+                  },
+                ],
+              },
+            },
             duration: "permanent",
           },
         ],

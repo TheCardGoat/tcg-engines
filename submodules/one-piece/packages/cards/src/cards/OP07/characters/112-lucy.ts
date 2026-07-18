@@ -30,6 +30,13 @@ export const op07Lucy112: CharacterCard = {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
+        ],
         actions: [
           {
             action: "rest",
@@ -47,6 +54,24 @@ export const op07Lucy112: CharacterCard = {
                   value: 4,
                 },
               ],
+            },
+          },
+          {
+            action: "addToLife",
+            target: {
+              player: "self",
+              zones: ["deck"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            position: "top",
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 1,
             },
           },
         ],

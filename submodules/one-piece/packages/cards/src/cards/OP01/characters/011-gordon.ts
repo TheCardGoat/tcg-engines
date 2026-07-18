@@ -30,6 +30,13 @@ export const op01Gordon011: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnHandToDeck",
+            amount: 1,
+            position: "bottom",
+          },
+        ],
         actions: [
           {
             action: "draw",

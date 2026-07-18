@@ -25,6 +25,5 @@ export const op02Atmos003: CharacterCard = {
   counter: 1000,
   traits: ["Whitebeard Pirates"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op02Atmos003I18n,
 };

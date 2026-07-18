@@ -17,4 +17,8 @@ export const jasmineDisguisedI18n: Record<Languages, I18nProperties> = {
     name: "Jasmine",
     version: "Disguised",
   },
+  es: {
+    name: "Jazmín",
+    version: "Disfrazado",
+  },
 };

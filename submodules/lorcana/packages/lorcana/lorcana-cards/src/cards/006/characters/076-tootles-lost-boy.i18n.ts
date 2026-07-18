@@ -17,4 +17,8 @@ export const tootlesLostBoyI18n: Record<Languages, I18nProperties> = {
     name: "Tootles",
     version: "Bimbo Sperduto",
   },
+  es: {
+    name: "Tootles",
+    version: "Niño perdido",
+  },
 };

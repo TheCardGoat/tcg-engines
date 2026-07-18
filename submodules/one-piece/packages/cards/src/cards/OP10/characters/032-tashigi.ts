@@ -42,5 +42,41 @@ export const op10Tashigi032: CharacterCard = {
   ],
   effect:
     "If you have a green Character other than [Tashigi] that would be removed from the field by your opponent's effect, you may rest this Character instead.",
+  effects: {
+    replacementEffects: [
+      {
+        replacedEvent: "removeFromField",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "color",
+              value: "green",
+            },
+            {
+              filter: "excludeName",
+              value: "Tashigi",
+            },
+          ],
+        },
+        source: "opponentEffect",
+        replacementAction: {
+          action: "rest",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: {
+              amount: 1,
+            },
+            self: true,
+          },
+        },
+      },
+    ],
+  },
   i18n: op10Tashigi032I18n,
 };

@@ -45,4 +45,15 @@ export const daleFriendInNeedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Valle",
+    version: "Amigo necesitado",
+    text: [
+      {
+        title: "SOCIO DE CHIP",
+        description:
+          "Este personaje entra en juego ejercido a menos que tengas un personaje llamado Chip en juego.",
+      },
+    ],
+  },
 };

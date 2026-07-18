@@ -57,4 +57,18 @@ export const peterPanNeverLandHeroI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Peter Pan",
+    version: "Héroe de Nunca Jamás",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "POR AQUÍ, TINK",
+        description:
+          "Mientras tengas un personaje llamado Tinker Bell en juego, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

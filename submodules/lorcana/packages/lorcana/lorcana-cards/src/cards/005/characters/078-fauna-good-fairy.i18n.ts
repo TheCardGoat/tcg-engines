@@ -17,4 +17,8 @@ export const faunaGoodFairyI18n: Record<Languages, I18nProperties> = {
     name: "Fauna",
     version: "Buona Fata",
   },
+  es: {
+    name: "Fauna",
+    version: "Buena hada",
+  },
 };

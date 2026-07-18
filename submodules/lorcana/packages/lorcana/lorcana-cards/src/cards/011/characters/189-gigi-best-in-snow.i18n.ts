@@ -54,4 +54,18 @@ export const gigiBestInSnowI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gigi",
+    version: "Lo mejor en nieve",
+    text: [
+      {
+        title: "Alerta",
+        description: "(Este personaje puede desafiar como si tuviera Evasivo).",
+      },
+      {
+        title: "TAN BONITO",
+        description: "Si bien este personaje no tiene daño, obtiene +2 {S}.",
+      },
+    ],
+  },
 };

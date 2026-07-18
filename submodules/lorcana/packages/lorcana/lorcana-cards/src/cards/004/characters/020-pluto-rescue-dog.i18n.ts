@@ -45,4 +45,15 @@ export const plutoRescueDogI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Plutón",
+    version: "Perro de rescate",
+    text: [
+      {
+        title: "AL RESCATE",
+        description:
+          "Cuando juegas con este personaje, puedes eliminar hasta 3 daños de uno de tus personajes.",
+      },
+    ],
+  },
 };

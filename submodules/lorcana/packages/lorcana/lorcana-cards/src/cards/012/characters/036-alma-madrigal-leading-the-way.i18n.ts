@@ -45,4 +45,15 @@ export const almaMadrigalLeadingTheWayI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Alma Madrigal",
+    version: "Liderando el camino",
+    text: [
+      {
+        title: "PROTEGER A LA FAMILIA",
+        description:
+          "Cuando juegas con este personaje, si tienes otro personaje de Madrigal en juego, puedes ejercer el personaje contrario elegido.",
+      },
+    ],
+  },
 };

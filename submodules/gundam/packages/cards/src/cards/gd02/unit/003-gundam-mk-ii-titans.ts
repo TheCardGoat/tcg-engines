@@ -5,6 +5,7 @@ export const gd02GundamMkIiTitans003: UnitCard = {
   name: "Gundam Mk-II (Titans)",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space", "earth"],
   traits: ["titans"],
   id: "GD02-003",
   canonicalId: "GD02-003",
@@ -92,6 +93,7 @@ export const gd02GundamMkIiTitans003: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 2,
+  linkCondition: "(Titans) Trait",
   effect:
     "【During Pair･Lv.3 or Lower Pilot】【Destroyed】You may discard 1 Unit card. If you do, return the card paired with this Unit to your hand.<br>",
   effects: [
@@ -107,7 +109,20 @@ export const gd02GundamMkIiTitans003: UnitCard = {
           action: {
             action: "discard",
             count: 1,
+            filter: {
+              owner: "friendly",
+              zone: "hand",
+              cardType: "unit",
+              count: 1,
+            },
           },
+          optional: true,
+        },
+        {
+          action: {
+            action: "returnPairedPilotToHand",
+          },
+          dependsOnPrevious: true,
         },
       ],
       sourceText:

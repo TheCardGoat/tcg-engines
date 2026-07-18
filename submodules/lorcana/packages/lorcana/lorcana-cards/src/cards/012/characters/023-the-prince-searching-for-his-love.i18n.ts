@@ -17,4 +17,8 @@ export const thePrinceSearchingForHisLoveI18n: Record<Languages, I18nProperties>
     name: "Il Principe",
     version: "In Cerca del Suo Amore",
   },
+  es: {
+    name: "El principe",
+    version: "Buscando su amor",
+  },
 };

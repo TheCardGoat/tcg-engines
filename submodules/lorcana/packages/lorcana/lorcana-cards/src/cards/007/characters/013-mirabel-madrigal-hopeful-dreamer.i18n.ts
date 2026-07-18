@@ -50,4 +50,16 @@ export const mirabelMadrigalHopefulDreamerI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Mirabel Madrigal",
+    version: "Soñador esperanzado",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "Cantante 5",
+      },
+    ],
+  },
 };

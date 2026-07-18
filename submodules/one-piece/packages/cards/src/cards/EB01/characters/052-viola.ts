@@ -53,18 +53,14 @@ export const eb01Viola052: CharacterCard = {
             options: [
               [
                 {
-                  action: "rearrangeDeck",
+                  action: "rearrangeLife",
                   player: "opponent",
-                  count: 99,
-                  position: "topOrBottom",
                 },
               ],
               [
                 {
-                  action: "rearrangeDeck",
+                  action: "turnLifeFaceDown",
                   player: "self",
-                  count: 99,
-                  position: "top",
                 },
               ],
             ],

@@ -31,7 +31,7 @@ export const prb02RoronoaZoroPrb02006006: CharacterCard = {
   cost: 4,
   power: 4000,
   counter: 2000,
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   attribute: "slash",
   artVariants: [
     {
@@ -47,6 +47,8 @@ export const prb02RoronoaZoroPrb02006006: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "rested",
+        source: "opponentCharacterEffect",
+        eventFilter: { targetSelf: true },
         replacementAction: {
           action: "rest",
           target: {
@@ -55,6 +57,7 @@ export const prb02RoronoaZoroPrb02006006: CharacterCard = {
             count: {
               amount: 1,
             },
+            filters: [{ filter: "excludeSelf" }],
           },
         },
         conditions: [

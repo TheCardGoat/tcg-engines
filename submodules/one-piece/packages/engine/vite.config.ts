@@ -4,8 +4,10 @@ import { defineConfig } from "vite-plus";
 export default defineConfig({
   test: {
     include: [
+      "tests/card-coverage.test.ts",
       "tests/index.test.ts",
       "tests/test-engine.test.ts",
+      "tests/cards/**/*.test.ts",
       "src/automation/bot-harness.test.ts",
     ],
     isolate: false,

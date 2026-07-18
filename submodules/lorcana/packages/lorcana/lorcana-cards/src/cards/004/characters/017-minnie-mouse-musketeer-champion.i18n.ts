@@ -59,4 +59,18 @@ export const minnieMouseMusketeerChampionI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Campeón mosquetero",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "ENTRADA DRAMÁTICA",
+        description:
+          "Cuando juegues con este personaje, destierra al personaje contrario elegido con 5 {S} o más.",
+      },
+    ],
+  },
 };

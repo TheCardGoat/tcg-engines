@@ -53,6 +53,22 @@ export const op06Raizo112: CharacterCard = {
         ],
         optional: true,
       },
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "lifeCount",
+            player: "opponent",
+            comparison: "lte",
+            value: 3,
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+      },
     ],
   },
   i18n: op06Raizo112I18n,

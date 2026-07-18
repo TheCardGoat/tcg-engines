@@ -17,4 +17,8 @@ export const brawlI18n: Record<Languages, I18nProperties> = {
     name: "Zuffa",
     text: "Esilia un personaggio a tua scelta con 2 {S} o inferiore.",
   },
+  es: {
+    name: "Pelearse",
+    text: "Destierra al personaje elegido con 2 {S} o menos.",
+  },
 };

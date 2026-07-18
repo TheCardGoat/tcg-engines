@@ -53,6 +53,7 @@ export const op04Apis041: CharacterCard = {
               {
                 filter: "trait",
                 value: "East Blue",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

@@ -170,7 +170,7 @@ function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: De
         </div>
       </div>
       <CombatArrowOverlay containerRef={boardWrapRef} />
-      <div className={classes.handTop}>
+      <div className={classes.handTop} data-testid="opponent-hand-overlay">
         <HandZone
           faceDown
           cards={rivalZones.hand.map((c) => ({
@@ -197,7 +197,7 @@ function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: De
           side={rivalSide}
         />
       </div>
-      <div className={classes.handBottom}>
+      <div className={classes.handBottom} data-testid="player-hand-dock">
         <HumanHand side={humanSide} />
       </div>
       {/*

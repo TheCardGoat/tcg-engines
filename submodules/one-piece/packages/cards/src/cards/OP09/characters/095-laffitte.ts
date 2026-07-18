@@ -31,6 +31,15 @@ export const op09Laffitte095: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 1,
+          },
+          {
+            cost: "restThisCard",
+          },
+        ],
         actions: [
           {
             action: "search",
@@ -47,6 +56,7 @@ export const op09Laffitte095: CharacterCard = {
               {
                 filter: "trait",
                 value: "Blackbeard Pirates",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

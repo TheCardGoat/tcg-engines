@@ -17,4 +17,8 @@ export const youngMacguffinSoftspokenSonI18n: Record<Languages, I18nProperties> 
     name: "Giovane MacGuffin",
     version: "Figlio Pacato",
   },
+  es: {
+    name: "Joven macguffin",
+    version: "Hijo de voz suave",
+  },
 };

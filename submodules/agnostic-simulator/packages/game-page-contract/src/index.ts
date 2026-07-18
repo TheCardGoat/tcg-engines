@@ -31,6 +31,27 @@ export type {
   UserSettings,
   ViewerSeat,
 } from "./page-data.js";
+export {
+  AnimationSpeedSchema,
+  CardPreviewModeSchema,
+  CyberpunkGameSettingsSchema,
+  GameSettingsMapSchema,
+  GameVisualSettingsSchema,
+  HotkeyModeSchema,
+  LorcanaGameSettingsSchema,
+  PlayerSettingsSchema,
+  SettingsGameSlugSchema,
+  UserSettingsSchema as CanonicalUserSettingsSchema,
+  settingsForGame,
+} from "./settings.js";
+export type {
+  GameSettings,
+  GameSettingsMap,
+  GameVisualSettings,
+  PlayerSettings,
+  SettingsGameSlug,
+  UserSettings as CanonicalUserSettings,
+} from "./settings.js";
 
 export type {
   AnimationCue,

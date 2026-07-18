@@ -17,4 +17,8 @@ export const breakCardI18n: Record<Languages, I18nProperties> = {
     name: "Break",
     text: "Banish chosen item.",
   },
+  es: {
+    name: "Romper",
+    text: "Desterrar el objeto elegido.",
+  },
 };

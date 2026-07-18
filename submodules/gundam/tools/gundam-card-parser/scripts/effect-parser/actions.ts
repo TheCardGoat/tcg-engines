@@ -403,6 +403,23 @@ export function parseSingleAction(clause: string): EffectAction | undefined {
     };
   }
 
+  // "friendly Shields can't receive battle damage from enemy Units"
+  // Shields are the face-down cards in the Shield section, not every card in
+  // the rules-level shield area (which also contains the Base section).
+  const shieldDmgM = t.match(
+    /(?:friendly\s+)?Shields? can'?t receive (?:battle )?damage from (.+?)\.?$/i,
+  );
+  if (shieldDmgM) {
+    const unitFilter = parseTargetFilter(shieldDmgM[1].trim());
+    if (unitFilter.owner === "any") unitFilter.owner = "opponent";
+    return {
+      action: "preventDamageToZone",
+      protectedArea: { kind: "zone", zone: "shieldArea" },
+      unitFilter,
+      duration: parseDuration(t),
+    };
+  }
+
   // "this Unit can't receive battle damage from enemy Units with 3 or less AP"
   const preventDmgM = t.match(
     /can'?t receive battle damage from (?:enemy Units? (?:that are |with )?)?(.+)/i,
@@ -425,7 +442,7 @@ export function parseSingleAction(clause: string): EffectAction | undefined {
     if (unitFilter.owner === "any") unitFilter.owner = "opponent";
     return {
       action: "preventDamageToZone",
-      zone: "shieldArea",
+      protectedArea: { kind: "shieldArea" },
       unitFilter,
       duration: parseDuration(t),
     };

@@ -45,4 +45,15 @@ export const nanaCanineCaregiverI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nana",
+    version: "Cuidador canino",
+    text: [
+      {
+        title: "INSTINTOS ÚTILES",
+        description:
+          "Cuando juegas con este personaje, puedes elegir y descartar una carta para devolver el personaje elegido con un coste de 2 o menos a la mano de su jugador.",
+      },
+    ],
+  },
 };

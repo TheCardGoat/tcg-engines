@@ -57,6 +57,7 @@ export const op04Giolla025: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

@@ -25,7 +25,7 @@ export const op08CharlotteOven061: CharacterCard = {
   traits: ["Big Mom Pirates"],
   attribute: "special",
   effect:
-    "[When Attacking] DON!! 1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): K.O. up to 1 of your opponent's Characters with a cost of 3 or less.",
+    "[When Attacking] DON!! −1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): K.O. up to 1 of your opponent's Characters with a cost of 3 or less.",
   effects: {
     effects: [
       {
@@ -56,6 +56,7 @@ export const op08CharlotteOven061: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

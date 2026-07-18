@@ -60,4 +60,18 @@ export const kuzcoImpulsiveLlamaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kuzco",
+    version: "Llama impulsiva",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "¿QUÉ HACE ESTO?",
+        description:
+          "Cuando juegas con este personaje, cada oponente elige uno de sus personajes y coloca esa carta en la parte inferior de su mazo. Luego, cada oponente puede robar una carta.",
+      },
+    ],
+  },
 };

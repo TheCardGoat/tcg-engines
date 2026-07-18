@@ -17,4 +17,8 @@ export const nightHowlerRageI18n: Record<Languages, I18nProperties> = {
     name: "Furia da Ululatore Notturno",
     text: "Pesca una carta. Un personaggio a tua scelta ottiene <Attaccabrighe> durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
   },
+  es: {
+    name: "Furia del aullador nocturno",
+    text: "Saca una carta. El personaje elegido gana Temerario durante su próximo turno. (No pueden realizar misiones y deben desafiar si pueden).",
+  },
 };

@@ -17,4 +17,8 @@ export const donaldDuckBoisterousFowlI18n: Record<Languages, I18nProperties> = {
     name: "Paperino",
     version: "Pennuto Turbolento",
   },
+  es: {
+    name: "Pato donald",
+    version: "Aves bulliciosas",
+  },
 };

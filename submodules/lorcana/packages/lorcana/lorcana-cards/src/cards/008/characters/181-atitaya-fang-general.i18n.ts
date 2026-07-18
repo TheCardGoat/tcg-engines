@@ -17,4 +17,8 @@ export const atitayaFangGeneralI18n: Record<Languages, I18nProperties> = {
     name: "Atitāya",
     version: "Generale di Zanna",
   },
+  es: {
+    name: "Atitaya",
+    version: "General colmillo",
+  },
 };

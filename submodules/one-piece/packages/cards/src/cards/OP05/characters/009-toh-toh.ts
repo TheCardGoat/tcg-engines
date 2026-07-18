@@ -36,11 +36,16 @@ export const op05TohToh009: CharacterCard = {
             player: "self",
             amount: 1,
             condition: {
-              condition: "cardState",
-              target: "this",
-              property: "power",
-              comparison: "lte",
-              value: 0,
+              condition: "hasCard",
+              player: "self",
+              zone: "leader",
+              filters: [
+                {
+                  filter: "power",
+                  comparison: "lte",
+                  value: 0,
+                },
+              ],
             },
           },
         ],

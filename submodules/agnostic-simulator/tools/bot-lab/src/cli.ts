@@ -2,10 +2,12 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
 import {
-  botCandidateManifestV1Schema,
-  botEvaluationReportV1Schema,
   canonicalJson,
 } from "@tcg/bot-core";
+import {
+  botCandidateManifestV1Schema,
+  botEvaluationReportV1Schema,
+} from "@tcg/bot-core/schemas";
 
 import { evaluateCandidate } from "./evaluate.ts";
 import { planPromotion } from "./promote.ts";

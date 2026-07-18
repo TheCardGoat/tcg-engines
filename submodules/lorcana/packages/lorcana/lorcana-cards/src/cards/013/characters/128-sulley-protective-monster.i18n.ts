@@ -64,4 +64,20 @@ export const sulleyProtectiveMonsterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sulley",
+    version: "Monstruo protector",
+    text: [
+      {
+        title: "Mirada temible",
+        description:
+          "Cuando juegas con este personaje, puedes ejercer todas las cartas en tu tintero.",
+      },
+      {
+        title: "irritado",
+        description:
+          "Mientras todas las cartas en tu tintero están agotadas, este personaje gana <Rush>. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

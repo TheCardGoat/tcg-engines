@@ -30,6 +30,7 @@ export const op06RaiseMax016: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [{ cost: "returnThisToDeck", position: "bottom" }],
         actions: [
           {
             action: "modifyPower",

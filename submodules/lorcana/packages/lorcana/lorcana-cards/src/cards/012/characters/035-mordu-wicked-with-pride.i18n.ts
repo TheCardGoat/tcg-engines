@@ -21,4 +21,9 @@ export const morduWickedWithPrideI18n: Record<Languages, I18nProperties> = {
     version: "Accecato dall'Orgoglio",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Mor'du",
+    version: "Malvado con orgullo",
+    text: "Correr",
+  },
 };

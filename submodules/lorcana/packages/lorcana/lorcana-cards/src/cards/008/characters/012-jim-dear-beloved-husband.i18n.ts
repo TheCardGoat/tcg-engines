@@ -21,4 +21,9 @@ export const jimDearBelovedHusbandI18n: Record<Languages, I18nProperties> = {
     version: "Marito Adorato",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Jim querido",
+    version: "Amado esposo",
+    text: "Guardaespaldas",
+  },
 };

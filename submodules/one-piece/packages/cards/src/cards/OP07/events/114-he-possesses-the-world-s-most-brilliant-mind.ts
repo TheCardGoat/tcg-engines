@@ -48,6 +48,7 @@ export const op07HePossessesTheWorldSMostBrilliantMind114: EventCard = {
               {
                 filter: "trait",
                 value: "Egghead",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

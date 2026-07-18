@@ -45,4 +45,15 @@ export const maximusTeamChampionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Máximo",
+    version: "Campeón del equipo",
+    text: [
+      {
+        title: "RECOMPENSAS REALMENTE GRANDES",
+        description:
+          "Al final de tu turno, si tienes algún personaje en juego con 5 {S} o más, gana 2 conocimientos. Si tienes alguno en juego con 10 {S} o más, gana 5 conocimientos.",
+      },
+    ],
+  },
 };

@@ -21,4 +21,9 @@ export const tipoJuniorChipmunkI18n: Record<Languages, I18nProperties> = {
     version: "Giovane Marmotta",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Tipo",
+    version: "Ardilla joven",
+    text: "Evasivo",
+  },
 };

@@ -47,12 +47,23 @@ export const eb03Camie015: CharacterCard = {
               },
               filters: [
                 {
-                  filter: "trait",
-                  value: "Fish-Man",
-                },
-                {
-                  filter: "trait",
-                  value: "Merfolk",
+                  filter: "anyOf",
+                  groups: [
+                    [
+                      {
+                        filter: "trait",
+                        value: "Fish-Man",
+                        match: "includes",
+                      },
+                    ],
+                    [
+                      {
+                        filter: "trait",
+                        value: "Merfolk",
+                        match: "includes",
+                      },
+                    ],
+                  ],
                 },
               ],
             },

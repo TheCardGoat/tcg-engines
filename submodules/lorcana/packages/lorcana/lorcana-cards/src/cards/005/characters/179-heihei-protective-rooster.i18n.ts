@@ -21,4 +21,9 @@ export const heiheiProtectiveRoosterI18n: Record<Languages, I18nProperties> = {
     version: "Galletto Protettivo",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Heihei",
+    version: "Gallo protector",
+    text: "Guardaespaldas",
+  },
 };

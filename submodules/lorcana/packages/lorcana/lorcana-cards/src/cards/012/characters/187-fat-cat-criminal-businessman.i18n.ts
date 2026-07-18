@@ -43,4 +43,14 @@ export const fatCatCriminalBusinessmanI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Gato gordo",
+    version: "Empresario criminal",
+    text: [
+      {
+        title: "INVERSIÓN DIGNA",
+        description: "Tus ubicaciones obtienen Resistencia +1.",
+      },
+    ],
+  },
 };

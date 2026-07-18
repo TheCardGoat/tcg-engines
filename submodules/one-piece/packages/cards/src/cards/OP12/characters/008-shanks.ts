@@ -40,7 +40,7 @@ export const op12Shanks008: CharacterCard = {
     },
   ],
   effect:
-    "[Blocker]\n[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Give up to 1 of your opponent's Leader or Character cards 2000 power during this turn.",
+    "[Blocker]\n[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Give up to 1 of your opponent's Leader or Character cards −2000 power during this turn.",
   effects: {
     keywords: ["blocker"],
     effects: [
@@ -63,7 +63,7 @@ export const op12Shanks008: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
           },
         ],

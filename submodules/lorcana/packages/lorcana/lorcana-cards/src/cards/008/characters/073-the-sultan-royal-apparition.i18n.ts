@@ -61,4 +61,19 @@ export const theSultanRoyalApparitionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El sultán",
+    version: "Aparición real",
+    text: [
+      {
+        title: "Desaparecer",
+        description: "(Cuando un oponente elige este personaje para una acción, destierralo).",
+      },
+      {
+        title: "PRESENCIA IMPONENTE",
+        description:
+          "Cada vez que uno de tus personajes de Illusion realice misiones, ejerce el personaje contrario elegido.",
+      },
+    ],
+  },
 };

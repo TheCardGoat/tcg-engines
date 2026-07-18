@@ -17,4 +17,8 @@ export const thomasWideeyedRecruitI18n: Record<Languages, I18nProperties> = {
     name: "Thomas",
     version: "Recluta Ingenua",
   },
+  es: {
+    name: "Tomás",
+    version: "Recluta con los ojos muy abiertos",
+  },
 };

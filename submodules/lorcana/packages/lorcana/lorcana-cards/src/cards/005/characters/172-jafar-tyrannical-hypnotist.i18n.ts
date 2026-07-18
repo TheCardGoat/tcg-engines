@@ -54,4 +54,17 @@ export const jafarTyrannicalHypnotistI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jafar",
+    version: "Hipnotizador tiránico",
+    text: [
+      {
+        title: "Retador +7",
+      },
+      {
+        title: "MIRADA INTIMIDADORA",
+        description: "Los personajes contrarios con coste 4 o menos no pueden desafiar.",
+      },
+    ],
+  },
 };

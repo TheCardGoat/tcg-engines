@@ -45,4 +45,15 @@ export const lefouOpportunisticFlunkyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lefou",
+    version: "Lacayo oportunista",
+    text: [
+      {
+        title: "APRENDÍ DE LOS MEJORES",
+        description:
+          "Durante tu turno, puedes jugar con este personaje gratis si un personaje contrario fue desterrado en un desafío este turno.",
+      },
+    ],
+  },
 };

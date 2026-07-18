@@ -17,4 +17,8 @@ export const lyleTiberiusRourkeLookingForHisMomentI18n: Record<Languages, I18nPr
     name: "Lyle Tiberius Rourke",
     version: "In Attesa del Suo Momento",
   },
+  es: {
+    name: "Lyle Tiberius Rourke",
+    version: "Buscando su momento",
+  },
 };

@@ -60,4 +60,18 @@ export const mulanReflectingI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mulán",
+    version: "Reflexionando",
+    text: [
+      {
+        title: "Shift 2",
+      },
+      {
+        title: "HONOR A LOS ANCESTROS",
+        description:
+          "Siempre que este personaje realice una misión, puedes revelar la carta superior de tu mazo. Si es una tarjeta de canción, puedes reproducirla gratis. De lo contrario, colóquelo en la parte superior de su plataforma.",
+      },
+    ],
+  },
 };

@@ -555,11 +555,20 @@ function getStatePlayerIds(state: StaticAbilityState): PlayerId[] {
 function createStaticAbilityTargetContext(args: {
   state: StaticAbilityState;
   getDefinitionByInstanceId: (cardId: CardInstanceId) => LorcanaCardDefinition | undefined;
+  getCardStrengthByInstanceId?: (cardId: CardInstanceId) => number;
+  getCardWillpowerByInstanceId?: (cardId: CardInstanceId) => number;
 }) {
-  const { state, getDefinitionByInstanceId } = args;
+  const {
+    state,
+    getDefinitionByInstanceId,
+    getCardStrengthByInstanceId,
+    getCardWillpowerByInstanceId,
+  } = args;
 
   return {
     disableFilterRegistry: true,
+    getCardStrengthByInstanceId,
+    getCardWillpowerByInstanceId,
     G: state.G,
     cards: {
       getDefinition: getDefinitionByInstanceId,
@@ -682,8 +691,19 @@ export function matchesStaticAbilityTarget(args: {
   targetCardId: CardInstanceId;
   controllerId?: PlayerId;
   getDefinitionByInstanceId: (cardId: CardInstanceId) => LorcanaCardDefinition | undefined;
+  getCardStrengthByInstanceId?: (cardId: CardInstanceId) => number;
+  getCardWillpowerByInstanceId?: (cardId: CardInstanceId) => number;
 }): boolean {
-  const { state, target, sourceId, targetCardId, controllerId, getDefinitionByInstanceId } = args;
+  const {
+    state,
+    target,
+    sourceId,
+    targetCardId,
+    controllerId,
+    getDefinitionByInstanceId,
+    getCardStrengthByInstanceId,
+    getCardWillpowerByInstanceId,
+  } = args;
   if (!controllerId || !getDefinitionByInstanceId) {
     return false;
   }
@@ -706,7 +726,12 @@ export function matchesStaticAbilityTarget(args: {
 
   const candidates = resolveCandidateTargets(
     {
-      ...createStaticAbilityTargetContext({ state, getDefinitionByInstanceId }),
+      ...createStaticAbilityTargetContext({
+        state,
+        getDefinitionByInstanceId,
+        getCardStrengthByInstanceId,
+        getCardWillpowerByInstanceId,
+      }),
       playerId: controllerId,
     } as unknown as Parameters<typeof resolveCandidateTargets>[0],
     descriptor,
@@ -1633,7 +1658,9 @@ export function getGrantedActivatedAbilities(args: {
 
   // Static grant-abilities-while-here and grant-ability from registry
   const staticGrants = (registry.byTarget.get(cardId) ?? []).filter(
-    (e) => e.kind === "grant-abilities-while-here" || e.kind === "grant-ability",
+    (e) =>
+      (e.kind === "grant-abilities-while-here" || e.kind === "grant-ability") &&
+      (e.payload.ability as { type?: unknown } | undefined)?.type === "activated",
   );
   for (const e of staticGrants) {
     granted.push({

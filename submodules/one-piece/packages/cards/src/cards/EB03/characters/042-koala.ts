@@ -78,19 +78,63 @@ export const eb03Koala042: CharacterCard = {
             },
             filters: [
               {
-                filter: "excludeName",
-                value: "Koala",
-              },
-              {
-                filter: "cost",
-                comparison: "lte",
-                value: 6,
-              },
-              {
-                filter: "trait",
-                value: "Revolutionary Army",
+                filter: "anyOf",
+                groups: [
+                  [
+                    {
+                      filter: "excludeName",
+                      value: "Koala",
+                    },
+                    {
+                      filter: "cost",
+                      comparison: "lte",
+                      value: 6,
+                    },
+                    {
+                      filter: "trait",
+                      value: "Revolutionary Army",
+                      match: "includes",
+                    },
+                  ],
+                  [
+                    {
+                      filter: "name",
+                      value: "Nico Robin",
+                    },
+                    {
+                      filter: "cost",
+                      comparison: "lte",
+                      value: 6,
+                    },
+                  ],
+                ],
               },
             ],
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Revolutionary Army",
+          },
+        ],
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 4,
+            duration: "permanent",
           },
         ],
       },

@@ -33,4 +33,21 @@ export const scroopOdiousMutineerI18n: Record<Languages, I18nProperties> = {
     version: "Ammutinato Detestabile",
     text: "<Sfuggente> Saluta il Signor Arrow da Parte Mia Quando giochi questo personaggio, puoi pagare 3 {I} per esiliare un personaggio danneggiato a tua scelta.",
   },
+  es: {
+    name: "Scroop",
+    version: "Odioso amotinado",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "SALUDA AL SR.",
+      },
+      {
+        title: "FLECHA",
+        description:
+          "Cuando juegas con este personaje, puedes pagar 3 {I} para desterrar al personaje dañado elegido.",
+      },
+    ],
+  },
 };

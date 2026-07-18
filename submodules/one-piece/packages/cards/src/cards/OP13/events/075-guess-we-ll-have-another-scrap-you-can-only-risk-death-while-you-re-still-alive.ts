@@ -28,22 +28,7 @@ export const op13GuessWeLlHaveAnotherScrapYouCanOnlyRiskDeathWhileYouReStillAliv
     effects: [
       {
         trigger: "main",
-        conditions: [
-          {
-            condition: "compound",
-            operator: "and",
-            conditions: [
-              {
-                condition: "leaderName",
-                name: "Gol.D.Roger",
-              },
-              {
-                condition: "donGiven",
-                player: "self",
-              },
-            ],
-          },
-        ],
+        costs: [{ cost: "restDon", amount: 1 }],
         actions: [
           {
             action: "addDon",
@@ -52,6 +37,20 @@ export const op13GuessWeLlHaveAnotherScrapYouCanOnlyRiskDeathWhileYouReStillAliv
               upTo: true,
             },
             state: "rested",
+            condition: {
+              condition: "compound",
+              operator: "and",
+              conditions: [
+                {
+                  condition: "leaderName",
+                  name: "Gol.D.Roger",
+                },
+                {
+                  condition: "donGiven",
+                  player: "self",
+                },
+              ],
+            },
           },
         ],
         optional: true,

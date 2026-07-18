@@ -71,6 +71,29 @@ export const op01TrafalgarLaw002: LeaderCard = {
               },
             },
           },
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 5,
+              },
+            ],
+            differentColorFromPreviousCharacter: true,
+          },
         ],
         oncePerTurn: true,
       },

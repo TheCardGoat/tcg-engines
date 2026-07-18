@@ -45,4 +45,15 @@ export const thebesTheBigOliveI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tebas",
+    version: "La gran aceituna",
+    text: [
+      {
+        title: "SI PUEDES HACERLO AQUÍ...",
+        description:
+          "Durante tu turno, cada vez que un personaje destierre a otro personaje en un desafío mientras estás aquí, gana 2 conocimientos.",
+      },
+    ],
+  },
 };

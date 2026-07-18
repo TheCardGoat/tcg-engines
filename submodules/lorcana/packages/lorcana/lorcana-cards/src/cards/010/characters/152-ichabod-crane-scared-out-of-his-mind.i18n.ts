@@ -45,4 +45,15 @@ export const ichabodCraneScaredOutOfHisMindI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Grúa Ichabod",
+    version: "Asustado de su mente",
+    text: [
+      {
+        title: "Cuento escalofriante",
+        description:
+          "Cuando este personaje sea desterrado, puedes poner esta carta en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

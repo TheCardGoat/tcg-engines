@@ -57,4 +57,18 @@ export const wendyDarlingCourageousCaptainI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Wendy querida",
+    version: "Capitán valiente",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "¡MIRA VIVO, TRIPULACIÓN!",
+        description:
+          "Mientras tengas otro personaje pirata en juego, este personaje obtiene +1 {S} y +1 {L}.",
+      },
+    ],
+  },
 };

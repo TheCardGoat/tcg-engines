@@ -42,4 +42,14 @@ export const sisuEmboldenedWarriorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sisu",
+    version: "Guerrero envalentonado",
+    text: [
+      {
+        title: "AUGE DE PODER",
+        description: "Este personaje obtiene +1 {S} por cada carta en la mano del oponente.",
+      },
+    ],
+  },
 };

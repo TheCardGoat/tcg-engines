@@ -45,4 +45,15 @@ export const sheriffOfNottinghamCorruptOfficialI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Sheriff de Nottingham",
+    version: "Funcionario corrupto",
+    text: [
+      {
+        title: "LOS IMPUESTOS DEBERÍAN DAÑAR",
+        description:
+          "Cada vez que descartas una carta, puedes causar 1 daño al personaje contrario elegido.",
+      },
+    ],
+  },
 };

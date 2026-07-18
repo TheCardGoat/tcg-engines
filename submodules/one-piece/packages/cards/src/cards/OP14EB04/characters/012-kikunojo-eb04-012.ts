@@ -63,6 +63,7 @@ export const op14eb04KikunojoEb04012012: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
+                  match: "includes",
                 },
               ],
             },

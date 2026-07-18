@@ -47,6 +47,15 @@ export const op14eb04Mr4Babe093: CharacterCard = {
                   filter: "cardCategory",
                   value: "character",
                 },
+                {
+                  filter: "trait",
+                  value: "Baroque Works",
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 8,
+                },
               ],
             },
           },

@@ -57,4 +57,18 @@ export const drFacilierFortuneTellerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dr. Facilier",
+    version: "Adivino",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "ESTAS EN MI MUNDO",
+        description:
+          "Siempre que este personaje realice una misión, el personaje contrario elegido no podrá realizar una misión durante su próximo turno.",
+      },
+    ],
+  },
 };

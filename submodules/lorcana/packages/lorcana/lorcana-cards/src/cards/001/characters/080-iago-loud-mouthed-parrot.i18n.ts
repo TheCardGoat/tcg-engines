@@ -45,4 +45,15 @@ export const iagoLoudmouthedParrotI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yago",
+    version: "Loro de boca ruidosa",
+    text: [
+      {
+        title: "¿TIENES UN PROBLEMA?",
+        description:
+          "{E}: el personaje elegido gana Temerario durante su próximo turno. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

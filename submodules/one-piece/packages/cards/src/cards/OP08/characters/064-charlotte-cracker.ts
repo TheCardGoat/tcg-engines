@@ -26,7 +26,7 @@ export const op08CharlotteCracker064: CharacterCard = {
   traits: ["Big Mom Pirates"],
   attribute: "slash",
   effect:
-    "[Activate:Main] [Once Per Turn] DON!! 1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Play up to 1 [Biscuit Warrior] from your hand.",
+    "[Activate:Main] [Once Per Turn] DON!! −1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Play up to 1 [Biscuit Warrior] from your hand.",
   effects: {
     effects: [
       {
@@ -56,6 +56,7 @@ export const op08CharlotteCracker064: CharacterCard = {
             ],
           },
         ],
+        optional: true,
         oncePerTurn: true,
       },
     ],

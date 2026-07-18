@@ -65,4 +65,20 @@ export const randallBoggsScarySmartP4ChallengeI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Randall Boggs",
+    version: "Aterrador inteligente",
+    text: [
+      {
+        title: "¡SALGA DE AQUÍ!",
+        description:
+          "Cuando juegues con este personaje, coloca tu personaje elegido en tu tintero boca abajo y ejercítalo.",
+      },
+      {
+        title: "PLAN TORTUOSO",
+        description:
+          "Al final de tu turno, si se agotan todas las cartas de tu tintero, gana 1 saber.",
+      },
+    ],
+  },
 };

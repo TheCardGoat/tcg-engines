@@ -21,4 +21,9 @@ export const tianaWarmAndHappyEpicI18n: Record<Languages, I18nProperties> = {
     version: "Felice e al Calduccio",
     text: "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
   },
+  es: {
+    name: "Tiana",
+    version: "Cálido y feliz",
+    text: "Apoyo",
+  },
 };

@@ -1,4 +1,5 @@
 export type Player = "self" | "opponent";
+export type TargetPlayer = Player | "any" | "both";
 
 export type Zone =
   | "leader"
@@ -25,6 +26,7 @@ export interface TargetCount {
 export type Duration =
   | "thisTurn"
   | "thisBattle"
+  | "untilEndOfYourNextTurn"
   | "untilEndOfOpponentNextTurn"
   | "untilEndOfOpponentNextEndPhase"
   | "untilStartOfNextTurn"
@@ -44,6 +46,7 @@ export type EffectTrigger =
   | "whenAttacking"
   | "onBlock"
   | "onKo"
+  | "startOfYourTurn"
   | "endOfYourTurn"
   | "endOfOpponentTurn"
   | "onOpponentAttack"
@@ -52,7 +55,9 @@ export type EffectTrigger =
   | "main"
   | "trigger"
   | "whenDealsDamage"
+  | "whenYouDealDamage"
   | "whenCharacterKod"
+  | "whenCharacterRemoved"
   | "whenLeaving"
   | "whenBlockerActivated"
   | "whenTriggerActivates"
@@ -62,10 +67,13 @@ export type EffectTrigger =
   | "whenDonGiven"
   | "endOfBattle"
   | "whenCardDrawn"
+  | "whenCardTrashedFromHandByEffect"
   | "whenLifeAddedToHand"
   | "whenLifeRemoved"
   | "whenOpponentPlaysCharacter"
   | "whenYouPlayCharacter"
   | "whenTriggerCharacterPlayed"
   | "whenBecomesRested"
-  | "whenCharacterRestedByEffect";
+  | "whenCharacterRestedByEffect"
+  | "whenCardsTrashedFromHandByEffect"
+  | "whenYouTakeDamage";

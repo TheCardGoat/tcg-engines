@@ -31,12 +31,6 @@ export const op07Monda074: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Foxy Pirates",
-          },
-        ],
         costs: [
           {
             cost: "trashThisCard",
@@ -50,6 +44,11 @@ export const op07Monda074: CharacterCard = {
               upTo: true,
             },
             state: "rested",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Foxy Pirates",
+              match: "includes",
+            },
           },
         ],
         optional: true,

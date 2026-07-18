@@ -17,4 +17,8 @@ export const diabloWatchfulRavenI18n: Record<Languages, I18nProperties> = {
     name: "Diablo",
     version: "Corvo Vigile",
   },
+  es: {
+    name: "Diablos",
+    version: "Cuervo vigilante",
+  },
 };

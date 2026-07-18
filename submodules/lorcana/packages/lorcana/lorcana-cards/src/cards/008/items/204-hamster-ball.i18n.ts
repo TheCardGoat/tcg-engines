@@ -41,4 +41,14 @@ export const hamsterBallI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bola de hámster",
+    text: [
+      {
+        title: "RODAR CON LOS GOLPES",
+        description:
+          "{E}, 1 {I}: el personaje elegido sin daño obtiene Resistencia +2 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

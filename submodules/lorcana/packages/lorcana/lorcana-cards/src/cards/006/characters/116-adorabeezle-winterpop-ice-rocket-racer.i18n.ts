@@ -41,4 +41,14 @@ export const adorabeezleWinterpopIceRocketRacerI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Adorabeezle Winterpop",
+    version: "Corredor de cohetes de hielo",
+    text: [
+      {
+        title: "SIGUE CONDUCIENDO",
+        description: "Mientras este personaje tenga daño, obtiene +1 {L}.",
+      },
+    ],
+  },
 };

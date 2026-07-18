@@ -229,7 +229,7 @@ describe("activate-ability — queue migration (PR C)", () => {
   // (GD02-011 Moebius Peacemaker Team). Paid up-front in `payCost`:
   // the source card leaves play for the owner's trash before the
   // directive body runs.
-  it("activated-ability destroySelf cost sends the source card to its owner's trash", () => {
+  it("activated-ability destroySelf cost performs destruction before the ability resolves", () => {
     const drawThenDie: CardEffect = {
       type: "activated",
       activation: { timing: ["activate:main"] },
@@ -237,22 +237,26 @@ describe("activate-ability — queue migration (PR C)", () => {
       directives: [{ action: { action: "draw", count: 1 } }],
       sourceText: "【Activate･Main】 Destroy this Unit: Draw 1.",
     };
-    const unit = createMockUnit({ ap: 1, hp: 1, effects: [drawThenDie] });
+    const destroyedDraw: CardEffect = {
+      type: "triggered",
+      activation: { timing: ["destroyed"] },
+      directives: [{ action: { action: "draw", count: 1 } }],
+      sourceText: "【Destroyed】 Draw 1.",
+    };
+    const unit = createMockUnit({ ap: 1, hp: 1, effects: [drawThenDie, destroyedDraw] });
 
     const engine = GundamTestEngine.create({ play: [unit], deck: 5 }, {});
     const p1 = engine.asPlayer(PLAYER_ONE);
     const unitId = p1.getCardsInZone("battleArea")[0]!;
-    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
+    const deckBefore = p1.getBoardView().players[PLAYER_ONE]!.deckCount;
+    const handBefore = p1.getHand().length;
 
     expectSuccess(p1.activateAbility(unit, 0, {}));
 
-    // Cost paid: source moved to its owner's trash, not still in battleArea.
-    expect(engine.getCardsInZone({ zone: "battleArea", playerId: PLAYER_ONE })).not.toContain(
-      unitId,
-    );
-    expect(engine.getCardsInZone({ zone: "trash", playerId: PLAYER_ONE })).toContain(unitId);
-    // Effect body still ran after cost payment — draw 1 happened.
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore - 1);
-    expect(engine.getG().pendingEffects).toHaveLength(0);
+    expect(p1.getCardZone(unitId)).toBe(`trash:${PLAYER_ONE}`);
+    // One card comes from the source's 【Destroyed】 effect and one from the
+    // activated ability whose cost destroyed it.
+    expect(p1.getHand()).toHaveLength(handBefore + 2);
+    expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(deckBefore - 2);
   });
 });

@@ -41,4 +41,14 @@ export const tritonsTridentI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tridente de Tritón",
+    text: [
+      {
+        title: "SÍMBOLO DE PODER",
+        description:
+          "Destierra este objeto: el personaje elegido obtiene +1 {S} este turno por cada carta en tu mano.",
+      },
+    ],
+  },
 };

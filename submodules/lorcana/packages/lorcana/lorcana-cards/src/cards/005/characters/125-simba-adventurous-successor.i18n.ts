@@ -44,4 +44,15 @@ export const simbaAdventurousSuccessorI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Simba",
+    version: "Sucesor aventurero",
+    text: [
+      {
+        title: "ME RÍO ANTE EL PELIGRO",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene +2 {S} este turno.",
+      },
+    ],
+  },
 };

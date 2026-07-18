@@ -54,4 +54,18 @@ export const underTheSeaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bajo el mar",
+    text: [
+      {
+        title: "Cantar juntos 8",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 8 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title:
+          "Coloca todos los personajes contrarios con 2 {S} o menos en la parte inferior de los mazos de sus jugadores en cualquier orden.",
+      },
+    ],
+  },
 };

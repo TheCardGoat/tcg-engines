@@ -31,6 +31,7 @@ export const op11Shirahoshi030: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [{ cost: "restDon", amount: 1 }, { cost: "restThisCard" }],
         actions: [
           {
             action: "search",
@@ -45,12 +46,11 @@ export const op11Shirahoshi030: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "trait",
-                value: "Neptunian",
-              },
-              {
-                filter: "trait",
-                value: "Fish-Man Island",
+                filter: "anyOf",
+                filters: [
+                  { filter: "trait", value: "Neptunian", match: "includes" },
+                  { filter: "trait", value: "Fish-Man Island", match: "includes" },
+                ],
               },
             ],
             revealDestination: "hand",

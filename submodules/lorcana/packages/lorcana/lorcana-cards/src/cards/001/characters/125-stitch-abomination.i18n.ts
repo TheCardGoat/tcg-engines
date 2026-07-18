@@ -17,4 +17,8 @@ export const stitchAbominationI18n: Record<Languages, I18nProperties> = {
     name: "Stitch",
     version: "Abomination",
   },
+  es: {
+    name: "Puntada",
+    version: "Abominación",
+  },
 };

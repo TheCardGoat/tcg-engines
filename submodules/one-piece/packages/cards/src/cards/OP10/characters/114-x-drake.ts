@@ -31,12 +31,6 @@ export const op10XDrake114: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "lifeComparison",
-            selfComparison: "lte",
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -59,6 +53,10 @@ export const op10XDrake114: CharacterCard = {
                   value: 4,
                 },
               ],
+            },
+            condition: {
+              condition: "lifeComparison",
+              selfComparison: "lte",
             },
           },
         ],

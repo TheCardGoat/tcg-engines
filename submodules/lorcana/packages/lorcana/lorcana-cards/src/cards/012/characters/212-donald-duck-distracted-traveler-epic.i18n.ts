@@ -45,4 +45,15 @@ export const donaldDuckDistractedTravelerEpicI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Viajero distraído",
+    text: [
+      {
+        title: "CURIOSIDAD ARDIENTE",
+        description:
+          "Siempre que este personaje realice una misión, si jugaste con otro personaje este turno, cada oponente elige y descarta una carta.",
+      },
+    ],
+  },
 };

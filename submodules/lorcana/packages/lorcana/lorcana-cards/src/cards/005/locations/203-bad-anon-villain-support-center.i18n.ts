@@ -45,4 +45,15 @@ export const badanonVillainSupportCenterI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Malo Anon",
+    version: "Centro de soporte de villanos",
+    text: [
+      {
+        title: "NO HAY NADIE QUE PREFIERA SER QUE YO",
+        description:
+          'Los personajes villanos obtienen "{E}, 3 {I} — Juega gratis con un personaje con el mismo nombre que este personaje" mientras estés aquí.',
+      },
+    ],
+  },
 };

@@ -33,4 +33,8 @@ export const aVeryMerryUnbirthdayI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Un muy feliz cumpleaños",
+    text: "Cada oponente pone las 2 primeras cartas de su mazo en su descarte.",
+  },
 };

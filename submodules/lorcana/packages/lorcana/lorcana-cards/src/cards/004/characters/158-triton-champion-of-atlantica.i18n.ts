@@ -57,4 +57,18 @@ export const tritonChampionOfAtlanticaI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Tritón",
+    version: "Campeón de Atlántica",
+    text: [
+      {
+        title: "Shift 6",
+      },
+      {
+        title: "PRESENCIA IMPONENTE",
+        description:
+          "Los personajes contrarios obtienen -1 {S} por cada ubicación que tengas en juego.",
+      },
+    ],
+  },
 };

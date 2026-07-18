@@ -26,6 +26,40 @@ export const op09Crocodile025: CharacterCard = {
   traits: ["Baroque Works The Seven Warlords of the Sea ODYSSEY"],
   attribute: "special",
   effect:
-    'If your Leader has the "ODYSSEY" type, this Character cannot be K.O.\'d in battle by Leaders.',
+    "If your Leader has the {ODYSSEY} type, this Character cannot be K.O.'d in battle by Leaders.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "ODYSSEY",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            restriction: "inBattle",
+            byFilter: [
+              {
+                filter: "cardCategory",
+                value: "leader",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   i18n: op09Crocodile025I18n,
 };

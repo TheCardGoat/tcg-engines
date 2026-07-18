@@ -4,6 +4,7 @@ export const gd02Dominion121: BaseCard = {
   cardNumber: "GD02-121",
   name: "Dominion",
   type: "base",
+  color: "blue",
   traits: ["earth alliance", "warship"],
   id: "GD02-121",
   canonicalId: "GD02-121",
@@ -39,6 +40,7 @@ export const gd02Dominion121: BaseCard = {
   level: 4,
   cost: 1,
   hp: 5,
+  battlefieldZones: ["space", "earth"],
   effect:
     "【Burst】Deploy this card.<br>【Deploy】Add 1 of your Shields to your hand. Then, choose 1 friendly blue Unit. It recovers 2 HP.<br>",
   effects: [
@@ -64,19 +66,26 @@ export const gd02Dominion121: BaseCard = {
       directives: [
         {
           action: {
-            action: "addShieldToHand",
-            count: 1,
-          },
-        },
-        {
-          action: {
-            action: "recoverHP",
-            amount: 2,
-            target: {
-              owner: "friendly",
-              cardType: "unit",
-              count: { min: 0, max: 1 },
-              attributeFilters: [{ attribute: "color", comparison: "eq", value: "blue" }],
+            action: "resolveThenQueue",
+            first: { action: "addShieldToHand", count: 1 },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
+                {
+                  action: {
+                    action: "recoverHP",
+                    amount: 2,
+                    target: {
+                      owner: "friendly",
+                      cardType: "unit",
+                      count: 1,
+                      attributeFilters: [{ attribute: "color", comparison: "eq", value: "blue" }],
+                    },
+                  },
+                },
+              ],
+              sourceText: "Then, choose 1 friendly blue Unit. It recovers 2 HP.",
             },
           },
         },

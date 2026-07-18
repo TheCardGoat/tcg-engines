@@ -45,7 +45,7 @@ export const op04DragonTwisterDemolitionBreath057: EventCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,
@@ -69,7 +69,7 @@ export const op04DragonTwisterDemolitionBreath057: EventCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

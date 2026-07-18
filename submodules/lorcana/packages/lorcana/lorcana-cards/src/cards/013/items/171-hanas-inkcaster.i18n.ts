@@ -41,4 +41,14 @@ export const hanasInkcasterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El lanzador de tinta de Hana",
+    text: [
+      {
+        title: "Florecimiento rejuvenecedor",
+        description:
+          "{E}: elimina hasta 2 daños del personaje elegido. Si hay una carta debajo de ese personaje, gana <Resistir> +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

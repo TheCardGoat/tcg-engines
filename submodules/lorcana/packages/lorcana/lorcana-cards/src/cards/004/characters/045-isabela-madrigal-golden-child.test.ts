@@ -35,4 +35,22 @@ describe("Isabela Madrigal - Golden Child", () => {
       expect(isabela.lore).toBe(1);
     });
   });
+
+  it("prevents other characters from questing after Isabela quests", () => {
+    const otherCharacter = createMockCharacter({
+      id: "isabela-golden-child-other-quester",
+      name: "Other Quester",
+      cost: 2,
+      lore: 1,
+    });
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      play: [
+        { card: isabelaMadrigalGoldenChild, isDrying: false },
+        { card: otherCharacter, isDrying: false },
+      ],
+    });
+
+    expect(testEngine.asPlayerOne().quest(isabelaMadrigalGoldenChild)).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().quest(otherCharacter)).not.toBeSuccessfulCommand();
+  });
 });

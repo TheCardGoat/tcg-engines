@@ -45,4 +45,15 @@ export const hansNobleScoundrelI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hans",
+    version: "Noble sinvergüenza",
+    text: [
+      {
+        title: "ESQUEMAS REALES",
+        description:
+          "Cuando juegas con este personaje, si hay un personaje de Princesa o Reina en juego, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

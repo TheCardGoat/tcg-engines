@@ -17,4 +17,8 @@ export const rangerTeamupI18n: Record<Languages, I18nProperties> = {
     name: "Agenti Speciali Uniti",
     text: "Un personaggio a tua scelta riceve +{S} pari alla sua {W} per questo turno.",
   },
+  es: {
+    name: "Equipo de guardabosques",
+    text: "El personaje elegido obtiene +{S} igual a su {W} este turno.",
+  },
 };

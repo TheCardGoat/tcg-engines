@@ -45,4 +45,15 @@ export const mrLitwakArcadeOwnerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sr. litwak",
+    version: "Propietario de la sala de juegos",
+    text: [
+      {
+        title: "LA PANDILLA ESTÁ TODA AQUÍ",
+        description:
+          "Una vez durante tu turno, cada vez que juegues con otro personaje, puedes preparar este personaje. No puede realizar misiones ni desafíos durante el resto de este turno.",
+      },
+    ],
+  },
 };

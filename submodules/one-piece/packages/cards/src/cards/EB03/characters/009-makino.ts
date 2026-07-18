@@ -21,7 +21,7 @@ export const eb03Makino009: CharacterCard = {
   rarity: "C",
   setId: "EB03",
   cost: 1,
-  traits: ["2000"],
+  traits: ["Windmill Village"],
   attribute: "wisdom",
   effect:
     "[Activate: Main] You may rest this Character: Up to 1 of your Characters with no base effect gains +2000 power during this turn.",

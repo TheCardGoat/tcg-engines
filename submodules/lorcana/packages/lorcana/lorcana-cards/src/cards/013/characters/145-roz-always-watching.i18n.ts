@@ -41,4 +41,14 @@ export const rozAlwaysWatchingI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rosa",
+    version: "Siempre mirando",
+    text: [
+      {
+        title: "Siempre",
+        description: "Cada oponente juega con la carta superior de su mazo boca arriba.",
+      },
+    ],
+  },
 };

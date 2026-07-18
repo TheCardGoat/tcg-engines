@@ -45,4 +45,15 @@ export const reubenSandwichExpertI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rubén",
+    version: "Experto en sándwiches",
+    text: [
+      {
+        title: "ESPECIAL ALMUERZO",
+        description:
+          "{E}: elimina hasta 2 daños del personaje tuyo elegido. Por cada daño eliminado de esta manera, pagas 1 {I} menos por el siguiente personaje que juegues en este turno.",
+      },
+    ],
+  },
 };

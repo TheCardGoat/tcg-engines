@@ -60,4 +60,18 @@ export const mirabelMadrigalGiftOfTheFamilyI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Mirabel Madrigal",
+    version: "Regalo de la familia",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "SALVANDO EL MILAGRO",
+        description:
+          "Siempre que este personaje realice una misión, tus otros personajes de Madrigal obtienen +1 {L} este turno.",
+      },
+    ],
+  },
 };

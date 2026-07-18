@@ -79,4 +79,23 @@ export const rapunzelFlynnRiderUnlikelyPairEnchantedI18n: Record<Languages, I18n
       },
     ],
   },
+  es: {
+    name: "Rapunzel y Flynn Rider",
+    version: "Par improbable",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "INTERCAMBIO INTELIGENTE",
+        description:
+          "Siempre que este personaje realice una misión, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+      {
+        title: "NUEVO COMIENZO",
+        description:
+          "Durante tu turno, siempre que descartes una carta de personaje, puedes jugar ese personaje de tu descarte. (Usted paga todos los costos).",
+      },
+    ],
+  },
 };

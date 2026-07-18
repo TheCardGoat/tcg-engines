@@ -28,6 +28,13 @@ export const eb01Loguetown030: StageCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnThisAndHandToDeck",
+            handAmount: 1,
+            position: "bottom",
+          },
+        ],
         actions: [
           {
             action: "draw",
@@ -41,14 +48,7 @@ export const eb01Loguetown030: StageCard = {
         trigger: "trigger",
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
       },

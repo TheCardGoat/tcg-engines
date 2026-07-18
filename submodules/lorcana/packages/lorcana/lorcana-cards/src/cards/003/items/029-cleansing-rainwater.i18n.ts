@@ -40,4 +40,13 @@ export const cleansingRainwaterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Limpieza del agua de lluvia",
+    text: [
+      {
+        title: "PODER ANTIGUO",
+        description: "Destierra este objeto: elimina hasta 2 daños de cada uno de tus personajes.",
+      },
+    ],
+  },
 };

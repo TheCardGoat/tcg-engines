@@ -17,4 +17,8 @@ export const bendToMyWillI18n: Record<Languages, I18nProperties> = {
     name: "Piegati al Mio Volere",
     text: "Ogni avversario scarta tutte le carte che ha in mano.",
   },
+  es: {
+    name: "Doblarse a mi voluntad",
+    text: "Cada oponente descarta todas las cartas que tiene en la mano.",
+  },
 };

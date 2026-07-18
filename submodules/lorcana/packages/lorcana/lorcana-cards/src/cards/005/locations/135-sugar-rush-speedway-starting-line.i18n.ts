@@ -45,4 +45,15 @@ export const sugarRushSpeedwayStartingLineI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Circuito Sugar Rush",
+    version: "Línea de salida",
+    text: [
+      {
+        title: "¡EN TUS MARCAS!",
+        description:
+          "Una vez por turno, puedes {E} personaje elegido aquí y causarle 1 daño para moverlo a otra ubicación de forma gratuita.",
+      },
+    ],
+  },
 };

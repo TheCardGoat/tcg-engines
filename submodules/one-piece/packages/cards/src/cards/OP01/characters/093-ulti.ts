@@ -61,6 +61,7 @@ export const op01Ulti093: CharacterCard = {
             state: "rested",
           },
         ],
+        optional: true,
       },
     ],
   },

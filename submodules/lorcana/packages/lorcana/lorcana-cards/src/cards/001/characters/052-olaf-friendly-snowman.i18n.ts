@@ -17,4 +17,8 @@ export const olafFriendlySnowmanI18n: Record<Languages, I18nProperties> = {
     name: "Olaf",
     version: "Amichevole Pupazzo di Neve",
   },
+  es: {
+    name: "Olaf",
+    version: "Muñeco de nieve amigable",
+  },
 };

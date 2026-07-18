@@ -31,12 +31,6 @@ export const op09DocQ090: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Blackbeard Pirates",
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -59,6 +53,11 @@ export const op09DocQ090: CharacterCard = {
                   value: 1,
                 },
               ],
+            },
+            condition: {
+              condition: "leaderTrait",
+              trait: "Blackbeard Pirates",
+              match: "includes",
             },
           },
         ],

@@ -57,4 +57,18 @@ export const gaetanMoliereCleverBurrowerI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Gaëtan Moliere",
+    version: "Excavador inteligente",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "DESENTERRAR",
+        description:
+          "Siempre que este personaje realice una misión, puedes robar 2 cartas, luego elegir y descartar 2 cartas.",
+      },
+    ],
+  },
 };

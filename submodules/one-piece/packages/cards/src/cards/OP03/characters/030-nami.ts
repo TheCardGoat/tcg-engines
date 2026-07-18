@@ -26,7 +26,7 @@ export const op03Nami030: CharacterCard = {
   traits: ["Arlong Pirates East Blue"],
   attribute: "wisdom",
   effect:
-    "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 green [East Blue] type card other than [Nami] and add it to your hand. Then, place the rest at the bottom of your deck in any order. [Trigger] Play this card.",
+    "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 green {East Blue} type card other than [Nami] and add it to your hand. Then, place the rest at the bottom of your deck in any order.\n[Trigger] Play this card.",
   effects: {
     effects: [
       {
@@ -55,6 +55,7 @@ export const op03Nami030: CharacterCard = {
               {
                 filter: "trait",
                 value: "East Blue",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
@@ -64,18 +65,7 @@ export const op03Nami030: CharacterCard = {
       },
       {
         trigger: "trigger",
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-          },
-        ],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   },

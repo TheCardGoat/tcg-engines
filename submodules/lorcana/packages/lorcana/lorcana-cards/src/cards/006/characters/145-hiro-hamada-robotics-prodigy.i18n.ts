@@ -45,4 +45,15 @@ export const hiroHamadaRoboticsProdigyI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Hiro Hamada",
+    version: "Prodigio de la robótica",
+    text: [
+      {
+        title: "DULCE TECNOLOGÍA",
+        description:
+          "{2} {E}: busca en tu mazo una carta de objeto o una carta de personaje de robot y muéstrala a todos los jugadores. Baraja tu mazo y pon esa carta encima.",
+      },
+    ],
+  },
 };

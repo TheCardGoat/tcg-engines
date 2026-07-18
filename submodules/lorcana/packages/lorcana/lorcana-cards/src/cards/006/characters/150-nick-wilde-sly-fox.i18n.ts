@@ -57,4 +57,17 @@ export const nickWildeSlyFoxI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nick Wilde",
+    version: "Zorro astuto",
+    text: [
+      {
+        title: "Shift 1",
+      },
+      {
+        title: "NO PUEDES TOCARME",
+        description: "Mientras tengas un objeto en juego, este personaje no puede ser desafiado.",
+      },
+    ],
+  },
 };

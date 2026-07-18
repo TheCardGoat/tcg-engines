@@ -41,4 +41,14 @@ export const jeweledCollarI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Collar con joyas",
+    text: [
+      {
+        title: "BIENVENIDA EXTRAVAGANCIA",
+        description:
+          "Siempre que uno de tus personajes sea desafiado, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

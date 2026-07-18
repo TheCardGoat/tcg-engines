@@ -29,6 +29,25 @@ export const op03Fukurou088: CharacterCard = {
     "This Character cannot be K.O.'d by effects. [Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
   effects: {
     keywords: ["blocker"],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            restriction: "byEffect",
+          },
+        ],
+      },
+    ],
   },
   i18n: op03Fukurou088I18n,
 };

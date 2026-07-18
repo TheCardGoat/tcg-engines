@@ -47,10 +47,11 @@ export const op02BartholomewKuma057: CharacterCard = {
               {
                 filter: "trait",
                 value: "The Seven Warlords of the Sea",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
-            remainderPosition: "bottom",
+            remainderPosition: "any",
           },
         ],
       },

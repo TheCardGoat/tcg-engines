@@ -60,4 +60,18 @@ export const rollyChubbyPuppyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rolly",
+    version: "Cachorro gordito",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "ANTIGUAS ADORABLES",
+        description:
+          "Cuando juegas con este personaje, puedes poner una carta de personaje de tu descarte en tu tintero boca abajo y ejercitarla.",
+      },
+    ],
+  },
 };

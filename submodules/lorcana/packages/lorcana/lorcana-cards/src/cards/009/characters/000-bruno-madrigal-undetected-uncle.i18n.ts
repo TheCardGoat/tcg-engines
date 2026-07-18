@@ -57,4 +57,18 @@ export const brunoMadrigalUndetectedUncleI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Bruno madrigal",
+    version: "Tío no detectado",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "SOLO TIENES QUE VERLO",
+        description:
+          "{E}: nombra una carta y luego revela la carta superior de tu mazo. Si es la carta nombrada, ponla en tu mano y gana 3 conocimientos. De lo contrario, colóquelo en la parte superior de su plataforma.",
+      },
+    ],
+  },
 };

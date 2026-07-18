@@ -42,4 +42,14 @@ export const merlinBackFromBermudaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Esmerejón",
+    version: "De regreso de las Bermudas",
+    text: [
+      {
+        title: "¡VIVA EL REY!",
+        description: "Tus personajes llamados Arthur obtienen Resistencia +1.",
+      },
+    ],
+  },
 };

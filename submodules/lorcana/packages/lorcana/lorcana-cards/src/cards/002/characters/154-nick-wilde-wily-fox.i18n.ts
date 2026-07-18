@@ -45,4 +45,15 @@ export const nickWildeWilyFoxI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nick Wilde",
+    version: "Zorro astuto",
+    text: [
+      {
+        title: "SE LLAMA",
+        description:
+          "UN HUSTLE Cuando juegas con este personaje, puedes devolver a tu mano una carta de objeto llamada Pawpsicle de tu descarte.",
+      },
+    ],
+  },
 };

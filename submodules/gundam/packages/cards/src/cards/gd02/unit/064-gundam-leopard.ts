@@ -4,6 +4,7 @@ export const gd02GundamLeopard064: UnitCard = {
   cardNumber: "GD02-064",
   name: "Gundam Leopard",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "purple",
   traits: ["vulture"],
   id: "GD02-064",
@@ -41,6 +42,7 @@ export const gd02GundamLeopard064: UnitCard = {
   cost: 4,
   ap: 4,
   hp: 4,
+  linkCondition: "(Vulture) Trait",
   effect:
     "During your turn, while there are 7 or more cards in your trash, this Unit can't receive effect damage from enemy Commands.<br>",
   effects: [
@@ -65,6 +67,7 @@ export const gd02GundamLeopard064: UnitCard = {
             target: { owner: "self" },
             damageType: "effect",
             sourceCardType: "command",
+            source: "enemy",
           },
         },
       ],

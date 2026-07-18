@@ -17,4 +17,8 @@ export const stitchNewDogI18n: Record<Languages, I18nProperties> = {
     name: "Stitch",
     version: "Nuovo Cagnolino",
   },
+  es: {
+    name: "Puntada",
+    version: "Perro nuevo",
+  },
 };

@@ -25,6 +25,5 @@ export const op04Bananagator062: CharacterCard = {
   counter: 1000,
   traits: ["Animal"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op04Bananagator062I18n,
 };

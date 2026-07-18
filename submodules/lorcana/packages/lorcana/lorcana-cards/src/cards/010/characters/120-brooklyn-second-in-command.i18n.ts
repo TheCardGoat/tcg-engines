@@ -55,4 +55,17 @@ export const brooklynSecondInCommandI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Brooklyn",
+    version: "Segundo al mando",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "PIEDRA DE DÍA",
+        description: "Si tienes 3 o más cartas en tu mano, este personaje no puede prepararse.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const kingCandySugarRushNightmareI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Rey caramelo",
+    version: "Pesadilla de la fiebre del azúcar",
+    text: [
+      {
+        title: "UNA NUEVA PLANTILLA",
+        description:
+          "Cuando este personaje es desterrado, puedes devolver a tu mano otra carta de personaje de Corredor de tu descarte.",
+      },
+    ],
+  },
 };

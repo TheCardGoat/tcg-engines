@@ -56,6 +56,7 @@ export const eb02MonkeyDLuffy010: LeaderCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
+                match: "includes",
                 negate: true,
               },
             ],

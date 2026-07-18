@@ -45,4 +45,15 @@ export const mulanStandingHerGroundEpicI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Mulán",
+    version: "Manteniéndose firme",
+    text: [
+      {
+        title: "HOJA QUE FLUYE",
+        description:
+          "Durante tu turno, si has puesto una carta debajo de uno de tus personajes o ubicaciones este turno, este personaje no recibe daño de los desafíos.",
+      },
+    ],
+  },
 };

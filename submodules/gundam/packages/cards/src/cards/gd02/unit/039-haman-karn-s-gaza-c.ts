@@ -5,6 +5,7 @@ export const gd02HamanKarnSGazaC039: UnitCard = {
   name: "Haman Karn's Gaza C",
   type: "unit",
   color: "red",
+  battlefieldZones: ["space", "earth"],
   traits: ["neo zeon"],
   id: "GD02-039",
   canonicalId: "GD02-039",
@@ -75,6 +76,7 @@ export const gd02HamanKarnSGazaC039: UnitCard = {
   cost: 2,
   ap: 2,
   hp: 3,
+  linkCondition: "[Haman Karn]",
   effect: "【When Paired】Choose 1 enemy Unit that is Lv.3 or lower. Deal 1 damage to it.<br>",
   effects: [
     {

@@ -35,4 +35,8 @@ export const youCanFlyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "¡Puedes volar!",
+    text: "El personaje elegido gana Evasivo hasta el comienzo de tu siguiente turno.",
+  },
 };

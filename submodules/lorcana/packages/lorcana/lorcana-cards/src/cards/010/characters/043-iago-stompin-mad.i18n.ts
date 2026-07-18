@@ -21,4 +21,9 @@ export const iagoStompinMadI18n: Record<Languages, I18nProperties> = {
     version: "Furioso",
     text: "<Sfidante> +5",
   },
+  es: {
+    name: "Yago",
+    version: "Pisoteando loco",
+    text: "Retador +5",
+  },
 };

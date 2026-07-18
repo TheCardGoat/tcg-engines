@@ -35,6 +35,7 @@ export const op07Aladine020: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Fish-Man",
+            match: "includes",
           },
         ],
         actions: [
@@ -55,12 +56,19 @@ export const op07Aladine020: CharacterCard = {
                 value: 3,
               },
               {
-                filter: "trait",
-                value: "Fish-Man",
-              },
-              {
-                filter: "trait",
-                value: "Merfolk",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Fish-Man",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Merfolk",
+                    match: "includes",
+                  },
+                ],
               },
               {
                 filter: "cardCategory",

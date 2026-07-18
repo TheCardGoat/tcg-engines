@@ -45,4 +45,15 @@ export const prestonWhitmoreExpeditionFinancierI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Preston Whitmore",
+    version: "Financiador de expedición",
+    text: [
+      {
+        title: "PRECIO DEL PROGRESO",
+        description:
+          "Cuando juegas con este personaje, puedes poner las 2 primeras cartas de tu mazo en tu descarte.",
+      },
+    ],
+  },
 };

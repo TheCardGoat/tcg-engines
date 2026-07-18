@@ -43,4 +43,15 @@ export const kevinFlightlessBirdI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kevin",
+    version: "Pájaro no volador",
+    text: [
+      {
+        title: "De vuelta al nido",
+        description:
+          "Siempre que este personaje realice una misión, coloca esta carta en la parte superior de tu mazo.",
+      },
+    ],
+  },
 };

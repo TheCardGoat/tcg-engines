@@ -40,7 +40,7 @@ export const op03Krieg025: CharacterCard = {
     },
   ],
   effect:
-    "[On Play] You may trash 1 card from your hand: K.O. up to 2 of your opponent's rested Characters with a cost of 4 or less. [DON!! x1] This Character gains [Double Attack]. (This card deals 2 damage.)",
+    "[On Play] You may trash 1 card from your hand: K.O. up to 2 of your opponent's rested Characters with a cost of 4 or less.\n[DON!! x1] This Character gains [Double Attack].\n(This card deals 2 damage.)",
   effects: {
     effects: [
       {

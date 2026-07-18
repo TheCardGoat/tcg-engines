@@ -72,4 +72,21 @@ export const dashParrSuperFastI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dash Parr",
+    version: "Súper rápido",
+    text: [
+      {
+        title: "<Mayús> 3 {I}",
+      },
+      {
+        title: "<Evasivo>",
+      },
+      {
+        title: "¡Sígueme!",
+        description:
+          "Siempre que este personaje realice una misión, puedes revelar la carta superior de tu mazo. Si lo haces, puedes jugarlo. De lo contrario, ponlo en tu descarte. (Usted paga todos los costos).",
+      },
+    ],
+  },
 };

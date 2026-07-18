@@ -52,4 +52,16 @@ export const perlaNimbleSeamstressI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Perla",
+    version: "Costurera ágil",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "Apoyo",
+      },
+    ],
+  },
 };

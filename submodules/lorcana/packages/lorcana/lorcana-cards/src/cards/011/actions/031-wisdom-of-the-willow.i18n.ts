@@ -17,4 +17,8 @@ export const wisdomOfTheWillowI18n: Record<Languages, I18nProperties> = {
     name: "Saggezza del Salice",
     text: "Per il resto di questo turno, ogni volta che uno dei tuoi personaggi va all'avventura, puoi pescare una carta.",
   },
+  es: {
+    name: "Sabiduría del sauce",
+    text: "Durante el resto de este turno, cada vez que uno de tus personajes realice una misión, puedes robar una carta.",
+  },
 };

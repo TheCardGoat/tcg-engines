@@ -23,10 +23,10 @@ export const op06IkarosMuch024: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Fish-Man New Fish-Man Pirates"],
+  traits: ["Fish-Man", "New Fish-Man Pirates"],
   attribute: "slash",
   effect:
-    "[On Play] If your Leader has the [New FIsh-Man Pirates] type, play up to 1 [Fish-Man] type Character card with a cost of 4 or less from your hand. Then, add 1 card from the top of your Life cards to your hand.",
+    "[On Play] If your Leader has the [New Fish-Man Pirates] type, play up to 1 [Fish-Man] type Character card with a cost of 4 or less from your hand. Then, add 1 card from the top of your Life cards to your hand.",
   effects: {
     effects: [
       {
@@ -34,7 +34,8 @@ export const op06IkarosMuch024: CharacterCard = {
         conditions: [
           {
             condition: "leaderTrait",
-            trait: "New FIsh-Man Pirates",
+            trait: "New Fish-Man Pirates",
+            match: "includes",
           },
         ],
         actions: [
@@ -57,6 +58,7 @@ export const op06IkarosMuch024: CharacterCard = {
               {
                 filter: "trait",
                 value: "Fish-Man",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -71,6 +73,7 @@ export const op06IkarosMuch024: CharacterCard = {
               amount: 1,
             },
             destination: "hand",
+            position: "top",
           },
         ],
       },

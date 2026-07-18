@@ -41,4 +41,14 @@ export const galacticCommunicatorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Comunicador Galáctico",
+    text: [
+      {
+        title: "ASIGNACIÓN DE RECURSOS 1",
+        description:
+          "{I}, destierra este objeto: devuelve el personaje elegido con 2 {S} o menos a la mano de su jugador.",
+      },
+    ],
+  },
 };

@@ -57,4 +57,18 @@ export const liShangNewlyPromotedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Li Shang",
+    version: "Recién promocionado",
+    text: [
+      {
+        title: "NO TE DECEPCIONARÉ",
+        description: "Este personaje puede desafiar a los personajes listos.",
+      },
+      {
+        title: "GRAN RESPONSABILIDAD",
+        description: "Mientras este personaje esté dañado, obtiene +2 {S}.",
+      },
+    ],
+  },
 };

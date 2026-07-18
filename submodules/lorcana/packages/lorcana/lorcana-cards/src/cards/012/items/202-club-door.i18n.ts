@@ -59,4 +59,19 @@ export const clubDoorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Puerta del club",
+    text: [
+      {
+        title: "BIENVENIDO DE NUEVO, SEÑOR",
+        description:
+          "Si tienes un personaje llamado Fat Cat en juego, puedes jugar esta carta gratis.",
+      },
+      {
+        title: "SÓLO GATOS FRESCOS",
+        description:
+          "Tus ubicaciones no pueden ser desafiadas por personajes con un coste de 2 o menos.",
+      },
+    ],
+  },
 };

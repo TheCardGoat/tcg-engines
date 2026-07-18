@@ -30,12 +30,6 @@ export const op12Crocodile069: CharacterCard = {
     effects: [
       {
         trigger: "onOpponentAttack",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Baroque Works",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -55,8 +49,14 @@ export const op12Crocodile069: CharacterCard = {
             },
             value: 2000,
             duration: "thisBattle",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Baroque Works",
+              match: "includes",
+            },
           },
         ],
+        optional: true,
         oncePerTurn: true,
       },
     ],

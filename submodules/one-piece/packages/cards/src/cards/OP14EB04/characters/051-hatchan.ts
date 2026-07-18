@@ -22,7 +22,7 @@ export const op14eb04Hatchan051: CharacterCard = {
   setId: "OP14EB04",
   cost: 1,
   power: 3000,
-  traits: ["Fish-Man The Sun Pirates"],
+  traits: ["Fish-Man", "The Sun Pirates"],
   attribute: "slash",
   effect: "[DON!! x2] [On K.O.] Draw 1 card.",
   effects: {

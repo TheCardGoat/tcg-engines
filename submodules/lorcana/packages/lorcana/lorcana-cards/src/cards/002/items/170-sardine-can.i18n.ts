@@ -40,4 +40,13 @@ export const sardineCanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lata de sardinas",
+    text: [
+      {
+        title: "CABINA DE VUELO",
+        description: "Tus personajes ejercidos ganan Ward.",
+      },
+    ],
+  },
 };

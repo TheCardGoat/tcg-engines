@@ -31,6 +31,13 @@ export const op08CharlotteCustard103: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "top",
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

@@ -23,7 +23,7 @@ export const op06Kikunojo104: CharacterCard = {
   cost: 4,
   power: 6000,
   trigger: "If your opponent has 3 or less Life cards, play this card.",
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[On K.O.] If your opponent has 3 or less Life cards, add up to 1 card from the top of your deck to the top of your Life cards.",
@@ -53,6 +53,18 @@ export const op06Kikunojo104: CharacterCard = {
             position: "top",
           },
         ],
+      },
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "lifeCount",
+            player: "opponent",
+            comparison: "lte",
+            value: 3,
+          },
+        ],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   },

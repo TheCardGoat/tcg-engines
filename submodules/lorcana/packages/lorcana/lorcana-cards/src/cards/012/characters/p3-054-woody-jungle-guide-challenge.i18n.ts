@@ -76,4 +76,22 @@ export const woodyJungleGuideP3ChallengeI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Leñoso",
+    version: "Guía de la selva",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "PONGAMOS EN MOVIMIENTO",
+        description:
+          "Siempre que este personaje realice una misión, roba una carta. Luego, podrás interpretar un personaje con un coste de 2 o menos de forma gratuita.",
+      },
+      {
+        title: "TODOS SE REÚNEN",
+        description: "Tus otros personajes de juguete obtienen +1 {W}.",
+      },
+    ],
+  },
 };

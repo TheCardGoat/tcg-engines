@@ -71,7 +71,7 @@ export const gd03FreedomGundam070: UnitCard = {
         {
           action: {
             action: "preventDamageToZone",
-            zone: "shieldArea",
+            protectedArea: { kind: "zone", zone: "shieldArea" },
             unitFilter: {
               owner: "opponent",
               cardType: "unit",

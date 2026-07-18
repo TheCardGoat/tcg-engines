@@ -54,6 +54,7 @@ export const op01BasilHawkins106: CharacterCard = {
             count: {
               amount: 1,
             },
+            self: true,
           },
         ],
       },

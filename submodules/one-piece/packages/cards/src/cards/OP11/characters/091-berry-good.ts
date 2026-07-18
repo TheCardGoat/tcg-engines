@@ -40,8 +40,16 @@ export const op11BerryGood091: CharacterCard = {
               count: {
                 amount: 3,
               },
+              filters: [
+                {
+                  filter: "cardCategory",
+                  value: "event",
+                },
+              ],
+              chosenBy: "opponent",
             },
             position: "bottom",
+            order: "any",
           },
         ],
       },

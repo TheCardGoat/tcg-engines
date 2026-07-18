@@ -45,4 +45,15 @@ export const roxannePowerlineFanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Roxana",
+    version: "Ventilador de línea eléctrica",
+    text: [
+      {
+        title: "AMANTE DE LOS CONCIERTOS",
+        description:
+          "Mientras tengas un personaje con Singer en juego, este personaje obtiene +1 {S} y +1 {L}.",
+      },
+    ],
+  },
 };

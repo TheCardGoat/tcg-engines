@@ -17,4 +17,8 @@ export const elsaQueenRegentI18n: Record<Languages, I18nProperties> = {
     name: "Elsa",
     version: "Regina Reggente",
   },
+  es: {
+    name: "Elsa",
+    version: "Reina regente",
+  },
 };

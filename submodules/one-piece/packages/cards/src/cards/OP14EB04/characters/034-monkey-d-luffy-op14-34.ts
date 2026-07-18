@@ -23,7 +23,7 @@ export const op14eb04MonkeyDLuffyOp1434034: CharacterCard = {
   cost: 3,
   power: 3000,
   counter: 1000,
-  traits: ["FILM Straw Hat Crew Supernovas"],
+  traits: ["FILM", "Supernovas", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[Your Turn] All of your green {Straw Hat Crew} type Characters with a base cost of 4 or more gain +1000 power.\n[Once Per Turn] If your {Straw Hat Crew} type Character would be K.O.'d by your opponent's effect, you may rest 1 of your Characters instead.",
@@ -70,6 +70,20 @@ export const op14eb04MonkeyDLuffyOp1434034: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "ko",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "trait",
+              value: "Straw Hat Crew",
+            },
+          ],
+        },
+        source: "opponentEffect",
         replacementAction: {
           action: "rest",
           target: {

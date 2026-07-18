@@ -45,4 +45,15 @@ export const scarMastermindI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cicatriz",
+    version: "Cerebro",
+    text: [
+      {
+        title: "TRAMA INSIDIOSA",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido obtiene -5 {S} este turno.",
+      },
+    ],
+  },
 };

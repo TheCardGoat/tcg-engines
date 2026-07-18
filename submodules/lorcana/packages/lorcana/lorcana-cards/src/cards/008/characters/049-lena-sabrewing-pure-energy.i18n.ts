@@ -53,4 +53,17 @@ export const lenaSabrewingPureEnergyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lena Sabrewing",
+    version: "Energía pura",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "VENGANZA SOBRENATURAL",
+        description: "{E}: inflige 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

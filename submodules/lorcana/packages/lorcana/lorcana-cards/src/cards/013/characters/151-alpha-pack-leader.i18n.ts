@@ -45,4 +45,15 @@ export const alphaPackLeaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Alfa",
+    version: "Líder de la manada",
+    text: [
+      {
+        title: "¿Quién quiere un regalo?",
+        description:
+          "Cada vez que juegas un objeto, el personaje elegido obtiene +1 {S} y gana <Resistir> +1 este turno.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const happyJoyfulAdventurerI18n: Record<Languages, I18nProperties> = {
     name: "Gongolo",
     version: "Avventuriero Gioioso",
   },
+  es: {
+    name: "Feliz",
+    version: "Aventurero alegre",
+  },
 };

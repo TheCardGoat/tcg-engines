@@ -43,4 +43,15 @@ export const merlinGoatI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Esmerejón",
+    version: "Cabra",
+    text: [
+      {
+        title: "AQUÍ",
+        description:
+          "¡YO VENGO! Cuando juegas con este personaje y cuando deja el juego, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

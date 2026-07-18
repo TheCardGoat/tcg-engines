@@ -34,4 +34,8 @@ export const everAsBeforeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Siempre como antes",
+    text: "Elimina hasta 2 daños de cualquier número de personajes elegidos.",
+  },
 };

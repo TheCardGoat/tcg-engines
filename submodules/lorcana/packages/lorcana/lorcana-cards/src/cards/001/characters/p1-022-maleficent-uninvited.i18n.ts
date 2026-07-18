@@ -17,4 +17,8 @@ export const maleficentUninvitedP1I18n: Record<Languages, I18nProperties> = {
     name: "Maleficent",
     version: "Uninvited",
   },
+  es: {
+    name: "Pernicioso",
+    version: "No invitado",
+  },
 };

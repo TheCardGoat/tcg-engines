@@ -45,4 +45,15 @@ export const theMatchmakerUnforgivingExpertI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "El casamentero",
+    version: "Experto implacable",
+    text: [
+      {
+        title: "ERES",
+        description:
+          "¡UNA DESGRACIA! Siempre que este personaje desafía a otro personaje, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

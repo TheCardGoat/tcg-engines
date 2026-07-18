@@ -62,8 +62,12 @@ export const prb02TheThreeBrothersBondPirateFoil019: EventCard = {
                 value: 5,
               },
               {
-                filter: "name",
-                value: "Sabo",
+                filter: "anyOf",
+                groups: [
+                  [{ filter: "name", value: "Sabo" }],
+                  [{ filter: "name", value: "Portgas.D.Ace" }],
+                  [{ filter: "name", value: "Monkey.D.Luffy" }],
+                ],
               },
             ],
             revealDestination: "hand",

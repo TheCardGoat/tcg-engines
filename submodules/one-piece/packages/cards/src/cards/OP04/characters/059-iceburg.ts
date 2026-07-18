@@ -23,7 +23,7 @@ export const op04Iceburg059: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 1000,
-  traits: ["Galley-La Company Water Seven"],
+  traits: ["Water Seven", "Galley-La Company"],
   attribute: "wisdom",
   effect:
     "[On Your Opponent's Attack] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your Leader has the [Water Seven] type, this Character gains [Blocker] during this turn. (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
@@ -31,12 +31,6 @@ export const op04Iceburg059: CharacterCard = {
     effects: [
       {
         trigger: "onOpponentAttack",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Water Seven",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -56,8 +50,14 @@ export const op04Iceburg059: CharacterCard = {
             },
             keyword: "blocker",
             duration: "thisTurn",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Water Seven",
+              match: "includes",
+            },
           },
         ],
+        optional: true,
       },
     ],
   },

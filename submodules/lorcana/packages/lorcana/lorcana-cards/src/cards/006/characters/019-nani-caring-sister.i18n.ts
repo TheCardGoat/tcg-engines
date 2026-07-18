@@ -59,4 +59,18 @@ export const naniCaringSisterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nani",
+    version: "Hermana cariñosa",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "LO SIENTO MUCHO 2",
+        description:
+          "{I}: el personaje elegido obtiene -1 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

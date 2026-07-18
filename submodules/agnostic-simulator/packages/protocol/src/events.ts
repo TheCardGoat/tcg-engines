@@ -32,7 +32,9 @@ import type {
   SkipOpponentTurnMsg,
   SubmitInteractionMsg,
   SubscribeEventMsg,
+  SubscribeMatchmakingDashboardMsg,
   UnsubscribeEventMsg,
+  UnsubscribeMatchmakingDashboardMsg,
 } from "./schemas.js";
 import type {
   ChatMessageEventPayload,
@@ -58,6 +60,7 @@ import type {
   MatchReadyUpdatePayload,
   MatchStatePayload,
   MatchmakingCancelledPayload,
+  MatchmakingDashboardSnapshotPayload,
   MatchmakingStatusPayload,
   MoveAcceptedPayload,
   MoveRejectedPayload,
@@ -67,6 +70,7 @@ import type {
   ProposalExpiredPayload,
   ProposalReceivedPayload,
   ProposalResolvedPayload,
+  PushStateResultPayload,
   RequestStateSyncPayload,
   ServerShuttingDownPayload,
   StateSyncPayload,
@@ -106,6 +110,8 @@ export interface ClientToServerEvents {
   proposal_decline: (payload: Payload<ProposalDeclineMsg>) => void;
   subscribe_event: (payload: Payload<SubscribeEventMsg>) => void;
   unsubscribe_event: (payload: Payload<UnsubscribeEventMsg>) => void;
+  subscribe_matchmaking_dashboard: (payload: Payload<SubscribeMatchmakingDashboardMsg>) => void;
+  unsubscribe_matchmaking_dashboard: (payload: Payload<UnsubscribeMatchmakingDashboardMsg>) => void;
 }
 
 export interface ServerToClientEvents {
@@ -149,6 +155,7 @@ export interface ServerToClientEvents {
   event_unsubscribed: (payload: EventSubscriptionAckPayload) => void;
   global_announcement: (payload: GlobalAnnouncementPayload) => void;
   friend_message: (payload: FriendMessagePayload) => void;
+  matchmaking_dashboard_snapshot: (payload: MatchmakingDashboardSnapshotPayload) => void;
 
   // Explicit response events for the call/response pattern (§5).
   // The ws-gateway is stateless: there is no pendingAcks map. The client
@@ -162,6 +169,7 @@ export interface ServerToClientEvents {
   "join_game:response": (payload: Response<GameJoinedPayload, ErrorPayload>) => void;
   "reconnect:response": (payload: Response<GameJoinedPayload, ErrorPayload>) => void;
   "request_game_state_sync:response": (payload: Response<StateSyncPayload, ErrorPayload>) => void;
+  "push_state:response": (payload: Response<PushStateResultPayload, ErrorPayload>) => void;
   "proposal_send:response": (payload: Response<ProposalReceivedPayload, ErrorPayload>) => void;
   "proposal_accept:response": (payload: Response<ProposalResolvedPayload, ErrorPayload>) => void;
   "proposal_decline:response": (payload: Response<ProposalResolvedPayload, ErrorPayload>) => void;

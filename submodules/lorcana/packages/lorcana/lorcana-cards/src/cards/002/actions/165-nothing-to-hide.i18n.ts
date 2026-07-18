@@ -24,4 +24,8 @@ export const nothingToHideI18n: Record<Languages, I18nProperties> = {
     name: "Nothing to Hide",
     text: "Each opponent reveals their hand. Draw a card.",
   },
+  es: {
+    name: "Nada que ocultar",
+    text: "Cada oponente revela su mano. Saca una carta.",
+  },
 };

@@ -58,4 +58,18 @@ export const rexProtectiveDinosaurI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rex",
+    version: "Dinosaurio protector",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "¡HUIR!",
+        description:
+          "Durante el turno de un oponente, cuando este personaje es desterrado, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

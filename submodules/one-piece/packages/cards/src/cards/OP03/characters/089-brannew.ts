@@ -51,6 +51,7 @@ export const op03Brannew089: CharacterCard = {
               {
                 filter: "trait",
                 value: "Navy",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

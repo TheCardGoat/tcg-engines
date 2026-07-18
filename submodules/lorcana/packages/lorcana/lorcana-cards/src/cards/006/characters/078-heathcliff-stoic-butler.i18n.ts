@@ -21,4 +21,9 @@ export const heathcliffStoicButlerI18n: Record<Languages, I18nProperties> = {
     version: "Stoico Maggiordomo",
     text: "<Protetto>",
   },
+  es: {
+    name: "Heathcliff",
+    version: "Mayordomo estoico",
+    text: "Pabellón",
+  },
 };

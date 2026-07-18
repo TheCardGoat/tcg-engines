@@ -57,4 +57,18 @@ export const frozoneSuperCoolEnchantedI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Frozono",
+    version: "Súper genial",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "SOLO REFRESCARSE",
+        description:
+          "Cuando juegas con este personaje, si tienes otro súper personaje en juego, puedes ejercer el personaje contrario elegido.",
+      },
+    ],
+  },
 };

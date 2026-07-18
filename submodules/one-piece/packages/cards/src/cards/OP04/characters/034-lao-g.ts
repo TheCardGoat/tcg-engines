@@ -37,6 +37,7 @@ export const op04LaoG034: CharacterCard = {
             player: "self",
             comparison: "gte",
             value: 3,
+            state: "active",
           },
         ],
         actions: [

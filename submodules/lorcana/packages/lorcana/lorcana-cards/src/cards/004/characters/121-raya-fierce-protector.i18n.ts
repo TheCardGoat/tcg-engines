@@ -45,4 +45,15 @@ export const rayaFierceProtectorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Raya",
+    version: "Protector feroz",
+    text: [
+      {
+        title: "NO ME CRUZES",
+        description:
+          "Siempre que este personaje desafíe a otro personaje, gana 1 conocimiento por cada personaje dañado que tengas en juego.",
+      },
+    ],
+  },
 };

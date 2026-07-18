@@ -54,4 +54,17 @@ export const fangCrossbowI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ballesta de colmillo",
+    text: [
+      {
+        title: "OBJETIVO CUIDADOSO",
+        description: "{E}, 2 {I}: el personaje elegido obtiene -2 {S} este turno.",
+      },
+      {
+        title: "¡QUÉDATE ATRÁS!",
+        description: "{E}, Destierra este objeto: destierra al personaje Dragón elegido.",
+      },
+    ],
+  },
 };

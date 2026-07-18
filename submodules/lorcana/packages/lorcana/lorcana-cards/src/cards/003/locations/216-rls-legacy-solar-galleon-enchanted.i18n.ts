@@ -64,4 +64,19 @@ export const rlsLegacySolarGalleonEnchantedI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Legado de RLS",
+    version: "Galeón Solar",
+    text: [
+      {
+        title: "ESTE ES NUESTRO BARCO",
+        description: "Los personajes obtienen Evasión mientras están aquí.",
+      },
+      {
+        title: "JUNTOS AHORA",
+        description:
+          "Si tienes un personaje aquí, pagas 2 {I} menos para mover un personaje tuyo aquí.",
+      },
+    ],
+  },
 };

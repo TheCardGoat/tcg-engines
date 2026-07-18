@@ -25,6 +25,5 @@ export const op02Crocodile053: CharacterCard = {
   counter: 1000,
   traits: ["Impel Down Former Baroque Works"],
   attribute: "special",
-  effect: "NULL",
   i18n: op02Crocodile053I18n,
 };

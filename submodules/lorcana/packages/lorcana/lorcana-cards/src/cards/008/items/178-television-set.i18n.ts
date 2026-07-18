@@ -41,4 +41,14 @@ export const televisionSetI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Televisor",
+    text: [
+      {
+        title: "¿ESTÁ ENCENDIDO TODAVÍA?",
+        description:
+          "{E}, 1 {I}: mira la carta superior de tu mazo. Si es una carta de personaje Cachorro, puedes revelarla y ponerla en tu mano. De lo contrario, colóquelo en el fondo de su plataforma.",
+      },
+    ],
+  },
 };

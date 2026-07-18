@@ -59,4 +59,18 @@ export const littleJohnRobinsPalI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pequeño juan",
+    version: "El amigo de Robin",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "DISFRAZADO",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

@@ -41,4 +41,14 @@ export const mysticalRoseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rosa mística",
+    text: [
+      {
+        title: "DISPIRA EL ENREDO",
+        description:
+          "Desterrar este objeto: el personaje elegido llamado Bestia obtiene +2 {L} este turno. Si tienes un personaje llamado Bella en juego, mueve hasta 3 contadores de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

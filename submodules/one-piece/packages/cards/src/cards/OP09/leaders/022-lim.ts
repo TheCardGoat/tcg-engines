@@ -45,6 +45,7 @@ export const op09Lim022: LeaderCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [{ cost: "restDon", amount: 3 }],
         actions: [
           {
             action: "addDon",
@@ -54,9 +55,30 @@ export const op09Lim022: LeaderCard = {
             },
             state: "rested",
           },
+          {
+            action: "play",
+            source: { player: "self", zone: "hand" },
+            count: { amount: 1, upTo: true },
+            filters: [
+              { filter: "cardCategory", value: "character" },
+              { filter: "trait", value: "ODYSSEY", match: "includes" },
+              { filter: "cost", comparison: "lte", value: 5 },
+            ],
+          },
         ],
         optional: true,
         oncePerTurn: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "playRested",
+            player: "self",
+            filters: [{ filter: "cardCategory", value: "character" }],
+          },
+        ],
       },
     ],
   },

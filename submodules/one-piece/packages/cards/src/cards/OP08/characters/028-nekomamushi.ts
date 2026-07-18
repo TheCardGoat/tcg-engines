@@ -33,17 +33,10 @@ export const op08Nekomamushi028: CharacterCard = {
         trigger: "onPlay",
         conditions: [
           {
-            condition: "zoneCount",
+            condition: "restedCardCount",
             player: "opponent",
-            zone: "field",
             comparison: "gte",
             value: 7,
-            filters: [
-              {
-                filter: "state",
-                value: "rested",
-              },
-            ],
           },
         ],
         actions: [

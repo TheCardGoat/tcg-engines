@@ -45,4 +45,15 @@ export const hiramFlavershamToymakerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hiram Flaversham",
+    version: "Fabricante de juguetes",
+    text: [
+      {
+        title: "ARTÍFICO",
+        description:
+          "Cuando juegas con este personaje y cada vez que realiza misiones, puedes desterrar uno de tus elementos para robar 2 cartas.",
+      },
+    ],
+  },
 };

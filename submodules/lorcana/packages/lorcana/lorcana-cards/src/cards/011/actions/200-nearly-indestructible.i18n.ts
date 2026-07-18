@@ -17,4 +17,8 @@ export const nearlyIndestructibleI18n: Record<Languages, I18nProperties> = {
     name: "Praticamente Indistruttibile",
     text: "Un tuo personaggio a tua scelta ottiene <Resistere> +2 fino all'inizio del tuo prossimo turno.",
   },
+  es: {
+    name: "Casi indestructible",
+    text: "El personaje elegido tuyo gana Resistencia +2 hasta el comienzo de tu siguiente turno.",
+  },
 };

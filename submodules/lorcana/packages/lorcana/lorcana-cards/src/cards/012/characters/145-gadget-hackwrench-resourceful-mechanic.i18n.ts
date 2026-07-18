@@ -61,4 +61,19 @@ export const gadgetHackwrenchResourcefulMechanicI18n: Record<Languages, I18nProp
       },
     ],
   },
+  es: {
+    name: "Llave para hackear gadgets",
+    version: "Mecánico ingenioso",
+    text: [
+      {
+        title: "HORA DE JUGAR",
+        description:
+          "Cuando juegas con este personaje, puedes jugar un objeto con un coste de 3 o menos de forma gratuita.",
+      },
+      {
+        title: "BIEN SUMINISTRADO",
+        description: "Tus personajes con soporte obtienen +1 {L}.",
+      },
+    ],
+  },
 };

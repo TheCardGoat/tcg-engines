@@ -44,4 +44,15 @@ export const chernabogsFollowersCreaturesOfEvilI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Los seguidores de Chernabog",
+    version: "Criaturas del mal",
+    text: [
+      {
+        title: "ALMAS INQUIETAS",
+        description:
+          "Siempre que este personaje realice una misión, puedes desterrarlo para robar una carta.",
+      },
+    ],
+  },
 };

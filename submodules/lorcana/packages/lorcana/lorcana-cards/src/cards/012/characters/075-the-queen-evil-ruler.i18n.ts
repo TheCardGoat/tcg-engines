@@ -44,4 +44,15 @@ export const theQueenEvilRulerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La reina",
+    version: "Gobernante malvado",
+    text: [
+      {
+        title: "CRUELDAD SIN IGUAL",
+        description:
+          "Mientras un personaje enemigo dañado esté en juego, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

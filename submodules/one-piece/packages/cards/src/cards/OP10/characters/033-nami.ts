@@ -46,6 +46,7 @@ export const op10Nami033: CharacterCard = {
               {
                 filter: "trait",
                 value: "ODYSSEY",
+                match: "includes",
               },
             ],
           },
@@ -55,7 +56,7 @@ export const op10Nami033: CharacterCard = {
             action: "freeze",
             target: {
               player: "opponent",
-              zones: ["character", "costArea"],
+              zones: ["costArea"],
               count: {
                 amount: 1,
                 upTo: true,

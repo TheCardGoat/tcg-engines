@@ -21,4 +21,9 @@ export const sirHissAggravatingAspI18n: Record<Languages, I18nProperties> = {
     version: "Aspide Esasperante",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Señor silbido",
+    version: "Áspid agravante",
+    text: "Evasivo",
+  },
 };

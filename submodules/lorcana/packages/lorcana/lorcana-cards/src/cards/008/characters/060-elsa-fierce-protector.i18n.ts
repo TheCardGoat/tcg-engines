@@ -43,4 +43,14 @@ export const elsaFierceProtectorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Elsa",
+    version: "Protector feroz",
+    text: [
+      {
+        title: "HIELO SOBRE 1",
+        description: "{I}, elige y descarta una carta: ejerce el personaje contrario elegido.",
+      },
+    ],
+  },
 };

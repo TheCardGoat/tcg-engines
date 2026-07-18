@@ -42,6 +42,29 @@ export const op12ILoveYou115: EventCard = {
             value: 2000,
             duration: "thisBattle",
           },
+          {
+            action: "returnToHand",
+            target: {
+              player: "self",
+              zones: ["trash"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "name",
+                  value: "Trafalgar Law",
+                },
+              ],
+            },
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 2,
+            },
+          },
         ],
       },
     ],

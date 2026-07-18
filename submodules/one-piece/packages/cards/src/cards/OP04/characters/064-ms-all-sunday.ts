@@ -54,6 +54,17 @@ export const op04MsAllSunday064: CharacterCard = {
             },
             state: "rested",
           },
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+            condition: {
+              condition: "donFieldCount",
+              player: "self",
+              comparison: "gte",
+              value: 6,
+            },
+          },
         ],
       },
       {
@@ -66,16 +77,10 @@ export const op04MsAllSunday064: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
+        optional: true,
       },
     ],
   },

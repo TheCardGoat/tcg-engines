@@ -17,4 +17,8 @@ export const aladdinCorneredSwordsmanI18n: Record<Languages, I18nProperties> = {
     name: "Aladdin",
     version: "Cornered Swordsman",
   },
+  es: {
+    name: "Aladino",
+    version: "Espadachín acorralado",
+  },
 };

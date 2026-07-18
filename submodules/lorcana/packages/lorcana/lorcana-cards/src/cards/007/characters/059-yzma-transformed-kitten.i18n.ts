@@ -45,4 +45,15 @@ export const yzmaTransformedKittenI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yzma",
+    version: "Gatito transformado",
+    text: [
+      {
+        title: "YO GANO",
+        description:
+          "Cuando este personaje es desterrado, si tienes más cartas en tu mano que cada oponente, puedes devolver esta carta a tu mano.",
+      },
+    ],
+  },
 };

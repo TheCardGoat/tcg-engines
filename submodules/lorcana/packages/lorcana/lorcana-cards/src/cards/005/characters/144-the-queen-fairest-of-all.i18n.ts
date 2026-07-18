@@ -72,4 +72,21 @@ export const theQueenFairestOfAllI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La reina",
+    version: "La más bella de todas",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "REFLEJOS DE VANIDAD",
+        description:
+          "Por cada otro personaje llamado La Reina que tengas en juego, este personaje obtiene +1 {L}.",
+      },
+    ],
+  },
 };

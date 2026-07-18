@@ -62,4 +62,19 @@ export const ursulasLairEyeOfTheStormP1PromoI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "La guarida de Úrsula",
+    version: "Ojo de la tormenta",
+    text: [
+      {
+        title: "PASILLOS RESbaladizos",
+        description:
+          "Siempre que un personaje sea desterrado en un desafío mientras estás aquí, puedes devolverlo a tu mano.",
+      },
+      {
+        title: "SEDE DEL PODER",
+        description: "Los personajes llamados Ursula obtienen +1 {L} mientras estén aquí.",
+      },
+    ],
+  },
 };

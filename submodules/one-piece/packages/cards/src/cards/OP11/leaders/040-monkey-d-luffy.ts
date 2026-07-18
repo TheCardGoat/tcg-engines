@@ -41,5 +41,31 @@ export const op11MonkeyDLuffy040: LeaderCard = {
   ],
   effect:
     'This effect can be activated at the start of your turn. If you have 8 or more DON!! cards on your field, look at 5 cards from the top of your deck; reveal up to 1 "Straw Hat Crew" type card and add it to your hand. Then, place the rest at the top or bottom of the deck in any order.',
+  effects: {
+    effects: [
+      {
+        trigger: "startOfYourTurn",
+        conditions: [{ condition: "turn", value: "your" }],
+        actions: [
+          {
+            action: "search",
+            lookCount: 5,
+            source: { player: "self", zone: "deck" },
+            revealCount: { amount: 1, upTo: true },
+            revealFilters: [{ filter: "trait", value: "Straw Hat Crew", match: "includes" }],
+            revealDestination: "hand",
+            remainderPosition: "any",
+            condition: {
+              condition: "donFieldCount",
+              player: "self",
+              comparison: "gte",
+              value: 8,
+            },
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
   i18n: op11MonkeyDLuffy040I18n,
 };

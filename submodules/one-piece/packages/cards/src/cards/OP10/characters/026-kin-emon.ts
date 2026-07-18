@@ -31,6 +31,28 @@ export const op10KinEmon026: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnThisToDeck",
+            position: "bottom",
+          },
+          {
+            cost: "returnTrashToDeck",
+            amount: 1,
+            position: "bottom",
+            filters: [
+              {
+                filter: "name",
+                value: "Kin'emon",
+              },
+              {
+                filter: "power",
+                comparison: "eq",
+                value: 0,
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "play",

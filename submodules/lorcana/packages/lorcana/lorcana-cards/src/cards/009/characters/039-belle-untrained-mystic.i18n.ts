@@ -45,4 +45,15 @@ export const belleUntrainedMysticI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Beldad",
+    version: "Místico no entrenado",
+    text: [
+      {
+        title: "AQUÍ AHORA, NO HAGAS ESO",
+        description:
+          "Cuando juegas con este personaje, mueve hasta 1 contador de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

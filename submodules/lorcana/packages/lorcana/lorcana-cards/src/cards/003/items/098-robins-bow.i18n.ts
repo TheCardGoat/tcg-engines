@@ -59,4 +59,18 @@ export const robinsBowI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El arco de Robin",
+    text: [
+      {
+        title: "EL REGALO DEL BOSQUE",
+        description: "{E}: inflige 1 daño al personaje o ubicación dañado elegido.",
+      },
+      {
+        title: "UN POCO DE ALONDRA",
+        description:
+          "Siempre que un personaje tuyo llamado Robin Hood realice misiones, puedes preparar este objeto.",
+      },
+    ],
+  },
 };

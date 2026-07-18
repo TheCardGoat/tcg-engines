@@ -63,4 +63,19 @@ export const isabelaMadrigalPerfectlyInControlI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Isabela Madrigal",
+    version: "Perfectamente en control",
+    text: [
+      {
+        title: "SENTIRSE MEJOR",
+        description:
+          "Cuando juegas con este personaje y cada vez que realiza misiones, puedes mover todo el daño del personaje tuyo elegido a este personaje.",
+      },
+      {
+        title: "CUIDADOS PERSONALES",
+        description: "Al final de tu turno, puedes eliminar todo el daño de este personaje.",
+      },
+    ],
+  },
 };

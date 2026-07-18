@@ -58,4 +58,18 @@ export const donaldDuckMusketeerSoldierI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Soldado mosquetero",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "¡ESPERAME!",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

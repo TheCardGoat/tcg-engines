@@ -61,6 +61,25 @@ export const op02Smoker102: CharacterCard = {
         ],
       },
     ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            restriction: "byEffect",
+          },
+        ],
+      },
+    ],
   },
   i18n: op02Smoker102I18n,
 };

@@ -37,4 +37,25 @@ export const rabbitHunnyPaladinI18n: Record<Languages, I18nProperties> = {
     version: "Paladino del Miele",
     text: "<Guardiano> Aura Mielosa Quando giochi questo personaggio, un personaggio Miele a tua scelta riceve +1 {L} per questo turno.",
   },
+  es: {
+    name: "Conejo",
+    version: "Paladín cariñoso",
+    text: [
+      {
+        title: "Guardaespaldas",
+        description: "(Este personaje puede entrar en juego agotado.",
+      },
+      {
+        title:
+          "Un personaje contrario que desafíe a uno de tus personajes debe elegir uno con Bodyguard si es posible.)",
+      },
+      {
+        title: "AURA DE CARIÑO",
+        description: "Cuando interpretas a este personaje,",
+      },
+      {
+        title: "El personaje Hunny elegido obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

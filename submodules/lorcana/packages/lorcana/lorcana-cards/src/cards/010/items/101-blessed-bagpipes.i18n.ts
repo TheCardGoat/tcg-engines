@@ -61,4 +61,19 @@ export const blessedBagpipesI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gaitas benditas",
+    text: [
+      {
+        title: "HERENCIA DE MCDUCK",
+        description:
+          "Cuando juegas este objeto, puedes poner la carta superior de tu mazo boca abajo debajo de uno de tus personajes o ubicaciones con Boost.",
+      },
+      {
+        title: "HIMNO DE BATALLA",
+        description:
+          "Siempre que uno de tus personajes o ubicaciones con una carta debajo sea desafiado, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

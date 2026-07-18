@@ -42,4 +42,14 @@ export const fredMajorScienceEnthusiastI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Fred",
+    version: "Gran entusiasta de la ciencia",
+    text: [
+      {
+        title: "¡ESCUPIENDO FUEGO!",
+        description: "Cuando juegas con este personaje, puedes desterrar el objeto elegido.",
+      },
+    ],
+  },
 };

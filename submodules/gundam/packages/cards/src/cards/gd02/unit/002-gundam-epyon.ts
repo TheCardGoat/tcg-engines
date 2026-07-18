@@ -5,6 +5,7 @@ export const gd02GundamEpyon002: UnitCard = {
   name: "Gundam Epyon",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space", "earth"],
   traits: ["white fang"],
   id: "GD02-002",
   canonicalId: "GD02-002",

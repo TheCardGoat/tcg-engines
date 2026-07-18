@@ -17,4 +17,8 @@ export const kingLouieBandleaderI18n: Record<Languages, I18nProperties> = {
     name: "Re Luigi",
     version: "Leader della Band",
   },
+  es: {
+    name: "Rey Luis",
+    version: "Líder de banda",
+  },
 };

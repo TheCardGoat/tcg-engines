@@ -64,4 +64,20 @@ export const ednaModeFashionDesignerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Modo Edna",
+    version: "Diseñador de moda",
+    text: [
+      {
+        title: "¡SIN CAPAS!",
+        description:
+          "Cuando juegas con este personaje, puedes devolver el objeto elegido con coste 2 o menos a la mano de su jugador. Si lo haces, su jugador roba una carta.",
+      },
+      {
+        title: "HACIENDO SUPERS FABULOSOS",
+        description:
+          "Cada vez que este personaje realiza una misión, tus súper personajes obtienen +1 {L} este turno.",
+      },
+    ],
+  },
 };

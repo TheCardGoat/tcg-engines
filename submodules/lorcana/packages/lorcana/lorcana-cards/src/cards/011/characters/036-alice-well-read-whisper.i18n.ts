@@ -59,4 +59,18 @@ export const aliceWellreadWhisperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Alicia",
+    version: "Susurro bien leído",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "VISIÓN MÍSTICA",
+        description:
+          "Siempre que este personaje realice una misión, pon todas las cartas que tiene debajo en tu mano.",
+      },
+    ],
+  },
 };

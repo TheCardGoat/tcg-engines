@@ -33,4 +33,8 @@ export const grabYourBowI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Coge tu arco",
+    text: "Destierra hasta 2 personajes elegidos con 2 {S} o menos.",
+  },
 };

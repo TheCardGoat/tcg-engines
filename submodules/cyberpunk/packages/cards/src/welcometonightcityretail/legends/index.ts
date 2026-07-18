@@ -4,6 +4,7 @@ import { welcomeToNightCityRetailAltCunninghamSoulkillerArchitect } from "./alt-
 import { welcomeToNightCityRetailDumDumMaelstromTriggerman } from "./dum-dum-maelstrom-triggerman.ts";
 import { welcomeToNightCityRetailEvelynParkerBeautifulEnigma } from "./evelyn-parker-beautiful-enigma.ts";
 import { welcomeToNightCityRetailGoroTakemuraVengefulBodyguard } from "./goro-takemura-vengeful-bodyguard.ts";
+import { welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor } from "./hanako-arasaka-daughter-of-the-emperor.ts";
 import { welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience } from "./kerry-eurodyne-axe-attitude-audience.ts";
 import { welcomeToNightCityRetailPanamPalmerNomadCavalry } from "./panam-palmer-nomad-cavalry.ts";
 import { welcomeToNightCityRetailRiverWardDetectiveOnTheHunt } from "./river-ward-detective-on-the-hunt.ts";
@@ -16,6 +17,7 @@ export { welcomeToNightCityRetailAltCunninghamSoulkillerArchitect } from "./alt-
 export { welcomeToNightCityRetailDumDumMaelstromTriggerman } from "./dum-dum-maelstrom-triggerman.ts";
 export { welcomeToNightCityRetailEvelynParkerBeautifulEnigma } from "./evelyn-parker-beautiful-enigma.ts";
 export { welcomeToNightCityRetailGoroTakemuraVengefulBodyguard } from "./goro-takemura-vengeful-bodyguard.ts";
+export { welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor } from "./hanako-arasaka-daughter-of-the-emperor.ts";
 export { welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience } from "./kerry-eurodyne-axe-attitude-audience.ts";
 export { welcomeToNightCityRetailPanamPalmerNomadCavalry } from "./panam-palmer-nomad-cavalry.ts";
 export { welcomeToNightCityRetailRiverWardDetectiveOnTheHunt } from "./river-ward-detective-on-the-hunt.ts";
@@ -29,6 +31,7 @@ export const welcomeToNightCityRetailLegends = [
   welcomeToNightCityRetailDumDumMaelstromTriggerman,
   welcomeToNightCityRetailEvelynParkerBeautifulEnigma,
   welcomeToNightCityRetailGoroTakemuraVengefulBodyguard,
+  welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor,
   welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience,
   welcomeToNightCityRetailPanamPalmerNomadCavalry,
   welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,

@@ -22,7 +22,7 @@ export const op14eb04Chew050: CharacterCard = {
   setId: "OP14EB04",
   cost: 1,
   power: 3000,
-  traits: ["Fish-Man The Sun Pirates"],
+  traits: ["Fish-Man", "The Sun Pirates"],
   attribute: "ranged",
   effect: "[On Play] If your Leader has the {Fish-Man} type, draw 1 card.",
   effects: {

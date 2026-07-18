@@ -63,4 +63,19 @@ export const hudsonDeterminedReaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hudson",
+    version: "Lector decidido",
+    text: [
+      {
+        title: "ENCONTRAR RESPUESTAS",
+        description:
+          "Cuando juegas con este personaje, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+      {
+        title: "PIEDRA DE DÍA",
+        description: "Si tienes 3 o más cartas en tu mano, este personaje no puede prepararse.",
+      },
+    ],
+  },
 };

@@ -63,4 +63,15 @@ export const simbaFightingPrinceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Simba",
+    version: "Príncipe luchador",
+    text: [
+      {
+        title: "BAJAR O LUCHAR",
+        description:
+          "Cuando juegas con este personaje y cada vez que destierra a otro personaje en un desafío durante tu turno, puedes elegir uno: • Roba 2 cartas, luego elige y descarta 2 cartas. • Causa 2 daños al personaje elegido.",
+      },
+    ],
+  },
 };

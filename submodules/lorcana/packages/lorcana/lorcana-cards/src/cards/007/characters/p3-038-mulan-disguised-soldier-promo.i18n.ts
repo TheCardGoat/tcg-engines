@@ -45,4 +45,15 @@ export const mulanDisguisedSoldierP3PromoI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Mulán",
+    version: "Soldado disfrazado",
+    text: [
+      {
+        title: "DONDE HACER",
+        description:
+          "¿ME REGISTRO? Cuando juegas con este personaje, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

@@ -65,4 +65,20 @@ export const mulanReadyForBattleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mulán",
+    version: "Listo para la batalla",
+    text: [
+      {
+        title: "ESPÍRITU NOBLE",
+        description:
+          "Si tienes un personaje en juego con daño, pagas 1 {I} menos para jugar con este personaje.",
+      },
+      {
+        title: "ESPÍRITU DE LUCHA",
+        description:
+          "Si tienes un personaje en juego con 5 o más, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+    ],
+  },
 };

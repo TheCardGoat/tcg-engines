@@ -62,4 +62,20 @@ export const theIslandOfNomanisanSyndromesHeadquartersI18n: Record<Languages, I1
       },
     ],
   },
+  es: {
+    name: "La isla de Nomanisan",
+    version: "Sede del síndrome",
+    text: [
+      {
+        title: "INVESTIGACIÓN",
+        description:
+          "Y DESARROLLO Los personajes de robots obtienen +1 {S} y +1 {W} mientras están aquí.",
+      },
+      {
+        title: "TIRO BARATO",
+        description:
+          "Una vez durante tu turno, cada vez que un personaje destierre a otro personaje en un desafío mientras estás aquí, puedes causar 2 daños al personaje elegido.",
+      },
+    ],
+  },
 };

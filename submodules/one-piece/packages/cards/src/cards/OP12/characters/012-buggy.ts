@@ -27,5 +27,38 @@ export const op12Buggy012: CharacterCard = {
   attribute: "slash",
   effect:
     '[On Play] Up to 1 of your Characters with a type including "Roger Pirates" other than [Buggy] gains [Blocker] until the end of your opponent\'s next End Phase.',
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "excludeName",
+                  value: "Buggy",
+                },
+                {
+                  filter: "trait",
+                  value: "Roger Pirates",
+                  match: "includes",
+                },
+              ],
+            },
+            keyword: "blocker",
+            duration: "untilEndOfOpponentNextEndPhase",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op12Buggy012I18n,
 };

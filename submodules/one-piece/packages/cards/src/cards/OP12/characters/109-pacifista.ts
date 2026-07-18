@@ -29,5 +29,26 @@ export const op12Pacifista109: CharacterCard = {
   attribute: "special",
   effect:
     "[Trigger] K.O. up to 1 of your opponent's Characters with a cost of 1 or less and add this card to your hand.",
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 1 }],
+            },
+          },
+          {
+            action: "addThisCardToHand",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op12Pacifista109I18n,
 };

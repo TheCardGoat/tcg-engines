@@ -45,4 +45,15 @@ export const ursulaDeceiverOfAllI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Úrsula",
+    version: "Engañador de todos",
+    text: [
+      {
+        title: "QUÉ",
+        description:
+          "UNA OFERTA Cada vez que este personaje cante una canción, puedes volver a reproducir esa canción desde tu descarte de forma gratuita y luego ponerla en la parte inferior de tu mazo.",
+      },
+    ],
+  },
 };

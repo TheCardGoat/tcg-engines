@@ -50,4 +50,18 @@ export const jasmineQueenOfAgrabahI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jazmín",
+    version: "Reina de Agraba",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "VIGILANTE",
+        description:
+          "Cuando juegas con este personaje y cada vez que realiza misiones, puedes eliminar hasta 2 daños de cada uno de tus personajes.",
+      },
+    ],
+  },
 };

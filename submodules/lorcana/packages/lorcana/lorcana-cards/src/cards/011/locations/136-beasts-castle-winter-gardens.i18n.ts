@@ -44,4 +44,14 @@ export const beastsCastleWinterGardensI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Castillo de la Bestia",
+    version: "Jardines de invierno",
+    text: [
+      {
+        title: "ENFRENTAMIENTO DE BOLA DE NIEVE",
+        description: "Siempre que un personaje aquí desafíe a otro personaje, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

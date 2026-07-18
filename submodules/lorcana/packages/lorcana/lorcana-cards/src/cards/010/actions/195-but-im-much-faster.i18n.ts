@@ -35,4 +35,8 @@ export const butImMuchFasterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pero soy mucho más rápido",
+    text: "El personaje elegido gana Alerta y Retador +2 este turno. (Pueden desafiar como si tuvieran Evasivo. Obtienen +2 {S} mientras desafían).",
+  },
 };

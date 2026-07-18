@@ -45,10 +45,18 @@ export const op12MonkeyDDragon094: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
+        costs: [
           {
-            condition: "leaderTrait",
-            trait: "Revolutionary Army",
+            cost: "returnTrashToDeck",
+            amount: 3,
+            position: "bottom",
+            filters: [
+              {
+                filter: "trait",
+                value: "Revolutionary Army",
+                match: "includes",
+              },
+            ],
           },
         ],
         actions: [
@@ -73,6 +81,11 @@ export const op12MonkeyDDragon094: CharacterCard = {
                 value: "character",
               },
             ],
+            condition: {
+              condition: "leaderTrait",
+              trait: "Revolutionary Army",
+              match: "includes",
+            },
           },
         ],
         optional: true,

@@ -4,6 +4,7 @@ export const gd02Argama129: BaseCard = {
   cardNumber: "GD02-129",
   name: "Argama",
   type: "base",
+  color: "white",
   traits: ["aeug", "warship"],
   id: "GD02-129",
   canonicalId: "GD02-129",
@@ -56,6 +57,7 @@ export const gd02Argama129: BaseCard = {
   level: 3,
   cost: 1,
   hp: 5,
+  battlefieldZones: ["space", "earth"],
   effect:
     "【Burst】Deploy this card.<br>【Deploy】Add 1 of your Shields to your hand.<br>\nThis Base can't receive enemy effect damage.<br>",
   effects: [
@@ -97,6 +99,7 @@ export const gd02Argama129: BaseCard = {
             action: "preventDamage",
             target: { owner: "self" },
             damageType: "effect",
+            source: "enemy",
           },
         },
       ],

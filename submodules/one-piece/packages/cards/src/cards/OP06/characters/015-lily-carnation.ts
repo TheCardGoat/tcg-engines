@@ -23,7 +23,7 @@ export const op06LilyCarnation015: CharacterCard = {
   cost: 4,
   power: 0,
   counter: 1000,
-  traits: ["FILM Omatsuri Island"],
+  traits: ["FILM", "Omatsuri Island"],
   attribute: "special",
   effect:
     "[Activate:Main][Once Per Turn] You may trash 1 of your Characters with 6000 power or more: Play up to 1 [FILM] type Character card with 2000 to 5000 power from your trash rested.",
@@ -31,6 +31,19 @@ export const op06LilyCarnation015: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "trashCharacter",
+            amount: 1,
+            filters: [
+              {
+                filter: "power",
+                comparison: "gte",
+                value: 6000,
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "play",
@@ -46,6 +59,21 @@ export const op06LilyCarnation015: CharacterCard = {
               {
                 filter: "trait",
                 value: "FILM",
+                match: "includes",
+              },
+              {
+                filter: "power",
+                comparison: "gte",
+                value: 2000,
+              },
+              {
+                filter: "power",
+                comparison: "lte",
+                value: 5000,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
               },
             ],
             playState: "rested",

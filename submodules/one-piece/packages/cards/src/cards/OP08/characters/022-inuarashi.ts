@@ -35,6 +35,7 @@ export const op08Inuarashi022: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Minks",
+            match: "includes",
           },
         ],
         actions: [

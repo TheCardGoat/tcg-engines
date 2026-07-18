@@ -22,10 +22,10 @@ export const op14eb04XDrake016: CharacterCard = {
   setId: "OP14EB04",
   cost: 5,
   power: 7000,
-  traits: ["Drake Pirates Navy Supernovas"],
+  traits: ["Supernovas", "Navy", "Drake Pirates"],
   attribute: "slash",
   effect:
-    "[Opponent's Turn] [Once Per Turn] If your {Supernovas} type Character would be removed from the field by your opponent's effect, you may give your Leader 2000 power during this turn instead.\n[DON!! x1] [When Attacking] Give up to 1 of your opponent's Characters 2000 power during this turn.",
+    "[Opponent's Turn] [Once Per Turn] If your {Supernovas} type Character would be removed from the field by your opponent's effect, you may give your Leader −2000 power during this turn instead.\n[DON!! x1] [When Attacking] Give up to 1 of your opponent's Characters −2000 power during this turn.",
   effects: {
     effects: [
       {
@@ -47,7 +47,7 @@ export const op14eb04XDrake016: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
           },
         ],
@@ -56,6 +56,20 @@ export const op14eb04XDrake016: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "removeFromField",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "trait",
+              value: "Supernovas",
+            },
+          ],
+        },
+        source: "opponentEffect",
         replacementAction: {
           action: "modifyPower",
           target: {
@@ -65,7 +79,7 @@ export const op14eb04XDrake016: CharacterCard = {
               amount: 1,
             },
           },
-          value: 2000,
+          value: -2000,
           duration: "thisTurn",
         },
         conditions: [

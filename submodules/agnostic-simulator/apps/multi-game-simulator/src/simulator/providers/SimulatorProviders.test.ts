@@ -89,6 +89,12 @@ describe("SimulatorProviders", () => {
       gameSlug: "cyberpunk",
       gatewayTicket: { ticket: "ticket", authToken: "auth-token" },
       simulatorRouteData: routeData,
+      viewerSettings: {
+        playerSettings: { animationSpeed: "fast" },
+        gameSettings: {
+          cyberpunk: { visual: { cardBackId: "neon" } },
+        },
+      },
       rootSocketReady: true,
     });
 
@@ -108,6 +114,10 @@ describe("SimulatorProviders", () => {
     expect(values.players.currentPlayer).toMatchObject({ isPremium: true, mmr: 1510 });
     expect(values.players.opponentPlayer).toMatchObject({ isPremium: true, mmr: 1490 });
     expect(values.userSettings.userSettings?.locale).toBe("en-US");
+    expect(values.userSettings.viewerSettings).toMatchObject({
+      playerSettings: { animationSpeed: "fast" },
+      gameSettings: { cyberpunk: { visual: { cardBackId: "neon" } } },
+    });
     expect(values.diagnostics).toMatchObject({
       matchId: "m1",
       gameId: "g1",

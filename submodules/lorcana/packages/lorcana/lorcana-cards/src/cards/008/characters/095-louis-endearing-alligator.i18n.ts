@@ -61,4 +61,19 @@ export const louisEndearingAlligatorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Luis",
+    version: "Caimán entrañable",
+    text: [
+      {
+        title: "ALMA SENSIBLE",
+        description: "Este personaje entra en juego ejercido.",
+      },
+      {
+        title: "MÁS AMISTOSO DE LO QUE PARECE",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido gana Temerario durante su próximo turno. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

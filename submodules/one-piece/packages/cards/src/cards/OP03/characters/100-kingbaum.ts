@@ -27,5 +27,25 @@ export const op03Kingbaum100: CharacterCard = {
   attribute: "strike",
   effect:
     "[Trigger] You may trash 1 card from the top or bottom of your Life cards: Play this card.",
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        costs: [
+          {
+            cost: "trashLife",
+            amount: 1,
+            position: "choice",
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
   i18n: op03Kingbaum100I18n,
 };

@@ -61,12 +61,13 @@ export const op02KinEmon025: LeaderCard = {
               player: "self",
               zones: ["hand"],
               count: {
-                amount: 1,
+                amount: "all",
               },
               filters: [
                 {
                   filter: "trait",
                   value: "Land of Wano",
+                  match: "includes",
                 },
                 {
                   filter: "cardCategory",
@@ -81,6 +82,7 @@ export const op02KinEmon025: LeaderCard = {
             },
             value: -1,
             duration: "thisTurn",
+            consumeOnPlay: true,
           },
         ],
         oncePerTurn: true,

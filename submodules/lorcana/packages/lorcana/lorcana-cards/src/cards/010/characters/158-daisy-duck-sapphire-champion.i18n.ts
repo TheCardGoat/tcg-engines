@@ -62,4 +62,19 @@ export const daisyDuckSapphireChampionI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Pato margarita",
+    version: "Campeón Zafiro",
+    text: [
+      {
+        title: "MANTÉNGASE FIRME",
+        description: "Tus otros personajes Zafiro obtienen Resistencia +1.",
+      },
+      {
+        title: "MIRAR ADELANTE",
+        description:
+          "Siempre que uno de tus otros personajes de Zafiro realice una misión, puedes mirar la carta superior de tu mazo. Colóquelo en la parte superior o inferior de su plataforma.",
+      },
+    ],
+  },
 };

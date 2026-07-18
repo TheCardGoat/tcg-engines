@@ -45,4 +45,15 @@ export const flintheartGlomgoldLoneCheaterI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Glomgold corazón de pedernal",
+    version: "Tramposo solitario",
+    text: [
+      {
+        title: "¡NUNCA LO VERÁN venir!",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

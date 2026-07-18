@@ -9,6 +9,17 @@ export type EffectDuration =
   | "thisBattle" // Until end of the current battle
   | "whileLinked"; // While this unit is in a linked state
 
+/**
+ * Area protected by a zone-level damage-prevention effect.
+ *
+ * `zone` addresses one exact engine zone. In particular,
+ * `{ kind: "zone", zone: "shieldArea" }` means only face-down Shields.
+ * `shieldArea` follows rules 4-6-2/3 and covers both the Shield section and
+ * the Base section. Keeping the printed area distinct from physical zones
+ * prevents "Shields" and "shield area cards" from becoming synonyms.
+ */
+export type DamageProtectionArea = { kind: "zone"; zone: Zone } | { kind: "shieldArea" };
+
 // ── Timing ────────────────────────────────────────────────────────────────────
 // When an effect activates from a game event or player action.
 
@@ -181,6 +192,12 @@ export type AttributeFilter =
       value: string;
     }
   | {
+      /** Match the printed card category inside a composed attribute predicate. */
+      attribute: "cardType";
+      comparison: "eq" | "neq";
+      value: CardType;
+    }
+  | {
       /** Match a printed or currently effective keyword. */
       attribute: "keyword";
       comparison: "includes" | "excludes";
@@ -240,6 +257,15 @@ export type AttributeFilter =
        *   ]}
        */
       attribute: "or";
+      filters: AttributeFilter[];
+    }
+  | {
+      /**
+       * Logical-AND composition of nested attribute predicates. This is
+       * primarily useful inside an `or` branch, where the outer
+       * `attributeFilters` array cannot express a grouped conjunction.
+       */
+      attribute: "and";
       filters: AttributeFilter[];
     };
 
@@ -362,6 +388,8 @@ export type EffectCondition =
        * An empty array matches nothing.
        */
       hasTrait?: string | readonly string[];
+      /** Restrict the count to Units carrying this printed or effective keyword. */
+      hasKeyword?: KeywordEffect;
       isToken?: boolean;
       /** True when "another" is used — the unit owning this effect is excluded from the count */
       excludeSelf?: boolean;
@@ -531,6 +559,16 @@ export type EffectCondition =
     }
   | {
       /**
+       * True when the Unit defeated by the triggering battle event matches
+       * the supplied filter. Pair-sensitive predicates use the Pilot that
+       * was attached when the Unit was defeated, even after both cards have
+       * moved to trash.
+       */
+      type: "eventDefeatedCardMatches";
+      target: TargetFilter;
+    }
+  | {
+      /**
        * True when the triggering event's player is the source controller.
        * Used by "when you ..." event text.
        */
@@ -602,6 +640,11 @@ export type EffectCondition =
   | {
       /** Compound condition: all sub-conditions must hold */
       type: "and";
+      conditions: EffectCondition[];
+    }
+  | {
+      /** Compound condition: at least one sub-condition must hold. */
+      type: "or";
       conditions: EffectCondition[];
     };
 
@@ -987,6 +1030,8 @@ export type EffectAction =
       unitFilter?: TargetFilter;
       damageType?: "battle" | "effect";
       sourceCardType?: CardType;
+      /** Restrict prevention to damage originating from an opposing player's card. */
+      source?: "enemy";
       /**
        * How long the prevention persists. Defaults to "permanent" when
        * omitted (preserves the original handler behavior). Cards printing
@@ -1079,12 +1124,12 @@ export type EffectAction =
       duration?: EffectDuration;
     }
   /**
-   * "your shield area cards can't receive damage from enemy Units that are Lv.N or lower"
-   * Protects all cards in a zone from damage dealt by a filtered set of units.
+   * Prevents damage to either one exact engine zone or every card in the
+   * rules-level shield area from a filtered set of Units.
    */
   | {
       action: "preventDamageToZone";
-      zone: Zone;
+      protectedArea: DamageProtectionArea;
       unitFilter: TargetFilter;
       duration: EffectDuration;
     }
@@ -1161,15 +1206,17 @@ export interface EffectDirective {
    *   - Optional (`optional: true`): controller opted in AND the action's
    *     own "resolved" check below passes. Declined ⇒ not resolved.
    *   - Mandatory: action's "resolved" check passes.
-   *   - Targeted actions (`dealDamage`, `destroy`, `rest`, `setActive`,
+   *   - Targeted and counted actions (`dealDamage`, `destroy`, `rest`, `setActive`,
    *     `returnToHand`, `returnToDeck`, `exile`, `deploy`, `recoverHP`, `addFromTrash`,
    *     `pairPilot`, `grantKeyword`, `statModifier`, `preventDamage`,
    *     `cantAttack`, `preventStatReduction`, `chooseAttackTarget`,
-   *     `dealDamageAll`): resolved iff at least one legal target was
-   *     actually picked (after `chosenTargets` intersection and `count`
-   *     clamp). "No legal target" ⇒ not resolved.
+   *     `dealDamageAll`, `discard`): resolved iff the action's required
+   *     target or card count can be fulfilled. A mandatory discard still
+   *     discards as many cards as possible when the hand is short (rule
+   *     10-1-3), but it does not unlock a following "If you do" clause
+   *     (rule 5-20-1).
    *   - Zone-level / non-targeted actions that always report resolved
-   *     (`draw`, `discard`, `addSelfToHand`, `addShieldToHand`,
+   *     (`draw`, `addSelfToHand`, `addShieldToHand`,
    *     `deploySelf`, `deployToken`, `deployFromTrash`, `placeResource`,
    *     `lookAtTopDeck`, `activateTiming`, `preventDamageToZone`):
    *     resolved = true. Note: several of these can be _effective_
@@ -1204,6 +1251,14 @@ export interface EffectDirective {
    * preceding directive actually resolved.
    */
   dependsOnPrevious?: boolean;
+  /**
+   * Keep this directive's counted target filter in the same visible prompt
+   * as the immediately preceding directive even though execution still
+   * depends on that predecessor. Use for jointly printed selections such as
+   * "choose 1 A and 1 B; exile them. If you do...". Omit when the printed
+   * text says "If you do, choose...", which requires a later prompt.
+   */
+  sharesTargetChoiceWithPrevious?: boolean;
 }
 
 // ── Conditional Directive ─────────────────────────────────────────────────────

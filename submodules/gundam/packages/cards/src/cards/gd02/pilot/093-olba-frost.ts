@@ -55,15 +55,35 @@ export const gd02OlbaFrost093: PilotCard = {
             action: "addSelfToHand",
           },
         },
-        {
-          action: {
-            action: "draw",
-            count: 1,
-          },
-        },
       ],
+      sourceText: "【Burst】Add this card to your hand.",
+    },
+    {
+      type: "triggered",
+      activation: {
+        timing: ["onDestroyByBattle"],
+        conditions: [
+          { type: "isTurn", whose: "friendly" },
+          { type: "eventCardIsSelf" },
+          {
+            type: "eventDefeatedCardMatches",
+            target: {
+              owner: "opponent",
+              cardType: "unit",
+              attributeFilters: [
+                {
+                  attribute: "pairedPilotTrait",
+                  comparison: "includes",
+                  value: "newtype",
+                },
+              ],
+            },
+          },
+        ],
+      },
+      directives: [{ action: { action: "draw", count: 1 } }],
       sourceText:
-        "【Burst】Add this card to your hand. During your turn, when this Unit destroys an enemy Unit paired with a (Newtype) Pilot with battle damage, draw 1.",
+        "During your turn, when this Unit destroys an enemy Unit paired with a (Newtype) Pilot with battle damage, draw 1.",
     },
   ] as CardEffect[],
   keywordEffects: [],

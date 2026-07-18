@@ -42,4 +42,14 @@ export const gantuHamstervielsAccompliceI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Gantu",
+    version: "El cómplice de Hamsterviel",
+    text: [
+      {
+        title: "OBJETIVO FÁCIL",
+        description: "Cuando juegues con este personaje, elige y descarta una carta.",
+      },
+    ],
+  },
 };

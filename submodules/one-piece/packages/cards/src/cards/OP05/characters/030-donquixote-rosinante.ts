@@ -23,7 +23,7 @@ export const op05DonquixoteRosinante030: CharacterCard = {
   cost: 2,
   power: 1000,
   counter: 1000,
-  traits: ["Donquixote Pirates Navy"],
+  traits: ["Navy", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [Opponent's Turn] If your rested Character would be K.O.'d, you may trash this Character instead.",
@@ -32,6 +32,19 @@ export const op05DonquixoteRosinante030: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "ko",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "state",
+              value: "rested",
+            },
+          ],
+        },
         replacementAction: {
           action: "trashThisCard",
         },

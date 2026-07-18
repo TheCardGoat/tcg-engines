@@ -57,4 +57,18 @@ export const mauiSoaringDemigodI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Maui",
+    version: "Semidiós altísimo",
+    text: [
+      {
+        title: "Imprudente",
+      },
+      {
+        title: "EN MA VIENTRE",
+        description:
+          "Cada vez que un personaje tuyo llamado HeiHei realiza misiones, este personaje obtiene +1 {L} y pierde Reckless este turno.",
+      },
+    ],
+  },
 };

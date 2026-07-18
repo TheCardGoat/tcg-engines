@@ -45,7 +45,21 @@ export const op07RobLucci079: LeaderCard = {
     effects: [
       {
         trigger: "whenAttacking",
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "deck",
+            comparison: "gte",
+            value: 2,
+          },
+        ],
         actions: [
+          {
+            action: "trashFromDeck",
+            player: "self",
+            amount: 2,
+          },
           {
             action: "modifyCost",
             target: {

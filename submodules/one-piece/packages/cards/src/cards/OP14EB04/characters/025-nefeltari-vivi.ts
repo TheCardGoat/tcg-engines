@@ -69,12 +69,26 @@ export const op14eb04NefeltariVivi025: CharacterCard = {
               {
                 filter: "trait",
                 value: "Alabasta",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
                 value: "character",
               },
             ],
+          },
+          {
+            action: "returnToDeck",
+            target: {
+              player: "self",
+              zones: ["hand"],
+              count: {
+                amount: 1,
+              },
+              chosenBy: "opponent",
+            },
+            position: "bottom",
+            destinationPlayer: "opponent",
           },
         ],
       },

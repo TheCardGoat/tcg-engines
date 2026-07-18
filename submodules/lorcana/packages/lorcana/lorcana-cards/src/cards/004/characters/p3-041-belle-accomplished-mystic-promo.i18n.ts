@@ -60,4 +60,18 @@ export const belleAccomplishedMysticP3PromoI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Beldad",
+    version: "Místico consumado",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "CURACIÓN MEJORADA",
+        description:
+          "Cuando juegas con este personaje, mueve hasta 3 contadores de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

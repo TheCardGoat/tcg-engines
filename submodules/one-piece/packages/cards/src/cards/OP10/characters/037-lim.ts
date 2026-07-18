@@ -60,6 +60,7 @@ export const op10Lim037: CharacterCard = {
                 {
                   filter: "trait",
                   value: "ODYSSEY",
+                  match: "includes",
                 },
               ],
             },
@@ -70,6 +71,10 @@ export const op10Lim037: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "removeFromField",
+        source: "opponentEffect",
+        eventFilter: {
+          targetSelf: true,
+        },
         replacementAction: {
           action: "rest",
           target: {
@@ -82,6 +87,7 @@ export const op10Lim037: CharacterCard = {
               {
                 filter: "trait",
                 value: "ODYSSEY",
+                match: "includes",
               },
             ],
           },

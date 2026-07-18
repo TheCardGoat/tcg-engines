@@ -51,6 +51,7 @@ export const op08QueenSp005: CharacterCard = {
             amount: 1,
           },
         ],
+        optional: true,
       },
     ],
   },

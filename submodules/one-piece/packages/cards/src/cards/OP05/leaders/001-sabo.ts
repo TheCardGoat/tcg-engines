@@ -54,8 +54,13 @@ export const op05Sabo001: LeaderCard = {
               amount: 1,
             },
           },
+          previousActionTargets: true,
           value: -1000,
           duration: "thisTurn",
+        },
+        eventFilter: {
+          player: "self",
+          filters: [{ filter: "power", comparison: "gte", value: 5000 }],
         },
         conditions: [
           {

@@ -56,4 +56,18 @@ export const randallBoggsEnviousCoworkerI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Randall Boggs",
+    version: "Compañero de trabajo envidioso",
+    text: [
+      {
+        title: "<Evasivo>",
+      },
+      {
+        title: "Proyecto fuera de horario",
+        description:
+          "Mientras todas las cartas de tu tintero estén agotadas, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

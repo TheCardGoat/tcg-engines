@@ -71,4 +71,21 @@ export const peterPanPiratesBaneI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Peter Pan",
+    version: "La perdición del pirata",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "¡TÚ ERES EL SIGUIENTE!",
+        description:
+          "Siempre que desafía a un personaje pirata, este personaje no sufre daños por el desafío.",
+      },
+    ],
+  },
 };

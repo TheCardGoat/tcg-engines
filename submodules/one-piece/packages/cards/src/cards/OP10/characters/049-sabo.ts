@@ -27,5 +27,42 @@ export const op10Sabo049: CharacterCard = {
   attribute: "special",
   effect:
     "If your Character with a base cost of 7 or less other than [Sabo] would be removed from the field by your opponent's effect, you may return this Character to the owner's hand instead.",
+  effects: {
+    replacementEffects: [
+      {
+        replacedEvent: "removeFromField",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "excludeName",
+              value: "Sabo",
+            },
+            {
+              filter: "baseCost",
+              comparison: "lte",
+              value: 7,
+            },
+          ],
+        },
+        source: "opponentEffect",
+        replacementAction: {
+          action: "returnToHand",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: {
+              amount: 1,
+            },
+            self: true,
+          },
+        },
+      },
+    ],
+  },
   i18n: op10Sabo049I18n,
 };

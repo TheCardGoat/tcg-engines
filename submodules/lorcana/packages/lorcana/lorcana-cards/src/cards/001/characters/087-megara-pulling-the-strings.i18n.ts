@@ -43,4 +43,15 @@ export const megaraPullingTheStringsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mégara",
+    version: "Tirando de los hilos",
+    text: [
+      {
+        title: "NIÑO MARAVILLA",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene +2 {S} este turno.",
+      },
+    ],
+  },
 };

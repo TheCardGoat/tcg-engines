@@ -46,6 +46,18 @@ export const op08Nami106: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "hasTrigger",
+                value: true,
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "ko",
@@ -63,6 +75,17 @@ export const op08Nami106: CharacterCard = {
                   value: 5,
                 },
               ],
+            },
+          },
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+            condition: {
+              condition: "handCount",
+              player: "self",
+              comparison: "lte",
+              value: 3,
             },
           },
         ],
