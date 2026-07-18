@@ -62,4 +62,19 @@ export const olafSnowmanOfActionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Olaf",
+    version: "Muñeco de nieve de acción",
+    text: [
+      {
+        title: "¡YA ERA TIEMPO!",
+        description:
+          "Por cada carta de acción de tu descarte, pagas 1 {I} menos para jugar con este personaje.",
+      },
+      {
+        title: "COLISIÓN CAÓTICA",
+        description: "Cuando juegas con este personaje, cada oponente pierde 2 conocimientos.",
+      },
+    ],
+  },
 };

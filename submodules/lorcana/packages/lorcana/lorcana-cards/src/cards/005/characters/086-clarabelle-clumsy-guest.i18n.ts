@@ -44,4 +44,15 @@ export const clarabelleClumsyGuestI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Clarabelle",
+    version: "Invitado torpe",
+    text: [
+      {
+        title: "TORPE",
+        description:
+          "Cuando juegas con este personaje, puedes pagar 2 {I} para desterrar el objeto elegido.",
+      },
+    ],
+  },
 };

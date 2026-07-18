@@ -637,5 +637,8 @@
   "sim.postGame.sidebar.navigationAria": "Post-game navigation",
   "sim.postGame.sidebar.gameOf": "Game {current} of {total}",
   "sim.postGame.sidebar.goToNextGame": "Go to Next Game →",
-  "sim.player.report.openAria": "Segnala giocatore"
+  "sim.player.report.openAria": "Segnala giocatore",
+  "sim.itemZone.showEarlierAria": "Mostra {count, plural, one {# oggetto precedente} other {# oggetti precedenti}}",
+  "sim.itemZone.showLaterAria": "Mostra {count, plural, one {# oggetto successivo} other {# oggetti successivi}}",
+  "sim.itemZone.resizeAria": "Ridimensiona le zone calamaio e oggetti, attualmente al {percent} percento"
 }

@@ -57,6 +57,10 @@ export const op13GumGumDawnStamp117: EventCard = {
         ],
         optional: true,
       },
+      {
+        trigger: "trigger",
+        actions: [{ action: "draw", player: "self", amount: 1 }],
+      },
     ],
   },
   i18n: op13GumGumDawnStamp117I18n,

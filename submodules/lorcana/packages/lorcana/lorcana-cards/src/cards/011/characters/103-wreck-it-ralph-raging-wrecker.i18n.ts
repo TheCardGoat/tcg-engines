@@ -76,4 +76,22 @@ export const wreckitRalphRagingWreckerI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Ralph el demoledor",
+    version: "Destructor furioso",
+    text: [
+      {
+        title: "Impulsar 1 {I}",
+      },
+      {
+        title: "ENCENDIDO",
+        description: "Este personaje obtiene +1 {S} por cada carta debajo de él.",
+      },
+      {
+        title: "¿QUIÉN VIENE CONMIGO?",
+        description:
+          "Cuando este personaje sea desterrado, destierra todos los personajes con {S} igual o menor que el {S} que tenía en juego.",
+      },
+    ],
+  },
 };

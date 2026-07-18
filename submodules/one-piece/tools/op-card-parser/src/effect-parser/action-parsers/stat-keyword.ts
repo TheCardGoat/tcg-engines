@@ -9,8 +9,38 @@ import { parseConditionText } from "../condition-parser/index.ts";
 
 type ModifyPowerAction = Extract<Action, { action: "modifyPower" }>;
 
+export function parseEachModifyPowerActions(text: string): ModifyPowerAction[] | null {
+  const trimmed = text
+    .trim()
+    .replace(/\u2212/g, "-")
+    .replace(/\.+$/, "");
+  const match =
+    /^give\s+up\s+to\s+(\d+)\s+each\s+of\s+(your(?:\s+opponent's)?)\s+Leader\s+and\s+Character\s+cards?\s+([+-]?\d+)\s+power(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
+      trimmed,
+    );
+  if (!match) return null;
+
+  const player = /opponent/i.test(match[2]!) ? "opponent" : "self";
+  const amount = parseInt(match[1]!, 10);
+  const value = parseInt(match[3]!, 10);
+  const duration = match[4] ? parseFullDuration(match[4]) : "permanent";
+  return (["leader", "character"] as const).map((zone) => ({
+    action: "modifyPower",
+    target: {
+      player,
+      zones: [zone],
+      count: { amount, upTo: true },
+    },
+    value,
+    duration,
+  }));
+}
+
 export function parseModifyPowerAction(text: string): ModifyPowerAction | null {
-  const trimmed = text.trim().replace(/\.+$/, "");
+  const trimmed = text
+    .trim()
+    .replace(/\u2212/g, "-")
+    .replace(/\.+$/, "");
 
   // Handle "for every" variable-amount patterns:
   // "This Character gains +1000 power for every 3 of your rested DON!! cards"
@@ -23,30 +53,45 @@ export function parseModifyPowerAction(text: string): ModifyPowerAction | null {
     const target = parseModifyPowerTarget(forEveryMatch[1]!);
     if (target) {
       const value = parseInt(forEveryMatch[2]!, 10);
+      const per = forEveryMatch[3] ? parseInt(forEveryMatch[3]!, 10) : 1;
+      const sourceText = forEveryMatch[4]!.trim();
       const duration = forEveryMatch[5] ? parseFullDuration(forEveryMatch[5]) : "permanent";
-      return { action: "modifyPower", target, value, duration };
+      const cardZoneMatch =
+        /^(?:(Character|Event|Stage)s?|cards?)\s+in\s+your\s+(hand|trash)$/i.exec(sourceText);
+      if (cardZoneMatch) {
+        const category = cardZoneMatch[1]?.toLowerCase() as
+          | "character"
+          | "event"
+          | "stage"
+          | undefined;
+        return {
+          action: "modifyPower",
+          target,
+          value,
+          valuePerCardGroup: {
+            size: per,
+            target: {
+              player: "self",
+              zones: [cardZoneMatch[2]!.toLowerCase() as "hand" | "trash"],
+              count: { amount: "all" },
+              ...(category && {
+                filters: [{ filter: "cardCategory", value: category }],
+              }),
+            },
+          },
+          duration,
+        };
+      }
+      if (/^(?:of\s+)?your\s+rested\s+DON!!\s+cards$/i.test(sourceText)) {
+        return {
+          action: "modifyPower",
+          target,
+          value,
+          restedDonGroupSize: per,
+          duration,
+        };
+      }
     }
-  }
-
-  // "Give up to 1 each of your opponent's Leader and Character cards -N power during this turn"
-  const eachMatch =
-    /^give\s+up\s+to\s+(\d+)\s+each\s+of\s+(your(?:\s+opponent's)?)\s+Leader\s+and\s+Character\s+cards?\s+([+-]?\d+)\s+power(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
-      trimmed,
-    );
-  if (eachMatch) {
-    const player = /opponent/i.test(eachMatch[2]!) ? "opponent" : "self";
-    const value = parseInt(eachMatch[3]!, 10);
-    const duration = eachMatch[4] ? parseFullDuration(eachMatch[4]) : "permanent";
-    return {
-      action: "modifyPower",
-      target: {
-        player: player as "self" | "opponent",
-        zones: ["leader", "character"],
-        count: { amount: parseInt(eachMatch[1]!, 10), upTo: true },
-      },
-      value,
-      duration,
-    };
   }
 
   // Pattern 1: "Give <target> +/-N power (duration)?"
@@ -80,7 +125,7 @@ export function parseModifyPowerAction(text: string): ModifyPowerAction | null {
 
 // ── SetPower action parsing ──
 
-type SetPowerAction = Extract<Action, { action: "setPower" }>;
+type SetPowerAction = Extract<Action, { action: "setPower" | "setBasePowerFrom" | "copyPower" }>;
 
 /**
  * Parse "set this Character's/Leader's power to N" action.
@@ -123,11 +168,32 @@ export function parseSetPowerAction(text: string): SetPowerAction | null {
       trimmed,
     );
   if (becomesMatch) {
-    const duration: Duration = becomesMatch[2] ? parseFullDuration(becomesMatch[2]) : "thisTurn";
+    const copiedSource = becomesMatch[1]!.trim();
+    const duration: Duration = becomesMatch[2] ? parseFullDuration(becomesMatch[2]) : "permanent";
+    if (/^your opponent['’]s attacking Leader or Character$/i.test(copiedSource)) {
+      return {
+        action: "copyPower",
+        target: {
+          player: "opponent",
+          zones: ["leader", "character"],
+          count: { amount: 1 },
+        },
+        duration,
+        triggerEventAttacker: true,
+      };
+    }
+    const sourceMatch = /^(your|your opponent['\u2019]s) Leader(?:['\u2019]s base power)?$/i.exec(
+      copiedSource,
+    );
+    if (!sourceMatch) return null;
     return {
-      action: "setPower",
+      action: "setBasePowerFrom",
       target: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
-      value: 0, // Sentinel: copy from referenced card
+      source: {
+        player: /^your opponent/i.test(sourceMatch[1]!) ? "opponent" : "self",
+        zones: ["leader"],
+        count: { amount: 1 },
+      },
       duration,
     };
   }
@@ -137,6 +203,7 @@ export function parseSetPowerAction(text: string): SetPowerAction | null {
 
 // ── ModifyCost action parsing ──
 
+type CostAction = Extract<Action, { action: "modifyCost" | "setCost" }>;
 type ModifyCostAction = Extract<Action, { action: "modifyCost" }>;
 
 /**
@@ -146,8 +213,42 @@ type ModifyCostAction = Extract<Action, { action: "modifyCost" }>;
  * - "Give up to 1 of your opponent's Characters -2 cost during this turn"
  * - "Give up to 1 of your opponent's Characters 1 cost during this turn" (unsigned = positive)
  */
-export function parseModifyCostAction(text: string): ModifyCostAction | null {
-  const trimmed = text.trim().replace(/\.+$/, "");
+export function parseModifyCostAction(text: string): CostAction | null {
+  const trimmed = text
+    .trim()
+    .replace(/[\u2212\u2013]/g, "-")
+    .replace(/\.+$/, "");
+
+  const selfInHandMatch = /^give\s+this\s+card\s+in\s+your\s+hand\s+([+-]?\d+)\s+cost$/i.exec(
+    trimmed,
+  );
+  if (selfInHandMatch) {
+    const rawValue = selfInHandMatch[1]!;
+    const value = parseInt(rawValue, 10);
+    if (/^[+-]/.test(rawValue)) {
+      return {
+        action: "modifyCost",
+        target: {
+          player: "self",
+          zones: ["hand"],
+          count: { amount: 1 },
+          self: true,
+        },
+        value,
+        duration: "permanent",
+      };
+    }
+    return {
+      action: "setCost",
+      target: {
+        player: "self",
+        zones: ["hand"],
+        count: { amount: 1 },
+        self: true,
+      },
+      value,
+    };
+  }
 
   // "give <target> +/-N cost (during this turn)?"
   const match = /^give\s+(.+?)\s+([+-]?\d+)\s+cost(?:\s+during\s+this\s+(turn|battle))?$/i.exec(
@@ -171,8 +272,7 @@ export function parseModifyCostAction(text: string): ModifyCostAction | null {
     if (!target) return null;
     const value = parseInt(setMatch[2]!, 10);
     const duration = parseDuration(setMatch[3]);
-    // "Set to 0" means give -(current cost), but we model it as absolute set
-    return { action: "modifyCost", target, value, duration };
+    return { action: "setCost", target, value, duration };
   }
 
   // "<target> gains +/-N cost (duration)?" — e.g. "Up to 1 of your Characters gains +1 cost until..."
@@ -205,7 +305,7 @@ export function parseCostReductionAction(text: string): ModifyCostAction | null 
     const trait = playingMatch[1]!;
     const reduction = -parseInt(playingMatch[4]!, 10);
     const filters: TargetFilter[] = [
-      { filter: "trait", value: trait },
+      { filter: "trait", value: trait, match: "includes" },
       { filter: "cardCategory", value: "character" as any },
     ];
     if (playingMatch[2]) {
@@ -281,12 +381,129 @@ export function parseCostReductionAction(text: string): ModifyCostAction | null 
 // ── GrantKeyword action parsing ──
 
 type GrantKeywordAction = Extract<Action, { action: "grantKeyword" }>;
+type KeywordChoiceAction = Extract<Action, { action: "choice" }>;
+
+/**
+ * Parse one target gaining exactly one keyword from an inline `A, B or C`
+ * list. Each option retains the same physical target and duration.
+ */
+export function parseGrantKeywordChoiceAction(text: string): KeywordChoiceAction | null {
+  const trimmed = text.trim().replace(/\.+$/, "");
+  const match = /^(.+?)\s+gains?\s+(.+?)\s+(during\s+this\s+(?:turn|battle)|until\s+.+)$/i.exec(
+    trimmed,
+  );
+  if (!match || !/\s+or\s+/i.test(match[2]!)) return null;
+
+  const keywordNames = [...match[2]!.matchAll(/\[([^\]]+)\]/g)].map((entry) => entry[1]!);
+  const separatorRemainder = match[2]!
+    .replace(/\[[^\]]+\]/g, "")
+    .replace(/\bor\b/gi, "")
+    .replace(/[\s,]/g, "");
+  if (keywordNames.length < 2 || separatorRemainder) return null;
+
+  const keywords = keywordNames.map((name) => KEYWORD_BRACKET_TO_TYPE[name.toLowerCase()]);
+  const target = parseModifyPowerTarget(match[1]!);
+  if (!target || keywords.some((keyword) => !keyword)) return null;
+
+  const duration = parseFullDuration(match[3]!);
+  return {
+    action: "choice",
+    options: keywords.map((keyword) => [
+      { action: "grantKeyword", target, keyword: keyword!, duration },
+    ]),
+  };
+}
 
 /**
  * Parse a "<target> gains [Keyword] (during this turn/battle)?" action clause.
  */
 export function parseGrantKeywordAction(text: string): GrantKeywordAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+
+  const selectedTraitRushCharacterMatch =
+    /^up\s+to\s+(\d+)\s+of\s+your\s+(?:\[([^\]]+)\]|\{([^}]+)\}|["\u201c]([^"\u201d]+)["\u201d])\s+or\s+(?:\[([^\]]+)\]|\{([^}]+)\}|["\u201c]([^"\u201d]+)["\u201d])\s+type\s+Characters\s+can\s+attack\s+Characters\s+on\s+the\s+turn\s+in\s+which\s+(?:it|they)\s+(?:is|are)\s+played$/i.exec(
+      trimmed,
+    );
+  if (selectedTraitRushCharacterMatch) {
+    const firstTrait =
+      selectedTraitRushCharacterMatch[2] ??
+      selectedTraitRushCharacterMatch[3] ??
+      selectedTraitRushCharacterMatch[4]!;
+    const secondTrait =
+      selectedTraitRushCharacterMatch[5] ??
+      selectedTraitRushCharacterMatch[6] ??
+      selectedTraitRushCharacterMatch[7]!;
+    return {
+      action: "grantKeyword",
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: {
+          amount: parseInt(selectedTraitRushCharacterMatch[1]!, 10),
+          upTo: true,
+        },
+        filters: [
+          {
+            filter: "anyOf",
+            filters: [
+              { filter: "trait", value: firstTrait, match: "includes" },
+              { filter: "trait", value: secondTrait, match: "includes" },
+            ],
+          },
+        ],
+      },
+      keyword: "rushCharacter",
+      duration: "permanent",
+    };
+  }
+
+  const typedRushCharacterMatch =
+    /^your\s+(?:\[([^\]]+)\]|\{([^}]+)\}|["\u201c]([^"\u201d]+)["\u201d])\s+type\s+Characters\s+can\s+attack\s+Characters\s+on\s+the\s+turn\s+in\s+which\s+they\s+are\s+played$/i.exec(
+      trimmed,
+    );
+  if (typedRushCharacterMatch) {
+    const trait =
+      typedRushCharacterMatch[1] ?? typedRushCharacterMatch[2] ?? typedRushCharacterMatch[3]!;
+    return {
+      action: "grantKeyword",
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: "all" },
+        filters: [{ filter: "trait", value: trait, match: "includes" }],
+      },
+      keyword: "rushCharacter",
+      duration: "permanent",
+    };
+  }
+
+  if (
+    /^(?:this\s+Character\s+can\s+attack\s+Characters|this\s+Character\s+cannot\s+attack\s+a\s+Leader)\s+on\s+the\s+turn\s+in\s+which\s+it\s+is\s+played$/i.test(
+      trimmed,
+    )
+  ) {
+    return {
+      action: "grantKeyword",
+      target: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
+      keyword: "rushCharacter",
+      duration: "permanent",
+    };
+  }
+
+  // Some official card text omits keyword brackets in an inline grant:
+  // "this Character gains Rush during this turn".
+  const unbracketedMatch =
+    /^(.+?)\s+gains?\s+(Rush|Blocker|Double Attack|Banish|Unblockable)(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
+      trimmed,
+    );
+  if (unbracketedMatch) {
+    const keyword = KEYWORD_BRACKET_TO_TYPE[unbracketedMatch[2]!.toLowerCase()];
+    const target = parseModifyPowerTarget(unbracketedMatch[1]!);
+    if (keyword && target) {
+      const duration = unbracketedMatch[3] ? parseFullDuration(unbracketedMatch[3]) : "permanent";
+      return { action: "grantKeyword", target, keyword, duration };
+    }
+  }
 
   // "<target> gains [Keyword] if <condition>"
   const condMatch = /^(.+?)\s+gains?\s+\[([^\]]+)\]\s+if\s+(.+)$/i.exec(trimmed);
@@ -339,6 +556,58 @@ export function parseGrantKeywordAction(text: string): GrantKeywordAction | null
 // ── Compound keyword + power pre-parser ──
 
 /**
+ * Parse a shared power modifier whose printed subject names one card and then
+ * broadens to a trait family:
+ *
+ * "your [Edward.Newgate] and all your Characters with a type including
+ *  "Whitebeard Pirates" gain +2000 power"
+ *
+ * The named Character is excluded from the trait action so a card satisfying
+ * both subjects receives the shared modifier only once.
+ */
+export function parseCompoundNamedTraitPower(text: string): Action[] | null {
+  const trimmed = text.trim().replace(/\.+$/, "");
+  const match =
+    /^your\s+\[([^\]]+)\]\s+and\s+all\s+(?:of\s+)?your\s+Characters\s+with\s+a\s+type\s+including\s+["\u201c]([^"\u201d]+)["\u201d]\s+gain\s+([+-]?\d+)\s+power(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
+      trimmed,
+    );
+  if (!match) return null;
+
+  const name = match[1]!;
+  const trait = match[2]!;
+  const value = parseInt(match[3]!, 10);
+  const duration = match[4] ? parseFullDuration(match[4]) : "permanent";
+
+  return [
+    {
+      action: "modifyPower",
+      target: {
+        player: "self",
+        zones: ["leader", "character"],
+        count: { amount: "all" },
+        filters: [{ filter: "name", value: name }],
+      },
+      value,
+      duration,
+    },
+    {
+      action: "modifyPower",
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: "all" },
+        filters: [
+          { filter: "trait", value: trait, match: "includes" },
+          { filter: "excludeName", value: name },
+        ],
+      },
+      value,
+      duration,
+    },
+  ];
+}
+
+/**
  * Parse "this Character/Leader gains [Keyword] and +/-N power (duration)?" patterns.
  * Must be parsed before clause splitting since "and" would split it apart.
  */
@@ -362,5 +631,65 @@ export function parseCompoundKeywordPower(text: string): Action[] | null {
   return [
     { action: "grantKeyword", target, keyword, duration },
     { action: "modifyPower", target: { ...target }, value: parseInt(m[3]!, 10), duration },
+  ];
+}
+
+/**
+ * Parse "this Character/Leader gains [Keyword] and +/-N cost (duration)?" patterns.
+ * Must be parsed before clause splitting since the cost clause has an implicit target.
+ */
+export function parseCompoundKeywordCost(text: string): Action[] | null {
+  const trimmed = text.trim().replace(/\.+$/, "");
+  const match =
+    /^(.+?)\s+gains?\s+\[([^\]]+)\]\s+and\s+([+-]?\d+)\s+cost(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
+      trimmed,
+    );
+  if (!match) return null;
+
+  const keyword = KEYWORD_BRACKET_TO_TYPE[match[2]!.toLowerCase()];
+  const target = parseModifyPowerTarget(match[1]!);
+  if (!keyword || !target) return null;
+
+  const duration = match[4] ? parseFullDuration(match[4]) : "permanent";
+  return [
+    { action: "grantKeyword", target, keyword, duration },
+    {
+      action: "modifyCost",
+      target: { ...target },
+      value: parseInt(match[3]!, 10),
+      duration,
+    },
+  ];
+}
+
+/**
+ * Parse "this Character/Leader gains +/-N power and +/-M cost" patterns.
+ * The second clause inherits the first clause's target.
+ */
+export function parseCompoundPowerCost(text: string): Action[] | null {
+  const trimmed = text.trim().replace(/\.+$/, "");
+  const match =
+    /^(.+?)\s+gains?\s+([+-]?\d+)\s+power\s+and\s+([+-]?\d+)\s+cost(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
+      trimmed,
+    );
+  if (!match) return null;
+
+  const target = parseModifyPowerTarget(match[1]!);
+  if (!target) return null;
+
+  const duration = match[4] ? parseFullDuration(match[4]) : "permanent";
+  return [
+    {
+      action: "modifyPower",
+      target,
+      value: parseInt(match[2]!, 10),
+      duration,
+    },
+    {
+      action: "modifyCost",
+      target: { ...target },
+      value: parseInt(match[3]!, 10),
+      duration,
+    },
   ];
 }

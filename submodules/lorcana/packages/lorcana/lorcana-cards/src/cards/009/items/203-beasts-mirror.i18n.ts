@@ -37,4 +37,13 @@ export const beastsMirrorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El espejo de la bestia",
+    text: [
+      {
+        title: "Muéstrame",
+        description: "{E}, 3 {I} — Si no tienes cartas en tu mano, roba una carta.",
+      },
+    ],
+  },
 };

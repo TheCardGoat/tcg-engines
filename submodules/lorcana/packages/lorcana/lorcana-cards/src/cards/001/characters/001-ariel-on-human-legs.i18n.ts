@@ -41,4 +41,14 @@ export const arielOnHumanLegsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ariel",
+    version: "En piernas humanas",
+    text: [
+      {
+        title: "SIN VOZ",
+        description: "Este personaje no puede {E} cantar canciones.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const yokaiEnigmaticInventorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yokai",
+    version: "Inventor enigmático",
+    text: [
+      {
+        title: "HORA DE ACTUALIZAR",
+        description:
+          "Siempre que este personaje realice una misión, puedes devolver uno de tus objetos a tu mano para pagar 2 {I} menos por el siguiente objeto que juegues en este turno.",
+      },
+    ],
+  },
 };

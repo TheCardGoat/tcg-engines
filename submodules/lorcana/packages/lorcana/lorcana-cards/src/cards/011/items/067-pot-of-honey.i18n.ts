@@ -41,4 +41,14 @@ export const potOfHoneyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pote de miel",
+    text: [
+      {
+        title: "¡ESTOY ATASCADO!",
+        description:
+          "Desterrar este objeto: el personaje elegido no puede estar listo al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

@@ -41,4 +41,14 @@ export const sumerianTalismanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Talismán sumerio",
+    text: [
+      {
+        title: "FUENTE DE MAGIA",
+        description:
+          "Durante tu turno, cada vez que uno de tus personajes sea desterrado en un desafío, podrás robar una carta.",
+      },
+    ],
+  },
 };

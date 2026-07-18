@@ -77,6 +77,7 @@ export const op01Shanks120: CharacterCard = {
               ],
             },
             keyword: "blocker",
+            requiresKeyword: true,
             duration: "thisBattle",
           },
         ],

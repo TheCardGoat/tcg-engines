@@ -17,4 +17,8 @@ export const avalancheI18n: Record<Languages, I18nProperties> = {
     name: "Valanga",
     text: "Infliggi 1 danno a ogni personaggio avversario. Puoi esiliare un luogo a tua scelta.",
   },
+  es: {
+    name: "Avalancha",
+    text: "Inflige 1 daño a cada personaje contrario. Puedes desterrar la ubicación elegida.",
+  },
 };

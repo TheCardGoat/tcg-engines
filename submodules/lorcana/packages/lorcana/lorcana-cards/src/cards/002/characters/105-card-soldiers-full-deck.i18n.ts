@@ -17,4 +17,8 @@ export const cardSoldiersFullDeckI18n: Record<Languages, I18nProperties> = {
     name: "Carte Soldato",
     version: "Mazzo Completo",
   },
+  es: {
+    name: "Soldados de cartas",
+    version: "Cubierta completa",
+  },
 };

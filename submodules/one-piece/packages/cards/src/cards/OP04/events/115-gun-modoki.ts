@@ -28,6 +28,13 @@ export const op04GunModoki115: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
+        ],
         actions: [
           {
             action: "grantKeyword",
@@ -42,6 +49,7 @@ export const op04GunModoki115: EventCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
+                  match: "includes",
                 },
               ],
             },

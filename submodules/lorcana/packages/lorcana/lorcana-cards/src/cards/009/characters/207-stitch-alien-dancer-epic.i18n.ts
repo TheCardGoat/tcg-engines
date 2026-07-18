@@ -17,4 +17,8 @@ export const stitchAlienDancerEpicI18n: Record<Languages, I18nProperties> = {
     name: "Stitch",
     version: "Ballerino Alieno",
   },
+  es: {
+    name: "Puntada",
+    version: "Bailarina extraterrestre",
+  },
 };

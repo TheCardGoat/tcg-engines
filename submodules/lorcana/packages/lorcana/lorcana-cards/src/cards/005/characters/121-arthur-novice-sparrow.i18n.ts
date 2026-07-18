@@ -21,4 +21,9 @@ export const arthurNoviceSparrowI18n: Record<Languages, I18nProperties> = {
     version: "Passerotto Principiante",
     text: "<Attaccabrighe>",
   },
+  es: {
+    name: "Arturo",
+    version: "Gorrión novato",
+    text: "Imprudente",
+  },
 };

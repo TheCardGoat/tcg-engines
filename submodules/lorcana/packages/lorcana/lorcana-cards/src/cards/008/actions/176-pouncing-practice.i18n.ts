@@ -17,4 +17,8 @@ export const pouncingPracticeI18n: Record<Languages, I18nProperties> = {
     name: "Lezione d'Agguato",
     text: "Un personaggio a tua scelta riceve -2 {S} per questo turno. Un tuo personaggio a tua scelta ottiene <Sfuggente> per questo turno. (Può sfidare altri personaggi con Sfuggente.)",
   },
+  es: {
+    name: "Práctica de salto",
+    text: "El personaje elegido obtiene -2 {S} este turno. El personaje elegido por ti gana Evasivo este turno. (Pueden desafiar a los personajes con Evasivo).",
+  },
 };

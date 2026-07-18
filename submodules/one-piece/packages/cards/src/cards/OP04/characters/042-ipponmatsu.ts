@@ -33,6 +33,25 @@ export const op04Ipponmatsu042: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "attribute",
+                  value: "slash",
+                },
+              ],
+            },
+            value: 3000,
+            duration: "thisTurn",
+          },
+          {
             action: "trashFromDeck",
             player: "self",
             amount: 1,

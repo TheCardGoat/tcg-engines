@@ -27,5 +27,38 @@ export const op14eb04CaponeGangBege003: CharacterCard = {
   attribute: "ranged",
   effect:
     "This Character cannot be K.O.'d by effects of your opponent's Characters with 5000 base power or less.",
+  effects: {
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            restriction: "byEffect",
+            byPlayer: "opponent",
+            byFilter: [
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+              {
+                filter: "basePower",
+                comparison: "lte",
+                value: 5000,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   i18n: op14eb04CaponeGangBege003I18n,
 };

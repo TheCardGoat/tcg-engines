@@ -28,12 +28,6 @@ export const op03EniesLobby098: StageCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "CP",
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -52,6 +46,11 @@ export const op03EniesLobby098: StageCard = {
             },
             value: -2,
             duration: "thisTurn",
+            condition: {
+              condition: "leaderTrait",
+              trait: "CP",
+              match: "includes",
+            },
           },
         ],
         optional: true,
@@ -60,14 +59,7 @@ export const op03EniesLobby098: StageCard = {
         trigger: "trigger",
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
       },

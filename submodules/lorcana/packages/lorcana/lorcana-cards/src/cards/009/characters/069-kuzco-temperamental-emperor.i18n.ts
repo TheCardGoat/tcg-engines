@@ -57,4 +57,18 @@ export const kuzcoTemperamentalEmperorI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Kuzco",
+    version: "Emperador temperamental",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "¡NO TOQUE!",
+        description:
+          "Cuando este personaje es desafiado y desterrado, puedes desterrar al personaje desafiante.",
+      },
+    ],
+  },
 };

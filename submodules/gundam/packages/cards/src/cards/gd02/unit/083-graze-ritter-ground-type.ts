@@ -4,6 +4,7 @@ export const gd02GrazeRitterGroundType083: UnitCard = {
   cardNumber: "GD02-083",
   name: "Graze Ritter (Ground Type)",
   type: "unit",
+  battlefieldZones: ["earth"],
   color: "white",
   traits: ["gjallarhorn"],
   id: "GD02-083",

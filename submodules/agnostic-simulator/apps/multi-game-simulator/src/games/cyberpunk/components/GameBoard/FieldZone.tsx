@@ -6,9 +6,9 @@ import { ZoneBadge } from "./ZoneBadge";
 import type { CardActiveEffectView, EffectiveRule, EngineCardType, Side } from "../../engine";
 import classes from "./FieldZone.module.css";
 
-// Vertical percentage margins resolve against card width. For a 5:7 card,
-// 33.6% width reserves the same space as the 24% vertical gear peek.
-const GEAR_PEEK_MARGIN_PERCENT = 33.6;
+// Attached gear extends 24% of the 5:7 unit card height, or 33.6% of its
+// width. Keep this as a count so CSS can resolve it against the card width,
+// rather than the much wider field container.
 
 interface FieldUnit {
   imageUrl: string;
@@ -83,15 +83,20 @@ export function FieldZone({
         return;
       }
 
-      const rowTops = Array.from(node.children).reduce<number[]>((tops, child) => {
-        const top = Math.round(child.getBoundingClientRect().top);
-        if (!tops.some((existing) => Math.abs(existing - top) <= 1)) {
-          tops.push(top);
-        }
-        return tops;
-      }, []);
+      const bounds = node.getBoundingClientRect();
+      const hasVisibleVerticalOverflow = Array.from(node.children).some((child) => {
+        const cardBounds = child.getBoundingClientRect();
+        return cardBounds.top < bounds.top - 1 || cardBounds.bottom > bounds.bottom + 1;
+      });
 
-      setIsScrollable(node.scrollHeight - node.clientHeight > 1 || rowTops.length > 1);
+      /*
+        A tapped card is shorter but bottom-aligned in an opponent row, so
+        sibling cards naturally have different top edges. Row-top comparison
+        therefore reported a second row and forced a scrollbar for cards that
+        were already fully visible. Scroll only for content that actually
+        extends outside the field's visible bounds.
+      */
+      setIsScrollable(node.scrollTop > 1 || hasVisibleVerticalOverflow);
     };
 
     updateScrollable();
@@ -139,9 +144,7 @@ export function FieldZone({
             key={unit.cardId ?? i}
             className={`${classes.card} ${unit.tapped ? classes.tapped : ""}`}
             style={{
-              ["--attached-gear-space" as string]: `${
-                (unit.gear?.length ?? 0) * GEAR_PEEK_MARGIN_PERCENT
-              }%`,
+              ["--attached-gear-count" as string]: unit.gear?.length ?? 0,
             }}
             data-testid="field-unit"
             data-card-id={unit.cardId}

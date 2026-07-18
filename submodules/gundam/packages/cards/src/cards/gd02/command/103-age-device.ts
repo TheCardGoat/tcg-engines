@@ -5,7 +5,7 @@ export const gd02AgeDevice103: CommandCard = {
   name: "AGE Device",
   type: "command",
   color: "green",
-  traits: ["-"],
+  traits: [],
   id: "GD02-103",
   canonicalId: "GD02-103",
   externalIds: { bandai: "gundam:gd02-103" },

@@ -47,6 +47,7 @@ export const prb02ThousandSunnyPirateFoil017: StageCard = {
           {
             condition: "leaderTrait",
             trait: "Straw Hat Crew",
+            match: "includes",
           },
         ],
         actions: [
@@ -54,6 +55,34 @@ export const prb02ThousandSunnyPirateFoil017: StageCard = {
             action: "draw",
             player: "self",
             amount: 1,
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "color",
+                  value: "black",
+                },
+                {
+                  filter: "trait",
+                  value: "Straw Hat Crew",
+                  match: "includes",
+                },
+              ],
+            },
+            value: 1,
           },
         ],
       },

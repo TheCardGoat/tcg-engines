@@ -44,6 +44,14 @@ export const op09Pierre110: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+      },
     ],
   },
   i18n: op09Pierre110I18n,

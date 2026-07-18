@@ -17,4 +17,8 @@ export const visionOfTheFutureI18n: Record<Languages, I18nProperties> = {
     name: "Visione del Futuro",
     text: "Guarda le prime 5 carte del tuo mazzo. Aggiungine una alla tua mano e metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
   },
+  es: {
+    name: "Visión del futuro",
+    text: "Mira las 5 primeras cartas de tu mazo. Pon uno en tu mano y el resto en la parte inferior de tu mazo en cualquier orden.",
+  },
 };

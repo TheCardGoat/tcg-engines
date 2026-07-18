@@ -54,4 +54,18 @@ export const i2iEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "I2I",
+    text: [
+      {
+        title: "Cantar juntos 9",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 9 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title:
+          "Cada jugador roba 2 cartas y gana 2 conocimientos. Si 2 o más personajes cantaron esta canción, prepárelos. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

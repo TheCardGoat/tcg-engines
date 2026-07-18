@@ -45,4 +45,15 @@ export const mrsJudsonHousekeeperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora judson",
+    version: "Ama de llaves",
+    text: [
+      {
+        title: "PONER EN ORDEN",
+        description:
+          "Siempre que juegues con un personaje Floodborn, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercitarla.",
+      },
+    ],
+  },
 };

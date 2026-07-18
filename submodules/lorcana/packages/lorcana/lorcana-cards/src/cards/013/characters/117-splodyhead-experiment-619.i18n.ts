@@ -17,4 +17,8 @@ export const splodyheadExperiment619I18n: Record<Languages, I18nProperties> = {
     name: "Lanciabombe",
     version: "Esperimento 499",
   },
+  es: {
+    name: "Cabeza de chorlito",
+    version: "Experimento 619",
+  },
 };

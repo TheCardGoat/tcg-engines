@@ -4,6 +4,7 @@ export const gd02Gwadan125: BaseCard = {
   cardNumber: "GD02-125",
   name: "Gwadan",
   type: "base",
+  color: "red",
   traits: ["neo zeon", "warship"],
   id: "GD02-125",
   canonicalId: "GD02-125",
@@ -39,6 +40,7 @@ export const gd02Gwadan125: BaseCard = {
   level: 4,
   cost: 2,
   hp: 5,
+  battlefieldZones: ["space"],
   effect:
     "【Burst】Deploy this card.<br>【Deploy】Add 1 of your Shields to your hand. Then, if it is your turn, you may discard 1 red card. If you do, draw 1.<br>",
   effects: [

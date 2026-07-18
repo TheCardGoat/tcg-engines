@@ -43,4 +43,15 @@ export const fixitFelixJrDelightedSightseerI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Repararlo Félix, Jr.",
+    version: "Turista encantado",
+    text: [
+      {
+        title: "¡OH MI TIERRA!",
+        description:
+          "Cuando juegas con este personaje, si tienes una ubicación en juego, roba una carta.",
+      },
+    ],
+  },
 };

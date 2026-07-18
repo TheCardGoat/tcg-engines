@@ -47,8 +47,12 @@ export const op09Buggy042: LeaderCard = {
         trigger: "activateMain",
         costs: [
           {
-            cost: "trashFromHand",
+            cost: "restDon",
             amount: 5,
+          },
+          {
+            cost: "trashFromHand",
+            amount: 1,
           },
         ],
         actions: [
@@ -66,6 +70,7 @@ export const op09Buggy042: LeaderCard = {
               {
                 filter: "trait",
                 value: "Cross Guild",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

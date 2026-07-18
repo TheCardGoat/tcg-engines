@@ -44,11 +44,13 @@ export const op04Karoo004: CharacterCard = {
               zones: ["character"],
               count: {
                 amount: "all",
+                upTo: true,
               },
               filters: [
                 {
                   filter: "trait",
                   value: "Alabasta",
+                  match: "includes",
                 },
               ],
             },
@@ -57,6 +59,7 @@ export const op04Karoo004: CharacterCard = {
               upTo: true,
             },
             donState: "rested",
+            distribution: "each",
           },
         ],
         optional: true,

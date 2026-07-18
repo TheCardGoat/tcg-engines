@@ -52,4 +52,16 @@ export const blueFairyGuidingLightI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hada azul",
+    version: "Luz guía",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "Apoyo",
+      },
+    ],
+  },
 };

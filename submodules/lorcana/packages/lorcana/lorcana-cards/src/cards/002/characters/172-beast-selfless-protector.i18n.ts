@@ -45,4 +45,15 @@ export const beastSelflessProtectorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bestia",
+    version: "Protector desinteresado",
+    text: [
+      {
+        title: "ESCUDO OTRO",
+        description:
+          "Siempre que uno de tus otros personajes reciba daño, pon esa misma cantidad de contadores de daño en este personaje.",
+      },
+    ],
+  },
 };

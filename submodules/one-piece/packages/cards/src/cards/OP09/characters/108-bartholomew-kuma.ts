@@ -29,5 +29,35 @@ export const op09BartholomewKuma108: CharacterCard = {
   attribute: "strike",
   effect:
     '[Trigger] If your Leader has the "Revolutionary Army" type and you and your opponent have a total of 5 or less Life cards, play this card.',
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "compound",
+            operator: "and",
+            conditions: [
+              {
+                condition: "leaderTrait",
+                trait: "Revolutionary Army",
+                match: "includes",
+              },
+              {
+                condition: "totalLifeCount",
+                comparison: "lte",
+                value: 5,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op09BartholomewKuma108I18n,
 };

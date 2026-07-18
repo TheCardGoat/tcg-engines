@@ -55,4 +55,17 @@ export const chiefPowhatanProtectiveLeaderI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Jefe Powhatan",
+    version: "Líder protector",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "SE MANTIENE EN SU TERRENO",
+        description: "Este personaje no puede desafiar.",
+      },
+    ],
+  },
 };

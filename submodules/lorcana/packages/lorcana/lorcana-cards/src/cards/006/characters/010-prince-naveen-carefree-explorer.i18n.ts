@@ -17,4 +17,8 @@ export const princeNaveenCarefreeExplorerI18n: Record<Languages, I18nProperties>
     name: "Principe Naveen",
     version: "Esploratore Scanzonato",
   },
+  es: {
+    name: "Príncipe naveen",
+    version: "Explorador despreocupado",
+  },
 };

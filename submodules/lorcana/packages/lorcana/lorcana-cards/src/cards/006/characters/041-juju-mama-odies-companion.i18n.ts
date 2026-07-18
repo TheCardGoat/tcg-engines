@@ -45,4 +45,15 @@ export const jujuMamaOdiesCompanionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Juju",
+    version: "El compañero de mamá Odie",
+    text: [
+      {
+        title: "RODILLAS DE ABEJAS",
+        description:
+          "Cuando juegas con este personaje, mueve 1 contador de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

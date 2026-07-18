@@ -40,4 +40,13 @@ export const luckyDimeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Moneda de diez centavos de la suerte",
+    text: [
+      {
+        title: "NÚMERO UNO",
+        description: "{E}, 2 {I}: elige un personaje tuyo y obtén una tradición igual a su {L}.",
+      },
+    ],
+  },
 };

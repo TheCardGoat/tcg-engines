@@ -26,5 +26,39 @@ export const op02Jango100: CharacterCard = {
   traits: ["Navy"],
   attribute: "slash",
   effect: "If you have [Fullbody], this Character cannot be K.O.'d in battle.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "hasCard",
+            player: "self",
+            zone: "field",
+            filters: [
+              {
+                filter: "name",
+                value: "Fullbody",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            restriction: "inBattle",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op02Jango100I18n,
 };

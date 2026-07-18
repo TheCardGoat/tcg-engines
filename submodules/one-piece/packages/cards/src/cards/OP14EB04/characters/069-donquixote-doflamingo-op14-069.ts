@@ -4,8 +4,8 @@ import { op14eb04DonquixoteDoflamingoOp14069069I18n } from "./069-donquixote-dof
 export const op14eb04DonquixoteDoflamingoOp14069069: CharacterCard = {
   id: "OP14-069",
   canonicalId: "OP14-069",
-  slug: "donquixote-doflamingo-op14-069",
-  name: "Donquixote Doflamingo - OP14-069",
+  slug: "donquixote-doflamingo/op14-069",
+  name: "Donquixote Doflamingo",
   printings: [
     {
       id: "OP14-069",
@@ -30,7 +30,7 @@ export const op14eb04DonquixoteDoflamingoOp14069069: CharacterCard = {
   setId: "OP14EB04",
   cost: 10,
   power: 10000,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   attribute: "special",
   artVariants: [
     {
@@ -40,7 +40,7 @@ export const op14eb04DonquixoteDoflamingoOp14069069: CharacterCard = {
     },
   ],
   effect:
-    "[On Play] DON!! -3: Choose one:\n•If your Leader has the {Donquixote Pirates} type, K.O. up to 1 of your opponent's Characters with a cost of 8 or less.\n•Up to 3 of your opponent's Characters with a cost of 7 or less cannot be rested until the end of your opponent's next End Phase.",
+    "[On Play] DON!! −3: Choose one:\n•If your Leader has the {Donquixote Pirates} type, K.O. up to 1 of your opponent's Characters with a cost of 8 or less.\n•Up to 3 of your opponent's Characters with a cost of 7 or less cannot be rested until the end of your opponent's next End Phase.",
   effects: {
     effects: [
       {
@@ -73,6 +73,10 @@ export const op14eb04DonquixoteDoflamingoOp14069069: CharacterCard = {
                       },
                     ],
                   },
+                  condition: {
+                    condition: "leaderTrait",
+                    trait: "Donquixote Pirates",
+                  },
                 },
               ],
               [
@@ -93,7 +97,7 @@ export const op14eb04DonquixoteDoflamingoOp14069069: CharacterCard = {
                       },
                     ],
                   },
-                  duration: "untilEndOfOpponentNextTurn",
+                  duration: "untilEndOfOpponentNextEndPhase",
                 },
               ],
             ],

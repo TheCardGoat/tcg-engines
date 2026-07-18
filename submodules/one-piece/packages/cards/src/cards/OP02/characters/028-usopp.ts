@@ -25,6 +25,5 @@ export const op02Usopp028: CharacterCard = {
   counter: 1000,
   traits: ["Film Straw Hat Crew"],
   attribute: "ranged",
-  effect: "NULL",
   i18n: op02Usopp028I18n,
 };

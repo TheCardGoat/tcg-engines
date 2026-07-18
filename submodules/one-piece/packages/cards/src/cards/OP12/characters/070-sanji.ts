@@ -41,5 +41,56 @@ export const op12Sanji070: CharacterCard = {
   ],
   effect:
     "This Character gains +1000 power for every 5 Events in your trash.\nIf this Character would be removed from the field by your opponent's effect, you may return 1 DON!! card from your field to your DON!! deck instead.",
+  effects: {
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 1000,
+            valuePerCardGroup: {
+              size: 5,
+              target: {
+                player: "self",
+                zones: ["trash"],
+                count: {
+                  amount: "all",
+                },
+                filters: [
+                  {
+                    filter: "cardCategory",
+                    value: "event",
+                  },
+                ],
+              },
+            },
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+    replacementEffects: [
+      {
+        replacedEvent: "removeFromField",
+        source: "opponentEffect",
+        eventFilter: {
+          targetSelf: true,
+        },
+        replacementAction: {
+          action: "returnDon",
+          player: "self",
+          amount: 1,
+        },
+      },
+    ],
+  },
   i18n: op12Sanji070I18n,
 };

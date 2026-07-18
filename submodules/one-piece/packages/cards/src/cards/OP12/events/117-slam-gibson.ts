@@ -28,17 +28,12 @@ export const op12SlamGibson117: EventCard = {
     effects: [
       {
         trigger: "main",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Supernovas",
-          },
-        ],
+        costs: [{ cost: "restDon", amount: 5 }],
         actions: [
           {
             action: "addToLife",
             target: {
-              player: "self",
+              player: "both",
               zones: ["character"],
               count: {
                 amount: 1,
@@ -52,7 +47,12 @@ export const op12SlamGibson117: EventCard = {
                 },
               ],
             },
-            position: "top",
+            position: "choice",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Supernovas",
+              match: "includes",
+            },
           },
         ],
         optional: true,

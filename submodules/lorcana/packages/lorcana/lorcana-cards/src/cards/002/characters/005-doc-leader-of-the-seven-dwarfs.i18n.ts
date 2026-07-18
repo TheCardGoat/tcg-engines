@@ -45,4 +45,15 @@ export const docLeaderOfTheSevenDwarfsI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Doc",
+    version: "Líder de los siete enanitos",
+    text: [
+      {
+        title: "POR PARTES IGUALES",
+        description:
+          "Cada vez que este personaje realiza una misión, pagas 1 {I} menos por el siguiente personaje que juegues en este turno.",
+      },
+    ],
+  },
 };

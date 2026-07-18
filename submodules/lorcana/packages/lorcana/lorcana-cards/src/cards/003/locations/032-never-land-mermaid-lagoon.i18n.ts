@@ -17,4 +17,8 @@ export const neverLandMermaidLagoonI18n: Record<Languages, I18nProperties> = {
     name: "L'Isola Che Non C'È",
     version: "Laguna delle Sirene",
   },
+  es: {
+    name: "Tierra de Nunca Jamás",
+    version: "Laguna de sirena",
+  },
 };

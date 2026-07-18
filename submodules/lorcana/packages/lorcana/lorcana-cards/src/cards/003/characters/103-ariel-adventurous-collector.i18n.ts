@@ -57,4 +57,18 @@ export const arielAdventurousCollectorI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Ariel",
+    version: "Coleccionista aventurero",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "VOZ INSPIRADORA",
+        description:
+          "Cada vez que tocas una canción, tu personaje elegido gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

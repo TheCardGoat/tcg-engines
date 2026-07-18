@@ -60,4 +60,18 @@ export const taranPigKeeperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Taran",
+    version: "Guardián de cerdos",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "SIGUE AL CERDO",
+        description:
+          "Siempre que este personaje realice una misión, puedes devolver a tu mano una carta de personaje llamada Hen Wen de tu descarte.",
+      },
+    ],
+  },
 };

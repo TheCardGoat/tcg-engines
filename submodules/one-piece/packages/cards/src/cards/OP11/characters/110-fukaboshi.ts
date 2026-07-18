@@ -30,6 +30,13 @@ export const op11Fukaboshi110: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
+        ],
         actions: [
           {
             action: "ko",
@@ -51,6 +58,40 @@ export const op11Fukaboshi110: CharacterCard = {
           },
         ],
         optional: true,
+      },
+    ],
+    replacementEffects: [
+      {
+        replacedEvent: "ko",
+        eventFilter: {
+          targetSelf: true,
+        },
+        replacementAction: {
+          action: "rest",
+          target: {
+            player: "self",
+            zones: ["leader"],
+            count: {
+              amount: 1,
+            },
+            filters: [
+              {
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Fish-Man Island",
+                    match: "includes",
+                  },
+                  {
+                    filter: "name",
+                    value: "Shirahoshi",
+                  },
+                ],
+              },
+            ],
+          },
+        },
       },
     ],
   },

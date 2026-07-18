@@ -49,9 +49,14 @@ export const op03GumGumGiantGavel055: EventCard = {
             duration: "thisBattle",
           },
           {
-            action: "trashFromDeck",
-            player: "self",
-            amount: 2,
+            action: "optional",
+            actions: [
+              {
+                action: "trashFromDeck",
+                player: "self",
+                amount: 2,
+              },
+            ],
           },
         ],
         optional: true,
@@ -62,7 +67,7 @@ export const op03GumGumGiantGavel055: EventCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

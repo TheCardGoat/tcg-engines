@@ -1,6 +1,7 @@
 import { getCard } from "../../cards/src/runtime-catalog.ts";
 import type { Action, Target, TargetFilter } from "@tcg/op-types";
 import { getLegalCommands } from "./engine/legal.ts";
+import { getCardCost, getCardPower } from "./shared.ts";
 import type { OPCard } from "@tcg/op-types";
 import type {
   CardInstance,
@@ -47,24 +48,6 @@ function baseCost(card: OPCard): number | null {
   return null;
 }
 
-function getModifierTotal(state: MatchState, instanceId: string, type: "power" | "cost"): number {
-  let total = 0;
-
-  for (const modifier of Object.values(state.modifiers)) {
-    if (
-      modifier.targetId !== instanceId ||
-      modifier.type !== type ||
-      modifier.value === undefined
-    ) {
-      continue;
-    }
-
-    total += modifier.value;
-  }
-
-  return total;
-}
-
 function canSeeCard(viewer: Viewer, instance: CardInstance): boolean {
   if (viewer === "judge") {
     return true;
@@ -74,7 +57,7 @@ function canSeeCard(viewer: Viewer, instance: CardInstance): boolean {
     return true;
   }
 
-  if (instance.zone === "hand" && viewer === instance.owner) {
+  if (instance.zone === "hand" && viewer === instance.controller) {
     return true;
   }
 
@@ -111,20 +94,12 @@ function projectCard(
     instanceId: visible ? instance.instanceId : null,
     cardId: visible ? instance.cardId : null,
     name: visible ? getCardName(card) : null,
-    owner: instance.owner,
+    owner: instance.controller,
     zone: instance.zone,
     rested: instance.rested,
     attachedDon: instance.attachedDon,
-    power:
-      visible && basePower(card) !== null
-        ? basePower(card)! +
-          getModifierTotal(state, instance.instanceId, "power") +
-          instance.attachedDon * 1000
-        : null,
-    cost:
-      visible && baseCost(card) !== null
-        ? baseCost(card)! + getModifierTotal(state, instance.instanceId, "cost")
-        : null,
+    power: visible && basePower(card) !== null ? getCardPower(state, instance.instanceId) : null,
+    cost: visible && baseCost(card) !== null ? getCardCost(state, instance.instanceId) : null,
     hidden: !visible,
   };
 }
@@ -138,11 +113,14 @@ function projectZone(
   if (concealAll && viewer !== "judge") {
     return zoneIds.map((instanceId) => {
       const instance = state.cards[instanceId];
+      if (instance.publicKnowledge) {
+        return projectCard(state, viewer, instanceId)!;
+      }
       return {
         instanceId: null,
         cardId: null,
         name: null,
-        owner: instance.owner,
+        owner: instance.controller,
         zone: instance.zone,
         rested: instance.rested,
         attachedDon: instance.attachedDon,
@@ -219,7 +197,7 @@ function entityRefForCard(state: MatchState, instanceId: string): ProjectedEntit
   return {
     kind: "card",
     id: instanceId,
-    ownerId: instance?.owner,
+    ownerId: instance?.controller,
     zoneId: instance?.zone,
   };
 }
@@ -241,11 +219,11 @@ function candidateForPromptOption(
     return {
       ref: entityRefForCard(state, option.targetId),
       label: option.label,
-      legal: true,
+      legal: option.enabled !== false,
       publicInfo: {
         cardId: instance?.cardId ?? null,
         name: card ? getCardName(card) : option.label,
-        owner: instance?.owner ?? null,
+        owner: instance?.controller ?? null,
         zone: instance?.zone ?? null,
         rested: instance?.rested ?? null,
         attachedDon: instance?.attachedDon ?? null,
@@ -300,13 +278,17 @@ function constraintForFilter(filter: TargetFilter): ProjectedDecisionConstraint 
       };
     case "excludeSelf":
       return { id: "excludeSelf", label: "Not the source card" };
-    case "trait":
+    case "allOf":
+      return { id: "allOf", label: "Matches all listed filters" };
+    case "trait": {
+      const trait = Array.isArray(filter.value) ? filter.value.join(" or ") : filter.value;
       return {
         id: "trait",
-        label: filter.negate ? `Does not have ${filter.value}` : `Has ${filter.value}`,
+        label: filter.negate ? `Does not have ${trait}` : `Has ${trait}`,
         operator: filter.negate ? "neq" : "includes",
-        value: filter.value,
+        value: trait,
       };
+    }
     case "attribute":
       return {
         id: "attribute",
@@ -327,6 +309,13 @@ function constraintForFilter(filter: TargetFilter): ProjectedDecisionConstraint 
       return {
         id: filter.filter,
         label: `${filter.filter === "basePower" ? "Base power" : "Power"} ${filter.comparison} ${filter.value}`,
+        operator: operatorForComparison(filter.comparison),
+        value: filter.value,
+      };
+    case "counter":
+      return {
+        id: "counter",
+        label: `Counter ${filter.comparison} ${filter.value}`,
         operator: operatorForComparison(filter.comparison),
         value: filter.value,
       };
@@ -383,6 +372,18 @@ function constraintForFilter(filter: TargetFilter): ProjectedDecisionConstraint 
       };
     case "noBaseEffect":
       return { id: "noBaseEffect", label: "No base effect" };
+    case "anyOf":
+      const groups = "groups" in filter ? filter.groups : filter.filters.map((nested) => [nested]);
+      return {
+        id: "anyOf",
+        label: `Any of: ${groups
+          .map(
+            (group) =>
+              `(${group.map((nested) => constraintForFilter(nested).label).join(" and ")})`,
+          )
+          .join(" or ")}`,
+        gameSpecific: true,
+      };
   }
 }
 
@@ -394,7 +395,12 @@ function constraintsForTarget(target: Target | null): ProjectedDecisionConstrain
   const constraints: ProjectedDecisionConstraint[] = [
     {
       id: "player",
-      label: target.player === "self" ? "Your cards" : "Opponent cards",
+      label:
+        target.player === "self"
+          ? "Your cards"
+          : target.player === "opponent"
+            ? "Opponent cards"
+            : "Both players' cards",
       operator: "eq",
       value: target.player,
     },
@@ -428,11 +434,24 @@ function constraintsForTarget(target: Target | null): ProjectedDecisionConstrain
 
 function targetFromPrompt(prompt: PromptState): Target | null {
   const context = prompt.resolutionContext;
-  if (context?.intent !== "effectTargetSelection") {
+  if (context?.intent === "effectPlaySelection") {
+    return {
+      player: context.action.source.player,
+      zones: Array.isArray(context.action.source.zone)
+        ? context.action.source.zone
+        : [context.action.source.zone],
+      count: context.action.count,
+      filters: context.action.filters,
+    };
+  }
+  if (
+    context?.intent !== "effectTargetSelection" &&
+    context?.intent !== "effectRedistributeDonTarget"
+  ) {
     return null;
   }
   const action = context.action as Action;
-  return "target" in action ? action.target : null;
+  return "target" in action ? (action.target ?? null) : null;
 }
 
 function decisionKindForPrompt(prompt: PromptState): ProjectedDecisionKind {
@@ -445,6 +464,8 @@ function decisionKindForPrompt(prompt: PromptState): ProjectedDecisionKind {
       return "selectTargets";
     case "selectCards":
       return "selectCards";
+    case "orderCards":
+      return "orderItems";
     case "confirm":
       return "confirm";
     case "costPayment":
@@ -458,6 +479,7 @@ function entityKindsForChoice(choiceKind: ChoiceKind | null): ProjectedEntityKin
   switch (choiceKind) {
     case "selectTargets":
     case "selectCards":
+    case "orderCards":
     case "costPayment":
       return ["card"];
     case "confirm":
@@ -494,6 +516,7 @@ function stepForPrompt(state: MatchState, prompt: PromptState): ProjectedDecisio
       entityKinds: entityKindsForChoice(prompt.choiceKind),
       min: prompt.minSelections,
       max: prompt.maxSelections,
+      ordered: prompt.context.ordered === true,
       candidates,
       constraints: constraintsForTarget(target),
       selected: [],
@@ -519,6 +542,17 @@ function stepForPrompt(state: MatchState, prompt: PromptState): ProjectedDecisio
         preferredPresentation: prompt.choiceKind === "selectTargets" ? "board" : "modal",
         emptyMessage: "No legal selections are available.",
       },
+    };
+  }
+
+  if (prompt.choiceKind === "orderCards") {
+    return {
+      id: `${prompt.id}:orderCards`,
+      kind: "orderItems",
+      label: prompt.details || prompt.label,
+      candidates,
+      min: prompt.minSelections,
+      max: prompt.maxSelections,
     };
   }
 
@@ -764,5 +798,7 @@ export function cardZoneSummary(state: MatchState, seat: MatchSeat, zone: CardZo
       return player.stageArea ? [player.stageArea] : [];
     case "leader":
       return [player.leaderInstanceId];
+    case "resolution":
+      return [];
   }
 }

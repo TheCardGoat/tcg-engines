@@ -59,4 +59,19 @@ export const ingeniousDeviceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dispositivo ingenioso",
+    text: [
+      {
+        title: "PAQUETE SORPRESA",
+        description:
+          "{E}, 2 {I}, desterrar este objeto: roba una carta, luego elige y descarta una carta.",
+      },
+      {
+        title: "EL TIEMPO SE CORTA",
+        description:
+          "Durante tu turno, cuando este objeto sea desterrado, inflige 3 daños al personaje o lugar elegido.",
+      },
+    ],
+  },
 };

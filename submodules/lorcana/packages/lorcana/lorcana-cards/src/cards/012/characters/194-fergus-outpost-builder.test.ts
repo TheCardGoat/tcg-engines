@@ -167,6 +167,38 @@ describe("Fergus - Outpost Builder", () => {
   });
 
   describe("HOLD FAST - While this character is at a location, whenever a location is challenged and banished, you may deal 4 damage to chosen character.", () => {
+    it("triggers when the location Fergus is at is challenged and banished", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+        {
+          play: [
+            cheapLocation,
+            {
+              card: fergusOutpostBuilder,
+              isDrying: false,
+              atLocation: cheapLocation,
+            },
+            target,
+          ],
+          deck: 1,
+        },
+        {
+          play: [{ card: attacker, isDrying: false }],
+          deck: 1,
+        },
+      );
+
+      expect(testEngine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerTwo().challenge(attacker, cheapLocation)).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerOne().getCardZone(cheapLocation)).toBe("discard");
+
+      expect(
+        testEngine.asPlayerOne().resolvePendingByCard(fergusOutpostBuilder, {
+          targets: [target],
+        }),
+      ).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerOne().getDamage(target)).toBe(4);
+    });
+
     it("triggers when an opponent's location is challenged and banished while Fergus is at a location", () => {
       const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
         {

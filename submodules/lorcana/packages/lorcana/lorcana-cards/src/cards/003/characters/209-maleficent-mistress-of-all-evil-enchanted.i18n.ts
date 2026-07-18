@@ -62,4 +62,19 @@ export const maleficentMistressOfAllEvilEnchantedI18n: Record<Languages, I18nPro
       },
     ],
   },
+  es: {
+    name: "Pernicioso",
+    version: "Señora de todo mal",
+    text: [
+      {
+        title: "CONOCIMIENTO OSCURO",
+        description: "Siempre que este personaje realice una misión, puedes robar una carta.",
+      },
+      {
+        title: "DIVINIDAD",
+        description:
+          "Durante tu turno, cada vez que robas una carta, puedes mover 1 contador de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

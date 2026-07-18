@@ -61,4 +61,19 @@ export const giantCobraGhostlySerpentI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cobra gigante",
+    version: "Serpiente fantasmal",
+    text: [
+      {
+        title: "Desaparecer",
+        description: "(Cuando un oponente elige este personaje para una acción, destierralo).",
+      },
+      {
+        title: "VENTAJA MISTERIOSA",
+        description:
+          "Cuando juegas con este personaje, puedes elegir y descartar una carta para ganar 2 conocimientos.",
+      },
+    ],
+  },
 };

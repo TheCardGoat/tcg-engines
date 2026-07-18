@@ -17,4 +17,8 @@ export const mickeyMouseInquisitiveExplorerI18n: Record<Languages, I18nPropertie
     name: "Topolino",
     version: "Esploratore Curioso",
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Explorador curioso",
+  },
 };

@@ -45,4 +45,15 @@ export const minnieMouseGhostHunterEpicI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Cazador de fantasmas",
+    text: [
+      {
+        title: "BUSCA LAS SOMBRAS",
+        description:
+          "Cuando juegas con este personaje, el personaje detective elegido obtiene Alerta este turno. (Pueden desafiar como si tuvieran Evasivo).",
+      },
+    ],
+  },
 };

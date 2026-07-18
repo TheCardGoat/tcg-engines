@@ -60,4 +60,18 @@ export const belleHiddenArcherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Beldad",
+    version: "Arquero escondido",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "FLECHAS ESPINADAS",
+        description:
+          "Siempre que se desafía a este personaje, el jugador del personaje desafiante descarta todas las cartas que tiene en la mano.",
+      },
+    ],
+  },
 };

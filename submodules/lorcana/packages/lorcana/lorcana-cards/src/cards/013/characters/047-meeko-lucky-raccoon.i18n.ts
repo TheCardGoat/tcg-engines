@@ -17,4 +17,8 @@ export const meekoLuckyRaccoonI18n: Record<Languages, I18nProperties> = {
     name: "Meeko",
     version: "Procione Fortunato",
   },
+  es: {
+    name: "Meeko",
+    version: "Mapache afortunado",
+  },
 };

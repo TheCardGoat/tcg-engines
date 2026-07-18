@@ -17,4 +17,8 @@ export const hadesMeticulousPlotterI18n: Record<Languages, I18nProperties> = {
     name: "Ade",
     version: "Pianificatore Meticoloso",
   },
+  es: {
+    name: "Infierno",
+    version: "Trazador meticuloso",
+  },
 };

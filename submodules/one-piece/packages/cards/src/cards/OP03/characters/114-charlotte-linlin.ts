@@ -40,7 +40,7 @@ export const op03CharlotteLinlin114: CharacterCard = {
     },
   ],
   effect:
-    "[On Play] If your Leader has the [Big Mom Pirates] type, add up to 1 card from the top of your deck to the top of your Life cards. Then, trash up to 1 card from the top of your opponent's Life cards.",
+    "[On Play] If your Leader has the {Big Mom Pirates} type, add up to 1 card from the top of your deck to the top of your Life cards. Then, trash up to 1 card from the top of your opponent's Life cards.",
   effects: {
     effects: [
       {
@@ -49,6 +49,7 @@ export const op03CharlotteLinlin114: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Big Mom Pirates",
+            match: "includes",
           },
         ],
         actions: [

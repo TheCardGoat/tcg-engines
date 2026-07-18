@@ -37,6 +37,10 @@ export const op14eb04HitokiriKamazo035: CharacterCard = {
             condition: "turn",
             value: "your",
           },
+          {
+            condition: "leaderTrait",
+            trait: "Kid Pirates",
+          },
         ],
         actions: [
           {

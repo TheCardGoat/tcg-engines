@@ -40,4 +40,13 @@ export const lanternI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Linterna",
+    text: [
+      {
+        title: "LUCES DE CUMPLEAÑOS",
+        description: "{E}: pagas 1 {I} menos por el siguiente personaje que juegues en este turno.",
+      },
+    ],
+  },
 };

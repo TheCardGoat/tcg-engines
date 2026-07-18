@@ -45,7 +45,20 @@ export const op08JewelryBonney105: CharacterCard = {
   effects: {
     effects: [
       {
-        trigger: "trigger",
+        trigger: "whenLifeRemoved",
+        eventFilter: {
+          player: "opponent",
+        },
+        conditions: [
+          {
+            condition: "donAttached",
+            amount: 1,
+          },
+          {
+            condition: "turn",
+            value: "your",
+          },
+        ],
         actions: [
           {
             action: "draw",
@@ -58,21 +71,16 @@ export const op08JewelryBonney105: CharacterCard = {
             amount: 1,
           },
         ],
+        oncePerTurn: true,
       },
-    ],
-    permanentEffects: [
       {
-        conditions: [
-          {
-            condition: "donAttached",
-            amount: 1,
-          },
-          {
-            condition: "turn",
-            value: "your",
-          },
-        ],
+        trigger: "trigger",
         actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 2,
+          },
           {
             action: "trashFromHand",
             player: "self",

@@ -45,4 +45,15 @@ export const hadesInfernalSchemerEnchantedI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Infierno",
+    version: "Conspirador infernal",
+    text: [
+      {
+        title: "ESTÁ AHÍ",
+        description:
+          "¿UNA DESVENTAJA DE ESTO? Cuando juegas con este personaje, puedes poner al personaje contrario elegido en el tintero de su jugador boca abajo.",
+      },
+    ],
+  },
 };

@@ -57,4 +57,18 @@ export const dumboTheFlyingElephantP3PromoI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Dumbo",
+    version: "El elefante volador",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "DÚO AÉREO",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

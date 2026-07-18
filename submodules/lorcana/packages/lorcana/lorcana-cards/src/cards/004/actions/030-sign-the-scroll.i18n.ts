@@ -17,4 +17,8 @@ export const signTheScrollI18n: Record<Languages, I18nProperties> = {
     name: "Firma Questa Pergamena",
     text: "Ogni avversario può scegliere e scartare una carta. Per ogni avversario che non lo fa, ottieni 2 leggenda.",
   },
+  es: {
+    name: "Firma el pergamino",
+    text: "Cada oponente puede elegir y descartar una carta. Por cada oponente que no lo haga, ganas 2 conocimientos.",
+  },
 };

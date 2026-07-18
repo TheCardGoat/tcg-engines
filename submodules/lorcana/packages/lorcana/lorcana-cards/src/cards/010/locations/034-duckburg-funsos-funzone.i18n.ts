@@ -45,4 +45,15 @@ export const duckburgFunsosFunzoneI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Patoburg",
+    version: "Zona de diversión de Funso",
+    text: [
+      {
+        title: "Donde está la diversión en la zona",
+        description:
+          "Cada vez que un personaje realiza una misión mientras estás aquí, pagas 2 {I} menos por el siguiente personaje que juegues en este turno.",
+      },
+    ],
+  },
 };

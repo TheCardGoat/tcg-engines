@@ -17,4 +17,8 @@ export const getToSafetyI18n: Record<Languages, I18nProperties> = {
     name: "Mettiti in Salvo!",
     text: "Gioca un luogo con costo 3 o inferiore dai tuoi scarti gratis. Poi, se hai in gioco un luogo chiamato La Valle Addormentata, pesca una carta.",
   },
+  es: {
+    name: "¡Ponte a salvo!",
+    text: "Juega gratis en una ubicación con un coste de 3 o menos de tu descarte. Luego, si tienes una ubicación llamada Sleepy Hollow en juego, roba una carta.",
+  },
 };

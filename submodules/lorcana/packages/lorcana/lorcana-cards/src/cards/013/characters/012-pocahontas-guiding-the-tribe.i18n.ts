@@ -43,4 +43,15 @@ export const pocahontasGuidingTheTribeI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Pocahontas",
+    version: "Guiando a la tribu",
+    text: [
+      {
+        title: "Mantente cerca",
+        description:
+          "Cuando juegas con este personaje, puedes jugar con un personaje con costo 1 de forma gratuita.",
+      },
+    ],
+  },
 };

@@ -4,6 +4,7 @@
 builder = "DOCKERFILE"
 dockerfilePath = "submodules/lorcana/packages/lorcana/lorcana-simulator/Dockerfile"
 watchPatterns = [
+  "railway-deploy-trigger.txt",
   "submodules/lorcana/packages/lorcana/lorcana-simulator/**",
   "package.json",
   "pnpm-lock.yaml",

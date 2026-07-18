@@ -17,4 +17,8 @@ export const robinHoodDesertWandererI18n: Record<Languages, I18nProperties> = {
     name: "Robin Hood",
     version: "Vagabondo del Deserto",
   },
+  es: {
+    name: "Robin Hood",
+    version: "Vagabundo del desierto",
+  },
 };

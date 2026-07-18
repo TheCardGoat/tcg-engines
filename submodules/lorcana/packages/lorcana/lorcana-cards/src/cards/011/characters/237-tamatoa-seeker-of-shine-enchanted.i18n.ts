@@ -57,4 +57,21 @@ export const tamatoaSeekerOfShineEnchantedI18n: Record<Languages, I18nProperties
     version: "Cercatore di Splendore",
     text: "<Potenziamento> 2 {I}, <Protetto> Dietro un Luccichio Ogni volta che metti una carta sotto a uno dei tuoi personaggi o luoghi, questo personaggio riceve +1 {L} per questo turno.",
   },
+  es: {
+    name: "Tamatoa",
+    version: "Buscador de brillo",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "TODO LO QUE BRILLA",
+        description:
+          "Siempre que coloques una carta debajo de uno de tus personajes o ubicaciones, este personaje obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

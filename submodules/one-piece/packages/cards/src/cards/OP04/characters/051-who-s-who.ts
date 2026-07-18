@@ -66,6 +66,7 @@ export const op04WhoSWho051: CharacterCard = {
               {
                 filter: "trait",
                 value: "Animal Kingdom Pirates",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

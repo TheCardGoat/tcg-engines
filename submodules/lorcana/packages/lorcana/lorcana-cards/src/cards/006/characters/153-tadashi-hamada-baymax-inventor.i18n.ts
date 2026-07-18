@@ -42,4 +42,14 @@ export const tadashiHamadaBaymaxInventorI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Tadashi Hamada",
+    version: "Inventor Baymax",
+    text: [
+      {
+        title: "VOLVEMOS AL TRABAJO",
+        description: "Este personaje obtiene +1 {S} y +1 {W} por cada objeto que tengas en juego.",
+      },
+    ],
+  },
 };

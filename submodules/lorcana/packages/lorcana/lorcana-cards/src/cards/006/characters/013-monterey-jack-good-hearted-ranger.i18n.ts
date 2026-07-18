@@ -17,4 +17,8 @@ export const montereyJackGoodheartedRangerI18n: Record<Languages, I18nProperties
     name: "Monterey Jack",
     version: "Agente Speciale di Buon Cuore",
   },
+  es: {
+    name: "Jack monterrey",
+    version: "Guardabosques de buen corazón",
+  },
 };

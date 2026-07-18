@@ -61,4 +61,19 @@ export const shepherdsJournalI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Diario del pastor",
+    text: [
+      {
+        title: "NOTAS DE MARGEN",
+        description:
+          "Cuando juegas este objeto, puedes mirar la carta superior de tu mazo. Colócalo en la parte superior de tu mazo o en tu descarte.",
+      },
+      {
+        title: "CLAVE DEL ROMPECABEZAS 1",
+        description:
+          "{I}, destierra este objeto: devuelve a tu mano otra carta de objeto de tu descarte.",
+      },
+    ],
+  },
 };

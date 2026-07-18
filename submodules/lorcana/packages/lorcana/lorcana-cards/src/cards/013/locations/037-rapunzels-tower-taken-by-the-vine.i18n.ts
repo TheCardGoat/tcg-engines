@@ -41,4 +41,14 @@ export const rapunzelsTowerTakenByTheVineI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Torre de Rapunzel",
+    version: "Tomado por la vid",
+    text: [
+      {
+        title: "Abrazando el cambio",
+        description: "Tus personajes Floodborn obtienen +2 {W}.",
+      },
+    ],
+  },
 };

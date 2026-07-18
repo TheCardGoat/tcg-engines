@@ -45,11 +45,16 @@ export const op04Sugar024: CharacterCard = {
   effects: {
     effects: [
       {
-        trigger: "onPlay",
+        trigger: "whenOpponentPlaysCharacter",
         conditions: [
           {
             condition: "turn",
             value: "opponent",
+          },
+          {
+            condition: "leaderTrait",
+            trait: "Donquixote Pirates",
+            match: "includes",
           },
         ],
         actions: [

@@ -72,4 +72,21 @@ export const mulanImperialGeneralI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mulán",
+    version: "General imperial",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "LÍDER EXCEPCIONAL",
+        description:
+          'Siempre que este personaje desafíe a otro personaje, tus otros personajes obtienen "Este personaje puede desafiar a personajes listos" este turno.',
+      },
+    ],
+  },
 };

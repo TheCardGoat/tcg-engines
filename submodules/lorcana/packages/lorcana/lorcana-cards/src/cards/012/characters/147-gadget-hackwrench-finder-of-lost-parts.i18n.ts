@@ -45,4 +45,15 @@ export const gadgetHackwrenchFinderOfLostPartsI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Llave para hackear gadgets",
+    version: "Buscador de piezas perdidas",
+    text: [
+      {
+        title: "PUNTOS ÚTILES",
+        description:
+          "Cuando este personaje deja el juego, puedes devolver una carta de objeto de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

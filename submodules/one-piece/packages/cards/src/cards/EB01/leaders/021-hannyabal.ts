@@ -45,6 +45,16 @@ export const eb01Hannyabal021: LeaderCard = {
     effects: [
       {
         trigger: "endOfYourTurn",
+        costs: [
+          {
+            cost: "returnCharacter",
+            amount: 1,
+            filters: [
+              { filter: "trait", value: "Impel Down", match: "includes" },
+              { filter: "cost", comparison: "gte", value: 2 },
+            ],
+          },
+        ],
         actions: [
           {
             action: "addDon",

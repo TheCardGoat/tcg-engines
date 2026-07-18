@@ -35,4 +35,8 @@ export const hesATrampI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El es un vagabundo",
+    text: "El personaje elegido obtiene +1 {S} este turno por cada personaje que tengas en juego.",
+  },
 };

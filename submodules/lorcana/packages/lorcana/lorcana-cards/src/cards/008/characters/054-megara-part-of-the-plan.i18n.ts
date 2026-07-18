@@ -45,4 +45,15 @@ export const megaraPartOfThePlanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mégara",
+    version: "Parte del Plan",
+    text: [
+      {
+        title: "ALIANZA CONTENCIOSA",
+        description:
+          "Mientras tengas un personaje llamado Hades en juego, este personaje obtiene Challenger +2. (Obtienen +2 {S} mientras desafían).",
+      },
+    ],
+  },
 };

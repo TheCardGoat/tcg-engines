@@ -37,4 +37,13 @@ export const wildcatsWrenchI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Llave del gato montés",
+    text: [
+      {
+        title: "RECONSTRUIR",
+        description: "{E}: elimina hasta 2 daños de la ubicación elegida.",
+      },
+    ],
+  },
 };

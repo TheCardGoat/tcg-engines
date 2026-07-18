@@ -48,8 +48,21 @@ export const op14eb04IHeardTheSoundOfALadySTeardropsFalling029: EventCard = {
             },
             revealFilters: [
               {
-                filter: "name",
-                value: "Sanji",
+                filter: "anyOf",
+                groups: [
+                  [
+                    {
+                      filter: "name",
+                      value: "Sanji",
+                    },
+                  ],
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "event",
+                    },
+                  ],
+                ],
               },
             ],
             revealDestination: "hand",
@@ -70,7 +83,7 @@ export const op14eb04IHeardTheSoundOfALadySTeardropsFalling029: EventCard = {
             action: "modifyPower",
             target: {
               player: "self",
-              zones: ["leader", "character", "stage", "costArea"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
                 upTo: true,

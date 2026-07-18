@@ -42,6 +42,30 @@ export const op05TwoHundredMillionVoltsAmaru115: EventCard = {
             value: 3000,
             duration: "thisTurn",
           },
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+              ],
+            },
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 1,
+            },
+          },
         ],
       },
       {

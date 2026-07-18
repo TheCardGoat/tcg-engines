@@ -48,7 +48,9 @@ interface BaseCardProperties extends BaseCardDefinition {
   setId: string;
   /** Traits/subtypes — language-agnostic identifiers, translations handled separately */
   traits?: string[];
-  attribute?: OPAttribute;
+  /** Additional names this card has for rules-facing name checks. */
+  alternateNames?: string[];
+  attribute?: OPAttribute | OPAttribute[];
   /**
    * DERIVED view computed from `printings[]` (RFC §10 One Piece step 3). Retained
    * for back-compat read paths; `printings[]` is the source of truth for variant

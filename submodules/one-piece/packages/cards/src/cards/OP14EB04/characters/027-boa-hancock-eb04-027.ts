@@ -43,6 +43,37 @@ export const op14eb04BoaHancockEb04027027: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "hasTrigger",
+                value: true,
+              },
+              {
+                filter: "power",
+                comparison: "lte",
+                value: 5000,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
   i18n: op14eb04BoaHancockEb04027027I18n,

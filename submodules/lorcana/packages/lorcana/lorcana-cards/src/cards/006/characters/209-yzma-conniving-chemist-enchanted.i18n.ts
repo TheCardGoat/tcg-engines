@@ -44,4 +44,15 @@ export const yzmaConnivingChemistEnchantedI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Yzma",
+    version: "Químico intrigante",
+    text: [
+      {
+        title: "SIENTE EL PODER",
+        description:
+          "{E}: si tienes menos de 3 cartas en tu mano, roba hasta tener 3 cartas en tu mano.",
+      },
+    ],
+  },
 };

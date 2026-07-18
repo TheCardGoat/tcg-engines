@@ -39,19 +39,13 @@ export const op08Roddy033: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Minks",
+                match: "includes",
               },
               {
-                condition: "zoneCount",
+                condition: "restedCardCount",
                 player: "opponent",
-                zone: "field",
                 comparison: "gte",
                 value: 7,
-                filters: [
-                  {
-                    filter: "state",
-                    value: "rested",
-                  },
-                ],
               },
             ],
           },

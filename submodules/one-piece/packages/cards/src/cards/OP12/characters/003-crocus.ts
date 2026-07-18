@@ -31,6 +31,18 @@ export const op12Crocus003: CharacterCard = {
     effects: [
       {
         trigger: "onKo",
+        costs: [
+          {
+            cost: "revealFromHand",
+            amount: 2,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "event",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "play",

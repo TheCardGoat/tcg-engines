@@ -45,4 +45,15 @@ export const helgaSinclairVengefulPartnerI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Helga Sinclair",
+    version: "Socio vengativo",
+    text: [
+      {
+        title: "NADA PERSONAL",
+        description:
+          "Cuando este personaje sea desafiado y desterrado, destierra al personaje desafiante.",
+      },
+    ],
+  },
 };

@@ -21,4 +21,9 @@ export const thePrinceVigilantSuitorI18n: Record<Languages, I18nProperties> = {
     version: "Pretendente all'Erta",
     text: "<Guardiano>",
   },
+  es: {
+    name: "El principe",
+    version: "Pretendiente vigilante",
+    text: "Guardaespaldas",
+  },
 };

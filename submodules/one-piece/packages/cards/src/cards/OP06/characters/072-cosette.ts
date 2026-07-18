@@ -27,5 +27,29 @@ export const op06Cosette072: CharacterCard = {
   attribute: "wisdom",
   effect:
     "If your Leader has the [GERMA 66] type and the number of DON!! cards on your field is at least 2 less than the number on your opponent's field, this Character gains [Blocker]. (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "compound",
+            operator: "and",
+            conditions: [
+              { condition: "leaderTrait", trait: "GERMA 66", match: "includes" },
+              { condition: "donFieldComparison", selfComparison: "lte", difference: 2 },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op06Cosette072I18n,
 };

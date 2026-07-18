@@ -17,4 +17,8 @@ export const taffytaMuttonfudgeRuthlessRivalI18n: Record<Languages, I18nProperti
     name: "Taffyta Muttonfudge",
     version: "Rivale Senza Scrupoli",
   },
+  es: {
+    name: "Dulce de cordero Taffyta",
+    version: "Rival despiadado",
+  },
 };

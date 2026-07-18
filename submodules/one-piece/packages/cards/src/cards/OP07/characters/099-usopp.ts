@@ -29,5 +29,34 @@ export const op07Usopp099: CharacterCard = {
   attribute: "ranged",
   effect:
     "[Trigger] Up to 1 of your {Egghead} type Leader or Character cards gains +2000 power until the end of your next turn.",
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Egghead",
+                  match: "includes",
+                },
+              ],
+            },
+            value: 2000,
+            duration: "untilEndOfYourNextTurn",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op07Usopp099I18n,
 };

@@ -27,5 +27,48 @@ export const op11CharlotteAnana065: CharacterCard = {
   attribute: "wisdom",
   effect:
     'If you have a purple "Big Mom Pirates" type Character other than [Charlotte Anana], this Character gains [Blocker].\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)',
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "hasCard",
+            player: "self",
+            zone: "character",
+            filters: [
+              {
+                filter: "color",
+                value: "purple",
+              },
+              {
+                filter: "trait",
+                value: "Big Mom Pirates",
+                match: "includes",
+              },
+              {
+                filter: "excludeName",
+                value: "Charlotte Anana",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op11CharlotteAnana065I18n,
 };

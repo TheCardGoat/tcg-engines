@@ -51,7 +51,22 @@ export const op06GeckoMoria080: LeaderCard = {
             amount: 1,
           },
         ],
+        costs: [
+          {
+            cost: "restDon",
+            amount: 2,
+          },
+          {
+            cost: "trashFromHand",
+            amount: 1,
+          },
+        ],
         actions: [
+          {
+            action: "trashFromDeck",
+            player: "self",
+            amount: 2,
+          },
           {
             action: "play",
             source: {
@@ -71,6 +86,7 @@ export const op06GeckoMoria080: LeaderCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -79,6 +95,7 @@ export const op06GeckoMoria080: LeaderCard = {
             ],
           },
         ],
+        optional: true,
       },
     ],
   },

@@ -45,4 +45,15 @@ export const mulanResourcefulRecruitEnchantedI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Mulán",
+    version: "Recluta ingenioso",
+    text: [
+      {
+        title: "ENTRENAMIENTO RIGOROSO",
+        description:
+          "Siempre que este personaje realice una misión, obtiene un conocimiento igual a su {S}, hasta un máximo de 6 conocimientos.",
+      },
+    ],
+  },
 };

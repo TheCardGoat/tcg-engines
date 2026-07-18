@@ -59,6 +59,7 @@ export const eb03Yamato057: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
+                  match: "includes",
                 },
               ],
             },

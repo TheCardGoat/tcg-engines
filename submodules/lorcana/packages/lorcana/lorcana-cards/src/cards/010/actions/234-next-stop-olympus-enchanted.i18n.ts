@@ -54,4 +54,18 @@ export const nextStopOlympusEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Próxima parada, el Olimpo",
+    text: [
+      {
+        title: "ACCIÓN",
+        description:
+          "Si tienes un personaje con 5 {S} o más en juego, pagas 2 {I} menos para realizar esta acción.",
+      },
+      {
+        title:
+          "Personaje elegido listo. No pueden realizar misiones durante el resto de este turno. La próxima vez que desafíen a otro personaje este turno, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

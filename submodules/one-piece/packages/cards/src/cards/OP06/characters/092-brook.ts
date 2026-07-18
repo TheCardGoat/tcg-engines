@@ -54,6 +54,21 @@ export const op06Brook092: CharacterCard = {
                   },
                 },
               ],
+              [
+                {
+                  action: "returnToDeck",
+                  target: {
+                    player: "opponent",
+                    zones: ["trash"],
+                    count: {
+                      amount: 3,
+                    },
+                    chosenBy: "opponent",
+                  },
+                  position: "bottom",
+                  order: "any",
+                },
+              ],
             ],
           },
         ],

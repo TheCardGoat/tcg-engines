@@ -32,6 +32,12 @@ export const op10Bellamy077: CharacterCard = {
     effects: [
       {
         trigger: "onBlock",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 2,
+          },
+        ],
         actions: [
           {
             action: "addDon",

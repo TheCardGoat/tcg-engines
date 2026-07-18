@@ -23,7 +23,7 @@ export const op01OfficerAgents087: EventCard = {
   cost: 2,
   traits: ["Baroque Works"],
   effect:
-    '[Counter] Play up to 1 "Baroque Works" type card with a cost of 3 or less from your hand.  This card has been officially errata\'d.',
+    "[Counter] Play up to 1 \"Baroque Works\" type Character card with a cost of 3 or less from your hand. [Trigger] Activate this card's [Counter] effect. This card has been officially errata'd.",
   effects: {
     effects: [
       {
@@ -48,8 +48,22 @@ export const op01OfficerAgents087: EventCard = {
               {
                 filter: "trait",
                 value: "Baroque Works",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
               },
             ],
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "counter",
           },
         ],
       },

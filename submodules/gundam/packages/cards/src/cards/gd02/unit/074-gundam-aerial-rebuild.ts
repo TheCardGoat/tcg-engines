@@ -4,6 +4,7 @@ export const gd02GundamAerialRebuild074: UnitCard = {
   cardNumber: "GD02-074",
   name: "Gundam Aerial Rebuild",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["academy"],
   id: "GD02-074",
@@ -41,6 +42,7 @@ export const gd02GundamAerialRebuild074: UnitCard = {
   cost: 5,
   ap: 5,
   hp: 5,
+  linkCondition: "[Suletta Mercury]",
   effect:
     "&lt;High-Maneuver&gt; (This Unit can't be blocked.)<br>【During Pair】While there are 4 or more Command cards in your trash, this Unit gains &lt;Blocker&gt;.<br>\n(Rest this Unit to change the attack target to it.)<br>",
   effects: [

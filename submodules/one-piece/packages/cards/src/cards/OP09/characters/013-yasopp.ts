@@ -26,7 +26,7 @@ export const op09Yasopp013: CharacterCard = {
   traits: ["Red-Haired Pirates"],
   attribute: "ranged",
   effect:
-    "[On Play] Up to 1 of your Leader gains +1000 power until the end of your opponent's next turn.\n[DON!! x1] [When Attacking] Give up to 1 of your opponent's Characters 1000 power during this turn.",
+    "[On Play] Up to 1 of your Leader gains +1000 power until the end of your opponent's next turn.\n[DON!! x1] [When Attacking] Give up to 1 of your opponent's Characters −1000 power during this turn.",
   effects: {
     effects: [
       {
@@ -66,7 +66,7 @@ export const op09Yasopp013: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 1000,
+            value: -1000,
             duration: "thisTurn",
           },
         ],

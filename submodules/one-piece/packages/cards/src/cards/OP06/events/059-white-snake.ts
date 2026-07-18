@@ -51,6 +51,17 @@ export const op06WhiteSnake059: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "rearrangeDeck",
+            player: "self",
+            count: 5,
+            position: "topOrBottom",
+          },
+        ],
+      },
     ],
   },
   i18n: op06WhiteSnake059I18n,

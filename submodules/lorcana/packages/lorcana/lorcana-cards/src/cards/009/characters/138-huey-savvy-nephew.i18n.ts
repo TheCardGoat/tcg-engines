@@ -60,4 +60,18 @@ export const hueySavvyNephewI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Huey",
+    version: "Sobrino inteligente",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "TRES SOBRINOS",
+        description:
+          "Siempre que este personaje realice una misión, si tienes personajes llamados Dewey y Louie en juego, puedes robar 3 cartas.",
+      },
+    ],
+  },
 };

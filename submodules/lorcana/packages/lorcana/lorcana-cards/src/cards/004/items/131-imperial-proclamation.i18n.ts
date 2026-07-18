@@ -41,4 +41,14 @@ export const imperialProclamationI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Proclamación Imperial",
+    text: [
+      {
+        title: "LLAMADO AL FRENTE",
+        description:
+          "Cada vez que uno de tus personajes desafía a otro personaje, pagas 1 {I} menos por el siguiente personaje que juegues en este turno.",
+      },
+    ],
+  },
 };

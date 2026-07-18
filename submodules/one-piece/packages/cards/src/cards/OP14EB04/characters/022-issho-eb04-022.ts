@@ -45,14 +45,6 @@ export const op14eb04IsshoEb04022022: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "handCount",
-            player: "opponent",
-            comparison: "gte",
-            value: 6,
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -68,8 +60,15 @@ export const op14eb04IsshoEb04022022: CharacterCard = {
               count: {
                 amount: 2,
               },
+              chosenBy: "opponent",
             },
             position: "bottom",
+            condition: {
+              condition: "handCount",
+              player: "opponent",
+              comparison: "gte",
+              value: 6,
+            },
           },
         ],
         optional: true,

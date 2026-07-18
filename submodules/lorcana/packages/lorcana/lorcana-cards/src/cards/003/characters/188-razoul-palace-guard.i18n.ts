@@ -41,4 +41,14 @@ export const razoulPalaceGuardI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Razoul",
+    version: "Guardia de Palacio",
+    text: [
+      {
+        title: "MIRA AQUI",
+        description: "Si bien este personaje no tiene daño, obtiene +2 {S}.",
+      },
+    ],
+  },
 };

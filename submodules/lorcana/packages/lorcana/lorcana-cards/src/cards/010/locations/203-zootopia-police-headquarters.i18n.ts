@@ -45,4 +45,15 @@ export const zootopiaPoliceHeadquartersI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Zootopía",
+    version: "Jefatura de policía",
+    text: [
+      {
+        title: "NUEVA INFORMACIÓN",
+        description:
+          "Una vez durante tu turno, cada vez que muevas un personaje aquí, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

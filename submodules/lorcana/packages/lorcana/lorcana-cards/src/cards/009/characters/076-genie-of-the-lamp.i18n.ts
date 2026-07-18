@@ -55,4 +55,17 @@ export const genieOfTheLampI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Genio",
+    version: "De la lámpara",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "HAGAMOS UN POCO DE MAGIA",
+        description: "Mientras este personaje se ejercita, tus otros personajes obtienen +2 {S}.",
+      },
+    ],
+  },
 };

@@ -47,8 +47,29 @@ export const eb03WillYouBeMyServant060: EventCard = {
               amount: 1,
               upTo: true,
             },
+            revealFilters: [
+              {
+                filter: "cost",
+                comparison: "gte",
+                value: 2,
+              },
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 8,
+              },
+            ],
             revealDestination: "hand",
             remainderPosition: "bottom",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
           },
         ],
       },

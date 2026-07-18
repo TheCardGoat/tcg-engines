@@ -33,7 +33,7 @@ export const op06GravityBladeRagingTiger058: EventCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 2,
@@ -44,6 +44,30 @@ export const op06GravityBladeRagingTiger058: EventCard = {
                   filter: "cost",
                   comparison: "lte",
                   value: 6,
+                },
+              ],
+            },
+            position: "bottom",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "returnToDeck",
+            target: {
+              player: "any",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 5,
                 },
               ],
             },

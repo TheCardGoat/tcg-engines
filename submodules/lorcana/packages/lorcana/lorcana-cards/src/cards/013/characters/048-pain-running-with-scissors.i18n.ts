@@ -45,4 +45,15 @@ export const painRunningWithScissorsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dolor",
+    version: "Corriendo con tijeras",
+    text: [
+      {
+        title: "HERRAMIENTA MULTIUSOS",
+        description:
+          "Cuando juegas con este personaje, si tienes una carta de personaje llamada Panic en tu descarte, ganas 2 conocimientos.",
+      },
+    ],
+  },
 };

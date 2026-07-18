@@ -72,6 +72,20 @@ export const op10RadioKnife041: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 4 }],
+            },
+          },
+        ],
+      },
     ],
   },
   i18n: op10RadioKnife041I18n,

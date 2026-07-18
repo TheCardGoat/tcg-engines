@@ -72,4 +72,21 @@ export const aladdinBarrelingThroughI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Aladino",
+    version: "A toda velocidad",
+    text: [
+      {
+        title: "Impulsar 1 {I}",
+      },
+      {
+        title: "Imprudente",
+      },
+      {
+        title: "SOLO LOS ATREVIDOS",
+        description:
+          'Mientras haya una carta debajo de este personaje, tus personajes con Reckless obtienen "{E} — Gana 1 conocimiento".',
+      },
+    ],
+  },
 };

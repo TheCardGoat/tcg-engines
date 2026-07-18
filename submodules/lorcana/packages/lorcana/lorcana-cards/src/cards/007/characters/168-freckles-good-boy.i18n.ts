@@ -45,4 +45,15 @@ export const frecklesGoodBoyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pecas",
+    version: "Buen chico",
+    text: [
+      {
+        title: "¡TAN LINDO!",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido obtiene -1 {S} este turno.",
+      },
+    ],
+  },
 };

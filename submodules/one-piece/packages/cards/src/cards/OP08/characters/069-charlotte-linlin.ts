@@ -85,7 +85,7 @@ export const op08CharlotteLinlin069: CharacterCard = {
                 },
               ],
             },
-            position: "top",
+            position: "choice",
             faceUp: true,
           },
         ],

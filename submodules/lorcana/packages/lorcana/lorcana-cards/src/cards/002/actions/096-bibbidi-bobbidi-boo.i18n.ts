@@ -26,4 +26,8 @@ export const bibbidiBobbidiBooI18n: Record<Languages, I18nProperties> = {
     name: "Bibbidi Bobbidi Boo",
     text: "Return chosen character of yours to your hand to play a character with the same cost or less for free.",
   },
+  es: {
+    name: "Bibbidi Bobbidi Boo",
+    text: "Devuelve tu personaje elegido a tu mano para jugar con otro personaje con el mismo costo o menos de forma gratuita.",
+  },
 };

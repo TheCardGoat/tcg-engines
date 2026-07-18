@@ -45,4 +45,15 @@ export const gosalynMallardTheQuiverwingQuackI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Gosalyn Mallard",
+    version: "El curandero de alas temblorosas",
+    text: [
+      {
+        title: "INTERVENCIÓN HEROICA",
+        description:
+          "Cuando juegas con este personaje, puedes preparar el personaje elegido con un coste de 2 o menos. Si lo haces, no podrán realizar misiones ni desafíos durante el resto de este turno.",
+      },
+    ],
+  },
 };

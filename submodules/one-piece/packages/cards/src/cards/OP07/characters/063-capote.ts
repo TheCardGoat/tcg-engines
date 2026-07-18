@@ -31,12 +31,6 @@ export const op07Capote063: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Foxy Pirates",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -62,8 +56,14 @@ export const op07Capote063: CharacterCard = {
               ],
             },
             duration: "untilEndOfOpponentNextTurn",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Foxy Pirates",
+              match: "includes",
+            },
           },
         ],
+        optional: true,
       },
     ],
   },

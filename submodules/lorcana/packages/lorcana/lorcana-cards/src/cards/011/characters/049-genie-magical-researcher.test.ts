@@ -13,6 +13,34 @@ const underCard = createMockCharacter({
 });
 
 describe("Genie - Magical Researcher", () => {
+  it("can activate Boost 1 and put the top card of the deck under him", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      play: [genieMagicalResearcher],
+      deck: [underCard],
+      inkwell: 1,
+    });
+    const player = testEngine.asPlayerOne();
+    const genieId = testEngine.findCardInstanceId(genieMagicalResearcher, "play", PLAYER_ONE);
+
+    expect(
+      player.getAvailableMoves().find((move) => move.moveId === "activateAbility")
+        ?.selectableCardIds,
+    ).toContain(genieId);
+    expect(player.getMoveOptions("activateAbility", genieId)).toContainEqual({
+      kind: "ability",
+      abilityIndex: 0,
+      abilityLabel: "Boost 1",
+    });
+
+    expect(
+      player.activateAbility(genieMagicalResearcher, { ability: "Boost" }),
+    ).toBeSuccessfulCommand();
+    expect(testEngine.getCardsUnder(genieMagicalResearcher)).toHaveLength(1);
+    expect(testEngine.asPlayerOne().getCardLore(genieMagicalResearcher)).toBe(
+      genieMagicalResearcher.lore + 1,
+    );
+  });
+
   it("quests for base lore when there are no cards under him", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
       play: [{ card: genieMagicalResearcher, isDrying: false }],

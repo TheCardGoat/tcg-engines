@@ -65,4 +65,20 @@ export const buzzLightyearOnTheWayI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Buzz Lightyear",
+    version: "En camino",
+    text: [
+      {
+        title: "MISIÓN SECRETA",
+        description:
+          "Siempre que pagues 2 {I} o menos para jugar con alguien que no sea un personaje, roba una carta, luego elige y descarta una carta.",
+      },
+      {
+        title: "EL JUGUETE MÁS GRANDE DEL MUNDO",
+        description:
+          "Siempre que pagues 2 {I} o menos para interpretar a un personaje, inflige 1 daño al personaje dañado del oponente elegido.",
+      },
+    ],
+  },
 };

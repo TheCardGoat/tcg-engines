@@ -56,4 +56,17 @@ export const kronkLaidBackP2ChallengeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kronk",
+    version: "Relajado",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "ME ENCANTA ESTO",
+        description: "Si un efecto te haría descartar una o más cartas, no descartas.",
+      },
+    ],
+  },
 };

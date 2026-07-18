@@ -4,6 +4,7 @@ export const gd02GundamKimaris070: UnitCard = {
   cardNumber: "GD02-070",
   name: "Gundam Kimaris",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["gjallarhorn", "gundam frame"],
   id: "GD02-070",

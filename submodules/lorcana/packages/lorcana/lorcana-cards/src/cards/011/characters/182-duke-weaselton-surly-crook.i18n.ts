@@ -45,4 +45,15 @@ export const dukeWeaseltonSurlyCrookI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Duque Weaselton",
+    version: "Ladrón hosco",
+    text: [
+      {
+        title: "APRETENIDO",
+        description:
+          "Cuando este personaje sea desterrado, podrás jugar con un personaje con coste 2 o menos de forma gratuita.",
+      },
+    ],
+  },
 };

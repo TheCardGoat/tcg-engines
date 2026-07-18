@@ -45,4 +45,15 @@ export const theHornedKingMercilessMasterI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "El rey cornudo",
+    version: "Maestro despiadado",
+    text: [
+      {
+        title: "El poder del caldero",
+        description:
+          "Mientras este personaje esté ejercido, puedes jugar personajes de tu descarte. Si lo hace, entran en juego ejercidos. (Usted paga todos los costos).",
+      },
+    ],
+  },
 };

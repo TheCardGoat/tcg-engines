@@ -53,4 +53,18 @@ export const stoppedChaosInItsTracksI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Detuvo el caos en seco",
+    text: [
+      {
+        title: "Cantar juntos 8",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 8 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title:
+          "Devuelve hasta 2 personajes elegidos con 3 {S} o menos cada uno a la mano de su jugador.",
+      },
+    ],
+  },
 };

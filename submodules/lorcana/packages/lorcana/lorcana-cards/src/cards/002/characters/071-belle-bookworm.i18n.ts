@@ -43,4 +43,15 @@ export const belleBookwormI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Beldad",
+    version: "Ratón de biblioteca",
+    text: [
+      {
+        title: "USA TU IMAGINACIÓN",
+        description:
+          "Mientras un oponente no tenga cartas en su mano, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

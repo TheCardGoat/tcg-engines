@@ -49,6 +49,10 @@ export const op01CaesarClown069: CharacterCard = {
               },
             ],
           },
+          {
+            action: "shuffleDeck",
+            player: "self",
+          },
         ],
       },
     ],

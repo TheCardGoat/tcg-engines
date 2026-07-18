@@ -44,4 +44,14 @@ export const mattiasArendelleGeneralI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Matías",
+    version: "General Arendelle",
+    text: [
+      {
+        title: "ORGULLOSO DE SERVIR",
+        description: "Tus personajes Reina ganan Protección.",
+      },
+    ],
+  },
 };

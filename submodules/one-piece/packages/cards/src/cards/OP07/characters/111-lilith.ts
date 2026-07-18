@@ -65,6 +65,7 @@ export const op07Lilith111: CharacterCard = {
               {
                 filter: "trait",
                 value: "Egghead",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
@@ -82,14 +83,7 @@ export const op07Lilith111: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
       },

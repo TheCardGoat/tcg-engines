@@ -66,6 +66,7 @@ export const prb02Nami012: CharacterCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
@@ -77,14 +78,7 @@ export const prb02Nami012: CharacterCard = {
         trigger: "trigger",
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
       },

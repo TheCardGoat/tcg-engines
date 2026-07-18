@@ -41,6 +41,7 @@ export const op01Monet082: CharacterCard = {
             count: {
               amount: 1,
             },
+            self: true,
           },
         ],
       },

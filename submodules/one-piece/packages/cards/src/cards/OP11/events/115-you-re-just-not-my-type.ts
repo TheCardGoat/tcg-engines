@@ -51,6 +51,29 @@ export const op11YouReJustNotMyType115: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 2,
+                },
+              ],
+            },
+          },
+        ],
+      },
     ],
   },
   i18n: op11YouReJustNotMyType115I18n,

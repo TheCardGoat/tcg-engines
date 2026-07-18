@@ -33,4 +33,8 @@ export const treasuresUntoldI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tesoros no contados",
+    text: "Devuelve a tu mano hasta 2 cartas de objetos de tu descarte.",
+  },
 };

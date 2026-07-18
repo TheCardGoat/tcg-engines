@@ -75,4 +75,23 @@ export const violetParrSuperResilientI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Violeta Parr",
+    version: "Súper resistente",
+    text: [
+      {
+        title: "Shift 3",
+        description:
+          "(Puedes pagar 3 tintas para jugar esto encima de uno de tus personajes llamado Violet Parr).",
+      },
+      {
+        title: "Resistir +1",
+      },
+      {
+        title: "SINERGIA HEROICA",
+        description:
+          "Siempre que juegues con este u otro personaje héroe, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const undermineI18n: Record<Languages, I18nProperties> = {
     name: "Sabotare",
     text: "Un avversario a tua scelta sceglie e scarta una carta. Un personaggio a tua scelta riceve +2 {S} per questo turno.",
   },
+  es: {
+    name: "Socavar",
+    text: "El oponente elegido elige y descarta una carta. El personaje elegido obtiene +2 {S} este turno.",
+  },
 };

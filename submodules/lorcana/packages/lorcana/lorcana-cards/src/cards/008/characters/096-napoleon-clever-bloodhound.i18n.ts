@@ -17,4 +17,8 @@ export const napoleonCleverBloodhoundI18n: Record<Languages, I18nProperties> = {
     name: "Napoleone",
     version: "Segugio Intelligente",
   },
+  es: {
+    name: "Napoleón",
+    version: "Sabueso inteligente",
+  },
 };

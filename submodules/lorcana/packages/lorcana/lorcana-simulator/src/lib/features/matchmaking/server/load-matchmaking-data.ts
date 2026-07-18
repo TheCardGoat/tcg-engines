@@ -14,6 +14,7 @@ export interface GatewayAuthData {
 }
 
 const LEADERBOARD_TYPES: LeaderboardType[] = ["mmr", "weekly", "win-streak", "sportsmanship"];
+const DEFAULT_COMPETITIVE_PARTITION = { formatId: "core-constructed", mode: "3" } as const;
 
 export async function loadMatchmakingData(request: Request) {
   const cookie = request.headers.get("cookie");
@@ -67,11 +68,18 @@ export async function loadMatchmakingData(request: Request) {
 async function fetchLeaderboardsOnServer(apiOrigin: string): Promise<LeaderboardResponse[]> {
   const results = await Promise.allSettled(
     LEADERBOARD_TYPES.map(async (type) => {
+      const params = new URLSearchParams({ limit: "10" });
+      if (type === "mmr") {
+        params.set("formatId", DEFAULT_COMPETITIVE_PARTITION.formatId);
+        params.set("mode", DEFAULT_COMPETITIVE_PARTITION.mode);
+      }
       const data = await serverJsonOrNull<LeaderboardResponse>(
-        `${apiOrigin}/v1/leaderboards/lorcana/${type}?limit=10`,
+        `${apiOrigin}/v1/leaderboards/lorcana/${type}?${params.toString()}`,
       );
       if (!data) return null;
-      return { ...data, type };
+      return type === "mmr"
+        ? { ...data, type, ...DEFAULT_COMPETITIVE_PARTITION }
+        : { ...data, type };
     }),
   );
 

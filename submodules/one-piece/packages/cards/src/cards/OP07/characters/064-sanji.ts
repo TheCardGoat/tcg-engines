@@ -44,6 +44,30 @@ export const op07Sanji064: CharacterCard = {
     "If the number of DON!! cards on your field is at least 2 less than the number on your opponent's field, give this card in your hand -3 cost. [Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
   effects: {
     keywords: ["blocker"],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "donFieldComparison",
+            selfComparison: "lte",
+            difference: 2,
+          },
+        ],
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["hand"],
+              count: { amount: 1 },
+              self: true,
+            },
+            value: -3,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
   },
   i18n: op07Sanji064I18n,
 };

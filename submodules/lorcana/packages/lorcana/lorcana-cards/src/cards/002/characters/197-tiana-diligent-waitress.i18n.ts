@@ -17,4 +17,8 @@ export const tianaDiligentWaitressI18n: Record<Languages, I18nProperties> = {
     name: "Tiana",
     version: "Diligent Waitress",
   },
+  es: {
+    name: "Tiana",
+    version: "Camarera diligente",
+  },
 };

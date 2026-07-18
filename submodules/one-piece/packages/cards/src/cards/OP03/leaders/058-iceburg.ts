@@ -42,6 +42,22 @@ export const op03Iceburg058: LeaderCard = {
   effect:
     "This Leader cannot attack. [Activate:Main] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.) You may rest this Leader: Play up to 1 [Galley-La Company] type Character card with a cost of 5 or less from your hand.",
   effects: {
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "cannotAttack",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: { amount: 1 },
+              self: true,
+            },
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
     effects: [
       {
         trigger: "activateMain",
@@ -74,6 +90,7 @@ export const op03Iceburg058: LeaderCard = {
               {
                 filter: "trait",
                 value: "Galley-La Company",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

@@ -45,4 +45,15 @@ export const coldstoneReincarnatedCyborgI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Piedra fría",
+    version: "Cyborg reencarnado",
+    text: [
+      {
+        title: "LOS CANTRIPS HAN SIDO HABLADOS",
+        description:
+          "Cuando juegas con este personaje, si tienes 2 o más cartas de personaje de Gárgola en tu descarte, ganas 2 conocimientos.",
+      },
+    ],
+  },
 };

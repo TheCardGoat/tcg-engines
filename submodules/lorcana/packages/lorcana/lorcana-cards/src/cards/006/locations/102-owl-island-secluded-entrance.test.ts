@@ -10,6 +10,7 @@ import { owlIslandSecludedEntrance } from "./102-owl-island-secluded-entrance";
 const firstActionI18n = {
   en: { name: "First Action" },
   de: { name: "First Action" },
+  es: { name: "First Action" },
   fr: { name: "First Action" },
   it: { name: "First Action" },
 };
@@ -17,6 +18,7 @@ const firstActionI18n = {
 const secondActionI18n = {
   en: { name: "Second Action" },
   de: { name: "Second Action" },
+  es: { name: "Second Action" },
   fr: { name: "Second Action" },
   it: { name: "Second Action" },
 };

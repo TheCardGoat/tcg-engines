@@ -45,4 +45,15 @@ export const aladdinCreatedByTheVineI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Aladino",
+    version: "Creado por la vid",
+    text: [
+      {
+        title: "La vid proporciona",
+        description:
+          "Siempre que uno de tus personajes Floodborn realice una misión, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

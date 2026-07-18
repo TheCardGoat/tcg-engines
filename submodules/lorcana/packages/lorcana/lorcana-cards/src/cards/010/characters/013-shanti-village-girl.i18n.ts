@@ -21,4 +21,9 @@ export const shantiVillageGirlI18n: Record<Languages, I18nProperties> = {
     version: "Ragazza del Villaggio",
     text: "<Melodioso> 5",
   },
+  es: {
+    name: "Shanty",
+    version: "Chica del pueblo",
+    text: "Cantante 5",
+  },
 };

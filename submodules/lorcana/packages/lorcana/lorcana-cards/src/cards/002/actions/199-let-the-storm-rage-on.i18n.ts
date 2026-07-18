@@ -40,4 +40,8 @@ export const letTheStormRageOnI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Deja que la tormenta siga rugiendo",
+    text: "Inflige 2 daños al personaje elegido. Saca una carta.",
+  },
 };

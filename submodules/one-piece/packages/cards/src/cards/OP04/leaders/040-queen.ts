@@ -51,29 +51,60 @@ export const op04Queen040: LeaderCard = {
             amount: 1,
           },
           {
-            condition: "compound",
-            operator: "and",
-            conditions: [
-              {
-                condition: "lifeCount",
-                player: "self",
-                comparison: "lte",
-                value: 4,
-              },
-              {
-                condition: "handCount",
-                player: "self",
-                comparison: "lte",
-                value: 4,
-              },
-            ],
+            condition: "combinedZoneCount",
+            player: "self",
+            zones: ["life", "hand"],
+            comparison: "lte",
+            value: 4,
           },
         ],
         actions: [
           {
-            action: "draw",
-            player: "self",
-            amount: 1,
+            action: "conditional",
+            predicate: {
+              condition: "existsOnField",
+              player: "self",
+              zone: "character",
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 8,
+                },
+              ],
+            },
+            whenTrue: [
+              {
+                action: "choice",
+                options: [
+                  [
+                    {
+                      action: "draw",
+                      player: "self",
+                      amount: 1,
+                    },
+                  ],
+                  [
+                    {
+                      action: "addToLife",
+                      target: {
+                        player: "self",
+                        zones: ["deck"],
+                        count: { amount: 1, upTo: true },
+                      },
+                      position: "top",
+                    },
+                  ],
+                ],
+              },
+            ],
+            whenFalse: [
+              {
+                action: "draw",
+                player: "self",
+                amount: 1,
+              },
+            ],
           },
         ],
       },

@@ -45,4 +45,15 @@ export const marshmallowPersistentGuardianI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Malvavisco",
+    version: "Guardián persistente",
+    text: [
+      {
+        title: "DURABLE",
+        description:
+          "Cuando este personaje es desterrado en un desafío, puedes devolver esta carta a tu mano.",
+      },
+    ],
+  },
 };

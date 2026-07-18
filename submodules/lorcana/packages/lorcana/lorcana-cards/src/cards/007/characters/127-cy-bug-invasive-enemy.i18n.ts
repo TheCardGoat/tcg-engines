@@ -43,4 +43,14 @@ export const cybugInvasiveEnemyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cy-bug",
+    version: "Enemigo invasor",
+    text: [
+      {
+        title: "MENTE COLMENA",
+        description: "Este personaje obtiene +1 {S} por cada otro personaje que tengas en juego.",
+      },
+    ],
+  },
 };

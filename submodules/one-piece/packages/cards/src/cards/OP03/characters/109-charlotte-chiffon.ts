@@ -30,6 +30,13 @@ export const op03CharlotteChiffon109: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashLife",
+            amount: 1,
+            position: "choice",
+          },
+        ],
         actions: [
           {
             action: "addToLife",

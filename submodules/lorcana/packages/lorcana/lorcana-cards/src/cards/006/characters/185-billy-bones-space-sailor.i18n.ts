@@ -44,4 +44,15 @@ export const billyBonesSpaceSailorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Huesos de billy",
+    version: "Marinero espacial",
+    text: [
+      {
+        title: "MANTÉNLO OCULTO",
+        description:
+          "Cuando este personaje es desterrado, puedes desterrar el elemento o ubicación elegidos.",
+      },
+    ],
+  },
 };

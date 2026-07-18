@@ -23,7 +23,7 @@ export const op12BrochetteBlow078: EventCard = {
   cost: 3,
   traits: ["Straw Hat Crew"],
   effect:
-    "[Main] If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, draw 1 card. Then, give up to 1 of your opponent's Characters 3000 power during this turn.",
+    "[Main] If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, draw 1 card. Then, give up to 1 of your opponent's Characters −3000 power during this turn.",
   effects: {
     effects: [
       {
@@ -50,7 +50,7 @@ export const op12BrochetteBlow078: EventCard = {
                 upTo: true,
               },
             },
-            value: 3000,
+            value: -3000,
             duration: "thisTurn",
           },
         ],

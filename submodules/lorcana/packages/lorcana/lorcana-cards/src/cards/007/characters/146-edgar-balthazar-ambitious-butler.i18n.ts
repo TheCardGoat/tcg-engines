@@ -17,4 +17,8 @@ export const edgarBalthazarAmbitiousButlerI18n: Record<Languages, I18nProperties
     name: "Edgar Balthazar",
     version: "Maggiordomo Ambizioso",
   },
+  es: {
+    name: "Edgar Baltasar",
+    version: "Mayordomo ambicioso",
+  },
 };

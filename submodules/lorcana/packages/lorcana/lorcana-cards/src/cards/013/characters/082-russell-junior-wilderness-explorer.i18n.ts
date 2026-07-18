@@ -45,4 +45,15 @@ export const russellJuniorWildernessExplorerI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Russell",
+    version: "Explorador junior de la naturaleza",
+    text: [
+      {
+        title: "INSIGNIA DE ASISTENCIA AL MAYOR",
+        description:
+          "Siempre que este personaje realice una misión, puedes moverlo a él y a uno de tus otros personajes al mismo lugar de forma gratuita.",
+      },
+    ],
+  },
 };

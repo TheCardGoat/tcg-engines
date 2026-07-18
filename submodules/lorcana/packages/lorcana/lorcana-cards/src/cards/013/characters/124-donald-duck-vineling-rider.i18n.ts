@@ -21,4 +21,9 @@ export const donaldDuckVinelingRiderI18n: Record<Languages, I18nProperties> = {
     version: "Cavalcavirgulti",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Pato donald",
+    version: "Jinete vinil",
+    text: "Correr",
+  },
 };

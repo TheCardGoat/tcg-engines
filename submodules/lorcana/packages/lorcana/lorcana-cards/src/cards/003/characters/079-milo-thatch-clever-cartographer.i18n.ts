@@ -17,4 +17,8 @@ export const miloThatchCleverCartographerI18n: Record<Languages, I18nProperties>
     name: "Milo Thatch",
     version: "Cartografo Brillante",
   },
+  es: {
+    name: "Milo Paja",
+    version: "Cartógrafo inteligente",
+  },
 };

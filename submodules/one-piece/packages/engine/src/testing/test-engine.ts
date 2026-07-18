@@ -8,10 +8,13 @@ import { applyCommand } from "../core.ts";
 import { projectStateForSeat } from "../projection.ts";
 import type {
   ApplyCommandResult,
+  CardZone,
   EngineCommand,
   MatchSeat,
   MatchState,
   PlayerView,
+  ProjectedDecision,
+  PromptResolutionContext,
   Viewer,
 } from "../types.ts";
 import {
@@ -96,17 +99,28 @@ export class OnePieceTestEngine {
     return result;
   }
 
-  findCardInZone(
-    seat: MatchSeat,
-    zone: "hand" | "life" | "trash" | "deck" | "character",
-    card: CardRef,
-  ): string {
+  findCardInZone(seat: MatchSeat, zone: CardZone, card: CardRef): string {
     const cardId = typeof card === "string" ? card : card.id;
     const player = this.state.players[seat];
-    const pool =
-      zone === "character"
-        ? player.characterArea.filter((entry): entry is string => Boolean(entry))
-        : player[zone];
+    const pool = (() => {
+      switch (zone) {
+        case "leader":
+          return [player.leaderInstanceId];
+        case "character":
+          return player.characterArea.filter((entry): entry is string => Boolean(entry));
+        case "stage":
+          return player.stageArea ? [player.stageArea] : [];
+        case "deck":
+        case "hand":
+        case "life":
+        case "trash":
+          return player[zone];
+        case "resolution":
+          return Object.values(this.state.cards)
+            .filter((instance) => instance.controller === seat && instance.zone === "resolution")
+            .map((instance) => instance.instanceId);
+      }
+    })();
     const instanceId = pool.find((candidate) => this.state.cards[candidate]?.cardId === cardId);
 
     if (!instanceId) {
@@ -114,6 +128,44 @@ export class OnePieceTestEngine {
     }
 
     return instanceId;
+  }
+
+  pendingDecision(
+    intent: PromptResolutionContext["intent"],
+    seat: MatchSeat = this.state.activeSeat,
+  ): ProjectedDecision {
+    const prompt = this.state.promptQueue.find(
+      (candidate) =>
+        candidate.kind === "choice" &&
+        candidate.status === "pending" &&
+        candidate.seat === seat &&
+        candidate.resolutionContext?.intent === intent,
+    );
+
+    if (!prompt) {
+      throw new Error(`Could not find a pending ${intent} prompt for ${seat}.`);
+    }
+
+    const decision = this.getView(seat).decisions.find((candidate) => candidate.id === prompt.id);
+    if (!decision) {
+      throw new Error(`Pending ${intent} prompt ${prompt.id} was not projected to ${seat}.`);
+    }
+
+    return decision;
+  }
+
+  resolveDecision(
+    intent: PromptResolutionContext["intent"],
+    resolution: { optionId?: string; selectedIds?: string[] },
+    seat: MatchSeat = this.state.activeSeat,
+  ) {
+    const decision = this.pendingDecision(intent, seat);
+    return this.exec({
+      type: "resolvePrompt",
+      seat,
+      promptId: decision.id,
+      ...resolution,
+    });
   }
 
   leader(seat: MatchSeat): string {

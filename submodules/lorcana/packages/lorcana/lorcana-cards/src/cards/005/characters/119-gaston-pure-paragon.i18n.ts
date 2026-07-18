@@ -56,4 +56,17 @@ export const gastonPureParagonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gastón",
+    version: "Modelo puro",
+    text: [
+      {
+        title:
+          "¡UN HOMBRE ENTRE HOMBRES! Por cada personaje dañado que tengas en juego, pagas 2 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "Correr",
+      },
+    ],
+  },
 };

@@ -49,10 +49,20 @@ export const op11IMGonnaBeANavyOfficer099: EventCard = {
               {
                 filter: "trait",
                 value: "Navy",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
             remainderPosition: "trash",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
           },
         ],
       },

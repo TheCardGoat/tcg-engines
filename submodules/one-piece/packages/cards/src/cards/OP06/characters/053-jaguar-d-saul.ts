@@ -23,7 +23,7 @@ export const op06JaguarDSaul053: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Giant Navy"],
+  traits: ["Giant", "Navy"],
   attribute: "strike",
   effect:
     "[On K.O.] Place up to 1 Character with a cost of 2 or less at the bottom of the owner's deck.",
@@ -35,7 +35,7 @@ export const op06JaguarDSaul053: CharacterCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

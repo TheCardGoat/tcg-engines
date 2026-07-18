@@ -57,4 +57,18 @@ export const rapunzelHighClimberEnchantedI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Rapunzel",
+    version: "Alto escalador",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "ARREBUJADO",
+        description:
+          "Siempre que este personaje realice una misión, el personaje contrario elegido no podrá realizar una misión durante su próximo turno.",
+      },
+    ],
+  },
 };

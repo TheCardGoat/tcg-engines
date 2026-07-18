@@ -1,19 +1,25 @@
 <script lang="ts">
-    import type {LorcanaPlayerSide, LorcanaTableSeat} from "@/features/simulator/model/contracts.js";
+  import XIcon from "@lucide/svelte/icons/x";
+  import type { LorcanaPlayerSide, LorcanaTableSeat } from "@/features/simulator/model/contracts.js";
   import { cn } from "$lib/utils.js";
-    import {DeckStack} from "@/design-system/simulator/cards/index.js";
+  import { DeckStack } from "@/design-system/simulator/cards/index.js";
   import LorcanaCard from "@/design-system/simulator/cards/LorcanaCard.svelte";
-    import {createZoneAnchorId} from "@/features/simulator/animations/board-move-animations.js";
-    import {useLorcanaBoardPresenter} from "@/features/simulator/context/game-context.svelte.js";
+  import { createZoneAnchorId } from "@/features/simulator/animations/board-move-animations.js";
+  import { useLorcanaBoardPresenter } from "@/features/simulator/context/game-context.svelte.js";
+  import {
+    dismissDeckReveal,
+    isDeckRevealDismissed,
+    type DeckRevealDismissals,
+  } from "@/features/simulator/board/deck-reveal-dismissal.js";
+  import { getDeckRevealPresentation } from "@/features/simulator/board/deck-reveal-presentation.js";
 
   interface DeckZoneProps {
     isOpponent: boolean;
     playerSide: LorcanaPlayerSide;
     seat: LorcanaTableSeat;
-    onClick?: () => void;
   }
 
-  let { isOpponent, playerSide, seat, onClick }: DeckZoneProps = $props();
+  let { isOpponent, playerSide, seat }: DeckZoneProps = $props();
 
   const board = useLorcanaBoardPresenter();
   const showZoneCounters = $derived(board.showZoneCounters);
@@ -21,128 +27,167 @@
   const ownerId = $derived(board.getOwnerIdForSide(playerSide));
   const revealedDeckTopCard = $derived(board.getRevealedDeckTopCard(playerSide));
   const revealedDeckBottomCard = $derived(board.getRevealedDeckBottomCard(playerSide));
-  const hasAnyReveal = $derived(!!revealedDeckTopCard || !!revealedDeckBottomCard);
+  let dismissedReveals = $state<DeckRevealDismissals>({});
+  const showRevealedDeckTopCard = $derived(
+    !!revealedDeckTopCard && !isDeckRevealDismissed(dismissedReveals, "top", revealedDeckTopCard.cardId),
+  );
+  const showRevealedDeckBottomCard = $derived(
+    !!revealedDeckBottomCard && !isDeckRevealDismissed(dismissedReveals, "bottom", revealedDeckBottomCard.cardId),
+  );
+  const hasAnyReveal = $derived(showRevealedDeckTopCard || showRevealedDeckBottomCard);
+  const topRevealPresentation = getDeckRevealPresentation("top");
+  const bottomRevealPresentation = getDeckRevealPresentation("bottom");
+
+  function dismissReveal(position: "top" | "bottom", cardId: string): void {
+    dismissedReveals = dismissDeckReveal(dismissedReveals, position, cardId);
+  }
 </script>
 
-<button
-  type="button"
+<div
   class={cn(
-    "relative flex flex-col items-center gap-1 p-2 rounded-lg cursor-pointer transition-all duration-150",
+    "relative flex flex-col items-center gap-1 p-2 rounded-lg cursor-default",
     "border-2",
-    isOpponent
-      ? "bg-zone-opponent-bg border-zone-opponent-border"
-      : "bg-zone-bg border-zone-border",
-    "hover:-translate-y-0.5 hover:shadow-lg"
+    isOpponent ? "bg-zone-opponent-bg border-zone-opponent-border" : "bg-zone-bg border-zone-border",
   )}
   style="min-width: calc(var(--zone-card-width, 50px) + 1rem); min-height: calc(var(--zone-card-height, 70px) + 1rem);"
   data-player-seat={seat}
   data-zone-id="deck"
   data-board-anchor-id={createZoneAnchorId(playerSide, "deck")}
-  onclick={onClick}
 >
   <DeckStack {count} {ownerId} {seat} showCount={showZoneCounters} />
   {#if hasAnyReveal}
-    <div class="revealed-deck-cards">
-      {#if revealedDeckTopCard}
-        <div class="revealed-card revealed-card--top">
-          <div class="revealed-card__frame revealed-card__frame--top">
+    <div class="deck-reveal-statuses">
+      {#if showRevealedDeckTopCard && revealedDeckTopCard}
+        <div class="deck-reveal-status deck-reveal-status--top">
+          <div class="deck-reveal-status__thumbnail">
             <LorcanaCard card={revealedDeckTopCard} useContainerSize />
           </div>
-          <span class="revealed-card__label revealed-card__label--top">Top</span>
+          <span class="deck-reveal-status__copy">
+            <strong>{topRevealPresentation.label}</strong>
+            <span>{topRevealPresentation.description}</span>
+          </span>
+          <button
+            type="button"
+            class="deck-reveal-status__dismiss"
+            aria-label={topRevealPresentation.dismissLabel}
+            onclick={(event) => {
+              event.stopPropagation();
+              dismissReveal("top", revealedDeckTopCard.cardId);
+            }}
+          >
+            <XIcon class="size-3.5" />
+          </button>
         </div>
       {/if}
-      {#if revealedDeckBottomCard}
-        <div class="revealed-card revealed-card--bottom">
-          <div class="revealed-card__frame revealed-card__frame--bottom">
+      {#if showRevealedDeckBottomCard && revealedDeckBottomCard}
+        <div class="deck-reveal-status deck-reveal-status--bottom">
+          <div class="deck-reveal-status__thumbnail">
             <LorcanaCard card={revealedDeckBottomCard} useContainerSize />
           </div>
-          <span class="revealed-card__label revealed-card__label--bottom">Bottom</span>
+          <span class="deck-reveal-status__copy">
+            <strong>{bottomRevealPresentation.label}</strong>
+            <span>{bottomRevealPresentation.description}</span>
+          </span>
+          <button
+            type="button"
+            class="deck-reveal-status__dismiss"
+            aria-label={bottomRevealPresentation.dismissLabel}
+            onclick={(event) => {
+              event.stopPropagation();
+              dismissReveal("bottom", revealedDeckBottomCard.cardId);
+            }}
+          >
+            <XIcon class="size-3.5" />
+          </button>
         </div>
       {/if}
     </div>
   {/if}
-</button>
+</div>
 
 <style>
-  .revealed-deck-cards {
+  .deck-reveal-statuses {
     position: absolute;
-    right: calc(100% + 0.4rem);
-    top: 50%;
-    transform: translateY(-50%);
-    width: var(--zone-card-width, 50px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.35rem;
-    z-index: 10;
-    pointer-events: none;
+    right: 0;
+    bottom: calc(100% + 0.35rem);
+    z-index: 20;
+    display: grid;
+    width: max-content;
+    max-width: min(16rem, 45vw);
+    gap: 0.3rem;
+    pointer-events: auto;
   }
 
-  .revealed-card {
+  .deck-reveal-status {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 0.2rem;
-    animation: revealed-card-enter 220ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    gap: 0.4rem;
+    min-width: 11.5rem;
+    padding: 0.32rem;
+    border: 1px solid rgba(191, 219, 254, 0.32);
+    border-radius: 0.55rem;
+    background: rgba(7, 18, 31, 0.96);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    animation: revealed-card-enter 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
-  .revealed-card__frame {
-    width: var(--zone-card-width, 50px);
-    height: var(--zone-card-height, 70px);
-    border-radius: 4px;
+  .deck-reveal-status--top { border-color: rgba(251, 191, 36, 0.58); }
+  .deck-reveal-status--bottom { border-color: rgba(165, 180, 252, 0.58); }
+
+  .deck-reveal-status__thumbnail {
+    width: 2rem;
+    height: 2.75rem;
+    flex: 0 0 auto;
     overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.24);
   }
 
-  .revealed-card__frame--top {
-    box-shadow:
-      0 0 0 2px rgba(251, 191, 36, 0.85),
-      0 0 14px rgba(251, 191, 36, 0.4),
-      0 4px 12px rgba(0, 0, 0, 0.5);
+  .deck-reveal-status__copy {
+    display: grid;
+    min-width: 0;
+    flex: 1 1 auto;
+    gap: 0.12rem;
+    color: rgba(226, 232, 240, 0.8);
+    font-size: 0.62rem;
+    line-height: 1.15;
   }
 
-  .revealed-card__frame--bottom {
-    box-shadow:
-      0 0 0 2px rgba(99, 102, 241, 0.85),
-      0 0 14px rgba(99, 102, 241, 0.45),
-      0 4px 12px rgba(0, 0, 0, 0.5);
+  .deck-reveal-status__copy strong {
+    color: rgba(248, 250, 252, 0.98);
+    font-size: 0.68rem;
   }
 
-  .revealed-card__label {
-    font-size: clamp(0.56rem, 1.45vw, 0.62rem);
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.1rem 0.35rem;
-    border-radius: 999px;
-    white-space: nowrap;
+  .deck-reveal-status__dismiss {
+    display: inline-grid;
+    width: 1.5rem;
+    height: 1.5rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid rgba(191, 219, 254, 0.28);
+    border-radius: 0.35rem;
+    background: rgba(15, 23, 42, 0.8);
+    color: rgba(241, 245, 249, 0.92);
+    cursor: pointer;
   }
 
-  .revealed-card__label--top {
-    color: rgba(251, 191, 36, 0.95);
-    background: rgba(0, 0, 0, 0.75);
-    border: 1px solid rgba(251, 191, 36, 0.45);
+  .deck-reveal-status__dismiss:hover,
+  .deck-reveal-status__dismiss:focus-visible {
+    border-color: rgba(226, 232, 240, 0.7);
+    background: rgba(30, 41, 59, 0.95);
   }
 
-  .revealed-card__label--bottom {
-    color: rgba(165, 180, 252, 0.95);
-    background: rgba(0, 0, 0, 0.75);
-    border: 1px solid rgba(99, 102, 241, 0.45);
+  .deck-reveal-status__dismiss:focus-visible {
+    outline: 2px solid rgba(191, 219, 254, 0.92);
+    outline-offset: 2px;
   }
 
   @keyframes revealed-card-enter {
-    from {
-      opacity: 0;
-      transform: translateX(10px) scale(0.92);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0) scale(1);
-    }
+    from { opacity: 0; transform: translateY(6px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .revealed-card {
-      animation: none;
-    }
+    .deck-reveal-status { animation: none; }
   }
 </style>

@@ -43,4 +43,14 @@ export const booHumanChildI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Abucheo",
+    version: "Niño humano",
+    text: [
+      {
+        title: "Creando recuerdos",
+        description: "Mientras tengas 5 o más cartas en tu tintero, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const dragonFireC2ChallengeI18n: Record<Languages, I18nProperties> = {
     name: "Dragon Fire",
     text: "Banish chosen character.",
   },
+  es: {
+    name: "Fuego de dragón",
+    text: "Desterrar al personaje elegido.",
+  },
 };

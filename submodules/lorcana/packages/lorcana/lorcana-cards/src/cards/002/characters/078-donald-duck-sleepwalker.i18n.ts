@@ -43,4 +43,14 @@ export const donaldDuckSleepwalkerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Sonámbulo",
+    text: [
+      {
+        title: "SORMADO DESPIERTO",
+        description: "Cada vez que juegas una acción, este personaje obtiene +2 {S} este turno.",
+      },
+    ],
+  },
 };

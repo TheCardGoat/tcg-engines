@@ -57,4 +57,18 @@ export const shereKhanFearsomeTigerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Shere Khan",
+    version: "Tigre temible",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "A LA CAZA",
+        description:
+          "Siempre que este personaje realice una misión, destierra al personaje dañado contrario elegido. Luego, puedes poner 1 contador de daño en otro personaje elegido.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const annaTrueheartedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ana",
+    version: "Sincero",
+    text: [
+      {
+        title: "Déjame ayudarte",
+        description:
+          "Siempre que este personaje realice una misión, tus otros personajes héroes obtienen +1 {L} este turno.",
+      },
+    ],
+  },
 };

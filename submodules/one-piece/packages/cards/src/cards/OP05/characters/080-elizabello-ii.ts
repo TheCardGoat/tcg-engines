@@ -23,15 +23,39 @@ export const op05ElizabelloIi080: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Dressrosa Kingdom of Prodence"],
+  traits: ["Kingdom of Prodence", "Dressrosa"],
   attribute: "strike",
   effect:
-    "[When Attacking][Once Per Turn] You may return 20 cards from your trash to your deck and shuffle it: This Character gains and +10000 power during this battle. (This card deals 2 damage.)",
+    "[When Attacking] [Once Per Turn] You may return 20 cards from your trash to your deck and shuffle it: This Character gains [Double Attack] and +10000 power during this battle. (This card deals 2 damage.)",
   effects: {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 20,
+            position: "bottom",
+          },
+        ],
         actions: [
+          {
+            action: "shuffleDeck",
+            player: "self",
+          },
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "doubleAttack",
+            duration: "thisBattle",
+          },
           {
             action: "modifyPower",
             target: {

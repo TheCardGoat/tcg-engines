@@ -101,17 +101,21 @@ describe("Blessed Bagpipes", () => {
     testEngine.manualExertCard(defender);
     expect(testEngine.asServer().manualPassTurn()).toBeSuccessfulCommand();
     expect(testEngine.asPlayerTwo().challenge(attacker, defender)).toBeSuccessfulCommand();
-    expect(testEngine.asPlayerOne().getBagCount()).toBe(1);
-    expect(testEngine.asPlayerOne().getBagEffects()[0]).toMatchObject({
-      payload: {
-        abilityId: "1s8-2",
-        effect: {
-          amount: 1,
-          target: "CONTROLLER",
-          type: "gain-lore",
-        },
-      },
-    });
+    // Megara's static ability also grants a triggered discard ability while
+    // she has a card under her, so both it and BATTLE ANTHEM enter the bag.
+    expect(testEngine.asPlayerOne().getBagCount()).toBe(2);
+    expect(testEngine.asPlayerOne().getBagEffects()).toContainEqual(
+      expect.objectContaining({
+        payload: expect.objectContaining({
+          abilityId: "1s8-2",
+          effect: {
+            amount: 1,
+            target: "CONTROLLER",
+            type: "gain-lore",
+          },
+        }),
+      }),
+    );
     expect(testEngine.asPlayerOne().resolvePendingByCard(blessedBagpipes)).toBeSuccessfulCommand();
   });
 });

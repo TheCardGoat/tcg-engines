@@ -44,4 +44,14 @@ export const theCarpenterDinnerCompanionI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "El carpintero",
+    version: "Compañero de cena",
+    text: [
+      {
+        title: "¡TE ATRAERÉ!",
+        description: "Cuando este personaje es desterrado, puedes ejercer el personaje elegido.",
+      },
+    ],
+  },
 };

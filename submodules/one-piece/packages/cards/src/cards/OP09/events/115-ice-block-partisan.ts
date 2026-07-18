@@ -54,6 +54,10 @@ export const op09IceBlockPartisan115: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [{ action: "draw", player: "self", amount: 1 }],
+      },
     ],
   },
   i18n: op09IceBlockPartisan115I18n,

@@ -26,4 +26,14 @@ export const sinaVigilantParentI18n: Record<Languages, I18nProperties> = {
     version: "Genitrice Attenta",
     text: "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
   },
+  es: {
+    name: "Siná",
+    version: "Padre vigilante",
+    text: [
+      {
+        title: "Alerta",
+        description: "(Este personaje puede desafiar como si tuviera Evasivo).",
+      },
+    ],
+  },
 };

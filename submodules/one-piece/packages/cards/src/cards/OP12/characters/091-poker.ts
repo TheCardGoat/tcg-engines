@@ -31,6 +31,13 @@ export const op12Poker091: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 3,
+            position: "bottom",
+          },
+        ],
         actions: [
           {
             action: "modifyPower",
@@ -45,6 +52,7 @@ export const op12Poker091: CharacterCard = {
                 {
                   filter: "trait",
                   value: "SMILE",
+                  match: "includes",
                 },
               ],
             },

@@ -46,7 +46,7 @@ export const carlFredricksenRussellIntrepidExplorers: CharacterCard = {
   ],
   classifications: ["Storyborn", "Team", "Hero"],
   abilities: [
-    shift(4),
+    shift("Carl Fredricksen or Russell", 4),
     {
       type: "static",
       name: "OUTDOOR SKILLS",

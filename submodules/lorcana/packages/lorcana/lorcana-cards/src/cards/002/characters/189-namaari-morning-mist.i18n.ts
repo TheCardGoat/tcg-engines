@@ -56,4 +56,17 @@ export const namaariMorningMistI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Namari",
+    version: "Niebla de la mañana",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "CUCHILLAS",
+        description: "Este personaje puede desafiar a los personajes listos.",
+      },
+    ],
+  },
 };

@@ -26,7 +26,7 @@ export const op07GloriosaGrandmaNyon041: CharacterCard = {
   traits: ["Amazon Lily"],
   attribute: "wisdom",
   effect:
-    "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 [Amazon Lily] or [Kuja Pirates] type card other than [Gloriosa (Grandma Nyon)] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
+    "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 {Amazon Lily} or {Kuja Pirates} type card other than [Gloriosa (Grandma Nyon)] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
   effects: {
     effects: [
       {
@@ -49,12 +49,19 @@ export const op07GloriosaGrandmaNyon041: CharacterCard = {
                 value: "Gloriosa (Grandma Nyon)",
               },
               {
-                filter: "trait",
-                value: "Amazon Lily",
-              },
-              {
-                filter: "trait",
-                value: "Kuja Pirates",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Amazon Lily",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Kuja Pirates",
+                    match: "includes",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

@@ -41,4 +41,14 @@ export const whiteRabbitsPocketWatchI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Reloj de bolsillo del conejo blanco",
+    text: [
+      {
+        title: "¡Voy tarde!",
+        description:
+          "{E}, 1 {I}: el personaje elegido gana <Rush> este turno. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

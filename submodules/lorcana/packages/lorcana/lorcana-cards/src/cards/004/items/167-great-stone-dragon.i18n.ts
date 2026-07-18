@@ -57,4 +57,18 @@ export const greatStoneDragonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gran Dragón de Piedra",
+    text: [
+      {
+        title: "DORMIDO",
+        description: "Este objeto entra en juego ejercido.",
+      },
+      {
+        title: "DESPERTAR",
+        description:
+          "{E}: coloca una carta de personaje de tu descarte en tu tintero boca abajo y ejercítala.",
+      },
+    ],
+  },
 };

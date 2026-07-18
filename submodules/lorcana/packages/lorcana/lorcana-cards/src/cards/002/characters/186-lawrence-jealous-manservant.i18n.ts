@@ -41,4 +41,14 @@ export const lawrenceJealousManservantI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Lorenzo",
+    version: "Sirviente celoso",
+    text: [
+      {
+        title: "REEMBOLSO",
+        description: "Si bien este personaje no tiene daño, obtiene +4 {S}.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const royalTantrumEnchantedI18n: Record<Languages, I18nProperties> = {
     name: "Capricci Regali",
     text: "Esilia un qualsiasi numero di tuoi oggetti, poi pesca una carta per ogni oggetto esiliato in questo modo.",
   },
+  es: {
+    name: "Rabieta real",
+    text: "Destierra cualquier cantidad de tus artículos, luego roba una carta por cada artículo desterrado de esta manera.",
+  },
 };

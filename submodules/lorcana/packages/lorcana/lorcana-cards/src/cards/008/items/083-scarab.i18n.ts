@@ -41,4 +41,14 @@ export const scarabI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Escarabajo",
+    text: [
+      {
+        title: "BUSCAR LAS ARENAS",
+        description:
+          "{E} 2 {I}: Devuelve a tu mano una carta de personaje de Ilusión de tu descarte.",
+      },
+    ],
+  },
 };

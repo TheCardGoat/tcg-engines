@@ -77,4 +77,24 @@ export const theVineToweringStalkI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La vid",
+    version: "Tallo imponente",
+    text: [
+      {
+        title: "Cambio nacido en las inundaciones 7 {I}",
+        description:
+          "(Puedes pagar 7 {I} para jugar esto encima de uno de tus personajes de Floodborn).",
+      },
+      {
+        title: "SATURAR",
+        description: "Tus otros personajes Floodborn ejercidos ganan Guardaespaldas.",
+      },
+      {
+        title: "ENJAMBRE HOSTIL",
+        description:
+          "Durante el turno de un oponente, cada vez que uno de tus personajes Floodborn sea desterrado, inflige 1 daño a cada personaje contrario.",
+      },
+    ],
+  },
 };

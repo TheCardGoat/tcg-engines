@@ -39,4 +39,13 @@ export const poohPirateShipI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Barco Pirata Pooh",
+    text: [
+      {
+        title: "HACER UN RESCATE",
+        description: "{E}, 3 {I}: devuelve a tu mano una carta de personaje pirata de tu descarte.",
+      },
+    ],
+  },
 };

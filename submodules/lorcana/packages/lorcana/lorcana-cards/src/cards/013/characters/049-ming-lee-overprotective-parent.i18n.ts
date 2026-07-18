@@ -45,4 +45,15 @@ export const mingLeeOverprotectiveParentI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Ming Lee",
+    version: "Padre sobreprotector",
+    text: [
+      {
+        title: "Estás castigado",
+        description:
+          "Cuando colocas un personaje encima de este personaje, el personaje oponente elegido no puede estar listo al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

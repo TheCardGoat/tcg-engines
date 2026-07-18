@@ -44,6 +44,7 @@ export const op01XDrake114: CharacterCard = {
             amount: 1,
           },
         ],
+        optional: true,
       },
     ],
   },

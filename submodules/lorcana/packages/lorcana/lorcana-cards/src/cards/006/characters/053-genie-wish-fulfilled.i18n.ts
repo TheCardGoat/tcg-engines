@@ -53,4 +53,17 @@ export const genieWishFulfilledI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Genio",
+    version: "Deseo cumplido",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "¿QUÉ PASA AHORA?",
+        description: "Cuando juegues con este personaje, roba una carta.",
+      },
+    ],
+  },
 };

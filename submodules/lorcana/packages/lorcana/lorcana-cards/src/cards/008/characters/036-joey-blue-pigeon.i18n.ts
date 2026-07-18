@@ -45,4 +45,15 @@ export const joeyBluePigeonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Joey",
+    version: "Paloma azul",
+    text: [
+      {
+        title: "TENGO SOLO LA COSA",
+        description:
+          "Siempre que este personaje realice una misión, puedes eliminar hasta 1 daño de cada uno de tus personajes con Bodyguard.",
+      },
+    ],
+  },
 };

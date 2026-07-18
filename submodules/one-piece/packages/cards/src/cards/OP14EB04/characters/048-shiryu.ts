@@ -42,6 +42,11 @@ export const op14eb04Shiryu048: CharacterCard = {
               },
             },
           },
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: "all",
+          },
         ],
       },
     ],

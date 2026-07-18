@@ -60,4 +60,18 @@ export const kingCandySweetAbominationI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Rey caramelo",
+    version: "Dulce abominación",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "CAMBIAR EL CÓDIGO",
+        description:
+          "Cuando juegas con este personaje, puedes robar 2 cartas y luego poner una carta de tu mano en la parte inferior de tu mazo.",
+      },
+    ],
+  },
 };

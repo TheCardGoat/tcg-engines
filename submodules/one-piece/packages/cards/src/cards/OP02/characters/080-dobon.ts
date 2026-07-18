@@ -25,6 +25,5 @@ export const op02Dobon080: CharacterCard = {
   counter: 1000,
   traits: ["Animal Kingdom Pirates SMILE"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op02Dobon080I18n,
 };

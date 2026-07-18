@@ -45,4 +45,15 @@ export const elsaTrustedSisterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Elsa",
+    version: "Hermana de confianza",
+    text: [
+      {
+        title: "¿QUÉ HACEMOS AHORA?",
+        description:
+          "Siempre que este personaje realice una misión, si tienes un personaje llamado Anna en juego, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

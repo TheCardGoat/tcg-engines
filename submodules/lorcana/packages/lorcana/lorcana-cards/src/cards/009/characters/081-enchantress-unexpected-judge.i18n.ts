@@ -41,4 +41,14 @@ export const enchantressUnexpectedJudgeI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Hechicera",
+    version: "Juez inesperado",
+    text: [
+      {
+        title: "FORMA VERDADERA",
+        description: "Mientras es desafiado, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

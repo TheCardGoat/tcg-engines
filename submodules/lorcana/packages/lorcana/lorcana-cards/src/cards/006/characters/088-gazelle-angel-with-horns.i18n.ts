@@ -45,4 +45,15 @@ export const gazelleAngelWithHornsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gacela",
+    version: "Ángel con cuernos",
+    text: [
+      {
+        title: "ERES",
+        description:
+          "UN BAILARÍN REALMENTE CALIENTE Cuando juegas con este personaje, el personaje elegido gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

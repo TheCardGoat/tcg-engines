@@ -49,6 +49,12 @@ export const op09ProfessorClover102: CharacterCard = {
               amount: 1,
               upTo: true,
             },
+            revealFilters: [
+              {
+                filter: "hasTrigger",
+                value: true,
+              },
+            ],
             revealDestination: "hand",
             remainderPosition: "bottom",
           },

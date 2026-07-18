@@ -44,4 +44,15 @@ export const lumiereNimbleCandelabraI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lumière",
+    version: "Candelabro ágil",
+    text: [
+      {
+        title: "PASO LIGERO",
+        description:
+          "Mientras tengas una carta de objeto en tu descarte, este personaje gana Evasivo.",
+      },
+    ],
+  },
 };

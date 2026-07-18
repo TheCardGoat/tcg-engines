@@ -53,4 +53,17 @@ export const fantasticalAndMagicalEnchantedI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Fantástico y mágico",
+    text: [
+      {
+        title: "Cantar juntos 9",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 9 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title: "Por cada personaje que cantó esta canción, roba una carta y gana 1 conocimiento.",
+      },
+    ],
+  },
 };

@@ -41,4 +41,14 @@ export const heartOfTeFitiI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "En pleno centro de Te Fiti",
+    text: [
+      {
+        title: "CREAR VIDA",
+        description:
+          "{E}, 2 {I}: coloca la carta superior de tu mazo en tu tintero boca abajo y ejercita.",
+      },
+    ],
+  },
 };

@@ -35,4 +35,8 @@ export const strengthOfARagingFireI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Fuerza de un fuego furioso",
+    text: "Inflige daño al personaje elegido igual a la cantidad de personajes que tienes en juego.",
+  },
 };

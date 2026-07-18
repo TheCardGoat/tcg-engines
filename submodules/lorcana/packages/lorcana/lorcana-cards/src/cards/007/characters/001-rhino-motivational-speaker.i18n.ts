@@ -41,4 +41,14 @@ export const rhinoMotivationalSpeakerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rinoceronte",
+    version: "Orador motivacional",
+    text: [
+      {
+        title: "LLAMADO DEL DESTINO",
+        description: "Tus otros personajes obtienen +2 {W}.",
+      },
+    ],
+  },
 };

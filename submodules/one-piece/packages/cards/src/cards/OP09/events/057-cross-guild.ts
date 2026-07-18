@@ -45,12 +45,17 @@ export const op09CrossGuild057: EventCard = {
               {
                 filter: "trait",
                 value: "Cross Guild",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",
           },
         ],
+      },
+      {
+        trigger: "trigger",
+        actions: [{ action: "activateEffect", effectTrigger: "main" }],
       },
     ],
   },

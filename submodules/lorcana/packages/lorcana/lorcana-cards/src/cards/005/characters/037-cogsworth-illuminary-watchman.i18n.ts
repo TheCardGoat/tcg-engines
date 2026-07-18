@@ -45,4 +45,15 @@ export const cogsworthIlluminaryWatchmanI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Diente",
+    version: "Vigilante iluminador",
+    text: [
+      {
+        title: "¡HORA DE MOVERLO!",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido gana Rush este turno. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

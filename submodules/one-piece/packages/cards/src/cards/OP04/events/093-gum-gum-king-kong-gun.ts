@@ -42,11 +42,40 @@ export const op04GumGumKingKongGun093: EventCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
+                  match: "includes",
                 },
               ],
             },
             value: 6000,
             duration: "thisTurn",
+          },
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Dressrosa",
+                  match: "includes",
+                },
+              ],
+            },
+            keyword: "doubleAttack",
+            duration: "thisTurn",
+            previousActionTargets: true,
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "trash",
+              comparison: "gte",
+              value: 15,
+            },
           },
         ],
       },

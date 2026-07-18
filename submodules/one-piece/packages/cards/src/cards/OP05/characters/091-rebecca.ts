@@ -66,6 +66,20 @@ export const op05Rebecca091: CharacterCard = {
                   filter: "cardCategory",
                   value: "character",
                 },
+                {
+                  filter: "excludeName",
+                  value: "Rebecca",
+                },
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 3,
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 7,
+                },
               ],
             },
           },

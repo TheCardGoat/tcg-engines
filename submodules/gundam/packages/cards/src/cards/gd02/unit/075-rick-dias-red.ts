@@ -4,6 +4,7 @@ export const gd02RickDiasRed075: UnitCard = {
   cardNumber: "GD02-075",
   name: "Rick Dias (Red)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["aeug"],
   id: "GD02-075",
@@ -41,6 +42,7 @@ export const gd02RickDiasRed075: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 3,
+  linkCondition: "(AEUG) Trait",
   effect:
     "【Attack】Choose 1 active friendly Base. Rest it. If you do, choose 1 enemy Unit that is Lv.4 or lower. It gets AP-2 during this battle.<br>",
   effects: [
@@ -48,35 +50,54 @@ export const gd02RickDiasRed075: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["attack"],
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "opponent",
+            zone: "battleArea",
+            cardType: "unit",
+            comparison: "gte",
+            count: 1,
+            attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+          },
+        ],
       },
       directives: [
         {
           action: {
-            action: "rest",
-            target: {
-              owner: "friendly",
-              cardType: "base",
-              state: "active",
-              count: 1,
+            action: "resolveThenQueue",
+            first: {
+              action: "rest",
+              target: {
+                owner: "friendly",
+                cardType: "base",
+                state: "active",
+                count: 1,
+              },
+            },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
+                {
+                  action: {
+                    action: "statModifier",
+                    stat: "ap",
+                    amount: -2,
+                    duration: "thisBattle",
+                    target: {
+                      owner: "opponent",
+                      cardType: "unit",
+                      count: 1,
+                      attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+                    },
+                  },
+                },
+              ],
+              sourceText:
+                "If you do, choose 1 enemy Unit that is Lv.4 or lower. It gets AP-2 during this battle.",
             },
           },
-        },
-        {
-          action: {
-            action: "statModifier",
-            stat: "ap",
-            amount: -2,
-            duration: "thisBattle",
-            target: {
-              owner: "opponent",
-              cardType: "unit",
-              count: 1,
-              attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
-            },
-          },
-          // "If you do, ..." — only apply the AP-debuff if the preceding
-          // rest actually landed on a legal target.
-          dependsOnPrevious: true,
         },
       ],
       sourceText:

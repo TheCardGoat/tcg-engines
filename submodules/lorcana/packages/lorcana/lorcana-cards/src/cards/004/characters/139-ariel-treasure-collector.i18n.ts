@@ -57,4 +57,18 @@ export const arielTreasureCollectorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ariel",
+    version: "Coleccionista de tesoros",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "LA CHICA QUE LO TIENE TODO",
+        description:
+          "Mientras tengas más elementos en juego que cada oponente, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

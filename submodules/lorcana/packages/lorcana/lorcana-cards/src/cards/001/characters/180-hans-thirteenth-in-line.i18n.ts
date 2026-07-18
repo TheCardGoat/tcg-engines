@@ -44,4 +44,15 @@ export const hansThirteenthInLineI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hans",
+    version: "Decimotercero en la fila",
+    text: [
+      {
+        title: "ESCENARIO",
+        description:
+          "UN PEQUEÑO ACCIDENTE Siempre que este personaje realice una misión, puedes causar 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

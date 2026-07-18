@@ -30,7 +30,7 @@ export const op14eb04JinbeOp14040040: LeaderCard = {
   setId: "OP14EB04",
   power: 5000,
   life: 5,
-  traits: ["Fish-Man The Seven Warlords of the Sea The Sun Pirates"],
+  traits: ["Fish-Man", "The Seven Warlords of the Sea", "The Sun Pirates"],
   attribute: "strike",
   artVariants: [
     {
@@ -62,12 +62,11 @@ export const op14eb04JinbeOp14040040: LeaderCard = {
               },
               filters: [
                 {
-                  filter: "trait",
-                  value: "Fish-Man",
-                },
-                {
-                  filter: "trait",
-                  value: "Merfolk",
+                  filter: "anyOf",
+                  groups: [
+                    [{ filter: "trait", value: "Fish-Man", match: "includes" }],
+                    [{ filter: "trait", value: "Merfolk", match: "includes" }],
+                  ],
                 },
               ],
             },

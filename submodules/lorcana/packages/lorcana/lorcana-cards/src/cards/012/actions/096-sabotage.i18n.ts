@@ -17,4 +17,8 @@ export const sabotageI18n: Record<Languages, I18nProperties> = {
     name: "Sabotare",
     text: "Esilia un oggetto o un luogo a tua scelta e tutti gli altri oggetti o luoghi con lo stesso nome.",
   },
+  es: {
+    name: "Sabotaje",
+    text: "Desterrar el elemento o ubicación elegido y todos los demás elementos o ubicaciones con el mismo nombre.",
+  },
 };

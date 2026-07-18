@@ -77,6 +77,9 @@ import { beKingUndisputedSet9 } from "./2026-05-08/be-king-undisputed-set9.js";
 import { sidPhillipsToySurgeonRegression } from "./2026-05-08/sid-phillips-toy-surgeon.js";
 import { leviathansLairHandVsPlayRegression } from "./2026-05-19/leviathans-lair-hand-vs-play.js";
 import { meridaMosquitoBitePutDamageRegression } from "./2026-05-20/merida-mosquito-bite-put-damage.js";
+import { feedback20260713TeamShiftAlternativesFixture } from "./feedback-2026-07-13-team-shift-alternatives.js";
+import { feedbackUiLegibilityFixture } from "./feedback-ui-legibility.js";
+import { dashParrSuperFastRevealedPlayRegression } from "./2026-07-15/dash-parr-super-fast-revealed-play.js";
 
 const regressionFixtureRegistry = createFixtureRegistry(
   [
@@ -162,6 +165,11 @@ const regressionFixtureRegistry = createFixtureRegistry(
     leviathansLairHandVsPlayRegression,
     // --- 2026-05-20 ---
     meridaMosquitoBitePutDamageRegression,
+    // --- 2026-07-13 player feedback ---
+    feedback20260713TeamShiftAlternativesFixture,
+    feedbackUiLegibilityFixture,
+    // --- 2026-07-15 player feedback ---
+    dashParrSuperFastRevealedPlayRegression,
   ] satisfies LorcanaSimulatorFixture[],
   "simulator regression fixtures",
 );

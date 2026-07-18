@@ -45,4 +45,15 @@ export const lefouCakeThiefI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lefou",
+    version: "Ladrón de pasteles",
+    text: [
+      {
+        title: "TODO PARA MI",
+        description:
+          "{E}, destierra uno de tus objetos: el oponente elegido pierde 1 conocimiento y tú ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

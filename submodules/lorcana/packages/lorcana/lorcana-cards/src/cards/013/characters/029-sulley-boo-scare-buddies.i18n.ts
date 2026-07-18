@@ -59,4 +59,18 @@ export const sulleyBooScareBuddiesI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sulley y Boo",
+    version: "Compañeros de miedo",
+    text: [
+      {
+        title: "Cambio combinado 4 {I}",
+      },
+      {
+        title: "EL PODER DE LA AMISTAD",
+        description:
+          "Cuando este personaje es desterrado, si alguna de las cartas que estaban debajo de él son cartas de personaje, puedes jugar esos personajes de tu descarte de forma gratuita.",
+      },
+    ],
+  },
 };

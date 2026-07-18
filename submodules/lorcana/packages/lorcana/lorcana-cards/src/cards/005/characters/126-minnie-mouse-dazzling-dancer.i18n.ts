@@ -45,4 +45,15 @@ export const minnieMouseDazzlingDancerI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Bailarina deslumbrante",
+    text: [
+      {
+        title: "BAILE",
+        description:
+          "Siempre que este personaje o uno de tus personajes llamado Mickey Mouse desafíe a otro personaje, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

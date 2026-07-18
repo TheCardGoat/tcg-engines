@@ -23,7 +23,7 @@ export const op08CandyMaiden075: EventCard = {
   cost: 1,
   traits: ["Big Mom Pirates"],
   effect:
-    "[Main] DON!! 1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Rest up to 1 of your opponent's Characters with a cost of 2 or less. Then, turn all of your Life cards face-down.",
+    "[Main] DON!! −1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Rest up to 1 of your opponent's Characters with a cost of 2 or less. Then, turn all of your Life cards face-down. [Trigger] Add up to 1 DON!! card from your DON!! deck and set it as active.",
   effects: {
     effects: [
       {
@@ -56,6 +56,19 @@ export const op08CandyMaiden075: EventCard = {
           {
             action: "turnLifeFaceDown",
             player: "self",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "addDon",
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            state: "active",
           },
         ],
       },

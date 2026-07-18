@@ -45,4 +45,15 @@ export const perditaDevotedMotherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Perdita",
+    version: "Madre devota",
+    text: [
+      {
+        title: "VENGAN NIÑOS",
+        description:
+          "Cuando juegas con este personaje y cada vez que realiza misiones, puedes jugar con un personaje con un coste de 2 o menos de tu descarte de forma gratuita.",
+      },
+    ],
+  },
 };

@@ -60,4 +60,18 @@ export const jimHawkinsRiggingSpecialistI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Jim Hawkins",
+    version: "Especialista en aparejos",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "ESTACIÓN DE BATALLA",
+        description:
+          "Cuando juegas con este personaje, puedes causar 1 daño al personaje o ubicación elegida.",
+      },
+    ],
+  },
 };

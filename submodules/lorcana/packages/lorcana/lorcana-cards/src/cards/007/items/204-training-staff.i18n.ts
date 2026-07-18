@@ -41,4 +41,14 @@ export const trainingStaffI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Personal de formación",
+    text: [
+      {
+        title: "GOLPE DE PRECISIÓN",
+        description:
+          "{E}, 1 {I}: el personaje elegido gana Challenger +2 este turno. (Obtienen +2 {S} mientras desafían).",
+      },
+    ],
+  },
 };

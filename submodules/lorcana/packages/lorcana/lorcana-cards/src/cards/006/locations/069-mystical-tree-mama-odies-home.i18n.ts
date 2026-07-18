@@ -65,4 +65,20 @@ export const mysticalTreeMamaOdiesHomeI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Árbol místico",
+    version: "La casa de mamá Odie",
+    text: [
+      {
+        title: "NADA MAL",
+        description:
+          "Al comienzo de tu turno, puedes mover 1 contador de daño del personaje elegido aquí al personaje contrario elegido.",
+      },
+      {
+        title: "SABIDURÍA GANADA CON DURO",
+        description:
+          "Al comienzo de tu turno, si tienes un personaje llamado Mama Odie aquí, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

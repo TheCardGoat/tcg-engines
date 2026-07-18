@@ -177,7 +177,7 @@ export interface CardsAuxKv {
 /**
  * Supported localization locales
  */
-export const SUPPORTED_LOCALES = ["en", "de", "fr", "it"] as const;
+export const SUPPORTED_LOCALES = ["en", "de", "fr", "it", "es"] as const;
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
 
 /**
@@ -188,7 +188,7 @@ export type SimulatorUiLocale = (typeof SIMULATOR_UI_LOCALES)[number];
 
 const CARD_LOCALE_BY_SIMULATOR_UI_LOCALE: Record<SimulatorUiLocale, SupportedLocale> = {
   en: "en",
-  es: "en",
+  es: "es",
   de: "de",
   it: "it",
   "pt-br": "en",
@@ -208,9 +208,9 @@ export function isSimulatorUiLocale(locale: string): locale is SimulatorUiLocale
 /**
  * Resolve a simulator UI locale into an available card-data locale.
  *
- * Card data currently exists for `en`, `de`, `fr`, `it`.
+ * Card data exists for `en`, `de`, `fr`, `it`, and `es`.
  * Simulator UI supports `en`, `es`, `de`, `it`, `pt-br`.
- * `es` and `pt-br` therefore deterministically fallback to `en`.
+ * `pt-br` deterministically falls back to `en`.
  */
 export function resolveSimulatorCardLocale(
   uiLocale: SimulatorUiLocale | string,
@@ -264,6 +264,7 @@ export type ImageIdsByPrinting = Record<string, string>;
 // Lazy-loaded image ID modules (optional; stubs committed for type-check; can be overwritten by future image-ids generator)
 const imageIdsModules: Record<Exclude<SupportedLocale, "en">, () => Promise<unknown>> = {
   de: () => import("./localization-de-image-ids.json").catch(() => ({})),
+  es: () => Promise.resolve({}),
   fr: () => import("./localization-fr-image-ids.json").catch(() => ({})),
   it: () => import("./localization-it-image-ids.json").catch(() => ({})),
 };

@@ -64,11 +64,20 @@ export interface ServerGameplaySettings {
 }
 
 export type SaveToServerFn = (settings: {
-  gameplaySettings: Partial<ServerGameplaySettings>;
+  playerSettings?: Partial<ServerGameplaySettings>;
+  gameSettings?: {
+    lorcana: {
+      simulator: Partial<
+        Pick<ServerGameplaySettings, "primaryClickAction" | "cardInfoMode" | "priorityNudgeEnabled">
+      >;
+    };
+  };
 }) => void;
 
 export type SaveVisualSettingsToServerFn = (settings: {
-  visualSettings: { cardBack?: string; playmat?: string };
+  gameSettings: {
+    lorcana: { visual: { cardBackId?: string; playmatId?: string } };
+  };
 }) => void;
 
 /**
@@ -359,7 +368,9 @@ export class PlayerSettingsStore {
   handlePlaymatChange = (id: string): void => {
     this.selectedPlaymat = id;
     localStorage.setItem(SELECTED_PLAYMAT_STORAGE_KEY, id);
-    this.#saveVisualSettingsToServer?.({ visualSettings: { playmat: id } });
+    this.#saveVisualSettingsToServer?.({
+      gameSettings: { lorcana: { visual: { playmatId: id } } },
+    });
   };
 
   handleCardInfoModeChange = (mode: CardInfoMode): void => {
@@ -371,7 +382,9 @@ export class PlayerSettingsStore {
   handleCardBackChange = (id: string): void => {
     this.selectedCardBack = id;
     localStorage.setItem(SELECTED_CARD_BACK_STORAGE_KEY, id);
-    this.#saveVisualSettingsToServer?.({ visualSettings: { cardBack: id } });
+    this.#saveVisualSettingsToServer?.({
+      gameSettings: { lorcana: { visual: { cardBackId: id } } },
+    });
   };
 
   // ── Server sync (debounced) ─────────────────────────────────────────
@@ -385,7 +398,25 @@ export class PlayerSettingsStore {
     this.#debounceTimer = setTimeout(() => {
       const update = { ...this.#pendingServerUpdate };
       this.#pendingServerUpdate = {};
-      this.#saveToServer?.({ gameplaySettings: update });
+      const { primaryClickAction, cardInfoMode, priorityNudgeEnabled, ...playerSettings } = update;
+      this.#saveToServer?.({
+        ...(Object.keys(playerSettings).length > 0 ? { playerSettings } : {}),
+        ...(primaryClickAction !== undefined ||
+        cardInfoMode !== undefined ||
+        priorityNudgeEnabled !== undefined
+          ? {
+              gameSettings: {
+                lorcana: {
+                  simulator: {
+                    ...(primaryClickAction !== undefined ? { primaryClickAction } : {}),
+                    ...(cardInfoMode !== undefined ? { cardInfoMode } : {}),
+                    ...(priorityNudgeEnabled !== undefined ? { priorityNudgeEnabled } : {}),
+                  },
+                },
+              },
+            }
+          : {}),
+      });
     }, 500);
   }
 }

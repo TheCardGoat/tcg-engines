@@ -1,72 +1,75 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
+  activeResources,
+  createMockUnit,
+  expectFailure,
+  expectSuccess,
   GundamTestEngine,
   PLAYER_ONE,
-  activeResources,
-  createMockPilot,
-  expectSuccess,
-  getEffectiveStats,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
 import { gd02Gquuuuuux034 } from "./034-gquuuuuux.ts";
+import { gd02FourMurasame085 } from "../pilot/085-four-murasame.ts";
+import { gd02HamanKarn091 } from "../pilot/091-haman-karn.ts";
 
 describe("GQuuuuuuX (GD02-034)", () => {
-  it("【During Pair·Red Pilot】This Unit gets AP+2 with a red pilot.", () => {
-    const redPilot = createMockPilot({
-      name: "Red Pilot",
-      color: "red",
-      apBonus: 0,
-      hpBonus: 0,
+  describe("Printed Lv.2 and cost 1", () => {
+    it("cannot deploy with only 1 total Resource", () => {
+      const engine = GundamTestEngine.create({
+        hand: [gd02Gquuuuuux034],
+        resourceArea: activeResources(1),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const cardId = p1.getHand()[0]!;
+
+      expectFailure(p1.deployUnit(cardId), "INSUFFICIENT_RESOURCE_LEVEL");
+
+      expect(p1.getHand()).toContain(cardId);
+      expect(p1.getCardsInZone("battleArea")).toHaveLength(0);
     });
-    const engine = GundamTestEngine.create({
-      hand: [redPilot],
-      play: [gd02Gquuuuuux034],
-      resourceArea: activeResources(3),
-      deck: 5,
+
+    it("cannot deploy after a legal play rests both Resources", () => {
+      const spender = createMockUnit({ level: 1, cost: 2 });
+      const engine = GundamTestEngine.create({
+        hand: [spender, gd02Gquuuuuux034],
+        resourceArea: activeResources(2),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const cardId = p1.getHand()[1]!;
+
+      expectSuccess(p1.deployUnit(spender));
+      expectFailure(p1.deployUnit(cardId), "INSUFFICIENT_RESOURCES");
+
+      expect(p1.getHand()).toContain(cardId);
+      expect(p1.getCardsInZone("battleArea")).toHaveLength(1);
+      expect(p1.getCardsInZone("resourceArea").filter((id) => !p1.isExhausted(id))).toHaveLength(0);
     });
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const rt = engine.getRuntime();
-    const unitId = rt.getInstanceIdByDefinition(
-      PLAYER_ONE as PlayerId,
-      gd02Gquuuuuux034.cardNumber,
-    )!;
-
-    // Before pairing: base AP 0
-    const fw = rt.getFrameworkReadAPI();
-    expect(getEffectiveStats(unitId, engine.getG(), fw.cards, fw).ap).toBe(0);
-
-    // Pair with red pilot
-    expectSuccess(p1.assignPilot(redPilot, gd02Gquuuuuux034));
-
-    // After pairing: base AP 0 + pilot apBonus 0 + constant +2 = 2
-    const fw2 = rt.getFrameworkReadAPI();
-    expect(getEffectiveStats(unitId, engine.getG(), fw2.cards, fw2).ap).toBe(2);
   });
 
-  it("does NOT get AP+2 with a non-red pilot", () => {
-    const bluePilot = createMockPilot({
-      name: "Blue Pilot",
-      color: "blue",
-      apBonus: 0,
-      hpBonus: 0,
-    });
+  it("gets AP+2 while paired with a red Pilot", () => {
     const engine = GundamTestEngine.create({
-      hand: [bluePilot],
-      play: [gd02Gquuuuuux034],
-      resourceArea: activeResources(3),
-      deck: 5,
+      hand: [gd02Gquuuuuux034, gd02HamanKarn091],
+      resourceArea: activeResources(5),
     });
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const rt = engine.getRuntime();
-    const unitId = rt.getInstanceIdByDefinition(
-      PLAYER_ONE as PlayerId,
-      gd02Gquuuuuux034.cardNumber,
-    )!;
+    const unitId = p1.getHand()[0]!;
 
-    expectSuccess(p1.assignPilot(bluePilot, gd02Gquuuuuux034));
+    expectSuccess(p1.deployUnit(unitId));
+    expectSuccess(p1.assignPilot(gd02HamanKarn091, unitId));
 
-    // After pairing with blue: base AP 0 + pilot apBonus 0, NO +2 = 0
-    const fw = rt.getFrameworkReadAPI();
-    expect(getEffectiveStats(unitId, engine.getG(), fw.cards, fw).ap).toBe(0);
+    expect(p1.getVisibleCard(unitId)?.effectiveAp).toBe(4);
+  });
+
+  it("does not get AP+2 while paired with a non-red Pilot", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd02Gquuuuuux034, gd02FourMurasame085],
+      resourceArea: activeResources(5),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const unitId = p1.getHand()[0]!;
+
+    expectSuccess(p1.deployUnit(unitId));
+    expectSuccess(p1.assignPilot(gd02FourMurasame085, unitId));
+
+    expect(p1.getVisibleCard(unitId)?.effectiveAp).toBe(2);
   });
 });

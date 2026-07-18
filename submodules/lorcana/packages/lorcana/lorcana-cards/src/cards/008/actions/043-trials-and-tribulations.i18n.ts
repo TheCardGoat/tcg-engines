@@ -33,4 +33,8 @@ export const trialsAndTribulationsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pruebas y tribulaciones",
+    text: "El personaje elegido obtiene -4 {S} hasta el inicio de tu siguiente turno.",
+  },
 };

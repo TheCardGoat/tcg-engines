@@ -21,4 +21,9 @@ export const theNokkWaterSpiritI18n: Record<Languages, I18nProperties> = {
     version: "Water Spirit",
     text: "<Ward> (Opponents can't choose this character except to challenge.)",
   },
+  es: {
+    name: "El Nokk",
+    version: "Espíritu de agua",
+    text: "Pabellón",
+  },
 };

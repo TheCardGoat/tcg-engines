@@ -17,4 +17,8 @@ export const daleBumblerI18n: Record<Languages, I18nProperties> = {
     name: "Ciop",
     version: "Pasticcione",
   },
+  es: {
+    name: "Valle",
+    version: "Torpe",
+  },
 };

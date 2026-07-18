@@ -31,6 +31,7 @@ export const op11Ishilly025: CharacterCard = {
     effects: [
       {
         trigger: "onOpponentAttack",
+        costs: [{ cost: "restDon", amount: 1 }, { cost: "restThisCard" }],
         actions: [
           {
             action: "modifyPower",

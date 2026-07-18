@@ -31,6 +31,19 @@ export const eb02ClovenRoseBlizzard007: EventCard = {
         trigger: "main",
         actions: [
           {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: {
+                amount: 3,
+                upTo: true,
+              },
+            },
+            value: 1000,
+            duration: "thisTurn",
+          },
+          {
             action: "ko",
             target: {
               player: "opponent",
@@ -44,6 +57,29 @@ export const eb02ClovenRoseBlizzard007: EventCard = {
                   filter: "power",
                   comparison: "lte",
                   value: 3000,
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "power",
+                  comparison: "lte",
+                  value: 4000,
                 },
               ],
             },

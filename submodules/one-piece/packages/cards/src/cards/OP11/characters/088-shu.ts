@@ -32,6 +32,17 @@ export const op11Shu088: CharacterCard = {
     effects: [
       {
         trigger: "onOpponentAttack",
+        conditions: [
+          {
+            condition: "triggerEventCard",
+            filters: [
+              {
+                filter: "attribute",
+                value: "slash",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

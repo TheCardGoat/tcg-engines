@@ -48,6 +48,7 @@ export const eb03Rebecca048: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -76,6 +77,7 @@ export const eb03Rebecca048: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

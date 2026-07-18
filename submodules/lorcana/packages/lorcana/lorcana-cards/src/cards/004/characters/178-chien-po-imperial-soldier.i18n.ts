@@ -21,4 +21,9 @@ export const chienpoImperialSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Soldato Imperiale",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Chien Po",
+    version: "Soldado Imperial",
+    text: "Guardaespaldas",
+  },
 };

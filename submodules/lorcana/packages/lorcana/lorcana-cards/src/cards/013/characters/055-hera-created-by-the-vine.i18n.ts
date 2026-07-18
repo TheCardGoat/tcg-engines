@@ -44,4 +44,15 @@ export const heraCreatedByTheVineI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hera",
+    version: "Creado por la vid",
+    text: [
+      {
+        title: "BENDICIÓN MÍSTICA",
+        description:
+          "Siempre que juegues con este u otro personaje Floodborn, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

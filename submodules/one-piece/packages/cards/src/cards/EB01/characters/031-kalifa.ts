@@ -46,12 +46,6 @@ export const eb01Kalifa031: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Water Seven",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -61,6 +55,11 @@ export const eb01Kalifa031: CharacterCard = {
         actions: [
           {
             action: "returnToHand",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Water Seven",
+              match: "includes",
+            },
             target: {
               player: "self",
               zones: ["trash"],

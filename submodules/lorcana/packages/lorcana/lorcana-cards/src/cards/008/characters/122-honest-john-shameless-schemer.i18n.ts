@@ -17,4 +17,8 @@ export const honestJohnShamelessSchemerI18n: Record<Languages, I18nProperties> =
     name: "La Volpe",
     version: "Cospiratore Spudorato",
   },
+  es: {
+    name: "Juan honesto",
+    version: "Planificador descarado",
+  },
 };

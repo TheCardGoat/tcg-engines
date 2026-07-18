@@ -21,4 +21,9 @@ export const maudieExasperatedNursemaidI18n: Record<Languages, I18nProperties> =
     version: "Bambinaia Esasperata",
     text: "<Resistere> +1",
   },
+  es: {
+    name: "Maudie",
+    version: "Niñera exasperada",
+    text: "Resistir +1",
+  },
 };

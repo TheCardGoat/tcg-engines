@@ -28,12 +28,6 @@ export const op08Zou039: StageCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Minks",
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -49,6 +43,11 @@ export const op08Zou039: StageCard = {
                 amount: 1,
                 upTo: true,
               },
+            },
+            condition: {
+              condition: "leaderTrait",
+              trait: "Minks",
+              match: "includes",
             },
           },
         ],
@@ -70,6 +69,7 @@ export const op08Zou039: StageCard = {
                 {
                   filter: "trait",
                   value: "Minks",
+                  match: "includes",
                 },
               ],
             },

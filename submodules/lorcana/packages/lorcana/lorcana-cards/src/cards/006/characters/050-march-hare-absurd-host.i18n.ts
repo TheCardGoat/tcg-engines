@@ -21,4 +21,9 @@ export const marchHareAbsurdHostI18n: Record<Languages, I18nProperties> = {
     version: "Ospite Assurdo",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Liebre de marzo",
+    version: "Anfitrión absurdo",
+    text: "Correr",
+  },
 };

@@ -77,6 +77,34 @@ export const eb03SSnake059: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "cannotAttack",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "excludeName",
+                  value: "Monkey.D.Luffy",
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 6,
+                },
+              ],
+            },
+            duration: "thisTurn",
+          },
+        ],
+      },
     ],
   },
   i18n: eb03SSnake059I18n,

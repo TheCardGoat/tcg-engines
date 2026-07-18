@@ -45,7 +45,7 @@ export const winnieThePoohPigletHunnyMages: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Team", "Hero", "Sorcerer", "Hunny"],
   abilities: [
-    shift(3),
+    shift("Winnie the Pooh or Piglet", 3),
     {
       type: "static",
       name: "MAGICAL MIX",

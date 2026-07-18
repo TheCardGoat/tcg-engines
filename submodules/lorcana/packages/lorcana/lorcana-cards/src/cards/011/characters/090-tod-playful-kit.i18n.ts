@@ -68,4 +68,20 @@ export const todPlayfulKitI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tod",
+    version: "Kit juguetón",
+    text: [
+      {
+        title: "¡MIRA ESTO!",
+        description: "Siempre que este personaje realice misiones, elige una:",
+      },
+      {
+        title: "* Gana 1 conocimiento.",
+      },
+      {
+        title: "* Tu personaje elegido gana Evasivo hasta el comienzo de tu próximo turno.",
+      },
+    ],
+  },
 };

@@ -19,6 +19,7 @@ const exportedCards = Object.values(cardExports as Record<string, unknown>).filt
   isCardDefinition,
 );
 const cardsSourceRoot = join(dirname(fileURLToPath(import.meta.url)), "../../cards/src/cards");
+const legacyBundledSourceFiles = [join(cardsSourceRoot, "ST01/index.ts")];
 
 function cardSourceFiles(directory: string): string[] {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -38,8 +39,9 @@ function cardSourceFiles(directory: string): string[] {
 }
 
 describe("card ability coverage inventory", () => {
-  test("covers every card source file with one exported card definition", async () => {
-    const sourceFiles = cardSourceFiles(cardsSourceRoot);
+  test("exports every standalone and legacy-bundled card definition exactly once", async () => {
+    const standaloneSourceFiles = cardSourceFiles(cardsSourceRoot);
+    const sourceFiles = [...standaloneSourceFiles, ...legacyBundledSourceFiles];
     const cardDefinitionsByFile = await Promise.all(
       sourceFiles.map(async (sourceFile) => {
         const module = (await import(pathToFileURL(sourceFile).href)) as Record<string, unknown>;
@@ -47,7 +49,20 @@ describe("card ability coverage inventory", () => {
       }),
     );
 
-    expect(cardDefinitionsByFile.every((definitions) => definitions.length === 1)).toBe(true);
-    expect(exportedCards.length).toBe(sourceFiles.length);
+    expect(
+      cardDefinitionsByFile
+        .slice(0, standaloneSourceFiles.length)
+        .every((definitions) => definitions.length === 1),
+    ).toBe(true);
+    expect(
+      cardDefinitionsByFile
+        .slice(standaloneSourceFiles.length)
+        .every((definitions) => definitions.length > 1),
+    ).toBe(true);
+
+    const sourceCardIds = cardDefinitionsByFile.flat().map((card) => card.id);
+    const exportedCardIds = exportedCards.map((card) => card.id);
+    expect(new Set(sourceCardIds).size).toBe(sourceCardIds.length);
+    expect(new Set(exportedCardIds)).toEqual(new Set(sourceCardIds));
   });
 });

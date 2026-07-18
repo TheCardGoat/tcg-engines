@@ -25,4 +25,8 @@ export const bePreparedI18n: Record<Languages, I18nProperties> = {
     name: "Be Prepared",
     text: "Banish all characters.",
   },
+  es: {
+    name: "Estar listo",
+    text: "Desterrar a todos los personajes.",
+  },
 };

@@ -46,12 +46,11 @@ export const op10MonkeyDLuffy118: CharacterCard = {
     effects: [
       {
         trigger: "whenAttacking",
-        conditions: [
+        costs: [
           {
-            condition: "handCount",
-            player: "opponent",
-            comparison: "gte",
-            value: 5,
+            cost: "returnTrashToDeck",
+            amount: 3,
+            position: "bottom",
           },
         ],
         actions: [
@@ -59,9 +58,30 @@ export const op10MonkeyDLuffy118: CharacterCard = {
             action: "trashFromHand",
             player: "opponent",
             amount: 1,
+            condition: {
+              condition: "handCount",
+              player: "opponent",
+              comparison: "gte",
+              value: 5,
+            },
           },
         ],
         optional: true,
+      },
+    ],
+    replacementEffects: [
+      {
+        replacedEvent: "ko",
+        source: "opponentEffect",
+        eventFilter: {
+          targetSelf: true,
+        },
+        replacementAction: {
+          action: "sequence",
+          actions: [],
+        },
+        oncePerTurn: true,
+        mandatory: true,
       },
     ],
   },

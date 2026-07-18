@@ -70,4 +70,20 @@ export const flynnRiderHisOwnBiggestFanI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Jinete Flynn",
+    version: "Su mayor fan",
+    text: [
+      {
+        title: "Shift 2",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "UN ÚLTIMO, GRAN PUNTUACIÓN",
+        description: "Este personaje obtiene -1 {L} por cada carta en la mano de tus oponentes.",
+      },
+    ],
+  },
 };

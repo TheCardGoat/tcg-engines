@@ -57,4 +57,18 @@ export const madamMimPurpleDragonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora mim",
+    version: "Dragón Púrpura",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "¡YO GANO, YO GANO!",
+        description:
+          "Cuando juegues con este personaje, destiérralo o devuelve otros 2 personajes tuyos elegidos a tu mano.",
+      },
+    ],
+  },
 };

@@ -25,7 +25,7 @@ export const op08King057: LeaderCard = {
     },
   ],
   cardType: "leader",
-  color: ["blue", "purple"],
+  color: ["purple", "black"],
   rarity: "L",
   setId: "OP08",
   power: 5000,
@@ -40,7 +40,7 @@ export const op08King057: LeaderCard = {
     },
   ],
   effect:
-    "[Activate:Main] [Once Per Turn] DON!! 2 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Choose one: • If you have 5 or less cards in your hand, draw 1 card. • Give up to 1 of your opponent's Characters 2 cost during this turn.",
+    "[Activate:Main] [Once Per Turn] DON!! −2 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Choose one: • If you have 5 or less cards in your hand, draw 1 card. • Give up to 1 of your opponent's Characters −2 cost during this turn.",
   effects: {
     effects: [
       {
@@ -60,6 +60,12 @@ export const op08King057: LeaderCard = {
                   action: "draw",
                   player: "self",
                   amount: 1,
+                  condition: {
+                    condition: "handCount",
+                    player: "self",
+                    comparison: "lte",
+                    value: 5,
+                  },
                 },
               ],
               [
@@ -73,7 +79,7 @@ export const op08King057: LeaderCard = {
                       upTo: true,
                     },
                   },
-                  value: 2,
+                  value: -2,
                   duration: "thisTurn",
                 },
               ],

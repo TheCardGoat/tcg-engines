@@ -53,6 +53,30 @@ export const op03FlameEmperor016: EventCard = {
               ],
             },
           },
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+            },
+            keyword: "doubleAttack",
+            duration: "thisTurn",
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+            },
+            value: 3000,
+            duration: "thisTurn",
+          },
         ],
       },
       {

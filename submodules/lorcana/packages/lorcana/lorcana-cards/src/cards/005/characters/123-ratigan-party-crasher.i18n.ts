@@ -68,4 +68,20 @@ export const ratiganPartyCrasherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratigan",
+    version: "Choque de fiesta",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "DELICIOSAMENTE MALVADO",
+        description: "Tus personajes dañados obtienen +2 {S}.",
+      },
+    ],
+  },
 };

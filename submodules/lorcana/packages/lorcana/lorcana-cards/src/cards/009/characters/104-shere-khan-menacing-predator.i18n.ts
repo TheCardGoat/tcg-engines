@@ -43,4 +43,15 @@ export const shereKhanMenacingPredatorI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Shere Khan",
+    version: "Depredador amenazante",
+    text: [
+      {
+        title: "NO INSULTEN MI INTELIGENCIA",
+        description:
+          "Siempre que uno de tus personajes desafíe a otro personaje, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

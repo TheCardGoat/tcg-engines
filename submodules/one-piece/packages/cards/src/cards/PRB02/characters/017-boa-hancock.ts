@@ -30,7 +30,7 @@ export const prb02BoaHancock017: CharacterCard = {
   setId: "PRB02",
   cost: 5,
   power: 7000,
-  traits: ["FILM Kuja Pirates The Seven Warlords of the Sea"],
+  traits: ["FILM", "The Seven Warlords of the Sea", "Kuja Pirates"],
   attribute: "special",
   artVariants: [
     {
@@ -40,9 +40,71 @@ export const prb02BoaHancock017: CharacterCard = {
     },
   ],
   effect:
-    "[Once Per Turn] You may trash 1 card with a [Trigger] from your hand: Your opponent's rested Leader or up to 1 of your opponent's Characters other than [Monkey.D.Luffy] cannot attack until the end of your opponent's next End Phase.[Trigger] K.O up to 1 of your opponent's Characters with a cost of 4 or less",
+    "[On Play] You may trash 1 card with a [Trigger] from your hand: Your opponent's rested Leader or up to 1 of your opponent's Characters other than [Monkey.D.Luffy] cannot attack until the end of your opponent's next End Phase.[Trigger] K.O. up to 1 of your opponent's Characters with a cost of 4 or less.",
   effects: {
     effects: [
+      {
+        trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "hasTrigger",
+                value: true,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "choice",
+            options: [
+              [
+                {
+                  action: "cannotAttack",
+                  target: {
+                    player: "opponent",
+                    zones: ["leader"],
+                    count: {
+                      amount: 1,
+                    },
+                    filters: [
+                      {
+                        filter: "state",
+                        value: "rested",
+                      },
+                    ],
+                  },
+                  duration: "untilEndOfOpponentNextEndPhase",
+                },
+              ],
+              [
+                {
+                  action: "cannotAttack",
+                  target: {
+                    player: "opponent",
+                    zones: ["character"],
+                    count: {
+                      amount: 1,
+                      upTo: true,
+                    },
+                    filters: [
+                      {
+                        filter: "excludeName",
+                        value: "Monkey.D.Luffy",
+                      },
+                    ],
+                  },
+                  duration: "untilEndOfOpponentNextEndPhase",
+                },
+              ],
+            ],
+          },
+        ],
+        optional: true,
+      },
       {
         trigger: "trigger",
         actions: [
@@ -63,33 +125,6 @@ export const prb02BoaHancock017: CharacterCard = {
                 },
               ],
             },
-          },
-        ],
-      },
-    ],
-    permanentEffects: [
-      {
-        actions: [
-          {
-            action: "cannotAttack",
-            target: {
-              player: "opponent",
-              zones: ["leader", "character"],
-              count: {
-                amount: "all",
-              },
-              filters: [
-                {
-                  filter: "excludeName",
-                  value: "Monkey.D.Luffy",
-                },
-                {
-                  filter: "state",
-                  value: "rested",
-                },
-              ],
-            },
-            duration: "untilEndOfOpponentNextEndPhase",
           },
         ],
       },

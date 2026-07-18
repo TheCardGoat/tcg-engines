@@ -43,4 +43,14 @@ export const megavoltElectricalMenaceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Megavoltio",
+    version: "Amenaza eléctrica",
+    text: [
+      {
+        title: "Campo de fuerza",
+        description: "Mientras no tengas cartas en tu mano, este personaje gana <Resistir> +2.",
+      },
+    ],
+  },
 };

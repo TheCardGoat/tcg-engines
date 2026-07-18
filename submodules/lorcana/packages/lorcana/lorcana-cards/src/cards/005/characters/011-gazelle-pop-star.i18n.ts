@@ -21,4 +21,9 @@ export const gazellePopStarI18n: Record<Languages, I18nProperties> = {
     version: "Pop Star",
     text: "<Melodioso> 5",
   },
+  es: {
+    name: "Gacela",
+    version: "Estrella del pop",
+    text: "Cantante 5",
+  },
 };

@@ -59,4 +59,17 @@ export const judyHoppsResourcefulRabbitI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Judy Hopps",
+    version: "Conejo ingenioso",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "¿NECESITAS AYUDA?",
+        description: "Al final de tu turno, puedes preparar otro personaje tuyo elegido.",
+      },
+    ],
+  },
 };

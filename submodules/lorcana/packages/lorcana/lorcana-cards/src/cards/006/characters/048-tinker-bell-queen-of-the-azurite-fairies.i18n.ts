@@ -72,4 +72,21 @@ export const tinkerBellQueenOfTheAzuriteFairiesI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Campanita",
+    version: "Reina de las Hadas Azuritas",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "EJEMPLO BRILLANTE",
+        description:
+          "Siempre que este personaje realice una misión, tus otros personajes de Hada obtienen +1 {L} este turno.",
+      },
+    ],
+  },
 };

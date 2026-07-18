@@ -31,6 +31,20 @@ export const op10Perona092: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 2,
+            position: "bottom",
+            filters: [
+              {
+                filter: "trait",
+                value: "Thriller Bark Pirates",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

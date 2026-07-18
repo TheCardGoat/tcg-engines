@@ -40,6 +40,8 @@ const REQUIRED_FIELDS: Record<Effect["effect"], readonly string[]> = {
   attachCard: ["target", "attachTo"],
   removeFromGame: ["target"],
   stealGig: ["target"],
+  swapGigs: ["friendly", "rival"],
+  grantNextFightWinGigSteal: ["minPowerMargin", "duration"],
   trashFromDeck: ["player", "amount"],
   sellFromDeck: ["player", "amount"],
   ifYouDo: ["doEffect", "ifEffects"],

@@ -35,6 +35,7 @@ export const op04Machvise033: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Donquixote Pirates",
+            match: "includes",
           },
         ],
         actions: [
@@ -57,15 +58,21 @@ export const op04Machvise033: CharacterCard = {
             },
           },
           {
-            action: "setActive",
-            target: {
-              player: "self",
-              zones: ["costArea"],
-              count: {
-                amount: 1,
-                upTo: true,
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "setActive",
+                target: {
+                  player: "self",
+                  zones: ["costArea"],
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                },
               },
-            },
+            ],
           },
         ],
       },

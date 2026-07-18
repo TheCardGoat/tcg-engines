@@ -65,4 +65,20 @@ export const fergusOutpostBuilderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Fergus",
+    version: "Constructor de puestos avanzados",
+    text: [
+      {
+        title: "SOLO EL LUGAR",
+        description:
+          "Durante tu turno, siempre que este personaje se esfuerce, puedes jugar una ubicación de tu mano o descartarla con un coste de 4 o menos de forma gratuita.",
+      },
+      {
+        title: "AGÁRRATE FUERTE",
+        description:
+          "Mientras este personaje esté en una ubicación, cada vez que una ubicación sea desafiada y desterrada, puedes causar 4 daños al personaje elegido.",
+      },
+    ],
+  },
 };

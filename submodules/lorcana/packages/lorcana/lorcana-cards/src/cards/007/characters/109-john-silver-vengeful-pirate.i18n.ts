@@ -78,4 +78,23 @@ export const johnSilverVengefulPirateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Juan Plata",
+    version: "Pirata vengativo",
+    text: [
+      {
+        title: "DIBUJADO A",
+        description:
+          "UNA LUCHA Si un personaje contrario resultó dañado este turno, pagas 2 {I} menos para jugar con este personaje.",
+      },
+      {
+        title: "Resistir +1",
+      },
+      {
+        title: "¡NO ME HE VUELTO SUAVE!",
+        description:
+          "Siempre que realices una acción que no sea una canción, puedes causar 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

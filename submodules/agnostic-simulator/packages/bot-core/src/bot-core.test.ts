@@ -2,7 +2,6 @@ import { describe, expect, test } from "vitest";
 
 import {
   BOT_CORE_SCHEMA_VERSION,
-  botCandidateManifestV1Schema,
   buildPairedSchedule,
   canonicalJson,
   classifyPromotion,
@@ -15,6 +14,7 @@ import {
   type BotCardHeuristicProfileV1,
   type BotEvaluationSpecV1,
 } from "./index.js";
+import { botCandidateManifestV1Schema } from "./schemas.js";
 
 const promotionSpec: BotEvaluationSpecV1 = {
   suiteId: "promotion",

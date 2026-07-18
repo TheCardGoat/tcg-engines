@@ -42,4 +42,14 @@ export const balooOlIronPawsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Baloo",
+    version: "Viejas patas de hierro",
+    text: [
+      {
+        title: "LUCHA COMO",
+        description: "UN OSO Tus personajes con 7 {S} o más no pueden recibir daño.",
+      },
+    ],
+  },
 };

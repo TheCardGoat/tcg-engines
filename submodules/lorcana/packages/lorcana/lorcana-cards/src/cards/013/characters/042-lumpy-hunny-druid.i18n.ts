@@ -45,4 +45,15 @@ export const lumpyHunnyDruidI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Aterronado",
+    version: "Druida cariñosa",
+    text: [
+      {
+        title: "BIENVENIDO A LA SANACIÓN",
+        description:
+          "Cuando juegas con este personaje, puedes mover hasta 2 puntos de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

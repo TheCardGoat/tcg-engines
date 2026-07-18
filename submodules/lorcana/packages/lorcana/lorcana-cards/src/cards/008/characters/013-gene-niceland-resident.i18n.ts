@@ -45,4 +45,15 @@ export const geneNicelandResidentI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gene",
+    version: "Residente de Nicelandia",
+    text: [
+      {
+        title: "Supongo que te lo ganaste",
+        description:
+          "Siempre que este personaje realice una misión, puedes eliminar hasta 2 daños del personaje elegido.",
+      },
+    ],
+  },
 };

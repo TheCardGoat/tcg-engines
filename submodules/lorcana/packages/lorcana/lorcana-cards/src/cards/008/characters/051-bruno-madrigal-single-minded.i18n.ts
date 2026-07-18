@@ -45,4 +45,15 @@ export const brunoMadrigalSinglemindedI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Bruno madrigal",
+    version: "Decidido",
+    text: [
+      {
+        title: "DE PIE ELEVADO",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido no puede estar listo al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

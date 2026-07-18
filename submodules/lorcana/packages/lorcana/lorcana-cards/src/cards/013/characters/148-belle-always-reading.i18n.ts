@@ -44,4 +44,14 @@ export const belleAlwaysReadingI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Beldad",
+    version: "Siempre leyendo",
+    text: [
+      {
+        title: "Soñando con más",
+        description: "Pagas 1 {I} menos para colocar un personaje encima de este personaje.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const hookHandUnexpectedlyFriendlyI18n: Record<Languages, I18nProperties>
     name: "Uncino",
     version: "Inaspettatamente Amichevole",
   },
+  es: {
+    name: "Mano de gancho",
+    version: "Inesperadamente amigable",
+  },
 };

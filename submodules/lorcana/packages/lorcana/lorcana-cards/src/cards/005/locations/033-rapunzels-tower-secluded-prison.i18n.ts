@@ -41,4 +41,14 @@ export const rapunzelsTowerSecludedPrisonI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Torre de Rapunzel",
+    version: "Prisión aislada",
+    text: [
+      {
+        title: "SANO Y SALVO",
+        description: "Los personajes obtienen +3 {W} mientras están aquí.",
+      },
+    ],
+  },
 };

@@ -33,6 +33,7 @@ export const op09NobodyHurtsAFriendOfMine019: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Red-Haired Pirates",
+            match: "includes",
           },
         ],
         actions: [
@@ -49,7 +50,22 @@ export const op09NobodyHurtsAFriendOfMine019: EventCard = {
             value: -3000,
             duration: "thisTurn",
           },
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+            condition: {
+              condition: "existsOnField",
+              player: "opponent",
+              zone: "character",
+              filters: [{ filter: "power", comparison: "gte", value: 5000 }],
+            },
+          },
         ],
+      },
+      {
+        trigger: "trigger",
+        actions: [{ action: "draw", player: "self", amount: 1 }],
       },
     ],
   },

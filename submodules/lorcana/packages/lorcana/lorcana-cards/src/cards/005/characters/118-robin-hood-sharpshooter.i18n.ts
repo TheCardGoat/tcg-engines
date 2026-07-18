@@ -45,4 +45,15 @@ export const robinHoodSharpshooterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Robin Hood",
+    version: "Tirador de primera",
+    text: [
+      {
+        title: "MI MAYOR ACTUACIÓN",
+        description:
+          "Siempre que este personaje realice una misión, mira las 4 cartas superiores de tu mazo. Puedes revelar una carta de acción con un coste de 6 o menos y jugarla gratis. Pon el resto en tu descarte.",
+      },
+    ],
+  },
 };

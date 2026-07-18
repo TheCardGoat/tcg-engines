@@ -41,4 +41,14 @@ export const tianasPalaceJazzRestaurantI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Palacio de Tiana",
+    version: "Restaurante Jazz",
+    text: [
+      {
+        title: "NOCHE DE SALIDA",
+        description: "Los personajes no pueden ser desafiados mientras estén aquí.",
+      },
+    ],
+  },
 };

@@ -80,4 +80,23 @@ export const mulanEliteArcherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mulán",
+    version: "Arquero de élite",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "TIRADOR RECTO",
+        description:
+          "Cuando juegas con este personaje, si usaste Shift para interpretarlo, ella obtiene +3 {S} este turno.",
+      },
+      {
+        title: "DISPARO TRIPLE",
+        description:
+          "Durante tu turno, siempre que este personaje inflija daño a otro personaje en un desafío, inflige la misma cantidad de daño hasta a otros 2 personajes elegidos.",
+      },
+    ],
+  },
 };

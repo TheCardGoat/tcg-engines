@@ -27,6 +27,32 @@ export const eb01OhComeMyWay038: EventCard = {
   effects: {
     effects: [
       {
+        trigger: "counter",
+        costs: [
+          {
+            cost: "returnDon",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "changeBattleTarget",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+            },
+            condition: {
+              condition: "leaderTrait",
+              trait: "Baroque Works",
+              match: "includes",
+            },
+          },
+        ],
+      },
+      {
         trigger: "trigger",
         costs: [
           {

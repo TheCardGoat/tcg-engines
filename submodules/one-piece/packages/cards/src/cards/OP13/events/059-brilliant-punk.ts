@@ -28,11 +28,12 @@ export const op13BrilliantPunk059: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [{ cost: "returnCharacter", amount: 1 }],
         actions: [
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "both",
               zones: ["character"],
               count: {
                 amount: 1,

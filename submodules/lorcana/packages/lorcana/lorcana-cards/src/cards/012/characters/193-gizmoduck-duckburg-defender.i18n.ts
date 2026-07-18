@@ -58,4 +58,18 @@ export const gizmoduckDuckburgDefenderI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Gizmoduck",
+    version: "Defensor de Duckburg",
+    text: [
+      {
+        title: "Resistir +1",
+      },
+      {
+        title: "A PRUEBA DE FALLOS",
+        description:
+          "Mientras no tengas cartas en tu mano, los oponentes no pueden realizar acciones con un coste de 4 o más.",
+      },
+    ],
+  },
 };

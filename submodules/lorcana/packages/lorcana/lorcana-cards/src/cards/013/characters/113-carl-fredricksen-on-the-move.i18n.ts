@@ -65,4 +65,20 @@ export const carlFredricksenOnTheMoveI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Carl Fredricksen",
+    version: "En movimiento",
+    text: [
+      {
+        title: "COMPAÑERO DE MUDANZA",
+        description:
+          "Cada vez que juegas en una ubicación, puedes mover este personaje y hasta 1 de tus otros personajes a esa ubicación de forma gratuita.",
+      },
+      {
+        title: "LA AVENTURA TE ESPERA",
+        description:
+          "Siempre que este personaje realice una misión mientras esté en una ubicación, roba cartas iguales a {L} de esa ubicación.",
+      },
+    ],
+  },
 };

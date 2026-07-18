@@ -43,12 +43,10 @@ export const op11GumGumFireFistPistolRedHawk114: EventCard = {
     effects: [
       {
         trigger: "main",
-        conditions: [
+        costs: [
           {
-            condition: "lifeCount",
-            player: "self",
-            comparison: "gte",
-            value: 5,
+            cost: "restDon",
+            amount: 3,
           },
         ],
         actions: [
@@ -68,6 +66,11 @@ export const op11GumGumFireFistPistolRedHawk114: EventCard = {
                   value: 5,
                 },
               ],
+            },
+            condition: {
+              condition: "totalLifeCount",
+              comparison: "gte",
+              value: 5,
             },
           },
         ],

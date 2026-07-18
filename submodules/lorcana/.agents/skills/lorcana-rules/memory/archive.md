@@ -35,3 +35,13 @@ Pre-migration entries lived as a flat dated list. Each was either folded into a 
 | 2026-03-30 | fair-information bot gating                           | PR-10                                    |
 | 2026-04-01 | vanish vs activated ability targeting                 | PR-09                                    |
 | 2026-04-11 | the-958 shift-trigger rules handoff                   | PR-04 cross-ref                          |
+
+## 2026-07-15 — stale sweep
+
+### C-01 — sing-trigger-bag-flush-timing
+
+- **pattern**: Sing triggers must be flushed to the bag only after the song's pending effect fully resolves, never mid-action. Engine already implements correctly; codifying as a Promoted Rule needs a dedicated runtime test (currently inferred from `play-card.ts` call-site placement).
+- **hits**: 1 (most recent: 2026-03-27)
+- **promote_when**: a dedicated test exists for the flush-timing invariant.
+- **demote_at**: 2026-06-20
+- **archived_on**: 2026-07-15 because the candidate expired without reinforcement.

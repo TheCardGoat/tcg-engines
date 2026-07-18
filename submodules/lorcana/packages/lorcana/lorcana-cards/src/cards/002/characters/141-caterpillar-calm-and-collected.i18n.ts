@@ -17,4 +17,8 @@ export const caterpillarCalmAndCollectedI18n: Record<Languages, I18nProperties> 
     name: "Caterpillar",
     version: "Calm and Collected",
   },
+  es: {
+    name: "Oruga",
+    version: "Tranquilo y sereno",
+  },
 };

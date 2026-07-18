@@ -56,4 +56,17 @@ export const scroogeMcduckGhostlyEbenezerI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Gilito McPato",
+    version: "Ebenezer fantasmal",
+    text: [
+      {
+        title: "Impulsar 1 {I}",
+      },
+      {
+        title: "CONTAR MONEDAS",
+        description: "Este personaje obtiene +1 {S} y +1 {W} por cada carta debajo de él.",
+      },
+    ],
+  },
 };

@@ -58,4 +58,18 @@ export const kronkMeatHutCookI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kronk",
+    version: "Cocinero de choza de carne",
+    text: [
+      {
+        title: "<Resistir> +1",
+      },
+      {
+        title: "¡Levantar!",
+        description:
+          "Una vez durante tu turno, puedes pagar 1 {I} para robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

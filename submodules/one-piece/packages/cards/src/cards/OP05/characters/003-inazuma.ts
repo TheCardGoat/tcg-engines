@@ -27,5 +27,43 @@ export const op05Inazuma003: CharacterCard = {
   attribute: "slash",
   effect:
     "If you have a Character with 7000 power or more other than this Character, this Character gains [Rush]. (This card can attack on the turn in which it is played.)",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "hasCard",
+            player: "self",
+            zone: "character",
+            filters: [
+              {
+                filter: "excludeSelf",
+              },
+              {
+                filter: "power",
+                comparison: "gte",
+                value: 7000,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op05Inazuma003I18n,
 };

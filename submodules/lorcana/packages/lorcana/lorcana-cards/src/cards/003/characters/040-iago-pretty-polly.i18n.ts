@@ -21,4 +21,9 @@ export const iagoPrettyPollyI18n: Record<Languages, I18nProperties> = {
     version: "Bel Pappagallino",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Yago",
+    version: "Linda polly",
+    text: "Evasivo",
+  },
 };

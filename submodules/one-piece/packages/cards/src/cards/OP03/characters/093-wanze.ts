@@ -30,12 +30,6 @@ export const op03Wanze093: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "CP",
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -59,6 +53,11 @@ export const op03Wanze093: CharacterCard = {
                   value: 1,
                 },
               ],
+            },
+            condition: {
+              condition: "leaderTrait",
+              trait: "CP",
+              match: "includes",
             },
           },
         ],

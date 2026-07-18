@@ -62,6 +62,16 @@ export const gd02GaelioBauduin099: PilotCard = {
       type: "triggered",
       activation: {
         timing: ["whenPaired"],
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "friendly",
+            zone: "trash",
+            comparison: "gte",
+            count: 4,
+            hasTrait: "gjallarhorn",
+          },
+        ],
       },
       directives: [
         {

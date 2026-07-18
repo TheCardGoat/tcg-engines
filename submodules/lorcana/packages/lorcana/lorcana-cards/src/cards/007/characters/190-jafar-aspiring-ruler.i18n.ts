@@ -45,4 +45,15 @@ export const jafarAspiringRulerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jafar",
+    version: "Aspirante a gobernante",
+    text: [
+      {
+        title: "ESO ES MEJOR",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido gana Challenger +2 este turno. (Obtienen +2 {S} mientras desafían).",
+      },
+    ],
+  },
 };

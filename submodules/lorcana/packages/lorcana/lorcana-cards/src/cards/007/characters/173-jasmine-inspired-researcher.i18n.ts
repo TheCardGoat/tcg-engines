@@ -45,4 +45,15 @@ export const jasmineInspiredResearcherI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Jazmín",
+    version: "Investigador inspirado",
+    text: [
+      {
+        title: "ASISTENCIA ADICIONAL",
+        description:
+          "Siempre que este personaje realice una misión, si no tienes cartas en tu mano, roba una carta por cada personaje aliado que tengas en juego.",
+      },
+    ],
+  },
 };

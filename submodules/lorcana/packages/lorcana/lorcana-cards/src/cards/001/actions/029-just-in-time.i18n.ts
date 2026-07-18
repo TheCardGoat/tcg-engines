@@ -17,4 +17,8 @@ export const justInTimeI18n: Record<Languages, I18nProperties> = {
     name: "Just in Time",
     text: "You may play a character with cost 5 or less for free.",
   },
+  es: {
+    name: "Justo a tiempo",
+    text: "Puedes interpretar un personaje con un coste de 5 o menos de forma gratuita.",
+  },
 };

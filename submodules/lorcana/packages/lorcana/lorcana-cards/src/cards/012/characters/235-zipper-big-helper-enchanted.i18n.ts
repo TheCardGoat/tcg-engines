@@ -57,4 +57,18 @@ export const zipperBigHelperEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cremallera",
+    version: "Gran ayudante",
+    text: [
+      {
+        title: "Shift 2 {I}",
+      },
+      {
+        title: "ENTUSIASMO ZUMBANTE",
+        description:
+          "Siempre que este personaje realice una misión, puedes agregar su {W} al {S} de otro personaje elegido este turno.",
+      },
+    ],
+  },
 };

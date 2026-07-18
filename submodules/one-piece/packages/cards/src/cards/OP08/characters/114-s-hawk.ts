@@ -26,19 +26,11 @@ export const op08SHawk114: CharacterCard = {
   traits: ["Egghead Seraphim"],
   attribute: "slash",
   effect:
-    "[DON!! x1] If you have less Life cards than your opponent, this Character cannot be K.O.'d in battle by attribute cards and gains +2000 power. [Trigger] You may trash 1 card from your hand: If you have 2 or less Life cards, play this card.",
+    "[DON!! x1] If you have less Life cards than your opponent, this Character cannot be K.O.'d in battle by <Slash> attribute cards and gains +2000 power. [Trigger] You may trash 1 card from your hand: If you have 2 or less Life cards, play this card.",
   effects: {
     effects: [
       {
         trigger: "trigger",
-        conditions: [
-          {
-            condition: "lifeCount",
-            player: "self",
-            comparison: "lte",
-            value: 2,
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -47,13 +39,12 @@ export const op08SHawk114: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
+            action: "playThisCard",
+            condition: {
+              condition: "lifeCount",
               player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
+              comparison: "lte",
+              value: 2,
             },
           },
         ],
@@ -85,6 +76,25 @@ export const op08SHawk114: CharacterCard = {
             },
             duration: "permanent",
             restriction: "inBattle",
+            byFilter: [
+              {
+                filter: "attribute",
+                value: "slash",
+              },
+            ],
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 2000,
+            duration: "permanent",
           },
         ],
       },

@@ -30,4 +30,18 @@ export const camiloMadrigalCenterStageI18n: Record<Languages, I18nProperties> = 
     version: "Al Centro dell'Attenzione",
     text: "Bis! Bis! Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta.",
   },
+  es: {
+    name: "Camilo Madrigal",
+    version: "Escenario central",
+    text: [
+      {
+        title: "¡BIS!",
+      },
+      {
+        title: "¡BIS!",
+        description:
+          "Cuando este personaje sea desterrado en un desafío, devuelve esta carta a tu mano.",
+      },
+    ],
+  },
 };

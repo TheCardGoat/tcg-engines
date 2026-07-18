@@ -60,4 +60,18 @@ export const queenOfHeartsSensingWeaknessI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Reina de corazones",
+    version: "Sintiendo debilidad",
+    text: [
+      {
+        title: "Shift 2",
+      },
+      {
+        title: "QUE COMIENCE EL JUEGO",
+        description:
+          "Siempre que uno de tus personajes desafíe a otro personaje, puedes robar una carta.",
+      },
+    ],
+  },
 };

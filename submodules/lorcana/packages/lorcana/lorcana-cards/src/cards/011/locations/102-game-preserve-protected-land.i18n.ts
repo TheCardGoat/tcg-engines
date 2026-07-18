@@ -45,4 +45,15 @@ export const gamePreserveProtectedLandI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Reserva de caza",
+    version: "Tierra Protegida",
+    text: [
+      {
+        title: "FÁCIL DE PERDERSE",
+        description:
+          "Si bien hay un personaje con Evasivo aquí, esta ubicación gana Evasivo. (Solo los personajes con Evasivo pueden desafiarlo).",
+      },
+    ],
+  },
 };

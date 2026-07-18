@@ -23,7 +23,7 @@ export const op08ThankYouForLovingMe053: EventCard = {
   cost: 1,
   traits: ["Whitebeard Pirates"],
   effect:
-    '[Main] If your Leader\'s type includes "Whitebeard Piratess", look at 3 cards from the top of your deck; reveal up to 1 card with a type including "Whitebeard Piratess" or [Monkey.D.Luffy] and add it to your hand. Then, place the rest at the top or bottom of your deck in any order. [Trigger] Draw 1 card.',
+    '[Main] If your Leader\'s type includes "Whitebeard Pirates", look at 3 cards from the top of your deck; reveal up to 1 card with a type including "Whitebeard Pirates" or [Monkey.D.Luffy] and add it to your hand. Then, place the rest at the top or bottom of your deck in any order. [Trigger] Draw 1 card.',
   effects: {
     effects: [
       {
@@ -31,7 +31,8 @@ export const op08ThankYouForLovingMe053: EventCard = {
         conditions: [
           {
             condition: "leaderTrait",
-            trait: "Whitebeard Piratess",
+            trait: "Whitebeard Pirates",
+            match: "includes",
           },
         ],
         actions: [
@@ -46,8 +47,24 @@ export const op08ThankYouForLovingMe053: EventCard = {
               amount: 1,
               upTo: true,
             },
+            revealFilters: [
+              {
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Whitebeard Pirates",
+                    match: "includes",
+                  },
+                  {
+                    filter: "name",
+                    value: "Monkey.D.Luffy",
+                  },
+                ],
+              },
+            ],
             revealDestination: "hand",
-            remainderPosition: "bottom",
+            remainderPosition: "any",
           },
         ],
       },

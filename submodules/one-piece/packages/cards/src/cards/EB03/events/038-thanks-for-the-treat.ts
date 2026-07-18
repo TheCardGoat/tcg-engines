@@ -27,6 +27,51 @@ export const eb03ThanksForTheTreat038: EventCard = {
   effects: {
     effects: [
       {
+        trigger: "main",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "addDon",
+            count: {
+              amount: 2,
+              upTo: true,
+            },
+            state: "rested",
+            condition: {
+              condition: "compound",
+              operator: "and",
+              conditions: [
+                {
+                  condition: "donFieldComparison",
+                  selfComparison: "lte",
+                },
+                {
+                  condition: "zoneCount",
+                  player: "self",
+                  zone: "character",
+                  comparison: "eq",
+                  value: 0,
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "GERMA",
+                      match: "includes",
+                      negate: true,
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+        optional: true,
+      },
+      {
         trigger: "counter",
         actions: [
           {

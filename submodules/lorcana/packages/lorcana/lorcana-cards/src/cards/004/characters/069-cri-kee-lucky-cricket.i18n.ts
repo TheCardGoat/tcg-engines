@@ -44,4 +44,15 @@ export const crikeeLuckyCricketI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cri-kee",
+    version: "Grillo afortunado",
+    text: [
+      {
+        title: "DIFUNDIENDO BUENA FORTUNA",
+        description:
+          "Cuando juegas con este personaje, tus otros personajes obtienen +3 {S} este turno.",
+      },
+    ],
+  },
 };

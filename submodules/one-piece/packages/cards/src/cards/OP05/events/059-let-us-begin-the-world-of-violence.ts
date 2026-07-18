@@ -28,21 +28,19 @@ export const op05LetUsBeginTheWorldOfViolence059: EventCard = {
     effects: [
       {
         trigger: "main",
-        conditions: [
-          {
-            condition: "leaderMulticolored",
-          },
-        ],
         actions: [
           {
             action: "draw",
             player: "self",
             amount: 1,
+            condition: {
+              condition: "leaderMulticolored",
+            },
           },
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

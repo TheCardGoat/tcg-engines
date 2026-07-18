@@ -72,4 +72,21 @@ export const cinderellaStoutheartedD23I18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Cenicienta",
+    version: "Valiente",
+    text: [
+      {
+        title: "<Mayús> 5",
+      },
+      {
+        title: "<Resistir> +2",
+      },
+      {
+        title: "La espada cantante",
+        description:
+          "Siempre que toques una canción, este personaje puede desafiar a los personajes listos en este turno.",
+      },
+    ],
+  },
 };

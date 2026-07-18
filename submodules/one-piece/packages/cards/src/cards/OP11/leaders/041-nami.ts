@@ -56,6 +56,12 @@ export const op11Nami041: LeaderCard = {
             action: "draw",
             player: "self",
             amount: 1,
+            condition: {
+              condition: "handCount",
+              player: "self",
+              comparison: "lte",
+              value: 7,
+            },
           },
         ],
         oncePerTurn: true,

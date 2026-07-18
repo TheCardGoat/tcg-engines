@@ -116,6 +116,7 @@ export interface PostGameRecordEnvelope {
   gameId: string;
   matchId: string | null;
   note: string;
+  inkmarksEarnedForMatch?: number;
   postGame: PostGameCanonicalData | null;
 }
 
@@ -172,6 +173,8 @@ function parsePostGameRecordEnvelope(payload: unknown): PostGameRecordEnvelope {
     typeof payload.gameId !== "string" ||
     (typeof payload.matchId !== "string" && payload.matchId !== null) ||
     typeof payload.note !== "string" ||
+    (payload.inkmarksEarnedForMatch !== undefined &&
+      typeof payload.inkmarksEarnedForMatch !== "number") ||
     !(payload.postGame === null || isPostGameCanonicalData(payload.postGame))
   ) {
     throw new Error("Received an invalid post-game record payload from the API.");
@@ -181,6 +184,9 @@ function parsePostGameRecordEnvelope(payload: unknown): PostGameRecordEnvelope {
     gameId: payload.gameId,
     matchId: payload.matchId,
     note: payload.note,
+    ...(typeof payload.inkmarksEarnedForMatch === "number"
+      ? { inkmarksEarnedForMatch: payload.inkmarksEarnedForMatch }
+      : {}),
     postGame: payload.postGame,
   };
 }

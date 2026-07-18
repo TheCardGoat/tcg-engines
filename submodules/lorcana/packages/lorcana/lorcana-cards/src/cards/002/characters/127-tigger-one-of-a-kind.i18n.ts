@@ -43,4 +43,14 @@ export const tiggerOneOfAKindI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tigre",
+    version: "Único en su clase",
+    text: [
+      {
+        title: "ENERGÉTICO",
+        description: "Cada vez que juegas una acción, este personaje obtiene +2 {S} este turno.",
+      },
+    ],
+  },
 };

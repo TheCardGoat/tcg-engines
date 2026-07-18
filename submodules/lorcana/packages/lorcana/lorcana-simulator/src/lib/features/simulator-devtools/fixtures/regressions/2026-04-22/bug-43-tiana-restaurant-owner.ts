@@ -14,16 +14,19 @@ export const bug43TianaRestaurantOwnerFixture = createFixture({
   description:
     "Tiana - Restaurant Owner in play with only the ready copy available. Used to verify the trigger does not prompt when the precondition is not met.",
   playerOne: {
-    play: [princeEricNobleSwordsman, daleExcitedFriend],
+    play: [
+      { card: princeEricNobleSwordsman, isDrying: false },
+      { card: daleExcitedFriend, isDrying: false },
+    ],
     inkwell: 4,
     deck: [donaldDuckStruttingHisStuff, grammaTalaStoryteller],
     hand: [grammaTalaStoryteller],
   },
   playerTwo: {
     play: [
-      { card: tianaRestaurantOwner, exerted: true },
-      { card: montereyJackWatchfulRanger, exerted: true },
-      { card: agustinMadrigalExceptionallyKind, exerted: true },
+      { card: tianaRestaurantOwner, exerted: false, isDrying: false },
+      { card: montereyJackWatchfulRanger, exerted: true, isDrying: false },
+      { card: agustinMadrigalExceptionallyKind, exerted: true, isDrying: false },
     ],
     inkwell: 3,
     deck: [donaldDuckStruttingHisStuff],

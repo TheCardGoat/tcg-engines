@@ -4575,4 +4575,177 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "79cdc9a5-d94d-4df4-9f88-aa02fb0357b3",
   },
+  "welcometonightcityretail:appetite-for-destruction": {
+    i18n: {
+      en: {
+        name: "Appetite for Destruction",
+        displayName: "Appetite for Destruction",
+        rulesText:
+          "The next time a friendly Unit wins a fight by 3+ power this turn, it also steals a Gig.",
+      },
+    },
+    printings: [
+      {
+        id: "f274789d-69f2-4acf-a511-f728c67d1a13",
+        artId: "f274789d-69f2-4acf-a511-f728c67d1a13",
+        collectorNumber: "028",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/028.webp",
+      },
+      {
+        id: "d2aed299-7c88-484a-aa8a-e2e2f09bf8a8",
+        artId: "d2aed299-7c88-484a-aa8a-e2e2f09bf8a8",
+        collectorNumber: "β028",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b028.webp",
+      },
+    ],
+    selectedPrintingId: "f274789d-69f2-4acf-a511-f728c67d1a13",
+  },
+  "welcometonightcityretail:hanako-arasaka-daughter-of-the-emperor": {
+    i18n: {
+      en: {
+        name: "Hanako Arasaka — Daughter of the Emperor",
+        displayName: "Hanako Arasaka — Daughter of the Emperor",
+        rulesText:
+          "{Spend} Swap a friendly Gig with a rival Gig.\nAt the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+      },
+    },
+    printings: [
+      {
+        id: "2c4a77e8-0fda-4ec1-9519-1d15e0f172b3",
+        artId: "2c4a77e8-0fda-4ec1-9519-1d15e0f172b3",
+        collectorNumber: "072",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/072.webp",
+      },
+      {
+        id: "1435b785-967e-48a7-8ef7-f7fecbb27aaf",
+        artId: "1435b785-967e-48a7-8ef7-f7fecbb27aaf",
+        collectorNumber: "β072",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b072.webp",
+      },
+    ],
+    selectedPrintingId: "2c4a77e8-0fda-4ec1-9519-1d15e0f172b3",
+  },
+  "welcometonightcityretail:pepe-najarro-working-doubles": {
+    i18n: {
+      en: {
+        name: "Pepe Najarro — Working Doubles",
+        displayName: "Pepe Najarro — Working Doubles",
+        rulesText:
+          "{Attack} If you control a value-pair of Gigs, ready up to 2 MERC Legends in your Legends area.",
+      },
+    },
+    printings: [
+      {
+        id: "0de81196-f1d3-4fd0-ae6a-062dae3f3f2c",
+        artId: "0de81196-f1d3-4fd0-ae6a-062dae3f3f2c",
+        collectorNumber: "086",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/086.webp",
+      },
+      {
+        id: "786d5ce2-bfc0-4648-9c7d-323e939a1d34",
+        artId: "786d5ce2-bfc0-4648-9c7d-323e939a1d34",
+        collectorNumber: "β086",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b086.webp",
+      },
+    ],
+    selectedPrintingId: "0de81196-f1d3-4fd0-ae6a-062dae3f3f2c",
+  },
+  "welcometonightcityretail:rita-wheeler-no-stupid-questions": {
+    i18n: {
+      en: {
+        name: "Rita Wheeler — No Stupid Questions",
+        displayName: "Rita Wheeler — No Stupid Questions",
+        rulesText:
+          "{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)\nThe first time this Unit is spent each turn, draw 1, then discard 1.",
+      },
+    },
+    printings: [
+      {
+        id: "5d795b32-9ad8-4c94-abd4-d01e389db389",
+        artId: "5d795b32-9ad8-4c94-abd4-d01e389db389",
+        collectorNumber: "125",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/125.webp",
+      },
+      {
+        id: "6b5606c9-12a2-46d6-b13f-a672c6bd5f07",
+        artId: "6b5606c9-12a2-46d6-b13f-a672c6bd5f07",
+        collectorNumber: "β125",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b125.webp",
+      },
+    ],
+    selectedPrintingId: "5d795b32-9ad8-4c94-abd4-d01e389db389",
+  },
+  "welcometonightcityretail:live-with-the-aftermath": {
+    i18n: {
+      en: {
+        name: "Live with the Aftermath",
+        displayName: "Live with the Aftermath",
+        rulesText: "Each player defeats one of their Units.",
+      },
+    },
+    printings: [
+      {
+        id: "f931c82e-a382-4f60-808c-5910ac9850be",
+        artId: "f931c82e-a382-4f60-808c-5910ac9850be",
+        collectorNumber: "068",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/068.webp",
+      },
+      {
+        id: "b2d6aeff-8fa3-4151-9e67-a83188a78197",
+        artId: "b2d6aeff-8fa3-4151-9e67-a83188a78197",
+        collectorNumber: "β068",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b068.webp",
+      },
+    ],
+    selectedPrintingId: "f931c82e-a382-4f60-808c-5910ac9850be",
+  },
+  "welcometonightcityretail:octant": {
+    i18n: {
+      en: {
+        name: "Octant",
+        displayName: "Octant",
+        rulesText:
+          "Play this Unit for -1 €$ for each friendly Gig with 8+ value, to a minimum of 1 €$.",
+      },
+    },
+    printings: [
+      {
+        id: "089df0e6-0000-4e6c-b6d3-d9119466b624",
+        artId: "089df0e6-0000-4e6c-b6d3-d9119466b624",
+        collectorNumber: "015",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/015.webp",
+      },
+      {
+        id: "3b8c035e-161d-4a84-bdc8-f76899e8244f",
+        artId: "3b8c035e-161d-4a84-bdc8-f76899e8244f",
+        collectorNumber: "β015",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b015.webp",
+      },
+    ],
+    selectedPrintingId: "089df0e6-0000-4e6c-b6d3-d9119466b624",
+  },
 } satisfies Record<string, CyberpunkCardMetadataEntry>;

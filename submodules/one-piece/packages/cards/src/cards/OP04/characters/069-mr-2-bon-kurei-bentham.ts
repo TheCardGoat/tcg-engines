@@ -39,19 +39,19 @@ export const op04Mr2BonKureiBentham069: CharacterCard = {
         ],
         actions: [
           {
-            action: "setPower",
+            action: "copyPower",
             target: {
-              player: "self",
-              zones: ["character"],
+              player: "opponent",
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
               },
-              self: true,
             },
-            value: 0,
             duration: "thisTurn",
+            triggerEventAttacker: true,
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",
@@ -63,16 +63,10 @@ export const op04Mr2BonKureiBentham069: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
+        optional: true,
       },
     ],
   },

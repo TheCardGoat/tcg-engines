@@ -45,4 +45,15 @@ export const simbaFutureKingI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Simba",
+    version: "Futuro rey",
+    text: [
+      {
+        title: "¿ADIVINA QUÉ?",
+        description:
+          "Cuando juegas con este personaje, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

@@ -32,6 +32,7 @@ export const eb01GumGumChampionRifle028: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Impel Down",
+            match: "includes",
           },
         ],
         actions: [
@@ -73,7 +74,7 @@ export const eb01GumGumChampionRifle028: EventCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

@@ -45,4 +45,15 @@ export const judyHoppsUncoveringCluesI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Judy Hopps",
+    version: "Descubriendo pistas",
+    text: [
+      {
+        title: "INVESTIGACIÓN FONDO",
+        description:
+          "Cuando juegues con este personaje y cada vez que realice misiones, mira las 3 primeras cartas de tu mazo. Puedes revelar una carta de personaje de detective y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

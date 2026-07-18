@@ -21,4 +21,9 @@ export const helgaSinclairRighthandWomanI18n: Record<Languages, I18nProperties> 
     version: "Braccio Destro",
     text: "<Sfidante> +2",
   },
+  es: {
+    name: "Helga Sinclair",
+    version: "Mujer mano derecha",
+    text: "Retador +2",
+  },
 };

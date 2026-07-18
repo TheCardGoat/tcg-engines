@@ -47,6 +47,13 @@ export const eb02TrafalgarLaw045: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 2,
+            position: "bottom",
+          },
+        ],
         actions: [
           {
             action: "choice",
@@ -63,6 +70,12 @@ export const eb02TrafalgarLaw045: CharacterCard = {
                   action: "trashFromHand",
                   player: "opponent",
                   amount: 1,
+                  condition: {
+                    condition: "handCount",
+                    player: "opponent",
+                    comparison: "gte",
+                    value: 5,
+                  },
                 },
               ],
             ],

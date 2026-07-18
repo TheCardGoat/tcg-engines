@@ -33,6 +33,9 @@ export const op14eb04Terracotta024: CharacterCard = {
         trigger: "activateMain",
         costs: [
           {
+            cost: "restThisCard",
+          },
+          {
             cost: "trashFromHand",
             amount: 1,
           },
@@ -51,6 +54,7 @@ export const op14eb04Terracotta024: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Alabasta",
+                  match: "includes",
                 },
               ],
             },

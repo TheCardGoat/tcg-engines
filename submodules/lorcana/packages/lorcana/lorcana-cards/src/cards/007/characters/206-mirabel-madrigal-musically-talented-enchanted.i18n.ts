@@ -60,4 +60,18 @@ export const mirabelMadrigalMusicallyTalentedEnchantedI18n: Record<Languages, I1
       },
     ],
   },
+  es: {
+    name: "Mirabel Madrigal",
+    version: "Musicalmente talentoso",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "SU PROPIO REGALO ESPECIAL",
+        description:
+          "Siempre que este personaje realice una misión, puedes devolver a tu mano una carta de canción con un coste de 3 o menos de tu descarte.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const mrSmeeSteadfastMateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señor smee",
+    version: "Compañero firme",
+    text: [
+      {
+        title: "BUENA CAPTURA",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

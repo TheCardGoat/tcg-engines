@@ -17,4 +17,8 @@ export const tamatoaDrabLittleCrabI18n: Record<Languages, I18nProperties> = {
     name: "Tamatoa",
     version: "Drab Little Crab",
   },
+  es: {
+    name: "Tamatoa",
+    version: "Pequeño cangrejo monótono",
+  },
 };

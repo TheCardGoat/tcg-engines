@@ -45,4 +45,15 @@ export const magicBroomDancingDusterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Escoba magica",
+    version: "Plumero bailando",
+    text: [
+      {
+        title: "LIMPIEZA ENERGÉTICA",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje Hechicero en juego, puedes ejercer el personaje contrario elegido. No pueden prepararse al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

@@ -4,8 +4,8 @@ import { op14eb04MissValentineMikitaDashPack087I18n } from "./087-miss-valentine
 export const op14eb04MissValentineMikitaDashPack087: CharacterCard = {
   id: "OP14-087",
   canonicalId: "OP14-087",
-  slug: "miss-valentine-mikita-dash-pack",
-  name: "Miss.Valentine(Mikita) (Dash Pack)",
+  slug: "miss-valentine-mikita/op14-087",
+  name: "Miss.Valentine(Mikita)",
   printings: [
     {
       id: "OP14-087",
@@ -53,6 +53,10 @@ export const op14eb04MissValentineMikitaDashPack087: CharacterCard = {
               {
                 filter: "excludeName",
                 value: "Miss.Valentine(Mikita)",
+              },
+              {
+                filter: "trait",
+                value: "Baroque Works",
               },
             ],
             revealDestination: "hand",

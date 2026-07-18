@@ -26,7 +26,7 @@ export const op03Blueno090: CharacterCard = {
   traits: ["CP9"],
   attribute: "strike",
   effect:
-    '[DON!! x1] [This Character gains [Blocker]. (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On K.O.] Play up to 1 Character card with a type including "CP" and a cost of 4 or less from your trash rested.',
+    '[DON!! x1] This Character gains [Blocker]. (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On K.O.] Play up to 1 Character card with a type including "CP" and a cost of 4 or less from your trash rested.',
   effects: {
     effects: [
       {
@@ -42,7 +42,48 @@ export const op03Blueno090: CharacterCard = {
               amount: 1,
               upTo: true,
             },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+              {
+                filter: "trait",
+                value: "CP",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
             playState: "rested",
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "donAttached",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
           },
         ],
       },

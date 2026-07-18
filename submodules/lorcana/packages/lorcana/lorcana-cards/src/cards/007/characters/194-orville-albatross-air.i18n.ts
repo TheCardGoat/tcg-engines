@@ -45,4 +45,15 @@ export const orvilleAlbatrossAirI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Orville",
+    version: "Aire de albatros",
+    text: [
+      {
+        title: "BIENVENIDOS A BORDO, AMIGOS",
+        description:
+          "Durante tu turno, mientras tengas un personaje llamado Miss Bianca o Bernard en juego, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

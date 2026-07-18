@@ -5,6 +5,7 @@ export const gd02DeltaPlusWaveriderMode017: UnitCard = {
   name: "Delta Plus (Waverider Mode)",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space", "earth"],
   traits: ["earth federation"],
   id: "GD02-017",
   canonicalId: "GD02-017",
@@ -41,6 +42,7 @@ export const gd02DeltaPlusWaveriderMode017: UnitCard = {
   cost: 2,
   ap: 2,
   hp: 3,
+  linkCondition: "[Riddhe Marcenas]",
   effect:
     "&lt;Repair 2&gt; (At the end of your turn, this Unit recovers the specified number of HP.)<br>",
   keywordEffects: [{ keyword: "Repair", value: 2 }],

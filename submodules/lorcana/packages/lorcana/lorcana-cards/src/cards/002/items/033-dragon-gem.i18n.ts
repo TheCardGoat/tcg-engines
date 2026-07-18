@@ -41,4 +41,14 @@ export const dragonGemI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gema del Dragón",
+    text: [
+      {
+        title: "DEVOLVER A LA VIDA",
+        description:
+          "{E}, 3 {I}: Devuelve a tu mano una carta de personaje con Apoyo de tu descarte.",
+      },
+    ],
+  },
 };

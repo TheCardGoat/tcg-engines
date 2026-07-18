@@ -26,7 +26,7 @@ export const op09ShachiPenguin003: CharacterCard = {
   traits: ["Heart Pirates"],
   attribute: "ranged",
   effect:
-    "[When Attacking] Give up to 1 of your opponent's Characters 2000 power during this turn.",
+    "[When Attacking] Give up to 1 of your opponent's Characters −2000 power during this turn.",
   effects: {
     effects: [
       {
@@ -42,7 +42,7 @@ export const op09ShachiPenguin003: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
           },
         ],

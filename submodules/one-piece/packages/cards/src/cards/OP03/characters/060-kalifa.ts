@@ -49,6 +49,7 @@ export const op03Kalifa060: CharacterCard = {
             amount: 1,
           },
         ],
+        optional: true,
       },
     ],
   },

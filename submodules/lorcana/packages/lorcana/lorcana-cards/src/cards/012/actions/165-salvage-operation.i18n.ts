@@ -17,4 +17,8 @@ export const salvageOperationI18n: Record<Languages, I18nProperties> = {
     name: "Operazione di Recupero",
     text: "Riprendi in mano una carta oggetto dai tuoi scarti. Se hai in gioco un personaggio con 4 {W} o superiore, ottieni 1 leggenda.",
   },
+  es: {
+    name: "Operación de salvamento",
+    text: "Devuelve una carta de objeto de tu descarte a tu mano. Si tienes un personaje con 4 {W} o más en juego, gana 1 conocimiento.",
+  },
 };

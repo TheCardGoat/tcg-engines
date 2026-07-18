@@ -3,6 +3,41 @@ import { parseActions } from "../../../src/effect-parser/index.ts";
 import { buildCardEffects } from "../../../src/effect-parser/index.ts";
 
 describe("parseActions — ModifyPowerAction", () => {
+  test("shared named and trait power excludes the named card from the trait action", () => {
+    const result = parseActions(
+      'your [Edward.Newgate] and all your Characters with a type including "Whitebeard Pirates" gain +2000 power',
+    );
+
+    expect(result.parsed).toEqual([
+      {
+        action: "modifyPower",
+        target: {
+          player: "self",
+          zones: ["leader", "character"],
+          count: { amount: "all" },
+          filters: [{ filter: "name", value: "Edward.Newgate" }],
+        },
+        value: 2000,
+        duration: "permanent",
+      },
+      {
+        action: "modifyPower",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: { amount: "all" },
+          filters: [
+            { filter: "trait", value: "Whitebeard Pirates", match: "includes" },
+            { filter: "excludeName", value: "Edward.Newgate" },
+          ],
+        },
+        value: 2000,
+        duration: "permanent",
+      },
+    ]);
+    expect(result.unparsed).toBe("");
+  });
+
   describe("self-target patterns", () => {
     test("this Character gains +N power (permanent)", () => {
       const result = parseActions("this Character gains +2000 power");
@@ -37,6 +72,27 @@ describe("parseActions — ModifyPowerAction", () => {
   });
 
   describe("targeted patterns", () => {
+    test('Up to 1 of your "Slash" attribute Characters gains power during this turn', () => {
+      const result = parseActions(
+        'Up to 1 of your "Slash" attribute Characters gains +3000 power during this turn',
+      );
+
+      expect(result.parsed).toEqual([
+        {
+          action: "modifyPower",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: { amount: 1, upTo: true },
+            filters: [{ filter: "attribute", value: "slash" }],
+          },
+          value: 3000,
+          duration: "thisTurn",
+        },
+      ]);
+      expect(result.unparsed).toBe("");
+    });
+
     test("Up to 1 of your Leader or Character cards gains +N power during this battle", () => {
       const result = parseActions(
         "Up to 1 of your Leader or Character cards gains +4000 power during this battle",
@@ -58,9 +114,20 @@ describe("parseActions — ModifyPowerAction", () => {
       const result = parseActions(
         "Up to 1 of your [Portgas.D.Ace] cards gains +3000 power during this turn",
       );
-      // This won't parse because [Name] filter isn't in parseTarget yet — that's OK
-      // Just verify it doesn't crash
-      expect(result).toBeDefined();
+      expect(result.parsed).toEqual([
+        {
+          action: "modifyPower",
+          target: {
+            player: "self",
+            zones: ["leader", "character"],
+            count: { amount: 1, upTo: true },
+            filters: [{ filter: "name", value: "Portgas.D.Ace" }],
+          },
+          value: 3000,
+          duration: "thisTurn",
+        },
+      ]);
+      expect(result.unparsed).toBe("");
     });
 
     test("Your Leader gains +N power during this battle", () => {
@@ -76,6 +143,19 @@ describe("parseActions — ModifyPowerAction", () => {
   });
 
   describe("Give patterns (opponent, negative power)", () => {
+    test("parses the Unicode minus sign used by the official card list", () => {
+      const result = parseActions(
+        "Give up to 1 of your opponent's Characters \u22122000 power during this turn",
+      );
+
+      expect(result.unparsed).toBe("");
+      expect(result.parsed[0]).toMatchObject({
+        action: "modifyPower",
+        value: -2000,
+        duration: "thisTurn",
+      });
+    });
+
     test("Give up to 1 of your opponent's Characters -N power during this turn", () => {
       const result = parseActions(
         "Give up to 1 of your opponent's Characters -2000 power during this turn",
@@ -108,16 +188,37 @@ describe("parseActions — ModifyPowerAction", () => {
   describe("handles 'for every' variable-amount patterns", () => {
     test("parses 'for every card in your hand' pattern", () => {
       const result = parseActions("This Character gains +1000 power for every card in your hand");
-      expect(result.parsed).toHaveLength(1);
-      expect(result.parsed[0]).toMatchObject({ action: "modifyPower", value: 1000 });
+      expect(result.parsed[0]).toMatchObject({
+        action: "modifyPower",
+        value: 1000,
+        valuePerCardGroup: {
+          size: 1,
+          target: {
+            player: "self",
+            zones: ["hand"],
+            count: { amount: "all" },
+          },
+        },
+      });
     });
 
-    test("parses 'for every 5 cards in your trash' pattern", () => {
+    test("preserves the divisor and card category for trash scaling", () => {
       const result = parseActions(
-        "This Character gains +1000 power for every 5 cards in your trash",
+        "This Character gains +1000 power for every 5 Events in your trash",
       );
-      expect(result.parsed).toHaveLength(1);
-      expect(result.parsed[0]).toMatchObject({ action: "modifyPower", value: 1000 });
+      expect(result.parsed[0]).toMatchObject({
+        action: "modifyPower",
+        value: 1000,
+        valuePerCardGroup: {
+          size: 5,
+          target: {
+            player: "self",
+            zones: ["trash"],
+            count: { amount: "all" },
+            filters: [{ filter: "cardCategory", value: "event" }],
+          },
+        },
+      });
     });
   });
 
@@ -217,6 +318,25 @@ describe("parseActions — modifyPower unsigned values", () => {
 });
 
 describe("parseActions — ModifyCostAction", () => {
+  test("sets this card's cost while it is in hand", () => {
+    const result = parseActions("give this card in your hand 3 cost");
+    expect(result).toEqual({
+      parsed: [
+        {
+          action: "setCost",
+          target: {
+            player: "self",
+            zones: ["hand"],
+            count: { amount: 1 },
+            self: true,
+          },
+          value: 3,
+        },
+      ],
+      unparsed: "",
+    });
+  });
+
   test("Give -2 cost during this turn", () => {
     const result = parseActions(
       "Give up to 1 of your opponent's Characters -2 cost during this turn",
@@ -294,6 +414,24 @@ describe("parseActions — ModifyCostAction", () => {
 });
 
 describe("parseActions — grantKeyword", () => {
+  test("this Character gains Rush during this turn without keyword brackets", () => {
+    const result = parseActions("this Character gains Rush during this turn");
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "grantKeyword",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: { amount: 1 },
+          self: true,
+        },
+        keyword: "rush",
+        duration: "thisTurn",
+      },
+    ]);
+  });
+
   test("this Character gains [Rush] during this turn", () => {
     const result = parseActions("this Character gains [Rush] during this turn");
     expect(result.unparsed).toBe("");
@@ -343,6 +481,26 @@ describe("parseActions — grantKeyword", () => {
     ]);
   });
 
+  test("a typed Character grant uses inclusive trait matching", () => {
+    const result = parseActions(
+      "up to 1 of your {Sky Island} type Characters gains [Double Attack] during this turn",
+    );
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "grantKeyword",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: { amount: 1, upTo: true },
+          filters: [{ filter: "trait", value: "Sky Island", match: "includes" }],
+        },
+        keyword: "doubleAttack",
+        duration: "thisTurn",
+      },
+    ]);
+  });
+
   test("this Character gains [Rush: Character] during this turn", () => {
     const result = parseActions("this Character gains [Rush: Character] during this turn");
     expect(result.unparsed).toBe("");
@@ -359,6 +517,48 @@ describe("parseActions — grantKeyword", () => {
         duration: "thisTurn",
       },
     ]);
+  });
+
+  test("natural Rush: Character reminder wording", () => {
+    expect(
+      parseActions("this Character can attack Characters on the turn in which it is played"),
+    ).toEqual({
+      parsed: [
+        {
+          action: "grantKeyword",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: { amount: 1 },
+            self: true,
+          },
+          keyword: "rushCharacter",
+          duration: "permanent",
+        },
+      ],
+      unparsed: "",
+    });
+  });
+
+  test("natural Rush: Character restriction wording", () => {
+    expect(
+      parseActions("this Character cannot attack a Leader on the turn in which it is played"),
+    ).toEqual({
+      parsed: [
+        {
+          action: "grantKeyword",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: { amount: 1 },
+            self: true,
+          },
+          keyword: "rushCharacter",
+          duration: "permanent",
+        },
+      ],
+      unparsed: "",
+    });
   });
 
   test("this Leader gain [Banish] during this turn", () => {
@@ -408,6 +608,96 @@ describe("parseCompoundKeywordPower", () => {
       action: "modifyPower",
       value: 2000,
       duration: "thisTurn",
+    });
+  });
+});
+
+describe("parseCompoundKeywordCost", () => {
+  test("preserves both [Blocker] and the implicit self cost modifier", () => {
+    const result = parseActions("this Character gains [Blocker] and +3 cost.");
+    expect(result).toEqual({
+      parsed: [
+        {
+          action: "grantKeyword",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: { amount: 1 },
+            self: true,
+          },
+          keyword: "blocker",
+          duration: "permanent",
+        },
+        {
+          action: "modifyCost",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: { amount: 1 },
+            self: true,
+          },
+          value: 3,
+          duration: "permanent",
+        },
+      ],
+      unparsed: "",
+    });
+  });
+});
+
+describe("parseCompoundPowerCost", () => {
+  test("preserves the implicit self target for both permanent modifiers", () => {
+    const result = parseActions("this Character gains +2000 power and +5 cost.");
+    expect(result).toEqual({
+      parsed: [
+        {
+          action: "modifyPower",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: { amount: 1 },
+            self: true,
+          },
+          value: 2000,
+          duration: "permanent",
+        },
+        {
+          action: "modifyCost",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: { amount: 1 },
+            self: true,
+          },
+          value: 5,
+          duration: "permanent",
+        },
+      ],
+      unparsed: "",
+    });
+  });
+});
+
+describe("trait-qualified Leader target", () => {
+  test("preserves the trait restriction on a Leader power modifier", () => {
+    const result = parseActions(
+      'Your "Supernovas" type Leader gains +1000 power until the end of your opponent\'s next turn.',
+    );
+    expect(result).toEqual({
+      parsed: [
+        {
+          action: "modifyPower",
+          target: {
+            player: "self",
+            zones: ["leader"],
+            count: { amount: 1 },
+            filters: [{ filter: "trait", value: "Supernovas", match: "includes" }],
+          },
+          value: 1000,
+          duration: "untilEndOfOpponentNextTurn",
+        },
+      ],
+      unparsed: "",
     });
   });
 });

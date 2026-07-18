@@ -35,4 +35,8 @@ export const itCallsMeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Me llama",
+    text: "Saca una carta. Luego, elige hasta 3 cartas del descarte del oponente elegido y barájalas en su mazo.",
+  },
 };

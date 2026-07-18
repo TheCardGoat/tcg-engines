@@ -37,6 +37,17 @@ export const op05Hakuba087: CharacterCard = {
             amount: 1,
           },
         ],
+        costs: [
+          {
+            cost: "koCharacter",
+            amount: 1,
+            filters: [
+              {
+                filter: "excludeSelf",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "modifyCost",

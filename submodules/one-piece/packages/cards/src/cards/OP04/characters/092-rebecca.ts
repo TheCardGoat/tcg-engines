@@ -51,6 +51,7 @@ export const op04Rebecca092: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

@@ -24,5 +24,34 @@ export const op13OroJackson078: StageCard = {
   traits: ["Roger Pirates"],
   effect:
     '[Once Per Turn] When your Character with a type including "Roger Pirates" is removed from the field by your opponent\'s effect, add up to 1 DON!! card from your DON!! deck and rest it.',
+  effects: {
+    effects: [
+      {
+        trigger: "whenLeaving",
+        eventFilter: {
+          player: "self",
+          causedBy: "opponent",
+          filters: [
+            {
+              filter: "trait",
+              value: "Roger Pirates",
+              match: "includes",
+            },
+          ],
+        },
+        actions: [
+          {
+            action: "addDon",
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            state: "rested",
+          },
+        ],
+        oncePerTurn: true,
+      },
+    ],
+  },
   i18n: op13OroJackson078I18n,
 };

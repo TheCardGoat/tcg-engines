@@ -298,6 +298,10 @@ export function evaluateAttributeFilter(
       if (filter.comparison === "includes") return has;
       return !has;
     }
+    case "cardType": {
+      const cardType = ctx.getCardType(card);
+      return filter.comparison === "eq" ? cardType === filter.value : cardType !== filter.value;
+    }
     case "keyword": {
       const has = ctx.getCardKeywords(card).includes(filter.value);
       return filter.comparison === "includes" ? has : !has;
@@ -341,6 +345,11 @@ export function evaluateAttributeFilter(
       // Logical-OR: matches when ANY nested predicate matches.
       // Empty `filters` is vacuously false (no disjunct can match).
       return filter.filters.some((f) => evaluateAttributeFilter(f, card, ctx));
+    }
+    case "and": {
+      // Logical-AND: matches when EVERY nested predicate matches.
+      // An empty conjunction is true, following ordinary boolean algebra.
+      return filter.filters.every((f) => evaluateAttributeFilter(f, card, ctx));
     }
   }
 }
@@ -691,8 +700,17 @@ export function evaluateCondition(
       let count = 0;
       for (const u of units) {
         if (ctx.getCardType(u) !== "unit") continue;
-        if (condition.excludeSelf && u.instanceId === ctx.sourceCardId) continue;
+        if (
+          condition.excludeSelf &&
+          (u.instanceId === ctx.sourceCardId || u.instanceId === ctx.selfIdentityCardId)
+        )
+          continue;
         if (!traitMatches(ctx.getCardTraits(u))) continue;
+        if (
+          condition.hasKeyword !== undefined &&
+          !ctx.getCardKeywords(u).includes(condition.hasKeyword)
+        )
+          continue;
         if (condition.isToken !== undefined && ctx.isToken(u) !== condition.isToken) continue;
         if (condition.isLinkUnit !== undefined && ctx.isLinked(u) !== condition.isLinkUnit)
           continue;
@@ -861,6 +879,10 @@ export function evaluateCondition(
       // Event-scoped condition. The pending-effect/executor layer evaluates
       // this with trigger context; the pure target DSL has no event payload.
       return false;
+    case "eventDefeatedCardMatches":
+      // Event-scoped condition. The pending-effect/executor layer evaluates
+      // this with the defeated-card snapshot carried by the battle event.
+      return false;
     case "eventPlayerIsSelf":
       // Event-scoped condition. The pending-effect/executor layer evaluates
       // this with trigger context; the pure target DSL has no event payload.
@@ -950,5 +972,7 @@ export function evaluateCondition(
     // ── Compound ──
     case "and":
       return condition.conditions.every((c) => evaluateCondition(c, ctx));
+    case "or":
+      return condition.conditions.some((c) => evaluateCondition(c, ctx));
   }
 }

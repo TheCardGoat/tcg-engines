@@ -41,4 +41,13 @@ export const madHattersTeapotI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tetera del Sombrerero Loco",
+    text: [
+      {
+        title: "SIN HABITACIÓN, SIN HABITACIÓN",
+        description: "{E}, 1 {I}: cada oponente pone la carta superior de su mazo en su descarte.",
+      },
+    ],
+  },
 };

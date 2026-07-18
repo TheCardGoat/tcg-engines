@@ -45,4 +45,15 @@ export const kidaGuardianOfThePathI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Niño",
+    version: "Guardián del camino",
+    text: [
+      {
+        title: "DEFENSA NATURAL",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido obtiene -2 {S} este turno.",
+      },
+    ],
+  },
 };

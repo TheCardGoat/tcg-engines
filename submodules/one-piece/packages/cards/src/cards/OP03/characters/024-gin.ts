@@ -41,7 +41,7 @@ export const op03Gin024: CharacterCard = {
     },
   ],
   effect:
-    "[On Play] If your Leader has the [East Blue] type, rest up to 2 of your opponent's Characters with a cost of 4 or less.",
+    "[On Play] If your Leader has the {East Blue} type, rest up to 2 of your opponent's Characters with a cost of 4 or less.",
   effects: {
     effects: [
       {
@@ -50,6 +50,7 @@ export const op03Gin024: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "East Blue",
+            match: "includes",
           },
         ],
         actions: [

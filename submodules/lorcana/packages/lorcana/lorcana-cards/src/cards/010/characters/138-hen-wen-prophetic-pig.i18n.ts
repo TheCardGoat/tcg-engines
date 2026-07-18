@@ -45,4 +45,15 @@ export const henWenPropheticPigI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gallina wen",
+    version: "Cerdo profético",
+    text: [
+      {
+        title: "MIRA DE FUTURO",
+        description:
+          "Siempre que este personaje realice una misión, mira la carta superior de tu mazo. Colóquelo en la parte superior o inferior de su plataforma.",
+      },
+    ],
+  },
 };

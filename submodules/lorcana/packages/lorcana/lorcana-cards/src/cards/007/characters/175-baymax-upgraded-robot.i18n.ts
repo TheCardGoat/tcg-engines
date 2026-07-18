@@ -60,4 +60,18 @@ export const baymaxUpgradedRobotI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Baymax",
+    version: "Robot mejorado",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "ESCÁNER AVANZADO",
+        description:
+          "Cuando juegues con este personaje, mira las 4 cartas superiores de tu mazo. Puedes revelar una carta de personaje Floodborn y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const madameMedusaDiamondLoverI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora Medusa",
+    version: "Amante del diamante",
+    text: [
+      {
+        title: "BUSCAR EL PANTANO",
+        description:
+          "Siempre que este personaje realice una misión, puedes infligir 2 daños a otro personaje tuyo elegido para poner las 3 primeras cartas del mazo del jugador elegido en su descarte.",
+      },
+    ],
+  },
 };

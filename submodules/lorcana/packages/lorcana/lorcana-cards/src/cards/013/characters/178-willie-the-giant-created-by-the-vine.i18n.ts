@@ -42,4 +42,14 @@ export const willieTheGiantCreatedByTheVineI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Willie el gigante",
+    version: "Creado por la vid",
+    text: [
+      {
+        title: "defender el tallo",
+        description: "Tus personajes Floodborn obtienen <Resistencia> +1.",
+      },
+    ],
+  },
 };

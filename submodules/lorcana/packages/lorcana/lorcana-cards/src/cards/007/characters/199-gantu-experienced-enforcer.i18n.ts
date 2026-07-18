@@ -65,4 +65,20 @@ export const gantuExperiencedEnforcerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gantu",
+    version: "Ejecutor experimentado",
+    text: [
+      {
+        title: "CERRAR TODOS LOS CANALES",
+        description:
+          "Cuando juegas con este personaje, los personajes no pueden esforzarse para cantar canciones hasta el comienzo de tu siguiente turno.",
+      },
+      {
+        title: "NO TENGAS NINGUNA IDEA",
+        description:
+          "Cada jugador paga 2 {I} más para realizar acciones o elementos. (Esto no se aplica a cantar canciones).",
+      },
+    ],
+  },
 };

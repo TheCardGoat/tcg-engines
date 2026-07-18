@@ -17,4 +17,8 @@ export const cerberusThreeheadedDogI18n: Record<Languages, I18nProperties> = {
     name: "Cerberus",
     version: "Three-Headed Dog",
   },
+  es: {
+    name: "Cerbero",
+    version: "Perro de tres cabezas",
+  },
 };

@@ -41,4 +41,14 @@ export const ratiganRagingRatI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratigan",
+    version: "Rata furiosa",
+    text: [
+      {
+        title: "NADA PUEDE INTERPONERSE EN MI CAMINO",
+        description: "Mientras este personaje tenga daño, obtiene +2 {S}.",
+      },
+    ],
+  },
 };

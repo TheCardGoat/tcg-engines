@@ -45,4 +45,15 @@ export const teKHeartlessI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Te Ka",
+    version: "Cruel",
+    text: [
+      {
+        title: "BUSCA EL CORAZÓN",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, ganas 2 conocimientos.",
+      },
+    ],
+  },
 };

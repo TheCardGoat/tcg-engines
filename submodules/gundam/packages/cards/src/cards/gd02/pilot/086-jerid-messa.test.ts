@@ -4,72 +4,101 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
+  createMockCommand,
   createMockUnit,
+  expectFailure,
   expectSuccess,
-  getEffectiveStats,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
 import { gd02JeridMessa086 } from "./086-jerid-messa.ts";
 
 describe("Jerid Messa (GD02-086)", () => {
-  it("【Burst】 Add this card to your hand", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd02JeridMessa086] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
-
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `hand:${PLAYER_TWO}`,
-    );
-  });
-
-  it("While you have another (Titans) Unit in play, this gets AP+1", () => {
-    // Pilot-resident `type: "constant"` with `target: { owner: "self" }`.
-    // Rule 3-3-9-1: "this Unit" on a pilot card refers to the paired unit;
-    // PR #122 rebinds `owner: "self"` onto that paired unit's identity so
-    // the statModifier lands on the unit the pilot is attached to.
-    const baseAp = 2;
-    const baseHp = 4;
-    const pairedUnit = createMockUnit({
-      ap: baseAp,
-      hp: baseHp,
-      level: 3,
-      cost: 1,
-      linkCondition: "[Jerid Messa]",
-    } as unknown as Parameters<typeof createMockUnit>[0]);
-    const otherTitansUnit = createMockUnit({
-      ap: 1,
-      hp: 1,
-      level: 1,
-      cost: 1,
-      traits: ["titans"],
-    } as unknown as Parameters<typeof createMockUnit>[0]);
-
+  it("【Burst】 adds the revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
     const engine = GundamTestEngine.create(
-      {
-        hand: [pairedUnit, gd02JeridMessa086],
-        play: [otherTitansUnit],
-        resourceArea: activeResources(5),
-      },
-      {},
+      { play: [attacker] },
+      { shieldArea: [gd02JeridMessa086] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
-    expectSuccess(p1.deployUnit(pairedUnit));
-    expectSuccess(p1.assignPilot(gd02JeridMessa086, pairedUnit));
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    const runtime = engine.getRuntime();
-    const framework = runtime.getFrameworkReadAPI();
-    const unitId = runtime.getInstanceIdByDefinition(
-      PLAYER_ONE as PlayerId,
-      pairedUnit.cardNumber,
-    )!;
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    const burstChoice = p2.getBoardView().pendingChoice;
+    if (burstChoice?.kind !== "optional") {
+      throw new Error("Expected Jerid Messa's visible Burst choice");
+    }
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [burstChoice.directiveIndex]: true } }));
 
-    const stats = getEffectiveStats(unitId, engine.getG(), framework.cards, framework);
-    // Pilot apBonus (1) + constant statModifier AP+1 (gated on another
-    // (Titans) unit in play) = baseAp + 2.
-    expect(stats.ap).toBe(baseAp + 1 + 1);
-    expect(stats.hp).toBe(baseHp + 1); // pilot hpBonus (1)
+    expect(p2.getCardZone(gd02JeridMessa086)).toBe(`hand:${PLAYER_TWO}`);
+  });
+
+  it("adds AP+1 while another friendly Titans Unit is in play", () => {
+    const host = createMockUnit({ name: "Jerid Host", ap: 2, hp: 4 });
+    const otherTitans = createMockUnit({ name: "Other Titans", traits: ["titans"] });
+    const engine = GundamTestEngine.create({
+      hand: [gd02JeridMessa086],
+      play: [host, otherTitans],
+      resourceArea: activeResources(3),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(gd02JeridMessa086, hostId));
+
+    expect(p1.getVisibleCard(hostId)).toMatchObject({ effectiveAp: 4, effectiveHp: 5 });
+    expect(p1.getPilotId(hostId)).toBeDefined();
+  });
+
+  it("does not add the conditional AP without another Titans Unit", () => {
+    const host = createMockUnit({ name: "Jerid Host", ap: 2, hp: 4, traits: ["titans"] });
+    const engine = GundamTestEngine.create({
+      hand: [gd02JeridMessa086],
+      play: [host],
+      resourceArea: activeResources(3),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(gd02JeridMessa086, hostId));
+
+    expect(p1.getVisibleCard(hostId)?.effectiveAp).toBe(3);
+  });
+
+  it("requires both its printed Lv.3 and one active Resource to be paired", () => {
+    const lowLevel = GundamTestEngine.create({
+      hand: [gd02JeridMessa086],
+      play: [createMockUnit({ name: "Low-Level Host" })],
+      resourceArea: activeResources(2),
+    });
+    const lowP1 = lowLevel.asPlayer(PLAYER_ONE);
+    const lowHostId = lowP1.getCardsInZone("battleArea")[0]!;
+
+    expectFailure(lowP1.assignPilot(gd02JeridMessa086, lowHostId), "INSUFFICIENT_RESOURCE_LEVEL");
+    expect(lowP1.getCardZone(gd02JeridMessa086)).toBe(`hand:${PLAYER_ONE}`);
+    expect(lowP1.getPilotId(lowHostId)).toBeUndefined();
+
+    const setup = createMockCommand({
+      name: "Exhaust All Resources",
+      level: 0,
+      cost: 3,
+      effects: [
+        { type: "command", activation: { timing: ["main"] }, directives: [], sourceText: "" },
+      ],
+    });
+    const insufficient = GundamTestEngine.create({
+      hand: [setup, gd02JeridMessa086],
+      play: [createMockUnit({ name: "Cost-Gate Host" })],
+      resourceArea: activeResources(3),
+    });
+    const p1 = insufficient.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.playCommand(setup));
+    expectFailure(p1.assignPilot(gd02JeridMessa086, hostId), "INSUFFICIENT_RESOURCES");
+    expect(p1.getCardZone(gd02JeridMessa086)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getPilotId(hostId)).toBeUndefined();
   });
 });

@@ -63,4 +63,19 @@ export const angelExperiment624I18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ángel",
+    version: "Experimento 624",
+    text: [
+      {
+        title: "INTOCABLE",
+        description: "Mientras no tengas cartas en tu mano, este personaje gana Resistencia +2.",
+      },
+      {
+        title: "BUENA OBJETIVO",
+        description:
+          "Una vez durante tu turno, puedes elegir y descartar una carta para causar 2 daños al personaje elegido.",
+      },
+    ],
+  },
 };

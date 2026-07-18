@@ -59,4 +59,17 @@ export const auroraDreamingGuardianEnchantedI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Aurora",
+    version: "Guardián de los sueños",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "ABRAZO PROTECTOR",
+        description: "Tus otros personajes ganan Ward.",
+      },
+    ],
+  },
 };

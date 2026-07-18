@@ -51,4 +51,19 @@ export const tamatoaSoShinyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tamatoa",
+    version: "¡Tan brillante!",
+    text: [
+      {
+        title: "¿QUÉ TENEMOS AQUÍ?",
+        description:
+          "Cuando juegas con este personaje y cada vez que realiza una misión, puedes devolver una carta de objeto de tu descarte a tu mano.",
+      },
+      {
+        title: "GLAMOUR",
+        description: "Este personaje obtiene +1 {L} por cada elemento que tengas en juego.",
+      },
+    ],
+  },
 };

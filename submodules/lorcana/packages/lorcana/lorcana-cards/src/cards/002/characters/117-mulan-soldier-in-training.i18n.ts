@@ -21,4 +21,9 @@ export const mulanSoldierInTrainingI18n: Record<Languages, I18nProperties> = {
     version: "Soldier in Training",
     text: "<Rush> (This character can challenge the turn they're played.)",
   },
+  es: {
+    name: "Mulán",
+    version: "Soldado en entrenamiento",
+    text: "Correr",
+  },
 };

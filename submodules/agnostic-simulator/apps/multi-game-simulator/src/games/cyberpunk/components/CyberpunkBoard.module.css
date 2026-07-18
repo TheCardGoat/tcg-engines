@@ -14,8 +14,13 @@
      them). Declaring it here makes the hands resolve the offset correctly and
      keeps a single source of truth for overlays anchored above the hand. */
   --hand-arc-bleed: 32px;
-  --self-hand-bottom: clamp(4px, 1cqh, 12px);
-  --self-hand-zone-h: clamp(140px, 15.625cqh, 200px);
+  --side-col-w: clamp(92px, calc(8.7cqh + 14px), 118px);
+  --zone-gutter: 4px;
+  --zone-pad: 6px;
+  --self-hand-bottom: 0px;
+  /* A compact dock prevents overlap without taking a full board lane away
+     from Field, Legends, and Eddies. */
+  --self-hand-zone-h: clamp(110px, 12.5cqh, 122px);
   --opponent-hand-zone-h: 13.5cqh;
   position: absolute;
   inset: 0;
@@ -27,7 +32,6 @@
   --hand-board-gap: clamp(18px, 3cqh, 32px);
   --hand-arc-bleed: 32px;
   --board-shift-up: 12px;
-  --side-col-w: clamp(92px, calc(8.7cqh + 14px), 118px);
   --zone-gutter: 4px;
   --zone-pad: 6px;
   --zone-border: 1px solid rgb(245 230 66 / 32%);
@@ -38,7 +42,9 @@
   position: absolute;
   top: calc(var(--hand-board-gap) - var(--board-shift-up));
   right: 0;
-  bottom: calc(var(--hand-board-gap) + var(--board-shift-up));
+  /* Reserve a physical dock for the local hand. The board never extends
+     into this space, keeping Eddies and return-to-hand drop targets clear. */
+  bottom: var(--self-hand-zone-h);
   left: 0;
   border: 1px solid rgb(245 230 66 / 82%);
   border-right-color: rgb(74 217 255 / 18%);
@@ -195,7 +201,9 @@
 .handTop {
   position: absolute;
   top: var(--hand-arc-bleed);
-  left: 0;
+  /* Rival hand remains an overlay, but begins after its left-side Trash and
+     Deck rail so those zones stay visible and reachable. */
+  left: calc(var(--side-col-w) + var(--zone-gutter) + var(--zone-pad));
   right: 0;
   height: var(--opponent-hand-zone-h);
   z-index: 50;
@@ -210,6 +218,10 @@
   height: var(--self-hand-zone-h);
   z-index: 180;
   pointer-events: none;
+  border-top: 1px solid rgb(74 217 255 / 72%);
+  background:
+    radial-gradient(ellipse at 50% 100%, rgb(74 217 255 / 12%), transparent 62%), rgb(7 9 12 / 96%);
+  box-shadow: 0 -10px 24px rgb(0 0 0 / 38%);
 }
 
 /*

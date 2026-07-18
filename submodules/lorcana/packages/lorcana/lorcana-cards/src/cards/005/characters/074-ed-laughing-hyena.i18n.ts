@@ -45,4 +45,15 @@ export const edLaughingHyenaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ed",
+    version: "Hiena riendo",
+    text: [
+      {
+        title: "CAUSA",
+        description:
+          "UN PÁNICO Cuando juegas con este personaje, puedes causar 2 daños al personaje dañado elegido.",
+      },
+    ],
+  },
 };

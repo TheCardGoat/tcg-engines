@@ -45,4 +45,15 @@ export const booInDisguiseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Abucheo",
+    version: "Disfrazado",
+    text: [
+      {
+        title: "Estás a salvo ahora",
+        description:
+          "Si bien tienes en juego un personaje ejercido llamado Sulley, este personaje no puede ser desafiado.",
+      },
+    ],
+  },
 };

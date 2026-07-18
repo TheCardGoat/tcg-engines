@@ -46,11 +46,18 @@ export const op06Absalom081: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 2,
+            position: "bottom",
+          },
+        ],
         actions: [
           {
             action: "ko",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

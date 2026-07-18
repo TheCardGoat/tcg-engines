@@ -77,6 +77,12 @@ export const op12BoeufBurst060: EventCard = {
                   action: "draw",
                   player: "self",
                   amount: 2,
+                  condition: {
+                    condition: "handCount",
+                    player: "self",
+                    comparison: "lte",
+                    value: 6,
+                  },
                 },
               ],
             ],

@@ -31,6 +31,14 @@ export const op04Koza006: CharacterCard = {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "modifyLeaderPower",
+            value: -5000,
+            duration: "thisTurn",
+            requiresActive: true,
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

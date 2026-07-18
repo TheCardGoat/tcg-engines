@@ -45,4 +45,15 @@ export const lenaSabrewingMysteriousDuckI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Lena Sabrewing",
+    version: "Pato misterioso",
+    text: [
+      {
+        title: "CONEXIÓN ARCANA",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje o una ubicación en juego con una carta debajo, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

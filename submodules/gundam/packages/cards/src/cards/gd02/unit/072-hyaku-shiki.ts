@@ -4,6 +4,7 @@ export const gd02HyakuShiki072: UnitCard = {
   cardNumber: "GD02-072",
   name: "Hyaku-Shiki",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["aeug"],
   id: "GD02-072",
@@ -58,6 +59,7 @@ export const gd02HyakuShiki072: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 4,
+  linkCondition: "[Quattro Bajeena]",
   effect:
     "&lt;Blocker&gt; (Rest this Unit to change the attack target to it.)<br>While a friendly white Base is in play, this Unit gains &lt;Repair 1&gt;.<br>\n(At the end of your turn, this Unit recovers the specified number of HP.)<br>",
   effects: [

@@ -4,6 +4,7 @@ export const gd02Daughtress049: UnitCard = {
   cardNumber: "GD02-049",
   name: "Daughtress",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["new une"],
   id: "GD02-049",

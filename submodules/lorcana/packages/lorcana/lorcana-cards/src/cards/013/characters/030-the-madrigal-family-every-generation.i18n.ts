@@ -60,4 +60,20 @@ export const theMadrigalFamilyEveryGenerationI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "La familia Madrigal",
+    version: "Cada generación",
+    text: [
+      {
+        title: "Madrigal Turno 3 {I}",
+        description:
+          "(Puedes pagar 3 {I} para jugar esto encima de uno de tus personajes de Madrigal).",
+      },
+      {
+        title: "BENDICIONES FAMILIARES",
+        description:
+          "Una vez durante tu turno, cada vez que elimines 1 o más daños de uno de tus personajes, coloca la carta superior de tu mazo en tu tintero boca abajo y ejerce.",
+      },
+    ],
+  },
 };

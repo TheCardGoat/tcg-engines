@@ -1,5 +1,6 @@
 import type { Action, TargetFilter } from "@tcg/op-types";
 import { parseComparison } from "../helpers.ts";
+import { traitAlternativesFilter } from "../target-parser.ts";
 
 // ── Search action parsing ──
 
@@ -18,31 +19,71 @@ type SearchAction = Extract<Action, { action: "search" }>;
  */
 function parsePlayDescription(text: string): TargetFilter[] | null {
   const filters: TargetFilter[] = [];
-  let rest = text.trim();
+  // Destination state belongs to the enclosing play/search action and must not
+  // obscure an end-anchored cost or power qualifier in the card description.
+  let rest = text
+    .trim()
+    .replace(/\s+rested$/i, "")
+    .trim();
 
-  // Extract "other than [Name]"
-  const excludeMatch = /\s+other than\s+\[([^\]]+)\]/i.exec(rest);
+  // Extract a shared exclusion before decomposing alternatives so it applies
+  // outside the resulting anyOf rather than being lost inside one branch.
+  const excludeMatch = /\s+other than\s+(?:\[([^\]]+)\]|["\u201c]([^"\u201d]+)["\u201d])/i.exec(
+    rest,
+  );
   if (excludeMatch) {
-    filters.push({ filter: "excludeName", value: excludeMatch[1]! });
+    filters.push({ filter: "excludeName", value: (excludeMatch[1] ?? excludeMatch[2])! });
     rest =
       rest.slice(0, excludeMatch.index) + rest.slice(excludeMatch.index + excludeMatch[0].length);
     rest = rest.trim();
   }
 
+  const mixedAlternativeMatch =
+    /^(.+?)\s+or\s+(?:1\s+)?((?:red|green|blue|purple|black|yellow)\s+(?:Character|Event|Stage)(?:\s+card)?|card\s+with\s+a\s+type\s+including\s+["“][^"”]+["”]|\[[^\]]+\])$/i.exec(
+      rest,
+    );
+  if (mixedAlternativeMatch) {
+    const left = parsePlayDescription(mixedAlternativeMatch[1]!);
+    const right = parsePlayDescription(mixedAlternativeMatch[2]!);
+    if (left && left.length > 0 && right && right.length > 0) {
+      const branch = (nested: TargetFilter[]): TargetFilter =>
+        nested.length === 1 ? nested[0]! : { filter: "allOf", filters: nested };
+      return [...filters, { filter: "anyOf", filters: [branch(left), branch(right)] }];
+    }
+  }
+
   // Extract "and no base effect" (before cost/power so it doesn't block their $ anchors)
   if (/\s+and no base effect$/i.test(rest)) {
-    filters.push({ filter: "hasEffectType", value: "onPlay", negate: true });
+    filters.push({ filter: "noBaseEffect" });
     rest = rest.replace(/\s+and no base effect$/i, "").trim();
   }
 
-  // Extract "and a [Trigger]"
-  if (/\s+and a \[Trigger\]$/i.test(rest)) {
+  // Extract "with/and a [Trigger]"
+  if (/\s+(?:with|and)\s+a\s+\[Trigger\]$/i.test(rest)) {
     filters.push({ filter: "hasTrigger", value: true });
-    rest = rest.replace(/\s+and a \[Trigger\]$/i, "").trim();
+    rest = rest.replace(/\s+(?:with|and)\s+a\s+\[Trigger\]$/i, "").trim();
   }
 
-  // Extract "with a cost of N (or less|more)?" or "with N power (or less|more)?"
-  const costMatch = /\s+with a cost of (\d+)(?:\s+or\s+(less|more))?$/i.exec(rest);
+  // Extract "with a cost of N to M", "with a cost of N (or less|more)?",
+  // or "with N power (or less|more)?".
+  const costRangeMatch = /\s+(?:with|and) a cost of (\d+)\s+to\s+(\d+)$/i.exec(rest);
+  if (costRangeMatch) {
+    filters.push(
+      {
+        filter: "cost",
+        comparison: "gte",
+        value: parseInt(costRangeMatch[1]!, 10),
+      },
+      {
+        filter: "cost",
+        comparison: "lte",
+        value: parseInt(costRangeMatch[2]!, 10),
+      },
+    );
+    rest = rest.slice(0, costRangeMatch.index).trim();
+  }
+
+  const costMatch = /\s+(?:with|and) a cost of (\d+)(?:\s+or\s+(less|more))?$/i.exec(rest);
   if (costMatch) {
     filters.push({
       filter: "cost",
@@ -60,6 +101,41 @@ function parsePlayDescription(text: string): TargetFilter[] | null {
       value: parseInt(powerMatch[1]!, 10),
     });
     rest = rest.slice(0, powerMatch.index).trim();
+  }
+
+  // Keep heterogeneous trait wording as one candidate alternative. Shared
+  // qualifiers such as cost and `other than` were extracted above and apply
+  // to both branches rather than only the trailing `type including` branch.
+  const typeIncludingAlternativeMatch =
+    /^(.+?\btype\s+(?:(?:Character|Event|Stage)\s+)?card)\s+or\s+((?:(?:Character|Event|Stage)\s+)?card\s+with\s+a\s+type\s+including\s+(?:[[{"\u201c])[^\]}"\u201d]+(?:[\]}"\u201d]))$/i.exec(
+      rest,
+    );
+  if (typeIncludingAlternativeMatch) {
+    const left = parsePlayDescription(typeIncludingAlternativeMatch[1]!);
+    const right = parsePlayDescription(typeIncludingAlternativeMatch[2]!);
+    if (left && left.length > 0 && right && right.length > 0) {
+      const branch = (nested: TargetFilter[]): TargetFilter =>
+        nested.length === 1 ? nested[0]! : { filter: "allOf", filters: nested };
+      return [...filters, { filter: "anyOf", filters: [branch(left), branch(right)] }];
+    }
+  }
+
+  // Extract suffix trait wording used by newer cards:
+  // `card with a type including "Baroque Works"`.
+  const suffixTraitMatch = /\s+with a type including ["“]([^"”]+)["”]$/i.exec(rest);
+  if (suffixTraitMatch) {
+    const traitFilter: TargetFilter = {
+      filter: "trait",
+      value: suffixTraitMatch[1]!,
+      match: "includes",
+    };
+    const costFilterIndex = filters.findIndex((filter) => filter.filter === "cost");
+    if (costFilterIndex === -1) {
+      filters.push(traitFilter);
+    } else {
+      filters.splice(costFilterIndex, 0, traitFilter);
+    }
+    rest = rest.slice(0, suffixTraitMatch.index).trim();
   }
 
   // Extract attribute prefix: "(Special) attribute Character card" → AttributeFilter
@@ -85,6 +161,80 @@ function parsePlayDescription(text: string): TargetFilter[] | null {
     rest = rest.slice(colorMatch[0].length);
   }
 
+  // Quoted imported text can use the same delimiters for a trait and a named
+  // card. The `type card` qualifier belongs only to the first alternative.
+  const quotedTraitNameMatch =
+    /^["\u201c]([^"\u201d]+)["\u201d]\s+type\s+(?:(Character|Event|Stage)\s+)?card\s+or\s+["\u201c]([^"\u201d]+)["\u201d]$/i.exec(
+      rest,
+    );
+  if (quotedTraitNameMatch) {
+    filters.push({
+      filter: "anyOf",
+      filters: [
+        { filter: "trait", value: quotedTraitNameMatch[1]!, match: "includes" },
+        { filter: "name", value: quotedTraitNameMatch[3]! },
+      ],
+    });
+    const category = quotedTraitNameMatch[2]?.toLowerCase();
+    if (category === "character" || category === "event" || category === "stage") {
+      filters.push({ filter: "cardCategory", value: category });
+    }
+    return filters;
+  }
+
+  // Official typography distinguishes a named card in square brackets from a
+  // type in braces: "[Name] or {Trait} type card".
+  const mixedNameTraitMatch =
+    /^\[([^\]]+)\]\s+or\s+\{([^}]+)\}\s+type\s+(?:(Character|Event|Stage)\s+)?card$/i.exec(rest);
+  if (mixedNameTraitMatch) {
+    filters.push({
+      filter: "anyOf",
+      filters: [
+        { filter: "name", value: mixedNameTraitMatch[1]! },
+        { filter: "trait", value: mixedNameTraitMatch[2]!, match: "includes" },
+      ],
+    });
+    const category = mixedNameTraitMatch[3]?.toLowerCase();
+    if (category === "character" || category === "event" || category === "stage") {
+      filters.push({ filter: "cardCategory", value: category });
+    }
+    return filters;
+  }
+
+  // Some imported card text uses square brackets for both a named card and a
+  // trait: "[Upper Yard] or [Shandian Warrior] type card". Only the second
+  // alternative is qualified by "type".
+  const bracketedNameTraitMatch =
+    /^\[([^\]]+)\]\s+or\s+\[([^\]]+)\]\s+type\s+(?:(Character|Event|Stage)\s+)?card$/i.exec(rest);
+  if (bracketedNameTraitMatch) {
+    filters.push({
+      filter: "anyOf",
+      filters: [
+        { filter: "name", value: bracketedNameTraitMatch[1]! },
+        { filter: "trait", value: bracketedNameTraitMatch[2]!, match: "includes" },
+      ],
+    });
+    const category = bracketedNameTraitMatch[3]?.toLowerCase();
+    if (category === "character" || category === "event" || category === "stage") {
+      filters.push({ filter: "cardCategory", value: category });
+    }
+    return filters;
+  }
+
+  // Named alternatives remain names even when the printed text uses a plural
+  // suffix: "[Plague Rounds] or [Ice Oni] cards".
+  const nameAlternativesMatch = /^(\[[^\]]+\](?:\s+or\s+\[[^\]]+\])+)(?:\s+cards?)?$/i.exec(rest);
+  if (nameAlternativesMatch) {
+    const names = [...nameAlternativesMatch[1]!.matchAll(/\[([^\]]+)\]/g)].map(
+      (match) => match[1]!,
+    );
+    filters.push({
+      filter: "anyOf",
+      filters: names.map((name) => ({ filter: "name", value: name })),
+    });
+    return filters;
+  }
+
   // Extract trait prefix: "[Trait] type", "{Trait} type", "\"Trait\" type",
   // "[A] or [B] type", "[A], [B], or [C] type"
   // Bracket group: [X], {X}, "X", \u201cX\u201d
@@ -96,13 +246,14 @@ function parsePlayDescription(text: string): TargetFilter[] | null {
   const traitMatch = traitRegex.exec(rest);
   if (traitMatch) {
     const traitParts = traitMatch[1]!.split(/,\s*(?:or\s+)?|\s+or\s+/i);
-    for (const part of traitParts) {
-      const trait = part
+    const traits = traitParts.map((part) =>
+      part
         .replace(/^[[\]{}"\u201c\u201d]/g, "")
         .replace(/[[\]{}"\u201c\u201d]$/g, "")
-        .trim();
-      if (trait) filters.push({ filter: "trait", value: trait });
-    }
+        .trim(),
+    );
+    const traitFilter = traitAlternativesFilter(traits, "includes");
+    if (traitFilter) filters.push(traitFilter);
     rest = rest.slice(traitMatch[0].length);
   }
 
@@ -126,14 +277,7 @@ function parsePlayDescription(text: string): TargetFilter[] | null {
   }
 
   // Extract card category: "Character card", "Character", "Stage", "Event card"
-  // Also handles "card or <color> <type>" compound (strips the "or" part for best-effort)
-  let catRest = rest
-    .trim()
-    .replace(
-      /\s+or\s+(?:red|green|blue|purple|black|yellow)\s+(?:Character|Event|Stage)\s*(?:cards?)?$/i,
-      "",
-    )
-    .trim();
+  const catRest = rest.trim();
   const categoryMatch = /^(Character|Stage|Event|card)\s*(cards?)?$/i.exec(catRest);
   if (categoryMatch) {
     const cat = categoryMatch[1]!.toLowerCase();
@@ -172,13 +316,23 @@ export function parseSearchAction(
   const lookCount = parseInt((lookMatch[1] ?? lookMatch[2] ?? lookMatch[3])!, 10);
   const afterLook = trimmed.slice(lookMatch[0].length);
 
-  // Remainder pattern: "place the rest at the (bottom|top) of your deck in any order" or "trash the rest"
+  // Remainder pattern: place the rest at the top, bottom, or chosen top/bottom of the deck.
   const REMAINDER_RE =
-    /(?:\s+and|\.\s*Then,)\s+(?:place\s+the\s+rest\s+at\s+the\s+(bottom|top)\s+of\s+your\s+deck(?:\s+in\s+any\s+order)?|trash\s+the\s+rest)/i;
+    /(?:\s+and|\.\s*Then,)\s+(?:place\s+the\s+rest\s+at\s+the\s+(top\s+or\s+bottom|bottom|top)\s+of\s+(?:(?:your|the)\s+)?deck(?:\s+in\s+any\s+order)?|trash\s+the\s+rest)/i;
+
+  const remainderPositionFor = (
+    match: RegExpExecArray | null,
+  ): "top" | "bottom" | "any" | "trash" => {
+    if (!match) return "bottom";
+    if (!match[1]) return "trash";
+    return /top\s+or\s+bottom/i.test(match[1])
+      ? "any"
+      : (match[1].toLowerCase() as "top" | "bottom");
+  };
 
   // Pattern 1: "reveal up to N / a total of N <desc> and add it/them to your hand [and|. Then,] <remainder>"
   const revealPattern =
-    /^reveal\s+(?:up\s+to|a\s+total\s+of)\s+(\d+)\s+(.+?)\s+and\s+add\s+(?:it|them)\s+to\s+your\s+hand/i;
+    /^reveal\s+(?:up\s+to|a\s+total\s+of(?:\s+up\s+to)?)\s+(\d+)\s+(.+?)\s+and\s+add\s+(?:it|them)\s+to\s+your\s+hand/i;
   const revealMatch = revealPattern.exec(afterLook);
   if (revealMatch) {
     const afterReveal = afterLook.slice(revealMatch[0].length);
@@ -186,11 +340,7 @@ export function parseSearchAction(
     // Also match if remainder is right after revealMatch (no afterReveal gap)
     const fullRemainderMatch = REMAINDER_RE.exec(afterLook.slice(revealMatch[0].length - 1));
     const remMatch = remainderMatch ?? fullRemainderMatch;
-    const remainderPosition: "top" | "bottom" | "trash" = remMatch
-      ? remMatch[1]
-        ? (remMatch[1].toLowerCase() as "top" | "bottom")
-        : "trash"
-      : "bottom";
+    const remainderPosition = remainderPositionFor(remMatch);
 
     const totalConsumed = remMatch
       ? revealMatch[0].length +
@@ -222,11 +372,7 @@ export function parseSearchAction(
   if (playMatch) {
     const afterPlay = afterLook.slice(playMatch[0].length);
     const remainderMatch = REMAINDER_RE.exec(afterPlay);
-    const remainderPosition: "top" | "bottom" | "trash" = remainderMatch
-      ? remainderMatch[1]
-        ? (remainderMatch[1].toLowerCase() as "top" | "bottom")
-        : "trash"
-      : "bottom";
+    const remainderPosition = remainderPositionFor(remainderMatch);
 
     const totalConsumed = remainderMatch
       ? playMatch[0].length + remainderMatch.index + remainderMatch[0].length
@@ -236,6 +382,7 @@ export function parseSearchAction(
     remaining = remaining.replace(/^(?:and\s+|,\s*and\s+)/i, "").trim();
 
     const filters = parsePlayDescription(playMatch[2]!);
+    const playState = /\brested\s*$/i.test(playMatch[2]!) ? ("rested" as const) : undefined;
     const action: SearchAction = {
       action: "search",
       lookCount,
@@ -244,6 +391,7 @@ export function parseSearchAction(
       ...(filters && filters.length > 0 && { revealFilters: filters }),
       revealDestination: "character",
       remainderPosition,
+      ...(playState && { playState }),
     };
     return { action, remaining };
   }
@@ -254,11 +402,7 @@ export function parseSearchAction(
   if (addMatch) {
     const afterAdd = afterLook.slice(addMatch[0].length);
     const remainderMatch = REMAINDER_RE.exec(afterAdd);
-    const remainderPosition: "top" | "bottom" | "trash" = remainderMatch
-      ? remainderMatch[1]
-        ? (remainderMatch[1].toLowerCase() as "top" | "bottom")
-        : "trash"
-      : "bottom";
+    const remainderPosition = remainderPositionFor(remainderMatch);
 
     const totalConsumed = remainderMatch
       ? addMatch[0].length + remainderMatch.index + remainderMatch[0].length
@@ -311,7 +455,8 @@ export function parseTrashFromDeckAction(text: string): TrashFromDeckAction | nu
 
 // ── RearrangeDeck action parsing ──
 
-type RearrangeDeckAction = Extract<Action, { action: "rearrangeDeck" }>;
+type RearrangeDeckAction = Extract<Action, { action: "rearrangeDeck" | "turnLifeFaceDown" }>;
+type RevealFromDeckAction = Extract<Action, { action: "revealFromDeck" }>;
 
 /**
  * Parse a "Look at N cards from the top of your deck and place them at the
@@ -351,6 +496,7 @@ export function parseRearrangeDeckAction(text: string): RearrangeDeckAction | nu
       player: "self",
       count: parseInt(lookTrashMatch[1]!, 10),
       position: posText as "top" | "bottom",
+      trashUpTo: parseInt(lookTrashMatch[2]!, 10),
     };
   }
 
@@ -373,13 +519,11 @@ export function parseRearrangeDeckAction(text: string): RearrangeDeckAction | nu
     };
   }
 
-  // Pattern 3: "Turn all of your Life cards face-down" (rearrange life area)
+  // Pattern 3: "Turn all of your Life cards face-down"
   if (/^turn\s+all\s+(?:of\s+)?your\s+Life\s+cards?\s+face-down$/i.test(trimmed)) {
     return {
-      action: "rearrangeDeck",
+      action: "turnLifeFaceDown",
       player: "self",
-      count: 99,
-      position: "top",
     };
   }
 
@@ -388,28 +532,29 @@ export function parseRearrangeDeckAction(text: string): RearrangeDeckAction | nu
 
 // ── Shuffle deck (standalone) ──
 
-export function parseShuffleDeckAction(text: string): RearrangeDeckAction | null {
+type ShuffleDeckAction = Extract<Action, { action: "shuffleDeck" }>;
+
+export function parseShuffleDeckAction(text: string): ShuffleDeckAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
   if (/^shuffle\s+your\s+deck$/i.test(trimmed)) {
-    return { action: "rearrangeDeck", player: "self", count: 0, position: "top" };
+    return { action: "shuffleDeck", player: "self" };
   }
   return null;
 }
 
 // ── Reveal from deck (standalone — for "Reveal 1 card from the top of your deck. If the revealed card...") ──
 
-export function parseRevealFromDeckAction(text: string): RearrangeDeckAction | null {
+export function parseRevealFromDeckAction(text: string): RevealFromDeckAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
   // "Reveal N card(s) from the top of your deck"
-  const m = /^reveal\s+(\d+)\s+cards?\s+from\s+the\s+top\s+of\s+your\s+deck$/i.exec(trimmed);
+  const m = /^reveal\s+(1)\s+card\s+from\s+the\s+top\s+of\s+your\s+deck$/i.exec(trimmed);
   if (!m) return null;
 
   return {
-    action: "rearrangeDeck",
+    action: "revealFromDeck",
     player: "self",
-    count: parseInt(m[1]!, 10),
-    position: "top",
+    count: 1,
   };
 }
 

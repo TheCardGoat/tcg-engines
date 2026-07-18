@@ -60,4 +60,18 @@ export const jiminyCricketGhostOfChristmasPastI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Pepe Grillo",
+    version: "Fantasma de la Navidad pasada",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "MIRA TU PASADO",
+        description:
+          "Siempre que coloques una carta debajo de este personaje, puedes poner una carta de tu descarte en tu tintero boca abajo y ejercida.",
+      },
+    ],
+  },
 };

@@ -23,6 +23,7 @@ function createCardI18n(
   return {
     en: english,
     de: overrides.de ?? english,
+    es: overrides.es ?? english,
     fr: overrides.fr ?? english,
     it: overrides.it ?? english,
   };

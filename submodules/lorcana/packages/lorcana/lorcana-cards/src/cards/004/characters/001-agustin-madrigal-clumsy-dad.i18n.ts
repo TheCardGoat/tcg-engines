@@ -17,4 +17,8 @@ export const agustinMadrigalClumsyDadI18n: Record<Languages, I18nProperties> = {
     name: "Agustín Madrigal",
     version: "Papà Impacciato",
   },
+  es: {
+    name: "Agustín Madrigal",
+    version: "Papá torpe",
+  },
 };

@@ -45,4 +45,15 @@ export const sleepyHollowTheBridgeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hueco soñoliento",
+    version: "El puente",
+    text: [
+      {
+        title: "¡VAYA AL PUENTE!",
+        description:
+          "Siempre que un personaje realice una misión mientras esté aquí, puedes desterrar esta ubicación para obtener 2 conocimientos y darles Evasivo hasta el comienzo de tu próximo turno.",
+      },
+    ],
+  },
 };

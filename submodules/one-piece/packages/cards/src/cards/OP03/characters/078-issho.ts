@@ -57,6 +57,7 @@ export const op03Issho078: CharacterCard = {
           {
             action: "trashFromHand",
             player: "opponent",
+            chosenBy: "self",
             amount: 2,
           },
         ],

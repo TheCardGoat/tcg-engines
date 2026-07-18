@@ -45,4 +45,15 @@ export const queenOfHeartsQuicktemperedI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Reina de corazones",
+    version: "De mal genio",
+    text: [
+      {
+        title: "FURIA REAL",
+        description:
+          "Cuando juegues con este personaje, inflige 1 daño al personaje contrario dañado elegido.",
+      },
+    ],
+  },
 };

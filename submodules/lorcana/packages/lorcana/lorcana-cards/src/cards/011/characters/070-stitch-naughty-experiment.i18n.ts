@@ -45,4 +45,15 @@ export const stitchNaughtyExperimentI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Puntada",
+    version: "Experimento travieso",
+    text: [
+      {
+        title: "¡TE RETO!",
+        description:
+          "{E}: el personaje contrario elegido gana Reckless hasta el comienzo de tu siguiente turno. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

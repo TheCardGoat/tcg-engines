@@ -75,4 +75,22 @@ export const russellSeniorWildernessExplorerI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Russell",
+    version: "Explorador senior de áreas silvestres",
+    text: [
+      {
+        title: "<Mayús> 3 {I}",
+      },
+      {
+        title: "Campamento base",
+        description: "Tus personajes en las ubicaciones obtienen +1 {S}.",
+      },
+      {
+        title: "Buen liderazgo",
+        description:
+          "Siempre que uno de tus personajes tenga 4 {S} o más misiones, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

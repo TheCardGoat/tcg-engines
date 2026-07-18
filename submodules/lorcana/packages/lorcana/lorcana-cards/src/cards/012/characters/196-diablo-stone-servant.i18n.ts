@@ -65,4 +65,20 @@ export const diabloStoneServantI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Diablos",
+    version: "Sirviente de piedra",
+    text: [
+      {
+        title: "INTENCIÓN CRUEL",
+        description:
+          "Mientras tengas un personaje villano en juego, este personaje obtiene +2 {S} y +1 {L}.",
+      },
+      {
+        title: "VÍNCULO VILLANO",
+        description:
+          "Mientras este personaje esté ejercido, tus personajes villanos no pueden ser desafiados.",
+      },
+    ],
+  },
 };

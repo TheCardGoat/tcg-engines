@@ -45,4 +45,15 @@ export const tiggerBouncingAllTheWayEpicI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Tigre",
+    version: "Rebotando todo el camino",
+    text: [
+      {
+        title: "ESPLENDERIÑO REBOTE",
+        description:
+          "Cuando juegas con este personaje, puedes devolver el personaje, objeto o ubicación elegidos con un coste de 2 o menos a la mano del jugador.",
+      },
+    ],
+  },
 };

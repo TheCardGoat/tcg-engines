@@ -41,5 +41,26 @@ export const op12Kuzan040: LeaderCard = {
   ],
   effect:
     'When a card is trashed from your hand by your "Navy" type card\'s effect, draw cards equal to the number of cards trashed.',
+  effects: {
+    effects: [
+      {
+        trigger: "whenCardsTrashedFromHandByEffect",
+        eventFilter: {
+          player: "self",
+          causedBy: "self",
+          sourceFilters: [{ filter: "trait", value: "Navy", match: "includes" }],
+          minimumAmount: 1,
+        },
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 0,
+            amountFromTriggerEvent: true,
+          },
+        ],
+      },
+    ],
+  },
   i18n: op12Kuzan040I18n,
 };

@@ -49,12 +49,17 @@ export const op09MyEraBegins096: EventCard = {
               {
                 filter: "trait",
                 value: "Blackbeard Pirates",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
             remainderPosition: "trash",
           },
         ],
+      },
+      {
+        trigger: "trigger",
+        actions: [{ action: "activateEffect", effectTrigger: "main" }],
       },
     ],
   },

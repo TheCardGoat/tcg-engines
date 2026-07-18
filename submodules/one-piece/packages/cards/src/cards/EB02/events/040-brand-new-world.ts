@@ -53,6 +53,15 @@ export const eb02BrandNewWorld040: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
+          },
+        ],
+      },
     ],
   },
   i18n: eb02BrandNewWorld040I18n,

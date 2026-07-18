@@ -41,4 +41,14 @@ export const theClawI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La garra",
+    text: [
+      {
+        title: "LA GARRA ELIGE",
+        description:
+          "{E}, 2 {I}, destierra a uno de tus personajes: devuelve el personaje contrario elegido a la mano de su jugador.",
+      },
+    ],
+  },
 };

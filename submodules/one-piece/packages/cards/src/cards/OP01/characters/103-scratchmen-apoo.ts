@@ -25,6 +25,5 @@ export const op01ScratchmenApoo103: CharacterCard = {
   counter: 1000,
   traits: ["Animal Kingdom Pirates On-Air Pirates"],
   attribute: "ranged",
-  effect: "NULL",
   i18n: op01ScratchmenApoo103I18n,
 };

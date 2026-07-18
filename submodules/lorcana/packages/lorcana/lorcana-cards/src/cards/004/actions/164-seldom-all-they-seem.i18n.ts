@@ -33,4 +33,8 @@ export const seldomAllTheySeemI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rara vez todo lo que parecen",
+    text: "El personaje elegido obtiene -3 {S} este turno.",
+  },
 };

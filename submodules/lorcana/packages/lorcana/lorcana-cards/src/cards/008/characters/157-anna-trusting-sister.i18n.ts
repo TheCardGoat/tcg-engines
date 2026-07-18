@@ -45,4 +45,15 @@ export const annaTrustingSisterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ana",
+    version: "Hermana confiada",
+    text: [
+      {
+        title: "PODEMOS HACER ESTO JUNTOS",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje llamado Elsa en juego, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

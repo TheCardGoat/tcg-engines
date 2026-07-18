@@ -21,4 +21,9 @@ export const aladdinPrinceAliI18n: Record<Languages, I18nProperties> = {
     version: "Prince Ali",
     text: "<Ward> (Opponents can't choose this character except to challenge.)",
   },
+  es: {
+    name: "Aladino",
+    version: "Príncipe Alí",
+    text: "Pabellón",
+  },
 };

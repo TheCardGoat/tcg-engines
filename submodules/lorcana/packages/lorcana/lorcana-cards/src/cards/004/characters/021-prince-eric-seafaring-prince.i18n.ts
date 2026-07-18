@@ -27,4 +27,15 @@ export const princeEricSeafaringPrinceI18n: Record<Languages, I18nProperties> = 
     version: "Principe Navigatore",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Príncipe eric",
+    version: "Príncipe marinero",
+    text: [
+      {
+        title: "Guardaespaldas",
+        description:
+          "(Este personaje puede entrar en juego agotado. Un personaje contrario que desafíe a uno de tus personajes debe elegir un personaje con Guardaespaldas si puede).",
+      },
+    ],
+  },
 };

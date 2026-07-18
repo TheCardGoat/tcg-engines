@@ -50,4 +50,18 @@ export const hadesKingOfOlympusEnchantedI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Infierno",
+    version: "Rey del Olimpo",
+    text: [
+      {
+        title: "Shift 6",
+      },
+      {
+        title: "TRAMA SINIESTRA",
+        description:
+          "Este personaje obtiene +1 {L} por cada otro personaje villano que tengas en juego.",
+      },
+    ],
+  },
 };

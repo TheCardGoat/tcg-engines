@@ -27,5 +27,25 @@ export const op03Gaimon043: CharacterCard = {
   attribute: "wisdom",
   effect:
     "When you deal damage to your opponent's Life, you may trash 3 cards from the top of your deck. If you do, trash this Character.",
+  effects: {
+    effects: [
+      {
+        trigger: "whenYouDealDamage",
+        actions: [
+          {
+            action: "trashFromDeck",
+            player: "self",
+            amount: 3,
+            thenActions: [
+              {
+                action: "trashThisCard",
+              },
+            ],
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
   i18n: op03Gaimon043I18n,
 };

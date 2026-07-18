@@ -32,26 +32,40 @@ export const op11TopknotNeptunian107: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "turnLifeFaceUp",
+            count: 1,
+            faceUp: false,
+          },
+        ],
+        actions: [
+          {
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "setActive",
+                target: {
+                  player: "self",
+                  zones: ["character"],
+                  count: {
+                    amount: 1,
+                  },
+                  self: true,
+                },
+              },
+            ],
+          },
+        ],
+        optional: true,
+        oncePerTurn: true,
         conditions: [
           {
             condition: "leaderName",
             name: "Shirahoshi",
           },
         ],
-        actions: [
-          {
-            action: "setActive",
-            target: {
-              player: "self",
-              zones: ["character"],
-              count: {
-                amount: 1,
-              },
-              self: true,
-            },
-          },
-        ],
-        oncePerTurn: true,
       },
     ],
   },

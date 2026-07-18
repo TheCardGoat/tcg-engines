@@ -35,4 +35,8 @@ export const weDontTalkAboutBrunoEnchantedI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "No hablamos de Bruno",
+    text: "Devuelve el personaje elegido a la mano de su jugador, luego ese jugador descarta una carta al azar.",
+  },
 };

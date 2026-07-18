@@ -26,11 +26,24 @@ export const op08Kingdew044: CharacterCard = {
   traits: ["Whitebeard Pirates"],
   attribute: "strike",
   effect:
-    '[Activate:Main] [Once Per Turn] You may reveal 2 cards with a type including "Whitebeard Piratess" from your hand: This Character gains +2000 power during this turn.',
+    '[Activate:Main] [Once Per Turn] You may reveal 2 cards with a type including "Whitebeard Pirates" from your hand: This Character gains +2000 power during this turn.',
   effects: {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "revealFromHand",
+            amount: 2,
+            filters: [
+              {
+                filter: "trait",
+                value: "Whitebeard Pirates",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

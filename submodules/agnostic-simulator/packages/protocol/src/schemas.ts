@@ -141,6 +141,8 @@ export const PushStateMessage = z
     moveType: z.string().min(1),
     /** Actor who made the move. */
     actorId: z.string().min(1),
+    /** Request id used when the client needs durable processing confirmation. */
+    correlationId: z.string().min(1).optional(),
     /** Single accepted move delta for normal client-authority actions. */
     acceptedMove: z
       .object({
@@ -295,6 +297,23 @@ export const UnsubscribeEventMessage = z.object({
   correlationId: z.string().optional(),
 });
 
+/**
+ * Public matchmaking-dashboard room membership. This is intentionally a
+ * payload-free local gateway operation: anonymous visitors may observe public
+ * queue and match counts, but cannot select another game's room.
+ */
+export const SubscribeMatchmakingDashboardMessage = z
+  .object({
+    type: z.literal("subscribe_matchmaking_dashboard"),
+  })
+  .strict();
+
+export const UnsubscribeMatchmakingDashboardMessage = z
+  .object({
+    type: z.literal("unsubscribe_matchmaking_dashboard"),
+  })
+  .strict();
+
 export const GatewayClientMessage = z.union([
   GatewayPingMessage,
   JoinGameMessage,
@@ -318,6 +337,8 @@ export const GatewayClientMessage = z.union([
   RequestGameStateSyncMessage,
   SubscribeEventMessage,
   UnsubscribeEventMessage,
+  SubscribeMatchmakingDashboardMessage,
+  UnsubscribeMatchmakingDashboardMessage,
 ]);
 
 export type MatchmakingPollMsg = z.infer<typeof MatchmakingPollMessage>;
@@ -343,4 +364,8 @@ export type ActivityUpdateMsg = z.infer<typeof ActivityUpdateMessage>;
 export type RequestGameStateSyncMsg = z.infer<typeof RequestGameStateSyncMessage>;
 export type SubscribeEventMsg = z.infer<typeof SubscribeEventMessage>;
 export type UnsubscribeEventMsg = z.infer<typeof UnsubscribeEventMessage>;
+export type SubscribeMatchmakingDashboardMsg = z.infer<typeof SubscribeMatchmakingDashboardMessage>;
+export type UnsubscribeMatchmakingDashboardMsg = z.infer<
+  typeof UnsubscribeMatchmakingDashboardMessage
+>;
 export type GatewayClientMsg = z.infer<typeof GatewayClientMessage>;

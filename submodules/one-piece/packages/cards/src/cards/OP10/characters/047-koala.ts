@@ -31,6 +31,24 @@ export const op10Koala047: CharacterCard = {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "returnCharacter",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Revolutionary Army",
+                match: "includes",
+              },
+              {
+                filter: "cost",
+                comparison: "gte",
+                value: 3,
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

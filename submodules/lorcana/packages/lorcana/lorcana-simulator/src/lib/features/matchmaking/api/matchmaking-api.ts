@@ -3,6 +3,7 @@ import { HttpRequestError, requestJson, requestVoid } from "$lib/data/transport/
 
 export interface MatchmakingJoinParams {
   gameProfileId: string;
+  queueId?: string;
   format: string;
   mode: string;
   /** Bitmask of opponent ink colors the player wants to face (casual only, ≤2 bits). */
@@ -23,6 +24,32 @@ export interface MatchmakingJoinParams {
   isMobile?: boolean;
 }
 
+export interface MatchmakingCatalogQueue {
+  queueId: string;
+  displayName: string;
+  formatId: string;
+  mode: string;
+  matchType: "ranked" | "casual" | "testing";
+  availability: "available" | "unavailable";
+  unavailableReason: string | null;
+  season: {
+    seasonId: string;
+    name: string;
+    slug: string;
+    startsAt: string;
+    endsAt: string | null;
+  } | null;
+}
+
+export async function fetchMatchmakingCatalog(): Promise<MatchmakingCatalogQueue[]> {
+  const response = await requestJson<{ queues: MatchmakingCatalogQueue[] }>(
+    `${getApiOrigin()}/v1/games/lorcana/play/matchmaking/catalog`,
+    undefined,
+    "Failed to load matchmaking queues",
+  );
+  return response.queues;
+}
+
 export interface MatchmakingEntryResponse {
   object: "matchmaking_entry";
   status: "queued";
@@ -36,6 +63,8 @@ export interface MatchmakingStatusResponse {
   entry?: {
     userId: string;
     gameProfileId: string;
+    queueId?: string;
+    seasonId?: string;
     deckListId: string;
     format: string;
     mode: string;

@@ -41,4 +41,14 @@ export const screamCanisterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bote de grito",
+    text: [
+      {
+        title: "Gritos erráticos",
+        description:
+          "{E}, 2 {I}: saca todas las cartas de tu tintero. Ejerce el personaje contrario elegido con 2 {S} o menos.",
+      },
+    ],
+  },
 };

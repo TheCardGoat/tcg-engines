@@ -8,6 +8,21 @@ interface FixtureIndexProps {
   variant?: "home" | "dev";
 }
 
+const LATEST_RELEASE_FIXTURES = [
+  {
+    id: "progLiveWithTheAftermathRetail",
+    title: "Live with the Aftermath",
+    steps:
+      "Play the Program, choose your Mox Inciters, then switch to P2 and choose Corpo Security.",
+  },
+  {
+    id: "unitOctantRetail",
+    title: "Octant",
+    steps:
+      "Play Octant with the two 8+ Gigs already in your Gig area; it costs 5 €$ instead of 7 €$.",
+  },
+] as const;
+
 export function FixtureIndex({ variant = "dev" }: FixtureIndexProps) {
   if (variant === "dev" && !import.meta.env.DEV) {
     return <NotFound />;
@@ -20,6 +35,15 @@ export function FixtureIndex({ variant = "dev" }: FixtureIndexProps) {
     scenarios: scenarios.filter((s) => s.group === group.id),
   }));
   const activeGroups = grouped.filter((group) => group.scenarios.length > 0);
+  const latestReleaseFixtures = LATEST_RELEASE_FIXTURES.map((fixture) => {
+    const scenario = scenarios.find((candidate) => candidate.id === fixture.id);
+
+    if (!scenario) {
+      throw new Error(`Latest-release fixture ${fixture.id} is not registered.`);
+    }
+
+    return { ...fixture, scenario };
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -65,6 +89,36 @@ export function FixtureIndex({ variant = "dev" }: FixtureIndexProps) {
             </div>
           </div>
         </header>
+        <section className={classes.releaseBench} aria-labelledby="latest-release-heading">
+          <div className={classes.groupHeader}>
+            <div>
+              <p className={classes.releaseEyebrow}>Manual visual test setup</p>
+              <h2 id="latest-release-heading" className={classes.releaseTitle}>
+                Latest release
+              </h2>
+            </div>
+            <span className={classes.groupCount}>{latestReleaseFixtures.length}</span>
+          </div>
+          <p className={classes.releaseLead}>
+            Deterministic boards with AI off. Use the on-board controls to resolve each choice and
+            inspect the result.
+          </p>
+          <ul className={classes.releaseList}>
+            {latestReleaseFixtures.map(({ id, title, steps, scenario }) => (
+              <li key={id} className={classes.releaseItem}>
+                <Link
+                  to={`${cyberpunkSimulatorPath(`/tests/${id}`)}?ai=off&auto-advance-attack=off`}
+                  className={classes.releaseLink}
+                >
+                  <span className={classes.releaseCardName}>{title}</span>
+                  <span className={classes.releaseScenario}>{scenario.label}</span>
+                  <span className={classes.releaseSteps}>{steps}</span>
+                  <span className={classes.releaseAction}>Open board</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
         {activeGroups.map((group) => (
           <section key={group.id} className={classes.group}>
             <div className={classes.groupHeader}>

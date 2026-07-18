@@ -73,4 +73,22 @@ export const mrsIncredibleDeterminedRescuerEnchantedI18n: Record<Languages, I18n
       },
     ],
   },
+  es: {
+    name: "Señora increíble",
+    version: "Rescatador decidido",
+    text: [
+      {
+        title: "Cambio 5 {I}",
+      },
+      {
+        title: "ECHAR PARA ATRÁS",
+        description: "Tus personajes obtienen Resistencia +1.",
+      },
+      {
+        title: "REAGRUPARSE",
+        description:
+          "Durante tu turno, cada vez que otro personaje sea desterrado en un desafío, podrás preparar el súper personaje elegido. Si lo haces, no podrán realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

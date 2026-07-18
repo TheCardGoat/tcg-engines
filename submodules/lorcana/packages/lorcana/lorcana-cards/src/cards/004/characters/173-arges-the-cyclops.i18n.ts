@@ -17,4 +17,8 @@ export const argesTheCyclopsI18n: Record<Languages, I18nProperties> = {
     name: "Arges",
     version: "Il Ciclope",
   },
+  es: {
+    name: "Argés",
+    version: "El cíclope",
+  },
 };

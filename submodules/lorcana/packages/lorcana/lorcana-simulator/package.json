@@ -1,6 +1,7 @@
 {
   "name": "@tcg/lorcana-simulator",
   "version": "0.0.1",
+  "private": true,
   "keywords": [
     "svelte"
   ],
@@ -32,7 +33,7 @@
     "start": "node build/index.js",
     "format": "bun x oxfmt --no-error-on-unmatched-pattern --write 'src/**/*.{js,jsx,ts,tsx,json,jsonc,json5,css,scss,less,html,md,mdx,graphql,yml,yaml,toml}'",
     "prepare": "svelte-kit sync || echo ''",
-    "prepack": "bun run i18n:compile && svelte-kit sync && svelte-package && publint",
+    "prepack": "bun run i18n:compile && svelte-kit sync && svelte-package",
     "i18n:verify": "pnpm run i18n:compile && pnpm run i18n:check",
     "i18n:compile": "vpx @inlang/paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
     "i18n:check": "node ./scripts/check-i18n-catalog.ts && bun run ./scripts/check-localized-copy.ts && bun run ./scripts/check-translation-keys.ts",
@@ -142,7 +143,6 @@
     "jsdom": "^29.0.0",
     "layerchart": "2.0.0-next.48",
     "playwright": "^1.58.2",
-    "publint": "^0.3.17",
     "shadcn-svelte": "^1.2.7",
     "svelte": "^5.55.10",
     "svelte-check": "^4.3.6",

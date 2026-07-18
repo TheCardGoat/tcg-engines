@@ -41,4 +41,14 @@ export const miracleCandleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Vela milagrosa",
+    text: [
+      {
+        title: "EL REGALO DE LA ABUELA",
+        description:
+          "Desterrar este objeto: si tienes 3 o más personajes en juego, obtienes 2 conocimientos y eliminas hasta 2 daños de la ubicación elegida.",
+      },
+    ],
+  },
 };

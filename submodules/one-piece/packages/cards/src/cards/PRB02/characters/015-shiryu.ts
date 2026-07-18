@@ -50,6 +50,7 @@ export const prb02Shiryu015: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Blackbeard Pirates",
+            match: "includes",
           },
         ],
         actions: [
@@ -70,6 +71,45 @@ export const prb02Shiryu015: CharacterCard = {
                 },
               ],
             },
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Blackbeard Pirates",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 4,
+            duration: "permanent",
           },
         ],
       },

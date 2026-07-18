@@ -17,4 +17,8 @@ export const protectiveAuraI18n: Record<Languages, I18nProperties> = {
     name: "Aura Protettiva",
     text: "I tuoi personaggi Imbevuto ottengono <Sfuggente> fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarli.)",
   },
+  es: {
+    name: "Aura protectora",
+    text: "Tus personajes Floodborn obtienen Evasividad hasta el comienzo de tu siguiente turno.",
+  },
 };

@@ -20,7 +20,9 @@ describe("Garma's Dopp (GD04-026)", () => {
       const revealedCardId = choice.revealedCardIds[0]!;
       expectSuccess(
         p1.resolveEffect({
-          deckLookAnswers: { 0: { toTrash: [revealedCardId], toTop: [] } },
+          deckLookAnswers: {
+            [choice.directiveIndex]: { toTrash: [revealedCardId], toTop: [] },
+          },
         }),
       );
 
@@ -43,23 +45,27 @@ describe("Garma's Dopp (GD04-026)", () => {
       const revealedCardId = firstChoice.revealedCardIds[0]!;
       expectSuccess(
         p1.resolveEffect({
-          deckLookAnswers: { 0: { toTop: [revealedCardId], toTrash: [] } },
+          deckLookAnswers: {
+            [firstChoice.directiveIndex]: { toTop: [revealedCardId], toTrash: [] },
+          },
         }),
       );
 
       expectSuccess(p1.deployUnit(secondDoppId!));
-      const simultaneousDeploys = p1.getBoardView().pendingChoice;
-      if (simultaneousDeploys?.kind !== "ordering") {
-        throw new Error("Expected simultaneous Deploy-effect ordering");
-      }
-      const secondDoppEffect = simultaneousDeploys.candidates.find(
-        (candidate) => candidate.sourceCardId === secondDoppId,
-      );
-      expectSuccess(p1.resolveEffect({ pendingEffectId: secondDoppEffect!.effectId }));
       const secondChoice = p1.getBoardView().pendingChoice;
       if (secondChoice?.kind !== "deckLook") throw new Error("Expected a deck-look choice");
+      expect(secondChoice.sourceCardId).toBe(secondDoppId);
       expect(secondChoice.revealedCardIds).toEqual([revealedCardId]);
+      expectSuccess(
+        p1.resolveEffect({
+          deckLookAnswers: {
+            [secondChoice.directiveIndex]: { toTop: [revealedCardId], toTrash: [] },
+          },
+        }),
+      );
+
       expect(p1.getCardZone(revealedCardId)).toBe(`deck:${PLAYER_ONE}`);
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
     });
 
     it("deploys successfully with an empty deck and leaves trash unchanged", () => {

@@ -68,6 +68,7 @@ export const op01Kanjuro038: CharacterCard = {
           {
             action: "trashFromHand",
             player: "self",
+            chosenBy: "opponent",
             amount: 1,
           },
         ],

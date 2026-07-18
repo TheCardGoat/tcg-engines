@@ -60,4 +60,18 @@ export const rayaLeaderOfHeartI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Raya",
+    version: "Líder de corazón",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "CAMPEÓN DE KUMANDRA",
+        description:
+          "Siempre que este personaje desafía a un personaje dañado, él no sufre daño por el desafío.",
+      },
+    ],
+  },
 };

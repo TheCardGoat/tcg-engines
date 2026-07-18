@@ -59,4 +59,18 @@ export const calhounMarineSergeantI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Calhoun",
+    version: "Sargento de marina",
+    text: [
+      {
+        title: "Resistir +1",
+      },
+      {
+        title: "ELEVAR A MISMO NIVEL",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, gana 2 conocimientos.",
+      },
+    ],
+  },
 };

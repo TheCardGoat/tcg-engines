@@ -17,4 +17,8 @@ export const mayorWinddancerActorturnedpoliticianI18n: Record<Languages, I18nPro
     name: "Sindaco Winddancer",
     version: "Ex Attore Ora in Politica",
   },
+  es: {
+    name: "Alcalde Bailarín del viento",
+    version: "Actor convertido en político",
+  },
 };

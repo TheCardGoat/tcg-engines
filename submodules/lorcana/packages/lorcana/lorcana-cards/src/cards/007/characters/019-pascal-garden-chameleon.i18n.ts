@@ -21,4 +21,9 @@ export const pascalGardenChameleonI18n: Record<Languages, I18nProperties> = {
     version: "Camaleonte da Giardino",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Pascal",
+    version: "Camaleón de jardín",
+    text: "Evasivo",
+  },
 };

@@ -41,4 +41,14 @@ export const ulfMimeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ulf",
+    version: "Mímica",
+    text: [
+      {
+        title: "RENDIMIENTO SILENCIOSO",
+        description: "Este personaje no puede {E} cantar canciones.",
+      },
+    ],
+  },
 };

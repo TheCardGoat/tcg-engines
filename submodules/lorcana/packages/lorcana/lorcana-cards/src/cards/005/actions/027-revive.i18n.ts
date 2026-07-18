@@ -17,4 +17,8 @@ export const reviveI18n: Record<Languages, I18nProperties> = {
     name: "Rivitalizzare",
     text: "Gioca una carta personaggio con costo 5 o inferiore dai tuoi scarti, gratis.",
   },
+  es: {
+    name: "Reanimar",
+    text: "Juega gratis una carta de personaje con coste 5 o menos de tu descarte.",
+  },
 };

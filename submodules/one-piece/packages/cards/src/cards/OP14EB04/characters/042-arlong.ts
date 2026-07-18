@@ -30,7 +30,7 @@ export const op14eb04Arlong042: CharacterCard = {
   setId: "OP14EB04",
   cost: 1,
   power: 3000,
-  traits: ["Fish-Man The Sun Pirates"],
+  traits: ["Fish-Man", "The Sun Pirates"],
   attribute: "slash",
   artVariants: [
     {

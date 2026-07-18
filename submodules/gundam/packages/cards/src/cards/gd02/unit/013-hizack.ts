@@ -5,6 +5,7 @@ export const gd02Hizack013: UnitCard = {
   name: "Hizack",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space", "earth"],
   traits: ["titans"],
   id: "GD02-013",
   canonicalId: "GD02-013",

@@ -99,6 +99,26 @@ describe("Dale - Ready for His Shot", () => {
       expect(testEngine.asPlayerTwo().getDamage(exertedDefender)).toBe(4);
     });
 
+    it("a friendly defender also deals damage with willpower when the opponent challenges", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+        {
+          play: [
+            { card: daleReadyForHisShot, isDrying: false },
+            { card: exertedDefender, exerted: true, isDrying: false },
+          ],
+        },
+        {
+          play: [{ card: sturdyExertedDefender, isDrying: false }],
+        },
+      );
+
+      expect(testEngine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+      expect(
+        testEngine.asPlayerTwo().challenge(sturdyExertedDefender, exertedDefender),
+      ).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerTwo().getDamage(sturdyExertedDefender)).toBe(5);
+    });
+
     it("release notes ruling: a strength modifier does NOT change challenge damage under SPIKE SUIT", () => {
       // Q&A: Spike Suit replaces the value used for challenge damage from {S}
       // to {W}; modifiers to {S} do not affect challenge damage; modifiers to

@@ -25,4 +25,8 @@ export const grabYourSwordI18n: Record<Languages, I18nProperties> = {
     name: "Grab Your Sword",
     text: "Deal 2 damage to each opposing character.",
   },
+  es: {
+    name: "Coge tu espada",
+    text: "Inflige 2 daños a cada personaje contrario.",
+  },
 };

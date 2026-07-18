@@ -45,4 +45,15 @@ export const sleepyDeepSleeperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Somnoliento",
+    version: "Durmiente profundo",
+    text: [
+      {
+        title: "SUEÑOS AGRADABLES",
+        description:
+          "Cuando este personaje es desterrado, si tienes un personaje de los Siete Enanitos o una Princesa en juego, puedes robar una carta.",
+      },
+    ],
+  },
 };

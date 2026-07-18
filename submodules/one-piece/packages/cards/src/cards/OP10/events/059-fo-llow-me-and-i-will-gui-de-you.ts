@@ -45,6 +45,7 @@ export const op10FoLlowMeAndIWillGuiDeYou059: EventCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -55,6 +56,10 @@ export const op10FoLlowMeAndIWillGuiDeYou059: EventCard = {
             remainderPosition: "bottom",
           },
         ],
+      },
+      {
+        trigger: "trigger",
+        actions: [{ action: "activateEffect", effectTrigger: "main" }],
       },
     ],
   },

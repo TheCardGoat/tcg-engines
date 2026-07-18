@@ -17,4 +17,8 @@ export const chiefTuiProudOfMotunuiI18n: Record<Languages, I18nProperties> = {
     name: "Capo Tui",
     version: "Fiero di Motunui",
   },
+  es: {
+    name: "Jefe Tui",
+    version: "Orgulloso de Motunui",
+  },
 };

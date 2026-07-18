@@ -61,4 +61,19 @@ export const olafCarrotEnthusiastI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Olaf",
+    version: "Entusiasta de la zanahoria",
+    text: [
+      {
+        title:
+          "Turno: descarta una carta de objeto (puedes descartar una carta de objeto para jugarla encima de uno de tus personajes llamado Olaf).",
+      },
+      {
+        title: "¡ZANAHORIAS POR TODOS LADOS!",
+        description:
+          "Cada vez que realiza una misión, cada uno de tus otros personajes obtiene +{S} igual al {S} de este personaje este turno.",
+      },
+    ],
+  },
 };

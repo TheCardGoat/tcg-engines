@@ -45,4 +45,15 @@ export const emilyQuackfasterLevelheadedLibrarianI18n: Record<Languages, I18nPro
       },
     ],
   },
+  es: {
+    name: "Emily Quackfaster",
+    version: "Bibliotecario sensato",
+    text: [
+      {
+        title: "LECTURA RECOMENDADA",
+        description:
+          "Cuando juegas con este personaje, puedes poner la carta superior de tu mazo boca abajo debajo de uno de tus personajes o ubicaciones con Boost.",
+      },
+    ],
+  },
 };

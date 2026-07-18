@@ -17,4 +17,8 @@ export const picoHelpfulToucanI18n: Record<Languages, I18nProperties> = {
     name: "Pico",
     version: "Utile Tucano",
   },
+  es: {
+    name: "Pico",
+    version: "Tucán útil",
+  },
 };

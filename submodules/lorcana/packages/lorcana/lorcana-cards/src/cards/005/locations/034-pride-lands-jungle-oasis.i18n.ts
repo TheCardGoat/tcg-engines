@@ -45,4 +45,15 @@ export const prideLandsJungleOasisI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tierras del Orgullo",
+    version: "Oasis de la selva",
+    text: [
+      {
+        title: "NUESTRO HUMILDE HOGAR",
+        description:
+          "Mientras tengas 3 o más personajes aquí, puedes desterrar esta ubicación para jugar con un personaje de tu descarte de forma gratuita.",
+      },
+    ],
+  },
 };

@@ -49,6 +49,29 @@ export const op06BlueDragonSealWaterStream019: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "power",
+                  comparison: "lte",
+                  value: 4000,
+                },
+              ],
+            },
+          },
+        ],
+      },
     ],
   },
   i18n: op06BlueDragonSealWaterStream019I18n,

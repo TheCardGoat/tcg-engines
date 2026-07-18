@@ -41,4 +41,15 @@ export const pinocchioTalkativePuppetP1PromoI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Pinocho",
+    version: "Marioneta habladora",
+    text: [
+      {
+        title: "DECIR MENTIRAS",
+        description:
+          "Cuando juegas con este personaje, puedes ejercer el personaje contrario elegido.",
+      },
+    ],
+  },
 };

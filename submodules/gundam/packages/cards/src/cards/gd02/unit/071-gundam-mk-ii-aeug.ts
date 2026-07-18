@@ -4,6 +4,7 @@ export const gd02GundamMkIiAeug071: UnitCard = {
   cardNumber: "GD02-071",
   name: "Gundam Mk-II (AEUG)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["aeug"],
   id: "GD02-071",
@@ -41,6 +42,7 @@ export const gd02GundamMkIiAeug071: UnitCard = {
   cost: 3,
   ap: 3,
   hp: 4,
+  linkCondition: "(AEUG) Trait",
   effect:
     "【Deploy】If a friendly white Base is in play, you may pair 1 (AEUG) Pilot card from your hand with this Unit.<br>",
   effects: [
@@ -68,6 +70,7 @@ export const gd02GundamMkIiAeug071: UnitCard = {
               ],
             },
           },
+          optional: true,
         },
       ],
       sourceText:

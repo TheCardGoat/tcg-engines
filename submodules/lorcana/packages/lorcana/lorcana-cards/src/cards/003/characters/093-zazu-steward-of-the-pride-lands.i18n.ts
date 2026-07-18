@@ -41,4 +41,14 @@ export const zazuStewardOfThePrideLandsI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Zazú",
+    version: "Administrador de las Tierras del Reino",
+    text: [
+      {
+        title: "¡ES HORA DE IRSE!",
+        description: "Mientras este personaje está en una ubicación, obtiene +1 {L}.",
+      },
+    ],
+  },
 };

@@ -28,6 +28,19 @@ export const op07SlaveArrow056: EventCard = {
     effects: [
       {
         trigger: "counter",
+        costs: [
+          {
+            cost: "returnCharacter",
+            amount: 1,
+            filters: [
+              {
+                filter: "cost",
+                comparison: "gte",
+                value: 2,
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "modifyPower",
@@ -63,6 +76,7 @@ export const op07SlaveArrow056: EventCard = {
               },
             },
             position: "bottom",
+            order: "any",
           },
         ],
       },

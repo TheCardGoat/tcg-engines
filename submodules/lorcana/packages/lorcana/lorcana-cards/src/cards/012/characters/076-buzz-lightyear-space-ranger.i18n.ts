@@ -17,4 +17,8 @@ export const buzzLightyearSpaceRangerI18n: Record<Languages, I18nProperties> = {
     name: "Buzz Lightyear",
     version: "Space Ranger",
   },
+  es: {
+    name: "Buzz Lightyear",
+    version: "Guardabosques espacial",
+  },
 };

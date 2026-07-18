@@ -45,4 +45,15 @@ export const jasmineDesertWarriorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jazmín",
+    version: "Guerrero del desierto",
+    text: [
+      {
+        title: "MANIOBRA ASTUTA",
+        description:
+          "Cuando juegas con este personaje y cada vez que lo desafían, cada oponente elige y descarta una carta.",
+      },
+    ],
+  },
 };

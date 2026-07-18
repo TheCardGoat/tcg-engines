@@ -45,4 +45,15 @@ export const queenOfHeartsWonderlandEmpressI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Reina de corazones",
+    version: "Emperatriz del país de las maravillas",
+    text: [
+      {
+        title: "TODOS LOS CAMINOS AQUÍ ESTÁN MIS CAMINOS",
+        description:
+          "Siempre que este personaje realice una misión, tus otros personajes villanos obtienen +1 {L} este turno.",
+      },
+    ],
+  },
 };

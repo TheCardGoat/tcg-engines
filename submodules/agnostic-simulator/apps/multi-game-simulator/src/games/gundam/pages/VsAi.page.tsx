@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { SimulatorApp } from "../src/SimulatorApp.tsx";
@@ -132,6 +132,8 @@ type SnapshotLoadState =
 export function VsAiPage() {
   const location = useLocation();
   const [loadState, setLoadState] = useState<SnapshotLoadState>({ status: "loading" });
+  const [restartRevision, setRestartRevision] = useState(0);
+  const restartScenario = useCallback(() => setRestartRevision((revision) => revision + 1), []);
 
   useEffect(() => {
     let cancelled = false;
@@ -152,7 +154,7 @@ export function VsAiPage() {
     return () => {
       cancelled = true;
     };
-  }, [location.pathname, location.search]);
+  }, [location.pathname, location.search, restartRevision]);
 
   if (loadState.status === "loading") {
     return <RouteStatus title="Loading match" message="Preparing the Gundam simulator." />;
@@ -168,7 +170,7 @@ export function VsAiPage() {
     return <VsAiSetup />;
   }
 
-  return <VsAiMatch snapshot={snapshot} />;
+  return <VsAiMatch snapshot={snapshot} onRestartScenario={restartScenario} />;
 }
 
 function RouteStatus({ title, message }: { readonly title: string; readonly message: string }) {
@@ -189,7 +191,13 @@ function RouteStatus({ title, message }: { readonly title: string; readonly mess
  * `useMemo` / `useClientBot` only run when there's actually a
  * match to mount.
  */
-function VsAiMatch({ snapshot }: { readonly snapshot: MatchSnapshot }) {
+function VsAiMatch({
+  snapshot,
+  onRestartScenario,
+}: {
+  readonly snapshot: MatchSnapshot;
+  readonly onRestartScenario: () => void;
+}) {
   const match = useMemo(() => reconstructFromSnapshot(snapshot), [snapshot]);
   const bot = useClientBot(
     match.fixtureName,
@@ -205,6 +213,7 @@ function VsAiMatch({ snapshot }: { readonly snapshot: MatchSnapshot }) {
       staticResources={match.staticResources}
       viewerId={match.p1Id}
       bot={bot}
+      onRestartScenario={onRestartScenario}
     />
   );
 }

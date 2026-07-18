@@ -94,7 +94,9 @@ export const gd02KamilleBidan097: PilotCard = {
     },
     {
       type: "constant",
-      activation: {},
+      activation: {
+        conditions: [{ type: "friendlyBaseInPlay", color: "white" }],
+      },
       directives: [
         {
           action: {

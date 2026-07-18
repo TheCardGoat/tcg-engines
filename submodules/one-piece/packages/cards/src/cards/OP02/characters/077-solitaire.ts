@@ -25,6 +25,5 @@ export const op02Solitaire077: CharacterCard = {
   counter: 1000,
   traits: ["Animal Kingdom Pirates SMILE"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op02Solitaire077I18n,
 };

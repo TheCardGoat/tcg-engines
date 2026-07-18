@@ -25,6 +25,7 @@ export const op01Yamato121: CharacterCard = {
     },
   ],
   cardType: "character",
+  alternateNames: ["Kouzuki Oden"],
   color: ["green"],
   rarity: "SEC",
   setId: "OP01",

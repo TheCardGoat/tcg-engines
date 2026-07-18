@@ -23,8 +23,7 @@ export const op04Randolph114: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Big Mom Pirates Homies"],
+  traits: ["Big Mom Pirates", "Homies"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op04Randolph114I18n,
 };

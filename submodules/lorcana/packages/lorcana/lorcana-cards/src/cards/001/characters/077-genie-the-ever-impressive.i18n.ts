@@ -17,4 +17,8 @@ export const genieTheEverImpressiveI18n: Record<Languages, I18nProperties> = {
     name: "Genie",
     version: "The Ever Impressive",
   },
+  es: {
+    name: "Genio",
+    version: "El siempre impresionante",
+  },
 };

@@ -4,6 +4,7 @@ export const gd02Freeden127: BaseCard = {
   cardNumber: "GD02-127",
   name: "Freeden",
   type: "base",
+  color: "purple",
   traits: ["vulture", "warship"],
   id: "GD02-127",
   canonicalId: "GD02-127",
@@ -39,6 +40,7 @@ export const gd02Freeden127: BaseCard = {
   level: 2,
   cost: 1,
   hp: 5,
+  battlefieldZones: ["earth"],
   effect:
     "【Burst】Deploy this card.<br>【Deploy】Add 1 of your Shields to your hand.<br>\n【Destroyed】Place the top 2 cards of your deck into your trash.<br>",
   effects: [

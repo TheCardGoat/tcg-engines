@@ -80,10 +80,29 @@ export const op11Helmeppo092: CharacterCard = {
               {
                 filter: "trait",
                 value: "SWORD",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
                 value: "character",
+              },
+            ],
+          },
+          {
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "returnToDeck",
+                target: {
+                  player: "self",
+                  zones: ["character"],
+                  count: {
+                    amount: 1,
+                  },
+                },
+                position: "bottom",
+                previousActionTargets: true,
               },
             ],
           },

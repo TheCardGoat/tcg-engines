@@ -17,4 +17,8 @@ export const youCameBackEnchantedI18n: Record<Languages, I18nProperties> = {
     name: "Sei Tornato",
     text: "Prepara un personaggio a tua scelta.",
   },
+  es: {
+    name: "Volviste",
+    text: "Personaje elegido listo.",
+  },
 };

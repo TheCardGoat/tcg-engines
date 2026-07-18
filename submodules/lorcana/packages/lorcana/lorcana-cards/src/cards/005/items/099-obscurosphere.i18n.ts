@@ -41,4 +41,14 @@ export const obscurosphereI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Oscurosfera",
+    text: [
+      {
+        title: "EXTRACTO DE ESMERALDA 2",
+        description:
+          "{I}, destierra este objeto: tus personajes obtienen protección hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -49,12 +49,17 @@ export const op09ComeOnWeLlFightYou020: EventCard = {
               {
                 filter: "trait",
                 value: "Red-Haired Pirates",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",
           },
         ],
+      },
+      {
+        trigger: "trigger",
+        actions: [{ action: "draw", player: "self", amount: 1 }],
       },
     ],
   },

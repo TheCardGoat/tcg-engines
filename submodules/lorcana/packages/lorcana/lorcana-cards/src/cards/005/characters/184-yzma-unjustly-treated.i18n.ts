@@ -45,4 +45,15 @@ export const yzmaUnjustlyTreatedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yzma",
+    version: "Tratado injustamente",
+    text: [
+      {
+        title: "¡TE LO AVISO!",
+        description:
+          "Durante tu turno, cada vez que uno de tus personajes destierre a un personaje en un desafío, puedes causar 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

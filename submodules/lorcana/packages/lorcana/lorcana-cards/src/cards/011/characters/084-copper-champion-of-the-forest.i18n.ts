@@ -60,4 +60,18 @@ export const copperChampionOfTheForestI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Cobre",
+    version: "Campeón del bosque",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "MÁS PARA EXPLORAR",
+        description:
+          "Siempre que este personaje realice una misión, tus personajes con Evasivo obtienen +1 {L} este turno.",
+      },
+    ],
+  },
 };

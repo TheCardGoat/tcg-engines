@@ -25,6 +25,12 @@ const searchableCharacter = createMockCharacter({
   cost: 3,
 });
 
+const alternateSearchableCharacter = createMockCharacter({
+  id: "antonio-alternate-searchable",
+  name: "Alternate Searchable Character",
+  cost: 2,
+});
+
 const tooExpensiveCharacter = createMockCharacter({
   id: "antonio-too-expensive",
   name: "Too Expensive Character",
@@ -104,6 +110,38 @@ describe("Antonio Madrigal - Friend to All", () => {
     // Second song should NOT trigger the ability (once per turn)
     expect(testEngine.asPlayerOne().singSong(secondSong, secondSinger)).toBeSuccessfulCommand();
     expect(testEngine.asPlayerOne().getBagCount()).toBe(0);
+  });
+
+  it("regression: lets the player choose when multiple characters match the deck search", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      play: [
+        { card: antonioMadrigalFriendToAll, isDrying: false },
+        { card: singer, isDrying: false },
+      ],
+      hand: [songToSing],
+      deck: [searchableCharacter, alternateSearchableCharacter, fillerCard],
+    });
+
+    const searchableId = testEngine.findCardInstanceId(searchableCharacter, "deck");
+    const alternateId = testEngine.findCardInstanceId(alternateSearchableCharacter, "deck");
+
+    expect(testEngine.asPlayerOne().singSong(songToSing, singer)).toBeSuccessfulCommand();
+    const [bagEffect] = testEngine.asPlayerOne().getBagEffects();
+    expect(bagEffect?.selectionContext).toMatchObject({
+      cardCandidateIds: expect.arrayContaining([searchableId, alternateId]),
+      allowedZones: ["deck"],
+      minSelections: 1,
+      maxSelections: 1,
+    });
+
+    expect(
+      testEngine.asPlayerOne().resolvePendingByCard(antonioMadrigalFriendToAll, {
+        resolveOptional: true,
+        targets: [alternateId],
+      }),
+    ).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().getCardZone(alternateSearchableCharacter)).toBe("hand");
+    expect(testEngine.asPlayerOne().getCardZone(searchableCharacter)).toBe("deck");
   });
 
   it("OF COURSE THEY CAN COME - can decline the optional search", () => {

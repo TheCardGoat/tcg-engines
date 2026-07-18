@@ -21,4 +21,9 @@ export const mrArrowLegacysFirstMateI18n: Record<Languages, I18nProperties> = {
     version: "Primo Ufficiale della Legacy",
     text: "<Resistere> +1",
   },
+  es: {
+    name: "Sr. flecha",
+    version: "Primer oficial del legado",
+    text: "Resistir +1",
+  },
 };

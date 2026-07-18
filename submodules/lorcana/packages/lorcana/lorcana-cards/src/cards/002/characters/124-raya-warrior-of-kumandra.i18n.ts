@@ -17,4 +17,8 @@ export const rayaWarriorOfKumandraI18n: Record<Languages, I18nProperties> = {
     name: "Raya",
     version: "Warrior of Kumandra",
   },
+  es: {
+    name: "Raya",
+    version: "Guerrero de Kumandra",
+  },
 };

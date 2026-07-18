@@ -40,22 +40,22 @@ export const prb02TrafalgarLawSt17002Reprint002: CharacterCard = {
     },
   ],
   effect:
-    '[On Play] You may return 1 of your Characters to the owner\'s hand: If your Leader has the "The Seven Warlords of the Sea" type, return up to 1 Character with a cost of 4 or less to the owner\'s hand.Disclaimer: This card was reprinted from the original set with changes to the copyright information (Note: the original print did not include "EN" at the end of the copyright).',
+    "[On Play] You may return 1 of your Characters to the owner's hand: If your Leader has the \"The Seven Warlords of the Sea\" type, return up to 1 Character with a cost of 4 or less to the owner's hand.",
   effects: {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
+        costs: [
           {
-            condition: "leaderTrait",
-            trait: "The Seven Warlords of the Sea",
+            cost: "returnCharacter",
+            amount: 1,
           },
         ],
         actions: [
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,
@@ -68,6 +68,11 @@ export const prb02TrafalgarLawSt17002Reprint002: CharacterCard = {
                   value: 4,
                 },
               ],
+            },
+            condition: {
+              condition: "leaderTrait",
+              trait: "The Seven Warlords of the Sea",
+              match: "includes",
             },
           },
         ],

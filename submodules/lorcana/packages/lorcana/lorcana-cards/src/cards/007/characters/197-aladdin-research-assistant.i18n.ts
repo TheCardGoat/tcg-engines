@@ -62,4 +62,20 @@ export const aladdinResearchAssistantI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Aladino",
+    version: "Asistente de investigación",
+    text: [
+      {
+        title: "MANO AMIGA",
+        description:
+          "Siempre que este personaje realice una misión, puedes jugar con un personaje aliado con un coste de 3 o menos de forma gratuita.",
+      },
+      {
+        title: "PONERSE ESFUERZO",
+        description:
+          "Mientras este personaje está ejercido, tus personajes aliados obtienen +1 {S}.",
+      },
+    ],
+  },
 };

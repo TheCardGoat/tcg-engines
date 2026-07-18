@@ -23,27 +23,22 @@ export const op08MobyDick056: StageCard = {
   cost: 2,
   traits: ["Whitebeard Pirates"],
   effect:
-    '[Your Turn] [Once Per Turn] When your Character with a type including "Whitebeard Piratess" is removed from the field by an effect, draw 1 card. Then, place 1 card from your hand at the top or bottom of your deck. [Trigger] Play this card.',
+    '[Your Turn] [Once Per Turn] When your Character with a type including "Whitebeard Pirates" is removed from the field by an effect, draw 1 card. Then, place 1 card from your hand at the top or bottom of your deck. [Trigger] Play this card.',
   effects: {
     effects: [
       {
-        trigger: "trigger",
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
+        trigger: "whenLeaving",
+        eventFilter: {
+          player: "self",
+          causedBy: "any",
+          filters: [
+            {
+              filter: "trait",
+              value: "Whitebeard Pirates",
+              match: "includes",
             },
-            count: {
-              amount: 1,
-            },
-          },
-        ],
-      },
-    ],
-    permanentEffects: [
-      {
+          ],
+        },
         conditions: [
           {
             condition: "turn",
@@ -51,6 +46,11 @@ export const op08MobyDick056: StageCard = {
           },
         ],
         actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
           {
             action: "returnToDeck",
             target: {
@@ -61,6 +61,15 @@ export const op08MobyDick056: StageCard = {
               },
             },
             position: "any",
+          },
+        ],
+        oncePerTurn: true,
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "playThisCard",
           },
         ],
       },

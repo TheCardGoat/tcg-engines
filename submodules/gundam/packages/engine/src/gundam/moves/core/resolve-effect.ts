@@ -244,33 +244,15 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
     }
 
     if (choice?.kind === "deckLook") {
-      if (
-        choice.acceptOptionalDirectiveIndex !== undefined &&
-        args?.optionalAnswers?.[choice.acceptOptionalDirectiveIndex] === false
-      ) {
-        // Declining the prerequisite optional skips the dependent deck-look
-        // directive, so no deck routing answer is required.
-      } else {
-        if (
-          choice.acceptOptionalDirectiveIndex !== undefined &&
-          args?.optionalAnswers?.[choice.acceptOptionalDirectiveIndex] !== true
-        ) {
-          return {
-            valid: false,
-            error: "Pending deck-look effect requires accepting its optional prerequisite",
-            errorCode: "MISSING_DECK_LOOK_OPTIONAL_ACCEPT",
-          };
-        }
-        const answer = args?.deckLookAnswers?.[choice.directiveIndex];
-        const validation = validateDeckLookAnswer(
-          target,
-          choice.directiveIndex,
-          answer,
-          g,
-          framework,
-        );
-        if (!validation.valid) return validation;
-      }
+      const answer = args?.deckLookAnswers?.[choice.directiveIndex];
+      const validation = validateDeckLookAnswer(
+        target,
+        choice.directiveIndex,
+        answer,
+        g,
+        framework,
+      );
+      if (!validation.valid) return validation;
     }
 
     // Validate submitted targets against the effect's target filter (rule
@@ -450,22 +432,34 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
       return;
     }
 
+    if (currentChoice?.kind === "targetSelection" && pending.chosenTargets === undefined) {
+      const resolution = evaluateLegalTargets(pending, g, framework);
+      const suppliedTargets = args?.targets;
+      if (!resolution || suppliedTargets === undefined) return;
+      const assigned = assignTargetsToGroups(suppliedTargets, resolution.groups);
+      if (!assigned) return;
+      const committedTargets = assigned.flat();
+      const committedTargetAnswers = { ...pending.committedTargetAnswers };
+      for (const directiveIndex of resolution.directiveIndexes) {
+        committedTargetAnswers[directiveIndex] = committedTargets;
+      }
+      pending.committedTargetAnswers = committedTargetAnswers;
+
+      // Keep the entry queued when another modal interaction still needs
+      // input. Committing a target does not execute its directive; printed
+      // sequences that must change public state before a later choice use
+      // the typed `resolveThenQueue` action so the continuation is evaluated
+      // against the updated board.
+      if (findChoiceDirective(pending, { g, framework })) return;
+    }
+
     // Prefer `pending.chosenTargets` over `args.targets` when both
     // are present — the triggering move pre-committed these at play time
     // (rule 10-1-8-1-1), and `validate` has already rejected any attempt
     // to overwrite them with `TARGETS_ALREADY_COMMITTED`. This is
     // defensive: if a caller somehow bypasses validate, honour the
     // committed set rather than the user override.
-    let committed = pending.chosenTargets ?? args?.targets;
-    if (committed !== undefined) {
-      const resolution = evaluateLegalTargets(
-        { ...pending, chosenTargets: undefined },
-        g,
-        framework,
-      );
-      const assigned = resolution ? assignTargetsToGroups(committed, resolution.groups) : null;
-      if (assigned) committed = assigned.flat();
-    }
+    const committed = pending.chosenTargets;
 
     g.pendingEffects.splice(idx, 1);
 

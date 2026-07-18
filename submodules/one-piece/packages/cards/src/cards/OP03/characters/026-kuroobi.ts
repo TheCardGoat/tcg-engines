@@ -26,7 +26,7 @@ export const op03Kuroobi026: CharacterCard = {
   traits: ["Fish-Man Arlong Pirates East Blue"],
   attribute: "strike",
   effect:
-    "[On Play] If your Leader has the [East Blue] type, rest up to 1 of your opponent's Characters. [Trigger] Play this card.",
+    "[On Play] If your Leader has the {East Blue} type, rest up to 1 of your opponent's Characters.\n[Trigger] Play this card.",
   effects: {
     effects: [
       {
@@ -35,6 +35,7 @@ export const op03Kuroobi026: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "East Blue",
+            match: "includes",
           },
         ],
         actions: [
@@ -53,18 +54,7 @@ export const op03Kuroobi026: CharacterCard = {
       },
       {
         trigger: "trigger",
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-          },
-        ],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   },

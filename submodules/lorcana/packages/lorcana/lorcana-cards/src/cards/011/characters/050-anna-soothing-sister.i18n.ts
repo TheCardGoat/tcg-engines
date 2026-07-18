@@ -64,4 +64,20 @@ export const annaSoothingSisterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ana",
+    version: "Hermana calmante",
+    text: [
+      {
+        title: "TRANSFORMACIÓN INUSUAL",
+        description:
+          "Si una carta dejó el descarte de un jugador este turno, esta carta gana Shift 0 {I}.",
+      },
+      {
+        title: "CORAZÓN CALIENTE",
+        description:
+          "Siempre que este personaje realice una misión, puedes obtener un conocimiento equivalente al {L} de una carta de personaje en tu descarte. Si lo haces, pon esa carta en la parte inferior de tu mazo.",
+      },
+    ],
+  },
 };

@@ -16,6 +16,12 @@ describe("Esperansa (GD04-060)", () => {
     const handBefore = p1.getCardsInZone("hand").length;
 
     expectSuccess(p1.playCommand(gd02AwakenedPower110));
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "targetSelection") {
+      throw new Error("Expected a visible trash Unit choice");
+    }
+    expect(choice.legalTargetIds).toEqual([esperansaId]);
+    expectSuccess(p1.resolveEffect({ targets: [esperansaId] }));
 
     expect(p1.getCardsInZone("battleArea")).toContain(esperansaId);
     expect(p1.getCardsInZone("hand").length).toBe(handBefore);

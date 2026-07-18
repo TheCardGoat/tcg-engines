@@ -17,4 +17,8 @@ export const lumiereHotheadedCandelabraI18n: Record<Languages, I18nProperties> =
     name: "Lumiere",
     version: "Hotheaded Candelabra",
   },
+  es: {
+    name: "Lumière",
+    version: "Candelabro impetuoso",
+  },
 };

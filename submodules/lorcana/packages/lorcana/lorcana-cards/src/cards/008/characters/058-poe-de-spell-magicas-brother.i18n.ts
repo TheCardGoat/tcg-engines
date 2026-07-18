@@ -17,4 +17,8 @@ export const poeDeSpellMagicasBrotherI18n: Record<Languages, I18nProperties> = {
     name: "Gennarino",
     version: "Fratello di Amelia",
   },
+  es: {
+    name: "Poe de hechizo",
+    version: "El hermano de Mágica",
+  },
 };

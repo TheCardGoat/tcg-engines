@@ -17,4 +17,8 @@ export const holdStillI18n: Record<Languages, I18nProperties> = {
     name: "Hold Still",
     text: "Remove up to 4 damage from chosen character.",
   },
+  es: {
+    name: "Quédate quieto",
+    text: "Elimina hasta 4 daños del personaje elegido.",
+  },
 };

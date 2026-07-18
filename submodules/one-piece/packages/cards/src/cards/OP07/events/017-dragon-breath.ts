@@ -47,6 +47,24 @@ export const op07DragonBreath017: EventCard = {
               ],
             },
           },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["stage"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 1,
+                },
+              ],
+            },
+          },
         ],
       },
       {

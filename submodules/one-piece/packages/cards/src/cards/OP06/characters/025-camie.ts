@@ -64,12 +64,19 @@ export const op06Camie025: CharacterCard = {
                 value: "Camie",
               },
               {
-                filter: "trait",
-                value: "Fish-Man",
-              },
-              {
-                filter: "trait",
-                value: "Merfolk",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Fish-Man",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Merfolk",
+                    match: "includes",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

@@ -17,4 +17,8 @@ export const baboomI18n: Record<Languages, I18nProperties> = {
     name: "Ba-Bum!",
     text: "Infliggi 2 danni a un personaggio o a un luogo a tua scelta.",
   },
+  es: {
+    name: "¡Ba-Boom!",
+    text: "Inflige 2 daños al personaje o lugar elegido.",
+  },
 };

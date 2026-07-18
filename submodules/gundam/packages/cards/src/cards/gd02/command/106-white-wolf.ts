@@ -88,7 +88,7 @@ export const gd02WhiteWolf106: CommandCard = {
         {
           action: {
             action: "preventDamageToZone",
-            zone: "shieldArea",
+            protectedArea: { kind: "shieldArea" },
             unitFilter: {
               owner: "opponent",
               cardType: "unit",

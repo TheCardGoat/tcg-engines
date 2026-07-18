@@ -78,4 +78,22 @@ export const maleficentDiabloEvilIncarnateEnchantedI18n: Record<Languages, I18nP
       },
     ],
   },
+  es: {
+    name: "Maléfica y Diablo",
+    version: "Mal encarnado",
+    text: [
+      {
+        title: "<Mayús> 5 {I}",
+      },
+      {
+        title: "¡Tontos!",
+        description:
+          "Puedes poner 5 cartas de personaje de tu descarte en la parte inferior de tu mazo en cualquier orden para cambiar este personaje de forma gratuita.",
+      },
+      {
+        title: "La llamada del cuervo",
+        description: "Durante tu turno, cada vez que este personaje se esfuerce, roba una carta.",
+      },
+    ],
+  },
 };

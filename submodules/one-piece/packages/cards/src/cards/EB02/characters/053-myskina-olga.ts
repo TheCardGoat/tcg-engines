@@ -33,10 +33,10 @@ export const eb02MyskinaOlga053: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
-            action: "rearrangeDeck",
-            player: "self",
-            count: 1,
+            action: "lookAtLife",
+            player: "either",
             position: "topOrBottom",
+            upTo: true,
           },
         ],
       },
@@ -44,10 +44,10 @@ export const eb02MyskinaOlga053: CharacterCard = {
         trigger: "onKo",
         actions: [
           {
-            action: "rearrangeDeck",
-            player: "self",
-            count: 1,
+            action: "lookAtLife",
+            player: "either",
             position: "topOrBottom",
+            upTo: true,
           },
         ],
       },

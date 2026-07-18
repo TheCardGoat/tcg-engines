@@ -44,4 +44,15 @@ export const vladimirCeramicUnicornFanI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Vladímir",
+    version: "Abanico Unicornio Cerámico",
+    text: [
+      {
+        title: "ALTOS ESTÁNDARES",
+        description:
+          "Siempre que este personaje realice una misión, puedes desterrar el objeto elegido.",
+      },
+    ],
+  },
 };

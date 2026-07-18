@@ -45,4 +45,15 @@ export const pachaTrekmateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pachá",
+    version: "Compañero de viaje",
+    text: [
+      {
+        title: "PAQUETE COMPLETO",
+        description:
+          "Mientras tengas más cartas en tu mano que cada oponente, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

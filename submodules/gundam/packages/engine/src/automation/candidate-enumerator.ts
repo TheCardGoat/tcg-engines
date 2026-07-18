@@ -70,7 +70,6 @@ function findDeckLookHeadAnswer(
   playerId: PlayerId,
 ): {
   directiveIndex: number;
-  acceptOptionalDirectiveIndex?: number;
   answer: DeckLookAnswer;
 } | null {
   const g = state.G as unknown as GundamG;
@@ -110,7 +109,6 @@ function findDeckLookHeadAnswer(
 
   return {
     directiveIndex: prompt.directiveIndex,
-    acceptOptionalDirectiveIndex: prompt.acceptOptionalDirectiveIndex,
     answer,
   };
 }
@@ -361,9 +359,6 @@ export function enumerateGundamBotCandidates(
       if (deckLook !== null) {
         const candidate = commandToCandidate("resolveEffect", {
           deckLookAnswers: { [deckLook.directiveIndex]: deckLook.answer },
-          ...(deckLook.acceptOptionalDirectiveIndex !== undefined
-            ? { optionalAnswers: { [deckLook.acceptOptionalDirectiveIndex]: true } }
-            : {}),
         });
         if (candidate !== null) out.push(candidate);
         continue;

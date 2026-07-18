@@ -44,6 +44,37 @@ export const op10LetSMeetAgainInTheNewWorld115: EventCard = {
             value: 4000,
             duration: "thisBattle",
           },
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "eq",
+              value: 0,
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [
+                {
+                  filter: "dynamicCost",
+                  comparison: "lte",
+                  source: "opponentLifeCount",
+                },
+              ],
+            },
+          },
         ],
       },
     ],

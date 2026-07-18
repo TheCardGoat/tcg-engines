@@ -45,4 +45,15 @@ export const rhinoOnesixteenthWolfI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rinoceronte",
+    version: "Un decimosexto lobo",
+    text: [
+      {
+        title: "PEQUEÑO AULLIDO",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido obtiene -1 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -57,4 +57,18 @@ export const vanellopeVonSchweetzRandomRosterRacerI18n: Record<Languages, I18nPr
       },
     ],
   },
+  es: {
+    name: "Vanellope von Schweetz",
+    version: "Corredor de lista aleatoria",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "PIXLEXIA",
+        description:
+          "Cuando juegas con este personaje, gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

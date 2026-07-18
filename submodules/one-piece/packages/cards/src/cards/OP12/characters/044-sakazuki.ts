@@ -34,6 +34,7 @@ export const op12Sakazuki044: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Navy",
+            match: "includes",
           },
         ],
         actions: [

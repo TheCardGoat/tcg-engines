@@ -41,4 +41,14 @@ export const brokenPodI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Vaina rota",
+    text: [
+      {
+        title: "PROCESO DE RENOVACIÓN",
+        description:
+          "{E}, 1 {I}: coloca una carta del descarte del jugador elegido en la parte inferior de su mazo.",
+      },
+    ],
+  },
 };

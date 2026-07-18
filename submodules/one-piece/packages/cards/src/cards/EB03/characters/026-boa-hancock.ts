@@ -75,6 +75,7 @@ export const eb03BoaHancock026: CharacterCard = {
               count: {
                 amount: 1,
               },
+              chosenBy: "opponent",
             },
             position: "bottom",
           },
@@ -82,12 +83,34 @@ export const eb03BoaHancock026: CharacterCard = {
       },
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnCharacterToDeck",
+            amount: 1,
+            position: "bottom",
+          },
+        ],
         actions: [
           {
             action: "giveDon",
             target: {
               player: "self",
-              zones: ["leader", "character"],
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            donState: "rested",
+          },
+          {
+            action: "giveDon",
+            target: {
+              player: "self",
+              zones: ["character"],
               count: {
                 amount: 1,
               },

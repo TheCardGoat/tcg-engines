@@ -45,4 +45,15 @@ export const merlinCleverClairvoyantI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Esmerejón",
+    version: "Clarividente inteligente",
+    text: [
+      {
+        title: "PRESTIDIGITORIO",
+        description:
+          "Siempre que este personaje realice una misión, nombra una carta y luego revela la carta superior de tu mazo. Si es la carta nombrada, colócala en tu tintero boca abajo y ejercítala. De lo contrario, colóquelo en la parte superior de su plataforma.",
+      },
+    ],
+  },
 };

@@ -42,4 +42,14 @@ export const edHystericalPartygoerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ed",
+    version: "Fiestero histérico",
+    text: [
+      {
+        title: "INVITADO RUIDOSO",
+        description: "Los personajes dañados no pueden desafiar a este personaje.",
+      },
+    ],
+  },
 };

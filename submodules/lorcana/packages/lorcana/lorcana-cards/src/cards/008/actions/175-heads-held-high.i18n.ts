@@ -54,4 +54,18 @@ export const headsHeldHighI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cabezas en alto",
+    text: [
+      {
+        title: "Cantar juntos 6",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 6 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title:
+          "Elimina hasta 3 daños de cualquier número de personajes elegidos. Todos los personajes contrarios obtienen -3 {S} este turno.",
+      },
+    ],
+  },
 };

@@ -22,6 +22,7 @@ export function parseFullDuration(text: string): Duration {
   if (/during this turn/i.test(lower)) return "thisTurn";
   if (/during this battle/i.test(lower)) return "thisBattle";
   if (/until the start of your next turn/i.test(lower)) return "untilStartOfNextTurn";
+  if (/until the end of your next turn/i.test(lower)) return "untilEndOfYourNextTurn";
   if (/until the end of your opponent'?s next turn/i.test(lower))
     return "untilEndOfOpponentNextTurn";
   if (/until the end of your opponent'?s next end phase/i.test(lower))

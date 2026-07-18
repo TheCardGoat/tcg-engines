@@ -41,4 +41,14 @@ export const rubyCoilI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bobina de rubí",
+    text: [
+      {
+        title: "CHISPA CARMESÍ",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, el personaje elegido obtiene +2 {S} este turno.",
+      },
+    ],
+  },
 };

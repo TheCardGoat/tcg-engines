@@ -4,6 +4,7 @@ export const gd02Gafran066: UnitCard = {
   cardNumber: "GD02-066",
   name: "Gafran",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "purple",
   traits: ["ue", "vagan"],
   id: "GD02-066",

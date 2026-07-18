@@ -11,6 +11,7 @@ import {
 import { analyticsErrorFields, trackEvent } from "$lib/analytics/analytics.js";
 import { saveRankedMatchSession } from "$lib/features/practice-match/practice-match-storage.js";
 import { logError, logOperationalEvent } from "$lib/telemetry/logs.js";
+import { LORCANA_FORMATS, type LorcanaFormatId } from "@tcg/lorcana-types";
 
 const DEFAULT_ACCEPT_WINDOW_MS = 15_000;
 
@@ -29,20 +30,16 @@ export type MatchmakingStatus =
   | "match_ready"
   | "match_found"
   | "blocked";
-export type MatchmakingQueueFormat = "infinity" | "core-constructed" | "attack-of-the-vine";
+export type MatchmakingQueueFormat = LorcanaFormatId;
 export type MatchmakingQueueMode = "1" | "3";
 export type MatchmakingQueueMatchType = "ranked" | "casual" | "testing";
-
-const SUPPORTED_QUEUE_FORMATS: readonly MatchmakingQueueFormat[] = [
-  "infinity",
-  "core-constructed",
-  "attack-of-the-vine",
-];
-
 function coerceQueuedFormat(value: string | undefined | null): MatchmakingQueueFormat | null {
-  return SUPPORTED_QUEUE_FORMATS.includes(value as MatchmakingQueueFormat)
-    ? (value as MatchmakingQueueFormat)
-    : null;
+  const normalized = value?.trim();
+  return normalized && isLorcanaFormatId(normalized) ? normalized : null;
+}
+
+function isLorcanaFormatId(value: string): value is LorcanaFormatId {
+  return value in LORCANA_FORMATS;
 }
 
 export class MatchmakingQueueStore {

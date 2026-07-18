@@ -44,11 +44,28 @@ export const op14eb04BrickBat117: EventCard = {
                 {
                   filter: "trait",
                   value: "Thriller Bark Pirates",
+                  match: "includes",
                 },
               ],
             },
             value: 3000,
             duration: "thisBattle",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: { player: "self", zone: "trash" },
+            count: { amount: 1, upTo: true },
+            filters: [
+              { filter: "cardCategory", value: "character" },
+              { filter: "cost", comparison: "lte", value: 4 },
+              { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
+            ],
+            playState: "rested",
           },
         ],
       },

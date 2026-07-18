@@ -45,4 +45,15 @@ export const marieFavoredKittenI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "María",
+    version: "Gatito favorito",
+    text: [
+      {
+        title: "TE MOSTRARÉ",
+        description:
+          "Siempre que este personaje realice una misión, puedes darle al personaje elegido -2 {S} este turno.",
+      },
+    ],
+  },
 };

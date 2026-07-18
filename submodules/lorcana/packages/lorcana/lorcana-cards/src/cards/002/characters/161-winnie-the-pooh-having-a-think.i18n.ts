@@ -45,4 +45,15 @@ export const winnieThePoohHavingAThinkI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Winnie el pooh",
+    version: "Tener un pensamiento",
+    text: [
+      {
+        title: "OLLA DE CARIÑO",
+        description:
+          "Siempre que este personaje realice una misión, puedes poner una carta de tu mano en tu tintero boca abajo.",
+      },
+    ],
+  },
 };

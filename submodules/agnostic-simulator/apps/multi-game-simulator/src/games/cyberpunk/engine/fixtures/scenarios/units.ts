@@ -11,11 +11,36 @@ import {
 
 export const unitScenarios: Scenario[] = [
   {
+    id: "unitOctantRetail",
+    group: "unit-gig-condition",
+    label: "Octant (Retail) · 8+ Gig cost reduction",
+    description: "P1 holds Octant with two friendly 8+ Gigs, reducing its 7 €$ cost to 5 €$.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailOctant],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 5,
+          gigArea: [
+            { dieType: "d8", faceValue: 8 },
+            { dieType: "d10", faceValue: 9 },
+            { dieType: "d6", faceValue: 4 },
+          ],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+        },
+        { seed: scenarioSeed("unitOctantRetail"), autoGainGig: false },
+      ),
+  },
+  {
     id: "retailNewCardAbilities",
     group: "unit-play-trigger",
     label: "Retail new cards · ability review board",
     description:
-      "P1 has the newly ingested retail cards staged across hand, field, trash, and legends. Use this board to visually inspect images, card text, Field Operator's even-Street-Cred draw, Viktor's trash Cyberware equip, and Goro/Saburo/Yorinobu attack interactions.",
+      "Manual QA board for the July retail release: Appetite for Destruction is playable from hand; Hanako is face-up with friendly/rival Gigs; Pepe and Rita are ready on the field; spent Merc Legends and a friendly Gig value-pair make their effects inspectable. The board is intentionally deterministic and has AI disabled via ?ai=off.",
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
@@ -24,6 +49,7 @@ export const unitScenarios: Scenario[] = [
             c.welcomeToNightCityRetailIndustrialAssembly,
             c.welcomeToNightCityRetailOverTheEdge,
             c.welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch,
+            c.welcomeToNightCityRetailAppetiteForDestruction,
           ],
           deck: [c.welcomeToNightCityRetailMoxInciters, c.welcomeToNightCityRetailSwordwiseHuscle],
           field: [
@@ -33,6 +59,16 @@ export const unitScenarios: Scenario[] = [
               hasLag: false,
             },
             { card: c.welcomeToNightCityRetailMoxInciters, spent: false, hasLag: false },
+            {
+              card: c.welcomeToNightCityRetailPepeNajarroWorkingDoubles,
+              spent: false,
+              hasLag: false,
+            },
+            {
+              card: c.welcomeToNightCityRetailRitaWheelerNoStupidQuestions,
+              spent: false,
+              hasLag: false,
+            },
           ],
           trash: [c.welcomeToNightCityRetailMantisBlades],
           legendArea: [
@@ -44,11 +80,27 @@ export const unitScenarios: Scenario[] = [
               card: c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
               faceDown: false,
             },
+            {
+              card: c.welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor,
+              faceDown: false,
+              spent: false,
+            },
+            {
+              card: c.welcomeToNightCityRetailVStreetkid,
+              faceDown: false,
+              spent: true,
+            },
+            {
+              card: c.welcomeToNightCityRetailAltCunninghamSoulkillerArchitect,
+              faceDown: false,
+              spent: true,
+            },
           ],
           eddies: 8,
           gigArea: [
             { dieType: "d20", faceValue: 3 },
             { dieType: "d8", faceValue: 5 },
+            { dieType: "d6", faceValue: 5 },
           ],
         },
         {
@@ -59,7 +111,10 @@ export const unitScenarios: Scenario[] = [
           ],
           legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 4,
-          gigArea: [{ dieType: "d6", faceValue: 4 }],
+          gigArea: [
+            { dieType: "d6", faceValue: 4 },
+            { dieType: "d4", faceValue: 2 },
+          ],
         },
         { seed: scenarioSeed("retailNewCardAbilities"), autoGainGig: false },
       ),

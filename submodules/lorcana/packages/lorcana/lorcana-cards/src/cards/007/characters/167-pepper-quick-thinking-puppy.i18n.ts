@@ -45,4 +45,15 @@ export const pepperQuickthinkingPuppyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pimienta",
+    version: "Cachorro de pensamiento rápido",
+    text: [
+      {
+        title: "JUSTO A TIEMPO",
+        description:
+          "Siempre que uno de tus personajes Cachorro sea desterrado, puedes poner esa carta en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

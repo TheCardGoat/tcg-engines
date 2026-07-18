@@ -41,4 +41,14 @@ export const ringOfStonesTakenByTheVineI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Anillo de piedras",
+    version: "Tomado por la vid",
+    text: [
+      {
+        title: "SABIDURÍA PROFUNDA",
+        description: "Tus personajes Floodborn obtienen +1 conocimiento.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const balooFunlovingBearI18n: Record<Languages, I18nProperties> = {
     name: "Baloo",
     version: "Fun-Loving Bear",
   },
+  es: {
+    name: "Baloo",
+    version: "Oso amante de la diversión",
+  },
 };

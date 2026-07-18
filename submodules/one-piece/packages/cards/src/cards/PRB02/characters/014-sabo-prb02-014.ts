@@ -44,6 +44,34 @@ export const prb02SaboPrb02014014: CharacterCard = {
     "If you have 15 or more cards in your trash, give this card in your hand -3 cost.[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
   effects: {
     keywords: ["blocker"],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "trash",
+            comparison: "gte",
+            value: 15,
+          },
+        ],
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["hand"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: -3,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
   },
   i18n: prb02SaboPrb02014014I18n,
 };

@@ -53,4 +53,16 @@ export const herculesDivineHeroEnchantedI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Hércules",
+    version: "Héroe Divino",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "Resistir +2",
+      },
+    ],
+  },
 };

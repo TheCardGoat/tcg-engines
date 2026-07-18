@@ -31,7 +31,7 @@ export const op05Mansherry088: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 1000,
-  traits: ["Dressrosa The Tontattas"],
+  traits: ["The Tontattas", "Dressrosa"],
   attribute: "special",
   artVariants: [
     {
@@ -54,6 +54,11 @@ export const op05Mansherry088: CharacterCard = {
           {
             cost: "restThisCard",
           },
+          {
+            cost: "returnTrashToDeck",
+            amount: 2,
+            position: "bottom",
+          },
         ],
         actions: [
           {
@@ -73,6 +78,16 @@ export const op05Mansherry088: CharacterCard = {
                 {
                   filter: "cardCategory",
                   value: "character",
+                },
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 3,
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 5,
                 },
               ],
             },

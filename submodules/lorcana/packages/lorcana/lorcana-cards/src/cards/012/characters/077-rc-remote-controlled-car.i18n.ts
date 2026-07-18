@@ -45,4 +45,15 @@ export const rcRemotecontrolledCarI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Radiocontrol",
+    version: "Coche teledirigido",
+    text: [
+      {
+        title: "BATERÍAS BAJAS",
+        description:
+          "Este personaje no puede realizar misiones ni desafíos a menos que pagues 1 {I}. (Usted paga este costo cada vez).",
+      },
+    ],
+  },
 };

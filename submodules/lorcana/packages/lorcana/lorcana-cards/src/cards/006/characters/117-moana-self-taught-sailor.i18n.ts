@@ -44,4 +44,15 @@ export const moanaSelftaughtSailorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Moana",
+    version: "Marinero autodidacta",
+    text: [
+      {
+        title: "APRENDIENDO LAS CUERDAS",
+        description:
+          "Este personaje no puede desafiar a menos que tengas un personaje Capitán en juego.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const stitchCarefreeSnowboarderI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Puntada",
+    version: "Snowboarder despreocupado",
+    text: [
+      {
+        title: "TRAE A TUS AMIGOS",
+        description:
+          "Siempre que este personaje realice una misión, si tienes 2 o más personajes en juego, puedes robar una carta.",
+      },
+    ],
+  },
 };

@@ -59,4 +59,19 @@ export const infrapinkUltraScanSpecsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Especificaciones del Ultra Scan infrarrojo",
+    text: [
+      {
+        title: "DETECCIÓN DE EVIDENCIA",
+        description:
+          "Cuando juegues este objeto, roba una carta, luego elige y descarta una carta.",
+      },
+      {
+        title: "SIGUE LAS PISTAS",
+        description:
+          "Desterrar este objeto: el personaje elegido gana Alerta este turno. (Pueden desafiar como si tuvieran Evasivo).",
+      },
+    ],
+  },
 };

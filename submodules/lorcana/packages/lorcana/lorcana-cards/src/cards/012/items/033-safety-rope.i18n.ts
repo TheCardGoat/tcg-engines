@@ -58,4 +58,18 @@ export const safetyRopeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cuerda de seguridad",
+    text: [
+      {
+        title: "¡AGARRE!",
+        description:
+          "Cuando juegas este objeto, puedes poner una carta de personaje de tu descarte en la parte superior de tu mazo.",
+      },
+      {
+        title: "EMPACARLO",
+        description: "Al final de tu turno, puedes desterrar este objeto para robar una carta.",
+      },
+    ],
+  },
 };

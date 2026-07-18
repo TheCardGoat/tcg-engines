@@ -28,12 +28,6 @@ export const op02ImpelDownAllStars066: EventCard = {
     effects: [
       {
         trigger: "main",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Impel Down",
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -45,6 +39,12 @@ export const op02ImpelDownAllStars066: EventCard = {
             action: "draw",
             player: "self",
             amount: 2,
+            upTo: true,
+            condition: {
+              condition: "leaderTrait",
+              trait: "Impel Down",
+              match: "includes",
+            },
           },
         ],
         optional: true,

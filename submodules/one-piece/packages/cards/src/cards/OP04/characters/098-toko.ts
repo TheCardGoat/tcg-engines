@@ -31,12 +31,17 @@ export const op04Toko098: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
+        costs: [
           {
-            condition: "lifeCount",
-            player: "self",
-            comparison: "lte",
-            value: 1,
+            cost: "trashFromHand",
+            amount: 2,
+            filters: [
+              {
+                filter: "trait",
+                value: "Land of Wano",
+                match: "includes",
+              },
+            ],
           },
         ],
         actions: [
@@ -50,6 +55,12 @@ export const op04Toko098: CharacterCard = {
               },
             },
             position: "top",
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 1,
+            },
           },
         ],
         optional: true,

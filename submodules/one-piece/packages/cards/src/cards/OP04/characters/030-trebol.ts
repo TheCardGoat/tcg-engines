@@ -98,6 +98,7 @@ export const op04Trebol030: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

@@ -23,12 +23,26 @@ export const eb01FingerPistol051: EventCard = {
   cost: 4,
   traits: ["CP9"],
   effect:
-    "[Main] You may trash 2 cards from the top of your deck: K.O. up to 1 of your opponent's Characters with a cost of 5 or less.",
+    "[Main] You may trash 2 cards from the top of your deck: K.O. up to 1 of your opponent's Characters with a cost of 5 or less.[Trigger] Activate this card's [Main] effect.",
   effects: {
     effects: [
       {
         trigger: "main",
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "deck",
+            comparison: "gte",
+            value: 2,
+          },
+        ],
         actions: [
+          {
+            action: "trashFromDeck",
+            player: "self",
+            amount: 2,
+          },
           {
             action: "ko",
             target: {
@@ -49,6 +63,15 @@ export const eb01FingerPistol051: EventCard = {
           },
         ],
         optional: true,
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
+          },
+        ],
       },
     ],
   },

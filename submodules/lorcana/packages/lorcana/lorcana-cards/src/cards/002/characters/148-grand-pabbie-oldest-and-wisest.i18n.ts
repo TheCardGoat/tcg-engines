@@ -45,4 +45,15 @@ export const grandPabbieOldestAndWisestI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Gran pabbie",
+    version: "El más viejo y el más sabio",
+    text: [
+      {
+        title: "Visión antigua",
+        description:
+          "Cada vez que eliminas 1 o más daños de uno de tus personajes, ganas 2 conocimientos.",
+      },
+    ],
+  },
 };

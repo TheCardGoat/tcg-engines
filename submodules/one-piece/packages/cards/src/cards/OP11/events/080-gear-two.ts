@@ -43,10 +43,10 @@ export const op11GearTwo080: EventCard = {
     effects: [
       {
         trigger: "main",
-        conditions: [
+        costs: [
           {
-            condition: "leaderColor",
-            color: "blue",
+            cost: "restDon",
+            amount: 2,
           },
         ],
         actions: [
@@ -57,6 +57,10 @@ export const op11GearTwo080: EventCard = {
               upTo: true,
             },
             state: "rested",
+            condition: {
+              condition: "leaderColor",
+              color: "blue",
+            },
           },
         ],
         optional: true,

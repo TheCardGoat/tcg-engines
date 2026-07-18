@@ -57,4 +57,18 @@ export const liloRockStarEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lilo",
+    version: "Estrella de rock",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "TE CONTARÉ",
+        description:
+          "Siempre que este personaje realice una misión, puedes jugar con un personaje con un coste de 2 o menos de tu descarte de forma gratuita.",
+      },
+    ],
+  },
 };

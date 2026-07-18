@@ -45,4 +45,15 @@ export const kakamoraBandOfPiratesI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kakamora",
+    version: "Banda de piratas",
+    text: [
+      {
+        title: "EXHIBICIÓN",
+        description:
+          "Mientras tengas otro personaje Pirata en juego, este personaje obtiene Retador +3.",
+      },
+    ],
+  },
 };

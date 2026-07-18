@@ -63,4 +63,20 @@ export const minnieMouseSweetheartPrincessI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Cariño princesa",
+    text: [
+      {
+        title: "FAVOR REAL",
+        description:
+          "Tus personajes llamados Mickey Mouse obtienen apoyo. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+      },
+      {
+        title: "ADIOS, AHORA",
+        description:
+          "Siempre que este personaje realice una misión, puedes desterrar al personaje ejercido elegido con 5 {S} o más.",
+      },
+    ],
+  },
 };

@@ -57,4 +57,18 @@ export const liShangValorousGeneralI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Li Shang",
+    version: "General valeroso",
+    text: [
+      {
+        title:
+          "Turno: descartar una carta de personaje (puedes descartar una carta de personaje para jugarla encima de uno de tus personajes llamado Li Shang).",
+      },
+      {
+        title: "LIDERAR LA CARGA",
+        description: "Tus personajes con 4 {S} o más obtienen +1 {L}.",
+      },
+    ],
+  },
 };

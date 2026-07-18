@@ -17,4 +17,8 @@ export const tobyDoggedCompanionI18n: Record<Languages, I18nProperties> = {
     name: "Ugo",
     version: "Compagno Accanito",
   },
+  es: {
+    name: "Toby",
+    version: "Compañero tenaz",
+  },
 };

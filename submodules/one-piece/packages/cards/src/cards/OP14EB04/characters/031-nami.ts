@@ -30,7 +30,7 @@ export const op14eb04Nami031: CharacterCard = {
   setId: "OP14EB04",
   cost: 4,
   power: 2000,
-  traits: ["FILM Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "special",
   artVariants: [
     {
@@ -66,15 +66,21 @@ export const op14eb04Nami031: CharacterCard = {
             },
           },
           {
-            action: "setActive",
-            target: {
-              player: "self",
-              zones: ["costArea"],
-              count: {
-                amount: 5,
-                upTo: true,
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "setActive",
+                target: {
+                  player: "self",
+                  zones: ["costArea"],
+                  count: {
+                    amount: 5,
+                    upTo: true,
+                  },
+                },
               },
-            },
+            ],
           },
         ],
       },

@@ -27,5 +27,32 @@ export const op05ONami062: CharacterCard = {
   attribute: "special",
   effect:
     "If you have 10 DON!! cards on your field, this Character gains [Blocker]. (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "donFieldCount",
+            player: "self",
+            comparison: "eq",
+            value: 10,
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op05ONami062I18n,
 };

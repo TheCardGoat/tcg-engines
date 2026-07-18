@@ -45,4 +45,15 @@ export const plutoTriedAndTrueP2PromoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Plutón",
+    version: "Probado y verdadero",
+    text: [
+      {
+        title: "FELIZ AYUDANTE",
+        description:
+          "Si bien este personaje no tiene daño, obtiene +2 {S} y gana Apoyo. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+      },
+    ],
+  },
 };

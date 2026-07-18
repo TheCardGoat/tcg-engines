@@ -61,4 +61,19 @@ export const magicCarpetPhantomRugI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Alfombra mágica",
+    version: "Alfombra fantasma",
+    text: [
+      {
+        title: "Desaparecer",
+        description: "(Cuando un oponente elige este personaje para una acción, destierralo).",
+      },
+      {
+        title: "FUERZA ESPECTRAL",
+        description:
+          "Tus otros personajes de Illusion obtienen Challenger +1. (Obtienen +1 {S} mientras desafían).",
+      },
+    ],
+  },
 };

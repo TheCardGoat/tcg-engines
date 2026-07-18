@@ -82,4 +82,24 @@ export const jackjackParrIncrediblePotentialI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Jack-Jack Parr",
+    version: "Potencial increíble",
+    text: [
+      {
+        title: "ESTAN PASANDO COSAS RARAS",
+        description:
+          "Al comienzo de tu turno, puedes poner la carta superior de tu mazo en tu descarte. Si su tipo de tarjeta es:",
+      },
+      {
+        title: "• personaje, este personaje obtiene +2 {S} este turno.",
+      },
+      {
+        title: "• acción o elemento, este personaje obtiene +2 {L} este turno.",
+      },
+      {
+        title: "• ubicación, desterrar al personaje elegido.",
+      },
+    ],
+  },
 };

@@ -64,4 +64,20 @@ export const christopherRobinHunnySageI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Cristóbal Robin",
+    version: "Miel sabia",
+    text: [
+      {
+        title: "REÚNE LA FIESTA",
+        description:
+          "Puedes tener otros personajes de Hunny en tu mazo independientemente del tipo de tinta.",
+      },
+      {
+        title: "INVOCACIONES MÁGICAS",
+        description:
+          "Cuando juegas con este personaje, puedes buscar en tu mazo una carta de Hunny, revelarla y ponerla en tu mano. Si lo haces, baraja tu mazo.",
+      },
+    ],
+  },
 };

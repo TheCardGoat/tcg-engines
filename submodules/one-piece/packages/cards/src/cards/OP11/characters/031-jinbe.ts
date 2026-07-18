@@ -53,10 +53,12 @@ export const op11Jinbe031: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Fish-Man",
+                match: "includes",
               },
               {
                 condition: "leaderTrait",
                 trait: "Merfolk",
+                match: "includes",
               },
             ],
           },
@@ -81,6 +83,42 @@ export const op11Jinbe031: CharacterCard = {
             },
           },
         ],
+      },
+      {
+        trigger: "activateMain",
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "anyOf",
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "Fish-Man",
+                      match: "includes",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Merfolk",
+                      match: "includes",
+                    },
+                  ],
+                },
+              ],
+            },
+            keyword: "rushCharacter",
+            duration: "permanent",
+          },
+        ],
+        oncePerTurn: true,
       },
     ],
   },

@@ -5,6 +5,7 @@ export const gd02MoebiusPeacemakerTeam011: UnitCard = {
   name: "Moebius (Peacemaker Team)",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space"],
   traits: ["earth alliance"],
   id: "GD02-011",
   canonicalId: "GD02-011",

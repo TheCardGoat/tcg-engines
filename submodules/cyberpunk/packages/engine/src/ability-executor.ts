@@ -693,6 +693,21 @@ function passesEventFilter(
     }
   }
 
+  if (ability.trigger.event.event === "turnStarted" && event.type === "turnStarted") {
+    const filter = ability.trigger.event;
+    if (filter.player && filter.player !== "any") {
+      if (
+        filter.player === "friendly" &&
+        (event.playerId as string) !== (sourcePlayerId as string)
+      ) {
+        return false;
+      }
+      if (filter.player === "rival" && (event.playerId as string) === (sourcePlayerId as string)) {
+        return false;
+      }
+    }
+  }
+
   if (ability.trigger.event.event === "fightResolved" && event.type === "attackResolved") {
     // Only fight outcomes; direct attacks (gigsStolen / blocked) don't fire fightResolved.
     if (event.attackKind !== "fight") return false;

@@ -45,4 +45,15 @@ export const basilSecretInformerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Albahaca",
+    version: "Informante secreto",
+    text: [
+      {
+        title: "DIBUJARLOS",
+        description:
+          "Siempre que este personaje realiza una misión, los personajes dañados del oponente obtienen Imprudencia durante su próximo turno. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

@@ -57,4 +57,17 @@ export const omnidroidV10I18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Omnidroide",
+    version: "V.10",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "ELECTRO-ARMADURA",
+        description: "Mientras haya una carta debajo de este personaje, gana Resistencia +2.",
+      },
+    ],
+  },
 };

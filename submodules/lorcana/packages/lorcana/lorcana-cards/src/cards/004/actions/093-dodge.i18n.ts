@@ -17,4 +17,8 @@ export const dodgeI18n: Record<Languages, I18nProperties> = {
     name: "Schivata!",
     text: "Un personaggio a tua scelta ottiene <Protetto> e <Sfuggente> fino all'inizio del tuo prossimo turno. (Gli avversari non possono sceglierlo se non per sfidarlo. Solo altri personaggi con Sfuggente possono sfidarlo.)",
   },
+  es: {
+    name: "¡Esquivar!",
+    text: "El personaje elegido gana Protección y Evasión hasta el comienzo de tu siguiente turno. (Los oponentes no pueden elegirlos excepto para desafiarlos. Solo los personajes con Evasivo pueden desafiarlos).",
+  },
 };

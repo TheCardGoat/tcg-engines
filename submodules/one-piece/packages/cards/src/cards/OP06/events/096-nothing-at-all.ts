@@ -29,6 +29,13 @@ export const op06NothingAtAll096: EventCard = {
     effects: [
       {
         trigger: "counter",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "top",
+          },
+        ],
         actions: [
           {
             action: "cannotBeKod",
@@ -51,6 +58,15 @@ export const op06NothingAtAll096: EventCard = {
           },
         ],
         optional: true,
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "counter",
+          },
+        ],
       },
     ],
   },

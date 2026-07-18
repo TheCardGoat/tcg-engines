@@ -107,6 +107,8 @@
     "smoke-test:abilities": "bun scripts/smoke-test-card-abilities.ts",
     "generate:all": "bun run generate-cards:all",
     "generate-localization": "bun scripts/generate-localization.ts",
+    "generate-spanish-translation-inventory": "bun scripts/generate-spanish-translation-inventory.ts",
+    "translate-spanish-card-i18n": "bun scripts/translate-spanish-card-i18n.ts",
     "update-translations": "bun run fetch:all-locales && bun run generate-localization"
   },
   "dependencies": {

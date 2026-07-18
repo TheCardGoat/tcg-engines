@@ -45,4 +45,15 @@ export const darkwingDuckDashingGadgeteerI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Pato Ala Oscura",
+    version: "Gadgeteer apuesto",
+    text: [
+      {
+        title: "MARAVILLA MODERNA",
+        description:
+          "Siempre que este personaje realice una misión, puedes colocar una carta de objeto de tu descarte en la parte inferior de tu mazo. Si lo haces, puedes jugar gratis un objeto con un coste de 5 o menos de tu descarte.",
+      },
+    ],
+  },
 };

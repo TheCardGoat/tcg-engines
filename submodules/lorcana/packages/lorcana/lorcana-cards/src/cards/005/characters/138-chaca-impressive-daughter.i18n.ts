@@ -17,4 +17,8 @@ export const chacaImpressiveDaughterI18n: Record<Languages, I18nProperties> = {
     name: "Chaca",
     version: "Figlia Straordinaria",
   },
+  es: {
+    name: "Chaca",
+    version: "Impresionante hija",
+  },
 };

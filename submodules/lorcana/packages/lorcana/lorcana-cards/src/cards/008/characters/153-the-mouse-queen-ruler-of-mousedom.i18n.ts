@@ -17,4 +17,8 @@ export const theMouseQueenRulerOfMousedomI18n: Record<Languages, I18nProperties>
     name: "La Regina dei Topi",
     version: "Governatrice di Tutti i Topi",
   },
+  es: {
+    name: "La reina del ratón",
+    version: "Gobernante de Mousedom",
+  },
 };

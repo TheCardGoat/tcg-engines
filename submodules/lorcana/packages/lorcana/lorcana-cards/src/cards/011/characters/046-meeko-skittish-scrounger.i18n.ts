@@ -57,4 +57,18 @@ export const meekoSkittishScroungerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Meeko",
+    version: "Gorrón asustadizo",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "POZO SIN FONDO",
+        description:
+          "Al final de tu turno, si este personaje está agotado, elige y descarta una carta o destiérralo.",
+      },
+    ],
+  },
 };

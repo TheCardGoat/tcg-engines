@@ -45,4 +45,15 @@ export const maidMarianCreatedByTheVineI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Criada mariana",
+    version: "Creado por la vid",
+    text: [
+      {
+        title: "flujo de tinta",
+        description:
+          "Siempre que uno de tus personajes Floodborn sea desterrado, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

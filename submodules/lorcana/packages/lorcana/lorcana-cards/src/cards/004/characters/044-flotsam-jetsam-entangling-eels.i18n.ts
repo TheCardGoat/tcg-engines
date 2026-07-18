@@ -53,4 +53,17 @@ export const flotsamJetsamEntanglingEelsI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Restos y desechos",
+    version: "Anguilas enredadas",
+    text: [
+      {
+        title:
+          "Turno: descarta 2 cartas (puedes descartar 2 cartas para jugar esto encima de uno de tus personajes llamado Flotsam o Jetsam).",
+      },
+      {
+        title: "(Este personaje cuenta como si se llamara Flotsam y Jetsam).",
+      },
+    ],
+  },
 };

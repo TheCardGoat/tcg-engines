@@ -41,4 +41,14 @@ export const lingImperialSoldierI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Abadejo",
+    version: "Soldado Imperial",
+    text: [
+      {
+        title: "LLENO DE ESPÍRITU",
+        description: "Tus personajes héroes obtienen +1 {S}.",
+      },
+    ],
+  },
 };

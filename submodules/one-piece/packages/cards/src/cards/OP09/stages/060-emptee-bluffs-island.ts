@@ -28,13 +28,12 @@ export const op09EmpteeBluffsIsland060: StageCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Cross Guild",
-          },
-        ],
         costs: [
+          {
+            cost: "returnHandToDeck",
+            amount: 2,
+            position: "bottom",
+          },
           {
             cost: "restThisCard",
           },
@@ -44,6 +43,11 @@ export const op09EmpteeBluffsIsland060: StageCard = {
             action: "draw",
             player: "self",
             amount: 2,
+            condition: {
+              condition: "leaderTrait",
+              trait: "Cross Guild",
+              match: "includes",
+            },
           },
         ],
         optional: true,

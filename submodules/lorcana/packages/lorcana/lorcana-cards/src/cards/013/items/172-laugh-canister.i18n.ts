@@ -41,4 +41,14 @@ export const laughCanisterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bote de risa",
+    text: [
+      {
+        title: "Imitador",
+        description:
+          "{E}: coloca la carta superior de tu mazo en tu tintero boca abajo y ejercítala. El oponente elegido puede poner la carta superior de su mazo en su tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

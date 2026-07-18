@@ -26,4 +26,14 @@ export const syndromeEvilInventorI18n: Record<Languages, I18nProperties> = {
     version: "Inventore Malvagio",
     text: "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
   },
+  es: {
+    name: "Síndrome",
+    version: "Inventor malvado",
+    text: [
+      {
+        title: "Alerta",
+        description: "(Este personaje puede desafiar como si tuviera Evasivo).",
+      },
+    ],
+  },
 };

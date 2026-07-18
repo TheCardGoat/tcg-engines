@@ -17,4 +17,8 @@ export const helpingHandI18n: Record<Languages, I18nProperties> = {
     name: "Dare una mano",
     text: "Un personaggio a tua scelta ottiene <Aiutante> per questo turno. Pesca una carta. (Ogni volta che va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
   },
+  es: {
+    name: "Mano amiga",
+    text: "El personaje elegido gana Apoyo este turno. Saca una carta. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+  },
 };

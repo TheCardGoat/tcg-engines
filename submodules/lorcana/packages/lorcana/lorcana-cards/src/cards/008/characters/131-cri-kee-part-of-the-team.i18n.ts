@@ -45,4 +45,15 @@ export const crikeePartOfTheTeamI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cri-kee",
+    version: "Parte del equipo",
+    text: [
+      {
+        title: "A SU LADO",
+        description:
+          "Mientras tengas 2 o más personajes ejercidos en juego, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

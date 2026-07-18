@@ -57,4 +57,21 @@ export const todKnowsAllTheTricksEnchantedI18n: Record<Languages, I18nProperties
     version: "Conosce Tutti i Trucchi",
     text: "<Trasformazione> 5 {I}, <Sfuggente> Salti Eccezionali Due volte durante il tuo turno, ogni volta che questo personaggio viene scelto per un'azione o per l'abilità di un oggetto, puoi prepararlo.",
   },
+  es: {
+    name: "Tod",
+    version: "Conoce todos los trucos",
+    text: [
+      {
+        title: "Cambio 5 {I}",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "SALTOS IMPRESIONANTES",
+        description:
+          "Dos veces durante tu turno, cada vez que este personaje sea elegido para una acción o habilidad de un objeto, puedes prepararlo.",
+      },
+    ],
+  },
 };

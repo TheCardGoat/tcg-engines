@@ -45,4 +45,15 @@ export const cinderellaTheRightOneI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cenicienta",
+    version: "El correcto",
+    text: [
+      {
+        title: "SI LA ZAPATILLA SE AJUSTA",
+        description:
+          "Cuando juegas con este personaje, puedes poner una carta de objeto llamada The Glass Slipper de tu descarte en la parte inferior de tu mazo para ganar 3 conocimientos.",
+      },
+    ],
+  },
 };

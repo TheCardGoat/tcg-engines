@@ -21,4 +21,9 @@ export const markowskiSpaceTrooperI18n: Record<Languages, I18nProperties> = {
     version: "Soldato Spaziale",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Markowski",
+    version: "Soldado espacial",
+    text: "Evasivo",
+  },
 };

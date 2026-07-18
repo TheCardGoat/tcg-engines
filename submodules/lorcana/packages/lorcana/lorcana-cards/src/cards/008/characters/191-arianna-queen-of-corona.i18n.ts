@@ -17,4 +17,8 @@ export const ariannaQueenOfCoronaI18n: Record<Languages, I18nProperties> = {
     name: "Arianna",
     version: "Regina di Corona",
   },
+  es: {
+    name: "Ariana",
+    version: "Reina de la corona",
+  },
 };

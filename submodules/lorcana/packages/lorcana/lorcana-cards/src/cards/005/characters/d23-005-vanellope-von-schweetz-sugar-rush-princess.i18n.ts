@@ -60,4 +60,18 @@ export const vanellopeVonSchweetzSugarRushPrincessD23I18n: Record<Languages, I18
       },
     ],
   },
+  es: {
+    name: "Vanellope von Schweetz",
+    version: "Princesa de la fiebre del azúcar",
+    text: [
+      {
+        title: "<Mayús> 2",
+      },
+      {
+        title: "Por el presente Decreto",
+        description:
+          "Cada vez que juegas con otro personaje de Princesa, todos los personajes opuestos obtienen -1 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -60,4 +60,18 @@ export const sisuEmpoweredSiblingEnchantedI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Sisu",
+    version: "Hermano empoderado",
+    text: [
+      {
+        title: "Shift 6",
+      },
+      {
+        title: "¡TENGO ESTO!",
+        description:
+          "Cuando juegues con este personaje, destierra a todos los personajes contrarios con 2 {S} o menos.",
+      },
+    ],
+  },
 };

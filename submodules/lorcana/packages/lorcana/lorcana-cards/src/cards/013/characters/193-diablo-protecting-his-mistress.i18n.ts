@@ -42,4 +42,14 @@ export const diabloProtectingHisMistressI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Diablos",
+    version: "Protegiendo a su amante",
+    text: [
+      {
+        title: "Ráfaga de plumas",
+        description: "Tus personajes llamados Maléfica obtienen <Resistencia> +1.",
+      },
+    ],
+  },
 };

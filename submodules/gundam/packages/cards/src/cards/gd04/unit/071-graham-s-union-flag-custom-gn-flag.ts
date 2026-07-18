@@ -127,6 +127,7 @@ export const gd04GrahamSUnionFlagCustomGnFlag071: UnitCard = {
             },
           },
           dependsOnPrevious: true,
+          sharesTargetChoiceWithPrevious: true,
         },
         {
           action: {

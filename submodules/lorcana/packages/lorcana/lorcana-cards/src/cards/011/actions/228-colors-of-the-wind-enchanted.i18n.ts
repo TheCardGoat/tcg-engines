@@ -23,4 +23,8 @@ export const colorsOfTheWindEnchantedI18n: Record<Languages, I18nProperties> = {
     name: "Il Vento e i Suoi Color",
     text: "Ogni giocatore rivela la prima carta del suo mazzo. Pesca una carta per ogni tipo di inchiostro diverso delle carte rivelate in questo modo.",
   },
+  es: {
+    name: "Colores del viento",
+    text: "Cada jugador revela la carta superior de su mazo. Roba una carta por cada tipo de tinta diferente de cartas reveladas de esta manera.",
+  },
 };

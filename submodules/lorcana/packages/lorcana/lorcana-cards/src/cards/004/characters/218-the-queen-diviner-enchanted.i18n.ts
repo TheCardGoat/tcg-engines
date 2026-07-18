@@ -45,4 +45,15 @@ export const theQueenDivinerEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La reina",
+    version: "Adivino",
+    text: [
+      {
+        title: "CONSULTAR EL LIBRO DE HECHIZOS",
+        description:
+          "{E}: mira las 4 cartas superiores de tu mazo. Puedes revelar una carta de objeto y ponerla en tu mano. Si ese artículo cuesta 3 o menos, puedes jugarlo gratis y entrará en juego agotado. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

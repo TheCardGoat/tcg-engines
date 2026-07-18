@@ -45,4 +45,15 @@ export const jaqConnoisseurOfClimbingI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jaq",
+    version: "Conocedor de la escalada",
+    text: [
+      {
+        title: "IDEA ASTURTADA",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido gana Temerario durante su próximo turno. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

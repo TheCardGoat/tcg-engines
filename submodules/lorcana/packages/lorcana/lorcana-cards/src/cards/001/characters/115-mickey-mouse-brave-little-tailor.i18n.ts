@@ -21,4 +21,9 @@ export const mickeyMouseBraveLittleTailorI18n: Record<Languages, I18nProperties>
     version: "Brave Little Tailor",
     text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Pequeño sastre valiente",
+    text: "Evasivo",
+  },
 };

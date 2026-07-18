@@ -30,6 +30,23 @@ export const op03MarshallDTeach012: CharacterCard = {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "trashCharacter",
+            amount: 1,
+            filters: [
+              {
+                filter: "color",
+                value: "red",
+              },
+              {
+                filter: "power",
+                comparison: "gte",
+                value: 4000,
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "draw",

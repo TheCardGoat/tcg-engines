@@ -45,6 +45,13 @@ export const op05RobLucci093: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 3,
+            position: "bottom",
+          },
+        ],
         actions: [
           {
             action: "ko",
@@ -60,6 +67,24 @@ export const op05RobLucci093: CharacterCard = {
                   filter: "cost",
                   comparison: "lte",
                   value: 2,
+                },
+              ],
+            },
+          },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 1,
                 },
               ],
             },

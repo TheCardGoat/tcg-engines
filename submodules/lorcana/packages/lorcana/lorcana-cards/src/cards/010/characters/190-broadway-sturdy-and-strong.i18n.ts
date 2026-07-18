@@ -57,4 +57,17 @@ export const broadwaySturdyAndStrongI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Broadway",
+    version: "Robusto y fuerte",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "PIEDRA DE DÍA",
+        description: "Si tienes 3 o más cartas en tu mano, este personaje no puede prepararse.",
+      },
+    ],
+  },
 };

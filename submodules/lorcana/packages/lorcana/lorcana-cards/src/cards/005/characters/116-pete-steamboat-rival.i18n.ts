@@ -45,4 +45,15 @@ export const peteSteamboatRivalI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pete",
+    version: "Rival del barco de vapor",
+    text: [
+      {
+        title: "¡LARGARSE!",
+        description:
+          "Cuando juegas con este personaje, si tienes otro personaje llamado Pete en juego, puedes desterrar al personaje contrario elegido.",
+      },
+    ],
+  },
 };

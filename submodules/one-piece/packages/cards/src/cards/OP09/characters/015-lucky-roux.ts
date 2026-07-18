@@ -36,6 +36,7 @@ export const op09LuckyRoux015: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Red-Haired Pirates",
+            match: "includes",
           },
         ],
         actions: [

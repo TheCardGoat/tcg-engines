@@ -41,7 +41,7 @@ export const op09Perona034: CharacterCard = {
     },
   ],
   effect:
-    '[On Play] Look at 5 cards from the top of your deck; reveal up to 1 [Dracule Mihawk] or "Thriller Bark Pirates" type card and add it to your hand. Then, place the rest at the bottom of your deck in any order and trash 1 card from your hand.',
+    "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 [Dracule Mihawk] or {Thriller Bark Pirates} type card and add it to your hand. Then, place the rest at the bottom of your deck in any order and trash 1 card from your hand.",
   effects: {
     effects: [
       {
@@ -60,12 +60,18 @@ export const op09Perona034: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "trait",
-                value: "Dracule Mihawk",
-              },
-              {
-                filter: "trait",
-                value: "Thriller Bark Pirates",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "name",
+                    value: "Dracule Mihawk",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Thriller Bark Pirates",
+                    match: "includes",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

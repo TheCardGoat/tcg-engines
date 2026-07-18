@@ -49,4 +49,16 @@ export const whosWithMeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "¿Quién está conmigo?",
+    text: [
+      {
+        title: "Tus personajes obtienen +2 {S} este turno.",
+      },
+      {
+        title:
+          "Siempre que uno de tus personajes con Reckless desafíe a otro personaje este turno, gana 2 conocimientos.",
+      },
+    ],
+  },
 };

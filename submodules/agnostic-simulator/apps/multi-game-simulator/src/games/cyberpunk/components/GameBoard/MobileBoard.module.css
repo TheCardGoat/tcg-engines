@@ -646,7 +646,7 @@
    → slot) and force everything to fill the band so cards size to the row
    height instead of overflowing. The CSS module class names are hashed,
    so we target by descendant position rather than class. */
-.fieldBand > *,
+.fieldBand > :not([data-mobile-field-overlay]),
 .legendsBand > * {
   height: 100%;
   width: 100%;
@@ -669,7 +669,7 @@
   gap: 2px;
 }
 
-.fieldBand > * > * {
+.fieldBand > :not([data-mobile-field-overlay]) > * {
   height: 100%;
   min-height: 0;
   padding: 2px;

@@ -41,4 +41,14 @@ export const imperialBowI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Arco imperial",
+    text: [
+      {
+        title: "AL ALCANCE",
+        description:
+          "{E}, 1 {I}: el personaje héroe elegido obtiene Challenger +2 y Evasive este turno. (Obtienen +2 {S} mientras desafían. Pueden desafiar personajes con Evasivo).",
+      },
+    ],
+  },
 };

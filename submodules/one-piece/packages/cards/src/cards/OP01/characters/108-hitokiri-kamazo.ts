@@ -22,7 +22,7 @@ export const op01HitokiriKamazo108: CharacterCard = {
   setId: "OP01",
   cost: 4,
   power: 5000,
-  counter: 5000,
+  counter: 1000,
   traits: ["Kid Pirates Supernovas SMILE"],
   attribute: "slash",
   effect:
@@ -57,6 +57,7 @@ export const op01HitokiriKamazo108: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

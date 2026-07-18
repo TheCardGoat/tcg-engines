@@ -64,4 +64,20 @@ export const illuminaryTunnelsLinkedCavernsI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Túneles iluminados",
+    version: "Cavernas vinculadas",
+    text: [
+      {
+        title: "RED SUBTERRÁNEA",
+        description:
+          "Mientras tengas un personaje aquí, esta ubicación obtiene +1 {L} por cada otra ubicación que tengas en juego.",
+      },
+      {
+        title: "LUGAR",
+        description:
+          "Mientras tengas un personaje aquí, pagarás 1 {I} menos para jugar en las ubicaciones.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const nutsyVultureHenchmanI18n: Record<Languages, I18nProperties> = {
     name: "Tonto",
     version: "Avvoltoio Tirapiedi",
   },
+  es: {
+    name: "Loco",
+    version: "Secuaz buitre",
+  },
 };

@@ -39,6 +39,19 @@ export const op05SaintMjosgard089: CharacterCard = {
           {
             cost: "restThisCard",
           },
+          {
+            cost: "restCards",
+            amount: 1,
+            filters: [
+              {
+                filter: "excludeSelf",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+          },
         ],
         actions: [
           {

@@ -60,4 +60,18 @@ export const theQueenCommandingPresenceI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "La reina",
+    version: "Presencia imponente",
+    text: [
+      {
+        title: "Shift 2",
+      },
+      {
+        title: "¿QUIÉN ES LA MÁS JUSTA?",
+        description:
+          "Siempre que este personaje realiza una misión, el personaje contrario elegido obtiene -4 {S} este turno y el personaje elegido obtiene +4 {S} este turno.",
+      },
+    ],
+  },
 };

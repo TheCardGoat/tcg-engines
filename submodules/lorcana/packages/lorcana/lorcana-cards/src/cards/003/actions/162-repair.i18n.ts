@@ -17,4 +17,8 @@ export const repairI18n: Record<Languages, I18nProperties> = {
     name: "Riparare",
     text: "Rimuovi fino a 3 danni da un tuo luogo o personaggio.",
   },
+  es: {
+    name: "Reparar",
+    text: "Elimina hasta 3 daños de una de tus ubicaciones o personajes.",
+  },
 };

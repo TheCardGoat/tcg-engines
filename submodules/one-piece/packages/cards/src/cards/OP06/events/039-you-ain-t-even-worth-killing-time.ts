@@ -81,6 +81,15 @@ export const op06YouAinTEvenWorthKillingTime039: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
+          },
+        ],
+      },
     ],
   },
   i18n: op06YouAinTEvenWorthKillingTime039I18n,

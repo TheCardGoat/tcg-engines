@@ -17,4 +17,8 @@ export const promisingLeadI18n: Record<Languages, I18nProperties> = {
     name: "Pista Promettente",
     text: "Un personaggio a tua scelta riceve +1 {L} e ottiene <Aiutante> per questo turno. (Ogni volta che va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
   },
+  es: {
+    name: "Plomo prometedor",
+    text: "El personaje elegido obtiene +1 {L} y gana Apoyo este turno. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+  },
 };

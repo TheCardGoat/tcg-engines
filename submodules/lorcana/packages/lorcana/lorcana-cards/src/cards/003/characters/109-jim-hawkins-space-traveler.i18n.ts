@@ -64,4 +64,20 @@ export const jimHawkinsSpaceTravelerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jim Hawkins",
+    version: "Viajero espacial",
+    text: [
+      {
+        title: "¡ESTO ES!",
+        description:
+          "Cuando juegas con este personaje, puedes jugar gratis en una ubicación con un coste de 4 o menos.",
+      },
+      {
+        title: "TOMA EL TIMÓN",
+        description:
+          "Cada vez que juegas en un lugar, este personaje puede moverse allí de forma gratuita.",
+      },
+    ],
+  },
 };

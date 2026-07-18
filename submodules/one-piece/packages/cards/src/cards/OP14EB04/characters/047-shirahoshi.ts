@@ -23,7 +23,7 @@ export const op14eb04Shirahoshi047: CharacterCard = {
   cost: 4,
   power: 0,
   counter: 1000,
-  traits: ["Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island"],
   attribute: "wisdom",
   effect:
     "[Blocker]\n[On Play] Draw 1 card and play up to 1 {Fish-Man} or {Merfolk} type Character card with a cost of 3 or less from your hand.",
@@ -55,12 +55,17 @@ export const op14eb04Shirahoshi047: CharacterCard = {
                 value: 3,
               },
               {
-                filter: "trait",
-                value: "Fish-Man",
-              },
-              {
-                filter: "trait",
-                value: "Merfolk",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Fish-Man",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Merfolk",
+                  },
+                ],
               },
               {
                 filter: "cardCategory",

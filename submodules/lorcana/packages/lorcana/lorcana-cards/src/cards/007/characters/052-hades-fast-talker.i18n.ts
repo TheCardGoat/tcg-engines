@@ -45,4 +45,15 @@ export const hadesFastTalkerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Infierno",
+    version: "Hablador rápido",
+    text: [
+      {
+        title: "POR SOLO",
+        description:
+          "UN PEQUEÑO DOLOR Cuando juegas con este personaje, puedes infligir 2 puntos de daño a otro personaje tuyo elegido para desterrar al personaje elegido con un coste de 3 o menos.",
+      },
+    ],
+  },
 };

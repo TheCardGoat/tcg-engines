@@ -60,4 +60,18 @@ export const ladyMissParkAvenueI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dama",
+    version: "Señorita Park Avenue",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "ALGO MARAVILLOSO",
+        description:
+          "Cuando juegas con este personaje, puedes devolver a tu mano hasta 2 cartas de personaje con un coste de 2 o menos cada una de tu descarte.",
+      },
+    ],
+  },
 };

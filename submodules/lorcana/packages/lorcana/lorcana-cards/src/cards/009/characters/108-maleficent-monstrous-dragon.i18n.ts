@@ -41,4 +41,14 @@ export const maleficentMonstrousDragonI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Pernicioso",
+    version: "Dragón monstruoso",
+    text: [
+      {
+        title: "FUEGO DE DRAGÓN",
+        description: "Cuando juegas con este personaje, puedes desterrar al personaje elegido.",
+      },
+    ],
+  },
 };

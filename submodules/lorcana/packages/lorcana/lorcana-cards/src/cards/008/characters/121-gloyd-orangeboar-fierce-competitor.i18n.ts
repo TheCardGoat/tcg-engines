@@ -45,4 +45,15 @@ export const gloydOrangeboarFierceCompetitorI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Jabalí dorado",
+    version: "Competidor feroz",
+    text: [
+      {
+        title: "ESPECIAS DE CALABAZA",
+        description:
+          "Cuando juegas con este personaje, cada oponente pierde 1 conocimiento y tú ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

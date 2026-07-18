@@ -17,4 +17,8 @@ export const robinHoodDaydreamerI18n: Record<Languages, I18nProperties> = {
     name: "Robin Hood",
     version: "Sognatore",
   },
+  es: {
+    name: "Robin Hood",
+    version: "Soñador",
+  },
 };

@@ -28,12 +28,6 @@ export const op03GalleyLaCompany075: StageCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderName",
-            name: "Iceburg",
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -47,6 +41,10 @@ export const op03GalleyLaCompany075: StageCard = {
               upTo: true,
             },
             state: "rested",
+            condition: {
+              condition: "leaderName",
+              name: "Iceburg",
+            },
           },
         ],
         optional: true,

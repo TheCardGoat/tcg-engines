@@ -30,6 +30,19 @@ export const op06Oars083: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "koCharacter",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Thriller Bark Pirates",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "negateEffects",
@@ -45,6 +58,24 @@ export const op06Oars083: CharacterCard = {
           },
         ],
         optional: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "cannotAttack",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+          },
+        ],
       },
     ],
   },

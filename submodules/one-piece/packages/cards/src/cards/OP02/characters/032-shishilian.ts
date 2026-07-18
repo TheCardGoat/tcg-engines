@@ -51,6 +51,7 @@ export const op02Shishilian032: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Minks",
+                  match: "includes",
                 },
                 {
                   filter: "cost",
@@ -61,6 +62,7 @@ export const op02Shishilian032: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

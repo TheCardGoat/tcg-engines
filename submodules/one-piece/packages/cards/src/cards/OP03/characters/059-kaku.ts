@@ -52,6 +52,7 @@ export const op03Kaku059: CharacterCard = {
             duration: "thisBattle",
           },
         ],
+        optional: true,
       },
     ],
   },

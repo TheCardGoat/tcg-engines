@@ -61,4 +61,19 @@ export const magicalHunnyStaffI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bastón mágico de miel",
+    text: [
+      {
+        title: "REGALO DE LA COLMENA",
+        description:
+          "Una vez durante tu turno, puedes pagar 1 {I} para otorgarle a tu personaje elegido la clasificación Hunny hasta el comienzo de tu siguiente turno.",
+      },
+      {
+        title: "HECHIZO DE VELOCIDAD",
+        description:
+          "{E}, 2 {I}: tu personaje elegido Hunny gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

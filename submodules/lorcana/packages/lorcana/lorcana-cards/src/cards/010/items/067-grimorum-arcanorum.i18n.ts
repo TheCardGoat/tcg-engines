@@ -61,4 +61,19 @@ export const grimorumArcanorumI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Grimorum Arcanorum",
+    text: [
+      {
+        title: "DOCTRINA ADUCTORA",
+        description:
+          "Durante tu turno, cada vez que un personaje contrario se vea estresado, gana 1 conocimiento.",
+      },
+      {
+        title: "CELERITAS",
+        description:
+          "Tus personajes llamados Demona obtienen Rush. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

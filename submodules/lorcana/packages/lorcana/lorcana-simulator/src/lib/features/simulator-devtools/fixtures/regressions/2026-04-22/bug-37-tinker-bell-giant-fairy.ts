@@ -5,17 +5,20 @@ import { createFixture } from "../../fixture-factory.js";
 
 export const bug37TinkerBellGiantFairyFixture = createFixture({
   id: "bug-37-tinker-bell-giant-fairy",
-  name: "Bug 37 - Tinker Bell Giant Fairy lone-target banish",
+  name: "Bug 37 - Tinker Bell Giant Fairy banish damage",
   description:
-    "Tinker Bell - Giant Fairy in play with exactly one opposing character available so the banish-trigger selection path is exercised with a single legal target (graceful no-op verification).",
+    "Tinker Bell - Giant Fairy can banish Pete in a challenge while Gramma Tala remains as the legal target for PUNY PIRATE!'s optional 2 damage.",
   playerOne: {
-    play: [tinkerBellGiantFairy],
+    play: [{ card: tinkerBellGiantFairy, isDrying: false }],
     inkwell: 6,
     deck: [donaldDuckStruttingHisStuff, grammaTalaStoryteller],
     hand: [grammaTalaStoryteller],
   },
   playerTwo: {
-    play: [{ card: peteBadGuy, exerted: true }],
+    play: [
+      { card: peteBadGuy, exerted: true, isDrying: false },
+      { card: grammaTalaStoryteller, exerted: false, isDrying: false },
+    ],
     inkwell: 3,
     deck: [donaldDuckStruttingHisStuff],
   },

@@ -230,6 +230,43 @@ export function canonicalV2ListHash(gameSlug: string, cards: DeckListCard[]): st
   return `${gameSlug}:v2:${canonicalListHash(cards)}`;
 }
 
+export type DeckHashBundle = {
+  exactHash: string;
+  templateHash: string;
+  synergyHash: string;
+};
+
+function canonicalIdentityPayload(cards: DeckListCard[]): string {
+  const canonical = cards.map((card) => {
+    if (!card.canonicalId) {
+      throw new Error(`Deck identity v3 requires canonicalId for "${card.cardId}"`);
+    }
+    return { canonicalId: card.canonicalId, quantity: card.quantity };
+  });
+  canonical.sort((a, b) => {
+    const identity = a.canonicalId.localeCompare(b.canonicalId);
+    return identity !== 0 ? identity : a.quantity - b.quantity;
+  });
+  return JSON.stringify(canonical);
+}
+
+/**
+ * V3 hashes are deliberately narrower than stored deck metadata: only canonical
+ * identities and quantities are serialized. Printing and engine card ids never
+ * participate in exact, template, or synergy identity.
+ */
+export function canonicalV3ListHash(gameSlug: string, cards: DeckListCard[]): string {
+  return `${gameSlug}:v3:${sha256HexSync(canonicalIdentityPayload(cards))}`;
+}
+
+export function canonicalV3DeckHashBundle(gameSlug: string, cards: DeckListCard[]): DeckHashBundle {
+  return {
+    exactHash: canonicalV3ListHash(gameSlug, cards),
+    templateHash: canonicalV3ListHash(gameSlug, toTemplateForm(cards)),
+    synergyHash: canonicalV3ListHash(gameSlug, toSynergyForm(cards)),
+  };
+}
+
 /** Cached hash of the canonical empty list ([]). Use for the empty-synergy deck_list row. */
 let emptyListHash: string | null = null;
 

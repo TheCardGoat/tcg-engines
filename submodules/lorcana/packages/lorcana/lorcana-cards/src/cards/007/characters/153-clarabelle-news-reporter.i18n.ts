@@ -56,4 +56,17 @@ export const clarabelleNewsReporterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Clarabelle",
+    version: "Reportero de noticias",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "HISTORIA DE ÚLTIMA HISTORIA",
+        description: "Tus otros personajes con soporte obtienen +1 {S}.",
+      },
+    ],
+  },
 };

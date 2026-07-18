@@ -41,4 +41,14 @@ export const goldCoinI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Moneda de oro",
+    text: [
+      {
+        title: "ACCESO BRILLANTE",
+        description:
+          "{E}, 1 {I}, destierra este objeto: ya has elegido tu personaje. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

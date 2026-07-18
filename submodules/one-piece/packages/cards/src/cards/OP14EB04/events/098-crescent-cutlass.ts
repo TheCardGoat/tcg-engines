@@ -27,6 +27,54 @@ export const op14eb04CrescentCutlass098: EventCard = {
   effects: {
     effects: [
       {
+        trigger: "main",
+        conditions: [
+          {
+            condition: "compound",
+            operator: "or",
+            conditions: [
+              {
+                condition: "existsOnField",
+                player: "self",
+                zone: "character",
+                filters: [{ filter: "cost", comparison: "eq", value: 0 }],
+              },
+              {
+                condition: "existsOnField",
+                player: "opponent",
+                zone: "character",
+                filters: [{ filter: "cost", comparison: "eq", value: 0 }],
+              },
+              {
+                condition: "existsOnField",
+                player: "self",
+                zone: "character",
+                filters: [{ filter: "cost", comparison: "gte", value: 8 }],
+              },
+              {
+                condition: "existsOnField",
+                player: "opponent",
+                zone: "character",
+                filters: [{ filter: "cost", comparison: "gte", value: 8 }],
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: "all" },
+              filters: [{ filter: "trait", value: "Baroque Works", match: "includes" }],
+            },
+            value: 3,
+            duration: "untilEndOfOpponentNextEndPhase",
+          },
+        ],
+      },
+      {
         trigger: "counter",
         actions: [
           {

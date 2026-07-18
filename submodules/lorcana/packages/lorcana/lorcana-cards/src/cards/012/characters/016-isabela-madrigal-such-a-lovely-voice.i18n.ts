@@ -58,4 +58,18 @@ export const isabelaMadrigalSuchALovelyVoiceI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Isabela Madrigal",
+    version: "Que voz tan encantadora",
+    text: [
+      {
+        title: "Cantante 5",
+      },
+      {
+        title: "NUEVO MOTIVO",
+        description:
+          "Cuando juegas con este personaje, si eliminaste 1 o más daño de uno de tus personajes este turno, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

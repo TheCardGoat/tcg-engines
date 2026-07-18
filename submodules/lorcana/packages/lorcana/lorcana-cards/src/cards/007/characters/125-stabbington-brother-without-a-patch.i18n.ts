@@ -53,4 +53,17 @@ export const stabbingtonBrotherWithoutAPatchI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Hermano Stabbington",
+    version: "Sin parche",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "¡CONSÍGUELOS!",
+        description: "Tus otros personajes llamados Stabbington Brother ganan Rush.",
+      },
+    ],
+  },
 };

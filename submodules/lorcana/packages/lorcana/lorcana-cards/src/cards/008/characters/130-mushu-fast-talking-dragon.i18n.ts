@@ -44,4 +44,15 @@ export const mushuFasttalkingDragonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mushu",
+    version: "Dragón que habla rápido",
+    text: [
+      {
+        title: "PONGAMOS ESTE ESPECTÁCULO EN EL CAMINO",
+        description:
+          "{E}: el personaje elegido gana Rush este turno. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

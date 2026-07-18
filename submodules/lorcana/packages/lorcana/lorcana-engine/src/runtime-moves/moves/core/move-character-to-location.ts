@@ -18,6 +18,7 @@ import { getAvailableInk, spendInk } from "../../rules/play-card-rules";
 import {
   emitTriggeredLorcanaEvent,
   flushTriggeredEventsToBag,
+  snapshotTriggeredCandidatesForCard,
 } from "../../effects/triggered-abilities";
 import {
   evaluateStaticCondition,
@@ -25,6 +26,7 @@ import {
   hasStaticSelfRestriction,
 } from "../../rules/static-ability-utils";
 import { getOrBuildMoveRegistry } from "../../rules/move-registry-cache";
+import { runGameStateCheck } from "../../state/game-state-check";
 
 type MoveExecutionContext = Parameters<
   LorcanaMoveDefinition<"moveCharacterToLocation">["execute"]
@@ -380,6 +382,10 @@ export const moveCharacterToLocation: LorcanaMoveDefinition<"moveCharacterToLoca
     ctx.cards.patchMeta(characterId as CardInstanceId, {
       atLocationId: locationId as CardInstanceId,
     });
+    const triggerCandidates = snapshotTriggeredCandidatesForCard(
+      ctx,
+      characterId as CardInstanceId,
+    );
 
     emitTriggeredLorcanaEvent(
       ctx,
@@ -396,6 +402,7 @@ export const moveCharacterToLocation: LorcanaMoveDefinition<"moveCharacterToLoca
         toZone: `location:${locationId as CardInstanceId}`,
         playerId: currentPlayer,
         subjectCardId: characterId as CardInstanceId,
+        triggerCandidates,
       },
     );
     ctx.framework.log(
@@ -411,6 +418,7 @@ export const moveCharacterToLocation: LorcanaMoveDefinition<"moveCharacterToLoca
       ),
     );
 
+    runGameStateCheck(ctx, { reasonCardId: characterId as CardInstanceId });
     flushTriggeredEventsToBag(ctx);
   },
 

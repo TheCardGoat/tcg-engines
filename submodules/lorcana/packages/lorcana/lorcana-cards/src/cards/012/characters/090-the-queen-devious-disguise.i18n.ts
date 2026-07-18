@@ -64,4 +64,20 @@ export const theQueenDeviousDisguiseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La reina",
+    version: "Disfraz tortuoso",
+    text: [
+      {
+        title: "ESQUEMA MALVADO",
+        description:
+          "Cuando juegas con este personaje, puedes robar una carta. Si lo haces, cada oponente gana 2 conocimientos.",
+      },
+      {
+        title: "CORAZÓN CELOSO",
+        description:
+          "Mientras un oponente tenga más conocimiento que tú, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

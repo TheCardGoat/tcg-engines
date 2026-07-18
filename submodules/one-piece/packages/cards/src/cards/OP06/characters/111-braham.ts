@@ -32,6 +32,16 @@ export const op06Braham111: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnCharacterToDeck",
+            amount: 1,
+            position: "bottom",
+            player: "both",
+            zones: ["stage"],
+            filters: [{ filter: "cost", comparison: "eq", value: 1 }],
+          },
+        ],
         actions: [
           {
             action: "rest",
@@ -54,6 +64,22 @@ export const op06Braham111: CharacterCard = {
         ],
         optional: true,
         oncePerTurn: true,
+      },
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "lifeCount",
+            player: "self",
+            comparison: "lte",
+            value: 2,
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
       },
     ],
   },

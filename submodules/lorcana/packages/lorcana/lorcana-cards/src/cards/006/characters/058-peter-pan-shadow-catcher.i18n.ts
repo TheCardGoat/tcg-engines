@@ -45,4 +45,15 @@ export const peterPanShadowCatcherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Peter Pan",
+    version: "Cazador de sombras",
+    text: [
+      {
+        title: "¡ENTENDIDO!",
+        description:
+          "Durante tu turno, siempre que se ponga una carta en tu tintero, ejerce el personaje contrario elegido.",
+      },
+    ],
+  },
 };

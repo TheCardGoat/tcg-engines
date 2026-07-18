@@ -55,7 +55,37 @@ export const op09GolDRoger118: CharacterCard = {
   effect:
     "[Rush] (This card can attack on the turn in which it is played.)\nWhen your opponent activates [Blocker], if either you or your opponent has 0 Life cards, you win the game.",
   effects: {
-    keywords: ["rush", "blocker"],
+    keywords: ["rush"],
+    effects: [
+      {
+        trigger: "whenBlockerActivated",
+        conditions: [
+          {
+            condition: "compound",
+            operator: "or",
+            conditions: [
+              {
+                condition: "lifeCount",
+                player: "self",
+                comparison: "eq",
+                value: 0,
+              },
+              {
+                condition: "lifeCount",
+                player: "opponent",
+                comparison: "eq",
+                value: 0,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "winGame",
+          },
+        ],
+      },
+    ],
   },
   i18n: op09GolDRoger118I18n,
 };

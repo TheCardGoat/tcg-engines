@@ -51,6 +51,7 @@ export const op10Vergo004: CharacterCard = {
               {
                 filter: "trait",
                 value: "Punk Hazard",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

@@ -49,6 +49,7 @@ export const op11VinsmokeJudge044: CharacterCard = {
                 {
                   filter: "trait",
                   value: "GERMA 66",
+                  match: "includes",
                 },
               ],
             },

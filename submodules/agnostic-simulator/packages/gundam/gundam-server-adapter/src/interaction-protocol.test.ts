@@ -4,6 +4,10 @@ import {
   gd01UnicornGundamDestroyMode002,
   gd01DuelGundamAssaultShroud045,
   gd01TheStubbornCog103,
+  gd02GundamAge1Normal021,
+  gd02Dominion121,
+  gd02GarrodRanTiffaAdill094,
+  gd02Zedas057,
   gd03AeuHellion083,
   gd03Defurse064,
   gd03Downes130,
@@ -19,16 +23,16 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  asPlayerId,
   createMockPilot,
   createMockUnit,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import {
   buildInteractionSubmissionForActionId,
+  type InteractionSubmission,
   validateInteractionSubmission,
 } from "@tcg/protocol";
-import { buildGundamInteractionView, gundamSubmissionToPayload } from "./interaction-protocol.js";
+import { GundamServerEngine } from "./gundam-server-engine.js";
 
 describe("Gundam interaction protocol adapter", () => {
   it("publishes and dispatches GD01-002's payable alternate deploy as a human choice", () => {
@@ -164,6 +168,7 @@ describe("Gundam interaction protocol adapter", () => {
     });
     const p1 = engine.asPlayer(PLAYER_ONE);
     const [destroyModeId] = p1.getHand();
+    const banagherId = p1.getHand()[2]!;
     const [unicornModeId] = p1.getCardsInZone("battleArea");
 
     expectSuccess(p1.assignPilot(banagher, unicornModeId!));
@@ -185,6 +190,282 @@ describe("Gundam interaction protocol adapter", () => {
     });
 
     expect(validateInteractionSubmission(view, oneTargetAlternate).ok).toBe(true);
+    dispatch(engine, oneTargetAlternate);
+
+    expect(p1.getCardZone(destroyModeId!)).toBe(`battleArea:${PLAYER_ONE}`);
+    expect(p1.getCardZone(unicornModeId!)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(banagherId)).toBe(`trash:${PLAYER_ONE}`);
+  });
+
+  it("carries AGE-1 Normal through its optional discard and exact eligible targets", () => {
+    const firstEligible = createMockUnit({
+      name: "First Eligible Unit",
+      color: "green",
+      traits: ["earth federation"],
+    });
+    const secondEligible = createMockUnit({
+      name: "Second Eligible Unit",
+      color: "green",
+      traits: ["earth federation"],
+    });
+    const wrongTrait = createMockUnit({
+      name: "Wrong Trait Unit",
+      color: "green",
+      traits: ["zeon"],
+    });
+    const engine = GundamTestEngine.create({
+      hand: [gd02GundamAge1Normal021, firstEligible, secondEligible, wrongTrait],
+      deck: 3,
+      resourceArea: activeResources(6),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [, firstEligibleId, secondEligibleId, wrongTraitId] = p1.getHand();
+
+    expectSuccess(p1.deployUnit(gd02GundamAge1Normal021));
+    const optional = p1.getBoardView().pendingChoice;
+    if (optional?.kind !== "optional") {
+      throw new Error("Expected AGE-1 Normal to offer its optional discard");
+    }
+    const optionalView = currentInteractionView(engine);
+    const optionalSubmission = buildInteractionSubmissionForActionId({
+      view: optionalView,
+      actionId: "resolveEffect",
+      values: {
+        pendingEffectId: optional.effectId,
+        [`optionalAnswers.${optional.directiveIndex}`]: true,
+      },
+    });
+
+    expect(validateInteractionSubmission(optionalView, optionalSubmission).ok).toBe(true);
+    dispatch(engine, optionalSubmission);
+
+    const targetChoice = p1.getBoardView().pendingChoice;
+    if (targetChoice?.kind !== "targetSelection") {
+      throw new Error("Expected AGE-1 Normal to ask which eligible Unit to discard");
+    }
+    const targetView = currentInteractionView(engine);
+    const invalidSubmission = buildInteractionSubmissionForActionId({
+      view: targetView,
+      actionId: "resolveEffect",
+      values: {
+        pendingEffectId: targetChoice.effectId,
+        targets: [wrongTraitId],
+      },
+    });
+    expect(validateInteractionSubmission(targetView, invalidSubmission).ok).toBe(false);
+    const targetSubmission = buildInteractionSubmissionForActionId({
+      view: targetView,
+      actionId: "resolveEffect",
+      values: {
+        pendingEffectId: targetChoice.effectId,
+        targets: [secondEligibleId],
+      },
+    });
+
+    expect(validateInteractionSubmission(targetView, targetSubmission).ok).toBe(true);
+    dispatch(engine, targetSubmission);
+
+    expect(p1.getCardsInZone("trash")).toContain(secondEligibleId);
+    expect(p1.getHand()).toEqual(expect.arrayContaining([firstEligibleId, wrongTraitId]));
+    expect(p1.getCardsInZone("resourceArea")).toHaveLength(7);
+    expect(p1.getCardsInZone("deck")).toHaveLength(2);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+  });
+
+  it("reveals GD02-094's Deck look only after accept and discard interactions", () => {
+    const host = createMockUnit({ name: "Garrod Host" });
+    const firstDiscard = createMockUnit({ name: "First Discard" });
+    const keptDiscard = createMockUnit({ name: "Kept Discard" });
+    const tutor = createMockUnit({ name: "Vulture Tutor", traits: ["vulture"] });
+    const engine = GundamTestEngine.create({
+      hand: [gd02GarrodRanTiffaAdill094, firstDiscard, keptDiscard],
+      play: [host],
+      resourceArea: activeResources(4),
+      deck: [tutor, createMockUnit(), createMockUnit()],
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const [, firstDiscardId, keptDiscardId] = p1.getHand();
+
+    expectSuccess(p1.assignPilot(gd02GarrodRanTiffaAdill094, hostId));
+    const optional = p1.getBoardView().pendingChoice;
+    if (optional?.kind !== "optional") {
+      throw new Error("Expected the discard acceptance before any Deck reveal");
+    }
+    const optionalView = currentInteractionView(engine);
+    const optionalAction = optionalView.actions.find((action) => action.id === "resolveEffect");
+    expect(optionalAction?.inputs.some((input) => input.id.startsWith("deckLookAnswers."))).toBe(
+      false,
+    );
+    const accept = buildInteractionSubmissionForActionId({
+      view: optionalView,
+      actionId: "resolveEffect",
+      values: {
+        pendingEffectId: optional.effectId,
+        [`optionalAnswers.${optional.directiveIndex}`]: true,
+      },
+    });
+    expect(validateInteractionSubmission(optionalView, accept).ok).toBe(true);
+    dispatch(engine, accept);
+
+    const discard = p1.getBoardView().pendingChoice;
+    if (discard?.kind !== "targetSelection") {
+      throw new Error("Expected the visible hand-card discard choice second");
+    }
+    expect(discard.legalTargetIds).toEqual(expect.arrayContaining([firstDiscardId, keptDiscardId]));
+    const discardView = currentInteractionView(engine);
+    const chooseDiscard = buildInteractionSubmissionForActionId({
+      view: discardView,
+      actionId: "resolveEffect",
+      values: { pendingEffectId: discard.effectId, targets: [firstDiscardId] },
+    });
+    expect(validateInteractionSubmission(discardView, chooseDiscard).ok).toBe(true);
+    dispatch(engine, chooseDiscard);
+
+    expect(p1.getCardZone(firstDiscardId!)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(keptDiscardId!)).toBe(`hand:${PLAYER_ONE}`);
+    const deckLook = p1.getBoardView().pendingChoice;
+    if (deckLook?.kind !== "deckLook") {
+      throw new Error("Expected the Deck look only after the discard was paid");
+    }
+    expect(deckLook.randomizeRemainingToBottom).toBe(true);
+    const tutorId = deckLook.legalTutorCardIds[0]!;
+    const deckView = currentInteractionView(engine);
+    const deckAction = deckView.actions.find((action) => action.id === "resolveEffect");
+    expect(deckAction?.inputs.some((input) => input.id.startsWith("optionalAnswers."))).toBe(false);
+    expect(deckAction?.inputs.some((input) => input.id.includes("toBottom"))).toBe(false);
+    const complete = buildInteractionSubmissionForActionId({
+      view: deckView,
+      actionId: "resolveEffect",
+      values: {
+        pendingEffectId: deckLook.effectId,
+        [`deckLookAnswers.${deckLook.directiveIndex}.tutorCardId`]: [tutorId],
+        [`deckLookAnswers.${deckLook.directiveIndex}.completion`]: ["complete"],
+      },
+    });
+    expect(validateInteractionSubmission(deckView, complete).ok).toBe(true);
+    dispatch(engine, complete);
+
+    expect(p1.getCardZone(firstDiscardId!)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(keptDiscardId!)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getCardZone(tutorId)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+  });
+
+  it("publishes Dominion's target only after its Shield has visibly moved to hand", () => {
+    const blueUnit = createMockUnit({ name: "Blue Unit", color: "blue" });
+    const wrongColorUnit = createMockUnit({ name: "Green Unit", color: "green" });
+    const shield = createMockUnit({ name: "Opening Shield" });
+    const engine = GundamTestEngine.create({
+      hand: [gd02Dominion121],
+      play: [blueUnit, wrongColorUnit],
+      shieldArea: [shield],
+      resourceArea: activeResources(4),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [blueUnitId, wrongColorUnitId] = p1.getCardsInZone("battleArea");
+
+    expectSuccess(p1.deployBase(gd02Dominion121));
+
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "targetSelection") {
+      throw new Error("Expected Dominion's recovery target after moving the Shield");
+    }
+    expect(p1.getBoardView().players[PLAYER_ONE]).toMatchObject({ shieldCount: 0, handCount: 1 });
+    expect(choice.legalTargetIds).toEqual([blueUnitId]);
+
+    const view = currentInteractionView(engine);
+    const invalid = buildInteractionSubmissionForActionId({
+      view,
+      actionId: "resolveEffect",
+      values: { pendingEffectId: choice.effectId, targets: [wrongColorUnitId] },
+    });
+    expect(validateInteractionSubmission(view, invalid).ok).toBe(false);
+
+    const legal = buildInteractionSubmissionForActionId({
+      view,
+      actionId: "resolveEffect",
+      values: { pendingEffectId: choice.effectId, targets: [blueUnitId] },
+    });
+    expect(validateInteractionSubmission(view, legal).ok).toBe(true);
+    dispatch(engine, legal);
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getBoardView().players[PLAYER_ONE]).toMatchObject({ shieldCount: 0, handCount: 1 });
+  });
+
+  it("stages Zedas's dependent target only after the sacrifice choice", () => {
+    const pilot = createMockPilot({ level: 1, cost: 1 });
+    const ally = createMockUnit({ name: "Sacrifice Unit", hp: 4 });
+    const enemy = createMockUnit({ name: "Damage Target", level: 4, hp: 5 });
+    const shield = createMockUnit({ name: "Opening Shield" });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [pilot],
+        play: [gd02Zedas057, ally],
+        resourceArea: activeResources(1),
+      },
+      { play: [enemy], shieldArea: [shield] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [zedasId, allyId] = p1.getCardsInZone("battleArea");
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(pilot, zedasId!));
+    expectSuccess(p1.enterBattle(zedasId!, "direct"));
+    const optional = p1.getBoardView().pendingChoice;
+    if (optional?.kind !== "optional") throw new Error("Expected Zedas's optional sacrifice");
+    const optionalView = currentInteractionView(engine);
+    const accept = buildInteractionSubmissionForActionId({
+      view: optionalView,
+      actionId: "resolveEffect",
+      values: {
+        pendingEffectId: optional.effectId,
+        [`optionalAnswers.${optional.directiveIndex}`]: true,
+      },
+    });
+    expect(validateInteractionSubmission(optionalView, accept).ok).toBe(true);
+    dispatch(engine, accept);
+
+    const sacrifice = p1.getBoardView().pendingChoice;
+    if (sacrifice?.kind !== "targetSelection") {
+      throw new Error("Expected Zedas to ask for the sacrifice target");
+    }
+    expect(sacrifice.legalTargetIds).toEqual([allyId]);
+    const sacrificeView = currentInteractionView(engine);
+    const invalidSacrifice = buildInteractionSubmissionForActionId({
+      view: sacrificeView,
+      actionId: "resolveEffect",
+      values: { pendingEffectId: sacrifice.effectId, targets: [enemyId] },
+    });
+    expect(validateInteractionSubmission(sacrificeView, invalidSacrifice).ok).toBe(false);
+    const chooseSacrifice = buildInteractionSubmissionForActionId({
+      view: sacrificeView,
+      actionId: "resolveEffect",
+      values: { pendingEffectId: sacrifice.effectId, targets: [allyId] },
+    });
+    expect(validateInteractionSubmission(sacrificeView, chooseSacrifice).ok).toBe(true);
+    dispatch(engine, chooseSacrifice);
+
+    expect(p1.getCardZone(allyId!)).toBe(`trash:${PLAYER_ONE}`);
+    const damageTarget = p1.getBoardView().pendingChoice;
+    if (damageTarget?.kind !== "targetSelection") {
+      throw new Error("Expected Zedas to ask for its dependent damage target");
+    }
+    expect(damageTarget.legalTargetIds).toEqual([enemyId]);
+    const damageView = currentInteractionView(engine);
+    const chooseEnemy = buildInteractionSubmissionForActionId({
+      view: damageView,
+      actionId: "resolveEffect",
+      values: { pendingEffectId: damageTarget.effectId, targets: [enemyId] },
+    });
+    expect(validateInteractionSubmission(damageView, chooseEnemy).ok).toBe(true);
+    dispatch(engine, chooseEnemy);
+
+    expect(p1.getCardZone(allyId!)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p2.getDamage(enemyId)).toBe(2);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
   });
 
   it("carries Downes through its optional choice and eligible trash target", () => {
@@ -501,21 +782,26 @@ function twoTargetDeploySubstitution(): CardEffect {
   };
 }
 
-function currentInteractionView(engine: GundamTestEngine) {
-  const state = engine.getState();
-  return buildGundamInteractionView({
-    actorId: PLAYER_ONE,
-    stateVersion: state.ctx._stateID,
-    state,
-    staticResources: engine.getRuntime().getStaticResources(),
-    pendingChoice: engine.asPlayer(PLAYER_ONE).getBoardView().pendingChoice,
-  });
+const interactionFixtures = new WeakMap<GundamTestEngine, GundamServerEngine>();
+
+function interactionFixture(engine: GundamTestEngine): GundamServerEngine {
+  const existing = interactionFixtures.get(engine);
+  if (existing) return existing;
+  const fixture = new GundamServerEngine(engine.getLocalEngine(), engine.getStaticResources());
+  interactionFixtures.set(engine, fixture);
+  return fixture;
 }
 
-function dispatch(
-  engine: GundamTestEngine,
-  submission: Parameters<typeof gundamSubmissionToPayload>[0],
-): void {
-  const nativeMove = gundamSubmissionToPayload(submission);
-  expectSuccess(engine.doMove(nativeMove.moveType, asPlayerId(PLAYER_ONE), nativeMove.payload));
+function currentInteractionView(engine: GundamTestEngine) {
+  return interactionFixture(engine).getInteractionView(PLAYER_ONE);
+}
+
+function dispatch(engine: GundamTestEngine, submission: InteractionSubmission): void {
+  const result = interactionFixture(engine).submitInteraction(PLAYER_ONE, submission, {
+    gameId: "interaction-protocol-test",
+    sourceAuthority: "server",
+  });
+  if (!result.success) {
+    throw new Error(`Expected interaction submission to succeed: ${result.error}`);
+  }
 }

@@ -57,4 +57,17 @@ export const rooHunnyRogueI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Roo",
+    version: "Miel pícaro",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "EXPERIENCIA ESQUIVA",
+        description: "Mientras tengas otro personaje Hunny en juego, este personaje gana Evasivo.",
+      },
+    ],
+  },
 };

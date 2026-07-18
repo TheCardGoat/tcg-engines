@@ -2,6 +2,24 @@ import { expect, test, describe } from "vite-plus/test";
 import { parseActions } from "../../../src/effect-parser/index.ts";
 
 describe("parseActions — activateEffect", () => {
+  test("selects a Character and changes the attack target to it", () => {
+    const result = parseActions(
+      "Select 1 of your Characters. Change the attack target to the selected Character.",
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "changeBattleTarget",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: { amount: 1 },
+        },
+      },
+    ]);
+  });
+
   test("activate this card's [Main] effect", () => {
     const result = parseActions("Activate this card's [Main] effect.");
     expect(result.parsed).toHaveLength(1);

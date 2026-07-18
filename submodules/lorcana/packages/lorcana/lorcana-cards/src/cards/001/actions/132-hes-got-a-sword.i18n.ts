@@ -17,4 +17,8 @@ export const hesGotASwordI18n: Record<Languages, I18nProperties> = {
     name: "Ha una Spada!",
     text: "Un personaggio a tua scelta riceve +2 {S} per questo turno.",
   },
+  es: {
+    name: "¡Tiene una espada!",
+    text: "El personaje elegido obtiene +2 {S} este turno.",
+  },
 };

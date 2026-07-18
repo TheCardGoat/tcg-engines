@@ -45,4 +45,15 @@ export const rayaHeadstrongI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Raya",
+    version: "Voluntarioso",
+    text: [
+      {
+        title: "NOTA PARA MISMO, NO MUERAS",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, puedes prepararlo. Si lo haces, ella no podrá realizar misiones por el resto de este turno.",
+      },
+    ],
+  },
 };

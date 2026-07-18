@@ -48,6 +48,11 @@ export const op03Izo003: CharacterCard = {
                 filter: "excludeName",
                 value: "Izo",
               },
+              {
+                filter: "trait",
+                value: "Whitebeard Pirates",
+                match: "includes",
+              },
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",

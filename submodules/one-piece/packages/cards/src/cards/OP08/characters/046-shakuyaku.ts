@@ -31,10 +31,17 @@ export const op08Shakuyaku046: CharacterCard = {
     effects: [
       {
         trigger: "whenLeaving",
+        source: "effect",
         conditions: [
           {
             condition: "turn",
             value: "your",
+          },
+          {
+            condition: "handCount",
+            player: "opponent",
+            comparison: "gte",
+            value: 5,
           },
         ],
         actions: [
@@ -46,6 +53,7 @@ export const op08Shakuyaku046: CharacterCard = {
               count: {
                 amount: 1,
               },
+              chosenBy: "opponent",
             },
             position: "bottom",
           },

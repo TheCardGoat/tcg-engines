@@ -31,6 +31,13 @@ export const op04CharlotteAmande105: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [{ filter: "hasTrigger", value: true }],
+          },
+        ],
         actions: [
           {
             action: "rest",

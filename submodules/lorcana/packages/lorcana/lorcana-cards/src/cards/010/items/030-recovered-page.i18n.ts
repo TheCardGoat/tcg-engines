@@ -61,4 +61,19 @@ export const recoveredPageI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Página recuperada",
+    text: [
+      {
+        title: "QUE ESTA POR VENIR",
+        description:
+          "Cuando juegues este objeto, mira las 4 cartas superiores de tu mazo. Puedes revelar una carta de personaje y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+      {
+        title: "PODER SUSURRADO 1",
+        description:
+          "{I}, destierra este objeto: coloca la carta superior de tu mazo boca abajo debajo de uno de tus personajes o ubicaciones con Boost.",
+      },
+    ],
+  },
 };

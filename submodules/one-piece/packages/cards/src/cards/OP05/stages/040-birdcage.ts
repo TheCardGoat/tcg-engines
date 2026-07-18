@@ -23,7 +23,7 @@ export const op05Birdcage040: StageCard = {
   cost: 5,
   traits: ["NULL"],
   effect:
-    "If your Leader is [Donquixote Doflamingo], all Characters with a cost of 5 or less do not become active in your and your opponent's Refresh Phases. [End of Your Turn] If you have 10 DON!! cards on your field, K.O. all rested Characters with a cost of 5 or less. Then, trash this SAtage.",
+    "If your Leader is [Donquixote Doflamingo], all Characters with a cost of 5 or less do not become active in your and your opponent's Refresh Phases. [End of Your Turn] If you have 10 DON!! cards on your field, K.O. all rested Characters with a cost of 5 or less. Then, trash this Stage.",
   effects: {
     effects: [
       {
@@ -40,7 +40,7 @@ export const op05Birdcage040: StageCard = {
           {
             action: "ko",
             target: {
-              player: "opponent",
+              player: "both",
               zones: ["character"],
               count: {
                 amount: "all",
@@ -60,6 +60,35 @@ export const op05Birdcage040: StageCard = {
           },
           {
             action: "trashThisCard",
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderName",
+            name: "Donquixote Doflamingo",
+          },
+        ],
+        actions: [
+          {
+            action: "freeze",
+            target: {
+              player: "both",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 5,
+                },
+              ],
+            },
           },
         ],
       },

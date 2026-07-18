@@ -45,4 +45,15 @@ export const casaMadrigalCourtyardI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Casa Madrigal",
+    version: "Patio",
+    text: [
+      {
+        title: "CASA DE CURACIÓN",
+        description:
+          "Siempre que un personaje realice una misión mientras esté aquí, puedes eliminarle hasta 2 daños. Luego, puedes eliminar hasta 2 daños de esta ubicación.",
+      },
+    ],
+  },
 };

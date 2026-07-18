@@ -41,4 +41,14 @@ export const shereKhanInfamousTigerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Shere Khan",
+    version: "Tigre infame",
+    text: [
+      {
+        title: "QUÉ",
+        description: "UNA LÁSIMA Cuando juegues con este personaje, descarta tu mano.",
+      },
+    ],
+  },
 };

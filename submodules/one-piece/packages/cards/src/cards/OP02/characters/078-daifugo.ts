@@ -60,6 +60,7 @@ export const op02Daifugo078: CharacterCard = {
               {
                 filter: "trait",
                 value: "SMILE",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -68,6 +69,7 @@ export const op02Daifugo078: CharacterCard = {
             ],
           },
         ],
+        optional: true,
       },
     ],
   },

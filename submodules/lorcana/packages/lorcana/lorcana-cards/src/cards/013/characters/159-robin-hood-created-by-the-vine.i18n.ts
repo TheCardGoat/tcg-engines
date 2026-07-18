@@ -45,4 +45,15 @@ export const robinHoodCreatedByTheVineI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Robin Hood",
+    version: "Creado por la vid",
+    text: [
+      {
+        title: "ojos agudos",
+        description:
+          "Tus personajes Floodborn obtienen <Alerta>. (Pueden desafiar como si tuvieran Evasivo).",
+      },
+    ],
+  },
 };

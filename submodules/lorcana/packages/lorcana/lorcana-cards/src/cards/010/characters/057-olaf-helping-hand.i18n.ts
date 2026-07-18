@@ -45,4 +45,15 @@ export const olafHelpingHandI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Olaf",
+    version: "Mano amiga",
+    text: [
+      {
+        title: "SEGUNDA OPORTUNIDAD",
+        description:
+          "Cuando este personaje deja el juego, puedes devolver el personaje tuyo elegido a tu mano.",
+      },
+    ],
+  },
 };

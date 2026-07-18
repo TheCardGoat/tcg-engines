@@ -61,4 +61,19 @@ export const jollyRogerHooksShipI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jolly roger",
+    version: "El barco de Hook",
+    text: [
+      {
+        title: "¡PAREZCAN VIVOS, HISTORIONES!",
+        description:
+          "Los personajes ganan Rush mientras están aquí. (Pueden desafiar el turno en el que se juega).",
+      },
+      {
+        title: "¡TODAS LAS MANOS A LA CUBIERTA!",
+        description: "Tus personajes piratas pueden moverse aquí gratis.",
+      },
+    ],
+  },
 };

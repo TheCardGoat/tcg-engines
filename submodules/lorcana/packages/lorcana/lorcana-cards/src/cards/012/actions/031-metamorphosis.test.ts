@@ -2,6 +2,8 @@ import { describe, expect, it } from "bun:test";
 import { LorcanaMultiplayerTestEngine, createMockCharacter } from "@tcg/lorcana-engine/testing";
 import { shift } from "../../../helpers/abilities/shift";
 import { metamorphosis } from "./031-metamorphosis";
+import { omnidroidV8 } from "../characters/173-omnidroid-v8";
+import { omnidroidV9 } from "../characters/184-omnidroid-v9";
 
 const shiftTarget = createMockCharacter({
   id: "metamorphosis-shift-target",
@@ -78,6 +80,23 @@ describe("Metamorphosis", () => {
       discard: 1,
       play: 1,
     });
+  });
+
+  it("shifts Omnidroid V.9 from discard onto Omnidroid V.8", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [metamorphosis],
+      inkwell: metamorphosis.cost,
+      discard: [omnidroidV9],
+      play: [omnidroidV8],
+    });
+
+    expect(
+      testEngine.asPlayerOne().playCard(metamorphosis, {
+        targets: [omnidroidV9, omnidroidV8],
+      }),
+    ).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().getCardZone(omnidroidV9)).toBe("play");
+    expect(testEngine.asPlayerOne()).toHaveCardsUnder({ card: omnidroidV9, count: 1 });
   });
 
   describe("release notes ruling", () => {

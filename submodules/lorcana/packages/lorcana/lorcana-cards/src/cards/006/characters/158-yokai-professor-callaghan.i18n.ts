@@ -17,4 +17,8 @@ export const yokaiProfessorCallaghanI18n: Record<Languages, I18nProperties> = {
     name: "Yokai",
     version: "Professor Callaghan",
   },
+  es: {
+    name: "Yokai",
+    version: "Profesor Callaghan",
+  },
 };

@@ -60,4 +60,18 @@ export const mickeyMouseArtfulRogueI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Pícaro ingenioso",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "DIRECCIÓN MAL",
+        description:
+          "Cada vez que juegas una acción, el personaje contrario elegido no puede realizar misiones durante su siguiente turno.",
+      },
+    ],
+  },
 };

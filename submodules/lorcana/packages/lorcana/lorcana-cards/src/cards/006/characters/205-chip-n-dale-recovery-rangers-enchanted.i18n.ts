@@ -72,4 +72,21 @@ export const chipNDaleRecoveryRangersEnchantedI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Chip y Dale",
+    version: "Guardabosques de recuperación",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "(Este personaje cuenta como si se llamara Chip y Dale).",
+      },
+      {
+        title: "BÚSQUEDA Y RESCATE",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, puedes devolver una carta de personaje de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

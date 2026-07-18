@@ -17,4 +17,8 @@ export const winterspellI18n: Record<Languages, I18nProperties> = {
     name: "Incanto d'Inverno",
     text: "Un tuo luogo a tua scelta non può essere sfidato fino all'inizio del tuo prossimo turno. Pesca una carta.",
   },
+  es: {
+    name: "Hechizo de invierno",
+    text: "La ubicación elegida por ti no puede ser cuestionada hasta el comienzo de tu próximo turno. Saca una carta.",
+  },
 };

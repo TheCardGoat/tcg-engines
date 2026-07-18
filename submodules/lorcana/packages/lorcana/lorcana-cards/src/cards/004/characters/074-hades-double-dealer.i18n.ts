@@ -45,4 +45,15 @@ export const hadesDoubleDealerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Infierno",
+    version: "Distribuidor doble",
+    text: [
+      {
+        title: "AQUÍ ESTÁ LA COMPENSACIÓN",
+        description:
+          "{E}, destierra a uno de tus otros personajes: juega con un personaje con el mismo nombre que el personaje desterrado de forma gratuita.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const threeArrowsEpicI18n: Record<Languages, I18nProperties> = {
     name: "Tre Frecce",
     text: "Infliggi 2 danni a un personaggio a tua scelta. Poi, puoi infliggere 1 danno a un altro personaggio a tua scelta.",
   },
+  es: {
+    name: "Tres flechas",
+    text: "Inflige 2 daños al personaje elegido. Luego, puedes infligir 1 daño a otro personaje elegido.",
+  },
 };

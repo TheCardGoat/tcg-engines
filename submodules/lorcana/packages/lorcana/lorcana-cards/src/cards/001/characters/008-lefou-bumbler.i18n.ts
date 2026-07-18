@@ -45,4 +45,15 @@ export const lefouBumblerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lefou",
+    version: "Torpe",
+    text: [
+      {
+        title: "LEAL",
+        description:
+          "Si tienes un personaje llamado Gastón en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+    ],
+  },
 };

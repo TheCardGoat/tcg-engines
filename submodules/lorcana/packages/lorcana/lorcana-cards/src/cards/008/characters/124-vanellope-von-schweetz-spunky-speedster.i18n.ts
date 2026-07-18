@@ -21,4 +21,9 @@ export const vanellopeVonSchweetzSpunkySpeedsterI18n: Record<Languages, I18nProp
     version: "Velocista Grintosa",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Vanellope von Schweetz",
+    version: "Velocista valiente",
+    text: "Evasivo",
+  },
 };

@@ -24,7 +24,7 @@ export const op14eb04Ryuma089: CharacterCard = {
   power: 5000,
   trigger:
     "Play up to 1 {Thriller Bark Pirates} type Character card with a cost of 4 or less from your trash rested.",
-  traits: ["Land of Wano Thriller Bark Pirates"],
+  traits: ["Land of Wano", "Thriller Bark Pirates"],
   attribute: "slash",
   effect: "[On K.O.] Draw 2 cards and trash 2 cards from your hand.",
   effects: {
@@ -41,6 +41,38 @@ export const op14eb04Ryuma089: CharacterCard = {
             action: "trashFromHand",
             player: "self",
             amount: 2,
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+              {
+                filter: "trait",
+                value: "Thriller Bark Pirates",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+            playState: "rested",
           },
         ],
       },

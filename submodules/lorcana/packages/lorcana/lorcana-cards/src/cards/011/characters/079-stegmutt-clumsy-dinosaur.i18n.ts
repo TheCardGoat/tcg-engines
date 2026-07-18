@@ -65,4 +65,20 @@ export const stegmuttClumsyDinosaurI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Stegmutt",
+    version: "Dinosaurio torpe",
+    text: [
+      {
+        title: "DESPERTAR DE LA DESTRUCCIÓN",
+        description:
+          "Por cada carta de objeto de tu descarte, pagas 1 {I} menos para jugar con este personaje.",
+      },
+      {
+        title: "DAÑO COLATERAL",
+        description:
+          "Cuando juegas con este personaje, puedes colocar 3 cartas de elementos de tu descarte en la parte inferior de tu mazo en cualquier orden. Si lo haces, inflige 3 daños al personaje elegido.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const banzaiGluttonousPredatorI18n: Record<Languages, I18nProperties> = {
     name: "Banzai",
     version: "Predatore Vorace",
   },
+  es: {
+    name: "Banzai",
+    version: "Depredador glotón",
+  },
 };

@@ -1,6 +1,8 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 import { circleOfLifeEnchantedI18n } from "./225-circle-of-life-enchanted.i18n";
 
+import { singTogether } from "../../../helpers/abilities/singTogether";
+
 export const circleOfLifeEnchanted: ActionCard = {
   id: "1LV",
   canonicalId: "ci_gzm",
@@ -39,6 +41,7 @@ export const circleOfLifeEnchanted: ActionCard = {
   ],
   actionSubtype: "song",
   abilities: [
+    singTogether(8),
     {
       effect: {
         cardType: "character",

@@ -80,4 +80,23 @@ export const annaDiplomaticQueenI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ana",
+    version: "Reina diplomática",
+    text: [
+      {
+        title: "REAL RESOLUCIÓN",
+        description: "Cuando juegas con este personaje, puedes pagar 2 {I} para elegir uno:",
+      },
+      {
+        title: "• Cada oponente elige y descarta una carta.",
+      },
+      {
+        title: "• El personaje elegido obtiene +2 {S} este turno.",
+      },
+      {
+        title: "• Destierra al personaje dañado elegido.",
+      },
+    ],
+  },
 };

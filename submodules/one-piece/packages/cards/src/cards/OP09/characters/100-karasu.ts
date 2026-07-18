@@ -31,6 +31,34 @@ export const op09Karasu100: CharacterCard = {
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
   effects: {
     keywords: ["blocker"],
+    effects: [
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "compound",
+            operator: "and",
+            conditions: [
+              {
+                condition: "leaderTrait",
+                trait: "Revolutionary Army",
+                match: "includes",
+              },
+              {
+                condition: "totalLifeCount",
+                comparison: "lte",
+                value: 5,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+      },
+    ],
   },
   i18n: op09Karasu100I18n,
 };

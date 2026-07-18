@@ -25,11 +25,11 @@ describe("Ribo Colony (GD03-124)", () => {
     expectSuccess(p2.passBlock());
     expectSuccess(p2.passBattleAction());
     expectSuccess(p1.passBattleAction());
-    expect(p2.getBoardView().pendingChoice).toMatchObject({
-      kind: "optional",
-      controllerId: PLAYER_TWO,
-    });
-    expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
+    const burstChoice = p2.getBoardView().pendingChoice;
+    if (burstChoice?.kind !== "optional" || burstChoice.controllerId !== PLAYER_TWO) {
+      throw new Error("Expected Ribo Colony's public optional Burst choice");
+    }
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [burstChoice.directiveIndex]: true } }));
 
     expect(p2.getCardZone(gd03RiboColony124)).toBe(`baseSection:${PLAYER_TWO}`);
   });
@@ -74,14 +74,11 @@ describe("Ribo Colony (GD03-124)", () => {
     expectSuccess(p1.assignPilot(pilot, unitId));
 
     const prompt = p1.getBoardView().pendingChoice;
-    expect(prompt).toMatchObject({
-      kind: "targetSelection",
-      controllerId: PLAYER_ONE,
-      legalTargetIds: [eligibleEnemyId],
-    });
-    expect(prompt?.kind === "targetSelection" ? prompt.legalTargetIds : []).not.toContain(
-      ineligibleEnemyId,
-    );
+    if (prompt?.kind !== "targetSelection" || prompt.controllerId !== PLAYER_ONE) {
+      throw new Error("Expected Ribo Colony's public enemy Unit choice");
+    }
+    expect(prompt.legalTargetIds).toEqual([eligibleEnemyId]);
+    expect(prompt.legalTargetIds).not.toContain(ineligibleEnemyId);
     expectSuccess(p1.resolveEffect({ targets: [eligibleEnemyId!] }));
     expect(p2.isExhausted(eligibleEnemyId!)).toBe(true);
     expect(p2.isExhausted(ineligibleEnemyId!)).toBe(false);
@@ -111,6 +108,29 @@ describe("Ribo Colony (GD03-124)", () => {
     expect(p2.isExhausted(enemyId)).toBe(false);
   });
 
+  it("does not trigger when the opponent pairs an eligible Pilot", () => {
+    const pilot = createMockPilot({ level: 3 });
+    const unit = createMockUnit({ hp: 3 });
+    const engine = GundamTestEngine.create(
+      { baseSection: [gd03RiboColony124] },
+      {
+        hand: [pilot],
+        play: [unit],
+        resourceArea: activeResources(3),
+      },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p2.assignPilot(pilot, unitId));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.isExhausted(unitId)).toBe(false);
+  });
+
   it("triggers only once when two eligible Pilots are paired in the same turn", () => {
     const firstPilot = createMockPilot({ cardNumber: "TEST-PILOT-A", level: 3 });
     const secondPilot = createMockPilot({ cardNumber: "TEST-PILOT-B", level: 3 });
@@ -133,6 +153,13 @@ describe("Ribo Colony (GD03-124)", () => {
     const [firstEnemyId, secondEnemyId] = p2.getCardsInZone("battleArea");
 
     expectSuccess(p1.assignPilot(firstPilot, firstUnitId!));
+    const firstChoice = p1.getBoardView().pendingChoice;
+    if (firstChoice?.kind !== "targetSelection") {
+      throw new Error("Expected Ribo Colony's first enemy Unit choice");
+    }
+    expect(firstChoice.legalTargetIds).toEqual(
+      expect.arrayContaining([firstEnemyId, secondEnemyId]),
+    );
     expectSuccess(p1.resolveEffect({ targets: [firstEnemyId!] }));
     expectSuccess(p1.assignPilot(secondPilot, secondUnitId!));
 

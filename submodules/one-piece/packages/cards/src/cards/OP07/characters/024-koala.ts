@@ -50,6 +50,7 @@ export const op07Koala024: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Fish-Man",
+                  match: "includes",
                 },
                 {
                   filter: "cost",

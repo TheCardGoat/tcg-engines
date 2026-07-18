@@ -45,4 +45,15 @@ export const morphSpaceGooEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Transformar",
+    version: "Goo espacial",
+    text: [
+      {
+        title: "MIMETISMO",
+        description:
+          "Puedes interpretar cualquier personaje con Shift sobre este personaje como si este personaje tuviera algún nombre.",
+      },
+    ],
+  },
 };

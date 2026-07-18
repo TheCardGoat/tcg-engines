@@ -28,10 +28,10 @@ export const eb03InsolentFoolStandDown029: EventCard = {
     effects: [
       {
         trigger: "main",
-        conditions: [
+        costs: [
           {
-            condition: "leaderName",
-            name: "Boa Hancock",
+            cost: "restDon",
+            amount: 4,
           },
         ],
         actions: [
@@ -52,18 +52,29 @@ export const eb03InsolentFoolStandDown029: EventCard = {
                 value: 6,
               },
               {
-                filter: "trait",
-                value: "Amazon Lily",
-              },
-              {
-                filter: "trait",
-                value: "Kuja Pirates",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Amazon Lily",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Kuja Pirates",
+                    match: "includes",
+                  },
+                ],
               },
               {
                 filter: "cardCategory",
                 value: "character",
               },
             ],
+            condition: {
+              condition: "leaderName",
+              name: "Boa Hancock",
+            },
           },
         ],
         optional: true,
@@ -75,7 +86,7 @@ export const eb03InsolentFoolStandDown029: EventCard = {
             action: "modifyPower",
             target: {
               player: "self",
-              zones: ["leader", "character", "stage", "costArea"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
                 upTo: true,

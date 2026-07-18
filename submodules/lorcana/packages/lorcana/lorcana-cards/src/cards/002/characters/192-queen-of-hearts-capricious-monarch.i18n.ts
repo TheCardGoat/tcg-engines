@@ -43,4 +43,14 @@ export const queenOfHeartsCapriciousMonarchI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Reina de corazones",
+    version: "Monarca caprichoso",
+    text: [
+      {
+        title: "¡QUE LES CORTEN LA CABEZA!",
+        description: "Siempre que un personaje contrario sea desterrado, puedes prepararlo.",
+      },
+    ],
+  },
 };

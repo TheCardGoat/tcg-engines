@@ -45,4 +45,15 @@ export const flynnRiderCharmingRogueI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jinete Flynn",
+    version: "Pícaro encantador",
+    text: [
+      {
+        title: "AQUÍ VIENE EL MÁS FUEGO",
+        description:
+          "Siempre que se desafía a este personaje, el jugador desafiante elige y descarta una carta.",
+      },
+    ],
+  },
 };

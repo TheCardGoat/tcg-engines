@@ -17,4 +17,8 @@ export const heWhoStealsAndRunsAwayI18n: Record<Languages, I18nProperties> = {
     name: "Se colui che ruba poi scappa via",
     text: "Esilia un oggetto a tua scelta. Pesca una carta.",
   },
+  es: {
+    name: "El que roba y huye",
+    text: "Desterrar el objeto elegido. Saca una carta.",
+  },
 };

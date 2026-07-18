@@ -31,6 +31,11 @@ export const op02Isuka094: CharacterCard = {
     effects: [
       {
         trigger: "whenCharacterKod",
+        eventFilter: {
+          player: "opponent",
+          koCause: "battle",
+          sourceSelf: true,
+        },
         conditions: [
           {
             condition: "donAttached",

@@ -69,4 +69,21 @@ export const mickeyMouseBraveLittlePrinceIconicI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Principito Valiente",
+    text: [
+      {
+        title: "Cambio 5 {I}",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "LOGRO DE CORONACIÓN",
+        description:
+          "Mientras este personaje tenga una carta debajo, obtiene +3 {S}, +3 {W} y +3 {L}.",
+      },
+    ],
+  },
 };

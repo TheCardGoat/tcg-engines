@@ -17,4 +17,8 @@ export const drDelbertDopplerFussyAstronomerI18n: Record<Languages, I18nProperti
     name: "Dr. Delbert Doppler",
     version: "Astronomo Pignolo",
   },
+  es: {
+    name: "Dr. Delbert Doppler",
+    version: "Astrónomo quisquilloso",
+  },
 };

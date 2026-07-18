@@ -59,4 +59,18 @@ export const jimHawkinsHonorablePirateI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Jim Hawkins",
+    version: "Honorable pirata",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "CONTRATAR",
+        description:
+          "UNA TRIPULACIÓN Cuando juegues con este personaje, mira las 4 primeras cartas de tu mazo. Puedes revelar cualquier cantidad de cartas de personaje Pirata y ponerlas en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

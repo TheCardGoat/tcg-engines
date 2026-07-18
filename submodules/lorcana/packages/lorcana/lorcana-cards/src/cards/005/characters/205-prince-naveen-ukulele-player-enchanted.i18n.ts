@@ -58,4 +58,18 @@ export const princeNaveenUkulelePlayerEnchantedI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Príncipe naveen",
+    version: "Jugador de ukelele",
+    text: [
+      {
+        title: "Cantante 6",
+      },
+      {
+        title: "ES HERMOSO ¿NO?",
+        description:
+          "Cuando juegas con este personaje, puedes tocar una canción con un costo de 6 o menos de forma gratuita.",
+      },
+    ],
+  },
 };

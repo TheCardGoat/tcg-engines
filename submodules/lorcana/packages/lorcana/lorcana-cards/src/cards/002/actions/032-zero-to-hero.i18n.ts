@@ -26,4 +26,8 @@ export const zeroToHeroI18n: Record<Languages, I18nProperties> = {
     name: "Zero to Hero",
     text: "Count the number of characters you have in play. You pay that amount of {I} less for the next character you play this turn.",
   },
+  es: {
+    name: "De cero a héroe",
+    text: "Cuenta el número de personajes que tienes en juego. Pagas esa cantidad de {I} menos por el siguiente personaje que juegues en este turno.",
+  },
 };

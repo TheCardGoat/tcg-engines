@@ -5,6 +5,7 @@ export const gd02PoliceZakuArmoredRruType035: UnitCard = {
   name: "Police Zaku (Armored RRU Type)",
   type: "unit",
   color: "green",
+  battlefieldZones: ["space", "earth"],
   traits: ["side 6"],
   id: "GD02-035",
   canonicalId: "GD02-035",

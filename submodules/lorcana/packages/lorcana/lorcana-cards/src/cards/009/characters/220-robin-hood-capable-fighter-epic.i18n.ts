@@ -41,4 +41,14 @@ export const robinHoodCapableFighterEpicI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Robin Hood",
+    version: "Luchador capaz",
+    text: [
+      {
+        title: "ESCARAMUZA",
+        description: "{E}: inflige 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

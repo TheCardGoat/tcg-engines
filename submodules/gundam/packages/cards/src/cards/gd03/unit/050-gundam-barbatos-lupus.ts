@@ -83,47 +83,66 @@ export const gd03GundamBarbatosLupus050: UnitCard = {
       type: "activated",
       activation: {
         timing: ["activate:main"],
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "opponent",
+            zone: "battleArea",
+            cardType: "unit",
+            comparison: "gte",
+            count: 1,
+          },
+        ],
       },
       directives: [
         {
           action: {
-            action: "exile",
-            target: {
-              owner: "friendly",
-              cardType: "unit",
-              zone: "trash",
-              attributeFilters: [
+            action: "resolveThenQueue",
+            first: {
+              action: "exile",
+              target: {
+                owner: "friendly",
+                cardType: "unit",
+                zone: "trash",
+                attributeFilters: [
+                  {
+                    attribute: "or",
+                    filters: [
+                      {
+                        attribute: "trait",
+                        comparison: "includes",
+                        value: "tekkadan",
+                      },
+                      {
+                        attribute: "trait",
+                        comparison: "includes",
+                        value: "teiwaz",
+                      },
+                    ],
+                  },
+                ],
+                count: 3,
+              },
+            },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
                 {
-                  attribute: "or",
-                  filters: [
-                    {
-                      attribute: "trait",
-                      comparison: "includes",
-                      value: "tekkadan",
+                  action: {
+                    action: "dealDamage",
+                    amount: 2,
+                    target: {
+                      owner: "opponent",
+                      cardType: "unit",
+                      count: 1,
                     },
-                    {
-                      attribute: "trait",
-                      comparison: "includes",
-                      value: "teiwaz",
-                    },
-                  ],
+                  },
                 },
               ],
-              count: 3,
+              sourceText: "If you do, choose 1 enemy Unit. Deal 2 damage to it.",
             },
           },
-        },
-        {
-          action: {
-            action: "dealDamage",
-            amount: 2,
-            target: {
-              owner: "opponent",
-              cardType: "unit",
-              count: 1,
-            },
-          },
-          dependsOnPrevious: true,
         },
       ],
       sourceText:

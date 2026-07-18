@@ -17,4 +17,8 @@ export const donaldDuckNephewFredI18n: Record<Languages, I18nProperties> = {
     name: "Paperino",
     version: "Nipote Fred",
   },
+  es: {
+    name: "Pato donald",
+    version: "Sobrino fred",
+  },
 };

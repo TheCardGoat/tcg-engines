@@ -61,4 +61,19 @@ export const baymaxGiantRobotI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Baymax",
+    version: "Robot gigante",
+    text: [
+      {
+        title: "Cambio universal 4",
+        description: "(Puedes pagar 4 {I} para jugar esto encima de cualquiera de tus personajes).",
+      },
+      {
+        title: "FUNCIONALIDAD MEJORADA",
+        description:
+          "Cuando juegues con este personaje, si usaste Shift para interpretarlo, elimina todo el daño que sufre.",
+      },
+    ],
+  },
 };

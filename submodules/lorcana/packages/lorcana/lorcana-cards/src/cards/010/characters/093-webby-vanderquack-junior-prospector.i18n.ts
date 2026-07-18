@@ -58,4 +58,21 @@ export const webbyVanderquackJuniorProspectorI18n: Record<Languages, I18nPropert
     version: "Apprendista Cercatrice",
     text: "<Trasformazione> 2 {I}, <Protetto> Lavorare Meglio Ogni volta che questo personaggio va all'avventura, se un avversario ha più carte nel suo calamaio di te, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
   },
+  es: {
+    name: "Webby Vanderquack",
+    version: "Prospector junior",
+    text: [
+      {
+        title: "Shift 2 {I}",
+      },
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "TRABAJA DE FORMA MÁS INTELIGENTE",
+        description:
+          "Siempre que este personaje realice una misión, si un oponente tiene más cartas en su tintero que tú, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

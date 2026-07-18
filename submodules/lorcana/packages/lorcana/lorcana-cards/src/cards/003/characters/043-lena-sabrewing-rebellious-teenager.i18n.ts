@@ -21,4 +21,9 @@ export const lenaSabrewingRebelliousTeenagerI18n: Record<Languages, I18nProperti
     version: "Adolescente Ribelle",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Lena Sabrewing",
+    version: "Adolescente rebelde",
+    text: "Correr",
+  },
 };

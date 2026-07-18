@@ -41,4 +41,14 @@ export const darkwingsGasDeviceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dispositivo de gas de Darkwing",
+    text: [
+      {
+        title: "NUBE CEGADORA",
+        description:
+          "{E}, 1 {I}: el personaje elegido obtiene -1 {S} este turno. Si tienes un personaje llamado Darkwing Duck en juego, el personaje elegido obtiene -2 {S} este turno.",
+      },
+    ],
+  },
 };

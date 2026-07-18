@@ -50,6 +50,7 @@ export const op02EmporioIvankov051: CharacterCard = {
             action: "draw",
             player: "self",
             amount: 3,
+            untilHandSize: 3,
           },
           {
             action: "play",
@@ -74,6 +75,7 @@ export const op02EmporioIvankov051: CharacterCard = {
               {
                 filter: "trait",
                 value: "Impel Down",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

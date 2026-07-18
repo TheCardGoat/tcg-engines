@@ -65,4 +65,20 @@ export const drHamstervielInfamousScientistI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Dr. Hámsterviel",
+    version: "Científico infame",
+    text: [
+      {
+        title: "VARIABLES CONTROLADAS",
+        description:
+          "Por cada carta de personaje Alien en tu descarte, pagas 1 {I} menos para jugar con este personaje.",
+      },
+      {
+        title: "ATEMORIZADO",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido no puede desafiar durante su próximo turno.",
+      },
+    ],
+  },
 };

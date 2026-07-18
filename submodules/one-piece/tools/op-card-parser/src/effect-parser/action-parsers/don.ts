@@ -1,5 +1,5 @@
 import type { Action, Target, TargetFilter } from "@tcg/op-types";
-import { parseTarget } from "../target-parser.ts";
+import { parseTarget, traitAlternativesFilter } from "../target-parser.ts";
 import { parseZoneList } from "../helpers.ts";
 
 // ── AddDon action parsing ──
@@ -17,15 +17,30 @@ type AddDonAction = Extract<Action, { action: "addDon" }>;
 export function parseAddDonAction(text: string): AddDonAction | null {
   const cleaned = text.trim().replace(/[.,]+$/, "");
 
+  const opponentMatch =
+    /^your\s+opponent\s+may\s+ad{1,2}\s+(\d+)\s+DON!!\s+cards?\s+from\s+their\s+DON!!\s+deck\s+and\s+(rest\s+(?:it|them)|set\s+(?:it|them)\s+as\s+active)$/i.exec(
+      cleaned,
+    );
+  if (opponentMatch) {
+    return {
+      action: "addDon",
+      player: "opponent",
+      count: { amount: parseInt(opponentMatch[1]!, 10), upTo: true },
+      state: opponentMatch[2]!.toLowerCase().startsWith("rest") ? "rested" : "active",
+    };
+  }
+
   // "Add [up to] N DON!! card(s) from your DON!! deck and (rest it|set it as active)"
+  // A later clause may abbreviate the repeated source as "additional DON!! card".
   const match =
-    /^ad{1,2}\s+(up to )?(\d+) DON!! cards? from your DON!! deck and (rest (?:it|them)|set (?:it|them) as active)$/i.exec(
+    /^ad{1,2}\s+(up to )?(\d+)\s+(additional\s+)?DON!! cards?(?:\s+from\s+your\s+DON!!\s+deck)?\s+and\s+(rest (?:it|them)|set (?:it|them) as active)$/i.exec(
       cleaned,
     );
   if (!match) return null;
+  if (!match[3] && !/from\s+your\s+DON!!\s+deck/i.test(cleaned)) return null;
   const upTo = !!match[1];
   const amount = parseInt(match[2]!, 10);
-  const state: "active" | "rested" = match[3]!.toLowerCase().startsWith("rest")
+  const state: "active" | "rested" = match[4]!.toLowerCase().startsWith("rest")
     ? "rested"
     : "active";
   return {
@@ -62,11 +77,12 @@ export function parseGiveDonAction(text: string): GiveDonAction | null {
       target: {
         player: "self",
         zones: ["character"],
-        count: { amount: "all" },
-        filters: [{ filter: "trait", value: eachTraitMatch[2]! }],
+        count: { amount: "all", upTo: true },
+        filters: [{ filter: "trait", value: eachTraitMatch[2]!, match: "includes" }],
       },
       count: { amount: parseInt(eachTraitMatch[1]!, 10), upTo: true },
       donState: "rested",
+      distribution: "each",
     };
   }
 
@@ -121,6 +137,23 @@ export function parseGiveDonAction(text: string): GiveDonAction | null {
     };
   }
 
+  const leaderAndAllMatch =
+    /^give\s+your\s+Leader\s+and\s+all\s+of\s+your\s+Characters\s+up\s+to\s+(\d+)\s+rested\s+DON!!\s+cards?\s+each$/i.exec(
+      cleaned,
+    );
+  if (leaderAndAllMatch) {
+    return {
+      action: "giveDon",
+      target: {
+        player: "self",
+        zones: ["leader", "character"],
+        count: { amount: "all" },
+      },
+      count: { amount: parseInt(leaderAndAllMatch[1]!, 10), upTo: true },
+      donState: "rested",
+    };
+  }
+
   // Pattern 5: "Give up to N of your [Trait] (or [Trait]) type Characters up to M rested DON!! card each"
   const traitEachMatch =
     /^give\s+up\s+to\s+(\d+)\s+of\s+your\s+(.+?)\s+type\s+Characters?\s+up\s+to\s+(\d+)\s+rested\s+DON!!\s+cards?\s+each$/i.exec(
@@ -129,13 +162,15 @@ export function parseGiveDonAction(text: string): GiveDonAction | null {
   if (traitEachMatch) {
     const traitText = traitEachMatch[2]!;
     const traitParts = traitText.split(/\s+or\s+/i);
-    const filters: TargetFilter[] = traitParts.map((p) => ({
-      filter: "trait" as const,
-      value: p
-        .replace(/^[[\]{}"\u201c\u201d]/g, "")
-        .replace(/[[\]{}"\u201c\u201d]$/g, "")
-        .trim(),
-    }));
+    const traitFilter = traitAlternativesFilter(
+      traitParts.map((part) =>
+        part
+          .replace(/^[[\]{}"\u201c\u201d]/g, "")
+          .replace(/[[\]{}"\u201c\u201d]$/g, "")
+          .trim(),
+      ),
+    );
+    const filters: TargetFilter[] = traitFilter ? [traitFilter] : [];
     return {
       action: "giveDon",
       target: {
@@ -184,7 +219,7 @@ export function parseGiveDonTarget(text: string): Target | null {
       // If the original text had "type" before "Leader", it's a trait filter;
       // otherwise it's a name filter
       if (/type\s+Leader$/i.test(text)) {
-        target.filters = [{ filter: "trait", value: val }];
+        target.filters = [{ filter: "trait", value: val, match: "includes" }];
       } else {
         target.filters = [{ filter: "name", value: val }];
       }
@@ -220,11 +255,10 @@ export function parseGiveDonTarget(text: string): Target | null {
   if (traitZoneMatch) {
     const amount = parseInt(traitZoneMatch[1]!, 10);
     const traitParts = traitZoneMatch[2]!.split(/\s+or\s+/i);
-    const filters: TargetFilter[] = [];
-    for (const part of traitParts) {
-      const trait = part.replace(/^[[{]|[\]}]$/g, "").trim();
-      if (trait) filters.push({ filter: "trait", value: trait });
-    }
+    const traitFilter = traitAlternativesFilter(
+      traitParts.map((part) => part.replace(/^[[{]|[\]}]$/g, "").trim()),
+    );
+    const filters: TargetFilter[] = traitFilter ? [traitFilter] : [];
     const zonesText = traitZoneMatch[3]!;
     const zones = parseZoneList(zonesText);
     if (!zones) return null;
@@ -242,12 +276,12 @@ export function parseGiveDonTarget(text: string): Target | null {
 
 // ── OpponentReturnDon action parsing ──
 
-type OpponentReturnDonAction = Extract<Action, { action: "opponentReturnDon" }>;
+type ReturnDonAction = Extract<Action, { action: "returnDon" }>;
 
 /**
  * Parse "Your opponent returns N DON!! card(s) from their field to their DON!! deck" action clause.
  */
-export function parseOpponentReturnDonAction(text: string): OpponentReturnDonAction | null {
+export function parseOpponentReturnDonAction(text: string): ReturnDonAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
   const match =
@@ -256,7 +290,8 @@ export function parseOpponentReturnDonAction(text: string): OpponentReturnDonAct
     );
   if (match) {
     return {
-      action: "opponentReturnDon",
+      action: "returnDon",
+      player: "opponent",
       amount: parseInt(match[1]!, 10),
     };
   }
@@ -268,7 +303,8 @@ export function parseOpponentReturnDonAction(text: string): OpponentReturnDonAct
     );
   if (selfMatch) {
     return {
-      action: "opponentReturnDon",
+      action: "returnDon",
+      player: "self",
       amount: parseInt(selfMatch[1]!, 10),
     };
   }
@@ -283,9 +319,9 @@ type RedistributeDonAction = Extract<Action, { action: "redistributeDon" }>;
 export function parseRedistributeDonAction(text: string): RedistributeDonAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
-  // "Give up to N total of your currently given DON!! cards to <target>"
+  // "Give up to N [total] of your currently given DON!! cards to <target>"
   const redistMatch =
-    /^give\s+up\s+to\s+(\d+)\s+total\s+of\s+your\s+currently\s+given\s+DON!!\s+cards?\s+to\s+(.+)$/i.exec(
+    /^give\s+up\s+to\s+(\d+)\s+(?:total\s+)?of\s+your\s+currently\s+given\s+DON!!\s+cards?\s+to\s+(.+)$/i.exec(
       trimmed,
     );
   if (redistMatch) {

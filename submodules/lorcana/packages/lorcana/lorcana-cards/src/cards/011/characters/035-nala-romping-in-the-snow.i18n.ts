@@ -45,4 +45,15 @@ export const nalaRompingInTheSnowI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Nala",
+    version: "Retozando en la nieve",
+    text: [
+      {
+        title: "DIAPOSITIVA JUGUETONA",
+        description:
+          "Cuando juegas con este personaje, tu personaje elegido gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

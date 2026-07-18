@@ -7,6 +7,8 @@ import {
   type DeckListCard,
   canonicalListHash,
   canonicalV2ListHash,
+  canonicalV3DeckHashBundle,
+  canonicalV3ListHash,
   getEmptyListHash,
   isSynergyForm,
   isTemplateForm,
@@ -318,6 +320,28 @@ describe("canonicalListHash", () => {
     );
     expect(canonicalV2ListHash("cyberpunk", base)).not.toBe(canonicalV2ListHash("gundam", base));
     expect(canonicalV2ListHash("cyberpunk", base).startsWith("cyberpunk:v2:")).toBe(true);
+  });
+
+  it("v3 serializes canonical ids only across exact, template, and synergy hashes", () => {
+    const base = [
+      { cardId: "engine-a", canonicalId: "canonical-a", printingId: "print-a", quantity: 4 },
+      { cardId: "engine-b", canonicalId: "canonical-b", printingId: "print-b", quantity: 1 },
+    ];
+    const alternate = [
+      { cardId: "other-engine-a", canonicalId: "canonical-a", printingId: "alt-a", quantity: 4 },
+      { cardId: "other-engine-b", canonicalId: "canonical-b", printingId: "alt-b", quantity: 1 },
+    ];
+
+    expect(canonicalV3DeckHashBundle("gundam", base)).toEqual(
+      canonicalV3DeckHashBundle("gundam", alternate),
+    );
+    expect(canonicalV3ListHash("gundam", base).startsWith("gundam:v3:")).toBe(true);
+  });
+
+  it("v3 rejects entries without canonical identity", () => {
+    expect(() =>
+      canonicalV3ListHash("lorcana", [{ cardId: "printing-only", quantity: 1 }]),
+    ).toThrow("requires canonicalId");
   });
 });
 

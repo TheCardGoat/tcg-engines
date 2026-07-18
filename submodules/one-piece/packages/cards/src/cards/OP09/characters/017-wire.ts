@@ -27,5 +27,55 @@ export const op09Wire017: CharacterCard = {
   attribute: "slash",
   effect:
     '[DON!! x1] If your Leader has 7000 power or more and the "Kid Pirates" type, this Character gains [Rush].',
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "donAttached",
+            amount: 1,
+          },
+          {
+            condition: "compound",
+            operator: "and",
+            conditions: [
+              {
+                condition: "hasCard",
+                player: "self",
+                zone: "leader",
+                filters: [
+                  {
+                    filter: "power",
+                    comparison: "gte",
+                    value: 7000,
+                  },
+                ],
+              },
+              {
+                condition: "leaderTrait",
+                trait: "Kid Pirates",
+                match: "includes",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op09Wire017I18n,
 };

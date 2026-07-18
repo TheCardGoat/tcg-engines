@@ -4,6 +4,7 @@ export const gd02Hyakuri061: UnitCard = {
   cardNumber: "GD02-061",
   name: "Hyakuri",
   type: "unit",
+  battlefieldZones: ["space"],
   color: "purple",
   traits: ["teiwaz"],
   id: "GD02-061",
@@ -41,6 +42,7 @@ export const gd02Hyakuri061: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 3,
+  linkCondition: "(Teiwaz) Trait",
   effect:
     "【When Paired･Purple Pilot】If there are 3 or more (Teiwaz)/(Tekkadan) cards in your trash, choose 1 enemy Unit with 3 or less AP. Rest it.<br>",
   effects: [

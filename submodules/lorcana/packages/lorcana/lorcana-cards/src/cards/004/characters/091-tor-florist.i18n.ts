@@ -17,4 +17,8 @@ export const torFloristI18n: Record<Languages, I18nProperties> = {
     name: "Tohr",
     version: "Fioraio",
   },
+  es: {
+    name: "Colina",
+    version: "Florista",
+  },
 };

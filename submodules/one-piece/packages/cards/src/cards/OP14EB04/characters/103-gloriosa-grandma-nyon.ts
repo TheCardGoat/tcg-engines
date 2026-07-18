@@ -23,14 +23,21 @@ export const op14eb04GloriosaGrandmaNyon103: CharacterCard = {
   cost: 2,
   power: 0,
   counter: 1000,
+  trigger: "Play this card.",
   traits: ["Amazon Lily"],
   attribute: "wisdom",
   effect:
-    "[On Play] You may add 1 card from the top or bottom of your Life cards to your hand: Add up to 1 card from your hand to the top of your Life cards. [Trigger] Play this card.",
+    "[On Play] You may add 1 card from the top or bottom of your Life cards to your hand: Add up to 1 card from your hand to the top of your Life cards.",
   effects: {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+          },
+        ],
         actions: [
           {
             action: "addToLife",
@@ -59,6 +66,7 @@ export const op14eb04GloriosaGrandmaNyon103: CharacterCard = {
             count: {
               amount: 1,
             },
+            self: true,
           },
         ],
       },

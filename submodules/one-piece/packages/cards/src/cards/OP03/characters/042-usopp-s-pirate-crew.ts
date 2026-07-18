@@ -25,7 +25,7 @@ export const op03UsoppSPirateCrew042: CharacterCard = {
   counter: 1000,
   traits: ["East Blue"],
   attribute: "wisdom",
-  effect: "[On Play] Add up to 1 blue [Usopp from your trash to your hand.",
+  effect: "[On Play] Add up to 1 blue [Usopp] from your trash to your hand.",
   effects: {
     effects: [
       {

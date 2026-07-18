@@ -59,4 +59,18 @@ export const mittensSassyStreetCatI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Guantes de boxeo",
+    version: "Gato callejero descarado",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "NO ES NECESARIO AGRADECER",
+        description:
+          "Una vez durante tu turno, cada vez que se pone una carta en tu tintero, tus otros personajes con Bodyguard obtienen +1 {L} este turno.",
+      },
+    ],
+  },
 };

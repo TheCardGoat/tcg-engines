@@ -31,18 +31,31 @@ export const eb01LittleoarsJr008: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "ko",
+        eventFilter: {
+          targetSelf: true,
+          koCause: "effect",
+        },
         replacementAction: {
           action: "trashFromHand",
           player: "self",
           amount: 1,
           filters: [
             {
-              filter: "cardCategory",
-              value: "event",
-            },
-            {
-              filter: "cardCategory",
-              value: "stage",
+              filter: "anyOf",
+              groups: [
+                [
+                  {
+                    filter: "cardCategory",
+                    value: "event",
+                  },
+                ],
+                [
+                  {
+                    filter: "cardCategory",
+                    value: "stage",
+                  },
+                ],
+              ],
             },
           ],
         },

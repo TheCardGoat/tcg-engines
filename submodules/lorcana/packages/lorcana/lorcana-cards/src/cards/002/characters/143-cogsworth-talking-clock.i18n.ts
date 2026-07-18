@@ -41,4 +41,14 @@ export const cogsworthTalkingClockI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Diente",
+    version: "Reloj parlante",
+    text: [
+      {
+        title: "ESPERA UN MINUTO",
+        description: 'Tus personajes con Reckless obtienen "{E} — Gana 1 conocimiento".',
+      },
+    ],
+  },
 };

@@ -58,4 +58,18 @@ export const judyHoppsLeadDetectiveI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Judy Hopps",
+    version: "Detective principal",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "PENSAMIENTO LATERAL",
+        description:
+          "Durante tu turno, tus personajes de detective obtienen Alerta y Resistencia +2. (Pueden desafiar como si tuvieran Evasivo. El daño que se les inflige se reduce en 2).",
+      },
+    ],
+  },
 };

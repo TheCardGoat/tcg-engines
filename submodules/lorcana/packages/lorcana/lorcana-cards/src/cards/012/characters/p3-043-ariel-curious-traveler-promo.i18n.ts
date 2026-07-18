@@ -45,4 +45,15 @@ export const arielCuriousTravelerP3PromoI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Ariel",
+    version: "Viajero curioso",
+    text: [
+      {
+        title: "TERRENO FAMILIAR",
+        description:
+          "Siempre que este personaje realice una misión, si jugaste con otro personaje este turno, el personaje contrario elegido no puede desafiar y debe realizar una misión durante su próximo turno si puede.",
+      },
+    ],
+  },
 };

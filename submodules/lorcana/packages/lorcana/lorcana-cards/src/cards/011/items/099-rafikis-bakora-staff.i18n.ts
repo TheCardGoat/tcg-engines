@@ -57,4 +57,17 @@ export const rafikisBakoraStaffI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bastón Bakora de Rafiki",
+    text: [
+      {
+        title: "LEER LOS PRESAGIOS",
+        description: "{E}, 1 {I}: roba una carta, luego elige y descarta una carta.",
+      },
+      {
+        title: "¡MALdita sea! 1",
+        description: "{I}, destierra este objeto: inflige 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

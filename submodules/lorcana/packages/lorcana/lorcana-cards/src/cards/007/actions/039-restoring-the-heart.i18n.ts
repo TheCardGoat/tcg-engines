@@ -17,4 +17,8 @@ export const restoringTheHeartI18n: Record<Languages, I18nProperties> = {
     name: "Risanare il Cuore",
     text: "Rimuovi fino a 3 danni da un personaggio o da un luogo a tua scelta. Pesca una carta.",
   },
+  es: {
+    name: "Restaurando el corazón",
+    text: "Elimina hasta 3 daños del personaje o ubicación elegidos. Saca una carta.",
+  },
 };

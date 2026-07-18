@@ -32,8 +32,12 @@ export interface CardActiveEffectView {
   id: string;
   targetKind: "card" | "player";
   targetId: string;
+  /** Public name of one affected card. Omitted for player-wide effects. */
+  targetName?: string;
   sourceCardId?: string;
   sourceName: string;
+  /** Public artwork for the card creating this effect, when it is available. */
+  sourceImageUrl?: string;
   label: string;
   detail: string;
   modifierLabel?: string;
@@ -41,6 +45,8 @@ export interface CardActiveEffectView {
   rule?: string;
   tone: "buff" | "debuff" | "neutral";
   durationLabel?: string;
+  /** True only for an effect that is expected to expire rather than a printed static rule. */
+  isTemporary?: boolean;
   defeatsAtEndOfTurn: boolean;
 }
 
@@ -210,6 +216,7 @@ function activeEffectViews(instance: CardInstance, state: MatchState): CardActiv
     .filter((effect) => effect.playerId === undefined && String(effect.targetCardId) === targetId)
     .map((effect) => {
       const sourceName = sourceCardName(effect.sourceCardId as unknown as string, state);
+      const sourceImageUrl = sourceCardImageUrl(effect.sourceCardId as unknown as string, state);
       const defeatsAtEndOfTurn = hasEndOfTurnDefeatFromSource(
         state,
         effect.sourceCardId as unknown as string,
@@ -222,8 +229,11 @@ function activeEffectViews(instance: CardInstance, state: MatchState): CardActiv
         targetId,
         sourceCardId: effect.sourceCardId as unknown as string,
         sourceName,
+        sourceImageUrl,
+        targetName: defOf(instance).displayName ?? defOf(instance).name,
         effectKind: effect.kind,
         durationLabel,
+        isTemporary: effect.origin !== "static" && effect.duration !== "continuous",
         defeatsAtEndOfTurn,
       };
 
@@ -282,11 +292,14 @@ function activeEffectViews(instance: CardInstance, state: MatchState): CardActiv
           targetId,
           sourceCardId: entry.sourceCardId as unknown as string,
           sourceName,
+          sourceImageUrl: sourceCardImageUrl(entry.sourceCardId as unknown as string, state),
+          targetName: defOf(instance).displayName ?? defOf(instance).name,
           label: "End defeat",
           detail: `${sourceName}: defeated at end of turn.`,
           effectKind: "delayedDefeat",
           tone: "debuff" as const,
           durationLabel: "end of turn",
+          isTemporary: true,
           defeatsAtEndOfTurn: true,
         },
       ];
@@ -300,6 +313,7 @@ function playerActiveEffectViews(playerId: string, state: MatchState): CardActiv
     .filter((effect) => effect.playerId !== undefined && String(effect.playerId) === playerId)
     .map((effect) => {
       const sourceName = sourceCardName(effect.sourceCardId as unknown as string, state);
+      const sourceImageUrl = sourceCardImageUrl(effect.sourceCardId as unknown as string, state);
       const durationLabel = durationLabelForEffect(effect);
       const label = activeEffectLabel(effect);
 
@@ -309,11 +323,13 @@ function playerActiveEffectViews(playerId: string, state: MatchState): CardActiv
         targetId: playerId,
         sourceCardId: effect.sourceCardId as unknown as string,
         sourceName,
+        sourceImageUrl,
         label,
         detail: `${sourceName}: ${label} ${durationLabel}.`,
         effectKind: effect.kind,
         tone: activeEffectTone(effect),
         durationLabel,
+        isTemporary: effect.origin !== "static" && effect.duration !== "continuous",
         defeatsAtEndOfTurn: false,
       };
     });
@@ -324,6 +340,11 @@ function sourceCardName(cardId: string, state: MatchState): string {
   if (!source) return "Effect";
   const def = defOf(source);
   return def.displayName ?? def.name;
+}
+
+function sourceCardImageUrl(cardId: string, state: MatchState): string | undefined {
+  const source = state.G.cardIndex[cardId];
+  return source ? defOf(source).imageUrl : undefined;
 }
 
 function hasEndOfTurnDefeatFromSource(

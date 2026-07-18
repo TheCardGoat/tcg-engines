@@ -45,4 +45,15 @@ export const motunuiIslandParadiseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Motunui",
+    version: "Isla Paraíso",
+    text: [
+      {
+        title: "REENCARNACIÓN",
+        description:
+          "Siempre que un personaje sea desterrado mientras estás aquí, puedes poner esa carta en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

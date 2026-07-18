@@ -60,4 +60,18 @@ export const motherGothelUnwaveringSchemerI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Madre Gothel",
+    version: "Intrigador inquebrantable",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "EL MUNDO ES OSCURO",
+        description:
+          "Cuando juegas con este personaje, cada oponente elige uno de sus personajes y devuelve esa carta a su mano.",
+      },
+    ],
+  },
 };

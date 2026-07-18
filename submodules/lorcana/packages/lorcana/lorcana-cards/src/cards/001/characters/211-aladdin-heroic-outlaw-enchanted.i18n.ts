@@ -60,4 +60,18 @@ export const aladdinHeroicOutlawEnchantedI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Aladino",
+    version: "Forajido heroico",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "EXPLOTACIÓN ATREVIDA",
+        description:
+          "Durante tu turno, cada vez que este personaje destierra a otro personaje en un desafío, ganas 2 conocimientos y cada oponente pierde 2 conocimientos.",
+      },
+    ],
+  },
 };

@@ -61,4 +61,19 @@ export const johnSmithsCompassI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La brújula de John Smith",
+    text: [
+      {
+        title: "FLECHA GIRADORA",
+        description:
+          "Al final de tu turno, si un personaje tuyo desafió este turno, destierra este objeto.",
+      },
+      {
+        title: "TU CAMINO",
+        description:
+          "Al final de tu turno, si ninguno de tus personajes desafió este turno, revela la carta superior de tu mazo. Si es una carta de personaje con costo 3 o menos o llamada Pocahontas, puedes ponerla en tu mano. De lo contrario, colóquelo en el fondo de su plataforma.",
+      },
+    ],
+  },
 };

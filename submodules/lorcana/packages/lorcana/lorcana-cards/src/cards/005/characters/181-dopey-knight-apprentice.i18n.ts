@@ -45,4 +45,15 @@ export const dopeyKnightApprenticeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Atontado",
+    version: "Aprendiz de caballero",
+    text: [
+      {
+        title: "JUNTOS MÁS FUERTES",
+        description:
+          "Cuando juegas con este personaje, si tienes otro personaje Caballero en juego, puedes causar 1 daño al personaje o ubicación elegida.",
+      },
+    ],
+  },
 };

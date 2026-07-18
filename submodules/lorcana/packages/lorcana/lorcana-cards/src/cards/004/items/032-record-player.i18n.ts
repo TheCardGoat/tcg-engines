@@ -60,4 +60,19 @@ export const recordPlayerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tocadiscos",
+    text: [
+      {
+        title: "¡MIRA ESTO!",
+        description:
+          "Cada vez que reproduces una canción, el personaje elegido obtiene -2 {S} hasta el comienzo de tu siguiente turno.",
+      },
+      {
+        title: "DESFILE DE ÉXITO",
+        description:
+          "Tus personajes llamados Stitch cuentan con un coste de +1 para cantar canciones.",
+      },
+    ],
+  },
 };

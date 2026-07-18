@@ -53,6 +53,7 @@ export const op01BlackMaria111: CharacterCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
       },
     ],
   },

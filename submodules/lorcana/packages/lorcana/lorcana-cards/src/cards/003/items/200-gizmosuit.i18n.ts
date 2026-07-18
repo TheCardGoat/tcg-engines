@@ -41,4 +41,14 @@ export const gizmosuitI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Traje de artilugio",
+    text: [
+      {
+        title: "ARMADURA CIBERNÉTICA",
+        description:
+          "Destierra este objeto: el personaje elegido obtiene Resistencia +2 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

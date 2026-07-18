@@ -72,4 +72,20 @@ export const johnSilverSternCaptainI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Juan Plata",
+    version: "Capitán severo",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "Resistir +2",
+      },
+      {
+        title: "¡NO TE SIENTAS AHÍ!",
+        description: "Al comienzo de tu turno, inflige 1 daño a cada personaje enemigo listo.",
+      },
+    ],
+  },
 };

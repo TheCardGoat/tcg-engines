@@ -41,4 +41,14 @@ export const mauricesMachineI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La máquina de Mauricio",
+    text: [
+      {
+        title: "DESCOMPONER",
+        description:
+          "Cuando este objeto sea desterrado, puedes devolver a tu mano una carta de objeto con coste 2 o menos de tu descarte.",
+      },
+    ],
+  },
 };

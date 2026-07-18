@@ -61,6 +61,16 @@ export const op09GumGumJumpRope079: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "addDon",
+            count: { amount: 1, upTo: true },
+            state: "active",
+          },
+        ],
+      },
     ],
   },
   i18n: op09GumGumJumpRope079I18n,

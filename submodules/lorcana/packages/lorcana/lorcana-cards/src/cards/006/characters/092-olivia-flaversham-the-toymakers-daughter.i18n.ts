@@ -17,4 +17,8 @@ export const oliviaFlavershamTheToymakersDaughterI18n: Record<Languages, I18nPro
     name: "Olivia Flaversham",
     version: "Figlia del Fabbricante di Giocattoli",
   },
+  es: {
+    name: "Olivia Flaversham",
+    version: "La hija del juguetero",
+  },
 };

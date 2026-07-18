@@ -57,4 +57,18 @@ export const gyroGearlooseEccentricInventorI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Giroscopio sin engranajes",
+    version: "Inventor excéntrico",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "¡TE LO MOSTRARÉ!",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido obtiene -3 {S} este turno.",
+      },
+    ],
+  },
 };

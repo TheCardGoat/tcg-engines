@@ -45,4 +45,15 @@ export const pyrosLavaTitanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pirotecnia",
+    version: "Titán de lava",
+    text: [
+      {
+        title: "ERUPCIÓN",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, podrás preparar al personaje elegido.",
+      },
+    ],
+  },
 };

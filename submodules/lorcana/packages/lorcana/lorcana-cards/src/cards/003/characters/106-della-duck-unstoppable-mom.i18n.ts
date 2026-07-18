@@ -21,4 +21,9 @@ export const dellaDuckUnstoppableMomI18n: Record<Languages, I18nProperties> = {
     version: "Mamma Inarrestabile",
     text: "<Attaccabrighe>",
   },
+  es: {
+    name: "Pato della",
+    version: "Mamá imparable",
+    text: "Imprudente",
+  },
 };

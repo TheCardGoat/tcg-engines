@@ -45,4 +45,15 @@ export const antonioMadrigalAnimalDoctorI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Antonio Madrigal",
+    version: "Médico de animales",
+    text: [
+      {
+        title: "Manos curativas",
+        description:
+          "Cuando juegas con este personaje, puedes eliminar hasta 3 daños del personaje que elijas. Si eliminó el daño de esta manera, coloque la carta superior de su mazo en su tintero boca abajo y ejerza.",
+      },
+    ],
+  },
 };

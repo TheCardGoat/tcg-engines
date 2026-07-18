@@ -60,4 +60,18 @@ export const syndromesRemoteI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El control remoto del síndrome",
+    text: [
+      {
+        title: "ENERGÍA DE PUNTO CERO",
+        description: "{E}, 2 {I}: el personaje elegido no puede desafiar durante su próximo turno.",
+      },
+      {
+        title: "APRENDE DE SUS PÉRDIDAS",
+        description:
+          "Siempre que un personaje Robot sea desterrado, puedes desterrar este objeto para descartar tu mano y robar 2 cartas.",
+      },
+    ],
+  },
 };

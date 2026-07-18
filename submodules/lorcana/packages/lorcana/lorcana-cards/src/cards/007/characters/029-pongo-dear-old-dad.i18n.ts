@@ -45,4 +45,15 @@ export const pongoDearOldDadI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pongo",
+    version: "Querido papá",
+    text: [
+      {
+        title: "TE ENCONTRÉ, PEQUEÑO BRIBÓN",
+        description:
+          "Al comienzo de tu turno, mira las cartas en tu tintero. Puedes interpretar un personaje de Puppy desde allí de forma gratuita.",
+      },
+    ],
+  },
 };

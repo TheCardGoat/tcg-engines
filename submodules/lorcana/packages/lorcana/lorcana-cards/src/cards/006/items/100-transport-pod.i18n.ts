@@ -41,4 +41,14 @@ export const transportPodI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cápsula de transporte",
+    text: [
+      {
+        title: "DÉLOS",
+        description:
+          "UN ESPECTÁCULO Al comienzo de tu turno, puedes mover un personaje tuyo a una ubicación de forma gratuita.",
+      },
+    ],
+  },
 };

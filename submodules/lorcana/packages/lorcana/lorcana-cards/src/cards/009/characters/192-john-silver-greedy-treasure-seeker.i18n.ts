@@ -45,4 +45,15 @@ export const johnSilverGreedyTreasureSeekerI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Juan Plata",
+    version: "Buscador de tesoros codicioso",
+    text: [
+      {
+        title: "TRAZA TU PROPIO CURSO",
+        description:
+          "Por cada ubicación que tengas en juego, este personaje gana Resistencia +1 y obtiene +1 {L}.",
+      },
+    ],
+  },
 };

@@ -44,4 +44,14 @@ export const darkwingDuckShadowySuperheroI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Pato Ala Oscura",
+    version: "Superhéroe sombrío",
+    text: [
+      {
+        title: "Ataque preventivo",
+        description: "Cuando juegas con este personaje, puedes causar 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

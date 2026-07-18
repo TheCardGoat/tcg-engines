@@ -45,4 +45,15 @@ export const montereyJackHypnotizedByCheeseI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Jack monterrey",
+    version: "Hipnotizado por el queso",
+    text: [
+      {
+        title: "ROMPER EL TRANCE",
+        description:
+          "Este personaje no puede realizar misiones a menos que tengas un personaje con 4 {W} o más en juego.",
+      },
+    ],
+  },
 };

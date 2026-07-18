@@ -43,4 +43,14 @@ export const agnarrKingOfArendelleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Agnarr",
+    version: "Rey de Arendelle",
+    text: [
+      {
+        title: "INSTINTO PROTECTOR",
+        description: "Mientras tengas un personaje Reina en juego, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

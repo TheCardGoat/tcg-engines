@@ -44,4 +44,15 @@ export const miloThatchUndauntedScholarI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Milo Paja",
+    version: "Erudito impávido",
+    text: [
+      {
+        title: "Soy tu chico",
+        description:
+          "Siempre que juegues una acción, puedes darle al personaje elegido +2 {S} este turno.",
+      },
+    ],
+  },
 };

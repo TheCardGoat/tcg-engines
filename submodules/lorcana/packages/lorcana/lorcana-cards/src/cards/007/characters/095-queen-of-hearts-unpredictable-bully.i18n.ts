@@ -59,4 +59,18 @@ export const queenOfHeartsUnpredictableBullyI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Reina de corazones",
+    version: "Matón impredecible",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "SI",
+        description:
+          "pierdo los estribos... Cada vez que se juega con otro personaje, ponle un contador de daño.",
+      },
+    ],
+  },
 };

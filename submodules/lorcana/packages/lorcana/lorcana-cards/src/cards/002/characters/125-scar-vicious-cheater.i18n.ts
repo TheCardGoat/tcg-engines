@@ -57,4 +57,18 @@ export const scarViciousCheaterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cicatriz",
+    version: "Tramposo vicioso",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "PAPÁ NO ESTÁ AQUÍ PARA SALVARTE",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, puedes prepararlo. No puede realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

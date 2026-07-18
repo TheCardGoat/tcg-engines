@@ -50,6 +50,7 @@ export const op09ZoroJuurouSt18004004: CharacterCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

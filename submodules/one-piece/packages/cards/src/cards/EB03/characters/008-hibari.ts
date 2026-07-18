@@ -40,7 +40,7 @@ export const eb03Hibari008: CharacterCard = {
     },
   ],
   effect:
-    "[On Play]/[When Attacking] Up to 1 of your {SWORD} type Leader or Character cards can also attack active Characters during this turn.\n[Activate: Main] [Once Per Turn] Give up to 1 of your opponent's Characters 1000 power during this turn.",
+    "[On Play]/[When Attacking] Up to 1 of your {SWORD} type Leader or Character cards can also attack active Characters during this turn.\n[Activate: Main] [Once Per Turn] Give up to 1 of your opponent's Characters -1000 power during this turn.",
   effects: {
     effects: [
       {
@@ -59,6 +59,7 @@ export const eb03Hibari008: CharacterCard = {
                 {
                   filter: "trait",
                   value: "SWORD",
+                  match: "includes",
                 },
               ],
             },
@@ -82,6 +83,7 @@ export const eb03Hibari008: CharacterCard = {
                 {
                   filter: "trait",
                   value: "SWORD",
+                  match: "includes",
                 },
               ],
             },
@@ -102,7 +104,7 @@ export const eb03Hibari008: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 1000,
+            value: -1000,
             duration: "thisTurn",
           },
         ],

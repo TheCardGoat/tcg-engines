@@ -21,4 +21,9 @@ export const arielSingingMermaidI18n: Record<Languages, I18nProperties> = {
     version: "Sirena Canterina",
     text: "<Melodioso> 7",
   },
+  es: {
+    name: "Ariel",
+    version: "Sirena cantando",
+    text: "Cantante 7",
+  },
 };

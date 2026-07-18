@@ -45,4 +45,15 @@ export const theQueensCastleMirrorChamberI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "El castillo de la reina",
+    version: "Cámara de espejos",
+    text: [
+      {
+        title: "USANDO EL ESPEJO",
+        description:
+          "Al comienzo de tu turno, por cada personaje que tengas aquí, puedes robar una carta.",
+      },
+    ],
+  },
 };

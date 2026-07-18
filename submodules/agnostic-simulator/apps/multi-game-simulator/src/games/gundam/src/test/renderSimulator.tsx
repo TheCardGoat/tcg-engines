@@ -95,6 +95,7 @@ export function renderSimulator(
         staticResources={dev.staticResources}
         viewerId={overrides.viewerId ?? dev.p1Id}
         bot={overrides.bot ?? dev.bot}
+        onRestartScenario={overrides.onRestartScenario}
       />
     </MemoryRouter>,
   );

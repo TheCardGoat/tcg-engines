@@ -28,6 +28,7 @@ export const op08ImperialFlame094: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [{ cost: "returnTrashToDeck", amount: 3, position: "bottom" }],
         actions: [
           {
             action: "ko",
@@ -52,6 +53,7 @@ export const op08ImperialFlame094: EventCard = {
       },
       {
         trigger: "counter",
+        costs: [{ cost: "returnTrashToDeck", amount: 3, position: "bottom" }],
         actions: [
           {
             action: "ko",

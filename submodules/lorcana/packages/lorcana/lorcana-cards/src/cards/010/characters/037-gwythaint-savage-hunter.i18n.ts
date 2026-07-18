@@ -57,4 +57,18 @@ export const gwythaintSavageHunterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gwythaint",
+    version: "Cazador salvaje",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "Golpe en picada",
+        description:
+          "Cada vez que este personaje realiza una misión, cada oponente elige y ejerce uno de sus personajes listos.",
+      },
+    ],
+  },
 };

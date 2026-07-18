@@ -48,12 +48,11 @@ export const op04Otama097: CharacterCard = {
                   value: 3,
                 },
                 {
-                  filter: "trait",
-                  value: "Animal",
-                },
-                {
-                  filter: "trait",
-                  value: "SMILE",
+                  filter: "anyOf",
+                  filters: [
+                    { filter: "trait", value: "Animal", match: "includes" },
+                    { filter: "trait", value: "SMILE", match: "includes" },
+                  ],
                 },
               ],
             },

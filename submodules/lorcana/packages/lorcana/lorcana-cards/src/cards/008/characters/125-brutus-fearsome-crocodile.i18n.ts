@@ -45,4 +45,15 @@ export const brutusFearsomeCrocodileI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bruto",
+    version: "Cocodrilo temible",
+    text: [
+      {
+        title: "MALÉVOLO",
+        description:
+          "Durante tu turno, cuando este personaje sea desterrado, si uno de tus personajes resultó dañado este turno, gana 2 conocimientos.",
+      },
+    ],
+  },
 };

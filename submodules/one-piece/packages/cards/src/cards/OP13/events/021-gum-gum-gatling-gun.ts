@@ -24,7 +24,7 @@ export const op13GumGumGatlingGun021: EventCard = {
   trigger: "Give up to 1 of your opponent's Characters 2000 power during this turn.",
   traits: ["Straw Hat Crew"],
   effect:
-    "[Main] Give up to 1 rested DON!! card to 1 of your [Monkey.D.Luffy] cards. Then, give up to 1 of your opponent's Characters 2000 power during this turn.",
+    "[Main] Give up to 1 rested DON!! card to 1 of your [Monkey.D.Luffy] cards. Then, give up to 1 of your opponent's Characters −2000 power during this turn.",
   effects: {
     effects: [
       {
@@ -34,7 +34,7 @@ export const op13GumGumGatlingGun021: EventCard = {
             action: "giveDon",
             target: {
               player: "self",
-              zones: ["leader", "character", "stage", "costArea"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
               },
@@ -61,7 +61,25 @@ export const op13GumGumGatlingGun021: EventCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
+            duration: "thisTurn",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: -2000,
             duration: "thisTurn",
           },
         ],

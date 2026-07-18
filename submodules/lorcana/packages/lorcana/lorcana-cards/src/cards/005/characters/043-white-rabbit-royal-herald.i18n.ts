@@ -17,4 +17,8 @@ export const whiteRabbitRoyalHeraldI18n: Record<Languages, I18nProperties> = {
     name: "Bianconiglio",
     version: "Nunzio Reale",
   },
+  es: {
+    name: "Conejo Blanco",
+    version: "Heraldo real",
+  },
 };

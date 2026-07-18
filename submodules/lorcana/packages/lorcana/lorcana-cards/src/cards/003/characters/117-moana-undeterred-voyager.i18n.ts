@@ -21,4 +21,9 @@ export const moanaUndeterredVoyagerI18n: Record<Languages, I18nProperties> = {
     version: "Viaggiatrice Imperterrita",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Moana",
+    version: "Viajero inquebrantable",
+    text: "Evasivo",
+  },
 };

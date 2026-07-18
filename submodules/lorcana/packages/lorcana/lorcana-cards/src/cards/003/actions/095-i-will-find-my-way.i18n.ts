@@ -35,4 +35,8 @@ export const iWillFindMyWayI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Encontraré mi camino",
+    text: "El personaje elegido tuyo obtiene +2 {S} este turno. Pueden mudarse a una ubicación de forma gratuita.",
+  },
 };

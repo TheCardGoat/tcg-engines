@@ -62,7 +62,8 @@ export const op02JudgmentOfHell089: EventCard = {
         ],
         actions: [
           {
-            action: "opponentReturnDon",
+            action: "returnDon",
+            player: "opponent",
             amount: 1,
           },
         ],

@@ -45,4 +45,15 @@ export const chiefBogoGazelleFanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jefe bogo",
+    version: "Abanico de gacela",
+    text: [
+      {
+        title: "¿A TI TAMBIÉN TE GUSTA LA GAZELA?",
+        description:
+          "Mientras tengas un personaje llamado Gazelle en juego, este personaje gana Cantante 6 (cuenta como costo 6 para cantar canciones).",
+      },
+    ],
+  },
 };

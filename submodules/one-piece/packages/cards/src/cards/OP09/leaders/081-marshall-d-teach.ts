@@ -53,19 +53,25 @@ export const op09MarshallDTeach081: LeaderCard = {
         ],
         actions: [
           {
-            action: "negateEffects",
-            target: {
-              player: "opponent",
-              zones: ["leader", "character"],
-              count: {
-                amount: "all",
-              },
-            },
+            action: "negatePlayerEffects",
+            player: "opponent",
             duration: "untilEndOfOpponentNextTurn",
             effectTypes: ["onPlay"],
           },
         ],
         optional: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "negatePlayerEffects",
+            player: "self",
+            duration: "permanent",
+            effectTypes: ["onPlay"],
+          },
+        ],
       },
     ],
   },

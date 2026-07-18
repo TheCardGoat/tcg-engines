@@ -17,4 +17,8 @@ export const attackOfTheVineI18n: Record<Languages, I18nProperties> = {
     name: "Viticcio all'Attacco!",
     text: "I tuoi personaggi Imbevuto ottengono <Resistere> +2 e possono sfidare i personaggi preparati per questo turno.",
   },
+  es: {
+    name: "¡El ataque de la vid!",
+    text: "Tus personajes Floodborn obtienen Resistencia +2 y pueden desafiar a los personajes listos este turno.",
+  },
 };

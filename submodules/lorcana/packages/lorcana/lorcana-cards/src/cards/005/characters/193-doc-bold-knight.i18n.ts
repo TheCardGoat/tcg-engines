@@ -44,4 +44,15 @@ export const docBoldKnightI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Doc",
+    version: "Caballero audaz",
+    text: [
+      {
+        title: "MEDIDAS DRASTICAS",
+        description:
+          "Cuando juegas con este personaje, puedes descartar tu mano para robar 2 cartas.",
+      },
+    ],
+  },
 };

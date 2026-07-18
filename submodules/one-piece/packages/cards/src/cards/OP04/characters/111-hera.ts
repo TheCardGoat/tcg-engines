@@ -23,7 +23,7 @@ export const op04Hera111: CharacterCard = {
   cost: 5,
   power: 3000,
   counter: 1000,
-  traits: ["Big Mom Pirates Homies"],
+  traits: ["Big Mom Pirates", "Homies"],
   attribute: "special",
   effect:
     "[Activate:Main] You may trash 1 of your [Homies] type Characters other than this Character and rest this Character: Set up to 1 of your [Charlotte Linlin] Characters as active. [Trigger] Play this card.",
@@ -32,6 +32,14 @@ export const op04Hera111: CharacterCard = {
       {
         trigger: "activateMain",
         costs: [
+          {
+            cost: "trashCharacter",
+            amount: 1,
+            filters: [
+              { filter: "excludeSelf" },
+              { filter: "trait", value: "Homies", match: "includes" },
+            ],
+          },
           {
             cost: "restThisCard",
           },
@@ -59,18 +67,7 @@ export const op04Hera111: CharacterCard = {
       },
       {
         trigger: "trigger",
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-          },
-        ],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   },

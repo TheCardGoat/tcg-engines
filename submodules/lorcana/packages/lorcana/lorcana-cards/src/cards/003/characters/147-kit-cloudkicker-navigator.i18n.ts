@@ -52,4 +52,16 @@ export const kitCloudkickerNavigatorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kit pateador de nubes",
+    version: "Navegador",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "Pabellón",
+      },
+    ],
+  },
 };

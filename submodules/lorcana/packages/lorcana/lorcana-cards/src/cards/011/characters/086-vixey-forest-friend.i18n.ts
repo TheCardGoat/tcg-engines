@@ -57,4 +57,18 @@ export const vixeyForestFriendI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Vixey",
+    version: "Amigo del bosque",
+    text: [
+      {
+        title: "MOSTRANDOSE",
+        description:
+          "Si tienes un personaje llamado Tod en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "Evasivo",
+      },
+    ],
+  },
 };

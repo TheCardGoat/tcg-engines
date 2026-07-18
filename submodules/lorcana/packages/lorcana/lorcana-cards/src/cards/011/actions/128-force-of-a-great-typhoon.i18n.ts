@@ -33,4 +33,8 @@ export const forceOfAGreatTyphoonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Fuerza de un gran tifón",
+    text: "El personaje elegido obtiene +5 {S} este turno.",
+  },
 };

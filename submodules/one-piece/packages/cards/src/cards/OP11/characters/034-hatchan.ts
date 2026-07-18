@@ -31,22 +31,6 @@ export const op11Hatchan034: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "compound",
-            operator: "or",
-            conditions: [
-              {
-                condition: "leaderTrait",
-                trait: "Fish-Man",
-              },
-              {
-                condition: "leaderTrait",
-                trait: "Merfolk",
-              },
-            ],
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -71,6 +55,22 @@ export const op11Hatchan034: CharacterCard = {
               ],
             },
             duration: "untilEndOfOpponentNextTurn",
+            condition: {
+              condition: "compound",
+              operator: "or",
+              conditions: [
+                {
+                  condition: "leaderTrait",
+                  trait: "Fish-Man",
+                  match: "includes",
+                },
+                {
+                  condition: "leaderTrait",
+                  trait: "Merfolk",
+                  match: "includes",
+                },
+              ],
+            },
           },
         ],
         optional: true,

@@ -57,4 +57,18 @@ export const magicBroomSwiftCleanerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Escoba magica",
+    version: "Limpiador veloz",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "LIMPIAR ESTO, LIMPIAR AQUEL",
+        description:
+          "Cuando juegas con este personaje, puedes barajar todas las cartas de Escoba de tu descarte en tu mazo.",
+      },
+    ],
+  },
 };

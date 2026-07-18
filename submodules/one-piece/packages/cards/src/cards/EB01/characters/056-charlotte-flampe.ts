@@ -46,6 +46,13 @@ export const eb01CharlotteFlampe056: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
+        ],
         actions: [
           {
             action: "draw",

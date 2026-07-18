@@ -60,4 +60,18 @@ export const mickeyMousePirateCaptainP2PromoI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Capitán pirata",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "EL PODER DEL MARINO",
+        description:
+          'Siempre que este personaje realiza una misión, el personaje pirata elegido obtiene +2 {S} y obtiene "Este personaje no recibe daño de los desafíos" este turno.',
+      },
+    ],
+  },
 };

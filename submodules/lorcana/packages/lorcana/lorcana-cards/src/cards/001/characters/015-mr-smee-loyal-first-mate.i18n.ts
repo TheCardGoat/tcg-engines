@@ -17,4 +17,8 @@ export const mrSmeeLoyalFirstMateI18n: Record<Languages, I18nProperties> = {
     name: "Mr. Smee",
     version: "Loyal First Mate",
   },
+  es: {
+    name: "Señor smee",
+    version: "Primer oficial leal",
+  },
 };

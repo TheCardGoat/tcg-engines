@@ -27,5 +27,42 @@ export const op02Rakuyo019: CharacterCard = {
   attribute: "strike",
   effect:
     '[DON!! x1] [Your Turn] All of your Characters with a type including "Whitebeard Pirates" gain +1000 power.',
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "donAttached",
+            amount: 1,
+          },
+          {
+            condition: "turn",
+            value: "your",
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Whitebeard Pirates",
+                  match: "includes",
+                },
+              ],
+            },
+            value: 1000,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op02Rakuyo019I18n,
 };

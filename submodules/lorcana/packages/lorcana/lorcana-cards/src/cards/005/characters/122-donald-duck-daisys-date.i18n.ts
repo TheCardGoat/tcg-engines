@@ -45,4 +45,15 @@ export const donaldDuckDaisysDateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "La cita de Daisy",
+    text: [
+      {
+        title: "JUEGO VALIENTE",
+        description:
+          "Siempre que este personaje desafía a otro personaje, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

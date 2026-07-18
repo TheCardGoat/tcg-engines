@@ -37,4 +37,13 @@ export const iceBlockI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bloque de hielo",
+    text: [
+      {
+        title: "TRABAJO FRÍO",
+        description: "{E}: el personaje elegido obtiene -1 {S} este turno.",
+      },
+    ],
+  },
 };

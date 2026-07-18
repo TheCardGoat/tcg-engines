@@ -49,4 +49,16 @@ export const copperOnTheScentI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cobre",
+    version: "Sobre el olor",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "Imprudente",
+      },
+    ],
+  },
 };

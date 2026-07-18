@@ -2,6 +2,61 @@ import { expect, test, describe } from "vite-plus/test";
 import { buildCardEffects, parseActions } from "../../../src/effect-parser/index.ts";
 
 describe("parseActions — SearchAction", () => {
+  test("preserves a named-card or color-and-category search alternative", () => {
+    const result = parseActions(
+      "Look at 5 cards from the top of your deck; reveal up to 1 [Monkey.D.Luffy] or 1 red Event and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed[0]).toMatchObject({
+      action: "search",
+      revealFilters: [
+        {
+          filter: "anyOf",
+          filters: [
+            { filter: "name", value: "Monkey.D.Luffy" },
+            {
+              filter: "allOf",
+              filters: [
+                { filter: "color", value: "red" },
+                { filter: "cardCategory", value: "event" },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  test("preserves the full no-base-effect filter", () => {
+    const result = parseActions(
+      "Look at 5 cards from the top of your deck; reveal up to 1 Character card with 6000 power or less and no base effect and add it to your hand and place the rest at the bottom of your deck in any order",
+    );
+
+    expect(result.parsed[0]).toMatchObject({
+      action: "search",
+      revealFilters: [
+        { filter: "noBaseEffect" },
+        { filter: "power", comparison: "lte", value: 6000 },
+        { filter: "cardCategory", value: "character" },
+      ],
+    });
+    expect(result.unparsed).toBe("");
+  });
+
+  test("preserves Trigger and excluded-name filters", () => {
+    const result = parseActions(
+      "Look at 4 cards from the top of your deck; reveal up to 1 card with a [Trigger] other than [Lilith] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
+    );
+    expect(result.parsed[0]).toMatchObject({
+      action: "search",
+      revealFilters: [
+        { filter: "excludeName", value: "Lilith" },
+        { filter: "hasTrigger", value: true },
+      ],
+    });
+  });
+
   test("basic: reveal up to 1 trait-typed Character and add to hand", () => {
     const result = parseActions(
       "look at 3 cards from the top of your deck; reveal up to 1 [Donquixote Pirates] type Character card and add it to your hand and place the rest at the bottom of your deck in any order",
@@ -13,12 +68,64 @@ describe("parseActions — SearchAction", () => {
       source: { player: "self", zone: "deck" },
       revealCount: { amount: 1, upTo: true },
       revealFilters: [
-        { filter: "trait", value: "Donquixote Pirates" },
+        { filter: "trait", value: "Donquixote Pirates", match: "includes" },
         { filter: "cardCategory", value: "character" },
       ],
       revealDestination: "hand",
       remainderPosition: "bottom",
     });
+    expect(result.unparsed).toBe("");
+  });
+
+  test("keeps a named-card or typed-card search as alternatives outside the exclusion", () => {
+    const result = parseActions(
+      "Look at 4 cards from the top of your deck; reveal up to 1 [Sanji] or {Big Mom Pirates} type card other than [Charlotte Pudding] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
+    );
+
+    expect(result.parsed).toEqual([
+      {
+        action: "search",
+        lookCount: 4,
+        source: { player: "self", zone: "deck" },
+        revealCount: { amount: 1, upTo: true },
+        revealFilters: [
+          { filter: "excludeName", value: "Charlotte Pudding" },
+          {
+            filter: "anyOf",
+            filters: [
+              { filter: "name", value: "Sanji" },
+              { filter: "trait", value: "Big Mom Pirates", match: "includes" },
+            ],
+          },
+        ],
+        revealDestination: "hand",
+        remainderPosition: "bottom",
+      },
+    ]);
+    expect(result.unparsed).toBe("");
+  });
+
+  test("preserves a top-or-bottom remainder choice", () => {
+    const result = parseActions(
+      "Look at 2 cards from the top of your deck; reveal up to 1 [The Seven Warlords of the Sea] type card and add it to your hand. Then, place the rest at the top or bottom of the deck in any order.",
+    );
+    expect(result.parsed).toEqual([
+      {
+        action: "search",
+        lookCount: 2,
+        source: { player: "self", zone: "deck" },
+        revealCount: { amount: 1, upTo: true },
+        revealFilters: [
+          {
+            filter: "trait",
+            value: "The Seven Warlords of the Sea",
+            match: "includes",
+          },
+        ],
+        revealDestination: "hand",
+        remainderPosition: "any",
+      },
+    ]);
     expect(result.unparsed).toBe("");
   });
 
@@ -159,8 +266,29 @@ describe("parseActions — SearchAction", () => {
     expect(result.parsed).toHaveLength(1);
     expect(result.parsed[0]).toMatchObject({
       action: "search",
-      revealFilters: [{ filter: "trait", value: "Cross Guild" }],
+      revealFilters: [{ filter: "trait", value: "Cross Guild", match: "includes" }],
     });
+  });
+
+  test('suffix trait and excluded name: card with a type including "Baroque Works"', () => {
+    const result = parseActions(
+      'Look at 4 cards from the top of your deck; reveal up to 1 card with a type including "Baroque Works" other than [Miss.Valentine(Mikita)] and add it to your hand. Then, trash the rest',
+    );
+    expect(result.parsed).toEqual([
+      {
+        action: "search",
+        lookCount: 4,
+        source: { player: "self", zone: "deck" },
+        revealCount: { amount: 1, upTo: true },
+        revealFilters: [
+          { filter: "excludeName", value: "Miss.Valentine(Mikita)" },
+          { filter: "trait", value: "Baroque Works", match: "includes" },
+        ],
+        revealDestination: "hand",
+        remainderPosition: "trash",
+      },
+    ]);
+    expect(result.unparsed).toBe("");
   });
 
   test("comma-separated traits: [A], [B], or [C] type", () => {
@@ -171,9 +299,14 @@ describe("parseActions — SearchAction", () => {
     expect(result.parsed[0]).toMatchObject({
       action: "search",
       revealFilters: [
-        { filter: "trait", value: "Straw Hat Crew" },
-        { filter: "trait", value: "Kid Pirates" },
-        { filter: "trait", value: "Heart Pirates" },
+        {
+          filter: "anyOf",
+          filters: [
+            { filter: "trait", value: "Straw Hat Crew", match: "includes" },
+            { filter: "trait", value: "Kid Pirates", match: "includes" },
+            { filter: "trait", value: "Heart Pirates", match: "includes" },
+          ],
+        },
       ],
     });
   });
@@ -187,7 +320,52 @@ describe("parseActions — SearchAction", () => {
       action: "search",
       revealFilters: [
         { filter: "color", value: "purple" },
-        { filter: "trait", value: "Straw Hat Crew" },
+        { filter: "trait", value: "Straw Hat Crew", match: "includes" },
+      ],
+    });
+  });
+
+  test("mixed attribute or colored category alternatives stay grouped", () => {
+    const result = parseActions(
+      "Look at 5 cards from the top of your deck; reveal up to 1 (Slash) attribute card or green Event and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
+    );
+    expect(result.parsed[0]).toMatchObject({
+      action: "search",
+      revealFilters: [
+        {
+          filter: "anyOf",
+          filters: [
+            { filter: "attribute", value: "slash" },
+            {
+              filter: "allOf",
+              filters: [
+                { filter: "color", value: "green" },
+                { filter: "cardCategory", value: "event" },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    expect(result.unparsed).toBe("");
+  });
+
+  test("mixed trait-prefix and type-including alternatives stay grouped", () => {
+    const result = parseActions(
+      'Look at 5 cards from the top of your deck; reveal up to 1 "Land of Wano" type card or card with a type including "Whitebeard Pirates" and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed[0]).toMatchObject({
+      action: "search",
+      revealFilters: [
+        {
+          filter: "anyOf",
+          filters: [
+            { filter: "trait", value: "Land of Wano", match: "includes" },
+            { filter: "trait", value: "Whitebeard Pirates", match: "includes" },
+          ],
+        },
       ],
     });
   });
@@ -246,6 +424,22 @@ describe("parseActions — rearrangeDeck", () => {
         player: "self",
         count: 3,
         position: "bottom",
+      },
+    ]);
+  });
+
+  test("Look at 5 cards, trash up to 2, then order the rest at the bottom", () => {
+    const result = parseActions(
+      "Look at 5 cards from the top of your deck and trash up to 2 cards. Then, place the rest at the bottom of your deck in any order.",
+    );
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "rearrangeDeck",
+        player: "self",
+        count: 5,
+        position: "bottom",
+        trashUpTo: 2,
       },
     ]);
   });
@@ -317,10 +511,57 @@ describe("parseActions — search play variants", () => {
       revealDestination: "character",
       remainderPosition: "bottom",
       revealFilters: expect.arrayContaining([
-        { filter: "trait", value: "Revolutionary Army" },
+        { filter: "trait", value: "Revolutionary Army", match: "includes" },
         { filter: "power", comparison: "lte", value: 5000 },
       ]),
     });
+  });
+
+  test("look at + play a filtered Character rested", () => {
+    const result = parseActions(
+      "Look at 5 cards from the top of your deck and play up to 1 [Animal] type Character card with 4000 power or less rested. Then, place the rest at the bottom of your deck in any order.",
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "search",
+        lookCount: 5,
+        source: { player: "self", zone: "deck" },
+        revealCount: { amount: 1, upTo: true },
+        revealFilters: [
+          { filter: "power", comparison: "lte", value: 4000 },
+          { filter: "trait", value: "Animal", match: "includes" },
+          { filter: "cardCategory", value: "character" },
+        ],
+        revealDestination: "character",
+        remainderPosition: "bottom",
+        playState: "rested",
+      },
+    ]);
+  });
+
+  test("look at + play a type-including Character with an additional cost filter", () => {
+    const result = parseActions(
+      'Look at 5 cards from the top of your deck; play up to 1 Character card with a type including "CP" and a cost of 5 or less. Then, trash the rest.',
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "search",
+        lookCount: 5,
+        source: { player: "self", zone: "deck" },
+        revealCount: { amount: 1, upTo: true },
+        revealFilters: [
+          { filter: "trait", value: "CP", match: "includes" },
+          { filter: "cost", comparison: "lte", value: 5 },
+          { filter: "cardCategory", value: "character" },
+        ],
+        revealDestination: "character",
+        remainderPosition: "trash",
+      },
+    ]);
   });
 });
 

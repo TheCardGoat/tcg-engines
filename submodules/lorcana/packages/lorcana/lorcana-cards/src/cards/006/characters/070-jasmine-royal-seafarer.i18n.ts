@@ -69,4 +69,21 @@ export const jasmineRoyalSeafarerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jazmín",
+    version: "Marinero real",
+    text: [
+      {
+        title: "POR ORDEN DE LA PRINCESA",
+        description: "Cuando juegues con este personaje, elige uno:",
+      },
+      {
+        title: "* Ejerce el personaje dañado elegido.",
+      },
+      {
+        title:
+          "* El personaje contrario elegido gana Temerario durante su próximo turno. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

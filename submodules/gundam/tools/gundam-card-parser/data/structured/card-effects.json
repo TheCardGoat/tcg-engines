@@ -1,11 +1,11 @@
 {
   "summary": {
-    "generatedAt": "2026-05-12T17:31:32.378Z",
+    "generatedAt": "2026-07-12T22:52:37.578Z",
     "cardsScanned": 848,
     "noEffect": 239,
-    "parsed": 534,
+    "parsed": 544,
     "partial": 25,
-    "empty": 50
+    "empty": 40
   },
   "cards": [
     {
@@ -17,9 +17,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -42,9 +40,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -67,9 +63,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -92,9 +86,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -117,9 +109,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -142,9 +132,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -167,9 +155,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -192,9 +178,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -217,9 +201,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -242,9 +224,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -267,9 +247,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -292,9 +270,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -317,9 +293,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -342,9 +316,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -367,9 +339,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -392,9 +362,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -417,9 +385,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -442,9 +408,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -467,9 +431,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -492,9 +454,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -517,9 +477,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -542,9 +500,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -567,9 +523,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -592,9 +546,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -617,9 +569,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -642,9 +592,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -667,9 +615,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -692,9 +638,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -717,9 +661,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -742,9 +684,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -789,7 +729,7 @@
       "rawEffect": "【During Link】【Attack】Choose 12 cards from your trash. Return them to their owner's deck and shuffle it. If you do, set this Unit as active. It gains <First Strike> during this turn.\n\n(While this Unit is attacking, it deals damage before the enemy Unit.)",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -914,7 +854,7 @@
       "rawEffect": "【During Pair】【Destroyed】If this is a Link Unit, return its paired Pilot to its owner's hand. Then, discard 1.<br>",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["destroyed"],
             "conditions": [
@@ -950,7 +890,7 @@
       "rawEffect": "【During Link】【Destroyed】Return this Unit's paired Pilot to its owner's hand. Then, discard 1.<br>",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["destroyed"],
             "conditions": [
@@ -988,7 +928,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -1407,7 +1346,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "unitCount",
@@ -1447,7 +1385,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "unitCount",
@@ -1514,7 +1451,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "unitCount",
@@ -1680,7 +1616,6 @@
             {
               "action": {
                 "action": "placeResource",
-                "resourceType": "normal",
                 "state": "rested"
               }
             },
@@ -1717,7 +1652,7 @@
       "rawEffect": "【During Pair】【Destroyed】Deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.<br>",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["destroyed"],
             "conditions": [
@@ -1753,7 +1688,7 @@
       "rawEffect": "【During Pair】【Destroyed】Deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.<br>",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["destroyed"],
             "conditions": [
@@ -2032,7 +1967,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringPair"
@@ -2076,7 +2010,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringPair"
@@ -2252,9 +2185,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -2675,7 +2606,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "selfStat",
@@ -2914,7 +2844,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "isTurn",
@@ -2967,7 +2896,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -3032,7 +2960,7 @@
           "sourceText": "【Deploy】Deploy 1 [Fatum-00]((Triple Ship Alliance)·AP2·HP2·<Blocker>) Unit token."
         },
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -3181,7 +3109,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "cardInZone",
@@ -3222,7 +3149,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "cardInZone",
@@ -3261,7 +3187,7 @@
       "rawEffect": "【During Link】【Attack】Choose 1 enemy Unit. It gets AP-2 during this battle.<br>",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -3316,7 +3242,7 @@
       "rawEffect": "【During Link】【Attack】Choose 1 enemy Unit with 2 or less HP. Return it to its owner's hand.<br>",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -3448,7 +3374,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "cardInZone",
@@ -3501,7 +3426,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "cardInZone",
@@ -3649,7 +3573,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "unitCount",
@@ -3715,7 +3638,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "unitCount",
@@ -3876,7 +3798,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "selfIsColor",
@@ -4056,7 +3977,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "selfHasKeyword",
@@ -4106,7 +4026,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -4239,7 +4158,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "selfHasTrait",
@@ -4296,7 +4214,7 @@
           "sourceText": "【Burst】Add this card to your hand."
         },
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -4428,7 +4346,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "selfIsColor",
@@ -5121,8 +5038,7 @@
           "directives": [
             {
               "action": {
-                "action": "placeResource",
-                "resourceType": "EX",
+                "action": "placeExResource",
                 "state": "active"
               }
             }
@@ -5138,7 +5054,6 @@
             {
               "action": {
                 "action": "placeResource",
-                "resourceType": "normal",
                 "state": "rested"
               }
             }
@@ -5163,8 +5078,7 @@
           "directives": [
             {
               "action": {
-                "action": "placeResource",
-                "resourceType": "EX",
+                "action": "placeExResource",
                 "state": "active"
               }
             }
@@ -5180,7 +5094,6 @@
             {
               "action": {
                 "action": "placeResource",
-                "resourceType": "normal",
                 "state": "rested"
               }
             }
@@ -6486,7 +6399,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -6518,7 +6430,7 @@
       "rawEffect": "【During Pair･Lv.3 or Lower Pilot】【Destroyed】You may discard 1 Unit card. If you do, return the card paired with this Unit to your hand.<br>",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["destroyed"],
             "conditions": [
@@ -6578,7 +6490,7 @@
       "rawEffect": "【During Link】【Attack】Choose 1 enemy Unit with 2 or less HP. Rest it.<br>",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -6617,8 +6529,41 @@
       "type": "unit",
       "filePath": "packages/cards/src/cards/gd02/unit/006-forbidden-gundam.ts",
       "rawEffect": "&lt;Blocker&gt; (Rest this Unit to change the attack target to it.)<br>During your turn, this Unit can't receive battle damage from enemy Units that are Lv.2 or lower.<br>",
-      "effects": [],
-      "parseStatus": "empty"
+      "effects": [
+        {
+          "type": "constant",
+          "activation": {
+            "conditions": [
+              {
+                "type": "isTurn",
+                "whose": "friendly"
+              }
+            ]
+          },
+          "directives": [
+            {
+              "action": {
+                "action": "preventDamage",
+                "target": {
+                  "owner": "self"
+                },
+                "unitFilter": {
+                  "owner": "any",
+                  "attributeFilters": [
+                    {
+                      "attribute": "level",
+                      "comparison": "lte",
+                      "value": 2
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "sourceText": "During your turn, this Unit can't receive battle damage from enemy Units that are Lv.2 or lower."
+        }
+      ],
+      "parseStatus": "parsed"
     },
     {
       "cardNumber": "GD02-007",
@@ -6670,7 +6615,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -6709,7 +6653,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -6889,9 +6832,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -6952,7 +6893,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -6999,8 +6939,7 @@
             },
             {
               "action": {
-                "action": "placeResource",
-                "resourceType": "EX",
+                "action": "placeExResource",
                 "state": "active"
               },
               "dependsOnPrevious": true
@@ -7027,7 +6966,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -7077,7 +7015,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -7125,7 +7062,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -7271,7 +7207,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "playerLevel",
@@ -7317,9 +7252,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -7357,7 +7290,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringPair"
@@ -7397,9 +7329,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -7974,9 +7904,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -7990,7 +7918,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -8093,7 +8020,7 @@
       "rawEffect": "【During Pair･(Vulture) Pilot】【Destroyed】Choose 1 (Vulture) Unit card that is Lv.5 or higher from your trash. Add it to your hand.<br>",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["destroyed"],
             "conditions": [
@@ -8121,7 +8048,7 @@
       "rawEffect": "【During Pair】【Attack】You may choose 1 of your other Units. Destroy it. If you do, choose 1 enemy Unit that is Lv.4 or lower. Deal 2 damage to it.<br>",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -8326,7 +8253,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "isTurn",
@@ -8365,9 +8291,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -8562,7 +8486,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "friendlyBaseInPlay",
@@ -8607,7 +8530,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "isTurn",
@@ -8651,7 +8573,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringPair"
@@ -8745,7 +8666,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "selfStat",
@@ -8864,7 +8784,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "unitCount",
@@ -8969,7 +8888,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -9013,7 +8931,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "unitCount",
@@ -9175,9 +9092,7 @@
         },
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -9268,7 +9183,7 @@
           "sourceText": "【Burst】Add this card to your hand."
         },
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -9521,9 +9436,7 @@
         },
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -9552,9 +9465,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -9816,8 +9727,7 @@
               "thenDirectives": [
                 {
                   "action": {
-                    "action": "placeResource",
-                    "resourceType": "EX",
+                    "action": "placeExResource",
                     "state": "active"
                   }
                 }
@@ -9927,7 +9837,9 @@
             {
               "action": {
                 "action": "preventDamageToZone",
-                "zone": "shieldArea",
+                "protectedArea": {
+                  "kind": "shieldArea"
+                },
                 "unitFilter": {
                   "owner": "opponent",
                   "cardType": "unit",
@@ -11114,7 +11026,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringPair"
@@ -11294,7 +11205,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringPair"
@@ -11416,7 +11326,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "unitCount",
@@ -11483,7 +11392,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "unitCount",
@@ -11625,7 +11533,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringPair"
@@ -11650,8 +11557,7 @@
           "directives": [
             {
               "action": {
-                "action": "placeResource",
-                "resourceType": "EX",
+                "action": "placeExResource",
                 "state": "active"
               }
             }
@@ -11691,9 +11597,7 @@
         },
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -11735,7 +11639,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -11820,9 +11723,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -11893,9 +11794,9 @@
       "rawEffect": "During your turn, when this Unit destroys an enemy Unit with battle damage, deal 2 damage to all enemy Units with <Blocker>.",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
-            "timing": ["constant"],
+            "timing": ["onDestroyByBattle"],
             "conditions": [
               {
                 "type": "isTurn",
@@ -11931,7 +11832,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "cardInZone",
@@ -11991,7 +11891,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringPair"
@@ -12175,7 +12074,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -12316,7 +12214,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -12388,7 +12285,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "selfStat",
@@ -12496,9 +12392,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -12716,7 +12610,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -12842,9 +12735,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -12928,7 +12819,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -12963,9 +12853,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -13150,7 +13038,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "friendlyBaseInPlay"
@@ -13193,7 +13080,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -13224,20 +13110,20 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
-                "action": "preventDamage",
-                "target": {
-                  "owner": "self"
+                "action": "preventDamageToZone",
+                "protectedArea": {
+                  "kind": "zone",
+                  "zone": "shieldArea"
                 },
                 "unitFilter": {
                   "owner": "opponent",
                   "cardType": "unit"
-                }
+                },
+                "duration": "permanent"
               }
             }
           ],
@@ -13377,7 +13263,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringPair"
@@ -13405,7 +13290,7 @@
       "rawEffect": "【During Link】【Attack】Choose 1 enemy Unit with no paired Pilot. It gets AP-2 during this turn.",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -13444,7 +13329,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -13490,7 +13374,7 @@
       "rawEffect": "【During Link】【Destroyed】Return the card paired with this Unit to your hand.",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["destroyed"],
             "conditions": [
@@ -13548,9 +13432,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -13574,7 +13456,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "unitCount",
@@ -13808,7 +13689,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -14052,9 +13932,7 @@
         },
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -14188,7 +14066,7 @@
           "sourceText": "【Burst】Add this card to your hand."
         },
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -14241,7 +14119,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -14292,7 +14169,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -14342,7 +14218,7 @@
           "sourceText": "【Burst】Add this card to your hand."
         },
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["destroyed"],
             "conditions": [
@@ -15787,7 +15663,7 @@
       "rawEffect": "【During Link】【Attack】If you are attacking an enemy Unit, you may return a blue Pilot paired with this Unit to its owner's hand.",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -15819,7 +15695,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "isTurn",
@@ -15919,8 +15794,28 @@
       "type": "unit",
       "filePath": "packages/cards/src/cards/gd04/unit/004-psycho-gundam-mk.ts",
       "rawEffect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\n【Once per Turn】When you pair a (Cyber-Newtype) Pilot with one of your blue Units, draw 1.",
-      "effects": [],
-      "parseStatus": "empty"
+      "effects": [
+        {
+          "type": "triggered",
+          "activation": {
+            "restrictions": [
+              {
+                "type": "oncePerTurn"
+              }
+            ]
+          },
+          "directives": [
+            {
+              "action": {
+                "action": "draw",
+                "count": 1
+              }
+            }
+          ],
+          "sourceText": "【Once per Turn】When you pair a (Cyber-Newtype) Pilot with one of your blue Units, draw 1."
+        }
+      ],
+      "parseStatus": "parsed"
     },
     {
       "cardNumber": "GD04-005",
@@ -15977,7 +15872,7 @@
       "rawEffect": "【During Pair】【Attack】Deploy 1 [Parts]((League Militaire)･AP1･HP1･This Unit can't choose the enemy player as its attack target) Unit token.",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -16015,7 +15910,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -16147,9 +16041,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -16235,8 +16127,22 @@
       "type": "unit",
       "filePath": "packages/cards/src/cards/gd04/unit/016-zoloat-league-militaire.ts",
       "rawEffect": "<Blocker> (Rest this Unit to change the attack target to it.)\nThis Unit can't choose the enemy player as its attack target.",
-      "effects": [],
-      "parseStatus": "empty"
+      "effects": [
+        {
+          "type": "constant",
+          "activation": {},
+          "directives": [
+            {
+              "action": {
+                "action": "cantTargetPlayer",
+                "whose": "opponent"
+              }
+            }
+          ],
+          "sourceText": "This Unit can't choose the enemy player as its attack target."
+        }
+      ],
+      "parseStatus": "parsed"
     },
     {
       "cardNumber": "GD04-017",
@@ -16301,8 +16207,28 @@
       "type": "unit",
       "filePath": "packages/cards/src/cards/gd04/unit/018-gundam-pharact.ts",
       "rawEffect": "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【Once per Turn】During your turn, when one of your other (Academy) Units receives damage from an enemy, place 1 EX Resource.",
-      "effects": [],
-      "parseStatus": "empty"
+      "effects": [
+        {
+          "type": "triggered",
+          "activation": {
+            "restrictions": [
+              {
+                "type": "oncePerTurn"
+              }
+            ]
+          },
+          "directives": [
+            {
+              "action": {
+                "action": "placeExResource",
+                "state": "active"
+              }
+            }
+          ],
+          "sourceText": "【Once per Turn】During your turn, when one of your other (Academy) Units receives damage from an enemy, place 1 EX Resource."
+        }
+      ],
+      "parseStatus": "parsed"
     },
     {
       "cardNumber": "GD04-019",
@@ -16352,7 +16278,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -16378,8 +16303,29 @@
       "type": "unit",
       "filePath": "packages/cards/src/cards/gd04/unit/021-gundam-lfrith-thorn.ts",
       "rawEffect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\nDuring your turn, when you play and activate a (Dawn of Fold) Command card using an EX Resource, you may pair that card from your trash with one of your Units with \"Gundam Lfrith\" in its card name.",
-      "effects": [],
-      "parseStatus": "empty"
+      "effects": [
+        {
+          "type": "constant",
+          "activation": {
+            "conditions": [
+              {
+                "type": "isTurn",
+                "whose": "friendly"
+              }
+            ]
+          },
+          "directives": [
+            {
+              "action": {
+                "action": "unparsedText",
+                "text": "when you play and activate a (Dawn of Fold) Command card using an EX Resource, you may pair that card from your trash with one of your Units with \"Gundam Lfrith\" in its card name."
+              }
+            }
+          ],
+          "sourceText": "During your turn, when you play and activate a (Dawn of Fold) Command card using an EX Resource, you may pair that card from your trash with one of your Units with \"Gundam Lfrith\" in its card name."
+        }
+      ],
+      "parseStatus": "parsed"
     },
     {
       "cardNumber": "GD04-022",
@@ -16390,9 +16336,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -16406,7 +16350,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -16519,8 +16462,7 @@
           "directives": [
             {
               "action": {
-                "action": "placeResource",
-                "resourceType": "EX",
+                "action": "placeExResource",
                 "state": "active"
               }
             }
@@ -16612,7 +16554,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -16630,7 +16571,19 @@
                 "count": 1,
                 "hasTrait": "cb"
               },
-              "thenDirectives": []
+              "thenDirectives": [
+                {
+                  "action": {
+                    "action": "reduceNextDamage",
+                    "amount": 1,
+                    "target": {
+                      "owner": "self"
+                    },
+                    "source": "enemy",
+                    "duration": "permanent"
+                  }
+                }
+              ]
             }
           ],
           "sourceText": "【Once per Turn】If you have a (CB) Pilot in play, when this Unit receives damage from an enemy, reduce it by 1."
@@ -16706,7 +16659,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -16736,7 +16688,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -16844,9 +16795,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -16872,9 +16821,7 @@
         },
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -16948,9 +16895,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -17013,7 +16958,8 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
+            "timing": ["onRestedByEffect"],
+            "conditions": [],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -17045,7 +16991,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -17232,7 +17177,7 @@
       "rawEffect": "<Suppression> (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\n【During Pair】【Attack】If you are attacking the enemy player, you may choose 7 (Vulture) cards from your trash. Exile them from the game. If you do, choose 1 enemy Unit/Base that is Lv.8 or lower. Destroy it.",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -17288,7 +17233,7 @@
       "rawEffect": "<High-Maneuver> (This Unit can't be blocked.)\n【During Pair】【Attack】You may choose 1 (Minerva Squad) Unit card from your trash. Pay its cost to deploy it.",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -17326,7 +17271,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringPair"
@@ -17367,7 +17311,7 @@
       "rawEffect": "【During Pair】【Attack】You may choose 1 enemy Unit. Deal 2 damage to it and this Unit.",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -17407,9 +17351,13 @@
       "rawEffect": "【During Link】【Once per Turn】When this Unit receives damage from an enemy, reduce it by 1.",
       "effects": [
         {
-          "type": "triggered",
+          "type": "constant",
           "activation": {
-            "timing": ["constant"],
+            "conditions": [
+              {
+                "type": "duringLink"
+              }
+            ],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -17419,8 +17367,13 @@
           "directives": [
             {
               "action": {
-                "action": "unparsedText",
-                "text": "When this Unit receives damage from an enemy, reduce it by 1."
+                "action": "reduceNextDamage",
+                "amount": 1,
+                "target": {
+                  "owner": "self"
+                },
+                "source": "enemy",
+                "duration": "permanent"
               }
             }
           ],
@@ -17529,7 +17482,7 @@
       "rawEffect": "【During Pair･(Vulture) Pilot】【Destroyed】If it is your turn, return this Unit's paired Pilot to its owner's hand.",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["destroyed"],
             "conditions": [
@@ -17597,8 +17550,26 @@
       "type": "unit",
       "filePath": "packages/cards/src/cards/gd04/unit/061-g-falcon.ts",
       "rawEffect": "<Blocker> (Rest this Unit to change the attack target to it.)\nThis Unit can't attack while there are 6 or less cards in your trash.",
-      "effects": [],
-      "parseStatus": "empty"
+      "effects": [
+        {
+          "type": "constant",
+          "activation": {},
+          "directives": [
+            {
+              "action": {
+                "action": "cantAttack",
+                "duration": "permanent",
+                "target": {
+                  "owner": "friendly",
+                  "cardType": "unit"
+                }
+              }
+            }
+          ],
+          "sourceText": "This Unit can't attack while there are 6 or less cards in your trash."
+        }
+      ],
+      "parseStatus": "parsed"
     },
     {
       "cardNumber": "GD04-062",
@@ -17868,8 +17839,28 @@
       "type": "unit",
       "filePath": "packages/cards/src/cards/gd04/unit/068-silver-bullet.ts",
       "rawEffect": "<Blocker> (Rest this Unit to change the attack target to it.)\nWhen this Unit receives effect damage from an enemy, reduce it by 3.",
-      "effects": [],
-      "parseStatus": "empty"
+      "effects": [
+        {
+          "type": "constant",
+          "activation": {},
+          "directives": [
+            {
+              "action": {
+                "action": "reduceNextDamage",
+                "amount": 3,
+                "target": {
+                  "owner": "self"
+                },
+                "damageType": "effect",
+                "source": "enemy",
+                "duration": "permanent"
+              }
+            }
+          ],
+          "sourceText": "When this Unit receives effect damage from an enemy, reduce it by 3."
+        }
+      ],
+      "parseStatus": "parsed"
     },
     {
       "cardNumber": "GD04-069",
@@ -17881,7 +17872,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -18108,9 +18098,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -18403,7 +18391,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -18445,7 +18432,7 @@
           "sourceText": "【Burst】Add this card to your hand."
         },
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["destroyed"],
             "conditions": [
@@ -18457,8 +18444,7 @@
           "directives": [
             {
               "action": {
-                "action": "placeResource",
-                "resourceType": "EX",
+                "action": "placeExResource",
                 "state": "active"
               }
             }
@@ -18490,7 +18476,7 @@
           "sourceText": "【Burst】Add this card to your hand."
         },
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -18611,7 +18597,6 @@
         {
           "type": "triggered",
           "activation": {
-            "timing": ["constant"],
             "restrictions": [
               {
                 "type": "oncePerTurn"
@@ -18853,7 +18838,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -18957,7 +18941,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -18967,8 +18950,14 @@
           "directives": [
             {
               "action": {
-                "action": "unparsedText",
-                "text": "When this Unit receives effect damage from an enemy, reduce it by 2."
+                "action": "reduceNextDamage",
+                "amount": 2,
+                "target": {
+                  "owner": "self"
+                },
+                "damageType": "effect",
+                "source": "enemy",
+                "duration": "permanent"
               }
             }
           ],
@@ -18999,7 +18988,7 @@
           "sourceText": "【Burst】Add this card to your hand."
         },
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -19897,9 +19886,7 @@
         },
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20340,9 +20327,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20365,9 +20350,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20390,9 +20373,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20415,9 +20396,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20440,9 +20419,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20465,9 +20442,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20490,9 +20465,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20515,9 +20488,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20540,9 +20511,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20565,9 +20534,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20590,9 +20557,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20623,9 +20588,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20648,9 +20611,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20673,9 +20634,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20698,9 +20657,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20723,9 +20680,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20748,9 +20703,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20773,9 +20726,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20798,9 +20749,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20823,9 +20772,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20848,9 +20795,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20873,9 +20818,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20898,9 +20841,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20923,9 +20864,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20948,9 +20887,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20973,9 +20910,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -20998,9 +20933,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21023,9 +20956,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21048,9 +20979,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21073,9 +21002,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21098,9 +21025,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21123,9 +21048,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21148,9 +21071,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21173,9 +21094,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21198,9 +21117,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21223,9 +21140,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21248,9 +21163,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21273,9 +21186,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21298,9 +21209,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21323,9 +21232,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21348,9 +21255,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21373,9 +21278,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21398,9 +21301,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21423,9 +21324,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21448,9 +21347,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21473,9 +21370,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21498,9 +21393,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21523,9 +21416,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21548,9 +21439,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21573,9 +21462,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21598,9 +21485,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21623,9 +21508,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21648,9 +21531,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21673,9 +21554,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21698,9 +21577,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21723,9 +21600,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21748,9 +21623,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21773,9 +21646,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21798,9 +21669,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21823,9 +21692,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21848,9 +21715,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21873,9 +21738,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21898,9 +21761,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21923,9 +21784,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21948,9 +21807,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21973,9 +21830,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -21998,9 +21853,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -22023,9 +21876,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -22048,9 +21899,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -22073,9 +21922,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -22098,9 +21945,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -22123,9 +21968,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -22148,9 +21991,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -22173,9 +22014,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -22198,9 +22037,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -22223,9 +22060,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -22249,7 +22084,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringPair"
@@ -22479,8 +22313,22 @@
       "type": "unit",
       "filePath": "packages/cards/src/cards/st01/unit/009-zowort.ts",
       "rawEffect": "&lt;Blocker&gt; (Rest this Unit to change the attack target to it.)<br>This Unit can't choose the enemy player as its attack target.<br>",
-      "effects": [],
-      "parseStatus": "empty"
+      "effects": [
+        {
+          "type": "constant",
+          "activation": {},
+          "directives": [
+            {
+              "action": {
+                "action": "cantTargetPlayer",
+                "whose": "opponent"
+              }
+            }
+          ],
+          "sourceText": "This Unit can't choose the enemy player as its attack target."
+        }
+      ],
+      "parseStatus": "parsed"
     },
     {
       "cardNumber": "ST01-010",
@@ -23200,8 +23048,37 @@
       "type": "unit",
       "filePath": "packages/cards/src/cards/st02/unit/001-wing-gundam.ts",
       "rawEffect": "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\nThis Unit may choose an active enemy Unit that is Lv.4 or lower as its attack target.",
-      "effects": [],
-      "parseStatus": "empty"
+      "effects": [
+        {
+          "type": "constant",
+          "activation": {},
+          "directives": [
+            {
+              "action": {
+                "action": "chooseAttackTarget",
+                "unit": {
+                  "owner": "friendly",
+                  "count": 1
+                },
+                "attackTarget": {
+                  "owner": "opponent",
+                  "cardType": "unit",
+                  "state": "active",
+                  "attributeFilters": [
+                    {
+                      "attribute": "level",
+                      "comparison": "lte",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "sourceText": "This Unit may choose an active enemy Unit that is Lv.4 or lower as its attack target."
+        }
+      ],
+      "parseStatus": "parsed"
     },
     {
       "cardNumber": "ST02-002",
@@ -23218,8 +23095,7 @@
           "directives": [
             {
               "action": {
-                "action": "placeResource",
-                "resourceType": "EX",
+                "action": "placeExResource",
                 "state": "active"
               }
             }
@@ -23244,8 +23120,7 @@
           "directives": [
             {
               "action": {
-                "action": "placeResource",
-                "resourceType": "EX",
+                "action": "placeExResource",
                 "state": "active"
               }
             }
@@ -23265,7 +23140,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringPair"
@@ -23452,7 +23326,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -23514,7 +23387,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -23614,7 +23486,9 @@
             {
               "action": {
                 "action": "preventDamageToZone",
-                "zone": "shieldArea",
+                "protectedArea": {
+                  "kind": "shieldArea"
+                },
                 "unitFilter": {
                   "owner": "opponent",
                   "cardType": "unit",
@@ -23651,7 +23525,9 @@
             {
               "action": {
                 "action": "preventDamageToZone",
-                "zone": "shieldArea",
+                "protectedArea": {
+                  "kind": "shieldArea"
+                },
                 "unitFilter": {
                   "owner": "opponent",
                   "cardType": "unit",
@@ -23833,7 +23709,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringPair"
@@ -24644,8 +24519,40 @@
       "type": "unit",
       "filePath": "packages/cards/src/cards/st04/unit/001-aile-strike-gundam.ts",
       "rawEffect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
-      "effects": [],
-      "parseStatus": "empty"
+      "effects": [
+        {
+          "type": "triggered",
+          "activation": {
+            "timing": ["whenPaired"],
+            "qualification": {
+              "attribute": "level",
+              "comparison": "gte",
+              "value": 4
+            }
+          },
+          "directives": [
+            {
+              "action": {
+                "action": "returnToHand",
+                "target": {
+                  "owner": "opponent",
+                  "cardType": "unit",
+                  "attributeFilters": [
+                    {
+                      "attribute": "hp",
+                      "comparison": "lte",
+                      "value": 4
+                    }
+                  ],
+                  "count": 1
+                }
+              }
+            }
+          ],
+          "sourceText": "【When Paired·Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand."
+        }
+      ],
+      "parseStatus": "parsed"
     },
     {
       "cardNumber": "ST04-002",
@@ -24808,7 +24715,7 @@
       "rawEffect": "【During Pair】【Destroyed】If you have another Link Unit in play, draw 1.<br>",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["destroyed"],
             "conditions": [
@@ -25405,9 +25312,7 @@
         },
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -25443,7 +25348,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "selfIsDamaged"
@@ -25691,7 +25595,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -26210,7 +26113,7 @@
           "sourceText": "【Burst】Add this card to your hand."
         },
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -26481,9 +26384,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -26547,7 +26448,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "cardInZone",
@@ -26594,9 +26494,9 @@
       "rawEffect": "During your turn, when this Unit destroys an enemy Unit with battle damage, this Unit recovers 2 HP.\n【During Link】This Unit gets AP+2.",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
-            "timing": ["constant"],
+            "timing": ["onDestroyByBattle"],
             "conditions": [
               {
                 "type": "isTurn",
@@ -26610,7 +26510,7 @@
                 "action": "recoverHP",
                 "amount": 2,
                 "target": {
-                  "owner": "opponent",
+                  "owner": "self",
                   "cardType": "unit"
                 }
               }
@@ -26621,7 +26521,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "duringLink"
@@ -26666,7 +26565,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "isTurn",
@@ -27031,9 +26929,7 @@
         },
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -27056,9 +26952,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -27182,7 +27076,7 @@
       "rawEffect": "【During Pair】【Attack】【Once per Turn】If this Unit is attacking the enemy player, reveal 1 (Earth Federation) Unit card from your hand. Return it to the bottom of your deck. If you do, draw 2.",
       "effects": [
         {
-          "type": "constant",
+          "type": "triggered",
           "activation": {
             "timing": ["attack"],
             "conditions": [
@@ -27241,7 +27135,6 @@
         {
           "type": "constant",
           "activation": {
-            "timing": ["constant"],
             "conditions": [
               {
                 "type": "unitCount",
@@ -27655,9 +27548,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -28005,9 +27896,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -28090,9 +27979,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {
@@ -28115,9 +28002,7 @@
       "effects": [
         {
           "type": "constant",
-          "activation": {
-            "timing": ["constant"]
-          },
+          "activation": {},
           "directives": [
             {
               "action": {

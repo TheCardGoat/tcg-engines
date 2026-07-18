@@ -29,6 +29,32 @@ export const op07Caribou023: CharacterCard = {
     "If you have 6 or more rested DON!! cards, this Character gains +1000 power. [Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
   effects: {
     keywords: ["blocker"],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "donFieldCount",
+            player: "self",
+            comparison: "gte",
+            value: 6,
+            state: "rested",
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            value: 1000,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
   },
   i18n: op07Caribou023I18n,
 };

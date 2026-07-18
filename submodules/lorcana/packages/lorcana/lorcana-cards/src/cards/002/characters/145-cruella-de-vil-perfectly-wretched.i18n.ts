@@ -60,4 +60,18 @@ export const cruellaDeVilPerfectlyWretchedI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Cruella De Vil",
+    version: "Perfectamente miserable",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "OH, NO, NO LO HACES",
+        description:
+          "Siempre que este personaje realiza una misión, el personaje contrario elegido obtiene -2 {S} este turno.",
+      },
+    ],
+  },
 };

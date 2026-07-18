@@ -56,4 +56,9 @@ export const camiloMadrigalPranksterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Camilo Madrigal",
+    version: "Bromista",
+    text: "MUCHAS FORMAS Al comienzo de tu turno, puedes elegir una:\n- Este personaje obtiene +1 {L} este turno.\n- Este personaje gana Challenger +2 este turno.",
+  },
 };

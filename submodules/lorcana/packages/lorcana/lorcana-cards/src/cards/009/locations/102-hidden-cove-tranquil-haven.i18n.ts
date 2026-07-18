@@ -41,4 +41,14 @@ export const hiddenCoveTranquilHavenI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cala escondida",
+    version: "Refugio tranquilo",
+    text: [
+      {
+        title: "AGUAS REVITALIZANTES",
+        description: "Los personajes obtienen +1 {S} y +1 {W} mientras están aquí.",
+      },
+    ],
+  },
 };

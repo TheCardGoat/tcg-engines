@@ -39,4 +39,13 @@ export const sleepysFluteI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La flauta de Sleepy",
+    text: [
+      {
+        title: "UNA CANCIÓN TONTA",
+        description: "{E}: si tocaste una canción este turno, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

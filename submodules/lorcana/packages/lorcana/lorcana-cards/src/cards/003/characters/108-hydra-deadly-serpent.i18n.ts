@@ -45,4 +45,15 @@ export const hydraDeadlySerpentI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hidra",
+    version: "Serpiente mortal",
+    text: [
+      {
+        title: "MIRA LOS DIENTES",
+        description:
+          "Siempre que este personaje reciba daño, inflige esa misma cantidad de daño al personaje contrario elegido.",
+      },
+    ],
+  },
 };

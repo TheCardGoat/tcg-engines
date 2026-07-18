@@ -29,11 +29,11 @@ describe("G-Defenser (GD03-079)", () => {
     expectSuccess(p1.enterBattle(attackerId!, enemyId));
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
-      legalTargetIds: expect.arrayContaining([baseId, enemyId]),
-      minTargets: 2,
-      maxTargets: 2,
+      legalTargetIds: [baseId],
+      minTargets: 1,
+      maxTargets: 1,
     });
-    expectSuccess(p1.resolveEffect({ targets: [baseId, enemyId] }));
+    expectSuccess(p1.resolveEffect({ targets: [baseId] }));
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
       sourceCardId: gDefenserId,
@@ -45,6 +45,11 @@ describe("G-Defenser (GD03-079)", () => {
 
     expect(p1.isExhausted(gDefenserId!)).toBe(true);
     expect(p1.isExhausted(baseId)).toBe(false);
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
   });
 
   it("may decline the substitution and rest the Base", () => {
@@ -61,7 +66,11 @@ describe("G-Defenser (GD03-079)", () => {
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.enterBattle(attackerId!, enemyId));
-    expectSuccess(p1.resolveEffect({ targets: [baseId, enemyId] }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [baseId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [baseId] }));
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
       sourceCardId: gDefenserId,
@@ -73,6 +82,11 @@ describe("G-Defenser (GD03-079)", () => {
 
     expect(p1.isExhausted(gDefenserId!)).toBe(false);
     expect(p1.isExhausted(baseId)).toBe(true);
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
   });
 
   it("lets the player select either eligible G-Defenser by its board card", () => {
@@ -92,7 +106,11 @@ describe("G-Defenser (GD03-079)", () => {
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.enterBattle(attackerId!, enemyId));
-    expectSuccess(p1.resolveEffect({ targets: [baseId, enemyId] }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [baseId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [baseId] }));
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
       legalTargetIds: expect.arrayContaining([firstGDefenserId, secondGDefenserId, baseId]),
@@ -104,6 +122,11 @@ describe("G-Defenser (GD03-079)", () => {
     expect(p1.isExhausted(firstGDefenserId!)).toBe(false);
     expect(p1.isExhausted(secondGDefenserId!)).toBe(true);
     expect(p1.isExhausted(baseId)).toBe(false);
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
   });
 
   it("does not offer a rested G-Defenser as a substitute", () => {
@@ -140,7 +163,18 @@ describe("G-Defenser (GD03-079)", () => {
     expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
 
     expectSuccess(p1.enterBattle(rickDiasId!, enemyId));
-    expectSuccess(p1.resolveEffect({ targets: [baseId, enemyId] }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [baseId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [baseId] }));
+
+    expect(p1.isExhausted(baseId)).toBe(true);
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
 
     expect(p1.getBoardView().pendingChoice).toBeUndefined();
     expect(p1.isExhausted(gDefenserId!)).toBe(true);

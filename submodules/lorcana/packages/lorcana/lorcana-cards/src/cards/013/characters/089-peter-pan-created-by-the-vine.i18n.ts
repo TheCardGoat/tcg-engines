@@ -45,4 +45,15 @@ export const peterPanCreatedByTheVineI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Peter Pan",
+    version: "Creado por la vid",
+    text: [
+      {
+        title: "Truco inteligente",
+        description:
+          "Cada vez que uno de tus personajes Floodborn es desafiado, el jugador desafiante elige y descarta una carta.",
+      },
+    ],
+  },
 };

@@ -34,6 +34,7 @@ export const op03Minorhinoceros069: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Impel Down",
+            match: "includes",
           },
         ],
         actions: [

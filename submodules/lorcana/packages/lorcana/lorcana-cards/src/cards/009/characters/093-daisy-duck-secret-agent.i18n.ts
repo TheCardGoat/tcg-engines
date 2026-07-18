@@ -43,4 +43,15 @@ export const daisyDuckSecretAgentI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato margarita",
+    version: "Agente secreto",
+    text: [
+      {
+        title: "FRUSTRAR",
+        description:
+          "Cada vez que este personaje realiza una misión, cada oponente elige y descarta una carta.",
+      },
+    ],
+  },
 };

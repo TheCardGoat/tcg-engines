@@ -28,12 +28,6 @@ export const op14eb04Eleclaw019: EventCard = {
     effects: [
       {
         trigger: "main",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Minks",
-          },
-        ],
         costs: [
           {
             cost: "restCards",
@@ -53,6 +47,11 @@ export const op14eb04Eleclaw019: EventCard = {
             },
             value: -3,
             duration: "thisTurn",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Minks",
+              match: "includes",
+            },
           },
         ],
         optional: true,
@@ -73,6 +72,7 @@ export const op14eb04Eleclaw019: EventCard = {
                 {
                   filter: "trait",
                   value: "Minks",
+                  match: "includes",
                 },
               ],
             },

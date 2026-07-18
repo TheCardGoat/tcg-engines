@@ -17,4 +17,8 @@ export const princeCharmingSearchingForAnswersI18n: Record<Languages, I18nProper
     name: "Principe Azzurro",
     version: "In Cerca di Risposte",
   },
+  es: {
+    name: "Príncipe azul",
+    version: "Buscando respuestas",
+  },
 };

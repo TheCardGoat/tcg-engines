@@ -31,6 +31,13 @@ export const op12Sabo100: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "top",
+          },
+        ],
         actions: [
           {
             action: "draw",
@@ -44,6 +51,46 @@ export const op12Sabo100: CharacterCard = {
           },
         ],
         optional: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "lifeCount",
+            player: "self",
+            comparison: "lte",
+            value: 3,
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 3,
+            duration: "permanent",
+          },
+        ],
       },
     ],
   },

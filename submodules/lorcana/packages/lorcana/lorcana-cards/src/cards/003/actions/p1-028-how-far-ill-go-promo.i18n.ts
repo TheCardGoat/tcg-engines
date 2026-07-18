@@ -35,4 +35,8 @@ export const howFarIllGoP1PromoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "¿Qué tan lejos llegaré?",
+    text: "Mira las 2 primeras cartas de tu mazo. Pon uno en tu mano y el otro en tu tintero boca abajo y ejerce presión.",
+  },
 };

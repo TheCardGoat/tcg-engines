@@ -1,28 +1,47 @@
 import type { Action, TargetFilter, Zone } from "@tcg/op-types";
-import { parseTarget, parseTargetWithoutPlayer, extractTargetFilters } from "../target-parser.ts";
+import {
+  parseTarget,
+  parseTargetWithoutPlayer,
+  extractTargetFilters,
+  traitAlternativesFilter,
+} from "../target-parser.ts";
 import { parseComparison, parseZoneList } from "../helpers.ts";
 
 // ── Type aliases ──
 
 type ReturnToHandAction = Extract<Action, { action: "returnToHand" }>;
+type DelayedAction = Extract<Action, { action: "delayed" }>;
 type ReturnToDeckAction = Extract<Action, { action: "returnToDeck" }>;
 
 // ── ReturnToHand action parsing ──
 
+export function parseAddThisCardToHandAction(
+  text: string,
+): Extract<Action, { action: "addThisCardToHand" }> | null {
+  return /^add\s+this\s+card\s+to\s+your\s+hand\.?$/i.test(text.trim())
+    ? { action: "addThisCardToHand" }
+    : null;
+}
+
 /**
  * Parse a "return <target> to the owner's hand" action clause.
  */
-export function parseReturnToHandAction(text: string): ReturnToHandAction | null {
+export function parseReturnToHandAction(text: string): ReturnToHandAction | DelayedAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
   // "return <target> to the owner's hand [at the end of this turn]" or "return <target> to your hand"
   const match =
-    /^return\s+(.+?)\s+to\s+(?:the\s+owner[''\u2019]s|your)\s+hand(?:\s+at\s+the\s+end\s+of\s+this\s+turn)?$/i.exec(
+    /^return\s+(.+?)\s+to\s+(?:the\s+owner[''\u2019]s|your)\s+hand(\s+at\s+the\s+end\s+of\s+this\s+turn)?$/i.exec(
       trimmed,
     );
   if (match) {
     const target = parseTarget(match[1]!) ?? parseTargetWithoutPlayer(match[1]!);
-    if (target) return { action: "returnToHand", target };
+    if (target) {
+      const returnAction: ReturnToHandAction = { action: "returnToHand", target };
+      return match[2]
+        ? { action: "delayed", timing: "endOfThisTurn", actions: [returnAction] }
+        : returnAction;
+    }
   }
 
   // "Your opponent returns N of their Characters to the owner's hand"
@@ -96,18 +115,22 @@ export function parseAddFromTrashToHandAction(text: string): ReturnToHandAction 
           remaining,
         );
       if (multiTraitCatMatch) {
-        filters.push({ filter: "trait", value: multiTraitCatMatch[1]! });
-        filters.push({ filter: "trait", value: multiTraitCatMatch[2]! });
+        const traitFilter = traitAlternativesFilter(
+          [multiTraitCatMatch[1]!, multiTraitCatMatch[2]!],
+          "includes",
+        );
+        if (traitFilter) filters.push(traitFilter);
         filters.push({
           filter: "cardCategory",
           value: multiTraitCatMatch[3]!.toLowerCase() as "character" | "event" | "stage",
         });
         if (multiTraitCatMatch[4]) {
           let restText = multiTraitCatMatch[4];
-          const otherThan = /^other than \[([^\]]+)\]\s*/i.exec(restText);
+          const otherThan = /(?:^|\s+)other than \[([^\]]+)\]/i.exec(restText);
           if (otherThan) {
             filters.push({ filter: "excludeName", value: otherThan[1]! });
-            restText = restText.slice(otherThan[0].length);
+            restText =
+              `${restText.slice(0, otherThan.index)}${restText.slice(otherThan.index + otherThan[0].length)}`.trim();
           }
           if (restText.trim()) {
             const { filters: subFilters } = extractTargetFilters(" " + restText);
@@ -121,17 +144,22 @@ export function parseAddFromTrashToHandAction(text: string): ReturnToHandAction 
             remaining,
           );
         if (traitCatMatch) {
-          filters.push({ filter: "trait", value: traitCatMatch[1]! });
+          filters.push({
+            filter: "trait",
+            value: traitCatMatch[1]!,
+            match: "includes",
+          });
           filters.push({
             filter: "cardCategory",
             value: traitCatMatch[2]!.toLowerCase() as "character" | "event" | "stage",
           });
           if (traitCatMatch[3]) {
             let restText = traitCatMatch[3];
-            const otherThan = /^other than \[([^\]]+)\]\s*/i.exec(restText);
+            const otherThan = /(?:^|\s+)other than \[([^\]]+)\]/i.exec(restText);
             if (otherThan) {
               filters.push({ filter: "excludeName", value: otherThan[1]! });
-              restText = restText.slice(otherThan[0].length);
+              restText =
+                `${restText.slice(0, otherThan.index)}${restText.slice(otherThan.index + otherThan[0].length)}`.trim();
             }
             if (restText.trim()) {
               const { filters: subFilters } = extractTargetFilters(" " + restText);
@@ -139,27 +167,53 @@ export function parseAddFromTrashToHandAction(text: string): ReturnToHandAction 
             }
           }
         } else {
-          // "Character card(s) (other than [Name]) (with a cost of N or less)" — category only
-          // Also handles "Event" / "Stage" without "card(s)" suffix
-          const catMatch = /^(Character|Event|Stage)(?:\s+cards?)?(?:\s+(.+))?$/i.exec(remaining);
-          if (catMatch) {
-            const category = catMatch[1]!.toLowerCase() as "character" | "event" | "stage";
-            filters.push({ filter: "cardCategory", value: category });
-            if (catMatch[2]) {
-              let restText = catMatch[2];
-              // "other than [Name]"
-              const otherThan = /^other than \[([^\]]+)\]\s*/i.exec(restText);
+          const traitOnlyMatch =
+            /^(?:[[{"\u201c])([^\]}\u201d"]+)(?:[\]}\u201d"])\s+type\s+card(?:s)?(?:\s+(.+))?$/i.exec(
+              remaining,
+            );
+          if (traitOnlyMatch) {
+            filters.push({
+              filter: "trait",
+              value: traitOnlyMatch[1]!,
+              match: "includes",
+            });
+            if (traitOnlyMatch[2]) {
+              let restText = traitOnlyMatch[2];
+              const otherThan = /(?:^|\s+)other than \[([^\]]+)\]/i.exec(restText);
+              if (otherThan) filters.push({ filter: "excludeName", value: otherThan[1]! });
               if (otherThan) {
-                filters.push({ filter: "excludeName", value: otherThan[1]! });
-                restText = restText.slice(otherThan[0].length);
+                restText =
+                  `${restText.slice(0, otherThan.index)}${restText.slice(otherThan.index + otherThan[0].length)}`.trim();
               }
               if (restText.trim()) {
-                const { filters: subFilters } = extractTargetFilters(" " + restText);
+                const { filters: subFilters } = extractTargetFilters(` ${restText}`);
                 filters.push(...subFilters);
               }
             }
           } else {
-            return null;
+            // "Character card(s) (other than [Name]) (with a cost of N or less)" — category only
+            // Also handles "Event" / "Stage" without "card(s)" suffix
+            const catMatch = /^(Character|Event|Stage)(?:\s+cards?)?(?:\s+(.+))?$/i.exec(remaining);
+            if (catMatch) {
+              const category = catMatch[1]!.toLowerCase() as "character" | "event" | "stage";
+              filters.push({ filter: "cardCategory", value: category });
+              if (catMatch[2]) {
+                let restText = catMatch[2];
+                // "other than [Name]"
+                const otherThan = /(?:^|\s+)other than \[([^\]]+)\]/i.exec(restText);
+                if (otherThan) {
+                  filters.push({ filter: "excludeName", value: otherThan[1]! });
+                  restText =
+                    `${restText.slice(0, otherThan.index)}${restText.slice(otherThan.index + otherThan[0].length)}`.trim();
+                }
+                if (restText.trim()) {
+                  const { filters: subFilters } = extractTargetFilters(" " + restText);
+                  filters.push(...subFilters);
+                }
+              }
+            } else {
+              return null;
+            }
           }
         }
       }
@@ -207,6 +261,30 @@ export function parseCompoundReturnToHand(text: string): Action[] | null {
  */
 export function parseReturnToDeckAction(text: string): ReturnToDeckAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+  const inAnyOrder = /\s+in\s+any\s+order$/i.test(trimmed);
+
+  const opponentPlacesTypedTrashMatch =
+    /^your\s+opponent\s+places?\s+(\d+)\s+(Characters?|Events?|Stages?)\s+from\s+their\s+trash\s+at\s+the\s+(bottom|top)\s+of\s+their\s+deck(?:\s+in\s+any\s+order)?$/i.exec(
+      trimmed,
+    );
+  if (opponentPlacesTypedTrashMatch) {
+    const category = opponentPlacesTypedTrashMatch[2]!.replace(/s$/i, "").toLowerCase() as
+      | "character"
+      | "event"
+      | "stage";
+    return {
+      action: "returnToDeck",
+      target: {
+        player: "opponent",
+        zones: ["trash"],
+        count: { amount: parseInt(opponentPlacesTypedTrashMatch[1]!, 10) },
+        filters: [{ filter: "cardCategory", value: category }],
+        chosenBy: "opponent",
+      },
+      position: opponentPlacesTypedTrashMatch[3]!.toLowerCase() as "bottom" | "top",
+      ...(inAnyOrder && { order: "any" }),
+    };
+  }
 
   // "place <target> at the (bottom|top) of the owner's/your/their deck" or
   // "return <target> to the (bottom|top) of the owner's/your/their deck"
@@ -219,20 +297,45 @@ export function parseReturnToDeckAction(text: string): ReturnToDeckAction | null
   let targetText = match[1]!;
   const pos = match[2]!.toLowerCase() as "top" | "bottom";
 
-  // Handle "N cards from your trash" — returnToDeck from trash zone
-  const trashCardsMatch = /^(\d+)\s+cards?\s+from\s+your\s+trash$/i.exec(targetText);
+  // "[up to] N cards from your/opponent's trash" — returnToDeck from trash.
+  const trashCardsMatch =
+    /^(up\s+to\s+)?(\d+)\s+cards?\s+from\s+(your\s+opponent['’]s|your)\s+trash$/i.exec(targetText);
   if (trashCardsMatch) {
+    const player = /^your\s+opponent/i.test(trashCardsMatch[3]!) ? "opponent" : "self";
     return {
       action: "returnToDeck",
       target: {
-        player: "self",
+        player,
         zones: ["trash"],
-        count: { amount: parseInt(trashCardsMatch[1]!, 10) },
+        count: {
+          amount: parseInt(trashCardsMatch[2]!, 10),
+          ...(trashCardsMatch[1] && { upTo: true }),
+        },
+        ...(player === "opponent" && { chosenBy: "self" as const }),
       },
       position: pos,
     };
   }
-
+  const opponentTypedTrashMatch =
+    /^(\d+)\s+(Characters?|Events?|Stages?)\s+from\s+their\s+trash$/i.exec(targetText);
+  if (opponentTypedTrashMatch) {
+    const category = opponentTypedTrashMatch[2]!.replace(/s$/i, "").toLowerCase() as
+      | "character"
+      | "event"
+      | "stage";
+    return {
+      action: "returnToDeck",
+      target: {
+        player: "opponent",
+        zones: ["trash"],
+        count: { amount: parseInt(opponentTypedTrashMatch[1]!, 10) },
+        filters: [{ filter: "cardCategory", value: category }],
+        chosenBy: "opponent",
+      },
+      position: pos,
+      ...(inAnyOrder && { order: "any" }),
+    };
+  }
   // Handle "all of your Characters except this Character"
   const exceptSelfMatch =
     /^all\s+(?:of\s+)?your\s+(Characters?)\s+except\s+this\s+Character$/i.exec(targetText);
@@ -243,10 +346,10 @@ export function parseReturnToDeckAction(text: string): ReturnToDeckAction | null
         player: "self",
         zones: ["character"],
         count: { amount: "all" },
-        filters: [{ filter: "excludeName", value: "__self__" }],
-        self: false,
+        filters: [{ filter: "excludeSelf" }],
       },
       position: pos,
+      ...(inAnyOrder && { order: "any" }),
     };
   }
 
@@ -276,7 +379,7 @@ export function parseReturnToDeckAction(text: string): ReturnToDeckAction | null
       return {
         action: "returnToDeck",
         target: {
-          player: "self",
+          player: "both",
           zones,
           count: { amount: "all" },
           ...(filters.length > 0 && { filters }),
@@ -295,6 +398,7 @@ export function parseReturnToDeckAction(text: string): ReturnToDeckAction | null
       action: "returnToDeck",
       target: { player: "opponent", zones: ["character" as Zone], count: { amount: 1 } },
       position: pos,
+      triggerEventTarget: true,
     };
   }
 
@@ -356,6 +460,7 @@ export function parsePlaceFromHandToDeckAction(text: string): ReturnToDeckAction
         count: { amount: parseInt(selfMatch[1]!, 10) },
       },
       position,
+      ...(/in\s+any\s+order$/i.test(trimmed) && { order: "any" as const }),
     };
   }
 
@@ -376,8 +481,28 @@ export function parsePlaceFromHandToDeckAction(text: string): ReturnToDeckAction
         player: "opponent",
         zones: ["hand"],
         count: { amount: parseInt(oppMatch[1]!, 10) },
+        chosenBy: "opponent",
       },
       position,
+      ...(/in\s+any\s+order$/i.test(trimmed) && { order: "any" as const }),
+    };
+  }
+
+  const opponentMovesYourHandMatch =
+    /^your\s+opponent\s+places?\s+(\d+)\s+cards?\s+from\s+your\s+hand\s+at\s+the\s+(bottom|top)\s+of\s+their\s+deck$/i.exec(
+      trimmed,
+    );
+  if (opponentMovesYourHandMatch) {
+    return {
+      action: "returnToDeck",
+      target: {
+        player: "self",
+        zones: ["hand"],
+        count: { amount: parseInt(opponentMovesYourHandMatch[1]!, 10) },
+        chosenBy: "opponent",
+      },
+      position: opponentMovesYourHandMatch[2]!.toLowerCase() as "top" | "bottom",
+      destinationPlayer: "opponent",
     };
   }
 
@@ -443,7 +568,7 @@ export function parseKoOrReturnChoice(text: string): Action | null {
 export function parseReturnHandOrDeckChoice(text: string): Action | null {
   const trimmed = text.trim().replace(/\.+$/, "");
   const m =
-    /^return\s+(.+?)\s+to\s+the\s+owner[''\u2019]s\s+hand\s+or\s+the\s+(top|bottom)\s+of\s+their\s+deck$/i.exec(
+    /^return\s+(.+?)\s+to\s+the\s+owner[''\u2019]s\s+hand\s+or\s+(?:place\s+it\s+at\s+)?the\s+(top|bottom)\s+of\s+their\s+deck$/i.exec(
       trimmed,
     );
   if (!m) return null;

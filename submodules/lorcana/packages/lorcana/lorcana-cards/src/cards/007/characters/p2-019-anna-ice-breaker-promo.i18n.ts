@@ -60,4 +60,18 @@ export const annaIceBreakerP2PromoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ana",
+    version: "Rompehielos",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "EMBOSCADA DE INVIERNO",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido no puede estar listo al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

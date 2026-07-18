@@ -31,6 +31,12 @@ export const op10Giolla066: CharacterCard = {
     effects: [
       {
         trigger: "onOpponentAttack",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 2,
+          },
+        ],
         actions: [
           {
             action: "rest",

@@ -60,4 +60,18 @@ export const madamMimRhinoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora mim",
+    version: "Rinoceronte",
+    text: [
+      {
+        title: "Shift 2",
+      },
+      {
+        title: "¡ABRAN PASO, PASANDO!",
+        description:
+          "Cuando juegues con este personaje, destiérralo o devuelve a tu mano otro personaje tuyo elegido.",
+      },
+    ],
+  },
 };

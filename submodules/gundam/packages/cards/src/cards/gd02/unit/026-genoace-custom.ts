@@ -5,6 +5,7 @@ export const gd02GenoaceCustom026: UnitCard = {
   name: "Genoace Custom",
   type: "unit",
   color: "green",
+  battlefieldZones: ["space", "earth"],
   traits: ["earth federation"],
   id: "GD02-026",
   canonicalId: "GD02-026",
@@ -41,6 +42,7 @@ export const gd02GenoaceCustom026: UnitCard = {
   cost: 2,
   ap: 2,
   hp: 2,
+  linkCondition: "[Woolf Enneacle]",
   effect:
     "【Deploy】If you are Lv.7 or higher, choose 1 of your (AGE System) Units. It gets AP+2 during this turn.<br>",
   effects: [

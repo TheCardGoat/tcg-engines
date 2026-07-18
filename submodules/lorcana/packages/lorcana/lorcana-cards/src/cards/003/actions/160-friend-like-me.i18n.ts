@@ -41,4 +41,8 @@ export const friendLikeMeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Amigo como yo",
+    text: "Cada jugador coloca las 3 primeras cartas de su mazo en su tintero boca abajo y las ejerce.",
+  },
 };

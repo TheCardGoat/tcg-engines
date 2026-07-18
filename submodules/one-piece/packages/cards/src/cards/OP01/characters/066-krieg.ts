@@ -25,6 +25,5 @@ export const op01Krieg066: CharacterCard = {
   counter: 1000,
   traits: ["Krieg Pirates"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op01Krieg066I18n,
 };

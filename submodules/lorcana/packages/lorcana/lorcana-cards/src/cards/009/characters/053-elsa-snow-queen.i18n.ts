@@ -41,4 +41,14 @@ export const elsaSnowQueenI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Elsa",
+    version: "Reina de las nieves",
+    text: [
+      {
+        title: "CONGELAR",
+        description: "{E}: ejerce el personaje contrario elegido.",
+      },
+    ],
+  },
 };

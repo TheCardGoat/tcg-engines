@@ -27,5 +27,32 @@ export const eb01Hamlet024: CharacterCard = {
   attribute: "slash",
   effect:
     "If you have 4 or less cards in your hand, all of your [SMILE] type Characters gain +1000 power.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "handCount",
+            player: "self",
+            comparison: "lte",
+            value: 4,
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: "all" },
+              filters: [{ filter: "trait", value: "SMILE", match: "includes" }],
+            },
+            value: 1000,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: eb01Hamlet024I18n,
 };

@@ -45,4 +45,15 @@ export const vinnieGreenPigeonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Vinnie",
+    version: "Paloma verde",
+    text: [
+      {
+        title: "EXPERIENCIA DE APRENDIZAJE",
+        description:
+          "Durante el turno de un oponente, cada vez que uno de tus otros personajes sea desterrado, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

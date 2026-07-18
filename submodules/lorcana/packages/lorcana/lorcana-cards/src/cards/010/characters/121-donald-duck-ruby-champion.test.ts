@@ -1,6 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaMultiplayerTestEngine, createMockCharacter } from "@tcg/lorcana-engine/testing";
 import { donaldDuckRubyChampion } from "./121-donald-duck-ruby-champion";
+import { mrIncredibleSuperStrong } from "../../012/characters/127-mr-incredible-super-strong";
 
 const rubyAllyWeakStrength = createMockCharacter({
   id: "ruby-ally-weak",
@@ -76,6 +77,17 @@ describe("Donald Duck - Ruby Champion", () => {
 
       // rubyAllyWeakStrength has 5 base strength, HIGH ENERGY gives +1 = 6, still below 7
       expect(testEngine.asPlayerOne().getCardLore(rubyAllyWeakStrength)).toBe(1);
+    });
+
+    it("uses derived strength for Mr. Incredible - Super Strong", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+        play: [donaldDuckRubyChampion, mrIncredibleSuperStrong, rubyAllyWeakStrength],
+      });
+
+      expect(
+        testEngine.asPlayerOne().getCardStrength(mrIncredibleSuperStrong),
+      ).toBeGreaterThanOrEqual(7);
+      expect(testEngine.asPlayerOne().getCardLore(mrIncredibleSuperStrong)).toBe(2);
     });
 
     it("does not give +1 lore to non-Ruby characters", () => {

@@ -24,12 +24,30 @@ export const op14eb04Salome106: CharacterCard = {
   power: 1000,
   counter: 1000,
   trigger: "Play this card.",
-  traits: ["Animal Amazon Lily"],
+  traits: ["Animal", "Amazon Lily"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
   effects: {
     keywords: ["blocker"],
+    effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+            },
+            self: true,
+          },
+        ],
+      },
+    ],
   },
   i18n: op14eb04Salome106I18n,
 };

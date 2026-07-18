@@ -39,4 +39,9 @@ export const peterPanLostBoyLeaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Peter Pan",
+    version: "Líder del niño perdido",
+    text: "VINE A ESCUCHAR LAS HISTORIAS Una vez por turno, cuando este personaje se mueve a una ubicación, obtiene un conocimiento igual al {L} de esa ubicación.",
+  },
 };

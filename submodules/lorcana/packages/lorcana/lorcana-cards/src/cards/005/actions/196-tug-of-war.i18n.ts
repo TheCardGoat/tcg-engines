@@ -57,4 +57,18 @@ export const tugofwarI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tira y afloja",
+    text: [
+      {
+        title: "Elige uno:",
+      },
+      {
+        title: "• Causa 1 daño a cada personaje contrario sin Evasivo.",
+      },
+      {
+        title: "• Causa 3 daños a cada personaje contrario con Evasivo.",
+      },
+    ],
+  },
 };

@@ -31,10 +31,11 @@ export const op11CharlotteBrulee069: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
+        costs: [
           {
-            condition: "leaderTrait",
-            trait: "Big Mom Pirates",
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "top",
           },
         ],
         actions: [
@@ -45,6 +46,11 @@ export const op11CharlotteBrulee069: CharacterCard = {
               upTo: true,
             },
             state: "active",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Big Mom Pirates",
+              match: "includes",
+            },
           },
         ],
         optional: true,

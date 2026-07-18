@@ -21,4 +21,9 @@ export const hadesMeticulousSchemerI18n: Record<Languages, I18nProperties> = {
     version: "Cospiratore Meticoloso",
     text: "<Protetto>",
   },
+  es: {
+    name: "Infierno",
+    version: "Planificador meticuloso",
+    text: "Pabellón",
+  },
 };

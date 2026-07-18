@@ -4,6 +4,7 @@ export const gd02GuncannonGq052: UnitCard = {
   cardNumber: "GD02-052",
   name: "Guncannon (GQ)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["earth federation"],
   id: "GD02-052",

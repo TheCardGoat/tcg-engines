@@ -28,11 +28,11 @@ export const op04Sanji104: CharacterCard = {
   color: ["yellow"],
   rarity: "SR",
   setId: "OP04",
-  cost: 3,
+  cost: 4,
   power: 5000,
   counter: 1000,
   traits: ["The Vinsmoke Family"],
-  attribute: "ranged",
+  attribute: "strike",
   artVariants: [
     {
       type: "alternate-art",
@@ -53,18 +53,7 @@ export const op04Sanji104: CharacterCard = {
             amount: 1,
           },
         ],
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-          },
-        ],
+        actions: [{ action: "playThisCard" }],
         optional: true,
       },
     ],

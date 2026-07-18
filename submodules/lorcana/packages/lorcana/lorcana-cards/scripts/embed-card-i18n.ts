@@ -360,6 +360,7 @@ export function embedI18nInCanonicalCards(
         de: deEntry ? buildLocalizedI18nProperties(deEntry, "de", enProps.text) : enProps,
         fr: frEntry ? buildLocalizedI18nProperties(frEntry, "fr", enProps.text) : enProps,
         it: itEntry ? buildLocalizedI18nProperties(itEntry, "it", enProps.text) : enProps,
+        es: enProps,
       } satisfies Record<Languages, I18nProperties>,
     };
   }

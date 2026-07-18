@@ -47,12 +47,17 @@ export const op02Marco018: CharacterCard = {
     effects: [
       {
         trigger: "onKo",
-        conditions: [
+        costs: [
           {
-            condition: "lifeCount",
-            player: "self",
-            comparison: "lte",
-            value: 2,
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Whitebeard Pirates",
+                match: "includes",
+              },
+            ],
           },
         ],
         actions: [
@@ -65,7 +70,14 @@ export const op02Marco018: CharacterCard = {
             count: {
               amount: 1,
             },
+            self: true,
             playState: "rested",
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 2,
+            },
           },
         ],
         optional: true,

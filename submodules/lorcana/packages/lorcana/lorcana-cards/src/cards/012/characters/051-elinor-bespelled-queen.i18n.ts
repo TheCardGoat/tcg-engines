@@ -21,4 +21,9 @@ export const elinorBespelledQueenI18n: Record<Languages, I18nProperties> = {
     version: "Regina Preda dell'Incantesimo",
     text: "<Sfidante> +2",
   },
+  es: {
+    name: "Elinor",
+    version: "Reina besada",
+    text: "Retador +2",
+  },
 };

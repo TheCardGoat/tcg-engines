@@ -16,6 +16,7 @@
     "./match": "./src/match.ts",
     "./snapshot": "./src/snapshot.ts",
     "./page-data": "./src/page-data.ts",
+    "./settings": "./src/settings.ts",
     "./replay": "./src/replay.ts",
     "./ws": "./src/ws.ts",
     "./json-patch": "./src/json-patch.ts",

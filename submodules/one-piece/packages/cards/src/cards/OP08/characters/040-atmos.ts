@@ -26,15 +26,22 @@ export const op08Atmos040: CharacterCard = {
   traits: ["Whitebeard Pirates"],
   attribute: "slash",
   effect:
-    '[On Play] You may reveal 2 cards with a type including "Whitebeard Piratess" from your hand: If your Leader\'s type includes "Whitebeard Piratess", return up to 1 of your opponent\'s Characters with a cost of 4 or less to the owner\'s hand.',
+    '[On Play] You may reveal 2 cards with a type including "Whitebeard Pirates" from your hand: If your Leader\'s type includes "Whitebeard Pirates", return up to 1 of your opponent\'s Characters with a cost of 4 or less to the owner\'s hand.',
   effects: {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
+        costs: [
           {
-            condition: "leaderTrait",
-            trait: "Whitebeard Piratess",
+            cost: "revealFromHand",
+            amount: 2,
+            filters: [
+              {
+                filter: "trait",
+                value: "Whitebeard Pirates",
+                match: "includes",
+              },
+            ],
           },
         ],
         actions: [
@@ -54,6 +61,11 @@ export const op08Atmos040: CharacterCard = {
                   value: 4,
                 },
               ],
+            },
+            condition: {
+              condition: "leaderTrait",
+              trait: "Whitebeard Pirates",
+              match: "includes",
             },
           },
         ],

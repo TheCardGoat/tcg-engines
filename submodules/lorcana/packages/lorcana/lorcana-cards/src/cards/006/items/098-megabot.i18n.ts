@@ -77,4 +77,23 @@ export const megabotI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Megabot",
+    text: [
+      {
+        title: "CARA FELIZ",
+        description: "Este objeto entra en juego ejercido.",
+      },
+      {
+        title: "¡DESTRUIR!",
+        description: "{E}, desterrar este objeto — Elige uno:",
+      },
+      {
+        title: "* Desterrar el elemento elegido.",
+      },
+      {
+        title: "* Desterrar personaje dañado elegido.",
+      },
+    ],
+  },
 };

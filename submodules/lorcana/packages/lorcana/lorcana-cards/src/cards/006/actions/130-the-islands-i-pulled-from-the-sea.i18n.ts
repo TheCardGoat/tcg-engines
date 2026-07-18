@@ -35,4 +35,8 @@ export const theIslandsIPulledFromTheSeaI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Las islas que saqué del mar",
+    text: "Busca en tu mazo una carta de ubicación, muéstrala a todos los jugadores y ponla en tu mano. Luego, baraja tu mazo.",
+  },
 };

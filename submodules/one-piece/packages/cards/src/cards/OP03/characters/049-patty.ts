@@ -43,7 +43,7 @@ export const op03Patty049: CharacterCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

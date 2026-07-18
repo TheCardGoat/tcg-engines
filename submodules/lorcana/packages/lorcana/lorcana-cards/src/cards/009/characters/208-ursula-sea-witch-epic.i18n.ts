@@ -45,4 +45,15 @@ export const ursulaSeaWitchEpicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Úrsula",
+    version: "Bruja del mar",
+    text: [
+      {
+        title: "LLEGAS DEMASIADO TARDE",
+        description:
+          "Siempre que este personaje realiza una misión, el personaje contrario elegido no puede estar listo al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

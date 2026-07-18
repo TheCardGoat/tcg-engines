@@ -45,4 +45,15 @@ export const davidXanatosSteelClanLeaderI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "David Xánatos",
+    version: "Líder del clan de acero",
+    text: [
+      {
+        title: "INCONVENIENTES MENORES",
+        description:
+          "Cuando juegas con este personaje, puedes elegir y descartar una carta para causar 2 daños al personaje elegido.",
+      },
+    ],
+  },
 };

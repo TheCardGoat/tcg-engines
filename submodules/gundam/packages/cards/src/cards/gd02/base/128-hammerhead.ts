@@ -4,6 +4,7 @@ export const gd02Hammerhead128: BaseCard = {
   cardNumber: "GD02-128",
   name: "Hammerhead",
   type: "base",
+  color: "purple",
   traits: ["teiwaz", "warship"],
   id: "GD02-128",
   canonicalId: "GD02-128",
@@ -39,6 +40,7 @@ export const gd02Hammerhead128: BaseCard = {
   level: 4,
   cost: 2,
   hp: 5,
+  battlefieldZones: ["space"],
   effect:
     "【Burst】Deploy this card.<br>【Deploy】Add 1 of your Shields to your hand. Then, if it is your turn and a friendly (Teiwaz) Link Unit is in play, choose 1 enemy Unit with 2 or less AP. Destroy it.<br>",
   effects: [
@@ -64,38 +66,41 @@ export const gd02Hammerhead128: BaseCard = {
       directives: [
         {
           action: {
-            action: "addShieldToHand",
-            count: 1,
-          },
-        },
-        {
-          condition: {
-            type: "and",
-            conditions: [
-              { type: "isTurn", whose: "friendly" },
-              {
-                type: "unitCount",
-                owner: "friendly",
-                comparison: "gte",
-                count: 1,
-                isLinkUnit: true,
-                hasTrait: "teiwaz",
-              },
-            ],
-          },
-          thenDirectives: [
-            {
-              action: {
-                action: "destroy",
-                target: {
-                  owner: "opponent",
-                  cardType: "unit",
-                  count: { min: 0, max: 1 },
-                  attributeFilters: [{ attribute: "ap", comparison: "lte", value: 2 }],
+            action: "resolveThenQueue",
+            first: { action: "addShieldToHand", count: 1 },
+            condition: {
+              type: "and",
+              conditions: [
+                { type: "isTurn", whose: "friendly" },
+                {
+                  type: "unitCount",
+                  owner: "friendly",
+                  comparison: "gte",
+                  count: 1,
+                  isLinkUnit: true,
+                  hasTrait: "teiwaz",
                 },
-              },
+              ],
             },
-          ],
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
+                {
+                  action: {
+                    action: "destroy",
+                    target: {
+                      owner: "opponent",
+                      cardType: "unit",
+                      count: 1,
+                      attributeFilters: [{ attribute: "ap", comparison: "lte", value: 2 }],
+                    },
+                  },
+                },
+              ],
+              sourceText: "Choose 1 enemy Unit with 2 or less AP. Destroy it.",
+            },
+          },
         },
       ],
       sourceText:

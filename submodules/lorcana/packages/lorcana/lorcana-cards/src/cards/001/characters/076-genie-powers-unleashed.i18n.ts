@@ -72,4 +72,21 @@ export const geniePowersUnleashedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Genio",
+    version: "Poderes desatados",
+    text: [
+      {
+        title: "Shift 6",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "¡PODER CÓSMICO FENOMENAL!",
+        description:
+          "Siempre que este personaje realice una misión, puedes realizar una acción con un coste de 5 o menos de forma gratuita.",
+      },
+    ],
+  },
 };

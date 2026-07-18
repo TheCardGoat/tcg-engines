@@ -41,7 +41,7 @@ export const op03Zeff047: CharacterCard = {
     },
   ],
   effect:
-    "[DON!! x1] When this Character's attack deals damage to your opponent's Life, you may trash 7 cards from the top of your deck. [On Play] Return up to 1 Character with a cost of 3 or less to the owner's hand, and you may trash 2 cards from the top of your deck.  This card has been officially errata'd.",
+    "[DON!! x1] When this Character's attack deals damage to your opponent's Life, you may trash 7 cards from the top of your deck.\n[On Play] Return up to 1 Character with a cost of 3 or less to the owner's hand, and you may trash 2 cards from the top of your deck.",
   effects: {
     effects: [
       {
@@ -59,6 +59,7 @@ export const op03Zeff047: CharacterCard = {
             amount: 7,
           },
         ],
+        optional: true,
       },
       {
         trigger: "onPlay",
@@ -66,7 +67,7 @@ export const op03Zeff047: CharacterCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,
@@ -82,9 +83,14 @@ export const op03Zeff047: CharacterCard = {
             },
           },
           {
-            action: "trashFromDeck",
-            player: "self",
-            amount: 2,
+            action: "optional",
+            actions: [
+              {
+                action: "trashFromDeck",
+                player: "self",
+                amount: 2,
+              },
+            ],
           },
         ],
       },

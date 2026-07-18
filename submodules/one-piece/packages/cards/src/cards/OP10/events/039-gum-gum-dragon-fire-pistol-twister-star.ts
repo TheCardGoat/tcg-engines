@@ -33,6 +33,7 @@ export const op10GumGumDragonFirePistolTwisterStar039: EventCard = {
           {
             condition: "leaderTrait",
             trait: "ODYSSEY",
+            match: "includes",
           },
         ],
         actions: [
@@ -51,6 +52,7 @@ export const op10GumGumDragonFirePistolTwisterStar039: EventCard = {
               {
                 filter: "trait",
                 value: "ODYSSEY",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -59,6 +61,20 @@ export const op10GumGumDragonFirePistolTwisterStar039: EventCard = {
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 5 }],
+            },
           },
         ],
       },

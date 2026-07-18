@@ -60,4 +60,18 @@ export const jasmineSoothingPrincessP3PromoI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Jazmín",
+    version: "Princesa calmante",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "AURA EDIFICANTE",
+        description:
+          "Siempre que este personaje realice una misión, si hay una carta debajo de ella, elimina hasta 3 daños de cada uno de tus personajes.",
+      },
+    ],
+  },
 };

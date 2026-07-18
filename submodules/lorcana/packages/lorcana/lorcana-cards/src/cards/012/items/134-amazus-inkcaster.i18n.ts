@@ -41,4 +41,14 @@ export const amazusInkcasterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lanzador de tinta de Amazu",
+    text: [
+      {
+        title: "EN EL HORIZONTE",
+        description:
+          "{E}, 1 {I}: mira las 4 cartas superiores de tu mazo. Puedes revelar una carta de ubicación y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

@@ -1,3 +1,4 @@
+// Rules grounding: CR 2.2.0 5.1.1.7, 8.10.4.2, 8.10.6-8.10.8.3.
 import { describe, expect, it } from "bun:test";
 import {
   LorcanaMultiplayerTestEngine,
@@ -90,6 +91,56 @@ describe("Mickey Mouse & Minnie Mouse - Adventuring Duo", () => {
     );
   });
 
+  it("is drying when either Duo Shift target is drying", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [mickeyMouseMinnieMouseAdventuringDuo],
+      play: [
+        { card: mickeyBase, isDrying: false },
+        { card: minnieBase, isDrying: true },
+      ],
+      inkwell: 0,
+    });
+    const mickeyTarget = testEngine.findCardInstanceId(mickeyBase, "play", PLAYER_ONE);
+    const minnieTarget = testEngine.findCardInstanceId(minnieBase, "play", PLAYER_ONE);
+
+    expect(
+      testEngine.asPlayerOne().playCard(mickeyMouseMinnieMouseAdventuringDuo, {
+        cost: {
+          cost: "shift",
+          shiftTarget: mickeyTarget,
+          additionalShiftTargets: [minnieTarget],
+        },
+      }),
+    ).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().quest(mickeyMouseMinnieMouseAdventuringDuo).success).toBe(
+      false,
+    );
+  });
+
+  it("retains the damage from both Duo Shift targets", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [mickeyMouseMinnieMouseAdventuringDuo],
+      play: [
+        { card: mickeyBase, damage: 1 },
+        { card: minnieBase, damage: 2 },
+      ],
+      inkwell: 0,
+    });
+    const mickeyTarget = testEngine.findCardInstanceId(mickeyBase, "play", PLAYER_ONE);
+    const minnieTarget = testEngine.findCardInstanceId(minnieBase, "play", PLAYER_ONE);
+
+    expect(
+      testEngine.asPlayerOne().playCard(mickeyMouseMinnieMouseAdventuringDuo, {
+        cost: {
+          cost: "shift",
+          shiftTarget: mickeyTarget,
+          additionalShiftTargets: [minnieTarget],
+        },
+      }),
+    ).toBeSuccessfulCommand();
+    expect(testEngine.asServer().getCard(mickeyMouseMinnieMouseAdventuringDuo).damage).toBe(3);
+  });
+
   it("goes to the inkwell facedown and exerted instead when banished", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
       hand: [banishChosenCharacter],
@@ -114,5 +165,36 @@ describe("Mickey Mouse & Minnie Mouse - Adventuring Duo", () => {
       ),
     ).toBe("faceDown");
     expect(testEngine.asPlayerOne().isExerted(mickeyMouseMinnieMouseAdventuringDuo)).toBe(true);
+  });
+
+  it("puts the entire shifted stack into the inkwell when banished", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [mickeyMouseMinnieMouseAdventuringDuo, banishChosenCharacter],
+      play: [mickeyBase, minnieBase],
+      inkwell: banishChosenCharacter.cost,
+    });
+    const mickeyTarget = testEngine.findCardInstanceId(mickeyBase, "play", PLAYER_ONE);
+    const minnieTarget = testEngine.findCardInstanceId(minnieBase, "play", PLAYER_ONE);
+
+    expect(
+      testEngine.asPlayerOne().playCard(mickeyMouseMinnieMouseAdventuringDuo, {
+        cost: {
+          cost: "shift",
+          shiftTarget: mickeyTarget,
+          additionalShiftTargets: [minnieTarget],
+        },
+      }),
+    ).toBeSuccessfulCommand();
+    expect(
+      testEngine.asPlayerOne().playCard(banishChosenCharacter, {
+        targets: [mickeyMouseMinnieMouseAdventuringDuo],
+      }),
+    ).toBeSuccessfulCommand();
+
+    for (const card of [mickeyMouseMinnieMouseAdventuringDuo, mickeyBase, minnieBase]) {
+      expect(testEngine.asPlayerOne().getCardZone(card)).toBe("inkwell");
+      expect(testEngine.getCardPublicFaceState(card, "inkwell", PLAYER_ONE)).toBe("faceDown");
+      expect(testEngine.asPlayerOne().isExerted(card)).toBe(true);
+    }
   });
 });

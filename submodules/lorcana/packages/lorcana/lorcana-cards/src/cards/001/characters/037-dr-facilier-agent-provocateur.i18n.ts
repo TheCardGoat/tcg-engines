@@ -52,4 +52,20 @@ export const drFacilierAgentProvocateurI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Dr. Facilier",
+    version: "Agente provocador",
+    text: [
+      {
+        title: "Shift 5",
+        description:
+          "(Puedes pagar 5 {I} para jugar esto encima de uno de tus personajes llamado Dr. Facilier).",
+      },
+      {
+        title: "EN LAS SOMBRAS",
+        description:
+          "Siempre que uno de tus otros personajes sea desterrado en un desafío, puedes devolver esa carta a tu mano.",
+      },
+    ],
+  },
 };

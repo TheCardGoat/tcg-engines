@@ -21,4 +21,9 @@ export const mrsBeakleyFormerShushAgentI18n: Record<Languages, I18nProperties> =
     version: "Ex Agente dello S.H.U.S.H.",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Sra. Beakley",
+    version: "El ex S.H.U.S.H. Agente",
+    text: "Guardaespaldas",
+  },
 };

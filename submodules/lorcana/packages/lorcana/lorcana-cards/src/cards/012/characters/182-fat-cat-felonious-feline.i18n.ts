@@ -21,4 +21,9 @@ export const fatCatFeloniousFelineI18n: Record<Languages, I18nProperties> = {
     version: "Felino Fellone",
     text: "<Resistere> +1",
   },
+  es: {
+    name: "Gato gordo",
+    version: "Felino criminal",
+    text: "Resistir +1",
+  },
 };

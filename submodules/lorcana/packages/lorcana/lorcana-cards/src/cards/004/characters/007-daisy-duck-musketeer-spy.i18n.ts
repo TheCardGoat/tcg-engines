@@ -44,4 +44,14 @@ export const daisyDuckMusketeerSpyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato margarita",
+    version: "Espía mosquetero",
+    text: [
+      {
+        title: "INFILTRACIÓN",
+        description: "Cuando juegas con este personaje, cada oponente elige y descarta una carta.",
+      },
+    ],
+  },
 };

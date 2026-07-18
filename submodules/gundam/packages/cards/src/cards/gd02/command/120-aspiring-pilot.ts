@@ -57,7 +57,7 @@ export const gd02AspiringPilot120: CommandCard = {
             amount: 2,
             target: {
               owner: "friendly",
-              cardType: "unit",
+              cardType: ["unit", "base"],
               attributeFilters: [
                 {
                   attribute: "trait",

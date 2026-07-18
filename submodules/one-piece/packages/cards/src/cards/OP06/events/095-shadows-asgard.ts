@@ -42,6 +42,42 @@ export const op06ShadowsAsgard095: EventCard = {
             value: 1000,
             duration: "thisTurn",
           },
+          {
+            action: "ko",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Thriller Bark Pirates",
+                  match: "includes",
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 2,
+                },
+              ],
+            },
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+            },
+            value: 0,
+            valuePerPreviousActionTarget: 1000,
+            duration: "thisTurn",
+          },
         ],
       },
       {
@@ -58,6 +94,57 @@ export const op06ShadowsAsgard095: EventCard = {
             },
             value: 1000,
             duration: "thisTurn",
+          },
+          {
+            action: "ko",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Thriller Bark Pirates",
+                  match: "includes",
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 2,
+                },
+              ],
+            },
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+            },
+            value: 0,
+            valuePerPreviousActionTarget: 1000,
+            duration: "thisTurn",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 2,
+          },
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: 1,
           },
         ],
       },

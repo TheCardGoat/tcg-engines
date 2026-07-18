@@ -60,4 +60,18 @@ export const moanaBornLeaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Moana",
+    version: "Líder nato",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "BIENVENIDO A MI BARCO",
+        description:
+          "Siempre que este personaje realice una misión mientras esté en una ubicación, prepara a todos los demás personajes aquí. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

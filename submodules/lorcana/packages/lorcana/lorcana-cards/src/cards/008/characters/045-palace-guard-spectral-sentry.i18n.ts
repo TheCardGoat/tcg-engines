@@ -26,4 +26,14 @@ export const palaceGuardSpectralSentryI18n: Record<Languages, I18nProperties> = 
     version: "Sentinella Spettrale",
     text: "<Svanire> (Quando un avversario sceglie questo personaggio per un'azione, esilialo.)",
   },
+  es: {
+    name: "Guardia de Palacio",
+    version: "Centinela espectral",
+    text: [
+      {
+        title: "Desaparecer",
+        description: "(Cuando un oponente elige este personaje para una acción, destierralo).",
+      },
+    ],
+  },
 };

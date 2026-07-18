@@ -59,4 +59,18 @@ export const theWeedwhackerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El herbicida",
+    text: [
+      {
+        title: "Potencia total",
+        description:
+          "{E}, 1 {I}: el personaje elegido obtiene <Challenger> +2 este turno. (Obtienen +2 {S} mientras desafían).",
+      },
+      {
+        title: "Claro",
+        description: "2 {I}, desterrar este objeto: destierra al personaje Vineling elegido.",
+      },
+    ],
+  },
 };

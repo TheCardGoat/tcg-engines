@@ -45,4 +45,15 @@ export const goofyGhostHunterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "Cazador de fantasmas",
+    text: [
+      {
+        title: "TRAMPA PERFECTA",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido obtiene -1 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

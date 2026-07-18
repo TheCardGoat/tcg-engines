@@ -69,4 +69,19 @@ export const educationOrEliminationI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Educación o eliminación",
+    text: [
+      {
+        title: "Elige uno:",
+      },
+      {
+        title:
+          "* Sacar una carta. El personaje tuyo elegido obtiene +1 {L} y gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+      {
+        title: "* Desterrar personaje dañado elegido.",
+      },
+    ],
+  },
 };

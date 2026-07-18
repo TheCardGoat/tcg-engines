@@ -23,7 +23,7 @@ export const op08MunchMunchMutation019: EventCard = {
   cost: 3,
   traits: ["Drum Kingdom"],
   effect:
-    "[Main]/[Counter] Give up to 1 of your opponent's Characters 3000 power during this turn. Then, up to 1 of your Characters gains +3000 power during this turn. [Trigger] K.O. up to 1 of your opponent's Characters with 5000 power or less.",
+    "[Main]/[Counter] Give up to 1 of your opponent's Characters −3000 power during this turn. Then, up to 1 of your Characters gains +3000 power during this turn. [Trigger] K.O. up to 1 of your opponent's Characters with 5000 power or less.",
   effects: {
     effects: [
       {
@@ -39,7 +39,7 @@ export const op08MunchMunchMutation019: EventCard = {
                 upTo: true,
               },
             },
-            value: 3000,
+            value: -3000,
             duration: "thisTurn",
           },
           {
@@ -70,7 +70,7 @@ export const op08MunchMunchMutation019: EventCard = {
                 upTo: true,
               },
             },
-            value: 3000,
+            value: -3000,
             duration: "thisTurn",
           },
           {

@@ -45,4 +45,15 @@ export const dinkyHasTheBrainsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mono",
+    version: "Tiene el cerebro",
+    text: [
+      {
+        title: "¡CONSÍGUELO!",
+        description:
+          "Cuando juegas con este personaje, cada oponente elige uno de sus personajes y le inflige 1 daño.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const nortonNimnulMisanthropicGeniusI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Norton Nimnul",
+    version: "Genio misantrópico",
+    text: [
+      {
+        title: "RAYO DESVITALIZADOR",
+        description:
+          "Una vez durante tu turno, cada vez que juegas un objeto, el personaje contrario elegido obtiene -2 {S} este turno.",
+      },
+    ],
+  },
 };

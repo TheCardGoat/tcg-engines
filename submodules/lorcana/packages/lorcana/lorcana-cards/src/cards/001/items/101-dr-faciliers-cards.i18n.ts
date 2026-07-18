@@ -39,4 +39,13 @@ export const drFaciliersCardsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tarjetas del Dr. Facilier",
+    text: [
+      {
+        title: "Las cartas lo dirán",
+        description: "{E}: pagas 1 {I} menos por la siguiente acción que juegues en este turno.",
+      },
+    ],
+  },
 };

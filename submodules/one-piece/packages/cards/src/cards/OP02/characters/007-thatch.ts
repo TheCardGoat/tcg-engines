@@ -25,6 +25,5 @@ export const op02Thatch007: CharacterCard = {
   counter: 1000,
   traits: ["Whitebeard Pirates"],
   attribute: "wisdom",
-  effect: "NULL",
   i18n: op02Thatch007I18n,
 };

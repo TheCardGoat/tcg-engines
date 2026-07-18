@@ -4,7 +4,7 @@ import { op14eb04Oinkchuck082I18n } from "./082-oinkchuck.i18n.ts";
 export const op14eb04Oinkchuck082: CharacterCard = {
   id: "OP14-082",
   canonicalId: "OP14-082",
-  slug: "oinkchuck",
+  slug: "oinkchuck/op14-082",
   name: "Oinkchuck",
   printings: [
     {
@@ -23,6 +23,8 @@ export const op14eb04Oinkchuck082: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
+  trigger:
+    "Play up to 1 {Thriller Bark Pirates} type Character card with a cost of 2 or less from your trash rested.",
   traits: ["Thriller Bark Pirates"],
   attribute: "slash",
   effect:
@@ -49,6 +51,38 @@ export const op14eb04Oinkchuck082: CharacterCard = {
             },
             value: 4,
             duration: "untilEndOfOpponentNextEndPhase",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 2,
+              },
+              {
+                filter: "trait",
+                value: "Thriller Bark Pirates",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+            playState: "rested",
           },
         ],
       },

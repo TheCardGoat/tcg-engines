@@ -56,4 +56,18 @@ export const annaMysticalMajestyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ana",
+    version: "Majestad mística",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "POTENCIA EXCEPCIONAL",
+        description:
+          "Cuando juegues con este personaje, ejercita a todos los personajes contrarios.",
+      },
+    ],
+  },
 };

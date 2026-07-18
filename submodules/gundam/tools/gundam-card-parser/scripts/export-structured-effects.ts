@@ -63,6 +63,9 @@ const records: StructuredCardEffectRecord[] = walk(CARDS_DIR)
   .filter((file) => file.endsWith(".ts"))
   .filter((file) => !file.endsWith(".test.ts"))
   .filter((file) => !file.endsWith("/index.ts"))
+  // The cards tree also contains typed lookup/helper modules. Only source
+  // files that actually declare a card belong in the structured card export.
+  .filter((file) => /\bcardNumber\s*:/.test(readFileSync(file, "utf8")))
   .map((file) => {
     const src = readFileSync(file, "utf8");
     const cardNumber = matchString(src, "cardNumber") ?? "UNKNOWN";

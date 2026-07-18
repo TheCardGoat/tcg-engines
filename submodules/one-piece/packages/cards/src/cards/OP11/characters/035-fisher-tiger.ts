@@ -30,6 +30,30 @@ export const op11FisherTiger035: CharacterCard = {
   effects: {
     effects: [
       {
+        trigger: "onKo",
+        source: "opponentEffect",
+        costs: [{ cost: "restDon", amount: 1 }],
+        actions: [
+          {
+            action: "play",
+            source: { player: "self", zone: "hand" },
+            count: { amount: 1, upTo: true },
+            filters: [
+              { filter: "cost", comparison: "lte", value: 4 },
+              {
+                filter: "anyOf",
+                filters: [
+                  { filter: "trait", value: "Fish-Man", match: "includes" },
+                  { filter: "trait", value: "Merfolk", match: "includes" },
+                ],
+              },
+              { filter: "cardCategory", value: "character" },
+            ],
+          },
+        ],
+        optional: true,
+      },
+      {
         trigger: "onPlay",
         actions: [
           {

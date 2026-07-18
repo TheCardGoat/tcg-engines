@@ -24,6 +24,9 @@ export interface CommunityLeaderboardEntry {
 export interface CommunityLeaderboardResponse {
   communityPublicId: string;
   type: LeaderboardType;
+  formatId?: string;
+  mode?: "1" | "3";
+  seasonId?: string | null;
   entries: CommunityLeaderboardEntry[];
   playerRank: number | null;
   playerEntry: CommunityLeaderboardEntry | null;
@@ -69,12 +72,18 @@ export async function getCommunityLeaderboard(params: {
   communityPublicId: string;
   type: LeaderboardType;
   gameSlug?: string;
+  formatId?: string;
+  mode?: "1" | "3";
+  seasonId?: string;
   gameProfileId?: string | null;
   limit?: number;
 }): Promise<CommunityLeaderboardResponse> {
   const query = new URLSearchParams();
   query.set("type", params.type);
   if (params.gameSlug) query.set("gameSlug", params.gameSlug);
+  if (params.formatId) query.set("formatId", params.formatId);
+  if (params.mode) query.set("mode", params.mode);
+  if (params.seasonId) query.set("seasonId", params.seasonId);
   if (params.gameProfileId) query.set("gameProfileId", params.gameProfileId);
   if (params.limit) query.set("limit", String(params.limit));
 

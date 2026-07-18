@@ -42,6 +42,24 @@ export const op05HauteCouturePatchWork094: EventCard = {
             value: -3,
             duration: "thisTurn",
           },
+          {
+            action: "freeze",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "eq",
+                  value: 0,
+                },
+              ],
+            },
+          },
         ],
       },
       {

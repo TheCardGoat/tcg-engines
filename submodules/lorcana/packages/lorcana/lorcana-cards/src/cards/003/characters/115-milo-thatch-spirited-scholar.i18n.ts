@@ -41,4 +41,14 @@ export const miloThatchSpiritedScholarI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Milo Paja",
+    version: "Erudito enérgico",
+    text: [
+      {
+        title: "¡SOY TU HOMBRE!",
+        description: "Mientras este personaje está en una ubicación, obtiene +2 {S}.",
+      },
+    ],
+  },
 };

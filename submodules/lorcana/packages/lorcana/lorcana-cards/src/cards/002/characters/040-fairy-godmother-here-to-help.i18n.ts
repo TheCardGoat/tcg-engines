@@ -17,4 +17,8 @@ export const fairyGodmotherHereToHelpI18n: Record<Languages, I18nProperties> = {
     name: "Fairy Godmother",
     version: "Here to Help",
   },
+  es: {
+    name: "Hada Madrina",
+    version: "Aquí para ayudar",
+  },
 };

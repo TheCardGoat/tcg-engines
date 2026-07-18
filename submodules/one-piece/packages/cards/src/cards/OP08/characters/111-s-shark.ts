@@ -54,14 +54,6 @@ export const op08SShark111: CharacterCard = {
       },
       {
         trigger: "trigger",
-        conditions: [
-          {
-            condition: "lifeCount",
-            player: "self",
-            comparison: "lte",
-            value: 2,
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -70,13 +62,12 @@ export const op08SShark111: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
+            action: "playThisCard",
+            condition: {
+              condition: "lifeCount",
               player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
+              comparison: "lte",
+              value: 2,
             },
           },
         ],

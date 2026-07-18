@@ -60,4 +60,18 @@ export const tinkerBellTemperamentalFairyI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Campanita",
+    version: "Hada temperamental",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "DESVÍO INOFENSIVO",
+        description:
+          "Cuando juegues con este personaje, ejerce el personaje contrario elegido con 2 {S} o menos.",
+      },
+    ],
+  },
 };

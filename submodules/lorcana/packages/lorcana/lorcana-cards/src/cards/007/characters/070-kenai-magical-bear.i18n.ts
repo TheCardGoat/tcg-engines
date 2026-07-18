@@ -57,4 +57,18 @@ export const kenaiMagicalBearI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kenai",
+    version: "Oso Mágico",
+    text: [
+      {
+        title: "Retador +2",
+      },
+      {
+        title: "SABIDURÍA DE SU HISTORIA",
+        description:
+          "Durante tu turno, cuando este personaje sea desterrado en un desafío, devuelve esta carta a tu mano y gana 1 conocimiento.",
+      },
+    ],
+  },
 };

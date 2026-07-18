@@ -44,12 +44,48 @@ export const op11Sanji051: CharacterCard = {
   effects: {
     effects: [
       {
+        trigger: "onKo",
+        source: "opponentEffect",
+        actions: [
+          {
+            action: "search",
+            lookCount: 5,
+            source: {
+              player: "self",
+              zone: "deck",
+            },
+            revealCount: {
+              amount: 1,
+              upTo: true,
+            },
+            revealFilters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 5,
+              },
+              {
+                filter: "trait",
+                value: "Straw Hat Crew",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+            revealDestination: "character",
+            remainderPosition: "bottom",
+          },
+        ],
+      },
+      {
         trigger: "onPlay",
         actions: [
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

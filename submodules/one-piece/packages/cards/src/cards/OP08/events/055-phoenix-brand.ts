@@ -23,16 +23,23 @@ export const op08PhoenixBrand055: EventCard = {
   cost: 4,
   traits: ["Former Whitebeard Pirates"],
   effect:
-    '[Main] You may reveal 2 cards with a type including "Whitebeard Piratess" from your hand: Place up to 1 Character with a cost of 6 or less at the bottom of the owner\'s deck.',
+    '[Main] You may reveal 2 cards with a type including "Whitebeard Pirates" from your hand: Place up to 1 Character with a cost of 6 or less at the bottom of the owner\'s deck.',
   effects: {
     effects: [
       {
         trigger: "main",
+        costs: [
+          {
+            cost: "revealFromHand",
+            amount: 2,
+            filters: [{ filter: "trait", value: "Whitebeard Pirates", match: "includes" }],
+          },
+        ],
         actions: [
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

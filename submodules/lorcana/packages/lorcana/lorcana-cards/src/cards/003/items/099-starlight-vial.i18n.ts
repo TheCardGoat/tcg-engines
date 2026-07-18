@@ -58,4 +58,17 @@ export const starlightVialI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Vial de luz estelar",
+    text: [
+      {
+        title: "ENERGÍA EFICIENTE",
+        description: "{E}: pagas 2 {I} menos por la siguiente acción que juegues en este turno.",
+      },
+      {
+        title: "TRAMPA 2",
+        description: "{I}, destierra este objeto: roba 2 cartas, luego elige y descarta una carta.",
+      },
+    ],
+  },
 };

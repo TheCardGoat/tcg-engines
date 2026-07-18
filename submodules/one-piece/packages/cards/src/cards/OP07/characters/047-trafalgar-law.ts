@@ -46,12 +46,9 @@ export const op07TrafalgarLaw047: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
+        costs: [
           {
-            condition: "handCount",
-            player: "opponent",
-            comparison: "gte",
-            value: 6,
+            cost: "returnThisToHand",
           },
         ],
         actions: [
@@ -63,8 +60,15 @@ export const op07TrafalgarLaw047: CharacterCard = {
               count: {
                 amount: 1,
               },
+              chosenBy: "opponent",
             },
             position: "bottom",
+            condition: {
+              condition: "handCount",
+              player: "opponent",
+              comparison: "gte",
+              value: 6,
+            },
           },
         ],
         optional: true,

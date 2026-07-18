@@ -63,4 +63,20 @@ export const morduSavageCursedPrinceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mor'du",
+    version: "Príncipe salvaje maldito",
+    text: [
+      {
+        title: "RUGIDO FEROZ",
+        description:
+          "Cuando juegues con este personaje, ejerce todos tus personajes que no se llamen Mor'du.",
+      },
+      {
+        title: "ENRAIZADO POR EL MIEDO",
+        description:
+          "Tus personajes que no se llamen Mor'du no pueden estar listos al comienzo de tu turno.",
+      },
+    ],
+  },
 };

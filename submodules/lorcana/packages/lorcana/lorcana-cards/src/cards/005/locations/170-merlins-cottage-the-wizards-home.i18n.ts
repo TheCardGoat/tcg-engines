@@ -42,4 +42,14 @@ export const merlinsCottageTheWizardsHomeI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "La cabaña de Merlín",
+    version: "La casa del mago",
+    text: [
+      {
+        title: "EL CONOCIMIENTO ES PODER",
+        description: "Cada jugador juega con la carta superior de su mazo boca arriba.",
+      },
+    ],
+  },
 };

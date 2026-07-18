@@ -44,4 +44,15 @@ export const dugGoodBoyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Teta",
+    version: "Buen chico",
+    text: [
+      {
+        title: "¡Buscar!",
+        description:
+          "Cuando juegas con este personaje, si tienes un objeto en juego, roba una carta.",
+      },
+    ],
+  },
 };

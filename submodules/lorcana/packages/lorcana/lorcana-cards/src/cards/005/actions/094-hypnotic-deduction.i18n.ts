@@ -17,4 +17,8 @@ export const hypnoticDeductionI18n: Record<Languages, I18nProperties> = {
     name: "Deduzione Ipnotica",
     text: "Pesca 3 carte, poi metti 2 carte dalla tua mano in cima al tuo mazzo in qualsiasi ordine.",
   },
+  es: {
+    name: "Deducción hipnótica",
+    text: "Roba 3 cartas y luego coloca 2 cartas de tu mano en la parte superior de tu mazo en cualquier orden.",
+  },
 };

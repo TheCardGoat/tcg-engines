@@ -35,6 +35,7 @@ export const op12Hack089: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Revolutionary Army",
+            match: "includes",
           },
         ],
         actions: [
@@ -55,6 +56,45 @@ export const op12Hack089: CharacterCard = {
                 },
               ],
             },
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Revolutionary Army",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 4,
+            duration: "permanent",
           },
         ],
       },

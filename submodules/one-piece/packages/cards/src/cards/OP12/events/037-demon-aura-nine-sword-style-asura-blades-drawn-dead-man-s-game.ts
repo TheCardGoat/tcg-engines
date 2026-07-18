@@ -43,6 +43,12 @@ export const op12DemonAuraNineSwordStyleAsuraBladesDrawnDeadManSGame037: EventCa
     effects: [
       {
         trigger: "main",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 3,
+          },
+        ],
         actions: [
           {
             action: "rest",

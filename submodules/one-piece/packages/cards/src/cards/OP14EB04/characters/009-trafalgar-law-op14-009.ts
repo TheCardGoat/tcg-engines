@@ -54,15 +54,21 @@ export const op14eb04TrafalgarLawOp14009009: CharacterCard = {
         ],
         actions: [
           {
-            action: "setPower",
+            action: "swapBasePower",
             target: {
               player: "self",
-              zones: ["leader", "character"],
+              zones: ["character"],
               count: {
-                amount: 2,
+                amount: 1,
               },
             },
-            value: 0,
+            pairedTarget: {
+              player: "self",
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+            },
             duration: "thisBattle",
           },
         ],

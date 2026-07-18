@@ -45,4 +45,15 @@ export const genieMainAttractionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Genio",
+    version: "Atracción principal",
+    text: [
+      {
+        title: "SHOWMAN FENOMENAL",
+        description:
+          "Mientras este personaje está ejercido, los personajes contrarios no pueden prepararse al comienzo de su turno.",
+      },
+    ],
+  },
 };

@@ -4,6 +4,7 @@ export const gd02RyuseiGoGrazeCustom058: UnitCard = {
   cardNumber: "GD02-058",
   name: "Ryusei-Go (Graze Custom Ⅱ)",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "purple",
   traits: ["tekkadan"],
   id: "GD02-058",
@@ -58,6 +59,7 @@ export const gd02RyuseiGoGrazeCustom058: UnitCard = {
   cost: 2,
   ap: 2,
   hp: 2,
+  linkCondition: "(Tekkadan) Trait",
   effect:
     "【Deploy】Choose 1 of your Units. Deal 1 damage to it. If you do, draw 1. Then, discard 1.<br>",
   effects: [

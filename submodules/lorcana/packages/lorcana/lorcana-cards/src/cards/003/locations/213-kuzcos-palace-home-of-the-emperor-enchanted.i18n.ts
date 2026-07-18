@@ -45,4 +45,15 @@ export const kuzcosPalaceHomeOfTheEmperorEnchantedI18n: Record<Languages, I18nPr
       },
     ],
   },
+  es: {
+    name: "Palacio de Kuzco",
+    version: "Hogar del Emperador",
+    text: [
+      {
+        title: "MURALLAS DE LA CIUDAD",
+        description:
+          "Siempre que un personaje sea desafiado y desterrado mientras estás aquí, destierra al personaje desafiante.",
+      },
+    ],
+  },
 };

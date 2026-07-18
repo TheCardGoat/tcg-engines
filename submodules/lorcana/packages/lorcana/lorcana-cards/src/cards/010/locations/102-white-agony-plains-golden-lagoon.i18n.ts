@@ -41,4 +41,14 @@ export const whiteAgonyPlainsGoldenLagoonI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Llanuras de la agonía blanca",
+    version: "Laguna Dorada",
+    text: [
+      {
+        title: "ORO LIQUIDO PURO",
+        description: "Esta ubicación obtiene +1 {L} por cada personaje aquí.",
+      },
+    ],
+  },
 };

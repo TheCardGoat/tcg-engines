@@ -60,4 +60,19 @@ export const mickeyMouseMinnieMouseAdventuringDuoI18n: Record<Languages, I18nPro
       },
     ],
   },
+  es: {
+    name: "Mickey Mouse y Minnie Mouse",
+    version: "Dúo aventurero",
+    text: [
+      {
+        title:
+          "<Duo Shift> 0 {I} (Puedes pagar 0 {I} para jugar esto encima de dos de tus personajes, uno llamado Mickey Mouse y otro llamado Minnie Mouse).",
+      },
+      {
+        title: "Pensando en ti",
+        description:
+          "Si este personaje fuera a ser desterrado, colócalo en tu tintero boca abajo y ejercítalo en su lugar.",
+      },
+    ],
+  },
 };

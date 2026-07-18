@@ -45,4 +45,15 @@ export const vineEntranceOminousPassagewayI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Entrada de vid",
+    version: "Pasaje siniestro",
+    text: [
+      {
+        title: "Raíz del poder",
+        description:
+          "La primera vez que un personaje Floodborn se mueve aquí cada turno, puedes causar 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

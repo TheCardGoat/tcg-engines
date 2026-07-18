@@ -23,7 +23,7 @@ export const op08YouCanTTakeOurKingThisEarlyInTheGame054: EventCard = {
   cost: 3,
   traits: ["Whitebeard Pirates"],
   effect:
-    '[Counter] Up to 1 of your Leader or Character cards gains +3000 power during this battle. Then, reveal 1 card from the top of your deck and play up to 1 Character card with a type including "Whitebeard Piratess" and a cost of 3 or less. Then, place the rest at the top or bottom of your deck.',
+    '[Counter] Up to 1 of your Leader or Character cards gains +3000 power during this battle. Then, reveal 1 card from the top of your deck and play up to 1 Character card with a type including "Whitebeard Pirates" and a cost of 3 or less. Then, place the rest at the top or bottom of your deck.',
   effects: {
     effects: [
       {
@@ -43,10 +43,29 @@ export const op08YouCanTTakeOurKingThisEarlyInTheGame054: EventCard = {
             duration: "thisBattle",
           },
           {
-            action: "rearrangeDeck",
+            action: "revealTopDeckCard",
             player: "self",
-            count: 1,
-            position: "top",
+            conditional: {
+              filters: [
+                { filter: "cost", comparison: "lte", value: 3 },
+                { filter: "trait", value: "Whitebeard Pirates", match: "includes" },
+                { filter: "cardCategory", value: "character" },
+              ],
+              actions: [
+                {
+                  action: "play",
+                  source: { player: "self", zone: "deck" },
+                  count: { amount: 1, upTo: true },
+                  filters: [
+                    { filter: "cost", comparison: "lte", value: 3 },
+                    { filter: "trait", value: "Whitebeard Pirates", match: "includes" },
+                    { filter: "cardCategory", value: "character" },
+                  ],
+                  topOnly: true,
+                },
+              ],
+            },
+            finalPosition: "choice",
           },
         ],
       },

@@ -17,4 +17,8 @@ export const ohanaMeansFamilyEnchantedI18n: Record<Languages, I18nProperties> = 
     name: "Ohana Significa Famiglia",
     text: "Rimuovi tutti i danni da un tuo personaggio a tua scelta. Pesca una carta per ogni singolo danno rimosso in questo modo.",
   },
+  es: {
+    name: "Ohana significa familia",
+    text: "Elimina todo el daño del personaje tuyo elegido. Roba una carta por cada daño eliminado de esta manera.",
+  },
 };

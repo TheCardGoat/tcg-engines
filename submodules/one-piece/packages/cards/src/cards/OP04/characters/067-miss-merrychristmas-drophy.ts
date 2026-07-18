@@ -39,16 +39,10 @@ export const op04MissMerrychristmasDrophy067: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
+        optional: true,
       },
     ],
   },

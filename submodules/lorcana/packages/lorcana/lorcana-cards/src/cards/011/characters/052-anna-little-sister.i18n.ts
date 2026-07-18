@@ -45,4 +45,15 @@ export const annaLittleSisterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ana",
+    version: "Hermana menor",
+    text: [
+      {
+        title: "DESCUBRIMIENTO INESPERADO",
+        description:
+          "Cuando juegas con este personaje, puedes poner una carta del descarte del jugador elegido en la parte inferior de su mazo.",
+      },
+    ],
+  },
 };

@@ -65,4 +65,20 @@ export const jessieLivelyCowgirlEnchantedI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Jessie",
+    version: "Vaquera animada",
+    text: [
+      {
+        title: "PARTE DE",
+        description:
+          "UNA FAMILIA Siempre que este personaje realice una misión, si tienes 2 o más personajes de juguete en juego, puedes robar una carta.",
+      },
+      {
+        title: "¡YODEL-AY-HEE-HOO!",
+        description:
+          "Siempre que pagas 2 {I} o menos para jugar una carta, el personaje contrario elegido obtiene -1 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -42,4 +42,14 @@ export const kakamoraMenacingSailorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kakamora",
+    version: "Marinero amenazante",
+    text: [
+      {
+        title: "SAQUEAR",
+        description: "Cuando juegas con este personaje, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

@@ -60,4 +60,18 @@ export const hiroHamadaArmorDesignerEnchantedI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Hiro Hamada",
+    version: "Diseñador de armaduras",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "PUEDES SER MUCHO MÁS",
+        description:
+          "Tus personajes Floodborn que tienen una carta debajo obtienen Evasión y Protección. (Solo los personajes con Evasivo pueden desafiarlos. Los oponentes no pueden elegirlos excepto para desafiarlos).",
+      },
+    ],
+  },
 };

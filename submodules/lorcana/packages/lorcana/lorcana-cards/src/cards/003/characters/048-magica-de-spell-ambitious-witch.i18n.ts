@@ -17,4 +17,8 @@ export const magicaDeSpellAmbitiousWitchI18n: Record<Languages, I18nProperties> 
     name: "Amelia",
     version: "Strega Ambiziosa",
   },
+  es: {
+    name: "Magia De Hechizo",
+    version: "Bruja ambiciosa",
+  },
 };

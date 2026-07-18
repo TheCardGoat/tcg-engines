@@ -57,4 +57,19 @@ export const scroogesCountingHouseEbenezersOfficeI18n: Record<Languages, I18nPro
       },
     ],
   },
+  es: {
+    name: "Casa de conteo de Scrooge",
+    version: "Oficina de Ebenezer",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+        description:
+          "(Una vez durante tu turno, puedes pagar 2 {I} para poner la carta superior de tu mazo boca abajo debajo de esta ubicación).",
+      },
+      {
+        title:
+          "Buen negocio Esta ubicación obtiene +1 {W} y +1 {L} por cada tarjeta debajo de ella.",
+      },
+    ],
+  },
 };

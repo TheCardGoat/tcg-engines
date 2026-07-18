@@ -45,4 +45,15 @@ export const daisyDuckPirateCaptainEnchantedI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Pato margarita",
+    version: "Capitán pirata",
+    text: [
+      {
+        title: "ORILLAS DISTANTES",
+        description:
+          "Siempre que uno de tus personajes piratas realice una misión mientras esté en un lugar, roba una carta.",
+      },
+    ],
+  },
 };

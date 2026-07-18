@@ -23,7 +23,7 @@ export const op14eb04EdwardNewgate044: CharacterCard = {
   cost: 8,
   power: 8000,
   counter: 1000,
-  traits: ["The Four Emperors Whitebeard Pirates"],
+  traits: ["The Four Emperors", "Whitebeard Pirates"],
   attribute: "special",
   effect:
     '[Blocker]\n[On Play] Reveal 1 card from the top of your deck. If that card\'s type includes "Whitebeard Pirates", draw 2 cards and trash 1 card from your hand.',
@@ -34,15 +34,29 @@ export const op14eb04EdwardNewgate044: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
-            action: "rearrangeDeck",
+            action: "revealFromDeck",
             player: "self",
             count: 1,
-            position: "top",
-          },
-          {
-            action: "trashFromHand",
-            player: "self",
-            amount: 1,
+            ifRevealedCardMatches: {
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Whitebeard Pirates",
+                },
+              ],
+              actions: [
+                {
+                  action: "draw",
+                  player: "self",
+                  amount: 2,
+                },
+                {
+                  action: "trashFromHand",
+                  player: "self",
+                  amount: 1,
+                },
+              ],
+            },
           },
         ],
       },

@@ -45,10 +45,19 @@ export const op07BoaHancock038: LeaderCard = {
     effects: [
       {
         trigger: "whenLeaving",
+        eventFilter: {
+          causedBy: "self",
+        },
         conditions: [
           {
             condition: "turn",
             value: "your",
+          },
+          {
+            condition: "handCount",
+            player: "self",
+            comparison: "lte",
+            value: 5,
           },
         ],
         actions: [

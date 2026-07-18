@@ -17,4 +17,8 @@ export const tinkerBellFindingAWayI18n: Record<Languages, I18nProperties> = {
     name: "Trilli",
     version: "In Cerca di una Via",
   },
+  es: {
+    name: "Campanita",
+    version: "Encontrar un camino",
+  },
 };

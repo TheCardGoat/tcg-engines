@@ -72,4 +72,21 @@ export const goGoTomagoCuttingEdgeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ve, ve, tomago",
+    version: "Innovador",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "RESISTENCIA CERO",
+        description:
+          "Cuando juegas con este personaje, si usaste Shift para interpretarla, puedes poner al personaje elegido en el tintero de su jugador boca abajo y ejercerlo.",
+      },
+    ],
+  },
 };

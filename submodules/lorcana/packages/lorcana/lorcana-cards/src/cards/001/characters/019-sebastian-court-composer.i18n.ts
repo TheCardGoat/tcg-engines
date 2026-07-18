@@ -21,4 +21,9 @@ export const sebastianCourtComposerI18n: Record<Languages, I18nProperties> = {
     version: "Compositore di Corte",
     text: "<Melodioso> 4",
   },
+  es: {
+    name: "Sebastián",
+    version: "Compositor de la corte",
+    text: "Cantante 4",
+  },
 };

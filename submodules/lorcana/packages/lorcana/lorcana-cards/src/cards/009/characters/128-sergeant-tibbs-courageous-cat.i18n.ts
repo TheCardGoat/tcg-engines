@@ -17,4 +17,8 @@ export const sergeantTibbsCourageousCatI18n: Record<Languages, I18nProperties> =
     name: "Sergeant Tibbs",
     version: "Courageous Cat",
   },
+  es: {
+    name: "Sargento tibbs",
+    version: "Gato valiente",
+  },
 };

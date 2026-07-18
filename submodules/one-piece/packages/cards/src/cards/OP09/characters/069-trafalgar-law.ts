@@ -65,12 +65,19 @@ export const op09TrafalgarLaw069: CharacterCard = {
                 value: 2,
               },
               {
-                filter: "trait",
-                value: "Straw Hat Crew",
-              },
-              {
-                filter: "trait",
-                value: "Heart Pirates",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Straw Hat Crew",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Heart Pirates",
+                    match: "includes",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

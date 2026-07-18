@@ -17,4 +17,8 @@ export const pickAFightI18n: Record<Languages, I18nProperties> = {
     name: "Attaccare Briga",
     text: "Un personaggio a tua scelta può sfidare i personaggi preparati per questo turno.",
   },
+  es: {
+    name: "Elige una pelea",
+    text: "El personaje elegido puede desafiar a los personajes listos este turno.",
+  },
 };

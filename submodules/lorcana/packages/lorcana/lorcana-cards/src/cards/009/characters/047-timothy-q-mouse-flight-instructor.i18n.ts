@@ -44,4 +44,15 @@ export const timothyQMouseFlightInstructorI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Timothy Q. Ratón",
+    version: "Instructor de vuelo",
+    text: [
+      {
+        title: "¡VAMOS A MOSTRARLES, DUMBO!",
+        description:
+          "Mientras tengas un personaje con Evasivo en juego, este personaje obtiene +1 {L}.",
+      },
+    ],
+  },
 };

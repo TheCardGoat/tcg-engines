@@ -29,6 +29,22 @@ export const op09JaguarDSaul109: CharacterCard = {
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
   effects: {
     keywords: ["blocker"],
+    effects: [
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "leaderName",
+            name: "Nico Robin",
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+      },
+    ],
   },
   i18n: op09JaguarDSaul109I18n,
 };

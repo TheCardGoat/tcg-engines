@@ -17,4 +17,8 @@ export const mosquitoBiteI18n: Record<Languages, I18nProperties> = {
     name: "Puntura di Zanzara",
     text: "Metti 1 segnalino danno su un personaggio a tua scelta.",
   },
+  es: {
+    name: "Picadura de mosquito",
+    text: "Pon 1 contador de daño en el personaje elegido.",
+  },
 };

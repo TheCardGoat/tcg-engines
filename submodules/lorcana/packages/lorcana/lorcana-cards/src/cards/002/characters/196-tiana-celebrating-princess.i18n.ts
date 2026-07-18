@@ -58,4 +58,18 @@ export const tianaCelebratingPrincessI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tiana",
+    version: "Celebrando a la princesa",
+    text: [
+      {
+        title: "Resistir +2",
+      },
+      {
+        title: "LO QUE DAS ES LO QUE RECIBES",
+        description:
+          "Mientras este personaje esté ejercido y no tengas cartas en tu mano, los oponentes no pueden realizar acciones.",
+      },
+    ],
+  },
 };

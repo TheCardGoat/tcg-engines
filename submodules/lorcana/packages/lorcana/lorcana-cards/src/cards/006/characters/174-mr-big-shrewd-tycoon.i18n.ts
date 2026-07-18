@@ -42,4 +42,14 @@ export const mrBigShrewdTycoonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señor grande",
+    version: "Magnate astuto",
+    text: [
+      {
+        title: "REPUTACIÓN",
+        description: "Este personaje no puede ser desafiado por personajes con 2 {S} o más.",
+      },
+    ],
+  },
 };

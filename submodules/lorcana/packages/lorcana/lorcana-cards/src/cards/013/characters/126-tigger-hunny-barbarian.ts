@@ -56,7 +56,11 @@ export const tiggerHunnyBarbarian: CharacterCard = {
         event: "challenge",
         on: "SELF",
         timing: "whenever",
-        restrictions: [{ type: "once-per-turn" }, { type: "during-turn", whose: "your" }],
+        restrictions: [
+          { type: "once-per-turn" },
+          { type: "during-turn", whose: "your" },
+          { type: "defender-is-character" },
+        ],
       },
       effect: {
         type: "optional",

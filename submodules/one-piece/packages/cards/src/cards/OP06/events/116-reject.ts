@@ -53,7 +53,39 @@ export const op06Reject116: EventCard = {
                   },
                 },
               ],
+              [
+                {
+                  action: "dealDamage",
+                  player: "opponent",
+                  amount: 1,
+                  condition: {
+                    condition: "lifeCount",
+                    player: "opponent",
+                    comparison: "eq",
+                    value: 1,
+                  },
+                },
+              ],
             ],
+          },
+          {
+            action: "removeFromLife",
+            player: "self",
+            count: {
+              amount: 1,
+            },
+            destination: "hand",
+            position: "top",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
           },
         ],
       },

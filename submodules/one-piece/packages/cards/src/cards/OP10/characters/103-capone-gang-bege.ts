@@ -31,6 +31,13 @@ export const op10CaponeGangBege103: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
+        ],
         actions: [
           {
             action: "addToLife",
@@ -45,6 +52,7 @@ export const op10CaponeGangBege103: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Supernovas",
+                  match: "includes",
                 },
                 {
                   filter: "cardCategory",

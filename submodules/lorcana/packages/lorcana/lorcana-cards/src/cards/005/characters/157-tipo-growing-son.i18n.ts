@@ -45,4 +45,15 @@ export const tipoGrowingSonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tipo",
+    version: "Hijo en crecimiento",
+    text: [
+      {
+        title: "MIDEME DE NUEVO",
+        description:
+          "Cuando juegas con este personaje, puedes poner una carta de tu mano en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const chernabogUnnaturalForceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Chernabog",
+    version: "Fuerza antinatural",
+    text: [
+      {
+        title: "DANZA OSCURA",
+        description:
+          "Cuando juegas con este personaje, puedes barajar el personaje contrario elegido en el mazo de su jugador. Si lo haces, ese jugador podrá jugar un personaje de su descarte de forma gratuita.",
+      },
+    ],
+  },
 };

@@ -14,6 +14,13 @@ import type {
   PlayerState,
   ResolutionItem,
 } from "./types.ts";
+import {
+  arePlayerEffectsNegatedByPermanentEffect,
+  getPermanentKeywords,
+  getPermanentModifierTotal,
+  getPermanentSetCost,
+  isRefreshPreventedByPermanentEffect,
+} from "./effects/permanent.ts";
 
 type ResolutionItemInput = ResolutionItem extends infer T
   ? T extends ResolutionItem
@@ -53,6 +60,10 @@ export function cardName(card: OPCard): string {
   return card.i18n.en.name;
 }
 
+export function cardNames(card: OPCard): readonly string[] {
+  return [cardName(card), ...(card.alternateNames ?? [])];
+}
+
 export function basePower(card: OPCard): number {
   if (card.cardType === "leader" || card.cardType === "character") {
     return card.power ?? 0;
@@ -69,12 +80,50 @@ export function baseCost(card: OPCard): number {
   return 0;
 }
 
+export function getCardCounter(state: MatchState, instanceId: string): number {
+  const card = getCardForInstance(state, instanceId);
+  if (card.cardType !== "character") {
+    return 0;
+  }
+  return (card.counter ?? 0) + getPermanentModifierTotal(state, instanceId, "counter");
+}
+
 export function leaderLife(card: OPCard): number {
   return card.cardType === "leader" ? card.life : 0;
 }
 
 export function effectBlocksFor(card: OPCard, trigger: EffectBlock["trigger"]): EffectBlock[] {
   return card.effects?.effects?.filter((block) => block.trigger === trigger) ?? [];
+}
+
+export function effectsAreNegated(
+  state: MatchState,
+  instanceId: string,
+  trigger?: EffectBlock["trigger"],
+): boolean {
+  const targetController = getInstance(state, instanceId).controller;
+  const targetLeaderId = getPlayer(state, targetController).leaderInstanceId;
+  return (
+    Object.values(state.modifiers).some(
+      (modifier) =>
+        (modifier.targetId === instanceId ||
+          (modifier.playerScope && modifier.targetId === targetLeaderId)) &&
+        modifier.type === "flag" &&
+        modifier.flag === "effectsNegated" &&
+        (!modifier.negatedEffectTypes?.length ||
+          (trigger !== undefined && modifier.negatedEffectTypes.includes(trigger))),
+    ) || arePlayerEffectsNegatedByPermanentEffect(state, instanceId, trigger)
+  );
+}
+
+export function effectBlocksForInstance(
+  state: MatchState,
+  instanceId: string,
+  trigger: EffectBlock["trigger"],
+): EffectBlock[] {
+  return effectsAreNegated(state, instanceId, trigger)
+    ? []
+    : effectBlocksFor(getCardForInstance(state, instanceId), trigger);
 }
 
 export function emitEvent(
@@ -143,12 +192,20 @@ export function emitLog(
   return entry;
 }
 
-export function enqueueResolution(state: MatchState, item: ResolutionItemInput): ResolutionItem {
+export function enqueueResolution(
+  state: MatchState,
+  item: ResolutionItemInput,
+  options: { next?: boolean } = {},
+): ResolutionItem {
   const nextItem = {
     ...item,
     id: nextIdentifier(state, "res"),
   } as ResolutionItem;
-  state.resolutionQueue.push(nextItem);
+  if (options.next) {
+    state.resolutionQueue.unshift(nextItem);
+  } else {
+    state.resolutionQueue.push(nextItem);
+  }
   state.resolutionStatus = "running";
   emitEvent(state, "resolutionQueued", "system", {
     sourceInstanceId:
@@ -166,6 +223,67 @@ export function enqueueResolution(state: MatchState, item: ResolutionItemInput):
     },
   });
   return nextItem;
+}
+
+export function enqueueEffectsForTrigger(
+  state: MatchState,
+  sourceInstanceId: string,
+  controller: MatchSeat,
+  trigger: EffectBlock["trigger"],
+  trashHandIds: string[] | undefined,
+  triggerEvent?: Extract<ResolutionItem, { kind: "effectBlock" }>["triggerEvent"],
+) {
+  const source = getInstance(state, sourceInstanceId);
+  const blocks = effectBlocksForInstance(state, sourceInstanceId, trigger);
+  let enqueued = 0;
+
+  for (const [index, block] of blocks.entries()) {
+    const effectKey = block.oncePerTurnKey ?? `${trigger}:${index}`;
+    if (block.oncePerTurn && source.usedEffectKeys.includes(effectKey)) {
+      continue;
+    }
+    enqueueResolution(state, {
+      kind: "effectBlock",
+      sourceInstanceId,
+      controller,
+      trigger,
+      blockIndex: index,
+      trashHandIds,
+      triggerEvent,
+    });
+    enqueued += 1;
+  }
+
+  return enqueued;
+}
+
+export function enqueueInPlayEffectsForTrigger(
+  state: MatchState,
+  trigger: EffectBlock["trigger"],
+  triggerEvent?: Extract<ResolutionItem, { kind: "effectBlock" }>["triggerEvent"],
+  sourceControllers?: readonly MatchSeat[],
+) {
+  for (const source of Object.values(state.cards)) {
+    if (sourceControllers && !sourceControllers.includes(source.controller)) {
+      continue;
+    }
+    const player = getPlayer(state, source.controller);
+    const isInPlay =
+      (source.zone === "leader" && player.leaderInstanceId === source.instanceId) ||
+      (source.zone === "character" && player.characterArea.includes(source.instanceId)) ||
+      (source.zone === "stage" && player.stageArea === source.instanceId);
+    if (!isInPlay) {
+      continue;
+    }
+    enqueueEffectsForTrigger(
+      state,
+      source.instanceId,
+      source.controller,
+      trigger,
+      undefined,
+      triggerEvent,
+    );
+  }
 }
 
 export function recordCapabilityIssue(
@@ -208,6 +326,37 @@ export function getInstance(state: MatchState, instanceId: string): CardInstance
   return instance;
 }
 
+export function restCard(
+  state: MatchState,
+  instanceId: string,
+  effectController: MatchSeat,
+): boolean {
+  const instance = getInstance(state, instanceId);
+  if (instance.rested) {
+    return false;
+  }
+
+  instance.rested = true;
+  enqueueInPlayEffectsForTrigger(state, "whenBecomesRested", {
+    instanceId,
+    effectController,
+    targetInstanceId: instanceId,
+  });
+  return true;
+}
+
+export function donCardsOnField(state: MatchState, seat: MatchSeat): number {
+  const player = getPlayer(state, seat);
+  return (
+    player.activeDon +
+    player.restedDon +
+    getInstance(state, player.leaderInstanceId).attachedDon +
+    player.characterArea
+      .filter((entry): entry is string => Boolean(entry))
+      .reduce((total, instanceId) => total + getInstance(state, instanceId).attachedDon, 0)
+  );
+}
+
 export function getCardForInstance(state: MatchState, instanceId: string): OPCard {
   return getCard(getInstance(state, instanceId).cardId);
 }
@@ -243,9 +392,43 @@ export function hasFlagModifier(
   );
 }
 
+export function isDonActivationByCharacterEffectPrevented(
+  state: MatchState,
+  sourceInstanceId: string,
+  affectedSeat: MatchSeat,
+): boolean {
+  return (
+    getCardForInstance(state, sourceInstanceId).cardType === "character" &&
+    hasFlagModifier(
+      state,
+      getPlayer(state, affectedSeat).leaderInstanceId,
+      "cannotSetDonActiveByCharacterEffects",
+    )
+  );
+}
+
+export function isKeywordActivationPrevented(
+  state: MatchState,
+  instanceId: string,
+  keyword: Keyword,
+): boolean {
+  const instance = getInstance(state, instanceId);
+  const controllerLeaderId = getPlayer(state, instance.controller).leaderInstanceId;
+  return Object.values(state.modifiers).some(
+    (modifier) =>
+      (modifier.targetId === instanceId ||
+        (modifier.playerScope === true && modifier.targetId === controllerLeaderId)) &&
+      modifier.type === "flag" &&
+      modifier.flag === "cannotActivate" &&
+      modifier.keyword === keyword,
+  );
+}
+
 export function getKeywords(state: MatchState, instanceId: string): Set<Keyword> {
   const card = getCardForInstance(state, instanceId);
-  const keywords = new Set<Keyword>(card.effects?.keywords ?? []);
+  const keywords = new Set<Keyword>(
+    effectsAreNegated(state, instanceId) ? [] : (card.effects?.keywords ?? []),
+  );
 
   for (const modifier of Object.values(state.modifiers)) {
     if (modifier.targetId !== instanceId || modifier.type !== "keyword" || !modifier.keyword) {
@@ -255,17 +438,39 @@ export function getKeywords(state: MatchState, instanceId: string): Set<Keyword>
     keywords.add(modifier.keyword);
   }
 
+  for (const keyword of getPermanentKeywords(state, instanceId)) {
+    keywords.add(keyword);
+  }
+
   return keywords;
+}
+
+export function isCardPreventedFromRefreshing(state: MatchState, instanceId: string): boolean {
+  return (
+    hasFlagModifier(state, instanceId, "freeze") ||
+    isRefreshPreventedByPermanentEffect(state, instanceId)
+  );
 }
 
 export function getCardPower(state: MatchState, instanceId: string): number {
   const instance = getInstance(state, instanceId);
   const card = getCard(instance.cardId);
-  return basePower(card) + instance.attachedDon * 1000 + getPowerModifierTotal(state, instanceId);
+  return (
+    basePower(card) +
+    (state.activeSeat === instance.controller ? instance.attachedDon * 1000 : 0) +
+    getPowerModifierTotal(state, instanceId) +
+    getPermanentModifierTotal(state, instanceId, "power")
+  );
 }
 
 export function getCardCost(state: MatchState, instanceId: string): number {
   const instance = getInstance(state, instanceId);
   const card = getCard(instance.cardId);
-  return baseCost(card) + getCostModifierTotal(state, instanceId);
+  const setCost = getPermanentSetCost(state, instanceId);
+  return Math.max(
+    0,
+    (setCost ?? baseCost(card)) +
+      getCostModifierTotal(state, instanceId) +
+      getPermanentModifierTotal(state, instanceId, "cost"),
+  );
 }

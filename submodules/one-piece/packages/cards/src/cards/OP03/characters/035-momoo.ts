@@ -25,6 +25,5 @@ export const op03Momoo035: CharacterCard = {
   counter: 1000,
   traits: ["Animal East Blue"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op03Momoo035I18n,
 };

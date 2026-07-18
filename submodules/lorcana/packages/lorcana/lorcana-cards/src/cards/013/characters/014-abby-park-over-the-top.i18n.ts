@@ -45,4 +45,15 @@ export const abbyParkOverTheTopI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Abby parque",
+    version: "Sobre la cima",
+    text: [
+      {
+        title: "MUESTRA EL MICRÓFONO",
+        description:
+          "Una vez durante tu turno, cada vez que toques una canción, podrás preparar este personaje. Si lo haces, ella no podrá realizar misiones ni desafíos durante el resto de este turno.",
+      },
+    ],
+  },
 };

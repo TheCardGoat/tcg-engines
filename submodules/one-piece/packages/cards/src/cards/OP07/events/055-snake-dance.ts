@@ -57,6 +57,12 @@ export const op07SnakeDance055: EventCard = {
       },
       {
         trigger: "trigger",
+        costs: [
+          {
+            cost: "returnCharacter",
+            amount: 1,
+          },
+        ],
         actions: [
           {
             action: "returnToHand",

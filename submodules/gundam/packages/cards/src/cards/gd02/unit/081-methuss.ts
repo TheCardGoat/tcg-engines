@@ -4,6 +4,7 @@ export const gd02Methuss081: UnitCard = {
   cardNumber: "GD02-081",
   name: "Methuss",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["aeug"],
   id: "GD02-081",
@@ -41,6 +42,7 @@ export const gd02Methuss081: UnitCard = {
   cost: 2,
   ap: 1,
   hp: 1,
+  linkCondition: "[Fa Yuiry]",
   effect:
     "【Deploy】If a friendly white Base is in play, choose 1 enemy Unit. It gets AP-2 during this turn.<br>",
   effects: [

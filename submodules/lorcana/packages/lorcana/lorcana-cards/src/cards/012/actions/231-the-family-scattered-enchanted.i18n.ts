@@ -17,4 +17,8 @@ export const theFamilyScatteredEnchantedI18n: Record<Languages, I18nProperties> 
     name: "La Famiglia Divisa",
     text: "Un avversario a tua scelta sceglie 3 dei suoi personaggi e riprende in mano una di quelle carte, ne mette una in fondo al suo mazzo e ne mette un'altra in cima al suo mazzo.",
   },
+  es: {
+    name: "La familia dispersa",
+    text: "El oponente elegido elige 3 de sus personajes y devuelve una de esas cartas a su mano, coloca una en la parte inferior de su mazo y otra en la parte superior de su mazo.",
+  },
 };

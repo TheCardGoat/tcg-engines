@@ -25,6 +25,5 @@ export const op01Bellamy076: CharacterCard = {
   counter: 1000,
   traits: ["Dressrosa"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op01Bellamy076I18n,
 };

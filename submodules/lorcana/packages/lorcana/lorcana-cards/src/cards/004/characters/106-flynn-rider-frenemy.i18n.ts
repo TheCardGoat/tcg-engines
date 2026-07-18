@@ -45,4 +45,15 @@ export const flynnRiderFrenemyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jinete Flynn",
+    version: "Enemigo enemigo",
+    text: [
+      {
+        title: "VENTAJA ESTRECHA",
+        description:
+          "Al comienzo de tu turno, si tienes un personaje en juego con más {S} que cada personaje contrario, gana 3 conocimientos.",
+      },
+    ],
+  },
 };

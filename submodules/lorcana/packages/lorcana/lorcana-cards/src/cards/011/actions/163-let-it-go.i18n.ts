@@ -31,4 +31,8 @@ export const letItGoI18n: Record<Languages, I18nProperties> = {
     name: "Let it Go",
     text: "Put chosen character into their player's inkwell facedown and exerted.",
   },
+  es: {
+    name: "Déjalo ir",
+    text: "Coloca el personaje elegido en el tintero de su jugador boca abajo y ejerce.",
+  },
 };

@@ -43,4 +43,14 @@ export const buckyNuttyRascalI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bucky",
+    version: "Bribón loco",
+    text: [
+      {
+        title: "¡ESTALLIDO!",
+        description: "Cuando este personaje es desterrado en un desafío, puedes robar una carta.",
+      },
+    ],
+  },
 };

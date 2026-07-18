@@ -55,4 +55,17 @@ export const shenziScarsAccompliceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Shenzi",
+    version: "El cómplice de Scar",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "RECOGIDAS FÁCILES",
+        description: "Al desafiar a un personaje dañado, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

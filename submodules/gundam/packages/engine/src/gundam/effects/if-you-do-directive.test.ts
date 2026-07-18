@@ -60,6 +60,36 @@ const mandatoryNonTargetedDependentEffect: CardEffect = {
   sourceText: "Draw 1. If you do, draw 1.",
 };
 
+const mandatoryShortDiscardEffect: CardEffect = {
+  type: "triggered",
+  activation: { timing: ["deploy"] },
+  directives: [
+    { action: { action: "discard", count: 2 } },
+    { action: { action: "draw", count: 1 }, dependsOnPrevious: true },
+  ],
+  sourceText: "Discard 2. If you do, draw 1.",
+};
+
+const mandatoryShortQueuedDiscardEffect: CardEffect = {
+  type: "triggered",
+  activation: { timing: ["deploy"] },
+  directives: [
+    {
+      action: {
+        action: "resolveThenQueue",
+        first: { action: "discard", count: 2 },
+        followUp: {
+          type: "triggered",
+          activation: { timing: [] },
+          directives: [{ action: { action: "draw", count: 1 } }],
+          sourceText: "Draw 1.",
+        },
+      },
+    },
+  ],
+  sourceText: "Discard 2. If you do, draw 1.",
+};
+
 // Mandatory TARGETED predecessor — "If you do" gating on whether the
 // triggered effect can legally choose and affect its target.
 const mandatoryTargetedDependentEffect: CardEffect = {
@@ -161,6 +191,88 @@ describe("executeDirectives — dependsOnPrevious", () => {
     expectSuccess(engine.asPlayer(PLAYER_ONE).resolveEffect({}));
     // Both draws ran — non-targeted mandatory always resolves.
     expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(before - 2);
+  });
+
+  it("discards as much as possible from a short hand without resolving If you do", () => {
+    const discard = createMockUnit({ name: "Only Card In Hand" });
+    const source = createMockUnit({
+      name: "Mandatory Discard Source",
+      effects: [mandatoryShortDiscardEffect],
+    });
+    const engine = GundamTestEngine.create({
+      hand: [source, discard],
+      resourceArea: activeResources(1),
+      deck: 3,
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [sourceId, discardId] = p1.getHand();
+    const deckBefore = p1.getBoardView().players[PLAYER_ONE]!.deckCount;
+
+    expectSuccess(p1.deployUnit(sourceId!));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [discardId],
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [discardId!] }));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getHand()).toHaveLength(0);
+    expect(p1.getCardZone(discardId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(deckBefore);
+  });
+
+  it("does not publish an empty discard prompt when a mandatory discard has no cards", () => {
+    const source = createMockUnit({
+      name: "Empty Hand Discard Source",
+      effects: [mandatoryShortDiscardEffect],
+    });
+    const engine = GundamTestEngine.create({
+      hand: [source],
+      resourceArea: activeResources(1),
+      deck: 3,
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const sourceId = p1.getHand()[0]!;
+    const deckBefore = p1.getBoardView().players[PLAYER_ONE]!.deckCount;
+
+    expectSuccess(p1.deployUnit(sourceId));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getHand()).toHaveLength(0);
+    expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(deckBefore);
+    expectSuccess(p1.passPhase());
+  });
+
+  it("does not queue a staged If you do continuation after a partial discard", () => {
+    const discard = createMockUnit({ name: "Only Card For Staged Discard" });
+    const source = createMockUnit({
+      name: "Staged Mandatory Discard Source",
+      effects: [mandatoryShortQueuedDiscardEffect],
+    });
+    const engine = GundamTestEngine.create({
+      hand: [source, discard],
+      resourceArea: activeResources(1),
+      deck: 3,
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [sourceId, discardId] = p1.getHand();
+    const deckBefore = p1.getBoardView().players[PLAYER_ONE]!.deckCount;
+
+    expectSuccess(p1.deployUnit(sourceId!));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [discardId],
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [discardId!] }));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getHand()).toHaveLength(0);
+    expect(p1.getCardZone(discardId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(deckBefore);
   });
 
   it("runs the dependent after a mandatory targeted predecessor that hit", () => {

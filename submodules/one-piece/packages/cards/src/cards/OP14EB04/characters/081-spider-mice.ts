@@ -4,7 +4,7 @@ import { op14eb04SpiderMice081I18n } from "./081-spider-mice.i18n.ts";
 export const op14eb04SpiderMice081: CharacterCard = {
   id: "OP14-081",
   canonicalId: "OP14-081",
-  slug: "spider-mice",
+  slug: "spider-mice/op14-081",
   name: "Spider Mice",
   printings: [
     {

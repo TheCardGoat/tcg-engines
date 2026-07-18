@@ -38,17 +38,12 @@ export const op13DivineDeparture076: EventCard = {
     },
   ],
   effect:
-    "[Main] You may rest 5 of your DON!! cards: If you have any DON!! cards given, give up to 1 of your opponent's Characters 8000 power during this turn.\n[Counter] You may trash 1 card from your hand: Up to 1 of your Leader or Character cards gains +3000 power during this battle.",
+    "[Main] You may rest 5 of your DON!! cards: If you have any DON!! cards given, give up to 1 of your opponent's Characters −8000 power during this turn.\n[Counter] You may trash 1 card from your hand: Up to 1 of your Leader or Character cards gains +3000 power during this battle.",
   effects: {
     effects: [
       {
         trigger: "main",
-        conditions: [
-          {
-            condition: "donGiven",
-            player: "self",
-          },
-        ],
+        costs: [{ cost: "restDon", amount: 5 }],
         actions: [
           {
             action: "modifyPower",
@@ -60,8 +55,12 @@ export const op13DivineDeparture076: EventCard = {
                 upTo: true,
               },
             },
-            value: 8000,
+            value: -8000,
             duration: "thisTurn",
+            condition: {
+              condition: "donGiven",
+              player: "self",
+            },
           },
         ],
         optional: true,

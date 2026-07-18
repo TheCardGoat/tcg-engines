@@ -59,6 +59,7 @@ export const op01Jack102: CharacterCard = {
             amount: 1,
           },
         ],
+        optional: true,
       },
     ],
   },

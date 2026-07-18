@@ -45,4 +45,15 @@ export const jingleJoeSidsToyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jingle-joe",
+    version: "El juguete de Sid",
+    text: [
+      {
+        title: "APAGA LA LUZ",
+        description:
+          "Durante tu turno, cada vez que uno de tus otros personajes de juguete es desterrado, tu personaje elegido gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

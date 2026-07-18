@@ -28,6 +28,21 @@ export const op06TheArkMaxim117: StageCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "restThisCard",
+          },
+          {
+            cost: "restCards",
+            amount: 1,
+            filters: [
+              {
+                filter: "name",
+                value: "Enel",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "ko",

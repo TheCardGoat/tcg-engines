@@ -41,4 +41,14 @@ export const tinyTimsCrutchI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La muleta del pequeño Tim",
+    text: [
+      {
+        title: "A TU LADO",
+        description:
+          "{E}: el personaje elegido obtiene apoyo este turno. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+      },
+    ],
+  },
 };

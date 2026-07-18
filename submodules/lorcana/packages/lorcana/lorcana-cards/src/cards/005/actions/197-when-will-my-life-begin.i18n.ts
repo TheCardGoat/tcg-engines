@@ -35,4 +35,8 @@ export const whenWillMyLifeBeginI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "¿Cuándo comenzará mi vida?",
+    text: "El personaje elegido no puede desafiar durante su próximo turno. Saca una carta.",
+  },
 };

@@ -44,4 +44,15 @@ export const galeWindSpiritI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Vendaval",
+    version: "Espíritu del viento",
+    text: [
+      {
+        title: "RAFAGA RECURRENTE",
+        description:
+          "Cuando este personaje sea desterrado en un desafío, devuelve esta carta a tu mano.",
+      },
+    ],
+  },
 };

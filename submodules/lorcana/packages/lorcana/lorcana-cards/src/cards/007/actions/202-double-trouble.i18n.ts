@@ -17,4 +17,8 @@ export const doubleTroubleI18n: Record<Languages, I18nProperties> = {
     name: "Doppio Problema",
     text: "Infliggi 1 danno ciascuno a fino a 2 personaggi a tua scelta.",
   },
+  es: {
+    name: "Doble problema",
+    text: "Inflige 1 daño cada uno a hasta 2 personajes elegidos.",
+  },
 };

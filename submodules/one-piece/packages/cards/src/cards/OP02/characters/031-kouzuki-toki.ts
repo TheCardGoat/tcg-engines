@@ -42,5 +42,27 @@ export const op02KouzukiToki031: CharacterCard = {
   ],
   effect:
     "If you have a [Kouzuki Oden] Character, this Character gains [Blocker]. (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "hasCard",
+            player: "self",
+            zone: "character",
+            filters: [{ filter: "name", value: "Kouzuki Oden" }],
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op02KouzukiToki031I18n,
 };

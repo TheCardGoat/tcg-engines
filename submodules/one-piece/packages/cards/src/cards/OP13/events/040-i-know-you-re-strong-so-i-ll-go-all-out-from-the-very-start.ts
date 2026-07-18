@@ -28,6 +28,7 @@ export const op13IKnowYouReStrongSoILlGoAllOutFromTheVeryStart040: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [{ cost: "restDon", amount: 2 }],
         actions: [
           {
             action: "freeze",

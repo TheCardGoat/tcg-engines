@@ -42,6 +42,30 @@ export const op04HappinessPunch017: EventCard = {
             value: -2000,
             duration: "thisTurn",
           },
+          {
+            action: "modifyPower",
+            target: {
+              player: "opponent",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: -1000,
+            duration: "thisTurn",
+            condition: {
+              condition: "hasCard",
+              player: "self",
+              zone: "leader",
+              filters: [
+                {
+                  filter: "state",
+                  value: "active",
+                },
+              ],
+            },
+          },
         ],
       },
     ],

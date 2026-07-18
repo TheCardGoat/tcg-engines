@@ -41,4 +41,14 @@ export const emeraldCoilI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bobina Esmeralda",
+    text: [
+      {
+        title: "ALAS BRILLANTES",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, el personaje elegido gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

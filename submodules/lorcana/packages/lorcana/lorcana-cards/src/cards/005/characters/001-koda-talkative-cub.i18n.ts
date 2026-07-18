@@ -42,4 +42,14 @@ export const kodaTalkativeCubI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Koda",
+    version: "Cachorro hablador",
+    text: [
+      {
+        title: "DÍGALO A TODOS",
+        description: "Durante los turnos de los oponentes, no puedes perder la historia.",
+      },
+    ],
+  },
 };

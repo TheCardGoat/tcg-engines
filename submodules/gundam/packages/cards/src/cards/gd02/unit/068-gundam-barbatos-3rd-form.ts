@@ -4,6 +4,7 @@ export const gd02GundamBarbatos3rdForm068: UnitCard = {
   cardNumber: "GD02-068",
   name: "Gundam Barbatos 3rd Form",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "purple",
   traits: ["tekkadan", "gundam frame"],
   id: "GD02-068",
@@ -41,6 +42,7 @@ export const gd02GundamBarbatos3rdForm068: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 5,
+  linkCondition: "(Tekkadan) Trait",
   effect: "【Deploy】Deal 2 damage to this Unit.<br>",
   effects: [
     {

@@ -25,6 +25,5 @@ export const op01Hajrudin018: CharacterCard = {
   counter: 1000,
   traits: ["Giant New Giant Pirate Crew"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op01Hajrudin018I18n,
 };

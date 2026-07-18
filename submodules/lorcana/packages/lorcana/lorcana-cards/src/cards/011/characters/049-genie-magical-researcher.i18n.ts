@@ -55,4 +55,17 @@ export const genieMagicalResearcherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Genio",
+    version: "Investigador mágico",
+    text: [
+      {
+        title: "Impulso 1",
+      },
+      {
+        title:
+          "{I} AUMENTO DE SABIDURÍA Este personaje obtiene +1 {L} por cada carta debajo de él.",
+      },
+    ],
+  },
 };

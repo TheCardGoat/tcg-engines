@@ -57,4 +57,17 @@ export const herculesSpectralDemigodEpicI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Hércules",
+    version: "Semidiós espectral",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "FUERZA SOBREHUMANA",
+        description: "Mientras haya una carta debajo de este personaje, obtiene +3 {S}.",
+      },
+    ],
+  },
 };

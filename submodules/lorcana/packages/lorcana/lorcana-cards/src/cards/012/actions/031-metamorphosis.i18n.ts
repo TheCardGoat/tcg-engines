@@ -17,4 +17,8 @@ export const metamorphosisI18n: Record<Languages, I18nProperties> = {
     name: "Metamorfosi",
     text: "Trasforma un personaggio dai tuoi scarti gratis.",
   },
+  es: {
+    name: "Metamorfosis",
+    text: "Cambia un personaje de tu descarte de forma gratuita.",
+  },
 };

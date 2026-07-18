@@ -17,4 +17,8 @@ export const hideAwayI18n: Record<Languages, I18nProperties> = {
     name: "Nascondere",
     text: "Aggiungi un oggetto o un luogo a tua scelta al calamaio del suo giocatore, a faccia in giù e impegnato.",
   },
+  es: {
+    name: "Esconderse",
+    text: "Coloque el elemento o ubicación elegido en el tintero de su jugador boca abajo y ejerza.",
+  },
 };

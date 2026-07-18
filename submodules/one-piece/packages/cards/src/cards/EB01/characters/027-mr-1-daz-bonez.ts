@@ -43,6 +43,39 @@ export const eb01Mr1DazBonez027: CharacterCard = {
   effect:
     'If your Leader\'s type includes "Baroque Works", this Character gains +1000 power for every 2 Events in your trash.[On Play] Draw 2 cards and trash 1 card from your hand.',
   effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Baroque Works",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            value: 1000,
+            duration: "permanent",
+            valuePerCardGroup: {
+              target: {
+                player: "self",
+                zones: ["trash"],
+                count: { amount: "all" },
+                filters: [{ filter: "cardCategory", value: "event" }],
+              },
+              size: 2,
+            },
+          },
+        ],
+      },
+    ],
     effects: [
       {
         trigger: "onPlay",

@@ -1,6 +1,7 @@
 import type { Condition, EffectTrigger, Zone } from "@tcg/op-types";
 import type { InlineConditionResult } from "./types.ts";
 import { parseComparison } from "./helpers.ts";
+import { parseTarget } from "./target-parser.ts";
 
 /**
  * Extract an "If <condition>, <actions>" or "When <event>, <actions>" prefix
@@ -143,19 +144,19 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
   // "you/your opponent activates an Event (or [Trigger])?"
   if (/^your\s+opponent\s+activates\s+an\s+Event(?:\s+or\s+\[Trigger\])?$/i.test(t))
     return "whenOpponentActivatesEvent";
-  if (/^you\s+activate\s+an\s+Event$/i.test(t)) return "whenOpponentActivatesEvent"; // reuse trigger type
+  if (/^you\s+activate\s+an\s+Event$/i.test(t)) return "whenYouActivateEvent";
 
   // "your opponent activates [Blocker] or an Event"
   if (/^your\s+opponent\s+activates\s+\[Blocker\]\s+or\s+an\s+Event$/i.test(t))
     return "whenBlockerActivated";
 
-  // "a card is removed from your or your opponent's Life cards"
+  // "a card is removed from your, your opponent's, or either player's Life cards"
   if (
-    /^a\s+card\s+is\s+removed\s+from\s+(?:your\s+or\s+your\s+opponent[''\u2019]s|your)\s+Life\s+cards?$/i.test(
+    /^a\s+card\s+is\s+removed\s+from\s+(?:your\s+or\s+your\s+opponent[''\u2019]s|your\s+opponent[''\u2019]s|your)\s+Life\s+cards?$/i.test(
       t,
     )
   )
-    return "whenDealsDamage";
+    return "whenLifeRemoved";
 
   // "your opponent plays a Character with a base cost of N or more" (with optional "or when..." compound)
   if (/^your\s+opponent\s+plays\s+a\s+Character/i.test(t)) return "onPlay";
@@ -217,15 +218,15 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
   if (/^you\s+play\s+a\s+Character\b/i.test(t)) return "onPlay";
 
   // "you activate an Event"
-  if (/^you\s+activate\s+an\s+Event$/i.test(t)) return "whenOpponentActivatesEvent"; // Reuse
+  if (/^you\s+activate\s+an\s+Event$/i.test(t)) return "whenYouActivateEvent";
 
   // "you draw a card outside of your Draw Phase"
   if (/^you\s+draw\s+a\s+card\s+outside\s+of\s+your\s+Draw\s+Phase$/i.test(t))
-    return "whenDealsDamage"; // Reuse
+    return "whenCardDrawn";
 
   // "a card is added to your hand from your Life"
   if (/^a\s+card\s+is\s+added\s+to\s+your\s+hand\s+from\s+your\s+Life$/i.test(t))
-    return "whenDealsDamage"; // Reuse
+    return "whenLifeAddedToHand";
 
   // "N or more DON!! cards on your field are returned to your DON!! deck"
   if (
@@ -236,7 +237,8 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
     return "whenDonReturned";
 
   // "a Character is rested by your effect"
-  if (/^a\s+Character\s+is\s+rested\s+by\s+your\s+effect$/i.test(t)) return "whenLeaving"; // Reuse
+  if (/^a\s+Character\s+is\s+rested\s+by\s+your\s+effect$/i.test(t))
+    return "whenCharacterRestedByEffect";
 
   // "your X type Character is removed from the field by your opponent's effect"
   if (
@@ -253,7 +255,7 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
   if (/^you\s+take\s+damage/i.test(t)) return "whenDealsDamage";
 
   // "this Character becomes rested"
-  if (/^this\s+Character\s+becomes\s+rested$/i.test(t)) return "whenLeaving"; // Reuse
+  if (/^this\s+Character\s+becomes\s+rested$/i.test(t)) return "whenBecomesRested";
 
   return null;
 }
@@ -596,6 +598,19 @@ function parseSingleCondition(text: string): Condition | null {
       player: "self",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
+      state: "active",
+    };
+  }
+
+  // DON!! field count (rested): you have N or more rested DON!! cards
+  m = /^you\s+have\s+(\d+)\s+or\s+(less|more)\s+rested\s+DON!!\s+cards?$/i.exec(t);
+  if (m) {
+    return {
+      condition: "donFieldCount",
+      player: "self",
+      comparison: parseComparison(m[2]),
+      value: parseInt(m[1]!, 10),
+      state: "rested",
     };
   }
 
@@ -616,13 +631,34 @@ function parseSingleCondition(text: string): Condition | null {
   // Opponent rested cards/Characters: your opponent has N or more rested cards/Characters
   m = /^your\s+opponent\s+has\s+(\d+)\s+or\s+(less|more)\s+rested\s+(cards?|Characters?)$/i.exec(t);
   if (m) {
+    if (/^cards?$/i.test(m[3]!)) {
+      return {
+        condition: "restedCardCount",
+        player: "opponent",
+        comparison: parseComparison(m[2]),
+        value: parseInt(m[1]!, 10),
+      };
+    }
     return {
       condition: "zoneCount",
       player: "opponent",
-      zone: /^Characters?$/i.test(m[3]!) ? "character" : "field",
+      zone: "character",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
       filters: [{ filter: "state", value: "rested" as const }],
+    };
+  }
+
+  // DON!! field gap: the number on your field is at least N less/more than the opponent's
+  m =
+    /^the\s+number\s+of\s+DON!!\s+cards?\s+on\s+your\s+field\s+is\s+at\s+least\s+(\d+)\s+(less|more)\s+than\s+the\s+number\s+on\s+your\s+opponent's\s+field$/i.exec(
+      t,
+    );
+  if (m) {
+    return {
+      condition: "donFieldComparison",
+      selfComparison: m[2]!.toLowerCase() === "less" ? "lte" : "gte",
+      difference: parseInt(m[1]!, 10),
     };
   }
 
@@ -730,17 +766,28 @@ function parseSingleCondition(text: string): Condition | null {
 
   // Has card: your opponent has a Leader or Character with a base power of N or more/less
   m =
-    /^your\s+opponent\s+has\s+a\s+(?:Leader\s+or\s+)?Character\s+with\s+a\s+base\s+power\s+of\s+(\d+)(?:\s+or\s+(less|more))?$/i.exec(
+    /^your\s+opponent\s+has\s+a\s+(Leader\s+or\s+)?Character\s+with\s+a\s+base\s+power\s+of\s+(\d+)(?:\s+or\s+(less|more))?$/i.exec(
       t,
     );
   if (m) {
-    const value = parseInt(m[1]!, 10);
-    const comparison = m[2] ? parseComparison(m[2]) : "eq";
+    const value = parseInt(m[2]!, 10);
+    const comparison = m[3] ? parseComparison(m[3]) : "eq";
+    const filters = [{ filter: "basePower" as const, comparison, value }];
+    if (m[1]) {
+      return {
+        condition: "compound",
+        operator: "or",
+        conditions: [
+          { condition: "hasCard", player: "opponent", zone: "leader", filters },
+          { condition: "hasCard", player: "opponent", zone: "character", filters },
+        ],
+      };
+    }
     return {
       condition: "hasCard",
       player: "opponent",
       zone: "character",
-      filters: [{ filter: "basePower", comparison, value }],
+      filters,
     };
   }
 
@@ -768,34 +815,57 @@ function parseSingleCondition(text: string): Condition | null {
   m = /^you\s+have\s+a\s+face-up\s+Life\s+card$/i.exec(t);
   if (m) return { condition: "faceUpLife", player: "self" };
 
-  // Exists on field: compound — "there is a Character with a cost of 0 or with a cost of 8 or more"
+  // Exists on field: compound — "there is" or "your opponent has" one of two costs.
   m =
-    /^there\s+is\s+a\s+Character\s+with\s+a\s+cost\s+of\s+(\d+)\s+or\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?$/i.exec(
+    /^(there\s+is|your\s+opponent\s+has)\s+a\s+Character\s+with\s+a\s+cost\s+of\s+(\d+)\s+or\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?$/i.exec(
       t,
     );
   if (m) {
+    const opponentOnly = /^your\s+opponent/i.test(m[1]!);
     return {
       condition: "compound",
       operator: "or",
       conditions: [
-        {
-          condition: "existsOnField",
-          zone: "character" as Zone,
-          filters: [
-            { filter: "cost" as const, comparison: "eq" as const, value: parseInt(m[1]!, 10) },
-          ],
-        },
-        {
-          condition: "existsOnField",
-          zone: "character" as Zone,
-          filters: [
-            {
-              filter: "cost" as const,
-              comparison: m[3] ? parseComparison(m[3]) : ("eq" as const),
-              value: parseInt(m[2]!, 10),
+        opponentOnly
+          ? {
+              condition: "hasCard",
+              player: "opponent",
+              zone: "character" as Zone,
+              filters: [
+                { filter: "cost" as const, comparison: "eq" as const, value: parseInt(m[2]!, 10) },
+              ],
+            }
+          : {
+              condition: "existsOnField",
+              zone: "character" as Zone,
+              filters: [
+                { filter: "cost" as const, comparison: "eq" as const, value: parseInt(m[2]!, 10) },
+              ],
             },
-          ],
-        },
+        opponentOnly
+          ? {
+              condition: "hasCard",
+              player: "opponent",
+              zone: "character" as Zone,
+              filters: [
+                {
+                  filter: "cost" as const,
+                  comparison: m[4] ? parseComparison(m[4]) : ("eq" as const),
+                  value: parseInt(m[3]!, 10),
+                },
+              ],
+            }
+          : {
+              condition: "existsOnField",
+              zone: "character" as Zone,
+              filters: [
+                {
+                  filter: "cost" as const,
+                  comparison: m[4] ? parseComparison(m[4]) : ("eq" as const),
+                  value: parseInt(m[3]!, 10),
+                },
+              ],
+            },
       ],
     };
   }
@@ -1005,8 +1075,13 @@ function parseSingleCondition(text: string): Condition | null {
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
       filters: [
-        { filter: "trait", value: m[3]! },
-        { filter: "trait", value: m[4]! },
+        {
+          filter: "anyOf",
+          filters: [
+            { filter: "trait", value: m[3]!, match: "includes" },
+            { filter: "trait", value: m[4]!, match: "includes" },
+          ],
+        },
       ],
     };
   }
@@ -1057,7 +1132,7 @@ function parseSingleCondition(text: string): Condition | null {
       zone: "character",
       comparison: "eq",
       value: 0,
-      filters: [{ filter: "trait", value: m[1]!, negate: true }],
+      filters: [{ filter: "trait", value: m[1]!, match: "includes", negate: true }],
     };
   }
 
@@ -1249,7 +1324,7 @@ function parseSingleCondition(text: string): Condition | null {
   // Event-like condition: "a Character is rested by your effect"
   m = /^a\s+Character\s+is\s+rested\s+by\s+your\s+effect$/i.exec(t);
   if (m) {
-    return { condition: "triggerEvent", event: "whenLeaving" } as any;
+    return { condition: "triggerEvent", event: "whenCharacterRestedByEffect" };
   }
 
   // Total given DON!!: "you have a total of N or more given DON!! cards"
@@ -1357,17 +1432,19 @@ function parseNonSelfReplacement(text: string): Condition | null {
 
   // your ... would be K.O.'d/removed/rested [by ...]
   m =
-    /^your\s+.+\s+would\s+be\s+(K\.O\.\u2019?'?d|removed\s+from\s+the\s+field|rested)(?:\s+(.+))?$/i.exec(
+    /^your\s+(.+?)\s+would\s+be\s+(K\.O\.\u2019?'?d|removed\s+from\s+the\s+field|rested)(?:\s+(.+))?$/i.exec(
       t,
     );
   if (m) {
-    const event = parseReplacementEvent(m[1]!);
-    const source = parseReplacementSource(m[2]);
+    const event = parseReplacementEvent(m[2]!);
+    const source = parseReplacementSource(m[3]);
+    const target = parseTarget(`1 of your ${m[1]!}`);
     return {
       condition: "replacement",
       event,
       targetSelf: false,
       ...(source && { source }),
+      ...(target && { target }),
     };
   }
 
@@ -1384,6 +1461,11 @@ function parseNonSelfReplacement(text: string): Condition | null {
       event,
       targetSelf: false,
       ...(source && { source }),
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+      },
     };
   }
 

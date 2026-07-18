@@ -17,4 +17,8 @@ export const donaldDuckDeepseaDiverI18n: Record<Languages, I18nProperties> = {
     name: "Donald Duck",
     version: "Deep-Sea Diver",
   },
+  es: {
+    name: "Pato donald",
+    version: "Buzo de aguas profundas",
+  },
 };

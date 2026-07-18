@@ -44,4 +44,15 @@ export const cubbyMightyLostBoyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cuchitril",
+    version: "Poderoso niño perdido",
+    text: [
+      {
+        title: "EL OSO",
+        description:
+          "Cada vez que este personaje se mueve a una ubicación, obtiene +3 {S} este turno.",
+      },
+    ],
+  },
 };

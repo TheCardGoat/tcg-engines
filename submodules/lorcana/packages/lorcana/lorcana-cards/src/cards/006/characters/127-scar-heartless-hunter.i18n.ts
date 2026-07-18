@@ -45,4 +45,15 @@ export const scarHeartlessHunterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cicatriz",
+    version: "Cazador sin corazón",
+    text: [
+      {
+        title: "DIENTES DESNUDOS",
+        description:
+          "Cuando juegues con este personaje, inflige 2 daños al personaje tuyo elegido para infligir 2 daños al personaje elegido.",
+      },
+    ],
+  },
 };

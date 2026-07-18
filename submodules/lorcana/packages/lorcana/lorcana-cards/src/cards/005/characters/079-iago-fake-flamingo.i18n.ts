@@ -57,4 +57,18 @@ export const iagoFakeFlamingoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yago",
+    version: "Flamenco falso",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "DISFRAZADO",
+        description:
+          "Cada vez que este personaje realiza una misión, pagas 2 {I} menos por la siguiente acción que juegues en este turno.",
+      },
+    ],
+  },
 };

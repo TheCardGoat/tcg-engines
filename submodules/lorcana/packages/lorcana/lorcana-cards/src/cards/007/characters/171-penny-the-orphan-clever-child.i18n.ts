@@ -44,4 +44,14 @@ export const pennyTheOrphanCleverChildI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Penny la huérfana",
+    version: "Niño inteligente",
+    text: [
+      {
+        title: "¡NUESTRA BOTELLA FUNCIONÓ!",
+        description: "Mientras tengas un personaje héroe en juego, este personaje gana Protección.",
+      },
+    ],
+  },
 };

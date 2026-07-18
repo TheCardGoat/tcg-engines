@@ -45,4 +45,15 @@ export const perilousMazeWateryLabyrinthI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Laberinto peligroso",
+    version: "Laberinto acuoso",
+    text: [
+      {
+        title: "PERDIDO EN LAS OLAS",
+        description:
+          "Cada vez que un personaje es desafiado mientras está aquí, cada oponente elige y descarta una carta.",
+      },
+    ],
+  },
 };

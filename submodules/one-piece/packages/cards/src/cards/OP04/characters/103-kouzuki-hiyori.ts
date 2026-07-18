@@ -23,7 +23,7 @@ export const op04KouzukiHiyori103: CharacterCard = {
   cost: 2,
   power: 0,
   counter: 2000,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "wisdom",
   effect:
     "[On Play] Up to 1 of your [Land of Wano] type Leader or Character cards gains +1000 power during this turn. [Trigger] Play this card.",
@@ -45,6 +45,7 @@ export const op04KouzukiHiyori103: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
+                  match: "includes",
                 },
               ],
             },
@@ -55,18 +56,7 @@ export const op04KouzukiHiyori103: CharacterCard = {
       },
       {
         trigger: "trigger",
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-          },
-        ],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   },

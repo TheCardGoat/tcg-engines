@@ -60,4 +60,18 @@ export const magicaDeSpellConnivingSorceressI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Magia De Hechizo",
+    version: "Hechicera intrigante",
+    text: [
+      {
+        title: "Cambio 7 {I}",
+      },
+      {
+        title: "EL AGARRE DE LA SOMBRA",
+        description:
+          "Cuando juegas con este personaje, si usaste Shift para jugar con ella, puedes robar 4 cartas.",
+      },
+    ],
+  },
 };

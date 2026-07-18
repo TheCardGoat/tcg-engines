@@ -22,7 +22,8 @@ export const op04Olin099: CharacterCard = {
   setId: "OP04",
   cost: 7,
   power: 7000,
-  traits: ["Land of Wano The Four Emperors Big Mom Pirates"],
+  traits: ["Land of Wano", "The Four Emperors", "Big Mom Pirates"],
+  alternateNames: ["Charlotte Linlin"],
   attribute: "special",
   effect:
     "Also treat this card's name as [Charlotte Linlin] according to the rules. [Trigger] If you have 1 or less Life cards, play this card.",
@@ -38,18 +39,7 @@ export const op04Olin099: CharacterCard = {
             value: 1,
           },
         ],
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-          },
-        ],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   },

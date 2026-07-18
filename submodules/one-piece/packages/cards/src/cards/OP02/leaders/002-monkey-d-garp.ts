@@ -45,6 +45,9 @@ export const op02MonkeyDGarp002: LeaderCard = {
     effects: [
       {
         trigger: "whenDonGiven",
+        eventFilter: {
+          player: "self",
+        },
         conditions: [
           {
             condition: "turn",

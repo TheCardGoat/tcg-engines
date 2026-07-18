@@ -45,4 +45,15 @@ export const madDogKarnagesFirstMateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Perro rabioso",
+    version: "Primer oficial de Karnage",
+    text: [
+      {
+        title: "¿ESTÁ SEGURO QUE ESTO ES SEGURO, CAPITÁN?",
+        description:
+          "Si tienes un personaje llamado Don Karnage en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+    ],
+  },
 };

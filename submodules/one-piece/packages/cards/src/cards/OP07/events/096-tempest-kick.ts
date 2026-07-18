@@ -34,6 +34,26 @@ export const op07TempestKick096: EventCard = {
             player: "self",
             amount: 1,
           },
+          {
+            action: "modifyCost",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: -3,
+            duration: "thisTurn",
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "trash",
+              comparison: "gte",
+              value: 10,
+            },
+          },
         ],
       },
       {

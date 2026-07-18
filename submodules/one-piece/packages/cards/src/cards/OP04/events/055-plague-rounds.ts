@@ -28,6 +28,31 @@ export const op04PlagueRounds055: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "name",
+                value: "Ice Oni",
+              },
+            ],
+          },
+          {
+            cost: "returnCharacterToDeck",
+            amount: 1,
+            position: "bottom",
+            player: "both",
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "play",

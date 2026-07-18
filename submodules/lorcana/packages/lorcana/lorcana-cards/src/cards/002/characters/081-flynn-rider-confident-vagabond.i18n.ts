@@ -17,4 +17,8 @@ export const flynnRiderConfidentVagabondI18n: Record<Languages, I18nProperties> 
     name: "Flynn Rider",
     version: "Confident Vagabond",
   },
+  es: {
+    name: "Jinete Flynn",
+    version: "Vagabundo confiado",
+  },
 };

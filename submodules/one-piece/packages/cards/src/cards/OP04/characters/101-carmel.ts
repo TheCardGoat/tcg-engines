@@ -48,16 +48,7 @@ export const op04Carmel101: CharacterCard = {
       {
         trigger: "trigger",
         actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-          },
+          { action: "playThisCard" },
           {
             action: "ko",
             target: {

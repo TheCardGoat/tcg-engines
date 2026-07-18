@@ -5,7 +5,7 @@ export const gd02AllRangeAttack107: CommandCard = {
   name: "All-Range Attack",
   type: "command",
   color: "red",
-  traits: ["-"],
+  traits: [],
   id: "GD02-107",
   canonicalId: "GD02-107",
   externalIds: { bandai: "gundam:gd02-107" },

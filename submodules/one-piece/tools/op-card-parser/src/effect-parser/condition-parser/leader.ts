@@ -1,5 +1,9 @@
 import type { Condition } from "@tcg/op-types";
 
+function leaderTrait(trait: string): Condition {
+  return { condition: "leaderTrait", trait, match: "includes" };
+}
+
 export function parseLeaderCondition(text: string): Condition | null {
   const t = text.trim();
   let m: RegExpExecArray | null;
@@ -12,10 +16,7 @@ export function parseLeaderCondition(text: string): Condition | null {
     return {
       condition: "compound",
       operator: "or",
-      conditions: [
-        { condition: "leaderTrait", trait: m[1]! },
-        { condition: "leaderTrait", trait: m[2]! },
-      ],
+      conditions: [leaderTrait(m[1]!), leaderTrait(m[2]!)],
     };
   }
 
@@ -28,20 +29,17 @@ export function parseLeaderCondition(text: string): Condition | null {
     return {
       condition: "compound",
       operator: "or",
-      conditions: [
-        { condition: "leaderTrait", trait: m[1]! },
-        { condition: "leaderTrait", trait: m[2]! },
-      ],
+      conditions: [leaderTrait(m[1]!), leaderTrait(m[2]!)],
     };
   }
 
   // Leader trait: your Leader has the "X" / [X] / {X} type
   m = /^your Leader has the [""[{]([^""\]}]+)[""\]}]\s+type$/i.exec(t);
-  if (m) return { condition: "leaderTrait", trait: m[1]! };
+  if (m) return leaderTrait(m[1]!);
 
   // Leader trait: your Leader's type includes "X"
   m = /^your Leader's type includes [""]([^""]+)[""]$/i.exec(t);
-  if (m) return { condition: "leaderTrait", trait: m[1]! };
+  if (m) return leaderTrait(m[1]!);
 
   // Leader name (multi): your Leader is [X], [Y] or [Z]
   m = /^your\s+Leader\s+is\s+(\[.+?\](?:,\s*\[.+?\])*\s+or\s+\[.+?\])$/i.exec(t);
@@ -80,10 +78,7 @@ export function parseLeaderCondition(text: string): Condition | null {
     return {
       condition: "compound",
       operator: "or",
-      conditions: [
-        { condition: "leaderTrait", trait: m[1]! },
-        { condition: "leaderTrait", trait: m[2]! },
-      ],
+      conditions: [leaderTrait(m[1]!), leaderTrait(m[2]!)],
     };
   }
 
@@ -96,7 +91,10 @@ export function parseLeaderCondition(text: string): Condition | null {
   // Leader attribute: "your Leader has the (Attribute) attribute"
   m = /^your\s+Leader\s+has\s+the\s+\(([^)]+)\)\s+attribute$/i.exec(t);
   if (m) {
-    return { condition: "leaderTrait", trait: m[1]!.toLowerCase() } as any;
+    return {
+      condition: "leaderAttribute",
+      attribute: m[1]!.toLowerCase(),
+    } as Condition;
   }
 
   // Leader color: "your Leader's colors include blue/red/..."
@@ -111,7 +109,7 @@ export function parseLeaderCondition(text: string): Condition | null {
   // "your Leader's type includes "X""
   m = /^your\s+Leader[''\u2019]s\s+type\s+includes?\s+[""\u201c]([^""\u201d]+)[""\u201d]$/i.exec(t);
   if (m) {
-    return { condition: "leaderTrait", trait: m[1]! };
+    return leaderTrait(m[1]!);
   }
 
   return null;

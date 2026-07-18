@@ -45,4 +45,15 @@ export const rogerRadcliffeDogLoverI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Roger Radcliffe",
+    version: "Amante de los perros",
+    text: [
+      {
+        title: "Ahi vas",
+        description:
+          "Siempre que este personaje realice una misión, puedes eliminar hasta 1 daño de cada uno de tus personajes Cachorro.",
+      },
+    ],
+  },
 };

@@ -53,6 +53,10 @@ export const op11CharlotteKatakuri062: LeaderCard = {
         ],
         actions: [
           {
+            action: "lookAtTopDeckCard",
+            player: "opponent",
+          },
+          {
             action: "modifyPower",
             target: {
               player: "self",
@@ -67,6 +71,7 @@ export const op11CharlotteKatakuri062: LeaderCard = {
           },
         ],
         oncePerTurn: true,
+        oncePerTurnKey: "katakuri-deck-look",
       },
       {
         trigger: "onOpponentAttack",
@@ -78,6 +83,10 @@ export const op11CharlotteKatakuri062: LeaderCard = {
         ],
         actions: [
           {
+            action: "lookAtTopDeckCard",
+            player: "opponent",
+          },
+          {
             action: "modifyPower",
             target: {
               player: "self",
@@ -92,6 +101,7 @@ export const op11CharlotteKatakuri062: LeaderCard = {
           },
         ],
         oncePerTurn: true,
+        oncePerTurnKey: "katakuri-deck-look",
       },
     ],
   },

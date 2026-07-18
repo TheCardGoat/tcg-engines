@@ -17,4 +17,8 @@ export const nalaFierceFriendI18n: Record<Languages, I18nProperties> = {
     name: "Nala",
     version: "Fiera Amica",
   },
+  es: {
+    name: "Nala",
+    version: "Amigo feroz",
+  },
 };

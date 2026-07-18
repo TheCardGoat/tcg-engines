@@ -43,6 +43,18 @@ export const op03FireFist018: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "event",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "ko",
@@ -58,6 +70,24 @@ export const op03FireFist018: EventCard = {
                   filter: "power",
                   comparison: "lte",
                   value: 5000,
+                },
+              ],
+            },
+          },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "power",
+                  comparison: "lte",
+                  value: 4000,
                 },
               ],
             },

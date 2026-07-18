@@ -46,6 +46,12 @@ export const op09Sanji065: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnDon",
+            minimumAmount: 1,
+          },
+        ],
         actions: [
           {
             action: "grantKeyword",

@@ -21,4 +21,9 @@ export const princePhillipRoyalExplorerI18n: Record<Languages, I18nProperties> =
     version: "Esploratore Reale",
     text: "<Protetto>",
   },
+  es: {
+    name: "Príncipe Felipe",
+    version: "Explorador real",
+    text: "Pabellón",
+  },
 };

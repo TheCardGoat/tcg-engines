@@ -45,4 +45,15 @@ export const alistairKreiAmbitiousEntrepreneurI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Alistair Krei",
+    version: "Emprendedor ambicioso",
+    text: [
+      {
+        title: "UN OJO PARA LA TECNOLOGÍA",
+        description:
+          "Cuando juegas con este personaje, si un oponente tiene un objeto en juego, obtienes 1 conocimiento.",
+      },
+    ],
+  },
 };

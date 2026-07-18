@@ -23,7 +23,7 @@ export const op05JohnGiant044: CharacterCard = {
   cost: 8,
   power: 10000,
   counter: 1000,
-  traits: ["Giant Navy"],
+  traits: ["Giant", "Navy"],
   attribute: "slash",
   effect: "NULL",
   i18n: op05JohnGiant044I18n,

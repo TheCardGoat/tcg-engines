@@ -41,4 +41,14 @@ export const mothersNecklaceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Collar de madre",
+    text: [
+      {
+        title: "PRECIOSO REGALO",
+        description:
+          "Al final de tu turno, si ninguno de tus personajes desafió este turno, tu personaje elegido gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

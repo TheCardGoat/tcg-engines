@@ -21,4 +21,9 @@ export const queenOfHeartsImpulsiveRulerI18n: Record<Languages, I18nProperties> 
     version: "Impulsive Ruler",
     text: "<Rush> (This character can challenge the turn they're played.)",
   },
+  es: {
+    name: "Reina de corazones",
+    version: "Gobernante impulsivo",
+    text: "Correr",
+  },
 };

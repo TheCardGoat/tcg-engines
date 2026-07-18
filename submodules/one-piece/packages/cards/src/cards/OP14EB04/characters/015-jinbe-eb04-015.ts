@@ -31,22 +31,6 @@ export const op14eb04JinbeEb04015015: CharacterCard = {
     effects: [
       {
         trigger: "onKo",
-        conditions: [
-          {
-            condition: "compound",
-            operator: "or",
-            conditions: [
-              {
-                condition: "leaderTrait",
-                trait: "Fish-Man",
-              },
-              {
-                condition: "leaderTrait",
-                trait: "Merfolk",
-              },
-            ],
-          },
-        ],
         costs: [
           {
             cost: "restCards",
@@ -79,6 +63,20 @@ export const op14eb04JinbeEb04015015: CharacterCard = {
                 value: "character",
               },
             ],
+            condition: {
+              condition: "compound",
+              operator: "or",
+              conditions: [
+                {
+                  condition: "leaderTrait",
+                  trait: "Fish-Man",
+                },
+                {
+                  condition: "leaderTrait",
+                  trait: "Merfolk",
+                },
+              ],
+            },
           },
         ],
         optional: true,

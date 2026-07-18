@@ -28,10 +28,11 @@ export const op11FishManIsland117: StageCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
+        costs: [
           {
-            condition: "leaderName",
-            name: "Shirahoshi",
+            cost: "turnLifeFaceUp",
+            count: 1,
+            faceUp: true,
           },
         ],
         actions: [
@@ -46,16 +47,24 @@ export const op11FishManIsland117: StageCard = {
               },
               filters: [
                 {
-                  filter: "trait",
-                  value: "Neptunian",
-                },
-                {
-                  filter: "trait",
-                  value: "Fish-Man",
-                },
-                {
-                  filter: "trait",
-                  value: "Merfolk",
+                  filter: "anyOf",
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "Neptunian",
+                      match: "includes",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Fish-Man",
+                      match: "includes",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Merfolk",
+                      match: "includes",
+                    },
+                  ],
                 },
               ],
             },
@@ -63,7 +72,14 @@ export const op11FishManIsland117: StageCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
         oncePerTurn: true,
+        conditions: [
+          {
+            condition: "leaderName",
+            name: "Shirahoshi",
+          },
+        ],
       },
     ],
   },

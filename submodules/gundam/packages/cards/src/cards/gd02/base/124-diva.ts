@@ -4,6 +4,7 @@ export const gd02Diva124: BaseCard = {
   cardNumber: "GD02-124",
   name: "Diva",
   type: "base",
+  color: "green",
   traits: ["earth federation", "warship"],
   id: "GD02-124",
   canonicalId: "GD02-124",
@@ -39,6 +40,7 @@ export const gd02Diva124: BaseCard = {
   level: 3,
   cost: 1,
   hp: 5,
+  battlefieldZones: ["space", "earth"],
   effect:
     "【Burst】Deploy this card.<br>【Deploy】Add 1 of your Shields to your hand.<br>\nDuring your turn, while you are Lv.7 or higher, all friendly green (Earth Federation) Units get AP+1.<br>",
   effects: [
@@ -90,6 +92,11 @@ export const gd02Diva124: BaseCard = {
               owner: "friendly",
               cardType: "unit",
               attributeFilters: [
+                {
+                  attribute: "color",
+                  comparison: "eq",
+                  value: "green",
+                },
                 {
                   attribute: "trait",
                   comparison: "includes",

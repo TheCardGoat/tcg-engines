@@ -17,4 +17,8 @@ export const gaetanMoliereTheMoleI18n: Record<Languages, I18nProperties> = {
     name: "Gaetan Moliere",
     version: "La Talpa",
   },
+  es: {
+    name: "Gaëtan Moliere",
+    version: "El topo",
+  },
 };

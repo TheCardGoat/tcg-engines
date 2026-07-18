@@ -45,4 +45,15 @@ export const jasmineHeirOfAgrabahI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jazmín",
+    version: "Heredero de Agraba",
+    text: [
+      {
+        title: "SOY",
+        description:
+          "UN APRENDE RÁPIDO Cuando juegas con este personaje, elimina hasta 1 daño del personaje tuyo elegido.",
+      },
+    ],
+  },
 };

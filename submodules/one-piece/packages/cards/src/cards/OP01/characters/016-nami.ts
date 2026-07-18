@@ -66,6 +66,7 @@ export const op01Nami016: CharacterCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

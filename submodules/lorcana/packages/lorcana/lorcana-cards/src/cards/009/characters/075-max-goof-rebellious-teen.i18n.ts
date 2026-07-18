@@ -45,4 +45,15 @@ export const maxGoofRebelliousTeenI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tonto máximo",
+    version: "Adolescente rebelde",
+    text: [
+      {
+        title: "BANDA SONORA PERSONAL",
+        description:
+          "Cuando juegas con este personaje, puedes pagar 1 {I} para devolver una carta de canción con un coste de 3 o menos de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

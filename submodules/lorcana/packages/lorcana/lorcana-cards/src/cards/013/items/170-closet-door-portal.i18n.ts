@@ -57,4 +57,18 @@ export const closetDoorPortalI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Portal de la puerta del armario",
+    text: [
+      {
+        title: "Toca, toca",
+        description: "Este objeto entra en juego ejercido.",
+      },
+      {
+        title: "¿Quién está ahí?",
+        description:
+          "{E}, 2 {I}: mira las 3 primeras cartas de tu mazo. Puedes revelar una carta de personaje, objeto o ubicación con un coste de 6 o menos y jugarla gratis. Coloque el resto en el fondo de su plataforma en cualquier orden. Pon esta carta en tu tintero boca abajo y ejercítala.",
+      },
+    ],
+  },
 };

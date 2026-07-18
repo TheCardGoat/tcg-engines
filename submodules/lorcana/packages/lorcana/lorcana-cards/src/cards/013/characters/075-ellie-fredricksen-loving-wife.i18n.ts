@@ -41,4 +41,14 @@ export const ellieFredricksenLovingWifeI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Ellie Fredricksen",
+    version: "Esposa amorosa",
+    text: [
+      {
+        title: "CORAZÓN AVENTURADOR",
+        description: "Siempre que juegues en un lugar, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

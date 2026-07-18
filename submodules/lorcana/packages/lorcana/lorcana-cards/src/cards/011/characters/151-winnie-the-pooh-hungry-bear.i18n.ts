@@ -45,4 +45,15 @@ export const winnieThePoohHungryBearI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Winnie el pooh",
+    version: "Oso hambriento",
+    text: [
+      {
+        title: "BUSCANDO",
+        description:
+          "UN MORSEL Cuando juegas con este personaje, puedes devolver a tu mano una carta de objeto de tu descarte.",
+      },
+    ],
+  },
 };

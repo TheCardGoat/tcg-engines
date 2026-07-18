@@ -61,16 +61,15 @@ export const eb01Mr2BonKureiBentham061: CharacterCard = {
         trigger: "whenAttacking",
         actions: [
           {
-            action: "setPower",
+            action: "copyPower",
             target: {
-              player: "self",
+              player: "opponent",
               zones: ["character"],
               count: {
                 amount: 1,
+                upTo: true,
               },
-              self: true,
             },
-            value: 0,
             duration: "thisTurn",
           },
         ],

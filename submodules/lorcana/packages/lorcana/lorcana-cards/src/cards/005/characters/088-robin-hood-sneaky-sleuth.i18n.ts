@@ -59,4 +59,17 @@ export const robinHoodSneakySleuthI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Robin Hood",
+    version: "Detective astuto",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "PLAN INTELIGENTE",
+        description: "Este personaje obtiene +1 {L} por cada personaje enemigo dañado en juego.",
+      },
+    ],
+  },
 };

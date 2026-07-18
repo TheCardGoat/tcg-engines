@@ -28,6 +28,7 @@ function cardWithText(text: CardText): LorcanaCardDefinition {
     i18n: {
       en: { name: "Printed Keyword Test", text },
       de: { name: "Printed Keyword Test", text },
+      es: { name: "Printed Keyword Test", text },
       fr: { name: "Printed Keyword Test", text },
       it: { name: "Printed Keyword Test", text },
     },

@@ -59,4 +59,18 @@ export const teKElementalTerrorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Te Ka",
+    version: "Terror elemental",
+    text: [
+      {
+        title: "Shift 7",
+      },
+      {
+        title: "FURIA ANTIGUA",
+        description:
+          "Durante tu turno, siempre que un personaje contrario sea ejercido, destiérralo.",
+      },
+    ],
+  },
 };

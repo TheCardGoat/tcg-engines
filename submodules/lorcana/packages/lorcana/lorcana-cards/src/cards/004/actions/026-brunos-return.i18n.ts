@@ -17,4 +17,8 @@ export const brunosReturnI18n: Record<Languages, I18nProperties> = {
     name: "Il Ritorno di Bruno",
     text: "Riprendi in mano una carta personaggio dai tuoi scarti. Poi rimuovi fino a 2 danni da un personaggio a tua scelta.",
   },
+  es: {
+    name: "El regreso de Bruno",
+    text: "Devuelve una carta de personaje de tu descarte a tu mano. Luego elimina hasta 2 daños del personaje elegido.",
+  },
 };

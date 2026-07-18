@@ -60,4 +60,18 @@ export const jafarDreadnoughtI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jafar",
+    version: "Acorazado",
+    text: [
+      {
+        title: "Shift 2",
+      },
+      {
+        title: "¿AHORA DÓNDE ESTÁBAMOS?",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, podrás robar una carta.",
+      },
+    ],
+  },
 };

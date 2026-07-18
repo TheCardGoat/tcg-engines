@@ -27,5 +27,39 @@ export const op12JewelryBonney101: CharacterCard = {
   attribute: "special",
   effect:
     '[Activate: Main] You may rest this Character: Your "Supernovas" type Leader gains +1000 power until the end of your opponent\'s next turn.',
+  effects: {
+    effects: [
+      {
+        trigger: "activateMain",
+        costs: [
+          {
+            cost: "restThisCard",
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Supernovas",
+                  match: "includes",
+                },
+              ],
+            },
+            value: 1000,
+            duration: "untilEndOfOpponentNextTurn",
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
   i18n: op12JewelryBonney101I18n,
 };

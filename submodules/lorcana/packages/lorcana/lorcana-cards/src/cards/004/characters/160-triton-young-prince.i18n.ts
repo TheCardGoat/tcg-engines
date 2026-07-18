@@ -65,4 +65,20 @@ export const tritonYoungPrinceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tritón",
+    version: "Joven príncipe",
+    text: [
+      {
+        title: "NADADOR SUPERIOR",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+      {
+        title: "GUARDIANES DE LA ATLÁNTICA",
+        description:
+          "Siempre que una de tus ubicaciones sea desterrada, puedes poner esa carta en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

@@ -21,4 +21,9 @@ export const kangaHunnyBardI18n: Record<Languages, I18nProperties> = {
     version: "Barda del Miele",
     text: "<Melodioso> 5",
   },
+  es: {
+    name: "Kanga",
+    version: "Bardo cariñoso",
+    text: "Cantante 5",
+  },
 };

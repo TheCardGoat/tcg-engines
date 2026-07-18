@@ -49,4 +49,16 @@ export const scarTempestuousLionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cicatriz",
+    version: "León tempestuoso",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "Retador +3",
+      },
+    ],
+  },
 };

@@ -65,4 +65,20 @@ export const scarCreatedByTheVineI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cicatriz",
+    version: "Creado por la vid",
+    text: [
+      {
+        title: "La recompensa del vencedor",
+        description:
+          "Durante tu turno, cada vez que uno de tus personajes Floodborn destierre a otro personaje en un desafío, gana 1 conocimiento.",
+      },
+      {
+        title: "Llena las filas",
+        description:
+          "Durante el turno de un oponente, cada vez que uno de tus personajes Floodborn sea desterrado, roba una carta.",
+      },
+    ],
+  },
 };

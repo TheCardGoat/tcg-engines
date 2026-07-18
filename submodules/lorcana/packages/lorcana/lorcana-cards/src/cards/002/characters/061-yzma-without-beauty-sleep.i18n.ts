@@ -17,4 +17,8 @@ export const yzmaWithoutBeautySleepI18n: Record<Languages, I18nProperties> = {
     name: "Yzma",
     version: "Without Beauty Sleep",
   },
+  es: {
+    name: "Yzma",
+    version: "Sin sueño reparador",
+  },
 };

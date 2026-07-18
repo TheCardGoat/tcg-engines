@@ -64,4 +64,20 @@ export const thePlankI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El tablón",
+    text: [
+      {
+        title: "¡CAMINAR! 2",
+        description: "{I}, desterrar este objeto — Elige uno:",
+      },
+      {
+        title: "• Destierra al personaje héroe elegido.",
+      },
+      {
+        title:
+          "• Personaje villano elegido listo. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

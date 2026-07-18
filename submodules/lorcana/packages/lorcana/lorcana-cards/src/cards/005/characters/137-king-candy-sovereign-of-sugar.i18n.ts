@@ -17,4 +17,8 @@ export const kingCandySovereignOfSugarI18n: Record<Languages, I18nProperties> = 
     name: "Re Candito",
     version: "Sovrano dello Zucchero",
   },
+  es: {
+    name: "Rey caramelo",
+    version: "Soberano del Azúcar",
+  },
 };

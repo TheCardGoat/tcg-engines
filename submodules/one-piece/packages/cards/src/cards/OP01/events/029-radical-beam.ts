@@ -42,6 +42,26 @@ export const op01RadicalBeam029: EventCard = {
             value: 2000,
             duration: "thisBattle",
           },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: 2000,
+            duration: "thisBattle",
+            previousActionTargets: true,
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 2,
+            },
+          },
         ],
       },
     ],

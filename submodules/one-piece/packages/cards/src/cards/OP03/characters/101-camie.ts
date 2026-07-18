@@ -25,6 +25,5 @@ export const op03Camie101: CharacterCard = {
   counter: 1000,
   traits: ["Merfolk"],
   attribute: "wisdom",
-  effect: "NULL",
   i18n: op03Camie101I18n,
 };

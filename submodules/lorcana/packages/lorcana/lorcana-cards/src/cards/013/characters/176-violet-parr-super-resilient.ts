@@ -54,6 +54,39 @@ export const violetParrSuperResilient: CharacterCard = {
     shift("Violet Parr", 3),
     resist(1),
     {
+      id: "Fqd-3-self",
+      type: "triggered",
+      name: "HEROIC SYNERGY",
+      text: "HEROIC SYNERGY Whenever you play this or another Hero character, you may draw a card, then choose and discard a card.",
+      trigger: {
+        event: "play",
+        on: "SELF",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+        chooser: "CONTROLLER",
+        effect: {
+          type: "sequence",
+          steps: [
+            {
+              type: "draw",
+              amount: 1,
+              target: "CONTROLLER",
+            },
+            {
+              type: "discard",
+              amount: 1,
+              chosen: true,
+              from: "hand",
+              target: "CONTROLLER",
+            },
+          ],
+        },
+      },
+    },
+    {
+      id: "Fqd-3-other",
       type: "triggered",
       name: "HEROIC SYNERGY",
       text: "HEROIC SYNERGY Whenever you play this or another Hero character, you may draw a card, then choose and discard a card.",

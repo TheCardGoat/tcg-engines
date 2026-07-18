@@ -17,4 +17,8 @@ export const tukTukCuriousPartnerI18n: Record<Languages, I18nProperties> = {
     name: "Tuk Tuk",
     version: "Compagno Curioso",
   },
+  es: {
+    name: "Tuk-tuk",
+    version: "Socio curioso",
+  },
 };

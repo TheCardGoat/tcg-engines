@@ -52,6 +52,9 @@ export const eb03TrafalgarLaw062: CharacterCard = {
             cost: "trashFromHand",
             amount: 1,
           },
+          {
+            cost: "trashThisCard",
+          },
         ],
         actions: [
           {

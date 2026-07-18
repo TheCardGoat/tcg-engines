@@ -29,4 +29,18 @@ export const princeJohnFraidycatI18n: Record<Languages, I18nProperties> = {
     version: "Pavido",
     text: "Aiuto! Aiuto! Ogni volta che un avversario gioca un personaggio, infliggi 1 danno a questo personaggio.",
   },
+  es: {
+    name: "Príncipe juan",
+    version: "Gato asustadizo",
+    text: [
+      {
+        title: "¡AYUDA!",
+      },
+      {
+        title: "¡AYUDA!",
+        description:
+          "Siempre que un oponente juegue con un personaje, inflige 1 daño a este personaje.",
+      },
+    ],
+  },
 };

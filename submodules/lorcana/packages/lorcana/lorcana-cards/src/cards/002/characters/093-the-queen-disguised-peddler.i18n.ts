@@ -45,4 +45,15 @@ export const theQueenDisguisedPeddlerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La reina",
+    version: "Vendedor ambulante disfrazado",
+    text: [
+      {
+        title: "UN DISFRAZ PERFECTO",
+        description:
+          "{E}, elige y descarta una carta de personaje: obtén un conocimiento igual al {L} del personaje descartado.",
+      },
+    ],
+  },
 };

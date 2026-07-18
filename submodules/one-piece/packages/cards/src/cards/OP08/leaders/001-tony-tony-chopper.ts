@@ -28,9 +28,9 @@ export const op08TonyTonyChopper001: LeaderCard = {
   color: ["green", "red"],
   rarity: "L",
   setId: "OP08",
-  power: 4,
-  life: 1,
-  traits: ["5000"],
+  power: 5000,
+  life: 4,
+  traits: ["Animal Drum Kingdom Straw Hat Crew"],
   attribute: "strike",
   artVariants: [
     {
@@ -57,20 +57,19 @@ export const op08TonyTonyChopper001: LeaderCard = {
               },
               filters: [
                 {
-                  filter: "trait",
-                  value: "Animal",
-                },
-                {
-                  filter: "trait",
-                  value: "Drum Kingdom",
+                  filter: "anyOf",
+                  groups: [
+                    [{ filter: "trait", value: "Animal", match: "includes" }],
+                    [{ filter: "trait", value: "Drum Kingdom", match: "includes" }],
+                  ],
                 },
               ],
             },
             count: {
               amount: 1,
-              upTo: true,
             },
             donState: "rested",
+            distribution: "each",
           },
         ],
         oncePerTurn: true,

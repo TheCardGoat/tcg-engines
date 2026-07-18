@@ -45,4 +45,15 @@ export const anitaRadcliffeDogLoverI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Anita Radcliffe",
+    version: "Amante de los perros",
+    text: [
+      {
+        title: "YO CUIDARÉ DE TI",
+        description:
+          "Cuando juegas con este personaje, puedes darle al personaje Cachorro elegido Resistencia +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

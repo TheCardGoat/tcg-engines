@@ -25,11 +25,19 @@ export const eb03Nami006: CharacterCard = {
   traits: ["Alabasta Straw Hat Crew"],
   attribute: "wisdom",
   effect:
-    "[On Play] You may give your active Leader 5000 power during this turn: Draw 1 card.\n[Activate: Main] [Once Per Turn] If your Leader has the {Alabasta} type, give up to 1 of your opponent's Characters 1000 power during this turn.",
+    "[On Play] You may give your active Leader -5000 power during this turn: Draw 1 card.\n[Activate: Main] [Once Per Turn] If your Leader has the {Alabasta} type, give up to 1 of your opponent's Characters -1000 power during this turn.",
   effects: {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "modifyLeaderPower",
+            value: -5000,
+            duration: "thisTurn",
+            requiresActive: true,
+          },
+        ],
         actions: [
           {
             action: "draw",
@@ -45,6 +53,7 @@ export const eb03Nami006: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Alabasta",
+            match: "includes",
           },
         ],
         actions: [
@@ -58,7 +67,7 @@ export const eb03Nami006: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 1000,
+            value: -1000,
             duration: "thisTurn",
           },
         ],

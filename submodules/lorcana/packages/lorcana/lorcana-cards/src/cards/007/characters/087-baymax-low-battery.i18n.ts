@@ -41,4 +41,14 @@ export const baymaxLowBatteryI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Baymax",
+    version: "Batería baja",
+    text: [
+      {
+        title: "SHHHHH",
+        description: "Este personaje entra en juego ejercido.",
+      },
+    ],
+  },
 };

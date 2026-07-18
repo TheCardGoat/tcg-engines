@@ -45,4 +45,15 @@ export const vixeyExpertFisherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Vixey",
+    version: "Pescador experto",
+    text: [
+      {
+        title: "Robar",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje con <Evasivo> en juego, puedes devolver el personaje, objeto o ubicación elegidos con un coste de 2 o menos a la mano de su jugador.",
+      },
+    ],
+  },
 };

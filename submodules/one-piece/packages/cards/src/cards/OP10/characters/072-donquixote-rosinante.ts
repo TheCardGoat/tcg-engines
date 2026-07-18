@@ -46,6 +46,18 @@ export const op10DonquixoteRosinante072: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "event",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "draw",

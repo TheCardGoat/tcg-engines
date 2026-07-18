@@ -25,6 +25,5 @@ export const op01Shinobu043: CharacterCard = {
   counter: 1000,
   traits: ["Land of Wano"],
   attribute: "special",
-  effect: "NULL",
   i18n: op01Shinobu043I18n,
 };

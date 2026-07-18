@@ -27,5 +27,39 @@ export const op02Onigumo095: CharacterCard = {
   attribute: "slash",
   effect:
     "If there is a Character with a cost of 0, this Character gains [Banish]. (When this card deals damage, the target card is trashed without activating its Trigger.)",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "existsOnField",
+            zone: "character",
+            filters: [
+              {
+                filter: "cost",
+                comparison: "eq",
+                value: 0,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "banish",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op02Onigumo095I18n,
 };

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { page } from "$app/state";
+  import { untrack } from "svelte";
   import Trophy from "@lucide/svelte/icons/trophy";
   import { m } from "$lib/i18n/messages.js";
   import { Button } from "$lib/design-system/primitives/button";
@@ -33,6 +34,11 @@
   }
 
   interface QueueOption {
+    value: string;
+    label: string;
+  }
+
+  interface SeasonOption {
     value: string;
     label: string;
   }
@@ -118,8 +124,45 @@
   ] as const;
 
   let { data }: { data: PageData } = $props();
-  let selectedQueueValue = $state("");
-  let selectedRegionValue = $state("");
+  let selectedSeasonValue = $state(
+    untrack(
+      () =>
+        data.seasonId ??
+        data.availableSeasons.find((season) => season.isCurrent)?.seasonId ??
+        data.competitive?.seasonId ??
+        "",
+    ),
+  );
+  let selectedQueueValue = $state(
+    untrack(() => (data.tab === "casual" ? "casual" : `competitive:${data.formatId}`)),
+  );
+  let selectedModeValue = $state<"1" | "3">(untrack(() => data.queueMode));
+  let selectedRegionValue = $state(untrack(() => data.region ?? ""));
+
+  const currentSeasonId = $derived.by(
+    () =>
+      data.availableSeasons.find((season) => season.isCurrent)?.seasonId ??
+      data.competitive?.seasonId ??
+      data.seasonId ??
+      "",
+  );
+  const seasonOptions = $derived.by((): SeasonOption[] => {
+    if (data.availableSeasons.length === 0) {
+      return [
+        {
+          value: currentSeasonId,
+          label: m["sim.leaderboard.filter.seasonCurrent"]({}),
+        },
+      ];
+    }
+
+    return data.availableSeasons.map((season) => ({
+      value: season.seasonId,
+      label: season.isCurrent
+        ? `${season.name} (${m["sim.leaderboard.filter.seasonCurrent"]({})})`
+        : season.name,
+    }));
+  });
 
   const queueOptions = $derived.by((): QueueOption[] => [
     ...data.availableFormats.map((format) => ({
@@ -152,7 +195,12 @@
   const activeQueueLabel = $derived.by(() => {
     if (data.tab === "casual") return m["sim.leaderboard.mode.casual"]({});
     const selected = data.availableFormats.find((format) => format.id === data.formatId);
-    return selected ? formatLabel(selected.labelKey) : titleFromId(data.formatId);
+    const queueLabel = selected ? formatLabel(selected.labelKey) : titleFromId(data.formatId);
+    const modeLabel =
+      data.queueMode === "1"
+        ? m["sim.leaderboard.filter.bestOfOne"]({})
+        : m["sim.leaderboard.filter.bestOfThree"]({});
+    return `${queueLabel} · ${modeLabel}`;
   });
   const countLabel = $derived(
     data.tab === "competitive"
@@ -179,7 +227,9 @@
   );
 
   $effect(() => {
+    selectedSeasonValue = data.seasonId ?? currentSeasonId;
     selectedQueueValue = queueValue;
+    selectedModeValue = data.queueMode;
     selectedRegionValue = data.region ?? "";
   });
 
@@ -216,18 +266,40 @@
     });
   }
 
+  function setSeason(value: string) {
+    const nextSeasonId = value || null;
+    const currentSeasonParam = page.url.searchParams.get("seasonId") || null;
+    if (
+      nextSeasonId === data.seasonId &&
+      (nextSeasonId !== currentSeasonId || currentSeasonParam === null)
+    ) {
+      return;
+    }
+
+    setQuery({
+      seasonId: nextSeasonId && nextSeasonId !== currentSeasonId ? nextSeasonId : null,
+    });
+  }
+
   function setQueue(value: string) {
     if (value === queueValue) return;
 
     if (value === "casual") {
-      setQuery({ tab: "casual", formatId: null });
+      setQuery({ tab: "casual", formatId: null, seasonId: null });
       return;
     }
 
     setQuery({
       tab: "competitive",
       formatId: value.replace(/^competitive:/, ""),
+      mode: data.queueMode,
+      seasonId: null,
     });
+  }
+
+  function setMode(value: string) {
+    if ((value !== "1" && value !== "3") || value === data.queueMode) return;
+    setQuery({ tab: "competitive", mode: value, seasonId: null });
   }
 
   function setRegion(value: string) {
@@ -357,7 +429,7 @@
       </div>
 
       <div
-        class="grid gap-2 sm:grid-cols-3 lg:min-w-[31rem]"
+        class="grid gap-2 sm:grid-cols-2 lg:min-w-[42rem] lg:grid-cols-4"
         aria-label={m["sim.leaderboard.filters.aria"]({})}
       >
         <label class="grid gap-1 text-xs font-medium text-slate-400">
@@ -365,9 +437,12 @@
           <select
             class="h-10 rounded-lg border border-white/10 bg-slate-900 px-3 text-sm text-slate-100 outline-none transition focus:border-sky-300/60 focus:ring-2 focus:ring-sky-400/25"
             aria-label={m["sim.leaderboard.filter.season"]({})}
-            value="current"
+            bind:value={selectedSeasonValue}
+            onchange={(event) => setSeason(event.currentTarget.value)}
           >
-            <option value="current">{m["sim.leaderboard.filter.seasonCurrent"]({})}</option>
+            {#each seasonOptions as option (option.value)}
+              <option value={option.value}>{option.label}</option>
+            {/each}
           </select>
         </label>
 
@@ -384,6 +459,21 @@
             {/each}
           </select>
         </label>
+
+        {#if data.tab === "competitive"}
+          <label class="grid gap-1 text-xs font-medium text-slate-400">
+            <span>{m["sim.leaderboard.filter.bestOf"]({})}</span>
+            <select
+              class="h-10 rounded-lg border border-white/10 bg-slate-900 px-3 text-sm text-slate-100 outline-none transition focus:border-sky-300/60 focus:ring-2 focus:ring-sky-400/25"
+              bind:value={selectedModeValue}
+              aria-label={m["sim.leaderboard.filter.bestOf"]({})}
+              onchange={(event) => setMode(event.currentTarget.value)}
+            >
+              <option value="1">{m["sim.leaderboard.filter.bestOfOne"]({})}</option>
+              <option value="3">{m["sim.leaderboard.filter.bestOfThree"]({})}</option>
+            </select>
+          </label>
+        {/if}
 
         <label class="grid gap-1 text-xs font-medium text-slate-400">
           <span>{m["sim.leaderboard.filter.region"]({})}</span>

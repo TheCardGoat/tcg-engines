@@ -45,4 +45,15 @@ export const tweedledeeTweedledumStrangeStorytellersI18n: Record<Languages, I18n
       },
     ],
   },
+  es: {
+    name: "Tweedledee y Tweedledum",
+    version: "Narradores extraños",
+    text: [
+      {
+        title: "OTRA RECITACIÓN",
+        description:
+          "Siempre que este personaje realice una misión, puedes devolver el personaje dañado elegido a la mano de su jugador.",
+      },
+    ],
+  },
 };

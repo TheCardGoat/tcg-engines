@@ -42,4 +42,14 @@ export const gantuGalacticFederationCaptainI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Gantu",
+    version: "Capitán de la Federación Galáctica",
+    text: [
+      {
+        title: "BAJO ARRESTO",
+        description: "Los personajes con coste 2 o menos no pueden desafiar a tus personajes.",
+      },
+    ],
+  },
 };

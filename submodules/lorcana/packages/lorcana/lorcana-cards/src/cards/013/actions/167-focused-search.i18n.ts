@@ -17,4 +17,8 @@ export const focusedSearchI18n: Record<Languages, I18nProperties> = {
     name: "Ricerca Approfondita",
     text: "Guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio chiamata Kevin o una carta oggetto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
   },
+  es: {
+    name: "Búsqueda enfocada",
+    text: "Mira las 4 primeras cartas de tu mazo. Puedes revelar una carta de personaje llamada Kevin o una carta de objeto y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+  },
 };

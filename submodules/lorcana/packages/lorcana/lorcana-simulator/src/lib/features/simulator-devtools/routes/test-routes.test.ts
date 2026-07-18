@@ -9,6 +9,7 @@ import {
 } from "./test-routes.js";
 import { resolveRegressionFixtureForTestRoute } from "./regression-test-routes.js";
 import { SET13_MANUAL_VALIDATION_FIXTURE_IDS } from "../fixtures/set13-manual-validation.js";
+import { USER_REPORT_FIXTURE_IDS } from "../fixtures/user-report-fixes.js";
 
 describe("test-routes", () => {
   it("builds fixture routes under /tests", () => {
@@ -131,6 +132,16 @@ describe("test-routes", () => {
   it("resolves the set13 manual validation visual chunks", () => {
     for (const fixtureId of SET13_MANUAL_VALIDATION_FIXTURE_IDS) {
       expect(resolveFixtureForTestRoute(fixtureId)?.id).toBe(fixtureId);
+      expect(buildFixtureTestRouteHref(fixtureId)).toBe(`/tests/${fixtureId}`);
+    }
+  });
+
+  it("loads every user-report manual QA fixture", async () => {
+    for (const fixtureId of USER_REPORT_FIXTURE_IDS) {
+      const fixture = await loadFixtureForTestRoute(fixtureId);
+
+      expect(fixture?.id).toBe(fixtureId);
+      expect(fixture?.description).toBeTruthy();
       expect(buildFixtureTestRouteHref(fixtureId)).toBe(`/tests/${fixtureId}`);
     }
   });

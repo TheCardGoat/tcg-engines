@@ -35,4 +35,8 @@ export const allIsFoundEnchantedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Todo se encuentra",
+    text: "Pon hasta 2 cartas de tu descarte en tu tintero, boca abajo y ejercidas.",
+  },
 };

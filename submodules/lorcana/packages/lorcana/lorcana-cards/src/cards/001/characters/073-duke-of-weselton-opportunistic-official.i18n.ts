@@ -17,4 +17,8 @@ export const dukeOfWeseltonOpportunisticOfficialI18n: Record<Languages, I18nProp
     name: "Duke of Weselton",
     version: "Opportunistic Official",
   },
+  es: {
+    name: "Duque de Weselton",
+    version: "Oficial oportunista",
+  },
 };

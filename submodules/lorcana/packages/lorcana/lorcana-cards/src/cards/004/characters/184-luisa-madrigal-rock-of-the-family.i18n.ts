@@ -42,4 +42,14 @@ export const luisaMadrigalRockOfTheFamilyI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Luisa Madrigal",
+    version: "Roca de la familia",
+    text: [
+      {
+        title: "YO SOY EL FUERTE",
+        description: "Mientras tengas otro personaje en juego, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

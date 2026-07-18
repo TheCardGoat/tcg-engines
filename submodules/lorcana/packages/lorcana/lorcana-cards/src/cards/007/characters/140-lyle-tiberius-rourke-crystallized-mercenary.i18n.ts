@@ -45,4 +45,15 @@ export const lyleTiberiusRourkeCrystallizedMercenaryI18n: Record<Languages, I18n
       },
     ],
   },
+  es: {
+    name: "Lyle Tiberius Rourke",
+    version: "Mercenario cristalizado",
+    text: [
+      {
+        title: "EXPLOSIVO",
+        description:
+          "Una vez durante tu turno, cada vez que se pone una carta en tu tintero, inflige 2 puntos de daño a cada personaje en juego.",
+      },
+    ],
+  },
 };

@@ -3,6 +3,7 @@ import type { CardEffect, PilotCard } from "@tcg/gundam-types";
 export const gd02QuattroBajeena098: PilotCard = {
   cardNumber: "GD02-098",
   name: "Quattro Bajeena",
+  alternateNames: ["Char Aznable"],
   type: "pilot",
   color: "white",
   traits: ["aeug", "newtype"],

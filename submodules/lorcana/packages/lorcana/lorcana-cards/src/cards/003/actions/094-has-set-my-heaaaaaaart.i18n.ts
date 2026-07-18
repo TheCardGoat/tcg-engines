@@ -40,4 +40,15 @@ export const hasSetMyHeaaaaaaartI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ha configurado mi corazón. . .",
+    text: [
+      {
+        title: "(Un personaje con coste 2 o más puede {E} reproducir esta canción gratis).",
+      },
+      {
+        title: "Desterrar el objeto elegido.",
+      },
+    ],
+  },
 };

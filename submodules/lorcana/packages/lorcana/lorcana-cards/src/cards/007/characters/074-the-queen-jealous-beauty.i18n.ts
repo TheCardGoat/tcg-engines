@@ -45,4 +45,15 @@ export const theQueenJealousBeautyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La reina",
+    version: "Belleza celosa",
+    text: [
+      {
+        title: "NINGUNA MANZANA ORDINARIA",
+        description:
+          "{E}: elige 3 cartas del descarte del oponente elegido y colócalas en la parte inferior de su mazo para obtener 3 conocimientos. Si alguna carta de Princesa se movió de esta manera, gana 4 conocimientos.",
+      },
+    ],
+  },
 };

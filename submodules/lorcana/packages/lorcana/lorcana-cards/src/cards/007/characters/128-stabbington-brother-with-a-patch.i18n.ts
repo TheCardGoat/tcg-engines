@@ -44,4 +44,14 @@ export const stabbingtonBrotherWithAPatchI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Hermano Stabbington",
+    version: "Con un parche",
+    text: [
+      {
+        title: "DELITO DE OPORTUNIDAD",
+        description: "Cuando juegas con este personaje, el oponente elegido pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

@@ -49,8 +49,19 @@ export const op09Mr3Galdino056: CharacterCard = {
                 value: "Mr.3(Galdino)",
               },
               {
-                filter: "trait",
-                value: "Cross Guild",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Cross Guild",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Baroque Works",
+                    match: "includes",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

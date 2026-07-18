@@ -45,4 +45,15 @@ export const elsaIceSurferI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Elsa",
+    version: "Surfista de hielo",
+    text: [
+      {
+        title: "Eso no es una ventisca",
+        description:
+          "Siempre que interpretes a un personaje llamado Anna, prepara este personaje. Este personaje no puede realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

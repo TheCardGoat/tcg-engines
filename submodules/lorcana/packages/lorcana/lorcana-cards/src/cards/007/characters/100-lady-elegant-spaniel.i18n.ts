@@ -44,4 +44,15 @@ export const ladyElegantSpanielI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dama",
+    version: "Perro de aguas elegante",
+    text: [
+      {
+        title: "LA VIDA DE UN PERRO",
+        description:
+          "Mientras tengas un personaje llamado Tramp en juego, este personaje obtiene +1 {L}.",
+      },
+    ],
+  },
 };

@@ -21,4 +21,9 @@ export const teKLavaMonsterI18n: Record<Languages, I18nProperties> = {
     version: "Mostro di Lava",
     text: "<Sfidante> +2",
   },
+  es: {
+    name: "Te Ka",
+    version: "Monstruo de lava",
+    text: "Retador +2",
+  },
 };

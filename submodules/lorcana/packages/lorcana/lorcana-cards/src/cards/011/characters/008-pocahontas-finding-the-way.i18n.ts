@@ -44,4 +44,15 @@ export const pocahontasFindingTheWayI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pocahontas",
+    version: "Encontrar el camino",
+    text: [
+      {
+        title: "EL DESCUBRIMIENTO ESPERA",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

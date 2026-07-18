@@ -45,4 +45,15 @@ export const minnieMouseAmethystChampionI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Campeón amatista",
+    text: [
+      {
+        title: "EQUILIBRIO MÍSTICO",
+        description:
+          "Siempre que uno de tus otros personajes de Amethyst sea desterrado en un desafío, puedes robar una carta.",
+      },
+    ],
+  },
 };

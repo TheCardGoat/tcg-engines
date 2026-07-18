@@ -60,4 +60,19 @@ export const ednaModeSuperSuitDesignerI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Modo Edna",
+    version: "Súper diseñador de trajes",
+    text: [
+      {
+        title: "ACCESORIO LLAVE",
+        description: "{E}: elemento elegido listo.",
+      },
+      {
+        title: "TODOS LOS BÁSICOS",
+        description:
+          "Mientras tengas un objeto llamado Super Suit en juego, este personaje gana Ward.",
+      },
+    ],
+  },
 };

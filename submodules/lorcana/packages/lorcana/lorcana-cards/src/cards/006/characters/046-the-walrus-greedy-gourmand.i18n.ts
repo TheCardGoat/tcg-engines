@@ -17,4 +17,8 @@ export const theWalrusGreedyGourmandI18n: Record<Languages, I18nProperties> = {
     name: "Il Tricheco",
     version: "Avido Buongustaio",
   },
+  es: {
+    name: "La morsa",
+    version: "Goloso codicioso",
+  },
 };

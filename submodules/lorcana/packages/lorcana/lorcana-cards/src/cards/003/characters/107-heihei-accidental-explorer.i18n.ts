@@ -45,4 +45,15 @@ export const heiheiAccidentalExplorerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Heihei",
+    version: "Explorador accidental",
+    text: [
+      {
+        title: "Vagabundeo sin sentido",
+        description:
+          "Una vez por turno, cuando este personaje se mueve a una ubicación, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

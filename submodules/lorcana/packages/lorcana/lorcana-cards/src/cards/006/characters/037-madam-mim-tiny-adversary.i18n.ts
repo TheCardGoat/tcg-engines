@@ -53,4 +53,17 @@ export const madamMimTinyAdversaryI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora mim",
+    version: "Pequeño adversario",
+    text: [
+      {
+        title: "Retador +1",
+      },
+      {
+        title: "ZIM ZABBERIM ZIM",
+        description: "Tus otros personajes obtienen Challenger +1.",
+      },
+    ],
+  },
 };

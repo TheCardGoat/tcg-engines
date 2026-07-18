@@ -21,4 +21,9 @@ export const francineEyeingTheEvidenceI18n: Record<Languages, I18nProperties> = 
     version: "Che Esamina le Prove",
     text: "<Resistere> +1",
   },
+  es: {
+    name: "Francina",
+    version: "Observando la evidencia",
+    text: "Resistir +1",
+  },
 };

@@ -17,4 +17,8 @@ export const hiramFlavershamIntriguedInventorI18n: Record<Languages, I18nPropert
     name: "Hiram Flaversham",
     version: "Inventore Incuriosito",
   },
+  es: {
+    name: "Hiram Flaversham",
+    version: "Inventor intrigado",
+  },
 };

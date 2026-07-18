@@ -21,4 +21,9 @@ export const meridaDefiantDaughterI18n: Record<Languages, I18nProperties> = {
     version: "Figlia Ribelle",
     text: "<Protetto>",
   },
+  es: {
+    name: "Mérida",
+    version: "Hija desafiante",
+    text: "Pabellón",
+  },
 };

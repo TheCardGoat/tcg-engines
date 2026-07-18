@@ -78,6 +78,47 @@ export const op04Kyros082: CharacterCard = {
         ],
       },
     ],
+    replacementEffects: [
+      {
+        replacedEvent: "ko",
+        eventFilter: {
+          targetSelf: true,
+        },
+        replacementAction: {
+          action: "rest",
+          target: {
+            player: "self",
+            zones: ["leader", "stage"],
+            count: {
+              amount: 1,
+            },
+            filters: [
+              {
+                filter: "anyOf",
+                groups: [
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "leader",
+                    },
+                  ],
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "stage",
+                    },
+                    {
+                      filter: "name",
+                      value: "Corrida Coliseum",
+                    },
+                  ],
+                ],
+              },
+            ],
+          },
+        },
+      },
+    ],
   },
   i18n: op04Kyros082I18n,
 };

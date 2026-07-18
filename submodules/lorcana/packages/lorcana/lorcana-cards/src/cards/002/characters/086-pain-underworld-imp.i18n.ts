@@ -41,4 +41,14 @@ export const painUnderworldImpI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dolor",
+    version: "Diablillo del inframundo",
+    text: [
+      {
+        title: "VIENE, TU MAS LUGBRIOSIDAD",
+        description: "Mientras este personaje tenga 5 {S} o más, obtiene +2 {L}.",
+      },
+    ],
+  },
 };

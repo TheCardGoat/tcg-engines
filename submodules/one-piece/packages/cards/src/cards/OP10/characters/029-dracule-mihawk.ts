@@ -64,6 +64,7 @@ export const op10DraculeMihawk029: CharacterCard = {
                 {
                   filter: "trait",
                   value: "ODYSSEY",
+                  match: "includes",
                 },
                 {
                   filter: "cost",

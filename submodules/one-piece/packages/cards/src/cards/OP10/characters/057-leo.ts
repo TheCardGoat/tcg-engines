@@ -31,41 +31,70 @@ export const op10Leo057: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
+        costs: [
           {
-            condition: "leaderName",
-            name: "Usopp",
+            cost: "restCards",
+            amount: 1,
+            filters: [
+              {
+                filter: "anyOf",
+                groups: [
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "leader",
+                    },
+                  ],
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "stage",
+                    },
+                  ],
+                ],
+              },
+            ],
           },
         ],
         actions: [
           {
-            action: "search",
-            lookCount: 5,
-            source: {
-              player: "self",
-              zone: "deck",
+            action: "conditional",
+            predicate: {
+              condition: "leaderName",
+              name: "Usopp",
             },
-            revealCount: {
-              amount: 2,
-              upTo: true,
-            },
-            revealFilters: [
+            whenTrue: [
               {
-                filter: "excludeName",
-                value: "Leo",
+                action: "search",
+                lookCount: 5,
+                source: {
+                  player: "self",
+                  zone: "deck",
+                },
+                revealCount: {
+                  amount: 2,
+                  upTo: true,
+                },
+                revealFilters: [
+                  {
+                    filter: "excludeName",
+                    value: "Leo",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Dressrosa",
+                    match: "includes",
+                  },
+                ],
+                revealDestination: "hand",
+                remainderPosition: "bottom",
               },
               {
-                filter: "trait",
-                value: "Dressrosa",
+                action: "trashFromHand",
+                player: "self",
+                amount: 1,
               },
             ],
-            revealDestination: "hand",
-            remainderPosition: "bottom",
-          },
-          {
-            action: "trashFromHand",
-            player: "self",
-            amount: 1,
           },
         ],
         optional: true,

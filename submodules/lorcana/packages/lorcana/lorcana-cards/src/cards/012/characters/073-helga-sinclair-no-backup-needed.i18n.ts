@@ -45,4 +45,15 @@ export const helgaSinclairNoBackupNeededI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Helga Sinclair",
+    version: "No se necesita copia de seguridad",
+    text: [
+      {
+        title: "GESTIÓN DE CRISIS",
+        description:
+          "Si se pusieron 2 o más cartas en tu descarte este turno, pagas 2 {I} menos para jugar con este personaje.",
+      },
+    ],
+  },
 };

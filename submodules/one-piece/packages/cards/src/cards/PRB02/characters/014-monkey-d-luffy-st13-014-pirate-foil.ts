@@ -6,6 +6,7 @@ export const prb02MonkeyDLuffySt13014PirateFoil014: CharacterCard = {
   canonicalId: "ST13-014",
   slug: "monkey-d-luffy-st13-014-pirate-foil",
   name: "Monkey.D.Luffy - ST13-014 (Pirate Foil)",
+  alternateNames: ["Monkey.D.Luffy"],
   printings: [
     {
       id: "ST13-014",

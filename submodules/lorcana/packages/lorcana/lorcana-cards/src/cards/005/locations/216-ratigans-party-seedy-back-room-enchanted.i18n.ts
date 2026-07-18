@@ -44,4 +44,14 @@ export const ratigansPartySeedyBackRoomEnchantedI18n: Record<Languages, I18nProp
       },
     ],
   },
+  es: {
+    name: "La fiesta de Ratigan",
+    version: "Cuarto trasero sórdido",
+    text: [
+      {
+        title: "JUEGO DE INADAPTADOS",
+        description: "Mientras tengas un personaje dañado aquí, esta ubicación obtiene +2 {L}.",
+      },
+    ],
+  },
 };

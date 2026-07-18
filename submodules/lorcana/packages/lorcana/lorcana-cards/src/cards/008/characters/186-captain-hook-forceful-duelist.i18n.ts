@@ -21,4 +21,9 @@ export const captainHookForcefulDuelistI18n: Record<Languages, I18nProperties> =
     version: "Forceful Duelist",
     text: "<Challenger> +2 (While challenging, this character gets +2 {S}.)",
   },
+  es: {
+    name: "Capitán Garfio",
+    version: "Duelista contundente",
+    text: "Retador +2",
+  },
 };

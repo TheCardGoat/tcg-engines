@@ -17,4 +17,8 @@ export const grumpySoreheadedMinerI18n: Record<Languages, I18nProperties> = {
     name: "Brontolo",
     version: "Minatore Irascibile",
   },
+  es: {
+    name: "Gruñón",
+    version: "Minero dolorido",
+  },
 };

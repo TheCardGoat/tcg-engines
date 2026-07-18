@@ -17,4 +17,8 @@ export const aladdinFearlessNavigatorI18n: Record<Languages, I18nProperties> = {
     name: "Aladdin",
     version: "Impavido Navigatore",
   },
+  es: {
+    name: "Aladino",
+    version: "Navegante intrépido",
+  },
 };

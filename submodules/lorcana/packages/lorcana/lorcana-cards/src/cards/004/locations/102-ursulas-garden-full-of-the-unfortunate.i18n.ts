@@ -44,4 +44,15 @@ export const ursulasGardenFullOfTheUnfortunateI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "El jardín de Úrsula",
+    version: "Lleno de desafortunados",
+    text: [
+      {
+        title: "ABANDONAR LA ESPERANZA",
+        description:
+          "Mientras tengas un personaje ejercido aquí, los personajes contrarios obtienen -1 {L}.",
+      },
+    ],
+  },
 };

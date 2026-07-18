@@ -65,4 +65,20 @@ export const pepaMadrigalCalmBeforeTheStormI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Pepa Madrigal",
+    version: "Calma antes de la tormenta",
+    text: [
+      {
+        title: "TIEMPO TORMENTA",
+        description:
+          "Cuando juegas con este personaje, inflige 1 daño a cada uno de tus otros personajes.",
+      },
+      {
+        title: "RESQUICIO DE ESPERANZA",
+        description:
+          "Una vez durante tu turno, cada vez que elimines 1 o más daños de uno de tus personajes, roba una carta.",
+      },
+    ],
+  },
 };

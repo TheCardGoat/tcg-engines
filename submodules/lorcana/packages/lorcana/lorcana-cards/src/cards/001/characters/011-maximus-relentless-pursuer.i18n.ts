@@ -43,4 +43,15 @@ export const maximusRelentlessPursuerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Máximo",
+    version: "Perseguidor implacable",
+    text: [
+      {
+        title: "PATADA DE CABALLO",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene -2 {S} este turno.",
+      },
+    ],
+  },
 };

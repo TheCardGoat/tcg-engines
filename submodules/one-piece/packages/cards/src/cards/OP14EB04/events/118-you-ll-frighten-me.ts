@@ -73,6 +73,21 @@ export const op14eb04YouLlFrightenMe118: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: { player: "self", zone: "hand" },
+            count: { amount: 1, upTo: true },
+            filters: [
+              { filter: "cardCategory", value: "character" },
+              { filter: "power", comparison: "lte", value: 6000 },
+              { filter: "hasTrigger", value: true },
+            ],
+          },
+        ],
+      },
     ],
   },
   i18n: op14eb04YouLlFrightenMe118I18n,

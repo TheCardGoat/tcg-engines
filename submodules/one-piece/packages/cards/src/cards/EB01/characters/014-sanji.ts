@@ -53,6 +53,7 @@ export const eb01Sanji014: CharacterCard = {
             },
             value: 1000,
             duration: "permanent",
+            restedDonGroupSize: 3,
           },
         ],
       },

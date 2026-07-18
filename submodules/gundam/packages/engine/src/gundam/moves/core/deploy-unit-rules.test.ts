@@ -247,16 +247,22 @@ describe("Gap 1 — Link Unit can attack turn deployed (rule 3-2-6-3)", () => {
 });
 
 // =============================================================================
-// Gap 3 — Field-wide 【Deploy】 observer triggers (rule 10-1-6-1)
+// Gap 3 — Explicit deployment observer triggers (rule 10-1-6-1)
 // =============================================================================
 
-describe("Gap 3 — Observer 【Deploy】 triggers fire on other in-play cards (rule 10-1-6-1)", () => {
-  it("in-play card with 【Deploy】 trigger draws a card when a unit is deployed", () => {
+describe("Gap 3 — explicit deployment observers fire on matching events", () => {
+  it("in-play observer draws when its controller deploys a Unit", () => {
     const deployTriggerEffect: CardEffect = {
       type: "triggered",
-      activation: { timing: ["deploy"] },
+      activation: {
+        timing: ["deploy"],
+        conditions: [
+          { type: "eventPlayerIsSelf" },
+          { type: "eventCardMatches", target: { owner: "friendly", cardType: "unit" } },
+        ],
+      },
       directives: [{ action: { action: "draw", count: 1 } }],
-      sourceText: "【Deploy】 Draw 1.",
+      sourceText: "When you deploy a Unit, draw 1.",
     };
     const observer = createMockUnit({
       level: 1,
@@ -276,12 +282,10 @@ describe("Gap 3 — Observer 【Deploy】 triggers fire on other in-play cards (
     );
 
     const p1 = engine.asPlayer(PLAYER_ONE);
-    // Measure by deck size: observer draws 1 card from deck to hand
-    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
+    const deckBefore = p1.getBoardView().players[PLAYER_ONE]!.deckCount;
     expectSuccess(p1.deployUnit(incoming));
 
-    // Observer's 【Deploy】 fired → deck decreased by 1
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore - 1);
+    expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(deckBefore - 1);
   });
 
   it("deployed card's own 【Deploy】 effect fires exactly once (not double-fired)", () => {
@@ -303,20 +307,24 @@ describe("Gap 3 — Observer 【Deploy】 triggers fire on other in-play cards (
     );
 
     const p1 = engine.asPlayer(PLAYER_ONE);
-    // Measure by deck size: unit's own Deploy trigger should draw exactly 1 card
-    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
+    const deckBefore = p1.getBoardView().players[PLAYER_ONE]!.deckCount;
     expectSuccess(p1.deployUnit(unit));
 
-    // Self-trigger fires once; field scan skips the deployed card → exactly 1 draw = 1 deck decrease
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore - 1);
+    expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(deckBefore - 1);
   });
 
-  it("opponent's in-play card with 【Deploy】 trigger fires when active player deploys", () => {
+  it("opponent's explicit observer draws when the active player deploys a Unit", () => {
     const opponentTriggerEffect: CardEffect = {
       type: "triggered",
-      activation: { timing: ["deploy"] },
+      activation: {
+        timing: ["deploy"],
+        conditions: [
+          { type: "eventPlayerIsOpponent" },
+          { type: "eventCardMatches", target: { owner: "opponent", cardType: "unit" } },
+        ],
+      },
       directives: [{ action: { action: "draw", count: 1 } }],
-      sourceText: "【Deploy】 Draw 1.",
+      sourceText: "When your opponent deploys a Unit, draw 1.",
     };
     const opponentObserver = createMockUnit({
       level: 1,
@@ -336,7 +344,6 @@ describe("Gap 3 — Observer 【Deploy】 triggers fire on other in-play cards (
 
     expectSuccess(p1.deployUnit(incoming));
 
-    // Opponent's observer 【Deploy】 effect draws for the opponent
     expect(p2.getHand().length).toBe(p2HandBefore + 1);
   });
 });

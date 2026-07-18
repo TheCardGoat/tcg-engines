@@ -17,4 +17,8 @@ export const nakomaWaitingOutTheStormI18n: Record<Languages, I18nProperties> = {
     name: "Nakoma",
     version: "Al Riparo dalla Bufera",
   },
+  es: {
+    name: "Nakoma",
+    version: "Esperando que pase la tormenta",
+  },
 };

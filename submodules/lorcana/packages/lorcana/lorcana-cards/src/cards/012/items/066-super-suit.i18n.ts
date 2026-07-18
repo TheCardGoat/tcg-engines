@@ -59,4 +59,18 @@ export const superSuitI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Súper traje",
+    text: [
+      {
+        title: "SENCILLO, ELEGANTE",
+        description:
+          "Cuando juegas este objeto, si tienes un personaje héroe en juego, obtienes 1 conocimiento.",
+      },
+      {
+        title: "VESTIRSE",
+        description: "{E}, 2 {I}: si jugaste con un personaje héroe este turno, roba una carta.",
+      },
+    ],
+  },
 };

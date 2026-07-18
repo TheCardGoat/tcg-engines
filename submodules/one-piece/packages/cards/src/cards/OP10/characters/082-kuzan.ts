@@ -79,6 +79,7 @@ export const op10Kuzan082: CharacterCard = {
               {
                 filter: "trait",
                 value: "Blackbeard Pirates",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -88,6 +89,25 @@ export const op10Kuzan082: CharacterCard = {
           },
         ],
         optional: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "cannotBeRemoved",
+            target: {
+              player: "self",
+              zones: ["field"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            bySource: "opponentEffect",
+          },
+        ],
       },
     ],
   },

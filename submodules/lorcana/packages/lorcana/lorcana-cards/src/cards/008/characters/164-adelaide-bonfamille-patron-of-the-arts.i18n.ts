@@ -17,4 +17,8 @@ export const adelaideBonfamillePatronOfTheArtsI18n: Record<Languages, I18nProper
     name: "Madame Adelaide",
     version: "Patrona delle Arti",
   },
+  es: {
+    name: "Adelaide Bonfamille",
+    version: "Patrono de las Artes",
+  },
 };

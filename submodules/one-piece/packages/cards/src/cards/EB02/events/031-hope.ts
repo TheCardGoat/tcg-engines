@@ -53,6 +53,15 @@ export const eb02Hope031: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
+          },
+        ],
+      },
     ],
   },
   i18n: eb02Hope031I18n,

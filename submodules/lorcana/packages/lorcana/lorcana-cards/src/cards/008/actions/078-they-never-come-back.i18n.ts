@@ -17,4 +17,8 @@ export const theyNeverComeBackI18n: Record<Languages, I18nProperties> = {
     name: "Non Tornano Mai Più",
     text: "Fino a 2 personaggi a tua scelta non si possono preparare all'inizio del loro prossimo turno. Pesca una carta.",
   },
+  es: {
+    name: "Nunca regresan",
+    text: "Hasta 2 personajes elegidos no pueden estar listos al comienzo de su siguiente turno. Saca una carta.",
+  },
 };

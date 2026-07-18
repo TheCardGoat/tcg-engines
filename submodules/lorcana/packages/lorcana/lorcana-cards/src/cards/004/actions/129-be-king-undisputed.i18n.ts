@@ -33,4 +33,8 @@ export const beKingUndisputedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sé rey indiscutible",
+    text: "Cada oponente elige y destierra a uno de sus personajes.",
+  },
 };

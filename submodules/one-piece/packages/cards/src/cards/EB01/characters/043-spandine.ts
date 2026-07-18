@@ -31,6 +31,20 @@ export const eb01Spandine043: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 3,
+            position: "bottom",
+            filters: [
+              {
+                filter: "trait",
+                value: "CP",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "play",
@@ -46,6 +60,20 @@ export const eb01Spandine043: CharacterCard = {
               {
                 filter: "excludeName",
                 value: "Spandine",
+              },
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+              {
+                filter: "trait",
+                value: "CP",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
               },
             ],
             playState: "rested",

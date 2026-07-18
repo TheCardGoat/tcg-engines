@@ -75,4 +75,21 @@ export const annaMagicalMissionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ana",
+    version: "Misión mágica",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "PLAN COORDINADO",
+        description:
+          "Siempre que este personaje realice una misión, si tienes un personaje llamado Elsa en juego, puedes robar una carta.",
+      },
+    ],
+  },
 };

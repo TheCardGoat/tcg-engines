@@ -41,4 +41,14 @@ export const snowWhiteFairestInTheLandP2ChallengeI18n: Record<Languages, I18nPro
       },
     ],
   },
+  es: {
+    name: "Blanco como la nieve",
+    version: "La más bella de la tierra",
+    text: [
+      {
+        title: "ESCONDIDO",
+        description: "Este personaje no puede ser desafiado.",
+      },
+    ],
+  },
 };

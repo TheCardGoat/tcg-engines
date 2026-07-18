@@ -43,4 +43,14 @@ export const beastRelentlessI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bestia",
+    version: "Implacable",
+    text: [
+      {
+        title: "SEGUNDO ALIENTO",
+        description: "Siempre que un personaje contrario resulte dañado, puedes prepararlo.",
+      },
+    ],
+  },
 };

@@ -56,7 +56,7 @@ export function parseZoneList(text: string): Zone[] | null {
   // Strip trailing " cards" / " card" unless preceded by "DON!!"
   cleaned = cleaned.replace(/(?<!DON!!)\s+cards?$/i, "").trim();
 
-  const parts = cleaned.split(/\s+or\s+/i);
+  const parts = cleaned.split(/\s+(?:or|and)\s+/i);
   const zones: Zone[] = [];
   for (const part of parts) {
     const zone = mapZoneNoun(part);

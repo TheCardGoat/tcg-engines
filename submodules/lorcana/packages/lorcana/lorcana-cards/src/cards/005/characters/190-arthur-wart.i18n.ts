@@ -17,4 +17,8 @@ export const arthurWartI18n: Record<Languages, I18nProperties> = {
     name: "Artù",
     version: "Semola",
   },
+  es: {
+    name: "Arturo",
+    version: "Verruga",
+  },
 };

@@ -44,4 +44,14 @@ export const princePhillipWardenOfTheWoodsI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Príncipe Felipe",
+    version: "Guardián del bosque",
+    text: [
+      {
+        title: "FARO BRILLANTE",
+        description: "Tus otros personajes héroes obtienen protección.",
+      },
+    ],
+  },
 };

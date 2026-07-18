@@ -21,4 +21,9 @@ export const montereyJackDefiantProtectorI18n: Record<Languages, I18nProperties>
     version: "Protettore Spavaldo",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Jack monterrey",
+    version: "Protector desafiante",
+    text: "Guardaespaldas",
+  },
 };

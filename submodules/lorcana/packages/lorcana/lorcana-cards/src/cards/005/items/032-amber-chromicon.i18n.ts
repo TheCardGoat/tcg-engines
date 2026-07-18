@@ -37,4 +37,13 @@ export const amberChromiconI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cromicon ámbar",
+    text: [
+      {
+        title: "LUZ ÁMBAR",
+        description: "{E}: elimina hasta 1 daño de cada uno de tus personajes.",
+      },
+    ],
+  },
 };

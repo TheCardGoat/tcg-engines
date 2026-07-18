@@ -5,6 +5,7 @@ export const gd02SugaiSGelgoogGq041: UnitCard = {
   name: "Sugai's Gelgoog (GQ)",
   type: "unit",
   color: "red",
+  battlefieldZones: ["space", "earth"],
   traits: ["clan"],
   id: "GD02-041",
   canonicalId: "GD02-041",
@@ -58,6 +59,7 @@ export const gd02SugaiSGelgoogGq041: UnitCard = {
   cost: 4,
   ap: 3,
   hp: 3,
+  linkCondition: "[Shiiko Sugai]",
   effect: "【Deploy】Choose 1 enemy Unit that is Lv.5 or higher. Deal 2 damage to it.<br>",
   effects: [
     {

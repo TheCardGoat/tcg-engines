@@ -23,11 +23,12 @@ export const op13ButAceHereSaidYouDeservedIt019: EventCard = {
   cost: 1,
   traits: ["Revolutionary Army Dressrosa"],
   effect:
-    "[Main] You may rest 4 of your DON!! cards: Give up to 1 of your opponent's Characters 3000 power during this turn. Then, K.O. up to 1 of your opponent's Characters with 3000 power or less.\n[Counter] Your Leader gains +3000 power during this battle.",
+    "[Main] You may rest 4 of your DON!! cards: Give up to 1 of your opponent's Characters −3000 power during this turn. Then, K.O. up to 1 of your opponent's Characters with 3000 power or less.\n[Counter] Your Leader gains +3000 power during this battle.",
   effects: {
     effects: [
       {
         trigger: "main",
+        costs: [{ cost: "restDon", amount: 4 }],
         actions: [
           {
             action: "modifyPower",
@@ -39,7 +40,7 @@ export const op13ButAceHereSaidYouDeservedIt019: EventCard = {
                 upTo: true,
               },
             },
-            value: 3000,
+            value: -3000,
             duration: "thisTurn",
           },
           {

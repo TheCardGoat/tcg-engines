@@ -17,4 +17,8 @@ export const peterPanSearchingFarAndWideI18n: Record<Languages, I18nProperties> 
     name: "Peter Pan",
     version: "Che Cerca in Lungo e in Largo",
   },
+  es: {
+    name: "Peter Pan",
+    version: "Buscando a lo largo y ancho",
+  },
 };

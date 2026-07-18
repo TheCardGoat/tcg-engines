@@ -45,4 +45,15 @@ export const angusMightyHorseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Angus",
+    version: "Caballo poderoso",
+    text: [
+      {
+        title: "INTRÉPIDO",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido gana Alerta este turno. (Pueden desafiar como si tuvieran Evasivo).",
+      },
+    ],
+  },
 };

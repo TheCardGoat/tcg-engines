@@ -28,6 +28,24 @@ export const eb01MiniMerry011: StageCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "restThisCard",
+          },
+          {
+            cost: "returnCharacterToDeck",
+            amount: 1,
+            position: "bottom",
+            player: "self",
+            filters: [
+              {
+                filter: "basePower",
+                comparison: "eq",
+                value: 1000,
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "draw",

@@ -56,4 +56,18 @@ export const pocahontasPeacekeeperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pocahontas",
+    version: "Pacificador",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "PALABRAS CALMANTES",
+        description:
+          "Cuando juegas con este personaje, si usaste Shift para interpretarlo y ninguno de tus personajes desafió este turno, los personajes no pueden desafiar hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const beagleBoysSmalltimeCrooksI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Chicos beagle",
+    version: "Ladrones de poca monta",
+    text: [
+      {
+        title: "¡DATE PRISA!",
+        description:
+          "Cada vez que este personaje realiza una misión, tu personaje elegido obtiene Rush and Resist +1 este turno. (Pueden desafiar el turno en el que se juegan. El daño que se les inflige se reduce en 1).",
+      },
+    ],
+  },
 };

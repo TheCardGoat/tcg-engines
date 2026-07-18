@@ -58,6 +58,31 @@ export const op03Buggy008: CharacterCard = {
         ],
       },
     ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            restriction: "inBattle",
+            byFilter: [
+              {
+                filter: "attribute",
+                value: "slash",
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   i18n: op03Buggy008I18n,
 };

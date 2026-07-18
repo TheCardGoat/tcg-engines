@@ -26,18 +26,12 @@ export const op10Violet062: CharacterCard = {
   traits: ["Donquixote Pirates"],
   attribute: "special",
   effect:
-    '[Blocker]\n[On K.O.] DON!! 1: If your Leader has the "Donquixote Pirates" type, add up to 1 purple Event from your trash to your hand.',
+    '[Blocker]\n[On K.O.] DON!! −1: If your Leader has the "Donquixote Pirates" type, add up to 1 purple Event from your trash to your hand.',
   effects: {
     keywords: ["blocker"],
     effects: [
       {
         trigger: "onKo",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Donquixote Pirates",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -65,8 +59,14 @@ export const op10Violet062: CharacterCard = {
                 },
               ],
             },
+            condition: {
+              condition: "leaderTrait",
+              trait: "Donquixote Pirates",
+              match: "includes",
+            },
           },
         ],
+        optional: true,
       },
     ],
   },

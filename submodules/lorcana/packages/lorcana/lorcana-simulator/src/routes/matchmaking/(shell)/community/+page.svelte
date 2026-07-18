@@ -12,6 +12,7 @@
     type CommunityLeagueStandingsResponse,
   } from "$lib/features/matchmaking/api/community-api.js";
   import type { LeaderboardType } from "$lib/features/matchmaking/api/leaderboard-api.js";
+  import { m } from "$lib/i18n/messages.js";
 
   const PAGE_TITLE = "Community Hub - Lorcana Simulator";
 
@@ -27,6 +28,7 @@
 
   let selectedPublicId = $state<string | null>(null);
   let leaderboardType = $state<(typeof TAB_TYPES)[number]>("mmr");
+  let leaderboardMode = $state<"1" | "3">("3");
   let leaderboard = $state<CommunityLeaderboardResponse | null>(null);
   let leaderboardLoading = $state(false);
   let leaderboardError = $state<string | null>(null);
@@ -60,6 +62,8 @@
       leaderboard = await getCommunityLeaderboard({
         communityPublicId: selectedPublicId,
         type: leaderboardType,
+        formatId: leaderboardType === "mmr" ? "core-constructed" : undefined,
+        mode: leaderboardType === "mmr" ? leaderboardMode : undefined,
         limit: 25,
       });
     } catch (e) {
@@ -78,6 +82,12 @@
 
   function setLeaderboardTab(t: (typeof TAB_TYPES)[number]): void {
     leaderboardType = t;
+    void loadLeaderboard();
+  }
+
+  function setLeaderboardMode(mode: "1" | "3"): void {
+    if (leaderboardMode === mode) return;
+    leaderboardMode = mode;
     void loadLeaderboard();
   }
 
@@ -189,6 +199,28 @@
             </button>
           {/each}
         </div>
+        {#if leaderboardType === "mmr"}
+          <div
+            class="mb-3 flex flex-wrap gap-1"
+            role="group"
+            aria-label={m["sim.leaderboard.filter.bestOf"]({})}
+          >
+            {#each ["1", "3"] as mode (mode)}
+              <button
+                type="button"
+                aria-pressed={leaderboardMode === mode}
+                class="rounded-md px-3 py-1.5 text-xs font-medium {leaderboardMode === mode
+                ? 'bg-white/15 text-slate-100'
+                : 'text-slate-400 hover:bg-white/5 hover:text-slate-200'}"
+                onclick={() => setLeaderboardMode(mode as "1" | "3")}
+              >
+                {mode === "1"
+                  ? m["sim.leaderboard.filter.bestOfOne"]({})
+                  : m["sim.leaderboard.filter.bestOfThree"]({})}
+              </button>
+            {/each}
+          </div>
+        {/if}
         {#if leaderboardLoading}
           <p class="text-sm text-slate-400">Loading leaderboard…</p>
         {:else if leaderboardError}

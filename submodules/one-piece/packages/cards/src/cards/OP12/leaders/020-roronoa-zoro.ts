@@ -50,6 +50,9 @@ export const op12RoronoaZoro020: LeaderCard = {
             condition: "donAttached",
             amount: 3,
           },
+          {
+            condition: "battledOpponentCharacterThisTurn",
+          },
         ],
         actions: [
           {
@@ -64,8 +67,8 @@ export const op12RoronoaZoro020: LeaderCard = {
             },
           },
           {
-            action: "cannotAttack",
-            target: {
+            action: "cannotAttackTargets",
+            attacker: {
               player: "self",
               zones: ["leader"],
               count: {
@@ -73,6 +76,10 @@ export const op12RoronoaZoro020: LeaderCard = {
               },
               self: true,
             },
+            filters: [
+              { filter: "cardCategory", value: "character" },
+              { filter: "baseCost", comparison: "lte", value: 7 },
+            ],
             duration: "thisTurn",
           },
         ],

@@ -125,8 +125,8 @@
     repeating-linear-gradient(135deg, rgb(7 9 12 / 18%) 0 7px, transparent 7px 16px);
 }
 
-.slot[data-spent="true"]::after {
-  content: "SPENT";
+.slot[data-spent="true"]::after,
+.slot[data-call-legend-actionable="true"]::after {
   position: absolute;
   right: 4px;
   bottom: 4px;
@@ -146,7 +146,11 @@
   text-transform: uppercase;
 }
 
-.slot[data-spent="true"][data-call-legend-actionable="true"]::after {
+.slot[data-spent="true"]::after {
+  content: "SPENT";
+}
+
+.slot[data-call-legend-actionable="true"]::after {
   content: "CALL LEGEND";
   z-index: 80;
   border-color: rgb(74 217 255 / 70%);
@@ -155,7 +159,7 @@
   box-shadow: 0 0 12px rgb(74 217 255 / 42%);
 }
 
-.slot[data-spent="true"][data-selection-candidate="true"]::after {
+.slot[data-selection-candidate="true"]::after {
   border-color: rgb(245 230 66 / 82%);
   color: #f5e642;
   box-shadow: 0 0 14px rgb(245 230 66 / 54%);

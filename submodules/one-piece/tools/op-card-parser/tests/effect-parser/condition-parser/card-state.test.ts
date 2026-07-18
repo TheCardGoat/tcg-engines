@@ -29,6 +29,17 @@ describe("parseInlineCondition", () => {
       });
     });
 
+    test("your Leader power targets the Leader zone", () => {
+      const result = parseInlineCondition("If your Leader has 0 power or less, draw 1 card.");
+      expect(result).not.toBeNull();
+      expect(result!.condition).toEqual({
+        condition: "hasCard",
+        player: "self",
+        zone: "leader",
+        filters: [{ filter: "power", comparison: "lte", value: 0 }],
+      });
+    });
+
     test("this Character is rested", () => {
       const result = parseInlineCondition("If this Character is rested, draw 1 card.");
       expect(result).not.toBeNull();
@@ -66,6 +77,63 @@ describe("parseInlineCondition", () => {
   });
 
   describe("has card conditions", () => {
+    test("another named card checks the field and excludes the source", () => {
+      const result = parseInlineCondition(
+        "If you have a [Kung Fu Jugon] other than this Character, this Character gains [Blocker].",
+      );
+      expect(result).not.toBeNull();
+      expect(result!.condition).toEqual({
+        condition: "hasCard",
+        player: "self",
+        zone: "field",
+        filters: [{ filter: "excludeSelf" }, { filter: "name", value: "Kung Fu Jugon" }],
+      });
+      expect(result!.remainingText).toBe("this Character gains [Blocker].");
+    });
+
+    test("no other named Character excludes the source card", () => {
+      const result = parseInlineCondition(
+        "If you have no other [King] Characters, add up to 1 DON!! card.",
+      );
+      expect(result).not.toBeNull();
+      expect(result!.condition).toEqual({
+        condition: "notHasCard",
+        player: "self",
+        zone: "character",
+        filters: [{ filter: "excludeSelf" }, { filter: "name", value: "King" }],
+      });
+    });
+
+    test("trait Character other than this card", () => {
+      const result = parseInlineCondition(
+        'If you have a "Mountain Bandits" type Character other than this card, draw 1 card.',
+      );
+      expect(result).not.toBeNull();
+      expect(result!.condition).toEqual({
+        condition: "hasCard",
+        player: "self",
+        zone: "character",
+        filters: [
+          { filter: "trait", value: "Mountain Bandits", match: "includes" },
+          { filter: "excludeSelf" },
+        ],
+      });
+    });
+
+    test("powered Character other than this Character", () => {
+      const result = parseInlineCondition(
+        "If you have a Character with 7000 power or more other than this Character, this Character gains [Rush].",
+      );
+      expect(result).not.toBeNull();
+      expect(result!.condition).toEqual({
+        condition: "hasCard",
+        player: "self",
+        zone: "character",
+        filters: [{ filter: "excludeSelf" }, { filter: "power", comparison: "gte", value: 7000 }],
+      });
+      expect(result!.remainingText).toBe("this Character gains [Rush].");
+    });
+
     test("your opponent has a Character with a cost of 0", () => {
       const result = parseInlineCondition(
         "If your opponent has a Character with a cost of 0, draw 1 card.",
@@ -76,6 +144,18 @@ describe("parseInlineCondition", () => {
         player: "opponent",
         zone: "character",
         filters: [{ filter: "cost", comparison: "eq", value: 0 }],
+      });
+    });
+
+    test("your opponent has a Character with effective power at a boundary", () => {
+      const result = parseInlineCondition(
+        "If your opponent has a Character with 7000 power or more, draw 1 card.",
+      );
+      expect(result?.condition).toEqual({
+        condition: "hasCard",
+        player: "opponent",
+        zone: "character",
+        filters: [{ filter: "power", comparison: "gte", value: 7000 }],
       });
     });
 
@@ -191,13 +271,11 @@ describe("parseInlineCondition — additional simple conditions", () => {
       "If your opponent has 7 or more rested cards, this Character gains [Rush].",
     );
     expect(result).not.toBeNull();
-    expect(result!.condition).toMatchObject({
-      condition: "zoneCount",
+    expect(result!.condition).toEqual({
+      condition: "restedCardCount",
       player: "opponent",
-      zone: "field",
       comparison: "gte",
       value: 7,
-      filters: [{ filter: "state", value: "rested" }],
     });
   });
 

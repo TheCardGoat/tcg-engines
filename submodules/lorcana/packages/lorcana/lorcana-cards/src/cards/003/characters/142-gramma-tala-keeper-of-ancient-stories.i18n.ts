@@ -45,4 +45,15 @@ export const grammaTalaKeeperOfAncientStoriesI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Abuela tala",
+    version: "Guardián de historias antiguas",
+    text: [
+      {
+        title: "SÓLO HABÍA OCÉANO",
+        description:
+          "Cuando juegues con este personaje, mira las 2 cartas superiores de tu mazo. Puedes poner uno en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

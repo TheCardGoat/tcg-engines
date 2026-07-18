@@ -28,10 +28,10 @@ export const eb03IKnewYouPeopleWereBehindThis049: EventCard = {
     effects: [
       {
         trigger: "main",
-        conditions: [
+        costs: [
           {
-            condition: "leaderName",
-            name: "Perona",
+            cost: "restDon",
+            amount: 7,
           },
         ],
         actions: [
@@ -54,12 +54,17 @@ export const eb03IKnewYouPeopleWereBehindThis049: EventCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
                 value: "character",
               },
             ],
+            condition: {
+              condition: "leaderName",
+              name: "Perona",
+            },
           },
           {
             action: "play",
@@ -80,12 +85,17 @@ export const eb03IKnewYouPeopleWereBehindThis049: EventCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
                 value: "character",
               },
             ],
+            condition: {
+              condition: "leaderName",
+              name: "Perona",
+            },
           },
         ],
         optional: true,

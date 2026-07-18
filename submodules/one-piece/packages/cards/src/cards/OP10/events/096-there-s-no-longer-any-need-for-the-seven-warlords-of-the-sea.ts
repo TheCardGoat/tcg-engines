@@ -44,12 +44,34 @@ export const op10ThereSNoLongerAnyNeedForTheSevenWarlordsOfTheSea096: EventCard 
                 {
                   filter: "trait",
                   value: "The Seven Warlords of the Sea",
+                  match: "includes",
                 },
                 {
                   filter: "cost",
                   comparison: "lte",
                   value: 8,
                 },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "The Seven Warlords of the Sea",
+                  match: "includes",
+                },
+                { filter: "cost", comparison: "lte", value: 4 },
               ],
             },
           },

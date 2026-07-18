@@ -43,6 +43,37 @@ export const op11GlorpWeb019: EventCard = {
             value: 2000,
             duration: "thisBattle",
           },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: { amount: 1, upTo: true },
+            },
+            value: 1000,
+            duration: "thisTurn",
+            condition: {
+              condition: "existsOnField",
+              player: "opponent",
+              zone: "character",
+              filters: [{ filter: "power", comparison: "gte", value: 6000 }],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: { amount: 1, upTo: true },
+            },
+            value: 1000,
+            duration: "thisTurn",
+          },
         ],
       },
     ],

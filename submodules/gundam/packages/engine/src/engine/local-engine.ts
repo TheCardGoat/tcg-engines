@@ -22,8 +22,8 @@ export class LocalEngine implements GameEngine {
 
   // ── Initialization ──────────────────────────────────────────────────────
 
-  initialize(players: Player[], seed?: string): void {
-    this.runtime.initialize(players, seed);
+  initialize(players: Player[], seed?: string, initialActivePlayer?: PlayerId): void {
+    this.runtime.initialize(players, seed, initialActivePlayer);
   }
 
   // ── GameEngine interface ────────────────────────────────────────────────

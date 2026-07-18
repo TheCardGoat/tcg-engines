@@ -21,4 +21,9 @@ export const bigMamaCleverAndCalmingI18n: Record<Languages, I18nProperties> = {
     version: "Arguta e Rassicurante",
     text: "<Protetto>",
   },
+  es: {
+    name: "Mamá grande",
+    version: "Inteligente y calmante",
+    text: "Pabellón",
+  },
 };

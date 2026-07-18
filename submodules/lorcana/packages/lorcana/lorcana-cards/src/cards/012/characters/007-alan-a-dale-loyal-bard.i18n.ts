@@ -21,4 +21,9 @@ export const alanadaleLoyalBardI18n: Record<Languages, I18nProperties> = {
     version: "Bardo Leale",
     text: "<Melodioso> 4",
   },
+  es: {
+    name: "Alan-a-Dale",
+    version: "Bardo leal",
+    text: "Cantante 4",
+  },
 };

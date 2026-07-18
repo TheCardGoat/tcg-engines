@@ -45,4 +45,15 @@ export const simbaRightfulKingI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Simba",
+    version: "Rey legítimo",
+    text: [
+      {
+        title: "POSTURA TRIUNFANTE",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, el personaje contrario elegido no podrá desafiar durante su siguiente turno.",
+      },
+    ],
+  },
 };

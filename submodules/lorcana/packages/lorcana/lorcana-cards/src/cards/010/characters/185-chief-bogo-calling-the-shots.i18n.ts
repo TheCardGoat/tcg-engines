@@ -57,4 +57,18 @@ export const chiefBogoCallingTheShotsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jefe bogo",
+    version: "Tomando las decisiones",
+    text: [
+      {
+        title: "MI JURISDICCIÓN",
+        description: "Durante tu turno, este personaje no puede recibir daño.",
+      },
+      {
+        title: "DELEGAR",
+        description: "Tus otros personajes obtienen la clasificación de Detective.",
+      },
+    ],
+  },
 };

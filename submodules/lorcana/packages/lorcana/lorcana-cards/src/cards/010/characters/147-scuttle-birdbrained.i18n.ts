@@ -21,4 +21,9 @@ export const scuttleBirdbrainedI18n: Record<Languages, I18nProperties> = {
     version: "Cervello di Gallina",
     text: "<Protetto>",
   },
+  es: {
+    name: "Escotilla",
+    version: "De cerebro de pájaro",
+    text: "Pabellón",
+  },
 };

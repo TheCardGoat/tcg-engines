@@ -45,4 +45,15 @@ export const pocahontasSteadfastTravelerEpicI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Pocahontas",
+    version: "Viajero firme",
+    text: [
+      {
+        title: "ESPÍRITU ERRANTE",
+        description:
+          "Siempre que este personaje realice una misión, si jugaste con otro personaje este turno, devuelve una carta de ubicación de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

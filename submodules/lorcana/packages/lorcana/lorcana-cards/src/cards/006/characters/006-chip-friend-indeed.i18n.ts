@@ -44,4 +44,15 @@ export const chipFriendIndeedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Chip",
+    version: "Amigo de hecho",
+    text: [
+      {
+        title: "SOCIO DE DALE",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

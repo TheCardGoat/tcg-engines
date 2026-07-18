@@ -73,9 +73,9 @@ export const belleBeastCertainAsTheSunIconic: CharacterCard = {
     {
       type: "activated",
       name: "APPRECIATIVE AUDIENCE 6",
-      text: "APPRECIATIVE AUDIENCE 6 {E} - Ready your other characters. They can't quest for the rest of this turn.",
+      text: "APPRECIATIVE AUDIENCE 6 {I} - Ready your other characters. They can't quest for the rest of this turn.",
       cost: {
-        exert: true,
+        ink: 6,
       },
       effect: {
         type: "sequence",

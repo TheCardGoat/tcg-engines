@@ -37,6 +37,15 @@ export const eb02DonquixoteRosinante025: CharacterCard = {
             name: "Donquixote Rosinante",
           },
         ],
+        costs: [
+          {
+            cost: "restDon",
+            amount: 1,
+          },
+          {
+            cost: "restThisCard",
+          },
+        ],
         actions: [
           {
             action: "search",
@@ -49,8 +58,20 @@ export const eb02DonquixoteRosinante025: CharacterCard = {
               amount: 1,
               upTo: true,
             },
+            revealFilters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 2,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
             revealDestination: "character",
             remainderPosition: "bottom",
+            playState: "rested",
           },
         ],
         optional: true,

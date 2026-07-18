@@ -26,7 +26,7 @@ export const op09Killer064: CharacterCard = {
   traits: ["Kid Pirates"],
   attribute: "slash",
   effect:
-    '[On Play] DON!! 1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Set up to 1 of your "Kid Pirates" type Leader as active.',
+    '[On Play] DON!! −1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Set up to 1 of your "Kid Pirates" type Leader as active.',
   effects: {
     effects: [
       {
@@ -51,11 +51,13 @@ export const op09Killer064: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Kid Pirates",
+                  match: "includes",
                 },
               ],
             },
           },
         ],
+        optional: true,
       },
     ],
   },

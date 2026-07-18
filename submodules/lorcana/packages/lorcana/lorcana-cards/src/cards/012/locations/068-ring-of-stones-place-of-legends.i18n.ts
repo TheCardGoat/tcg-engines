@@ -60,4 +60,19 @@ export const ringOfStonesPlaceOfLegendsI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Anillo de piedras",
+    version: "Lugar de leyendas",
+    text: [
+      {
+        title: "SIGUE TU DESTINO",
+        description: "Tus personajes ejercidos pueden moverse aquí gratis.",
+      },
+      {
+        title: "PARTE EL VELO",
+        description:
+          "Una vez durante tu turno, cada vez que un personaje se mueve aquí, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

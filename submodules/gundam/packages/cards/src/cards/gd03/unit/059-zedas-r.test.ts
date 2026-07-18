@@ -29,17 +29,26 @@ describe("Zedas R (GD03-059)", () => {
     const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.enterBattle(zedasId!, defenderId));
-    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
-    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
+    const optional = p1.getBoardView().pendingChoice;
+    if (optional?.kind !== "optional") throw new Error("Expected the Vagan exile choice");
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
-      legalTargetIds: expect.arrayContaining([vaganTrashId, zedasId, friendlyVaganId]),
-      minTargets: 2,
-      maxTargets: 2,
+      legalTargetIds: [vaganTrashId],
+      minTargets: 1,
+      maxTargets: 1,
     });
-    expectSuccess(p1.resolveEffect({ targets: [vaganTrashId!, friendlyVaganId!] }));
+    expectSuccess(p1.resolveEffect({ targets: [vaganTrashId!] }));
 
     expect(p1.getCardsInZone("trash")).not.toContain(vaganTrashId);
+    expect(p1.getVisibleCard(friendlyVaganId!)?.effectiveAp).toBe(2);
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: expect.arrayContaining([zedasId, friendlyVaganId]),
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [friendlyVaganId!] }));
     expect(p1.getVisibleCard(friendlyVaganId!)?.effectiveAp).toBe(4);
 
     expectSuccess(p2.passBlock());
@@ -67,7 +76,9 @@ describe("Zedas R (GD03-059)", () => {
     const defenderId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.enterBattle(zedasId!, defenderId));
-    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: false } }));
+    const optional = p1.getBoardView().pendingChoice;
+    if (optional?.kind !== "optional") throw new Error("Expected the Vagan exile choice");
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: false } }));
 
     expect(p1.getCardsInZone("trash")).toContain(trashId);
     expect(p1.getVisibleCard(friendlyVaganId!)?.effectiveAp).toBe(2);

@@ -45,4 +45,15 @@ export const mikeWazowskiWellroundedEntertainerI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Mike Wazowski",
+    version: "Animador completo",
+    text: [
+      {
+        title: "HAZLOS RÍE",
+        description:
+          "Cuando juegas con este personaje, puedes pagar 2 {I} para darle al personaje elegido +1 {L} este turno.",
+      },
+    ],
+  },
 };

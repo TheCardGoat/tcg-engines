@@ -45,4 +45,15 @@ export const mrsIncredibleHelenParrI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora increíble",
+    version: "Helen Parr",
+    text: [
+      {
+        title: "Charla de ánimo",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido gana Challenger +2 este turno. (Obtienen +2 {S} mientras desafían).",
+      },
+    ],
+  },
 };

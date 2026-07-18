@@ -48,6 +48,7 @@ export const op07MorePizza037: EventCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

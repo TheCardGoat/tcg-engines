@@ -483,9 +483,6 @@ importers:
       playwright:
         specifier: ^1.58.2
         version: 1.59.1
-      publint:
-        specifier: ^0.3.17
-        version: 0.3.20
       shadcn-svelte:
         specifier: ^1.2.7
         version: 1.2.7(svelte@5.55.10(@typescript-eslint/types@8.59.2))

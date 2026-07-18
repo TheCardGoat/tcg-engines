@@ -60,4 +60,18 @@ export const rapunzelReadyForAdventureI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Rapunzel",
+    version: "Listo para la aventura",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "ACTO DE BONDAD",
+        description:
+          "Siempre que uno de tus personajes sea elegido para apoyo, hasta el comienzo de tu siguiente turno, la próxima vez que reciba daño, no recibirá daño.",
+      },
+    ],
+  },
 };

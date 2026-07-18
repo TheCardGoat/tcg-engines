@@ -66,8 +66,29 @@ export const op08Kalgara098: LeaderCard = {
               {
                 filter: "trait",
                 value: "Shandian Warrior",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+              {
+                filter: "dynamicCost",
+                comparison: "lte",
+                source: "selfDonCount",
               },
             ],
+          },
+          {
+            action: "removeFromLife",
+            player: "self",
+            count: { amount: 1 },
+            position: "top",
+            destination: "hand",
+            condition: {
+              condition: "previousActionTarget",
+              filters: [],
+            },
           },
         ],
       },

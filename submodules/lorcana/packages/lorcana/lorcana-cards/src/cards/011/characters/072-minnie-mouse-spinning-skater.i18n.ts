@@ -17,4 +17,8 @@ export const minnieMouseSpinningSkaterI18n: Record<Languages, I18nProperties> = 
     name: "Minni",
     version: "Pattinatrice Piroettante",
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Patinador giratorio",
+  },
 };

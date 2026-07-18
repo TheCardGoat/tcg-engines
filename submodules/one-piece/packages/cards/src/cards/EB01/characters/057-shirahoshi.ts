@@ -44,6 +44,26 @@ export const eb01Shirahoshi057: CharacterCard = {
     "When this Character is K.O.'d by your opponent's effect, add up to 1 card from the top of your deck to the top of your Life cards.[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
   effects: {
     keywords: ["blocker"],
+    effects: [
+      {
+        trigger: "onKo",
+        source: "opponentEffect",
+        actions: [
+          {
+            action: "addToLife",
+            target: {
+              player: "self",
+              zones: ["deck"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            position: "top",
+          },
+        ],
+      },
+    ],
   },
   i18n: eb01Shirahoshi057I18n,
 };

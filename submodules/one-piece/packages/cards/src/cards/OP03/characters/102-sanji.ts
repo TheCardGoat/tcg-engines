@@ -37,6 +37,13 @@ export const op03Sanji102: CharacterCard = {
             amount: 2,
           },
         ],
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
+        ],
         actions: [
           {
             action: "addToLife",

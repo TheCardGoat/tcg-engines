@@ -31,6 +31,20 @@ export const op07GeckoMoria083: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 4,
+            position: "bottom",
+            filters: [
+              {
+                filter: "trait",
+                value: "Thriller Bark Pirates",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "grantKeyword",

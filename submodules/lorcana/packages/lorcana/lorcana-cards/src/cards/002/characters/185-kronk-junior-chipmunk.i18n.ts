@@ -58,4 +58,18 @@ export const kronkJuniorChipmunkI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kronk",
+    version: "Ardilla joven",
+    text: [
+      {
+        title: "Resistir +1",
+      },
+      {
+        title: "LÍDER SCOUT",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, puedes causar 2 daños al personaje elegido.",
+      },
+    ],
+  },
 };

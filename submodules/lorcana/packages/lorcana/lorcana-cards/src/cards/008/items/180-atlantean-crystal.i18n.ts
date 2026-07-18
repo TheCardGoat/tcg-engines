@@ -41,4 +41,14 @@ export const atlanteanCrystalI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cristal atlante",
+    text: [
+      {
+        title: "LUZ DE PROTECCIÓN",
+        description:
+          "{E}, 2 {I}: el personaje elegido obtiene Resistencia +2 y Apoyo hasta el comienzo de tu siguiente turno. (El daño que reciben se reduce en 2. Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+      },
+    ],
+  },
 };

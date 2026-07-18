@@ -45,4 +45,15 @@ export const rajahRoyalProtectorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Raja",
+    version: "Protector Real",
+    text: [
+      {
+        title: "MIRADA FIJA",
+        description:
+          "Mientras no tengas cartas en tu mano, los personajes con coste 4 o menos no pueden desafiar a este personaje.",
+      },
+    ],
+  },
 };

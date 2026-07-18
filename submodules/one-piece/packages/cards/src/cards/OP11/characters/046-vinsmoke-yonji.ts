@@ -29,6 +29,56 @@ export const op11VinsmokeYonji046: CharacterCard = {
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\nIf you only have Characters with a type including \"GERMA\", this Character cannot be K.O.'d or rested by your opponent's effects.",
   effects: {
     keywords: ["blocker"],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "character",
+            comparison: "eq",
+            value: 0,
+            filters: [
+              {
+                filter: "trait",
+                value: "GERMA",
+                match: "includes",
+                negate: true,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            restriction: "byEffect",
+            byPlayer: "opponent",
+          },
+          {
+            action: "cannotBeRested",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            byPlayer: "opponent",
+          },
+        ],
+      },
+    ],
   },
   i18n: op11VinsmokeYonji046I18n,
 };

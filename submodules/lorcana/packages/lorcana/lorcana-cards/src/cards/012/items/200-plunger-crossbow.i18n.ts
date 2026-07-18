@@ -38,4 +38,13 @@ export const plungerCrossbowI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ballesta de émbolo",
+    text: [
+      {
+        title: "TECNOLOGÍA DE SUCCIÓN",
+        description: "{E}, 2 {I}: roba una carta, luego elige y descarta una carta.",
+      },
+    ],
+  },
 };

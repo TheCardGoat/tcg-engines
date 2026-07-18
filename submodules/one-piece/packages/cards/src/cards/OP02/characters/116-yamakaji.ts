@@ -25,6 +25,5 @@ export const op02Yamakaji116: CharacterCard = {
   counter: 1000,
   traits: ["Navy"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op02Yamakaji116I18n,
 };

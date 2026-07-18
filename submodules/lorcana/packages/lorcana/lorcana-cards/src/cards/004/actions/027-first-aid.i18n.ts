@@ -17,4 +17,8 @@ export const firstAidI18n: Record<Languages, I18nProperties> = {
     name: "Primo Soccorso",
     text: "Rimuovi fino a 1 danno da ogni tuo personaggio.",
   },
+  es: {
+    name: "Primeros auxilios",
+    text: "Elimina hasta 1 daño de cada uno de tus personajes.",
+  },
 };

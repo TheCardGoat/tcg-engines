@@ -15,31 +15,31 @@ import type { Languages } from "@tcg/lorcana-types";
  * Keys are the English keyword names from the game engine.
  */
 const SIMPLE_KEYWORD_TRANSLATIONS: Record<string, Record<Languages, string>> = {
-  Alert: { en: "Alert", de: "Alarmiert", fr: "Agilité", it: "Vigile" },
-  Bodyguard: { en: "Bodyguard", de: "Beschützen", fr: "Rempart", it: "Guardiano" },
-  Evasive: { en: "Evasive", de: "Wendig", fr: "Insaisissable", it: "Sfuggente" },
-  Reckless: { en: "Reckless", de: "Impulsiv", fr: "Combattant", it: "Attaccabrighe" },
-  Rush: { en: "Rush", de: "Rasant", fr: "Charge", it: "Lesto" },
-  Support: { en: "Support", de: "Unterstützen", fr: "Soutien", it: "Aiutante" },
-  Vanish: { en: "Vanish", de: "Verschwinden", fr: "Dissipation", it: "Svanire" },
-  Ward: { en: "Ward", de: "Behütet", fr: "Hors d'atteinte", it: "Protetto" },
+  Alert: { en: "Alert", de: "Alarmiert", es: "Alert", fr: "Agilité", it: "Vigile" },
+  Bodyguard: { en: "Bodyguard", de: "Beschützen", es: "Bodyguard", fr: "Rempart", it: "Guardiano" },
+  Evasive: { en: "Evasive", de: "Wendig", es: "Evasive", fr: "Insaisissable", it: "Sfuggente" },
+  Reckless: { en: "Reckless", de: "Impulsiv", es: "Reckless", fr: "Combattant", it: "Attaccabrighe" },
+  Rush: { en: "Rush", de: "Rasant", es: "Rush", fr: "Charge", it: "Lesto" },
+  Support: { en: "Support", de: "Unterstützen", es: "Support", fr: "Soutien", it: "Aiutante" },
+  Vanish: { en: "Vanish", de: "Verschwinden", es: "Vanish", fr: "Dissipation", it: "Svanire" },
+  Ward: { en: "Ward", de: "Behütet", es: "Ward", fr: "Hors d'atteinte", it: "Protetto" },
 };
 
 /**
  * Parameterized keywords: matched by prefix + number (e.g. "Challenger +3", "Resist +2").
  */
 const PARAMETERIZED_KEYWORD_TRANSLATIONS: Record<string, Record<Languages, string>> = {
-  Challenger: { en: "Challenger", de: "Herausfordern", fr: "Offensif", it: "Sfidante" },
-  Resist: { en: "Resist", de: "Robust", fr: "Résistance", it: "Resistere" },
+  Challenger: { en: "Challenger", de: "Herausfordern", es: "Challenger", fr: "Offensif", it: "Sfidante" },
+  Resist: { en: "Resist", de: "Robust", es: "Resist", fr: "Résistance", it: "Resistere" },
 };
 
 /**
  * Complex keywords with a trailing number (e.g. "Shift 5", "Singer 3").
  */
 const COMPLEX_KEYWORD_TRANSLATIONS: Record<string, Record<Languages, string>> = {
-  Boost: { en: "Boost", de: "Stärken", fr: "Boost", it: "Potenziamento" },
-  Shift: { en: "Shift", de: "Gestaltwandel", fr: "Alter", it: "Trasformazione" },
-  Singer: { en: "Singer", de: "Singen", fr: "Mélomane", it: "Melodioso" },
+  Boost: { en: "Boost", de: "Stärken", es: "Boost", fr: "Boost", it: "Potenziamento" },
+  Shift: { en: "Shift", de: "Gestaltwandel", es: "Shift", fr: "Alter", it: "Trasformazione" },
+  Singer: { en: "Singer", de: "Singen", es: "Singer", fr: "Mélomane", it: "Melodioso" },
 };
 
 function escapeRegex(str: string): string {

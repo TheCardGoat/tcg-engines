@@ -38,9 +38,24 @@ export const op09MarshallDTeach092: CharacterCard = {
         ],
         actions: [
           {
-            action: "trashFromHand",
-            player: "self",
-            amount: 1,
+            action: "conditional",
+            predicate: {
+              condition: "compareHands",
+              selfComparison: "lte",
+              difference: 3,
+            },
+            whenTrue: [
+              {
+                action: "draw",
+                player: "self",
+                amount: 2,
+              },
+              {
+                action: "trashFromHand",
+                player: "self",
+                amount: 1,
+              },
+            ],
           },
         ],
         optional: true,

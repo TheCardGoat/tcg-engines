@@ -29,5 +29,15 @@ export const op02Shiki075: CharacterCard = {
   attribute: "slash",
   effect:
     "[Trigger] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Play this card.",
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        costs: [{ cost: "returnDon", amount: 1 }],
+        actions: [{ action: "playThisCard" }],
+        optional: true,
+      },
+    ],
+  },
   i18n: op02Shiki075I18n,
 };

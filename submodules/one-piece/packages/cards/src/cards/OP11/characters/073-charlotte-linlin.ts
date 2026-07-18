@@ -40,7 +40,7 @@ export const op11CharlotteLinlin073: CharacterCard = {
     },
   ],
   effect:
-    "If your Leader has the \"Big Mom Pirates\" type, this Character gains [Rush].\n[On Your Opponent's Attack] [Once Per Turn] DON!! 5: Choose a cost and reveal 1 card from the top of your opponent's deck. If the revealed card has the chosen cost, up to 1 of your Leader gains +2000 power during this turn.",
+    "If your Leader has the \"Big Mom Pirates\" type, this Character gains [Rush].\n[On Your Opponent's Attack] [Once Per Turn] DON!! −5: Choose a cost and reveal 1 card from the top of your opponent's deck. If the revealed card has the chosen cost, up to 1 of your Leader gains +2000 power during this turn.",
   effects: {
     effects: [
       {
@@ -53,20 +53,53 @@ export const op11CharlotteLinlin073: CharacterCard = {
         ],
         actions: [
           {
-            action: "modifyPower",
-            target: {
-              player: "self",
-              zones: ["leader"],
-              count: {
-                amount: 1,
-                upTo: true,
+            action: "guessTopDeckCost",
+            player: "opponent",
+            onMatch: [
+              {
+                action: "modifyPower",
+                target: {
+                  player: "self",
+                  zones: ["leader"],
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                },
+                value: 2000,
+                duration: "thisTurn",
               },
-            },
-            value: 2000,
-            duration: "thisTurn",
+            ],
           },
         ],
+        optional: true,
         oncePerTurn: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Big Mom Pirates",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "permanent",
+          },
+        ],
       },
     ],
   },

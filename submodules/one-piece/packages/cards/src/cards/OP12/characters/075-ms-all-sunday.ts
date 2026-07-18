@@ -51,6 +51,29 @@ export const op12MsAllSunday075: CharacterCard = {
               ],
             },
           },
+          {
+            action: "addDon",
+            player: "opponent",
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            state: "active",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        costs: [
+          {
+            cost: "returnDon",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
         ],
       },
     ],

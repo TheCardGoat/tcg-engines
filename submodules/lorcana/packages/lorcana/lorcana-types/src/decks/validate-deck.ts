@@ -168,8 +168,7 @@ const FORTISPHERE = "PSk";
 
 export const LORCANA_FORMATS: Record<LorcanaFormatId, LorcanaFormat> = {
   /**
-   * All publicly released sets legal; early-access release sets stay in their
-   * own queue until official release.
+   * All publicly released sets legal.
    */
   infinity: {
     id: "infinity",
@@ -188,33 +187,32 @@ export const LORCANA_FORMATS: Record<LorcanaFormatId, LorcanaFormat> = {
       "WIW",
       "WSP",
       "WUN",
+      "013",
     ],
     bannedCardIds: [HIRAM_FLAVERSHAM_TOYMAKER],
   },
 
   /**
-   * Rotating constructed format. Set 13 is only available through its release
-   * queue until the official rotation date.
+   * Rotating constructed format.
    * Both Hiram Flaversham - Toymaker and Fortisphere are banned.
    */
   "core-constructed": {
     id: "core-constructed",
     label: "Core Constructed",
-    description: "Current rotating format. Sets SSK through WUN are legal.",
-    allowedSets: ["SSK", "AZS", "ARC", "ROJ", "FAB", "WIW", "WSP", "WUN"],
+    description: "Current rotating format. Sets FAB through 013 are legal.",
+    allowedSets: ["FAB", "WIW", "WSP", "WUN", "013"],
     bannedCardIds: [HIRAM_FLAVERSHAM_TOYMAKER, FORTISPHERE],
     requiredRotationState: "CoreConstructed",
-    excludedSets: ["013"],
+    excludedSets: ["SSK", "AZS", "ARC", "ROJ"],
   },
 
   /**
-   * Attack of the Vine early-access release queue. Uses the new rotation window
-   * before Core Constructed officially rotates.
+   * Historical early-access release snapshot retained for old queue data.
    */
   "attack-of-the-vine": {
     id: "attack-of-the-vine",
     label: "Attack of the Vine",
-    description: "Attack of the Vine early-access queue. Set 13 cards are legal.",
+    description: "Historical Attack of the Vine early-access format.",
     allowedSets: ["FAB", "WIW", "WSP", "WUN", "013"],
     bannedCardIds: [HIRAM_FLAVERSHAM_TOYMAKER, FORTISPHERE],
   },

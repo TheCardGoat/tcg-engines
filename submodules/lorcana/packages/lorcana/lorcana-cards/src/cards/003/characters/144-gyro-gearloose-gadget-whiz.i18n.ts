@@ -42,4 +42,15 @@ export const gyroGearlooseGadgetWhizI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Giroscopio sin engranajes",
+    version: "Genio de los artilugios",
+    text: [
+      {
+        title: "AHORA INTENTE SEGUIR EL ALTO",
+        description:
+          "{E}: coloca una carta de objeto de tu descarte en la parte superior de tu mazo.",
+      },
+    ],
+  },
 };

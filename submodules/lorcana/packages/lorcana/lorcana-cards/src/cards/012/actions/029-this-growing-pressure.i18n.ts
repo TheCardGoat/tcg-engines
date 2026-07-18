@@ -35,4 +35,8 @@ export const thisGrowingPressureI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Esta presión creciente",
+    text: "El personaje contrario elegido no puede desafiar y debe realizar misiones durante su próximo turno si puede. Saca una carta.",
+  },
 };

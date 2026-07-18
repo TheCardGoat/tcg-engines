@@ -37,4 +37,13 @@ export const magicMirrorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Espejo magico",
+    text: [
+      {
+        title: "¡HABLAR!",
+        description: "{E}, 4 {I} — Roba una carta.",
+      },
+    ],
+  },
 };

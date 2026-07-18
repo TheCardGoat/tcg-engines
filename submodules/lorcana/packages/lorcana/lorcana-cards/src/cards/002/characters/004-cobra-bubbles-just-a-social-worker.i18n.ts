@@ -17,4 +17,8 @@ export const cobraBubblesJustASocialWorkerI18n: Record<Languages, I18nProperties
     name: "Cobra Bubbles",
     version: "Un Semplice Assistente Sociale",
   },
+  es: {
+    name: "Burbujas de cobra",
+    version: "Solo un trabajador social",
+  },
 };

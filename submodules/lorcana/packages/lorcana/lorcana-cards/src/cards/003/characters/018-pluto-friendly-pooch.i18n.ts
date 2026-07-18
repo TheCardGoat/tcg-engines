@@ -44,4 +44,14 @@ export const plutoFriendlyPoochI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Plutón",
+    version: "Perro amigable",
+    text: [
+      {
+        title: "BUEN PERRO",
+        description: "{E}: pagas 1 {I} menos por el siguiente personaje que juegues en este turno.",
+      },
+    ],
+  },
 };

@@ -26,7 +26,7 @@ export const op14eb04MsWednesday083: CharacterCard = {
   traits: ["Baroque Works"],
   attribute: "slash",
   effect:
-    "[Activate: Main] You may trash this Character: Give up to 1 of your opponent's 0 cost Characters 3000 power during this turn.",
+    "[Activate: Main] You may trash this Character: Give up to 1 of your opponent's 0 cost Characters −3000 power during this turn.",
   effects: {
     effects: [
       {
@@ -54,7 +54,7 @@ export const op14eb04MsWednesday083: CharacterCard = {
                 },
               ],
             },
-            value: 3000,
+            value: -3000,
             duration: "thisTurn",
           },
         ],

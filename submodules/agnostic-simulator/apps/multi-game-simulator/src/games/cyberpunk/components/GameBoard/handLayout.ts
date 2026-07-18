@@ -7,15 +7,31 @@ const MAX_PLAYER_CARD_WIDTH = 96;
 const PLAYER_CARD_WIDTH_RATIO = 0.054;
 const HAND_SIZE_MULTIPLIERS = {
   opponent: 0.75,
-  player: 1.25,
+  player: 1.05,
 } as const;
-const PLAYER_HAND_SCREEN_BLEED = 32;
-const PLAYER_HAND_OFFSCREEN_RATIO = 7 / 15;
-const PLAYER_HAND_ARC_HEIGHT = 5;
-const PLAYER_HAND_MAX_ROTATION = 3;
+const HAND_EDGE_GUTTER = 32;
+const HAND_BOTTOM_BLEED = {
+  opponent: 32,
+  player: 0,
+} as const;
+const HAND_OFFSCREEN_RATIO = {
+  opponent: 7 / 15,
+  /* The lower card text is not useful at board scale. Hiding this portion
+     keeps the hand tactile while returning vertical space to the play area. */
+  player: 0.22,
+} as const;
+const PLAYER_HAND_ARC_HEIGHT = {
+  opponent: 5,
+  player: 7,
+} as const;
+const PLAYER_HAND_MAX_ROTATION = {
+  opponent: 3,
+  player: 5,
+} as const;
 const PLAYER_HAND_FULL_GAP = 8;
 
 export type HandLayoutVariant = keyof typeof HAND_SIZE_MULTIPLIERS;
+export type HandLayoutAlignment = "center" | "start";
 
 interface Layout {
   angle: number;
@@ -36,6 +52,7 @@ export function computePlayerHandLayout(
   n: number,
   zoneWidth = DEFAULT_PLAYER_ZONE_WIDTH,
   variant: HandLayoutVariant = "player",
+  alignment: HandLayoutAlignment = "center",
 ): PlayerHandLayout {
   const safeZoneWidth =
     Number.isFinite(zoneWidth) && zoneWidth > 0 ? zoneWidth : DEFAULT_PLAYER_ZONE_WIDTH;
@@ -46,7 +63,7 @@ export function computePlayerHandLayout(
   );
   const cardWidth = Math.round(baseCardWidth * HAND_SIZE_MULTIPLIERS[variant]);
   const baselineOffset = Math.round(
-    PLAYER_HAND_SCREEN_BLEED + cardWidth * PLAYER_HAND_OFFSCREEN_RATIO,
+    HAND_BOTTOM_BLEED[variant] + cardWidth * HAND_OFFSCREEN_RATIO[variant],
   );
 
   if (n <= 0) {
@@ -62,7 +79,7 @@ export function computePlayerHandLayout(
   const fullSpreadStep = cardWidth + PLAYER_HAND_FULL_GAP;
   const fullSpreadWidth = cardWidth * n + PLAYER_HAND_FULL_GAP * (n - 1);
   const canUseFullSpread =
-    variant === "player" && fullSpreadWidth <= safeZoneWidth - PLAYER_HAND_SCREEN_BLEED;
+    variant === "player" && fullSpreadWidth <= safeZoneWidth - HAND_EDGE_GUTTER;
   const step = canUseFullSpread
     ? fullSpreadStep
     : Math.round(
@@ -77,9 +94,9 @@ export function computePlayerHandLayout(
       const x = i * step - halfSpan;
       const normalized = halfSpan > 0 ? x / halfSpan : 0;
       return {
-        angle: normalized * PLAYER_HAND_MAX_ROTATION,
-        x: Math.round(x),
-        y: Math.round(baselineOffset + Math.abs(normalized) ** 2 * PLAYER_HAND_ARC_HEIGHT),
+        angle: normalized * PLAYER_HAND_MAX_ROTATION[variant],
+        x: Math.round(alignment === "start" ? x + halfSpan + cardWidth / 2 : x),
+        y: Math.round(baselineOffset + Math.abs(normalized) ** 2 * PLAYER_HAND_ARC_HEIGHT[variant]),
       };
     }),
   };

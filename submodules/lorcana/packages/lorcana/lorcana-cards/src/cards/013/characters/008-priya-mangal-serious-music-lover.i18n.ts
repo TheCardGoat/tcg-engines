@@ -45,4 +45,15 @@ export const priyaMangalSeriousMusicLoverI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Priya Mangal",
+    version: "Amante serio de la música",
+    text: [
+      {
+        title: "ESTA ES MI MERMELADA",
+        description:
+          "Cuando juegas con este personaje, si hay una carta de canción en tu descarte, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

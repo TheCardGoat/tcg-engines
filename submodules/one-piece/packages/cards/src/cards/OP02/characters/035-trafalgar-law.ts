@@ -36,6 +36,9 @@ export const op02TrafalgarLaw035: CharacterCard = {
             cost: "restDon",
             amount: 1,
           },
+          {
+            cost: "returnThisToHand",
+          },
         ],
         actions: [
           {

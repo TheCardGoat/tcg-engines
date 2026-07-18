@@ -50,6 +50,7 @@ export const op04Viola021: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

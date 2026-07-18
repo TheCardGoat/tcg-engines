@@ -27,5 +27,28 @@ export const op06Inazuma002: CharacterCard = {
   attribute: "slash",
   effect:
     "If this Character has 7000 power or more, this Character gains [Banish].\n(When this card deals damage, the target card is trashed without activating its Trigger.)",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "cardState",
+            target: "this",
+            property: "power",
+            comparison: "gte",
+            value: 7000,
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
+            keyword: "banish",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op06Inazuma002I18n,
 };

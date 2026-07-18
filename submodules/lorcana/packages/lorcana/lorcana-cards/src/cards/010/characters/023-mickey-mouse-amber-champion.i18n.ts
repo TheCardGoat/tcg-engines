@@ -61,4 +61,19 @@ export const mickeyMouseAmberChampionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Campeón ámbar",
+    text: [
+      {
+        title: "LIDERANDO EL CAMINO",
+        description: "Tus otros personajes de Amber obtienen +2 {W}.",
+      },
+      {
+        title: "CORO AMISTOSO",
+        description:
+          "Mientras tengas 2 o más personajes de Amber en juego, este personaje obtiene Cantante 8 (cuentan como un costo de 8 para cantar canciones).",
+      },
+    ],
+  },
 };

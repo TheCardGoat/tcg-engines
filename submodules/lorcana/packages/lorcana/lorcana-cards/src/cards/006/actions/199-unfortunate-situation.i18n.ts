@@ -17,4 +17,8 @@ export const unfortunateSituationI18n: Record<Languages, I18nProperties> = {
     name: "Situazione Sfortunata",
     text: "Ogni avversario sceglie uno dei suoi personaggi e gli infligge 4 danni.",
   },
+  es: {
+    name: "Situación desafortunada",
+    text: "Cada oponente elige uno de sus personajes y le inflige 4 daños.",
+  },
 };

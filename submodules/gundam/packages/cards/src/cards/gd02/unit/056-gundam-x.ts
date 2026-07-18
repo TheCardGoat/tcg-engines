@@ -4,6 +4,7 @@ export const gd02GundamX056: UnitCard = {
   cardNumber: "GD02-056",
   name: "Gundam X",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "purple",
   traits: ["vulture"],
   id: "GD02-056",
@@ -75,6 +76,7 @@ export const gd02GundamX056: UnitCard = {
   cost: 3,
   ap: 3,
   hp: 4,
+  linkCondition: "[Garrod Ran]",
   effect:
     "【During Pair･(Vulture) Pilot】【Destroyed】Choose 1 (Vulture) Unit card that is Lv.5 or higher from your trash. Add it to your hand.<br>",
   effects: [

@@ -60,4 +60,18 @@ export const beastTragicHeroI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bestia",
+    version: "Héroe trágico",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "ES MEJOR ASÍ",
+        description:
+          "Al comienzo de tu turno, si este personaje no tiene daño, roba una carta. De lo contrario, obtiene +4 {S} este turno.",
+      },
+    ],
+  },
 };

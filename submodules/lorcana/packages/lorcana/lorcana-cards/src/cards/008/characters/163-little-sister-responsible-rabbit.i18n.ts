@@ -45,4 +45,15 @@ export const littleSisterResponsibleRabbitI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Hermana menor",
+    version: "Conejo Responsable",
+    text: [
+      {
+        title: "DÉJAME AYUDAR",
+        description:
+          "Cuando juegas con este personaje, puedes eliminar hasta 1 daño del personaje elegido.",
+      },
+    ],
+  },
 };

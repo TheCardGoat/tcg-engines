@@ -33,4 +33,8 @@ export const worldsGreatestCriminalMindI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "La mente criminal más grande del mundo",
+    text: "Destierra al personaje elegido con 5 {S} o más.",
+  },
 };

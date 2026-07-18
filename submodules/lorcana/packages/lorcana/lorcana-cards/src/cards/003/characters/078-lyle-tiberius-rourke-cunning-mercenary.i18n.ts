@@ -65,4 +65,20 @@ export const lyleTiberiusRourkeCunningMercenaryI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Lyle Tiberius Rourke",
+    version: "Mercenario astuto",
+    text: [
+      {
+        title: "BUENO, AHORA LO SABES",
+        description:
+          "Cuando juegas con este personaje, el personaje contrario elegido gana Temerario durante su próximo turno. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+      {
+        title: "GRACIAS POR SER VOLUNTARIO",
+        description:
+          "Cada vez que uno de tus otros personajes es desterrado, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

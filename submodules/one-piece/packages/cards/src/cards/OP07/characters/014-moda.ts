@@ -42,7 +42,7 @@ export const op07Moda014: CharacterCard = {
             action: "modifyPower",
             target: {
               player: "self",
-              zones: ["leader", "character", "stage", "costArea"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
                 upTo: true,

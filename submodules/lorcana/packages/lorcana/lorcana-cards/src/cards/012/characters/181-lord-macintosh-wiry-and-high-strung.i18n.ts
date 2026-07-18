@@ -45,4 +45,15 @@ export const lordMacintoshWiryAndHighstrungI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Señor Macintosh",
+    version: "Nervioso y muy nervioso",
+    text: [
+      {
+        title: "RESFUERZO",
+        description:
+          "Este personaje puede entrar en juego ejercido para darle al personaje elegido Resistencia +2 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

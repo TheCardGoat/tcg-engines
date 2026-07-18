@@ -83,6 +83,7 @@ export const gd02FourMurasame085: PilotCard = {
         conditions: [
           { type: "duringLink" },
           { type: "isTurn", whose: "friendly" },
+          { type: "eventCardIsSelf" },
           { type: "handCount", owner: "friendly", comparison: "lte", count: 4 },
         ],
       },

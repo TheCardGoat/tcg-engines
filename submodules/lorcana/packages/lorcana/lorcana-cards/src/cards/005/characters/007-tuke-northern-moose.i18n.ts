@@ -17,4 +17,8 @@ export const tukeNorthernMooseI18n: Record<Languages, I18nProperties> = {
     name: "Rocco",
     version: "Alce del Nord",
   },
+  es: {
+    name: "Tuke",
+    version: "Alce del Norte",
+  },
 };

@@ -61,4 +61,19 @@ export const dopeyDrawnToMusicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Atontado",
+    version: "Atraído por la música",
+    text: [
+      {
+        title: "LENGUA ATADA",
+        description: "Este personaje no puede {E} cantar canciones.",
+      },
+      {
+        title: "MELODÍA DISTANTE",
+        description:
+          "Una vez durante tu turno, cada vez que reproduces una canción, este personaje obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

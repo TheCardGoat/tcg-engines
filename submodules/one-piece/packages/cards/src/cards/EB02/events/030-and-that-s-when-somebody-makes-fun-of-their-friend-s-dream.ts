@@ -26,14 +26,30 @@ export const eb02AndThatSWhenSomebodyMakesFunOfTheirFriendSDream030: EventCard =
   effect:
     "[Counter] If any of your Characters would be K.O.'d in battle during this turn, you may trash 1 card from your hand instead.",
   effects: {
-    replacementEffects: [
+    effects: [
       {
-        replacedEvent: "ko",
-        replacementAction: {
-          action: "trashFromHand",
-          player: "self",
-          amount: 1,
-        },
+        trigger: "counter",
+        actions: [
+          {
+            action: "battleKoReplacement",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: "all" },
+            },
+            duration: "thisTurn",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+        ],
       },
     ],
   },

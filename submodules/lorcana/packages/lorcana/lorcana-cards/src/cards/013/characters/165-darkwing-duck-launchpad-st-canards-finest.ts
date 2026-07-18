@@ -47,7 +47,7 @@ export const darkwingDuckLaunchpadStCanardsFinest: CharacterCard = {
   ],
   classifications: ["Storyborn", "Team", "Super", "Hero", "Detective"],
   abilities: [
-    shift(5),
+    shift("Darkwing Duck or Launchpad", 5),
     ward,
     {
       type: "triggered",

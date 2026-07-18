@@ -43,11 +43,41 @@ export const op10GumGumRhinoSchneider097: EventCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
+                  match: "includes",
                 },
               ],
             },
             value: 2000,
             duration: "thisTurn",
+          },
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+            },
+            keyword: "banish",
+            duration: "thisTurn",
+            previousActionTargets: true,
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "trash",
+              comparison: "gte",
+              value: 10,
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          { action: "draw", player: "self", amount: 2 },
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: 1,
           },
         ],
       },

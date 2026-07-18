@@ -45,4 +45,15 @@ export const daisyDuckMultitalentedPirateI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Pato margarita",
+    version: "Pirata polifacético",
+    text: [
+      {
+        title: "JUEGO DE AVES",
+        description:
+          "Una vez durante tu turno, cada vez que se pone una carta en tu tintero, el oponente elegido elige uno de sus personajes y devuelve esa carta a su mano.",
+      },
+    ],
+  },
 };

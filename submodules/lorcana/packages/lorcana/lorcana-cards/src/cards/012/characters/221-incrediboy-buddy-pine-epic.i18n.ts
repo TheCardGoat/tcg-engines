@@ -63,4 +63,19 @@ export const incrediboyBuddyPineEpicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Incrediboy",
+    version: "Amigo pino",
+    text: [
+      {
+        title: "NERVIOSO",
+        description:
+          "Cuando juegas con este personaje, si hay un personaje héroe en juego, obtienes 1 conocimiento.",
+      },
+      {
+        title: "ALERTA DE SPOILER",
+        description: "Este personaje también cuenta como llamado Síndrome de Shift.",
+      },
+    ],
+  },
 };

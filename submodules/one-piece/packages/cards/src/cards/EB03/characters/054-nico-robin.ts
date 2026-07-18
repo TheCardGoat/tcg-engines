@@ -30,6 +30,13 @@ export const eb03NicoRobin054: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashLife",
+            amount: 1,
+            position: "top",
+          },
+        ],
         actions: [
           {
             action: "addToLife",
@@ -64,6 +71,7 @@ export const eb03NicoRobin054: CharacterCard = {
             count: {
               amount: 1,
             },
+            self: true,
           },
         ],
         optional: true,

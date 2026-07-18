@@ -57,4 +57,18 @@ export const luisaMadrigalConfidentClimberI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Luisa Madrigal",
+    version: "Escalador confiado",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "PUEDO TOMARLO 1",
+        description:
+          "{I}: Mueve hasta 1 daño del personaje tuyo elegido a este personaje. Luego, si este personaje tiene 3 o más daños, mueve todo el daño de este personaje al personaje contrario elegido.",
+      },
+    ],
+  },
 };

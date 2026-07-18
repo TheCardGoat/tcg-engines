@@ -46,6 +46,7 @@ export function SimulatorProviders({
   gatewayTicket,
   simulatorRouteData,
   simulatorSettings = null,
+  viewerSettings = null,
   rootSocketReady = false,
   children,
 }: SimulatorProvidersProps) {
@@ -56,9 +57,10 @@ export function SimulatorProviders({
         gameSlug,
         gatewayTicket,
         simulatorRouteData,
+        viewerSettings,
         rootSocketReady,
       }),
-    [auth, gameSlug, gatewayTicket, rootSocketReady, simulatorRouteData],
+    [auth, gameSlug, gatewayTicket, rootSocketReady, simulatorRouteData, viewerSettings],
   );
   const initialSimulatorSettings = useMemo(() => simulatorSettings, [simulatorSettings]);
 
@@ -106,6 +108,7 @@ export function buildSimulatorProviderValues(
   const players = buildPlayersValue(match);
   const userSettings: SimulatorUserSettingsContextValue = {
     userSettings: route.matchPageData?.userSettings ?? null,
+    viewerSettings: input.viewerSettings ?? null,
   };
   const diagnostics: SimulatorDiagnosticsContextValue = {
     route,

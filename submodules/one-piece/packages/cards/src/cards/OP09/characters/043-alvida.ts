@@ -35,6 +35,7 @@ export const op09Alvida043: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Cross Guild",
+            match: "includes",
           },
         ],
         actions: [

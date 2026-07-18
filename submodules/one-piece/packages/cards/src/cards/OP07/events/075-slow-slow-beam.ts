@@ -39,7 +39,20 @@ export const op07SlowSlowBeam075: EventCard = {
             action: "modifyPower",
             target: {
               player: "opponent",
-              zones: ["leader", "character"],
+              zones: ["leader"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: -2000,
+            duration: "thisTurn",
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "opponent",
+              zones: ["character"],
               count: {
                 amount: 1,
                 upTo: true,

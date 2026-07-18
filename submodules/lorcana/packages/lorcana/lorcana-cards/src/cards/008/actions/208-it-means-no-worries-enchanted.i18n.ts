@@ -54,4 +54,18 @@ export const itMeansNoWorriesEnchantedI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Significa que no hay preocupaciones",
+    text: [
+      {
+        title: "Cantar juntos 9",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 9 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title:
+          "Devuelve a tu mano hasta 3 cartas de personaje de tu descarte. Pagas 2 {I} menos por el siguiente personaje que juegues en este turno.",
+      },
+    ],
+  },
 };

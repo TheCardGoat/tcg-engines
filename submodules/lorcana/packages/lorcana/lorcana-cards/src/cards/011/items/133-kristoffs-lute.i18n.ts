@@ -41,4 +41,14 @@ export const kristoffsLuteI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Laúd de Kristoff",
+    text: [
+      {
+        title: "MOMENTO DE INSPIRACIÓN",
+        description:
+          "{E}, 2 {I}: revela la carta superior de tu mazo. Puedes jugarlo como si estuviera en tu mano. De lo contrario, ponlo en tu descarte.",
+      },
+    ],
+  },
 };

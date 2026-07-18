@@ -37,4 +37,13 @@ export const cardSoldiersSpearI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lanza del soldado de cartas",
+    text: [
+      {
+        title: "UN ARMA ADECUADA",
+        description: "Tus personajes dañados obtienen +1 {S}.",
+      },
+    ],
+  },
 };

@@ -41,4 +41,14 @@ export const hiroHamadaIntuitiveThinkerI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Hiro Hamada",
+    version: "Pensador intuitivo",
+    text: [
+      {
+        title: "BUSCA UN NUEVO ÁNGULO",
+        description: "{E} — Personaje Floodborn listo y elegido.",
+      },
+    ],
+  },
 };

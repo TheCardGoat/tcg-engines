@@ -45,4 +45,15 @@ export const sisuDivineWaterDragonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sisu",
+    version: "Dragón de agua divino",
+    text: [
+      {
+        title: "CONFÍO EN TI",
+        description:
+          "Siempre que este personaje realice una misión, mira las 2 cartas superiores de tu mazo. Puedes poner uno en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

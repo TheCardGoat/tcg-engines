@@ -27,5 +27,45 @@ export const op02Inuarashi027: CharacterCard = {
   attribute: "slash",
   effect:
     "If all of your DON!! cards are rested, this Character cannot be removed from the field by your opponent's effects.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "compound",
+            operator: "and",
+            conditions: [
+              {
+                condition: "activeDonCount",
+                comparison: "eq",
+                value: 0,
+              },
+              {
+                condition: "givenDonCount",
+                player: "self",
+                comparison: "eq",
+                value: 0,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeRemoved",
+            target: {
+              player: "self",
+              zones: ["field"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            bySource: "opponentEffect",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op02Inuarashi027I18n,
 };

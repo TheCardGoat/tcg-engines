@@ -61,4 +61,19 @@ export const pedroMadrigalFamilyPatriarchI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Pedro Madrigal",
+    version: "Patriarca de la familia",
+    text: [
+      {
+        title: "VIAJE DIFÍCIL",
+        description: "Este personaje entra en juego con 1 daño.",
+      },
+      {
+        title: "FAMILIA DEDICADA",
+        description:
+          "Cuando juegas con este personaje, si tienes otro personaje de Madrigal en juego, puedes eliminarle hasta 1 daño.",
+      },
+    ],
+  },
 };

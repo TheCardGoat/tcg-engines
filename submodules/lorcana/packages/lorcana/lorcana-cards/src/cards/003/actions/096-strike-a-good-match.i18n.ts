@@ -33,4 +33,8 @@ export const strikeAGoodMatchI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Haz un buen partido",
+    text: "Roba 2 cartas, luego elige y descarta una carta.",
+  },
 };

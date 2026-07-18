@@ -48,6 +48,32 @@ export const op09BeloBetty112: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "compound",
+            operator: "and",
+            conditions: [
+              {
+                condition: "leaderTrait",
+                trait: "Revolutionary Army",
+                match: "includes",
+              },
+              {
+                condition: "totalLifeCount",
+                comparison: "lte",
+                value: 5,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+      },
     ],
   },
   i18n: op09BeloBetty112I18n,

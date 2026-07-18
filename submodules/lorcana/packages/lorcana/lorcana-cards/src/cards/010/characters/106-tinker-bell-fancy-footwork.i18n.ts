@@ -17,4 +17,8 @@ export const tinkerBellFancyFootworkI18n: Record<Languages, I18nProperties> = {
     name: "Trilli",
     version: "Ballerina Raffinata",
   },
+  es: {
+    name: "Campanita",
+    version: "Juego de pies elegante",
+  },
 };

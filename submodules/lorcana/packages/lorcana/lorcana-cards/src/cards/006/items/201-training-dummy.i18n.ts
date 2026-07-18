@@ -41,4 +41,14 @@ export const trainingDummyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Maniquí de entrenamiento",
+    text: [
+      {
+        title: "TRATAR CON CUIDADO",
+        description:
+          "{E}, 2 {I}: el personaje elegido obtiene Guardaespaldas hasta el comienzo de tu siguiente turno. (Un personaje contrario que desafíe a uno de tus personajes debe elegir uno con Bodyguard si puede).",
+      },
+    ],
+  },
 };

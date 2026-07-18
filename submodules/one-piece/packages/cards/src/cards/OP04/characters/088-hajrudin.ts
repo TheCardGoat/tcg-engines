@@ -23,7 +23,7 @@ export const op04Hajrudin088: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Giant New Giant Pirate Crew Dressrosa"],
+  traits: ["Giant", "Dressrosa", "New Giant Pirates"],
   attribute: "strike",
   effect:
     "[Activate:Main] You may rest your 1 Leader: Give up to 1 of your opponent's Characters -4 cost during this turn.",
@@ -31,6 +31,13 @@ export const op04Hajrudin088: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "restCards",
+            amount: 1,
+            filters: [{ filter: "cardCategory", value: "leader" }],
+          },
+        ],
         actions: [
           {
             action: "modifyCost",

@@ -23,7 +23,7 @@ export const op14eb04Usopp022: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["FILM Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "ranged",
   effect:
     "[End of Your Turn] If your Leader has the {FILM} or {Straw Hat Crew} type, set up to 2 of your DON!! cards as active.",

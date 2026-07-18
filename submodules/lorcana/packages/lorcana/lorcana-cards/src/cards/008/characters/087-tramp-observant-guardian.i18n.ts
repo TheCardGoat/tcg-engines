@@ -45,4 +45,15 @@ export const trampObservantGuardianI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Vagabundo",
+    version: "Guardián observador",
+    text: [
+      {
+        title: "¿CÓMO HACER?",
+        description:
+          "¿ME ENTRO? Cuando juegas con este personaje, el personaje elegido gana Protección hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const gleanI18n: Record<Languages, I18nProperties> = {
     name: "Racimolare",
     text: "Esilia un oggetto a tua scelta. Il suo giocatore ottiene 2 leggenda.",
   },
+  es: {
+    name: "Espigar",
+    text: "Desterrar el objeto elegido. Su jugador gana 2 conocimientos.",
+  },
 };

@@ -42,4 +42,14 @@ export const beastHardheadedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bestia",
+    version: "Obstinado",
+    text: [
+      {
+        title: "ROMPER",
+        description: "Cuando juegas con este personaje, puedes desterrar el objeto elegido.",
+      },
+    ],
+  },
 };

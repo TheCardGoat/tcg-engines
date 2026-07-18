@@ -58,4 +58,18 @@ export const tianaNaturalTalentI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tiana",
+    version: "Talento Natural",
+    text: [
+      {
+        title: "Cantante 6",
+      },
+      {
+        title: "MELODÍA CAUTIVADORA",
+        description:
+          "Cada vez que reproduces una canción, cada personaje contrario obtiene -1 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const rooLittleHelperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Roo",
+    version: "Pequeño ayudante",
+    text: [
+      {
+        title: "SALTAR EN",
+        description:
+          "{E}: coloca este personaje boca abajo debajo de uno de tus personajes o ubicaciones con Boost.",
+      },
+    ],
+  },
 };

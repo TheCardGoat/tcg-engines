@@ -37,4 +37,13 @@ export const plasmaBlasterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lanzador de plasma",
+    text: [
+      {
+        title: "DISPARO RÁPIDO",
+        description: "{E}, 2 {I}: inflige 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

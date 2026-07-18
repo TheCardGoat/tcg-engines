@@ -45,4 +45,15 @@ export const judyHoppsOptimisticOfficerI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Judy Hopps",
+    version: "Oficial optimista",
+    text: [
+      {
+        title: "NO ME LLAMES LINDA",
+        description:
+          "Cuando juegas con este personaje, puedes desterrar el objeto elegido. Su jugador roba una carta.",
+      },
+    ],
+  },
 };

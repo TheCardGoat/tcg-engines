@@ -45,4 +45,15 @@ export const cruellaDeVilFashionableCruiserI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Cruella De Vil",
+    version: "Crucero de moda",
+    text: [
+      {
+        title: "AHORA PONTE EN MARCHA",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

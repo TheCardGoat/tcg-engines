@@ -45,4 +45,15 @@ export const theFrozenVineMonstrousPlantI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "La vid congelada",
+    version: "Planta monstruosa",
+    text: [
+      {
+        title: "PROBLEMA PERSISTENTE",
+        description:
+          "Cuando esta ubicación sea desterrada, si había un personaje ejercido aquí, devuelve esta carta de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

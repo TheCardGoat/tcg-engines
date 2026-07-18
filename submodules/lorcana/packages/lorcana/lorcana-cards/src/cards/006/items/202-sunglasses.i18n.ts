@@ -37,4 +37,13 @@ export const sunglassesI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gafas de sol",
+    text: [
+      {
+        title: "ESPÍA",
+        description: "{E}: roba una carta, luego elige y descarta una carta.",
+      },
+    ],
+  },
 };

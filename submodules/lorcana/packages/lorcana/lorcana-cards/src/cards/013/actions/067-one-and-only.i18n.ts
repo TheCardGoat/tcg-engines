@@ -17,4 +17,8 @@ export const oneAndOnlyI18n: Record<Languages, I18nProperties> = {
     name: "L'Unico e il Solo",
     text: "Scegli un personaggio. Esilia tutti gli altri personaggi con lo stesso nome di quel personaggio.",
   },
+  es: {
+    name: "Uno y solo",
+    text: "Elige un personaje. Destierra a todos los demás personajes con el mismo nombre que ese personaje.",
+  },
 };

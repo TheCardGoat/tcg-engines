@@ -45,4 +45,15 @@ export const galacticCouncilChamberCourtroomI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Cámara del Consejo Galáctico",
+    version: "Sala de justicia",
+    text: [
+      {
+        title: "DECRETO DE FEDERACIÓN",
+        description:
+          "Mientras tengas un personaje alienígena o robot aquí, esta ubicación no puede ser cuestionada.",
+      },
+    ],
+  },
 };

@@ -59,6 +59,7 @@ export const op05Enel100: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "leaveField",
+        eventFilter: { targetSelf: true },
         replacementAction: {
           action: "removeFromLife",
           player: "self",
@@ -67,6 +68,26 @@ export const op05Enel100: CharacterCard = {
           },
           destination: "trash",
         },
+        conditions: [
+          {
+            condition: "compound",
+            operator: "and",
+            conditions: [
+              {
+                condition: "notHasCard",
+                player: "self",
+                zone: "character",
+                filters: [{ filter: "name", value: "Monkey.D.Luffy" }],
+              },
+              {
+                condition: "notHasCard",
+                player: "opponent",
+                zone: "character",
+                filters: [{ filter: "name", value: "Monkey.D.Luffy" }],
+              },
+            ],
+          },
+        ],
         oncePerTurn: true,
       },
     ],

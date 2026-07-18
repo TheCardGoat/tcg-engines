@@ -5,6 +5,7 @@ export const gd02GundamAshtaronMaMode042: UnitCard = {
   name: "Gundam Ashtaron (MA Mode)",
   type: "unit",
   color: "red",
+  battlefieldZones: ["space", "earth"],
   traits: ["new une"],
   id: "GD02-042",
   canonicalId: "GD02-042",
@@ -41,6 +42,7 @@ export const gd02GundamAshtaronMaMode042: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 2,
+  linkCondition: "[Olba Frost]",
   effect:
     "【Deploy】Choose 1 of your (New UNE) Units. It gains &lt;High-Maneuver&gt; during this turn.<br>\n(This Unit can't be blocked.)<br>",
   effects: [

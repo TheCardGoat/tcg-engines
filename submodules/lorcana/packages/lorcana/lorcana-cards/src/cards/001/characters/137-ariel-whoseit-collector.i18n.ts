@@ -42,4 +42,14 @@ export const arielWhoseitCollectorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ariel",
+    version: "Cuyo coleccionista",
+    text: [
+      {
+        title: "MIRA ESTA COSA",
+        description: "Cada vez que juegas un elemento, puedes preparar este personaje.",
+      },
+    ],
+  },
 };

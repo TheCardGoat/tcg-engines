@@ -41,4 +41,14 @@ export const pixieDustI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Polvo de duendecillo",
+    text: [
+      {
+        title: "FE Y CONFIANZA",
+        description:
+          "{E}, {2} {I}: el personaje elegido obtiene Challenger +2 y Evasive hasta el comienzo de tu siguiente turno. (Mientras desafían, obtienen +2 {1}. Solo los personajes con Evasivo pueden desafiarlos).",
+      },
+    ],
+  },
 };

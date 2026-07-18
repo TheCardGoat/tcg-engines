@@ -65,4 +65,20 @@ export const mushuMajesticDragonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mushu",
+    version: "Dragón majestuoso",
+    text: [
+      {
+        title: "INTIMIDANTE E IMPRESIONANTE",
+        description:
+          "Cada vez que uno de tus personajes desafía, obtiene Resistencia +2 durante ese desafío.",
+      },
+      {
+        title: "GUARDIÁN DE LAS ALMAS PERDIDAS",
+        description:
+          "Durante tu turno, cada vez que uno de tus personajes destierre a otro personaje en un desafío, gana 2 conocimientos.",
+      },
+    ],
+  },
 };

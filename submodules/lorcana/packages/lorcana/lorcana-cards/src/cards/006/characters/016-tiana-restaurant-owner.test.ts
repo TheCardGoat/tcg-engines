@@ -64,6 +64,41 @@ describe("Tiana - Restaurant Owner", () => {
       expect(testEngine.asServer().getAvailableInk(PLAYER_TWO)).toBe(0);
     });
 
+    it("creates and resolves a separate payment for each exerted Tiana", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+        {
+          play: [
+            { card: tianaRestaurantOwner, exerted: true },
+            { card: tianaRestaurantOwner, exerted: true },
+            { card: ally, exerted: true },
+          ],
+          deck: 2,
+        },
+        {
+          play: [{ card: attacker, exerted: false, isDrying: false }],
+          inkwell: 6,
+          deck: 2,
+        },
+      );
+
+      expect(testEngine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerTwo().challenge(attacker, ally)).toBeSuccessfulCommand();
+
+      const tianaTriggers = testEngine.asPlayerOne().getBagEffects();
+      expect(tianaTriggers).toHaveLength(2);
+
+      expect(testEngine.asPlayerOne().resolveBag(tianaTriggers[0]!.id)).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerTwo().respondWithChoice(0)).toBeSuccessfulCommand();
+
+      const remainingTriggers = testEngine.asPlayerOne().getBagEffects();
+      expect(remainingTriggers).toHaveLength(1);
+      expect(testEngine.asPlayerOne().resolveBag(remainingTriggers[0]!.id)).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerTwo().respondWithChoice(0)).toBeSuccessfulCommand();
+
+      expect(testEngine.asServer().getAvailableInk(PLAYER_TWO)).toBe(0);
+      expect(testEngine.asPlayerTwo().getCard(attacker).strength).toBe(attacker.strength);
+    });
+
     it("applies -3 strength when the challenging player cannot pay 3 ink", () => {
       const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
         {

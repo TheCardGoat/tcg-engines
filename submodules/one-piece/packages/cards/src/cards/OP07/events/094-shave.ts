@@ -42,6 +42,31 @@ export const op07Shave094: EventCard = {
             value: 2000,
             duration: "thisBattle",
           },
+          {
+            action: "returnToHand",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "CP",
+                  match: "includes",
+                },
+              ],
+            },
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "trash",
+              comparison: "gte",
+              value: 10,
+            },
+          },
         ],
       },
       {

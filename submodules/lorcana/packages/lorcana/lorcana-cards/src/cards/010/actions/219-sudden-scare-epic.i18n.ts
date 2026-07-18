@@ -17,4 +17,8 @@ export const suddenScareEpicI18n: Record<Languages, I18nProperties> = {
     name: "Spavento Improvviso",
     text: "Aggiungi un personaggio avversario a tua scelta al calamaio del suo giocatore, a faccia in giù. Quel giocatore aggiunge la prima carta del suo mazzo al suo calamaio, a faccia in giù.",
   },
+  es: {
+    name: "Susto repentino",
+    text: "Coloca el personaje contrario elegido en el tintero de su jugador boca abajo. Ese jugador pone la carta superior de su mazo en su tintero boca abajo.",
+  },
 };

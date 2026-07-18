@@ -40,7 +40,7 @@ export const op09Shanks001: LeaderCard = {
     },
   ],
   effect:
-    "[Once Per Turn] This effect can be activated when your opponent attacks. Give up to 1 of your opponent's Leader or Character cards 1000 power during this turn.",
+    "[Once Per Turn] This effect can be activated when your opponent attacks. Give up to 1 of your opponent's Leader or Character cards −1000 power during this turn.",
   effects: {
     effects: [
       {
@@ -56,10 +56,11 @@ export const op09Shanks001: LeaderCard = {
                 upTo: true,
               },
             },
-            value: 1000,
+            value: -1000,
             duration: "thisTurn",
           },
         ],
+        optional: true,
         oncePerTurn: true,
       },
     ],

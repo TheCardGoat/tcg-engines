@@ -57,4 +57,18 @@ export const tinkerBellInsistentFairyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Campanita",
+    version: "Hada insistente",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "PRESTAR ATENCIÓN",
+        description:
+          "Siempre que juegues con un personaje con 5 {S} o más, puedes esforzarlos para ganar 2 conocimientos.",
+      },
+    ],
+  },
 };

@@ -44,4 +44,15 @@ export const theFatesOnlyOneEyeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Los destinos",
+    version: "Sólo un ojo",
+    text: [
+      {
+        title: "TODO SERÁ VER",
+        description:
+          "Cuando juegues con este personaje, mira la carta superior del mazo de cada oponente.",
+      },
+    ],
+  },
 };

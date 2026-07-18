@@ -39,4 +39,13 @@ export const mauricesWorkshopI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El taller de Mauricio",
+    text: [
+      {
+        title: "¿BUSCAS ESTO?",
+        description: "Siempre que juegues otro artículo, puedes pagar 1 {I} para robar una carta.",
+      },
+    ],
+  },
 };

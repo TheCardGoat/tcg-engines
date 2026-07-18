@@ -45,4 +45,15 @@ export const sisuUnitingDragonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sisu",
+    version: "Dragón uniendo",
+    text: [
+      {
+        title: "LA CONFIANZA CONSTRUYE CONFIANZA",
+        description:
+          "Siempre que este personaje realice una misión, revela la carta superior de tu mazo. Si es una carta de personaje de Dragón, ponla en tu mano y repite este efecto. De lo contrario, colóquelo en la parte superior o inferior de su plataforma.",
+      },
+    ],
+  },
 };

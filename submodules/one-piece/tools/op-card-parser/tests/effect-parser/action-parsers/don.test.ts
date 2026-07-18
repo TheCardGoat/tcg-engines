@@ -2,6 +2,24 @@ import { expect, test, describe } from "vite-plus/test";
 import { buildCardEffects, parseActions } from "../../../src/effect-parser/index.ts";
 
 describe("parseActions — AddDonAction", () => {
+  test("opponent may add an active DON!! from their deck", () => {
+    const result = parseActions(
+      "your opponent may add 1 DON!! card from their DON!! deck and set it as active",
+    );
+
+    expect(result).toEqual({
+      parsed: [
+        {
+          action: "addDon",
+          player: "opponent",
+          count: { amount: 1, upTo: true },
+          state: "active",
+        },
+      ],
+      unparsed: "",
+    });
+  });
+
   test("Add 1 DON!! and rest it", () => {
     const result = parseActions("Add up to 1 DON!! card from your DON!! deck and rest it");
     expect(result.parsed).toHaveLength(1);
@@ -46,6 +64,25 @@ describe("parseActions — AddDonAction", () => {
     });
   });
 
+  test("Add an additional DON!! card using the preceding DON!! deck source", () => {
+    const result = parseActions(
+      "Add up to 1 DON!! card from your DON!! deck and set it as active, and add up to 1 additional DON!! card and rest it",
+    );
+    expect(result.parsed).toEqual([
+      {
+        action: "addDon",
+        count: { amount: 1, upTo: true },
+        state: "active",
+      },
+      {
+        action: "addDon",
+        count: { amount: 1, upTo: true },
+        state: "rested",
+      },
+    ]);
+    expect(result.unparsed).toBe("");
+  });
+
   test("trailing period is stripped", () => {
     const result = parseActions("Add up to 1 DON!! card from your DON!! deck and rest it.");
     expect(result.parsed).toHaveLength(1);
@@ -77,6 +114,28 @@ describe("parseActions — AddDonAction", () => {
 });
 
 describe("parseActions — GiveDonAction", () => {
+  test("gives up to one rested DON!! to every included-trait Character", () => {
+    const result = parseActions(
+      "Give up to 1 rested DON!! card to each of your [Alabasta] type Characters.",
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "giveDon",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: { amount: "all", upTo: true },
+          filters: [{ filter: "trait", value: "Alabasta", match: "includes" }],
+        },
+        count: { amount: 1, upTo: true },
+        donState: "rested",
+        distribution: "each",
+      },
+    ]);
+  });
+
   test("Give 1 rested DON!! to your Leader or 1 of your Characters", () => {
     const result = parseActions(
       "Give up to 1 rested DON!! card to your Leader or 1 of your Characters",
@@ -133,7 +192,7 @@ describe("parseActions — GiveDonAction", () => {
       target: {
         player: "self",
         zones: ["leader"],
-        filters: [{ filter: "trait", value: "Land of Wano" }],
+        filters: [{ filter: "trait", value: "Land of Wano", match: "includes" }],
       },
     });
   });

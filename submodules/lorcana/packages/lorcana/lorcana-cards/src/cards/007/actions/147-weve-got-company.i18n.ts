@@ -17,4 +17,8 @@ export const weveGotCompanyI18n: Record<Languages, I18nProperties> = {
     name: "Abbiamo Visite!",
     text: "Prepara tutti i tuoi personaggi. Ottengono <Attaccabrighe> per questo turno. (Non possono andare all'avventura e devono sfidare, se possibile.)",
   },
+  es: {
+    name: "¡Tenemos compañía!",
+    text: "Prepara todos tus personajes. Obtienen Temeridad este turno. (No pueden realizar misiones y deben desafiar si pueden).",
+  },
 };

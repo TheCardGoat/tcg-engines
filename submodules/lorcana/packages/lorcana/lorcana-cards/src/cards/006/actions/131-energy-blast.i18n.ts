@@ -17,4 +17,8 @@ export const energyBlastI18n: Record<Languages, I18nProperties> = {
     name: "Esplosione di Energia",
     text: "Esilia un personaggio a tua scelta. Pesca una carta.",
   },
+  es: {
+    name: "Explosión de energía",
+    text: "Desterrar al personaje elegido. Saca una carta.",
+  },
 };

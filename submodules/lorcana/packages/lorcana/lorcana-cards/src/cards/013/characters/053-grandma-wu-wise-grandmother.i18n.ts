@@ -56,4 +56,17 @@ export const grandmaWuWiseGrandmotherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Abuela wu",
+    version: "Abuela sabia",
+    text: [
+      {
+        title: "<Retador> +2",
+      },
+      {
+        title: "Comprensión ancestral",
+        description: "Cuando colocas un personaje encima de este personaje, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

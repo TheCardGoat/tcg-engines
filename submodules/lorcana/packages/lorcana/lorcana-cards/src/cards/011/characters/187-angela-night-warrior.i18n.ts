@@ -61,4 +61,19 @@ export const angelaNightWarriorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ángela",
+    version: "Guerrero nocturno",
+    text: [
+      {
+        title: "PODER DE LA SOMBRA",
+        description:
+          "Cuando juegas con este personaje, puedes darle al personaje elegido Retador +2 y Resistencia +2 hasta el comienzo de tu siguiente turno. (Obtienen +2 {S} mientras desafían. El daño que se les inflige se reduce en 2).",
+      },
+      {
+        title: "NOCHE ETERNA",
+        description: "Tus personajes de Gárgola pierden la habilidad Piedra de día.",
+      },
+    ],
+  },
 };

@@ -57,4 +57,18 @@ export const monstroInfamousWhaleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Monstruo",
+    version: "Ballena infame",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "INCUMPLIMIENTO TOTAL",
+        description:
+          "Elige y descarta una carta: prepara este personaje. No puede realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

@@ -41,4 +41,14 @@ export const madamMimTrulyMarvelousI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora mim",
+    version: "Verdaderamente maravilloso",
+    text: [
+      {
+        title: "Oh, mollejas de murciélago 2",
+        description: "{I}, elige y descarta una carta: gana 1 conocimiento.",
+      },
+    ],
+  },
 };

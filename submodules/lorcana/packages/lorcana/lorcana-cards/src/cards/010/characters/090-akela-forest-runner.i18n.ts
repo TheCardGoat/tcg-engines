@@ -41,4 +41,14 @@ export const akelaForestRunnerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Akela",
+    version: "Corredor del bosque",
+    text: [
+      {
+        title: "DELANTE DEL PAQUETE 1",
+        description: "{I}: este personaje obtiene +1 {S} este turno.",
+      },
+    ],
+  },
 };

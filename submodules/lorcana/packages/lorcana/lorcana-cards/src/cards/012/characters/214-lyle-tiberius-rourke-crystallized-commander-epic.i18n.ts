@@ -60,4 +60,18 @@ export const lyleTiberiusRourkeCrystallizedCommanderEpicI18n: Record<Languages, 
       },
     ],
   },
+  es: {
+    name: "Lyle Tiberius Rourke",
+    version: "Comandante cristalizado",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "EL PLAN HA CAMBIADO",
+        description:
+          "Cuando juegues con este personaje, pon las 2 primeras cartas de tu mazo en tu descarte. Luego, puedes devolver a tu mano una carta de acción con coste 4 o menos de tu descarte.",
+      },
+    ],
+  },
 };

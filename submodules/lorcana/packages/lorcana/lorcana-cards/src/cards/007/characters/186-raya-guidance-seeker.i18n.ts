@@ -45,4 +45,15 @@ export const rayaGuidanceSeekerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Raya",
+    version: "Buscador de orientación",
+    text: [
+      {
+        title: "UN PROPÓSITO MAYOR",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, este personaje gana Resistencia +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

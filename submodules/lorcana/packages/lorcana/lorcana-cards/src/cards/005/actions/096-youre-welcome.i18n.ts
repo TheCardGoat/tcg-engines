@@ -35,4 +35,8 @@ export const youreWelcomeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "De nada",
+    text: "Mezcla el personaje, objeto o ubicación elegidos en el mazo de su jugador. Ese jugador roba 2 cartas.",
+  },
 };

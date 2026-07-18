@@ -43,6 +43,7 @@ export const op14eb04SharkBrickFist020: EventCard = {
                 {
                   filter: "trait",
                   value: "Fish-Man",
+                  match: "includes",
                 },
               ],
             },
@@ -62,6 +63,30 @@ export const op14eb04SharkBrickFist020: EventCard = {
                 {
                   filter: "trait",
                   value: "Fish-Man",
+                  match: "includes",
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
                 },
               ],
             },

@@ -33,6 +33,9 @@ const expensivePrototype: ItemCard = {
     de: {
       name: "Expensive Prototype",
     },
+    es: {
+      name: "Expensive Prototype",
+    },
     fr: {
       name: "Expensive Prototype",
     },

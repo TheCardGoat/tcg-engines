@@ -51,6 +51,24 @@ export const op10CaesarClown002: LeaderCard = {
             amount: 2,
           },
         ],
+        costs: [
+          {
+            cost: "returnCharacter",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Punk Hazard",
+                match: "includes",
+              },
+              {
+                filter: "cost",
+                comparison: "gte",
+                value: 2,
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "ko",

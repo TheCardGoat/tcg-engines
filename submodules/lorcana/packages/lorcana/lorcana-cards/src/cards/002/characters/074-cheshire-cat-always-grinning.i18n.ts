@@ -17,4 +17,8 @@ export const cheshireCatAlwaysGrinningI18n: Record<Languages, I18nProperties> = 
     name: "Cheshire Cat",
     version: "Always Grinning",
   },
+  es: {
+    name: "Gato de cheshire",
+    version: "Siempre sonriendo",
+  },
 };

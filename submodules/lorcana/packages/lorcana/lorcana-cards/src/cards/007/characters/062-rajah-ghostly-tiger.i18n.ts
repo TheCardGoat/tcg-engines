@@ -26,4 +26,14 @@ export const rajahGhostlyTigerI18n: Record<Languages, I18nProperties> = {
     version: "Tigre Spettrale",
     text: "<Svanire> (Quando un avversario sceglie questo personaggio per un'azione, esilialo.)",
   },
+  es: {
+    name: "Raja",
+    version: "Tigre fantasmal",
+    text: [
+      {
+        title: "Desaparecer",
+        description: "(Cuando un oponente elige este personaje para una acción, destierralo).",
+      },
+    ],
+  },
 };

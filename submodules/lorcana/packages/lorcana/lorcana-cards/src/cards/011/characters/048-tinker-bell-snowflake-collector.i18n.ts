@@ -61,4 +61,18 @@ export const tinkerBellSnowflakeCollectorI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Campanita",
+    version: "Coleccionista de copos de nieve",
+    text: [
+      {
+        title: "ráfaga de deleite",
+        description: "Mientras tengas 4 o más cartas en tu mano, este personaje gana Evasivo.",
+      },
+      {
+        title: "ESPECTACULAR HALLAZGO",
+        description: "Mientras tengas 7 o más cartas en tu mano, este personaje obtiene +3 {L}.",
+      },
+    ],
+  },
 };

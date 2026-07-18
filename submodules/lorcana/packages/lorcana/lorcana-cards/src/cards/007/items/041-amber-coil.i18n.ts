@@ -41,4 +41,14 @@ export const amberCoilI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bobina ámbar",
+    text: [
+      {
+        title: "AURA SANADORA",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, puedes eliminar hasta 2 daños del personaje elegido.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const theNokkMythicalSpiritI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El Nokk",
+    version: "Espíritu mítico",
+    text: [
+      {
+        title: "MAREAS CAMBIANTES",
+        description:
+          "Cuando juegas con este personaje, puedes mover hasta 2 contadores de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

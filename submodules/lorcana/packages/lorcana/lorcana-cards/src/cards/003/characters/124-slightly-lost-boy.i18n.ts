@@ -57,4 +57,18 @@ export const slightlyLostBoyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Levemente",
+    version: "Niño perdido",
+    text: [
+      {
+        title: "EL ZORRO",
+        description:
+          "Si tienes un personaje llamado Peter Pan en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "Evasivo",
+      },
+    ],
+  },
 };

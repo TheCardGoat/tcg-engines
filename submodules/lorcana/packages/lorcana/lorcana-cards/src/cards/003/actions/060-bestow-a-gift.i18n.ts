@@ -17,4 +17,8 @@ export const bestowAGiftI18n: Record<Languages, I18nProperties> = {
     name: "Porgere un Dono",
     text: "Sposta 1 segnalino danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
   },
+  es: {
+    name: "Otorgar un regalo",
+    text: "Mueve 1 contador de daño del personaje elegido al personaje contrario elegido.",
+  },
 };

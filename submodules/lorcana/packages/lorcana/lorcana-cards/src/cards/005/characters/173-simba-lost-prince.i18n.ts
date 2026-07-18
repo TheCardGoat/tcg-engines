@@ -45,4 +45,15 @@ export const simbaLostPrinceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Simba",
+    version: "Príncipe perdido",
+    text: [
+      {
+        title: "ENFRENTAR EL PASADO",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, podrás robar una carta.",
+      },
+    ],
+  },
 };

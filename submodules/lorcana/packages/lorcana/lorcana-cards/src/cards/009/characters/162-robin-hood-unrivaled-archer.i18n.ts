@@ -65,4 +65,20 @@ export const robinHoodUnrivaledArcherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Robin Hood",
+    version: "Arquero inigualable",
+    text: [
+      {
+        title: "ALIMENTAR A LOS POBRES",
+        description:
+          "Cuando juegas con este personaje, si un oponente tiene más cartas en su mano que tú, puedes robar una carta.",
+      },
+      {
+        title: "BUEN TIRO",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

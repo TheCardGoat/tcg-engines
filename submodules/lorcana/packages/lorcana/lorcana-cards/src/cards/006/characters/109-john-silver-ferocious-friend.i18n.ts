@@ -45,4 +45,15 @@ export const johnSilverFerociousFriendI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Juan Plata",
+    version: "Amigo feroz",
+    text: [
+      {
+        title: "TIENES QUE TRAZAR TU PROPIO CURSO",
+        description:
+          "Siempre que este personaje realice una misión, puedes infligir 1 daño a uno de tus otros personajes. Si lo haces, prepara ese personaje. No pueden realizar misiones en este turno.",
+      },
+    ],
+  },
 };

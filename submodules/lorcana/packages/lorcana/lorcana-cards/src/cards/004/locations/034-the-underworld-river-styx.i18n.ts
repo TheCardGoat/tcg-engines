@@ -45,4 +45,15 @@ export const theUnderworldRiverStyxI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El inframundo",
+    version: "Río Estigia",
+    text: [
+      {
+        title: "AHORRAR",
+        description:
+          "UN ALMA Siempre que un personaje realice una misión mientras estés aquí, puedes pagar 3 {I} para devolver una carta de personaje de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

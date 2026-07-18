@@ -33,4 +33,8 @@ export const toWitherAFlowerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Marchitar una flor",
+    text: "Inflige 2 daños a cada personaje dañado del oponente.",
+  },
 };

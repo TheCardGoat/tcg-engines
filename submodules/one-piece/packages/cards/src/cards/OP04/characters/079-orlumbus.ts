@@ -23,7 +23,7 @@ export const op04Orlumbus079: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Dressrosa Yonta Maria Fleet"],
+  traits: ["Dressrosa", "Yonta Maria Fleet"],
   attribute: "strike",
   effect:
     "[Activate:Main] [Once Per Turn] Give up to 1 of your opponent's Characters -4 cost during this turn and trash 2 cards from the top of your deck. Then, K.O. 1 of your [Dressrosa] type Characters.",
@@ -62,6 +62,7 @@ export const op04Orlumbus079: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
+                  match: "includes",
                 },
               ],
             },

@@ -42,4 +42,14 @@ export const donaldDuckAlongForTheRideI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "A lo largo del viaje",
+    text: [
+      {
+        title: "¡YA PASANDO!",
+        description: "Cuando juegas con este personaje, puedes desterrar el objeto elegido.",
+      },
+    ],
+  },
 };

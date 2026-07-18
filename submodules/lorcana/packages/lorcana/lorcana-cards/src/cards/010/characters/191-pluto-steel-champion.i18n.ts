@@ -64,4 +64,20 @@ export const plutoSteelChampionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Plutón",
+    version: "Campeón de acero",
+    text: [
+      {
+        title: "EL GANADOR SE LO LLEVA TODO",
+        description:
+          "Durante tu turno, cada vez que uno de tus otros personajes de Steel destierre a otro personaje en un desafío, gana 2 conocimientos.",
+      },
+      {
+        title: "HACER ESPACIO",
+        description:
+          "Siempre que juegues con otro personaje de Steel, podrás desterrar el objeto elegido.",
+      },
+    ],
+  },
 };

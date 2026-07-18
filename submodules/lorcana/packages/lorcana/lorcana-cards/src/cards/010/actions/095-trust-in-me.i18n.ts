@@ -57,4 +57,8 @@ export const trustInMeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Confía en mí",
+    text: "Elige uno:\n- Cada personaje contrario obtiene -1 hasta el inicio de tu siguiente turno.\n- Cada oponente elige y descarta 2 cartas.",
+  },
 };

@@ -21,4 +21,9 @@ export const donKarnagePrinceOfPiratesI18n: Record<Languages, I18nProperties> = 
     version: "Principe dei Pirati",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Don Karnage",
+    version: "Príncipe de los piratas",
+    text: "Evasivo",
+  },
 };

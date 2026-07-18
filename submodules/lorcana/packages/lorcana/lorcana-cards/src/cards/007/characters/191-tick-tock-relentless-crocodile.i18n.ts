@@ -45,4 +45,15 @@ export const ticktockRelentlessCrocodileI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Tic-tac",
+    version: "Cocodrilo implacable",
+    text: [
+      {
+        title: "BUSCANDO ALMUERZO",
+        description:
+          "Durante tu turno, este personaje gana Evasivo mientras un personaje Pirata está en juego. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

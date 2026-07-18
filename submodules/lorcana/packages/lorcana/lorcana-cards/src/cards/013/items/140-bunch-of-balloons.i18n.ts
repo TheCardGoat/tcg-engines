@@ -57,4 +57,18 @@ export const bunchOfBalloonsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Manojo de globos",
+    text: [
+      {
+        title: "Flotar lejos",
+        description:
+          "Cuando juegues este objeto, elige una ubicación tuya. Mientras este objeto esté en juego, esa ubicación gana <Evasivo>. (Solo los personajes con Evasivo pueden desafiarlo).",
+      },
+      {
+        title: "Fuera de la vista",
+        description: "3 {I} — Devuelve este objeto a tu mano.",
+      },
+    ],
+  },
 };

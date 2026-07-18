@@ -5,6 +5,7 @@ export const gd02RedGundam024: UnitCard = {
   name: "Red Gundam",
   type: "unit",
   color: "green",
+  battlefieldZones: ["space", "earth"],
   traits: ["clan"],
   id: "GD02-024",
   canonicalId: "GD02-024",
@@ -58,6 +59,7 @@ export const gd02RedGundam024: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 4,
+  linkCondition: "(Clan) Trait",
   effect:
     "【During Link】This Unit gains &lt;High-Maneuver&gt;.<br>\n(This Unit can't be blocked.)<br>",
   effects: [

@@ -45,6 +45,7 @@ export const op13TheOneWhoIsTheMostFreeIsThePirateKing116: EventCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -53,6 +54,15 @@ export const op13TheOneWhoIsTheMostFreeIsThePirateKing116: EventCard = {
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
           },
         ],
       },

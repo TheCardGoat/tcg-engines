@@ -45,4 +45,15 @@ export const carlFredricksenLovingHusbandI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Carl Fredricksen",
+    version: "Marido amoroso",
+    text: [
+      {
+        title: "TOMA MI MANO",
+        description:
+          "Cuando juegas con este personaje, pagas 2 {I} menos por el siguiente personaje llamado Ellie Fredricksen que juegues en este turno.",
+      },
+    ],
+  },
 };

@@ -41,5 +41,41 @@ export const op01Kaido094: CharacterCard = {
   ],
   effect:
     '[On Play] DON!! -6 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your Leader has the "Animal Kingdom Pirates" type, K.O. all Characters other than this Character.',
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnDon",
+            amount: 6,
+          },
+        ],
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "any",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "excludeSelf",
+                },
+              ],
+            },
+            condition: {
+              condition: "leaderTrait",
+              trait: "Animal Kingdom Pirates",
+              match: "includes",
+            },
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
   i18n: op01Kaido094I18n,
 };

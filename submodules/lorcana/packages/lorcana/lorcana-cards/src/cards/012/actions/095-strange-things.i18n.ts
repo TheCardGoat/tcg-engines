@@ -35,4 +35,8 @@ export const strangeThingsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cosas extrañas",
+    text: "Hasta 2 personajes elegidos no pueden realizar misiones hasta el comienzo de tu siguiente turno. Saca una carta.",
+  },
 };

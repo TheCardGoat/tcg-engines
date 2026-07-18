@@ -35,6 +35,12 @@ export const op04Igaram002: CharacterCard = {
           {
             cost: "restThisCard",
           },
+          {
+            cost: "modifyLeaderPower",
+            value: -5000,
+            duration: "thisTurn",
+            requiresActive: true,
+          },
         ],
         actions: [
           {
@@ -52,6 +58,7 @@ export const op04Igaram002: CharacterCard = {
               {
                 filter: "trait",
                 value: "Alabasta",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

@@ -186,7 +186,6 @@ export interface DeckLookEffect {
   readonly tutorDestination: "hand" | "battleArea";
   readonly revealed: readonly GameCardData[];
   readonly legalTutorIds: readonly string[];
-  readonly acceptOptionalDirectiveIndex?: number;
 }
 
 export interface DeckLookConfirmResult {

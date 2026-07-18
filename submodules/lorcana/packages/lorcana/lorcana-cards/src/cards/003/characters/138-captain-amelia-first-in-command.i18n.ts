@@ -45,4 +45,15 @@ export const captainAmeliaFirstInCommandI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Capitana amelia",
+    version: "Primero al mando",
+    text: [
+      {
+        title: "DISCIPLINA",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

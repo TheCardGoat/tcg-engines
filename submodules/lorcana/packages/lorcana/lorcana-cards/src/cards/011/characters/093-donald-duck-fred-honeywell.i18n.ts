@@ -65,4 +65,20 @@ export const donaldDuckFredHoneywellI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Fred Honeywell",
+    text: [
+      {
+        title: "ESPÍRITU DE DAR",
+        description:
+          "Siempre que uses la habilidad Boost de un personaje, puedes colocar la carta superior de tu mazo debajo de él boca abajo.",
+      },
+      {
+        title: "BUENOS DESEOS",
+        description:
+          "Durante los turnos de los oponentes, cada vez que uno de tus otros personajes sea desterrado, puedes robar una carta por cada carta que estaba debajo de él.",
+      },
+    ],
+  },
 };

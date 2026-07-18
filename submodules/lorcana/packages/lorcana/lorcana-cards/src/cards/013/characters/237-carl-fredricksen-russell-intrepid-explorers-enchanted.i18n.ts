@@ -62,4 +62,18 @@ export const carlFredricksenRussellIntrepidExplorersEnchantedI18n: Record<
       },
     ],
   },
+  es: {
+    name: "Carl Fredricksen y Russell",
+    version: "Exploradores intrépidos",
+    text: [
+      {
+        title: "<Mayús> 4 {I}",
+      },
+      {
+        title: "Habilidades al aire libre",
+        description:
+          "Mientras este personaje está en una ubicación, todos los personajes en esa ubicación obtienen +1 {L} y obtienen <Evasivo>.",
+      },
+    ],
+  },
 };

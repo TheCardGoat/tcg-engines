@@ -23,7 +23,7 @@ export const op04Mr13MsFriday073: CharacterCard = {
   cost: 3,
   power: 1000,
   counter: 2000,
-  traits: ["Animal Baroque Works"],
+  traits: ["Animal", "Baroque Works"],
   attribute: "wisdom",
   effect:
     '[Activate:Main] You may trash this Character and 1 of your Characters with a type including "Baroque Works": Add up to 1 DON!! card from your DON!! deck and set it as active. [Trigger] Play this card.',
@@ -34,6 +34,20 @@ export const op04Mr13MsFriday073: CharacterCard = {
         costs: [
           {
             cost: "trashThisCard",
+          },
+          {
+            cost: "trashCharacter",
+            amount: 1,
+            filters: [
+              {
+                filter: "excludeSelf",
+              },
+              {
+                filter: "trait",
+                value: "Baroque Works",
+                match: "includes",
+              },
+            ],
           },
         ],
         actions: [
@@ -52,14 +66,7 @@ export const op04Mr13MsFriday073: CharacterCard = {
         trigger: "trigger",
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
       },

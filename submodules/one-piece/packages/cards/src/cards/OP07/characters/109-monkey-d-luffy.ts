@@ -41,19 +41,11 @@ export const op07MonkeyDLuffy109: CharacterCard = {
     },
   ],
   effect:
-    "[Activate: Main]You may trash this Character: If you have 2 or less Life cards, K.O. up to 1 of your opponent's Characters with a cost of 4 or less. Then, draw 1 card. [Trigger] K.O. up to 1 of your opponent's Characters with a cost of 4 or less.",
+    "[Activate: Main] You may trash this Character: If you have 2 or less Life cards, K.O. up to 1 of your opponent's Characters with a cost of 4 or less. Then, draw 1 card. [Trigger] K.O. up to 1 of your opponent's Characters with a cost of 4 or less.",
   effects: {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "lifeCount",
-            player: "self",
-            comparison: "lte",
-            value: 2,
-          },
-        ],
         costs: [
           {
             cost: "trashThisCard",
@@ -76,6 +68,12 @@ export const op07MonkeyDLuffy109: CharacterCard = {
                   value: 4,
                 },
               ],
+            },
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 2,
             },
           },
           {

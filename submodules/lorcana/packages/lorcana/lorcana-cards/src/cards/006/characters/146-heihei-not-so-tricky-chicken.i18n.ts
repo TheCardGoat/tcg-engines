@@ -65,4 +65,20 @@ export const heiheiNotsotrickyChickenI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Heihei",
+    version: "Pollo no tan complicado",
+    text: [
+      {
+        title: "COME CUALQUIER COSA",
+        description:
+          "Cuando juegues con este personaje, utiliza el elemento contrario elegido. No puede estar listo al comienzo de su siguiente turno.",
+      },
+      {
+        title: "SALIR A ALMORZAR",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

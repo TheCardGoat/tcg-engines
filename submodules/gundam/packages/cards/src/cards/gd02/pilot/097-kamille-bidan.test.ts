@@ -4,65 +4,104 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
+  createMockBase,
+  createMockCommand,
   createMockUnit,
+  expectFailure,
   expectSuccess,
-  getEffectiveStats,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
 import { gd02KamilleBidan097 } from "./097-kamille-bidan.ts";
 
 describe("Kamille Bidan (GD02-097)", () => {
-  it("【Burst】 Add this card to your hand", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd02KamilleBidan097] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
-
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `hand:${PLAYER_TWO}`,
-    );
-  });
-
-  it("constant AP+2 on the paired unit fires via the pilot-self rebind", () => {
-    // Pilot-resident `type: "constant"` with `target: { owner: "self",
-    // cardType: "unit" }`. PR #122: pilot-resident `owner: "self"`
-    // rebinds onto the paired unit (rule 3-3-9-1). The printed
-    // "while a friendly white Base is in play" precondition is NOT yet
-    // encoded in card data — this test documents the rebind works and
-    // the modifier lands on the paired unit.
-    const baseAp = 2;
-    const baseHp = 4;
-    const pairedUnit = createMockUnit({
-      ap: baseAp,
-      hp: baseHp,
-      level: 5,
-      cost: 1,
-      linkCondition: "[Kamille Bidan]",
-    } as unknown as Parameters<typeof createMockUnit>[0]);
-
+  it("【Burst】 adds the revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
     const engine = GundamTestEngine.create(
-      {
-        hand: [pairedUnit, gd02KamilleBidan097],
-        resourceArea: activeResources(6),
-      },
-      {},
+      { play: [attacker] },
+      { shieldArea: [gd02KamilleBidan097] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
-    expectSuccess(p1.deployUnit(pairedUnit));
-    expectSuccess(p1.assignPilot(gd02KamilleBidan097, pairedUnit));
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    const runtime = engine.getRuntime();
-    const framework = runtime.getFrameworkReadAPI();
-    const unitId = runtime.getInstanceIdByDefinition(
-      PLAYER_ONE as PlayerId,
-      pairedUnit.cardNumber,
-    )!;
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    const burstChoice = p2.getBoardView().pendingChoice;
+    if (burstChoice?.kind !== "optional") {
+      throw new Error("Expected Kamille Bidan's visible Burst choice");
+    }
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [burstChoice.directiveIndex]: true } }));
 
-    const stats = getEffectiveStats(unitId, engine.getG(), framework.cards, framework);
-    // Pilot apBonus (1) + constant AP+2 = baseAp + 3.
-    expect(stats.ap).toBe(baseAp + 1 + 2);
-    expect(stats.hp).toBe(baseHp + 2); // pilot hpBonus (2)
+    expect(p2.getCardZone(gd02KamilleBidan097)).toBe(`hand:${PLAYER_TWO}`);
+  });
+
+  it("adds AP+2 while a friendly white Base is in play", () => {
+    const host = createMockUnit({ ap: 2, hp: 4 });
+    const whiteBase = createMockBase({ color: "white" });
+    const engine = GundamTestEngine.create({
+      hand: [gd02KamilleBidan097],
+      play: [host],
+      baseSection: [whiteBase],
+      resourceArea: activeResources(5),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(gd02KamilleBidan097, hostId));
+
+    expect(p1.getVisibleCard(hostId)).toMatchObject({ effectiveAp: 5, effectiveHp: 6 });
+  });
+
+  it("does not add the conditional AP with a non-white Base", () => {
+    const host = createMockUnit({ ap: 2, hp: 4 });
+    const blueBase = createMockBase({ color: "blue" });
+    const engine = GundamTestEngine.create({
+      hand: [gd02KamilleBidan097],
+      play: [host],
+      baseSection: [blueBase],
+      resourceArea: activeResources(5),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(gd02KamilleBidan097, hostId));
+
+    expect(p1.getVisibleCard(hostId)?.effectiveAp).toBe(3);
+  });
+
+  it("requires both its printed Lv.5 and one active Resource to be paired", () => {
+    const lowLevel = GundamTestEngine.create({
+      hand: [gd02KamilleBidan097],
+      play: [createMockUnit({ name: "Low-Level Host" })],
+      resourceArea: activeResources(4),
+    });
+    const lowP1 = lowLevel.asPlayer(PLAYER_ONE);
+    const lowHostId = lowP1.getCardsInZone("battleArea")[0]!;
+
+    expectFailure(lowP1.assignPilot(gd02KamilleBidan097, lowHostId), "INSUFFICIENT_RESOURCE_LEVEL");
+    expect(lowP1.getCardZone(gd02KamilleBidan097)).toBe(`hand:${PLAYER_ONE}`);
+    expect(lowP1.getPilotId(lowHostId)).toBeUndefined();
+
+    const setup = createMockCommand({
+      name: "Exhaust All Resources",
+      level: 0,
+      cost: 5,
+      effects: [
+        { type: "command", activation: { timing: ["main"] }, directives: [], sourceText: "" },
+      ],
+    });
+    const insufficient = GundamTestEngine.create({
+      hand: [setup, gd02KamilleBidan097],
+      play: [createMockUnit({ name: "Cost-Gate Host" })],
+      resourceArea: activeResources(5),
+    });
+    const p1 = insufficient.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.playCommand(setup));
+    expectFailure(p1.assignPilot(gd02KamilleBidan097, hostId), "INSUFFICIENT_RESOURCES");
+    expect(p1.getCardZone(gd02KamilleBidan097)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getPilotId(hostId)).toBeUndefined();
   });
 });

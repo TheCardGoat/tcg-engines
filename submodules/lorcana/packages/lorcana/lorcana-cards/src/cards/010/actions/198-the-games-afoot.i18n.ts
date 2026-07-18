@@ -17,4 +17,8 @@ export const theGamesAfootI18n: Record<Languages, I18nProperties> = {
     name: "È il Momento di Agire!",
     text: "Sposta fino a 2 dei tuoi personaggi nello stesso luogo, gratis. Quel luogo ottiene <Resistere> +2 fino all'inizio del tuo prossimo turno.",
   },
+  es: {
+    name: "¡El juego está en marcha!",
+    text: "Mueve hasta 2 de tus personajes a la misma ubicación de forma gratuita. Esa ubicación gana Resistencia +2 hasta el comienzo de tu siguiente turno. (El daño que se le inflige se reduce en 2).",
+  },
 };

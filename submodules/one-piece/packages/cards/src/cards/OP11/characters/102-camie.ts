@@ -36,18 +36,87 @@ export const op11Camie102: CharacterCard = {
             condition: "turn",
             value: "your",
           },
+          {
+            condition: "lifeCount",
+            player: "opponent",
+            comparison: "gte",
+            value: 2,
+          },
         ],
         actions: [
           {
-            action: "removeFromLife",
-            player: "self",
-            count: {
-              amount: 1,
-            },
-            destination: "trash",
+            action: "sequence",
+            actions: [
+              {
+                action: "removeFromLife",
+                player: "self",
+                count: {
+                  amount: 1,
+                },
+                destination: "trash",
+                position: "top",
+              },
+              {
+                action: "removeFromLife",
+                player: "opponent",
+                count: {
+                  amount: 1,
+                },
+                destination: "trash",
+                position: "top",
+              },
+            ],
           },
         ],
+        optional: true,
         oncePerTurn: true,
+        oncePerTurnKey: "opponentEventOrTrigger",
+      },
+      {
+        trigger: "whenTriggerActivates",
+        conditions: [
+          {
+            condition: "turn",
+            value: "your",
+          },
+          {
+            condition: "lifeCount",
+            player: "opponent",
+            comparison: "gte",
+            value: 2,
+          },
+        ],
+        actions: [
+          {
+            action: "sequence",
+            actions: [
+              {
+                action: "removeFromLife",
+                player: "self",
+                count: {
+                  amount: 1,
+                },
+                destination: "trash",
+                position: "top",
+              },
+              {
+                action: "removeFromLife",
+                player: "opponent",
+                count: {
+                  amount: 1,
+                },
+                destination: "trash",
+                position: "top",
+              },
+            ],
+          },
+        ],
+        optional: true,
+        oncePerTurn: true,
+        oncePerTurnKey: "opponentEventOrTrigger",
+        eventFilter: {
+          causedBy: "opponent",
+        },
       },
     ],
   },

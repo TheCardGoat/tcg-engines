@@ -72,6 +72,31 @@ export const op05Ohm101: CharacterCard = {
         ],
       },
     ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "lifeCount",
+            player: "self",
+            comparison: "lte",
+            value: 2,
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            value: 1000,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
   },
   i18n: op05Ohm101I18n,
 };

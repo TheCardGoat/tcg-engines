@@ -17,4 +17,8 @@ export const imStuckI18n: Record<Languages, I18nProperties> = {
     name: "Sono Bloccato!",
     text: "Un personaggio impegnato a tua scelta non si può preparare all'inizio del suo prossimo turno.",
   },
+  es: {
+    name: "¡Estoy atascado!",
+    text: "El personaje ejercido elegido no puede estar listo al comienzo de su siguiente turno.",
+  },
 };

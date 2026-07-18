@@ -53,4 +53,17 @@ export const munchingsAndCrunchingsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Masticando y Crujiendo",
+    text: [
+      {
+        title: "QUE MANZANA MAS JUGOSA",
+        description: "{E}: elimina hasta 2 daños del personaje elegido.",
+      },
+      {
+        title: "SALGA",
+        description: "Pagas 1 {I} menos para interpretar personajes llamados Gurgi.",
+      },
+    ],
+  },
 };

@@ -28,6 +28,15 @@ export const op13TheEmptyThrone099: StageCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "restThisCard",
+          },
+          {
+            cost: "restDon",
+            amount: 3,
+          },
+        ],
         actions: [
           {
             action: "play",
@@ -41,12 +50,22 @@ export const op13TheEmptyThrone099: StageCard = {
             },
             filters: [
               {
+                filter: "dynamicCost",
+                comparison: "lte",
+                source: "selfDonCount",
+              },
+              {
                 filter: "color",
                 value: "black",
               },
               {
                 filter: "trait",
                 value: "Five Elders",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
               },
             ],
           },
@@ -76,7 +95,7 @@ export const op13TheEmptyThrone099: StageCard = {
               player: "self",
               zones: ["leader"],
               count: {
-                amount: 1,
+                amount: "all",
               },
             },
             value: 1000,

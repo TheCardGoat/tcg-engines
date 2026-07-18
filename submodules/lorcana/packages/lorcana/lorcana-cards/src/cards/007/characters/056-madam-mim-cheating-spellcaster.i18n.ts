@@ -44,4 +44,15 @@ export const madamMimCheatingSpellcasterI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Señora mim",
+    version: "Lanzador de conjuros tramposo",
+    text: [
+      {
+        title: "JUGAR BRUTO",
+        description:
+          "Siempre que este personaje realice una misión, ejerce el personaje contrario elegido.",
+      },
+    ],
+  },
 };

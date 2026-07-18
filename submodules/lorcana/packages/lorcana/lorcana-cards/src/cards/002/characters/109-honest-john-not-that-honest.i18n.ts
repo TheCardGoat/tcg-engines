@@ -43,4 +43,15 @@ export const honestJohnNotThatHonestI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Juan honesto",
+    version: "No tan honesto",
+    text: [
+      {
+        title: "CALLE FÁCIL",
+        description:
+          "Siempre que juegas con un personaje Floodborn, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

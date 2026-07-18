@@ -45,4 +45,15 @@ export const cruellaDeVilMiserableAsUsualI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Cruella De Vil",
+    version: "Miserable como siempre",
+    text: [
+      {
+        title: "¡LO ARENTIRÁS!",
+        description:
+          "Cuando este personaje es desafiado y desterrado, puedes devolver el personaje elegido a la mano de su jugador.",
+      },
+    ],
+  },
 };

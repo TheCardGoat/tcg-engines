@@ -51,6 +51,7 @@ export const op08Hamlet090: CharacterCard = {
               {
                 filter: "trait",
                 value: "SMILE",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

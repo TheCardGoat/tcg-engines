@@ -57,4 +57,18 @@ export const aliceSavvySailorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Alicia",
+    version: "Marinero inteligente",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "¡AHORA!",
+        description:
+          "Cada vez que este personaje realiza una misión, otro personaje tuyo elegido obtiene +1 {L} y gana Protección hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

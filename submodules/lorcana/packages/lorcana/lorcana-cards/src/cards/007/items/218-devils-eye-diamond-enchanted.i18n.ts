@@ -40,4 +40,14 @@ export const devilsEyeDiamondEnchantedI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Diamante ojo del diablo",
+    text: [
+      {
+        title: "EL PRECIO DEL PODER",
+        description:
+          "{E}: si uno de tus personajes resultó dañado este turno, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

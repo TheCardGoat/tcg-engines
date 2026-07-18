@@ -34,46 +34,6 @@
   min-height: 0;
 }
 
-.effectChips {
-  position: absolute;
-  inset: 8px;
-  z-index: 4;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  gap: 5px;
-  pointer-events: none;
-}
-
-.effectChip {
-  display: inline-flex;
-  max-width: 100%;
-  align-items: center;
-  gap: 5px;
-  pointer-events: auto;
-  border: 1px solid rgb(74 217 255 / 46%);
-  border-radius: 999px;
-  background: rgb(7 9 12 / 86%);
-  padding: 3px 7px;
-  color: #e7fbff;
-  font-family: Rajdhani, sans-serif;
-  font-size: 10px;
-  font-weight: 800;
-  line-height: 1;
-  text-transform: uppercase;
-  box-shadow: 0 0 12px rgb(74 217 255 / 16%);
-}
-
-.effectChip strong {
-  min-width: 0;
-  max-width: 92px;
-  overflow: hidden;
-  color: #f5e642;
-  font-weight: 900;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .zone.withDock::before,
 .zone.withDock::after {
   content: "";

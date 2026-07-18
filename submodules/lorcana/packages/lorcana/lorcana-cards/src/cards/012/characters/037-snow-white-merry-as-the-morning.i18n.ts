@@ -65,4 +65,20 @@ export const snowWhiteMerryAsTheMorningI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Blanco como la nieve",
+    version: "Feliz como la mañana",
+    text: [
+      {
+        title: "LLAMADO DE ACLARACIÓN",
+        description:
+          "Siempre que este personaje realice una misión, puedes devolver tu personaje de los Siete Enanitos elegido a tu mano para robar una carta.",
+      },
+      {
+        title: "NUNCA OLVIDADO",
+        description:
+          "Durante el turno de un oponente, cuando este personaje sea desterrado en un desafío, devuelve esta carta a tu mano.",
+      },
+    ],
+  },
 };

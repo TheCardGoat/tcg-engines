@@ -184,9 +184,21 @@ export function resolveDiscardEffect(
   const actorId = (ctx.playerId ??
     ctx.framework.state.currentPlayer ??
     ctx.framework.state.priority.holder) as PlayerId | undefined;
+  const resolvedPlayerIds = new Set(resolutionInput.eventSnapshot?.discardResolvedPlayerIds ?? []);
+  const markPlayerResolved = (playerId: PlayerId): void => {
+    resolvedPlayerIds.add(playerId);
+    if (!resolutionInput.eventSnapshot) {
+      resolutionInput.eventSnapshot = {};
+    }
+    resolutionInput.eventSnapshot.discardResolvedPlayerIds = [...resolvedPlayerIds];
+  };
   let discardedAny = false;
 
   for (const targetPlayerId of targetPlayerIds) {
+    if (resolvedPlayerIds.has(targetPlayerId as PlayerId)) {
+      continue;
+    }
+
     // Check if a replacement effect prevents this player from discarding
     const discardEvent = applyReplacementEffects(ctx, {
       kind: "discard",
@@ -198,6 +210,7 @@ export function resolveDiscardEffect(
       prevented: false,
     });
     if (discardEvent.prevented) {
+      markPlayerResolved(targetPlayerId as PlayerId);
       continue;
     }
 
@@ -215,6 +228,7 @@ export function resolveDiscardEffect(
         ) && matchesDiscardFilter(ctx, cardId, effect, cardPlayed.playerId),
     );
     if (candidates.length === 0) {
+      markPlayerResolved(targetPlayerId as PlayerId);
       continue;
     }
 
@@ -343,8 +357,13 @@ export function resolveDiscardEffect(
         });
       }
     }
+
+    markPlayerResolved(targetPlayerId as PlayerId);
   }
 
+  if (resolutionInput.eventSnapshot) {
+    delete resolutionInput.eventSnapshot.discardResolvedPlayerIds;
+  }
   markLastEffectPerformed(resolutionInput.eventSnapshot, discardedAny);
   return { status: "resolved" };
 }

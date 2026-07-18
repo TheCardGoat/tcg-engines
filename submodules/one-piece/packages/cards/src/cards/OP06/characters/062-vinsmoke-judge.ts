@@ -66,10 +66,21 @@ export const op06VinsmokeJudge062: CharacterCard = {
               amount: 4,
               upTo: true,
             },
+            differentNames: true,
             filters: [
+              {
+                filter: "power",
+                comparison: "lte",
+                value: 4000,
+              },
               {
                 filter: "trait",
                 value: "GERMA 66",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
               },
             ],
           },

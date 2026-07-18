@@ -41,4 +41,14 @@ export const alanadaleRockinRoosterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Alan-a-Dale",
+    version: "Gallo rockero",
+    text: [
+      {
+        title: "FAVORITO DE LOS FANS",
+        description: "Cada vez que toques una canción, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

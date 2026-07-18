@@ -17,4 +17,8 @@ export const controlYourTemperI18n: Record<Languages, I18nProperties> = {
     name: "Control Your Temper!",
     text: "Chosen character gets –2 {S} this turn.",
   },
+  es: {
+    name: "¡Controla tu temperamento!",
+    text: "El personaje elegido obtiene -2 {S} este turno.",
+  },
 };

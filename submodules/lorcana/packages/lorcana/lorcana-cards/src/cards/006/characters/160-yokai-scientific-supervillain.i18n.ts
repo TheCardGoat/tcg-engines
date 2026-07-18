@@ -76,4 +76,22 @@ export const yokaiScientificSupervillainI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Yokai",
+    version: "Supervillano científico",
+    text: [
+      {
+        title: "Shift 6",
+      },
+      {
+        title: "NEUROTRANSMISOR",
+        description: "Puedes reproducir elementos llamados Microbots de forma gratuita.",
+      },
+      {
+        title: "GANANCIA TÉCNICA",
+        description:
+          "Siempre que este personaje realice una misión, roba una carta por cada personaje contrario con {S}.",
+      },
+    ],
+  },
 };

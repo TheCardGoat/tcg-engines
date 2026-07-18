@@ -45,4 +45,15 @@ export const finnickTinyTerrorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Finnick",
+    version: "Pequeño terror",
+    text: [
+      {
+        title: "Será mejor que corras",
+        description:
+          "Cuando juegas con este personaje, puedes pagar 2 {I} para devolver el personaje contrario elegido con 2 {S} o menos a la mano de su jugador.",
+      },
+    ],
+  },
 };

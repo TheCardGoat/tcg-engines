@@ -56,4 +56,9 @@ export const littleJohnSirReginaldI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pequeño juan",
+    version: "Señor Reginaldo",
+    text: "¡QUÉ HERMOSA PELEA! Cuando juegues con este personaje, elige uno:\n- El personaje héroe elegido gana Resistencia +2 este turno.\n- Inflige 2 daños al personaje villano elegido.",
+  },
 };

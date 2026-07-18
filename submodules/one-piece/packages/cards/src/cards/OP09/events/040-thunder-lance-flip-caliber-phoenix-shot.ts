@@ -65,6 +65,20 @@ export const op09ThunderLanceFlipCaliberPhoenixShot040: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 4 }],
+            },
+          },
+        ],
+      },
     ],
   },
   i18n: op09ThunderLanceFlipCaliberPhoenixShot040I18n,

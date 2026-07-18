@@ -58,4 +58,18 @@ export const captainAmeliaCommanderOfTheLegacyEnchantedI18n: Record<Languages, I
       },
     ],
   },
+  es: {
+    name: "Capitana amelia",
+    version: "Comandante del legado",
+    text: [
+      {
+        title: "CONDUCIR GALOOTS",
+        description: "Este personaje no puede ser desafiado por personajes piratas.",
+      },
+      {
+        title: "TODO EN FORMA DE BARCO",
+        description: "Mientras son desafiados, tus otros personajes obtienen Resistencia +1.",
+      },
+    ],
+  },
 };

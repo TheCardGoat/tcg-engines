@@ -17,4 +17,8 @@ export const petePastryChomperI18n: Record<Languages, I18nProperties> = {
     name: "Gambadilegno",
     version: "Mascellone da Pasticceria",
   },
+  es: {
+    name: "Pete",
+    version: "Masticador de pastelería",
+  },
 };

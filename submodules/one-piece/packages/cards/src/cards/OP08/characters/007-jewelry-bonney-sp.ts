@@ -56,6 +56,7 @@ export const op08JewelryBonneySp007: CharacterCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

@@ -23,8 +23,7 @@ export const op04Rokki054: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates Giant"],
+  traits: ["Giant", "Animal Kingdom Pirates"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op04Rokki054I18n,
 };

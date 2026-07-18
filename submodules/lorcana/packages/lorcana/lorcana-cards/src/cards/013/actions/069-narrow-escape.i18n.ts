@@ -17,4 +17,8 @@ export const narrowEscapeI18n: Record<Languages, I18nProperties> = {
     name: "Scampato Pericolo",
     text: "Fai riprendere in mano ai loro giocatori fino a 2 personaggi, oggetti o luoghi a tua scelta con costo 2 o inferiore ciascuno.",
   },
+  es: {
+    name: "Escape estrecho",
+    text: "Devuelve hasta 2 personajes, objetos o ubicaciones elegidos con un coste de 2 o menos cada uno a la mano de su jugador.",
+  },
 };

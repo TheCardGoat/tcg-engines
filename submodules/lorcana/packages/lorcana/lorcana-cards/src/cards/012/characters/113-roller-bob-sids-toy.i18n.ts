@@ -45,4 +45,15 @@ export const rollerBobSidsToyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bob rodillo",
+    version: "El juguete de Sid",
+    text: [
+      {
+        title: "HORA DE MUDARSE",
+        description:
+          "Cuando juegas con este personaje, puedes poner 2 cartas de personaje de tu descarte en la parte inferior de tu mazo para darle a este personaje Rush este turno. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

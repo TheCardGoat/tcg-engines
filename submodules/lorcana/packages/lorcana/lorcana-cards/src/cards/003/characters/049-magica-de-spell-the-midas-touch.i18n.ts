@@ -60,4 +60,18 @@ export const magicaDeSpellTheMidasTouchI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Magia De Hechizo",
+    version: "El toque de Midas",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "TODO MIO",
+        description:
+          "Siempre que este personaje realice una misión, obtendrás un conocimiento equivalente al coste de uno de tus objetos en juego.",
+      },
+    ],
+  },
 };

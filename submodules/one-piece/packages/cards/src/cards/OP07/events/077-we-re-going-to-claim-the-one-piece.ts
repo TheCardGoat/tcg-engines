@@ -36,10 +36,12 @@ export const op07WeReGoingToClaimTheOnePiece077: EventCard = {
               {
                 condition: "leaderTrait",
                 trait: "Animal Kingdom Pirates",
+                match: "includes",
               },
               {
                 condition: "leaderTrait",
                 trait: "Big Mom Pirates",
+                match: "includes",
               },
             ],
           },
@@ -58,12 +60,19 @@ export const op07WeReGoingToClaimTheOnePiece077: EventCard = {
             },
             revealFilters: [
               {
-                filter: "trait",
-                value: "Animal Kingdom Pirates",
-              },
-              {
-                filter: "trait",
-                value: "Big Mom Pirates",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Animal Kingdom Pirates",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Big Mom Pirates",
+                    match: "includes",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

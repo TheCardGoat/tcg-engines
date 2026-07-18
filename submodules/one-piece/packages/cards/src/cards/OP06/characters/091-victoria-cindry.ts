@@ -35,6 +35,7 @@ export const op06VictoriaCindry091: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Thriller Bark Pirates",
+            match: "includes",
           },
         ],
         actions: [

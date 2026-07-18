@@ -25,9 +25,35 @@ export const op03Lim015: CharacterCard = {
   traits: ["ODYSSEY"],
   attribute: "wisdom",
   effect:
-    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
+    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[Opponent's Turn] When this Character is K.O.'d, give up to 1 of your opponent's Leader or Character cards −2000 power during this turn.",
   effects: {
     keywords: ["blocker"],
+    effects: [
+      {
+        trigger: "onKo",
+        conditions: [
+          {
+            condition: "turn",
+            value: "opponent",
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "opponent",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: -2000,
+            duration: "thisTurn",
+          },
+        ],
+      },
+    ],
   },
   i18n: op03Lim015I18n,
 };

@@ -45,4 +45,15 @@ export const daisyDuckTrendyTravelerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato margarita",
+    version: "Viajero de moda",
+    text: [
+      {
+        title: "EL DESCANSO HA TERMINADO",
+        description:
+          "Siempre que este personaje realice una misión, si jugaste con un personaje este turno, puedes preparar otro personaje elegido. Si lo haces, no podrán realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

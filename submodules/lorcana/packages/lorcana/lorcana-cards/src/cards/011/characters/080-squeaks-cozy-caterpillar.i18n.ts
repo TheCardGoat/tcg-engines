@@ -21,4 +21,9 @@ export const squeaksCozyCaterpillarI18n: Record<Languages, I18nProperties> = {
     version: "Bruco Confortevole",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Chirridos",
+    version: "Oruga acogedora",
+    text: "Evasivo",
+  },
 };

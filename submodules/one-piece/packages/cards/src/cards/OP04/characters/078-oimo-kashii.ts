@@ -23,8 +23,7 @@ export const op04OimoKashii078: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["Giant World Government"],
+  traits: ["Giant", "World Government"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op04OimoKashii078I18n,
 };

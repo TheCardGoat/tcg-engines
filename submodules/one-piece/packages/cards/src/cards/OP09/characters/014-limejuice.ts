@@ -51,6 +51,7 @@ export const op09Limejuice014: CharacterCard = {
               ],
             },
             keyword: "blocker",
+            requiresKeyword: true,
             duration: "thisTurn",
           },
         ],

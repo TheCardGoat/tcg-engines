@@ -45,4 +45,15 @@ export const treasureMountainAzuriteSeaIslandI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Montaña del tesoro",
+    version: "Isla del Mar Azurita",
+    text: [
+      {
+        title: "ARMA SECRETA",
+        description:
+          "Al comienzo de tu turno, inflige daño al personaje o ubicación elegido igual a la cantidad de personajes aquí.",
+      },
+    ],
+  },
 };

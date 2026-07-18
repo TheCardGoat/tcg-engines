@@ -21,4 +21,9 @@ export const thePhantomBlotShadowyFigureI18n: Record<Languages, I18nProperties> 
     version: "Figura Misteriosa",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "La mancha fantasma",
+    version: "Figura sombría",
+    text: "Correr",
+  },
 };

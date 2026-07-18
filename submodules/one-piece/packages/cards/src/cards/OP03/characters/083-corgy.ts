@@ -37,6 +37,7 @@ export const op03Corgy083: CharacterCard = {
             player: "self",
             count: 5,
             position: "bottom",
+            trashUpTo: 2,
           },
         ],
       },

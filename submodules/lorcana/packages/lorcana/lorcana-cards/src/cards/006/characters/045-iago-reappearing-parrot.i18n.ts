@@ -44,4 +44,15 @@ export const iagoReappearingParrotI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yago",
+    version: "Loro que reaparece",
+    text: [
+      {
+        title: "ADIVINA QUIÉN",
+        description:
+          "Cuando este personaje sea desterrado en un desafío, devuelve esta carta a tu mano.",
+      },
+    ],
+  },
 };

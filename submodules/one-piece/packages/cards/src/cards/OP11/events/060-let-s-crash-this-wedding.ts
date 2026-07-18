@@ -54,10 +54,20 @@ export const op11LetSCrashThisWedding060: EventCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
           },
         ],
       },

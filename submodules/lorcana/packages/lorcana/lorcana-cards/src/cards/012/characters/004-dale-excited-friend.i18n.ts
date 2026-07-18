@@ -45,4 +45,15 @@ export const daleExcitedFriendI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Valle",
+    version: "Amigo emocionado",
+    text: [
+      {
+        title: "MIRA QUE",
+        description:
+          "ENCONTRÉ Mientras tengas un personaje llamado Chip en juego, este personaje obtiene +1 {L}.",
+      },
+    ],
+  },
 };

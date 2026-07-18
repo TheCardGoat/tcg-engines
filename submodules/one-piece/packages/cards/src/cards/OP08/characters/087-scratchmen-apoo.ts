@@ -26,7 +26,7 @@ export const op08ScratchmenApoo087: CharacterCard = {
   traits: ["Animal Kingdom Pirates On-Air Pirates"],
   attribute: "ranged",
   effect:
-    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [Activate:Main] [Once Per Turn] Give up to 1 of your opponent's Characters 1 cost during this turn.",
+    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [Activate:Main] [Once Per Turn] Give up to 1 of your opponent's Characters −1 cost during this turn.",
   effects: {
     keywords: ["blocker"],
     effects: [
@@ -43,7 +43,7 @@ export const op08ScratchmenApoo087: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 1,
+            value: -1,
             duration: "thisTurn",
           },
         ],

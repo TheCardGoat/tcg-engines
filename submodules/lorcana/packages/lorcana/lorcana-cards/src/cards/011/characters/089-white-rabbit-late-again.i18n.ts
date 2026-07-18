@@ -57,4 +57,18 @@ export const whiteRabbitLateAgainI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Conejo Blanco",
+    version: "Tarde otra vez",
+    text: [
+      {
+        title: "PERDIDO",
+        description:
+          "Si este es tu primer turno y no eres el primer jugador, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "Evasivo",
+      },
+    ],
+  },
 };

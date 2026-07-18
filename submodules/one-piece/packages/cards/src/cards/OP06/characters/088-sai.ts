@@ -23,9 +23,38 @@ export const op06Sai088: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Happosui Army Dressrosa"],
+  traits: ["Dressrosa Happosui Army"],
   attribute: "slash",
   effect:
-    "If your Leader has the [Dressrosa] type and is active, this Character gains +2000 power.",
+    "If your Leader has the {Dressrosa} type and is active, this Character gains +2000 power.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "compound",
+            operator: "and",
+            conditions: [
+              { condition: "leaderTrait", trait: "Dressrosa", match: "includes" },
+              {
+                condition: "hasCard",
+                player: "self",
+                zone: "leader",
+                filters: [{ filter: "state", value: "active" }],
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
+            value: 2000,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op06Sai088I18n,
 };

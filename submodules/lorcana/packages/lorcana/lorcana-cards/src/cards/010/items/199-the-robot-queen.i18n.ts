@@ -41,4 +41,14 @@ export const theRobotQueenI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La reina robot",
+    text: [
+      {
+        title: "MAL FUNCIONAMIENTO MAYOR",
+        description:
+          "Siempre que juegues con un personaje, puedes pagar 1 {I} y desterrar este objeto para causar 2 daños al personaje elegido.",
+      },
+    ],
+  },
 };

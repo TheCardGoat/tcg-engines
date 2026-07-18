@@ -38,10 +38,58 @@ export const op07DonquixoteDoflamingo048: CharacterCard = {
         ],
         actions: [
           {
-            action: "rearrangeDeck",
+            action: "revealTopDeckCard",
             player: "self",
-            count: 1,
-            position: "top",
+            conditional: {
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+                {
+                  filter: "trait",
+                  value: "The Seven Warlords of the Sea",
+                  match: "includes",
+                },
+                {
+                  filter: "cardCategory",
+                  value: "character",
+                },
+              ],
+              actions: [
+                {
+                  action: "play",
+                  source: {
+                    player: "self",
+                    zone: "deck",
+                  },
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                  filters: [
+                    {
+                      filter: "cost",
+                      comparison: "lte",
+                      value: 4,
+                    },
+                    {
+                      filter: "trait",
+                      value: "The Seven Warlords of the Sea",
+                      match: "includes",
+                    },
+                    {
+                      filter: "cardCategory",
+                      value: "character",
+                    },
+                  ],
+                  topOnly: true,
+                  playState: "rested",
+                },
+              ],
+            },
+            finalPosition: "bottom",
           },
         ],
         oncePerTurn: true,

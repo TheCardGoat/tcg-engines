@@ -57,4 +57,18 @@ export const violetParrLearningNewPowersP3PromoI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Violeta Parr",
+    version: "Aprendiendo nuevos poderes",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "CAMBIAR",
+        description:
+          "Cuando juegas con este personaje, puedes mover 1 daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

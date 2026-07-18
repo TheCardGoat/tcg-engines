@@ -24,7 +24,7 @@ export const op10GumGumUfo020: EventCard = {
   trigger: "K.O. up to 1 of your opponent's Characters with 3000 power or less.",
   traits: ["Straw Hat Crew Punk Hazard"],
   effect:
-    "[Main] Give up to 1 of your opponent's Characters 4000 power during this turn. Then, if you have 2 or less Life cards, up to 1 of your Leader or Character cards gains +1000 power during this turn.",
+    "[Main] Give up to 1 of your opponent's Characters −4000 power during this turn. Then, if you have 2 or less Life cards, up to 1 of your Leader or Character cards gains +1000 power during this turn.",
   effects: {
     effects: [
       {
@@ -40,8 +40,38 @@ export const op10GumGumUfo020: EventCard = {
                 upTo: true,
               },
             },
-            value: 4000,
+            value: -4000,
             duration: "thisTurn",
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: { amount: 1, upTo: true },
+            },
+            value: 1000,
+            duration: "thisTurn",
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 2,
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "power", comparison: "lte", value: 3000 }],
+            },
           },
         ],
       },

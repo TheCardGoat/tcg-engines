@@ -60,4 +60,18 @@ export const flounderCollectorsCompanionI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Platija",
+    version: "Compañero de coleccionista",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "NO LO SOY",
+        description:
+          "UN GUPPY Si tienes un personaje llamado Ariel en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+    ],
+  },
 };

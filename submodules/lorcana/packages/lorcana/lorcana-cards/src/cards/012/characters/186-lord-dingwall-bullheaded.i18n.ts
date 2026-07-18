@@ -45,4 +45,15 @@ export const lordDingwallBullheadedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señor Dingwall",
+    version: "Obstinado",
+    text: [
+      {
+        title: "HABLAR DE LUCHA",
+        description:
+          "Este personaje puede entrar en juego ejercido para darle al personaje elegido Challenger +3 este turno. (Obtienen +3 {S} mientras desafían).",
+      },
+    ],
+  },
 };

@@ -60,4 +60,18 @@ export const meridaGiftedArcherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mérida",
+    version: "Arquero dotado",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "PROTECCIÓN FEROZ",
+        description:
+          "Mientras este personaje está ejercido, cada vez que un personaje contrario desafía, puedes causarle 1 daño al personaje desafiante.",
+      },
+    ],
+  },
 };

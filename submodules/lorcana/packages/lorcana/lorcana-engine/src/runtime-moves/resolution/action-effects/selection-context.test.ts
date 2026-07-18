@@ -13,6 +13,7 @@ type TestCardDefinition = {
   cardType: "character" | "item" | "location" | "action";
   name?: string;
   version?: string;
+  ownerId?: PlayerId;
   controllerId?: PlayerId;
   damage?: number;
 };
@@ -20,7 +21,12 @@ type TestCardDefinition = {
 /**
  * Minimal PlayCardExecutionContext for selection-context tests (mirrors composed-effect-resolver.test.ts).
  */
-function createMinimalSelectionTestContext(definitions: Record<string, TestCardDefinition>): {
+function createMinimalSelectionTestContext(
+  definitions: Record<string, TestCardDefinition>,
+  options?: {
+    zoneCards?: Partial<Record<"hand" | "discard" | "inkwell", CardInstanceId[]>>;
+  },
+): {
   ctx: PlayCardExecutionContext;
 } {
   const cardMeta: Record<string, Record<string, unknown>> = {};
@@ -91,7 +97,8 @@ function createMinimalSelectionTestContext(definitions: Record<string, TestCardD
       time: { getRemainingTime: () => 0 },
       zones: {
         drawCards: () => {},
-        getCards: () => [],
+        getCards: ({ zone }: { zone: string }) =>
+          options?.zoneCards?.[zone as "hand" | "discard" | "inkwell"] ?? [],
         reveal: () => {},
         moveCard: () => {},
         shuffle: () => {},
@@ -116,6 +123,39 @@ function createCardPlayedPayload(cardId: CardInstanceId, playerId: PlayerId): Ca
 }
 
 describe("buildResolutionSelectionContext", () => {
+  it("does not replace a revealed-card play with ordinary hand candidates", () => {
+    const source = "dash-parr" as CardInstanceId;
+    const revealed = "revealed-card" as CardInstanceId;
+    const handCard = "hand-card" as CardInstanceId;
+    const { ctx } = createMinimalSelectionTestContext(
+      {
+        [source]: { id: "dash-parr", cardType: "character" },
+        [revealed]: { id: "revealed-card", cardType: "character" },
+        [handCard]: { id: "hand-card", cardType: "character" },
+      },
+      { zoneCards: { hand: [handCard] } },
+    );
+
+    const selection = buildResolutionSelectionContext({
+      origin: "pending-effect",
+      requestId: "req-play-revealed",
+      sourceCardId: source,
+      chooserId: PLAYER_ONE,
+      cardPlayed: createCardPlayedPayload(source, PLAYER_ONE),
+      effect: {
+        type: "play-card",
+        from: "revealed",
+        target: "CONTROLLER",
+      },
+      resolutionInput: {
+        eventSnapshot: { revealedCardIds: [revealed] },
+      },
+      ctx,
+    });
+
+    expect(selection).toBeUndefined();
+  });
+
   it("derives sensible choice labels when optionLabels are omitted", () => {
     const source = "source" as CardInstanceId;
     const { ctx } = createMinimalSelectionTestContext({
@@ -535,5 +575,80 @@ describe("buildResolutionSelectionContext", () => {
       return;
     }
     expect(selection.expectedSlottedKind).toBeUndefined();
+  });
+
+  it("defers for-each-opponent optional target selection from the controller's bag", () => {
+    const source = "source" as CardInstanceId;
+    const { ctx } = createMinimalSelectionTestContext({
+      [source]: { id: "source", cardType: "character" },
+    });
+
+    const selection = buildResolutionSelectionContext({
+      origin: "bag",
+      requestId: "req-opponent-optional",
+      sourceCardId: source,
+      chooserId: PLAYER_ONE,
+      cardPlayed: createCardPlayedPayload(source, PLAYER_ONE),
+      effect: {
+        type: "for-each-opponent",
+        effect: {
+          type: "optional",
+          chooser: "OPPONENT",
+          effect: {
+            type: "banish",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "opponent",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+        },
+      },
+      resolutionInput: {},
+      ctx,
+    });
+
+    expect(selection).toBeUndefined();
+  });
+
+  it("defers for-each-opponent mandatory target selection from the controller's bag", () => {
+    const source = "source" as CardInstanceId;
+    const opponentTarget = "opponent-target" as CardInstanceId;
+    const { ctx } = createMinimalSelectionTestContext({
+      [source]: { id: "source", cardType: "location" },
+      [opponentTarget]: {
+        id: "opponent-target",
+        cardType: "character",
+        ownerId: PLAYER_TWO,
+      },
+    });
+
+    const selection = buildResolutionSelectionContext({
+      origin: "bag",
+      requestId: "req-opponent-mandatory",
+      sourceCardId: source,
+      chooserId: PLAYER_ONE,
+      cardPlayed: createCardPlayedPayload(source, PLAYER_ONE),
+      effect: {
+        type: "for-each-opponent",
+        effect: {
+          type: "banish",
+          chosenBy: "opponent",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "opponent",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+      },
+      resolutionInput: {},
+      ctx,
+    });
+
+    expect(selection).toBeUndefined();
   });
 });

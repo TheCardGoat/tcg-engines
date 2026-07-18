@@ -44,4 +44,15 @@ export const gastonSchemingSuitorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gastón",
+    version: "Pretendiente intrigante",
+    text: [
+      {
+        title: "SÍ, ESTOY INTIMIDANTE",
+        description:
+          "Mientras uno o más oponentes no tengan cartas en sus manos, este personaje obtiene +3 {S}.",
+      },
+    ],
+  },
 };

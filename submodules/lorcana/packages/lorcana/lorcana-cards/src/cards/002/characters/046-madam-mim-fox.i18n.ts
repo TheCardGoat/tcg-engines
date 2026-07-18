@@ -57,4 +57,18 @@ export const madamMimFoxI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora mim",
+    version: "Zorro",
+    text: [
+      {
+        title: "PERSIGUIENDO AL CONEJO",
+        description:
+          "Cuando juegues con este personaje, destiérralo o devuelve a tu mano otro personaje tuyo elegido.",
+      },
+      {
+        title: "Correr",
+      },
+    ],
+  },
 };

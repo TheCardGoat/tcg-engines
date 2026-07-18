@@ -25,6 +25,5 @@ export const op05Hack012: CharacterCard = {
   counter: 1000,
   traits: ["Fish-Man Revolutionary Army"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op05Hack012I18n,
 };

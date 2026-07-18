@@ -45,4 +45,15 @@ export const cinderellaResourcefulTravelerI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Cenicienta",
+    version: "Viajero ingenioso",
+    text: [
+      {
+        title: "ESTO Y AQUEL",
+        description:
+          "Siempre que este personaje realice una misión, si jugaste con otro personaje este turno, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

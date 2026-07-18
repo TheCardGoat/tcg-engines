@@ -41,18 +41,12 @@ export const op11Doll008: CharacterCard = {
     },
   ],
   effect:
-    '[Blocker]\n[On Play] You may trash 1 card from your hand: If your Leader has the "Navy" type, give up to 1 of your opponent\'s Characters 6000 power during this turn.',
+    '[Blocker]\n[On Play] You may trash 1 card from your hand: If your Leader has the "Navy" type, give up to 1 of your opponent\'s Characters −6000 power during this turn.',
   effects: {
     keywords: ["blocker"],
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Navy",
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -70,8 +64,13 @@ export const op11Doll008: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 6000,
+            value: -6000,
             duration: "thisTurn",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Navy",
+              match: "includes",
+            },
           },
         ],
         optional: true,

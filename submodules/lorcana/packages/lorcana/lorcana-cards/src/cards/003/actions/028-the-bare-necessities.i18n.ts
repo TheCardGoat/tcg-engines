@@ -35,4 +35,8 @@ export const theBareNecessitiesI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Las necesidades básicas",
+    text: "El oponente elegido revela su mano y descarta una carta que no sea de personaje de tu elección.",
+  },
 };

@@ -45,4 +45,15 @@ export const lefouInstigatorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lefou",
+    version: "Instigador",
+    text: [
+      {
+        title: "VENTILAR LAS LLAMAS",
+        description:
+          "Cuando juegues con este personaje, tendrás listo el personaje elegido. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

@@ -41,4 +41,14 @@ export const scrumpI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Scrum",
+    text: [
+      {
+        title: "YO LA HICE",
+        description:
+          "{E} uno de tus personajes: el personaje elegido obtiene -2 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

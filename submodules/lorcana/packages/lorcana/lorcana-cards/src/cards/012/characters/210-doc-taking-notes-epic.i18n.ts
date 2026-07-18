@@ -45,4 +45,15 @@ export const docTakingNotesEpicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Doc",
+    version: "Tomar notas",
+    text: [
+      {
+        title: "COMPARTIR CONOCIMIENTO",
+        description:
+          "Cuando juegas con este personaje, si tienes otro personaje de los Siete Enanitos o una Princesa en juego, roba una carta.",
+      },
+    ],
+  },
 };

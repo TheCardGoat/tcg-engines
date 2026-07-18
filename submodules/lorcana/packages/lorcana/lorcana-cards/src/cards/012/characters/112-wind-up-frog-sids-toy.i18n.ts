@@ -45,4 +45,15 @@ export const windupFrogSidsToyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rana de cuerda",
+    version: "El juguete de Sid",
+    text: [
+      {
+        title: "TRACCIÓN AÑADIDA",
+        description:
+          "Si uno de tus personajes de juguete fue desterrado este turno, pagas 2 {I} menos para interpretar a este personaje.",
+      },
+    ],
+  },
 };

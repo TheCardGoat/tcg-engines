@@ -35,6 +35,7 @@ function createMockActionCard(params: {
     i18n: {
       en: { name: params.name, text: params.text },
       de: { name: params.name, text: params.text },
+      es: { name: params.name, text: params.text },
       fr: { name: params.name, text: params.text },
       it: { name: params.name, text: params.text },
     },

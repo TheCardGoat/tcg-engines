@@ -5,6 +5,7 @@
   import Flame from "@lucide/svelte/icons/flame";
   import Heart from "@lucide/svelte/icons/heart";
   import { SURFACE_CARD_CLASS } from "./matchmaking-lobby.constants.js";
+  import { m } from "$lib/i18n/messages.js";
   import {
     fetchLeaderboard,
     type LeaderboardResponse,
@@ -37,6 +38,7 @@
   let tabData = $state<Map<LeaderboardType, LeaderboardResponse>>(new Map());
   let initialLoadDone = $state(false);
   let activeTab = $state<LeaderboardType>("mmr");
+  let leaderboardMode = $state<"1" | "3">("3");
   let loading = $state(false);
 
   // Use server-provided data if available, otherwise fetch client-side
@@ -51,6 +53,7 @@
   function hydrateFromInitialData(data: LeaderboardResponse[]) {
     const newMap = new Map<LeaderboardType, LeaderboardResponse>();
     for (const entry of data) {
+      if (entry.type === "mmr" && entry.mode) leaderboardMode = entry.mode;
       if (entry.entries.length > 0) {
         newMap.set(entry.type, entry);
       }
@@ -67,7 +70,15 @@
     loading = true;
     const results = await Promise.allSettled(
       allTabs.map(async (tab) => {
-        const res = await fetchLeaderboard(gameSlug, tab.type, gameProfileId ?? undefined, 10);
+        const res = await fetchLeaderboard(
+          gameSlug,
+          tab.type,
+          gameProfileId ?? undefined,
+          10,
+          gameSlug === "lorcana" && tab.type === "mmr"
+            ? { formatId: "core-constructed", mode: leaderboardMode }
+            : undefined,
+        );
         return { type: tab.type, res };
       }),
     );
@@ -88,13 +99,35 @@
     }
   }
 
-  const visibleTabs = $derived(allTabs.filter((t) => tabData.has(t.type)));
+  const visibleTabs = $derived(
+    allTabs.filter((t) => (gameSlug === "lorcana" && t.type === "mmr") || tabData.has(t.type)),
+  );
   const activeData = $derived(tabData.get(activeTab) ?? null);
   const activeTabDef = $derived(allTabs.find((t) => t.type === activeTab)!);
   const hasAnyData = $derived(tabData.size > 0);
 
   function selectTab(type: LeaderboardType) {
     activeTab = type;
+  }
+
+  async function selectLeaderboardMode(mode: "1" | "3") {
+    if (leaderboardMode === mode) return;
+    const previousMode = leaderboardMode;
+    leaderboardMode = mode;
+    loading = true;
+    try {
+      const response = await fetchLeaderboard(gameSlug, "mmr", gameProfileId ?? undefined, 10, {
+        formatId: "core-constructed",
+        mode,
+      });
+      const next = new Map(tabData);
+      next.set("mmr", response);
+      tabData = next;
+    } catch {
+      leaderboardMode = previousMode;
+    } finally {
+      loading = false;
+    }
   }
 
   function formatValue(value: number, type: LeaderboardType): string {
@@ -129,6 +162,28 @@
           >
             <Icon class="size-2.5" />
             {tab.label}
+          </button>
+        {/each}
+      </div>
+    {/if}
+
+    {#if activeTab === "mmr" && gameSlug === "lorcana"}
+      <div class="mt-1 flex gap-1" role="group" aria-label={m["sim.leaderboard.filter.bestOf"]({})}>
+        {#each ["1", "3"] as mode (mode)}
+          <button
+            type="button"
+            aria-pressed={leaderboardMode === mode}
+            class={cn(
+              "flex-1 rounded px-1.5 py-1 text-[10px] font-medium transition-colors",
+              leaderboardMode === mode
+                ? "bg-blue-500/15 text-blue-300"
+                : "bg-white/5 text-slate-500 hover:text-slate-300",
+            )}
+            onclick={() => selectLeaderboardMode(mode as "1" | "3")}
+          >
+            {mode === "1"
+              ? m["sim.leaderboard.filter.bestOfOne"]({})
+              : m["sim.leaderboard.filter.bestOfThree"]({})}
           </button>
         {/each}
       </div>

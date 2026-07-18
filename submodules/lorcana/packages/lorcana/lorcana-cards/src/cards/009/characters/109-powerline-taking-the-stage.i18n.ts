@@ -21,4 +21,9 @@ export const powerlineTakingTheStageI18n: Record<Languages, I18nProperties> = {
     version: "Sul Palco",
     text: "<Melodioso> 4",
   },
+  es: {
+    name: "Línea eléctrica",
+    version: "Subiendo al escenario",
+    text: "Cantante 4",
+  },
 };

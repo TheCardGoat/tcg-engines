@@ -21,4 +21,9 @@ export const goofyDaredevilI18n: Record<Languages, I18nProperties> = {
     version: "Daredevil",
     text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
+  es: {
+    name: "Mentecato",
+    version: "Temerario",
+    text: "Evasivo",
+  },
 };

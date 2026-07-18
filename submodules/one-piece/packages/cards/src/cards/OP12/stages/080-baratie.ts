@@ -29,10 +29,10 @@ export const op12Baratie080: StageCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
+        costs: [
           {
-            condition: "leaderName",
-            name: "Sanji",
+            cost: "returnThisToDeck",
+            position: "bottom",
           },
         ],
         actions: [
@@ -55,9 +55,21 @@ export const op12Baratie080: StageCard = {
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",
+            condition: {
+              condition: "leaderName",
+              name: "Sanji",
+            },
           },
         ],
         optional: true,
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
       },
     ],
   },

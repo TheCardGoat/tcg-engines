@@ -37,7 +37,31 @@ export const op12LuffyIsTheManWhoWillBecomeTheKingOfPirates039: EventCard = {
               count: {
                 amount: 1,
               },
+              filters: [
+                {
+                  filter: "name",
+                  value: "Roronoa Zoro",
+                },
+              ],
             },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: 1000,
+            duration: "thisTurn",
           },
         ],
       },

@@ -46,13 +46,20 @@ export const op04HeavenlyFire117: EventCard = {
                 },
               ],
             },
-            position: "top",
+            position: "choice",
             faceUp: true,
           },
         ],
       },
       {
         trigger: "trigger",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
+        ],
         actions: [
           {
             action: "addToLife",

@@ -17,6 +17,7 @@ export const eb02Chopperman016: CharacterCard = {
     },
   ],
   cardType: "character",
+  alternateNames: ["Tony Tony.Chopper"],
   color: ["green"],
   rarity: "C",
   setId: "EB02",
@@ -51,6 +52,7 @@ export const eb02Chopperman016: CharacterCard = {
               {
                 filter: "trait",
                 value: "Animal",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

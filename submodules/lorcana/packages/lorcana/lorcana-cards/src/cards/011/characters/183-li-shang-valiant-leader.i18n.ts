@@ -28,4 +28,16 @@ export const liShangValiantLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Leader Valoroso",
     text: "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Li Shang.)",
   },
+  es: {
+    name: "Li Shang",
+    version: "Líder valiente",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "{I}",
+      },
+    ],
+  },
 };

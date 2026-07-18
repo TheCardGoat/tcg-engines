@@ -30,6 +30,23 @@ export const op03Curiel004: CharacterCard = {
   effects: {
     permanentEffects: [
       {
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "rushCharacter",
+            duration: "permanent",
+          },
+        ],
+      },
+      {
         conditions: [
           {
             condition: "donAttached",

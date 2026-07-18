@@ -44,4 +44,14 @@ export const billTheLizardChimneySweepI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Bill el lagarto",
+    version: "Deshollinador",
+    text: [
+      {
+        title: "NADA DE ESO",
+        description: "Mientras otro personaje en juego tenga daño, este personaje gana Evasión.",
+      },
+    ],
+  },
 };

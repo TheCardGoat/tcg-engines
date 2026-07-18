@@ -76,4 +76,23 @@ export const buzzLightyearJungleRangerIconicI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Buzz Lightyear",
+    version: "Guardabosques de la selva",
+    text: [
+      {
+        title: "Cambio 5 {I}",
+      },
+      {
+        title: "TOMA EL CARGO",
+        description:
+          "Cuando juegas con este personaje, puedes devolver a tu mano una carta de acción con coste 7 o menos de tu descarte.",
+      },
+      {
+        title: "ENTRENAMIENTO AVANZADO",
+        description:
+          "Cada vez que juegas una acción, el personaje elegido obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

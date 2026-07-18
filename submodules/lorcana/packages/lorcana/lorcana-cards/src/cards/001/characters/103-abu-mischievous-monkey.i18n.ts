@@ -17,4 +17,8 @@ export const abuMischievousMonkeyI18n: Record<Languages, I18nProperties> = {
     name: "Abu",
     version: "Mischievous Monkey",
   },
+  es: {
+    name: "Abu",
+    version: "Mono travieso",
+  },
 };

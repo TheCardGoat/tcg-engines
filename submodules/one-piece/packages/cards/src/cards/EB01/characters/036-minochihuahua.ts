@@ -35,6 +35,7 @@ export const eb01Minochihuahua036: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Impel Down",
+            match: "includes",
           },
         ],
         actions: [

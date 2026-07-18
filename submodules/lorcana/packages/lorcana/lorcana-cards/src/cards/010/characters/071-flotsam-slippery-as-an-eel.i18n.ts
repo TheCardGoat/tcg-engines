@@ -21,4 +21,9 @@ export const flotsamSlipperyAsAnEelI18n: Record<Languages, I18nProperties> = {
     version: "Viscido Come un'Anguilla",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Pecio",
+    version: "Resbaladizo como una anguila",
+    text: "Evasivo",
+  },
 };

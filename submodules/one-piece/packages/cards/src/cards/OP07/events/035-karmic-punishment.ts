@@ -42,6 +42,27 @@ export const op07KarmicPunishment035: EventCard = {
             value: 2000,
             duration: "thisBattle",
           },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: 1000,
+            duration: "thisBattle",
+            previousActionTargets: true,
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "character",
+              comparison: "gte",
+              value: 3,
+            },
+          },
         ],
       },
       {

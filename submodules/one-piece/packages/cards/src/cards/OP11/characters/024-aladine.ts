@@ -27,5 +27,36 @@ export const op11Aladine024: CharacterCard = {
   attribute: "slash",
   effect:
     'When this Character is K.O.\'d by your opponent\'s effect, you may trash 1 card from your hand and rest 1 of your DON!! cards. If you do, play up to 1 "Fish-Man" or "Merfolk" type Character card with a cost of 6 or less from your hand.',
+  effects: {
+    effects: [
+      {
+        trigger: "onKo",
+        source: "opponentEffect",
+        costs: [
+          { cost: "trashFromHand", amount: 1 },
+          { cost: "restDon", amount: 1 },
+        ],
+        actions: [
+          {
+            action: "play",
+            source: { player: "self", zone: "hand" },
+            count: { amount: 1, upTo: true },
+            filters: [
+              { filter: "cost", comparison: "lte", value: 6 },
+              {
+                filter: "anyOf",
+                filters: [
+                  { filter: "trait", value: "Fish-Man", match: "includes" },
+                  { filter: "trait", value: "Merfolk", match: "includes" },
+                ],
+              },
+              { filter: "cardCategory", value: "character" },
+            ],
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
   i18n: op11Aladine024I18n,
 };

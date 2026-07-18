@@ -41,4 +41,14 @@ export const theSorcerersHatI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El sombrero del hechicero",
+    text: [
+      {
+        title: "ENERGÍA INCREÍBLE",
+        description:
+          "{E}, 1 {I}: nombra una carta y luego revela la carta superior de tu mazo. Si es la carta nombrada, pon esa carta en tu mano. De lo contrario, colóquelo en la parte superior de su plataforma.",
+      },
+    ],
+  },
 };

@@ -27,5 +27,43 @@ export const op13CurlyDadan009: CharacterCard = {
   attribute: "slash",
   effect:
     'If you have a "Mountain Bandits" type Character other than this card, this Character gains [Double Attack].',
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "hasCard",
+            player: "self",
+            zone: "character",
+            filters: [
+              {
+                filter: "trait",
+                value: "Mountain Bandits",
+                match: "includes",
+              },
+              {
+                filter: "excludeSelf",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "doubleAttack",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op13CurlyDadan009I18n,
 };

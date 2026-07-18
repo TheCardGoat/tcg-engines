@@ -45,4 +45,15 @@ export const megaraCaptivatingCynicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mégara",
+    version: "Cínico cautivador",
+    text: [
+      {
+        title: "TRATO SOMBRÍO",
+        description:
+          "Cuando juegues con este personaje, elige y descarta una carta o destierra a este personaje.",
+      },
+    ],
+  },
 };

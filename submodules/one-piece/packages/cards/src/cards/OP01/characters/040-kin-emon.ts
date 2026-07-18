@@ -71,6 +71,7 @@ export const op01KinEmon040: CharacterCard = {
               {
                 filter: "trait",
                 value: "The Akazaya Nine",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -102,6 +103,7 @@ export const op01KinEmon040: CharacterCard = {
                 {
                   filter: "trait",
                   value: "The Akazaya Nine",
+                  match: "includes",
                 },
                 {
                   filter: "cost",

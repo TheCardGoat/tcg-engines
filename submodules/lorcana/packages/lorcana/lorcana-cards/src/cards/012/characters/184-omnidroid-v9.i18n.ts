@@ -60,4 +60,18 @@ export const omnidroidV9I18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Omnidroide",
+    version: "V.9",
+    text: [
+      {
+        title: "Shift 2 {I}",
+      },
+      {
+        title: "ENEMIGO DETECTADO",
+        description:
+          "Cuando juegas con este personaje, si usaste Shift para jugarlo, puedes causar 2 daños al personaje elegido.",
+      },
+    ],
+  },
 };

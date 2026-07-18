@@ -21,4 +21,9 @@ export const bobbyPurplePigeonI18n: Record<Languages, I18nProperties> = {
     version: "Piccione Viola",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Poli",
+    version: "Paloma morada",
+    text: "Guardaespaldas",
+  },
 };

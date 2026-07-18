@@ -54,7 +54,7 @@ export const eb03VinsmokeReiju031: CharacterCard = {
     },
   ],
   effect:
-    "[Your Turn] [On Play] DON!! 1: If your Leader is [Sanji], activate the [Main] effect of up to 1 Event card with a cost of 7 or less in your trash.",
+    "[Your Turn] [On Play] DON!! −1: If your Leader is [Sanji], activate the [Main] effect of up to 1 Event card with a cost of 7 or less in your trash.",
   effects: {
     effects: [
       {
@@ -63,10 +63,6 @@ export const eb03VinsmokeReiju031: CharacterCard = {
           {
             condition: "turn",
             value: "your",
-          },
-          {
-            condition: "leaderName",
-            name: "Sanji",
           },
         ],
         costs: [
@@ -78,7 +74,30 @@ export const eb03VinsmokeReiju031: CharacterCard = {
         actions: [
           {
             action: "activateEffect",
+            target: {
+              player: "self",
+              zones: ["trash"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cardCategory",
+                  value: "event",
+                },
+                {
+                  filter: "baseCost",
+                  comparison: "lte",
+                  value: 7,
+                },
+              ],
+            },
             effectTrigger: "main",
+            condition: {
+              condition: "leaderName",
+              name: "Sanji",
+            },
           },
         ],
       },

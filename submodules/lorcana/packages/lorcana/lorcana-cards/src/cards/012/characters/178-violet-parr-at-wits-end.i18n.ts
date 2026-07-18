@@ -26,4 +26,14 @@ export const violetParrAtWitsEndI18n: Record<Languages, I18nProperties> = {
     version: "Esasperata",
     text: "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
   },
+  es: {
+    name: "Violeta Parr",
+    version: "Al final del ingenio",
+    text: [
+      {
+        title: "Alerta",
+        description: "(Este personaje puede desafiar como si tuviera Evasivo).",
+      },
+    ],
+  },
 };

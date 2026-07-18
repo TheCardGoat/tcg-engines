@@ -40,6 +40,7 @@ export const op03Sogeking122: CharacterCard = {
   power: 6000,
   counter: 1000,
   traits: ["Sniper Island"],
+  alternateNames: ["Usopp"],
   attribute: "ranged",
   artVariants: [
     {
@@ -63,7 +64,7 @@ export const op03Sogeking122: CharacterCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

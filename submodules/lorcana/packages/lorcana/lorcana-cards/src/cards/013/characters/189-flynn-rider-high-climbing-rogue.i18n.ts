@@ -45,4 +45,15 @@ export const flynnRiderHighclimbingRogueI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Jinete Flynn",
+    version: "Pícaro escalador",
+    text: [
+      {
+        title: "PODEMOS RESOLVER ESTO",
+        description:
+          "Siempre que un oponente elige este personaje para una acción o habilidad, elige y descarta una carta.",
+      },
+    ],
+  },
 };

@@ -41,4 +41,14 @@ export const coconutBasketI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cesta de coco",
+    text: [
+      {
+        title: "CONSIDERE EL COCO",
+        description:
+          "Cada vez que juegas con un personaje, puedes eliminar hasta 2 daños del personaje elegido.",
+      },
+    ],
+  },
 };

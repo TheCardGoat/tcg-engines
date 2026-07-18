@@ -17,4 +17,8 @@ export const peterPanVineDuelistI18n: Record<Languages, I18nProperties> = {
     name: "Peter Pan",
     version: "Duellante del Viticcio",
   },
+  es: {
+    name: "Peter Pan",
+    version: "Duelista de vid",
+  },
 };

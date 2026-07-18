@@ -61,4 +61,19 @@ export const blueSmokeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Humo azul",
+    text: [
+      {
+        title: "ENTRADA TEATRO",
+        description:
+          "Si tienes un personaje llamado Darkwing Duck en juego, pagas 1 {I} menos para jugar este artículo.",
+      },
+      {
+        title: "NUBE DE MISTERIO",
+        description:
+          "{E}, 1 {I}, destierra este objeto: el personaje elegido gana protección hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

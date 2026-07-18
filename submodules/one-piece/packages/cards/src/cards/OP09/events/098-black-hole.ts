@@ -34,6 +34,7 @@ export const op09BlackHole098: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Blackbeard Pirates",
+            match: "includes",
           },
         ],
         actions: [
@@ -46,6 +47,30 @@ export const op09BlackHole098: EventCard = {
                 amount: 1,
                 upTo: true,
               },
+            },
+            duration: "thisTurn",
+          },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 4 }],
+            },
+            previousActionTargets: true,
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "negateEffects",
+            target: {
+              player: "opponent",
+              zones: ["leader", "character"],
+              count: { amount: 1, upTo: true },
             },
             duration: "thisTurn",
           },

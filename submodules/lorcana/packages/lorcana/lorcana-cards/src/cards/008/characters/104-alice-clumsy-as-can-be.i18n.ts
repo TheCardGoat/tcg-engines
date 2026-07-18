@@ -60,4 +60,18 @@ export const aliceClumsyAsCanBeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Alicia",
+    version: "Tan torpe como puede ser",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "PROPENSO A ACCIDENTES",
+        description:
+          "Siempre que este personaje realice una misión, pon 1 contador de daño en cada uno de los demás personajes.",
+      },
+    ],
+  },
 };

@@ -21,4 +21,9 @@ export const mickeyMouseFoodFightDefenderI18n: Record<Languages, I18nProperties>
     version: "Difensore nella Battaglia di Cibo",
     text: "<Resistere> +1",
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Defensor de la lucha contra la comida",
+    text: "Resistir +1",
+  },
 };

@@ -17,4 +17,8 @@ export const healingTouchI18n: Record<Languages, I18nProperties> = {
     name: "Tocco Curativo",
     text: "Rimuovi fino a 4 danni da un personaggio a tua scelta. Pesca una carta.",
   },
+  es: {
+    name: "Toque curativo",
+    text: "Elimina hasta 4 daños del personaje elegido. Saca una carta.",
+  },
 };

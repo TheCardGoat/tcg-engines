@@ -41,4 +41,14 @@ export const arthurDeterminedSquireI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Arturo",
+    version: "Escudero decidido",
+    text: [
+      {
+        title: "NO MÁS LIBROS",
+        description: "Sáltate el paso de Robar de tu turno.",
+      },
+    ],
+  },
 };

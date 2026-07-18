@@ -30,7 +30,7 @@ export const op04Crocodile060: CharacterCard = {
   setId: "OP04",
   cost: 8,
   power: 9000,
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   attribute: "special",
   artVariants: [
     {
@@ -45,12 +45,6 @@ export const op04Crocodile060: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Baroque Works",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -69,8 +63,14 @@ export const op04Crocodile060: CharacterCard = {
               },
             },
             position: "top",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Baroque Works",
+              match: "includes",
+            },
           },
         ],
+        optional: true,
       },
       {
         trigger: "onOpponentAttack",
@@ -92,6 +92,7 @@ export const op04Crocodile060: CharacterCard = {
             amount: 1,
           },
         ],
+        optional: true,
         oncePerTurn: true,
       },
     ],

@@ -36,6 +36,7 @@ export const op03OutOfTheBag036: EventCard = {
               {
                 filter: "trait",
                 value: "East Blue",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -49,7 +50,7 @@ export const op03OutOfTheBag036: EventCard = {
             action: "setActive",
             target: {
               player: "self",
-              zones: ["leader", "character", "stage", "costArea"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
                 upTo: true,

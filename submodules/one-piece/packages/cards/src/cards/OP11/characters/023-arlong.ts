@@ -43,5 +43,64 @@ export const op11Arlong023: CharacterCard = {
   ],
   effect:
     'If your Leader has the "Fish-Man" type, you have 3 or less Life cards and your opponent has 5 or more rested cards, give this card in your hand 3 cost.',
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 4 }],
+            },
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "compound",
+            operator: "and",
+            conditions: [
+              {
+                condition: "leaderTrait",
+                trait: "Fish-Man",
+                match: "includes",
+              },
+              {
+                condition: "lifeCount",
+                player: "self",
+                comparison: "lte",
+                value: 3,
+              },
+              {
+                condition: "restedCardCount",
+                player: "opponent",
+                comparison: "gte",
+                value: 5,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "setCost",
+            target: {
+              player: "self",
+              zones: ["hand"],
+              count: { amount: 1 },
+              self: true,
+            },
+            value: 3,
+          },
+        ],
+      },
+    ],
+  },
   i18n: op11Arlong023I18n,
 };

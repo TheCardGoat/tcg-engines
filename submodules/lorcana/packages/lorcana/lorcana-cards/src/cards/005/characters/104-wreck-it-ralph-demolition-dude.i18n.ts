@@ -44,4 +44,15 @@ export const wreckitRalphDemolitionDudeI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Ralph el demoledor",
+    version: "Tipo de demolición",
+    text: [
+      {
+        title: "DESCANSO REFRESCANTE",
+        description:
+          "Cada vez que prepares a este personaje, obtienes 1 conocimiento por cada daño que le haga.",
+      },
+    ],
+  },
 };

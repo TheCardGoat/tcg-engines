@@ -39,4 +39,14 @@ export const fryingPanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sartén",
+    text: [
+      {
+        title: "¡SONIDO METÁLICO!",
+        description:
+          "Desterrar este objeto: el personaje elegido no puede desafiar durante su próximo turno.",
+      },
+    ],
+  },
 };

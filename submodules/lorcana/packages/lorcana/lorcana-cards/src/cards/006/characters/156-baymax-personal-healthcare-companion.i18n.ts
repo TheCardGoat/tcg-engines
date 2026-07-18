@@ -61,4 +61,19 @@ export const baymaxPersonalHealthcareCompanionI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Baymax",
+    version: "Compañero de atención médica personal",
+    text: [
+      {
+        title: "COMPLETAMENTE CARGADO",
+        description:
+          "Si tienes un personaje de Inventor en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "USTED DIJO",
+        description: "'OW' 2 {I}: elimina hasta 1 daño de otro personaje elegido.",
+      },
+    ],
+  },
 };

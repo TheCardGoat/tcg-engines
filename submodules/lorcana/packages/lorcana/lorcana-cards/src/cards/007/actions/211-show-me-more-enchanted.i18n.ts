@@ -22,4 +22,8 @@ export const showMeMoreEnchantedI18n: Record<Languages, I18nProperties> = {
     name: "Mostrami di Più!",
     text: "Ogni giocatore pesca 3 carte.",
   },
+  es: {
+    name: "¡Muéstrame más!",
+    text: "Cada jugador roba 3 cartas.",
+  },
 };

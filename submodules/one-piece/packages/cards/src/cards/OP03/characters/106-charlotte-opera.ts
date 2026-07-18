@@ -25,6 +25,5 @@ export const op03CharlotteOpera106: CharacterCard = {
   counter: 1000,
   traits: ["Big Mom Pirates"],
   attribute: "special",
-  effect: "NULL",
   i18n: op03CharlotteOpera106I18n,
 };

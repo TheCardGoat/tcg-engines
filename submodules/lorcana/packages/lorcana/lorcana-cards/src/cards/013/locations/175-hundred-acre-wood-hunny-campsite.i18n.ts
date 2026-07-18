@@ -57,4 +57,18 @@ export const hundredAcreWoodHunnyCampsiteI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Bosque de cien acres",
+    version: "Camping miel",
+    text: [
+      {
+        title: "Hogar lejos del hogar",
+        description: "Los personajes obtienen +1 {W} mientras están aquí.",
+      },
+      {
+        title: "Búsqueda de miel",
+        description: "Los personajes cariñosos obtienen +1 {L} mientras estén aquí.",
+      },
+    ],
+  },
 };

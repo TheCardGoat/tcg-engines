@@ -56,4 +56,18 @@ export const mapOfTreasurePlanetI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mapa del Planeta del Tesoro",
+    text: [
+      {
+        title: "CLAVE DEL PORTAL",
+        description:
+          "{E}: pagas 1 {I} menos por la siguiente ubicación en la que juegues este turno.",
+      },
+      {
+        title: "MUESTRA EL CAMINO",
+        description: "Pagas 1 {I} menos para mover tus personajes a una ubicación.",
+      },
+    ],
+  },
 };

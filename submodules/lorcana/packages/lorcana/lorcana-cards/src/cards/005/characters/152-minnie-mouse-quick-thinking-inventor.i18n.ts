@@ -44,4 +44,15 @@ export const minnieMouseQuickthinkingInventorI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Inventor de pensamiento rápido",
+    text: [
+      {
+        title: "CATAPULTA DE TORTA",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene -2 {S} este turno.",
+      },
+    ],
+  },
 };

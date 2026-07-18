@@ -21,4 +21,9 @@ export const tongSurvivorI18n: Record<Languages, I18nProperties> = {
     version: "Sopravvissuto",
     text: "<Attaccabrighe>",
   },
+  es: {
+    name: "Pinza",
+    version: "Sobreviviente",
+    text: "Imprudente",
+  },
 };

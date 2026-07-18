@@ -39,8 +39,7 @@ export const prb02HinaReprint008: CharacterCard = {
       imageId: "ST06-008_p1",
     },
   ],
-  effect:
-    '[On Play] Give up to 1 of your opponent\'s Characters -4 cost during this turn.Disclaimer: This card was reprinted from the original set with changes to the copyright information (Note: the original print did not include "EN" at the end of the copyright).',
+  effect: "[On Play] Give up to 1 of your opponent's Characters -4 cost during this turn.",
   effects: {
     effects: [
       {

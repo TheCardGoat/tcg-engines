@@ -21,4 +21,9 @@ export const dukeWeaseltonSmalltimeCrookI18n: Record<Languages, I18nProperties> 
     version: "Ladruncolo da Quattro Soldi",
     text: "<Protetto>",
   },
+  es: {
+    name: "Duque Weaselton",
+    version: "Ladrón de poca monta",
+    text: "Pabellón",
+  },
 };

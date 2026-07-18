@@ -77,4 +77,23 @@ export const hiddenTrapI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Trampa oculta",
+    text: [
+      {
+        title: "CASI LISTO",
+        description: "Este objeto entra en juego ejercido.",
+      },
+      {
+        title: "¡QUEBRAR!",
+        description: "{E}, desterrar este objeto — Elige uno:",
+      },
+      {
+        title: "* Desterrar el elemento elegido.",
+      },
+      {
+        title: "* El personaje contrario elegido obtiene -2 {S} este turno.",
+      },
+    ],
+  },
 };

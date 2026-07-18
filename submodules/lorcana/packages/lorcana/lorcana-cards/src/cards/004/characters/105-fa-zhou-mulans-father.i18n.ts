@@ -61,4 +61,19 @@ export const faZhouMulansFatherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Fa Zhou",
+    version: "El padre de Mulán",
+    text: [
+      {
+        title: "HERIDAS DE GUERRA",
+        description: "Este personaje no puede desafiar.",
+      },
+      {
+        title: "JEFE DE HOGAR",
+        description:
+          "{E} — Personaje elegido listo llamado Mulan. No puede realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

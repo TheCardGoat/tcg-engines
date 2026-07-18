@@ -1025,6 +1025,51 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
     ]);
   });
 
+  it("auto-resolves the first of multiple equivalent self-keyword bag entries", () => {
+    const executed: Array<{ moveId: string; params: Record<string, unknown> }> = [];
+    const gainChallenger = {
+      type: "gain-keyword",
+      target: "SELF",
+      keyword: "Challenger",
+      value: 1,
+      duration: "this-turn",
+    };
+    const boardSnapshot = createBoardSnapshot({
+      bagEffects: ["bag-1", "bag-2"].map((id) => ({
+        id,
+        type: "triggered",
+        controllerId: asPlayerId("player-1"),
+        chooserId: asPlayerId("player-1"),
+        sourceId: asCardId("royal-guard-1"),
+        payload: { effect: gainChallenger },
+      })),
+    });
+    const presenter = new LorcanaSidebarPresenter(
+      createGameContextStub({
+        ownerSide: () => "playerOne",
+        getOwnerIdForSide: () => asPlayerId("player-1"),
+        boardSnapshot: () => boardSnapshot,
+        pendingResolutionMoves: () => [
+          createPendingBagResolutionMove("bag-1"),
+          createPendingBagResolutionMove("bag-2"),
+        ],
+        executeMove: (moveId, params) => {
+          executed.push({ moveId, params: params as Record<string, unknown> });
+          return true;
+        },
+      }),
+    );
+
+    presenter.syncAutoOpenPendingResolution();
+
+    expect(executed).toEqual([
+      {
+        moveId: "resolveBag",
+        params: { bagId: "bag-1" },
+      },
+    ]);
+  });
+
   it("executes the clicked activated ability index instead of the aggregated category", () => {
     const card = createCardSnapshot({
       cardId: "pawpsicle-1",

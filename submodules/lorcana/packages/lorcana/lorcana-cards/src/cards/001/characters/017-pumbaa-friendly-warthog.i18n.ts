@@ -17,4 +17,8 @@ export const pumbaaFriendlyWarthogI18n: Record<Languages, I18nProperties> = {
     name: "Pumbaa",
     version: "Friendly Warthog",
   },
+  es: {
+    name: "Pumba",
+    version: "Jabalí amigable",
+  },
 };

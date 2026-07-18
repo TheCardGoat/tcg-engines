@@ -45,4 +45,15 @@ export const jafarPowerhungryVizierI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jafar",
+    version: "Visir hambriento de poder",
+    text: [
+      {
+        title: "SE LE PAGARÁ CUANDO LLEGUE EL MOMENTO",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, inflige 1 daño al personaje elegido.",
+      },
+    ],
+  },
 };

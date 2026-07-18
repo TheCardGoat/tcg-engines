@@ -17,4 +17,8 @@ export const princeCharmingHeirToTheThroneI18n: Record<Languages, I18nProperties
     name: "Prince Charming",
     version: "Heir to the Throne",
   },
+  es: {
+    name: "Príncipe azul",
+    version: "Heredero del trono",
+  },
 };

@@ -45,4 +45,15 @@ export const kenaiProtectiveBrotherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kenai",
+    version: "Hermano protector",
+    text: [
+      {
+        title: "EL ME NECESITA",
+        description:
+          "Al final de tu turno, si este personaje está agotado, puedes preparar otro personaje tuyo elegido y eliminarle todo el daño.",
+      },
+    ],
+  },
 };

@@ -43,6 +43,12 @@ export const op12Kalgara099: CharacterCard = {
             player: "self",
             amount: 1,
           },
+          {
+            action: "cannotDraw",
+            player: "self",
+            source: "ownEffects",
+            duration: "thisTurn",
+          },
         ],
       },
     ],

@@ -3,6 +3,7 @@ import { LorcanaMultiplayerTestEngine, LorcanaTestEngine } from "@tcg/lorcana-en
 import { palaceGuardSpectralSentry } from "./045-palace-guard-spectral-sentry";
 import { angelExperiment624 } from "../../011";
 import { liloMakingAWish } from "../../001";
+import { fireTheCannons } from "../../001/actions/197-fire-the-cannons";
 
 describe("Palace Guard - Spectral Sentry", () => {
   it("does not vanish when chosen by Angel's activated ability", () => {
@@ -27,5 +28,25 @@ describe("Palace Guard - Spectral Sentry", () => {
 
     expect(testEngine.asPlayerTwo().getCardZone(palaceGuardSpectralSentry)).toBe("play");
     expect(testEngine.asPlayerTwo().getDamage(palaceGuardSpectralSentry)).toBe(2);
+  });
+
+  it("vanishes after an opponent chooses it for Fire the Cannons", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+      {
+        hand: [fireTheCannons],
+        inkwell: fireTheCannons.cost,
+      },
+      {
+        play: [palaceGuardSpectralSentry],
+      },
+    );
+
+    expect(
+      testEngine.asPlayerOne().playCard(fireTheCannons, {
+        targets: [palaceGuardSpectralSentry],
+      }),
+    ).toBeSuccessfulCommand();
+
+    expect(testEngine.asPlayerTwo().getCardZone(palaceGuardSpectralSentry)).toBe("discard");
   });
 });

@@ -46,24 +46,24 @@ describe("Zeydra (GD03-054)", () => {
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.assignPilot(pilot, unitId));
-    expect(p1.getBoardView().pendingChoice).toMatchObject({
-      kind: "optional",
-      directiveIndex: 0,
-    });
-    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
+    const optional = p1.getBoardView().pendingChoice;
+    if (optional?.kind !== "optional") throw new Error("Expected the Vagan exile choice");
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
-      legalTargetIds: expect.arrayContaining([...trashIds, enemyId]),
-      minTargets: 5,
-      maxTargets: 5,
+      legalTargetIds: trashIds,
+      minTargets: 4,
+      maxTargets: 4,
     });
-    expectSuccess(
-      p1.resolveEffect({
-        targets: [...trashIds, enemyId],
-      }),
-    );
+    expectSuccess(p1.resolveEffect({ targets: trashIds }));
 
     for (const trashId of trashIds) expect(p1.getCardZone(trashId)).toBe("removalArea");
+    expect(p2.getCardZone(enemyId)).toBe(`battleArea:${PLAYER_TWO}`);
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
     expect(p2.getCardZone(enemyId)).toBe(`trash:${PLAYER_TWO}`);
   });
 
@@ -86,7 +86,9 @@ describe("Zeydra (GD03-054)", () => {
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.assignPilot(pilot, unitId));
-    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: false } }));
+    const optional = p1.getBoardView().pendingChoice;
+    if (optional?.kind !== "optional") throw new Error("Expected the Vagan exile choice");
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: false } }));
 
     expect(p1.getCardsInZone("trash")).toHaveLength(4);
     expect(p2.getCardZone(enemyId)).toBe(`battleArea:${PLAYER_TWO}`);

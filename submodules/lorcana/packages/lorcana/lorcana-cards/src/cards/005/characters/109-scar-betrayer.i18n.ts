@@ -44,4 +44,15 @@ export const scarBetrayerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cicatriz",
+    version: "Traidor",
+    text: [
+      {
+        title: "¡VIVA EL REY!",
+        description:
+          "Cuando juegas con este personaje, puedes desterrar al personaje elegido llamado Mufasa.",
+      },
+    ],
+  },
 };

@@ -31,6 +31,13 @@ export const op11Vito042: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [{ filter: "trait", value: "Firetank Pirates", match: "includes" }],
+          },
+        ],
         actions: [
           {
             action: "grantKeyword",

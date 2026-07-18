@@ -45,4 +45,15 @@ export const widowTweedKindlySoulI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tweed de viuda",
+    version: "Alma bondadosa",
+    text: [
+      {
+        title: "TE TENGO",
+        description:
+          "Cuando juegues con este personaje, devuelve a tu mano una carta de personaje de tu descarte. Si ese personaje se llama Tod, puedes jugar con él gratis.",
+      },
+    ],
+  },
 };

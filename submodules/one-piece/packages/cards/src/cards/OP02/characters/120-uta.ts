@@ -65,6 +65,7 @@ export const op02Uta120: CharacterCard = {
             duration: "untilStartOfNextTurn",
           },
         ],
+        optional: true,
       },
     ],
   },

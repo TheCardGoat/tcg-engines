@@ -45,4 +45,15 @@ export const cinderellaDreamComeTrueEnchantedI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Cenicienta",
+    version: "Sueño hecho realidad",
+    text: [
+      {
+        title: "LO QUE DESEAS",
+        description:
+          "Al final de tu turno, si jugaste con un personaje Princesa este turno, puedes poner una carta de tu mano en tu tintero boca abajo para robar una carta.",
+      },
+    ],
+  },
 };

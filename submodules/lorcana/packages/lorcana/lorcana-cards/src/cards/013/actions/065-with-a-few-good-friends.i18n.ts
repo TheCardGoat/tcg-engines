@@ -54,4 +54,18 @@ export const withAFewGoodFriendsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Con algunos buenos amigos",
+    text: [
+      {
+        title: "Cantar juntos 6",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 6 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title:
+          "El jugador elegido roba una carta por cada tipo de tinta diferente de personaje que tengas en juego.",
+      },
+    ],
+  },
 };

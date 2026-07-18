@@ -35,6 +35,7 @@ export const op08CharlotteKatakuri063: CharacterCard = {
           {
             cost: "turnLifeFaceUp",
             count: 1,
+            faceUp: false,
           },
         ],
         actions: [

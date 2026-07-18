@@ -45,4 +45,15 @@ export const almaMadrigalHeartOfTheFamilyI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Alma Madrigal",
+    version: "Corazón de la familia",
+    text: [
+      {
+        title: "ENCONTRAR",
+        description:
+          "UNA MANERA Siempre que este personaje realice una misión, mueve hasta 1 daño del personaje tuyo elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

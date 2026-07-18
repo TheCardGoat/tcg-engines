@@ -21,4 +21,9 @@ export const elsaGlovesOffI18n: Record<Languages, I18nProperties> = {
     version: "Gloves Off",
     text: "<Challenger> +3 (While challenging, this character gets +3 {S}.)",
   },
+  es: {
+    name: "Elsa",
+    version: "Guantes quitados",
+    text: "Retador +3 (mientras desafía, este personaje obtiene +3 {S})",
+  },
 };

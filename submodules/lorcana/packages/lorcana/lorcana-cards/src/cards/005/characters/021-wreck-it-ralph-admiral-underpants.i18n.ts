@@ -45,4 +45,15 @@ export const wreckitRalphAdmiralUnderpantsI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Ralph el demoledor",
+    version: "Calzoncillos de almirante",
+    text: [
+      {
+        title: "TENGO EL AMIGO MÁS GENIAL",
+        description:
+          "Cuando juegues con este personaje, devuelve a tu mano una carta de personaje de tu descarte. Si esa carta es una carta de personaje de Princesa, gana 2 conocimientos.",
+      },
+    ],
+  },
 };

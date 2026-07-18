@@ -5,6 +5,7 @@ export const gd02GExes022: UnitCard = {
   name: "G-Exes",
   type: "unit",
   color: "green",
+  battlefieldZones: ["space", "earth"],
   traits: ["earth federation"],
   id: "GD02-022",
   canonicalId: "GD02-022",
@@ -41,6 +42,7 @@ export const gd02GExes022: UnitCard = {
   cost: 2,
   ap: 2,
   hp: 3,
+  linkCondition: "[Woolf Enneacle]",
   effect:
     "【Once per Turn】When you place an EX Resource, choose 1 of your (AGE System) Units. It gains &lt;Breach 2&gt; during this turn.<br>\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)<br>",
   effects: [
@@ -48,6 +50,7 @@ export const gd02GExes022: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["onExResourcePlaced"],
+        conditions: [{ type: "eventPlayerIsSelf" }],
         restrictions: [{ type: "oncePerTurn" }],
       },
       directives: [

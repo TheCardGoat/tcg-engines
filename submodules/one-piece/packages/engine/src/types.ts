@@ -5,13 +5,69 @@ export type MatchSeat = "north" | "south";
 export type Viewer = MatchSeat | "judge" | "spectator";
 export type MatchStatus = "setup" | "active" | "finished";
 export type MatchPhase = "setup" | "refresh" | "draw" | "don" | "main" | "end" | "finished";
-export type CardZone = "leader" | "deck" | "hand" | "life" | "character" | "stage" | "trash";
+export type CardZone =
+  | "leader"
+  | "deck"
+  | "hand"
+  | "life"
+  | "character"
+  | "stage"
+  | "trash"
+  | "resolution";
 export type JoKenPoChoice = "rock" | "paper" | "scissors";
 export type PromptKind = "choice" | "judge";
-export type ChoiceKind = "selectTargets" | "selectCards" | "confirm" | "costPayment";
+export type ChoiceKind =
+  | "selectTargets"
+  | "selectCards"
+  | "orderCards"
+  | "confirm"
+  | "costPayment"
+  | "chooseOption";
 export type EngineActor = MatchSeat | "judge" | "system";
 export type LogVisibility = "public" | "private" | "judge";
 export type ResolutionStatus = "idle" | "running" | "waitingForPrompt";
+
+export interface ReturnToDeckOwnerGroup {
+  owner: MatchSeat;
+  targetIds: string[];
+}
+
+export interface ReturnToDeckContinuation {
+  owner: MatchSeat;
+  allTargetIds: string[];
+  publicTargetIds: string[];
+  orderedTargetIds: string[];
+  remainingOwnerGroups: ReturnToDeckOwnerGroup[];
+  orderResolved: boolean;
+  finalizeOwnerGroup: boolean;
+}
+
+export interface EffectBlockContinuation {
+  sourceInstanceId: string;
+  controller: MatchSeat;
+  trigger: EffectTrigger;
+  blockIndex: number;
+  trashHandIds?: string[];
+  costPaymentIds?: string[];
+  costPaymentIdsByType?: {
+    restCards?: string[];
+    returnCharacter?: string[];
+  };
+  costsPaid?: boolean;
+  confirmed?: boolean;
+  triggerEvent?: {
+    instanceId: string;
+    instanceController?: MatchSeat;
+    effectController: MatchSeat;
+    koCause?: "battle" | "effect";
+    attachedDon?: number;
+    targetInstanceId?: string;
+    amount?: number;
+    sourceInstanceId?: string;
+    sourceFromZone?: CardZone;
+    toZone?: CardZone;
+  };
+}
 
 export interface MatchPlayerConfig {
   leaderCardId: string;
@@ -38,33 +94,54 @@ export interface CardInstance {
   controller: MatchSeat;
   zone: CardZone;
   zoneIndex: number;
+  zoneChangeCounter: number;
   rested: boolean;
   attachedDon: number;
   playedOnTurn: number | null;
   faceUp: boolean;
   publicKnowledge: boolean;
   usedEffectKeys: string[];
+  battledOpponentCharacterOnTurn: number | null;
 }
 
 export interface ModifierState {
   id: string;
   sourceInstanceId: string | null;
   targetId: string;
-  type: "power" | "cost" | "keyword" | "flag";
+  type: "power" | "cost" | "keyword" | "flag" | "attackRestriction";
   value?: number;
   keyword?: Keyword;
   flag?:
     | "cannotAttack"
+    | "attackHandTrashCost"
     | "cannotBeKO"
     | "cannotBeRemoved"
+    | "cannotAddLifeToHandByOwnEffect"
     | "cannotActivate"
     | "canAttackActive"
     | "cannotBeRested"
-    | "freeze";
+    | "freeze"
+    | "freezeDon"
+    | "battleKoReplacement"
+    | "effectsNegated"
+    | "cannotPlay"
+    | "cannotDrawByOwnEffects"
+    | "cannotSetDonActiveByCharacterEffects";
+  negatedEffectTypes?: EffectTrigger[];
+  playerScope?: boolean;
+  koRestriction?: "inBattle" | "byEffect";
+  koByPlayer?: "self" | "opponent";
+  koByFilters?: import("@tcg/op-types").TargetFilter[];
   duration: Duration | "unsupported";
   expiresAtTurn: number | null;
+  createdBySeat?: MatchSeat;
   expiresAtBattleId: string | null;
   expiresOnTurnStartOfSeat: MatchSeat | null;
+  consumeOnPlay?: boolean;
+  attackRestriction?: "mustAttack" | "cannotAttack" | "cannotAttackOtherThan";
+  attackTargetFilters?: import("@tcg/op-types").TargetFilter[];
+  playRestrictionFilters?: import("@tcg/op-types").TargetFilter[];
+  playRestrictionSourceZones?: CardZone[];
 }
 
 export interface PromptOption {
@@ -72,9 +149,18 @@ export interface PromptOption {
   label: string;
   value: string;
   targetId?: string;
+  enabled?: boolean;
 }
 
 export type PromptResolutionContext =
+  | {
+      intent: "battleAttackHandTrashCost";
+      attackerId: string;
+      targetId: string;
+      controller: MatchSeat;
+      amount: number;
+      candidateIds: string[];
+    }
   | {
       intent: "battleBlocker";
       battleId: string;
@@ -84,10 +170,35 @@ export type PromptResolutionContext =
       battleId: string;
     }
   | {
+      intent: "battleKoReplacement";
+      battleId: string;
+      targetId: string;
+      controller: MatchSeat;
+      candidateIds: string[];
+      sourceInstanceId?: string;
+      replacementEffectIndex?: number;
+      replacementEvent?: "ko" | "leaveField" | "loseGame" | "removeFromField" | "rested";
+      replacementAction?: Action;
+    }
+  | {
       intent: "lifeTrigger";
       sourceInstanceId: string;
       controller: MatchSeat;
       trigger: "trigger";
+      damageKind: "battle";
+      battleId: string;
+      resume: "continueDamage" | "completeBattle";
+    }
+  | {
+      intent: "lifeTrigger";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: "trigger";
+      damageKind: "effect";
+      damageSourceInstanceId: string;
+      damageController: MatchSeat;
+      damageTargetSeat: MatchSeat;
+      damageRemaining: number;
     }
   | {
       intent: "effectOptional";
@@ -96,6 +207,101 @@ export type PromptResolutionContext =
       trigger: EffectTrigger;
       blockIndex: number;
       trashHandIds?: string[];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+        targetInstanceId?: string;
+        amount?: number;
+        sourceInstanceId?: string;
+      };
+    }
+  | {
+      intent: "effectActionOptional";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      actions: Action[];
+      previousActionTargetIds?: string[];
+    }
+  | {
+      intent: "effectActionChoice";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      options: Action[][];
+      previousActionTargetIds?: string[];
+    }
+  | {
+      intent: "effectKoReplacement";
+      targetId: string;
+      controller: MatchSeat;
+      replacementSourceInstanceId: string;
+      replacementEffectIndex: number;
+      replacementEvent: "ko" | "removeFromField";
+      replacementAction: Action;
+      koSourceInstanceId: string;
+      koController: MatchSeat;
+      replacementTargetIds: string[];
+      remainingTargetIds: string[];
+    }
+  | {
+      intent: "effectRestReplacement";
+      targetId: string;
+      controller: MatchSeat;
+      replacementSourceInstanceId: string;
+      replacementEffectIndex: number;
+      replacementAction: Action;
+      restSourceInstanceId: string;
+      restController: MatchSeat;
+      restAction: Extract<Action, { action: "rest" }>;
+      remainingTargetIds: string[];
+    }
+  | {
+      intent: "effectRemovalReplacement";
+      targetId: string;
+      controller: MatchSeat;
+      replacementSourceInstanceId: string;
+      replacementEffectIndex: number;
+      replacementEvent: "removeFromField" | "leaveField";
+      replacementAction: Action;
+      removalSourceInstanceId: string;
+      removalController: MatchSeat;
+      removalAction: Extract<
+        Action,
+        { action: "returnToHand" | "returnToDeck" | "trashFromField" }
+      >;
+      remainingTargetIds: string[];
+      returnToDeckContinuation?: ReturnToDeckContinuation;
+      returnCharacterCostContinuation?: EffectBlockContinuation;
+    }
+  | {
+      intent: "effectGuessTopDeckCost";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "guessTopDeckCost" }>;
+      revealedInstanceId: string;
+      owner: MatchSeat;
+    }
+  | {
+      intent: "effectRestDonCount";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "rest" }>;
+      targetSeat: MatchSeat;
+      maximum: number;
+    }
+  | {
+      intent: "effectMixedRestSelection";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "rest" }>;
+      candidateIds: string[];
+      requested: number;
+    }
+  | {
+      intent: "effectRestDonForPowerCount";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "restDonForPower" }>;
+      maximum: number;
     }
   | {
       intent: "effectCostTrashFromHand";
@@ -104,13 +310,454 @@ export type PromptResolutionContext =
       trigger: EffectTrigger;
       blockIndex: number;
       amount: number;
+      cost: Extract<import("@tcg/op-types").Cost, { cost: "trashFromHand" }>;
       candidateIds: string[];
+      costPaymentIds?: string[];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+        targetInstanceId?: string;
+        amount?: number;
+        sourceInstanceId?: string;
+        sourceFromZone?: CardZone;
+        toZone?: CardZone;
+      };
+    }
+  | {
+      intent: "effectCostPlayCard" | "effectCostTrashCard";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      amount: number;
+      candidateIds: string[];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+        targetInstanceId?: string;
+        amount?: number;
+        sourceInstanceId?: string;
+        sourceFromZone?: CardZone;
+        toZone?: CardZone;
+      };
+    }
+  | {
+      intent: "effectCostReturnDon";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      amount: number;
+      candidateIds: string[];
+      trashHandIds?: string[];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+      };
+    }
+  | {
+      intent: "effectCostReturnCharacterToDeck";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      amount: number;
+      candidateIds: string[];
+      trashHandIds?: string[];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+      };
+    }
+  | {
+      intent: "effectCostReturnCharacter";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      amount: number;
+      candidateIds: string[];
+      costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+      };
+    }
+  | {
+      intent: "effectCostTrashLife";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+      };
+    }
+  | {
+      intent: "effectCostAddLifeToHand";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+      };
+    }
+  | {
+      intent: "effectCostReturnHandToDeck";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      amount: number;
+      candidateIds: string[];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+      };
+    }
+  | {
+      intent: "effectCostReturnTrashToDeck";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      amount: number;
+      candidateIds: string[];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+      };
+    }
+  | {
+      intent: "effectCostReturnThisAndHandToDeck";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      handAmount: number;
+      candidateIds: string[];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+      };
+    }
+  | {
+      intent: "effectCostRestCards";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      amount: number;
+      candidateIds: string[];
+      costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+      };
+    }
+  | {
+      intent: "effectCostKoCharacter";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      amount: number;
+      candidateIds: string[];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+      };
+    }
+  | {
+      intent: "effectCostTrashCharacter";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      amount: number;
+      candidateIds: string[];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+      };
+    }
+  | {
+      intent: "effectCostRevealFromHand";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      amount: number;
+      candidateIds: string[];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+      };
     }
   | {
       intent: "effectTargetSelection";
       sourceInstanceId: string;
       controller: MatchSeat;
       action: Action;
+      previousActionTargetIds?: string[];
+      opaqueCandidateIds?: Record<string, string>;
+    }
+  | {
+      intent: "effectTrashFromHandSelection";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      seat: MatchSeat;
+      action: Extract<Action, { action: "trashFromHand" }>;
+      candidateIds: string[];
+      opaqueCandidateIds?: Record<string, string>;
+    }
+  | {
+      intent: "effectRevealFromHandSelection";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      seat: MatchSeat;
+      action: Extract<Action, { action: "revealFromHand" }>;
+      candidateIds: string[];
+      opaqueCandidateIds?: Record<string, string>;
+    }
+  | {
+      intent: "effectPlaySelection";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "play" }>;
+      candidateIds: string[];
+      previousActionTargetIds?: string[];
+    }
+  | {
+      intent: "effectGroupedPlaySelection";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "playGrouped" }>;
+      candidateIds: string[];
+      previousActionTargetIds?: string[];
+    }
+  | {
+      intent: "effectGroupedPlayStateAssignment";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "playGrouped" }>;
+      selectedIds: string[];
+    }
+  | {
+      intent: "effectGroupedPlayOnPlayOrder";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      playedCards: Array<{
+        instanceId: string;
+        zoneChangeCounter: number;
+      }>;
+    }
+  | {
+      intent: "effectSearchSelection";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "search" }>;
+      lookedIds: string[];
+      eligibleIds: string[];
+    }
+  | {
+      intent: "effectSearchRemainderOrder";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "search" }>;
+      remainderIds: string[];
+    }
+  | {
+      intent: "effectReturnToDeckOwnerOrder";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "returnToDeck" }>;
+      targetIds: string[];
+      continuation: ReturnToDeckContinuation;
+    }
+  | {
+      intent: "effectSearchRemainderPosition";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      orderedIds: string[];
+    }
+  | {
+      intent: "effectRearrangeDeckTrashSelection";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "rearrangeDeck" }>;
+      lookedIds: string[];
+    }
+  | {
+      intent: "effectRearrangeDeckOrder";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "rearrangeDeck" }>;
+      lookedIds: string[];
+    }
+  | {
+      intent: "effectRearrangeDeckPosition";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "rearrangeDeck" }>;
+      lookedIds: string[];
+      orderedIds: string[];
+    }
+  | {
+      intent: "effectRearrangeLifeOrder";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "rearrangeLife" }>;
+      lookedIds: string[];
+    }
+  | {
+      intent: "effectRedistributeDonSource";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "redistributeDon" }>;
+      candidateIds: string[];
+      tokenized: boolean;
+    }
+  | {
+      intent: "effectRedistributeDonTarget";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "redistributeDon" }>;
+      donorInstanceIds: string[];
+      candidateIds: string[];
+    }
+  | {
+      intent: "effectSetActiveDon";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      maximum: number;
+    }
+  | {
+      intent: "effectDeckPosition";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "returnToDeck" }>;
+      selectedTargetIds: string[];
+      returnToDeckContinuation?: ReturnToDeckContinuation;
+    }
+  | {
+      intent: "effectReturnToDeckOrder";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      owner: MatchSeat;
+      action: Extract<Action, { action: "returnToDeck" }>;
+      targetIds: string[];
+      previousActionTargetIds?: string[];
+    }
+  | {
+      intent: "effectLifePosition";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action:
+        | Extract<Action, { action: "addToLife" }>
+        | Extract<Action, { action: "removeFromLife" }>;
+      selectedTargetIds?: string[];
+    }
+  | {
+      intent: "effectLookAtLifeOwner";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "lookAtLife" }>;
+      availableSeats: MatchSeat[];
+    }
+  | {
+      intent: "effectLookAtLifePosition";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      owner: MatchSeat;
+      lookedInstanceId: string;
+    }
+  | {
+      intent: "effectRevealFromLifePlay";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      owner: MatchSeat;
+      action: Extract<Action, { action: "revealFromLife" }>;
+      revealedInstanceId: string;
+    }
+  | {
+      intent: "effectRevealedDeckPosition";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      revealedInstanceId: string;
+      owner: MatchSeat;
+    }
+  | {
+      intent: "effectAddDon";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      maximum: number;
+      rested: boolean;
+    }
+  | {
+      intent: "effectAddToLifeFromDeck";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "addToLife" }>;
+      maximum: number;
+    }
+  | {
+      intent: "effectDrawCount";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "draw" }>;
+      maximum: number;
+    }
+  | {
+      intent: "effectOpponentReturnDon";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      returningSeat: MatchSeat;
+      amount: number;
+      candidateIds: string[];
+    }
+  | {
+      intent: "effectReturnDon";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      returningSeat: MatchSeat;
+      amount: number;
+      candidateIds: string[];
+      action: Extract<Action, { action: "returnDon" }>;
+    }
+  | {
+      intent: "effectTrashFromDeckCount";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "trashFromDeck" }>;
+      maximum: number;
+    }
+  | {
+      intent: "effectRemoveFromLifeCount";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "removeFromLife" }>;
+      maximum: number;
+    }
+  | {
+      intent: "effectRemoveFromLifeSelection";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "removeFromLife" }>;
+      candidateIds: string[];
+      opaqueCandidateIds?: Record<string, string>;
+      minimum: number;
+      maximum: number;
+    }
+  | {
+      intent: "effectGiveDonCount";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "giveDon" }>;
+      maximum: number;
     }
   | {
       intent: "judge";
@@ -147,7 +794,9 @@ export interface BattleState {
   counterTotal: number;
   attackPower: number;
   defensePower: number;
+  damageRemaining: number | null;
   result: "pending" | "hit" | "ko" | "blocked" | "no_damage";
+  completionQueued?: boolean;
 }
 
 export interface SetupState {
@@ -193,13 +842,40 @@ export type ResolutionItem =
     }
   | {
       id: string;
+      kind: "beginTurnRefreshFinalize";
+      seat: MatchSeat;
+      skipDraw: boolean;
+    }
+  | {
+      id: string;
+      kind: "endTurnFinalize";
+      seat: MatchSeat;
+    }
+  | {
+      id: string;
       kind: "effectBlock";
       sourceInstanceId: string;
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      sourceZoneChangeCounter?: number;
       trashHandIds?: string[];
+      costPaymentIds?: string[];
+      costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
+      costsPaid?: boolean;
       confirmed?: boolean;
+      triggerEvent?: {
+        instanceId: string;
+        instanceController?: MatchSeat;
+        effectController: MatchSeat;
+        koCause?: "battle" | "effect";
+        attachedDon?: number;
+        targetInstanceId?: string;
+        amount?: number;
+        sourceInstanceId?: string;
+        sourceFromZone?: CardZone;
+        toZone?: CardZone;
+      };
     }
   | {
       id: string;
@@ -208,6 +884,18 @@ export type ResolutionItem =
       controller: MatchSeat;
       action: Action;
       selectedTargetIds?: string[];
+      previousActionTargetIds?: string[];
+      skipRemovalReplacementIds?: string[];
+      returnToDeckContinuation?: ReturnToDeckContinuation;
+    }
+  | {
+      id: string;
+      kind: "finalizeRevealedDeckCard";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      revealedInstanceId: string;
+      owner: MatchSeat;
+      position: "top" | "bottom" | "choice";
     }
   | {
       id: string;
@@ -223,6 +911,43 @@ export type ResolutionItem =
       id: string;
       kind: "battleFinalize";
       battleId: string;
+    }
+  | {
+      id: string;
+      kind: "battleDamageContinue";
+      battleId: string;
+    }
+  | {
+      id: string;
+      kind: "battleLifeTriggerPrompt";
+      battleId: string;
+      lifeCardId: string;
+    }
+  | {
+      id: string;
+      kind: "battleDamageComplete";
+      battleId: string;
+    }
+  | {
+      id: string;
+      kind: "battleEndEffects";
+      battleId: string;
+      attackerId: string;
+      attackerController: MatchSeat;
+      targetId: string;
+    }
+  | {
+      id: string;
+      kind: "battleCleanupFinalize";
+      battleId: string;
+    }
+  | {
+      id: string;
+      kind: "effectDamageContinue";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      targetSeat: MatchSeat;
+      remaining: number;
     };
 
 export interface PlayerState {
@@ -325,6 +1050,16 @@ export interface GameLogEntry {
   judgeMessage: string | null;
 }
 
+export interface DelayedEffectAction {
+  sourceInstanceId: string;
+  controller: MatchSeat;
+  action: Action;
+  scheduledTurn: number;
+  scheduledBattleId?: string;
+  sourceZoneChangeCounter?: number;
+  previousActionTargetIds?: string[];
+}
+
 export interface MatchState {
   config: Required<
     Pick<
@@ -339,6 +1074,7 @@ export interface MatchState {
     Pick<MatchConfig, "firstPlayer" | "players" | "seed">;
   status: MatchStatus;
   activeSeat: MatchSeat;
+  extraTurnSeat: MatchSeat | null;
   turnNumber: number;
   phase: MatchPhase;
   players: Record<MatchSeat, PlayerState>;
@@ -355,6 +1091,7 @@ export interface MatchState {
   eventHistory: EngineEvent[];
   logHistory: GameLogEntry[];
   capabilityHistory: EngineCapabilityIssue[];
+  delayedEffectActions: DelayedEffectAction[];
   resolutionQueue: ResolutionItem[];
   resolutionStatus: ResolutionStatus;
   commandHistory: Array<GameCommand | JudgeCommand>;
@@ -562,6 +1299,7 @@ export type ProjectedDecisionStep =
       entityKinds: ProjectedEntityKind[];
       min: number;
       max: number;
+      ordered?: boolean;
       candidates: ProjectedEntityCandidate[];
       constraints: ProjectedDecisionConstraint[];
       selected: ProjectedEntityRef[];

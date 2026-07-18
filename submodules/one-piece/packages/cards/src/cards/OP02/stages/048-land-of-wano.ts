@@ -30,6 +30,17 @@ export const op02LandOfWano048: StageCard = {
         trigger: "activateMain",
         costs: [
           {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Land of Wano",
+                match: "includes",
+              },
+            ],
+          },
+          {
             cost: "restThisCard",
           },
         ],

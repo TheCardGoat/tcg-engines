@@ -60,4 +60,18 @@ export const mushuYourWorstNightmareI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mushu",
+    version: "Tu peor pesadilla",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "TODO ENCENDIDO",
+        description:
+          "Cada vez que juegas con otro personaje, este turno obtiene Rush, Reckless y Evasive. (Pueden desafiar el turno en el que se juega. No pueden realizar misiones y deben desafiar si pueden. Pueden desafiar personajes con Evasivo).",
+      },
+    ],
+  },
 };

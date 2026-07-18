@@ -28,6 +28,17 @@ export const op09ThousandSunny080: StageCard = {
     effects: [
       {
         trigger: "whenLeaving",
+        eventFilter: {
+          player: "self",
+          causedBy: "opponent",
+          filters: [
+            {
+              filter: "trait",
+              value: "Straw Hat Crew",
+              match: "includes",
+            },
+          ],
+        },
         conditions: [
           {
             condition: "turn",

@@ -70,6 +70,7 @@ export const op07Jinbe045: CharacterCard = {
               {
                 filter: "trait",
                 value: "The Seven Warlords of the Sea",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

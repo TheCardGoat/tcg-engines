@@ -41,29 +41,11 @@ export const prb02CharlottePuddingPrb02010010: CharacterCard = {
     },
   ],
   effect:
-    '[On Play] DON!! -2: If your Leader has the "Big Mom Pirates" type and your opponent has 6 or more DON!! cards on their field, draw 2 cards. Then, play up to 1 "Big Mom Pirates" type Character card with 6000 to 8000 power from your hand.',
+    '[On Play] DON!! −2: If your Leader has the "Big Mom Pirates" type and your opponent has 6 or more DON!! cards on their field, draw 2 cards. Then, play up to 1 "Big Mom Pirates" type Character card with 6000 to 8000 power from your hand.',
   effects: {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "compound",
-            operator: "and",
-            conditions: [
-              {
-                condition: "leaderTrait",
-                trait: "Big Mom Pirates",
-              },
-              {
-                condition: "donFieldCount",
-                player: "opponent",
-                comparison: "gte",
-                value: 6,
-              },
-            ],
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -75,6 +57,23 @@ export const prb02CharlottePuddingPrb02010010: CharacterCard = {
             action: "draw",
             player: "self",
             amount: 2,
+            condition: {
+              condition: "compound",
+              operator: "and",
+              conditions: [
+                {
+                  condition: "leaderTrait",
+                  trait: "Big Mom Pirates",
+                  match: "includes",
+                },
+                {
+                  condition: "donFieldCount",
+                  player: "opponent",
+                  comparison: "gte",
+                  value: 6,
+                },
+              ],
+            },
           },
           {
             action: "play",
@@ -88,12 +87,28 @@ export const prb02CharlottePuddingPrb02010010: CharacterCard = {
             },
             filters: [
               {
+                filter: "power",
+                comparison: "gte",
+                value: 6000,
+              },
+              {
+                filter: "power",
+                comparison: "lte",
+                value: 8000,
+              },
+              {
                 filter: "trait",
                 value: "Big Mom Pirates",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
               },
             ],
           },
         ],
+        optional: true,
       },
     ],
   },

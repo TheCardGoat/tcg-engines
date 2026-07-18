@@ -44,6 +44,7 @@ export const op05UpperYard117: StageCard = {
               {
                 filter: "trait",
                 value: "Sky Island",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

@@ -28,12 +28,18 @@ export const op14eb04FlameDragonTorch040: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 6,
+          },
+        ],
         actions: [
           {
             action: "modifyPower",
             target: {
               player: "self",
-              zones: ["leader", "character", "stage", "costArea"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
                 upTo: true,

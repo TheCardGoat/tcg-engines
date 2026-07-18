@@ -65,4 +65,20 @@ export const peterPanShadowFinderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Peter Pan",
+    version: "Buscador de sombras",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "¡VUELA, POR CLARO!",
+        description: "Tus otros personajes con Evasivo ganan Rush.",
+      },
+    ],
+  },
 };

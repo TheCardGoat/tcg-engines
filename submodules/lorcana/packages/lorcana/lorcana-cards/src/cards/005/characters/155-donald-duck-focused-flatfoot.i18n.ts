@@ -45,4 +45,15 @@ export const donaldDuckFocusedFlatfootI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Pie plano enfocado",
+    text: [
+      {
+        title: "MISTERIO DESCONCENTRANTE",
+        description:
+          "Cuando juegas con este personaje, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

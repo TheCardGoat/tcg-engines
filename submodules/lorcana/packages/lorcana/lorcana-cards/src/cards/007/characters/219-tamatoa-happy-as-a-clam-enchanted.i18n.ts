@@ -64,4 +64,20 @@ export const tamatoaHappyAsAClamEnchantedI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Tamatoa",
+    version: "Feliz como una almeja",
+    text: [
+      {
+        title: "LA COLECCIÓN MÁS GENIAL",
+        description:
+          "Cuando juegues con este personaje, devuelve a tu mano hasta 2 cartas de objetos de tu descarte.",
+      },
+      {
+        title: "¡SOY HERMOSA, BEBÉ!",
+        description:
+          "Siempre que este personaje realice una misión, podrás jugar un elemento de forma gratuita.",
+      },
+    ],
+  },
 };

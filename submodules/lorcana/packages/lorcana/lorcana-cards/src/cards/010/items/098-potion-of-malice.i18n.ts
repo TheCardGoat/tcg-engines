@@ -57,4 +57,18 @@ export const potionOfMaliceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Poción de malicia",
+    text: [
+      {
+        title: "Ira reprimida",
+        description: "{E}, 1 {I}: pon 1 contador de daño en el personaje elegido.",
+      },
+      {
+        title: "FURIA SIN MENTE",
+        description:
+          "{E}, destierra este objeto: cada personaje dañado del oponente obtiene Temerario hasta el comienzo de tu siguiente turno. (No pueden realizar misiones y deben desafiar si pueden).",
+      },
+    ],
+  },
 };

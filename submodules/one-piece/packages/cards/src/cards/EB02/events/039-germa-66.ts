@@ -28,10 +28,26 @@ export const eb02Germa66039: EventCard = {
     effects: [
       {
         trigger: "main",
-        conditions: [
+        costs: [
           {
-            condition: "donFieldComparison",
-            selfComparison: "lte",
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "GERMA 66",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+              {
+                filter: "power",
+                comparison: "lte",
+                value: 4000,
+              },
+            ],
           },
         ],
         actions: [
@@ -44,6 +60,27 @@ export const eb02Germa66039: EventCard = {
             count: {
               amount: 1,
               upTo: true,
+            },
+            filters: [
+              {
+                filter: "power",
+                comparison: "gte",
+                value: 5000,
+              },
+              {
+                filter: "power",
+                comparison: "lte",
+                value: 7000,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+            sameNameAsPreviousCard: true,
+            condition: {
+              condition: "donFieldComparison",
+              selfComparison: "lte",
             },
           },
         ],

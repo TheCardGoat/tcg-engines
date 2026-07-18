@@ -17,4 +17,8 @@ export const headlessManhorseMannyI18n: Record<Languages, I18nProperties> = {
     name: "Uomo-Cavallo Senza Testa",
     version: "Manny",
   },
+  es: {
+    name: "Caballo de batalla sin cabeza",
+    version: "Manny",
+  },
 };

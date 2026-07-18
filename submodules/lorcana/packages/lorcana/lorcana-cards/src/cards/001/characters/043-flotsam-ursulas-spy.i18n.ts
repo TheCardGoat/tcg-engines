@@ -45,4 +45,17 @@ export const flotsamUrsulasSpyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pecio",
+    version: "La espía de Úrsula",
+    text: [
+      {
+        title: "<Rusia>",
+      },
+      {
+        title: "Estocada diestra",
+        description: "Tus personajes llamados Jetsam obtienen Rush.",
+      },
+    ],
+  },
 };

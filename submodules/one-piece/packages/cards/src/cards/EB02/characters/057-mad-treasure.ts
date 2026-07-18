@@ -31,6 +31,13 @@ export const eb02MadTreasure057: CharacterCard = {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
+        ],
         actions: [
           {
             action: "addToLife",
@@ -49,7 +56,7 @@ export const eb02MadTreasure057: CharacterCard = {
                 },
               ],
             },
-            position: "top",
+            position: "choice",
             faceUp: true,
           },
         ],

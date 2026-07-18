@@ -53,4 +53,17 @@ export const madamMimHummingbirdI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora mim",
+    version: "Colibrí",
+    text: [
+      {
+        title: "<Evasivo>",
+      },
+      {
+        title: "Justo como me gusta",
+        description: "Todas las cartas en tu mano cuentan como {C}.",
+      },
+    ],
+  },
 };

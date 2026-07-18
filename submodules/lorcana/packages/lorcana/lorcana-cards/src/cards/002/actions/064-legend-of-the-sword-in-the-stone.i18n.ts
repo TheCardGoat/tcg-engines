@@ -34,4 +34,8 @@ export const legendOfTheSwordInTheStoneI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Leyenda de la espada en la piedra",
+    text: "El personaje elegido gana Challenger +3 este turno. (Obtienen +3 {S} mientras desafían).",
+  },
 };

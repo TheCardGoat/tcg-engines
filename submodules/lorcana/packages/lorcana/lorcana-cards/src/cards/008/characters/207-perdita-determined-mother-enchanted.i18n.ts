@@ -60,4 +60,18 @@ export const perditaDeterminedMotherEnchantedI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Perdita",
+    version: "Madre decidida",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "RÁPIDO, TODOS ESCONDENSE",
+        description:
+          "Cuando juegas con este personaje, puedes poner todas las cartas de personaje de Cachorro de tu descarte en tu tintero boca abajo y ejercitarlas.",
+      },
+    ],
+  },
 };

@@ -41,4 +41,14 @@ export const faZhouHonorableWarriorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Fa Zhou",
+    version: "Honorable guerrero",
+    text: [
+      {
+        title: "HERIDA DE BATALLA",
+        description: "Este personaje entra en juego con 2 daños.",
+      },
+    ],
+  },
 };

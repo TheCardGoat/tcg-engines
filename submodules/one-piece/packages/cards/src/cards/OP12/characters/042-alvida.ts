@@ -54,6 +54,40 @@ export const op12Alvida042: CharacterCard = {
         ],
       },
     ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "character",
+            comparison: "gte",
+            value: 2,
+            filters: [
+              {
+                filter: "baseCost",
+                comparison: "gte",
+                value: 5,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 1,
+          },
+        ],
+      },
+    ],
   },
   i18n: op12Alvida042I18n,
 };

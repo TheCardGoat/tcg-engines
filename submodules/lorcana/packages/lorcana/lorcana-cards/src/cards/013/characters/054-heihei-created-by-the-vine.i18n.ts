@@ -45,4 +45,15 @@ export const heiheiCreatedByTheVineI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Heihei",
+    version: "Creado por la vid",
+    text: [
+      {
+        title: "Remedio Botánico",
+        description:
+          "Siempre que uno de tus personajes de Floodborn realice una misión, puedes mover 1 daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

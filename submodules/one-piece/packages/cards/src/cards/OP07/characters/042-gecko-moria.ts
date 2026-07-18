@@ -30,6 +30,10 @@ export const op07GeckoMoria042: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "removeFromField",
+        source: "opponentEffect",
+        eventFilter: {
+          targetSelf: true,
+        },
         replacementAction: {
           action: "returnToDeck",
           target: {
@@ -51,6 +55,7 @@ export const op07GeckoMoria042: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "The Seven Warlords of the Sea",
+            match: "includes",
           },
         ],
         oncePerTurn: true,

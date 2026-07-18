@@ -44,4 +44,15 @@ export const chipQuickThinkerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Chip",
+    version: "Pensador rápido",
+    text: [
+      {
+        title: "YO MANEJARÉ ESTO",
+        description:
+          "Cuando juegas con este personaje, el oponente elegido elige y descarta una carta.",
+      },
+    ],
+  },
 };

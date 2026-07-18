@@ -21,4 +21,9 @@ export const mauiSnowSliderI18n: Record<Languages, I18nProperties> = {
     version: "Scivolatore su Neve",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Maui",
+    version: "Control deslizante de nieve",
+    text: "Correr",
+  },
 };

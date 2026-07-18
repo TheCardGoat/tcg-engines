@@ -1,3 +1,4 @@
+export * from "./DON/index.ts";
 export * from "./EB01/leaders/index.ts";
 export * from "./EB01/characters/index.ts";
 export * from "./EB01/events/index.ts";

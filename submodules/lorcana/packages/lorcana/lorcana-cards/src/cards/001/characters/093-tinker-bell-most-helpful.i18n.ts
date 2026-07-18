@@ -46,4 +46,18 @@ export const tinkerBellMostHelpfulI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Campanita",
+    version: "Más útil",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "POLVO DE PIXIE",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido gana Evasivo este turno.",
+      },
+    ],
+  },
 };

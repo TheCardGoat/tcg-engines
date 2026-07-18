@@ -17,4 +17,8 @@ export const nessusRiverGuardianI18n: Record<Languages, I18nProperties> = {
     name: "Nesso",
     version: "Guardiano del Fiume",
   },
+  es: {
+    name: "Neso",
+    version: "Guardián del río",
+  },
 };

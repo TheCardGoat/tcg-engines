@@ -45,4 +45,15 @@ export const fergusMcduckScroogesFatherI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Fergus McPato",
+    version: "El padre de Scrooge",
+    text: [
+      {
+        title: "ENDURECER",
+        description:
+          "Cuando juegas con este personaje, tu personaje elegido gana Protección hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

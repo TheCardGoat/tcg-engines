@@ -21,4 +21,9 @@ export const ursulaVanessaI18n: Record<Languages, I18nProperties> = {
     version: "Vanessa",
     text: "<Melodioso> 4",
   },
+  es: {
+    name: "Úrsula",
+    version: "Vanessa",
+    text: "Cantante 4",
+  },
 };

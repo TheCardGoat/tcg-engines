@@ -45,4 +45,15 @@ export const motherGothelEvilAsEverI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Madre Gothel",
+    version: "Malvado como siempre",
+    text: [
+      {
+        title: "LA VUELTA DE LA MOMIA",
+        description:
+          "Durante tu turno, cuando descartas esta carta, puedes jugar este personaje de tu descarte. (Usted paga todos los costos).",
+      },
+    ],
+  },
 };

@@ -32,7 +32,7 @@ export const op04GumGumRedRoc056: EventCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,
@@ -49,7 +49,7 @@ export const op04GumGumRedRoc056: EventCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

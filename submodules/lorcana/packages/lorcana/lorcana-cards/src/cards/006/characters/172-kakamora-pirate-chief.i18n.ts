@@ -45,4 +45,15 @@ export const kakamoraPirateChiefI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kakamora",
+    version: "Jefe Pirata",
+    text: [
+      {
+        title: "LÍDER DEL COCO",
+        description:
+          "Siempre que este personaje realice una misión, puedes robar una carta. Luego, elige y descarta una carta para causar 1 daño al personaje o ubicación elegida. Si se descartó una carta de personaje pirata, en su lugar inflige 3 daños a ese personaje o ubicación.",
+      },
+    ],
+  },
 };

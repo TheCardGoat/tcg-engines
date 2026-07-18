@@ -21,4 +21,9 @@ export const ursulaMadSeaWitchI18n: Record<Languages, I18nProperties> = {
     version: "Folle Strega del Mare",
     text: "<Sfidante> +2",
   },
+  es: {
+    name: "Úrsula",
+    version: "Bruja del mar loca",
+    text: "Retador +2",
+  },
 };

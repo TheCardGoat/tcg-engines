@@ -45,4 +45,15 @@ export const hadesLookingForADealIconicI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Infierno",
+    version: "Buscando un trato",
+    text: [
+      {
+        title: "¿QUÉ DICES?",
+        description:
+          "Cuando juegas con este personaje, puedes elegir un personaje contrario. Si lo haces, roba 2 cartas a menos que el jugador de ese personaje ponga esa carta en la parte inferior de su mazo.",
+      },
+    ],
+  },
 };

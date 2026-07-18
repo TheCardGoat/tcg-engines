@@ -45,4 +45,15 @@ export const zeusMrLightningBoltsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Zeus",
+    version: "Sr. Rayos",
+    text: [
+      {
+        title: "PRÁCTICA DE OBJETIVO",
+        description:
+          "Siempre que este personaje desafía a otro personaje, obtiene +{S} igual al {S} del personaje elegido este turno.",
+      },
+    ],
+  },
 };

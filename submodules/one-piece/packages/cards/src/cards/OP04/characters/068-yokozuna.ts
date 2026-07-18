@@ -23,7 +23,7 @@ export const op04Yokozuna068: CharacterCard = {
   cost: 3,
   power: 3000,
   counter: 1000,
-  traits: ["Animal Water Seven"],
+  traits: ["Animal", "Water Seven"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Your Opponent's Attack] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Return up to 1 of your opponent's Characters with a cost of 2 or less to the owner's hand.",
@@ -58,6 +58,7 @@ export const op04Yokozuna068: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

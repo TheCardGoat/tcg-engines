@@ -17,4 +17,8 @@ export const theWardrobeBellesConfidantI18n: Record<Languages, I18nProperties> =
     name: "L'Armadio",
     version: "Confidente di Belle",
   },
+  es: {
+    name: "El armario",
+    version: "El confidente de Bella",
+  },
 };

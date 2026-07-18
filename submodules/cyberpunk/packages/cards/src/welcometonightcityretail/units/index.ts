@@ -23,9 +23,12 @@ import { welcomeToNightCityRetailModdedKusanagi } from "./modded-kusanagi.ts";
 import { welcomeToNightCityRetailMoxInciters } from "./mox-inciters.ts";
 import { welcomeToNightCityRetailNadiaFightingThroughGrief } from "./nadia-fighting-through-grief.ts";
 import { welcomeToNightCityRetailOffdutyMalfini } from "./offduty-malfini.ts";
+import { welcomeToNightCityRetailOctant } from "./octant.ts";
+import { welcomeToNightCityRetailPepeNajarroWorkingDoubles } from "./pepe-najarro-working-doubles.ts";
 import { welcomeToNightCityRetailPlacideVoodooSentinel } from "./placide-voodoo-sentinel.ts";
 import { welcomeToNightCityRetailPsychoSquad } from "./psycho-squad.ts";
 import { welcomeToNightCityRetailRidingNomad } from "./riding-nomad.ts";
+import { welcomeToNightCityRetailRitaWheelerNoStupidQuestions } from "./rita-wheeler-no-stupid-questions.ts";
 import { welcomeToNightCityRetailRoyceDonTCallMeSimon } from "./royce-don-t-call-me-simon.ts";
 import { welcomeToNightCityRetailSandayuOdaHanakoSGuardian } from "./sandayu-oda-hanako-s-guardian.ts";
 import { welcomeToNightCityRetailSaulBrightStormrider } from "./saul-bright-stormrider.ts";
@@ -62,9 +65,12 @@ export { welcomeToNightCityRetailModdedKusanagi } from "./modded-kusanagi.ts";
 export { welcomeToNightCityRetailMoxInciters } from "./mox-inciters.ts";
 export { welcomeToNightCityRetailNadiaFightingThroughGrief } from "./nadia-fighting-through-grief.ts";
 export { welcomeToNightCityRetailOffdutyMalfini } from "./offduty-malfini.ts";
+export { welcomeToNightCityRetailOctant } from "./octant.ts";
+export { welcomeToNightCityRetailPepeNajarroWorkingDoubles } from "./pepe-najarro-working-doubles.ts";
 export { welcomeToNightCityRetailPlacideVoodooSentinel } from "./placide-voodoo-sentinel.ts";
 export { welcomeToNightCityRetailPsychoSquad } from "./psycho-squad.ts";
 export { welcomeToNightCityRetailRidingNomad } from "./riding-nomad.ts";
+export { welcomeToNightCityRetailRitaWheelerNoStupidQuestions } from "./rita-wheeler-no-stupid-questions.ts";
 export { welcomeToNightCityRetailRoyceDonTCallMeSimon } from "./royce-don-t-call-me-simon.ts";
 export { welcomeToNightCityRetailSandayuOdaHanakoSGuardian } from "./sandayu-oda-hanako-s-guardian.ts";
 export { welcomeToNightCityRetailSaulBrightStormrider } from "./saul-bright-stormrider.ts";
@@ -102,9 +108,12 @@ export const welcomeToNightCityRetailUnits = [
   welcomeToNightCityRetailMoxInciters,
   welcomeToNightCityRetailNadiaFightingThroughGrief,
   welcomeToNightCityRetailOffdutyMalfini,
+  welcomeToNightCityRetailOctant,
+  welcomeToNightCityRetailPepeNajarroWorkingDoubles,
   welcomeToNightCityRetailPlacideVoodooSentinel,
   welcomeToNightCityRetailPsychoSquad,
   welcomeToNightCityRetailRidingNomad,
+  welcomeToNightCityRetailRitaWheelerNoStupidQuestions,
   welcomeToNightCityRetailRoyceDonTCallMeSimon,
   welcomeToNightCityRetailSandayuOdaHanakoSGuardian,
   welcomeToNightCityRetailSaulBrightStormrider,

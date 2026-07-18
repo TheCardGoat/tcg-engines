@@ -42,4 +42,14 @@ export const paradiseFallsExoticDestinationI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Cataratas del paraíso",
+    version: "Destino exótico",
+    text: [
+      {
+        title: "Toda una vista",
+        description: "Mientras tengas un personaje aquí, esta ubicación obtiene +3 {L}.",
+      },
+    ],
+  },
 };

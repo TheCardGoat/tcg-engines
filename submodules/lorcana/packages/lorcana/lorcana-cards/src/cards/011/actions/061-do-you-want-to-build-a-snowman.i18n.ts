@@ -68,4 +68,19 @@ export const doYouWantToBuildASnowmanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "¿Quieres construir un muñeco de nieve?",
+    text: [
+      {
+        title: "El oponente elegido elige ¡SÍ! o ¡NO!:",
+      },
+      {
+        title: "* ¡SÍ!",
+        description: "Obtienes 3 conocimientos.",
+      },
+      {
+        title: "* ¡NO! Eligen un personaje suyo y ponen esa carta en la parte inferior de su mazo.",
+      },
+    ],
+  },
 };

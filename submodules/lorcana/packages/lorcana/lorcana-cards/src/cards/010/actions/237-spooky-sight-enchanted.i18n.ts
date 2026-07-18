@@ -17,4 +17,8 @@ export const spookySightEnchantedI18n: Record<Languages, I18nProperties> = {
     name: "Visione Inquietante",
     text: "Aggiungi tutti i personaggi con costo 3 o inferiore ai calamai dei loro giocatori, a faccia in giù e impegnati.",
   },
+  es: {
+    name: "Vista espeluznante",
+    text: "Coloca todos los personajes con coste 3 o menos en los tinteros de sus jugadores boca abajo y esforzados.",
+  },
 };

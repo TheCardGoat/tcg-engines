@@ -49,4 +49,16 @@ export const zeusGodOfLightningI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Zeus",
+    version: "Dios del rayo",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "Retador +4",
+      },
+    ],
+  },
 };

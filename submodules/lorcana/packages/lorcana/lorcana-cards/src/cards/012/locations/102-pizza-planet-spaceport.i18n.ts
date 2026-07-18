@@ -60,4 +60,19 @@ export const pizzaPlanetSpaceportI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Planeta pizza",
+    version: "Puerto espacial",
+    text: [
+      {
+        title: "ESTAS LISTO PARA ENTRAR",
+        description: "Tus personajes de Toy pueden moverse aquí gratis.",
+      },
+      {
+        title: "MUY GUARDADO",
+        description:
+          "Cada vez que un personaje es desafiado mientras está aquí, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

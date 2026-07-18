@@ -44,4 +44,14 @@ export const gastonDespicableDealerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gastón",
+    version: "Distribuidor despreciable",
+    text: [
+      {
+        title: "RECLUTAMIENTO DUDOSO",
+        description: "{E}: pagas 2 {I} menos por el siguiente personaje que juegues en este turno.",
+      },
+    ],
+  },
 };

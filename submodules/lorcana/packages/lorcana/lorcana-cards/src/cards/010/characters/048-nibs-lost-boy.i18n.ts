@@ -45,4 +45,15 @@ export const nibsLostBoyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Puntas",
+    version: "Niño perdido",
+    text: [
+      {
+        title: "MIRA QUIEN HA VUELTO",
+        description:
+          "Cuando este personaje sea desterrado en un desafío, devuelve esta carta a tu mano.",
+      },
+    ],
+  },
 };

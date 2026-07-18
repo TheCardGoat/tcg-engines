@@ -31,17 +31,33 @@ export const op11WhenTwoMenAreFightingTheLastThingINeedIsSomeHalfHeartedAssistan
         trigger: "counter",
         actions: [
           {
-            action: "modifyPower",
-            target: {
-              player: "self",
-              zones: ["leader", "character"],
-              count: {
-                amount: 1,
-                upTo: true,
+            action: "guessTopDeckCost",
+            player: "opponent",
+            onMatch: [
+              {
+                action: "modifyPower",
+                target: {
+                  player: "self",
+                  zones: ["leader", "character"],
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                },
+                value: 5000,
+                duration: "thisBattle",
               },
-            },
-            value: 5000,
-            duration: "thisBattle",
+            ],
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
           },
         ],
       },

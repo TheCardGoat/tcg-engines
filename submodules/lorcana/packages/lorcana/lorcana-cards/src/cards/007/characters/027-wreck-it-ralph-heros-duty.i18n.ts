@@ -45,4 +45,15 @@ export const wreckitRalphHerosDutyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ralph el demoledor",
+    version: "El deber del héroe",
+    text: [
+      {
+        title: "FLANQUEAR",
+        description:
+          "Durante tu turno, cada vez que uno de tus otros personajes es desterrado, este personaje obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

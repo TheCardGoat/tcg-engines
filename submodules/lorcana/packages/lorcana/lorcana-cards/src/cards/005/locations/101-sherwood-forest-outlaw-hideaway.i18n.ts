@@ -63,4 +63,19 @@ export const sherwoodForestOutlawHideawayI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Bosque de Sherwood",
+    version: "Escondite de forajidos",
+    text: [
+      {
+        title: "CASA EN EL BOSQUE",
+        description: "Tus personajes llamados Robin Hood pueden moverse aquí gratis.",
+      },
+      {
+        title: "TERRENO FAMILIAR",
+        description:
+          'Los personajes obtienen protección y "{E}, 1 {I}: inflige 2 daños al personaje dañado elegido" mientras están aquí.',
+      },
+    ],
+  },
 };

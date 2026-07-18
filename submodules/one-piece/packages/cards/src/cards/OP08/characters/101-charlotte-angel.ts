@@ -31,23 +31,35 @@ export const op08CharlotteAngel101: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
+        costs: [
           {
-            condition: "leaderTrait",
-            trait: "Big Mom Pirates",
+            cost: "trashLife",
+            amount: 1,
+            position: "top",
           },
         ],
         actions: [
           {
-            action: "addToLife",
-            target: {
-              player: "self",
-              zones: ["deck"],
-              count: {
-                amount: 1,
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "addToLife",
+                target: {
+                  player: "self",
+                  zones: ["deck"],
+                  count: {
+                    amount: 1,
+                  },
+                },
+                position: "top",
               },
+            ],
+            condition: {
+              condition: "leaderTrait",
+              trait: "Big Mom Pirates",
+              match: "includes",
             },
-            position: "top",
           },
         ],
         optional: true,

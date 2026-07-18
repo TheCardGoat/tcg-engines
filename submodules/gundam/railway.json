@@ -2,7 +2,11 @@
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
     "builder": "dockerfile",
-    "dockerfile": "submodules/gundam/Dockerfile"
+    "dockerfile": "submodules/gundam/Dockerfile",
+    "watchPatterns": [
+      "railway-deploy-trigger.txt",
+      "submodules/gundam/**"
+    ]
   },
   "deploy": {
     "startCommand": "node server.js",

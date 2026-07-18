@@ -45,4 +45,15 @@ export const elsaStormChaserI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Elsa",
+    version: "Cazador de tormentas",
+    text: [
+      {
+        title: "TEMPESTAD",
+        description:
+          "{E}: el personaje elegido obtiene Challenger +2 y Rush este turno. (Obtienen +2 {S} mientras desafían. Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

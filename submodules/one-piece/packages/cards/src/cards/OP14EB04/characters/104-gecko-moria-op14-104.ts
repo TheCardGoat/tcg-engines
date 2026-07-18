@@ -4,8 +4,8 @@ import { op14eb04GeckoMoriaOp14104104I18n } from "./104-gecko-moria-op14-104.i18
 export const op14eb04GeckoMoriaOp14104104: CharacterCard = {
   id: "OP14-104",
   canonicalId: "OP14-104",
-  slug: "gecko-moria-op14-104",
-  name: "Gecko Moria - OP14-104",
+  slug: "gecko-moria/op14-104",
+  name: "Gecko Moria",
   printings: [
     {
       id: "OP14-104",
@@ -31,7 +31,7 @@ export const op14eb04GeckoMoriaOp14104104: CharacterCard = {
   cost: 8,
   power: 10000,
   trigger: "Play up to 1 Character card with a cost of 4 or less from your trash.",
-  traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
+  traits: ["The Seven Warlords of the Sea", "Thriller Bark Pirates"],
   attribute: "special",
   artVariants: [
     {
@@ -63,9 +63,17 @@ export const op14eb04GeckoMoriaOp14104104: CharacterCard = {
                   },
                   filters: [
                     {
+                      filter: "trait",
+                      value: "Thriller Bark Pirates",
+                    },
+                    {
                       filter: "cost",
                       comparison: "lte",
                       value: 4,
+                    },
+                    {
+                      filter: "cardCategory",
+                      value: "character",
                     },
                   ],
                 },
@@ -82,9 +90,17 @@ export const op14eb04GeckoMoriaOp14104104: CharacterCard = {
                     },
                     filters: [
                       {
+                        filter: "trait",
+                        value: "Thriller Bark Pirates",
+                      },
+                      {
                         filter: "cost",
                         comparison: "lte",
                         value: 4,
+                      },
+                      {
+                        filter: "cardCategory",
+                        value: "character",
                       },
                     ],
                   },
@@ -92,6 +108,33 @@ export const op14eb04GeckoMoriaOp14104104: CharacterCard = {
                   faceUp: true,
                 },
               ],
+            ],
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
             ],
           },
         ],

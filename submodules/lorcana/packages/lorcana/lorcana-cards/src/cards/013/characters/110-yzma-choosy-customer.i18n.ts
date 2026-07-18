@@ -42,4 +42,14 @@ export const yzmaChoosyCustomerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yzma",
+    version: "Cliente exigente",
+    text: [
+      {
+        title: "Haz esto bien",
+        description: "Cuando juegas con este personaje, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

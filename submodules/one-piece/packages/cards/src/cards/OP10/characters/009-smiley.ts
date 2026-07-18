@@ -26,7 +26,7 @@ export const op10Smiley009: CharacterCard = {
   traits: ["Biological Weapon Punk Hazard"],
   attribute: "special",
   effect:
-    '[On Play] If your Leader has the "Punk Hazard" type, give up to 1 of your opponent\'s Characters 3000 power during this turn.',
+    '[On Play] If your Leader has the "Punk Hazard" type, give up to 1 of your opponent\'s Characters -3000 power during this turn.',
   effects: {
     effects: [
       {
@@ -35,6 +35,7 @@ export const op10Smiley009: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Punk Hazard",
+            match: "includes",
           },
         ],
         actions: [
@@ -48,7 +49,7 @@ export const op10Smiley009: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 3000,
+            value: -3000,
             duration: "thisTurn",
           },
         ],

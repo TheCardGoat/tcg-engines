@@ -27,5 +27,32 @@ export const op13Vegapunk112: CharacterCard = {
   attribute: "wisdom",
   effect:
     "If you have a total of 2 or more given DON!! cards, this Character gains [Blocker].\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "givenDonCount",
+            player: "self",
+            comparison: "gte",
+            value: 2,
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op13Vegapunk112I18n,
 };

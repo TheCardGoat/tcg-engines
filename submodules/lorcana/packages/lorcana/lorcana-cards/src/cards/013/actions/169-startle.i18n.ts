@@ -17,4 +17,8 @@ export const startleI18n: Record<Languages, I18nProperties> = {
     name: "Trasalire",
     text: "Un personaggio a tua scelta riceve -3 {S} per questo turno.",
   },
+  es: {
+    name: "Asustar",
+    text: "El personaje elegido obtiene -3 {S} este turno.",
+  },
 };

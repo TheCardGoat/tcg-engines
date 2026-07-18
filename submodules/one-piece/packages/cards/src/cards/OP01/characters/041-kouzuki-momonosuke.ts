@@ -56,6 +56,7 @@ export const op01KouzukiMomonosuke041: CharacterCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

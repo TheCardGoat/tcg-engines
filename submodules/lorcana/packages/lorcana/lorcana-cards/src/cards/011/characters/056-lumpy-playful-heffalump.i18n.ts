@@ -21,4 +21,9 @@ export const lumpyPlayfulHeffalumpI18n: Record<Languages, I18nProperties> = {
     version: "Efelante Giocoso",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Aterronado",
+    version: "Heffalump juguetón",
+    text: "Evasivo",
+  },
 };

@@ -17,4 +17,8 @@ export const painImmortalSidekickI18n: Record<Languages, I18nProperties> = {
     name: "Pena",
     version: "Tirapiedi Immortale",
   },
+  es: {
+    name: "Dolor",
+    version: "Compañero inmortal",
+  },
 };

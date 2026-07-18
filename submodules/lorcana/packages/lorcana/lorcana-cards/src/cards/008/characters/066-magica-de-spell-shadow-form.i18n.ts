@@ -57,4 +57,18 @@ export const magicaDeSpellShadowFormI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Magia De Hechizo",
+    version: "Forma de sombra",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "DANZA DE LA OSCURIDAD",
+        description:
+          "Cuando juegas con este personaje, puedes devolver uno de tus otros personajes a tu mano para robar una carta.",
+      },
+    ],
+  },
 };

@@ -26,17 +26,11 @@ export const op09Hongo011: CharacterCard = {
   traits: ["Red-Haired Pirates"],
   attribute: "strike",
   effect:
-    '[Activate: Main] You may rest this Character: If your Leader has the "Red-Haired Pirates" type, give up to 1 of your opponent\'s Characters 2000 power during this turn.',
+    '[Activate: Main] You may rest this Character: If your Leader has the "Red-Haired Pirates" type, give up to 1 of your opponent\'s Characters −2000 power during this turn.',
   effects: {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Red-Haired Pirates",
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -53,8 +47,13 @@ export const op09Hongo011: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Red-Haired Pirates",
+              match: "includes",
+            },
           },
         ],
         optional: true,

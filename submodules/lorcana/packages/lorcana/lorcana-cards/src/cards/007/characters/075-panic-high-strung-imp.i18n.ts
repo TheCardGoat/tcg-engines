@@ -45,4 +45,15 @@ export const panicHighstrungImpI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pánico",
+    version: "Diablillo muy nervioso",
+    text: [
+      {
+        title: "GRITO DE SORTEO",
+        description:
+          "Cuando juegas con este personaje, puedes mover hasta 2 contadores de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

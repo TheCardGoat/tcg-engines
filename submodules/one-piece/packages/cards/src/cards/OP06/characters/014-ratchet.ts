@@ -23,7 +23,7 @@ export const op06Ratchet014: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 1000,
-  traits: ["FILM Mecha Island"],
+  traits: ["FILM", "Mecha Island"],
   attribute: "wisdom",
   effect:
     "[On Your Opponent's Attack] You may trash any number of [FILM] type cards from your hand. Your Leader or 1 of your Characters gains +1000 power during this battle for every card trashed.",
@@ -35,15 +35,29 @@ export const op06Ratchet014: CharacterCard = {
           {
             action: "trashFromHand",
             player: "self",
-            amount: 0,
+            amount: "all",
+            upTo: true,
             filters: [
               {
                 filter: "trait",
                 value: "FILM",
+                match: "includes",
               },
             ],
           },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: { amount: 1 },
+            },
+            value: 0,
+            valuePerPreviousActionTarget: 1000,
+            duration: "thisBattle",
+          },
         ],
+        optional: true,
       },
     ],
   },

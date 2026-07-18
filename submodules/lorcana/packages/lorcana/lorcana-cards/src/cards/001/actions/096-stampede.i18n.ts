@@ -17,4 +17,8 @@ export const stampedeI18n: Record<Languages, I18nProperties> = {
     name: "Stampede",
     text: "Deal 2 damage to chosen damaged character.",
   },
+  es: {
+    name: "Estampida",
+    text: "Inflige 2 daños al personaje dañado elegido.",
+  },
 };

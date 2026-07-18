@@ -23,7 +23,7 @@ export const eb02ThreePaceHumSoulNotchSlash051: EventCard = {
   cost: 3,
   traits: ["Former Rumbar Pirates"],
   effect:
-    "[Main] Choose one:\n• K.O. up to 1 of your opponent's Characters with a cost of 2 or less.\n• Give up to 1 of your opponent's Characters 4 cost during this turn.",
+    "[Main] Choose one:\n• K.O. up to 1 of your opponent's Characters with a cost of 2 or less.\n• Give up to 1 of your opponent's Characters −4 cost during this turn.",
   effects: {
     effects: [
       {
@@ -63,7 +63,7 @@ export const eb02ThreePaceHumSoulNotchSlash051: EventCard = {
                       upTo: true,
                     },
                   },
-                  value: 4,
+                  value: -4,
                   duration: "thisTurn",
                 },
               ],

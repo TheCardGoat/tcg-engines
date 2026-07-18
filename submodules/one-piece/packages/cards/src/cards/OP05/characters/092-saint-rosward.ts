@@ -45,6 +45,7 @@ export const op05SaintRosward092: CharacterCard = {
               {
                 filter: "trait",
                 value: "Celestial Dragons",
+                match: "includes",
                 negate: true,
               },
             ],

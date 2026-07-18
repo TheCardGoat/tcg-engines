@@ -58,4 +58,18 @@ export const auroraWakingBeautyEnchantedI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Aurora",
+    version: "Belleza despierta",
+    text: [
+      {
+        title: "Cantante 5",
+      },
+      {
+        title: "DULCES SUEÑOS",
+        description:
+          "Siempre que elimines 1 o más daños de un personaje, prepara este personaje. No puede realizar misiones ni desafíos durante el resto de este turno.",
+      },
+    ],
+  },
 };

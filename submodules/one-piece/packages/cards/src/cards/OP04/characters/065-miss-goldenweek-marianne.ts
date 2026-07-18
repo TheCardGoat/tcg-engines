@@ -35,6 +35,7 @@ export const op04MissGoldenweekMarianne065: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Baroque Works",
+            match: "includes",
           },
         ],
         actions: [
@@ -69,16 +70,10 @@ export const op04MissGoldenweekMarianne065: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
+        optional: true,
       },
     ],
   },

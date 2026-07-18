@@ -63,4 +63,19 @@ export const demonaScourgeOfTheWyvernClanEnchantedI18n: Record<Languages, I18nPr
       },
     ],
   },
+  es: {
+    name: "Demonio",
+    version: "Azote del clan Wyvern",
+    text: [
+      {
+        title: "CONMUTACIÓN AD SAXUM",
+        description:
+          "Cuando juegues con este personaje, ejercita a todos los personajes contrarios. Luego, cada jugador con menos de 3 cartas en su mano roba hasta tener 3.",
+      },
+      {
+        title: "PIEDRA DE DÍA",
+        description: "Si tienes 3 o más cartas en tu mano, este personaje no puede prepararse.",
+      },
+    ],
+  },
 };

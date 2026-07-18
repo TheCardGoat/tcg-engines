@@ -68,6 +68,32 @@ export const op12Kuzan043: CharacterCard = {
         optional: true,
       },
     ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "handCount",
+            player: "self",
+            comparison: "gte",
+            value: 5,
+          },
+        ],
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 1,
+          },
+        ],
+      },
+    ],
   },
   i18n: op12Kuzan043I18n,
 };

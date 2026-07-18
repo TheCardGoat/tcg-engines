@@ -54,4 +54,17 @@ export const meilinLeeLeadVocalistP4ChallengeI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Meilin Lee",
+    version: "Vocalista principal",
+    text: [
+      {
+        title: "Cantante 3",
+      },
+      {
+        title: "LEALTAD A LA BANDA",
+        description: "Este personaje no puede cantar canciones sin Sing Together.",
+      },
+    ],
+  },
 };

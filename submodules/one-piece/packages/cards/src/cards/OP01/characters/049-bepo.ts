@@ -61,6 +61,7 @@ export const op01Bepo049: CharacterCard = {
               {
                 filter: "trait",
                 value: "Heart Pirates",
+                match: "includes",
               },
             ],
           },

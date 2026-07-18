@@ -57,4 +57,18 @@ export const inkrunnerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Corredor de tinta",
+    text: [
+      {
+        title: "VERIFICACIÓN PREVIA AL VUELO",
+        description: "Cuando juegues este objeto, roba una carta.",
+      },
+      {
+        title: "LISTO PARA VIAJAR",
+        description:
+          "{E}, 1 {I}: el personaje elegido gana Alerta este turno. (Pueden desafiar como si tuvieran Evasivo).",
+      },
+    ],
+  },
 };

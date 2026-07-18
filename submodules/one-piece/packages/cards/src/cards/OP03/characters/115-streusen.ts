@@ -31,6 +31,13 @@ export const op03Streusen115: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [{ filter: "hasTrigger", value: true }],
+          },
+        ],
         actions: [
           {
             action: "ko",

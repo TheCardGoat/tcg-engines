@@ -21,4 +21,9 @@ export const thomasOmalleyFelineCharmerI18n: Record<Languages, I18nProperties> =
     version: "Seduttore Felino",
     text: "<Protetto>",
   },
+  es: {
+    name: "Thomas O'Malley",
+    version: "Encantador felino",
+    text: "Pabellón",
+  },
 };

@@ -45,4 +45,15 @@ export const mrSmeeBumblingMateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señor smee",
+    version: "Compañero torpe",
+    text: [
+      {
+        title: "OH QUERIDO, QUERIDO, QUERIDO",
+        description:
+          "Al final de tu turno, si este personaje está agotado y no tienes un personaje Capitán en juego, inflige 1 daño a este personaje.",
+      },
+    ],
+  },
 };

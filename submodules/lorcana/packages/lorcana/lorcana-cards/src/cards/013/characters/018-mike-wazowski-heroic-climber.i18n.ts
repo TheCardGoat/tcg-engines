@@ -45,4 +45,15 @@ export const mikeWazowskiHeroicClimberI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Mike Wazowski",
+    version: "Escalador heroico",
+    text: [
+      {
+        title: "ENCONTRAR",
+        description:
+          "UN AMIGO Cuando juegas con este personaje y cada vez que realiza una misión, cada jugador revela la carta superior de su mazo. Si es una carta de personaje, pueden ponerla en su mano. De lo contrario, colóquelo en el fondo de su plataforma.",
+      },
+    ],
+  },
 };

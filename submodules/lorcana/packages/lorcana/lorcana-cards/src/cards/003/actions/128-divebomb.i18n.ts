@@ -17,4 +17,8 @@ export const divebombI18n: Record<Languages, I18nProperties> = {
     name: "In Picchiata",
     text: "Esilia uno dei tuoi personaggi con <Attaccabrighe> per esiliare un personaggio a tua scelta con meno {S} del tuo personaggio.",
   },
+  es: {
+    name: "Bomba en picado",
+    text: "Destierra a uno de tus personajes con Reckless para desterrar al personaje elegido con menos {S} que ese personaje.",
+  },
 };

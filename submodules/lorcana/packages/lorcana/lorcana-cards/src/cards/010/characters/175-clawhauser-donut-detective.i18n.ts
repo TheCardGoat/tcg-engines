@@ -21,4 +21,9 @@ export const clawhauserDonutDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Detective delle Ciambelle",
     text: "<Sfidante> +2",
   },
+  es: {
+    name: "Garrahauser",
+    version: "Detective de donas",
+    text: "Retador +2",
+  },
 };

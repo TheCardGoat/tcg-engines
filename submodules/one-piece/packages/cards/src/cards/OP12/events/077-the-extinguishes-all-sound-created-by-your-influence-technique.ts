@@ -34,26 +34,43 @@ export const op12TheExtinguishesAllSoundCreatedByYourInfluenceTechnique077: Even
             action: "modifyPower",
             target: {
               player: "self",
-              zones: ["character"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
                 upTo: true,
               },
+              filters: [
+                {
+                  filter: "name",
+                  value: "Trafalgar Law",
+                },
+              ],
             },
             value: 2000,
             duration: "thisTurn",
           },
           {
-            action: "cannotActivate",
+            action: "grantKeyword",
             target: {
-              player: "opponent",
-              zones: ["character"],
+              player: "self",
+              zones: ["leader", "character"],
               count: {
-                amount: "all",
+                amount: 1,
               },
             },
-            keyword: "blocker",
+            keyword: "unblockable",
             duration: "thisTurn",
+            previousActionTargets: true,
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
           },
         ],
       },

@@ -47,4 +47,8 @@ export const shesYourPersonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ella es tu persona",
+    text: "Elige uno:\n- Elimina hasta 3 daños del personaje elegido.\n- Elimina hasta 3 daños de cada uno de tus personajes con Bodyguard.",
+  },
 };

@@ -17,4 +17,8 @@ export const timeToGoI18n: Record<Languages, I18nProperties> = {
     name: "È ora di Andare!",
     text: "Esilia un tuo personaggio a tua scelta per pescare 2 carte. Se quel personaggio aveva una carta sotto di sé, pesca invece 3 carte.",
   },
+  es: {
+    name: "¡Es hora de irse!",
+    text: "Destierra tu personaje elegido para robar 2 cartas. Si ese personaje tenía una carta debajo, roba 3 cartas en su lugar.",
+  },
 };

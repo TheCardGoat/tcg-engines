@@ -5,6 +5,7 @@ export const gd02CalamityGundam009: UnitCard = {
   name: "Calamity Gundam",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space", "earth"],
   traits: ["earth alliance"],
   id: "GD02-009",
   canonicalId: "GD02-009",
@@ -41,6 +42,7 @@ export const gd02CalamityGundam009: UnitCard = {
   cost: 3,
   ap: 3,
   hp: 5,
+  linkCondition: "(Biological CPU) Trait",
   effect:
     "【Once per Turn】When this Unit's AP is reduced by an enemy effect, choose 1 rested enemy Unit. Deal 2 damage to it.<br>",
   effects: [

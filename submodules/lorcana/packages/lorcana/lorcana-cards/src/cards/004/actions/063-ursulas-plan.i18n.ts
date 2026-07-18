@@ -17,4 +17,8 @@ export const ursulasPlanI18n: Record<Languages, I18nProperties> = {
     name: "Il Piano di Ursula",
     text: "Ogni avversario sceglie e impegna uno dei suoi personaggi. Questi personaggi non si possono preparare all'inizio del loro prossimo turno.",
   },
+  es: {
+    name: "El plan de Úrsula",
+    text: "Cada oponente elige y ejerce uno de sus personajes. Esos personajes no pueden prepararse al comienzo de su siguiente turno.",
+  },
 };

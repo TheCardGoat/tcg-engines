@@ -17,4 +17,8 @@ export const bounceI18n: Record<Languages, I18nProperties> = {
     name: "Bounce",
     text: "Return chosen character of yours to your hand to return another chosen character to their player's hand.",
   },
+  es: {
+    name: "Rebotar",
+    text: "Devuelve tu personaje elegido a tu mano para devolver otro personaje elegido a la mano de su jugador.",
+  },
 };

@@ -45,4 +45,15 @@ export const darkwingTowerIcyHeadquartersI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Torre Ala Oscura",
+    version: "Sede helada",
+    text: [
+      {
+        title: "MAL VENCIDO",
+        description:
+          "Durante tu turno, siempre que un personaje villano contrario sea desterrado, puedes preparar un personaje aquí. Si lo haces, no podrán realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

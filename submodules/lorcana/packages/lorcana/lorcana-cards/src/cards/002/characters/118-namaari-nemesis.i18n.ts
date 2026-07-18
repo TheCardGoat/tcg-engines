@@ -41,4 +41,14 @@ export const namaariNemesisI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Namari",
+    version: "Justicia",
+    text: [
+      {
+        title: "ESTO NO DEBE TARDAR MUCHO",
+        description: "{E}, Destierra este personaje: destierra al personaje elegido.",
+      },
+    ],
+  },
 };

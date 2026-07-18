@@ -57,4 +57,18 @@ export const tukTukLivelyPartnerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tuk-tuk",
+    version: "Socio animado",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "EN",
+        description:
+          "UNA TIRADA Cuando juegas con este personaje, puedes moverlo a él y a uno de tus otros personajes al mismo lugar de forma gratuita. El otro personaje obtiene +2 {S} este turno.",
+      },
+    ],
+  },
 };

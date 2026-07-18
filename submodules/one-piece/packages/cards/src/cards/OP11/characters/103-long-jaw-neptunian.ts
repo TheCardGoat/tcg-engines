@@ -30,10 +30,14 @@ export const op11LongJawNeptunian103: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
+        costs: [
           {
-            condition: "leaderName",
-            name: "Shirahoshi",
+            cost: "restThisCard",
+          },
+          {
+            cost: "turnLifeFaceUp",
+            count: 1,
+            faceUp: false,
           },
         ],
         actions: [
@@ -54,6 +58,13 @@ export const op11LongJawNeptunian103: CharacterCard = {
                 },
               ],
             },
+          },
+        ],
+        optional: true,
+        conditions: [
+          {
+            condition: "leaderName",
+            name: "Shirahoshi",
           },
         ],
       },

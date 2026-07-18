@@ -21,4 +21,9 @@ export const merlinSelfappointedMentorI18n: Record<Languages, I18nProperties> = 
     version: "Self-Appointed Mentor",
     text: "<Support> (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
   },
+  es: {
+    name: "Esmerejón",
+    version: "Mentor autoproclamado",
+    text: "Apoyo",
+  },
 };

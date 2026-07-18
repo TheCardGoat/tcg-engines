@@ -45,4 +45,15 @@ export const magicBroomIndustrialModelI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Escoba magica",
+    version: "Modelo Industrial",
+    text: [
+      {
+        title: "HAZLO BRILLAR",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido gana Resistencia +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

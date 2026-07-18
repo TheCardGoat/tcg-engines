@@ -65,4 +65,20 @@ export const graveyardOfChristmasFutureLonelyRestingPlaceI18n: Record<Languages,
       },
     ],
   },
+  es: {
+    name: "Cementerio del futuro navideño",
+    version: "Lugar de descanso solitario",
+    text: [
+      {
+        title: "RECIÉN LLEGADO",
+        description:
+          "Siempre que muevas un personaje aquí, coloca la carta superior de tu mazo debajo de esta ubicación boca abajo.",
+      },
+      {
+        title: "OTRA OPORTUNIDAD",
+        description:
+          "Al comienzo de tu turno, puedes poner en tu mano todas las cartas que se encuentren debajo de esta ubicación. Si lo haces, destierra esta ubicación.",
+      },
+    ],
+  },
 };

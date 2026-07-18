@@ -70,4 +70,20 @@ export const cogsworthGrandfatherClockI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Diente",
+    version: "Reloj de abuelo",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "RELAJARSE",
+        description: "Tus otros personajes ganan Resistencia +1",
+      },
+    ],
+  },
 };

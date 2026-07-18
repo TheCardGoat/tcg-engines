@@ -1,6 +1,7 @@
 <script lang="ts">
   import Bug from "@lucide/svelte/icons/bug";
   import ChevronDown from "@lucide/svelte/icons/chevron-down";
+  import Coins from "@lucide/svelte/icons/coins";
   import Download from "@lucide/svelte/icons/download";
   import Flag from "@lucide/svelte/icons/flag";
   import LoaderCircle from "@lucide/svelte/icons/loader-circle";
@@ -146,6 +147,8 @@
   const effectiveSummary = $derived.by(() =>
     record?.postGame ? buildPostGameSummaryFromCanonical(record.postGame, summary.outcome.viewerSide) : summary,
   );
+  const isOverallMatchComplete = $derived(matchContext === null || matchContext.matchCompleted);
+  const inkmarksEarnedForMatch = $derived(record?.inkmarksEarnedForMatch ?? null);
 
   const sectionButtons = [
     {
@@ -407,6 +410,15 @@
     }
   }
 
+  async function handleOpenAtelier(event: MouseEvent): Promise<void> {
+    event.preventDefault();
+    if (noteDirty) {
+      await handleSaveNotes();
+      if (noteDirty) return;
+    }
+    window.location.assign("/matchmaking/atelier");
+  }
+
   async function handleReturn(): Promise<void> {
     if (leavingMatch) {
       return;
@@ -567,6 +579,25 @@
             <strong>{effectiveSummary.totalLogEntries}</strong>
           </div>
         </div>
+
+        {#if isOverallMatchComplete && inkmarksEarnedForMatch !== null && inkmarksEarnedForMatch > 0}
+          <aside class="post-game-inkmarks" aria-label={m["sim.postGame.inkmarks.aria"]({})}>
+            <Coins class="post-game-inkmarks__icon" aria-hidden="true" />
+            <div class="post-game-inkmarks__copy">
+              <strong>{m["sim.postGame.inkmarks.earned"]({ marks: inkmarksEarnedForMatch })}</strong>
+              <span>{m["sim.postGame.inkmarks.description"]({})}</span>
+            </div>
+            <Button
+              href="/matchmaking/atelier"
+              variant="outline"
+              size="sm"
+              class="post-game-inkmarks__cta"
+              onclick={handleOpenAtelier}
+            >
+              {m["sim.postGame.inkmarks.openAtelier"]({})}
+            </Button>
+          </aside>
+        {/if}
       </header>
 
       <nav class="post-game-sections" aria-label={m["sim.postGame.section.aria"]({})}>
@@ -1098,6 +1129,47 @@
     margin-top: 0.18rem;
     font-size: 1.05rem;
     color: #f8fafc;
+  }
+
+  .post-game-inkmarks {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-top: 0.85rem;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid rgba(250, 204, 21, 0.34);
+    border-radius: 0.85rem;
+    background: rgba(113, 63, 18, 0.2);
+  }
+
+  .post-game-inkmarks__icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    flex: 0 0 auto;
+    color: #fde68a;
+  }
+
+  .post-game-inkmarks__copy {
+    display: grid;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+
+  .post-game-inkmarks__copy strong {
+    color: #fef3c7;
+    font-size: 0.88rem;
+  }
+
+  .post-game-inkmarks__copy span {
+    color: rgba(254, 243, 199, 0.78);
+    font-size: 0.78rem;
+  }
+
+  :global(.post-game-inkmarks__cta) {
+    margin-left: auto;
+    flex: 0 0 auto;
+    border-color: rgba(253, 230, 138, 0.42);
+    color: #fef3c7;
   }
 
   .post-game-sections {
@@ -1716,6 +1788,16 @@
     .post-game-fact {
       padding: 0.5rem 0.45rem;
       border-radius: 0.75rem;
+    }
+
+    .post-game-inkmarks {
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    :global(.post-game-inkmarks__cta) {
+      width: 100%;
+      margin-left: 0;
     }
 
     .post-game-fact span {

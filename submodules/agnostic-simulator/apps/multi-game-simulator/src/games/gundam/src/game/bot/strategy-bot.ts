@@ -3,6 +3,7 @@ import {
   getSafeGundamAutomatedActionStrategyOption,
   takeAutomatedActionWithFallback,
   type BotDecisionSink,
+  type BotDecisionRecord,
   type CandidateStrategy,
   type MatchRuntime,
   type MatchStaticResources,
@@ -75,6 +76,8 @@ export interface StrategyBotHandle {
   setSpeed(speed: BotSpeed): void;
   /** Replace the ranking strategy. Takes effect on the next action. */
   setStrategy(strategy: CandidateStrategy): void;
+  /** Subscribe to structured decision records for local diagnostics. */
+  subscribeDecisions(listener: BotDecisionSink): () => void;
   /**
    * Fire exactly one bot action if it's currently the bot's turn. No-op
    * otherwise. Returns the action result (or undefined if no action was
@@ -134,6 +137,7 @@ export function attachStrategyBot(
       setMode: () => {},
       setSpeed: () => {},
       setStrategy: () => {},
+      subscribeDecisions: () => () => {},
       stepOnce: () => undefined,
       dispose: () => {},
     };
@@ -145,6 +149,12 @@ export function attachStrategyBot(
   let mode: BotPlayMode = options.playMode ?? "auto";
   let timer: ReturnType<typeof setTimeout> | null = null;
   let timerRevision = 0;
+  const decisionListeners = new Set<BotDecisionSink>();
+
+  const emitDecision = (record: BotDecisionRecord): void => {
+    options.onDecision?.(record);
+    for (const listener of decisionListeners) listener(record);
+  };
 
   const clearTimer = (): void => {
     timerRevision += 1;
@@ -162,9 +172,11 @@ export function attachStrategyBot(
 
   const submit = (): TakeAutomatedActionWithFallbackResult | undefined => {
     if (!shouldAct()) return undefined;
+    const decisionSink =
+      options.onDecision || decisionListeners.size > 0 ? emitDecision : undefined;
     const result = takeAutomatedActionWithFallback(runtime, player, strategy, staticResources, {
       maxCandidateAttempts: options.maxCandidateAttempts,
-      ...(options.onDecision ? { decisionSink: options.onDecision } : {}),
+      ...(decisionSink ? { decisionSink } : {}),
     });
     options.onAction?.(result);
     return result;
@@ -226,12 +238,17 @@ export function attachStrategyBot(
     setStrategy(nextStrategy: CandidateStrategy): void {
       strategy = nextStrategy;
     },
+    subscribeDecisions(listener: BotDecisionSink): () => void {
+      decisionListeners.add(listener);
+      return () => decisionListeners.delete(listener);
+    },
     stepOnce(): TakeAutomatedActionWithFallbackResult | undefined {
       return submit();
     },
     dispose(): void {
       clearTimer();
       unsubscribe();
+      decisionListeners.clear();
     },
   };
 }

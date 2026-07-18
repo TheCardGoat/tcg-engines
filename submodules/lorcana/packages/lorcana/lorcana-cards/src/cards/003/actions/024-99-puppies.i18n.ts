@@ -17,4 +17,8 @@ export const _99PuppiesI18n: Record<Languages, I18nProperties> = {
     name: "99 Cuccioli",
     text: "Ogni volta che uno dei tuoi personaggi va all'avventura per questo turno, ottieni 1 leggenda.",
   },
+  es: {
+    name: "99 cachorros",
+    text: "Siempre que uno de tus personajes realice una misión este turno, gana 1 conocimiento.",
+  },
 };

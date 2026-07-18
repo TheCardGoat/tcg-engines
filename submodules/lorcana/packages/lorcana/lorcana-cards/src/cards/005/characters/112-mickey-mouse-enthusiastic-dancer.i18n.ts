@@ -44,4 +44,15 @@ export const mickeyMouseEnthusiasticDancerI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Bailarina entusiasta",
+    text: [
+      {
+        title: "SOCIOS PERFECTOS",
+        description:
+          "Mientras tengas un personaje llamado Minnie Mouse en juego, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

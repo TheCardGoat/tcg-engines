@@ -51,4 +51,16 @@ export const theTroubadourMusicalNarratorI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "El trovador",
+    version: "Narrador Musical",
+    text: [
+      {
+        title: "Resistir +1",
+      },
+      {
+        title: "Cantante 4",
+      },
+    ],
+  },
 };

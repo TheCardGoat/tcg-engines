@@ -84,7 +84,10 @@ describe("Baloo - Carefree Bear", () => {
         testEngine.asPlayerTwo().resolveNextPending({ targets: [fillerTwo] }),
       ).toBeSuccessfulCommand();
 
-      expect(testEngine.asPlayerTwo().getCardZone(filler)).toBe("discard");
+      expect(testEngine.asPlayerTwo().getCardZone(fillerTwo)).toBe("discard");
+      expect(testEngine.asPlayerOne().getPendingEffects()).toHaveLength(0);
+      expect(testEngine.asPlayerOne().getZonesCardCount().hand).toBe(0);
+      expect(testEngine.asPlayerTwo().getZonesCardCount().hand).toBe(0);
     });
   });
 

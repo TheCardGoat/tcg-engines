@@ -33,6 +33,9 @@ export const op05RevolutionaryArmyHq021: StageCard = {
             cost: "trashFromHand",
             amount: 1,
           },
+          {
+            cost: "restThisCard",
+          },
         ],
         actions: [
           {
@@ -50,6 +53,7 @@ export const op05RevolutionaryArmyHq021: StageCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

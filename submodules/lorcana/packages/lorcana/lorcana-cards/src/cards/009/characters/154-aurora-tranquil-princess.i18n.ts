@@ -21,4 +21,9 @@ export const auroraTranquilPrincessI18n: Record<Languages, I18nProperties> = {
     version: "Principessa Pacata",
     text: "<Protetto>",
   },
+  es: {
+    name: "Aurora",
+    version: "Princesa tranquila",
+    text: "Pabellón",
+  },
 };

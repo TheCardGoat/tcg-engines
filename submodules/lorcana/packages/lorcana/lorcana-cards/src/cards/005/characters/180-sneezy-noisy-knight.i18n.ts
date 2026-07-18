@@ -45,4 +45,15 @@ export const sneezyNoisyKnightI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Estornudo",
+    version: "Caballero ruidoso",
+    text: [
+      {
+        title: "VIENTO EN CONTRA",
+        description:
+          "Cuando juegas con este personaje, el personaje Caballero elegido obtiene Retador +2 este turno. (Obtienen +2 {S} mientras desafían).",
+      },
+    ],
+  },
 };

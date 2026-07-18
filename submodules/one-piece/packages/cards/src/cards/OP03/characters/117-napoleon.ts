@@ -41,7 +41,7 @@ export const op03Napoleon117: CharacterCard = {
             action: "modifyPower",
             target: {
               player: "self",
-              zones: ["leader", "character", "stage", "costArea"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
                 upTo: true,
@@ -63,14 +63,7 @@ export const op03Napoleon117: CharacterCard = {
         trigger: "trigger",
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
       },

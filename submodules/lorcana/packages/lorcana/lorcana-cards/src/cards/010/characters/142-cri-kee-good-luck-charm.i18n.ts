@@ -26,4 +26,14 @@ export const crikeeGoodLuckCharmI18n: Record<Languages, I18nProperties> = {
     version: "Portafortuna",
     text: "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
   },
+  es: {
+    name: "Cri-kee",
+    version: "Amuleto de buena suerte",
+    text: [
+      {
+        title: "Alerta",
+        description: "(Este personaje puede desafiar como si tuviera Evasivo).",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const arthurTrainedSwordsmanI18n: Record<Languages, I18nProperties> = {
     name: "Arthur",
     version: "Trained Swordsman",
   },
+  es: {
+    name: "Arturo",
+    version: "Espadachín entrenado",
+  },
 };

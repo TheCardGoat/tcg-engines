@@ -28,7 +28,6 @@ export const op06Zeff048: CharacterCard = {
   effect:
     "[Your Turn] When your opponent activates [Blocker] or an Event, if your Leader has the [East Blue] type, you may trash 4 cards from the top of your deck.",
   effects: {
-    keywords: ["blocker"],
     effects: [
       {
         trigger: "whenBlockerActivated",
@@ -36,6 +35,11 @@ export const op06Zeff048: CharacterCard = {
           {
             condition: "turn",
             value: "your",
+          },
+          {
+            condition: "leaderTrait",
+            trait: "East Blue",
+            match: "includes",
           },
         ],
         actions: [
@@ -45,6 +49,29 @@ export const op06Zeff048: CharacterCard = {
             amount: 4,
           },
         ],
+        optional: true,
+      },
+      {
+        trigger: "whenOpponentActivatesEvent",
+        conditions: [
+          {
+            condition: "turn",
+            value: "your",
+          },
+          {
+            condition: "leaderTrait",
+            trait: "East Blue",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "trashFromDeck",
+            player: "self",
+            amount: 4,
+          },
+        ],
+        optional: true,
       },
     ],
   },

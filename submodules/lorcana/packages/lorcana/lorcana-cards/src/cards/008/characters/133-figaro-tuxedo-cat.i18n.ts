@@ -41,4 +41,14 @@ export const figaroTuxedoCatI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Fígaro",
+    version: "Gato esmoquin",
+    text: [
+      {
+        title: "ALEGRÍA",
+        description: "Los elementos contrarios entran en juego ejercidos.",
+      },
+    ],
+  },
 };

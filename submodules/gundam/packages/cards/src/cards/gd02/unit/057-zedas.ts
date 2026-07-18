@@ -4,6 +4,7 @@ export const gd02Zedas057: UnitCard = {
   cardNumber: "GD02-057",
   name: "Zedas",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "purple",
   traits: ["ue", "vagan"],
   id: "GD02-057",
@@ -41,6 +42,7 @@ export const gd02Zedas057: UnitCard = {
   cost: 3,
   ap: 5,
   hp: 3,
+  linkCondition: "[Desil Galette]",
   effect:
     "【During Pair】【Attack】You may choose 1 of your other Units. Destroy it. If you do, choose 1 enemy Unit that is Lv.4 or lower. Deal 2 damage to it.<br>",
   effects: [
@@ -48,36 +50,54 @@ export const gd02Zedas057: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["attack"],
-        conditions: [{ type: "duringPair" }],
+        conditions: [
+          { type: "duringPair" },
+          {
+            type: "cardInZone",
+            owner: "opponent",
+            zone: "battleArea",
+            cardType: "unit",
+            comparison: "gte",
+            count: 1,
+            attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+          },
+        ],
       },
       directives: [
         {
           action: {
-            action: "destroy",
-            target: {
-              owner: "friendly",
-              cardType: "unit",
-              count: 1,
-              excludeSource: true,
+            action: "resolveThenQueue",
+            first: {
+              action: "destroy",
+              target: {
+                owner: "friendly",
+                cardType: "unit",
+                count: 1,
+                excludeSource: true,
+              },
+            },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
+                {
+                  action: {
+                    action: "dealDamage",
+                    amount: 2,
+                    target: {
+                      owner: "opponent",
+                      cardType: "unit",
+                      count: 1,
+                      attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+                    },
+                  },
+                },
+              ],
+              sourceText:
+                "If you do, choose 1 enemy Unit that is Lv.4 or lower. Deal 2 damage to it.",
             },
           },
           optional: true,
-        },
-        {
-          action: {
-            action: "dealDamage",
-            amount: 2,
-            target: {
-              owner: "opponent",
-              cardType: "unit",
-              count: 1,
-              attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
-            },
-          },
-          // "If you do, ..." — only deal damage if the preceding optional
-          // destroy actually resolved (controller opted in AND the
-          // destroy found a legal target).
-          dependsOnPrevious: true,
         },
       ],
       sourceText:

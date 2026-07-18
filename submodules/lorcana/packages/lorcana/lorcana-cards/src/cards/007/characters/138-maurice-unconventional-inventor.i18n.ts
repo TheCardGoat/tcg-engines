@@ -45,4 +45,15 @@ export const mauriceUnconventionalInventorI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Mauricio",
+    version: "Inventor no convencional",
+    text: [
+      {
+        title: "¿CÓMO DIABLOS PASÓ ESO?",
+        description:
+          "Cuando juegas con este personaje, puedes desterrar un objeto tuyo elegido para robar una carta. Si el objeto desterrado se llama Maurice's Machine, también puedes desterrar al personaje elegido con 2 {S} o menos.",
+      },
+    ],
+  },
 };

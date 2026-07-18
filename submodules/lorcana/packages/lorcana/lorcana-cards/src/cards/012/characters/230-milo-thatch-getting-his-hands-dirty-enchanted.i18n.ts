@@ -77,4 +77,23 @@ export const miloThatchGettingHisHandsDirtyEnchantedI18n: Record<Languages, I18n
       },
     ],
   },
+  es: {
+    name: "Milo Paja",
+    version: "Ensuciarse las manos",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "Gambito del erudito",
+        description:
+          "Cuando juegas con este personaje, puedes elegir y descartar una carta para devolver el personaje elegido a la mano de su jugador.",
+      },
+      {
+        title: "CONOCIMIENTOS PRÁCTICOS",
+        description:
+          "Al final de tu turno, si se pusieron 2 o más cartas en tu descarte este turno, roba una carta.",
+      },
+    ],
+  },
 };

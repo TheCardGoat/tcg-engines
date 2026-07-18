@@ -42,26 +42,5 @@ export const prb02SanjiSt21003PirateFoil003: CharacterCard = {
   ],
   effect:
     "[On Play] Select up to 1 of your {Straw Hat Crew} type Characters with 6000 power or more. If the selected Character attacks during this turn, your opponent cannot activate [Blocker].",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "cannotActivate",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: "all",
-              },
-            },
-            keyword: "blocker",
-            duration: "thisTurn",
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb02SanjiSt21003PirateFoil003I18n,
 };

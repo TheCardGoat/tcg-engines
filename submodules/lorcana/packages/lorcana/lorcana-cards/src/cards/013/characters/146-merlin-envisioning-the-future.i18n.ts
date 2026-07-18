@@ -65,4 +65,20 @@ export const merlinEnvisioningTheFutureI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Esmerejón",
+    version: "Visualizando el futuro",
+    text: [
+      {
+        title: "Engaño menor",
+        description:
+          "Cuando juegas con este personaje, puedes robar una carta de la parte inferior de tu mazo.",
+      },
+      {
+        title: "Edad de los inconvenientes",
+        description:
+          "Cuando este personaje sea desterrado, coloca esta carta de tu descarte en la parte inferior de tu mazo.",
+      },
+    ],
+  },
 };

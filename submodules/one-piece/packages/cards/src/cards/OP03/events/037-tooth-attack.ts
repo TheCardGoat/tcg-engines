@@ -36,6 +36,7 @@ export const op03ToothAttack037: EventCard = {
               {
                 filter: "trait",
                 value: "East Blue",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

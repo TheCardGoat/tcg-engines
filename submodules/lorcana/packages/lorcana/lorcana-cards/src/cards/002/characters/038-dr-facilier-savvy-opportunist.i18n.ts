@@ -21,4 +21,9 @@ export const drFacilierSavvyOpportunistI18n: Record<Languages, I18nProperties> =
     version: "Savvy Opportunist",
     text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
+  es: {
+    name: "Dr. Facilier",
+    version: "Oportunista inteligente",
+    text: "Evasivo",
+  },
 };

@@ -4,6 +4,7 @@ export const gd02SaylaSLightTypeGuncannon046: UnitCard = {
   cardNumber: "GD02-046",
   name: "Sayla's Light-Type Guncannon",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "red",
   traits: ["earth federation"],
   id: "GD02-046",
@@ -41,6 +42,7 @@ export const gd02SaylaSLightTypeGuncannon046: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 4,
+  linkCondition: "[Sayla Mass]",
   effect: "【Deploy】Choose 1 enemy Unit token. Deal 2 damage to it.<br>",
   effects: [
     {

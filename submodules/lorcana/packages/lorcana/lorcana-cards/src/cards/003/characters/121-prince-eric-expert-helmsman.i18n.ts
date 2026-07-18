@@ -43,4 +43,14 @@ export const princeEricExpertHelmsmanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Príncipe eric",
+    version: "Timonel experto",
+    text: [
+      {
+        title: "MANIOBRA SORPRESA",
+        description: "Cuando este personaje sea desterrado, podrás desterrar al personaje elegido.",
+      },
+    ],
+  },
 };

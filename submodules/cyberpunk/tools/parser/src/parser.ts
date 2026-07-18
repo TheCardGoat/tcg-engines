@@ -274,7 +274,7 @@ function removeStandaloneKeywordText(
 function normalizeText(text: string): string {
   return text
     .replace(
-      /(?:\[|\{)(PLAY|ATTACK|FLIP|CALL|DEFEATED|BLOCKER|GO SOLO|ADRENALINE|QUICK)(?:\]|\})/gi,
+      /(?:\[|\{)(PLAY|ATTACK|FLIP|CALL|DEFEATED|BLOCKER|GO SOLO|ADRENALINE|QUICK|SPEND)(?:\]|\})/gi,
       "$1",
     )
     .replace(/\[Spend Icon:\]/gi, "SPEND")
@@ -403,6 +403,78 @@ function deriveKeywords(abilities: readonly Ability[]): CardKeyword[] {
 
 function parseSpecialAbilities(card: CardDefinition, text: string): Ability[] | null {
   const source = gearHostOrSelf(card);
+
+  if (
+    /^SPEND Swap a friendly Gig with a rival Gig\. At the start of your turn, draw 1 for each friendly value-pair of Gigs\.$/i.test(
+      text,
+    )
+  ) {
+    return [
+      activatedAbility({
+        text: "SPEND Swap a friendly Gig with a rival Gig.",
+        source: SELF_TARGET,
+        bindings: [
+          {
+            id: "friendlyGig",
+            target: {
+              ...FRIENDLY_GIG_TARGET,
+              selection: { mode: "choose", min: 1, max: 1 },
+            },
+          },
+          {
+            id: "rivalGig",
+            target: {
+              ...RIVAL_GIG_TARGET,
+              selection: { mode: "choose", min: 1, max: 1 },
+            },
+          },
+        ],
+        costs: [{ cost: "spend", target: SELF_TARGET }],
+        effects: [
+          {
+            effect: "swapGigs",
+            friendly: boundTarget("friendlyGig"),
+            rival: boundTarget("rivalGig"),
+          },
+        ],
+      }),
+      triggeredAbility({
+        text: "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+        trigger: {
+          trigger: "event",
+          event: { event: "turnStarted", player: "friendly" },
+        },
+        source: SELF_TARGET,
+        effects: [
+          {
+            effect: "forEachFriendlyGigPair",
+            effects: [{ effect: "draw", player: "friendly", amount: 1 }],
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^The next time a friendly Unit wins a fight by 3\+ power this turn, it also steals a Gig\.$/i.test(
+      text,
+    )
+  ) {
+    return [
+      triggeredAbility({
+        text,
+        trigger: { trigger: "play" },
+        source: SELF_TARGET,
+        effects: [
+          {
+            effect: "grantNextFightWinGigSteal",
+            minPowerMargin: 3,
+            duration: "turn",
+          },
+        ],
+      }),
+    ];
+  }
 
   if (/^PLAY Defeat all other Units\.$/i.test(text)) {
     return [

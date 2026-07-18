@@ -55,4 +55,18 @@ export const stratosTornadoTitanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Estratos",
+    version: "Tornado Titán",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "CICLÓN",
+        description:
+          "{E}: obtén una cantidad de conocimientos equivalente a la cantidad de personajes de Titán que tienes en juego.",
+      },
+    ],
+  },
 };

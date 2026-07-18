@@ -61,4 +61,19 @@ export const captainHooksRapierI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Estoque del Capitán Garfio",
+    text: [
+      {
+        title: "¡CONSIGA A ESOS MOCOSOS CON ESCORBITO!",
+        description:
+          "Durante tu turno, cada vez que uno de tus personajes destierre a otro personaje en un desafío, puedes pagar 1 {I} para robar una carta.",
+      },
+      {
+        title: "¡VAMOS A HACERLO!",
+        description:
+          "Tus personajes llamados Capitán Garfio obtienen Challenger +1. (Obtienen +1 {S} mientras desafían).",
+      },
+    ],
+  },
 };

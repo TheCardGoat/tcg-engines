@@ -5,7 +5,7 @@ export const op05Mr1DazBonez075: CharacterCard = {
   id: "OP05-075",
   canonicalId: "OP05-075",
   slug: "mr-1-daz-bonez/op05-075",
-  name: "Mr.1 (Daz.Bonez)",
+  name: "Mr.1(Daz.Bonez)",
   printings: [
     {
       id: "OP05-075",
@@ -57,6 +57,7 @@ export const op05Mr1DazBonez075: CharacterCard = {
               {
                 filter: "trait",
                 value: "Baroque Works",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -65,6 +66,7 @@ export const op05Mr1DazBonez075: CharacterCard = {
             ],
           },
         ],
+        optional: true,
         oncePerTurn: true,
       },
     ],

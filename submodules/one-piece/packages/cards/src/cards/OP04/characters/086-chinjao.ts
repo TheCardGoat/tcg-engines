@@ -23,7 +23,7 @@ export const op04Chinjao086: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Happosui Army Dressrosa"],
+  traits: ["Dressrosa", "Happosui Army"],
   attribute: "strike",
   effect:
     "[DON!! x1] When this Character battles and K.O.'s your opponent's Character, draw 2 cards and trash 2 cards from your hand.",
@@ -31,6 +31,11 @@ export const op04Chinjao086: CharacterCard = {
     effects: [
       {
         trigger: "whenCharacterKod",
+        eventFilter: {
+          player: "opponent",
+          koCause: "battle",
+          sourceSelf: true,
+        },
         conditions: [
           {
             condition: "donAttached",

@@ -17,4 +17,8 @@ export const outOfOrderI18n: Record<Languages, I18nProperties> = {
     name: "Fuori Servizio",
     text: "Esilia un personaggio a tua scelta.",
   },
+  es: {
+    name: "Fuera de servicio",
+    text: "Desterrar al personaje elegido.",
+  },
 };

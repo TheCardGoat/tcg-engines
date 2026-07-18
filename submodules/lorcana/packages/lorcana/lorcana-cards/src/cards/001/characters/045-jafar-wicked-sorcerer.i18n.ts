@@ -21,4 +21,9 @@ export const jafarWickedSorcererI18n: Record<Languages, I18nProperties> = {
     version: "Stregone Malvagio",
     text: "<Sfidante> +3",
   },
+  es: {
+    name: "Jafar",
+    version: "Hechicero malvado",
+    text: "Retador +3",
+  },
 };

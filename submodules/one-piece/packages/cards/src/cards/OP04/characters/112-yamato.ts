@@ -64,6 +64,24 @@ export const op04Yamato112: CharacterCard = {
               ],
             },
           },
+          {
+            action: "addToLife",
+            target: {
+              player: "self",
+              zones: ["deck"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            position: "top",
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 1,
+            },
+          },
         ],
       },
     ],

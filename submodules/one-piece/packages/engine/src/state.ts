@@ -4,11 +4,15 @@ import {
   cardName,
   emitEvent,
   emitLog,
+  enqueueResolution,
   getCardForInstance,
   getInstance,
   getPlayer,
+  enqueueInPlayEffectsForTrigger,
+  isCardPreventedFromRefreshing,
   leaderLife,
   nextIdentifier,
+  otherSeat,
   shuffle,
 } from "./shared.ts";
 import type {
@@ -21,6 +25,7 @@ import type {
   PlayerState,
   PromptState,
 } from "./types.ts";
+import { donGivenFromDonPhase } from "./effects/permanent.ts";
 
 const DEFAULT_DON_DECK_COUNT = 10;
 
@@ -53,6 +58,40 @@ function describeHiddenCard(state: MatchState, instanceId: string): string {
   return "a hidden card";
 }
 
+function processEmptyDeckDefeat(state: MatchState, seat: MatchSeat) {
+  if (state.status !== "active" || getPlayer(state, seat).deck.length > 0) {
+    return;
+  }
+
+  const leaderId = getPlayer(state, seat).leaderInstanceId;
+  const replacement = getCardForInstance(state, leaderId).effects?.replacementEffects?.find(
+    (effect) =>
+      effect.replacedEvent === "loseGame" && effect.replacementAction.action === "winGame",
+  );
+  const winner = replacement ? seat : otherSeat(seat);
+  state.status = "finished";
+  state.phase = "finished";
+  state.winner = winner;
+  emitEvent(state, "winnerDeclared", winner, {
+    sourceCardId: replacement ? getInstance(state, leaderId).cardId : null,
+    sourceInstanceId: replacement ? leaderId : null,
+    visibility: "public",
+    data: { winner },
+  });
+  emitLog(
+    state,
+    "system",
+    replacement
+      ? `${getPlayer(state, seat).playerName} wins when their deck is reduced to 0.`
+      : `${getPlayer(state, winner).playerName} wins because their opponent's deck was reduced to 0.`,
+    {
+      sourceCardId: replacement ? getInstance(state, leaderId).cardId : null,
+      sourceInstanceId: replacement ? leaderId : null,
+      visibility: "public",
+    },
+  );
+}
+
 function zoneLabel(zone: CardZone): string {
   switch (zone) {
     case "character":
@@ -69,29 +108,31 @@ function zoneLabel(zone: CardZone): string {
       return "Stage area";
     case "trash":
       return "Trash";
+    case "resolution":
+      return "effect resolution";
   }
 }
 
 function removeFromCurrentZone(state: MatchState, instanceId: string) {
   const instance = getInstance(state, instanceId);
-  const player = getPlayer(state, instance.owner);
+  const player = getPlayer(state, instance.controller);
 
   switch (instance.zone) {
     case "deck":
       removeFromList(player.deck, instanceId);
-      reindexLinearZone(state, instance.owner, "deck");
+      reindexLinearZone(state, instance.controller, "deck");
       break;
     case "hand":
       removeFromList(player.hand, instanceId);
-      reindexLinearZone(state, instance.owner, "hand");
+      reindexLinearZone(state, instance.controller, "hand");
       break;
     case "life":
       removeFromList(player.life, instanceId);
-      reindexLinearZone(state, instance.owner, "life");
+      reindexLinearZone(state, instance.controller, "life");
       break;
     case "trash":
       removeFromList(player.trash, instanceId);
-      reindexLinearZone(state, instance.owner, "trash");
+      reindexLinearZone(state, instance.controller, "trash");
       break;
     case "character":
       if (player.characterArea[instance.zoneIndex] === instanceId) {
@@ -109,6 +150,7 @@ function removeFromCurrentZone(state: MatchState, instanceId: string) {
       }
       break;
     case "leader":
+    case "resolution":
       break;
   }
 }
@@ -121,6 +163,7 @@ function placeInZone(
   options: {
     slotIndex?: number;
     deckPosition?: "top" | "bottom";
+    lifePosition?: "top" | "bottom";
     faceUp?: boolean;
     publicKnowledge?: boolean;
   } = {},
@@ -128,8 +171,8 @@ function placeInZone(
   const instance = getInstance(state, instanceId);
   const player = getPlayer(state, owner);
 
-  instance.owner = owner;
   instance.controller = owner;
+  instance.zoneChangeCounter += 1;
   instance.zone = zone;
   instance.faceUp = options.faceUp ?? (zone !== "deck" && zone !== "life" && zone !== "hand");
   instance.publicKnowledge =
@@ -152,7 +195,11 @@ function placeInZone(
       reindexLinearZone(state, owner, "hand");
       break;
     case "life":
-      player.life.push(instanceId);
+      if (options.lifePosition === "top") {
+        player.life.unshift(instanceId);
+      } else {
+        player.life.push(instanceId);
+      }
       reindexLinearZone(state, owner, "life");
       break;
     case "trash":
@@ -182,6 +229,9 @@ function placeInZone(
       instance.faceUp = true;
       instance.publicKnowledge = true;
       break;
+    case "resolution":
+      instance.zoneIndex = 0;
+      break;
   }
 }
 
@@ -198,25 +248,28 @@ export function moveCard(
     privateMessages?: Partial<Record<MatchSeat, string>>;
     judgeMessage?: string | null;
     suppressLog?: boolean;
+    redactIdentity?: boolean;
+    deferLifeRemovedTrigger?: boolean;
   } = {},
 ) {
+  const current = getInstance(state, instanceId);
   const previous = {
-    owner: getInstance(state, instanceId).owner,
-    zone: getInstance(state, instanceId).zone,
+    controller: current.controller,
+    zone: current.zone,
     description: describeHiddenCard(state, instanceId),
   };
   removeFromCurrentZone(state, instanceId);
   placeInZone(state, instanceId, owner, zone, options);
   const next = getInstance(state, instanceId);
   emitEvent(state, "cardMoved", options.actor ?? "system", {
-    sourceCardId: next.cardId,
-    sourceInstanceId: instanceId,
+    sourceCardId: options.redactIdentity ? null : next.cardId,
+    sourceInstanceId: options.redactIdentity ? null : instanceId,
     eventId: options.eventId ?? null,
     visibility: options.visibility ?? "public",
     data: {
       fromZone: previous.zone,
       toZone: zone,
-      fromOwner: previous.owner,
+      fromOwner: previous.controller,
       toOwner: owner,
     },
   });
@@ -226,8 +279,8 @@ export function moveCard(
       options.actor ?? "system",
       `${getPlayer(state, owner).playerName} moves ${previous.description} from ${zoneLabel(previous.zone)} to ${zoneLabel(zone)}.`,
       {
-        sourceCardId: next.cardId,
-        sourceInstanceId: instanceId,
+        sourceCardId: options.redactIdentity ? null : next.cardId,
+        sourceInstanceId: options.redactIdentity ? null : instanceId,
         eventId: options.eventId ?? null,
         visibility: options.visibility ?? "public",
         privateMessages: options.privateMessages,
@@ -236,6 +289,32 @@ export function moveCard(
           `${getPlayer(state, owner).playerName} moves ${cardName(getCardForInstance(state, instanceId))} from ${zoneLabel(previous.zone)} to ${zoneLabel(zone)}.`,
       },
     );
+  }
+  if (previous.zone === "life" && zone !== "life" && !options.deferLifeRemovedTrigger) {
+    const effectController =
+      options.actor === "north" || options.actor === "south" ? options.actor : previous.controller;
+    enqueueInPlayEffectsForTrigger(state, "whenLifeRemoved", {
+      instanceId,
+      effectController,
+      targetInstanceId: getPlayer(state, previous.controller).leaderInstanceId,
+    });
+  }
+  if (previous.zone === "life" && zone === "hand") {
+    const effectController =
+      options.actor === "north" || options.actor === "south" ? options.actor : previous.controller;
+    enqueueInPlayEffectsForTrigger(
+      state,
+      "whenLifeAddedToHand",
+      {
+        instanceId,
+        effectController,
+        targetInstanceId: getPlayer(state, previous.controller).leaderInstanceId,
+      },
+      [previous.controller],
+    );
+  }
+  if (previous.zone === "deck" && zone !== "deck") {
+    processEmptyDeckDefeat(state, previous.controller);
   }
 }
 
@@ -253,12 +332,14 @@ function createInstance(
     controller: owner,
     zone,
     zoneIndex,
+    zoneChangeCounter: 0,
     rested: false,
     attachedDon: 0,
     playedOnTurn: null,
     faceUp: zone !== "deck" && zone !== "life" && zone !== "hand",
     publicKnowledge: zone === "leader",
     usedEffectKeys: [],
+    battledOpponentCharacterOnTurn: null,
   };
   state.cards[instance.instanceId] = instance;
   return instance;
@@ -275,12 +356,36 @@ export function addModifier(
     id,
     sourceInstanceId,
     targetId,
+    ...(sourceInstanceId && { createdBySeat: getInstance(state, sourceInstanceId).controller }),
     ...modifier,
   };
 }
 
 function removeModifier(state: MatchState, modifierId: string) {
   delete state.modifiers[modifierId];
+}
+
+export function consumeNextPlayCostModifiers(state: MatchState, instanceId: string) {
+  const sourceIds = new Set(
+    Object.values(state.modifiers)
+      .filter(
+        (modifier) =>
+          modifier.targetId === instanceId &&
+          modifier.type === "cost" &&
+          modifier.consumeOnPlay &&
+          modifier.sourceInstanceId,
+      )
+      .map((modifier) => modifier.sourceInstanceId!),
+  );
+  for (const modifier of Object.values(state.modifiers)) {
+    if (
+      modifier.consumeOnPlay &&
+      modifier.sourceInstanceId &&
+      sourceIds.has(modifier.sourceInstanceId)
+    ) {
+      removeModifier(state, modifier.id);
+    }
+  }
 }
 
 export function cleanupBattleModifiers(state: MatchState, battleId: string) {
@@ -291,9 +396,24 @@ export function cleanupBattleModifiers(state: MatchState, battleId: string) {
   }
 }
 
-export function cleanupTurnEndModifiers(state: MatchState, turnNumber: number) {
+export function cleanupTurnEndModifiers(
+  state: MatchState,
+  turnNumber: number,
+  endingSeat: MatchSeat,
+) {
   for (const modifier of Object.values(state.modifiers)) {
     if (modifier.expiresAtTurn === turnNumber) {
+      const expectedEndingSeat =
+        modifier.duration === "untilEndOfYourNextTurn"
+          ? modifier.createdBySeat
+          : modifier.duration === "untilEndOfOpponentNextTurn" ||
+              modifier.duration === "untilEndOfOpponentNextEndPhase"
+            ? modifier.createdBySeat && otherSeat(modifier.createdBySeat)
+            : undefined;
+      if (expectedEndingSeat && expectedEndingSeat !== endingSeat) {
+        modifier.expiresAtTurn = turnNumber + 1;
+        continue;
+      }
       removeModifier(state, modifier.id);
     }
   }
@@ -490,6 +610,19 @@ export function drawCards(state: MatchState, seat: MatchSeat, amount: number, re
       judgeMessage: `${getPlayer(state, seat).playerName} draws ${formatCardList(state, drawn)}.`,
     },
   );
+
+  if (state.phase !== "draw") {
+    enqueueInPlayEffectsForTrigger(
+      state,
+      "whenCardDrawn",
+      {
+        instanceId: drawn[0]!,
+        instanceController: seat,
+        effectController: seat,
+      },
+      [seat],
+    );
+  }
 }
 
 export function buildInitialPlayerState(
@@ -557,12 +690,14 @@ function resetStartOfTurnState(state: MatchState, seat: MatchSeat) {
   let returningDon = 0;
 
   for (const instance of Object.values(state.cards)) {
-    if (instance.owner !== seat) {
+    if (instance.controller !== seat) {
       continue;
     }
 
     if (instance.zone === "leader" || instance.zone === "character" || instance.zone === "stage") {
-      instance.rested = false;
+      if (!isCardPreventedFromRefreshing(state, instance.instanceId)) {
+        instance.rested = false;
+      }
       instance.usedEffectKeys = [];
       if (instance.attachedDon > 0) {
         returningDon += instance.attachedDon;
@@ -571,8 +706,15 @@ function resetStartOfTurnState(state: MatchState, seat: MatchSeat) {
     }
   }
 
-  player.activeDon += player.restedDon + returningDon;
-  player.restedDon = 0;
+  const frozenDon = Object.values(state.modifiers).filter(
+    (modifier) =>
+      modifier.type === "flag" &&
+      modifier.flag === "freezeDon" &&
+      modifier.targetId.startsWith(`rested-don:${seat}:`),
+  ).length;
+  const remainingRestedDon = Math.min(player.restedDon, frozenDon);
+  player.activeDon += player.restedDon - remainingRestedDon + returningDon;
+  player.restedDon = remainingRestedDon;
   cleanupTurnStartModifiers(state, seat);
 }
 
@@ -589,6 +731,19 @@ export function beginTurn(state: MatchState, seat: MatchSeat, skipDraw: boolean)
   emitLog(state, "system", `${getPlayer(state, seat).playerName} enters Refresh.`, {
     visibility: "public",
   });
+
+  enqueueInPlayEffectsForTrigger(state, "startOfYourTurn", {
+    instanceId: getPlayer(state, seat).leaderInstanceId,
+    effectController: seat,
+  });
+  enqueueResolution(state, {
+    kind: "beginTurnRefreshFinalize",
+    seat,
+    skipDraw,
+  });
+}
+
+export function finalizeBeginTurnRefresh(state: MatchState, seat: MatchSeat, skipDraw: boolean) {
   resetStartOfTurnState(state, seat);
 
   state.phase = "draw";
@@ -615,7 +770,25 @@ export function beginTurn(state: MatchState, seat: MatchSeat, skipDraw: boolean)
   emitLog(state, "system", `${getPlayer(state, seat).playerName} enters DON!! phase.`, {
     visibility: "public",
   });
-  addDonFromDeck(state, seat, 2, false);
+  const player = getPlayer(state, seat);
+  const placedDon = Math.min(2, player.donDeckCount);
+  const givenDon = Math.min(placedDon, donGivenFromDonPhase(state, seat));
+  addDonFromDeck(state, seat, placedDon - givenDon, false);
+  if (givenDon > 0) {
+    player.donDeckCount -= givenDon;
+    getInstance(state, player.leaderInstanceId).attachedDon += givenDon;
+    emitLog(
+      state,
+      "system",
+      `${player.playerName} gives ${givenDon} DON!! from the DON!! Phase to their Leader.`,
+      {
+        sourceCardId: getInstance(state, player.leaderInstanceId).cardId,
+        sourceInstanceId: player.leaderInstanceId,
+        targetIds: [player.leaderInstanceId],
+        visibility: "public",
+      },
+    );
+  }
 
   state.phase = "main";
   emitEvent(state, "phaseChanged", "system", {

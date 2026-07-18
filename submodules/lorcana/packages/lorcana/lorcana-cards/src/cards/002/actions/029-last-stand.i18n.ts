@@ -17,4 +17,8 @@ export const lastStandI18n: Record<Languages, I18nProperties> = {
     name: "Last Stand",
     text: "Banish chosen character who was challenged this turn.",
   },
+  es: {
+    name: "Última resistencia",
+    text: "Destierra al personaje elegido que fue desafiado en este turno.",
+  },
 };

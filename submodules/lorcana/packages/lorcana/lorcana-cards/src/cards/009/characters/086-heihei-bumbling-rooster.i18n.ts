@@ -45,4 +45,15 @@ export const heiheiBumblingRoosterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Heihei",
+    version: "Gallo torpe",
+    text: [
+      {
+        title: "ENgordarte",
+        description:
+          "Cuando juegas con este personaje, si un oponente tiene más cartas en su tintero que tú, puedes poner la carta superior de tu mazo en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

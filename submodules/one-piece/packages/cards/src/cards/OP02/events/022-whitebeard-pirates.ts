@@ -40,6 +40,17 @@ export const op02WhitebeardPirates022: EventCard = {
               amount: 1,
               upTo: true,
             },
+            revealFilters: [
+              {
+                filter: "trait",
+                value: "Whitebeard Pirates",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
             revealDestination: "hand",
             remainderPosition: "bottom",
           },

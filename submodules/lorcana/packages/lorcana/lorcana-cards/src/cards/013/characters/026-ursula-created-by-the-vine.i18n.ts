@@ -45,4 +45,15 @@ export const ursulaCreatedByTheVineI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Úrsula",
+    version: "Creado por la vid",
+    text: [
+      {
+        title: "SAP ENERGÉTICO",
+        description:
+          "Cada vez que uno de tus personajes de Floodborn realiza misiones, el personaje contrario elegido obtiene -1 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

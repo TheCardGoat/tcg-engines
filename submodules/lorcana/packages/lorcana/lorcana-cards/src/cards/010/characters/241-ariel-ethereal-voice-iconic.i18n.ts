@@ -57,4 +57,18 @@ export const arielEtherealVoiceIconicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ariel",
+    version: "Voz etérea",
+    text: [
+      {
+        title: "Impulsar 1 {I}",
+      },
+      {
+        title: "RENDIMIENTO DEL COMANDO",
+        description:
+          "Una vez durante tu turno, cada vez que toques una canción, si hay una carta debajo de este personaje, puedes robar una carta.",
+      },
+    ],
+  },
 };

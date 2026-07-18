@@ -57,4 +57,18 @@ export const darkwingDuckDarkwarriorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato Ala Oscura",
+    version: "Guerrero oscuro",
+    text: [
+      {
+        title: "Retador +2",
+      },
+      {
+        title: "ARMADURA INSTA",
+        description:
+          "Durante tu turno, cada vez que un objeto es desterrado, este personaje obtiene Resistencia +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

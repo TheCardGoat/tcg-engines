@@ -62,4 +62,20 @@ export const scroogeMcduckResourcefulMiserI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Gilito McPato",
+    version: "Avaro ingenioso",
+    text: [
+      {
+        title: "DARLE BUEN USO",
+        description:
+          "Puedes utilizar 4 elementos tuyos para interpretar a este personaje de forma gratuita.",
+      },
+      {
+        title: "CAZADOR DE FORTUNAS",
+        description:
+          "Cuando juegues con este personaje, mira las 4 cartas superiores de tu mazo. Puedes revelar una carta de objeto y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

@@ -50,6 +50,7 @@ export const op11VinsmokeReiju047: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "The Vinsmoke Family",
+            match: "includes",
           },
         ],
         actions: [
@@ -64,6 +65,13 @@ export const op11VinsmokeReiju047: CharacterCard = {
               amount: 1,
               upTo: true,
             },
+            revealFilters: [
+              {
+                filter: "trait",
+                value: "GERMA",
+                match: "includes",
+              },
+            ],
             revealDestination: "hand",
             remainderPosition: "trash",
           },

@@ -77,4 +77,23 @@ export const kuzcoPanickedLlamaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kuzco",
+    version: "Llama en pánico",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "PODEMOS DESCUBRIR ESTO",
+        description: "Al comienzo de tu turno, elige uno:",
+      },
+      {
+        title: "• Cada jugador roba una carta.",
+      },
+      {
+        title: "• Cada jugador elige y descarta una carta.",
+      },
+    ],
+  },
 };

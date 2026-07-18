@@ -17,4 +17,8 @@ export const gadgetHackwrenchPerceptiveMouseI18n: Record<Languages, I18nProperti
     name: "Scheggia Hackwrench",
     version: "Topolina Perspicace",
   },
+  es: {
+    name: "Llave para hackear gadgets",
+    version: "Ratón perceptivo",
+  },
 };

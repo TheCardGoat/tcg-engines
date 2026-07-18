@@ -29,5 +29,41 @@ export const op14eb04Kumacy102: CharacterCard = {
   attribute: "strike",
   effect:
     "[Trigger] Play up to 1 {Thriller Bark Pirates} type Character card with a cost of 4 or less from your trash rested.",
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+              {
+                filter: "trait",
+                value: "Thriller Bark Pirates",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+            playState: "rested",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op14eb04Kumacy102I18n,
 };

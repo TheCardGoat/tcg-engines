@@ -4,6 +4,7 @@ export const gd02GundamLeopard060: UnitCard = {
   cardNumber: "GD02-060",
   name: "Gundam Leopard",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "purple",
   traits: ["vulture"],
   id: "GD02-060",
@@ -58,6 +59,7 @@ export const gd02GundamLeopard060: UnitCard = {
   cost: 4,
   ap: 4,
   hp: 4,
+  linkCondition: "[Roybea Loy]",
   effect:
     "【Deploy】If there are 7 or more cards in your trash, choose 1 enemy Unit that is Lv.4 or lower. Rest it.<br>",
   effects: [

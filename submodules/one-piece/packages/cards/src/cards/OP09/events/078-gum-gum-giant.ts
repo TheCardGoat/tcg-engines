@@ -28,12 +28,6 @@ export const op09GumGumGiant078: EventCard = {
     effects: [
       {
         trigger: "counter",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Straw Hat Crew",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -57,11 +51,21 @@ export const op09GumGumGiant078: EventCard = {
             },
             value: 4000,
             duration: "thisBattle",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Straw Hat Crew",
+              match: "includes",
+            },
           },
           {
             action: "draw",
             player: "self",
             amount: 2,
+            condition: {
+              condition: "leaderTrait",
+              trait: "Straw Hat Crew",
+              match: "includes",
+            },
           },
         ],
         optional: true,

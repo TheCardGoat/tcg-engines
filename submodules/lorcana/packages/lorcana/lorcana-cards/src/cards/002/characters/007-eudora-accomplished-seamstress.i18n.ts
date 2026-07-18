@@ -17,4 +17,8 @@ export const eudoraAccomplishedSeamstressI18n: Record<Languages, I18nProperties>
     name: "Eudora",
     version: "Accomplished Seamstress",
   },
+  es: {
+    name: "Eudora",
+    version: "Costurera consumada",
+  },
 };

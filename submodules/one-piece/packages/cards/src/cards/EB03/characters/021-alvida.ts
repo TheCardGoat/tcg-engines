@@ -60,7 +60,7 @@ export const eb03Alvida021: CharacterCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

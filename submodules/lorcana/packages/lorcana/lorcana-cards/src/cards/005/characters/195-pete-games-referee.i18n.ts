@@ -45,4 +45,15 @@ export const peteGamesRefereeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pete",
+    version: "Árbitro de juegos",
+    text: [
+      {
+        title: "DELATAR",
+        description:
+          "Cuando juegas con este personaje, los oponentes no pueden realizar acciones hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

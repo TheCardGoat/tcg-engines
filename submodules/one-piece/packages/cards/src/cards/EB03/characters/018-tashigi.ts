@@ -60,6 +60,10 @@ export const eb03Tashigi018: CharacterCard = {
         trigger: "endOfYourTurn",
         costs: [
           {
+            cost: "restDon",
+            amount: 1,
+          },
+          {
             cost: "trashFromHand",
             amount: 1,
           },
@@ -101,6 +105,7 @@ export const eb03Tashigi018: CharacterCard = {
             },
             duration: "permanent",
             restriction: "byEffect",
+            byPlayer: "opponent",
           },
           {
             action: "grantKeyword",

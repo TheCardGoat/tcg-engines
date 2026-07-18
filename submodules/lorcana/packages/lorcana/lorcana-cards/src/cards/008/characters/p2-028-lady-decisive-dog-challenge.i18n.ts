@@ -60,4 +60,19 @@ export const ladyDecisiveDogP2ChallengeI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Dama",
+    version: "Perro decisivo",
+    text: [
+      {
+        title: "PAQUETE PROPIO",
+        description:
+          "Siempre que juegas con un personaje, este personaje obtiene +1 {S} este turno.",
+      },
+      {
+        title: "TOMAR LA CABEZA",
+        description: "Mientras este personaje tenga 3 {S} o más, obtiene +2 {L}.",
+      },
+    ],
+  },
 };

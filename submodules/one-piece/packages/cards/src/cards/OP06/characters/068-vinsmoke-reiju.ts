@@ -23,7 +23,7 @@ export const op06VinsmokeReiju068: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   attribute: "special",
   effect:
     "[Activate:Main] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.)You may trash this Character: If your Leader has the [GERMA 66] type, play up to 1 [Vinsmoke Reiju] with a cost of 4 from your hand or trash.",
@@ -31,12 +31,6 @@ export const op06VinsmokeReiju068: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "GERMA 66",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -68,6 +62,11 @@ export const op06VinsmokeReiju068: CharacterCard = {
                 value: "Vinsmoke Reiju",
               },
             ],
+            condition: {
+              condition: "leaderTrait",
+              trait: "GERMA 66",
+              match: "includes",
+            },
           },
         ],
         optional: true,

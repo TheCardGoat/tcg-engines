@@ -45,4 +45,15 @@ export const winterCampMedicalTentI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Campamento de invierno",
+    version: "Tienda médica",
+    text: [
+      {
+        title: "AYUDA A LOS HERIDOS",
+        description:
+          "Siempre que un personaje realice una misión mientras esté aquí, elimina hasta 2 daños. Si es un personaje héroe, elimina hasta 4 daños.",
+      },
+    ],
+  },
 };

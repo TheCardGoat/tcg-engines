@@ -78,4 +78,22 @@ export const tinkerBellGiantFairyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Campanita",
+    version: "Hada gigante",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "OSCILAR EL BARCO",
+        description: "Cuando juegas con este personaje, inflige 1 daño a cada personaje contrario.",
+      },
+      {
+        title: "¡PIRATA PEQUEÑO!",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, puedes causar 2 daños al personaje contrario elegido.",
+      },
+    ],
+  },
 };

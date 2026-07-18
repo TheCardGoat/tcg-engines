@@ -64,4 +64,19 @@ export const captainHookMasterSwordsmanI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Capitán Garfio",
+    version: "Maestro espadachín",
+    text: [
+      {
+        title: "JUSTICIA",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, prepara este personaje. No puede realizar misiones durante el resto de este turno.",
+      },
+      {
+        title: "HOMBRE A HOMBRE",
+        description: "Los personajes llamados Peter Pan pierden Evasivo y no pueden ganar Evasivo.",
+      },
+    ],
+  },
 };

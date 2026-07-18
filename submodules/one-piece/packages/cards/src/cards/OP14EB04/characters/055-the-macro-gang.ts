@@ -4,7 +4,7 @@ import { op14eb04TheMacroGang055I18n } from "./055-the-macro-gang.i18n.ts";
 export const op14eb04TheMacroGang055: CharacterCard = {
   id: "OP14-055",
   canonicalId: "OP14-055",
-  slug: "the-macro-gang",
+  slug: "the-macro-gang/op14-055",
   name: "The Macro Gang",
   printings: [
     {
@@ -23,7 +23,7 @@ export const op14eb04TheMacroGang055: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 2000,
-  traits: ["Fish-Man The Sun Pirates"],
+  traits: ["Fish-Man", "The Sun Pirates"],
   attribute: "strike",
   i18n: op14eb04TheMacroGang055I18n,
 };

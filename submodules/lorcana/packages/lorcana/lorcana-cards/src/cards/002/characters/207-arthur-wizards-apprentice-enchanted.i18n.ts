@@ -45,4 +45,15 @@ export const arthurWizardsApprenticeEnchantedI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Arturo",
+    version: "Aprendiz de mago",
+    text: [
+      {
+        title: "ALUMNO",
+        description:
+          "Siempre que este personaje realice una misión, puedes devolver otro personaje tuyo elegido a tu mano para ganar 2 conocimientos.",
+      },
+    ],
+  },
 };

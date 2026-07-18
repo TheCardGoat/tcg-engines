@@ -31,12 +31,6 @@ export const op10Baby5076: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Donquixote Pirates",
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -51,6 +45,11 @@ export const op10Baby5076: CharacterCard = {
               upTo: true,
             },
             state: "active",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Donquixote Pirates",
+              match: "includes",
+            },
           },
         ],
         optional: true,

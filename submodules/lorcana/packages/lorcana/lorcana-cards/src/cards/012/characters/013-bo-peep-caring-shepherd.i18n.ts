@@ -45,4 +45,15 @@ export const boPeepCaringShepherdI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bo pío",
+    version: "Pastor cariñoso",
+    text: [
+      {
+        title: "¡ALGUIEN HAGA ALGO!",
+        description:
+          "Tus personajes llamados Woody obtienen Guardaespaldas. (Un personaje contrario que desafíe a uno de tus personajes debe elegir uno con Bodyguard si puede).",
+      },
+    ],
+  },
 };

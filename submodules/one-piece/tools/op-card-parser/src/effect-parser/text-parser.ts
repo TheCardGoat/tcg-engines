@@ -249,7 +249,7 @@ function parsePrefixChain(segment: string): PrefixParseResult {
     }
 
     // Try DON!! return cost: DON!! -N or DON!! N (outside brackets)
-    const donReturnMatch = /^DON!!\s*-?\s*(\d+)\s*/.exec(remaining);
+    const donReturnMatch = /^DON!!\s*[-\u2212]?\s*(\d+)\s*/.exec(remaining);
     if (donReturnMatch) {
       costs.push({ type: "returnDon", amount: parseInt(donReturnMatch[1]!, 10) });
       remaining = remaining.slice(donReturnMatch[0].length);
@@ -271,14 +271,16 @@ function parsePrefixChain(segment: string): PrefixParseResult {
   // Strip leading comma/space from cost-action separator (e.g., "DON!! 2, You may trash...")
   remaining = remaining.replace(/^[,\s]+/, "");
 
-  // Now handle cost text before the colon separator
-  // Look for "You may <cost>:" pattern
-  const costColonMatch = /^(You may .+?):\s*/i.exec(remaining);
-  if (costColonMatch) {
-    const costText = costColonMatch[1]!;
-    optional = true;
-    const cost = parseTextCost(costText);
-    costs.push(cost);
+  // Now handle cost text before the colon separator. Most cards use
+  // "You may <cost>:", but some spell the first payment imperatively before
+  // joining a later optional payment (for example, "Rest 1 DON!! and you may
+  // rest this Character:"). Accept either shape only when the prefix parses as
+  // real costs, so ordinary action punctuation is not consumed as payment.
+  const costColonMatch = /^(.+?):\s*/i.exec(remaining);
+  const parsedColonCosts = costColonMatch ? parseTextCosts(costColonMatch[1]!) : [];
+  if (costColonMatch && parsedColonCosts.some((cost) => cost.type !== "unknown")) {
+    optional = /\byou\s+may\b/i.test(costColonMatch[1]!);
+    costs.push(...parsedColonCosts.filter((cost) => cost.type !== "unknown"));
     remaining = remaining.slice(costColonMatch[0].length);
   } else {
     // Check for a bare colon that separates cost notation from action text
@@ -288,6 +290,15 @@ function parsePrefixChain(segment: string): PrefixParseResult {
     if (bareColonMatch && costs.length > 0) {
       remaining = remaining.slice(bareColonMatch[0].length);
     }
+  }
+
+  // Cost reminder text uses "You may", but is stripped before this point.
+  // Costs are optional when a passive trigger offers the effect; direct
+  // activations already represent the player's choice to pay their costs.
+  const directActivationTriggers = new Set(["main", "counter", "trigger", "activateMain"]);
+  const hasPassiveTrigger = triggers.some((trigger) => !directActivationTriggers.has(trigger));
+  if (costs.length > 0 && hasPassiveTrigger) {
+    optional = true;
   }
 
   return {
@@ -300,18 +311,204 @@ function parsePrefixChain(segment: string): PrefixParseResult {
   };
 }
 
-function parseTextCost(text: string): RawCost {
-  // "You may trash N card(s) from your hand"
-  if (/trash\s+\d+\s+cards?\s+from\s+your\s+hand/i.test(text)) {
-    return { type: "trashFromHand", raw: text };
+function parseTextCosts(text: string): RawCost[] {
+  const costs: Array<{ index: number; cost: RawCost }> = [];
+
+  const variableReturnDonMatch =
+    /return\s+(\d+)\s+or\s+more\s+DON!!\s+cards?\s+from\s+your\s+field\s+to\s+your\s+DON!!\s+deck/i.exec(
+      text,
+    );
+  if (variableReturnDonMatch) {
+    costs.push({
+      index: variableReturnDonMatch.index,
+      cost: {
+        type: "returnDon",
+        minimumAmount: parseInt(variableReturnDonMatch[1]!, 10),
+      },
+    });
   }
-  // "You may rest this Character/Stage/Leader"
-  if (/rest\s+this\s+(character|stage|leader)/i.test(text)) {
-    return { type: "restThisCard" };
+
+  const alternativeTrashCardMatch =
+    /trash\s+\d+\s+.+?\s+from\s+your\s+hand\s+or\s+\d+\s+\[[^\]]+\]\s+from\s+your\s+hand\s+or\s+field/i.exec(
+      text,
+    );
+  if (alternativeTrashCardMatch) {
+    costs.push({
+      index: alternativeTrashCardMatch.index,
+      cost: { type: "trashCard", raw: alternativeTrashCardMatch[0] },
+    });
+  }
+
+  const playCardMatch = /play\s+\d+\s+\[[^\]]+\]\s+from\s+your\s+hand/i.exec(text);
+  if (playCardMatch) {
+    costs.push({
+      index: playCardMatch.index,
+      cost: { type: "playCard", raw: playCardMatch[0] },
+    });
+  }
+
+  const modifyLeaderPowerMatch =
+    /give\s+your\s+(?:1\s+)?(active\s+)?Leader\s+([+-]\d+)\s+power\s+during\s+this\s+turn/i.exec(
+      text,
+    );
+  if (modifyLeaderPowerMatch) {
+    costs.push({
+      index: modifyLeaderPowerMatch.index,
+      cost: {
+        type: "modifyLeaderPower",
+        value: parseInt(modifyLeaderPowerMatch[2]!, 10),
+        duration: "thisTurn",
+        ...(modifyLeaderPowerMatch[1] && { requiresActive: true }),
+      },
+    });
+  }
+
+  // "You may rest N of your DON!! cards"
+  const restDonMatch = /(?:rest|and)\s+(\d+)\s+of\s+your\s+DON!!\s+cards?/i.exec(text);
+  if (restDonMatch) {
+    costs.push({
+      index: restDonMatch.index,
+      cost: { type: "restDon", amount: parseInt(restDonMatch[1]!, 10) },
+    });
+  }
+  // "You may trash N card(s) from your hand", optionally filtered by a supported type or Trigger.
+  const trashFromHandMatch =
+    /trash\s+\d+\s+(?:cards?|(?:Character|Event|Stage)s?|\[[^\]]+\]|Character\s+cards?\s+with\s+a\s+cost\s+of\s+\d+(?:\s+or\s+(?:less|more))?|.+?\s+type\s+(?:Character|Event|Stage)\s+cards?\s+with\s+\d+\s+power(?:\s+or\s+(?:less|more))?|.+?\s+type\s+cards?|cards?\s+with\s+a\s+type\s+including\s+[""\u201c][^""\u201d]+[""\u201d]|cards?\s+with\s+a\s+\[Trigger\])\s+from\s+your\s+hand/i.exec(
+      text,
+    );
+  if (trashFromHandMatch && !alternativeTrashCardMatch) {
+    costs.push({
+      index: trashFromHandMatch.index,
+      cost: { type: "trashFromHand", raw: text },
+    });
+  }
+  const trashFromDeckMatch = /trash\s+(\d+)\s+cards?\s+from\s+the\s+top\s+of\s+your\s+deck/i.exec(
+    text,
+  );
+  if (trashFromDeckMatch) {
+    costs.push({
+      index: trashFromDeckMatch.index,
+      cost: {
+        type: "trashFromDeck",
+        amount: parseInt(trashFromDeckMatch[1]!, 10),
+        position: "top",
+      },
+    });
+  }
+  // "You may trash N card(s) from the top, bottom, or top or bottom of your Life cards"
+  const trashLifeMatch =
+    /trash\s+(\d+)\s+cards?\s+from\s+the\s+(top\s+or\s+bottom|top|bottom)\s+of\s+your\s+Life\s+cards?/i.exec(
+      text,
+    );
+  if (trashLifeMatch) {
+    const positionText = trashLifeMatch[2]!.toLowerCase().replace(/\s+/g, " ");
+    costs.push({
+      index: trashLifeMatch.index,
+      cost: {
+        type: "trashLife",
+        amount: parseInt(trashLifeMatch[1]!, 10),
+        position: positionText === "top or bottom" ? "choice" : (positionText as "top" | "bottom"),
+      },
+    });
+  }
+  // "You may trash N of your <qualified> Characters", including a second
+  // Character after "trash this Character and ...".
+  const compoundTrashCharacterMatch =
+    /trash\s+this\s+(?:Character|Stage|Leader)\s+and\s+\d+\s+of\s+your\s+Characters?\s+with\s+a\s+type\s+including\s+[""\u201c][^""\u201d]+[""\u201d]/i.exec(
+      text,
+    );
+  const trashCharacterMatch =
+    /trash\s+\d+\s+of\s+your\s+(?:.+?\s+)?Characters?(?:(?:\s+other\s+than\s+this\s+Character)(?:\s+with\s+\d+\s+power\s+or\s+more)?|(?:\s+with\s+\d+\s+power\s+or\s+more)(?:\s+other\s+than\s+this\s+Character)?|)/i.exec(
+      text,
+    ) ??
+    /\band\s+\d+\s+of\s+your\s+Characters?\s+with\s+a\s+type\s+including\s+["\u201c][^"\u201d]+["\u201d]/i.exec(
+      text,
+    );
+  if (trashCharacterMatch) {
+    const raw = trashCharacterMatch[0];
+    costs.push({
+      index:
+        trashCharacterMatch.index +
+        (compoundTrashCharacterMatch && raw.toLowerCase().startsWith("and")
+          ? raw.toLowerCase().indexOf("and")
+          : 0),
+      cost: { type: "trashCharacter", raw },
+    });
+  }
+  // "You may K.O. N of your Characters other than this Character"
+  const koCharacterMatch =
+    /K\.O\.\s+\d+\s+of\s+your\s+(?:\[[^\]]+\]\s+type\s+)?Characters?(?:\s+other\s+than\s+this\s+Character)?/i.exec(
+      text,
+    );
+  if (koCharacterMatch) {
+    costs.push({
+      index: koCharacterMatch.index,
+      cost: { type: "koCharacter", raw: koCharacterMatch[0] },
+    });
+  }
+  // "You may rest this Character/Stage/Leader/card"
+  const restThisMatch =
+    /rest\s+this\s+(character|stage|leader|card)/i.exec(text) ??
+    (restDonMatch ? /\band\s+this\s+(character|stage|leader)/i.exec(text) : null);
+  if (restThisMatch) {
+    costs.push({ index: restThisMatch.index, cost: { type: "restThisCard" } });
   }
   // "You may trash this Character/Stage/Leader"
-  if (/trash\s+this\s+(character|stage|leader)/i.test(text)) {
-    return { type: "trashThisCard" };
+  const trashThisMatch = /trash\s+this\s+(character|stage|leader)/i.exec(text);
+  if (trashThisMatch) {
+    costs.push({ index: trashThisMatch.index, cost: { type: "trashThisCard" } });
+  }
+  // "You may return this Character to the owner's hand"
+  const returnThisToHandMatch =
+    /return\s+this\s+character\s+to\s+(?:the\s+owner[''\u2019]s|your)\s+hand/i.exec(text);
+  if (returnThisToHandMatch) {
+    costs.push({ index: returnThisToHandMatch.index, cost: { type: "returnThisToHand" } });
+  }
+  // "You may place this Character/Stage/card at the top/bottom of the owner's deck"
+  const returnThisToDeckMatch =
+    /place\s+this\s+(?:character|stage|card)\s+at\s+the\s+(top|bottom)\s+of\s+(?:the\s+owner[''\u2019]s|your)\s+deck/i.exec(
+      text,
+    );
+  if (returnThisToDeckMatch) {
+    costs.push({
+      index: returnThisToDeckMatch.index,
+      cost: {
+        type: "returnThisToDeck",
+        position: returnThisToDeckMatch[1]!.toLowerCase() as "top" | "bottom",
+      },
+    });
+  }
+  const returnThisAndHandToDeckMatch =
+    /place\s+this\s+(?:card|Character|Stage)\s+and\s+(\d+)\s+cards?\s+from\s+your\s+hand\s+at\s+the\s+(top|bottom)\s+of\s+your\s+deck(?:\s+in\s+any\s+order)?/i.exec(
+      text,
+    );
+  if (returnThisAndHandToDeckMatch) {
+    costs.push({
+      index: returnThisAndHandToDeckMatch.index,
+      cost: {
+        type: "returnThisAndHandToDeck",
+        handAmount: parseInt(returnThisAndHandToDeckMatch[1]!, 10),
+        position: returnThisAndHandToDeckMatch[2]!.toLowerCase() as "top" | "bottom",
+      },
+    });
+  }
+  const returnThisAndTrashToDeckMatch =
+    /place\s+this\s+(?:card|Character|Stage)\s+and\s+(\d+)\s+(.+?)\s+from\s+your\s+trash\s+at\s+the\s+(top|bottom)\s+of\s+your\s+deck(?:\s+in\s+any\s+order)?/i.exec(
+      text,
+    );
+  if (returnThisAndTrashToDeckMatch) {
+    const position = returnThisAndTrashToDeckMatch[3]!.toLowerCase() as "top" | "bottom";
+    costs.push({
+      index: returnThisAndTrashToDeckMatch.index,
+      cost: { type: "returnThisToDeck", position },
+    });
+    costs.push({
+      index: returnThisAndTrashToDeckMatch.index,
+      cost: {
+        type: "returnFromTrashToDeck",
+        raw: `place ${returnThisAndTrashToDeckMatch[1]} ${returnThisAndTrashToDeckMatch[2]} from your trash at the ${position} of your deck`,
+      },
+    });
   }
   // "You may turn N card(s) from the top of your Life cards face-up/face-down"
   const faceUpMatch =
@@ -319,13 +516,119 @@ function parseTextCost(text: string): RawCost {
       text,
     );
   if (faceUpMatch) {
-    return { type: "turnLifeFaceUp", count: parseInt(faceUpMatch[1]!, 10) };
+    costs.push({
+      index: faceUpMatch.index,
+      cost: {
+        type: "turnLifeFaceUp",
+        count: parseInt(faceUpMatch[1]!, 10),
+        faceUp: faceUpMatch[2]!.toLowerCase() === "up",
+      },
+    });
   }
-  // "You may rest N of your cards/Characters/..." (but NOT "DON!! cards" — that's restDon)
-  if (/rest\s+\d+\s+of\s+your\s+(?!DON!!)/i.test(text)) {
-    return { type: "restCards", raw: text };
+  // "You may return N of your Characters to the owner's hand"
+  // "You may return N Character to your hand"
+  const returnCharacterMatch =
+    /return\s+\d+\s+(?:(?:of\s+your\s+(?:.+?\s+)?)?Characters?)(?:\s+with\s+a\s+cost\s+of\s+\d+(?:\s+or\s+(?:less|more))?)?\s+to\s+(?:the\s+owner[''\u2019]s|your)\s+hand/i.exec(
+      text,
+    );
+  if (returnCharacterMatch) {
+    costs.push({
+      index: returnCharacterMatch.index,
+      cost: { type: "returnCharacter", raw: returnCharacterMatch[0] },
+    });
   }
-  return { type: "unknown", raw: text };
+  // "You may place N [qualified] Character(s)/Stage(s) at the top/bottom of the owner's deck"
+  const returnCharacterToDeckMatch =
+    /place\s+\d+\s+(?:(?:of\s+your|of\s+your\s+opponent['\u2019]s)\s+)?(?:Characters?|Stages?)(?:\s+other\s+than\s+this\s+Character)?(?:\s+with\s+(?:a\s+cost\s+of\s+\d+(?:\s+or\s+(?:less|more))?|\d+\s+base\s+power))?\s+at\s+the\s+(?:top|bottom)\s+of\s+(?:the\s+owner['\u2019]s|your)\s+deck/i.exec(
+      text,
+    );
+  if (returnCharacterToDeckMatch) {
+    costs.push({
+      index: returnCharacterToDeckMatch.index,
+      cost: { type: "returnCharacterToDeck", raw: returnCharacterToDeckMatch[0] },
+    });
+  }
+  // "You may place/return N cards from your trash at/to the bottom of your deck"
+  const returnFromTrashMatch =
+    /(?:place|return)\s+\d+\s+.+?\s+from\s+your\s+trash\s+(?:(?:at|to)\s+the\s+bottom\s+of\s+your\s+deck|to\s+your\s+deck\s+and\s+shuffle\s+it)/i.exec(
+      text,
+    );
+  if (returnFromTrashMatch) {
+    costs.push({
+      index: returnFromTrashMatch.index,
+      cost: { type: "returnFromTrashToDeck", raw: returnFromTrashMatch[0] },
+    });
+  }
+  // "You may place N cards from your hand at the top/bottom of your deck"
+  const returnHandToDeckMatch =
+    /place\s+(\d+)\s+cards?\s+from\s+your\s+hand\s+at\s+the\s+(top|bottom)\s+of\s+your\s+deck/i.exec(
+      text,
+    );
+  if (returnHandToDeckMatch) {
+    costs.push({
+      index: returnHandToDeckMatch.index,
+      cost: {
+        type: "returnHandToDeck",
+        amount: parseInt(returnHandToDeckMatch[1]!, 10),
+        position: returnHandToDeckMatch[2]!.toLowerCase() as "top" | "bottom",
+      },
+    });
+  }
+  // "You may add N cards from the top, bottom, or top or bottom of your Life cards to your hand"
+  const addLifeToHandMatch =
+    /add\s+(\d+)\s+cards?\s+from\s+the\s+(top\s+or\s+bottom|top|bottom)\s+of\s+your\s+Life\s+cards?\s+to\s+your\s+hand/i.exec(
+      text,
+    );
+  if (addLifeToHandMatch) {
+    const positionText = addLifeToHandMatch[2]!.toLowerCase().replace(/\s+/g, " ");
+    costs.push({
+      index: addLifeToHandMatch.index,
+      cost: {
+        type: "addLifeToHand",
+        amount: parseInt(addLifeToHandMatch[1]!, 10),
+        position: positionText === "top or bottom" ? "choice" : (positionText as "top" | "bottom"),
+      },
+    });
+  }
+  const revealFromHandMatch = /reveal\s+\d+\s+.+?\s+from\s+your\s+hand/i.exec(text);
+  if (revealFromHandMatch) {
+    costs.push({
+      index: revealFromHandMatch.index,
+      cost: { type: "revealFromHand", raw: text },
+    });
+  }
+  // "You may rest N of your cards/Characters/...", "rest your N Leader", or "rest your Leader"
+  // (but NOT "DON!! cards" — that's restDon).
+  const restLeaderOrStageMatch =
+    /rest\s+your\s+Leader\s+or\s+\d+\s+of\s+your\s+Stage\s+cards?/i.exec(text);
+  const boundedRestCardsMatch =
+    /rest\s+\d+\s+of\s+your\s+(?!DON!!).+?(?:cards?|Characters?|Leaders?|Stages?)(?=\s*(?:,\s+and\s+return|:))/i.exec(
+      text,
+    );
+  const restCardsMatch =
+    restLeaderOrStageMatch ??
+    boundedRestCardsMatch ??
+    /rest\s+\d+\s+of\s+your\s+(?!DON!!)/i.exec(text) ??
+    /rest\s+this\s+(?:Character|Leader|Stage|card)\s+and\s+\d+\s+of\s+your\s+(?!DON!!).+/i.exec(
+      text,
+    ) ??
+    /rest\s+your\s+\d+\s+(?:Leader|Character|Stage)/i.exec(text) ??
+    /rest\s+your\s+(?:Leader|Character|Stage)/i.exec(text);
+  if (restCardsMatch) {
+    costs.push({
+      index: restCardsMatch.index,
+      cost: {
+        type: "restCards",
+        raw:
+          restCardsMatch === restLeaderOrStageMatch || restCardsMatch === boundedRestCardsMatch
+            ? restCardsMatch[0]
+            : text,
+      },
+    });
+  }
+  return costs.length > 0
+    ? costs.sort((left, right) => left.index - right.index).map(({ cost }) => cost)
+    : [{ type: "unknown", raw: text }];
 }
 
 // ── Choose one parsing ──
@@ -333,6 +636,7 @@ function parseTextCost(text: string): RawCost {
 function parseChoicePattern(actionText: string): {
   prefix: string;
   choiceItems?: string[];
+  postChoiceActionText?: string;
 } {
   const chooseIdx = actionText.toLowerCase().indexOf("choose one:");
   if (chooseIdx === -1) return { prefix: actionText };
@@ -346,9 +650,20 @@ function parseChoicePattern(actionText: string): {
     .map((s) => s.trim())
     .filter(Boolean);
 
+  let postChoiceActionText: string | undefined;
+  const lastItem = items.at(-1);
+  if (lastItem) {
+    const trailingThen = /^(.*?)\.\s*Then,\s*(.+)$/is.exec(lastItem);
+    if (trailingThen) {
+      items[items.length - 1] = `${trailingThen[1]!.trim()}.`;
+      postChoiceActionText = trailingThen[2]!.trim();
+    }
+  }
+
   return {
     prefix: prefix || "Choose one:",
     choiceItems: items.length > 0 ? items : undefined,
+    ...(postChoiceActionText && { postChoiceActionText }),
   };
 }
 
@@ -377,22 +692,36 @@ export function parseEffectText(text: string): ParsedEffectText {
     "[$1] ($2) :",
   );
 
-  // Step 3: Strip [Trigger] section (if it somehow leaks through)
-  const triggerSplit = /(?:^|\n)\[Trigger\]\s*[\s\S]*$/i;
-  const withoutTrigger = fixed.replace(triggerSplit, "").trim();
-
-  if (!withoutTrigger) {
+  // Step 3: Keep [Trigger] as a first-class effect segment. Normalized card
+  // data may store its printed Trigger separately, but generation combines it
+  // with the main effect text before parsing.
+  if (!fixed.trim()) {
     return { plainStatements: [], segments: [], ...(errata && { errata }) };
   }
 
   // Step 4: Split into lines
-  const lines = splitIntoLines(withoutTrigger);
+  const lines = splitIntoLines(fixed);
 
   // Step 5: Process each line
   const plainStatements: string[] = [];
   const segments: RawEffectSegment[] = [];
 
   for (const line of lines) {
+    const previousSegment = segments.at(-1);
+    if (
+      /^Then,\s*/i.test(line) &&
+      previousSegment?.choiceItems?.length &&
+      !previousSegment.postChoiceActionText
+    ) {
+      previousSegment.postChoiceActionText = line.replace(/^Then,\s*/i, "").trim();
+      continue;
+    }
+
+    if (/^This\s+effect\s+can\s+be\s+activated\s+when\b/i.test(line)) {
+      processSegment(line, segments);
+      continue;
+    }
+
     // Check if line starts with a known bracket
     if (!startsWithKnownBracket(line)) {
       // Try to split plain text prefix from bracket suffix
@@ -434,7 +763,11 @@ function processSegment(line: string, segments: RawEffectSegment[]): void {
   }
 
   // Parse "Choose one:" in action text
-  const { prefix: actionPrefix, choiceItems } = parseChoicePattern(prefix.actionText);
+  const {
+    prefix: actionPrefix,
+    choiceItems,
+    postChoiceActionText,
+  } = parseChoicePattern(prefix.actionText);
 
   segments.push({
     triggers: prefix.triggers,
@@ -444,5 +777,6 @@ function processSegment(line: string, segments: RawEffectSegment[]): void {
     optional: prefix.optional,
     rawActionText: actionPrefix,
     ...(choiceItems && { choiceItems }),
+    ...(postChoiceActionText && { postChoiceActionText }),
   });
 }

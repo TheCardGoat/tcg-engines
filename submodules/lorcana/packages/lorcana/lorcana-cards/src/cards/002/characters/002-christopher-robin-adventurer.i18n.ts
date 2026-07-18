@@ -45,4 +45,15 @@ export const christopherRobinAdventurerI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Cristóbal Robin",
+    version: "Aventurero",
+    text: [
+      {
+        title: "SIEMPRE ESTAREMOS JUNTOS",
+        description:
+          "Siempre que prepares este personaje, si tienes 2 o más personajes en juego, obtienes 2 conocimientos.",
+      },
+    ],
+  },
 };

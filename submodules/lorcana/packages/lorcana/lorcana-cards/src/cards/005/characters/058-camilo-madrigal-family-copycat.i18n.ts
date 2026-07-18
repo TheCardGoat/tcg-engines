@@ -45,4 +45,15 @@ export const camiloMadrigalFamilyCopycatI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Camilo Madrigal",
+    version: "Imitador familiar",
+    text: [
+      {
+        title: "IMITAR",
+        description:
+          "Siempre que este personaje realice una misión, podrás obtener un conocimiento equivalente al {L} del otro personaje tuyo elegido. Devuelve ese personaje a tu mano.",
+      },
+    ],
+  },
 };

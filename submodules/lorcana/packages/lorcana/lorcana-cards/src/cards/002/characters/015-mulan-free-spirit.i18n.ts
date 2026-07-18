@@ -21,4 +21,9 @@ export const mulanFreeSpiritI18n: Record<Languages, I18nProperties> = {
     version: "Spirito Libero",
     text: "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
   },
+  es: {
+    name: "Mulán",
+    version: "Espíritu libre",
+    text: "Apoyo",
+  },
 };

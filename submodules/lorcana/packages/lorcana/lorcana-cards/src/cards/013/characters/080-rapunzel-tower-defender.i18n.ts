@@ -45,4 +45,15 @@ export const rapunzelTowerDefenderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rapunzel",
+    version: "Defensor de la torre",
+    text: [
+      {
+        title: "EL DISEÑO DEL DESTINO",
+        description:
+          "Cuando juegas con este personaje, puedes elegir y descartar una carta. Si lo haces, devuelve el personaje elegido a la mano de su jugador.",
+      },
+    ],
+  },
 };

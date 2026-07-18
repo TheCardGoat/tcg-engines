@@ -85,6 +85,12 @@ export const eb03UtaManga061: CharacterCard = {
       },
       {
         trigger: "endOfYourTurn",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 1,
+          },
+        ],
         actions: [
           {
             action: "setActive",
@@ -99,6 +105,7 @@ export const eb03UtaManga061: CharacterCard = {
                 {
                   filter: "trait",
                   value: "FILM",
+                  match: "includes",
                 },
               ],
             },

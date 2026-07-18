@@ -25,6 +25,5 @@ export const op03Nero087: CharacterCard = {
   counter: 1000,
   traits: ["CP9"],
   attribute: "ranged",
-  effect: "NULL",
   i18n: op03Nero087I18n,
 };

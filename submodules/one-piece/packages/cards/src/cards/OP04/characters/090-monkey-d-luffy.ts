@@ -30,7 +30,7 @@ export const op04MonkeyDLuffy090: CharacterCard = {
   setId: "OP04",
   cost: 7,
   power: 7000,
-  traits: ["Straw Hat Crew Dressrosa"],
+  traits: ["Dressrosa", "Straw Hat Crew"],
   attribute: "strike",
   artVariants: [
     {
@@ -45,6 +45,13 @@ export const op04MonkeyDLuffy090: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 7,
+            position: "bottom",
+          },
+        ],
         actions: [
           {
             action: "setActive",
@@ -71,6 +78,24 @@ export const op04MonkeyDLuffy090: CharacterCard = {
         ],
         optional: true,
         oncePerTurn: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "canAttackActive",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+          },
+        ],
       },
     ],
   },

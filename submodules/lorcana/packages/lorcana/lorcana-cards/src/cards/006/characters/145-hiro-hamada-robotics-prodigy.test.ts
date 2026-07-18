@@ -1,6 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import {
   LorcanaMultiplayerTestEngine,
+  PLAYER_ONE,
   createMockCharacter,
   createMockItem,
 } from "@tcg/lorcana-engine/testing";
@@ -50,9 +51,20 @@ describe("Hiro Hamada - Robotics Prodigy", () => {
       });
 
       expect(result).toBeSuccessfulCommand();
+      const robotId = testEngine.findCardInstanceId(robotCharacter, "deck");
+      expect(
+        testEngine.asPlayerOne().resolvePendingByCard(hiroHamadaRoboticsProdigy, {
+          targets: [robotId],
+        }),
+      ).toBeSuccessfulCommand();
 
       // Hiro should be exerted after using the ability
       expect(testEngine.asPlayerOne().isExerted(hiroHamadaRoboticsProdigy)).toBe(true);
+      expect(testEngine.asPlayerOne().getCardZone(robotCharacter)).toBe("deck");
+      expect(testEngine.getCardDefinitionIdsInZone("deck", PLAYER_ONE).at(-1)).toBe(
+        robotCharacter.id,
+      );
+      expect(testEngine.asPlayerOne()).toHaveZoneCounts({ hand: 0, deck: 3 });
     });
   });
 });

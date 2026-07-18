@@ -26,7 +26,7 @@ export const op14eb04LaoG075: CharacterCard = {
   traits: ["Donquixote Pirates"],
   attribute: "strike",
   effect:
-    "[On K.O.] Add up to 1 DON!! card from your DON!! deck and rest it. Then, give up to 1 of your opponent's Characters 2000 power during this turn.",
+    "[On K.O.] Add up to 1 DON!! card from your DON!! deck and rest it. Then, give up to 1 of your opponent's Characters −2000 power during this turn.",
   effects: {
     effects: [
       {
@@ -50,7 +50,7 @@ export const op14eb04LaoG075: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
           },
         ],

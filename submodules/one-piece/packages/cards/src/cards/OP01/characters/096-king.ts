@@ -70,7 +70,26 @@ export const op01King096: CharacterCard = {
               ],
             },
           },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 2,
+                },
+              ],
+            },
+          },
         ],
+        optional: true,
       },
     ],
   },

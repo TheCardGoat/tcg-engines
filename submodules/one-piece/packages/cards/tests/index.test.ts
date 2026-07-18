@@ -51,6 +51,19 @@ describe("@tcg/op-cards", () => {
     expect(namiSp.canonicalId).toBe("OP08-106");
   });
 
+  test("includes the canonical DON!! resource card", () => {
+    const don = getAllCards().filter((card) => card.cardType === "don");
+
+    expect(don).toHaveLength(1);
+    expect(don[0]).toMatchObject({
+      id: "DON-001",
+      canonicalId: "DON-001",
+      name: "DON!!",
+      color: [],
+      rarity: "DON",
+    });
+  });
+
   test("catalog ids are unique and sorted", () => {
     const ids = allCards.map((card) => card.id);
     const uniqueIds = new Set(ids);

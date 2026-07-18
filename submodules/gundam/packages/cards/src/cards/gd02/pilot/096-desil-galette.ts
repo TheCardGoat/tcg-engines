@@ -103,6 +103,16 @@ export const gd02DesilGalette096: PilotCard = {
             action: "deployFromTrash",
             levelAtMost: 2,
             payCost: true,
+            target: {
+              owner: "friendly",
+              cardType: "unit",
+              zone: "trash",
+              count: 1,
+              attributeFilters: [
+                { attribute: "trait", comparison: "includes", value: "vagan" },
+                { attribute: "level", comparison: "lte", value: 2 },
+              ],
+            },
           },
           optional: true,
         },

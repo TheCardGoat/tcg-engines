@@ -52,6 +52,7 @@ export const eb03Lim037: CharacterCard = {
                 {
                   filter: "trait",
                   value: "ODYSSEY",
+                  match: "includes",
                 },
               ],
             },

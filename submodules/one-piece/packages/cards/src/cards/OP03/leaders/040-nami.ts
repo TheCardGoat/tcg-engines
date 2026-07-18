@@ -40,8 +40,16 @@ export const op03Nami040: LeaderCard = {
     },
   ],
   effect:
-    "When your deck is reduced to 0, you win the game instead of losing, according to the rules. [DON!! x1] When this Leader's attack deals damage to your opponent's Life, you may trash 1 card from the top of your deck.",
+    "When your deck is reduced to 0, you win the game instead of losing, according to the rules.\n[DON!! x1] When this Leader's attack deals damage to your opponent's Life, you may trash 1 card from the top of your deck.",
   effects: {
+    replacementEffects: [
+      {
+        replacedEvent: "loseGame",
+        replacementAction: {
+          action: "winGame",
+        },
+      },
+    ],
     effects: [
       {
         trigger: "whenDealsDamage",
@@ -58,6 +66,7 @@ export const op03Nami040: LeaderCard = {
             amount: 1,
           },
         ],
+        optional: true,
       },
     ],
   },

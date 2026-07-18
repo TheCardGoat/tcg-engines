@@ -17,4 +17,8 @@ export const lookWhatYouveDoneI18n: Record<Languages, I18nProperties> = {
     name: "Guarda Cosa Hai Fatto",
     text: "Infliggi 2 danni a un personaggio a tua scelta. Durante il tuo turno, quando scarti questa carta, puoi giocarla dai tuoi scarti. (Paga tutti i costi.)",
   },
+  es: {
+    name: "Mira lo que has hecho",
+    text: "Inflige 2 daños al personaje elegido. Durante tu turno, cuando descartas esta carta, puedes jugarla desde tu descarte. (Usted paga todos los costos).",
+  },
 };

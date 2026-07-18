@@ -41,4 +41,14 @@ export const hadesHotheadedRulerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Infierno",
+    version: "Gobernante exaltado",
+    text: [
+      {
+        title: "LLAMA A LOS TITANES",
+        description: "{E} — Prepara tus personajes de Titán.",
+      },
+    ],
+  },
 };

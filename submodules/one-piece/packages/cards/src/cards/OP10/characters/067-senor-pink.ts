@@ -40,7 +40,7 @@ export const op10SenorPink067: CharacterCard = {
     },
   ],
   effect:
-    "[On Play] DON!! 1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Add up to 1 purple Event with a cost of 5 or less from your trash to your hand. Then, set up to 1 of your DON!! cards as active.",
+    "[On Play] DON!! −1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Add up to 1 purple Event with a cost of 5 or less from your trash to your hand. Then, set up to 1 of your DON!! cards as active.",
   effects: {
     effects: [
       {
@@ -90,6 +90,7 @@ export const op10SenorPink067: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

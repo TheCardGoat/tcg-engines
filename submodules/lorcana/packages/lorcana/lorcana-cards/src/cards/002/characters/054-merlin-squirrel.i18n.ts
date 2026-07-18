@@ -45,4 +45,15 @@ export const merlinSquirrelI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Esmerejón",
+    version: "Ardilla",
+    text: [
+      {
+        title: "MIRA ANTES DE SALTAR",
+        description:
+          "Cuando juegues con este personaje y cuando deje el juego, mira la carta superior de tu mazo. Colóquelo en la parte superior o inferior de su plataforma.",
+      },
+    ],
+  },
 };

@@ -87,9 +87,10 @@ describe("real card integration tests", () => {
     const text =
       "[Main] / [Counter] If your Leader's type includes \"Whitebeard Pirates\", give up to 1 of your opponent's Characters -4000 power during this turn.\n[Trigger] Activate this card's [Main] effect.";
     const result = parseEffectText(text);
-    // [Trigger] line should be stripped
-    expect(result.segments).toHaveLength(1);
+    expect(result.segments).toHaveLength(2);
     expect(result.segments[0]!.triggers).toEqual(["main", "counter"]);
+    expect(result.segments[1]!.triggers).toEqual(["trigger"]);
+    expect(result.segments[1]!.rawActionText).toBe("Activate this card's [Main] effect.");
   });
 
   test("EB02-057 King with DON!! 2 (no minus sign)", () => {
@@ -244,10 +245,33 @@ describe("real card integration — batch 8", () => {
     // "When" converts to EffectBlock with whenDealsDamage trigger
     const block = effects!.effects![0]!;
     expect(block.trigger).toBe("whenDealsDamage");
-    expect(block.actions[0]).toMatchObject({
-      action: "trashFromDeck",
-      player: "self",
-      amount: 7,
+    expect(block).toMatchObject({
+      trigger: "whenDealsDamage",
+      optional: true,
+      actions: [{ action: "trashFromDeck", player: "self", amount: 7 }],
+    });
+  });
+
+  test("When you deal damage scopes a dependent self-trash to any own attacker", () => {
+    expect(
+      buildCardEffects(
+        "When you deal damage to your opponent's Life, you may trash 3 cards from the top of your deck. If you do, trash this Character.",
+      ),
+    ).toEqual({
+      effects: [
+        {
+          trigger: "whenYouDealDamage",
+          actions: [
+            {
+              action: "trashFromDeck",
+              player: "self",
+              amount: 3,
+              thenActions: [{ action: "trashThisCard" }],
+            },
+          ],
+          optional: true,
+        },
+      ],
     });
   });
 
@@ -259,7 +283,8 @@ describe("real card integration — batch 8", () => {
     const block = effects!.effects![0]!;
     expect(block.trigger).toBe("onKo");
     expect(block.actions[0]).toMatchObject({
-      action: "opponentReturnDon",
+      action: "returnDon",
+      player: "opponent",
       amount: 2,
     });
   });
@@ -596,6 +621,11 @@ describe("real card integration — batch 8", () => {
     });
   });
 
+  test("self damage action", () => {
+    const result = parseActions("you take 1 damage.");
+    expect(result.parsed).toEqual([{ action: "dealDamage", player: "self", amount: 1 }]);
+  });
+
   test("give DON!! cards: leader and character each", () => {
     const result = parseActions("Give your Leader and 1 Character up to 1 rested DON!! card each.");
     expect(result.parsed).toHaveLength(1);
@@ -648,6 +678,7 @@ describe("real card integration — batch 8", () => {
     expect(result.parsed[0]).toMatchObject({
       action: "trashFromHand",
       player: "self",
+      chosenBy: "opponent",
       amount: 1,
     });
   });
@@ -718,9 +749,32 @@ describe("real card integration — batch 8", () => {
     );
     expect(result.parsed).toHaveLength(1);
     expect(result.parsed[0]).toMatchObject({
-      action: "modifyCost",
+      action: "setCost",
       value: 0,
     });
+  });
+
+  test("swap a Leader's base power with a Character during the battle", () => {
+    const result = parseActions(
+      "Select your Leader and 1 Character. Swap the base power of the selected cards with each other during this battle.",
+    );
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "swapBasePower",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: { amount: 1 },
+        },
+        pairedTarget: {
+          player: "self",
+          zones: ["leader"],
+          count: { amount: 1 },
+        },
+        duration: "thisBattle",
+      },
+    ]);
   });
 
   test("Draw 1 card when suffix event", () => {

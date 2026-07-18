@@ -31,6 +31,20 @@ export const eb03Stussy043: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 2,
+            position: "bottom",
+            filters: [
+              {
+                filter: "trait",
+                value: "CP",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "ko",

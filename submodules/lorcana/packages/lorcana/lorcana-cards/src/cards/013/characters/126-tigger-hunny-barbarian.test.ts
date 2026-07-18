@@ -1,5 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaMultiplayerTestEngine, createMockCharacter } from "@tcg/lorcana-engine/testing";
+import {
+  LorcanaMultiplayerTestEngine,
+  createMockCharacter,
+  createMockLocation,
+} from "@tcg/lorcana-engine/testing";
 import { tiggerHunnyBarbarian } from "./126-tigger-hunny-barbarian";
 
 const hunnyAlly = createMockCharacter({
@@ -16,6 +20,15 @@ const opposingDefender = createMockCharacter({
   cost: 2,
   strength: 1,
   willpower: 6,
+});
+
+const opposingLocation = createMockLocation({
+  id: "tigger-opposing-location",
+  name: "Opposing Location",
+  cost: 2,
+  willpower: 6,
+  moveCost: 1,
+  lore: 0,
 });
 
 describe("Tigger - Hunny Barbarian", () => {
@@ -58,5 +71,23 @@ describe("Tigger - Hunny Barbarian", () => {
 
     expect(testEngine.asPlayerOne().isExerted(hunnyAlly)).toBe(false);
     expect(testEngine.hasRestriction(hunnyAlly, "cant-quest")).toBe(true);
+  });
+
+  it("does not trigger when Tigger challenges a location", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+      {
+        play: [{ card: tiggerHunnyBarbarian, isDrying: false }],
+        deck: 3,
+      },
+      {
+        play: [opposingLocation],
+        deck: 3,
+      },
+    );
+
+    expect(
+      testEngine.asPlayerOne().challenge(tiggerHunnyBarbarian, opposingLocation),
+    ).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().getBagCount()).toBe(0);
   });
 });

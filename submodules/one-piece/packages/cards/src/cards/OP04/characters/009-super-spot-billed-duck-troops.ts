@@ -31,17 +31,31 @@ export const op04SuperSpotBilledDuckTroops009: CharacterCard = {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "modifyLeaderPower",
+            value: -5000,
+            duration: "thisTurn",
+            requiresActive: true,
+          },
+        ],
         actions: [
           {
-            action: "returnToHand",
-            target: {
-              player: "self",
-              zones: ["character"],
-              count: {
-                amount: 1,
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "returnToHand",
+                target: {
+                  player: "self",
+                  zones: ["character"],
+                  count: {
+                    amount: 1,
+                  },
+                  self: true,
+                },
               },
-              self: true,
-            },
+            ],
           },
         ],
         optional: true,

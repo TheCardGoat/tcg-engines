@@ -20,6 +20,7 @@ import type {
   LorcanaCardDefinition,
   ModifyStatEffect,
   StatFloorEffect,
+  TriggeredAbilityDefinition,
 } from "@tcg/lorcana-types";
 import type { Classification } from "@tcg/lorcana-types";
 import {
@@ -173,6 +174,8 @@ function matchesDerivedStateTarget(
   targetCardId: CardInstanceId,
   controllerId: PlayerId | undefined,
   getDefinitionByInstanceId: GetDef,
+  getCardStrengthByInstanceId?: (cardId: CardInstanceId) => number,
+  getCardWillpowerByInstanceId?: (cardId: CardInstanceId) => number,
 ): boolean {
   return (
     matchesStaticAbilityTarget({
@@ -182,6 +185,8 @@ function matchesDerivedStateTarget(
       targetCardId,
       controllerId,
       getDefinitionByInstanceId,
+      getCardStrengthByInstanceId,
+      getCardWillpowerByInstanceId,
     }) ||
     matchesLegacyStaticStatTarget({
       state,
@@ -959,6 +964,8 @@ export function buildStaticEffectRegistry(
             targetId,
             controllerId,
             getDefinitionWithGrantedKeywords,
+            getRegistryStrength,
+            getRegistryWillpower,
           )
         )
           continue;
@@ -1337,12 +1344,16 @@ export function buildStaticEffectRegistry(
             !grantedAbility ||
             typeof grantedAbility !== "object" ||
             Array.isArray(grantedAbility) ||
-            (grantedAbility as Record<string, unknown>).type !== "activated"
+            !["activated", "triggered"].includes(
+              String((grantedAbility as Record<string, unknown>).type),
+            )
           ) {
             continue;
           }
 
-          const typedAbility = grantedAbility as ActivatedAbilityDefinition;
+          const typedAbility = grantedAbility as
+            | ActivatedAbilityDefinition
+            | TriggeredAbilityDefinition;
           addToTarget(byTarget, targetId, {
             sourceId,
             sourceControllerId: controllerId!,
@@ -1353,7 +1364,7 @@ export function buildStaticEffectRegistry(
               ability: {
                 ...typedAbility,
                 id: typedAbility.id ?? `${sourceId}-granted-${abilityIdx}`,
-              } as ActivatedAbilityDefinition,
+              } as ActivatedAbilityDefinition | TriggeredAbilityDefinition,
             },
           });
         }

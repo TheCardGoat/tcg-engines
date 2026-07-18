@@ -80,6 +80,7 @@ export const op09MarshallDTeach093: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Blackbeard Pirates",
+                match: "includes",
               },
               {
                 condition: "playedThisTurn",
@@ -99,6 +100,31 @@ export const op09MarshallDTeach093: CharacterCard = {
               },
             },
             duration: "thisTurn",
+          },
+          {
+            action: "negateEffects",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            duration: "thisTurn",
+          },
+          {
+            action: "cannotAttack",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            duration: "untilEndOfOpponentNextTurn",
+            previousActionTargets: true,
           },
         ],
         oncePerTurn: true,

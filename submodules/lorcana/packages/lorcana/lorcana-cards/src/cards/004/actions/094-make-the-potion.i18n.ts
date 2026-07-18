@@ -58,4 +58,18 @@ export const makeThePotionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hacer la poción",
+    text: [
+      {
+        title: "Elige uno:",
+      },
+      {
+        title: "• Desterrar el objeto elegido.",
+      },
+      {
+        title: "• Causa 2 daños al personaje dañado elegido.",
+      },
+    ],
+  },
 };

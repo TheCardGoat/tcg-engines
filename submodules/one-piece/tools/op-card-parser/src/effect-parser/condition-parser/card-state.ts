@@ -1,12 +1,32 @@
-import type { Condition, Zone } from "@tcg/op-types";
+import type { Condition, OPColor, Zone } from "@tcg/op-types";
 import { parseComparison } from "../helpers.ts";
 
 export function parseCardStateCondition(text: string): Condition | null {
   const t = text.trim();
   let m: RegExpExecArray | null;
 
-  // CardState (power): this/your Character/Leader has N power or more/less
-  m = /^(?:this|your) (?:Character|Leader) has (\d+) power(?:\s+or\s+(more|less))?$/i.exec(t);
+  // Own Leader power is a field-card condition, not the source Character.
+  m = /^your Leader has (\d+) power(?:\s+or\s+(more|less))?$/i.exec(t);
+  if (m) {
+    return {
+      condition: "hasCard",
+      player: "self",
+      zone: "leader",
+      filters: [
+        {
+          filter: "power",
+          comparison: parseComparison(m[2]),
+          value: parseInt(m[1]!, 10),
+        },
+      ],
+    };
+  }
+
+  // CardState (power): this Character/Leader or your Character has N power.
+  m =
+    /^(?:this (?:Character|Leader)|your Character) has (\d+) power(?:\s+or\s+(more|less))?$/i.exec(
+      t,
+    );
   if (m) {
     return {
       condition: "cardState",
@@ -14,6 +34,17 @@ export function parseCardStateCondition(text: string): Condition | null {
       property: "power",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
+    };
+  }
+
+  // Has active/rested Leader: your Leader is active/rested
+  m = /^your Leader is (active|rested)$/i.exec(t);
+  if (m) {
+    return {
+      condition: "hasCard",
+      player: "self",
+      zone: "leader",
+      filters: [{ filter: "state", value: m[1]!.toLowerCase() as "active" | "rested" }],
     };
   }
 
@@ -47,6 +78,21 @@ export function parseCardStateCondition(text: string): Condition | null {
   }
 
   // Has card with name: you have a [X] Character
+  m = /^you\s+have\s+a\s+\[([^\]]+)\]\s+or\s+\[([^\]]+)\]\s+Character$/i.exec(t);
+  if (m) {
+    return {
+      condition: "compound",
+      operator: "or",
+      conditions: [m[1]!, m[2]!].map((name) => ({
+        condition: "hasCard" as const,
+        player: "self" as const,
+        zone: "character" as const,
+        filters: [{ filter: "name" as const, value: name }],
+      })),
+    };
+  }
+
+  // Has card with name: you have a [X] Character
   m = /^you\s+have\s+a\s+\[([^\]]+)\]\s+Character$/i.exec(t);
   if (m) {
     return {
@@ -59,7 +105,34 @@ export function parseCardStateCondition(text: string): Condition | null {
 
   // Has card: your opponent has a Leader or Character with a base power of N or more/less
   m =
-    /^your\s+opponent\s+has\s+a\s+(?:Leader\s+or\s+)?Character\s+with\s+a\s+base\s+power\s+of\s+(\d+)(?:\s+or\s+(less|more))?$/i.exec(
+    /^your\s+opponent\s+has\s+a\s+(Leader\s+or\s+)?Character\s+with\s+a\s+base\s+power\s+of\s+(\d+)(?:\s+or\s+(less|more))?$/i.exec(
+      t,
+    );
+  if (m) {
+    const value = parseInt(m[2]!, 10);
+    const comparison = m[3] ? parseComparison(m[3]) : "eq";
+    const filters = [{ filter: "basePower" as const, comparison, value }];
+    if (m[1]) {
+      return {
+        condition: "compound",
+        operator: "or",
+        conditions: [
+          { condition: "hasCard", player: "opponent", zone: "leader", filters },
+          { condition: "hasCard", player: "opponent", zone: "character", filters },
+        ],
+      };
+    }
+    return {
+      condition: "hasCard",
+      player: "opponent",
+      zone: "character",
+      filters,
+    };
+  }
+
+  // Has card: your opponent has a Character with N effective power or more/less
+  m =
+    /^your\s+opponent\s+has\s+a\s+Character\s+with\s+(\d+)\s+power(?:\s+or\s+(less|more))?$/i.exec(
       t,
     );
   if (m) {
@@ -69,7 +142,7 @@ export function parseCardStateCondition(text: string): Condition | null {
       condition: "hasCard",
       player: "opponent",
       zone: "character",
-      filters: [{ filter: "basePower", comparison, value }],
+      filters: [{ filter: "power", comparison, value }],
     };
   }
 
@@ -97,34 +170,57 @@ export function parseCardStateCondition(text: string): Condition | null {
   m = /^you\s+have\s+a\s+face-up\s+Life\s+card$/i.exec(t);
   if (m) return { condition: "faceUpLife", player: "self" };
 
-  // Exists on field (compound): there is a Character with a cost of 0 or with a cost of 8 or more
+  // Exists on field (compound): there is / your opponent has a Character with one of two costs.
   m =
-    /^there\s+is\s+a\s+Character\s+with\s+a\s+cost\s+of\s+(\d+)\s+or\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?$/i.exec(
+    /^(there\s+is|your\s+opponent\s+has)\s+a\s+Character\s+with\s+a\s+cost\s+of\s+(\d+)\s+or\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?$/i.exec(
       t,
     );
   if (m) {
+    const opponentOnly = /^your\s+opponent/i.test(m[1]!);
     return {
       condition: "compound",
       operator: "or",
       conditions: [
-        {
-          condition: "existsOnField",
-          zone: "character" as Zone,
-          filters: [
-            { filter: "cost" as const, comparison: "eq" as const, value: parseInt(m[1]!, 10) },
-          ],
-        },
-        {
-          condition: "existsOnField",
-          zone: "character" as Zone,
-          filters: [
-            {
-              filter: "cost" as const,
-              comparison: m[3] ? parseComparison(m[3]) : ("eq" as const),
-              value: parseInt(m[2]!, 10),
+        opponentOnly
+          ? {
+              condition: "hasCard",
+              player: "opponent",
+              zone: "character" as Zone,
+              filters: [
+                { filter: "cost" as const, comparison: "eq" as const, value: parseInt(m[2]!, 10) },
+              ],
+            }
+          : {
+              condition: "existsOnField",
+              zone: "character" as Zone,
+              filters: [
+                { filter: "cost" as const, comparison: "eq" as const, value: parseInt(m[2]!, 10) },
+              ],
             },
-          ],
-        },
+        opponentOnly
+          ? {
+              condition: "hasCard",
+              player: "opponent",
+              zone: "character" as Zone,
+              filters: [
+                {
+                  filter: "cost" as const,
+                  comparison: m[4] ? parseComparison(m[4]) : ("eq" as const),
+                  value: parseInt(m[3]!, 10),
+                },
+              ],
+            }
+          : {
+              condition: "existsOnField",
+              zone: "character" as Zone,
+              filters: [
+                {
+                  filter: "cost" as const,
+                  comparison: m[4] ? parseComparison(m[4]) : ("eq" as const),
+                  value: parseInt(m[3]!, 10),
+                },
+              ],
+            },
       ],
     };
   }
@@ -157,16 +253,27 @@ export function parseCardStateCondition(text: string): Condition | null {
     };
   }
 
-  // Has card with trait: you have a {X} type Character (no cost filter)
-  m = /^you\s+have\s+a\s+(?:[[{"\u201c])([^\]}\u201d"]+)(?:[\]}\u201d"])\s+type\s+Character$/i.exec(
-    t,
-  );
+  // Has card with trait: you have a {X} type Character, optionally constrained
+  // by color and excluding the source card or a named Character.
+  m =
+    /^you\s+have\s+a\s+(?:(red|green|blue|purple|black|yellow)\s+)?(?:[[{"\u201c])([^\]}\u201d"]+)(?:[\]}\u201d"])\s+type\s+Character(?:\s+other\s+than\s+(this\s+card|this\s+Character|\[([^\]]+)\]))?$/i.exec(
+      t,
+    );
   if (m) {
+    const exclusion = m[3]
+      ? /^this\s+/i.test(m[3])
+        ? ({ filter: "excludeSelf" } as const)
+        : ({ filter: "excludeName", value: m[4]! } as const)
+      : undefined;
     return {
       condition: "hasCard",
       player: "self",
       zone: "character",
-      filters: [{ filter: "trait", value: m[1]! }],
+      filters: [
+        ...(m[1] ? [{ filter: "color", value: m[1].toLowerCase() as OPColor } as const] : []),
+        { filter: "trait", value: m[2]!, match: "includes" },
+        ...(exclusion ? [exclusion] : []),
+      ],
     };
   }
 
@@ -187,14 +294,21 @@ export function parseCardStateCondition(text: string): Condition | null {
     };
   }
 
-  // Has card with power: you have a Character with N power or more/less
-  m = /^you\s+have\s+a\s+Character\s+with\s+(\d+)\s+power\s+or\s+(more|less)$/i.exec(t);
+  // Has card with power: you have a Character with N power or more/less,
+  // optionally excluding the effect source.
+  m =
+    /^you\s+have\s+a\s+Character\s+with\s+(\d+)\s+power\s+or\s+(more|less)(?:\s+other\s+than\s+(this\s+card|this\s+Character))?$/i.exec(
+      t,
+    );
   if (m) {
     return {
       condition: "hasCard",
       player: "self",
       zone: "character",
-      filters: [{ filter: "power", comparison: parseComparison(m[2]), value: parseInt(m[1]!, 10) }],
+      filters: [
+        ...(m[3] ? ([{ filter: "excludeSelf" }] as const) : []),
+        { filter: "power", comparison: parseComparison(m[2]), value: parseInt(m[1]!, 10) },
+      ],
     };
   }
 
@@ -248,6 +362,17 @@ export function parseCardStateCondition(text: string): Condition | null {
   m = /^this\s+Character\s+cannot\s+be\s+K\.O\.\u2019?'?d\s+in\s+battle$/i.exec(t);
   if (m) return null; // Handled as action, not condition — return null to let it fall through
 
+  // Has another card by name: you have a [X] other than this Character
+  m = /^you\s+have\s+(?:a\s+)?\[([^\]]+)\]\s+other\s+than\s+this\s+Character$/i.exec(t);
+  if (m) {
+    return {
+      condition: "hasCard",
+      player: "self",
+      zone: "field",
+      filters: [{ filter: "excludeSelf" }, { filter: "name", value: m[1]! }],
+    };
+  }
+
   // Has card by name: you have [X] (without "a" or "Character" after)
   m = /^you\s+have\s+\[([^\]]+)\]$/i.exec(t);
   if (m) {
@@ -281,6 +406,7 @@ export function parseCardStateCondition(text: string): Condition | null {
       player: "self",
       zone: "field",
       filters: [
+        { filter: "excludeSelf" },
         { filter: "name", value: m[1]! },
         {
           filter: "baseCost",
@@ -298,7 +424,7 @@ export function parseCardStateCondition(text: string): Condition | null {
       condition: "notHasCard",
       player: "self",
       zone: /Characters?$/i.test(t) ? "character" : "field",
-      filters: [{ filter: "name", value: m[1]! }],
+      filters: [{ filter: "excludeSelf" }, { filter: "name", value: m[1]! }],
     };
   }
 
@@ -312,12 +438,14 @@ export function parseCardStateCondition(text: string): Condition | null {
   m = /^that\s+Character\s+has\s+the\s+\(([^)]+)\)\s+attribute$/i.exec(t);
   if (m) {
     return {
-      condition: "cardState",
-      target: "opponent",
-      property: "attribute",
-      comparison: "eq",
-      value: m[1]!.toLowerCase(),
-    } as any;
+      condition: "triggerEventCard",
+      filters: [
+        {
+          filter: "attribute",
+          value: m[1]!.toLowerCase() as import("@tcg/op-types").OPAttribute,
+        },
+      ],
+    };
   }
 
   // Played this turn (duplicate): this Character was played on this turn
@@ -327,7 +455,7 @@ export function parseCardStateCondition(text: string): Condition | null {
   // Event-like condition: a Character is rested by your effect
   m = /^a\s+Character\s+is\s+rested\s+by\s+your\s+effect$/i.exec(t);
   if (m) {
-    return { condition: "triggerEvent", event: "whenLeaving" } as any;
+    return { condition: "triggerEvent", event: "whenCharacterRestedByEffect" } as any;
   }
 
   // Battle conditions: this Leader/Character battles your opponent's Character (during this turn)?

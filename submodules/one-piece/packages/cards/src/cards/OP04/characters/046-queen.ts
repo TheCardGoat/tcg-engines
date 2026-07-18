@@ -26,7 +26,7 @@ export const op04Queen046: CharacterCard = {
   traits: ["Animal Kingdom Pirates"],
   attribute: "strike",
   effect:
-    "[On Play] If your Leader has the [Animal Kingdom Pirates] type, look at 7 cards from the top of your deck; reveal a total of 2 [Plague Rounds] or [Ice Oni] cards and add them to your hand. Then, place the rest at the bottom of your deck in any order.",
+    "[On Play] If your Leader has the [Animal Kingdom Pirates] type, look at 7 cards from the top of your deck; reveal a total of up to 2 [Plague Rounds] or [Ice Oni] cards and add them to your hand. Then, place the rest at the bottom of your deck in any order.",
   effects: {
     effects: [
       {
@@ -35,6 +35,7 @@ export const op04Queen046: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Animal Kingdom Pirates",
+            match: "includes",
           },
         ],
         actions: [
@@ -51,8 +52,11 @@ export const op04Queen046: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "name",
-                value: "Plague Rounds",
+                filter: "anyOf",
+                filters: [
+                  { filter: "name", value: "Plague Rounds" },
+                  { filter: "name", value: "Ice Oni" },
+                ],
               },
             ],
             revealDestination: "hand",

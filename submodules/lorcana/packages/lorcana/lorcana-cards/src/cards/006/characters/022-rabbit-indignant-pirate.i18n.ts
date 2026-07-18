@@ -45,4 +45,15 @@ export const rabbitIndignantPirateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Conejo",
+    version: "Pirata indignado",
+    text: [
+      {
+        title: "TEN MAS CUIDADO",
+        description:
+          "Cuando juegas con este personaje, puedes eliminar hasta 1 daño del personaje elegido.",
+      },
+    ],
+  },
 };

@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vite-plus/test";
 import {
+  createMockBase,
   createMockUnit,
   expectSuccess,
   GundamTestEngine,
@@ -52,5 +53,32 @@ describe("Freedom Gundam (GD03-070)", () => {
 
     expect(p1.getBoardView().players[PLAYER_ONE]?.shieldCount).toBe(0);
     expect(p1.getCardZone(shield)).toBe(`trash:${PLAYER_ONE}`);
+  });
+
+  it("does not protect a Base while this Unit is rested", () => {
+    const attacker = createMockUnit({ ap: 4, hp: 5, level: 4, cost: 1 });
+    const base = createMockBase({ name: "Base in the Shield Area", hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        play: [{ card: gd03FreedomGundam070, exhausted: true }],
+        baseSection: [base],
+        deck: 5,
+      },
+      { play: [attacker], deck: 5 },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const baseId = p1.getCardsInZone("baseSection")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+
+    expect(p1.getCardZone(baseId)).toBe(`baseSection:${PLAYER_ONE}`);
+    expect(p1.getDamage(baseId)).toBe(4);
+    expect(p1.getBoardView().pendingCombat).toBeUndefined();
   });
 });

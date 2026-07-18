@@ -27,5 +27,40 @@ export const op12RoronoaZoro036: CharacterCard = {
   attribute: "slash",
   effect:
     "This card in your hand cannot be played by effects.\nIf your Leader has the (Slash) attribute, this Character cannot be K.O.'d in battle by (Slash) attribute cards and gains +1000 power.",
+  effects: {
+    permanentEffects: [
+      {
+        actions: [{ action: "cannotBePlayedByEffects" }],
+      },
+      {
+        conditions: [{ condition: "leaderAttribute", attribute: "slash" }],
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            duration: "permanent",
+            restriction: "inBattle",
+            byFilter: [{ filter: "attribute", value: "slash" }],
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            value: 1000,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op12RoronoaZoro036I18n,
 };

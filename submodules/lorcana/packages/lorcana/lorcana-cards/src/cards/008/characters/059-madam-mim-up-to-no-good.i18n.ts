@@ -17,4 +17,8 @@ export const madamMimUpToNoGoodI18n: Record<Languages, I18nProperties> = {
     name: "Maga Magò",
     version: "Con Cattive Intenzioni",
   },
+  es: {
+    name: "Señora mim",
+    version: "Hasta nada bueno",
+  },
 };

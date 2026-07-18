@@ -17,4 +17,8 @@ export const duckForCoverI18n: Record<Languages, I18nProperties> = {
     name: "Al Riparo!",
     text: "Un personaggio a tua scelta ottiene <Resistere> +1 e <Sfuggente> per questo turno. (Il danno che gli viene inflitto è ridotto di 1. Può sfidare altri personaggi con Sfuggente.)",
   },
+  es: {
+    name: "¡Agáchate para cubrirte!",
+    text: "El personaje elegido gana Resistencia +1 y Evasiva este turno. (El daño que reciben se reduce en 1. Pueden desafiar a los personajes con Evasivo).",
+  },
 };

@@ -63,4 +63,20 @@ export const scroogeMcduckShushAgentI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gilito McPato",
+    version: "SILENCIAR. Agente",
+    text: [
+      {
+        title: "PLAN DE RESPALDO",
+        description:
+          "Cuando juegues con este personaje, roba una carta, luego elige y descarta una carta.",
+      },
+      {
+        title: "EN MOVIMIENTO",
+        description:
+          "Cuando este personaje sea desafiado, devuelve esta carta a tu mano. (No se inflige ningún daño en ese desafío).",
+      },
+    ],
+  },
 };

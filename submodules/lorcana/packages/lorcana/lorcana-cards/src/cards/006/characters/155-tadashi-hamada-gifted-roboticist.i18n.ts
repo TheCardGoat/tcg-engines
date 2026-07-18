@@ -45,4 +45,15 @@ export const tadashiHamadaGiftedRoboticistI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Tadashi Hamada",
+    version: "Roboticista talentoso",
+    text: [
+      {
+        title: "ALGUIEN TIENE QUE AYUDAR",
+        description:
+          "Durante el turno de un oponente, cuando este personaje es desterrado, puedes poner la carta superior de tu mazo en tu tintero boca abajo. Luego, coloca esta carta en tu tintero boca abajo.",
+      },
+    ],
+  },
 };

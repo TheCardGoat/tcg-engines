@@ -41,7 +41,7 @@ export const op09Franky072: CharacterCard = {
     },
   ],
   effect:
-    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] DON!! 2, You may trash 1 card from your hand: Draw 2 cards.",
+    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] DON!! −2, You may trash 1 card from your hand: Draw 2 cards.",
   effects: {
     keywords: ["blocker"],
     effects: [

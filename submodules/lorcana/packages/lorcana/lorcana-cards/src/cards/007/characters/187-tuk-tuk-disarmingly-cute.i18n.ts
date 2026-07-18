@@ -52,4 +52,16 @@ export const tukTukDisarminglyCuteI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tuk-tuk",
+    version: "Desarmantemente lindo",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "Resistir +2",
+      },
+    ],
+  },
 };

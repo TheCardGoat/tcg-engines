@@ -21,4 +21,9 @@ export const kakamoraBoardingPartyI18n: Record<Languages, I18nProperties> = {
     version: "Banda d'Arrembaggio",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Kakamora",
+    version: "Grupo de embarque",
+    text: "Correr",
+  },
 };

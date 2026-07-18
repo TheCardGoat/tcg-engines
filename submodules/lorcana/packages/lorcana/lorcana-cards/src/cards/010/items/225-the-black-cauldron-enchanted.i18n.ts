@@ -59,4 +59,18 @@ export const theBlackCauldronEnchantedI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "El caldero negro",
+    text: [
+      {
+        title: "EL CALDERO LLAMA",
+        description:
+          "{E}, 1 {I}: coloca una carta de personaje de tu descarte debajo de este elemento boca arriba.",
+      },
+      {
+        title: "¡LEVÁNTATE Y ÚNETE A MÍ!",
+        description: "{E}, 1 {I}: este turno, puedes jugar con personajes debajo de este elemento.",
+      },
+    ],
+  },
 };

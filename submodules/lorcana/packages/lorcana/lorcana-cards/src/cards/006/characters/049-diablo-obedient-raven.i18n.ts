@@ -41,4 +41,14 @@ export const diabloObedientRavenI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Diablos",
+    version: "Cuervo obediente",
+    text: [
+      {
+        title: "¡VUELA, MI MASCOTA!",
+        description: "Cuando este personaje es desterrado, puedes robar una carta.",
+      },
+    ],
+  },
 };

@@ -121,6 +121,14 @@ export interface StateUpdatePayload extends ClientUpdateBaseProperties {
   acceptedMove?: unknown;
 }
 
+/** Durable result of persisting a client-authority snapshot. */
+export interface PushStateResultPayload {
+  gameId: string;
+  stateVersion: number;
+  matchId: string;
+  matchCompleted: boolean;
+}
+
 export interface MoveAcceptedPayload extends ClientUpdateBaseProperties {
   moveType: string;
   actorId: string;
@@ -356,4 +364,50 @@ export interface FriendMessagePayload {
   fromUserName: string;
   content: string;
   sentAt: string;
+}
+
+/** Public-only snapshot delivered to matchmaking-page viewers in one game namespace. */
+export interface MatchmakingDashboardSnapshotPayload {
+  revision: number;
+  generatedAt: string;
+  queueStats: {
+    partitions: Array<{
+      queueId?: string | null;
+      seasonId?: string | null;
+      format: string;
+      mode: string;
+      matchType: string;
+      inQueue: number;
+      liveMatches: number;
+    }>;
+    practiceMatches: number;
+  };
+  liveMatches: {
+    matches: Array<{
+      gameSlug: string;
+      matchId: string;
+      currentGameId?: string;
+      player1: { id: string; displayName: string; isMobile?: boolean };
+      player2: { id: string; displayName: string; isMobile?: boolean };
+      player1Score: number;
+      player2Score: number;
+      player1Inks: string[];
+      player2Inks: string[];
+      turnNumber: number;
+      format: "best_of_1" | "best_of_3";
+      matchType: string;
+      createdAt: string;
+      spectatorCount: number;
+    }>;
+    total: number;
+  };
+  activity: Array<{
+    queueId: string | null;
+    format: string;
+    mode: string;
+    matchType: string;
+    action: "joined" | "left";
+    reason: "matched" | "expired" | "requeued" | "manual";
+    occurredAt: string;
+  }>;
 }

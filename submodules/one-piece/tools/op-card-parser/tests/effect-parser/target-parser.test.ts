@@ -2,6 +2,15 @@ import { expect, test, describe } from "vite-plus/test";
 import { parseTarget } from "../../src/effect-parser/index.ts";
 
 describe("parseTarget", () => {
+  test("parses suffix type-including trait filters", () => {
+    expect(parseTarget('all of your Characters with a type including "Baroque Works"')).toEqual({
+      player: "self",
+      zones: ["character"],
+      count: { amount: "all" },
+      filters: [{ filter: "trait", value: "Baroque Works", match: "includes" }],
+    });
+  });
+
   test("parses self-reference: 'this Character'", () => {
     const target = parseTarget("this Character");
     expect(target).toEqual({
@@ -66,6 +75,20 @@ describe("parseTarget", () => {
       zones: ["character"],
       count: { amount: 1, upTo: true },
       filters: [{ filter: "cost", comparison: "eq", value: 0 }],
+    });
+  });
+
+  test("parses a closed Character cost range", () => {
+    const target = parseTarget("up to 1 of your black Characters with a cost of 3 to 5");
+    expect(target).toEqual({
+      player: "self",
+      zones: ["character"],
+      count: { amount: 1, upTo: true },
+      filters: [
+        { filter: "color", value: "black" },
+        { filter: "cost", comparison: "gte", value: 3 },
+        { filter: "cost", comparison: "lte", value: 5 },
+      ],
     });
   });
 
@@ -175,7 +198,7 @@ describe("parseTarget", () => {
       player: "self",
       zones: ["leader", "character"],
       count: { amount: 1, upTo: true },
-      filters: [{ filter: "trait", value: "SWORD" }],
+      filters: [{ filter: "trait", value: "SWORD", match: "includes" }],
     });
   });
 
@@ -199,8 +222,13 @@ describe("parseTarget", () => {
       zones: ["character"],
       count: { amount: 1, upTo: true },
       filters: [
-        { filter: "trait", value: "Amazon Lily" },
-        { filter: "trait", value: "Kuja Pirates" },
+        {
+          filter: "anyOf",
+          filters: [
+            { filter: "trait", value: "Amazon Lily", match: "includes" },
+            { filter: "trait", value: "Kuja Pirates", match: "includes" },
+          ],
+        },
       ],
     });
   });
@@ -211,12 +239,38 @@ describe("parseTarget", () => {
       player: "self",
       zones: ["leader", "character", "stage", "costArea"],
       count: { amount: 1, upTo: true },
-      filters: [{ filter: "trait", value: "Cross Guild" }],
+      filters: [{ filter: "trait", value: "Cross Guild", match: "includes" }],
     });
   });
 });
 
 describe("parseTarget — state filters", () => {
+  test("preserves an attribute target excluding this Character", () => {
+    expect(
+      parseTarget(
+        "1 of your (Slash) attribute Characters with a cost of 5 or less other than this Character",
+      ),
+    ).toEqual({
+      player: "self",
+      zones: ["character"],
+      count: { amount: 1 },
+      filters: [
+        { filter: "attribute", value: "slash" },
+        { filter: "excludeSelf" },
+        { filter: "cost", comparison: "lte", value: 5 },
+      ],
+    });
+  });
+
+  test("preserves 'other' as an exclude-self filter", () => {
+    expect(parseTarget("1 of your other Characters")).toEqual({
+      player: "self",
+      zones: ["character"],
+      count: { amount: 1 },
+      filters: [{ filter: "excludeSelf" }],
+    });
+  });
+
   test("parses 'rested Characters'", () => {
     const target = parseTarget(
       "up to 1 of your opponent's rested Characters with a cost of 4 or less",

@@ -45,24 +45,11 @@ export const op05MonkeyDLuffy060: LeaderCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
+        costs: [
           {
-            condition: "compound",
-            operator: "or",
-            conditions: [
-              {
-                condition: "donFieldCount",
-                player: "self",
-                comparison: "eq",
-                value: 0,
-              },
-              {
-                condition: "donFieldCount",
-                player: "self",
-                comparison: "gte",
-                value: 3,
-              },
-            ],
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "top",
           },
         ],
         actions: [
@@ -73,6 +60,24 @@ export const op05MonkeyDLuffy060: LeaderCard = {
               upTo: true,
             },
             state: "active",
+            condition: {
+              condition: "compound",
+              operator: "or",
+              conditions: [
+                {
+                  condition: "donFieldCount",
+                  player: "self",
+                  comparison: "eq",
+                  value: 0,
+                },
+                {
+                  condition: "donFieldCount",
+                  player: "self",
+                  comparison: "gte",
+                  value: 3,
+                },
+              ],
+            },
           },
         ],
         optional: true,

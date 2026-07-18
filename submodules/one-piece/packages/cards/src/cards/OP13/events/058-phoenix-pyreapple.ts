@@ -28,6 +28,7 @@ export const op13PhoenixPyreapple058: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [{ cost: "restDon", amount: 1 }],
         actions: [
           {
             action: "returnToDeck",

@@ -32,6 +32,7 @@ export const eb01Chambres020: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Supernovas",
+            match: "includes",
           },
         ],
         actions: [
@@ -44,6 +45,29 @@ export const eb01Chambres020: EventCard = {
                 amount: 1,
               },
             },
+          },
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 2,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+            differentColorFromPreviousCharacter: true,
           },
         ],
       },

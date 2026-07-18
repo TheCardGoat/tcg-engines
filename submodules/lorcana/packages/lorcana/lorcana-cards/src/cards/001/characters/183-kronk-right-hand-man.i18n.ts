@@ -17,4 +17,8 @@ export const kronkRighthandManI18n: Record<Languages, I18nProperties> = {
     name: "Kronk",
     version: "Right-Hand Man",
   },
+  es: {
+    name: "Kronk",
+    version: "Mano derecha",
+  },
 };

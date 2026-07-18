@@ -17,4 +17,8 @@ export const piercingAttackI18n: Record<Languages, I18nProperties> = {
     name: "Attacco Perforante",
     text: "Infliggi 2 danni a un personaggio a tua scelta. Questo danno non può essere ridotto da <Resistere>.",
   },
+  es: {
+    name: "Ataque penetrante",
+    text: "Inflige 2 daños al personaje elegido. Este daño no se puede reducir con Resistir.",
+  },
 };

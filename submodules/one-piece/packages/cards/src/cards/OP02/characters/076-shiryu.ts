@@ -57,6 +57,7 @@ export const op02Shiryu076: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

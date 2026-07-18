@@ -26,11 +26,17 @@ export const op09Brook073: CharacterCard = {
   traits: ["Straw Hat Crew"],
   attribute: "slash",
   effect:
-    "[When Attacking] You may return 1 or more DON!! cards from your field to your DON!! deck: Give up to 2 of your opponent's Characters 2000 power during this turn.",
+    "[When Attacking] You may return 1 or more DON!! cards from your field to your DON!! deck: Give up to 2 of your opponent's Characters −2000 power during this turn.",
   effects: {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "returnDon",
+            minimumAmount: 1,
+          },
+        ],
         actions: [
           {
             action: "modifyPower",
@@ -42,7 +48,7 @@ export const op09Brook073: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
           },
         ],

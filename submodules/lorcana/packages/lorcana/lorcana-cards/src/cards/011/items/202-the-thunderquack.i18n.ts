@@ -56,4 +56,18 @@ export const theThunderquackI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El trueno",
+    text: [
+      {
+        title: "JUSTICIA VIGILANTE",
+        description: "Todos los personajes contrarios obtienen la clasificación de Villano.",
+      },
+      {
+        title: "DISPOSICIÓN DEL TERRENO",
+        description:
+          "{E}: si un personaje fue desterrado en un desafío este turno, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

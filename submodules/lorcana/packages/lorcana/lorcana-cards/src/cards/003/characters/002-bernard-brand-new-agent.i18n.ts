@@ -45,4 +45,15 @@ export const bernardBrandnewAgentI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bernardo",
+    version: "Agente nuevo",
+    text: [
+      {
+        title: "LO VERÉ",
+        description:
+          "Al final de tu turno, si este personaje está agotado, puedes preparar otro personaje tuyo elegido.",
+      },
+    ],
+  },
 };

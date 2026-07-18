@@ -64,4 +64,20 @@ export const sidPhillipsToySurgeonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sid Phillips",
+    version: "Cirujano de juguete",
+    text: [
+      {
+        title: "SE ACABÓ EL TIEMPO DE JUEGO",
+        description:
+          "Cuando juegas con este personaje, puedes desterrar a otro personaje tuyo elegido. Si lo haces, cada oponente elige y destierra a uno de sus personajes.",
+      },
+      {
+        title: "¡PREMIOS DOBLES!",
+        description:
+          "Durante tu turno, cada vez que un personaje de juguete sea desterrado, ganas 2 conocimientos.",
+      },
+    ],
+  },
 };

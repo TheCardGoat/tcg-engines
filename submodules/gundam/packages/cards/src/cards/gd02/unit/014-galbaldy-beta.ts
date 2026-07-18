@@ -5,6 +5,7 @@ export const gd02GalbaldyBeta014: UnitCard = {
   name: "Galbaldy Beta",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space", "earth"],
   traits: ["titans"],
   id: "GD02-014",
   canonicalId: "GD02-014",

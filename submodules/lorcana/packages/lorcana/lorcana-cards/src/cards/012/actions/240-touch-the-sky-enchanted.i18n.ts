@@ -17,4 +17,8 @@ export const touchTheSkyEnchantedI18n: Record<Languages, I18nProperties> = {
     name: "Il Cielo Toccherò",
     text: "Sposta un tuo personaggio in un luogo gratis. Poi, pesca carte pari al {L} di quel luogo.",
   },
+  es: {
+    name: "Toca el cielo",
+    text: "Mueve un personaje tuyo a una ubicación de forma gratuita. Luego, roba cartas iguales a {L} de esa ubicación.",
+  },
 };

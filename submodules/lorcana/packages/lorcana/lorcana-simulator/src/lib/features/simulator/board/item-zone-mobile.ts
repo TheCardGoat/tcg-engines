@@ -54,9 +54,11 @@ export function getScrollableItemStep({
   }
 
   const secondElement = elements[1];
-  if (secondElement) {
-    return Math.max(secondElement.offsetLeft - firstElement.offsetLeft, firstElement.offsetWidth);
-  }
+  const cardStep = secondElement
+    ? Math.max(secondElement.offsetLeft - firstElement.offsetLeft, firstElement.offsetWidth)
+    : firstElement.offsetWidth;
 
-  return firstElement.offsetWidth;
+  // Keep one card in common between pages. It preserves orientation while
+  // moving far enough that large item collections are practical to scan.
+  return Math.max(cardStep, viewportWidth - cardStep);
 }

@@ -17,4 +17,8 @@ export const twitterpatedI18n: Record<Languages, I18nProperties> = {
     name: "Rincitrullulito",
     text: "Un personaggio a tua scelta ottiene <Sfuggente> fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
   },
+  es: {
+    name: "Twitterpated",
+    text: "El personaje elegido gana Evasivo hasta el comienzo de tu siguiente turno.",
+  },
 };

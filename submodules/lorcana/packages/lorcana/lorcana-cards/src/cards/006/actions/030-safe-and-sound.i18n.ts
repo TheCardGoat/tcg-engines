@@ -17,4 +17,8 @@ export const safeAndSoundI18n: Record<Languages, I18nProperties> = {
     name: "Al Sicuro",
     text: "Un tuo personaggio a tua scelta non può essere sfidato fino all'inizio del tuo prossimo turno.",
   },
+  es: {
+    name: "Sano y salvo",
+    text: "El personaje elegido por ti no puede ser desafiado hasta el comienzo de tu siguiente turno.",
+  },
 };

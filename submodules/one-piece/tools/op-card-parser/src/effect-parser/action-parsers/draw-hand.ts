@@ -4,6 +4,19 @@ import { parseComparison } from "../helpers.ts";
 import { parseConditionText } from "../condition-parser/index.ts";
 
 type DrawAction = Extract<Action, { action: "draw" }>;
+type RedrawHandAction = Extract<Action, { action: "redrawHand" }>;
+
+export function parseRedrawHandAction(text: string): RedrawHandAction | null {
+  const trimmed = text.trim().replace(/\.+$/, "");
+  if (
+    !/^return\s+all\s+cards\s+in\s+your\s+hand\s+to\s+your\s+deck\s+and\s+shuffle\s+your\s+deck\.\s*then,\s*draw\s+cards\s+equal\s+to\s+the\s+number\s+you\s+returned\s+to\s+your\s+deck$/i.test(
+      trimmed,
+    )
+  ) {
+    return null;
+  }
+  return { action: "redrawHand", player: "self", drawCount: "returned" };
+}
 
 export function parseDrawAction(text: string): DrawAction | null {
   const trimmed = text.trim();
@@ -22,6 +35,9 @@ export function parseDrawAction(text: string): DrawAction | null {
   const match = DRAW_RE.exec(trimmed);
   if (!match) return null;
   const result: DrawAction = { action: "draw", player: "self", amount: parseInt(match[1]!, 10) };
+  if (/^draw up to\b/i.test(trimmed)) {
+    result.upTo = true;
+  }
   // Trailing condition: "if you have N or less/more cards in your hand" or "DON!! cards on your field"
   if (match[2] && match[3]) {
     const condText = trimmed.slice(match[0].indexOf("if")).trim();
@@ -44,7 +60,21 @@ export function parseDrawAction(text: string): DrawAction | null {
   return result;
 }
 
-type TrashFromHandAction = Extract<Action, { action: "trashFromHand" }>;
+type TrashFromHandAction = Extract<Action, { action: "trashFromHand" | "trashFromHandUntil" }>;
+
+export function parseBothPlayersTrashUntilHandSize(text: string): TrashFromHandAction[] | null {
+  const match =
+    /^you\s+and\s+your\s+opponent\s+trash\s+cards?\s+from\s+your\s+hands?\s+until\s+you\s+each\s+have\s+(\d+)\s+cards?\s+in\s+your\s+hands?$/i.exec(
+      text.trim().replace(/\.+$/, ""),
+    );
+  if (!match) return null;
+
+  const untilHandSize = parseInt(match[1]!, 10);
+  return [
+    { action: "trashFromHand", player: "self", amount: 0, untilHandSize },
+    { action: "trashFromHand", player: "opponent", amount: 0, untilHandSize },
+  ];
+}
 
 /**
  * Parse a "Trash N card(s) from your/opponent's hand" action clause.
@@ -53,6 +83,28 @@ type TrashFromHandAction = Extract<Action, { action: "trashFromHand" }>;
  */
 export function parseTrashFromHandAction(text: string): TrashFromHandAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+
+  // "trash all cards from your/your opponent's hand"
+  const allMatch = /^trash\s+all\s+cards\s+from\s+(your|your opponent's)\s+hand$/i.exec(trimmed);
+  if (allMatch) {
+    return {
+      action: "trashFromHand",
+      player: allMatch[1]!.toLowerCase() === "your" ? "self" : "opponent",
+      amount: "all",
+    };
+  }
+
+  // "trash N card(s) from your/your opponent's hand"
+  const upToMatch =
+    /^trash\s+up\s+to\s+(\d+)\s+cards?\s+from\s+(your|your opponent's)\s+hand$/i.exec(trimmed);
+  if (upToMatch) {
+    return {
+      action: "trashFromHand",
+      player: upToMatch[2]!.toLowerCase() === "your" ? "self" : "opponent",
+      amount: parseInt(upToMatch[1]!, 10),
+      upTo: true,
+    };
+  }
 
   // "trash N card(s) from your/your opponent's hand"
   const match = /^trash\s+(\d+)\s+cards?\s+from\s+(your|your opponent's)\s+hand$/i.exec(trimmed);
@@ -123,9 +175,9 @@ export function parseTrashFromHandAction(text: string): TrashFromHandAction | nu
     );
   if (trashUntilMatch) {
     return {
-      action: "trashFromHand",
+      action: "trashFromHandUntil",
       player: "self",
-      amount: parseInt(trashUntilMatch[1]!, 10),
+      handSize: parseInt(trashUntilMatch[1]!, 10),
     };
   }
 
@@ -141,13 +193,20 @@ export function parseOpponentChosenTrashAction(text: string): TrashFromHandActio
       trimmed,
     )
   ) {
-    return { action: "trashFromHand", player: "self", amount: 1 };
+    return {
+      action: "trashFromHand",
+      player: "self",
+      chosenBy: "opponent",
+      amount: 1,
+    };
   }
 
   return null;
 }
 
-export function parseChooseRevealAction(text: string): TrashFromHandAction | null {
+type RevealFromHandAction = Extract<Action, { action: "revealFromHand" }>;
+
+export function parseChooseRevealAction(text: string): RevealFromHandAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
   // "Choose N card(s) from your opponent's hand; your opponent reveals that/those card(s)"
@@ -157,12 +216,23 @@ export function parseChooseRevealAction(text: string): TrashFromHandAction | nul
     );
   if (!m) return null;
 
-  // Model as a reveal action — closest to trashFromHand with amount 0 (just reveal, no discard)
-  // Actually, this is just information reveal, model as draw 0 from opponent for tracking
   return {
-    action: "trashFromHand",
+    action: "revealFromHand",
     player: "opponent",
-    amount: 0, // 0 = reveal only, no actual trash
+    amount: parseInt(m[1]!, 10),
+    chosenBy: "self",
+  };
+}
+
+export function parseRevealEntireHandAction(text: string): RevealFromHandAction | null {
+  const trimmed = text.trim().replace(/\.+$/, "");
+  const match = /^(?:(your\s+opponent|you)\s+)?reveals?\s+(their|your)\s+hand$/i.exec(trimmed);
+  if (!match) return null;
+  return {
+    action: "revealFromHand",
+    player:
+      /^your\s+opponent$/i.test(match[1] ?? "") || /^their$/i.test(match[2]!) ? "opponent" : "self",
+    amount: "all",
   };
 }
 
@@ -178,7 +248,13 @@ export function parseDrawToAction(text: string): DrawAction | null {
     );
   if (!m) return null;
 
-  return { action: "draw", player: "self", amount: parseInt(m[1]!, 10) };
+  const handSize = parseInt(m[1]!, 10);
+  return {
+    action: "draw",
+    player: "self",
+    amount: handSize,
+    untilHandSize: handSize,
+  };
 }
 
 // ── "Draw N card(s) if condition" ──

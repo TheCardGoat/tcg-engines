@@ -76,4 +76,22 @@ export const genieWonderfulTricksterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Genio",
+    version: "Maravilloso embaucador",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "TU RECOMPENSA TE ESPERA",
+        description: "Cada vez que juegues una carta, roba una carta.",
+      },
+      {
+        title: "TESORO PROHIBIDO",
+        description:
+          "Al final de tu turno, coloca todas las cartas de tu mano en la parte inferior de tu mazo en cualquier orden.",
+      },
+    ],
+  },
 };

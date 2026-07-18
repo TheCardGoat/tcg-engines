@@ -40,7 +40,7 @@ export const op11Hibari010: CharacterCard = {
     },
   ],
   effect:
-    '[On Play] Give up to 1 of your opponent\'s Characters 2000 power during this turn.\n[When Attacking] This Character gains +1000 power during this turn. Then, up to 1 of your "Navy" type Leader can also attack active Characters during this turn.',
+    '[On Play] Give up to 1 of your opponent\'s Characters −2000 power during this turn.\n[When Attacking] This Character gains +1000 power during this turn. Then, up to 1 of your "Navy" type Leader can also attack active Characters during this turn.',
   effects: {
     effects: [
       {
@@ -56,7 +56,7 @@ export const op11Hibari010: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
           },
         ],
@@ -90,6 +90,7 @@ export const op11Hibari010: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Navy",
+                  match: "includes",
                 },
               ],
             },

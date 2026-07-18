@@ -65,4 +65,20 @@ export const peterPansShadowNotSewnOnI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La sombra de Peter Pan",
+    version: "No cosido",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "PUNTA DEL PIE",
+        description: "Tus otros personajes con Rush obtienen Evasivo.",
+      },
+    ],
+  },
 };

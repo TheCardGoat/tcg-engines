@@ -57,4 +57,18 @@ export const mushuStealthyDragonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mushu",
+    version: "Dragón sigiloso",
+    text: [
+      {
+        title: "<Evasivo>",
+      },
+      {
+        title: "Inclinar el fiel de la balanza",
+        description:
+          "Siempre que este personaje realice una misión, si un oponente tiene más cartas en su mano que tú, puedes robar una carta.",
+      },
+    ],
+  },
 };

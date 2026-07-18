@@ -17,4 +17,8 @@ export const puttingItAllTogetherP3PromoI18n: Record<Languages, I18nProperties> 
     name: "Unire gli Indizi",
     text: "Un personaggio avversario a tua scelta non può sfidare durante il suo prossimo turno. Pesca una carta.",
   },
+  es: {
+    name: "Poniéndolo todo junto",
+    text: "El personaje contrario elegido no puede desafiar durante su próximo turno. Saca una carta.",
+  },
 };

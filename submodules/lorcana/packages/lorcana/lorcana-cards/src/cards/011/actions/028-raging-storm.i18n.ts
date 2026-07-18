@@ -17,4 +17,8 @@ export const ragingStormI18n: Record<Languages, I18nProperties> = {
     name: "Bufera Furiosa",
     text: "Esilia tutti i personaggi.",
   },
+  es: {
+    name: "Tormenta furiosa",
+    text: "Desterrar a todos los personajes.",
+  },
 };

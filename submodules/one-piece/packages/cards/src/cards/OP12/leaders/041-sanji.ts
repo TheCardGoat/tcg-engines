@@ -40,9 +40,30 @@ export const op12Sanji041: LeaderCard = {
     },
   ],
   effect:
-    '[Activate: Main] [Once Per Turn] DON!! 1: Activate up to 1 "Straw Hat Crew" type Event with a base cost of 3 or less from your hand.\n[When Attacking] If the number of DON!! cards on your field is equal to or less than the number on your opponent\'s field, add up to 1 DON!! card from your DON!! deck and rest it.',
+    '[Activate: Main] [Once Per Turn] DON!! −1: Activate up to 1 "Straw Hat Crew" type Event with a base cost of 3 or less from your hand.\n[When Attacking] If the number of DON!! cards on your field is equal to or less than the number on your opponent\'s field, add up to 1 DON!! card from your DON!! deck and rest it.',
   effects: {
     effects: [
+      {
+        trigger: "activateMain",
+        costs: [{ cost: "returnDon", amount: 1 }],
+        actions: [
+          {
+            action: "activateEvent",
+            target: {
+              player: "self",
+              zones: ["hand"],
+              count: { amount: 1, upTo: true },
+              filters: [
+                { filter: "cardCategory", value: "event" },
+                { filter: "trait", value: "Straw Hat Crew", match: "includes" },
+                { filter: "baseCost", comparison: "lte", value: 3 },
+              ],
+            },
+            effectTrigger: "main",
+          },
+        ],
+        oncePerTurn: true,
+      },
       {
         trigger: "whenAttacking",
         conditions: [

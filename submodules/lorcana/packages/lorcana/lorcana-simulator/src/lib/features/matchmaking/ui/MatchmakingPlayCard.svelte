@@ -96,6 +96,7 @@
         wsConnected={controller.gateway.status === 'connected'}
         selectedQueueMode={controller.queue.selectedQueueMode}
         selectedMatchType={controller.queue.selectedMatchType}
+        season={controller.queue.season}
         rankedEnabled={controller.queue.rankedEnabled}
         testingEnabled={controller.queue.testingQueueEnabled}
         cards={controller.queue.queueCards}
@@ -179,4 +180,3 @@
         onStartPracticeMatch={() => controller.startPracticeMatch()}
       />
     {/if}
-

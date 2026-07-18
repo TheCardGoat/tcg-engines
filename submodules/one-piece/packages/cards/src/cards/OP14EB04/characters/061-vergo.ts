@@ -30,7 +30,7 @@ export const op14eb04Vergo061: CharacterCard = {
   setId: "OP14EB04",
   cost: 5,
   power: 7000,
-  traits: ["Donquixote Pirates Navy Punk Hazard"],
+  traits: ["Punk Hazard", "Navy", "Donquixote Pirates"],
   attribute: "strike",
   artVariants: [
     {
@@ -40,7 +40,7 @@ export const op14eb04Vergo061: CharacterCard = {
     },
   ],
   effect:
-    "[Once Per Turn] If your {Donquixote Pirates} type Character would be removed from the field by your opponent's effect, you may return 1 DON!! card from your field to your DON!! deck instead.\n[When Attacking] DON!! 1: Give up to 1 of your opponent's Characters 2000 power during this turn.",
+    "[Once Per Turn] If your {Donquixote Pirates} type Character would be removed from the field by your opponent's effect, you may return 1 DON!! card from your field to your DON!! deck instead.\n[When Attacking] DON!! −1: Give up to 1 of your opponent's Characters −2000 power during this turn.",
   effects: {
     effects: [
       {
@@ -62,7 +62,7 @@ export const op14eb04Vergo061: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
           },
         ],
@@ -71,8 +71,23 @@ export const op14eb04Vergo061: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "removeFromField",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "trait",
+              value: "Donquixote Pirates",
+            },
+          ],
+        },
+        source: "opponentEffect",
         replacementAction: {
-          action: "opponentReturnDon",
+          action: "returnDon",
+          player: "self",
           amount: 1,
         },
         oncePerTurn: true,

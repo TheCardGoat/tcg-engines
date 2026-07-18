@@ -41,4 +41,14 @@ export const grandDukeAdvisorToTheKingI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Gran duque",
+    version: "Asesor del Rey",
+    text: [
+      {
+        title: "SÍ, SU MAJESTAD",
+        description: "Tus personajes Príncipe, Princesa, Rey y Reina obtienen +1 {S}.",
+      },
+    ],
+  },
 };

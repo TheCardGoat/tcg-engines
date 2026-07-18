@@ -136,6 +136,108 @@
   border-top: 1px solid oklch(0.74 0.019 84);
 }
 
+.releaseBench {
+  border-bottom: 1px solid oklch(0.66 0.061 70);
+  background: oklch(0.82 0.028 78);
+  padding: 18px;
+}
+
+.releaseEyebrow {
+  margin: 0 0 5px;
+  color: oklch(0.39 0.085 63);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.releaseTitle {
+  margin: 0;
+  color: oklch(0.27 0.047 67);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.releaseLead {
+  max-width: 70ch;
+  margin: 0 0 12px;
+  color: oklch(0.42 0.037 69);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.releaseList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.releaseItem {
+  min-width: 0;
+}
+
+.releaseLink {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 10px;
+  height: 100%;
+  border: 1px solid oklch(0.65 0.068 68);
+  border-radius: 7px;
+  background: oklch(0.87 0.02 83);
+  color: inherit;
+  padding: 12px;
+  text-decoration: none;
+  transition:
+    background-color 160ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 160ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.releaseLink:hover {
+  border-color: oklch(0.49 0.11 62);
+  background: oklch(0.91 0.025 84);
+  transform: translateY(-1px);
+}
+
+.releaseLink:focus-visible {
+  outline: 3px solid oklch(0.51 0.125 61 / 0.45);
+  outline-offset: 2px;
+}
+
+.releaseCardName {
+  color: oklch(0.24 0.044 67);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.releaseScenario {
+  grid-column: 1 / -1;
+  color: oklch(0.46 0.05 69);
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.releaseSteps {
+  grid-column: 1 / -1;
+  color: oklch(0.37 0.032 69);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.releaseAction {
+  justify-self: end;
+  color: oklch(0.38 0.093 62);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
 .groupHeader {
   display: flex;
   align-items: center;
@@ -295,6 +397,14 @@
 
   .group {
     padding: 14px;
+  }
+
+  .releaseBench {
+    padding: 14px;
+  }
+
+  .releaseList {
+    grid-template-columns: 1fr;
   }
 
   .link {

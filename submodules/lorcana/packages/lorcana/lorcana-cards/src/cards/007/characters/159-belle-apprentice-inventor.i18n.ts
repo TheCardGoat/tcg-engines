@@ -45,4 +45,15 @@ export const belleApprenticeInventorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Beldad",
+    version: "Aprendiz de inventor",
+    text: [
+      {
+        title: "QUÉ",
+        description:
+          "UN MASS Durante tu turno, puedes desterrar un objeto tuyo elegido para jugar con este personaje de forma gratuita.",
+      },
+    ],
+  },
 };

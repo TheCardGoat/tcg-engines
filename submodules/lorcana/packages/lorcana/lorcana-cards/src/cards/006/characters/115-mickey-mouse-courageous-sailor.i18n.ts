@@ -41,4 +41,14 @@ export const mickeyMouseCourageousSailorI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Marinero valiente",
+    text: [
+      {
+        title: "TIERRA SÓLIDA",
+        description: "Mientras este personaje está en una ubicación, obtiene +2 {S}.",
+      },
+    ],
+  },
 };

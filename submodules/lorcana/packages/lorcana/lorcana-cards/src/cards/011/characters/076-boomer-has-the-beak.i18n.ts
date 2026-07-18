@@ -44,4 +44,15 @@ export const boomerHasTheBeakI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Boomer",
+    version: "Tiene el pico",
+    text: [
+      {
+        title: "¡LO VISTE!",
+        description:
+          "Cuando juegas con este personaje, puedes ejercer el personaje dañado elegido.",
+      },
+    ],
+  },
 };

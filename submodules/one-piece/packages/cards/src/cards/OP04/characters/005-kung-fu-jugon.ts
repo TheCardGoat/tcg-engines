@@ -27,5 +27,32 @@ export const op04KungFuJugon005: CharacterCard = {
   attribute: "strike",
   effect:
     "If you have a [Kung Fu Jugon] other than this Character, this Character gains [Blocker]. (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "hasCard",
+            player: "self",
+            zone: "field",
+            filters: [{ filter: "excludeSelf" }, { filter: "name", value: "Kung Fu Jugon" }],
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op04KungFuJugon005I18n,
 };

@@ -60,4 +60,18 @@ export const iceSpikesI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Picos de hielo",
+    text: [
+      {
+        title: "MANTENERSE QUIETO",
+        description: "Cuando juegues este objeto, ejerce el personaje contrario elegido.",
+      },
+      {
+        title: "ESTÁ ATASCADO",
+        description:
+          "{E}, 1 {I}: ejerce el elemento contrario elegido. No puede estar listo al comienzo de su siguiente turno.",
+      },
+    ],
+  },
 };

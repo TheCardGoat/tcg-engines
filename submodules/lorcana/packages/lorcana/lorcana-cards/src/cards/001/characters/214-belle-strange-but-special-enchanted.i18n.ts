@@ -60,4 +60,20 @@ export const belleStrangeButSpecialEnchantedI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Beldad",
+    version: "Extraño pero especial",
+    text: [
+      {
+        title: "LEER",
+        description:
+          "UN LIBRO Durante tu turno, puedes poner una carta adicional de tu mano en tu tintero boca abajo.",
+      },
+      {
+        title: "¡MI PARTE FAVORITA!",
+        description:
+          "Mientras tengas 10 o más cartas en tu tintero, este personaje obtiene +4 {L}.",
+      },
+    ],
+  },
 };

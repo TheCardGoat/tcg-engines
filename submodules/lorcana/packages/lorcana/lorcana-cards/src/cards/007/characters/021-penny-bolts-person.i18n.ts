@@ -45,4 +45,15 @@ export const pennyBoltsPersonI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Centavo",
+    version: "La persona de Bolt",
+    text: [
+      {
+        title: "LEALTAD DURADERA",
+        description:
+          "Cuando juegas con este personaje, puedes eliminar hasta 2 daños del personaje elegido y este obtiene Resistencia +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

@@ -1,5 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaMultiplayerTestEngine, createMockSong } from "@tcg/lorcana-engine/testing";
+import {
+  LorcanaMultiplayerTestEngine,
+  PLAYER_ONE,
+  createMockSong,
+} from "@tcg/lorcana-engine/testing";
 import { meilinLeeLeadVocalist } from "./007-meilin-lee-lead-vocalist";
 
 const regularSong = createMockSong({
@@ -30,5 +34,23 @@ describe("Meilin Lee - Lead Vocalist", () => {
     expect(
       testEngine.asPlayerOne().playSongTogether(singTogetherSong, [meilinLeeLeadVocalist]),
     ).toBeSuccessfulCommand();
+  });
+
+  it("surfaces Meilin as a singer when discovering Sing Together play options", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [singTogetherSong],
+      play: [{ card: meilinLeeLeadVocalist, isDrying: false }],
+    });
+    const player = testEngine.asPlayerOne();
+    const songId = testEngine.findCardInstanceId(singTogetherSong, "hand", PLAYER_ONE);
+    const meilinId = testEngine.findCardInstanceId(meilinLeeLeadVocalist, "play", PLAYER_ONE);
+
+    expect(player.getMoveOptions("singCard", songId)).toEqual([
+      {
+        kind: "singTogether",
+        requiredTotal: 3,
+        singers: [{ cardId: meilinId, value: 3 }],
+      },
+    ]);
   });
 });

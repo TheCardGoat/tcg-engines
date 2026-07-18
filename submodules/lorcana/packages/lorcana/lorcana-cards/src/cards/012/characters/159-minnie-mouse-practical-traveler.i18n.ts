@@ -45,4 +45,15 @@ export const minnieMousePracticalTravelerI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Viajero práctico",
+    text: [
+      {
+        title: "OJO DISCIERNENTE",
+        description:
+          "Siempre que este personaje realice una misión, si jugaste con otro personaje este turno, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

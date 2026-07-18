@@ -17,4 +17,8 @@ export const doItAgainI18n: Record<Languages, I18nProperties> = {
     name: "Do It Again!",
     text: "Return an action card from your discard to your hand.",
   },
+  es: {
+    name: "¡Hazlo de nuevo!",
+    text: "Devuelve una carta de acción de tu descarte a tu mano.",
+  },
 };

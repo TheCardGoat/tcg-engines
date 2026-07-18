@@ -2,6 +2,28 @@ import type { Scenario } from "./types";
 import { c, CyberpunkTestEngine, scenarioSeed } from "./shared";
 
 export const programScenarios: Scenario[] = [
+  {
+    id: "progLiveWithTheAftermathRetail",
+    group: "program-spend",
+    label: "Live with the Aftermath (Retail) · each player defeats a Unit",
+    description:
+      "P1 plays Live with the Aftermath, selects a friendly Unit, then P2 selects one of their own Units.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailLiveWithTheAftermath],
+          field: [{ card: c.welcomeToNightCityRetailMoxInciters, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 3,
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+        },
+        { seed: scenarioSeed("progLiveWithTheAftermathRetail"), autoGainGig: false },
+      ),
+  },
   // ── Program: Spend (Corporate Surveillance) ─────────────────────────────
   {
     id: "progCorporateSurveillance",

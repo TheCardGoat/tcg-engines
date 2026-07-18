@@ -57,4 +57,18 @@ export const minnieMouseMrsCratchitI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Señora cratchit",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "EL AMOR DE UNA MADRE",
+        description:
+          "Cuando juegas con este personaje, puedes poner la carta superior de tu mazo boca abajo debajo de uno de tus personajes o ubicaciones con Boost. Si lo haces, roba una carta.",
+      },
+    ],
+  },
 };

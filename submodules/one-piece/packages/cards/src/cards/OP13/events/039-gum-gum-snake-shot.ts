@@ -53,6 +53,15 @@ export const op13GumGumSnakeShot039: EventCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "counter",
+          },
+        ],
+      },
     ],
   },
   i18n: op13GumGumSnakeShot039I18n,

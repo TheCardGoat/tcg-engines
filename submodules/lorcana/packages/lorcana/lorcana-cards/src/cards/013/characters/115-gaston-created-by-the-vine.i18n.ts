@@ -41,4 +41,14 @@ export const gastonCreatedByTheVineI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gastón",
+    version: "Creado por la vid",
+    text: [
+      {
+        title: "FUERZA DE DIBUJO",
+        description: "Tus personajes Floodborn obtienen +1 {S}.",
+      },
+    ],
+  },
 };

@@ -72,4 +72,21 @@ export const minnieMouseWideeyedDiverP1PromoI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Buceador con los ojos muy abiertos",
+    text: [
+      {
+        title: "Shift 2",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "AVENTURA SUBMARINA",
+        description:
+          "Cada vez que juegas una segunda acción en un turno, este personaje obtiene +2 {L} este turno.",
+      },
+    ],
+  },
 };

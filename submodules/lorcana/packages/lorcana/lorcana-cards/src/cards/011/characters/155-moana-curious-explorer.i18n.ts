@@ -41,4 +41,14 @@ export const moanaCuriousExplorerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Moana",
+    version: "Explorador curioso",
+    text: [
+      {
+        title: "LEGADO ANCESTRAL",
+        description: "Puedes entintar cartas de tu descarte.",
+      },
+    ],
+  },
 };

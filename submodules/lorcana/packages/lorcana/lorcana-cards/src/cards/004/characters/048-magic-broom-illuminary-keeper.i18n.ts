@@ -45,4 +45,15 @@ export const magicBroomIlluminaryKeeperI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Escoba magica",
+    version: "Guardián iluminador",
+    text: [
+      {
+        title: "AGRADABLE Y ORDENADO",
+        description:
+          "Siempre que juegues con otro personaje, puedes desterrar a este personaje para robar una carta.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const gastonSuperiorArcherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gastón",
+    version: "Arquero Superior",
+    text: [
+      {
+        title: "¡Mira esto!",
+        description:
+          "Cuando juegas con este personaje, puedes desterrar al personaje elegido con 5 {S} o más.",
+      },
+    ],
+  },
 };

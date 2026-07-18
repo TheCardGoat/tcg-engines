@@ -1,134 +1,127 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
+  activeResources,
+  createMockCommand,
   createMockUnit,
-  evaluateTargetFilter,
-  buildTargetResolutionContext,
+  expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
 import { gd02HeartSetOnRevenge118 } from "./118-heart-set-on-revenge.ts";
 
+function reachBlockedBattle(attackerHp: number) {
+  const blocker = createMockUnit({
+    ap: 2,
+    hp: 6,
+    keywordEffects: [{ keyword: "Blocker" }],
+  });
+  const attacker = createMockUnit({ ap: 4, hp: attackerHp });
+  const engine = GundamTestEngine.create(
+    {
+      hand: [gd02HeartSetOnRevenge118],
+      play: [blocker],
+      resourceArea: activeResources(3),
+      deck: 3,
+    },
+    { play: [attacker], deck: 3 },
+    { initialActivePlayer: PLAYER_TWO },
+  );
+  const p1 = engine.asPlayer(PLAYER_ONE);
+  const p2 = engine.asPlayer(PLAYER_TWO);
+  const blockerId = p1.getCardsInZone("battleArea")[0]!;
+  const attackerId = p2.getCardsInZone("battleArea")[0]!;
+
+  expectSuccess(p2.enterBattle(attackerId, "direct"));
+  expectSuccess(p1.declareBlock(blockerId));
+
+  return { p1, p2, blockerId, attackerId };
+}
+
 describe("Heart Set on Revenge (GD02-118)", () => {
-  // 【Action】Choose 1 enemy Unit with 4 or less HP battling a friendly
-  // Unit with <Blocker>. Return it to its owner's hand.
-  //
-  // The card text combines TWO attribute narrows (HP ≤ 4 on the enemy
-  // candidate) with ONE relational narrow (the enemy is battling a
-  // friendly Unit with <Blocker>). The relational narrow is modelled
-  // via `isBattling.opponentMatches` — the <Blocker> keyword lives on
-  // the OTHER combatant, not on the enemy candidate.
+  it("returns the chosen 4-HP enemy battling a friendly Blocker to its owner's hand", () => {
+    const { p1, p2, blockerId, attackerId } = reachBlockedBattle(4);
 
-  function setup() {
-    const blocker = createMockUnit({
-      name: "Friendly Blocker",
-      ap: 2,
-      hp: 3,
-      keywordEffects: [{ keyword: "Blocker" }],
+    expectSuccess(p1.playCommand(gd02HeartSetOnRevenge118));
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "targetSelection") {
+      throw new Error("Expected the battling enemy Unit choice");
+    }
+    expect(choice.legalTargetIds).toEqual([attackerId]);
+    expectSuccess(p1.resolveEffect({ targets: [attackerId] }));
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p1.getBoardView().pendingCombat).toBeUndefined();
+    expect(p2.getCardZone(attackerId)).toBe(`hand:${PLAYER_TWO}`);
+    expect(p1.getDamage(blockerId)).toBe(0);
+    expect(p1.getCardZone(gd02HeartSetOnRevenge118)).toBe(`trash:${PLAYER_ONE}`);
+  });
+
+  it("cannot target a battling enemy Unit with more than 4 HP", () => {
+    const { p1, p2, attackerId } = reachBlockedBattle(5);
+
+    expectFailure(p1.playCommand(gd02HeartSetOnRevenge118), "NO_LEGAL_TARGETS");
+    expect(p2.getCardZone(attackerId)).toBe(`battleArea:${PLAYER_TWO}`);
+  });
+
+  it("can be paired as Ein Dalton instead of activating the Command", () => {
+    const host = createMockUnit({ ap: 2, hp: 4 });
+    const engine = GundamTestEngine.create({
+      hand: [gd02HeartSetOnRevenge118],
+      play: [host],
+      resourceArea: activeResources(3),
     });
-    const nonBlocker = createMockUnit({ name: "Friendly Plain", ap: 2, hp: 3 });
-    const weakEnemy = createMockUnit({ name: "Weak Enemy", ap: 3, hp: 3 });
-    const beefyEnemy = createMockUnit({ name: "Beefy Enemy", ap: 4, hp: 6 });
-    const engine = GundamTestEngine.create(
-      { play: [blocker, nonBlocker] },
-      { play: [weakEnemy, beefyEnemy] },
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const commandId = p1.getHand()[0]!;
+
+    expectSuccess(p1.playCommandAsPilot(commandId, hostId));
+
+    expect(p1.getPilotId(hostId)).toBe(commandId);
+    expect(p1.getVisibleCard(hostId)).toMatchObject({ effectiveAp: 3, effectiveHp: 4 });
+  });
+
+  it("cannot activate during Main", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd02HeartSetOnRevenge118],
+      resourceArea: activeResources(3),
+    });
+
+    expectFailure(
+      engine.asPlayer(PLAYER_ONE).playCommand(gd02HeartSetOnRevenge118),
+      "WRONG_TIMING",
     );
-    const rt = engine.getRuntime();
-    const blockerId = rt.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, blocker.cardNumber)!;
-    const nonBlockerId = rt.getInstanceIdByDefinition(
-      PLAYER_ONE as PlayerId,
-      nonBlocker.cardNumber,
-    )!;
-    const weakEnemyId = rt.getInstanceIdByDefinition(PLAYER_TWO as PlayerId, weakEnemy.cardNumber)!;
-    const beefyEnemyId = rt.getInstanceIdByDefinition(
-      PLAYER_TWO as PlayerId,
-      beefyEnemy.cardNumber,
-    )!;
-    return { engine, rt, blockerId, nonBlockerId, weakEnemyId, beefyEnemyId };
-  }
-
-  function allBattleAreaCards(rt: ReturnType<GundamTestEngine["getRuntime"]>) {
-    const fw = rt.getFrameworkReadAPI();
-    return [
-      ...fw.zones.getCards({ zone: "battleArea", playerId: PLAYER_ONE }),
-      ...fw.zones.getCards({ zone: "battleArea", playerId: PLAYER_TWO }),
-    ]
-      .map((id) => fw.cards.get(id))
-      .filter(<T>(c: T | undefined): c is T => c !== undefined);
-  }
-
-  it("positive: enemy HP≤4 battling a friendly <Blocker> → candidate matches", () => {
-    const { engine, rt, blockerId, weakEnemyId } = setup();
-    const g = engine.getG();
-    g.turnMetadata.pendingCombat = {
-      stage: "attack-step",
-      attackerId: weakEnemyId,
-      attackerPlayerId: PLAYER_TWO,
-      target: blockerId,
-    };
-
-    const fw = rt.getFrameworkReadAPI();
-    const ctx = buildTargetResolutionContext(g, PLAYER_ONE, fw, { sourceCardId: blockerId });
-    const target = gd02HeartSetOnRevenge118.effects?.[0]?.directives[0];
-    if (!target || !("action" in target) || target.action.action !== "returnToHand") {
-      throw new Error("Unexpected directive shape");
-    }
-    const matched = evaluateTargetFilter(target.action.target, allBattleAreaCards(rt), ctx);
-    expect(matched).toEqual([weakEnemyId]);
   });
 
-  it("negative: enemy battling a NON-blocker friendly → no match", () => {
-    const { engine, rt, nonBlockerId, weakEnemyId } = setup();
-    const g = engine.getG();
-    g.turnMetadata.pendingCombat = {
-      stage: "attack-step",
-      attackerId: weakEnemyId,
-      attackerPlayerId: PLAYER_TWO,
-      target: nonBlockerId,
-    };
+  it("enforces its printed Lv.3 and active Resource cost 1 in a legal Action step", () => {
+    const lowLevel = GundamTestEngine.create({
+      hand: [gd02HeartSetOnRevenge118],
+      resourceArea: activeResources(2),
+    });
+    const lowP1 = lowLevel.asPlayer(PLAYER_ONE);
+    expectSuccess(lowP1.passPhase());
+    expectSuccess(lowLevel.asPlayer(PLAYER_TWO).passActionStep());
+    expectFailure(lowP1.playCommand(gd02HeartSetOnRevenge118), "INSUFFICIENT_RESOURCE_LEVEL");
+    expect(lowP1.getCardZone(gd02HeartSetOnRevenge118)).toBe(`hand:${PLAYER_ONE}`);
 
-    const fw = rt.getFrameworkReadAPI();
-    const ctx = buildTargetResolutionContext(g, PLAYER_ONE, fw, { sourceCardId: nonBlockerId });
-    const target = gd02HeartSetOnRevenge118.effects?.[0]?.directives[0];
-    if (!target || !("action" in target) || target.action.action !== "returnToHand") {
-      throw new Error("Unexpected directive shape");
-    }
-    const matched = evaluateTargetFilter(target.action.target, allBattleAreaCards(rt), ctx);
-    expect(matched).toEqual([]);
-  });
-
-  it("negative: enemy HP>4 even when battling blocker → no match", () => {
-    const { engine, rt, blockerId, beefyEnemyId } = setup();
-    const g = engine.getG();
-    g.turnMetadata.pendingCombat = {
-      stage: "attack-step",
-      attackerId: beefyEnemyId,
-      attackerPlayerId: PLAYER_TWO,
-      target: blockerId,
-    };
-
-    const fw = rt.getFrameworkReadAPI();
-    const ctx = buildTargetResolutionContext(g, PLAYER_ONE, fw, { sourceCardId: blockerId });
-    const target = gd02HeartSetOnRevenge118.effects?.[0]?.directives[0];
-    if (!target || !("action" in target) || target.action.action !== "returnToHand") {
-      throw new Error("Unexpected directive shape");
-    }
-    const matched = evaluateTargetFilter(target.action.target, allBattleAreaCards(rt), ctx);
-    expect(matched).toEqual([]);
-  });
-
-  it("no active combat → no candidate", () => {
-    const { engine, rt, blockerId } = setup();
-    const g = engine.getG();
-    expect(g.turnMetadata.pendingCombat).toBeUndefined();
-    const fw = rt.getFrameworkReadAPI();
-    const ctx = buildTargetResolutionContext(g, PLAYER_ONE, fw, { sourceCardId: blockerId });
-    const target = gd02HeartSetOnRevenge118.effects?.[0]?.directives[0];
-    if (!target || !("action" in target) || target.action.action !== "returnToHand") {
-      throw new Error("Unexpected directive shape");
-    }
-    const matched = evaluateTargetFilter(target.action.target, allBattleAreaCards(rt), ctx);
-    expect(matched).toEqual([]);
+    const setup = createMockCommand({
+      level: 0,
+      cost: 3,
+      effects: [
+        { type: "command", activation: { timing: ["main"] }, directives: [], sourceText: "" },
+      ],
+    });
+    const insufficient = GundamTestEngine.create({
+      hand: [setup, gd02HeartSetOnRevenge118],
+      resourceArea: activeResources(3),
+    });
+    const p1 = insufficient.asPlayer(PLAYER_ONE);
+    expectSuccess(p1.playCommand(setup));
+    expectSuccess(p1.passPhase());
+    expectSuccess(insufficient.asPlayer(PLAYER_TWO).passActionStep());
+    expectFailure(p1.playCommand(gd02HeartSetOnRevenge118), "INSUFFICIENT_RESOURCES");
+    expect(p1.getCardZone(gd02HeartSetOnRevenge118)).toBe(`hand:${PLAYER_ONE}`);
   });
 });

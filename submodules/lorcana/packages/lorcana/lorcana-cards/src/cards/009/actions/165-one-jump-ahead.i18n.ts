@@ -26,4 +26,8 @@ export const oneJumpAheadI18n: Record<Languages, I18nProperties> = {
     name: "One Jump Ahead",
     text: "Put the top card of your deck into your inkwell facedown and exerted.",
   },
+  es: {
+    name: "Un salto adelante",
+    text: "Coloque la carta superior de su mazo en su tintero boca abajo y ejerza.",
+  },
 };

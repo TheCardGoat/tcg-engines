@@ -62,6 +62,13 @@ export const op11Koby119: CharacterCard = {
       },
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 2,
+            position: "bottom",
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

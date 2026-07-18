@@ -57,6 +57,12 @@ export const op02BoaHancock059: CharacterCard = {
             player: "self",
             amount: 1,
           },
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: 3,
+            upTo: true,
+          },
         ],
       },
     ],

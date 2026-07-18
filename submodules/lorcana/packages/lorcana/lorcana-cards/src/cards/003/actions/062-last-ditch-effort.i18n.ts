@@ -17,4 +17,8 @@ export const lastditchEffortI18n: Record<Languages, I18nProperties> = {
     name: "Ultimo Tentativo Disperato",
     text: "Impegna un personaggio avversario a tua scelta. Poi un tuo personaggio a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
   },
+  es: {
+    name: "Esfuerzo de último momento",
+    text: "Ejercer el personaje contrario elegido. Luego, tu personaje elegido gana Challenger +2 este turno. (Obtienen +2 {S} mientras desafían).",
+  },
 };

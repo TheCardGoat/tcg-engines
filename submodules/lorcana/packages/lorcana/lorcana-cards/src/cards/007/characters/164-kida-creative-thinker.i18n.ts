@@ -57,4 +57,18 @@ export const kidaCreativeThinkerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Niño",
+    version: "Pensador creativo",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "CLAVE DEL ROMPECABEZAS",
+        description:
+          "{E}: mira las 2 cartas superiores de tu mazo. Coloque uno en su suministro de tinta, boca abajo y extendido, y el otro encima de su plataforma.",
+      },
+    ],
+  },
 };

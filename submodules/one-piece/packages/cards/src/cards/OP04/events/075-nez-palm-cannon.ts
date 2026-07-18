@@ -42,6 +42,20 @@ export const op04NezPalmCannon075: EventCard = {
             value: 6000,
             duration: "thisBattle",
           },
+          {
+            action: "addDon",
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            state: "rested",
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 2,
+            },
+          },
         ],
       },
       {

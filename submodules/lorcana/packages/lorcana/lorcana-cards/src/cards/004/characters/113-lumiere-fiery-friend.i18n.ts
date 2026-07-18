@@ -41,4 +41,14 @@ export const lumiereFieryFriendI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lumière",
+    version: "Amigo ardiente",
+    text: [
+      {
+        title: "FERVIENTE DISCURSO",
+        description: "Tus otros personajes obtienen +1 {S}.",
+      },
+    ],
+  },
 };

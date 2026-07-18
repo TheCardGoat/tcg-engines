@@ -41,4 +41,14 @@ export const triggerNotsosharpShooterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Desencadenar",
+    version: "Tirador no tan agudo",
+    text: [
+      {
+        title: "VIEJA BETSY",
+        description: "Tus personajes llamados Nutsy obtienen +1 {L}.",
+      },
+    ],
+  },
 };

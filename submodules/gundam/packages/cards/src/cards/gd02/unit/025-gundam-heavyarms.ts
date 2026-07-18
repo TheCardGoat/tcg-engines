@@ -5,6 +5,7 @@ export const gd02GundamHeavyarms025: UnitCard = {
   name: "Gundam Heavyarms",
   type: "unit",
   color: "green",
+  battlefieldZones: ["earth"],
   traits: ["operation meteor"],
   id: "GD02-025",
   canonicalId: "GD02-025",
@@ -41,6 +42,7 @@ export const gd02GundamHeavyarms025: UnitCard = {
   cost: 3,
   ap: 3,
   hp: 4,
+  linkCondition: "(Operation Meteor) Trait",
   effect:
     "【Deploy】Look at the top card of your deck. Return it to the top or bottom of your deck.<br>",
   effects: [

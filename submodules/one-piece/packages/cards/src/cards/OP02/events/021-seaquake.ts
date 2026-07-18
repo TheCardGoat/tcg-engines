@@ -32,6 +32,7 @@ export const op02Seaquake021: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Whitebeard Pirates",
+            match: "includes",
           },
         ],
         actions: [

@@ -17,4 +17,8 @@ export const freezeTheVineI18n: Record<Languages, I18nProperties> = {
     name: "Congelare il Viticcio",
     text: "Esilia tutti i luoghi. Pesca 2 carte, poi scegli e scarta una carta.",
   },
+  es: {
+    name: "Congelar la vid",
+    text: "Desterrar todas las ubicaciones. Roba 2 cartas, luego elige y descarta una carta.",
+  },
 };

@@ -76,4 +76,22 @@ export const boltSuperdogEpicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tornillo",
+    version: "Superperro",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "MARCA DE PODER",
+        description:
+          "Cada vez que prepares a este personaje, gana 1 conocimiento por cada otro personaje no dañado que tengas en juego.",
+      },
+      {
+        title: "MIRADA DEL PERNO",
+        description: "{E}: destierra al personaje de ilusión elegido.",
+      },
+    ],
+  },
 };

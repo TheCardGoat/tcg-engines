@@ -17,4 +17,8 @@ export const captainColonelsLieutenantI18n: Record<Languages, I18nProperties> = 
     name: "Captain",
     version: "Colonel’s Lieutenant",
   },
+  es: {
+    name: "Capitán",
+    version: "Teniente del coronel",
+  },
 };

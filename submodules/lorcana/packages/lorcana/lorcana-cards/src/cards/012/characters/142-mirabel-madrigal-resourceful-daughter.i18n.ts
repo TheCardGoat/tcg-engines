@@ -44,4 +44,15 @@ export const mirabelMadrigalResourcefulDaughterI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Mirabel Madrigal",
+    version: "Hija ingeniosa",
+    text: [
+      {
+        title: "ESTO AYUDARÁ",
+        description:
+          "Cuando juegas con este personaje, eliminas hasta 2 daños del personaje elegido.",
+      },
+    ],
+  },
 };

@@ -27,5 +27,42 @@ export const op12MarshallDTeach054: CharacterCard = {
   attribute: "special",
   effect:
     '[On Play] If your Leader has the "The Seven Warlords of the Sea" type, return up to 1 Character with a cost of 1 or less other than this Character to the owner\'s hand.',
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "The Seven Warlords of the Sea",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "returnToHand",
+            target: {
+              player: "any",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 1,
+                },
+                {
+                  filter: "excludeSelf",
+                },
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
   i18n: op12MarshallDTeach054I18n,
 };

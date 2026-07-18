@@ -41,4 +41,14 @@ export const tinkerBellTinyTacticianI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Campanita",
+    version: "Pequeño táctico",
+    text: [
+      {
+        title: "PLANES DE BATALLA",
+        description: "{E}: roba una carta, luego elige y descarta una carta.",
+      },
+    ],
+  },
 };

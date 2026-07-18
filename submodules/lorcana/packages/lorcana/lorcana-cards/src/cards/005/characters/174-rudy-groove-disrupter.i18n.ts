@@ -17,4 +17,8 @@ export const rudyGrooveDisrupterI18n: Record<Languages, I18nProperties> = {
     name: "Rudy",
     version: "Rompiritmo",
   },
+  es: {
+    name: "Rudy",
+    version: "Disruptor de ritmo",
+  },
 };

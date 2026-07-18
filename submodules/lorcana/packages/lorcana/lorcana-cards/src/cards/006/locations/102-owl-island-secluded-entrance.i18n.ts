@@ -63,4 +63,19 @@ export const owlIslandSecludedEntranceI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Isla del Búho",
+    version: "Entrada aislada",
+    text: [
+      {
+        title: "TRABAJO EN EQUIPO",
+        description:
+          "Por cada personaje que tengas aquí, pagas 1 {I} menos por la primera acción que juegues en cada turno.",
+      },
+      {
+        title: "MUCHO QUE APRENDER",
+        description: "Siempre que juegues una segunda acción en un turno, ganas 3 conocimientos.",
+      },
+    ],
+  },
 };

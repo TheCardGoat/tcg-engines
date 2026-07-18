@@ -43,6 +43,53 @@ export const op06TheBillionFoldWorldTrichiliocosm038: EventCard = {
             value: 2000,
             duration: "thisBattle",
           },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: 2000,
+            duration: "thisBattle",
+            previousActionTargets: true,
+            condition: {
+              condition: "restedCardCount",
+              player: "self",
+              comparison: "gte",
+              value: 8,
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "state",
+                  value: "rested",
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 3,
+                },
+              ],
+            },
+          },
         ],
       },
     ],

@@ -17,4 +17,8 @@ export const robinHoodBelovedOutlawI18n: Record<Languages, I18nProperties> = {
     name: "Robin Hood",
     version: "Amato Fuorilegge",
   },
+  es: {
+    name: "Robin Hood",
+    version: "Amado forajido",
+  },
 };

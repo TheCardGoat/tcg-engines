@@ -28,6 +28,15 @@ export const op04TruenoBastardo094: EventCard = {
     effects: [
       {
         trigger: "main",
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "trash",
+            comparison: "lt",
+            value: 15,
+          },
+        ],
         actions: [
           {
             action: "ko",
@@ -36,13 +45,65 @@ export const op04TruenoBastardo094: EventCard = {
               zones: ["character"],
               count: {
                 amount: 1,
+                upTo: true,
               },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "main",
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "trash",
+            comparison: "gte",
+            value: 15,
+          },
+        ],
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 6,
+                },
+              ],
             },
           },
         ],
       },
       {
         trigger: "trigger",
+        costs: [
+          {
+            cost: "restCards",
+            amount: 1,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "leader",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "ko",

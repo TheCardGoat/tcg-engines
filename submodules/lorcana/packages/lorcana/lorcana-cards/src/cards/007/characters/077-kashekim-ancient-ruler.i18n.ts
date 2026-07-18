@@ -17,4 +17,8 @@ export const kashekimAncientRulerI18n: Record<Languages, I18nProperties> = {
     name: "Kashekim",
     version: "Antico Sovrano",
   },
+  es: {
+    name: "Kashekim",
+    version: "Gobernante antiguo",
+  },
 };

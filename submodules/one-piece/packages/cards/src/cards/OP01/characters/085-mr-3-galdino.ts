@@ -35,6 +35,7 @@ export const op01Mr3Galdino085: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Baroque Works",
+            match: "includes",
           },
         ],
         actions: [

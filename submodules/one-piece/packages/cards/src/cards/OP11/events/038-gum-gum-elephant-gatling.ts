@@ -28,6 +28,7 @@ export const op11GumGumElephantGatling038: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [{ cost: "restDon", amount: 1 }],
         actions: [
           {
             action: "rest",

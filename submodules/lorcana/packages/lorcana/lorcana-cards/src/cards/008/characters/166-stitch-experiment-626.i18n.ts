@@ -65,4 +65,20 @@ export const stitchExperiment626I18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Puntada",
+    version: "Experimento 626",
+    text: [
+      {
+        title: "TAN TRAVIESO",
+        description:
+          "Cuando juegas con este personaje, cada oponente coloca la carta superior de su mazo en su tintero boca abajo y ejerce.",
+      },
+      {
+        title: "MODO STEALTH",
+        description:
+          "Al comienzo de tu turno, si esta carta está en tu descarte, puedes elegir y descartar una carta con {IW} para jugar con este personaje gratis y él entra en juego ejercido.",
+      },
+    ],
+  },
 };

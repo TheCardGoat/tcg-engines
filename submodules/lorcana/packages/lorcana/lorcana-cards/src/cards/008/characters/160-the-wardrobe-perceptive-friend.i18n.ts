@@ -42,4 +42,14 @@ export const theWardrobePerceptiveFriendI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "El armario",
+    version: "Amigo perceptivo",
+    text: [
+      {
+        title: "¡TENGO SOLO LA COSA!",
+        description: "{E}, elige y descarta una carta de objeto: roba 2 cartas.",
+      },
+    ],
+  },
 };

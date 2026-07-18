@@ -41,4 +41,14 @@ export const pegNaturalPerformerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Clavija",
+    version: "Artista natural",
+    text: [
+      {
+        title: "AUDIENCIA CAUTIVO",
+        description: "{E}: si tienes 3 o más personajes en juego, roba una carta.",
+      },
+    ],
+  },
 };

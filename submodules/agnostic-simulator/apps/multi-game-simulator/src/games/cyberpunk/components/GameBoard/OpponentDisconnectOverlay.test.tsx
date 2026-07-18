@@ -68,6 +68,11 @@ describe("OpponentDisconnectOverlay", () => {
     fireEvent.click(view.getByLabelText("Minimize"));
     expect(view.queryByText("Opponent time expired")).toBeNull();
     expect(view.getByText("Time expired")).toBeTruthy();
+    expect(
+      view
+        .getByLabelText("Opponent time expired - expand options")
+        .hasAttribute("data-mobile-field-overlay"),
+    ).toBe(true);
 
     fireEvent.click(view.getByLabelText("Opponent time expired - expand options"));
     expect(view.getByText("Opponent time expired")).toBeTruthy();

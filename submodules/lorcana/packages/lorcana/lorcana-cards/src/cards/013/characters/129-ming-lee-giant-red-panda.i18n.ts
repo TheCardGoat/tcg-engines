@@ -61,4 +61,19 @@ export const mingLeeGiantRedPandaI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ming Lee",
+    version: "Panda rojo gigante",
+    text: [
+      {
+        title:
+          "<Cambio temporal> 7 {I} (Puedes pagar 7 {I} para jugar esto encima de uno de tus personajes llamado Ming Lee. Al final de tu turno, elimina todo el daño de este personaje y devuelve solo esta carta a tu mano).",
+      },
+      {
+        title: "Camino de destrucción",
+        description:
+          "Siempre que este personaje desafíe a otro personaje, prepáralo. No puede realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

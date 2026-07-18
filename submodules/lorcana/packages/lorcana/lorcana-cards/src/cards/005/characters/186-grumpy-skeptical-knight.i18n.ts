@@ -64,4 +64,20 @@ export const grumpySkepticalKnightI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gruñón",
+    version: "Caballero escéptico",
+    text: [
+      {
+        title: "BENEFICIO DE LA RESILIENCIA",
+        description:
+          "Mientras uno de tus personajes Caballero esté en una ubicación, ese personaje gana Resistencia +2.",
+      },
+      {
+        title: "ARRANCADA",
+        description:
+          "Durante tu turno, este personaje gana Evasivo. (Pueden desafiar a los personajes con Evasivo).",
+      },
+    ],
+  },
 };

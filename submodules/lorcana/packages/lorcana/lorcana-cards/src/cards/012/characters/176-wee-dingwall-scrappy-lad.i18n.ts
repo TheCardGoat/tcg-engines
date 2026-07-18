@@ -21,4 +21,9 @@ export const weeDingwallScrappyLadI18n: Record<Languages, I18nProperties> = {
     version: "Ragazzino Combattivo",
     text: "<Sfidante> +2",
   },
+  es: {
+    name: "Pequeño dingwall",
+    version: "Muchacho rudo",
+    text: "Retador +2",
+  },
 };

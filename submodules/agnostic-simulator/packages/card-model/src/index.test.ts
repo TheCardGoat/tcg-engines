@@ -43,12 +43,14 @@ const bogusKeyRejected: "bogus" extends ExternalSource ? true : false = false;
 // --- Runtime smoke checks ----------------------------------------------------
 
 describe("EXTERNAL_SOURCES", () => {
-  it("contains exactly the 5 seed values and excludes cdn", () => {
+  it("contains exactly the 7 supported values and excludes cdn", () => {
     expect([...EXTERNAL_SOURCES]).toEqual([
       "ravensburger",
       "cultureInvariantId",
       "lorcast",
       "tcgPlayer",
+      "tcgcsv",
+      "cardNexus",
       "bandai",
     ]);
     expect(EXTERNAL_SOURCES).not.toContain("cdn");

@@ -45,4 +45,15 @@ export const grewngeCannonExpertI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Grewnge",
+    version: "Experto en cañones",
+    text: [
+      {
+        title: "FUEGO RÁPIDO",
+        description:
+          "Siempre que este personaje realice una misión, pagas 1 {I} menos por la siguiente acción que juegues en este turno.",
+      },
+    ],
+  },
 };

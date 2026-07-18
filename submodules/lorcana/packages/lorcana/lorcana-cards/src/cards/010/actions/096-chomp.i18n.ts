@@ -17,4 +17,8 @@ export const chompI18n: Record<Languages, I18nProperties> = {
     name: "Gnam!",
     text: "Infliggi 2 danni a un personaggio danneggiato a tua scelta.",
   },
+  es: {
+    name: "¡Muerde!",
+    text: "Inflige 2 daños al personaje dañado elegido.",
+  },
 };

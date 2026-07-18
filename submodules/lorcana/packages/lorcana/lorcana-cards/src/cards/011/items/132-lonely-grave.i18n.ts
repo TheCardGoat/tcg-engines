@@ -41,4 +41,14 @@ export const lonelyGraveI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tumba solitaria",
+    text: [
+      {
+        title: "PRESENCIA INCREÍBLE",
+        description:
+          "{E}, destierra tu personaje elegido: coloca la carta superior de tu mazo boca abajo debajo de uno de tus personajes o ubicaciones con Boost.",
+      },
+    ],
+  },
 };

@@ -44,4 +44,15 @@ export const cheshireCatNotAllThereI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gato de cheshire",
+    version: "No todo ahí",
+    text: [
+      {
+        title: "¿PERDER ALGO?",
+        description:
+          "Cuando este personaje sea desafiado y desterrado, destierra al personaje desafiante.",
+      },
+    ],
+  },
 };

@@ -4,6 +4,7 @@ export const gd02Baqto067: UnitCard = {
   cardNumber: "GD02-067",
   name: "Baqto",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "purple",
   traits: ["ue", "vagan"],
   id: "GD02-067",

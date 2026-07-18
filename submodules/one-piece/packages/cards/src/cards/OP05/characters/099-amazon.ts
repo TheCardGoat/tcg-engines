@@ -39,6 +39,7 @@ export const op05Amazon099: CharacterCard = {
         actions: [
           {
             action: "choice",
+            player: "opponent",
             options: [
               [
                 {

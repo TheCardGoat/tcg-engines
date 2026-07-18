@@ -23,9 +23,24 @@ export const op06DouglasBullet010: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["FILM The Pirates Fest"],
+  traits: ["FILM", "The Pirates Fest"],
   attribute: "strike",
   effect:
     'If your Leader has the "FILM" type, this Character gains [Blocker].\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)',
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [{ condition: "leaderTrait", trait: "FILM", match: "includes" }],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op06DouglasBullet010I18n,
 };

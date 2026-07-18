@@ -57,4 +57,18 @@ export const familyFishingPoleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Caña de pescar familiar",
+    text: [
+      {
+        title: "MIRAR DE CERCA",
+        description: "Este objeto entra en juego ejercido.",
+      },
+      {
+        title: "EL REPARTO PERFECTO",
+        description:
+          "{E}, 1 {I}, destierra este objeto: devuelve el personaje tuyo ejercido elegido a tu mano para ganar 2 conocimientos.",
+      },
+    ],
+  },
 };

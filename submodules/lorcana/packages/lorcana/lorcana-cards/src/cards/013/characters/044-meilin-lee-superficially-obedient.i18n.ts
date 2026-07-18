@@ -45,4 +45,15 @@ export const meilinLeeSuperficiallyObedientI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Meilin Lee",
+    version: "Superficialmente obediente",
+    text: [
+      {
+        title: "NUEVA CONFIANZA",
+        description:
+          "Cuando colocas un personaje encima de ella, este personaje gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

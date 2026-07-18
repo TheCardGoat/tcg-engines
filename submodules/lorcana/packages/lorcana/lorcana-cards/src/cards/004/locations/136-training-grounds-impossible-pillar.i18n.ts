@@ -43,4 +43,14 @@ export const trainingGroundsImpossiblePillarI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Campos de entrenamiento",
+    version: "Pilar imposible",
+    text: [
+      {
+        title: "FUERZA MENTAL 1",
+        description: "{I}: el personaje elegido aquí obtiene +1 {S} este turno.",
+      },
+    ],
+  },
 };

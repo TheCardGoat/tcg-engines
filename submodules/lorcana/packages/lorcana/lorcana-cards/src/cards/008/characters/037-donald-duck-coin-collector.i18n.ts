@@ -65,4 +65,20 @@ export const donaldDuckCoinCollectorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Coleccionista de monedas",
+    text: [
+      {
+        title: "AQUÍ, CERDO, CERDO",
+        description:
+          "Por cada objeto llamado The Nephews' Piggy Bank que tengas en juego, pagas 2 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "DINERO POR TODAS PARTES",
+        description:
+          'Cuando juegas con este personaje, tus otros personajes obtienen "{E} — Roba una carta" este turno.',
+      },
+    ],
+  },
 };

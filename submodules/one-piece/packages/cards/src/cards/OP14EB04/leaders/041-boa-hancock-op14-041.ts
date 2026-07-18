@@ -30,7 +30,7 @@ export const op14eb04BoaHancockOp14041041: LeaderCard = {
   setId: "OP14EB04",
   power: 5000,
   life: 4,
-  traits: ["Kuja Pirates The Seven Warlords of the Sea"],
+  traits: ["Kuja Pirates", "The Seven Warlords of the Sea"],
   attribute: "special",
   artVariants: [
     {
@@ -60,7 +60,24 @@ export const op14eb04BoaHancockOp14041041: LeaderCard = {
         ],
       },
       {
-        trigger: "onKo",
+        trigger: "whenCharacterKod",
+        eventFilter: {
+          player: "self",
+          filters: [
+            {
+              filter: "anyOf",
+              groups: [
+                [{ filter: "trait", value: "Amazon Lily", match: "includes" }],
+                [{ filter: "trait", value: "Kuja Pirates", match: "includes" }],
+              ],
+            },
+            {
+              filter: "basePower",
+              comparison: "gte",
+              value: 5000,
+            },
+          ],
+        },
         conditions: [
           {
             condition: "donAttached",

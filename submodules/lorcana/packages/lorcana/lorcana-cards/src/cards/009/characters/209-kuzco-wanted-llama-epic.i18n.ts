@@ -41,4 +41,14 @@ export const kuzcoWantedLlamaEpicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kuzco",
+    version: "Llama buscada",
+    text: [
+      {
+        title: "OK, ¿DÓNDE ESTOY?",
+        description: "¿I? Cuando este personaje es desterrado, puedes robar una carta.",
+      },
+    ],
+  },
 };

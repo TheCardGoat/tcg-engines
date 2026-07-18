@@ -26,6 +26,59 @@ export const op09NicoRobin033: CharacterCard = {
   traits: ["Straw Hat Crew ODYSSEY"],
   attribute: "strike",
   effect:
-    '[On Play] If you have 2 or more rested Characters, none of your "ODYSSEY" or "Straw Hat Crew" type Characters can be K.O.\'d by effects until the end of your opponent\'s next turn.',
+    "[On Play] If you have 2 or more rested Characters, none of your {ODYSSEY} or {Straw Hat Crew} type Characters can be K.O.'d by effects until the end of your opponent's next turn.",
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "character",
+            comparison: "gte",
+            value: 2,
+            filters: [
+              {
+                filter: "state",
+                value: "rested",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "anyOf",
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "ODYSSEY",
+                      match: "includes",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Straw Hat Crew",
+                      match: "includes",
+                    },
+                  ],
+                },
+              ],
+            },
+            duration: "untilEndOfOpponentNextTurn",
+            restriction: "byEffect",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op09NicoRobin033I18n,
 };

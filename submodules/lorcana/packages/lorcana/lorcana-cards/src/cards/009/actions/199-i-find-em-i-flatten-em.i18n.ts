@@ -33,4 +33,8 @@ export const iFindEmIFlattenEmI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Los encuentro, los aplano",
+    text: "Desterrar todos los elementos.",
+  },
 };

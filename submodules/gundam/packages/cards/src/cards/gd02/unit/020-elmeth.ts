@@ -5,6 +5,7 @@ export const gd02Elmeth020: UnitCard = {
   name: "Elmeth",
   type: "unit",
   color: "green",
+  battlefieldZones: ["space"],
   traits: ["zeon"],
   id: "GD02-020",
   canonicalId: "GD02-020",
@@ -73,6 +74,7 @@ export const gd02Elmeth020: UnitCard = {
             action: "lookAtTopDeck",
             count: 5,
             return: "chooseTop",
+            randomizeRemainingToBottom: true,
             tutorFilter: {
               owner: "friendly",
               cardType: "pilot",

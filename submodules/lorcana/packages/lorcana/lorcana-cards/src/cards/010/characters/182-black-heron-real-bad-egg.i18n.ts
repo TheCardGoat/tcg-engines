@@ -17,4 +17,8 @@ export const blackHeronRealBadEggI18n: Record<Languages, I18nProperties> = {
     name: "Airone Nero",
     version: "Vera Mela Marcia",
   },
+  es: {
+    name: "Garza negra",
+    version: "Huevo realmente malo",
+  },
 };

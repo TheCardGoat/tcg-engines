@@ -45,4 +45,15 @@ export const madameMedusaDeceivingPartnerI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Señora Medusa",
+    version: "Socio engañoso",
+    text: [
+      {
+        title: "DOBLE CRUZ",
+        description:
+          "Cuando juegas con este personaje, puedes causar 2 daños a otro personaje tuyo elegido para devolver el personaje elegido con coste 2 o menos a la mano de su jugador.",
+      },
+    ],
+  },
 };

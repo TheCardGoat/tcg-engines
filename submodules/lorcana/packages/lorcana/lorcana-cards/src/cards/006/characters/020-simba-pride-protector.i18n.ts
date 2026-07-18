@@ -60,4 +60,18 @@ export const simbaPrideProtectorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Simba",
+    version: "Protector del orgullo",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "ENTENDER EL EQUILIBRIO",
+        description:
+          "Al final de tu turno, si este personaje está agotado, puedes preparar a tus otros personajes.",
+      },
+    ],
+  },
 };

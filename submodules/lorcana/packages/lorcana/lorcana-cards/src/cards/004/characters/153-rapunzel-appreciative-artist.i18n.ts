@@ -44,4 +44,15 @@ export const rapunzelAppreciativeArtistI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Rapunzel",
+    version: "Artista agradecido",
+    text: [
+      {
+        title: "SOCIO PERCEPTIVO",
+        description:
+          "Mientras tengas un personaje llamado Pascal en juego, este personaje gana Protección.",
+      },
+    ],
+  },
 };

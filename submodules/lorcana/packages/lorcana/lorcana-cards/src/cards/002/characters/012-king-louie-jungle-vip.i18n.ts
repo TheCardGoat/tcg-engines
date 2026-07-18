@@ -45,4 +45,15 @@ export const kingLouieJungleVipI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rey Luis",
+    version: "VIP de la selva",
+    text: [
+      {
+        title: "Ponlo en la línea",
+        description:
+          "Cada vez que otro personaje es desterrado, puedes eliminar hasta 2 daños de este personaje.",
+      },
+    ],
+  },
 };

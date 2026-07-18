@@ -2,6 +2,7 @@ import type {
   Card,
   CardEffect,
   CardType,
+  DamageProtectionArea,
   EffectCondition,
   EffectDirective,
   Zone,
@@ -52,6 +53,12 @@ export function hasDamagePreventionFor(
     // Damage-type gate: if the effect specifies a damageType, it only
     // prevents that kind.
     if (p.damageType && p.damageType !== damageType) continue;
+
+    if (p.source === "enemy") {
+      const targetOwnerId = framework.cards.getOwner(targetCardId) as string | undefined;
+      const sourceOwnerId = framework.cards.getOwner(attackerCardId) as string | undefined;
+      if (!targetOwnerId || !sourceOwnerId || targetOwnerId === sourceOwnerId) continue;
+    }
 
     // Source card-type gate: if the effect specifies a sourceCardType,
     // the source must match.
@@ -207,6 +214,11 @@ function inlineConstantPreventDamage(
         // Damage-type gate.
         if (action.damageType && action.damageType !== damageType) continue;
 
+        if (action.source === "enemy") {
+          const sourceOwnerId = framework.cards.getOwner(attackerCardId) as string | undefined;
+          if (!sourceOwnerId || sourceOwnerId === targetOwnerId) continue;
+        }
+
         // Source card-type gate.
         if (action.sourceCardType) {
           const sourceDef = framework.cards.getDefinition(attackerCardId) as Card | undefined;
@@ -304,7 +316,7 @@ export function hasZoneDamagePreventionFor(
     if (effect.targetId !== defenderPlayerId) continue;
     const p = effect.payload;
     if (p.kind !== "prevent-damage-to-zone") continue;
-    if (p.zone !== zone) continue;
+    if (!protectedAreaContainsZone(p.protectedArea, zone)) continue;
     const tgtCtx = buildTargetResolutionContext(g, defenderPlayerId, framework);
     const battleCards = getAllBattleAreaRuntimeCards(g, framework);
     const matches = evaluateTargetFilter(p.unitFilter, battleCards, tgtCtx);
@@ -314,6 +326,19 @@ export function hasZoneDamagePreventionFor(
     return true;
   }
   return false;
+}
+
+/**
+ * Match one exact engine zone or the rules-level shield area. The latter
+ * contains both the Shield and Base sections (rules 4-6-2/3), while a card
+ * that prints only "Shields" uses the exact `shieldArea` engine zone.
+ */
+function protectedAreaContainsZone(
+  protectedArea: DamageProtectionArea,
+  damagedZone: Zone,
+): boolean {
+  if (protectedArea.kind === "zone") return protectedArea.zone === damagedZone;
+  return damagedZone === "shieldArea" || damagedZone === "baseSection";
 }
 
 function inlineConstantZoneDamagePrevention(
@@ -351,7 +376,7 @@ function inlineConstantZoneDamagePrevention(
         if (!("action" in directive)) continue;
         const action = (directive as EffectDirective).action;
         if (action.action !== "preventDamageToZone") continue;
-        if (action.zone !== zone) continue;
+        if (!protectedAreaContainsZone(action.protectedArea, zone)) continue;
 
         const matches = evaluateTargetFilter(action.unitFilter, battleCards, tgtCtx);
         if (matches.includes(attackerCardId as CardInstanceId)) return true;

@@ -42,6 +42,21 @@ export const op07BlazeSlice116: EventCard = {
             value: 1000,
             duration: "thisTurn",
           },
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 4 }],
+            },
+            condition: {
+              condition: "lifeCount",
+              player: "opponent",
+              comparison: "lte",
+              value: 2,
+            },
+          },
         ],
       },
       {
@@ -59,6 +74,21 @@ export const op07BlazeSlice116: EventCard = {
             },
             value: 1000,
             duration: "thisTurn",
+          },
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 4 }],
+            },
+            condition: {
+              condition: "lifeCount",
+              player: "opponent",
+              comparison: "lte",
+              value: 2,
+            },
           },
         ],
       },

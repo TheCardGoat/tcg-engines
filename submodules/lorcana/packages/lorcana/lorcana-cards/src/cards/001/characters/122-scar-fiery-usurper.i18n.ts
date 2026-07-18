@@ -17,4 +17,8 @@ export const scarFieryUsurperI18n: Record<Languages, I18nProperties> = {
     name: "Scar",
     version: "Usurpatore Focoso",
   },
+  es: {
+    name: "Cicatriz",
+    version: "Usurpador ardiente",
+  },
 };

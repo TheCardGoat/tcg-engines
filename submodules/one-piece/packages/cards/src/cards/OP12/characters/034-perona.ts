@@ -48,8 +48,8 @@ export const op12Perona034: CharacterCard = {
         trigger: "onPlay",
         conditions: [
           {
-            condition: "leaderTrait",
-            trait: "slash",
+            condition: "leaderAttribute",
+            attribute: "slash",
           },
         ],
         actions: [
@@ -66,8 +66,26 @@ export const op12Perona034: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "attribute",
-                value: "slash",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "attribute",
+                    value: "slash",
+                  },
+                  {
+                    filter: "allOf",
+                    filters: [
+                      {
+                        filter: "color",
+                        value: "green",
+                      },
+                      {
+                        filter: "cardCategory",
+                        value: "event",
+                      },
+                    ],
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

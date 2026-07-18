@@ -1,20 +1,18 @@
-## Attack of the Vine Early Access Queue
+## Congratulations to the Wilds Unknown Ranked Winners
 
-**July 3, 2026**
+**July 13, 2026**
 
-Hi everyone, I have some good news and some bad news.
+Congratulations to **Trusty Ham Hands**, our Infinity champion, and **Donald Duck In The Moment**, our Core Constructed champion. urbaro, Arashinbo, and Maldah also earned top-three finishes. Thank you to everyone who made the _Wilds Unknown_ season so competitive.
 
-Good news first: the _Attack of the Vine_ early access queue is ready. All cards are available and ready to play. I would love for you to jump in, give them a try, and share your feedback.
+[See the full final standings](/matchmaking/season/wilds-unknown).
 
-I have tested most of them myself, but there is always a chance I missed something. If anything feels off, please let me know.
+---
 
-Now the bad news: during a 20-hour implementation marathon, I made a mistake that corrupted some player deck data. To be clear, there was no data leak and no private information was exposed. The issue was limited to deck IDs getting mixed up.
+## Set 13 Early Access Is Open
 
-Because of that, I kindly ask everyone to re-import your decks. This will make sure the correct IDs are being used going forward.
+**July 13, 2026**
 
-Thank you for being patient with me. As some of you know, I am in a very busy phase of life right now, but I am still doing my best to keep dedicating time to the project and move things forward.
-
-I really appreciate you all.
+Want to play with Set 13 cards? Choose the **Early Access** format before joining a queue. Casual and ranked queues are available for the duration of the _Attack of the Vine_ season.
 
 ---
 

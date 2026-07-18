@@ -22,11 +22,11 @@ export const op08TashigiSp006: CharacterCard = {
   setId: "OP08",
   cost: 3,
   power: 4000,
-  counter: 1000,
+  counter: 2000,
   traits: ["Navy"],
   attribute: "slash",
   effect:
-    "[Activate:Main] You may rest this Character: Give up to 1 of your opponent's Characters 2 cost during this turn.",
+    "[Activate: Main] You may rest this Character: Give up to 1 of your opponent's Characters -2 cost during this turn.",
   effects: {
     effects: [
       {
@@ -47,7 +47,7 @@ export const op08TashigiSp006: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2,
+            value: -2,
             duration: "thisTurn",
           },
         ],

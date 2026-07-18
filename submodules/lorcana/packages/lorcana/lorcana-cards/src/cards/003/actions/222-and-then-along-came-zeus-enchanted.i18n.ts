@@ -33,4 +33,8 @@ export const andThenAlongCameZeusEnchantedI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Y luego vino Zeus",
+    text: "Inflige 5 daños al personaje o lugar elegido.",
+  },
 };

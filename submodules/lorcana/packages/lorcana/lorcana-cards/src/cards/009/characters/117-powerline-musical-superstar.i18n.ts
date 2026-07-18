@@ -45,4 +45,15 @@ export const powerlineMusicalSuperstarI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Línea eléctrica",
+    version: "Superestrella musical",
+    text: [
+      {
+        title: "MOVIMIENTO ELÉCTRICO",
+        description:
+          "Si has tocado una canción este turno, este personaje gana Rush este turno. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

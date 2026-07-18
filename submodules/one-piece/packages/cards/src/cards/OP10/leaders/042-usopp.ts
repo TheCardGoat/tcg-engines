@@ -41,5 +41,74 @@ export const op10Usopp042: LeaderCard = {
   ],
   effect:
     'All of your "Dressrosa" type Characters with a cost of 2 or more gain +1 cost.[Opponent\'s Turn] [Once Per Turn] This effect can be activated when your "Dressrosa" type Character is removed from the field by your opponent\'s effect or K.O.\'d. If you have 5 or less cards in your hand, draw 1 card.',
+  effects: {
+    effects: [
+      {
+        trigger: "whenCharacterRemoved",
+        eventFilter: {
+          player: "self",
+          causedBy: "opponent",
+          filters: [
+            {
+              filter: "trait",
+              value: "Dressrosa",
+              match: "includes",
+            },
+          ],
+        },
+        conditions: [
+          {
+            condition: "turn",
+            value: "opponent",
+          },
+          {
+            condition: "handCount",
+            player: "self",
+            comparison: "lte",
+            value: 5,
+          },
+        ],
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+        ],
+        optional: true,
+        oncePerTurn: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Dressrosa",
+                  match: "includes",
+                },
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 2,
+                },
+              ],
+            },
+            value: 1,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op10Usopp042I18n,
 };

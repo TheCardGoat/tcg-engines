@@ -58,4 +58,18 @@ export const simbaKingInTheMakingEnchantedI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Simba",
+    version: "Rey en ciernes",
+    text: [
+      {
+        title: "Impulsar 3 {I}",
+      },
+      {
+        title: "ALIANZA OPORTUNA",
+        description:
+          "Siempre que coloques una carta debajo de este personaje, puedes revelar la carta superior de tu mazo. Si es una carta de personaje, puedes jugar con ese personaje de forma gratuita y entrará en juego ejercido. De lo contrario, colóquelo en el fondo de su plataforma.",
+      },
+    ],
+  },
 };

@@ -25,6 +25,5 @@ export const op02Komille097: CharacterCard = {
   counter: 1000,
   traits: ["Navy"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op02Komille097I18n,
 };

@@ -41,4 +41,14 @@ export const translationCollarI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Collar de traducción",
+    text: [
+      {
+        title: "Eres mi amigo",
+        description:
+          "{E}, 1 {I}: el personaje elegido obtiene +1 {L} y obtiene <Apoyo> este turno. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+      },
+    ],
+  },
 };

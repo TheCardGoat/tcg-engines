@@ -21,4 +21,9 @@ export const ratiganCriminalMastermindI18n: Record<Languages, I18nProperties> = 
     version: "Criminal Mastermind",
     text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
+  es: {
+    name: "Ratigan",
+    version: "Cerebro criminal",
+    text: "Evasivo",
+  },
 };

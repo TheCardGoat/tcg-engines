@@ -45,4 +45,15 @@ export const fangmeyerIcyOfficerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Fangmeyer",
+    version: "Oficial helado",
+    text: [
+      {
+        title: "SOLICITAR REFUERZOS",
+        description:
+          "Cuando juegas con este personaje, puedes devolver a tu mano una carta de personaje de detective de tu descarte.",
+      },
+    ],
+  },
 };

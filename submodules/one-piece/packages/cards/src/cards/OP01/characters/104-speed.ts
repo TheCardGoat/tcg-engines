@@ -41,6 +41,7 @@ export const op01Speed104: CharacterCard = {
             count: {
               amount: 1,
             },
+            self: true,
           },
         ],
       },

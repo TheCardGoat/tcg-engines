@@ -32,6 +32,7 @@ export const op14eb04BulletString078: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Donquixote Pirates",
+            match: "includes",
           },
         ],
         costs: [
@@ -53,6 +54,17 @@ export const op14eb04BulletString078: EventCard = {
             },
             value: 2000,
             duration: "thisBattle",
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: { amount: 1, upTo: true },
+            },
+            value: 2000,
+            duration: "thisTurn",
+            previousActionTargets: true,
           },
         ],
       },

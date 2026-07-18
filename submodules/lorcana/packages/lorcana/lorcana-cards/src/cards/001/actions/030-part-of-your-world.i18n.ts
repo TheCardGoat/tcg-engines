@@ -33,4 +33,8 @@ export const partOfYourWorldI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Parte de tu mundo",
+    text: "Devuelve una carta de personaje de tu descarte a tu mano.",
+  },
 };

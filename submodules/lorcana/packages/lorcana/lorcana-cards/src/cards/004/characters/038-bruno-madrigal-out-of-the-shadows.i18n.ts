@@ -45,4 +45,15 @@ export const brunoMadrigalOutOfTheShadowsI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Bruno madrigal",
+    version: "Fuera de las sombras",
+    text: [
+      {
+        title: "ERA TU VISIÓN",
+        description:
+          'Cuando juegas con este personaje, el personaje elegido gana "Cuando este personaje es desterrado en un desafío, puedes devolver esta carta a tu mano" este turno.',
+      },
+    ],
+  },
 };

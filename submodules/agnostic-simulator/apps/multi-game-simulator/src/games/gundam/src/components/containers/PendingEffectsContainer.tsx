@@ -61,9 +61,6 @@ export function PendingEffectsContainer() {
               toTrash: result.toTrash.map((card) => card.id).filter((id): id is string => !!id),
             },
           },
-          ...(prompt.acceptOptionalDirectiveIndex !== undefined
-            ? { optionalAnswers: { [prompt.acceptOptionalDirectiveIndex]: true } }
-            : {}),
         }),
       );
       setDeckLookOpen(false);
@@ -87,14 +84,6 @@ export function PendingEffectsContainer() {
         adapter.submit(asMoveName("resolveEffect"), {
           pendingEffectId: prompt.effectId,
           targets: [],
-        }),
-      );
-    }
-    if (prompt.kind === "deckLook" && prompt.acceptOptionalDirectiveIndex !== undefined) {
-      report(
-        adapter.submit(asMoveName("resolveEffect"), {
-          pendingEffectId: prompt.effectId,
-          optionalAnswers: { [prompt.acceptOptionalDirectiveIndex]: false },
         }),
       );
     }
@@ -163,11 +152,9 @@ export function PendingEffectsContainer() {
     declineLabel:
       prompt.kind === "optional"
         ? "Skip"
-        : prompt.kind === "deckLook" && prompt.acceptOptionalDirectiveIndex !== undefined
-          ? "Skip"
-          : prompt.kind === "targetSelection" && prompt.minTargets === 0
-            ? "Skip effect"
-            : undefined,
+        : prompt.kind === "targetSelection" && prompt.minTargets === 0
+          ? "Skip effect"
+          : undefined,
     confirmDisabled:
       prompt.kind === "targetSelection"
         ? !pendingEffectSelection.isComplete ||
@@ -183,7 +170,6 @@ export function PendingEffectsContainer() {
             randomizeRemainingToBottom: prompt.randomizeRemainingToBottom,
             tutorDestination: prompt.tutorDestination,
             legalTutorIds: prompt.legalTutorCardIds,
-            acceptOptionalDirectiveIndex: prompt.acceptOptionalDirectiveIndex,
             revealed: prompt.revealedCardIds.flatMap((id): GameCardData[] => {
               const def = adapter.cardDefinitionOf(id);
               return def ? [{ ...cardDefinitionToPreview(def), id }] : [];

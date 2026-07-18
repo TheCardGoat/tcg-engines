@@ -40,7 +40,7 @@ export const op03Kuro021: LeaderCard = {
     },
   ],
   effect:
-    "[Activate:Main] (3) (You may rest the specified number of DON!! cards in your cost area.) You may rest 2 of your [East Blue] type Characters: Set this Leader as active, and rest up to 1 of your opponent's Characters with a cost of 5 or less.",
+    "[Activate: Main] ③ (You may rest the specified number of DON!! cards in your cost area.) You may rest 2 of your {East Blue} type Characters: Set this Leader as active, and rest up to 1 of your opponent's Characters with a cost of 5 or less.",
   effects: {
     effects: [
       {
@@ -57,6 +57,7 @@ export const op03Kuro021: LeaderCard = {
               {
                 filter: "trait",
                 value: "East Blue",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

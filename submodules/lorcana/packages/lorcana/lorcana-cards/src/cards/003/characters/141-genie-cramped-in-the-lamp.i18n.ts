@@ -17,4 +17,8 @@ export const genieCrampedInTheLampI18n: Record<Languages, I18nProperties> = {
     name: "Genio",
     version: "In un Minuscolo Spazio Vitale",
   },
+  es: {
+    name: "Genio",
+    version: "Apretado en la lámpara",
+  },
 };

@@ -25,6 +25,5 @@ export const op02JaguarDSaul109: CharacterCard = {
   counter: 1000,
   traits: ["Giant Navy"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op02JaguarDSaul109I18n,
 };

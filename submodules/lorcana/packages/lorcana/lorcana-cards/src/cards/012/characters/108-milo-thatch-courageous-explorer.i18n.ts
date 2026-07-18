@@ -45,4 +45,15 @@ export const miloThatchCourageousExplorerI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Milo Paja",
+    version: "Explorador valiente",
+    text: [
+      {
+        title: "DESCUBRIMIENTO FASCINANTE",
+        description:
+          "Durante tu turno, si se pusieron 2 o más cartas en tu descarte este turno, este personaje obtiene +1 {L}.",
+      },
+    ],
+  },
 };

@@ -44,6 +44,53 @@ export const op12VinsmokeReiju063: CharacterCard = {
     "If you have 4 or more Events in your trash, this Character gains +2000 power and +5 cost.\n[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
   effects: {
     keywords: ["blocker"],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "trash",
+            comparison: "gte",
+            value: 4,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "event",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 2000,
+            duration: "permanent",
+          },
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 5,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
   },
   i18n: op12VinsmokeReiju063I18n,
 };

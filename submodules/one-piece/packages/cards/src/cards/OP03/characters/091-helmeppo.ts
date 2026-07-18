@@ -33,7 +33,7 @@ export const op03Helmeppo091: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
-            action: "modifyCost",
+            action: "setCost",
             target: {
               player: "opponent",
               zones: ["character"],

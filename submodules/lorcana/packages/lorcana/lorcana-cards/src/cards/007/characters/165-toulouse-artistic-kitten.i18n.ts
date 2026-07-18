@@ -17,4 +17,8 @@ export const toulouseArtisticKittenI18n: Record<Languages, I18nProperties> = {
     name: "Matisse",
     version: "Gattino Artistico",
   },
+  es: {
+    name: "Tolosa",
+    version: "Gatito artístico",
+  },
 };

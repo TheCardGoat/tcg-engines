@@ -45,4 +45,15 @@ export const guntherInteriorDesignerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gunter",
+    version: "Decorador de interiores",
+    text: [
+      {
+        title: "CACHORRO DE OJOS TRISTE",
+        description:
+          "Cuando este personaje es desafiado y desterrado, cada oponente elige uno de sus personajes y devuelve esa carta a su mano.",
+      },
+    ],
+  },
 };

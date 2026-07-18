@@ -45,4 +45,15 @@ export const mrSmeeEfficientCaptainI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señor smee",
+    version: "Capitán eficiente",
+    text: [
+      {
+        title: "PREPARA LA TRIPULACIÓN",
+        description:
+          "Siempre que juegues una acción que no sea una canción, es posible que ya tengas el personaje pirata elegido.",
+      },
+    ],
+  },
 };

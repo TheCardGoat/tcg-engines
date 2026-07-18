@@ -53,4 +53,17 @@ export const jetsamUrsulasBabyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Echazón",
+    version: 'El "bebé" de Úrsula',
+    text: [
+      {
+        title: "Retador +2",
+      },
+      {
+        title: "PAR SINIESTRO",
+        description: "Tus personajes llamados Flotsam obtienen Challenger +2.",
+      },
+    ],
+  },
 };

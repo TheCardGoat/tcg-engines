@@ -28,7 +28,7 @@ export const op02Magellan071: LeaderCard = {
   color: ["purple"],
   rarity: "L",
   setId: "OP02",
-  power: 6000,
+  power: 5000,
   life: 5,
   traits: ["Impel Down"],
   attribute: "special",

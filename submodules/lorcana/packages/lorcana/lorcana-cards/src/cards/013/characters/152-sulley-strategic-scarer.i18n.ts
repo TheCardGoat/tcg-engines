@@ -43,4 +43,14 @@ export const sulleyStrategicScarerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sulley",
+    version: "Asustador estratégico",
+    text: [
+      {
+        title: "saltar susto",
+        description: "Mientras tengas 5 o más cartas en tu tintero, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

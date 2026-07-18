@@ -44,4 +44,14 @@ export const mushuSneakyDragonEpicI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mushu",
+    version: "Dragón astuto",
+    text: [
+      {
+        title: "SORPRESA NEVADA",
+        description: "Cuando juegas con este personaje, inflige 2 daños al personaje elegido.",
+      },
+    ],
+  },
 };

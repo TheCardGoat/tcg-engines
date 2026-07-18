@@ -21,4 +21,9 @@ export const rayEasygoingFireflyI18n: Record<Languages, I18nProperties> = {
     version: "Easygoing Firefly",
     text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
+  es: {
+    name: "Rayo",
+    version: "Luciérnaga tranquila",
+    text: "Evasivo",
+  },
 };

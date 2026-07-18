@@ -45,4 +45,15 @@ export const theWallBorderFortressEnchantedI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "El muro",
+    version: "Fortaleza fronteriza",
+    text: [
+      {
+        title: "PROTEGER EL REINO",
+        description:
+          "Si bien tienes un carácter ejercido aquí, tus otras ubicaciones no pueden ser desafiadas.",
+      },
+    ],
+  },
 };

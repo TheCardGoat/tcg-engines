@@ -45,4 +45,15 @@ export const jasmineResourcefulInfiltratorI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Jazmín",
+    version: "Infiltrado ingenioso",
+    text: [
+      {
+        title: "JUSTO LO QUE NECESITAS",
+        description:
+          "Cuando juegas con este personaje, puedes darle a otro personaje elegido Resistencia +1 hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

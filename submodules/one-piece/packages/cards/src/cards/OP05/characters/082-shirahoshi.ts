@@ -31,17 +31,14 @@ export const op05Shirahoshi082: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "handCount",
-            player: "opponent",
-            comparison: "gte",
-            value: 6,
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
+          },
+          {
+            cost: "returnTrashToDeck",
+            amount: 2,
+            position: "bottom",
           },
         ],
         actions: [
@@ -49,6 +46,12 @@ export const op05Shirahoshi082: CharacterCard = {
             action: "trashFromHand",
             player: "opponent",
             amount: 1,
+            condition: {
+              condition: "handCount",
+              player: "opponent",
+              comparison: "gte",
+              value: 6,
+            },
           },
         ],
         optional: true,

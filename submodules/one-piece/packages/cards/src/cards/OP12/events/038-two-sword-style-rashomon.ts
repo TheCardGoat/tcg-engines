@@ -28,6 +28,12 @@ export const op12TwoSwordStyleRashomon038: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 2,
+          },
+        ],
         actions: [
           {
             action: "ko",

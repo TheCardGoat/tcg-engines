@@ -25,6 +25,5 @@ export const op02Doberman107: CharacterCard = {
   counter: 1000,
   traits: ["Navy"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op02Doberman107I18n,
 };

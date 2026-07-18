@@ -46,6 +46,18 @@ export const op12MonkeyDLuffy015: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "revealFromHand",
+            amount: 2,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "event",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "play",
@@ -90,6 +102,33 @@ export const op12MonkeyDLuffy015: CharacterCard = {
           },
         ],
         optional: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "givenDonCount",
+            player: "self",
+            comparison: "gte",
+            value: 2,
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 2000,
+            duration: "permanent",
+          },
+        ],
       },
     ],
   },

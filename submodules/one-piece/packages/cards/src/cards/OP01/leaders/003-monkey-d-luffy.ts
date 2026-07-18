@@ -41,5 +41,59 @@ export const op01MonkeyDLuffy003: LeaderCard = {
   ],
   effect:
     '[Activate:Main] [Once Per Turn] (4) (You may rest the specified number of DON!! cards in your cost area): Set up to 1 of your "Supernova" or "Straw Hat Crew" type Character cards with a cost of 5 or less as active. It gains +1000 power during this turn.  This card has been officially errata\'d.',
+  effects: {
+    effects: [
+      {
+        trigger: "activateMain",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 4,
+          },
+        ],
+        actions: [
+          {
+            action: "setActive",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "anyOf",
+                  groups: [
+                    [{ filter: "trait", value: "Supernovas", match: "includes" }],
+                    [{ filter: "trait", value: "Straw Hat Crew", match: "includes" }],
+                  ],
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 5,
+                },
+              ],
+            },
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+            },
+            value: 1000,
+            duration: "thisTurn",
+            previousActionTargets: true,
+          },
+        ],
+        oncePerTurn: true,
+      },
+    ],
+  },
   i18n: op01MonkeyDLuffy003I18n,
 };

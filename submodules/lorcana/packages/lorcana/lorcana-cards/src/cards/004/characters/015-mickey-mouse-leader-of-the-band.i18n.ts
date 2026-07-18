@@ -59,4 +59,18 @@ export const mickeyMouseLeaderOfTheBandI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Líder de la banda",
+    text: [
+      {
+        title: "Apoyo",
+      },
+      {
+        title: "TOCA LA MÚSICA",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene Apoyo este turno.",
+      },
+    ],
+  },
 };

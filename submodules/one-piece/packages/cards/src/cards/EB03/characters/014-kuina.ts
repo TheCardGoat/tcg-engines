@@ -26,7 +26,7 @@ export const eb03Kuina014: CharacterCard = {
   traits: ["East Blue Frost Moon Village"],
   attribute: "slash",
   effect:
-    "[Activate: Main] You may rest this Character: Give up to 2 rested DON!! cards to your attribute Leader.",
+    '[Activate: Main] You may rest this Character: Give up to 2 rested DON!! cards to your "Slash" attribute Leader.',
   effects: {
     effects: [
       {
@@ -45,6 +45,12 @@ export const eb03Kuina014: CharacterCard = {
               count: {
                 amount: 1,
               },
+              filters: [
+                {
+                  filter: "attribute",
+                  value: "slash",
+                },
+              ],
             },
             count: {
               amount: 2,

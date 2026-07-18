@@ -29,5 +29,28 @@ export const op07TonyTonyChopper103: CharacterCard = {
   attribute: "wisdom",
   effect:
     "[Trigger] Up to 1 of your {Egghead} type Characters gains [Blocker] during this turn. Then, add this card to your hand.",
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "trait", value: "Egghead", match: "includes" }],
+            },
+            keyword: "blocker",
+            duration: "thisTurn",
+          },
+          {
+            action: "addThisCardToHand",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op07TonyTonyChopper103I18n,
 };

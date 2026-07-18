@@ -33,6 +33,9 @@ export const op12Hina051: CharacterCard = {
         trigger: "activateMain",
         costs: [
           {
+            cost: "restThisCard",
+          },
+          {
             cost: "trashFromHand",
             amount: 1,
           },

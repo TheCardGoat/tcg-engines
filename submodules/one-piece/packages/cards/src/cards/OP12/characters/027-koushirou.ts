@@ -29,6 +29,31 @@ export const op12Koushirou027: CharacterCard = {
     "If your (Slash) attribute Character with a cost of 5 or less other than this Character would be K.O.'d by your opponent's effect, you may rest this Character instead.\n[Blocker]",
   effects: {
     keywords: ["blocker"],
+    replacementEffects: [
+      {
+        replacedEvent: "ko",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: { amount: 1 },
+          filters: [
+            { filter: "attribute", value: "slash" },
+            { filter: "excludeSelf" },
+            { filter: "cost", comparison: "lte", value: 5 },
+          ],
+        },
+        source: "opponentEffect",
+        replacementAction: {
+          action: "rest",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: { amount: 1 },
+            self: true,
+          },
+        },
+      },
+    ],
   },
   i18n: op12Koushirou027I18n,
 };

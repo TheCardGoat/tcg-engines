@@ -31,6 +31,16 @@ export const op04IceOni047: CharacterCard = {
     effects: [
       {
         trigger: "endOfBattle",
+        eventFilter: {
+          sourceSelf: true,
+          targetFilters: [
+            {
+              filter: "cost",
+              comparison: "lte",
+              value: 5,
+            },
+          ],
+        },
         conditions: [
           {
             condition: "turn",
@@ -48,6 +58,7 @@ export const op04IceOni047: CharacterCard = {
               },
             },
             position: "bottom",
+            triggerEventTarget: true,
           },
         ],
       },

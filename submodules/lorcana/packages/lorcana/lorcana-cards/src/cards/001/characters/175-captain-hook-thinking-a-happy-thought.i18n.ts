@@ -69,4 +69,20 @@ export const captainHookThinkingAHappyThoughtI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Capitán Garfio",
+    version: "Tener un pensamiento feliz",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "Retador +3",
+      },
+      {
+        title: "POLVO ROBADO",
+        description: "Los personajes con coste 3 o menos no pueden desafiar a este personaje.",
+      },
+    ],
+  },
 };

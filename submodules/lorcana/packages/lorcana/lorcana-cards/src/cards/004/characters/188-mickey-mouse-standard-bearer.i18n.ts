@@ -45,4 +45,15 @@ export const mickeyMouseStandardBearerI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Abanderado",
+    text: [
+      {
+        title: "MANTÉNGASE FUERTE",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido gana Challenger +2 este turno. (Obtienen +2 {S} mientras desafían).",
+      },
+    ],
+  },
 };

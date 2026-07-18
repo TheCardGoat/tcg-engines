@@ -62,4 +62,19 @@ export const meridaWispConjurerEnchantedI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Mérida",
+    version: "Conjurador de fuego fatuo",
+    text: [
+      {
+        title: "ENERGÍA ENFOCADA",
+        description: "Este personaje puede entrar en juego esforzado para robar una carta.",
+      },
+      {
+        title: "LLAMAR",
+        description:
+          "Durante tu turno, cada vez que otro personaje tuyo entre en juego ejercido, podrás robar una carta.",
+      },
+    ],
+  },
 };

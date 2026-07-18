@@ -45,4 +45,15 @@ export const tananaWiseWomanI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tanana",
+    version: "Mujer sabia",
+    text: [
+      {
+        title: "TUS HERMANOS NECESITAN ORIENTACIÓN",
+        description:
+          "Cuando juegas con este personaje, puedes eliminar hasta 1 daño del personaje o ubicación elegidos.",
+      },
+    ],
+  },
 };

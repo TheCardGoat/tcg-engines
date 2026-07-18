@@ -25,7 +25,7 @@ export const eb02FakeStrawHatCrew005: CharacterCard = {
   traits: ["Fake Straw Hat Crew"],
   attribute: "ranged",
   effect:
-    "[Your Turn] This Character gains +2000 power.\n[Opponent's Turn] Give this Character 2000 power.",
+    "[Your Turn] This Character gains +2000 power.\n[Opponent's Turn] Give this Character -2000 power.",
   effects: {
     permanentEffects: [
       {
@@ -69,7 +69,7 @@ export const eb02FakeStrawHatCrew005: CharacterCard = {
               },
               self: true,
             },
-            value: 2000,
+            value: -2000,
             duration: "permanent",
           },
         ],

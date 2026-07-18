@@ -1,7 +1,7 @@
 import type { Action, TargetFilter, Zone } from "@tcg/op-types";
 import { KEYWORD_BRACKET_TO_TYPE, TRIGGER_MAP_ACTIVATE } from "../constants.ts";
 import { parseComparison, parseZoneList } from "../helpers.ts";
-import { extractTargetFilters } from "../target-parser.ts";
+import { extractTargetFilters, parseTarget, parseTargetWithoutPlayer } from "../target-parser.ts";
 import { parseFullDuration } from "./helpers.ts";
 
 type ActivateEffectAction = Extract<Action, { action: "activateEffect" }>;
@@ -56,13 +56,40 @@ export function parseExtraTurnAction(text: string): ExtraTurnAction | null {
 
 export function parseDealDamageAction(text: string): DealDamageAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
-  const match = /^(?:you may )?deal\s+(\d+)\s+damage\s+to\s+your\s+opponent$/i.exec(trimmed);
-  if (!match) return null;
-  return { action: "dealDamage", player: "opponent", amount: parseInt(match[1]!, 10) };
+  const opponentMatch = /^(?:you may )?deal\s+(\d+)\s+damage\s+to\s+your\s+opponent$/i.exec(
+    trimmed,
+  );
+  if (opponentMatch) {
+    return {
+      action: "dealDamage",
+      player: "opponent",
+      amount: parseInt(opponentMatch[1]!, 10),
+    };
+  }
+  const selfMatch = /^you\s+take\s+(\d+)\s+damage$/i.exec(trimmed);
+  if (!selfMatch) return null;
+  return { action: "dealDamage", player: "self", amount: parseInt(selfMatch[1]!, 10) };
 }
 
 export function parseSelectAction(text: string): Action[] | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+
+  const changeBattleTargetMatch =
+    /^select\s+(\d+)\s+(?:of\s+)?your\s+Characters?\.\s*Change\s+the\s+attack\s+target\s+to\s+the\s+selected\s+Character$/i.exec(
+      trimmed,
+    );
+  if (changeBattleTargetMatch) {
+    return [
+      {
+        action: "changeBattleTarget",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: { amount: parseInt(changeBattleTargetMatch[1]!, 10) },
+        },
+      },
+    ];
+  }
 
   // "Select up to N of your/opponent's Characters [with filters]. The selected Character(s) cannot attack during this turn"
   const selectCannotAttackMatch =
@@ -205,10 +232,11 @@ export function parseSelectAction(text: string): Action[] | null {
   if (selectGainPowerMatch) {
     const amount = parseInt(selectGainPowerMatch[1]!, 10);
     const upTo = /^select\s+up\s+to/i.test(trimmed);
-    const player = /opponent/i.test(selectGainPowerMatch[2]!) ? "opponent" : "self";
     const filterText = selectGainPowerMatch[3]!;
-    const { zonesText, filters } = extractTargetFilters(filterText);
-    const zones = parseZoneList(zonesText) || ["character"];
+    const selectionTarget = parseTarget(
+      `${upTo ? "up to " : ""}${amount} of ${selectGainPowerMatch[2]!} ${filterText}`,
+    );
+    if (!selectionTarget) return null;
     const value = parseInt(selectGainPowerMatch[4]!, 10);
     const duration = selectGainPowerMatch[5]
       ? parseFullDuration(selectGainPowerMatch[5])
@@ -216,24 +244,23 @@ export function parseSelectAction(text: string): Action[] | null {
     const actions: Action[] = [
       {
         action: "modifyPower",
-        target: {
-          player: player as "self" | "opponent",
-          zones: zones as Zone[],
-          count: { amount, ...(upTo && { upTo: true }) },
-          ...(filters.length > 0 && { filters }),
-        },
+        target: selectionTarget,
         value,
         duration,
       },
     ];
     if (selectGainPowerMatch[6]) {
-      const keyword = KEYWORD_BRACKET_TO_TYPE[selectGainPowerMatch[6].toLowerCase()];
-      if (keyword) {
+      if (selectGainPowerMatch[6].toLowerCase() === "blocker") {
         actions.push({
-          action: "cannotActivate",
-          target: { player: "opponent", zones: ["character"], count: { amount: "all" } },
-          keyword,
+          action: "grantKeyword",
+          target: {
+            player: selectionTarget.player,
+            zones: selectionTarget.zones,
+            count: selectionTarget.count,
+          },
+          keyword: "unblockable",
           duration: "thisTurn",
+          previousActionTargets: true,
         });
       }
     }
@@ -246,8 +273,20 @@ export function parseSelectAction(text: string): Action[] | null {
       trimmed,
     );
   if (selectPlayOrLifeMatch) {
+    const amount = parseInt(selectPlayOrLifeMatch[1]!, 10);
     const filterText = selectPlayOrLifeMatch[2]!;
-    const { filters } = extractTargetFilters(filterText);
+    const parsedTarget = parseTargetWithoutPlayer(`${amount} ${filterText}`);
+    const filters: TargetFilter[] = [...(parsedTarget?.filters ?? [])];
+    const categoryMatch = /\b(Character|Event|Stage)\b/i.exec(filterText);
+    if (categoryMatch) {
+      filters.push({
+        filter: "cardCategory",
+        value: categoryMatch[1]!.toLowerCase() as "character" | "event" | "stage",
+      });
+    }
+    if (!parsedTarget) {
+      filters.push(...extractTargetFilters(filterText).filters);
+    }
     const zone = selectPlayOrLifeMatch[3]!.toLowerCase() as Zone;
     const lifePos = selectPlayOrLifeMatch[4]!.toLowerCase() as "top" | "bottom";
     return [
@@ -258,7 +297,7 @@ export function parseSelectAction(text: string): Action[] | null {
             {
               action: "play",
               source: { player: "self" as const, zone },
-              count: { amount: parseInt(selectPlayOrLifeMatch[1]!, 10), upTo: true },
+              count: { amount, upTo: true },
               ...(filters.length > 0 && { filters }),
             },
           ],
@@ -268,7 +307,7 @@ export function parseSelectAction(text: string): Action[] | null {
               target: {
                 player: "self",
                 zones: [zone],
-                count: { amount: parseInt(selectPlayOrLifeMatch[1]!, 10), upTo: true },
+                count: { amount, upTo: true },
                 ...(filters.length > 0 && { filters }),
               },
               position: lifePos,
@@ -288,20 +327,26 @@ export function parseSelectAction(text: string): Action[] | null {
   if (selectSwapMatch) {
     const duration = selectSwapMatch[4] ? parseFullDuration(selectSwapMatch[4]) : "thisBattle";
     const isLeaderAndChar = /your\s+Leader\s+and/i.test(trimmed);
-    const zones: Zone[] = isLeaderAndChar ? ["leader", "character"] : ["character"];
+    const zones: Zone[] = ["character"];
     const player = selectSwapMatch[2] && /opponent/i.test(selectSwapMatch[2]) ? "opponent" : "self";
     const filterText = selectSwapMatch[3]!;
     const { filters } = extractTargetFilters(filterText);
     return [
       {
-        action: "setPower",
+        action: "swapBasePower",
         target: {
           player: player as "self" | "opponent",
           zones,
-          count: { amount: isLeaderAndChar ? 2 : parseInt(selectSwapMatch[1]!, 10) },
+          count: { amount: isLeaderAndChar ? 1 : parseInt(selectSwapMatch[1]!, 10) },
           ...(filters.length > 0 && { filters }),
         },
-        value: 0,
+        ...(isLeaderAndChar && {
+          pairedTarget: {
+            player: "self" as const,
+            zones: ["leader" as const],
+            count: { amount: 1 },
+          },
+        }),
         duration,
       },
     ];
@@ -332,7 +377,7 @@ export function parseSelectAction(text: string): Action[] | null {
 
   // "Select (all of) your opponent's Characters on their field. Until ..., none of the selected Characters can attack unless ..."
   const selectAllCannotAttackMatch =
-    /^select\s+(?:all\s+(?:of\s+)?)?your\s+opponent[''\u2019]s\s+Characters\s+(?:on\s+their\s+field\s*)?\.\s*Until\s+(.+?),\s+(?:none\s+of\s+)?the\s+selected\s+Characters?\s+(?:can(?:not|'t)\s+attack|cannot\s+attack|can\s+attack\s+unless)/i.exec(
+    /^select\s+(?:all\s+(?:of\s+)?)?your\s+opponent[''\u2019]s\s+Characters\s+(?:on\s+their\s+field\s*)?\.\s*Until\s+(.+?),\s+(?:none\s+of\s+)?the\s+selected\s+Characters?\s+(?:can(?:not|'t)\s+attack|cannot\s+attack|can\s+attack\s+unless\s+your\s+opponent\s+trashes\s+(\d+)\s+cards?\s+from\s+their\s+hand\s+whenever\s+they\s+attack)\.?$/i.exec(
       trimmed,
     );
   if (selectAllCannotAttackMatch) {
@@ -346,6 +391,9 @@ export function parseSelectAction(text: string): Action[] | null {
           count: { amount: "all" },
         },
         duration,
+        ...(selectAllCannotAttackMatch[2] && {
+          unlessTrashFromHand: parseInt(selectAllCannotAttackMatch[2]!, 10),
+        }),
       },
     ];
   }
@@ -355,6 +403,29 @@ export function parseSelectAction(text: string): Action[] | null {
 
 export function parseOpponentAction(text: string): Action | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+
+  // "You may place up to N cards from your opponent's trash at the bottom of their deck"
+  // The controller chooses the opponent-owned cards; the opponent is not the decision actor.
+  const placeOpponentTrashMatch =
+    /^(?:you\s+may\s+)?place\s+(up\s+to\s+)?(\d+)\s+cards?\s+from\s+your\s+opponent[''\u2019]s\s+trash\s+at\s+(?:the\s+)?(bottom|top)\s+of\s+their\s+deck(?:\s+in\s+any\s+order)?$/i.exec(
+      trimmed,
+    );
+  if (placeOpponentTrashMatch) {
+    return {
+      action: "returnToDeck",
+      target: {
+        player: "opponent",
+        zones: ["trash"],
+        count: {
+          amount: parseInt(placeOpponentTrashMatch[2]!, 10),
+          ...(placeOpponentTrashMatch[1] && { upTo: true }),
+        },
+        chosenBy: "self",
+      },
+      position: placeOpponentTrashMatch[3]!.toLowerCase() as "top" | "bottom",
+      ...(/\s+in\s+any\s+order$/i.test(trimmed) && { order: "any" as const }),
+    } as ReturnToDeckAction;
+  }
 
   // "Your opponent returns all cards in their hand to their deck [and shuffles their deck]"
   const returnDeckMatch =
@@ -375,18 +446,21 @@ export function parseOpponentAction(text: string): Action | null {
 
   // "Your opponent places N cards/Events from their trash at the bottom of their deck in any order"
   const placeTrashMatch =
-    /^your\s+opponent\s+places?\s+(\d+)\s+(?:cards?|Events?)\s+from\s+their\s+trash\s+at\s+the\s+(bottom|top)\s+of\s+their\s+deck(?:\s+in\s+any\s+order)?$/i.exec(
+    /^your\s+opponent\s+places?\s+(\d+)\s+(?:cards?|Events?)\s+from\s+their\s+trash\s+at\s+(?:the\s+)?(bottom|top)\s+of\s+their\s+deck(?:\s+in\s+any\s+order)?$/i.exec(
       trimmed,
     );
   if (placeTrashMatch) {
+    const inAnyOrder = /\s+in\s+any\s+order$/i.test(trimmed);
     return {
       action: "returnToDeck",
       target: {
         player: "opponent",
         zones: ["trash"],
         count: { amount: parseInt(placeTrashMatch[1]!, 10) },
+        chosenBy: "opponent",
       },
       position: placeTrashMatch[2]!.toLowerCase() as "top" | "bottom",
+      ...(inAnyOrder && { order: "any" }),
     } as ReturnToDeckAction;
   }
 

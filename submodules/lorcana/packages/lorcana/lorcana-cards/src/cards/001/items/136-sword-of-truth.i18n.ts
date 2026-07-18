@@ -38,4 +38,13 @@ export const swordOfTruthI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Espada de la verdad",
+    text: [
+      {
+        title: "ENCANTO FINAL",
+        description: "Destierra este objeto: destierra al personaje villano elegido.",
+      },
+    ],
+  },
 };

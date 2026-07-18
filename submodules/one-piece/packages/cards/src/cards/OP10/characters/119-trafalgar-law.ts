@@ -60,6 +60,49 @@ export const op10TrafalgarLaw119: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
+            action: "revealFromHand",
+            player: "self",
+            amount: 1,
+            upTo: true,
+            filters: [
+              {
+                filter: "trait",
+                value: "Supernovas",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+            thenActions: [
+              {
+                action: "addToLife",
+                target: {
+                  player: "self",
+                  zones: ["hand"],
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "Supernovas",
+                      match: "includes",
+                    },
+                    {
+                      filter: "cardCategory",
+                      value: "character",
+                    },
+                  ],
+                },
+                position: "top",
+                previousActionTargets: true,
+              },
+            ],
+          },
+          {
             action: "giveDon",
             target: {
               player: "self",
@@ -71,6 +114,7 @@ export const op10TrafalgarLaw119: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Supernovas",
+                  match: "includes",
                 },
               ],
             },

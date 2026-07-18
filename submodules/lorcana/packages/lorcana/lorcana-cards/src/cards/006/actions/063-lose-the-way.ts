@@ -60,7 +60,7 @@ export const loseTheWay: ActionCard = {
                   duration: "until-start-of-next-turn",
                   restriction: "cant-ready",
                   target: {
-                    ref: "previous-target",
+                    reference: "selected-first",
                   },
                   type: "restriction",
                 },

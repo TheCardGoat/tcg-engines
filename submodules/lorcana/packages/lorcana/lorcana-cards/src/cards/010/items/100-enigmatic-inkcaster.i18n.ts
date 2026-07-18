@@ -38,4 +38,13 @@ export const enigmaticInkcasterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Enigmático lanzador de tinta",
+    text: [
+      {
+        title: "SU PROPIA RECOMPENSA",
+        description: "{E}: si has jugado 2 o más cartas este turno, obtienes 1 conocimiento.",
+      },
+    ],
+  },
 };

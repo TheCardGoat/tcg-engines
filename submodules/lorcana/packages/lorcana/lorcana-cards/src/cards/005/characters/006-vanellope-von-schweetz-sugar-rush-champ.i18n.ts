@@ -17,4 +17,8 @@ export const vanellopeVonSchweetzSugarRushChampI18n: Record<Languages, I18nPrope
     name: "Vanellope von Schweetz",
     version: "Campionessa di Sugar Rush",
   },
+  es: {
+    name: "Vanellope von Schweetz",
+    version: "Campeón de fiebre del azúcar",
+  },
 };

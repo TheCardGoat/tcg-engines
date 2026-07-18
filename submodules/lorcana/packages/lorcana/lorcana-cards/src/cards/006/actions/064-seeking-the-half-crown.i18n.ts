@@ -49,4 +49,16 @@ export const seekingTheHalfCrownI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Buscando la media corona",
+    text: [
+      {
+        title:
+          "Por cada personaje Hechicero que tengas en juego, pagas 1 {I} menos para jugar esta acción.",
+      },
+      {
+        title: "Roba 2 cartas.",
+      },
+    ],
+  },
 };

@@ -33,10 +33,9 @@ export const op04Sasaki048: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
-            action: "rearrangeDeck",
+            action: "redrawHand",
             player: "self",
-            count: 0,
-            position: "top",
+            drawCount: "returned",
           },
         ],
       },

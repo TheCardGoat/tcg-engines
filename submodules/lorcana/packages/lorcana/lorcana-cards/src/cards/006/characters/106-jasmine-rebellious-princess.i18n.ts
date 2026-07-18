@@ -44,4 +44,15 @@ export const jasmineRebelliousPrincessI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Jazmín",
+    version: "Princesa rebelde",
+    text: [
+      {
+        title: "NUNCA TE LO PERDERÁS",
+        description:
+          "Cada vez que este personaje realiza una misión, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

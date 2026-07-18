@@ -79,35 +79,49 @@ export const gd02GarrodRanTiffaAdill094: PilotCard = {
       type: "triggered",
       activation: {
         timing: ["whenPaired"],
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "friendly",
+            zone: "deck",
+            comparison: "gte",
+            count: 1,
+          },
+        ],
       },
-      // "You may discard 1. If you do, look at the top 3…" — `discard` is
-      // optional; the look-at-top-deck tutor is chained via
-      // `dependsOnPrevious` so it only fires when the controller opted
-      // into the discard. The tutor uses `tutorFilter` on (vulture) Unit
-      // cards; `lookAtTopDeck`'s deterministic minimal executor will
-      // reveal the first matching card and add it to hand, returning the
-      // remainder to the bottom of deck (rule-conformant approximation
-      // of "reveal 1 among them" pending a full player-choice prompt).
       directives: [
         {
           action: {
-            action: "discard",
-            count: 1,
-          },
-          optional: true,
-        },
-        {
-          action: {
-            action: "lookAtTopDeck",
-            count: 3,
-            return: "chooseTop",
-            tutorFilter: {
-              owner: "friendly",
-              cardType: "unit",
-              attributeFilters: [{ attribute: "trait", comparison: "includes", value: "vulture" }],
+            action: "resolveThenQueue",
+            first: {
+              action: "discard",
+              count: 1,
+            },
+            followUp: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [
+                {
+                  action: {
+                    action: "lookAtTopDeck",
+                    count: 3,
+                    return: "chooseTop",
+                    tutorFilter: {
+                      owner: "friendly",
+                      cardType: "unit",
+                      attributeFilters: [
+                        { attribute: "trait", comparison: "includes", value: "vulture" },
+                      ],
+                    },
+                    randomizeRemainingToBottom: true,
+                  },
+                },
+              ],
+              sourceText:
+                "Look at the top 3 cards of your deck. You may reveal 1 (Vulture) Unit card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
             },
           },
-          dependsOnPrevious: true,
+          optional: true,
         },
       ],
       sourceText:

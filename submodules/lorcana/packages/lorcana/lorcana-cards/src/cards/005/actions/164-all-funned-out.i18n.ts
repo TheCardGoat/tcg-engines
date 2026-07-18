@@ -17,4 +17,8 @@ export const allFunnedOutI18n: Record<Languages, I18nProperties> = {
     name: "Mi Sto Divertendo Anche Troppo",
     text: "Aggiungi un tuo personaggio a tua scelta al tuo calamaio, a faccia in giù e impegnato.",
   },
+  es: {
+    name: "Todo divertido",
+    text: "Coloca tu personaje elegido en tu tintero boca abajo y ejercítalo.",
+  },
 };

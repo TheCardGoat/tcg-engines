@@ -17,4 +17,8 @@ export const mataMeatHutWaitressI18n: Record<Languages, I18nProperties> = {
     name: "Mata",
     version: "Cameriera della Casa della Carne",
   },
+  es: {
+    name: "Matá",
+    version: "Camarera de cabaña de carne",
+  },
 };

@@ -17,4 +17,8 @@ export const katrinaVanTasselRosycheekedLassI18n: Record<Languages, I18nProperti
     name: "Katrina van Tassel",
     version: "Ragazza dalle Guance Rosee",
   },
+  es: {
+    name: "Katrina Van Borla",
+    version: "Muchacha de mejillas sonrosadas",
+  },
 };

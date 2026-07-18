@@ -21,4 +21,9 @@ export const panicHammerEnthusiastI18n: Record<Languages, I18nProperties> = {
     version: "Appassionato di Martelli",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Pánico",
+    version: "Entusiasta del martillo",
+    text: "Correr",
+  },
 };

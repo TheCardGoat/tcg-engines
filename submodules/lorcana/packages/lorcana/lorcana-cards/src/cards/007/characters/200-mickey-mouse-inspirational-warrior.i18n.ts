@@ -45,4 +45,15 @@ export const mickeyMouseInspirationalWarriorI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Guerrero inspirador",
+    text: [
+      {
+        title: "ESPÍRITU Agitador",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, puedes jugar con un personaje gratis.",
+      },
+    ],
+  },
 };

@@ -21,4 +21,9 @@ export const pongoOlRascalI18n: Record<Languages, I18nProperties> = {
     version: "Ol’ Rascal",
     text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
+  es: {
+    name: "Pongo",
+    version: "Viejo bribón",
+    text: "Evasivo",
+  },
 };

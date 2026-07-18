@@ -45,4 +45,15 @@ export const magicaDeSpellSpitefulSorceressI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Magia De Hechizo",
+    version: "Hechicera rencorosa",
+    text: [
+      {
+        title: "MANIPULACIÓN MÍSTICA",
+        description:
+          "Siempre que coloques una carta debajo de uno de tus personajes o ubicaciones, puedes mover 1 contador de daño del personaje elegido al personaje contrario elegido.",
+      },
+    ],
+  },
 };

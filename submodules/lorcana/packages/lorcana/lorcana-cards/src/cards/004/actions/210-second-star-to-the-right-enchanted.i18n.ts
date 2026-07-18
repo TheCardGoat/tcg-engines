@@ -50,4 +50,17 @@ export const secondStarToTheRightEnchantedI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Segunda estrella a la derecha",
+    text: [
+      {
+        title: "Cantar juntos 10",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 10 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title: "El jugador elegido roba 5 cartas.",
+      },
+    ],
+  },
 };

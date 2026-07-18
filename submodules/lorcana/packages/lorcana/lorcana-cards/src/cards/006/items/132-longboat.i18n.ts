@@ -41,4 +41,14 @@ export const longboatI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lancha",
+    text: [
+      {
+        title: "Llévalo a dar una vuelta 2",
+        description:
+          "{I}: tu personaje elegido gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

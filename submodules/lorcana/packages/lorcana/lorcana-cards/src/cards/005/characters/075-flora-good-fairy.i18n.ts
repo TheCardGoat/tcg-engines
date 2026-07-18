@@ -41,4 +41,14 @@ export const floraGoodFairyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Flora",
+    version: "Buena hada",
+    text: [
+      {
+        title: "violín",
+        description: "Mientras es desafiado, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

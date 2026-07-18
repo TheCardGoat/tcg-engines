@@ -45,4 +45,15 @@ export const grandmotherFaSpiritedElderI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Abuela fa",
+    version: "Anciano enérgico",
+    text: [
+      {
+        title: "TENGO TODA LA SUERTE QUE NECESITAMOS",
+        description:
+          "Siempre que este personaje realice una misión, puedes darle a tu personaje elegido +2 {S} este turno.",
+      },
+    ],
+  },
 };

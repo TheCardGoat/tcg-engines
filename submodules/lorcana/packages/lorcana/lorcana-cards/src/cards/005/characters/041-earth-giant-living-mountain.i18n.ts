@@ -42,4 +42,14 @@ export const earthGiantLivingMountainI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gigante de la Tierra",
+    version: "Montaña viva",
+    text: [
+      {
+        title: "DESENTERRADO",
+        description: "Cuando juegas con este personaje, cada oponente roba una carta.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const honeyLemonChemistryWhizI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Miel limón",
+    version: "Genio de la química",
+    text: [
+      {
+        title: "BASTANTE GENIAL, ¿EH?",
+        description:
+          "Siempre que juegues con un personaje Floodborn, si usaste Shift para jugarlo, puedes eliminar hasta 2 daños del personaje elegido.",
+      },
+    ],
+  },
 };

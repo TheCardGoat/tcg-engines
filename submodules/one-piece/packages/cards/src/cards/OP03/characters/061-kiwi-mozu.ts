@@ -25,6 +25,5 @@ export const op03KiwiMozu061: CharacterCard = {
   counter: 1000,
   traits: ["Water Seven The Franky Family"],
   attribute: "slash",
-  effect: "NULL",
   i18n: op03KiwiMozu061I18n,
 };

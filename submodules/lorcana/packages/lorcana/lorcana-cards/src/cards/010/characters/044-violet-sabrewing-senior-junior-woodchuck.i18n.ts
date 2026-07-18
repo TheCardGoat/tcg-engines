@@ -21,4 +21,9 @@ export const violetSabrewingSeniorJuniorWoodchuckI18n: Record<Languages, I18nPro
     version: "Giovane Marmotta Senior",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Ala de sable violeta",
+    version: "Marmota junior mayor",
+    text: "Evasivo",
+  },
 };

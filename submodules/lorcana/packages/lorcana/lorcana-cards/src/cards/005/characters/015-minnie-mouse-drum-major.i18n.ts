@@ -60,4 +60,18 @@ export const minnieMouseDrumMajorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Tambor mayor",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "ORDEN DEL DESFILE",
+        description:
+          "Cuando juegas con este personaje, si usaste Shift para interpretarlo, puedes buscar en tu mazo una carta de personaje y revelarla a todos los jugadores. Baraja tu mazo y pon esa carta encima.",
+      },
+    ],
+  },
 };

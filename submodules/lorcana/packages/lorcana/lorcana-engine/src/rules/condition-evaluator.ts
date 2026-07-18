@@ -1440,7 +1440,21 @@ export function evaluateCondition(
       const meta = ctx.cards.require(targetId).meta;
       const atLocationId = meta?.atLocationId;
       if (!atLocationId) {
-        return false;
+        const charactersAtBanishedLocation =
+          ctx.resolutionInput?.eventSnapshot?.charactersAtSourceLocationBeforeBanish;
+        if (!charactersAtBanishedLocation?.includes(targetId)) {
+          return false;
+        }
+
+        if (condition.locationName) {
+          const banishedLocationId = ctx.resolutionInput?.eventSnapshot?.subjectCardId;
+          const locationDef = banishedLocationId
+            ? ctx.cards.getDefinition(banishedLocationId)
+            : undefined;
+          return locationDef?.name === condition.locationName;
+        }
+
+        return true;
       }
       // Verify the location is still in play
       const locationZone = ctx.framework.zones.getCardZone?.(atLocationId as CardInstanceId);

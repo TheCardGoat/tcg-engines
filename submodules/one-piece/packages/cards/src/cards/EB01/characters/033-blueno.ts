@@ -31,12 +31,6 @@ export const eb01Blueno033: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Water Seven",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -46,6 +40,11 @@ export const eb01Blueno033: CharacterCard = {
         actions: [
           {
             action: "play",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Water Seven",
+              match: "includes",
+            },
             source: {
               player: "self",
               zone: ["hand", "trash"],
@@ -67,6 +66,7 @@ export const eb01Blueno033: CharacterCard = {
               {
                 filter: "trait",
                 value: "Water Seven",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

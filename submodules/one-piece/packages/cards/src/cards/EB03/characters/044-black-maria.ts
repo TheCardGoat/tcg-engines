@@ -72,6 +72,30 @@ export const eb03BlackMaria044: CharacterCard = {
         ],
       },
     ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "leaderMulticolored",
+          },
+        ],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
   },
   i18n: eb03BlackMaria044I18n,
 };

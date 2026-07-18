@@ -35,6 +35,11 @@ export const op04KinEmon102: CharacterCard = {
             cost: "restDon",
             amount: 1,
           },
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
         ],
         actions: [
           {

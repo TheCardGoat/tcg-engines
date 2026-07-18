@@ -25,4 +25,8 @@ export const suddenChillI18n: Record<Languages, I18nProperties> = {
     name: "Sudden Chill",
     text: "Each opponent chooses and discards a card.",
   },
+  es: {
+    name: "Escalofrío repentino",
+    text: "Cada oponente elige y descarta una carta.",
+  },
 };

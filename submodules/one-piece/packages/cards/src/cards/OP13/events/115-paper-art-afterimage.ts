@@ -43,6 +43,35 @@ export const op13PaperArtAfterimage115: EventCard = {
             value: 3000,
             duration: "thisBattle",
           },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: 1000,
+            duration: "thisTurn",
+            condition: {
+              condition: "lifeCount",
+              player: "opponent",
+              comparison: "lte",
+              value: 2,
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
         ],
       },
     ],

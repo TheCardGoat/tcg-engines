@@ -65,4 +65,20 @@ export const jumbaJookibaProlificInventorI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Jumba Jookiba",
+    version: "Inventor prolífico",
+    text: [
+      {
+        title: "MULTITUD DE BIENVENIDA",
+        description:
+          "Por cada personaje que tienes en juego, pagas 1 {I} menos para interpretar a este personaje.",
+      },
+      {
+        title: "ESTOY AYUDANDO",
+        description:
+          "Siempre que este personaje realice una misión, puedes eliminar todo el daño del personaje elegido.",
+      },
+    ],
+  },
 };

@@ -92,12 +92,17 @@ export const op02KouzukiOden030: CharacterCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
                 value: "character",
               },
             ],
+          },
+          {
+            action: "shuffleDeck",
+            player: "self",
           },
         ],
       },

@@ -42,4 +42,14 @@ export const mickeyMouseNightWatchI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Guardia nocturna",
+    text: [
+      {
+        title: "APOYO",
+        description: "Tus personajes de Plutón obtienen Resistencia +1.",
+      },
+    ],
+  },
 };

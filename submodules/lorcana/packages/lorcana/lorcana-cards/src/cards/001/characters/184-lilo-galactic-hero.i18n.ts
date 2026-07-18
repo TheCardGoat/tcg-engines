@@ -17,4 +17,8 @@ export const liloGalacticHeroI18n: Record<Languages, I18nProperties> = {
     name: "Lilo",
     version: "Galactic Hero",
   },
+  es: {
+    name: "Lilo",
+    version: "Héroe Galáctico",
+  },
 };

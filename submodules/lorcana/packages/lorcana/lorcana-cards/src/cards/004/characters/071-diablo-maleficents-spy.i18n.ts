@@ -43,4 +43,14 @@ export const diabloMaleficentsSpyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Diablos",
+    version: "La espía de Maléfica",
+    text: [
+      {
+        title: "EXPLORAR ADELANTE",
+        description: "Cuando juegas con este personaje, puedes mirar la mano de cada oponente.",
+      },
+    ],
+  },
 };

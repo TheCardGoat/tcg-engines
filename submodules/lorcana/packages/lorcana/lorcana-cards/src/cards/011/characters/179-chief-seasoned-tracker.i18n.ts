@@ -45,4 +45,15 @@ export const chiefSeasonedTrackerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Jefe",
+    version: "Rastreador experimentado",
+    text: [
+      {
+        title: "BUEN VIAJE",
+        description:
+          "{E}: si un personaje contrario fue desterrado en un desafío este turno, roba una carta.",
+      },
+    ],
+  },
 };

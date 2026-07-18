@@ -21,4 +21,9 @@ export const happyGoodnaturedI18n: Record<Languages, I18nProperties> = {
     version: "Good-Natured",
     text: "<Support> (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
   },
+  es: {
+    name: "Feliz",
+    version: "De buen carácter",
+    text: "Apoyo",
+  },
 };

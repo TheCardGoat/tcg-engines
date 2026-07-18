@@ -41,4 +41,14 @@ export const marshmallowTerrifyingSnowmanI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Malvavisco",
+    version: "Aterrador muñeco de nieve",
+    text: [
+      {
+        title: "GIGANTE",
+        description: "Este personaje obtiene +1 {S} por cada carta en tu mano.",
+      },
+    ],
+  },
 };

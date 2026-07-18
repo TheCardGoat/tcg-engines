@@ -44,4 +44,15 @@ export const ratiganNefariousCriminalI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratigan",
+    version: "Criminal nefasto",
+    text: [
+      {
+        title: "UNA ACTUACIÓN MARAVILLOSA",
+        description:
+          "Siempre que realices una acción mientras este personaje está ejercido, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

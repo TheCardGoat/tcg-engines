@@ -44,4 +44,15 @@ export const donaldDuckFirstMateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pato donald",
+    version: "Primer oficial",
+    text: [
+      {
+        title: "CAPITÁN EN CUBIERTA",
+        description:
+          "Mientras tengas un personaje Capitán en juego, este personaje obtiene +2 {L}.",
+      },
+    ],
+  },
 };

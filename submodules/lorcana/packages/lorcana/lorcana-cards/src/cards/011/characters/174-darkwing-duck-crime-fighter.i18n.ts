@@ -17,4 +17,8 @@ export const darkwingDuckCrimeFighterI18n: Record<Languages, I18nProperties> = {
     name: "Darkwing Duck",
     version: "Nemico del Crimine",
   },
+  es: {
+    name: "Pato Ala Oscura",
+    version: "Luchador contra el crimen",
+  },
 };

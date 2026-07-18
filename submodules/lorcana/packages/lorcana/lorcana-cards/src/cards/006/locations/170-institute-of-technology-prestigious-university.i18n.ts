@@ -60,4 +60,18 @@ export const instituteOfTechnologyPrestigiousUniversityI18n: Record<Languages, I
       },
     ],
   },
+  es: {
+    name: "Instituto de Tecnología",
+    version: "Universidad prestigiosa",
+    text: [
+      {
+        title: "BIENVENIDO AL LABORATORIO",
+        description: "Los personajes de Inventor obtienen +1 {W} mientras estén aquí.",
+      },
+      {
+        title: "SUPERAR LOS LÍMITES",
+        description: "Al comienzo de tu turno, si tienes un personaje aquí, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

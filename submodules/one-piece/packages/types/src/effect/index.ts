@@ -42,19 +42,26 @@ export type {
   LifeCountCondition,
   NotHasCardCondition,
   OncePerTurnCondition,
+  RestedCardCountCondition,
   TurnCondition,
   ZoneCountCondition,
 } from "./condition.ts";
 
 export type {
   AddLifeToHandCost,
+  CardCostOption,
   Cost,
+  ModifyLeaderPowerCost,
+  PlayCardCost,
   RestDonCost,
   RestThisCardCost,
   ReturnCharacterCost,
+  ReturnCharacterToDeckCost,
   ReturnDonCost,
+  ReturnThisAndHandToDeckCost,
   RevealFromHandCost,
   TrashFromHandCost,
+  TrashCardCost,
 } from "./cost.ts";
 
 export type {
@@ -71,11 +78,13 @@ export type {
   DrawAction,
   GiveDonAction,
   GrantKeywordAction,
+  GroupedPlayAction,
   KoAction,
   ModifyCostAction,
   ModifyPowerAction,
   NegateEffectsAction,
   PlayAction,
+  PlayThisCardAction,
   RearrangeDeckAction,
   RemoveFromLifeAction,
   RestAction,
@@ -84,6 +93,7 @@ export type {
   SearchAction,
   SetActiveAction,
   SetPowerAction,
+  ShuffleDeckAction,
   TrashFromFieldAction,
   TrashFromHandAction,
   TrashThisCardAction,
@@ -94,6 +104,7 @@ export type {
   CardEffects,
   DeckBuildingRule,
   EffectBlock,
+  EffectEventFilter,
   PermanentEffect,
   ReplacementEffect,
 } from "./effect.ts";

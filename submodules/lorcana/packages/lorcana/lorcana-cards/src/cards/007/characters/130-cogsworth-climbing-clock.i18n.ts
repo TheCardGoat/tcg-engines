@@ -44,4 +44,15 @@ export const cogsworthClimbingClockI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Diente",
+    version: "Reloj de escalada",
+    text: [
+      {
+        title: "TODAVÍA ÚTIL",
+        description:
+          "Mientras tengas una carta de objeto en tu descarte, este personaje obtiene +2 {S}.",
+      },
+    ],
+  },
 };

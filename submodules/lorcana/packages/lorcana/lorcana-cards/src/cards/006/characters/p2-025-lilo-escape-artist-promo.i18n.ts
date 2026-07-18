@@ -45,4 +45,15 @@ export const liloEscapeArtistP2PromoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lilo",
+    version: "Artista del escape",
+    text: [
+      {
+        title: "NINGÚN LUGAR PREFIERE ESTAR",
+        description:
+          "Al comienzo de tu turno, si esta carta está en tu descarte, puedes jugarla y ella entra en juego ejercida.",
+      },
+    ],
+  },
 };

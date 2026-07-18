@@ -34,10 +34,10 @@ export const op03Shirley104: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
-            action: "rearrangeDeck",
-            player: "self",
-            count: 1,
+            action: "lookAtLife",
+            player: "either",
             position: "topOrBottom",
+            upTo: true,
           },
         ],
       },

@@ -17,4 +17,8 @@ export const getOutI18n: Record<Languages, I18nProperties> = {
     name: "Vattene!",
     text: "Esilia un personaggio a tua scelta, poi riprendi in mano una carta oggetto dai tuoi scarti.",
   },
+  es: {
+    name: "¡Salir!",
+    text: "Destierra al personaje elegido y luego devuelve a tu mano una carta de objeto de tu descarte.",
+  },
 };

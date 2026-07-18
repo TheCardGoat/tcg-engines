@@ -51,6 +51,7 @@ export const op11Borsalino014: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Navy",
+                  match: "includes",
                 },
               ],
             },

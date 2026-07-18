@@ -28,12 +28,6 @@ export const op06ThrillerBark098: StageCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Thriller Bark Pirates",
-          },
-        ],
         costs: [
           {
             cost: "restDon",
@@ -63,6 +57,7 @@ export const op06ThrillerBark098: StageCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -70,6 +65,11 @@ export const op06ThrillerBark098: StageCard = {
               },
             ],
             playState: "rested",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Thriller Bark Pirates",
+              match: "includes",
+            },
           },
         ],
         optional: true,

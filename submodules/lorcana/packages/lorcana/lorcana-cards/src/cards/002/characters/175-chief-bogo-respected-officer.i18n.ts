@@ -45,4 +45,15 @@ export const chiefBogoRespectedOfficerI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Jefe bogo",
+    version: "Oficial respetado",
+    text: [
+      {
+        title: "¡INSUBORDINACIÓN!",
+        description:
+          "Siempre que juegues con un personaje Floodborn, inflige 1 daño a cada personaje contrario.",
+      },
+    ],
+  },
 };

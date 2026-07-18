@@ -45,4 +45,15 @@ export const boltHeadstrongDogI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tornillo",
+    version: "Perro testarudo",
+    text: [
+      {
+        title: "NO HAY VUELTA ATRÁS",
+        description:
+          "Siempre que este personaje realice una misión, si no tiene daño, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

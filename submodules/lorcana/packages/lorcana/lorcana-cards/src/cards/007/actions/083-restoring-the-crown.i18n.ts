@@ -17,4 +17,8 @@ export const restoringTheCrownI18n: Record<Languages, I18nProperties> = {
     name: "Ripristinare la Corona",
     text: "Impegna tutti i personaggi avversari. Ogni volta che uno dei tuoi personaggi esilia un altro personaggio in una sfida per questo turno, ottieni 2 leggenda.",
   },
+  es: {
+    name: "Restaurando la Corona",
+    text: "Ejercita a todos los personajes contrarios. Siempre que uno de tus personajes destierre a otro personaje en un desafío este turno, gana 2 conocimientos.",
+  },
 };

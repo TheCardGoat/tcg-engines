@@ -2,6 +2,9 @@ import { describe, expect, it } from "bun:test";
 import { LorcanaMultiplayerTestEngine, createMockCharacter } from "@tcg/lorcana-engine/testing";
 import type { LorcanaProjectedBagEffect } from "@tcg/lorcana-engine";
 import { shift } from "../../../helpers/abilities/shift";
+import { omnidroidScanningForThreats } from "../../013/characters/188-omnidroid-scanning-for-threats";
+import { omnidroidUltimateIteration } from "../../013/characters/196-omnidroid-ultimate-iteration";
+import { omnidroidV9 } from "./184-omnidroid-v9";
 import { syndromeOutForRevenge } from "./172-syndrome-out-for-revenge";
 
 const robotInDiscard = createMockCharacter({
@@ -53,6 +56,41 @@ function hasAbilityName(bagEffect: LorcanaProjectedBagEffect, abilityName: strin
 }
 
 describe("Syndrome - Out for Revenge", () => {
+  it("can shift the real Omnidroid - Ultimate Iteration onto Omnidroid - V.9 for free", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      play: [{ card: syndromeOutForRevenge, isDrying: false }, omnidroidV9],
+      hand: [omnidroidUltimateIteration],
+      discard: [omnidroidScanningForThreats],
+      deck: 1,
+    });
+
+    expect(testEngine.asPlayerOne().quest(syndromeOutForRevenge)).toBeSuccessfulCommand();
+    const trigger = testEngine
+      .asPlayerOne()
+      .getBagEffects()
+      .find((bagEffect) => hasAbilityName(bagEffect, "GOT ME MONOLOGUING!"));
+    expect(trigger).toBeDefined();
+    expect(
+      testEngine.asPlayerOne().resolveBag(trigger!.id, { resolveOptional: true }),
+    ).toBeSuccessfulCommand();
+
+    const discardRobotId = testEngine.findCardInstanceId(omnidroidScanningForThreats, "discard");
+    expect(
+      testEngine.asPlayerOne().resolveNextPending({ targets: [discardRobotId] }),
+    ).toBeSuccessfulCommand();
+    const v9Id = testEngine.findCardInstanceId(omnidroidV9, "play");
+    const ultimateId = testEngine.findCardInstanceId(omnidroidUltimateIteration, "hand");
+    expect(
+      testEngine.asPlayerOne().resolveNextPending({
+        resolveOptional: true,
+        targets: [ultimateId, v9Id],
+      }),
+    ).toBeSuccessfulCommand();
+
+    expect(testEngine.asPlayerOne().getCardZone(omnidroidUltimateIteration)).toBe("play");
+    expect(testEngine.getCardsUnder(omnidroidUltimateIteration)).toContain(v9Id);
+  });
+
   it("returns a Robot character from discard and optionally plays a Robot for free on quest", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
       play: [{ card: syndromeOutForRevenge }],

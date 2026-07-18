@@ -58,8 +58,24 @@ export const op08PortgasDAce052: CharacterCard = {
               amount: 1,
               upTo: true,
             },
+            revealFilters: [
+              {
+                filter: "trait",
+                value: "Whitebeard Pirates",
+                match: "includes",
+              },
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
             revealDestination: "character",
-            remainderPosition: "bottom",
+            remainderPosition: "any",
           },
         ],
       },

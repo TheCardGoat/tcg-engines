@@ -58,4 +58,18 @@ export const microbotsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Microrobots",
+    text: [
+      {
+        title: "APLICACIONES ILIMITADAS",
+        description: "Puedes tener cualquier cantidad de cartas llamadas Microbots en tu mazo.",
+      },
+      {
+        title: "TECNOLOGÍA INSPIRADA",
+        description:
+          "Cuando juegas este objeto, el personaje elegido obtiene -1 {S} este turno por cada objeto llamado Microbots que tengas en juego.",
+      },
+    ],
+  },
 };

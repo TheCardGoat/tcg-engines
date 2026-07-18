@@ -19,4 +19,6 @@ export interface Printing {
   rarity: string;
   /** Asset URL for this printing's card image. */
   imageUrl: string;
+  /** Provider-native identities for this exact physical printing. */
+  externalIds?: Partial<Record<import("./external-source").ExternalSource, string>>;
 }

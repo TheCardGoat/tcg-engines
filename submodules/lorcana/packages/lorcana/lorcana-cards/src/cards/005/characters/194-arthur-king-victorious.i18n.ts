@@ -60,4 +60,18 @@ export const arthurKingVictoriousI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Arturo",
+    version: "Rey victorioso",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "CABALLERO POR EL REY",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene Retador +2 y Resistencia +2 y puede desafiar a los personajes listos este turno. (Obtienen +2 {S} mientras desafían. El daño que se les inflige se reduce en 2).",
+      },
+    ],
+  },
 };

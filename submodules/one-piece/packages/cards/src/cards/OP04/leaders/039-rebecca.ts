@@ -42,17 +42,25 @@ export const op04Rebecca039: LeaderCard = {
   effect:
     "This Leader cannot attack. [Activate:Main] [Once Per Turn] (1) (You may rest the specified number of DON!! cards in your cost area.): If you have 6 or less cards in your hand, look at 2 cards from the top of your deck; reveal up to 1 [Dressrosa] type card and add it to your hand. Then, trash the rest.",
   effects: {
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "cannotAttack",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: { amount: 1 },
+              self: true,
+            },
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "handCount",
-            player: "self",
-            comparison: "lte",
-            value: 6,
-          },
-        ],
         costs: [
           {
             cost: "restDon",
@@ -75,10 +83,17 @@ export const op04Rebecca039: LeaderCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
             remainderPosition: "trash",
+            condition: {
+              condition: "handCount",
+              player: "self",
+              comparison: "lte",
+              value: 6,
+            },
           },
         ],
         oncePerTurn: true,

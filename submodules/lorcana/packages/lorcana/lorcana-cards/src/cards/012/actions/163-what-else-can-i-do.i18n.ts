@@ -17,4 +17,8 @@ export const whatElseCanIDoI18n: Record<Languages, I18nProperties> = {
     name: "Cos'Altro Farò?",
     text: "Guarda le prime 2 carte del tuo mazzo. Aggiungine una alla tua mano e l'altra al tuo calamaio, a faccia in giù e impegnata. Se un personaggio ha cantato questa canzone, i tuoi personaggi ottengono <Protetto> fino all'inizio del tuo prossimo turno.",
   },
+  es: {
+    name: "¿Qué más puedo hacer?",
+    text: "Mira las 2 primeras cartas de tu mazo. Pon uno en tu mano y el otro en tu tintero boca abajo y ejerce presión. Si un personaje canta esta canción, tus personajes ganan Protección hasta el comienzo de tu siguiente turno.",
+  },
 };

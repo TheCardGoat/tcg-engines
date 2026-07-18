@@ -45,4 +45,15 @@ export const leviathansLairDangerousGroundI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "La guarida del Leviatán",
+    version: "Terreno peligroso",
+    text: [
+      {
+        title: "PERDIDO EN LAS DUNAS",
+        description:
+          "Cuando esta ubicación es desterrada, cada oponente elige y destierra a uno de sus personajes.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const stitchCarefreeSurferI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Puntada",
+    version: "Surfista despreocupado",
+    text: [
+      {
+        title: "OHANA",
+        description:
+          "Cuando juegas con este personaje, si tienes 2 o más personajes en juego, puedes robar 2 cartas.",
+      },
+    ],
+  },
 };

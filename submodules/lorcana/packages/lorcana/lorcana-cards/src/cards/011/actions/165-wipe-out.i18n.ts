@@ -17,4 +17,8 @@ export const wipeOutI18n: Record<Languages, I18nProperties> = {
     name: "Precipitare!",
     text: "Aggiungi un personaggio con <Guardiano> o un oggetto a tua scelta al calamaio del suo giocatore, a faccia in giù e impegnato.",
   },
+  es: {
+    name: "¡Borrar!",
+    text: "Coloca el personaje elegido con el guardaespaldas o el objeto en el tintero de su jugador boca abajo y ejercítalo.",
+  },
 };

@@ -4,8 +4,8 @@ import { op14eb04JinbeOp14049049I18n } from "./049-jinbe-op14-049.i18n.ts";
 export const op14eb04JinbeOp14049049: CharacterCard = {
   id: "OP14-049",
   canonicalId: "OP14-049",
-  slug: "jinbe-op14-049",
-  name: "Jinbe - OP14-049",
+  slug: "jinbe/op14-049",
+  name: "Jinbe",
   printings: [
     {
       id: "OP14-049",
@@ -30,7 +30,7 @@ export const op14eb04JinbeOp14049049: CharacterCard = {
   setId: "OP14EB04",
   cost: 8,
   power: 10000,
-  traits: ["Fish-Man The Seven Warlords of the Sea The Sun Pirates"],
+  traits: ["Fish-Man", "The Seven Warlords of the Sea", "The Sun Pirates"],
   attribute: "strike",
   artVariants: [
     {
@@ -44,7 +44,31 @@ export const op14eb04JinbeOp14049049: CharacterCard = {
   effects: {
     effects: [
       {
+        trigger: "whenCardTrashedFromHandByEffect",
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "thisTurn",
+          },
+        ],
+      },
+      {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 2,
+          },
+        ],
         actions: [
           {
             action: "draw",
@@ -54,7 +78,7 @@ export const op14eb04JinbeOp14049049: CharacterCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

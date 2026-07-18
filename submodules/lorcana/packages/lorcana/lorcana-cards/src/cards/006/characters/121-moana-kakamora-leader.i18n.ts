@@ -60,4 +60,18 @@ export const moanaKakamoraLeaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Moana",
+    version: "Líder Kakamora",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "REUNIENDO FUERZAS",
+        description:
+          "Cuando juegas con este personaje, puedes mover cualquier número de tus personajes a la misma ubicación de forma gratuita. Gana 1 conocimiento por cada personaje que hayas movido.",
+      },
+    ],
+  },
 };

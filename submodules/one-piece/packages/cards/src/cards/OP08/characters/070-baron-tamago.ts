@@ -62,6 +62,7 @@ export const op08BaronTamago070: CharacterCard = {
             ],
           },
         ],
+        optional: true,
       },
     ],
   },

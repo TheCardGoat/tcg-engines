@@ -41,4 +41,14 @@ export const buzzLightyearGroundedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Buzz Lightyear",
+    version: "Conectado a tierra",
+    text: [
+      {
+        title: "No es un juguete volador",
+        description: "Este personaje no puede obtener <Evasivo>.",
+      },
+    ],
+  },
 };

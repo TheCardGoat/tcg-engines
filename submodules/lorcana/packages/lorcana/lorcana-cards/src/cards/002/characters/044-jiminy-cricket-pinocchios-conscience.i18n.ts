@@ -57,4 +57,18 @@ export const jiminyCricketPinocchiosConscienceI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Pepe Grillo",
+    version: "La conciencia de Pinocho",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "ESE AÚN, PEQUEÑA VOZ",
+        description:
+          "Cuando juegas con este personaje, si tienes un personaje llamado Pinocho en juego, puedes robar una carta.",
+      },
+    ],
+  },
 };

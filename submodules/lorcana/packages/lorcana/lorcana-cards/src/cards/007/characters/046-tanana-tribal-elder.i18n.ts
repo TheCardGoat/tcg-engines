@@ -17,4 +17,8 @@ export const tananaTribalElderI18n: Record<Languages, I18nProperties> = {
     name: "Tanana",
     version: "Anziana della Tribù",
   },
+  es: {
+    name: "Tanana",
+    version: "Anciano tribal",
+  },
 };

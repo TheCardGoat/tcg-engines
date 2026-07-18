@@ -45,4 +45,15 @@ export const pterodactylJanieDollSidsToyI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Muñeca Pterodáctilo Janie",
+    version: "El juguete de Sid",
+    text: [
+      {
+        title: "TRASPLANTE DOBLE",
+        description:
+          "Durante tu turno, cuando este personaje es desterrado, cada oponente pierde 1 conocimiento y tú ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

@@ -12,6 +12,9 @@ export interface LeaderboardEntry {
 
 export interface LeaderboardResponse {
   type: LeaderboardType;
+  formatId?: string;
+  mode?: "1" | "3";
+  seasonId?: string | null;
   entries: LeaderboardEntry[];
   playerRank: number | null;
   playerEntry: LeaderboardEntry | null;
@@ -22,10 +25,19 @@ export async function fetchLeaderboard(
   type: LeaderboardType,
   gameProfileId?: string,
   limit: number = 50,
+  partition?: { formatId: string; mode: "1" | "3"; seasonId?: string },
 ): Promise<LeaderboardResponse> {
+  if (gameSlug === "lorcana" && type === "mmr" && !partition) {
+    throw new Error("Lorcana MMR requires a format and best-of mode");
+  }
   const params = new URLSearchParams();
   if (gameProfileId) params.set("gameProfileId", gameProfileId);
   if (limit !== 50) params.set("limit", String(limit));
+  if (partition) {
+    params.set("formatId", partition.formatId);
+    params.set("mode", partition.mode);
+    if (partition.seasonId) params.set("seasonId", partition.seasonId);
+  }
 
   const qs = params.toString();
   const url = `${getApiOrigin()}/v1/leaderboards/${gameSlug}/${type}${qs ? `?${qs}` : ""}`;

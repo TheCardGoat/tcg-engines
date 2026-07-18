@@ -17,4 +17,8 @@ export const gatheringKnowledgeAndWisdomI18n: Record<Languages, I18nProperties> 
     name: "Ottenere Sapere e Saggezza",
     text: "Ottieni 2 leggenda.",
   },
+  es: {
+    name: "Reuniendo conocimiento y sabiduría",
+    text: "Gana 2 conocimientos.",
+  },
 };

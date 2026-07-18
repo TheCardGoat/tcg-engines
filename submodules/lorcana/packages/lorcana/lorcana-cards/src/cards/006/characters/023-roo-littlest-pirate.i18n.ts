@@ -45,4 +45,15 @@ export const rooLittlestPirateI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Roo",
+    version: "El pirata más pequeño",
+    text: [
+      {
+        title: "SOY",
+        description:
+          "¡UN PIRATA TAMBIÉN! Cuando juegas con este personaje, puedes darle al personaje elegido -2 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

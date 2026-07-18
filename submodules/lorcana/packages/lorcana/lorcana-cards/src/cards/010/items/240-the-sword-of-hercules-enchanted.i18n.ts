@@ -60,4 +60,19 @@ export const theSwordOfHerculesEnchantedI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "La espada de Hércules",
+    text: [
+      {
+        title: "PODEROSO GOLPE",
+        description:
+          "Cuando juegas este objeto, destierras al personaje de la Deidad oponente elegido.",
+      },
+      {
+        title: "MANO A MANO",
+        description:
+          "Durante tu turno, cada vez que uno de tus personajes destierre a otro personaje en un desafío, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

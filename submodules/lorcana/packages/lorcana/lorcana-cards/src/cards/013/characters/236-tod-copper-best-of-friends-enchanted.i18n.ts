@@ -51,4 +51,16 @@ export const todCopperBestOfFriendsEnchantedI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Tod y cobre",
+    version: "Lo mejor de los amigos",
+    text: [
+      {
+        title: "<Mayús> 2 {I}",
+      },
+      {
+        title: "<Evasivo>",
+      },
+    ],
+  },
 };

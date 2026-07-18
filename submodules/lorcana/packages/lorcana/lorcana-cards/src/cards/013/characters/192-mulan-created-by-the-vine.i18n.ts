@@ -45,4 +45,15 @@ export const mulanCreatedByTheVineI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mulán",
+    version: "Creado por la vid",
+    text: [
+      {
+        title: "Demoler",
+        description:
+          "Siempre que juegues con este u otro personaje de Floodborn, podrás desterrar el objeto elegido.",
+      },
+    ],
+  },
 };

@@ -60,4 +60,18 @@ export const arielSonicWarriorI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ariel",
+    version: "Guerrero sónico",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "VOZ AMPLIFICADA",
+        description:
+          "Cada vez que reproduces una canción, puedes pagar 2 {I} para causar 3 daños al personaje elegido.",
+      },
+    ],
+  },
 };

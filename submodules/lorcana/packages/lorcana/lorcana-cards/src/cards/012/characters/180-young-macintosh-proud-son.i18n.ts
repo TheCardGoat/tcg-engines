@@ -17,4 +17,8 @@ export const youngMacintoshProudSonI18n: Record<Languages, I18nProperties> = {
     name: "Giovane Macintosh",
     version: "Figlio Orgoglioso",
   },
+  es: {
+    name: "Macintosh joven",
+    version: "Hijo orgulloso",
+  },
 };

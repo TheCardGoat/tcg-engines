@@ -47,6 +47,20 @@ export const op04Stussy084: CharacterCard = {
                 filter: "excludeName",
                 value: "Stussy",
               },
+              {
+                filter: "trait",
+                value: "CP",
+                match: "includes",
+              },
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 2,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
             ],
             revealDestination: "character",
             remainderPosition: "trash",

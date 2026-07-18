@@ -26,7 +26,7 @@ export const op11Ain002: CharacterCard = {
   traits: ["FILM Neo Navy"],
   attribute: "special",
   effect:
-    "[On Play] Give up to 1 of your opponent's Characters 1000 power during this turn. Then, K.O. up to 1 of your opponent's Characters with 0 power or less.",
+    "[On Play] Give up to 1 of your opponent's Characters −1000 power during this turn. Then, K.O. up to 1 of your opponent's Characters with 0 power or less.",
   effects: {
     effects: [
       {
@@ -42,7 +42,7 @@ export const op11Ain002: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 1000,
+            value: -1000,
             duration: "thisTurn",
           },
           {

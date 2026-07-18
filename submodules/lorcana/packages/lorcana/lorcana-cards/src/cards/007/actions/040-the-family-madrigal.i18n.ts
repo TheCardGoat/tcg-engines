@@ -35,4 +35,8 @@ export const theFamilyMadrigalI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La Familia Madrigal",
+    text: "Mira las 5 primeras cartas de tu mazo. Puedes revelar hasta 1 carta de personaje de Madrigal y hasta 1 carta de canción y ponerlas en tu mano. Coloca el resto en la parte superior de tu mazo en cualquier orden.",
+  },
 };

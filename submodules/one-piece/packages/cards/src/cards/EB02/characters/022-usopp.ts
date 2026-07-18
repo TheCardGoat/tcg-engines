@@ -75,9 +75,7 @@ export const eb02Usopp022: CharacterCard = {
             },
             filters: [
               {
-                filter: "hasEffectType",
-                value: "onPlay",
-                negate: true,
+                filter: "noBaseEffect",
               },
               {
                 filter: "power",

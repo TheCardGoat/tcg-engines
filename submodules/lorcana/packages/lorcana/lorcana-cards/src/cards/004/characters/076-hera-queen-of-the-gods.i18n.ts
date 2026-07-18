@@ -71,4 +71,21 @@ export const heraQueenOfTheGodsI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hera",
+    version: "Reina de los dioses",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "DIOSA PROTECTORA",
+        description: "Tus personajes llamados Zeus ganan Ward.",
+      },
+      {
+        title: "ESTÁS",
+        description: "UN VERDADERO HÉROE Tus personajes llamados Hércules obtienen Evasión.",
+      },
+    ],
+  },
 };

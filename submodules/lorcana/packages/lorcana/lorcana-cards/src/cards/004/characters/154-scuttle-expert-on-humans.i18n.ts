@@ -45,4 +45,15 @@ export const scuttleExpertOnHumansI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Escotilla",
+    version: "Experto en humanos",
+    text: [
+      {
+        title: "DÉJEME VER",
+        description:
+          "Cuando juegues con este personaje, mira las 4 cartas superiores de tu mazo. Puedes revelar una carta de objeto y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

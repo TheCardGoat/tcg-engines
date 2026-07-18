@@ -45,4 +45,15 @@ export const theHuntsmanReluctantEnforcerI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "El cazador",
+    version: "Ejecutor reacio",
+    text: [
+      {
+        title: "CAMBIO DE CORAZÓN",
+        description:
+          "Siempre que este personaje realice una misión, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

@@ -41,4 +41,14 @@ export const croquetMalletI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mazo de croquet",
+    text: [
+      {
+        title: "ERIZO RÁPIDO",
+        description:
+          "Desterrar este objeto: el personaje elegido gana Rush este turno. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

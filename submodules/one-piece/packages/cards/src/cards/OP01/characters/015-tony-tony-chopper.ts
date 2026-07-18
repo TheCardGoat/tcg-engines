@@ -57,6 +57,7 @@ export const op01TonyTonyChopper015: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
+                  match: "includes",
                 },
                 {
                   filter: "cardCategory",

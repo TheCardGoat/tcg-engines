@@ -45,4 +45,15 @@ export const cogsworthMajordomoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Diente",
+    version: "Mayordomo",
+    text: [
+      {
+        title: "¡COMO ERES TÚ!",
+        description:
+          "Siempre que este personaje realice una misión, puedes darle al personaje elegido -2 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

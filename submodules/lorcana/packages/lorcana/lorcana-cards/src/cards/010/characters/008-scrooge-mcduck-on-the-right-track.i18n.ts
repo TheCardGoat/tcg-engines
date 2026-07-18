@@ -45,4 +45,15 @@ export const scroogeMcduckOnTheRightTrackI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Gilito McPato",
+    version: "En el camino correcto",
+    text: [
+      {
+        title: "RIQUEZA FABULOSA",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido con una carta debajo obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

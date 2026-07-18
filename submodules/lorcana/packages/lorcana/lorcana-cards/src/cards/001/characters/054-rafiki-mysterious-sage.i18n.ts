@@ -21,4 +21,9 @@ export const rafikiMysteriousSageI18n: Record<Languages, I18nProperties> = {
     version: "Mysterious Sage",
     text: "<Rush> (This character can challenge the turn they're played.)",
   },
+  es: {
+    name: "Rafiki",
+    version: "Sabio misterioso",
+    text: "Correr",
+  },
 };

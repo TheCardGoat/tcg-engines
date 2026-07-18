@@ -21,4 +21,9 @@ export const darkwingDuckDrakeMallardI18n: Record<Languages, I18nProperties> = {
     version: "Drake Mallard",
     text: "<Protetto>",
   },
+  es: {
+    name: "Pato Ala Oscura",
+    version: "Pato real",
+    text: "Pabellón",
+  },
 };

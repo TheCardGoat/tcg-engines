@@ -40,7 +40,7 @@ export const op10DonquixoteDoflamingo071: CharacterCard = {
     },
   ],
   effect:
-    '[On Play] DON!! 1: Play up to 1 "Donquixote Pirates" type Character card with a cost of 5 or less from your hand.\n[On Your Opponent\'s Attack] [Once Per Turn] You may rest 1 of your DON!! cards: Add up to 1 DON!! card from your DON!! deck and set it as active.',
+    '[On Play] DON!! −1: Play up to 1 "Donquixote Pirates" type Character card with a cost of 5 or less from your hand.\n[On Your Opponent\'s Attack] [Once Per Turn] You may rest 1 of your DON!! cards: Add up to 1 DON!! card from your DON!! deck and set it as active.',
   effects: {
     effects: [
       {
@@ -71,6 +71,7 @@ export const op10DonquixoteDoflamingo071: CharacterCard = {
               {
                 filter: "trait",
                 value: "Donquixote Pirates",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -79,9 +80,16 @@ export const op10DonquixoteDoflamingo071: CharacterCard = {
             ],
           },
         ],
+        optional: true,
       },
       {
         trigger: "onOpponentAttack",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 1,
+          },
+        ],
         actions: [
           {
             action: "addDon",

@@ -45,4 +45,15 @@ export const mufasaBetrayedLeaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mufasa",
+    version: "Líder traicionado",
+    text: [
+      {
+        title: "EL SOL SE PONDRA",
+        description:
+          "Cuando este personaje sea desterrado, podrás revelar la carta superior de tu mazo. Si es una carta de personaje, puedes jugar con ese personaje de forma gratuita y entrará en juego ejercido. De lo contrario, colóquelo en la parte superior de su plataforma.",
+      },
+    ],
+  },
 };

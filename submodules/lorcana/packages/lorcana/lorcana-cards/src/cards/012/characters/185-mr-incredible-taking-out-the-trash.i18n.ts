@@ -45,4 +45,15 @@ export const mrIncredibleTakingOutTheTrashI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Señor increíble",
+    version: "Sacando la basura",
+    text: [
+      {
+        title: "¡KA-POW!",
+        description:
+          "Cuando juegas con este personaje, puedes causar 2 daños al personaje Robot o Villano contrario elegido.",
+      },
+    ],
+  },
 };

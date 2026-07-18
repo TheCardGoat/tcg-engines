@@ -5,6 +5,7 @@ export const gd02GundamAge1Spallow023: UnitCard = {
   name: "Gundam AGE-1 Spallow",
   type: "unit",
   color: "green",
+  battlefieldZones: ["space", "earth"],
   traits: ["earth federation", "age system"],
   id: "GD02-023",
   canonicalId: "GD02-023",
@@ -58,6 +59,7 @@ export const gd02GundamAge1Spallow023: UnitCard = {
   cost: 3,
   ap: 3,
   hp: 4,
+  linkCondition: "[Flit Asuno]",
   effect:
     "【During Link】While you are Lv.7 or higher, this Unit gains &lt;First Strike&gt;.<br>\n(While this Unit is attacking, it deals damage before the enemy Unit.)<br>",
   effects: [

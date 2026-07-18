@@ -4,6 +4,7 @@ export const gd02BusterGundam076: UnitCard = {
   cardNumber: "GD02-076",
   name: "Buster Gundam",
   type: "unit",
+  battlefieldZones: ["space", "earth"],
   color: "white",
   traits: ["triple ship alliance"],
   id: "GD02-076",
@@ -58,6 +59,7 @@ export const gd02BusterGundam076: UnitCard = {
   cost: 3,
   ap: 4,
   hp: 3,
+  linkCondition: "(Coordinator) Trait",
   effect:
     "While this Unit has 5 or more AP, it gains &lt;Blocker&gt;.<br>\n(Rest this Unit to change the attack target to it.)<br>",
   effects: [

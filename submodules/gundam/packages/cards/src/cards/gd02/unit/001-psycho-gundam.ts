@@ -5,6 +5,7 @@ export const gd02PsychoGundam001: UnitCard = {
   name: "Psycho Gundam",
   type: "unit",
   color: "blue",
+  battlefieldZones: ["space", "earth"],
   traits: ["titans"],
   id: "GD02-001",
   canonicalId: "GD02-001",

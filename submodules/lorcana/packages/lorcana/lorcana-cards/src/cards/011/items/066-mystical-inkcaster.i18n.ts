@@ -41,4 +41,14 @@ export const mysticalInkcasterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lanzador de tinta místico",
+    text: [
+      {
+        title: "CONVOCATORIAS ESPECIALES",
+        description:
+          "{E}, 3 {I}: juega con un personaje con un coste de 5 o menos de forma gratuita. Ganan Rush. Al final de tu turno, destiérralos. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

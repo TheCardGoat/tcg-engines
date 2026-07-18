@@ -45,4 +45,15 @@ export const ladyFamilyDogI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dama",
+    version: "Perro de familia",
+    text: [
+      {
+        title: "ALGUIEN A QUIEN CUIDAR",
+        description:
+          "Cuando juegas con este personaje, puedes jugar con un personaje con un coste de 2 o menos de forma gratuita.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const tinkerBellGenerousFairyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Campanita",
+    version: "Hada generosa",
+    text: [
+      {
+        title: "HACER",
+        description:
+          "UN NUEVO AMIGO Cuando juegues con este personaje, mira las 4 primeras cartas de tu mazo. Puedes revelar una carta de personaje y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+      },
+    ],
+  },
 };

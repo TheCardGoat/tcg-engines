@@ -39,4 +39,13 @@ export const magicGoldenFlowerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Flor Dorada Mágica",
+    text: [
+      {
+        title: "POLEN CURATIVO",
+        description: "Desterrar este objeto: elimina hasta 3 daños del personaje elegido.",
+      },
+    ],
+  },
 };

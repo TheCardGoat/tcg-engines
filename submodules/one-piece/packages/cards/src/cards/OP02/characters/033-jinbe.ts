@@ -25,6 +25,5 @@ export const op02Jinbe033: CharacterCard = {
   counter: 1000,
   traits: ["Film Fish-Man Straw Hat Crew"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op02Jinbe033I18n,
 };

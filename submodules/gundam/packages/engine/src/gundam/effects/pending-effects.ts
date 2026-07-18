@@ -17,13 +17,14 @@ import type {
   ChooseOneDirective,
   Directive,
   EffectCondition,
+  EffectAction,
   EffectDirective,
   TargetFilter,
   Zone,
 } from "@tcg/gundam-types";
 import type { LifecycleContext, TransitionCheckResult } from "../../types/index.ts";
 import type { DeepReadonly, FrameworkReadAPI, FrameworkWriteAPI } from "../../types/move-types.ts";
-import type { PlayerId } from "../../types/branded.ts";
+import type { CardInstanceId, PlayerId } from "../../types/branded.ts";
 import { takeTopCards } from "../../runtime/zone-order.ts";
 import type { RuntimeCard } from "../../types/base-card.ts";
 import type {
@@ -95,6 +96,13 @@ export function enqueuePendingEffect(
     entry.originatingMoveId === undefined && g.pendingEffectCurrentMoveId !== undefined
       ? { ...entry, originatingMoveId: g.pendingEffectCurrentMoveId }
       : entry;
+  const withSourceIdentity: PendingEffect =
+    withMoveId.sourceIdentityCardId === undefined
+      ? {
+          ...withMoveId,
+          sourceIdentityCardId: sourceIdentityCardId(g, framework, withMoveId.sourceCardId),
+        }
+      : withMoveId;
   let priorityGeneration = entry.priorityGeneration;
   if (priorityGeneration === undefined && g.pendingEffectCurrentPriorityGeneration !== undefined) {
     priorityGeneration = g.pendingEffectCurrentPriorityGeneration;
@@ -103,7 +111,9 @@ export function enqueuePendingEffect(
     g.eventCounters.pendingEffectPriorityGeneration = priorityGeneration;
   }
   const stamped: PendingEffect =
-    priorityGeneration === undefined ? withMoveId : { ...withMoveId, priorityGeneration };
+    priorityGeneration === undefined
+      ? withSourceIdentity
+      : { ...withSourceIdentity, priorityGeneration };
   if (opts.preempt) {
     g.pendingEffects.unshift(stamped);
   } else {
@@ -192,7 +202,9 @@ function pendingTargetResolutionOptions(pe: DeepReadonly<PendingEffect>) {
   return {
     sourceCardId: pe.sourceCardId,
     eventSourceCardId: pe.trigger?.sourceCardId as string | undefined,
-    ...(destroyedHostForPilot ? { selfIdentityCardId: destroyedHostForPilot } : {}),
+    ...((pe.sourceIdentityCardId ?? destroyedHostForPilot)
+      ? { selfIdentityCardId: pe.sourceIdentityCardId ?? destroyedHostForPilot }
+      : {}),
   };
 }
 
@@ -210,7 +222,10 @@ function pendingTargetResolutionOptions(pe: DeepReadonly<PendingEffect>) {
  * not covered here, we fail closed (return null) so the trigger won't
  * silently fire ungated.
  */
-function resolveQualificationActorId(event: TriggerEventLike): string | undefined | null {
+function resolveQualificationActorId(
+  effect: CardEffect,
+  event: TriggerEventLike,
+): string | undefined | null {
   switch (event.type) {
     case "pilotPaired":
       // The qualification is on the pilot (e.g. "White Base Team Pilot").
@@ -221,11 +236,13 @@ function resolveQualificationActorId(event: TriggerEventLike): string | undefine
       // today, but having the mapping keeps the fallback safe.
       return (event as { attackerId?: string }).attackerId;
     case "unitDestroyed":
-      // `unitDestroyed.cardId` is the dying card. Qualifications on a
-      // 【Destroyed】 trigger (e.g. gd02/003 Gundam Mk-II Titans:
-      // "If this Unit has an X Pilot…") check the destroyed unit
-      // itself — i.e. "if I am destroyed" — so the actor is the
-      // source card.
+      // A `During Pair·X Pilot` qualifier describes the paired Pilot,
+      // even though the trigger event belongs to the destroyed Unit.
+      // Other Destroyed qualifications continue to describe the dying
+      // card itself.
+      if (effect.activation.conditions?.some((condition) => condition.type === "duringPair")) {
+        return (event as { pairedPilotId?: string }).pairedPilotId ?? null;
+      }
       return (event as { cardId?: string }).cardId;
     default:
       return undefined;
@@ -249,7 +266,7 @@ function effectQualificationMet(
 ): boolean {
   const qualification = effect.activation.qualification as AttributeFilter | undefined;
   if (!qualification) return true;
-  const actorId = resolveQualificationActorId(event);
+  const actorId = resolveQualificationActorId(effect, event);
   if (!actorId) return false;
   const actor = framework.cards.get(actorId);
   if (!actor) return false;
@@ -304,6 +321,28 @@ function effectConditionsMet(
       if (!sourceCard) return false;
       const matches = evaluateTargetFilter(condition.target, [sourceCard], tgtCtx);
       return matches.length > 0;
+    }
+    if (condition.type === "eventDefeatedCardMatches") {
+      const defeatedCardId = event.defeatedCardId as string | undefined;
+      if (!defeatedCardId) return false;
+      const defeatedCard = framework.cards.get(defeatedCardId);
+      if (!defeatedCard) return false;
+      const defeatedPairedPilotId = event.defeatedPairedPilotId as string | undefined;
+      const eventCtx = {
+        ...tgtCtx,
+        getPairedPilotId: (card: RuntimeCard) =>
+          card.instanceId === defeatedCardId
+            ? (defeatedPairedPilotId as CardInstanceId | undefined)
+            : tgtCtx.getPairedPilotId(card),
+      };
+      const target: TargetFilter = {
+        ...condition.target,
+        // Event-card predicates describe the card at the time of the event.
+        // Avoid TargetFilter's normal in-play default after destruction has
+        // moved that known card to trash.
+        zone: condition.target.zone ?? eventCtx.getCardZone(defeatedCard),
+      };
+      return evaluateTargetFilter(target, [defeatedCard], eventCtx).length > 0;
     }
     if (condition.type === "eventPlayerIsSelf") {
       return event.playerId === controllerId;
@@ -411,12 +450,17 @@ function hasLegalRequiredTargets(
     );
     const directTargetsExist = requiredTargetAssignmentExists(
       coalesceTargetGroups(
-        filters.map(({ filter, actionType }) => {
-          const { minTargets, maxTargets } = filterCountBounds(filter);
+        filters.map(({ filter, actionType, allowPartialWhenShort }) => {
+          const legalTargetIds = evaluateTargetFilter(filter, candidates, tgtCtx);
+          const { minTargets, maxTargets } = filterCountBoundsForCandidates(
+            filter,
+            legalTargetIds.length,
+            allowPartialWhenShort,
+          );
           return {
             filter,
             actionType,
-            legalTargetIds: evaluateTargetFilter(filter, candidates, tgtCtx),
+            legalTargetIds,
             minTargets,
             maxTargets,
           };
@@ -616,6 +660,28 @@ function explicitlyObservesAttackEvent(effect: CardEffect): boolean {
 }
 
 /**
+ * Plain 【Deploy】, 【When Paired】, and 【When Linked】 timings belong to the
+ * card that was deployed/paired. A different card is an observer only when
+ * its activation conditions explicitly describe the event card or player
+ * (for example, "when you pair a Pilot with one of your blue Units").
+ */
+function explicitlyObservesCardEvent(effect: CardEffect): boolean {
+  return (
+    effect.activation.conditions?.some((condition) => {
+      switch ((condition as EffectCondition).type) {
+        case "eventCardMatches":
+        case "eventSourceMatches":
+        case "eventPlayerIsSelf":
+        case "eventPlayerIsOpponent":
+          return true;
+        default:
+          return false;
+      }
+    }) ?? false
+  );
+}
+
+/**
  * Scan every in-play observer (battleArea + baseSection on both sides)
  * for triggered effects whose timing matches `event.type` and enqueue
  * each one as a PendingEffect. Dedupes identical effects so a single
@@ -681,6 +747,24 @@ export function enqueueObserverTriggers(
           event.type === "attackDeclared" &&
           effectTimings.includes("attack") &&
           !explicitlyObservesAttackEvent(effect)
+        ) {
+          continue;
+        }
+        // Rules 13-2-6, 13-2-9, and 13-2-10: source-owned timing keywords
+        // are enqueued explicitly by deploy/pair moves. Scanning them as
+        // board-wide observers makes an already-in-play card repeat its own
+        // Deploy/Pair/Link ability whenever an unrelated card is played.
+        if (
+          (event.type === "unitDeployed" || event.type === "baseDeployed") &&
+          effectTimings.includes("deploy") &&
+          !explicitlyObservesCardEvent(effect)
+        ) {
+          continue;
+        }
+        if (
+          event.type === "pilotPaired" &&
+          (effectTimings.includes("whenPaired") || effectTimings.includes("whenLinked")) &&
+          !explicitlyObservesCardEvent(effect)
         ) {
           continue;
         }
@@ -917,7 +1001,10 @@ export function requiresPlayerChoice(
   const choice = findChoiceDirective(pe, runtime);
   if (choice?.kind === "targetSelection" && runtime) {
     const resolution = evaluateLegalTargets(pe, runtime.g, runtime.framework);
-    return resolution !== null;
+    // Mandatory counted actions resolve as much as possible. When no cards
+    // exist, their public target bounds clamp to 0..0 and there is no human
+    // decision to halt for.
+    return resolution !== null && resolution.maxTargets > 0;
   }
   return choice !== null;
 }
@@ -948,7 +1035,6 @@ type ChoiceMatch =
   | {
       kind: "deckLook";
       directive: EffectDirective;
-      acceptOptionalDirectiveIndex?: number;
     };
 
 export type ChoiceDirective = ChoiceMatch & { directiveIndex: number };
@@ -1001,6 +1087,7 @@ export function findChoiceDirective(
 
   for (let i = 0; i < directives.length; i++) {
     const directive = directives[i]!;
+    if (pe.committedTargetAnswers?.[i] !== undefined) continue;
     if (!("condition" in directive) && !("kind" in directive)) {
       const effectDirective = directive as EffectDirective;
       if (effectDirective.dependsOnPrevious && previousDeclined) continue;
@@ -1018,37 +1105,6 @@ export function findChoiceDirective(
       if (effectDirective.optional && committedAnswer === false) {
         previousDeclined = true;
         continue;
-      }
-    }
-    const next = directives[i + 1];
-    if (
-      next !== undefined &&
-      !("condition" in directive) &&
-      !("kind" in directive) &&
-      !("condition" in next) &&
-      !("kind" in next)
-    ) {
-      const ed = directive as EffectDirective;
-      const nextEd = next as EffectDirective;
-      if (
-        canHaltForDeckLook &&
-        ed.optional &&
-        nextEd.dependsOnPrevious &&
-        nextEd.action.action === "lookAtTopDeck"
-      ) {
-        const found: ChoiceMatch = {
-          kind: "deckLook",
-          directive: nextEd,
-          acceptOptionalDirectiveIndex: i,
-        };
-        if (runtime) {
-          const deckCards = runtime.framework.zones.getCards({
-            zone: "deck",
-            playerId: pe.controllerId,
-          });
-          if (deckCards.length === 0 || nextEd.action.count <= 0) continue;
-        }
-        return { ...found, directiveIndex: i + 1 };
       }
     }
     const found = findChoiceInDirective(
@@ -1399,12 +1455,12 @@ export function buildPendingChoicePrompt(
       randomizeRemainingToBottom: action.randomizeRemainingToBottom === true,
       tutorDestination: action.tutorDestination ?? "hand",
       legalTutorCardIds,
-      acceptOptionalDirectiveIndex: choice.acceptOptionalDirectiveIndex,
     };
   }
 
   const resolution = evaluateLegalTargets({ ...head, chosenTargets: undefined }, g, framework);
   if (!resolution) return undefined;
+  if (resolution.maxTargets === 0) return undefined;
   if (!requiredTargetAssignmentExists(resolution.groups)) return undefined;
 
   return {
@@ -1634,6 +1690,7 @@ export function evaluateLegalTargets(
     minTargets: number;
     maxTargets: number;
   }[];
+  directiveIndexes: readonly number[];
 } | null {
   const choice = findChoiceDirective(pe, { g, framework });
   if (!choice || choice.kind !== "targetSelection") return null;
@@ -1644,21 +1701,67 @@ export function evaluateLegalTargets(
     pendingTargetResolutionOptions(pe),
   );
   const cards = gatherTargetableCards(framework, Object.keys(g.players));
-  const filters = collectTargetSelectionFilters(
+  const segment = targetChoiceSegment(
     pe.effect.directives as readonly Directive[],
-    tgtCtx,
+    choice.directiveIndex,
   );
+  const filters = collectTargetSelectionFilters(segment.directives, tgtCtx);
   const groups = coalesceTargetGroups(
-    filters.map(({ filter, actionType }) => {
+    filters.map(({ filter, actionType, allowPartialWhenShort }) => {
       const legalTargetIds = evaluateTargetFilter(filter, cards, tgtCtx) as readonly string[];
-      const { minTargets, maxTargets } = filterCountBounds(filter);
+      const { minTargets, maxTargets } = filterCountBoundsForCandidates(
+        filter,
+        legalTargetIds.length,
+        allowPartialWhenShort,
+      );
       return { filter, actionType, legalTargetIds, minTargets, maxTargets };
     }),
   );
   const legalTargetIds = [...new Set(groups.flatMap((group) => [...group.legalTargetIds]))];
   const minTargets = groups.reduce((sum, group) => sum + group.minTargets, 0);
   const maxTargets = groups.reduce((sum, group) => sum + group.maxTargets, 0);
-  return { choice, legalTargetIds, minTargets, maxTargets, groups };
+  return {
+    choice,
+    legalTargetIds,
+    minTargets,
+    maxTargets,
+    groups,
+    directiveIndexes: segment.directiveIndexes,
+  };
+}
+
+/**
+ * Consecutive target directives normally describe one grouped choice. An
+ * `If you do` dependency, optional decision, or modal/deck-routing directive
+ * starts a new interaction step because its legal choice depends on an
+ * earlier player answer or visible state change.
+ */
+function targetChoiceSegment(
+  directives: readonly Directive[],
+  startIndex: number,
+): { directives: readonly Directive[]; directiveIndexes: readonly number[] } {
+  const selected: Directive[] = [];
+  const directiveIndexes: number[] = [];
+
+  for (let i = startIndex; i < directives.length; i++) {
+    const directive = directives[i]!;
+    if (i > startIndex) {
+      if ("condition" in directive || "kind" in directive) break;
+      const effectDirective = directive as EffectDirective;
+      if (
+        (effectDirective.dependsOnPrevious && !effectDirective.sharesTargetChoiceWithPrevious) ||
+        effectDirective.optional ||
+        effectDirective.action.action === "lookAtTopDeck"
+      )
+        break;
+    }
+
+    selected.push(directive as Directive);
+    directiveIndexes.push(i);
+    if ("condition" in directive || "kind" in directive) break;
+  }
+
+  return { directives: selected, directiveIndexes };
 }
 
 export interface LegalTargetGroup {
@@ -1787,6 +1890,13 @@ function coalesceTargetGroups(
 interface CollectedTargetFilter {
   filter: TargetFilter;
   actionType: string;
+  allowPartialWhenShort: boolean;
+}
+
+function actionAllowsPartialWhenShort(action: EffectAction): boolean {
+  if (action.action === "discard") return true;
+  if (action.action === "resolveThenQueue") return actionAllowsPartialWhenShort(action.first);
+  return false;
 }
 
 function collectTargetSelectionFilters(
@@ -1833,7 +1943,15 @@ function collectTargetSelectionFilters(
       if (filter.owner === "self") continue;
       const count = filter.count;
       if (count === undefined || count === "all") continue;
-      filters.push({ filter, actionType: directive.action.action });
+      filters.push({
+        filter,
+        actionType: directive.action.action,
+        // Rule 10-1-3: mandatory effects do as much as possible. Optional
+        // discards remain exact because accepting them represents resolving
+        // the full printed prerequisite for any following "If you do".
+        allowPartialWhenShort:
+          !directive.optional && actionAllowsPartialWhenShort(directive.action),
+      });
     }
     previousDirectiveProducesTargets = actionFilters.length > 0;
   }
@@ -1852,6 +1970,17 @@ function filterCountBounds(filter: DeepReadonly<TargetFilter>): {
   // `undefined` / "all" fall through — findChoiceDirective already
   // excludes those, but guard here so the helper is honest about bounds.
   return { minTargets: 0, maxTargets: Number.POSITIVE_INFINITY };
+}
+
+function filterCountBoundsForCandidates(
+  filter: DeepReadonly<TargetFilter>,
+  legalTargetCount: number,
+  allowPartialWhenShort: boolean,
+): { minTargets: number; maxTargets: number } {
+  const bounds = filterCountBounds(filter);
+  if (!allowPartialWhenShort || legalTargetCount >= bounds.minTargets) return bounds;
+  const available = Math.min(legalTargetCount, bounds.maxTargets);
+  return { minTargets: available, maxTargets: available };
 }
 
 /**
@@ -2041,8 +2170,10 @@ export function buildExecCtx(
     G: ctx.G as GundamG,
     sourcePlayerId: pe.controllerId,
     sourceCardId: pe.sourceCardId,
+    sourceIdentityCardId: pe.sourceIdentityCardId,
     framework: ctx.framework,
     chosenTargets: pe.chosenTargets,
+    chosenTargetsByDirective: pe.committedTargetAnswers,
     optionalAnswers: {
       ...pe.committedOptionalAnswers,
       ...opts.optionalAnswers,
@@ -2067,6 +2198,8 @@ export function buildExecCtx(
               playerId: pe.trigger.playerId as string | undefined,
               eventSourceCardId: pe.trigger.sourceCardId as string | undefined,
               pairedPilotId: pe.trigger.pairedPilotId as string | undefined,
+              defeatedCardId: pe.trigger.defeatedCardId as string | undefined,
+              defeatedPairedPilotId: pe.trigger.defeatedPairedPilotId as string | undefined,
               paidResources: pe.trigger.paidResources as number | undefined,
               paidExResources: pe.trigger.paidExResources as number | undefined,
               damagedBy: pe.trigger.damagedBy as string | undefined,

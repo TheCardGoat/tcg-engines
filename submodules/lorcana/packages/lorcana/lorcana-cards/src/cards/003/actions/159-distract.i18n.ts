@@ -17,4 +17,8 @@ export const distractI18n: Record<Languages, I18nProperties> = {
     name: "Distrarre",
     text: "Un personaggio a tua scelta riceve -2 {S} per questo turno. Pesca una carta.",
   },
+  es: {
+    name: "Distraer",
+    text: "El personaje elegido obtiene -2 {S} este turno. Saca una carta.",
+  },
 };

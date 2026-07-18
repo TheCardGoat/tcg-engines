@@ -471,6 +471,12 @@ export interface TargetSelectionDSL {
   mode: "choose";
   min: number;
   max: number;
+  /**
+   * Which player makes this choice. Defaults to the ability's controller.
+   * Use this for effects such as "each player chooses" where a rival must
+   * select from their own eligible cards.
+   */
+  chooser?: RelativePlayer;
 }
 
 export interface CardTargetDSL {
@@ -949,6 +955,20 @@ export interface RemoveFromGameEffect extends EffectBase {
 export interface StealGigEffect extends EffectBase {
   effect: "stealGig";
   target: TargetDSL;
+  /** Optional card credited as the thief for gigStolen event filters. */
+  source?: TargetDSL;
+}
+
+export interface SwapGigsEffect extends EffectBase {
+  effect: "swapGigs";
+  friendly: TargetDSL;
+  rival: TargetDSL;
+}
+
+export interface GrantNextFightWinGigStealEffect extends EffectBase {
+  effect: "grantNextFightWinGigSteal";
+  minPowerMargin: number;
+  duration: "turn";
 }
 
 export interface TrashFromDeckEffect extends EffectBase {
@@ -1070,6 +1090,8 @@ export type Effect =
   | AttachCardEffect
   | RemoveFromGameEffect
   | StealGigEffect
+  | SwapGigsEffect
+  | GrantNextFightWinGigStealEffect
   | TrashFromDeckEffect
   | SellFromDeckEffect
   | IfYouDoEffect
@@ -1144,6 +1166,11 @@ export interface TurnEndedEvent {
   player: EventPlayer;
 }
 
+export interface TurnStartedEvent {
+  event: "turnStarted";
+  player: EventPlayer;
+}
+
 export interface GigStolenEvent {
   event: "gigStolen";
   player: RelativePlayer;
@@ -1201,6 +1228,7 @@ export interface EventTrigger {
     | CardSpentEvent
     | CardDefeatedEvent
     | BlockerActivatedEvent
+    | TurnStartedEvent
     | TurnEndedEvent
     | GigStolenEvent
     | GigRolledEvent

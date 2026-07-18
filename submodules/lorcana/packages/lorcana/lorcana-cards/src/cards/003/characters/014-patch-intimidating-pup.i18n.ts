@@ -44,4 +44,15 @@ export const patchIntimidatingPupI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Parche",
+    version: "Cachorro intimidante",
+    text: [
+      {
+        title: "LADRAR",
+        description:
+          "{E}: el personaje elegido obtiene -2 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

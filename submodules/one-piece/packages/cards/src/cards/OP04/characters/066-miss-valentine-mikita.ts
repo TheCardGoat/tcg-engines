@@ -43,6 +43,13 @@ export const op04MissValentineMikita066: CharacterCard = {
               amount: 1,
               upTo: true,
             },
+            revealFilters: [
+              {
+                filter: "trait",
+                value: "Baroque Works",
+                match: "includes",
+              },
+            ],
             revealDestination: "hand",
             remainderPosition: "bottom",
           },
@@ -58,16 +65,10 @@ export const op04MissValentineMikita066: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
+            action: "playThisCard",
           },
         ],
+        optional: true,
       },
     ],
   },

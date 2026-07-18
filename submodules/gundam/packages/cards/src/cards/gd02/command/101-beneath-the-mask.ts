@@ -5,7 +5,7 @@ export const gd02BeneathTheMask101: CommandCard = {
   name: "Beneath the Mask",
   type: "command",
   color: "blue",
-  traits: ["-"],
+  traits: [],
   id: "GD02-101",
   canonicalId: "GD02-101",
   externalIds: { bandai: "gundam:gd02-101" },

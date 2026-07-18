@@ -45,4 +45,15 @@ export const chipTeamPlayerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Chip",
+    version: "Jugador de equipo",
+    text: [
+      {
+        title: "RECURSOS DE GUARDABOSQUES",
+        description:
+          "Cuando juegas con este personaje, si tienes otro personaje con 4 {W} o más en juego, puedes robar una carta.",
+      },
+    ],
+  },
 };

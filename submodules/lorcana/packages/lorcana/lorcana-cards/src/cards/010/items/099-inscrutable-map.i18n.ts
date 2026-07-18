@@ -41,4 +41,14 @@ export const inscrutableMapI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mapa inescrutable",
+    text: [
+      {
+        title: "VOLVER HACIA ATRÁS",
+        description:
+          "{E}, 1 {I}: el personaje contrario elegido obtiene -1 {L} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

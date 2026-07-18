@@ -59,4 +59,18 @@ export const sulleyTheNewBossI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Sulley",
+    version: "El nuevo jefe",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "RECONTRATAR",
+        description:
+          "Cuando juegas con este personaje, puedes devolver una carta de personaje de tu descarte a tu mano.",
+      },
+    ],
+  },
 };

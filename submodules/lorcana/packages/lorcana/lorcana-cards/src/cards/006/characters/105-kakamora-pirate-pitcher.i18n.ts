@@ -45,4 +45,15 @@ export const kakamoraPiratePitcherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Kakamora",
+    version: "Lanzador pirata",
+    text: [
+      {
+        title: "VELOCIDAD VERtiginosa",
+        description:
+          "Cuando juegas con este personaje, el personaje pirata elegido gana Evasivo hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

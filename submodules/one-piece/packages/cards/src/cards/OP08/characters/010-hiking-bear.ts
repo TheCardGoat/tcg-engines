@@ -26,7 +26,7 @@ export const op08HikingBear010: CharacterCard = {
   traits: ["Animal Drum Kingdom"],
   attribute: "wisdom",
   effect:
-    "[DON!! x1] [Activate: Main] [Once Per Turn] Up to 1 of your [Animal] type Characters other than this Character gains +1000 power during this turn.",
+    "[DON!! x1] [Activate: Main] [Once Per Turn] Up to 1 of your {Animal} type Characters other than this Character gains +1000 power during this turn.",
   effects: {
     effects: [
       {
@@ -51,6 +51,7 @@ export const op08HikingBear010: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Animal",
+                  match: "includes",
                 },
                 {
                   filter: "excludeSelf",

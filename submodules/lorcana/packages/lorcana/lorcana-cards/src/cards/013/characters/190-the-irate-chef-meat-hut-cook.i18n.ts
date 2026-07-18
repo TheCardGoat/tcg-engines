@@ -17,4 +17,8 @@ export const theIrateChefMeatHutCookI18n: Record<Languages, I18nProperties> = {
     name: "Lo Chef Irato",
     version: "Cuoco della Casa della Carne",
   },
+  es: {
+    name: "El chef furioso",
+    version: "Cocinero de choza de carne",
+  },
 };

@@ -26,11 +26,18 @@ export const op09Sanji028: CharacterCard = {
   traits: ["Straw Hat Crew ODYSSEY"],
   attribute: "strike",
   effect:
-    '[On K.O.] You may add 1 card from the top or bottom of your Life cards to your hand: Play up to 1 "ODYSSEY" or "Straw Hat Crew" type Character card with a cost of 4 or less from your trash rested.',
+    "[On K.O.] You may add 1 card from the top or bottom of your Life cards to your hand: Play up to 1 {ODYSSEY} or {Straw Hat Crew} type Character card with a cost of 4 or less from your trash rested.",
   effects: {
     effects: [
       {
         trigger: "onKo",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
+        ],
         actions: [
           {
             action: "play",
@@ -49,12 +56,19 @@ export const op09Sanji028: CharacterCard = {
                 value: 4,
               },
               {
-                filter: "trait",
-                value: "ODYSSEY",
-              },
-              {
-                filter: "trait",
-                value: "Straw Hat Crew",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "ODYSSEY",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Straw Hat Crew",
+                    match: "includes",
+                  },
+                ],
               },
               {
                 filter: "cardCategory",

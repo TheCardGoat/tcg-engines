@@ -17,4 +17,8 @@ export const kingHubertPhillipsFatherI18n: Record<Languages, I18nProperties> = {
     name: "Re Uberto",
     version: "Padre di Filippo",
   },
+  es: {
+    name: "Rey Huberto",
+    version: "El padre de Felipe",
+  },
 };

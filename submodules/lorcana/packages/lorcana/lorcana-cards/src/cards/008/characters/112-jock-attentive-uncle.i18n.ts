@@ -45,4 +45,15 @@ export const jockAttentiveUncleI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Atleta",
+    version: "Tío atento",
+    text: [
+      {
+        title: "VOZ DE EXPERIENCIA",
+        description:
+          "Cuando juegas con este personaje, si tienes 3 o más personajes en juego, obtienes 2 conocimientos.",
+      },
+    ],
+  },
 };

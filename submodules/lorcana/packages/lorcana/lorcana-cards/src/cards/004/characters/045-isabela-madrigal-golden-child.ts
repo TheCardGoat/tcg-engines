@@ -82,7 +82,14 @@ export const isabelaMadrigalGoldenChild: CharacterCard = {
       effect: {
         duration: "this-turn",
         restriction: "cant-quest",
-        target: "SELF",
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "you",
+          zones: ["play"],
+          cardTypes: ["character"],
+          excludeSelf: true,
+        },
         type: "restriction",
       },
       id: "qop-3",

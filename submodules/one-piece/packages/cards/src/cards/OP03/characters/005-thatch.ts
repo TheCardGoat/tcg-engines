@@ -46,7 +46,13 @@ export const op03Thatch005: CharacterCard = {
             duration: "thisTurn",
           },
           {
-            action: "trashThisCard",
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "trashThisCard",
+              },
+            ],
           },
         ],
         oncePerTurn: true,

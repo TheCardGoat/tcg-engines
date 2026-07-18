@@ -72,4 +72,21 @@ export const pegasusCloudRacerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pegaso",
+    version: "Corredor de nubes",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "¡SUBIR A!",
+        description:
+          "Cuando juegas con este personaje, si usaste Shift para interpretarlo, tus personajes obtienen Evasividad hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

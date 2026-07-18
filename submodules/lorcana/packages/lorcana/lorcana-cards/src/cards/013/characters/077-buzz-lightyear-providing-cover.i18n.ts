@@ -73,4 +73,22 @@ export const buzzLightyearProvidingCoverI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Buzz Lightyear",
+    version: "Proporcionar cobertura",
+    text: [
+      {
+        title: "Figura de acción",
+        description:
+          "Cuando interpretes a este personaje, elige uno de los siguientes. Si tienes otro personaje de juguete en juego, elige ambos:",
+      },
+      {
+        title:
+          "• Puedes devolver a tu mano una carta de acción con coste 2 o menos de tu descarte.",
+      },
+      {
+        title: "• Puedes jugar una acción con coste 2 o menos de forma gratuita.",
+      },
+    ],
+  },
 };

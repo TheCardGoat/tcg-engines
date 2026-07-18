@@ -17,4 +17,8 @@ export const voyageI18n: Record<Languages, I18nProperties> = {
     name: "Navigare",
     text: "Muovi fino a 2 tuoi personaggi nello stesso luogo, gratis.",
   },
+  es: {
+    name: "Viaje",
+    text: "Mueve hasta 2 personajes tuyos a la misma ubicación de forma gratuita.",
+  },
 };

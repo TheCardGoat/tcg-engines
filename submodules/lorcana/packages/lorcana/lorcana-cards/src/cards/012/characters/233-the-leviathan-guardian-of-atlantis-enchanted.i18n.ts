@@ -45,4 +45,15 @@ export const theLeviathanGuardianOfAtlantisEnchantedI18n: Record<Languages, I18n
       },
     ],
   },
+  es: {
+    name: "El Leviatán",
+    version: "Guardián de la Atlántida",
+    text: [
+      {
+        title: "ES",
+        description:
+          "¡UNA MÁQUINA! Cuando juegas con este personaje, si se pusieron 2 o más cartas en tu descarte este turno, puedes desterrar cualquier número de personajes contrarios elegidos con un total de {S} 10 o menos.",
+      },
+    ],
+  },
 };

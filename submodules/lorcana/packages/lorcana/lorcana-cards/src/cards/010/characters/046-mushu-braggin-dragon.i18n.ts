@@ -17,4 +17,8 @@ export const mushuBragginDragonI18n: Record<Languages, I18nProperties> = {
     name: "Mushu",
     version: "Drago Spaccone",
   },
+  es: {
+    name: "Mushu",
+    version: "Dragón fanfarrón",
+  },
 };

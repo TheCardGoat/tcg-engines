@@ -54,27 +54,20 @@ export const op14eb04Salamander116: EventCard = {
               upTo: true,
             },
             filters: [
+              { filter: "cost", comparison: "lte", value: 4 },
+              { filter: "cardCategory", value: "character" },
               {
-                filter: "cost",
-                comparison: "lte",
-                value: 4,
-              },
-              {
-                filter: "trait",
-                value: "Amazon Lily",
-              },
-              {
-                filter: "trait",
-                value: "Kuja Pirates",
-              },
-              {
-                filter: "cardCategory",
-                value: "character",
+                filter: "anyOf",
+                groups: [
+                  [{ filter: "trait", value: "Amazon Lily", match: "includes" }],
+                  [{ filter: "trait", value: "Kuja Pirates", match: "includes" }],
+                ],
               },
             ],
           },
         ],
       },
+      { trigger: "trigger", actions: [{ action: "draw", player: "self", amount: 1 }] },
     ],
   },
   i18n: op14eb04Salamander116I18n,

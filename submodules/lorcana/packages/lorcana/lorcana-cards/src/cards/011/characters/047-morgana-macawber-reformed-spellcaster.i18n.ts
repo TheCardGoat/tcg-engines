@@ -60,4 +60,18 @@ export const morganaMacawberReformedSpellcasterI18n: Record<Languages, I18nPrope
       },
     ],
   },
+  es: {
+    name: "Morgana Guacamayo",
+    version: "Lanzador de conjuros reformado",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "SOLO PARA TI",
+        description:
+          "Cuando juegas con este personaje, puedes elegir un personaje contrario y mover 1 daño de cada personaje hacia él.",
+      },
+    ],
+  },
 };

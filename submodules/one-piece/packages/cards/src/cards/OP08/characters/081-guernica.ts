@@ -31,6 +31,20 @@ export const op08Guernica081: CharacterCard = {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "returnTrashToDeck",
+            amount: 3,
+            position: "bottom",
+            filters: [
+              {
+                filter: "trait",
+                value: "CP",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "ko",

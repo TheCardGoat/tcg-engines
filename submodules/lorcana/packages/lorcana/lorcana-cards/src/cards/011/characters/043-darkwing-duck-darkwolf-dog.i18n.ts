@@ -21,4 +21,9 @@ export const darkwingDuckDarkwolfDogI18n: Record<Languages, I18nProperties> = {
     version: "Darkwolf Can",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Pato Ala Oscura",
+    version: "Perro lobo oscuro",
+    text: "Correr",
+  },
 };

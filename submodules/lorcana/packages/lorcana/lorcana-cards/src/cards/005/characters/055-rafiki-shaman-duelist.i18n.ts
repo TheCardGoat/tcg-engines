@@ -57,4 +57,18 @@ export const rafikiShamanDuelistI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Rafiki",
+    version: "Duelista chamán",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "HABILIDAD SORPRENDENTE",
+        description:
+          "Cuando juegas con este personaje, obtiene Challenger +4 este turno. (Obtienen +4 {S} mientras desafían).",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const fairyGodmotherPureHeartI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Hada Madrina",
+    version: "Corazón puro",
+    text: [
+      {
+        title: "SÓLO DÉJAME A MÍ",
+        description:
+          "Siempre que interpretes a un personaje llamado Cenicienta, podrás ejercer el personaje elegido.",
+      },
+    ],
+  },
 };

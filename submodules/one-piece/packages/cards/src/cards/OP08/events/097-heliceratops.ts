@@ -23,7 +23,7 @@ export const op08Heliceratops097: EventCard = {
   cost: 3,
   traits: ["Animal Kingdom Pirates"],
   effect:
-    "[Main] If your Leader has the [Animal Kingdom Pirates] type, give up to 1 of your opponent's Characters 2 cost during this turn. Then, K.O. up to 1 of your opponent's Characters with a cost of 0. [Trigger] K.O. up to 1 of your opponent's Characters with a cost of 3 or less.",
+    "[Main] If your Leader has the [Animal Kingdom Pirates] type, give up to 1 of your opponent's Characters −2 cost during this turn. Then, K.O. up to 1 of your opponent's Characters with a cost of 0. [Trigger] K.O. up to 1 of your opponent's Characters with a cost of 3 or less.",
   effects: {
     effects: [
       {
@@ -32,6 +32,7 @@ export const op08Heliceratops097: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Animal Kingdom Pirates",
+            match: "includes",
           },
         ],
         actions: [
@@ -45,7 +46,7 @@ export const op08Heliceratops097: EventCard = {
                 upTo: true,
               },
             },
-            value: 2,
+            value: -2,
             duration: "thisTurn",
           },
           {

@@ -17,4 +17,8 @@ export const goofyKnightForADayI18n: Record<Languages, I18nProperties> = {
     name: "Goofy",
     version: "Knight for a Day",
   },
+  es: {
+    name: "Mentecato",
+    version: "Caballero por un día",
+  },
 };

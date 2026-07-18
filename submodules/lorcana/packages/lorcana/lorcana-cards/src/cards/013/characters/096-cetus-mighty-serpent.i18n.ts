@@ -17,4 +17,8 @@ export const cetusMightySerpentI18n: Record<Languages, I18nProperties> = {
     name: "Ceto",
     version: "Serpente Possente",
   },
+  es: {
+    name: "Cetus",
+    version: "Serpiente poderosa",
+  },
 };

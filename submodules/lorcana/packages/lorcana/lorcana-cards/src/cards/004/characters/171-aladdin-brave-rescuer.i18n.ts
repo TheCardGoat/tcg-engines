@@ -60,4 +60,19 @@ export const aladdinBraveRescuerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Aladino",
+    version: "Valiente salvador",
+    text: [
+      {
+        title:
+          "Turno: descarta una carta de ubicación (puedes descartar una carta de ubicación para jugarla encima de uno de tus personajes llamado Aladdin).",
+      },
+      {
+        title: "Chocando a través",
+        description:
+          "Siempre que este personaje realice una misión, puedes desterrar el objeto elegido.",
+      },
+    ],
+  },
 };

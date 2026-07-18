@@ -64,4 +64,19 @@ export const archimedesElectrifiedOwlEnchantedI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Arquímedes",
+    version: "Búho electrificado",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "Retador +3",
+      },
+    ],
+  },
 };

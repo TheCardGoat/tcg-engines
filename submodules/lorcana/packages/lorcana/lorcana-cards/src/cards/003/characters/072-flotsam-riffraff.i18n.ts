@@ -41,4 +41,14 @@ export const flotsamRiffraffI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pecio",
+    version: "Chusma",
+    text: [
+      {
+        title: "PAR ESPECTACULAR",
+        description: "Tus personajes llamados Jetsam obtienen +3 {S}.",
+      },
+    ],
+  },
 };

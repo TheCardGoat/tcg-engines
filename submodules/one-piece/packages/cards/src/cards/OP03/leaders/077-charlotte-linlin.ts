@@ -50,12 +50,6 @@ export const op03CharlotteLinlin077: LeaderCard = {
             condition: "donAttached",
             amount: 2,
           },
-          {
-            condition: "lifeCount",
-            player: "self",
-            comparison: "lte",
-            value: 1,
-          },
         ],
         costs: [
           {
@@ -79,6 +73,12 @@ export const op03CharlotteLinlin077: LeaderCard = {
               },
             },
             position: "top",
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 1,
+            },
           },
         ],
         optional: true,

@@ -17,4 +17,8 @@ export const tukTukBigBuddyI18n: Record<Languages, I18nProperties> = {
     name: "Tuk Tuk",
     version: "Grande Amico",
   },
+  es: {
+    name: "Tuk-tuk",
+    version: "Gran amigo",
+  },
 };

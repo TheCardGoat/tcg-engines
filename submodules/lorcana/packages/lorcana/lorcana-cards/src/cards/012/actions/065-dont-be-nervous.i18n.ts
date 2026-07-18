@@ -17,4 +17,8 @@ export const dontBeNervousI18n: Record<Languages, I18nProperties> = {
     name: "Non Essere Nervoso",
     text: "Cerca nel tuo mazzo una carta personaggio Principessa, rivela quella carta a tutti i giocatori e aggiungila alla tua mano. Poi, rimescola il tuo mazzo. Se hai in gioco 2 o più personaggi Sette Nani, pesca 2 carte e ottieni 2 leggenda.",
   },
+  es: {
+    name: "No te pongas nervioso",
+    text: "Busca en tu mazo una carta de personaje de Princesa, muestra esa carta a todos los jugadores y ponla en tu mano. Luego, baraja tu mazo. Si tienes 2 o más personajes de los Siete Enanitos en juego, roba 2 cartas y gana 2 conocimientos.",
+  },
 };

@@ -41,4 +41,14 @@ export const theDodoOutlandishStorytellerI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "El dodo",
+    version: "Narrador extravagante",
+    text: [
+      {
+        title: "SITUACIÓN EXTRAORDINARIA",
+        description: "Este personaje obtiene +1 {S} por cada 1 daño que sufre.",
+      },
+    ],
+  },
 };

@@ -27,5 +27,52 @@ export const op14eb04MissDoublefingerZala086: CharacterCard = {
   attribute: "slash",
   effect:
     'If you have 7 or more cards in your trash, this Character gains +1000 power, and all of your Characters with a type including "Baroque Works" gain +2 cost.',
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "trash",
+            comparison: "gte",
+            value: 7,
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 1000,
+            duration: "permanent",
+          },
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Baroque Works",
+                },
+              ],
+            },
+            value: 2,
+          },
+        ],
+      },
+    ],
+  },
   i18n: op14eb04MissDoublefingerZala086I18n,
 };

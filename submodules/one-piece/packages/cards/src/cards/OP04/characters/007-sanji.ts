@@ -25,6 +25,5 @@ export const op04Sanji007: CharacterCard = {
   counter: 1000,
   traits: ["Alabasta Straw Hat Crew"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op04Sanji007I18n,
 };

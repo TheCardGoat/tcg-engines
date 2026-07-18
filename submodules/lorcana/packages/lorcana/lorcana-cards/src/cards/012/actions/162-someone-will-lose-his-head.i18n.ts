@@ -33,4 +33,8 @@ export const someoneWillLoseHisHeadI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Alguien perderá la cabeza",
+    text: "Cada personaje contrario obtiene -2 {S} este turno.",
+  },
 };

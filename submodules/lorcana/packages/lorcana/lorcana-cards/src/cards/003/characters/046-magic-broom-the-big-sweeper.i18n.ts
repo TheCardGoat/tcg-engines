@@ -41,4 +41,14 @@ export const magicBroomTheBigSweeperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Escoba magica",
+    version: "El gran barrendero",
+    text: [
+      {
+        title: "BARRIDO LIMPIO",
+        description: "Mientras este personaje está en una ubicación, obtiene +2 {S}.",
+      },
+    ],
+  },
 };

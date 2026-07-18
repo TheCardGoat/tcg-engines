@@ -17,4 +17,8 @@ export const theFirebirdForceOfDestructionI18n: Record<Languages, I18nProperties
     name: "L'Uccello di Fuoco",
     version: "Forza di Distruzione",
   },
+  es: {
+    name: "El pájaro de fuego",
+    version: "Fuerza de destrucción",
+  },
 };

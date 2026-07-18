@@ -17,4 +17,8 @@ export const theColdNeverBotheredMeEnchantedI18n: Record<Languages, I18nProperti
     name: "Da Oggi il Freddo è Casa Mia",
     text: "Guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta luogo e aggiungerla alla tua mano. Metti il resto nei tuoi scarti. Paga 3 {I} in meno per giocare il tuo prossimo luogo per questo turno.",
   },
+  es: {
+    name: "El frío nunca me molestó",
+    text: "Mira las 4 primeras cartas de tu mazo. Puedes revelar una carta de ubicación y ponerla en tu mano. Pon el resto en tu descarte. Pagas 3 {I} menos por la siguiente ubicación en la que juegues este turno.",
+  },
 };

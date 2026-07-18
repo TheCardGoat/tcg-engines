@@ -21,4 +21,9 @@ export const kidaRoyalWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Guerriera Reale",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Niño",
+    version: "Guerrero real",
+    text: "Guardaespaldas",
+  },
 };

@@ -25,6 +25,5 @@ export const op01Mocha081: CharacterCard = {
   counter: 1000,
   traits: ["Punk Hazard"],
   attribute: "strike",
-  effect: "NULL",
   i18n: op01Mocha081I18n,
 };

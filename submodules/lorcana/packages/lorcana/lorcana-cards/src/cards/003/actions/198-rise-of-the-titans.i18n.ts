@@ -17,4 +17,8 @@ export const riseOfTheTitansI18n: Record<Languages, I18nProperties> = {
     name: "Ascesa dei Titani",
     text: "Esilia un luogo o un oggetto a tua scelta.",
   },
+  es: {
+    name: "El ascenso de los titanes",
+    text: "Desterrar la ubicación o el elemento elegido.",
+  },
 };

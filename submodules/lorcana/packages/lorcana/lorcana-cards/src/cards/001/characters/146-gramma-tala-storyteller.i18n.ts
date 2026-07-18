@@ -45,4 +45,15 @@ export const grammaTalaStorytellerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Abuela tala",
+    version: "Cuentista",
+    text: [
+      {
+        title: "YO ESTARÉ CONTIGO",
+        description:
+          "Cuando este personaje sea desterrado, puedes poner esta carta en tu tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

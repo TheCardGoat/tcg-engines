@@ -32,8 +32,9 @@ import { enqueueOwnCardTriggers } from "../effects/pending-effects.ts";
 import { listLegalAttackTargets } from "../moves/core/enter-battle.ts";
 
 import { MatchRuntime } from "../../runtime/match-runtime.ts";
+import { LocalEngine } from "../../engine/local-engine.ts";
 import { createStaticResources } from "../../runtime/static-resources.ts";
-import type { Player } from "../../runtime/static-resources.ts";
+import type { MatchStaticResources, Player } from "../../runtime/static-resources.ts";
 import { serializeState } from "../../runtime/match-runtime.serialization.ts";
 import { getMoveProcedure } from "../../runtime/match-runtime.procedure.ts";
 import { createPlayerId, asPlayerId } from "../../types/branded.ts";
@@ -102,10 +103,12 @@ export class GundamTestEngine {
    * production code should never reach into this field.
    */
   public readonly runtime: MatchRuntime;
+  private readonly localEngine: LocalEngine;
   private cmdCounter = 0;
 
-  private constructor(runtime: MatchRuntime) {
-    this.runtime = runtime;
+  private constructor(localEngine: LocalEngine) {
+    this.localEngine = localEngine;
+    this.runtime = localEngine.getRuntime();
   }
 
   // ── Factory ──────────────────────────────────────────────────────────────
@@ -141,14 +144,14 @@ export class GundamTestEngine {
 
     const staticResources = createStaticResources([p1, p2], catalog);
 
-    const runtime = new MatchRuntime(staticResources);
-    runtime.initialize(
+    const localEngine = new LocalEngine(staticResources);
+    localEngine.initialize(
       [p1, p2],
       seed,
       initialActivePlayer ? asPlayerId(initialActivePlayer) : asPlayerId(PLAYER_ONE),
     );
 
-    const engine = new GundamTestEngine(runtime);
+    const engine = new GundamTestEngine(localEngine);
 
     // Inject fixture state
     engine.applyFixture(p1Cards, p2Cards, p1State, p2State);
@@ -179,9 +182,9 @@ export class GundamTestEngine {
     }
 
     const staticResources = createStaticResources(players, new Map());
-    const runtime = new MatchRuntime(staticResources);
-    runtime.initialize(players, seed);
-    return new GundamTestEngine(runtime);
+    const localEngine = new LocalEngine(staticResources);
+    localEngine.initialize(players, seed);
+    return new GundamTestEngine(localEngine);
   }
 
   // ── Fixture application ──────────────────────────────────────────────────
@@ -919,6 +922,16 @@ export class GundamTestEngine {
 
   getRuntime(): MatchRuntime {
     return this.runtime;
+  }
+
+  /** Production engine boundary backed by this fixture's initialized runtime. */
+  getLocalEngine(): LocalEngine {
+    return this.localEngine;
+  }
+
+  /** Static catalog/player data paired with {@link getLocalEngine}. */
+  getStaticResources(): MatchStaticResources {
+    return this.runtime.getStaticResources();
   }
 
   /**

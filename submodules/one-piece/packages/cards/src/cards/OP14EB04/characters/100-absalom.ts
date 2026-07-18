@@ -55,6 +55,38 @@ export const op14eb04Absalom100: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+              {
+                filter: "trait",
+                value: "Thriller Bark Pirates",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+            playState: "rested",
+          },
+        ],
+      },
     ],
   },
   i18n: op14eb04Absalom100I18n,

@@ -43,6 +43,37 @@ export const op11GumGumKingCobra059: EventCard = {
             value: 2000,
             duration: "thisBattle",
           },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: { amount: 1, upTo: true },
+            },
+            value: 2000,
+            duration: "thisBattle",
+            previousActionTargets: true,
+            condition: {
+              condition: "handCount",
+              player: "self",
+              comparison: "lte",
+              value: 4,
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "returnToHand",
+            target: {
+              player: "both",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 2 }],
+            },
+          },
         ],
       },
     ],

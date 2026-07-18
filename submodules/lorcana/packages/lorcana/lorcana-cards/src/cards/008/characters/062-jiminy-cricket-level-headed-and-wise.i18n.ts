@@ -57,4 +57,18 @@ export const jiminyCricketLevelheadedAndWiseI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Pepe Grillo",
+    version: "Sensato y sabio",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "¡BASTA ES SUFICIENTE!",
+        description:
+          "Mientras este personaje está ejercido, los personajes oponentes con Rush entran en juego ejercidos.",
+      },
+    ],
+  },
 };

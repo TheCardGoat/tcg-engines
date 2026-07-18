@@ -41,4 +41,14 @@ export const beastWoundedI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bestia",
+    version: "Herido",
+    text: [
+      {
+        title: "¡ESO DUELE!",
+        description: "Este personaje entra en juego con 4 daños.",
+      },
+    ],
+  },
 };

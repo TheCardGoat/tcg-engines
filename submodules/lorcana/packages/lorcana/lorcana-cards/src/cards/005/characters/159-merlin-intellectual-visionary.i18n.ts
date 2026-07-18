@@ -60,4 +60,18 @@ export const merlinIntellectualVisionaryI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Esmerejón",
+    version: "Visionario intelectual",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "CEREBRO SOBREDESARROLLADO",
+        description:
+          "Cuando juegas con este personaje, si usaste Shift para jugar con él, puedes buscar cualquier carta en tu mazo, poner esa carta en tu mano y luego barajar tu mazo.",
+      },
+    ],
+  },
 };

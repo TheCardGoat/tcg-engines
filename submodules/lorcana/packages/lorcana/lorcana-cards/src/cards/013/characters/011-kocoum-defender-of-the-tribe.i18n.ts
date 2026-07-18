@@ -21,4 +21,9 @@ export const kocoumDefenderOfTheTribeI18n: Record<Languages, I18nProperties> = {
     version: "Difensore della Tribù",
     text: "<Guardiano>",
   },
+  es: {
+    name: "Kocum",
+    version: "Defensor de la tribu",
+    text: "Guardaespaldas",
+  },
 };

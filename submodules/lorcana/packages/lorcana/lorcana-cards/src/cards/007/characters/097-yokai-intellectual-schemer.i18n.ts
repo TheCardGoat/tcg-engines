@@ -43,4 +43,14 @@ export const yokaiIntellectualSchemerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Yokai",
+    version: "Conspirador intelectual",
+    text: [
+      {
+        title: "INNOVAR",
+        description: "Pagas 1 {I} menos para interpretar personajes usando su habilidad Shift.",
+      },
+    ],
+  },
 };

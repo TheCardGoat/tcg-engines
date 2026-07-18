@@ -21,4 +21,9 @@ export const agustinMadrigalExceptionallyKindI18n: Record<Languages, I18nPropert
     version: "Eccezionalmente Gentile",
     text: "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
   },
+  es: {
+    name: "Agustín Madrigal",
+    version: "Excepcionalmente amable",
+    text: "Apoyo",
+  },
 };

@@ -45,4 +45,15 @@ export const witchesOfMorvaOrdduOrwenAndOrgochI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Brujas de Morva",
+    version: "Orddu, Orwen y Orgoch",
+    text: [
+      {
+        title: "BASTANTE",
+        description:
+          "UNA GANGA Cuando juegas con este personaje, puedes devolver a tu mano otro personaje tuyo elegido. Si lo haces, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

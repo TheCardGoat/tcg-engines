@@ -35,4 +35,8 @@ export const motherWillProtectYouI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Madre te protegerá",
+    text: "El personaje elegido no puede ser desafiado hasta el comienzo de tu siguiente turno.",
+  },
 };

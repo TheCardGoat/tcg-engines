@@ -42,6 +42,12 @@ export const op14eb04BirdNeptunian016: CharacterCard = {
               },
             },
           },
+          {
+            action: "cannotSetDonActive",
+            player: "self",
+            source: "characterEffects",
+            duration: "thisTurn",
+          },
         ],
       },
       {
@@ -57,6 +63,7 @@ export const op14eb04BirdNeptunian016: CharacterCard = {
               {
                 filter: "trait",
                 value: "Neptunian",
+                match: "includes",
               },
             ],
           },

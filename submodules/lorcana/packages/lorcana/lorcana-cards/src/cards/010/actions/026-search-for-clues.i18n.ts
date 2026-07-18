@@ -23,4 +23,8 @@ export const searchForCluesI18n: Record<Languages, I18nProperties> = {
     name: "Cercare Indizi",
     text: "Il giocatore o i giocatori con più carte in mano scelgono e scartano 2 carte. Se hai in gioco un personaggio Detective, ottieni 1 leggenda.",
   },
+  es: {
+    name: "Buscar pistas",
+    text: "El jugador o jugadores con más cartas en la mano eligen y descartan 2 cartas. Si tienes un personaje de detective en juego, gana 1 conocimiento.",
+  },
 };

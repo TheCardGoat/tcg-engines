@@ -45,4 +45,15 @@ export const flintheartGlomgoldSchemingBillionaireI18n: Record<Languages, I18nPr
       },
     ],
   },
+  es: {
+    name: "Glomgold corazón de pedernal",
+    version: "Multimillonario intrigante",
+    text: [
+      {
+        title: "PRUEBAME",
+        description:
+          "Mientras tengas un personaje o lugar en juego con una carta debajo, este personaje gana Protección.",
+      },
+    ],
+  },
 };

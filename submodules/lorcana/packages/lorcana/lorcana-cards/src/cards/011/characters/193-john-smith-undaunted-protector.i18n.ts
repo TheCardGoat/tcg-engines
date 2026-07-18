@@ -58,4 +58,18 @@ export const johnSmithUndauntedProtectorI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Juan Smith",
+    version: "Protector impávido",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "HAGA LO PEOR",
+        description:
+          "Los oponentes deben elegir este personaje para acciones y habilidades si pueden.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const pigletEntrancedBySnowI18n: Record<Languages, I18nProperties> = {
     name: "Pimpi",
     version: "Incantato dalla Neve",
   },
+  es: {
+    name: "Cerdito",
+    version: "Fascinado por la nieve",
+  },
 };

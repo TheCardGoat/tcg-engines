@@ -41,4 +41,14 @@ export const mulanInjuredSoldierI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mulán",
+    version: "Soldado herido",
+    text: [
+      {
+        title: "HERIDA DE BATALLA",
+        description: "Este personaje entra en juego con 2 daños.",
+      },
+    ],
+  },
 };

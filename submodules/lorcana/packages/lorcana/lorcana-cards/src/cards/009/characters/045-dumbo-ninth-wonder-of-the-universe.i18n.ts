@@ -73,4 +73,22 @@ export const dumboNinthWonderOfTheUniverseI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Dumbo",
+    version: "Novena Maravilla del Universo",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "ROMPIENDO RÉCORDS",
+        description: "{E}, 1 {I}: roba una carta y gana 1 conocimiento.",
+      },
+      {
+        title: "HACIENDO HISTORIA",
+        description:
+          'Tus otros personajes con Evasivo obtienen "{E}, 1 {I} — Roba una carta y gana 1 conocimiento".',
+      },
+    ],
+  },
 };

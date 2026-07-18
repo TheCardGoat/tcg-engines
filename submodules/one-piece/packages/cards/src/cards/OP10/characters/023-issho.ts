@@ -35,6 +35,7 @@ export const op10Issho023: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Navy",
+            match: "includes",
           },
         ],
         actions: [

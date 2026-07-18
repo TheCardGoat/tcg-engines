@@ -45,4 +45,15 @@ export const chipRangerLeaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Chip",
+    version: "Líder guardabosques",
+    text: [
+      {
+        title: "EL VALOR DE LA AMISTAD",
+        description:
+          "Mientras tengas un personaje llamado Dale en juego, este personaje obtiene Apoyo. (Siempre que realicen una misión, puedes agregar su {S} al {S} de otro personaje elegido este turno).",
+      },
+    ],
+  },
 };

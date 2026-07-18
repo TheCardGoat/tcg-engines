@@ -31,12 +31,6 @@ export const op10Foxy075: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "donFieldComparison",
-            selfComparison: "lte",
-          },
-        ],
         costs: [
           {
             cost: "trashThisCard",
@@ -47,6 +41,10 @@ export const op10Foxy075: CharacterCard = {
             action: "draw",
             player: "self",
             amount: 1,
+            condition: {
+              condition: "donFieldComparison",
+              selfComparison: "lte",
+            },
           },
         ],
         optional: true,

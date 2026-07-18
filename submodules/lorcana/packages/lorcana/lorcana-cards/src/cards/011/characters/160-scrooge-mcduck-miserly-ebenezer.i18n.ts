@@ -45,4 +45,15 @@ export const scroogeMcduckMiserlyEbenezerI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Gilito McPato",
+    version: "El avaro Ebenezer",
+    text: [
+      {
+        title: "BAH, EMBARAZO",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, el personaje elegido obtiene -1 {S} este turno.",
+      },
+    ],
+  },
 };

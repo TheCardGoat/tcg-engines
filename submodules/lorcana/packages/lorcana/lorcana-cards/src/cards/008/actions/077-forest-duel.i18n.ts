@@ -17,4 +17,8 @@ export const forestDuelI18n: Record<Languages, I18nProperties> = {
     name: "Duello nella Foresta",
     text: 'I tuoi personaggi ottengono <Sfidante> +2 e "Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta" per questo turno. (Ricevono +2 {S} mentre stanno sfidando.)',
   },
+  es: {
+    name: "Duelo en el bosque",
+    text: 'Tus personajes obtienen Retador +2 y "Cuando este personaje sea desterrado en un desafío, devuelve esta carta a tu mano" este turno. (Obtienen +2 {S} mientras desafían).',
+  },
 };

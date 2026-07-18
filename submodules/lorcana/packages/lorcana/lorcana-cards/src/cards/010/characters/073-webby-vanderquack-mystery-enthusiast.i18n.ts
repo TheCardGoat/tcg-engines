@@ -44,4 +44,15 @@ export const webbyVanderquackMysteryEnthusiastI18n: Record<Languages, I18nProper
       },
     ],
   },
+  es: {
+    name: "Webby Vanderquack",
+    version: "Entusiasta del misterio",
+    text: [
+      {
+        title: "ENERGÍA CONTAGIOSA",
+        description:
+          "Cuando juegas con este personaje, el personaje elegido obtiene +1 {S} este turno.",
+      },
+    ],
+  },
 };

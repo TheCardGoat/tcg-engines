@@ -21,4 +21,9 @@ export const yaoImperialSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Soldato Imperiale",
     text: "<Sfidante> +2",
   },
+  es: {
+    name: "Yao",
+    version: "Soldado Imperial",
+    text: "Retador +2",
+  },
 };

@@ -41,4 +41,14 @@ export const theQueenWickedAndVainI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La reina",
+    version: "Malvado y vanidoso",
+    text: [
+      {
+        title: "YO TE CONVOCO",
+        description: "{E}: roba una carta.",
+      },
+    ],
+  },
 };

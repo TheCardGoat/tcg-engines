@@ -57,4 +57,18 @@ export const ratiganGreedyGeniusI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratigan",
+    version: "Genio codicioso",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "EL TIEMPO SE AGOTA",
+        description:
+          "Al final de tu turno, si no pusiste ninguna carta en tu tintero este turno, destierra a este personaje.",
+      },
+    ],
+  },
 };

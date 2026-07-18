@@ -59,4 +59,18 @@ export const taffytaMuttonfudgeSourSpeedsterI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Dulce de cordero Taffyta",
+    version: "Velocista amargo",
+    text: [
+      {
+        title: "Shift 2",
+      },
+      {
+        title: "NUEVA PLANTILLA",
+        description:
+          "Una vez por turno, cuando este personaje se mueve a una ubicación, gana 2 conocimientos.",
+      },
+    ],
+  },
 };

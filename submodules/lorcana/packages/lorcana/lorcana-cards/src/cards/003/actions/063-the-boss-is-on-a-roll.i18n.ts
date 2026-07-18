@@ -35,4 +35,8 @@ export const theBossIsOnARollI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "El jefe está en racha",
+    text: "Mira las 5 primeras cartas de tu mazo. Coloque cualquier cantidad de ellos en la parte superior o inferior de su plataforma en cualquier orden. Gana 1 conocimiento.",
+  },
 };

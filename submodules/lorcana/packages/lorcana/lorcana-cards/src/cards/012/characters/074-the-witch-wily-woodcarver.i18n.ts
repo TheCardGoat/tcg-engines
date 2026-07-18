@@ -44,4 +44,15 @@ export const theWitchWilyWoodcarverI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La bruja",
+    version: "Astuto tallador de madera",
+    text: [
+      {
+        title: "CLIENTES INSATISFECHOS",
+        description:
+          "Cada vez que se desafía a este personaje, cada oponente pierde 1 conocimiento.",
+      },
+    ],
+  },
 };

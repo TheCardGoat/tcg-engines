@@ -51,6 +51,7 @@ export const op03Kokoro062: CharacterCard = {
               {
                 filter: "trait",
                 value: "Water Seven",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

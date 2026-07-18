@@ -57,4 +57,17 @@ export const pigletCocoaMakerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Cerdito",
+    version: "Fabricante de cacao",
+    text: [
+      {
+        title: "Shift 3 {I}",
+      },
+      {
+        title: "RECETA ESPECIAL",
+        description: "Al final de tu turno, elimina hasta 2 daños de cada uno de tus personajes.",
+      },
+    ],
+  },
 };

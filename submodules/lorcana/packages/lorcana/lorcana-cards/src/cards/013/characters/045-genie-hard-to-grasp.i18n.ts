@@ -21,4 +21,9 @@ export const genieHardToGraspI18n: Record<Languages, I18nProperties> = {
     version: "Difficile da Afferrare",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Genio",
+    version: "Difícil de entender",
+    text: "Evasivo",
+  },
 };

@@ -44,4 +44,15 @@ export const stitchTeamUnderdogI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Puntada",
+    version: "Equipo desvalido",
+    text: [
+      {
+        title: "¡A VUELTA HO!",
+        description:
+          "Cuando juegas con este personaje, puedes causar 2 daños al personaje elegido.",
+      },
+    ],
+  },
 };

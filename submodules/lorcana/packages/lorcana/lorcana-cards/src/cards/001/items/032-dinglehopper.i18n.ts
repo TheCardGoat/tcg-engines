@@ -37,4 +37,13 @@ export const dinglehopperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Saltamontes",
+    text: [
+      {
+        title: "ALISAR EL CABELLO",
+        description: "{E}: elimina hasta 1 daño del personaje elegido.",
+      },
+    ],
+  },
 };

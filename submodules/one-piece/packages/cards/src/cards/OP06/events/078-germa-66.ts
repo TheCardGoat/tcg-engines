@@ -46,9 +46,24 @@ export const op06Germa66078: EventCard = {
                 filter: "excludeName",
                 value: "GERMA 66",
               },
+              {
+                filter: "trait",
+                value: "GERMA",
+                match: "includes",
+              },
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
           },
         ],
       },

@@ -1,83 +1,315 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
-  asPlayerId,
+  createMockCommand,
   createMockUnit,
+  expectFailure,
   expectSuccess,
-  handleRecoverHPAction,
-  seedShieldsFromDeck,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
+import { passTurnThroughPublicMoves } from "../../../test-helpers/legal-gameplay-test-helpers.ts";
+import { gd02DramaticTurnabout100 } from "../command/100-dramatic-turnabout.ts";
 import { gd02FourMurasame085 } from "./085-four-murasame.ts";
 
-describe("Four Murasame (GD02-085)", () => {
-  it("【Burst】Add this card to your hand.", () => {
-    const engine = GundamTestEngine.create({}, { deck: [gd02FourMurasame085] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, gd02FourMurasame085.cardNumber, asPlayerId(PLAYER_TWO));
+type TestPlayer = ReturnType<GundamTestEngine["asPlayer"]>;
 
-    engine.fireShieldBurst(shieldId);
-
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `hand:${PLAYER_TWO}`,
-    );
-  });
-
-  it("【During Link】【When Healed】 draws 1 when linked, during your turn, hand ≤ 4", () => {
-    // Pilot-resident `type: "triggered"` with a unit-healed event timing and a
-    // separate `duringLink` condition.
-    // When the paired unit recovers HP, the engine emits a `unitHealed` event
-    // whose observer scan picks up Four Murasame (the paired pilot lives in
-    // `battleArea` next to the unit per PR #122). The duringLink gate rebinds
-    // onto the paired unit (rule 3-3-9-1), handCount ≤ 4 and isTurn:friendly
-    // conditions hold, so the draw directive resolves.
-    const unit = createMockUnit({
-      ap: 2,
-      hp: 5,
-      level: 4,
-      cost: 1,
-      linkCondition: "[Four Murasame]",
-    } as unknown as Parameters<typeof createMockUnit>[0]);
-
-    const engine = GundamTestEngine.create(
+function damageCommand(name: string) {
+  return createMockCommand({
+    name,
+    level: 0,
+    cost: 0,
+    effects: [
       {
-        hand: [unit, gd02FourMurasame085],
-        resourceArea: activeResources(5),
-        deck: 3,
+        type: "command",
+        activation: { timing: ["main"] },
+        directives: [
+          {
+            action: {
+              action: "dealDamage",
+              amount: 2,
+              target: { owner: "friendly", cardType: "unit", count: 1 },
+            },
+          },
+        ],
+        sourceText: "【Main】Choose 1 friendly Unit. Deal 2 damage to it.",
       },
-      {},
+    ],
+  });
+}
+
+function healingCommandForOpponent() {
+  return createMockCommand({
+    name: "Opponent's Recovery",
+    level: 0,
+    cost: 0,
+    effects: [
+      {
+        type: "command",
+        activation: { timing: ["main"] },
+        directives: [
+          {
+            action: {
+              action: "recoverHP",
+              amount: 2,
+              target: {
+                owner: "opponent",
+                cardType: "unit",
+                state: "damaged",
+                count: 1,
+              },
+            },
+          },
+        ],
+        sourceText: "【Main】Choose 1 damaged enemy Unit. It recovers 2 HP.",
+      },
+    ],
+  });
+}
+
+function resolveDamageCommand(p1: TestPlayer, commandId: string, targetId: string): void {
+  expectSuccess(p1.playCommand(commandId));
+  const choice = p1.getBoardView().pendingChoice;
+  if (choice?.kind !== "targetSelection") {
+    throw new Error("Expected a visible friendly Unit damage choice");
+  }
+  expect(choice.legalTargetIds).toContain(targetId);
+  expectSuccess(p1.resolveEffect({ targets: [targetId] }));
+}
+
+function resolveDramaticTurnabout(p1: TestPlayer, commandId: string, targetId: string): void {
+  expectSuccess(p1.playCommand(commandId));
+  const choice = p1.getBoardView().pendingChoice;
+  if (choice?.kind !== "targetSelection") {
+    throw new Error("Expected Dramatic Turnabout to ask which damaged Unit recovers");
+  }
+  expect(choice.legalTargetIds).toContain(targetId);
+  expectSuccess(p1.resolveEffect({ targets: [targetId] }));
+}
+
+describe("Four Murasame (GD02-085)", () => {
+  it("【Burst】 adds the revealed Shield to its owner's hand", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [gd02FourMurasame085] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
-    expectSuccess(p1.deployUnit(unit));
-    expectSuccess(p1.assignPilot(gd02FourMurasame085, unit));
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    const runtime = engine.getRuntime();
-    const unitId = runtime.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, unit.cardNumber)!;
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+    const burstChoice = p2.getBoardView().pendingChoice;
+    if (burstChoice?.kind !== "optional") {
+      throw new Error("Expected Four Murasame's visible Burst choice");
+    }
+    expectSuccess(p2.resolveEffect({ optionalAnswers: { [burstChoice.directiveIndex]: true } }));
 
-    // Seed damage so the heal is not a no-op.
-    runtime.runTestMutation(PLAYER_ONE as PlayerId, ({ G }) => {
-      G.damage[unitId] = 2;
+    expect(p2.getCardZone(gd02FourMurasame085)).toBe(`hand:${PLAYER_TWO}`);
+  });
+
+  it("draws once when its linked Unit legally recovers HP during its controller's turn", () => {
+    const host = createMockUnit({ name: "Four's Host", hp: 7, linkCondition: "[Four Murasame]" });
+    const damage = damageCommand("Friendly Damage");
+    const engine = GundamTestEngine.create({
+      hand: [gd02FourMurasame085, damage, gd02DramaticTurnabout100],
+      play: [host],
+      resourceArea: activeResources(5),
+      deck: 5,
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const damageId = p1.getHand()[1]!;
+    const recoveryId = p1.getHand()[2]!;
 
-    const handBefore = engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE });
-    const deckBefore = engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE });
+    expectSuccess(p1.assignPilot(gd02FourMurasame085, hostId));
+    resolveDamageCommand(p1, damageId, hostId);
+    expect(p1.getDamage(hostId)).toBe(2);
+    resolveDramaticTurnabout(p1, recoveryId, hostId);
 
-    runtime.runTestMutation(PLAYER_ONE as PlayerId, ({ G, framework }) => {
-      handleRecoverHPAction([unitId] as never, 1, {
-        G,
-        framework,
-        sourcePlayerId: PLAYER_ONE,
-        sourceCardId: unitId,
-      });
+    expect(p1.getDamage(hostId)).toBe(0);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(3);
+    expect(p1.getPilotId(hostId)).toBeDefined();
+  });
+
+  it("does not draw when a different friendly Unit recovers HP", () => {
+    const host = createMockUnit({ name: "Four's Host", hp: 7, linkCondition: "[Four Murasame]" });
+    const otherUnit = createMockUnit({ name: "Other Friendly Unit", hp: 7 });
+    const damage = damageCommand("Damage Other Unit");
+    const engine = GundamTestEngine.create({
+      hand: [gd02FourMurasame085, damage, gd02DramaticTurnabout100],
+      play: [host, otherUnit],
+      resourceArea: activeResources(5),
+      deck: 5,
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [hostId, otherUnitId] = p1.getCardsInZone("battleArea");
+    const damageId = p1.getHand()[1]!;
+    const recoveryId = p1.getHand()[2]!;
 
-    expect(engine.getCardCount({ zone: "hand", playerId: PLAYER_ONE })).toBe(handBefore + 1);
-    expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(deckBefore - 1);
+    expectSuccess(p1.assignPilot(gd02FourMurasame085, hostId!));
+    resolveDamageCommand(p1, damageId, otherUnitId!);
+    resolveDramaticTurnabout(p1, recoveryId, otherUnitId!);
+
+    expect(p1.getDamage(otherUnitId!)).toBe(0);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(4);
+  });
+
+  it("does not draw when the linked Unit recovers during the opponent's turn", () => {
+    const host = createMockUnit({ name: "Four's Host", hp: 7, linkCondition: "[Four Murasame]" });
+    const damage = damageCommand("Damage Before Opponent Turn");
+    const opponentHealing = healingCommandForOpponent();
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd02FourMurasame085, damage],
+        play: [host],
+        resourceArea: activeResources(5),
+        deck: 5,
+      },
+      { hand: [opponentHealing], deck: 5 },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const damageId = p1.getHand()[1]!;
+    const healingId = p2.getHand()[0]!;
+
+    expectSuccess(p1.assignPilot(gd02FourMurasame085, hostId));
+    resolveDamageCommand(p1, damageId, hostId);
+    passTurnThroughPublicMoves(engine, PLAYER_ONE);
+    expectSuccess(p2.playCommand(healingId));
+    const choice = p2.getBoardView().pendingChoice;
+    if (choice?.kind !== "targetSelection") {
+      throw new Error("Expected the opponent to choose the visibly damaged linked Unit");
+    }
+    expect(choice.legalTargetIds).toEqual([hostId]);
+    expectSuccess(p2.resolveEffect({ targets: [hostId] }));
+
+    expect(p1.getDamage(hostId)).toBe(0);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(5);
+  });
+
+  it("does not draw with five cards in hand when the linked Unit recovers HP", () => {
+    const host = createMockUnit({ name: "Four's Host", hp: 7, linkCondition: "[Four Murasame]" });
+    const damage = damageCommand("Damage With Full Hand");
+    const fillers = Array.from({ length: 5 }, (_, index) =>
+      createMockCommand({ name: `Card Kept in Hand ${index + 1}` }),
+    );
+    const engine = GundamTestEngine.create({
+      hand: [gd02FourMurasame085, damage, gd02DramaticTurnabout100, ...fillers],
+      play: [host],
+      resourceArea: activeResources(5),
+      deck: 5,
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const damageId = p1.getHand()[1]!;
+    const recoveryId = p1.getHand()[2]!;
+
+    expectSuccess(p1.assignPilot(gd02FourMurasame085, hostId));
+    resolveDamageCommand(p1, damageId, hostId);
+    expect(p1.getHand()).toHaveLength(6);
+    resolveDramaticTurnabout(p1, recoveryId, hostId);
+
+    expect(p1.getHand()).toHaveLength(6);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(4);
+  });
+
+  it("draws only once when its linked Unit recovers HP twice in one turn", () => {
+    const host = createMockUnit({ name: "Four's Host", hp: 7, linkCondition: "[Four Murasame]" });
+    const firstDamage = damageCommand("First Damage");
+    const secondDamage = damageCommand("Second Damage");
+    const engine = GundamTestEngine.create({
+      hand: [
+        gd02FourMurasame085,
+        firstDamage,
+        gd02DramaticTurnabout100,
+        secondDamage,
+        gd02DramaticTurnabout100,
+      ],
+      play: [host],
+      resourceArea: activeResources(8),
+      deck: 8,
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const firstDamageId = p1.getHand()[1]!;
+    const firstRecoveryId = p1.getHand()[2]!;
+    const secondDamageId = p1.getHand()[3]!;
+    const secondRecoveryId = p1.getHand()[4]!;
+
+    expectSuccess(p1.assignPilot(gd02FourMurasame085, hostId));
+    resolveDamageCommand(p1, firstDamageId, hostId);
+    resolveDramaticTurnabout(p1, firstRecoveryId, hostId);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(6);
+    resolveDamageCommand(p1, secondDamageId, hostId);
+    resolveDramaticTurnabout(p1, secondRecoveryId, hostId);
+
+    expect(p1.getDamage(hostId)).toBe(0);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(5);
+  });
+
+  it("does not draw for HP recovery while the Pilot is not linked", () => {
+    const host = createMockUnit({ name: "Unlinked Host", hp: 7, linkCondition: "[Kamille Bidan]" });
+    const damage = damageCommand("Unlinked Damage");
+    const engine = GundamTestEngine.create({
+      hand: [gd02FourMurasame085, damage, gd02DramaticTurnabout100],
+      play: [host],
+      resourceArea: activeResources(5),
+      deck: 5,
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const damageId = p1.getHand()[1]!;
+    const recoveryId = p1.getHand()[2]!;
+
+    expectSuccess(p1.assignPilot(gd02FourMurasame085, hostId));
+    resolveDamageCommand(p1, damageId, hostId);
+    resolveDramaticTurnabout(p1, recoveryId, hostId);
+
+    expect(p1.getDamage(hostId)).toBe(0);
+    expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(4);
+  });
+
+  it("requires both its printed Lv.5 and one active Resource to be paired", () => {
+    const lowLevelHost = createMockUnit({ name: "Low-Level Host" });
+    const lowLevel = GundamTestEngine.create({
+      hand: [gd02FourMurasame085],
+      play: [lowLevelHost],
+      resourceArea: activeResources(4),
+    });
+    const lowP1 = lowLevel.asPlayer(PLAYER_ONE);
+    const lowHostId = lowP1.getCardsInZone("battleArea")[0]!;
+
+    expectFailure(lowP1.assignPilot(gd02FourMurasame085, lowHostId), "INSUFFICIENT_RESOURCE_LEVEL");
+    expect(lowP1.getCardZone(gd02FourMurasame085)).toBe(`hand:${PLAYER_ONE}`);
+
+    const setup = createMockCommand({
+      name: "Exhaust All Resources",
+      level: 0,
+      cost: 5,
+      effects: [
+        { type: "command", activation: { timing: ["main"] }, directives: [], sourceText: "" },
+      ],
+    });
+    const costHost = createMockUnit({ name: "Cost-Gate Host" });
+    const insufficient = GundamTestEngine.create({
+      hand: [setup, gd02FourMurasame085],
+      play: [costHost],
+      resourceArea: activeResources(5),
+    });
+    const p1 = insufficient.asPlayer(PLAYER_ONE);
+    const setupId = p1.getHand()[0]!;
+    const pilotId = p1.getHand()[1]!;
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.playCommand(setupId));
+    expectFailure(p1.assignPilot(pilotId, hostId), "INSUFFICIENT_RESOURCES");
+    expect(p1.getCardZone(pilotId)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getPilotId(hostId)).toBeUndefined();
   });
 });

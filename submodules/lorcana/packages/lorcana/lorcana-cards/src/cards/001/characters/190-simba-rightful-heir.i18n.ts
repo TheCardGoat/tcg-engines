@@ -45,4 +45,15 @@ export const simbaRightfulHeirI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Simba",
+    version: "Heredero legítimo",
+    text: [
+      {
+        title: "SÉ LO QUE TENGO QUE HACER",
+        description:
+          "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

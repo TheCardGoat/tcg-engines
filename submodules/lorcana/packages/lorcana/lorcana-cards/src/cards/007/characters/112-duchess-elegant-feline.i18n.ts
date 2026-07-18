@@ -17,4 +17,8 @@ export const duchessElegantFelineI18n: Record<Languages, I18nProperties> = {
     name: "Duchessa",
     version: "Gatta Elegante",
   },
+  es: {
+    name: "Duquesa",
+    version: "Felino elegante",
+  },
 };

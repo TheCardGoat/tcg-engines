@@ -41,4 +41,14 @@ export const scroopBackstabberI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Scroop",
+    version: "Traidor",
+    text: [
+      {
+        title: "BRUTO",
+        description: "Mientras este personaje tenga daño, obtiene +3 {S}.",
+      },
+    ],
+  },
 };

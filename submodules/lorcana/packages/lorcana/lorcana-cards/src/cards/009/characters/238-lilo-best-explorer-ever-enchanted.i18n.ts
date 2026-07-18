@@ -65,4 +65,20 @@ export const liloBestExplorerEverEnchantedI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Lilo",
+    version: "El mejor explorador de todos los tiempos",
+    text: [
+      {
+        title: "VENGA GENTE, VAN A MOVIRSE",
+        description:
+          "Cuando juegas con este personaje, tus otros personajes obtienen Challenger +2 este turno (obtienen +2 {S} mientras desafían).",
+      },
+      {
+        title: "VE A CONSEGUIRLOS",
+        description:
+          'Siempre que este personaje realiza una misión, el personaje alienígena elegido obtiene Challenger +2 y "Este personaje puede desafiar a los personajes listos" este turno.',
+      },
+    ],
+  },
 };

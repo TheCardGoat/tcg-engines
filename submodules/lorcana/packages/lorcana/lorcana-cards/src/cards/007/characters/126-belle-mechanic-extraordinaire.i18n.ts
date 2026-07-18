@@ -77,4 +77,23 @@ export const belleMechanicExtraordinaireI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Beldad",
+    version: "Mecánico extraordinario",
+    text: [
+      {
+        title: "Shift 7",
+      },
+      {
+        title: "SALVAR",
+        description:
+          "Por cada carta de objeto de tu descarte, pagas 1 {I} menos para interpretar a este personaje usando su habilidad Shift.",
+      },
+      {
+        title: "REPROPÓSITO",
+        description:
+          "Siempre que este personaje realice una misión, puedes colocar hasta 3 cartas de objeto de tu descarte en la parte inferior de tu mazo para ganar 1 conocimiento por cada carta de objeto movida de esta manera.",
+      },
+    ],
+  },
 };

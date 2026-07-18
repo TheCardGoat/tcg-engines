@@ -17,4 +17,8 @@ export const forbiddenMountainMaleficentsCastleI18n: Record<Languages, I18nPrope
     name: "Montagna Proibita",
     version: "Castello di Malefica",
   },
+  es: {
+    name: "Montaña prohibida",
+    version: "El castillo de Maléfica",
+  },
 };

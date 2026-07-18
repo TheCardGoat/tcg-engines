@@ -5,6 +5,7 @@ export const gd02GundamAshtaron040: UnitCard = {
   name: "Gundam Ashtaron",
   type: "unit",
   color: "red",
+  battlefieldZones: ["space", "earth"],
   traits: ["new une"],
   id: "GD02-040",
   canonicalId: "GD02-040",
@@ -58,6 +59,7 @@ export const gd02GundamAshtaron040: UnitCard = {
   cost: 3,
   ap: 3,
   hp: 3,
+  linkCondition: "(New UNE) Trait",
   effect:
     "【Activate･Main】&lt;Support 2&gt; (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)<br>【Deploy】Choose 1 of your other (New UNE) Units. It can't receive battle damage from enemy Units with 2 or less HP during this turn.<br>",
   effects: [
@@ -82,6 +84,8 @@ export const gd02GundamAshtaron040: UnitCard = {
               cardType: "unit",
               attributeFilters: [{ attribute: "hp", comparison: "lte", value: 2 }],
             },
+            damageType: "battle",
+            duration: "thisTurn",
           },
         },
       ],

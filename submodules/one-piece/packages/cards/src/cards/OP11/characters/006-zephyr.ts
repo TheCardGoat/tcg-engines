@@ -26,7 +26,7 @@ export const op11Zephyr006: CharacterCard = {
   traits: ["FILM Neo Navy"],
   attribute: "strike",
   effect:
-    "[DON!! x1] [When Attacking] Give up to 1 of your opponent's (Special) attribute Characters 5000 power during this turn.",
+    "[DON!! x1] [When Attacking] Give up to 1 of your opponent's (Special) attribute Characters −5000 power during this turn.",
   effects: {
     effects: [
       {
@@ -54,7 +54,7 @@ export const op11Zephyr006: CharacterCard = {
                 },
               ],
             },
-            value: 5000,
+            value: -5000,
             duration: "thisTurn",
           },
         ],

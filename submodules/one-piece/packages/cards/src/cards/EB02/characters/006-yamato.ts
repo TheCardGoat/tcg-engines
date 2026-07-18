@@ -45,7 +45,39 @@ export const eb02Yamato006: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        conditions: [
+          {
+            condition: "compound",
+            operator: "or",
+            conditions: [
+              {
+                condition: "leaderTrait",
+                trait: "Land of Wano",
+                match: "includes",
+              },
+              {
+                condition: "leaderName",
+                name: "Portgas.D.Ace",
+              },
+            ],
+          },
+        ],
         actions: [
+          {
+            action: "giveDon",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            donState: "rested",
+          },
           {
             action: "grantKeyword",
             target: {

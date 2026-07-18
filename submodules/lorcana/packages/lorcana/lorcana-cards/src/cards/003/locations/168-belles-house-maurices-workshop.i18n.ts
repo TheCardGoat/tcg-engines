@@ -44,4 +44,14 @@ export const bellesHouseMauricesWorkshopI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "La casa de Bella",
+    version: "El taller de Mauricio",
+    text: [
+      {
+        title: "LABORATORIO",
+        description: "Si tienes un personaje aquí, pagas 1 {I} menos para jugar elementos.",
+      },
+    ],
+  },
 };

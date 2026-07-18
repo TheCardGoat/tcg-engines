@@ -43,4 +43,15 @@ export const motherGothelSelfishManipulatorI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Madre Gothel",
+    version: "Manipulador egoísta",
+    text: [
+      {
+        title: "SALTE EL DRAMA, QUEDATE CON MAMA",
+        description:
+          "Mientras este personaje esté ejercido, los personajes contrarios no pueden realizar misiones.",
+      },
+    ],
+  },
 };

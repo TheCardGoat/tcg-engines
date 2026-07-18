@@ -60,4 +60,18 @@ export const basilDisguisedDetectiveEnchantedI18n: Record<Languages, I18nPropert
       },
     ],
   },
+  es: {
+    name: "Albahaca",
+    version: "Detective disfrazado",
+    text: [
+      {
+        title: "Shift 4",
+      },
+      {
+        title: "GIROS Y VUELTAS",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, puedes pagar 1 {I} para que el oponente elegido elija y descarte una carta.",
+      },
+    ],
+  },
 };

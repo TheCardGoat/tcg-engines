@@ -29,11 +29,13 @@ import { violetParrSuperResilient } from "./176-violet-parr-super-resilient";
 import { aladdinCreatedByTheVine } from "./177-aladdin-created-by-the-vine";
 import { dashParrVioletParrSuperSiblings } from "./133-dash-parr-violet-parr-super-siblings";
 import { diabloProtectingHisMistress } from "./193-diablo-protecting-his-mistress";
+import { maleficentDiabloEvilIncarnate } from "./063-maleficent-diablo-evil-incarnate";
 import { ellieFredricksenAdventurePartner } from "./149-ellie-fredricksen-adventure-partner";
 import { scarCreatedByTheVine } from "./194-scar-created-by-the-vine";
 import { yzmaChoosyCustomer } from "./110-yzma-choosy-customer";
 import { kronkMeatHutCook } from "./191-kronk-meat-hut-cook";
 import { potato } from "../items/105-potato";
+import { likeABirdInTheSky } from "../../012/actions/131-like-a-bird-in-the-sky";
 
 const itemInPlay = createMockItem({
   id: "dug-good-boy-test-item",
@@ -236,6 +238,13 @@ const russellLocation = createMockLocation({
   moveCost: 2,
 });
 
+const russellStartingLocation = createMockLocation({
+  id: "russell-starting-location",
+  name: "Russell Starting Location",
+  cost: 1,
+  moveCost: 1,
+});
+
 const dashSuperFastTopDeck = createMockCharacter({
   id: "dash-super-fast-top-deck",
   name: "Dash Super Fast Top Deck",
@@ -357,6 +366,16 @@ describe("Set 13 static and triggered happy paths", () => {
     });
 
     expect(testEngine.asPlayerOne().getKeywordValue(maleficentAlly, "Resist")).toBe(1);
+  });
+
+  it("Diablo - Protecting His Mistress gives Maleficent & Diablo - Evil Incarnate Resist +1", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      play: [diabloProtectingHisMistress, maleficentDiabloEvilIncarnate],
+    });
+
+    expect(testEngine.asPlayerOne().getKeywordValue(maleficentDiabloEvilIncarnate, "Resist")).toBe(
+      1,
+    );
   });
 
   it("Madam Mim - Hummingbird lets all cards in your hand count as inkable", () => {
@@ -671,6 +690,42 @@ describe("Set 13 static and triggered happy paths", () => {
     });
   });
 
+  it("Russell - Junior Wilderness Explorer can leave his current location for the chosen location", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      play: [
+        {
+          card: russellJuniorWildernessExplorer,
+          isDrying: false,
+          atLocation: russellStartingLocation,
+        },
+        russellTravelBuddy,
+        russellStartingLocation,
+        russellLocation,
+      ],
+    });
+
+    expect(testEngine.asPlayerOne().quest(russellJuniorWildernessExplorer)).toBeSuccessfulCommand();
+    expect(
+      testEngine.asPlayerOne().resolvePendingByCard(russellJuniorWildernessExplorer, {
+        resolveOptional: true,
+        targets: {
+          kind: "move-to-location",
+          subject: [testEngine.findCardInstanceId(russellTravelBuddy, "play", PLAYER_ONE)],
+          location: [testEngine.findCardInstanceId(russellLocation, "play", PLAYER_ONE)],
+        },
+      }),
+    ).toBeSuccessfulCommand();
+
+    expect(testEngine.asPlayerOne()).toBeAtLocation({
+      card: russellJuniorWildernessExplorer,
+      location: russellLocation,
+    });
+    expect(testEngine.asPlayerOne()).toBeAtLocation({
+      card: russellTravelBuddy,
+      location: russellLocation,
+    });
+  });
+
   it("Posey - Vampire Potato can shift onto an item named Potato", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
       play: [potato],
@@ -708,6 +763,34 @@ describe("Set 13 static and triggered happy paths", () => {
     ).toBeSuccessfulCommand();
 
     expect(testEngine.asPlayerOne().getCardZone(dashSuperFastTopDeck)).toBe("play");
+  });
+
+  it("Dash Parr - Super Fast may play a revealed song rather than selecting from hand", () => {
+    const songTarget = createMockCharacter({
+      id: "dash-super-fast-song-target",
+      name: "Dash Song Target",
+      cost: 2,
+    });
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      play: [{ card: dashParrSuperFast, isDrying: false }, songTarget],
+      deck: [likeABirdInTheSky],
+      inkwell: likeABirdInTheSky.cost,
+    });
+
+    expect(testEngine.asPlayerOne().quest(dashParrSuperFast)).toBeSuccessfulCommand();
+    expect(
+      testEngine.asPlayerOne().resolvePendingByCard(dashParrSuperFast, {
+        resolveOptional: true,
+        choiceIndex: 0,
+      }),
+    ).toBeSuccessfulCommand();
+
+    expect(
+      testEngine.asPlayerOne().resolvePendingByCard(likeABirdInTheSky, {
+        targets: [songTarget],
+      }),
+    ).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().getCardZone(likeABirdInTheSky)).toBe("discard");
   });
 
   it("Grandma Wu - Fierce Red Panda gains lore and makes the opponent lose lore when challenging", () => {

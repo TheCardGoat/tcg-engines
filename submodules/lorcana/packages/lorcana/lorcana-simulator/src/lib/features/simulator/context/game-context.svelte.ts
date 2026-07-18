@@ -4586,6 +4586,36 @@ function canAutoResolveLeadingDrawInOptionalSequence(
   return (controllerBoard?.hand.length ?? controllerBoard?.handCount ?? 0) === 0;
 }
 
+function canAutoResolveEquivalentSelfKeywordBagEffects(
+  bagEffects: readonly LorcanaProjectedBoardView["bagEffects"][number][],
+): boolean {
+  if (bagEffects.length < 2) {
+    return false;
+  }
+
+  const first = bagEffects[0];
+  const firstPayload = asRecord(first?.payload);
+  const firstEffect = asRecord(firstPayload?.effect);
+  if (
+    !first ||
+    first.selectionContext !== undefined ||
+    firstEffect?.type !== "gain-keyword" ||
+    firstEffect.target !== "SELF"
+  ) {
+    return false;
+  }
+
+  const serializedEffect = JSON.stringify(firstEffect);
+  return bagEffects.every((bagEffect) => {
+    const payload = asRecord(bagEffect.payload);
+    return (
+      bagEffect.selectionContext === undefined &&
+      bagEffect.sourceId === first.sourceId &&
+      JSON.stringify(payload?.effect) === serializedEffect
+    );
+  });
+}
+
 function getResolutionDeclineLabel(session: ResolutionSelectionSession): string {
   return session.context.kind === "optional-selection"
     ? session.context.rejectLabel
@@ -5106,7 +5136,8 @@ function buildAvailableMovesCardDetail(card: LorcanaCardSnapshot): string | unde
 }
 
 async function saveGameplaySettings(update: {
-  gameplaySettings: Record<string, unknown>;
+  playerSettings?: Record<string, unknown>;
+  gameSettings?: Record<string, unknown>;
 }): Promise<void> {
   try {
     await updateUserSettings(update);
@@ -5115,12 +5146,11 @@ async function saveGameplaySettings(update: {
   }
 }
 
-async function saveVisualSettings(settings: {
-  cardBack?: string;
-  playmat?: string;
+async function saveVisualSettings(update: {
+  gameSettings: { lorcana: { visual: { cardBackId?: string; playmatId?: string } } };
 }): Promise<void> {
   try {
-    await updateUserVisualSettings({ visualSettings: settings });
+    await updateUserVisualSettings(update);
   } catch {
     // Silently fail - visual settings are non-critical
   }
@@ -5232,7 +5262,7 @@ export class LorcanaSidebarPresenter {
       saveGameplaySettings(update).catch(() => {});
     });
     this.#settings.setSaveVisualSettingsToServer((update) => {
-      saveVisualSettings(update.visualSettings).catch(() => {});
+      saveVisualSettings(update).catch(() => {});
     });
 
     this.activePlayerGuidanceController = {
@@ -5280,6 +5310,7 @@ export class LorcanaSidebarPresenter {
   }
 
   initializeLocale(): void {
+    const localeBeforeHydration = getLocale();
     const storedRawRegistryFlag = localStorage.getItem(RAW_LOG_REGISTRY_STORAGE_KEY);
     if (storedRawRegistryFlag === "true") {
       this.showRawLogRegistryJson = true;
@@ -5294,7 +5325,7 @@ export class LorcanaSidebarPresenter {
     this.#game.setAnimationSpeed(this.animationSpeed);
     this.#game.setSoundVolume(this.soundVolume);
     this.#game.setShowZoneCounters(this.showZoneCounters);
-    if (this.selectedLocale !== getLocale()) {
+    if (this.selectedLocale !== localeBeforeHydration) {
       this.#game.handleLocaleChanged();
     }
   }
@@ -5304,11 +5335,15 @@ export class LorcanaSidebarPresenter {
    * Call once after construction with data from GET /v1/users/me/settings.
    */
   initializeFromServer(serverSettings: ServerGameplaySettings): void {
+    const localeBeforeHydration = getLocale();
     this.#settings.initializeFromServer(serverSettings);
     // Re-apply game-specific side effects with server values
     this.#game.setAnimationSpeed(this.animationSpeed);
     this.#game.setSoundVolume(this.soundVolume);
     this.#game.setShowZoneCounters(this.showZoneCounters);
+    if (this.selectedLocale !== localeBeforeHydration) {
+      this.#game.handleLocaleChanged();
+    }
   }
 
   syncAutoOpenPendingResolution(): void {
@@ -6064,10 +6099,15 @@ export class LorcanaSidebarPresenter {
       }
     }
 
-    // Mandatory bag effects auto-resolve only when there's exactly one actionable bag move.
-    // Multiple actionable triggers must preserve player's choice of resolution order.
+    // Mandatory bag effects normally auto-resolve only when there's exactly one actionable move.
+    // Equivalent self-keyword grants from the same source are safe to drain in sequence: choosing
+    // an order between identical Challenger/Resist-style grants cannot change the outcome.
     const resolvableBagEffect = board.bagEffects[0] ?? null;
-    if (resolvableBagEffect && this.pendingResolutionMoveByBagId.size === 1) {
+    const canAutoResolveStack = canAutoResolveEquivalentSelfKeywordBagEffects(board.bagEffects);
+    if (
+      resolvableBagEffect &&
+      (this.pendingResolutionMoveByBagId.size === 1 || canAutoResolveStack)
+    ) {
       const bagKind = resolvableBagEffect.selectionContext?.kind;
       const isMandatory = bagKind !== "optional-selection";
       const bagChooser = resolvableBagEffect.selectionContext?.chooserId ?? null;

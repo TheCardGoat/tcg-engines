@@ -45,4 +45,15 @@ export const princeJohnGoldLoverP2PromoI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Príncipe juan",
+    version: "Amante del oro",
+    text: [
+      {
+        title: "HERMOSOS, ENCANTADORES IMPUESTOS",
+        description:
+          "{E}: juega un objeto de tu mano o descártalo con un coste de 5 o menos de forma gratuita, ejercido.",
+      },
+    ],
+  },
 };

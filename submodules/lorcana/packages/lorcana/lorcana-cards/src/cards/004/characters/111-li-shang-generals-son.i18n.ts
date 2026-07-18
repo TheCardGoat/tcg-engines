@@ -17,4 +17,8 @@ export const liShangGeneralsSonI18n: Record<Languages, I18nProperties> = {
     name: "Li Shang",
     version: "Figlio del Generale",
   },
+  es: {
+    name: "Li Shang",
+    version: "Hijo del general",
+  },
 };

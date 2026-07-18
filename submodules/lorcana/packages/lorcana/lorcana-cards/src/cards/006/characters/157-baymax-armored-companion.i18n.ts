@@ -45,4 +45,15 @@ export const baymaxArmoredCompanionI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Baymax",
+    version: "Compañero blindado",
+    text: [
+      {
+        title: "EL TRATAMIENTO ESTÁ FUNCIONANDO",
+        description:
+          "Cuando juegas con este personaje y cada vez que realiza misiones, puedes eliminar hasta 2 daños de otro personaje tuyo elegido. Gana 1 conocimiento por cada daño eliminado de esta manera.",
+      },
+    ],
+  },
 };

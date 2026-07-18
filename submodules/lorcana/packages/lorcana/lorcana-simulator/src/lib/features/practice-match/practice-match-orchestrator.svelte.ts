@@ -116,7 +116,9 @@ export class PracticeMatchOrchestrator {
    */
   forcePush(): void {
     this.#clearPushTimer();
-    this.#pushState("sync");
+    void this.#pushState("sync").catch(() => {
+      // Best-effort sync; a later scheduled push or reconnect can recover.
+    });
   }
 
   /**
@@ -126,21 +128,30 @@ export class PracticeMatchOrchestrator {
    * the practice match as completed.
    */
   async flushPendingState(moveType = "flush"): Promise<void> {
-    if (this.#authority === "server" || this.#pushTimer === null) {
+    if (this.#authority === "server") {
       return;
     }
 
-    this.#clearPushTimer();
-    this.#pushState(moveType);
+    try {
+      const shouldPush = this.#pushTimer !== null || this.#hasGameEnded();
+      if (!shouldPush) {
+        return;
+      }
 
-    await new Promise((resolve) => setTimeout(resolve, 150));
+      this.#clearPushTimer();
+      await this.#pushState(moveType, { awaitResponse: true });
+    } catch {
+      // Best-effort: still allow navigation if the response times out or the socket drops.
+    }
   }
 
   #schedulePush(moveType: string): void {
     this.#clearPushTimer();
     this.#pushTimer = setTimeout(() => {
       this.#pushTimer = null;
-      this.#pushState(moveType);
+      void this.#pushState(moveType).catch(() => {
+        // Best-effort background persistence; an explicit flush covers navigation-critical state.
+      });
     }, 100);
   }
 
@@ -151,7 +162,7 @@ export class PracticeMatchOrchestrator {
     }
   }
 
-  #pushState(moveType: string): void {
+  async #pushState(moveType: string, options?: { awaitResponse?: boolean }): Promise<void> {
     if (this.#authority === "server") return;
 
     const server = this.orchestrator.server as unknown as LorcanaServer;
@@ -184,25 +195,20 @@ export class PracticeMatchOrchestrator {
       }),
     );
     const actorId = acceptedMoveRecords.at(-1)?.actorId ?? this.#playerId;
-    this.#version = latestStateVersion;
-    this.#persistedMoveCount += nextMoveEntries.length;
-    // Track raw count (including filtered system logs) so the next slice window is correct.
-    this.#persistedLogCount += newRawLogEntries.length;
-
     if (import.meta.env.DEV) {
       console.log(
-        `[practice-match] push_state v${this.#version} moveType=${moveType} actorId=${actorId}`,
+        `[practice-match] push_state v${latestStateVersion} moveType=${moveType} actorId=${actorId}`,
       );
     }
 
     // Send raw engine state + cardsMaps as separate fields, matching the
     // flat EngineSnapshot format used by server-authority matches.
-    this.#gateway.send({
+    const message = {
       type: "push_state",
       gameId: this.#gameId,
       state: engineSnapshot.state,
       cardsMaps: engineSnapshot.cardsMaps,
-      version: this.#version,
+      version: latestStateVersion,
       moveType,
       actorId,
       ...(acceptedMoveRecords.length === 1
@@ -211,7 +217,32 @@ export class PracticeMatchOrchestrator {
           ? { acceptedMoves: acceptedMoveRecords }
           : {}),
       ...(engineLogRecords.length > 0 ? { engineLogs: engineLogRecords } : {}),
-    });
+    };
+
+    if (options?.awaitResponse) {
+      await this.#gateway.sendWithAck<{
+        type: "push_state:response";
+        correlationId: string;
+        status: "ok";
+        data: {
+          gameId: string;
+          stateVersion: number;
+          matchId: string;
+          matchCompleted: boolean;
+        };
+      }>(message, 3_000);
+    } else if (!this.#gateway.send(message)) {
+      return;
+    }
+
+    this.#version = latestStateVersion;
+    this.#persistedMoveCount += nextMoveEntries.length;
+    // Track raw count (including filtered system logs) so the next slice window is correct.
+    this.#persistedLogCount += newRawLogEntries.length;
+  }
+
+  #hasGameEnded(): boolean {
+    return Boolean(this.orchestrator.server.getState().ctx.status.gameEnded);
   }
 
   #getAcceptedMoveHistory(): EngineMoveHistoryEntry[] {

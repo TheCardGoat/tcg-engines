@@ -45,4 +45,15 @@ export const ratiganVeryLargeMouseI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ratigan",
+    version: "Ratón muy grande",
+    text: [
+      {
+        title: "ESTE ES MI REINO",
+        description:
+          "Cuando juegues con este personaje, ejerce el personaje contrario elegido con 3 {S} o menos. Elige uno de tus personajes y prepáralo. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

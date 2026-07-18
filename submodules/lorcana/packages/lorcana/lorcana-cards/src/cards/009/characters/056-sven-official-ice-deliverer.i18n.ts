@@ -17,4 +17,8 @@ export const svenOfficialIceDelivererI18n: Record<Languages, I18nProperties> = {
     name: "Sven",
     version: "Official Ice Deliverer",
   },
+  es: {
+    name: "Sven",
+    version: "Distribuidor oficial de hielo",
+  },
 };

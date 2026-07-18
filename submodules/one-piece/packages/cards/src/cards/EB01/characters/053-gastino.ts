@@ -48,7 +48,7 @@ export const eb01Gastino053: CharacterCard = {
                 },
               ],
             },
-            position: "top",
+            position: "choice",
             faceUp: true,
           },
         ],

@@ -63,4 +63,19 @@ export const goliathGuardianOfCastleWyvernI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Goliat",
+    version: "Guardián del Castillo Wyvern",
+    text: [
+      {
+        title: "CUIDADO TODOS",
+        description:
+          "Siempre que uno de tus personajes de Gárgola desafíe a otro personaje, gana 1 conocimiento.",
+      },
+      {
+        title: "PIEDRA DE DÍA",
+        description: "Si tienes 3 o más cartas en tu mano, este personaje no puede prepararse.",
+      },
+    ],
+  },
 };

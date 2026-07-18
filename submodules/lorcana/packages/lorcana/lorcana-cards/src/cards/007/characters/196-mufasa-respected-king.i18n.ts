@@ -17,4 +17,8 @@ export const mufasaRespectedKingI18n: Record<Languages, I18nProperties> = {
     name: "Mufasa",
     version: "Re Rispettato",
   },
+  es: {
+    name: "Mufasa",
+    version: "Rey respetado",
+  },
 };

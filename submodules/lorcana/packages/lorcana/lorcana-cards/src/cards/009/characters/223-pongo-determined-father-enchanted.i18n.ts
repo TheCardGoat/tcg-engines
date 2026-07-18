@@ -45,4 +45,15 @@ export const pongoDeterminedFatherEnchantedI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Pongo",
+    version: "Padre decidido",
+    text: [
+      {
+        title: "CORTEZA CREPÚSCULO",
+        description:
+          "Una vez durante tu turno, puedes pagar 2 {I} para revelar la carta superior de tu mazo. Si es una carta de personaje, ponla en tu mano. De lo contrario, colóquelo en el fondo de su plataforma.",
+      },
+    ],
+  },
 };

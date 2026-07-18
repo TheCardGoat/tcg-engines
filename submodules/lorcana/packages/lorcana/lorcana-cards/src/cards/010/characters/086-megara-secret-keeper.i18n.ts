@@ -60,4 +60,18 @@ export const megaraSecretKeeperI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mégara",
+    version: "Guardián secreto",
+    text: [
+      {
+        title: "Impulsar 1 {I}",
+      },
+      {
+        title: "Estaré bien",
+        description:
+          'Mientras haya una carta debajo de este personaje, ella obtiene +1 {L} y gana "Siempre que este personaje es desafiado, cada oponente elige y descarta una carta".',
+      },
+    ],
+  },
 };

@@ -28,4 +28,16 @@ export const herculesUnwaveringDemigodI18n: Record<Languages, I18nProperties> = 
     version: "Semidio Risoluto",
     text: "<Sfidante> +2",
   },
+  es: {
+    name: "Hércules",
+    version: "Semidiós inquebrantable",
+    text: [
+      {
+        title: "Retador +2",
+      },
+      {
+        title: ".",
+      },
+    ],
+  },
 };

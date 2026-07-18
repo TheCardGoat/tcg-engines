@@ -60,4 +60,18 @@ export const scroogeMcduckCavernProspectorI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Gilito McPato",
+    version: "Prospector de cavernas",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "ESPECULACIÓN",
+        description:
+          "Siempre que juegues con un personaje o ubicación con Boost, puedes colocar la carta superior de tu mazo boca abajo debajo de él.",
+      },
+    ],
+  },
 };

@@ -55,4 +55,18 @@ export const vincenzoSantoriniOnTheRunI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Vicente Santorini",
+    version: "En la carrera",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "NEUTRALIZAR",
+        description:
+          "Los elementos contrarios no pueden estar listos al comienzo de los turnos de sus jugadores.",
+      },
+    ],
+  },
 };

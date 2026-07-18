@@ -31,12 +31,6 @@ export const op11Tashigi007: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Navy",
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -56,11 +50,17 @@ export const op11Tashigi007: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Navy",
+                  match: "includes",
                 },
               ],
             },
             value: 2000,
             duration: "thisTurn",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Navy",
+              match: "includes",
+            },
           },
         ],
         optional: true,

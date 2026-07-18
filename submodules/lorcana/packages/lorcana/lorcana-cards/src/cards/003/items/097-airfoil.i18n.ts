@@ -39,4 +39,13 @@ export const airfoilI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Superficie sustentadora",
+    text: [
+      {
+        title: "TENGO QUE IRME",
+        description: "{E}: si has jugado 2 o más acciones este turno, roba una carta.",
+      },
+    ],
+  },
 };

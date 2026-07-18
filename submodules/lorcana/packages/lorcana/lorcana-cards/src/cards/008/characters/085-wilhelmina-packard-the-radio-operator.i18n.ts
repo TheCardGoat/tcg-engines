@@ -17,4 +17,8 @@ export const wilhelminaPackardTheRadioOperatorI18n: Record<Languages, I18nProper
     name: "Wilhelmina Packard",
     version: "L'Operatrice Radio",
   },
+  es: {
+    name: "Guillermina Packard",
+    version: "El operador de radio",
+  },
 };

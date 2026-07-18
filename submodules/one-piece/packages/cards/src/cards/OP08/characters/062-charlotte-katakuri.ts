@@ -31,12 +31,6 @@ export const op08CharlotteKatakuri062: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Big Mom Pirates",
-          },
-        ],
         costs: [
           {
             cost: "trashThisCard",
@@ -55,10 +49,25 @@ export const op08CharlotteKatakuri062: CharacterCard = {
             },
             filters: [
               {
+                filter: "cost",
+                comparison: "gte",
+                value: 3,
+              },
+              {
+                filter: "dynamicCost",
+                comparison: "lte",
+                source: "opponentDonCount",
+              },
+              {
                 filter: "name",
                 value: "Charlotte Katakuri",
               },
             ],
+            condition: {
+              condition: "leaderTrait",
+              trait: "Big Mom Pirates",
+              match: "includes",
+            },
           },
         ],
         optional: true,

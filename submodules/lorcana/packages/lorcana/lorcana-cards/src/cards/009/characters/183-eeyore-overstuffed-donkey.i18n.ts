@@ -21,4 +21,9 @@ export const eeyoreOverstuffedDonkeyI18n: Record<Languages, I18nProperties> = {
     version: "Asinello Molto Imbottito",
     text: "<Resistere> +1",
   },
+  es: {
+    name: "Eeyore",
+    version: "Burro mullido",
+    text: "Resistir +1",
+  },
 };

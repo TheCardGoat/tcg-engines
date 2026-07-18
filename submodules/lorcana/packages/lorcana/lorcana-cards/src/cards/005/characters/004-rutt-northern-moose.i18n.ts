@@ -21,4 +21,9 @@ export const ruttNorthernMooseI18n: Record<Languages, I18nProperties> = {
     version: "Alce del Nord",
     text: "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
   },
+  es: {
+    name: "Rut",
+    version: "Alce del Norte",
+    text: "Apoyo",
+  },
 };

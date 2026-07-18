@@ -53,6 +53,28 @@ export const op14eb04Shakuyaku107: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Kuja Pirates",
+          },
+        ],
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+            },
+            self: true,
+          },
+        ],
+      },
     ],
   },
   i18n: op14eb04Shakuyaku107I18n,

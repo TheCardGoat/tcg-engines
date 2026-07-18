@@ -41,4 +41,14 @@ export const medalOfHeroesI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Medalla de los héroes",
+    text: [
+      {
+        title: "FELICIDADES SOLDADO",
+        description:
+          "{E}, 2 {I}, destierra este objeto: tu personaje elegido obtiene +2 {L} este turno.",
+      },
+    ],
+  },
 };

@@ -84,6 +84,7 @@ export const prb01Kaido003: CharacterCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
       },
     ],
   },

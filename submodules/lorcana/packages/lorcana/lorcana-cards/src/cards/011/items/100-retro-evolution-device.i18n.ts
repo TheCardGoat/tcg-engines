@@ -41,4 +41,14 @@ export const retroEvolutionDeviceI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Dispositivo de evolución retro",
+    text: [
+      {
+        title: "CONVERTIRSE EN DINOSAURIO",
+        description:
+          "{E}, 1 {I}, destierra a tu personaje elegido: juega con un personaje que cuesta hasta 2 más que el personaje desterrado de forma gratuita.",
+      },
+    ],
+  },
 };

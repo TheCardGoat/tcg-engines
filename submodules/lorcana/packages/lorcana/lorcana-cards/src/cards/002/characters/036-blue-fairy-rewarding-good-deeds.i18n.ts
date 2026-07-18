@@ -54,4 +54,17 @@ export const blueFairyRewardingGoodDeedsI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Hada azul",
+    version: "Recompensar las buenas acciones",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "BRILLO ETERNO",
+        description: "Siempre que juegues con un personaje Floodborn, puedes robar una carta.",
+      },
+    ],
+  },
 };

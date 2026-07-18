@@ -41,4 +41,14 @@ export const boltDownButNotOutI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Tornillo",
+    version: "Abajo pero no afuera",
+    text: [
+      {
+        title: "NINGUNO DE TUS PODERES ESTÁ FUNCIONANDO",
+        description: "Este personaje entra en juego ejercido.",
+      },
+    ],
+  },
 };

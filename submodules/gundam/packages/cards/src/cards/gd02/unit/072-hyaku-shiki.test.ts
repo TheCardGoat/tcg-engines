@@ -1,98 +1,201 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  expectSuccess,
-  createMockUnit,
+  activeResources,
   createMockBase,
-  getEffectiveStats,
+  createMockCommand,
+  createMockUnit,
+  expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
+import { passTurnThroughPublicMoves } from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 import { gd02HyakuShiki072 } from "./072-hyaku-shiki.ts";
+import { gd02KamilleBidan097 } from "../pilot/097-kamille-bidan.ts";
+import { gd02QuattroBajeena098 } from "../pilot/098-quattro-bajeena.ts";
+import { createLinkUnitCheckCommand } from "../../../test-helpers/link-condition-test-helpers.ts";
+
+function damageCommand() {
+  return createMockCommand({
+    level: 1,
+    cost: 1,
+    effects: [
+      {
+        type: "command",
+        activation: { timing: ["main"] },
+        directives: [
+          {
+            action: {
+              action: "dealDamage",
+              amount: 1,
+              target: { owner: "opponent", cardType: "unit", count: 1 },
+            },
+          },
+        ],
+        sourceText: "【Main】Choose 1 enemy Unit. Deal 1 damage to it.",
+      },
+    ],
+  });
+}
 
 describe("Hyaku-Shiki (GD02-072)", () => {
-  it("<Blocker> lets Hyaku-Shiki intercept an attack targeted at another friendly Unit", () => {
-    const attacker = createMockUnit({ ap: 3, hp: 5 });
-    const defender = createMockUnit({ ap: 1, hp: 5 });
-    const engine = GundamTestEngine.create(
-      { play: [attacker] },
-      { play: [{ card: defender, exhausted: true }, gd02HyakuShiki072] },
-    );
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const p2 = engine.asPlayer(PLAYER_TWO);
-    const attackerId = p1.getCardsInZone("battleArea")[0]!;
-    const defenderId = p2.getCardsInZone("battleArea")[0]!;
-    const blockerId = p2.getCardsInZone("battleArea")[1]!;
+  it("requires its printed Lv.5 and three active Resources to deploy", () => {
+    const lowLevel = GundamTestEngine.create({
+      hand: [gd02HyakuShiki072],
+      resourceArea: activeResources(4),
+    });
+    const lowP1 = lowLevel.asPlayer(PLAYER_ONE);
 
-    expectSuccess(p1.enterBattle(attackerId, defenderId));
-    expectSuccess(p2.declareBlock(blockerId));
+    expectFailure(lowP1.deployUnit(gd02HyakuShiki072), "INSUFFICIENT_RESOURCE_LEVEL");
+    expect(lowP1.getCardZone(gd02HyakuShiki072)).toBe(`hand:${PLAYER_ONE}`);
+
+    const setup = createMockCommand({
+      name: "Exhaust All Resources",
+      level: 0,
+      cost: 5,
+      effects: [
+        { type: "command", activation: { timing: ["main"] }, directives: [], sourceText: "" },
+      ],
+    });
+    const insufficient = GundamTestEngine.create({
+      hand: [setup, gd02HyakuShiki072],
+      resourceArea: activeResources(5),
+    });
+    const p1 = insufficient.asPlayer(PLAYER_ONE);
+
+    expectSuccess(p1.playCommand(setup));
+    expect(p1.getCardsInZone("resourceArea").filter((id) => !p1.isExhausted(id))).toHaveLength(0);
+    expectFailure(p1.deployUnit(gd02HyakuShiki072), "INSUFFICIENT_RESOURCES");
+    expect(p1.getCardZone(gd02HyakuShiki072)).toBe(`hand:${PLAYER_ONE}`);
   });
 
-  // While a friendly white Base is in play, this Unit gains <Repair 1>.
-  // Constant effect with `friendlyBaseInPlay { color: "white" }` condition;
-  // derived-state.ts re-evaluates on every getEffectiveStats call.
+  describe("Link Condition: [Quattro Bajeena]", () => {
+    it("becomes a Link Unit when paired with Quattro Bajeena", () => {
+      const linkCheck = createLinkUnitCheckCommand();
+      const engine = GundamTestEngine.create({
+        hand: [gd02QuattroBajeena098, linkCheck],
+        play: [gd02HyakuShiki072],
+        resourceArea: activeResources(4),
+        deck: [
+          createMockUnit({ name: "Card drawn by Quattro Bajeena" }),
+          createMockUnit({ name: "Card left in deck" }),
+        ],
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const unitId = p1.getCardsInZone("battleArea")[0]!;
+      const [pilotId, commandId] = p1.getHand();
 
-  it("positive: friendly white Base in play → gains <Repair>", () => {
-    const whiteBase = createMockBase({ color: "white" });
-    const engine = GundamTestEngine.create(
-      { play: [gd02HyakuShiki072], baseSection: [whiteBase] },
-      { deck: 5 },
-    );
-    const rt = engine.getRuntime();
-    const uid = rt.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, gd02HyakuShiki072.cardNumber)!;
-    const fw = rt.getFrameworkReadAPI();
-    const stats = getEffectiveStats(uid, engine.getG(), fw.cards, fw);
-    expect(stats.keywords).toContain("Repair");
+      expectSuccess(p1.assignPilot(pilotId!, unitId));
+      const discardChoice = p1.getBoardView().pendingChoice;
+      if (discardChoice?.kind !== "targetSelection") {
+        throw new Error("Expected Quattro Bajeena's visible discard choice after drawing");
+      }
+      const drawnCardId = discardChoice.legalTargetIds.find((id) => id !== commandId);
+      if (!drawnCardId) throw new Error("Expected the newly drawn card to be discardable");
+      expectSuccess(p1.resolveEffect({ targets: [drawnCardId] }));
+      const apBefore = p1.getVisibleCard(unitId)?.effectiveAp;
+      expectSuccess(p1.playCommand(commandId!));
+      const linkChoice = p1.getBoardView().pendingChoice;
+      if (linkChoice?.kind !== "targetSelection") {
+        throw new Error("Expected the Link check to ask which friendly Unit gets AP+1");
+      }
+      expect(linkChoice.legalTargetIds).toEqual([unitId]);
+      expectSuccess(p1.resolveEffect({ targets: [unitId] }));
+
+      expect(apBefore).toBeDefined();
+      expect(p1.getVisibleCard(unitId)?.effectiveAp).toBe(apBefore! + 1);
+    });
+
+    it("does not become a Link Unit when paired with a different Pilot", () => {
+      const linkCheck = createLinkUnitCheckCommand();
+      const engine = GundamTestEngine.create({
+        hand: [gd02KamilleBidan097, linkCheck],
+        play: [gd02HyakuShiki072],
+        resourceArea: activeResources(5),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const unitId = p1.getCardsInZone("battleArea")[0]!;
+      const [pilotId, commandId] = p1.getHand();
+
+      expectSuccess(p1.assignPilot(pilotId!, unitId));
+      expectFailure(p1.playCommand(commandId!), "NO_LEGAL_TARGETS");
+
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+      expect(p1.getCardZone(commandId!)).toBe(`hand:${PLAYER_ONE}`);
+    });
   });
 
-  it("negative: no friendly Base in play → no <Repair>", () => {
-    const engine = GundamTestEngine.create({ play: [gd02HyakuShiki072] }, { deck: 5 });
-    const rt = engine.getRuntime();
-    const uid = rt.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, gd02HyakuShiki072.cardNumber)!;
-    const fw = rt.getFrameworkReadAPI();
-    const stats = getEffectiveStats(uid, engine.getG(), fw.cards, fw);
-    expect(stats.keywords).not.toContain("Repair");
+  describe("<Blocker>", () => {
+    it("rests to redirect a direct attack to itself", () => {
+      const attacker = createMockUnit({ ap: 3, hp: 5 });
+      const engine = GundamTestEngine.create(
+        { play: [attacker] },
+        { play: [gd02HyakuShiki072], deck: 5 },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const attackerId = p1.getCardsInZone("battleArea")[0]!;
+      const blockerId = p2.getCardsInZone("battleArea")[0]!;
+
+      expectSuccess(p1.enterBattle(attackerId, "direct"));
+      expectSuccess(p2.declareBlock(blockerId));
+
+      expect(p2.isExhausted(blockerId)).toBe(true);
+      expect(p2.getBoardView().pendingCombat).toMatchObject({ attackerId, blockerId });
+    });
   });
 
-  it("negative: friendly non-white Base in play → no <Repair>", () => {
-    const blueBase = createMockBase({ color: "blue" });
-    const engine = GundamTestEngine.create(
-      { play: [gd02HyakuShiki072], baseSection: [blueBase] },
-      { deck: 5 },
-    );
-    const rt = engine.getRuntime();
-    const uid = rt.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, gd02HyakuShiki072.cardNumber)!;
-    const fw = rt.getFrameworkReadAPI();
-    const stats = getEffectiveStats(uid, engine.getG(), fw.cards, fw);
-    expect(stats.keywords).not.toContain("Repair");
-  });
+  describe("While a friendly white Base is in play, this Unit gains <Repair 1>.", () => {
+    it("recovers 1 damage at the end of its controller's turn with a friendly white Base", () => {
+      const whiteBase = createMockBase({ color: "white" });
+      const command = damageCommand();
+      const engine = GundamTestEngine.create(
+        { play: [gd02HyakuShiki072], baseSection: [whiteBase], deck: 5 },
+        { hand: [command], resourceArea: activeResources(1), deck: 5 },
+        { initialActivePlayer: PLAYER_TWO },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const hyakuShikiId = p1.getCardsInZone("battleArea")[0]!;
 
-  it("transition: base deployed between two reads flips the grant on", () => {
-    const engineBefore = GundamTestEngine.create({ play: [gd02HyakuShiki072] }, { deck: 5 });
-    const rtBefore = engineBefore.getRuntime();
-    const uidBefore = rtBefore.getInstanceIdByDefinition(
-      PLAYER_ONE as PlayerId,
-      gd02HyakuShiki072.cardNumber,
-    )!;
-    const fwBefore = rtBefore.getFrameworkReadAPI();
-    expect(
-      getEffectiveStats(uidBefore, engineBefore.getG(), fwBefore.cards, fwBefore).keywords,
-    ).not.toContain("Repair");
+      expectSuccess(p2.playCommand(command));
+      const choice = p2.getBoardView().pendingChoice;
+      if (choice?.kind !== "targetSelection") {
+        throw new Error("Expected the enemy Command's visible Unit damage choice");
+      }
+      expect(choice.legalTargetIds).toEqual([hyakuShikiId]);
+      expectSuccess(p2.resolveEffect({ targets: [hyakuShikiId] }));
+      expect(p1.getDamage(hyakuShikiId)).toBe(1);
+      passTurnThroughPublicMoves(engine, PLAYER_TWO);
+      passTurnThroughPublicMoves(engine, PLAYER_ONE);
 
-    const whiteBase = createMockBase({ color: "white" });
-    const engineAfter = GundamTestEngine.create(
-      { play: [gd02HyakuShiki072], baseSection: [whiteBase] },
-      { deck: 5 },
-    );
-    const rtAfter = engineAfter.getRuntime();
-    const uidAfter = rtAfter.getInstanceIdByDefinition(
-      PLAYER_ONE as PlayerId,
-      gd02HyakuShiki072.cardNumber,
-    )!;
-    const fwAfter = rtAfter.getFrameworkReadAPI();
-    expect(
-      getEffectiveStats(uidAfter, engineAfter.getG(), fwAfter.cards, fwAfter).keywords,
-    ).toContain("Repair");
+      expect(p1.getDamage(hyakuShikiId)).toBe(0);
+    });
+
+    it("does not recover with a friendly non-white Base", () => {
+      const blueBase = createMockBase({ color: "blue" });
+      const command = damageCommand();
+      const engine = GundamTestEngine.create(
+        { play: [gd02HyakuShiki072], baseSection: [blueBase], deck: 5 },
+        { hand: [command], resourceArea: activeResources(1), deck: 5 },
+        { initialActivePlayer: PLAYER_TWO },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const hyakuShikiId = p1.getCardsInZone("battleArea")[0]!;
+
+      expectSuccess(p2.playCommand(command));
+      const choice = p2.getBoardView().pendingChoice;
+      if (choice?.kind !== "targetSelection") {
+        throw new Error("Expected the enemy Command's visible Unit damage choice");
+      }
+      expect(choice.legalTargetIds).toEqual([hyakuShikiId]);
+      expectSuccess(p2.resolveEffect({ targets: [hyakuShikiId] }));
+      passTurnThroughPublicMoves(engine, PLAYER_TWO);
+      passTurnThroughPublicMoves(engine, PLAYER_ONE);
+
+      expect(p1.getDamage(hyakuShikiId)).toBe(1);
+    });
   });
 });

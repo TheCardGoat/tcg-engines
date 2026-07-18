@@ -17,4 +17,8 @@ export const magicBroomLivelySweeperI18n: Record<Languages, I18nProperties> = {
     name: "Scopa Magica",
     version: "Spazzino Vivace",
   },
+  es: {
+    name: "Escoba magica",
+    version: "Barrendero animado",
+  },
 };

@@ -21,4 +21,9 @@ export const slushyGlacialGusterI18n: Record<Languages, I18nProperties> = {
     version: "Soffiatore Glaciale",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Sentimentaloide",
+    version: "Guster glacial",
+    text: "Evasivo",
+  },
 };

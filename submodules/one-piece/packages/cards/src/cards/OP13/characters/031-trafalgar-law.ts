@@ -30,6 +30,7 @@ export const op13TrafalgarLaw031: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [{ cost: "returnCharacter", amount: 1 }],
         actions: [
           {
             action: "play",
@@ -56,6 +57,24 @@ export const op13TrafalgarLaw031: CharacterCard = {
           },
         ],
         optional: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [{ condition: "lifeCount", player: "self", comparison: "lte", value: 1 }],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
       },
     ],
   },

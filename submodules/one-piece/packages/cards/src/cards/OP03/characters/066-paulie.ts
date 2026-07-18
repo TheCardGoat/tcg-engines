@@ -60,7 +60,32 @@ export const op03Paulie066: CharacterCard = {
             },
             state: "active",
           },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+              ],
+            },
+            condition: {
+              condition: "donFieldCount",
+              player: "self",
+              comparison: "gte",
+              value: 8,
+            },
+          },
         ],
+        optional: true,
       },
     ],
   },

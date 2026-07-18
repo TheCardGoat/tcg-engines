@@ -58,4 +58,17 @@ export const zeusMissingHisSparkP3ChallengeI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Zeus",
+    version: "Falta su chispa",
+    text: [
+      {
+        title: "Impulsar 2 {I}",
+      },
+      {
+        title: "¡NECESITO MÁS RAYONOS!",
+        description: "Mientras haya una carta debajo de este personaje, obtiene +2 {S} y +2 {W}.",
+      },
+    ],
+  },
 };

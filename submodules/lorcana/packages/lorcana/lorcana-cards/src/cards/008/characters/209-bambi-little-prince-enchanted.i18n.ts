@@ -60,4 +60,18 @@ export const bambiLittlePrinceEnchantedI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Bambi",
+    version: "Principito",
+    text: [
+      {
+        title: "DI HOLA",
+        description: "Cuando juegas con este personaje, ganas 1 conocimiento.",
+      },
+      {
+        title: "TIPO DE tímido",
+        description: "Cuando un oponente juega un personaje, devuelve este personaje a tu mano.",
+      },
+    ],
+  },
 };

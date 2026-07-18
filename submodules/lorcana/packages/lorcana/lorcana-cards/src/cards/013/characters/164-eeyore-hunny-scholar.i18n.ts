@@ -45,4 +45,15 @@ export const eeyoreHunnyScholarI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Eeyore",
+    version: "Erudito miel",
+    text: [
+      {
+        title: "TÁCTICAS DE HUNNY",
+        description:
+          "Cada vez que este personaje realiza una misión, tu personaje Hunny elegido obtiene +1 {L} y gana Protección hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

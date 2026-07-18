@@ -17,4 +17,8 @@ export const quickShotI18n: Record<Languages, I18nProperties> = {
     name: "Colpo Rapido",
     text: "Infliggi 1 danno a un personaggio a tua scelta. Pesca una carta.",
   },
+  es: {
+    name: "Tiro rápido",
+    text: "Inflige 1 daño al personaje elegido. Saca una carta.",
+  },
 };

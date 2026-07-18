@@ -41,4 +41,14 @@ export const sapphireCoilI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bobina de zafiro",
+    text: [
+      {
+        title: "BRILLO BRILLANTE",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, puedes darle al personaje elegido -2 {S} este turno.",
+      },
+    ],
+  },
 };

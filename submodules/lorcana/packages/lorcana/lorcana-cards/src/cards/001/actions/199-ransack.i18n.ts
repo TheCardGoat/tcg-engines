@@ -17,4 +17,8 @@ export const ransackI18n: Record<Languages, I18nProperties> = {
     name: "Ransack",
     text: "Draw 2 cards, then choose and discard 2 cards.",
   },
+  es: {
+    name: "Saquear",
+    text: "Roba 2 cartas, luego elige y descarta 2 cartas.",
+  },
 };

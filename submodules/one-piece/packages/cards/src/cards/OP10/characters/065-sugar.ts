@@ -31,6 +31,15 @@ export const op10Sugar065: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 1,
+          },
+          {
+            cost: "restThisCard",
+          },
+        ],
         actions: [
           {
             action: "search",
@@ -47,6 +56,7 @@ export const op10Sugar065: CharacterCard = {
               {
                 filter: "trait",
                 value: "Donquixote Pirates",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

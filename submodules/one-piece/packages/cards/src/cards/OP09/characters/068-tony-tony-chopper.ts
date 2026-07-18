@@ -31,6 +31,12 @@ export const op09TonyTonyChopper068: CharacterCard = {
     effects: [
       {
         trigger: "endOfYourTurn",
+        costs: [
+          {
+            cost: "returnDon",
+            minimumAmount: 1,
+          },
+        ],
         actions: [
           {
             action: "setActive",

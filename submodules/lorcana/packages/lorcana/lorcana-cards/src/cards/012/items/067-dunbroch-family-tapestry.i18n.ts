@@ -57,4 +57,18 @@ export const dunbrochFamilyTapestryI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Familia DunBroch Tela decorativa",
+    text: [
+      {
+        title: "DESTROZADO",
+        description: "Este objeto entra en juego ejercido.",
+      },
+      {
+        title: "REPARAR EL VÍNCULO",
+        description:
+          "{E}, desterrar este objeto: cada jugador baraja todas las cartas de personaje de su descarte en su mazo.",
+      },
+    ],
+  },
 };

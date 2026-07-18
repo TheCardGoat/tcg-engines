@@ -32,6 +32,7 @@ export const op03CrossFire017: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Whitebeard Pirates",
+            match: "includes",
           },
         ],
         actions: [
@@ -56,6 +57,7 @@ export const op03CrossFire017: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Whitebeard Pirates",
+            match: "includes",
           },
         ],
         actions: [

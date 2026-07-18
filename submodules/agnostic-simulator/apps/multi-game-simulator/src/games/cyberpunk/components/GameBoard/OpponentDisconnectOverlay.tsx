@@ -73,6 +73,7 @@ export function OpponentDisconnectOverlay({
         type="button"
         className={`${classes.pill} ${dropReady ? classes.pillReady : ""}`}
         onClick={handleExpand}
+        data-mobile-field-overlay
         aria-label={
           timeoutMode
             ? "Opponent time expired - expand options"

@@ -60,4 +60,19 @@ export const prepareYourBotI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Prepara tu robot",
+    text: [
+      {
+        title: "Elige uno:",
+      },
+      {
+        title: "*Artículo elegido listo.",
+      },
+      {
+        title:
+          "* Personaje robot elegido listo. No pueden realizar misiones durante el resto de este turno.",
+      },
+    ],
+  },
 };

@@ -57,7 +57,7 @@ export const op02GumGumRain068: EventCard = {
           {
             action: "returnToHand",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

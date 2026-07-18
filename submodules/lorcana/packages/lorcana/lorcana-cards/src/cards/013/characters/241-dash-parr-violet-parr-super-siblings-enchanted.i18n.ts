@@ -71,4 +71,21 @@ export const dashParrVioletParrSuperSiblingsEnchantedI18n: Record<Languages, I18
       },
     ],
   },
+  es: {
+    name: "Dash Parr y violeta Parr",
+    version: "Súper hermanos",
+    text: [
+      {
+        title: "<Cambio combinado> 6 {I}",
+      },
+      {
+        title: "<Evasivos>, <Resistir> +1",
+      },
+      {
+        title: "Tácticas increíbles",
+        description:
+          "Siempre que este personaje realice misiones o desafíos, roba una carta por cada carta debajo de ella.",
+      },
+    ],
+  },
 };

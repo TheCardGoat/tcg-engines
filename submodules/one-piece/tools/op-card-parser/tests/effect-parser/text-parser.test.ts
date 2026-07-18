@@ -172,6 +172,43 @@ describe("dual triggers", () => {
 });
 
 describe("cost parsing", () => {
+  test("top-or-bottom Life-to-trash cost", () => {
+    const result = parseEffectText(
+      "[Trigger] You may trash 1 card from the top or bottom of your Life cards: Play this card.",
+    );
+    expect(result.segments).toHaveLength(1);
+    expect(result.segments[0]).toMatchObject({
+      costs: [{ type: "trashLife", amount: 1, position: "choice" }],
+      optional: true,
+      rawActionText: "Play this card.",
+    });
+  });
+
+  test("top-or-bottom Life-to-hand cost", () => {
+    const result = parseEffectText(
+      "[On Play] You may add 1 card from the top or bottom of your Life cards to your hand: Add up to 1 card from your hand to the top of your Life cards.",
+    );
+    expect(result.segments).toHaveLength(1);
+    expect(result.segments[0]).toMatchObject({
+      costs: [{ type: "addLifeToHand", amount: 1, position: "choice" }],
+      optional: true,
+      rawActionText: "Add up to 1 card from your hand to the top of your Life cards.",
+    });
+  });
+
+  test.each([
+    ["top", "top"],
+    ["bottom", "bottom"],
+  ] as const)("%s Life-to-hand cost", (printedPosition, expectedPosition) => {
+    const result = parseEffectText(
+      `[On Play] You may add 1 card from the ${printedPosition} of your Life cards to your hand: Draw 1 card.`,
+    );
+    expect(result.segments[0]).toMatchObject({
+      costs: [{ type: "addLifeToHand", amount: 1, position: expectedPosition }],
+      optional: true,
+    });
+  });
+
   test("DON!! rest cost (N) before colon", () => {
     const result = parseEffectText(
       "[Activate:Main] [Once Per Turn] (4): Set up to 1 of your Characters as active.",
@@ -215,6 +252,57 @@ describe("cost parsing", () => {
     expect(seg.optional).toBe(true);
   });
 
+  test("preserves the printed 1 active Leader power cost with a preceding rest cost", () => {
+    const result = parseEffectText(
+      "[Activate:Main] You may rest this Character and give your 1 active Leader -5000 power during this turn: Draw 1 card.",
+    );
+
+    expect(result.segments).toHaveLength(1);
+    expect(result.segments[0]).toMatchObject({
+      costs: [
+        { type: "restThisCard" },
+        {
+          type: "modifyLeaderPower",
+          value: -5000,
+          duration: "thisTurn",
+          requiresActive: true,
+        },
+      ],
+      optional: true,
+      rawActionText: "Draw 1 card.",
+    });
+  });
+
+  test("recognizes a card-category-filtered trash-from-hand cost", () => {
+    const result = parseEffectText(
+      "[Main] You may trash 1 Event from your hand: K.O. up to 1 of your opponent's Characters with 5000 power or less and up to 1 of your opponent's Characters with 4000 power or less.",
+    );
+
+    expect(result.segments).toHaveLength(1);
+    expect(result.segments[0]!.costs).toEqual([
+      {
+        type: "trashFromHand",
+        raw: "You may trash 1 Event from your hand",
+      },
+    ]);
+    expect(result.segments[0]!.optional).toBe(true);
+  });
+
+  test("recognizes a Trigger-filtered trash-from-hand cost as optional", () => {
+    const result = parseEffectText(
+      "[Activate:Main] You may trash 1 card with a [Trigger] from your hand: Rest up to 1 of your opponent's Characters.",
+    );
+
+    expect(result.segments).toHaveLength(1);
+    expect(result.segments[0]!.costs).toEqual([
+      {
+        type: "trashFromHand",
+        raw: "You may trash 1 card with a [Trigger] from your hand",
+      },
+    ]);
+    expect(result.segments[0]!.optional).toBe(true);
+  });
+
   test("You may trash this Character cost", () => {
     const result = parseEffectText(
       "[End of Your Turn] You may trash this Character: Set up to 2 of your DON!! cards as active.",
@@ -224,6 +312,44 @@ describe("cost parsing", () => {
     expect(seg.costs[0]!.type).toBe("trashThisCard");
     expect(seg.optional).toBe(true);
     expect(seg.rawActionText).toBe("Set up to 2 of your DON!! cards as active.");
+  });
+
+  test("You may return this Character to the owner's hand cost", () => {
+    const result = parseEffectText(
+      "[Activate:Main] You may return this Character to the owner's hand: Draw 1 card.",
+    );
+    expect(result.segments).toHaveLength(1);
+    const seg = result.segments[0]!;
+    expect(seg.costs).toEqual([{ type: "returnThisToHand" }]);
+    expect(seg.optional).toBe(true);
+    expect(seg.rawActionText).toBe("Draw 1 card.");
+  });
+
+  test("qualified Character return cost preserves its cost threshold", () => {
+    const result = parseEffectText(
+      "[Counter] You may return 1 of your Characters with a cost of 2 or more to the owner's hand: Up to 1 of your Leader gains +4000 power during this battle.",
+    );
+
+    expect(result.segments[0]).toMatchObject({
+      costs: [
+        {
+          type: "returnCharacter",
+          raw: "return 1 of your Characters with a cost of 2 or more to the owner's hand",
+        },
+      ],
+      optional: true,
+    });
+  });
+
+  test("keeps a direct Counter DON!! return cost non-optional", () => {
+    const result = parseEffectText(
+      "[Counter] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Give up to 1 of your opponent's Characters -2000 power during this turn.",
+    );
+
+    expect(result.segments[0]).toMatchObject({
+      costs: [{ type: "returnDon", amount: 1 }],
+      optional: false,
+    });
   });
 });
 
@@ -313,6 +439,19 @@ describe("choose one patterns", () => {
     expect(seg.costs).toEqual([{ type: "returnDon", amount: 3 }]);
     expect(seg.choiceItems).toHaveLength(2);
   });
+
+  test("attaches a standalone Then line after the final choice bullet", () => {
+    const result = parseEffectText(
+      "[Main] Choose one:\n• Draw 1 card.\n• K.O. up to 1 of your opponent's Characters.\nThen, add 1 card from the top of your Life cards to your hand.",
+    );
+
+    expect(result.plainStatements).toEqual([]);
+    expect(result.segments).toHaveLength(1);
+    expect(result.segments[0]).toMatchObject({
+      choiceItems: ["Draw 1 card.", "K.O. up to 1 of your opponent's Characters."],
+      postChoiceActionText: "add 1 card from the top of your Life cards to your hand.",
+    });
+  });
 });
 
 describe("plain text before brackets", () => {
@@ -370,25 +509,39 @@ describe("keyword flavor stripping", () => {
     );
     expect(result.segments).toHaveLength(1);
     expect(result.segments[0]!.costs).toEqual([{ type: "returnDon", amount: 1 }]);
+    expect(result.segments[0]!.optional).toBe(true);
     expect(result.segments[0]!.rawActionText).toBe("Draw 1 card.");
   });
 
-  test("strips DON!! rest cost reminder parenthetical", () => {
+  test("marks passive DON!! rest costs optional after stripping the reminder", () => {
+    const result = parseEffectText(
+      "[On Play] (1) (You may rest the specified number of DON!! cards in your cost area.): Draw 1 card.",
+    );
+    expect(result.segments).toHaveLength(1);
+    expect(result.segments[0]!.costs).toEqual([{ type: "restDon", amount: 1 }]);
+    expect(result.segments[0]!.optional).toBe(true);
+    expect(result.segments[0]!.rawActionText).toBe("Draw 1 card.");
+  });
+
+  test("keeps direct Activate:Main DON!! rest costs non-optional", () => {
     const result = parseEffectText(
       "[Activate:Main] [Once Per Turn] (4) (You may rest the specified number of DON!! cards in your cost area.): Set up to 1 of your Characters as active.",
     );
     expect(result.segments).toHaveLength(1);
     expect(result.segments[0]!.costs).toEqual([{ type: "restDon", amount: 4 }]);
+    expect(result.segments[0]!.optional).toBe(false);
     expect(result.segments[0]!.rawActionText).toBe("Set up to 1 of your Characters as active.");
   });
 });
 
 describe("[Trigger] handling", () => {
-  test("strips [Trigger] section from text", () => {
+  test("preserves [Trigger] as an independent effect segment", () => {
     const result = parseEffectText("[On Play] Draw 2 cards.\n[Trigger] Draw 1 card.");
-    expect(result.segments).toHaveLength(1);
+    expect(result.segments).toHaveLength(2);
     expect(result.segments[0]!.triggers).toEqual(["onPlay"]);
     expect(result.segments[0]!.rawActionText).toBe("Draw 2 cards.");
+    expect(result.segments[1]!.triggers).toEqual(["trigger"]);
+    expect(result.segments[1]!.rawActionText).toBe("Draw 1 card.");
   });
 });
 
@@ -408,6 +561,16 @@ describe("text with only keywords", () => {
   });
 });
 describe("cost parsing — restCards", () => {
+  test("You may rest 2 of your DON!! cards", () => {
+    const result = parseEffectText("[On Play] You may rest 2 of your DON!! cards: Draw 2 cards.");
+    expect(result.segments).toHaveLength(1);
+    expect(result.segments[0]).toMatchObject({
+      costs: [{ type: "restDon", amount: 2 }],
+      optional: true,
+      rawActionText: "Draw 2 cards.",
+    });
+  });
+
   test("You may rest 1 of your cards", () => {
     const result = parseEffectText("[On K.O.] You may rest 1 of your cards: Draw 1 card.");
     expect(result.segments).toHaveLength(1);
@@ -443,7 +606,17 @@ describe("turnLifeFaceUp cost", () => {
     );
     expect(result.segments).toHaveLength(1);
     const seg = result.segments[0]!;
-    expect(seg.costs[0]).toEqual({ type: "turnLifeFaceUp", count: 1 });
+    expect(seg.costs[0]).toEqual({ type: "turnLifeFaceUp", count: 1, faceUp: true });
+    expect(seg.optional).toBe(true);
+  });
+
+  test("You may turn 1 card from the top of your Life cards face-down cost", () => {
+    const result = parseEffectText(
+      "[On Play] You may turn 1 card from the top of your Life cards face-down: Draw 1 card.",
+    );
+    expect(result.segments).toHaveLength(1);
+    const seg = result.segments[0]!;
+    expect(seg.costs[0]).toEqual({ type: "turnLifeFaceUp", count: 1, faceUp: false });
     expect(seg.optional).toBe(true);
   });
 });

@@ -614,9 +614,22 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
     const hasExplicitTargets = hasExplicitTargetSelectionInput(explicitTargets);
     const explicitTargetCount = countExplicitTargetSelections(explicitTargets);
     const sourceCardDefinition = ctx.cards.getDefinition(bagEffect.sourceId as CardInstanceId);
+    const isAcceptingOptionalDeckSearch =
+      params?.resolveOptional === true &&
+      (bagEffect.effect as { type?: unknown; effect?: { type?: unknown } } | null)?.type ===
+        "optional" &&
+      (bagEffect.effect as { effect?: { type?: unknown } } | null)?.effect?.type === "search-deck";
     const selectionResolutionInput: PendingActionResolutionInput = {
-      targets: explicitTargets as PendingActionResolutionInput["targets"],
-      currentTargets: explicitTargets as PendingActionResolutionInput["currentTargets"],
+      // An accepted optional deck search must build its inner hidden-zone
+      // selection context before interpreting the submitted deck card as a
+      // completed selection. Other optional effects keep their target set so
+      // multi-step choices validate each submitted target.
+      targets: isAcceptingOptionalDeckSearch
+        ? undefined
+        : (explicitTargets as PendingActionResolutionInput["targets"]),
+      currentTargets: isAcceptingOptionalDeckSearch
+        ? undefined
+        : (explicitTargets as PendingActionResolutionInput["currentTargets"]),
       resolveOptional: params?.resolveOptional,
       enterPlayExerted: params?.enterPlayExerted,
       choiceIndex: params?.choiceIndex,
@@ -667,6 +680,16 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
       bagSelectionContext?.kind === "discard-choice"
         ? {
             ...targetAnalysis,
+            // A hidden deck card is intentionally absent from the regular
+            // target analysis. Only that context substitutes its candidates;
+            // generic optional sequences can select targets for multiple
+            // inner steps and must retain the aggregate analysis.
+            ...(bagSelectionContext.allowedZones.includes("deck")
+              ? {
+                  cardCandidates: bagSelectionContext.cardCandidateIds,
+                  playerCandidates: bagSelectionContext.playerCandidateIds,
+                }
+              : {}),
             minSelections: bagSelectionContext.minSelections,
             maxSelections: bagSelectionContext.maxSelections,
             ordered: bagSelectionContext.ordered,

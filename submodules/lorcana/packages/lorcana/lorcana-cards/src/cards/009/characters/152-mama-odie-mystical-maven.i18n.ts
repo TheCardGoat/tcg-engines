@@ -45,4 +45,15 @@ export const mamaOdieMysticalMavenI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mamá odie",
+    version: "Experto místico",
+    text: [
+      {
+        title: "ESTO VA A ESTAR BUENO",
+        description:
+          "Siempre que toques una canción, puedes poner la carta superior de tu mazo en el tintero boca abajo y ejercerla.",
+      },
+    ],
+  },
 };

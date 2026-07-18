@@ -26,7 +26,7 @@ export const op11CharlotteMontDOr072: CharacterCard = {
   traits: ["Big Mom Pirates"],
   attribute: "special",
   effect:
-    "[Activate: Main] [Once Per Turn] DON!! 1, You may rest this Character: Your opponent places 2 cards from their trash at the bottom of their deck in any order. Then, add 1 card from the top of your Life cards to your hand.",
+    "[Activate: Main] [Once Per Turn] DON!! −1, You may rest this Character: Your opponent places 2 cards from their trash at the bottom of their deck in any order. Then, add 1 card from the top of your Life cards to your hand.",
   effects: {
     effects: [
       {
@@ -49,8 +49,10 @@ export const op11CharlotteMontDOr072: CharacterCard = {
               count: {
                 amount: 2,
               },
+              chosenBy: "opponent",
             },
             position: "bottom",
+            order: "any",
           },
           {
             action: "removeFromLife",
@@ -59,6 +61,7 @@ export const op11CharlotteMontDOr072: CharacterCard = {
               amount: 1,
             },
             destination: "hand",
+            position: "top",
           },
         ],
         optional: true,

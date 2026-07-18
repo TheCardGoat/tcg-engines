@@ -26,4 +26,15 @@ export const poseyVampirePotatoI18n: Record<Languages, I18nProperties> = {
     version: "Patata Vampiro",
     text: "<Trasformazione Patata> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi oggetti chiamato Patata.)",
   },
+  es: {
+    name: "Posey",
+    version: "Patata vampiro",
+    text: [
+      {
+        title: "Cambio de papa 5 {I}",
+        description:
+          "(Puedes pagar 5 {I} para jugar esto encima de uno de tus artículos llamado Potato).",
+      },
+    ],
+  },
 };

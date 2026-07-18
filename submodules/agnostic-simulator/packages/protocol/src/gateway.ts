@@ -266,6 +266,22 @@ export const RawGatewayStateUpdateMessageSchema = z
   })
   .strict();
 
+export const RawGatewayPushStateResponseMessageSchema = z
+  .object({
+    type: z.literal("push_state:response"),
+    correlationId: z.string().min(1),
+    status: z.literal("ok"),
+    data: z
+      .object({
+        gameId: opaqueId,
+        stateVersion: z.number().int().nonnegative(),
+        matchId: opaqueId,
+        matchCompleted: z.boolean(),
+      })
+      .strict(),
+  })
+  .strict();
+
 export const RawGatewayStateSyncMessageSchema = z
   .object({
     type: z.literal("state_sync"),
@@ -348,6 +364,7 @@ export const RawGatewayServerMessageSchema = z.discriminatedUnion("type", [
   RawGatewayChatMessageSchema,
   RawGatewayMoveAcceptedMessageSchema,
   RawGatewayStateUpdateMessageSchema,
+  RawGatewayPushStateResponseMessageSchema,
   RawGatewayStateSyncMessageSchema,
   RawGatewayMoveRejectedMessageSchema,
   RawGatewayGameEndedMessageSchema,

@@ -35,6 +35,16 @@ export const op12Hatchan013: CharacterCard = {
           {
             cost: "restThisCard",
           },
+          {
+            cost: "revealFromHand",
+            amount: 2,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "event",
+              },
+            ],
+          },
         ],
         actions: [
           {

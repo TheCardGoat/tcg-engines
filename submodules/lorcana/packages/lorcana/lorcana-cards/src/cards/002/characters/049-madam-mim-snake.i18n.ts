@@ -45,4 +45,15 @@ export const madamMimSnakeI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Señora mim",
+    version: "Serpiente",
+    text: [
+      {
+        title: "SOLO ESPERA",
+        description:
+          "Cuando juegues con este personaje, destiérralo o devuelve a tu mano otro personaje tuyo elegido.",
+      },
+    ],
+  },
 };

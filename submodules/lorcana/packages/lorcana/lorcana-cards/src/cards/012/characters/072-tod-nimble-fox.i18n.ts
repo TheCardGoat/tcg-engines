@@ -21,4 +21,9 @@ export const todNimbleFoxI18n: Record<Languages, I18nProperties> = {
     version: "Agile Volpe",
     text: "<Sfuggente>",
   },
+  es: {
+    name: "Tod",
+    version: "Zorro ágil",
+    text: "Evasivo",
+  },
 };

@@ -61,4 +61,19 @@ export const mickeyMouseWaywardSorcererEnchantedI18n: Record<Languages, I18nProp
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Hechicero descarriado",
+    text: [
+      {
+        title: "ESCOBA ANIMADA",
+        description: "Pagas 1 {I} menos para jugar con los personajes de Broom.",
+      },
+      {
+        title: "TRABAJADOR INCESABLE",
+        description:
+          "Siempre que uno de tus personajes de Escoba sea desterrado en un desafío, puedes devolver esa carta a tu mano.",
+      },
+    ],
+  },
 };

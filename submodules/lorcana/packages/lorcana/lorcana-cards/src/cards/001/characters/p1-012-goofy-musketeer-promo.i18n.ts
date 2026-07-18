@@ -60,4 +60,18 @@ export const goofyMusketeerP1PromoI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mentecato",
+    version: "Mosquetero",
+    text: [
+      {
+        title: "Guardaespaldas",
+      },
+      {
+        title: "¡Y DOS PARA EL TÉ!",
+        description:
+          "Cuando juegas con este personaje, puedes eliminar hasta 2 daños de cada uno de tus personajes Mosquetero.",
+      },
+    ],
+  },
 };

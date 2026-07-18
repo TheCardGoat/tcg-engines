@@ -57,4 +57,17 @@ export const peterPanTinkerBellFastFriendsEnchantedI18n: Record<Languages, I18nP
       },
     ],
   },
+  es: {
+    name: "Peter Pan y Campanita",
+    version: "Amigos rapidos",
+    text: [
+      {
+        title: "Cambio 4 {I}",
+      },
+      {
+        title: "¡PUEDES VOLAR!",
+        description: "Tus personajes ganan Evasión.",
+      },
+    ],
+  },
 };

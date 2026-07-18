@@ -56,4 +56,17 @@ export const turboRoyalHackI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Turbo",
+    version: "Hack real",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "SALTO DE JUEGO",
+        description: "Este personaje también cuenta como rey Candy para Shift.",
+      },
+    ],
+  },
 };

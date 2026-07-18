@@ -51,6 +51,7 @@ export const op07VinsmokeReiju062: CharacterCard = {
                 {
                   filter: "trait",
                   value: "The Vinsmoke Family",
+                  match: "includes",
                 },
                 {
                   filter: "cost",

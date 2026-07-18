@@ -64,4 +64,20 @@ export const davidXanatosCharismaticLeaderI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "David Xánatos",
+    version: "Líder carismático",
+    text: [
+      {
+        title: "APRENDE DE TODO",
+        description:
+          "Durante tu turno, cada vez que uno de tus personajes sea desterrado, roba una carta.",
+      },
+      {
+        title: "¿A QUÉ ESTÁS ESPERANDO?",
+        description:
+          "Siempre que este personaje realice una misión, el personaje elegido gana Rush este turno. (Pueden desafiar el turno en el que se juega).",
+      },
+    ],
+  },
 };

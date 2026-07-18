@@ -61,4 +61,19 @@ export const shenziHyenaPackLeaderI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Shenzi",
+    version: "Líder de la manada de hienas",
+    text: [
+      {
+        title: "YO MANEJARÉ ESTO",
+        description: "Mientras este personaje está en una ubicación, obtiene +3 {S}.",
+      },
+      {
+        title: "¿CUÁL ES LA PRISA?",
+        description:
+          "Mientras este personaje esté en un lugar, cada vez que desafíe a otro personaje, puedes robar una carta.",
+      },
+    ],
+  },
 };

@@ -54,4 +54,17 @@ export const stitchCovertAgentI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Puntada",
+    version: "Agente encubierto",
+    text: [
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "ESCONDER",
+        description: "Mientras este personaje esté en un lugar, gana Protección.",
+      },
+    ],
+  },
 };

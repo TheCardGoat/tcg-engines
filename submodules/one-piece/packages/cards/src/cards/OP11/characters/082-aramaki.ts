@@ -31,12 +31,6 @@ export const op11Aramaki082: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Navy",
-          },
-        ],
         costs: [
           {
             cost: "trashThisCard",
@@ -56,10 +50,16 @@ export const op11Aramaki082: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Navy",
+                  match: "includes",
                 },
               ],
             },
             duration: "thisTurn",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Navy",
+              match: "includes",
+            },
           },
           {
             action: "trashFromDeck",

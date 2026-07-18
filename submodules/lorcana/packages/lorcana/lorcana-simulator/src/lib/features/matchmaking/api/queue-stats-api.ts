@@ -1,12 +1,15 @@
 import { getApiOrigin } from "$lib/config/public-url-config.js";
 import { requestJson } from "$lib/data/transport/http-client.js";
+import type { LorcanaFormatId } from "@tcg/lorcana-types";
 
-export type QueueStatsFormat = "infinity" | "core-constructed" | "attack-of-the-vine";
+export type QueueStatsFormat = LorcanaFormatId;
 export type QueueStatsMode = "1" | "3";
 
 export type QueueStatsMatchType = "ranked" | "casual" | "testing";
 
 export interface QueueStatsPartition {
+  queueId?: string | null;
+  seasonId?: string | null;
   format: QueueStatsFormat;
   mode: QueueStatsMode;
   matchType: QueueStatsMatchType;

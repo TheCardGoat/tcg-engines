@@ -72,4 +72,21 @@ export const mickeyMouseMusketeerCaptainI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Ratoncito Mickey",
+    version: "Capitán mosquetero",
+    text: [
+      {
+        title: "Shift 5",
+      },
+      {
+        title: "Guardaespaldas, Apoyo",
+      },
+      {
+        title: "MOSQUETEROS UNIDOS",
+        description:
+          "Cuando juegas con este personaje, si usaste Shift para jugar con él, puedes robar una carta por cada personaje con Bodyguard que tengas en juego.",
+      },
+    ],
+  },
 };

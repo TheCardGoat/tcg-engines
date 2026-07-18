@@ -45,4 +45,15 @@ export const antonioMadrigalFriendToAllI18n: Record<Languages, I18nProperties> =
       },
     ],
   },
+  es: {
+    name: "Antonio Madrigal",
+    version: "Amigo de todos",
+    text: [
+      {
+        title: "CLARO QUE PUEDEN VENIR",
+        description:
+          "Una vez durante tu turno, cada vez que uno de tus personajes cante una canción, puedes buscar en tu mazo una carta de personaje con un coste de 3 o menos y revelar esa carta a todos los jugadores. Pon esa carta en tu mano y baraja tu mazo.",
+      },
+    ],
+  },
 };

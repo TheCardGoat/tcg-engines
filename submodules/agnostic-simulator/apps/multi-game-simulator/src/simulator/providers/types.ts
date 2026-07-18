@@ -4,6 +4,7 @@ import type {
   MatchPageData,
   MatchResolution,
   Participant,
+  CanonicalUserSettings,
   UserSettings,
 } from "@tcg/game-page-contract";
 import type {
@@ -23,6 +24,7 @@ export interface SimulatorProviderInput {
   gatewayTicket: GatewayTicket | null;
   simulatorRouteData: SharedSimulatorRouteData | null;
   simulatorSettings?: SimulatorSettings | null;
+  viewerSettings?: CanonicalUserSettings | null;
   rootSocketReady?: boolean;
 }
 
@@ -92,7 +94,10 @@ export interface SimulatorPlayersContextValue {
 }
 
 export interface SimulatorUserSettingsContextValue {
+  /** Legacy route-local settings supplied by older game page payloads. */
   userSettings: UserSettings | null;
+  /** Canonical signed-in viewer settings, including active per-game configuration. */
+  viewerSettings: CanonicalUserSettings | null;
 }
 
 export interface SimulatorDiagnosticsContextValue {

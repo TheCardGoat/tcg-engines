@@ -6,10 +6,18 @@ import {
   createMockLocation,
 } from "@tcg/lorcana-engine/testing";
 import { carlFredricksenRussellIntrepidExplorers } from "./098-carl-fredricksen-russell-intrepid-explorers";
+import { carlFredricksenRussellIntrepidExplorersEnchanted } from "./237-carl-fredricksen-russell-intrepid-explorers-enchanted";
 
-const shiftBase = createMockCharacter({
-  id: "carl-russell-shift-base",
-  name: "Carl Fredricksen & Russell",
+// CR 1.2.1, 8.10.1: this card's Shift text permits either named base.
+const carlShiftBase = createMockCharacter({
+  id: "carl-fredricksen-russell-carl-shift-base",
+  name: "Carl Fredricksen",
+  cost: 2,
+});
+
+const russellShiftBase = createMockCharacter({
+  id: "carl-fredricksen-russell-russell-shift-base",
+  name: "Russell",
   cost: 2,
 });
 
@@ -40,7 +48,10 @@ const characterAtOtherLocation = createMockCharacter({
 });
 
 describe("Carl Fredricksen & Russell - Intrepid Explorers", () => {
-  it("can be shifted onto a character with the same name", () => {
+  it.each([
+    ["Carl Fredricksen", carlShiftBase],
+    ["Russell", russellShiftBase],
+  ])("can be shifted onto %s", (_name: string, shiftBase: typeof carlShiftBase) => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
       play: [shiftBase],
       hand: [carlFredricksenRussellIntrepidExplorers],
@@ -59,6 +70,28 @@ describe("Carl Fredricksen & Russell - Intrepid Explorers", () => {
       "play",
     );
   });
+
+  it.each([
+    ["Carl Fredricksen", carlShiftBase],
+    ["Russell", russellShiftBase],
+  ])(
+    "enchanted printing can be shifted onto %s",
+    (_name: string, shiftBase: typeof carlShiftBase) => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+        play: [shiftBase],
+        hand: [carlFredricksenRussellIntrepidExplorersEnchanted],
+        inkwell: 4,
+        deck: [],
+      });
+      const shiftTarget = testEngine.findCardInstanceId(shiftBase, "play", PLAYER_ONE);
+
+      expect(
+        testEngine.asPlayerOne().playCard(carlFredricksenRussellIntrepidExplorersEnchanted, {
+          cost: { cost: "shift", shiftTarget },
+        }),
+      ).toBeSuccessfulCommand();
+    },
+  );
 
   it("gives all characters at its location +1 lore", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({

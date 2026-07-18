@@ -48,4 +48,8 @@ export const pullTheLeverI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "¡Tira de la palanca!",
+    text: "Elige uno:\n- Roba 2 cartas.\n- Cada oponente elige y descarta una carta.",
+  },
 };

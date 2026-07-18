@@ -46,6 +46,13 @@ export const op09NicoRobin062: LeaderCard = {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [{ filter: "hasTrigger", value: true }],
+          },
+        ],
         actions: [
           {
             action: "addDon",

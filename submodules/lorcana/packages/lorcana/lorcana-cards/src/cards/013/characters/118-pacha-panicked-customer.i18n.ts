@@ -53,4 +53,17 @@ export const pachaPanickedCustomerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pachá",
+    version: "Cliente en pánico",
+    text: [
+      {
+        title: "<Imprudente>",
+      },
+      {
+        title: "Oleada de adrenalina",
+        description: "Durante tu turno, este personaje obtiene +4 {S}.",
+      },
+    ],
+  },
 };

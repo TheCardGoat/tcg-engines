@@ -43,6 +43,29 @@ export const op10LittleBlackBears080: EventCard = {
             value: 4000,
             duration: "thisBattle",
           },
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+            condition: {
+              condition: "compound",
+              operator: "and",
+              conditions: [
+                { condition: "donFieldCount", player: "self", comparison: "gte", value: 7 },
+                { condition: "handCount", player: "self", comparison: "lte", value: 5 },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "addDon",
+            count: { amount: 1, upTo: true },
+            state: "active",
+          },
         ],
       },
     ],

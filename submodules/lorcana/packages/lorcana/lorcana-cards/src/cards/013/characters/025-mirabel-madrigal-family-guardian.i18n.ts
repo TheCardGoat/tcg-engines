@@ -45,4 +45,15 @@ export const mirabelMadrigalFamilyGuardianI18n: Record<Languages, I18nProperties
       },
     ],
   },
+  es: {
+    name: "Mirabel Madrigal",
+    version: "Tutor familiar",
+    text: [
+      {
+        title: "PROTECCIÓN MILAGROSA",
+        description:
+          "Siempre que elimines el daño de uno de tus personajes, podrás prepararlo. Si lo haces, no podrán realizar misiones ni desafíos durante el resto de este turno.",
+      },
+    ],
+  },
 };

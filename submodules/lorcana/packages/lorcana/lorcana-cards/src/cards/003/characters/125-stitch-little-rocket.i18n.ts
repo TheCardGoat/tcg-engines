@@ -21,4 +21,9 @@ export const stitchLittleRocketI18n: Record<Languages, I18nProperties> = {
     version: "Piccolo Razzo",
     text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
+  es: {
+    name: "Puntada",
+    version: "Pequeño cohete",
+    text: "Correr",
+  },
 };

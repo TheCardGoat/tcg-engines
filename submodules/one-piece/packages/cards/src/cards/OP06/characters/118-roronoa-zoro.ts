@@ -77,6 +77,7 @@ export const op06RoronoaZoro118: CharacterCard = {
             },
           },
         ],
+        optional: true,
         oncePerTurn: true,
       },
       {

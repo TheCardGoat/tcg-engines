@@ -21,4 +21,9 @@ export const peterPanNeverLandingI18n: Record<Languages, I18nProperties> = {
     version: "Never Landing",
     text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
+  es: {
+    name: "Peter Pan",
+    version: "Nunca aterrizar",
+    text: "Evasivo",
+  },
 };

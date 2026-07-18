@@ -41,4 +41,14 @@ export const theWhiteRoseJewelOfTheGardenI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "La rosa blanca",
+    version: "Joya del jardin",
+    text: [
+      {
+        title: "LA BELLEZA DEL MUNDO",
+        description: "Cuando juegas con este personaje, ganas 1 conocimiento.",
+      },
+    ],
+  },
 };

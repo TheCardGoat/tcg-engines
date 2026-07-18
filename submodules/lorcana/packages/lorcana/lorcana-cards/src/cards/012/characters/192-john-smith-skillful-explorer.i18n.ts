@@ -17,4 +17,8 @@ export const johnSmithSkillfulExplorerI18n: Record<Languages, I18nProperties> = 
     name: "John Smith",
     version: "Abile Esploratore",
   },
+  es: {
+    name: "Juan Smith",
+    version: "Explorador hábil",
+  },
 };

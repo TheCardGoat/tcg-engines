@@ -30,12 +30,6 @@ export const op14eb04Kaido030: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Animal Kingdom Pirates",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -43,6 +37,24 @@ export const op14eb04Kaido030: CharacterCard = {
           },
         ],
         actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "thisTurn",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Animal Kingdom Pirates",
+              match: "includes",
+            },
+          },
           {
             action: "rest",
             target: {
@@ -62,6 +74,17 @@ export const op14eb04Kaido030: CharacterCard = {
             },
           },
         ],
+        optional: true,
+      },
+    ],
+    replacementEffects: [
+      {
+        replacedEvent: "ko",
+        replacementAction: {
+          action: "returnDon",
+          player: "self",
+          amount: 1,
+        },
       },
     ],
   },

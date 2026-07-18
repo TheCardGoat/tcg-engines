@@ -54,4 +54,17 @@ export const batteringRamI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Ariete",
+    text: [
+      {
+        title: "FUERZA COMPLETA",
+        description: "{E}: inflige 1 daño al personaje dañado elegido.",
+      },
+      {
+        title: "DESCUBRIMIENTO",
+        description: "{E}, desterrar este elemento: desterrar la ubicación elegida.",
+      },
+    ],
+  },
 };

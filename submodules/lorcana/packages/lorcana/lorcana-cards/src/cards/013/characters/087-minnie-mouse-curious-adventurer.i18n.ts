@@ -17,4 +17,8 @@ export const minnieMouseCuriousAdventurerI18n: Record<Languages, I18nProperties>
     name: "Minni",
     version: "Avventuriera Curiosa",
   },
+  es: {
+    name: "Minnie ratón",
+    version: "Aventurero curioso",
+  },
 };

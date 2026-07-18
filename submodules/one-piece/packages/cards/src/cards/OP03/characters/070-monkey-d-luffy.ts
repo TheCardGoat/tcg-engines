@@ -35,6 +35,21 @@ export const op03MonkeyDLuffy070: CharacterCard = {
             cost: "returnDon",
             amount: 1,
           },
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+              {
+                filter: "cost",
+                comparison: "eq",
+                value: 5,
+              },
+            ],
+          },
         ],
         actions: [
           {

@@ -167,8 +167,11 @@
   padding: 8px;
   place-content: flex-start center;
   align-items: flex-start;
-  overflow: hidden auto;
-  scrollbar-gutter: stable;
+  /* Transformed tapped cards can inflate scrollHeight without extending past
+     the painted field. Vertical scrolling is enabled explicitly only after
+     FieldZone confirms visible overflow. */
+  overflow: hidden;
+  scrollbar-gutter: auto;
   scrollbar-color: rgb(var(--side-accent-rgb, 245 230 66) / 78%)
     rgb(var(--side-accent-rgb, 245 230 66) / 14%);
   scrollbar-width: thin;
@@ -176,6 +179,7 @@
 
 .cards[data-scrollable="true"] {
   overflow-y: scroll;
+  scrollbar-gutter: stable;
 }
 
 .cards[data-scroll-axis="horizontal"] {
@@ -217,10 +221,12 @@
   content: none;
 }
 
-.zone[data-count="1"] .cards,
-.zone[data-count="2"] .cards {
-  --field-unit-card-h: var(--field-unit-card-h-low-count, clamp(112px, 16.8dvh, 152px));
-}
+/*
+  Field scale is a player-setting, not a board-state signal. Enlarging a
+  sparse field made a two-unit opponent appear materially more important than
+  a four-unit friendly field. Both sides therefore keep the same base scale;
+  density is handled by wrapping and scrolling instead.
+*/
 
 .cards:has(.abilityBadge:hover),
 .cards:has(.abilityBadge:focus-visible),
@@ -275,7 +281,15 @@
 }
 
 .card {
-  --attached-gear-space: 0px;
+  /*
+    The card is flex/grid-aligned inside a field that can be much wider than
+    the card itself. A percentage margin here would therefore reserve a
+    percentage of the field width and push equipped opponent units away from
+    the centre line. Gear peeks 24% of a 5:7 card height, which is 33.6% of
+    the card width.
+  */
+  --attached-gear-count: 0;
+  --attached-gear-space: calc(var(--attached-gear-count) * var(--field-card-w) * 0.336);
 
   /* Match Legends slot size — shared via --unit-card-h on .boardShell. */
   height: var(--field-unit-card-h);

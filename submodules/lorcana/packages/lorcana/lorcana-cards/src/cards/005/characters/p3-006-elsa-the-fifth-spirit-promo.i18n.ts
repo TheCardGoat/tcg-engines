@@ -68,4 +68,20 @@ export const elsaTheFifthSpiritP3PromoI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Elsa",
+    version: "El quinto espíritu",
+    text: [
+      {
+        title: "Correr",
+      },
+      {
+        title: "Evasivo",
+      },
+      {
+        title: "CRISTALIZAR",
+        description: "Cuando juegues con este personaje, ejerce el personaje contrario elegido.",
+      },
+    ],
+  },
 };

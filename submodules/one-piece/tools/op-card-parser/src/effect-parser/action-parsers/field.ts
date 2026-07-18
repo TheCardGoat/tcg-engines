@@ -1,20 +1,123 @@
 import type { Action, Target, TargetFilter, Zone } from "@tcg/op-types";
 import { mapZoneNoun, parseComparison } from "../helpers.ts";
-import { parseTarget, parseTargetWithoutPlayer } from "../target-parser.ts";
+import {
+  parseTarget,
+  parseTargetWithoutPlayer,
+  traitAlternativesFilter,
+} from "../target-parser.ts";
 
 type KoAction = Extract<Action, { action: "ko" }>;
 type RestAction = Extract<Action, { action: "rest" }>;
 type TrashFromFieldAction = Extract<Action, { action: "trashFromField" }>;
-type PlayAction = Extract<Action, { action: "play" }>;
+type GenericPlayAction = Extract<Action, { action: "play" }>;
+type PlayAction = Extract<Action, { action: "play" | "playThisCard" }>;
 type SetActiveAction = Extract<Action, { action: "setActive" }>;
 type FreezeAction = Extract<Action, { action: "freeze" }>;
 type TrashThisCardAction = Extract<Action, { action: "trashThisCard" }>;
+
+export function parseCompoundRestActions(text: string): RestAction[] | null {
+  const match = /^rest\s+this\s+(Character|Leader|Stage)\s+and\s+(.+)$/i.exec(
+    text.trim().replace(/\.+$/, ""),
+  );
+  if (!match) return null;
+
+  const opponentTarget = parseTarget(match[2]!);
+  if (!opponentTarget) return null;
+
+  const selfZone = match[1]!.toLowerCase() as "character" | "leader" | "stage";
+  return [
+    {
+      action: "rest",
+      target: {
+        player: "self",
+        zones: [selfZone],
+        count: { amount: 1 },
+        self: true,
+      },
+    },
+    { action: "rest", target: opponentTarget },
+  ];
+}
+
+export function parseCompoundSetActiveActions(text: string): SetActiveAction[] | null {
+  const stripped = text
+    .trim()
+    .replace(/\.+$/, "")
+    .replace(/\s+at\s+the\s+end\s+of\s+this\s+turn$/i, "");
+  const match = /^set\s+(.+?)\s+and\s+your\s+Leader\s+as\s+active$/i.exec(stripped);
+  if (!match) {
+    return null;
+  }
+  const characterTarget = parseTarget(match[1]!);
+  if (!characterTarget) {
+    return null;
+  }
+  return [
+    { action: "setActive", target: characterTarget },
+    {
+      action: "setActive",
+      target: { player: "self", zones: ["leader"], count: { amount: 1 } },
+    },
+  ];
+}
 
 /**
  * Parse a "Rest <target>" action clause.
  */
 export function parseRestAction(text: string): RestAction | null {
-  const match = /^rest\s+(.+)$/i.exec(text.trim());
+  const trimmed = text.trim().replace(/\.+$/, "");
+  const traitOrNamedLeaderMatch =
+    /^rest\s+1\s+of\s+your\s+\[([^\]]+)\]\s+or\s+your\s+\[([^\]]+)\]\s+Leader(?:\s+instead)?$/i.exec(
+      trimmed,
+    );
+  if (traitOrNamedLeaderMatch) {
+    return {
+      action: "rest",
+      target: {
+        player: "self",
+        zones: ["leader"],
+        count: { amount: 1 },
+        filters: [
+          {
+            filter: "anyOf",
+            filters: [
+              {
+                filter: "trait",
+                value: traitOrNamedLeaderMatch[1]!,
+                match: "includes",
+              },
+              { filter: "name", value: traitOrNamedLeaderMatch[2]! },
+            ],
+          },
+        ],
+      },
+    };
+  }
+  const leaderOrNamedStageMatch = /^rest\s+your\s+Leader\s+or\s+1\s+\[([^\]]+)\]$/i.exec(trimmed);
+  if (leaderOrNamedStageMatch) {
+    return {
+      action: "rest",
+      target: {
+        player: "self",
+        zones: ["leader", "stage"],
+        count: { amount: 1 },
+        filters: [
+          {
+            filter: "anyOf",
+            groups: [
+              [{ filter: "cardCategory", value: "leader" }],
+              [
+                { filter: "cardCategory", value: "stage" },
+                { filter: "name", value: leaderOrNamedStageMatch[1]! },
+              ],
+            ],
+          },
+        ],
+      },
+    };
+  }
+
+  const match = /^rest\s+(.+)$/i.exec(trimmed);
   if (!match) return null;
 
   const target = parseTarget(match[1]!);
@@ -48,8 +151,11 @@ export function parseKoAction(text: string): KoAction | null {
     };
   }
 
-  const target = parseTarget(targetText) ?? parseTargetWithoutPlayer(targetText);
-  if (!target) return null;
+  const parsedTarget = parseTarget(targetText) ?? parseTargetWithoutPlayer(targetText);
+  if (!parsedTarget) return null;
+  const target = /^all\s+rested\s+Characters\b/i.test(targetText)
+    ? { ...parsedTarget, player: "both" as const }
+    : parsedTarget;
 
   return { action: "ko", target };
 }
@@ -84,10 +190,27 @@ export function parseTrashFromFieldAction(text: string): TrashFromFieldAction | 
  * - "Play up to 1 Character card other than [Name] from your hand"
  */
 export function parsePlayAction(text: string): PlayAction | null {
-  const match = /^play\s+(.+)$/i.exec(text.trim().replace(/\.+$/, ""));
+  const match = /^(?:(your\s+opponent)\s+plays?|play)\s+(.+)$/i.exec(
+    text.trim().replace(/\.+$/, ""),
+  );
   if (!match) return null;
 
-  let rest = match[1]!;
+  const sourcePlayer = match[1] ? "opponent" : "self";
+  let rest = match[2]!;
+  const differentColorFromPreviousCharacter =
+    /\s+that\s+is\s+a\s+different\s+color\s+than\s+the\s+returned\s+Character$/i.test(rest);
+  if (differentColorFromPreviousCharacter) {
+    rest = rest.replace(
+      /\s+that\s+is\s+a\s+different\s+color\s+than\s+the\s+returned\s+Character$/i,
+      "",
+    );
+  }
+
+  // A card resolving its Life Trigger is in no ordinary area. Bare
+  // "Play this card" therefore moves the resolving physical card itself.
+  if (sourcePlayer === "self" && /^this\s+card$/i.test(rest.trim())) {
+    return { action: "playThisCard" };
+  }
 
   // "Play this card" / "Play this Character card (from your trash)? (rested)?"
   const thisCardMatch =
@@ -99,12 +222,13 @@ export function parsePlayAction(text: string): PlayAction | null {
       action: "play",
       source: { player: "self", zone: (thisCardMatch[1]?.toLowerCase() as any) ?? "hand" },
       count: { amount: 1 },
+      self: true,
       ...(thisCardMatch[2] && { playState: "rested" as const }),
     };
   }
 
   // Extract play state: "rested" at the end
-  let playState: PlayAction["playState"];
+  let playState: GenericPlayAction["playState"];
   if (/\s+rested$/i.test(rest)) {
     playState = "rested";
     rest = rest.replace(/\s+rested$/i, "");
@@ -113,12 +237,14 @@ export function parsePlayAction(text: string): PlayAction | null {
   // Extract source: "from your hand/trash/deck" or "from your hand or trash"
   // Source may appear before "with a cost..." so also try mid-string
   let zone: Zone | Zone[];
-  const multiSourceMatch = /\s+from\s+your\s+(hand)\s+or\s+(trash|deck)$/i.exec(rest);
+  const multiSourceMatch = /\s+from\s+(?:your|their)\s+(hand)\s+or\s+(trash|deck)$/i.exec(rest);
   if (multiSourceMatch) {
     zone = [multiSourceMatch[1]!.toLowerCase() as Zone, multiSourceMatch[2]!.toLowerCase() as Zone];
     rest = rest.slice(0, multiSourceMatch.index).trim();
   } else {
-    const sourceMatch = /\s+from\s+your\s+(hand|trash|deck)(?=\s+with\s+|\s*$)/i.exec(rest);
+    const sourceMatch = /\s+from\s+(?:your|their)\s+(hand|trash|deck)(?=\s+with\s+|\s*$)/i.exec(
+      rest,
+    );
     if (!sourceMatch) return null;
     zone = sourceMatch[1]!.toLowerCase() as Zone;
     rest = rest.slice(0, sourceMatch.index) + rest.slice(sourceMatch.index + sourceMatch[0].length);
@@ -138,15 +264,29 @@ export function parsePlayAction(text: string): PlayAction | null {
     rest = rest.slice(numMatch[0].length);
   }
 
+  const sameNameAsPreviousCard =
+    /\s+and\s+the\s+same\s+card\s+name\s+as\s+the\s+trashed\s+card$/i.test(rest);
+  if (sameNameAsPreviousCard) {
+    rest = rest.replace(/\s+and\s+the\s+same\s+card\s+name\s+as\s+the\s+trashed\s+card$/i, "");
+  }
+
+  const differentNames = /\s+with\s+different\s+card\s+names\s+and\s+/i.test(rest);
+  if (differentNames) {
+    rest = rest.replace(/\s+with\s+different\s+card\s+names\s+and\s+/i, " with ");
+  }
+
   // Parse the card description into filters
   const filters = parsePlayDescription(rest);
   if (!filters) return null;
 
   return {
     action: "play",
-    source: { player: "self", zone },
+    source: { player: sourcePlayer, zone },
     count: { amount, ...(upTo && { upTo: true }) },
+    ...(differentNames && { differentNames: true }),
     ...(filters.length > 0 && { filters }),
+    ...(sameNameAsPreviousCard && { sameNameAsPreviousCard: true }),
+    ...(differentColorFromPreviousCharacter && { differentColorFromPreviousCharacter: true }),
     ...(playState && { playState }),
   };
 }
@@ -164,7 +304,10 @@ export function parsePlayAction(text: string): PlayAction | null {
  */
 export function parsePlayDescription(text: string): TargetFilter[] | null {
   const filters: TargetFilter[] = [];
-  let rest = text.trim();
+  let rest = text
+    .trim()
+    .replace(/^of\s+your\s+/i, "")
+    .trim();
 
   // Extract "other than [Name]"
   const excludeMatch = /\s+other than\s+\[([^\]]+)\]/i.exec(rest);
@@ -177,7 +320,7 @@ export function parsePlayDescription(text: string): TargetFilter[] | null {
 
   // Extract "and no base effect" (before cost/power so it doesn't block their $ anchors)
   if (/\s+and no base effect$/i.test(rest)) {
-    filters.push({ filter: "hasEffectType", value: "onPlay", negate: true });
+    filters.push({ filter: "noBaseEffect" });
     rest = rest.replace(/\s+and no base effect$/i, "").trim();
   }
 
@@ -187,8 +330,45 @@ export function parsePlayDescription(text: string): TargetFilter[] | null {
     rest = rest.replace(/\s+and a \[Trigger\]$/i, "").trim();
   }
 
+  // Extract a bounded dynamic DON!!-field cost. Keep both the printed minimum
+  // and the live upper bound.
+  const dynamicDonCostMatch =
+    /\s+with\s+a\s+cost\s+of\s+(\d+)\s+or\s+more\s+that\s+is\s+equal\s+to\s+or\s+(less|more)\s+than\s+the\s+number\s+of\s+DON!!\s+cards?\s+on\s+(your|your\s+opponent[''\u2019]s)\s+field$/i.exec(
+      rest,
+    );
+  if (dynamicDonCostMatch) {
+    filters.push(
+      {
+        filter: "cost",
+        comparison: "gte",
+        value: parseInt(dynamicDonCostMatch[1]!, 10),
+      },
+      {
+        filter: "dynamicCost",
+        comparison: parseComparison(dynamicDonCostMatch[2]),
+        source: /opponent/i.test(dynamicDonCostMatch[3]!) ? "opponentDonCount" : "selfDonCount",
+      },
+    );
+    rest = rest.slice(0, dynamicDonCostMatch.index).trim();
+  }
+
+  const boundedDynamicDonCostMatch =
+    /\s+with\s+a\s+cost\s+equal\s+to\s+or\s+(less|more)\s+than\s+the\s+number\s+of\s+DON!!\s+cards?\s+on\s+(your|your\s+opponent[''\u2019]s)\s+field$/i.exec(
+      rest,
+    );
+  if (boundedDynamicDonCostMatch) {
+    filters.push({
+      filter: "dynamicCost",
+      comparison: parseComparison(boundedDynamicDonCostMatch[1]),
+      source: /opponent/i.test(boundedDynamicDonCostMatch[2]!)
+        ? "opponentDonCount"
+        : "selfDonCount",
+    });
+    rest = rest.slice(0, boundedDynamicDonCostMatch.index).trim();
+  }
+
   // Extract "with a cost of N (or less|more)?" or "with N power (or less|more)?"
-  const costMatch = /\s+with a cost of (\d+)(?:\s+or\s+(less|more))?$/i.exec(rest);
+  const costMatch = /\s+(?:with|and) a cost of (\d+)(?:\s+or\s+(less|more))?$/i.exec(rest);
   if (costMatch) {
     filters.push({
       filter: "cost",
@@ -198,14 +378,97 @@ export function parsePlayDescription(text: string): TargetFilter[] | null {
     rest = rest.slice(0, costMatch.index).trim();
   }
 
+  const powerRangeMatch = /\s+with (\d+)\s+to\s+(\d+) power$/i.exec(rest);
+  if (!costMatch && powerRangeMatch) {
+    filters.push(
+      {
+        filter: "power",
+        comparison: "gte",
+        value: parseInt(powerRangeMatch[1]!, 10),
+      },
+      {
+        filter: "power",
+        comparison: "lte",
+        value: parseInt(powerRangeMatch[2]!, 10),
+      },
+    );
+    rest = rest.slice(0, powerRangeMatch.index).trim();
+  }
+
   const powerMatch = /\s+with (\d+) power(?:\s+or\s+(less|more))?$/i.exec(rest);
-  if (!costMatch && powerMatch) {
+  if (!costMatch && !powerRangeMatch && powerMatch) {
     filters.push({
       filter: "power",
       comparison: parseComparison(powerMatch[2]),
       value: parseInt(powerMatch[1]!, 10),
     });
     rest = rest.slice(0, powerMatch.index).trim();
+  }
+
+  const qualifiedTraitOrNameMatch =
+    /^(?:of\s+your\s+)?(?:(red|green|blue|purple|black|yellow)\s+)?["“]([^"”]+)["”]\s+type\s+(Character|Event|Stage)\s+cards?\s+or\s+\[([^\]]+)\]$/i.exec(
+      rest,
+    );
+  if (qualifiedTraitOrNameMatch) {
+    const category = qualifiedTraitOrNameMatch[3]!.toLowerCase() as "character" | "event" | "stage";
+    filters.push(
+      { filter: "cardCategory", value: category },
+      {
+        filter: "anyOf",
+        groups: [
+          [
+            ...(qualifiedTraitOrNameMatch[1]
+              ? [
+                  {
+                    filter: "color" as const,
+                    value: qualifiedTraitOrNameMatch[1].toLowerCase() as
+                      | "red"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "black"
+                      | "yellow",
+                  },
+                ]
+              : []),
+            {
+              filter: "trait",
+              value: qualifiedTraitOrNameMatch[2]!,
+              match: "includes",
+            },
+          ],
+          [{ filter: "name", value: qualifiedTraitOrNameMatch[4]! }],
+        ],
+      },
+    );
+    return filters;
+  }
+
+  // A prefix `type card` and a suffix `card with a type including` are
+  // alternatives, not two conjunctive trait filters. Cost/exclusion filters
+  // extracted above remain shared by both branches.
+  const typeIncludingAlternativeMatch =
+    /^(.+?\btype\s+(?:(?:Character|Event|Stage)\s+)?card)\s+or\s+((?:(?:Character|Event|Stage)\s+)?card\s+with\s+a\s+type\s+including\s+(?:[[{"\u201c])[^\]}"\u201d]+(?:[\]}"\u201d]))$/i.exec(
+      rest,
+    );
+  if (typeIncludingAlternativeMatch) {
+    const left = parsePlayDescription(typeIncludingAlternativeMatch[1]!);
+    const right = parsePlayDescription(typeIncludingAlternativeMatch[2]!);
+    if (left && left.length > 0 && right && right.length > 0) {
+      const branch = (nested: TargetFilter[]): TargetFilter =>
+        nested.length === 1 ? nested[0]! : { filter: "allOf", filters: nested };
+      return [...filters, { filter: "anyOf", filters: [branch(left), branch(right)] }];
+    }
+  }
+
+  // Extract suffix trait wording: `Character card with a type including
+  // "Baroque Works"`. This is equivalent to the prefix `{Trait} type`
+  // wording, but appears after the card category.
+  const includesTraitMatch =
+    /\s+with\s+a\s+type\s+including\s+(?:[[{"\u201c])([^\]}"\u201d]+)(?:[\]}"\u201d])$/i.exec(rest);
+  if (includesTraitMatch) {
+    filters.push({ filter: "trait", value: includesTraitMatch[1]!, match: "includes" });
+    rest = rest.slice(0, includesTraitMatch.index).trim();
   }
 
   // Extract attribute prefix: "(Special) attribute Character card" → AttributeFilter
@@ -242,18 +505,28 @@ export function parsePlayDescription(text: string): TargetFilter[] | null {
   const traitMatch = traitRegex.exec(rest);
   if (traitMatch) {
     const traitParts = traitMatch[1]!.split(/,\s*(?:or\s+)?|\s+or\s+/i);
-    for (const part of traitParts) {
-      const trait = part
+    const traits = traitParts.map((part) =>
+      part
         .replace(/^[[\]{}"\u201c\u201d]/g, "")
         .replace(/[[\]{}"\u201c\u201d]$/g, "")
-        .trim();
-      if (trait) filters.push({ filter: "trait", value: trait });
-    }
+        .trim(),
+    );
+    const traitFilter = traitAlternativesFilter(traits, "includes");
+    if (traitFilter) filters.push(traitFilter);
     rest = rest.slice(traitMatch[0].length);
   }
 
   // If no trait, check for name: "[Name]" (not followed by "type")
   if (!traitMatch) {
+    const nameListMatch = /^(\[[^\]]+\](?:(?:,\s*(?:or\s+)?|\s+or\s+)\[[^\]]+\])+)$/.exec(rest);
+    if (nameListMatch) {
+      const names = [...nameListMatch[1]!.matchAll(/\[([^\]]+)\]/g)].map((match) => match[1]!);
+      filters.push({
+        filter: "anyOf",
+        filters: names.map((value) => ({ filter: "name", value })),
+      });
+      return filters;
+    }
     const nameMatch = /^\[([^\]]+)\]$/i.exec(rest);
     if (nameMatch) {
       filters.push({ filter: "name", value: nameMatch[1]! });
@@ -298,18 +571,9 @@ export function parsePlayDescription(text: string): TargetFilter[] | null {
 export function parseSetActiveAction(text: string): SetActiveAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
-  // Strip optional trailing "at the end of this turn" timing
+  // The action orchestrator preserves this suffix in a delayed-action wrapper.
+  // Strip it here so this parser can focus on the underlying target and action.
   const stripped = trimmed.replace(/\s+at\s+the\s+end\s+of\s+this\s+turn$/i, "");
-
-  // "set X and your Leader as active" — compound target
-  const compoundSetActive = /^set\s+(.+?)\s+and\s+(your\s+Leader)\s+as\s+active$/i.exec(stripped);
-  if (compoundSetActive) {
-    const target1 = parseTarget(compoundSetActive[1]!);
-    if (target1) {
-      target1.zones = [...target1.zones, "leader"];
-      return { action: "setActive", target: target1 };
-    }
-  }
 
   // "Set all of your DON!! cards as active"
   if (/^set\s+all\s+(?:of\s+)?your\s+DON!!\s+cards?\s+as\s+active$/i.test(stripped)) {
@@ -354,16 +618,28 @@ export function parseSetActiveAction(text: string): SetActiveAction | null {
     if (leaderMatch[1]) {
       const traitMatch = /^[{[["\u201c]([^}\]"\u201d]+)[}\]"\u201d]\s+type$/i.exec(leaderMatch[1]);
       if (traitMatch) {
-        target.filters = [{ filter: "trait", value: traitMatch[1]! }];
+        target.filters = [{ filter: "trait", value: traitMatch[1]!, match: "includes" }];
       }
     }
     return { action: "setActive", target };
   }
 
-  const target = parseTarget(targetText) ?? parseTargetWithoutPlayer(targetText);
+  const explicitTarget = parseTarget(targetText);
+  const target = explicitTarget ?? parseTargetWithoutPlayer(targetText);
   if (!target) return null;
+  const ownedTarget = explicitTarget ? target : { ...target, player: "self" as const };
 
-  return { action: "setActive", target };
+  // A named generic "card" can refer to a Leader or Character with that name,
+  // but not to a Stage or DON!! card. OP03-036's official Q&A confirms this
+  // scope for "your [Kuro] cards".
+  if (
+    /^up\s+to\s+\d+\s+of\s+your\s+\[[^\]]+\]\s+cards?$/i.test(targetText) &&
+    target.filters?.some((filter) => filter.filter === "name")
+  ) {
+    return { action: "setActive", target: { ...ownedTarget, zones: ["leader", "character"] } };
+  }
+
+  return { action: "setActive", target: ownedTarget };
 }
 
 /**
@@ -375,15 +651,67 @@ export function parseSetActiveAction(text: string): SetActiveAction | null {
 export function parseFreezeAction(text: string): FreezeAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
-  // Self-freeze: "this Character/the selected Character will not become active in your next Refresh Phase"
-  if (
-    /^(?:this|the selected)\s+Character\s+will\s+not\s+become\s+active\s+in\s+your\s+next\s+Refresh\s+Phase$/i.test(
+  const bothPlayersRefreshMatch =
+    /^all\s+Characters\s+with\s+a\s+cost\s+of\s+(\d+)\s+or\s+(less|more)\s+do\s+not\s+become\s+active\s+in\s+your\s+and\s+your\s+opponent's\s+Refresh\s+Phases$/i.exec(
       trimmed,
-    )
-  ) {
+    );
+  if (bothPlayersRefreshMatch) {
     return {
       action: "freeze",
-      target: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
+      target: {
+        player: "both",
+        zones: ["character"],
+        count: { amount: "all" },
+        filters: [
+          {
+            filter: "cost",
+            comparison: parseComparison(bothPlayersRefreshMatch[2]),
+            value: parseInt(bothPlayersRefreshMatch[1]!, 10),
+          },
+        ],
+      },
+    };
+  }
+
+  const nextRefreshMatch =
+    /^Up\s+to\s+(\d+)\s+of\s+your\s+opponent's\s+Characters\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?\s+will\s+not\s+become\s+active\s+in\s+the\s+next\s+Refresh\s+Phase$/i.exec(
+      trimmed,
+    );
+  if (nextRefreshMatch) {
+    return {
+      action: "freeze",
+      target: {
+        player: "opponent",
+        zones: ["character"],
+        count: { amount: parseInt(nextRefreshMatch[1]!, 10), upTo: true },
+        filters: [
+          {
+            filter: "cost",
+            comparison: nextRefreshMatch[3] ? parseComparison(nextRefreshMatch[3]) : "eq",
+            value: parseInt(nextRefreshMatch[2]!, 10),
+          },
+        ],
+      },
+    };
+  }
+
+  // Self-freeze: "this Character/the selected Character will not become active in your next Refresh Phase"
+  const selfFreezeMatch =
+    /^(this|the selected)\s+Character\s+will\s+not\s+become\s+active\s+in\s+your\s+next\s+Refresh\s+Phase$/i.exec(
+      trimmed,
+    );
+  if (selfFreezeMatch) {
+    return {
+      action: "freeze",
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: 1 },
+        ...(selfFreezeMatch[1]!.toLowerCase() === "this" && { self: true }),
+      },
+      ...(selfFreezeMatch[1]!.toLowerCase() === "the selected" && {
+        previousActionTargets: true,
+      }),
     };
   }
 
@@ -410,9 +738,9 @@ export function parseFreezeAction(text: string): FreezeAction | null {
     };
   }
 
-  // Opponent freeze: "Up to [a total of] N of your opponent's rested [Leader and] Character(s)/cards/DON!! cards will not become active in your opponent's next Refresh Phase"
+  // Opponent freeze: "Up to [a total of] N of your opponent's rested [Leader and] Character(s)/Stages/cards/DON!! cards will not become active in your opponent's next Refresh Phase"
   const opponentMatch =
-    /^Up\s+to\s+(?:a\s+total\s+of\s+)?(\d+)\s+of\s+your\s+opponent's\s+rested\s+(Leader\s+and\s+Character|Characters?(?:\s+or\s+DON!!\s+cards?)?|Character\s+or\s+DON!!\s+cards?|DON!!\s+cards?)\s*(?:cards?)?\s*(?:with\s+(.+?)\s+)?will\s+not\s+become\s+active\s+in\s+your\s+opponent's\s+next\s+Refresh\s+Phase$/i.exec(
+    /^Up\s+to\s+(?:a\s+total\s+of\s+)?(\d+)\s+of\s+your\s+opponent's\s+rested\s+(Leader\s+and\s+Character|Characters?\s+or\s+Stages?|Characters?(?:\s+or\s+DON!!\s+cards?)?|Character\s+or\s+DON!!\s+cards?|DON!!\s+cards?)\s*(?:cards?)?\s*(?:with\s+(.+?)\s+)?will\s+not\s+become\s+active\s+in\s+your\s+opponent's\s+next\s+Refresh\s+Phase$/i.exec(
       trimmed,
     );
   if (opponentMatch) {
@@ -420,9 +748,13 @@ export function parseFreezeAction(text: string): FreezeAction | null {
     const zonesText = opponentMatch[2]!.toLowerCase();
     const zones: Zone[] = zonesText.includes("leader")
       ? ["leader", "character"]
-      : zonesText.includes("don")
-        ? ["character", "costArea"]
-        : ["character"];
+      : zonesText.includes("stage")
+        ? ["character", "stage"]
+        : zonesText.includes("character") && zonesText.includes("don")
+          ? ["character", "costArea"]
+          : zonesText.includes("don")
+            ? ["costArea"]
+            : ["character"];
     const filters: TargetFilter[] = [{ filter: "state", value: "rested" }];
 
     // Parse optional filter like "a cost of N or less"

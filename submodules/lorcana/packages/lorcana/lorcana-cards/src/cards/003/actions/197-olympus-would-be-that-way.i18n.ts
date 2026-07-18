@@ -17,4 +17,8 @@ export const olympusWouldBeThatWayI18n: Record<Languages, I18nProperties> = {
     name: "L'Olimpo Sarebbe per di Là",
     text: "I tuoi personaggi ottengono +3 {S} mentre stanno sfidando luoghi per questo turno.",
   },
+  es: {
+    name: "El Olimpo sería así",
+    text: "Tus personajes obtienen +3 {S} mientras desafían una ubicación este turno.",
+  },
 };

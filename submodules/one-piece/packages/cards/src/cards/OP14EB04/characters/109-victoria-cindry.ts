@@ -30,6 +30,40 @@ export const op14eb04VictoriaCindry109: CharacterCard = {
   effect: "[Blocker]",
   effects: {
     keywords: ["blocker"],
+    effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+              {
+                filter: "trait",
+                value: "Thriller Bark Pirates",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+            playState: "rested",
+          },
+        ],
+      },
+    ],
   },
   i18n: op14eb04VictoriaCindry109I18n,
 };

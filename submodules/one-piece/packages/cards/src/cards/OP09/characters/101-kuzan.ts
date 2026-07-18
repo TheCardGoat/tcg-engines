@@ -48,7 +48,7 @@ export const op09Kuzan101: CharacterCard = {
                 },
               ],
             },
-            position: "top",
+            position: "choice",
             faceUp: true,
           },
           {

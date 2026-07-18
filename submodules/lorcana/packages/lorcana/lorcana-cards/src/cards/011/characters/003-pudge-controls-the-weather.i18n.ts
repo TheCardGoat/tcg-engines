@@ -45,4 +45,14 @@ export const pudgeControlsTheWeatherI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Gordito",
+    version: "Controla el clima",
+    text: [
+      {
+        title: "BUEN AMIGO",
+        description: "Si tienes un personaje llamado Lilo en juego, puedes interpretarlo gratis.",
+      },
+    ],
+  },
 };

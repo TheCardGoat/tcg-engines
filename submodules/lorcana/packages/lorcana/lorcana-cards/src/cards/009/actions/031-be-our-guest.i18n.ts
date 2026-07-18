@@ -26,4 +26,8 @@ export const beOurGuestI18n: Record<Languages, I18nProperties> = {
     name: "Be Our Guest",
     text: "Look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
   },
+  es: {
+    name: "Sea nuestro invitado",
+    text: "Mira las 4 primeras cartas de tu mazo. Puedes revelar una carta de personaje y ponerla en tu mano. Coloque el resto en el fondo de su plataforma en cualquier orden.",
+  },
 };

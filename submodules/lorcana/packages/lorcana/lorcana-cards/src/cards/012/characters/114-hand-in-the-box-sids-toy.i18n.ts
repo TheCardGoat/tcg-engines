@@ -45,4 +45,15 @@ export const handintheboxSidsToyI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Mano en la caja",
+    version: "El juguete de Sid",
+    text: [
+      {
+        title: "CON RESORTE",
+        description:
+          "Puedes poner una carta de personaje de juguete de tu descarte en la parte inferior de tu mazo para jugar con este personaje de forma gratuita.",
+      },
+    ],
+  },
 };

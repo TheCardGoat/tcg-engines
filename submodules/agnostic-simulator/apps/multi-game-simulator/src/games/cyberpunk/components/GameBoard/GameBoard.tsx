@@ -356,7 +356,7 @@ export function GameBoard({
         />
       </div>
       <div className={classes.stackCol}>
-        <PInfoZone opponent={opponent} phase={phase} activeEffects={zones.activeEffects}>
+        <PInfoZone opponent={opponent} phase={phase}>
           {opponent ? (
             <div className={classes.statusDock}>
               <ClockDisplay docked />

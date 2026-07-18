@@ -72,4 +72,21 @@ export const lumiereFiredUpI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Lumière",
+    version: "Encendido",
+    text: [
+      {
+        title: "Shift 3",
+      },
+      {
+        title: "Evasivo, pupilo",
+      },
+      {
+        title: "¡SACRBLEU!:",
+        description:
+          "Cada vez que uno de tus objetos es desterrado, este personaje obtiene +1 {L} este turno.",
+      },
+    ],
+  },
 };

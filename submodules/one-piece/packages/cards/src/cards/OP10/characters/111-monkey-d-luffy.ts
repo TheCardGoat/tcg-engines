@@ -66,6 +66,7 @@ export const op10MonkeyDLuffy111: CharacterCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

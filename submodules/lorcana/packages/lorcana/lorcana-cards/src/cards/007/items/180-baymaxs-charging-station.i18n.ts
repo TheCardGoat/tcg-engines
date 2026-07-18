@@ -41,4 +41,14 @@ export const baymaxsChargingStationI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Estación de carga de Baymax",
+    text: [
+      {
+        title: "CONVERTIDOR DE ENERGÍA",
+        description:
+          "Siempre que juegues con un personaje Floodborn, si usaste Shift para jugarlo, puedes robar una carta.",
+      },
+    ],
+  },
 };

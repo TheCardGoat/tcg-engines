@@ -43,6 +43,7 @@ export const op14eb04GroundDeath096: EventCard = {
     effects: [
       {
         trigger: "main",
+        costs: [{ cost: "restDon", amount: 2 }],
         actions: [
           {
             action: "negateEffects",

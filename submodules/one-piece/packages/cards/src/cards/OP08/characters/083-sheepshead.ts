@@ -25,7 +25,7 @@ export const op08Sheepshead083: CharacterCard = {
   counter: 1000,
   traits: ["Animal Kingdom Pirates SMILE"],
   attribute: "slash",
-  effect: "[DON!! x1] [Your Turn] Give all of your opponent's Characters 1 cost.",
+  effect: "[DON!! x1] [Your Turn] Give all of your opponent's Characters −1 cost.",
   effects: {
     permanentEffects: [
       {
@@ -49,7 +49,7 @@ export const op08Sheepshead083: CharacterCard = {
                 amount: "all",
               },
             },
-            value: 1,
+            value: -1,
             duration: "permanent",
           },
         ],

@@ -61,4 +61,20 @@ export const aladdinGenieMischievousPalsI18n: Record<Languages, I18nProperties> 
       },
     ],
   },
+  es: {
+    name: "Aladino y el genio",
+    version: "Amigos traviesos",
+    text: [
+      {
+        title: "Shift 3",
+        description:
+          "(Puedes pagar 3 para jugar esto encima de uno de tus personajes llamado Aladdin o Genie).",
+      },
+      {
+        title: "PRESTIDIGITACIÓN",
+        description:
+          "Cuando juegas con este personaje, puedes poner cualquier cantidad de cartas de tu mano en la parte inferior de tu mazo en cualquier orden. Si lo haces, roba esa cantidad de cartas más 1.",
+      },
+    ],
+  },
 };

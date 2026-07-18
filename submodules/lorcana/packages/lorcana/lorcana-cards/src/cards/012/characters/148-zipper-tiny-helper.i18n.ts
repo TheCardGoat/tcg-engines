@@ -17,4 +17,8 @@ export const zipperTinyHelperI18n: Record<Languages, I18nProperties> = {
     name: "Zipper",
     version: "Minuscolo Aiutante",
   },
+  es: {
+    name: "Cremallera",
+    version: "Pequeño ayudante",
+  },
 };

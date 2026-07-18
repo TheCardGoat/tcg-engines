@@ -45,4 +45,15 @@ export const pepaMadrigalWeatherMakerI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pepa Madrigal",
+    version: "Creador del tiempo",
+    text: [
+      {
+        title: "PARECE LLUVIA",
+        description:
+          "Cuando juegas con este personaje, puedes ejercer el personaje contrario elegido. Ese personaje no puede prepararse al comienzo de su siguiente turno a menos que esté en una ubicación.",
+      },
+    ],
+  },
 };

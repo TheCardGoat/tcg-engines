@@ -45,4 +45,15 @@ export const anastasiaBossyStepsisterI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Anastasia",
+    version: "Hermanastra mandona",
+    text: [
+      {
+        title: "OH,",
+        description:
+          "¡ODIO ESTO! Siempre que se desafía a este personaje, el jugador desafiante elige y descarta una carta.",
+      },
+    ],
+  },
 };

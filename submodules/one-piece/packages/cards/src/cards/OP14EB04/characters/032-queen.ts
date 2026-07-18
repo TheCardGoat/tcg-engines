@@ -31,6 +31,19 @@ export const op14eb04Queen032: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Animal Kingdom Pirates",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "draw",
@@ -42,10 +55,10 @@ export const op14eb04Queen032: CharacterCard = {
       },
       {
         trigger: "activateMain",
-        conditions: [
+        costs: [
           {
-            condition: "leaderTrait",
-            trait: "Animal Kingdom Pirates",
+            cost: "restDon",
+            amount: 2,
           },
         ],
         actions: [
@@ -56,6 +69,10 @@ export const op14eb04Queen032: CharacterCard = {
               upTo: true,
             },
             state: "rested",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Animal Kingdom Pirates",
+            },
           },
         ],
         optional: true,

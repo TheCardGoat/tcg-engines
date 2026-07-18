@@ -57,4 +57,18 @@ export const belleOfTheBallI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Beldad",
+    version: "De la pelota",
+    text: [
+      {
+        title: "Pabellón",
+      },
+      {
+        title: "INTRODUCIDO EN LA FIESTA",
+        description:
+          "Cuando juegas con este personaje, tus otros personajes ganan Protección hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

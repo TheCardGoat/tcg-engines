@@ -45,4 +45,15 @@ export const morphLittleImitatorP4ChallengeI18n: Record<Languages, I18nPropertie
       },
     ],
   },
+  es: {
+    name: "Transformar",
+    version: "Pequeño imitador",
+    text: [
+      {
+        title: "MÍMETRO AVANZADO",
+        description:
+          "Puedes mover cualquier personaje encima de este personaje. (Esto incluye todas las variantes de Shift).",
+      },
+    ],
+  },
 };

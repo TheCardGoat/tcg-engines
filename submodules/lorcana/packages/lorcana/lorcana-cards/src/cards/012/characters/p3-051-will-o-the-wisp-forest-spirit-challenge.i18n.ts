@@ -45,4 +45,15 @@ export const willOTheWispForestSpiritP3ChallengeI18n: Record<Languages, I18nProp
       },
     ],
   },
+  es: {
+    name: "Voluntad del fuego fatuo",
+    version: "Espíritu del bosque",
+    text: [
+      {
+        title: "SALGA",
+        description:
+          "Cuando este personaje es desterrado en un desafío, puedes devolver esta carta a tu mano.",
+      },
+    ],
+  },
 };

@@ -23,7 +23,7 @@ export const op04Franky063: CharacterCard = {
   cost: 1,
   power: 1000,
   counter: 2000,
-  traits: ["Water Seven The Franky Family"],
+  traits: ["Water Seven", "The Franky Family"],
   attribute: "wisdom",
   effect:
     "[On Your Opponent's Attack] [Once Per Turn] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your Leader has the [Water Seven] type, up to 1 of your Leader or Character cards gains +1000 power during this battle.",
@@ -31,12 +31,6 @@ export const op04Franky063: CharacterCard = {
     effects: [
       {
         trigger: "onOpponentAttack",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Water Seven",
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -56,8 +50,14 @@ export const op04Franky063: CharacterCard = {
             },
             value: 1000,
             duration: "thisBattle",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Water Seven",
+              match: "includes",
+            },
           },
         ],
+        optional: true,
         oncePerTurn: true,
       },
     ],

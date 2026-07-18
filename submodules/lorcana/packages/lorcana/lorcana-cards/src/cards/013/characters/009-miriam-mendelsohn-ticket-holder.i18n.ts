@@ -41,4 +41,14 @@ export const miriamMendelsohnTicketHolderI18n: Record<Languages, I18nProperties>
       },
     ],
   },
+  es: {
+    name: "Miriam Mendelsohn",
+    version: "Titular del boleto",
+    text: [
+      {
+        title: "¡LOS TENGO!",
+        description: "Cuando juegas con este personaje, cada jugador roba una carta.",
+      },
+    ],
+  },
 };

@@ -26,4 +26,8 @@ export const gruesomeAndGrimI18n: Record<Languages, I18nProperties> = {
     name: "Gruesome and Grim",
     text: "Play a character with cost 4 or less for free. They gain <Rush>. At the end of the turn, banish them. (They can challenge the turn they're played.)",
   },
+  es: {
+    name: "Horrible y sombrío",
+    text: "Juega gratis con un personaje con un coste de 4 o menos. Ganan Rush. Al final del turno, destiérralos. (Pueden desafiar el turno en el que se juega).",
+  },
 };

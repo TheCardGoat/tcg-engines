@@ -41,4 +41,14 @@ export const steelCoilI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Bobina de acero",
+    text: [
+      {
+        title: "FLUJO METÁLICO",
+        description:
+          "Durante tu turno, cada vez que se pone una carta en tu tintero, puedes robar una carta, luego elegir y descartar una carta.",
+      },
+    ],
+  },
 };

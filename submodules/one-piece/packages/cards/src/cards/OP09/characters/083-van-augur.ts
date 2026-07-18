@@ -26,17 +26,11 @@ export const op09VanAugur083: CharacterCard = {
   traits: ["Blackbeard Pirates"],
   attribute: "ranged",
   effect:
-    '[Activate: Main] You may rest this Character: If your Leader has the "Blackbeard Pirates" type, give up to 1 of your opponent\'s Characters 3 cost during this turn.\n[On K.O.] Draw 1 card.',
+    '[Activate: Main] You may rest this Character: If your Leader has the "Blackbeard Pirates" type, give up to 1 of your opponent\'s Characters −3 cost during this turn.\n[On K.O.] Draw 1 card.',
   effects: {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderTrait",
-            trait: "Blackbeard Pirates",
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -53,8 +47,13 @@ export const op09VanAugur083: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 3,
+            value: -3,
             duration: "thisTurn",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Blackbeard Pirates",
+              match: "includes",
+            },
           },
         ],
         optional: true,

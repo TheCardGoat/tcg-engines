@@ -54,7 +54,6 @@ export const st01MonkeyDLuffy001: LeaderCard = {
       {
         trigger: "activateMain",
         oncePerTurn: true,
-        optional: true,
         actions: [
           {
             action: "giveDon",
@@ -208,7 +207,6 @@ export const st01Nami007: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        oncePerTurn: true,
         actions: [
           {
             action: "giveDon",
@@ -221,6 +219,7 @@ export const st01Nami007: CharacterCard = {
             donState: "rested",
           },
         ],
+        oncePerTurn: true,
       },
     ],
   },
@@ -516,10 +515,27 @@ export const st01DiableJambe016: EventCard = {
               player: "self",
               zones: ["leader", "character"],
               count: { amount: 1, upTo: true },
-              filters: [{ filter: "trait", value: "Straw Hat Crew" }],
+              filters: [{ filter: "trait", value: "Straw Hat Crew", match: "includes" }],
             },
             keyword: "unblockable",
             duration: "thisTurn",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [
+                { filter: "hasKeyword", value: "blocker" },
+                { filter: "cost", comparison: "lte", value: 3 },
+              ],
+            },
           },
         ],
       },
@@ -550,7 +566,6 @@ export const st01ThousandSunny017: StageCard = {
     effects: [
       {
         trigger: "activateMain",
-        optional: true,
         costs: [{ cost: "restThisCard" }],
         actions: [
           {
@@ -559,12 +574,13 @@ export const st01ThousandSunny017: StageCard = {
               player: "self",
               zones: ["leader", "character"],
               count: { amount: 1, upTo: true },
-              filters: [{ filter: "trait", value: "Straw Hat Crew" }],
+              filters: [{ filter: "trait", value: "Straw Hat Crew", match: "includes" }],
             },
             value: 1000,
             duration: "thisTurn",
           },
         ],
+        optional: true,
       },
     ],
   },

@@ -17,4 +17,8 @@ export const sebastianLoyalCrabI18n: Record<Languages, I18nProperties> = {
     name: "Sebastian",
     version: "Granchio Leale",
   },
+  es: {
+    name: "Sebastián",
+    version: "Cangrejo leal",
+  },
 };

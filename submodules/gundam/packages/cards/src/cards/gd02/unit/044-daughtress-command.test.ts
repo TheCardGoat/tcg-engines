@@ -1,48 +1,98 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  asPlayerId,
+  activeResources,
   createMockUnit,
+  expectFailure,
+  expectSuccess,
 } from "@tcg/gundam-engine";
+import {
+  passTurnThroughPublicMoves,
+  resolveUnitBattle,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 import { gd02DaughtressCommand044 } from "./044-daughtress-command.ts";
 
 describe("Daughtress Command (GD02-044)", () => {
-  it("【Destroyed】 deploys a rested Daughtress token when another (New UNE) Unit is in play", () => {
-    // Daughtress Command (AP 3, HP 1) has the "new une" trait. Add a
-    // second (New UNE) unit on p2's side so the Destroyed condition
-    // "another (New UNE) Unit in play" is satisfied. An AP-1 attacker
-    // destroys Daughtress Command in combat.
-    const attacker = createMockUnit({ ap: 1, hp: 5 });
-    const friendlyNewUne = createMockUnit({
-      ap: 1,
-      hp: 5,
-      traits: ["new une"],
-    } as unknown as Parameters<typeof createMockUnit>[0]);
-    const engine = GundamTestEngine.create(
-      { play: [attacker] },
-      { play: [{ card: gd02DaughtressCommand044, exhausted: true }, friendlyNewUne] },
-    );
-    const p1Id = asPlayerId(PLAYER_ONE);
-    const p2Id = asPlayerId(PLAYER_TWO);
-    const attackerId = engine.getCardsInZone({ zone: "battleArea", playerId: p1Id })[0]!;
-    const daughtressId = engine.getCardsInZone({ zone: "battleArea", playerId: p2Id })[0]!;
+  describe("Playing the Unit", () => {
+    it("stays in hand below its printed Lv.2 requirement", () => {
+      const engine = GundamTestEngine.create({
+        hand: [gd02DaughtressCommand044],
+        resourceArea: activeResources(1),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const cardId = p1.getHand()[0]!;
 
-    engine.getG().exhausted[attackerId] = false;
-    const battleCountBefore = engine.getCardCount({ zone: "battleArea", playerId: PLAYER_TWO });
+      expectFailure(p1.deployUnit(cardId), "INSUFFICIENT_RESOURCE_LEVEL");
 
-    engine.resolveCombat({ attackerId, target: daughtressId });
+      expect(p1.getHand()).toContain(cardId);
+      expect(p1.getCardsInZone("battleArea")).toHaveLength(0);
+    });
 
-    // Daughtress Command destroyed (AP 1 vs HP 1).
-    expect(engine.getState().ctx.zones.private.cardIndex[daughtressId]?.zoneKey).toBe(
-      `trash:${PLAYER_TWO}`,
-    );
-    // Destroyed trigger deployed the token: one new unit entered p2's
-    // battle area (Daughtress Command left, token entered, net 0 vs
-    // pre-combat; but pre-combat had 2 units, post-combat has 2).
-    expect(engine.getCardCount({ zone: "battleArea", playerId: PLAYER_TWO })).toBe(
-      battleCountBefore,
-    );
+    it("stays in hand after another legal deployment rests the active Resources", () => {
+      const spender = createMockUnit({ level: 1, cost: 2 });
+      const engine = GundamTestEngine.create({
+        hand: [spender, gd02DaughtressCommand044],
+        resourceArea: activeResources(2),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const cardId = p1.getHand()[1]!;
+
+      expectSuccess(p1.deployUnit(spender));
+      expectFailure(p1.deployUnit(cardId), "INSUFFICIENT_RESOURCES");
+
+      expect(p1.getHand()).toContain(cardId);
+      expect(p1.getCardsInZone("battleArea")).toHaveLength(1);
+    });
+  });
+
+  describe("【Destroyed】If you have another (New UNE) Unit in play, deploy 1 rested [Daughtress] Unit token.", () => {
+    it("deploys a visible rested Daughtress token after being destroyed in battle", () => {
+      const attacker = createMockUnit({ ap: 1, hp: 4 });
+      const ally = createMockUnit({ traits: ["new une"], hp: 4 });
+      const openingShield = createMockUnit({ name: "Opening Shield" });
+      const engine = GundamTestEngine.create(
+        { play: [attacker], shieldArea: [openingShield], deck: 5 },
+        { play: [gd02DaughtressCommand044, ally], deck: 5 },
+        { initialActivePlayer: PLAYER_TWO },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const attackerId = p1.getCardsInZone("battleArea")[0]!;
+      const [daughtressId, allyId] = p2.getCardsInZone("battleArea");
+
+      restUnitsByAttackingDirectly(engine, PLAYER_TWO, [daughtressId!]);
+      passTurnThroughPublicMoves(engine, PLAYER_TWO);
+      resolveUnitBattle(engine, PLAYER_ONE, attackerId, daughtressId!);
+
+      expect(p2.getCardZone(daughtressId!)).toBe(`trash:${PLAYER_TWO}`);
+      const tokenId = p2.getCardsInZone("battleArea").find((id) => id !== allyId);
+      expect(tokenId).toBeDefined();
+      expect(p2.isExhausted(tokenId!)).toBe(true);
+    });
+
+    it("does not deploy a token when the only other friendly Unit has another trait", () => {
+      const attacker = createMockUnit({ ap: 1, hp: 4 });
+      const outsider = createMockUnit({ traits: ["vulture"], hp: 4 });
+      const openingShield = createMockUnit({ name: "Opening Shield" });
+      const engine = GundamTestEngine.create(
+        { play: [attacker], shieldArea: [openingShield], deck: 5 },
+        { play: [gd02DaughtressCommand044, outsider], deck: 5 },
+        { initialActivePlayer: PLAYER_TWO },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const attackerId = p1.getCardsInZone("battleArea")[0]!;
+      const [daughtressId, outsiderId] = p2.getCardsInZone("battleArea");
+
+      restUnitsByAttackingDirectly(engine, PLAYER_TWO, [daughtressId!]);
+      passTurnThroughPublicMoves(engine, PLAYER_TWO);
+      resolveUnitBattle(engine, PLAYER_ONE, attackerId, daughtressId!);
+
+      expect(p2.getCardZone(daughtressId!)).toBe(`trash:${PLAYER_TWO}`);
+      expect(p2.getCardsInZone("battleArea")).toEqual([outsiderId]);
+    });
   });
 });

@@ -17,4 +17,8 @@ export const drizellaSpoiledStepsisterI18n: Record<Languages, I18nProperties> = 
     name: "Genoveffa",
     version: "Sorellastra Viziata",
   },
+  es: {
+    name: "Drizella",
+    version: "Hermanastra mimada",
+  },
 };

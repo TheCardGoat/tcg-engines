@@ -50,4 +50,17 @@ export const theMobSongI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "La canción de la mafia",
+    text: [
+      {
+        title: "Cantar juntos 10",
+        description:
+          "(Cualquier número de personajes tuyos o de tus compañeros de equipo con un costo total de 10 o más puede {E} cantar esta canción gratis).",
+      },
+      {
+        title: "Inflige 3 daños a hasta 3 personajes y/o ubicaciones elegidos.",
+      },
+    ],
+  },
 };

@@ -8,6 +8,12 @@ const peterPanShiftBase = createMockCharacter({
   cost: 2,
 });
 
+const tinkerBellShiftBase = createMockCharacter({
+  id: "peter-tink-fast-friends-tinker-bell-base",
+  name: "Tinker Bell",
+  cost: 2,
+});
+
 const friendlyCharacter = createMockCharacter({
   id: "peter-tink-fast-friends-friendly",
   name: "Friendly Character",
@@ -22,6 +28,23 @@ describe("Peter Pan & Tinker Bell - Fast Friends", () => {
       inkwell: 4,
     });
     const shiftTarget = testEngine.findCardInstanceId(peterPanShiftBase, "play", "player_one");
+
+    expect(
+      testEngine.asPlayerOne().playCard(peterPanTinkerBellFastFriends, {
+        cost: { cost: "shift", shiftTarget },
+      }),
+    ).toBeSuccessfulCommand();
+
+    expect(testEngine.asPlayerOne().getCardZone(peterPanTinkerBellFastFriends)).toBe("play");
+  });
+
+  it("can shift onto a character named Tinker Bell", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [peterPanTinkerBellFastFriends],
+      play: [tinkerBellShiftBase],
+      inkwell: 4,
+    });
+    const shiftTarget = testEngine.findCardInstanceId(tinkerBellShiftBase, "play", "player_one");
 
     expect(
       testEngine.asPlayerOne().playCard(peterPanTinkerBellFastFriends, {

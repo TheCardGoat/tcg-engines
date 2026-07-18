@@ -34,4 +34,8 @@ export const putThatThingBackI18n: Record<Languages, I18nProperties> = {
       },
     ],
   },
+  es: {
+    name: "Pon esa cosa de vuelta",
+    text: "Devuelve el personaje u objeto elegido a la mano de su jugador.",
+  },
 };

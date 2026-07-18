@@ -60,4 +60,19 @@ export const skullRockIsolatedFortressI18n: Record<Languages, I18nProperties> = 
       },
     ],
   },
+  es: {
+    name: "Roca del cráneo",
+    version: "Fortaleza aislada",
+    text: [
+      {
+        title: "TERRENO FAMILIAR",
+        description: "Los personajes obtienen +1 {S} mientras están aquí.",
+      },
+      {
+        title: "REFUGIO SEGURO",
+        description:
+          "Al comienzo de tu turno, si tienes un personaje pirata aquí, gana 1 conocimiento.",
+      },
+    ],
+  },
 };

@@ -45,4 +45,15 @@ export const gadgetHackwrenchQuirkyScientistI18n: Record<Languages, I18nProperti
       },
     ],
   },
+  es: {
+    name: "Llave para hackear gadgets",
+    version: "Científico peculiar",
+    text: [
+      {
+        title: "¡Dios mío!",
+        description:
+          "Cuando juegas con este personaje, si un oponente tiene más cartas en su mano que tú, puedes robar una carta.",
+      },
+    ],
+  },
 };

@@ -17,4 +17,8 @@ export const vaianaAdventurerOfLandAndSeaP2PromoI18n: Record<Languages, I18nProp
     name: "Vaiana",
     version: "Adventurer of Land and Sea",
   },
+  es: {
+    name: "Vaiana",
+    version: "Aventurero de tierra y mar",
+  },
 };

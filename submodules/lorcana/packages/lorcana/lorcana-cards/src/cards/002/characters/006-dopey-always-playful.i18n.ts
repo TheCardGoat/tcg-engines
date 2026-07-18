@@ -33,4 +33,15 @@ export const dopeyAlwaysPlayfulI18n: Record<Languages, I18nProperties> = {
     version: "Always Playful",
     text: "Odd One Out\\ When this character is banished, your other Seven Dwarfs characters get +2 {S} until the start of your next turn.",
   },
+  es: {
+    name: "Atontado",
+    version: "Siempre juguetón",
+    text: [
+      {
+        title: "UNO IMPAR FUERA",
+        description:
+          "Cuando este personaje es desterrado, tus otros personajes de los Siete Enanitos obtienen +2 {S} hasta el comienzo de tu siguiente turno.",
+      },
+    ],
+  },
 };

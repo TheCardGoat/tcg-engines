@@ -54,9 +54,7 @@ export const op02ThreeSwordStyleOniGiri045: EventCard = {
             },
             filters: [
               {
-                filter: "hasEffectType",
-                value: "onPlay",
-                negate: true,
+                filter: "noBaseEffect",
               },
               {
                 filter: "cost",
