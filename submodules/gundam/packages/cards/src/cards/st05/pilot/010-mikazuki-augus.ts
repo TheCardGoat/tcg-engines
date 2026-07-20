@@ -120,6 +120,17 @@ export const st05MikazukiAugus010: PilotCard = {
             action: "dealDamage",
             amount: 1,
             target: {
+              owner: "friendly",
+              cardType: "unit",
+              count: 1,
+            },
+          },
+        },
+        {
+          action: {
+            action: "dealDamage",
+            amount: 1,
+            target: {
               owner: "opponent",
               cardType: "unit",
               count: 1,

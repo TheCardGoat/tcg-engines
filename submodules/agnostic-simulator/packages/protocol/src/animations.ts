@@ -1,5 +1,15 @@
 import { z } from "zod";
 
+/** Authoritative engine animation packet transported by the gateway. */
+export const AnimationPacketV1Schema = z
+  .object({
+    id: z.string().min(1),
+    kind: z.string().min(1),
+    durationMs: z.number().nonnegative().optional(),
+    payload: z.unknown(),
+  })
+  .strict();
+
 export const AnimationEntityRefSchema = z
   .object({
     kind: z.literal("entity"),
@@ -186,3 +196,4 @@ export type AnimationAnchor = z.infer<typeof AnimationAnchorSchema>;
 export type SimulatorAudioCueId = z.infer<typeof SimulatorAudioCueIdSchema>;
 export type AnimationPlanStepV1 = z.infer<typeof AnimationPlanStepV1Schema>;
 export type AnimationPlanV1 = z.infer<typeof AnimationPlanV1Schema>;
+export type AnimationPacketV1 = z.infer<typeof AnimationPacketV1Schema>;

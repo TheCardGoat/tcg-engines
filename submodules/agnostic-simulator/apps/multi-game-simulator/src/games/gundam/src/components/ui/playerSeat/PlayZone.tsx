@@ -1,4 +1,6 @@
-import type { CSSProperties, ReactNode } from "react";
+import { useDroppable } from "@dnd-kit/core";
+import { useEffect } from "react";
+import type { CSSProperties } from "react";
 
 import { useLayoutMode } from "../../../lib/use-layout-mode.ts";
 import { cn } from "../../../lib/utils.ts";
@@ -10,6 +12,7 @@ import type { GameCardData } from "../types.ts";
 import type { SeatSide } from "./PlayerSeat.tsx";
 import { CLIP_DIAMOND } from "./constants.ts";
 import { PlayZoneCardBands } from "./PlayZoneCardBands.tsx";
+import { encodeGundamBattleAreaTarget, useGundamDragDrop } from "./gundam-drag-drop-context.tsx";
 
 const PAIRED_PILOT_PEEK_RATIO = 0.3;
 const PAIRED_PILOT_UNIT_COVER_RATIO = 0.08;
@@ -24,13 +27,11 @@ interface PlayZoneProps {
    *  dispatcher even though `GameCard` itself no longer captures clicks
    *  for inspect (right-click is the inspect path now). */
   readonly onCardClick?: (cardId: string) => void;
-  /** Optional column rendered inside the play zone, flush to its left
-   *  edge (shields + base for the seat). Stays scoped to the battle-area
-   *  row so it doesn't span the hand/resource rows above or below. */
-  readonly leftColumn?: ReactNode;
-  /** Same as leftColumn but pinned to the right edge — used by the top
-   *  (opponent) seat so its plate mirrors the bottom seat. */
-  readonly rightColumn?: ReactNode;
+  /** Dropping a playable hand card dispatches the same source-card action
+   * as tapping it. Targeted moves continue through the normal prompt flow. */
+  readonly onCardDrop?: (cardId: string) => void;
+  readonly isTurn?: boolean;
+  readonly isPriority?: boolean;
   readonly className?: string;
 }
 
@@ -41,13 +42,33 @@ export function PlayZone({
   selectedCardIds,
   highlightCardIds,
   onCardClick,
-  leftColumn,
-  rightColumn,
+  onCardDrop,
+  isTurn = false,
+  isPriority = false,
   className,
 }: PlayZoneProps) {
   const isTop = side === "top";
   const layout = useLayoutMode();
   const selectedCardSet = new Set(selectedCardIds);
+  const canAcceptDrop = Boolean(onCardDrop);
+  const { activeSource, registerCardDropHandler } = useGundamDragDrop();
+  const dropTargetId = encodeGundamBattleAreaTarget({
+    type: "battle-area",
+    playerId: playerId ?? side,
+  });
+  const { isOver, setNodeRef } = useDroppable({ id: dropTargetId, disabled: !canAcceptDrop });
+  const isDragOver = canAcceptDrop && Boolean(activeSource) && isOver;
+  useEffect(() => {
+    if (!onCardDrop) return;
+    registerCardDropHandler(onCardDrop);
+    return () => registerCardDropHandler(null);
+  }, [onCardDrop, registerCardDropHandler]);
+  const dropProps = canAcceptDrop
+    ? {
+        "aria-label": "Your battle area drop zone",
+        "data-drop-active": isDragOver ? "true" : "false",
+      }
+    : {};
   // Band sizing cascades via CSS vars (Lorcana pattern) so the bands and
   // anything inside them scale uniformly. On mobile, collapse bands back
   // onto the card face — the smaller viewport can't afford the extra
@@ -55,8 +76,12 @@ export function PlayZone({
   const bandsEnabled = layout !== "mobile";
   const zoneVars: CSSProperties & Record<string, string> = {
     background: isTop
-      ? "linear-gradient(180deg, rgba(255,45,122,.06), transparent 70%)"
-      : "linear-gradient(0deg,   rgba(30,73,199,.10), transparent 70%)",
+      ? layout === "mobile"
+        ? "linear-gradient(180deg, oklch(0.42 0.12 350 / .35), transparent 82%)"
+        : "linear-gradient(180deg, oklch(0.42 0.1 350 / .22), transparent 72%)"
+      : layout === "mobile"
+        ? "linear-gradient(0deg, oklch(0.46 0.14 255 / .36), transparent 82%)"
+        : "linear-gradient(0deg, oklch(0.42 0.12 255 / .24), transparent 72%)",
     borderBottom: isTop ? "1px dashed rgba(45,107,255,.12)" : "none",
     "--play-pill-size": "34px",
     "--play-pill-text-size": "15px",
@@ -64,41 +89,51 @@ export function PlayZone({
     "--play-band-height-top": "22px",
     "--play-band-height-bottom": "22px",
     "--play-band-overlap": "0.5",
+    ...(isDragOver
+      ? {
+          boxShadow: "inset 0 0 0 3px rgba(86,220,120,.9), inset 0 0 32px rgba(86,220,120,.22)",
+        }
+      : {}),
   };
   if (layout === "mobile") {
-    // Mobile portrait: vertically stack the plate row above (own seat)
-    // or below (opp seat) the play row, so the play row gets the full
-    // viewport width and the plate doesn't eat horizontal space.
-    // Play row uses overflow-x-auto so units overflow off-screen and
-    // the player can swipe — flex-wrap would shrink the row vertically
-    // on a phone where there's no spare height to spend.
-    const plate = leftColumn ?? rightColumn;
+    // The utility plate lives in ResourceAreaRow, leaving the field as a
+    // full-width horizontal lane. Players can swipe when deployed units
+    // exceed the viewport rather than shrinking the card faces.
     return (
       <div
-        className={cn("flex-1 min-h-0 min-w-0 flex flex-col relative", className)}
+        ref={setNodeRef}
+        className={cn(
+          "flex-1 min-h-0 min-w-0 flex flex-col relative border-y border-hud-border/20",
+          className,
+        )}
         data-sim-zone-id={playerId ? `battleArea:${playerId}` : undefined}
+        data-turn={isTurn ? "true" : "false"}
+        data-priority={isPriority ? "true" : "false"}
         style={zoneVars}
+        {...dropProps}
       >
-        {!isTop && plate}
         <div
           className={cn(
-            "flex-1 flex items-center gap-2 px-2 py-2 overflow-x-auto overflow-y-visible",
+            "relative flex-1 flex items-center gap-2 px-2 py-2 overflow-x-auto overflow-y-visible",
             "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden touch-pan-x justify-start",
           )}
         >
+          <FieldLabel
+            side={side}
+            count={play.length}
+            mobile
+            isTurn={isTurn}
+            isPriority={isPriority}
+          />
           {play.map((c, i) => {
             const handleClick = c.id && onCardClick ? () => onCardClick(c.id!) : undefined;
             return (
-              <div
-                key={c.id ?? i}
-                className="play-slot flex-shrink-0"
-                onClick={handleClick}
-                style={handleClick ? { cursor: "pointer" } : undefined}
-              >
+              <div key={c.id ?? i} className="play-slot flex-shrink-0">
                 <PairedUnitStack
                   card={c}
                   side={side}
                   size="micro"
+                  onCardClick={handleClick}
                   selected={c.id !== undefined && selectedCardSet.has(c.id)}
                   highlight={c.id !== undefined && highlightCardIds.includes(c.id)}
                   hideStatBadges={false}
@@ -108,22 +143,22 @@ export function PlayZone({
             );
           })}
         </div>
-        {isTop && plate}
       </div>
     );
   }
 
   return (
     <div
+      ref={setNodeRef}
       className={cn(
         "flex-1 min-h-[160px] pt-3.5 pr-6 pb-3.5 pl-3 relative flex items-stretch gap-3",
         className,
       )}
       data-sim-zone-id={playerId ? `battleArea:${playerId}` : undefined}
       style={zoneVars}
+      {...dropProps}
     >
-      {leftColumn}
-
+      <FieldLabel side={side} count={play.length} />
       <div className="relative flex-1 flex items-center">
         <div className="absolute left-[2px] top-0 bottom-0 flex flex-col items-center justify-between py-3 pointer-events-none">
           {[0, 1, 2, 3].map((i) => (
@@ -138,52 +173,107 @@ export function PlayZone({
           ))}
         </div>
 
-        <div className="flex-1 flex gap-2.5 justify-center items-center flex-wrap pl-8">
+        <div className="flex flex-1 flex-wrap items-center justify-center gap-2.5 pl-8">
+          {play.length === 0 ? (
+            <div className="mx-auto flex flex-col items-center gap-1 text-center text-hud-text-faint">
+              <span className="h-5 w-5 rounded-full border border-dashed border-current" />
+              <span className="text-[9px] font-semibold uppercase tracking-[.14em]">
+                {isTop ? "Opponent field clear" : "Deploy units here"}
+              </span>
+            </div>
+          ) : null}
           {play.map((c, i) => {
             const handleClick = c.id && onCardClick ? () => onCardClick(c.id!) : undefined;
             const slotVars = getPlaySlotVars(c, side, "small");
-            const cardNode = (
-              <PairedUnitStack
-                card={c}
-                side={side}
-                size="small"
-                selected={c.id !== undefined && selectedCardSet.has(c.id)}
-                highlight={c.id !== undefined && highlightCardIds.includes(c.id)}
-                hideStatBadges={bandsEnabled}
-                hideSupplementalBadges={bandsEnabled}
-              />
-            );
             if (!bandsEnabled) {
               return (
-                <div
-                  key={c.id ?? i}
-                  onClick={handleClick}
-                  style={handleClick ? { cursor: "pointer" } : undefined}
-                >
-                  {cardNode}
+                <div key={c.id ?? i}>
+                  {renderUnitNode({
+                    card: c,
+                    size: "small",
+                    selected: c.id !== undefined && selectedCardSet.has(c.id),
+                    highlight: c.id !== undefined && highlightCardIds.includes(c.id),
+                    hideStatBadges: bandsEnabled,
+                    hideSupplementalBadges: bandsEnabled,
+                    onCardClick: handleClick,
+                  })}
                 </div>
               );
             }
             return (
-              <div
-                key={c.id ?? i}
-                className="play-slot"
-                onClick={handleClick}
-                style={{
-                  ...slotVars,
-                  ...(handleClick ? { cursor: "pointer" } : undefined),
-                }}
-              >
+              <div key={c.id ?? i} className="play-slot" style={slotVars}>
                 <PlayZoneCardBands card={c} section="top" />
-                {cardNode}
+                <PairedUnitStack
+                  card={c}
+                  side={side}
+                  size="small"
+                  onCardClick={handleClick}
+                  selected={c.id !== undefined && selectedCardSet.has(c.id)}
+                  highlight={c.id !== undefined && highlightCardIds.includes(c.id)}
+                  hideStatBadges={bandsEnabled}
+                  hideSupplementalBadges={bandsEnabled}
+                />
                 <PlayZoneCardBands card={c} section="bottom" />
               </div>
             );
           })}
         </div>
       </div>
+    </div>
+  );
+}
 
-      {rightColumn}
+function FieldLabel({
+  side,
+  count,
+  mobile = false,
+  isTurn = false,
+  isPriority = false,
+}: {
+  readonly side: SeatSide;
+  readonly count: number;
+  readonly mobile?: boolean;
+  readonly isTurn?: boolean;
+  readonly isPriority?: boolean;
+}) {
+  const isTop = side === "top";
+  return (
+    <div
+      className={cn(
+        "pointer-events-none absolute z-[2] flex items-center gap-1.5 rounded-sm border bg-white/80 px-2 py-1 text-[8px] font-bold uppercase tracking-[.16em] text-hud-text-dim",
+        mobile
+          ? "left-2 right-2 top-1 min-h-[26px] shadow-sm"
+          : isTop
+            ? "left-4 top-2"
+            : "bottom-2 right-4",
+      )}
+      style={{
+        borderColor: isTop ? "rgba(255,45,122,.22)" : "rgba(45,107,255,.22)",
+      }}
+    >
+      <span
+        className="h-1.5 w-1.5 rounded-full"
+        style={{ background: isTop ? "var(--color-hud-danger)" : "var(--color-hud-accent)" }}
+      />
+      {isTop ? "Opponent field" : "Your field"}
+      <span className="text-hud-text-faint">{count}</span>
+      {mobile && (isTurn || isPriority) ? (
+        <span className="ml-auto flex items-center gap-1">
+          {isTurn ? (
+            <span className="rounded-sm border border-current/20 bg-white/70 px-1 py-0.5 text-[7px]">
+              Turn
+            </span>
+          ) : null}
+          {isPriority ? (
+            <span
+              className="rounded-sm px-1 py-0.5 text-[7px] text-white"
+              style={{ background: isTop ? "#c8155a" : "#1e49c7" }}
+            >
+              Priority
+            </span>
+          ) : null}
+        </span>
+      ) : null}
     </div>
   );
 }
@@ -192,6 +282,7 @@ interface PairedUnitStackProps {
   readonly card: GameCardData;
   readonly side: SeatSide;
   readonly size: "small" | "micro";
+  readonly onCardClick?: () => void;
   readonly selected: boolean;
   readonly highlight: boolean;
   readonly hideStatBadges: boolean;
@@ -242,6 +333,7 @@ function PairedUnitStack({
   card,
   side,
   size,
+  onCardClick,
   selected,
   highlight,
   hideStatBadges,
@@ -250,6 +342,7 @@ function PairedUnitStack({
   const unitNode = renderUnitNode({
     card,
     size,
+    onCardClick,
     selected,
     highlight,
     hideStatBadges,
@@ -306,6 +399,7 @@ function PairedUnitStack({
 function renderUnitNode({
   card,
   size,
+  onCardClick,
   selected,
   highlight,
   hideStatBadges,
@@ -316,6 +410,7 @@ function renderUnitNode({
       <GameCard
         {...card}
         size={size}
+        onClick={onCardClick}
         selected={selected}
         highlight={highlight}
         hideStatBadges={hideStatBadges}

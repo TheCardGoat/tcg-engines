@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router";
 
-import { useBoardProjection, useGundamGame, useViewerId } from "../../game/index.ts";
+import { useBoardProjection, useGundamGame, useMoveLogs, useViewerId } from "../../game/index.ts";
 import { MatchOverviewModal } from "../ui/MatchOverviewModal.tsx";
 import type { MatchResult, PlayerRecap } from "../ui/MatchOverviewModal.tsx";
 import { countActiveResources, resolveOpponentId, zoneCount } from "./mappers.ts";
+import { projectGundamMoveLogEntries } from "./move-log-projection.ts";
 
 const NOOP = () => {};
 const REPLAY_DB_NAME = "gundam-replays";
@@ -21,6 +22,7 @@ export function MatchOverviewModalContainer() {
   const view = useBoardProjection();
   const viewerId = useViewerId();
   const { adapter } = useGundamGame();
+  const moveLogs = useMoveLogs();
   const [dismissed, setDismissed] = useState(false);
   const [replayStatus, setReplayStatus] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -49,6 +51,18 @@ export function MatchOverviewModalContainer() {
   const firstTs = history[0]?.timestamp ?? 0;
   const lastTs = history[history.length - 1]?.timestamp ?? 0;
   const duration = firstTs && lastTs ? formatDuration(lastTs - firstTs) : "—";
+  const phase = view.status.phase ?? view.status.gameSegment ?? "game-end";
+  const timeline = projectGundamMoveLogEntries(
+    moveLogs,
+    String(viewerId),
+    phase,
+    adapter.cardDefinitionOf,
+    { moveHistory: history },
+  ).map((entry) => ({
+    turn: entry.turn,
+    who: entry.seatId === "opponent" ? ("opp" as const) : ("self" as const),
+    text: entry.message,
+  }));
 
   const result: MatchResult = {
     outcome,
@@ -56,8 +70,9 @@ export function MatchOverviewModalContainer() {
     turn: view.status.turn,
     duration,
     moves: history.length,
-    self: buildRecap(view, viewerId, history),
-    opponent: buildRecap(view, opponentId, history),
+    self: buildRecap(view, viewerId, history, moveLogs),
+    opponent: buildRecap(view, opponentId, history, moveLogs),
+    timeline,
   };
 
   // After a match ends, "back to matchmaking" routes to the bare
@@ -117,11 +132,13 @@ type BoardView = ReturnType<typeof useBoardProjection>;
 type MoveHistoryEntry = ReturnType<
   ReturnType<typeof useGundamGame>["adapter"]["moveHistory"]
 >[number];
+type MoveLogEntry = ReturnType<typeof useMoveLogs>[number];
 
 function buildRecap(
   view: BoardView,
   playerId: string,
   history: readonly MoveHistoryEntry[],
+  moveLogs: readonly MoveLogEntry[],
 ): PlayerRecap {
   const battleArea = view.zones.zones[`battleArea:${playerId}`];
   const units = battleArea?.cards ?? [];
@@ -130,24 +147,31 @@ function buildRecap(
   const resourcesTotal = zoneCount(view, "resourceArea", playerId);
   const resourcesActive = countActiveResources(view, playerId);
   const moves = history.filter((h) => String(h.playerId) === playerId).length;
+  const playerLogs = moveLogs
+    .map((entry) => entry.log)
+    .filter((log) => String(log.playerId) === playerId);
+  const countMoves = (type: MoveLogEntry["log"]["type"]): number =>
+    playerLogs.filter((log) => log.type === type).length;
 
   return {
     name: playerId,
-    lore: zoneCount(view, "shieldArea", playerId),
+    shields: zoneCount(view, "shieldArea", playerId),
     deck: zoneCount(view, "deck", playerId),
     hand: zoneCount(view, "hand", playerId),
-    discard: zoneCount(view, "trash", playerId),
-    resourcesUsed: resourcesTotal - resourcesActive,
+    trash: zoneCount(view, "trash", playerId),
+    resourcesActive,
     resourcesTotal,
-    boardCount: units.length,
-    ready,
-    exerted,
-    played: 0,
-    resourcesPlaced: 0,
-    quests: 0,
-    challenges: 0,
+    unitsInPlay: units.length,
+    activeUnits: ready,
+    restedUnits: exerted,
+    unitsDeployed: countMoves("deployUnit"),
+    basesDeployed: countMoves("deployBase"),
+    commandsPlayed: countMoves("playCommand"),
+    pilotsPaired: countMoves("assignPilot"),
+    attacks: countMoves("attack"),
+    blocks: countMoves("block"),
     moves,
-    abilities: 0,
+    effectsResolved: countMoves("resolveEffect"),
   };
 }
 

@@ -1,5 +1,6 @@
 import { useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { getProjectedDirectAttackGigStealCount } from "@tcg/cyberpunk-engine";
+import { TargetingArrow } from "@tcg/simulator-ui";
 import { useCardView } from "../../engine/zoneViews";
 import { PLAYER_SIDE_TO_ID, useEngine, type RawEngineEventEntry, type Side } from "../../engine";
 import classes from "./CombatArrowOverlay.module.css";
@@ -201,31 +202,16 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
 }
 
 function ArrowSegment({ segment }: { segment: CombatSegment }) {
-  const arrow = arrowGeometry(segment.from, segment.to, {
-    length: segment.kind === "block" ? 18 : 22,
-    width: segment.kind === "block" ? 15 : 17,
-  });
-  const glowEnd = shortenLineEnd(segment.from, arrow.base, 8);
-  const toneClass = segment.kind === "block" ? classes.block : classes.attack;
-
   return (
-    <g className={toneClass}>
-      <line
-        className={classes.glowLine}
-        x1={segment.from.x}
-        y1={segment.from.y}
-        x2={glowEnd.x}
-        y2={glowEnd.y}
-      />
-      <line
-        className={classes.attackLine}
-        x1={segment.from.x}
-        y1={segment.from.y}
-        x2={arrow.base.x}
-        y2={arrow.base.y}
-      />
-      <polygon className={classes.arrowHead} points={arrow.points} />
-    </g>
+    <TargetingArrow
+      x1={segment.from.x}
+      y1={segment.from.y}
+      x2={segment.to.x}
+      y2={segment.to.y}
+      curved={false}
+      animated
+      color={segment.kind === "block" ? "#f5e642" : "#ff3d5e"}
+    />
   );
 }
 
@@ -312,49 +298,6 @@ function findPlayerTargetElement(side: Side | null): HTMLElement | null {
     document.querySelector<HTMLElement>(`[data-testid="gig-row"][data-side="${side}"]`) ??
     document.querySelector<HTMLElement>(`[data-testid="eddies-zone"][data-side="${side}"]`)
   );
-}
-
-function arrowGeometry(
-  start: Point,
-  tip: Point,
-  { length, width }: { length: number; width: number },
-): { base: Point; points: string } {
-  const dx = tip.x - start.x;
-  const dy = tip.y - start.y;
-  const lineLength = Math.hypot(dx, dy);
-  if (lineLength === 0) {
-    return { base: tip, points: `${tip.x},${tip.y} ${tip.x},${tip.y} ${tip.x},${tip.y}` };
-  }
-
-  const ux = dx / lineLength;
-  const uy = dy / lineLength;
-  const base = {
-    x: tip.x - ux * length,
-    y: tip.y - uy * length,
-  };
-  const halfWidth = width / 2;
-  const px = -uy * halfWidth;
-  const py = ux * halfWidth;
-  const left = { x: base.x + px, y: base.y + py };
-  const right = { x: base.x - px, y: base.y - py };
-
-  return {
-    base,
-    points: `${tip.x},${tip.y} ${left.x},${left.y} ${right.x},${right.y}`,
-  };
-}
-
-function shortenLineEnd(start: Point, end: Point, amount: number): Point {
-  const dx = end.x - start.x;
-  const dy = end.y - start.y;
-  const length = Math.hypot(dx, dy);
-  if (length === 0) {
-    return end;
-  }
-  return {
-    x: end.x - (dx / length) * amount,
-    y: end.y - (dy / length) * amount,
-  };
 }
 
 function findCardElement(cardId: string): HTMLElement | null {

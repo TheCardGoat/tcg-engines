@@ -76,11 +76,6 @@ describe("OP03-122 Sogeking", () => {
 
     engine.playCard(op03Sogeking122, "south");
     engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
-    engine.resolveDecision(
-      "effectTrashFromHandSelection",
-      { selectedIds: [firstDrawId, secondDrawId] },
-      "south",
-    );
 
     const view = engine.getView("south");
     expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(targetId);

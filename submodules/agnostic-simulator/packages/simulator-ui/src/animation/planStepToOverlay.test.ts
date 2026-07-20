@@ -155,4 +155,138 @@ describe("planStepToOverlay", () => {
       },
     });
   });
+
+  test.each(["deck", "hand", "shield", "life", "resource"])(
+    "projects a leaked private %s transfer as hidden for spectators",
+    (zoneRole) => {
+      const cache = emptyRectCache();
+      cache.byZoneEntityId.set(`opponent-${zoneRole}::private-card`, {
+        left: 10,
+        top: 20,
+        width: 50,
+        height: 70,
+      });
+      cache.byZoneId.set(`opponent-${zoneRole}`, {
+        left: 100,
+        top: 120,
+        width: 60,
+        height: 84,
+      });
+      const entity: SimulatorEntity = {
+        id: "private-card",
+        title: "Leaked Secret",
+        subtitle: "Private",
+        kind: "card",
+        ownerId: "opponent",
+        face: "public",
+        states: [],
+        stats: [],
+        traits: [],
+        imageUrl: "https://private.invalid/secret.webp",
+      };
+      const privateZone: SimulatorZone = {
+        id: `opponent-${zoneRole}`,
+        label: zoneRole,
+        role: zoneRole as SimulatorZone["role"],
+        ownerId: "opponent",
+        visibility: "private",
+        entityIds: [entity.id],
+        hint: zoneRole,
+      };
+      const plan: AnimationPlanV1 = {
+        id: `private-${zoneRole}`,
+        version: 1,
+        anchors: [],
+        steps: [
+          {
+            id: "private-move",
+            type: "moveEntity",
+            entity: { kind: "entity", id: entity.id },
+            from: { kind: "zone", id: privateZone.id, ownerId: "opponent" },
+            to: { kind: "zone", id: privateZone.id, ownerId: "opponent" },
+          },
+        ],
+      };
+
+      expect(
+        planStepToOverlay({
+          plan,
+          step: plan.steps[0]!,
+          cache,
+          viewerSeatId: null,
+          resolveEntity: () => entity,
+          resolveZone: () => privateZone,
+        }),
+      ).toMatchObject({
+        type: "card",
+        overlay: { sourceFace: "hidden", destinationFace: "hidden" },
+      });
+    },
+  );
+
+  test.each([
+    { viewerSeatId: "owner", expectedFace: "public" },
+    { viewerSeatId: "opponent", expectedFace: "hidden" },
+    { viewerSeatId: null, expectedFace: "hidden" },
+  ] as const)(
+    "resolves private-zone animation faces for viewer $viewerSeatId",
+    ({ viewerSeatId, expectedFace }) => {
+      const cache = emptyRectCache();
+      cache.byZoneEntityId.set("owner-hand::private-card", {
+        left: 10,
+        top: 20,
+        width: 50,
+        height: 70,
+      });
+      const entity: SimulatorEntity = {
+        id: "private-card",
+        title: "Leaked Secret",
+        subtitle: "Private",
+        kind: "card",
+        ownerId: "owner",
+        face: "public",
+        states: [],
+        stats: [],
+        traits: [],
+        imageUrl: "https://private.invalid/secret.webp",
+      };
+      const zone: SimulatorZone = {
+        id: "owner-hand",
+        label: "Hand",
+        role: "hand",
+        ownerId: "owner",
+        visibility: "private",
+        entityIds: [entity.id],
+        hint: "Hand",
+      };
+      const plan: AnimationPlanV1 = {
+        id: "private-hand",
+        version: 1,
+        anchors: [],
+        steps: [
+          {
+            id: "private-move",
+            type: "moveEntity",
+            entity: { kind: "entity", id: entity.id },
+            from: { kind: "zone", id: zone.id, ownerId: "owner" },
+            to: { kind: "zone", id: zone.id, ownerId: "owner" },
+          },
+        ],
+      };
+
+      expect(
+        planStepToOverlay({
+          plan,
+          step: plan.steps[0]!,
+          cache,
+          viewerSeatId,
+          resolveEntity: () => entity,
+          resolveZone: () => zone,
+        }),
+      ).toMatchObject({
+        type: "card",
+        overlay: { sourceFace: expectedFace, destinationFace: expectedFace },
+      });
+    },
+  );
 });

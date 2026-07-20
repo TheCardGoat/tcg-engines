@@ -3,7 +3,7 @@ import { describe, expect, test } from "vite-plus/test";
 
 import { buildReplay, verifyReplay, type BenchReplay } from "./replay.ts";
 import { classifyRegressions, parseFailOn } from "./regression.ts";
-import type { BenchReport, FamilyStats } from "./run.ts";
+import type { BenchReport, FamilyStats, SelectionStats } from "./run.ts";
 
 function emptyFamilyStats(): Record<GundamBotCandidateFamily, FamilyStats> {
   const stats = {} as Record<GundamBotCandidateFamily, FamilyStats>;
@@ -14,6 +14,14 @@ function emptyFamilyStats(): Record<GundamBotCandidateFamily, FamilyStats> {
       failed: 0,
       errorCodes: {},
     };
+  }
+  return stats;
+}
+
+function emptySelectionStats(): Record<GundamBotCandidateFamily, SelectionStats> {
+  const stats = {} as Record<GundamBotCandidateFamily, SelectionStats>;
+  for (const name of GUNDAM_MOVE_NAMES) {
+    stats[name as GundamBotCandidateFamily] = { selected: 0, variants: {} };
   }
   return stats;
 }
@@ -100,8 +108,8 @@ describe("bot-bench regression classification", () => {
         },
         winReasonDistribution: {},
       },
-      p1: { wins: 0, familyStats: emptyFamilyStats() },
-      p2: { wins: 0, familyStats: emptyFamilyStats() },
+      p1: { wins: 0, familyStats: emptyFamilyStats(), selectionStats: emptySelectionStats() },
+      p2: { wins: 0, familyStats: emptyFamilyStats(), selectionStats: emptySelectionStats() },
       matches: [
         {
           matchId: 0,

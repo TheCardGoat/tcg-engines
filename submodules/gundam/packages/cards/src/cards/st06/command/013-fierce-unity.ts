@@ -82,6 +82,8 @@ export const st06FierceUnity013: CommandCard = {
               cardType: "unit",
               attributeFilters: [{ attribute: "level", comparison: "lte", value: 2 }],
             },
+            damageType: "battle",
+            duration: "thisTurn",
           },
         },
       ],

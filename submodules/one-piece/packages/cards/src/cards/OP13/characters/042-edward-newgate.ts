@@ -61,7 +61,22 @@ export const op13EdwardNewgate042: CharacterCard = {
             action: "giveDon",
             target: {
               player: "self",
-              zones: ["leader", "character"],
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+            },
+            count: {
+              amount: 2,
+              upTo: true,
+            },
+            donState: "rested",
+          },
+          {
+            action: "giveDon",
+            target: {
+              player: "self",
+              zones: ["character"],
               count: {
                 amount: 1,
               },

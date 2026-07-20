@@ -241,6 +241,12 @@
   --pill-border: rgba(216, 229, 247, 0.28);
 }
 
+@keyframes targeting-dash-flow {
+  to {
+    stroke-dashoffset: -14;
+  }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -249,5 +255,9 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .targeting-arrow-dash {
+    animation: none !important;
   }
 }

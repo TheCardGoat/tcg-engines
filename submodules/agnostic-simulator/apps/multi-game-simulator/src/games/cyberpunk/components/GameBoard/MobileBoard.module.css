@@ -3024,11 +3024,10 @@
 }
 
 .directAttackDropTarget {
-  /* Keep the hit target as the full center row. The visual cue stays narrower
-     below, but drops on top of Gig dice must still resolve to attackRival on
-     cramped mobile layouts. */
+  /* Direct attacks steal from the rival. Limit both the visible cue and hit
+     target to the rival half so the friendly Gig lane stays interactive. */
   position: absolute;
-  inset: 0;
+  inset: 0 0 0 50%;
   z-index: 8;
   min-width: 0;
   opacity: 0;
@@ -3038,7 +3037,7 @@
 
 .directAttackDropCue {
   position: absolute;
-  inset: 4px 50% 4px 4px;
+  inset: 4px;
   display: grid;
   align-content: center;
   justify-items: center;

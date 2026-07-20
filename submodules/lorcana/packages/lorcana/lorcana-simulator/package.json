@@ -57,7 +57,8 @@
     "test:strategy:quick-replay": "RUN_STRATEGY_QUICK_REPLAY=1 AGENT=1 bun test --silent src/testing/ai-strategy/simulate-game.test.ts",
     "test:strategy:replay": "RUN_STRATEGY_REPLAY=1 AGENT=1 bun test --silent src/testing/ai-strategy/simulate-game.test.ts",
     "test:strategy:benchmark": "RUN_STRATEGY_BENCHMARK=1 STRATEGY_GAME_COUNT=100 AGENT=1 bun test --silent src/testing/ai-strategy/*.test.ts",
-    "test": "bun run test:rules && bun run test:unit"
+    "test:card-log-token": "vp test run --environment jsdom vitest/card-log-token.vitest.test.ts",
+    "test": "bun run test:rules && bun run test:unit && bun run test:card-log-token"
   },
   "dependencies": {
     "@better-auth/infra": "catalog:",

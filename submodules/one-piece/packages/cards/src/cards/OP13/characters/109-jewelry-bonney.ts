@@ -33,8 +33,16 @@ export const op13JewelryBonney109: CharacterCard = {
       {
         trigger: "trigger",
         actions: [
-          { action: "draw", player: "self", amount: 2 },
-          { action: "trashFromHand", player: "self", amount: 1 },
+          {
+            action: "draw",
+            player: "self",
+            amount: 2,
+          },
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: 1,
+          },
         ],
       },
     ],
@@ -42,6 +50,9 @@ export const op13JewelryBonney109: CharacterCard = {
       {
         replacedEvent: "removeFromField",
         source: "opponentEffect",
+        eventFilter: {
+          targetSelf: true,
+        },
         replacementAction: {
           action: "turnLifeFaceUp",
           player: "self",

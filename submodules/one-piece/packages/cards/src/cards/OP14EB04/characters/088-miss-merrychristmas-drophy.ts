@@ -35,6 +35,7 @@ export const op14eb04MissMerrychristmasDrophy088: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Baroque Works",
+            match: "includes",
           },
         ],
         actions: [

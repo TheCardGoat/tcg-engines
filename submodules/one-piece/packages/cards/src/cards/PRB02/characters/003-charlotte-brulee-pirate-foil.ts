@@ -44,5 +44,23 @@ export const prb02CharlotteBruleePirateFoil003: CharacterCard = {
   ],
   effect:
     "[Trigger] Look at up to 1 card from the top of your or your opponent's Life cards, and place it at the top or bottom of the Life cards. Then, add this card to your hand.",
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "lookAtLife",
+            player: "either",
+            position: "topOrBottom",
+            upTo: true,
+          },
+          {
+            action: "addThisCardToHand",
+          },
+        ],
+      },
+    ],
+  },
   i18n: prb02CharlotteBruleePirateFoil003I18n,
 };

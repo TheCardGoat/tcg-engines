@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 
+import { useLayoutMode } from "../../../lib/use-layout-mode.ts";
 import { cn } from "../../../lib/utils.ts";
 import type { GameCardData, PlayerInfo } from "../types.ts";
 import { PlayerSeatPlate } from "./PlayerSeatPlate.tsx";
@@ -22,11 +23,14 @@ export interface PlayerSeatProps {
   /** True when this seat owns the active turn. Drives the inline
    *  turn indicator that's visible even when the sidebar is collapsed. */
   readonly isTurn?: boolean;
+  /** True when this seat currently has action priority. */
+  readonly isPriority?: boolean;
   readonly selectedCardIds?: readonly string[];
   readonly highlightCardIds?: readonly string[];
   /** Click handler for cards in the battle-area row. Receives the
    *  card's instance id; the container dispatches the move. */
   readonly onPlayCardClick?: (cardId: string) => void;
+  readonly onHandCardDrop?: (cardId: string) => void;
   readonly timeoutOverlay?: ReactNode;
   readonly children?: ReactNode;
 }
@@ -42,21 +46,41 @@ export function PlayerSeat({
   availableResources = 0,
   isViewer = false,
   isTurn = false,
+  isPriority = false,
   selectedCardIds = [],
   highlightCardIds = [],
   onPlayCardClick,
+  onHandCardDrop,
   timeoutOverlay,
   children,
 }: PlayerSeatProps) {
   const isTop = side === "top";
+  const isMobile = useLayoutMode() === "mobile";
 
-  // Layout columns: seat plate on the left, then a flex column with
-  // explicit `order` so the same JSX renders both seats. Hand sits as
-  // a real row instead of an absolute overlay — top seat reads
-  // hand → resource → play; bottom seat reads play → resource → hand.
+  // Each seat owns three real rows. The top seat reads hand → utility
+  // (base, shields, resources, scrap, deck) → field; the bottom seat mirrors
+  // that order around the match rail. Nothing is positioned across rows.
   return (
-    <div className="flex flex-col flex-1 min-h-0 min-w-0 relative">
-      <SeatTurnIndicator isTurn={isTurn} isViewer={isViewer} />
+    <div
+      className={cn(
+        "gd-dark-surface relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden",
+        isTop ? "border-b border-hud-danger/30" : "border-t border-hud-accent/30",
+      )}
+      data-seat-side={side}
+      data-turn={isTurn ? "true" : "false"}
+      data-priority={isPriority ? "true" : "false"}
+      aria-label={isTop ? "Opponent board" : "Active player board"}
+      style={{
+        background: isTop
+          ? isMobile
+            ? "linear-gradient(180deg, oklch(0.34 0.09 350 / .92), oklch(0.21 0.035 275 / .95))"
+            : "linear-gradient(180deg, oklch(0.31 0.075 350 / .78), oklch(0.19 0.03 270 / .82))"
+          : isMobile
+            ? "linear-gradient(0deg, oklch(0.34 0.1 255 / .94), oklch(0.2 0.04 265 / .95))"
+            : "linear-gradient(0deg, oklch(0.3 0.085 255 / .82), oklch(0.18 0.03 268 / .84))",
+      }}
+    >
+      <SeatTurnIndicator isTurn={isTurn} isPriority={isPriority} isViewer={isViewer} />
       {timeoutOverlay}
       <ResourceAreaRow
         side={side}
@@ -64,6 +88,16 @@ export function PlayerSeat({
         resourceArea={resourceArea}
         discard={discard}
         availableResources={availableResources}
+        utilityColumn={
+          <PlayerSeatPlate
+            side={side}
+            player={player}
+            base={base}
+            shields={shields}
+            isViewer={isViewer}
+            playerId={player.name}
+          />
+        }
         className={cn("order-2")}
       />
       <PlayZone
@@ -73,36 +107,20 @@ export function PlayerSeat({
         selectedCardIds={selectedCardIds}
         highlightCardIds={highlightCardIds}
         onCardClick={onPlayCardClick}
-        leftColumn={
-          isTop ? undefined : (
-            <PlayerSeatPlate
-              side={side}
-              player={player}
-              base={base}
-              shields={shields}
-              isViewer={isViewer}
-              playerId={player.name}
-            />
-          )
-        }
-        rightColumn={
-          isTop ? (
-            <PlayerSeatPlate
-              side={side}
-              player={player}
-              base={base}
-              shields={shields}
-              isViewer={isViewer}
-              playerId={player.name}
-            />
-          ) : undefined
-        }
+        onCardDrop={onHandCardDrop}
+        isTurn={isTurn}
+        isPriority={isPriority}
         className={cn(isTop ? "order-3" : "order-1")}
       />
       {children && (
         <div
           className={cn(
-            "flex justify-center px-2 py-1 min-w-0 w-full",
+            "flex justify-center min-w-0 w-full",
+            isMobile ? "px-2 py-0" : "px-2 py-1",
+            isMobile &&
+              (isTop
+                ? "border-b border-hud-danger/25 bg-hud-deep/35"
+                : "border-t border-hud-accent/25 bg-hud-deep/35"),
             isTop ? "order-1" : "order-3",
           )}
         >
@@ -115,25 +133,25 @@ export function PlayerSeat({
 
 interface SeatTurnIndicatorProps {
   readonly isTurn: boolean;
+  readonly isPriority: boolean;
   readonly isViewer: boolean;
 }
 
-/**
- * Turn ring around the entire seat. When the seat owns the turn the ring
- * lights up a thick gradient border with an outer glow that's hard to miss
- * regardless of sidebar state; idle seats get a faint neutral outline so
- * the layout stays stable.
- */
-function SeatTurnIndicator({ isTurn, isViewer }: SeatTurnIndicatorProps) {
+/** A quiet seat tint reinforces the explicit match-status bar. */
+function SeatTurnIndicator({ isTurn, isPriority, isViewer }: SeatTurnIndicatorProps) {
   const accent = isViewer ? "#2d6bff" : "#ff2d7a";
 
-  const ringStyle: CSSProperties = isTurn
+  const ringStyle: CSSProperties = isPriority
     ? {
-        boxShadow: `inset 0 0 0 3px ${accent}, inset 0 0 24px ${accent}40, 0 0 24px ${accent}55`,
+        boxShadow: `inset 0 0 0 2px ${accent}a8, inset 0 0 36px ${accent}26`,
       }
-    : {
-        boxShadow: "inset 0 0 0 1px rgba(120,140,180,.25)",
-      };
+    : isTurn
+      ? {
+          boxShadow: `inset 0 0 0 1px ${accent}70, inset 0 0 28px ${accent}16`,
+        }
+      : {
+          boxShadow: "inset 0 0 0 1px rgba(120,140,180,.16)",
+        };
 
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 z-[8]" style={ringStyle} />

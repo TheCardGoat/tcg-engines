@@ -35,6 +35,7 @@ export function parseTargetFilter(desc: string): TargetFilter {
   )
     filter.owner = "friendly";
   else if (lower.includes("this unit") || lower.includes("this card")) filter.owner = "self";
+  else if (/^it\b/.test(lower.trim())) filter.owner = "self";
 
   // Card type
   const ct = parseCardType(workingDesc);
@@ -53,12 +54,30 @@ export function parseTargetFilter(desc: string): TargetFilter {
   }
 
   // State
-  if (lower.includes("rested")) filter.state = "rested";
-  else if (lower.includes("active") && !lower.includes("set it as active")) filter.state = "active";
-  else if (lower.includes("damaged")) filter.state = "damaged";
+  const states: Array<"active" | "rested" | "damaged"> = [];
+  if (lower.includes("damaged")) states.push("damaged");
+  if (lower.includes("active") && !lower.includes("set it as active")) states.push("active");
+  if (lower.includes("rested")) states.push("rested");
+  if (states.length === 1) filter.state = states[0];
+  else if (states.length > 1) filter.state = states;
 
   // Attribute filters (numeric and string predicates)
   const attributeFilters: AttributeFilter[] = [];
+
+  const excludedNameM = workingDesc.match(/without "([^"]+)" in its card name/i);
+  if (excludedNameM)
+    attributeFilters.push({
+      attribute: "name",
+      comparison: "excludes",
+      value: excludedNameM[1],
+    });
+  const includedNameM = workingDesc.match(/with "([^"]+)" in its card name/i);
+  if (includedNameM)
+    attributeFilters.push({
+      attribute: "name",
+      comparison: "includes",
+      value: includedNameM[1],
+    });
 
   // HP filter
   const hpMostM = workingDesc.match(/(\d+)\s+or\s+less\s+HP/i);
@@ -257,12 +276,20 @@ export function parseTargetFilter(desc: string): TargetFilter {
     filter.owner = "self";
     filter.zone = "trash";
   }
+  if (lower.includes("from your trash")) {
+    filter.zone = "trash";
+  }
 
   // Link unit
   if (lower.includes("link unit")) filter.isLinkUnit = true;
 
   // Token
   if (lower.includes("token")) filter.isToken = true;
+  if (lower.includes("other than unit tokens")) filter.isToken = false;
+
+  if (/highest Lv\.?/i.test(workingDesc)) filter.highest = "level";
+
+  if (/\bother(?:\s+\([^)]+\))?\s+units?\b/.test(lower)) filter.excludeSource = true;
 
   // Keyword has
   const kwMatch = workingDesc.match(/<([\w\s-]+?)(?:\s+\d+)?>/);

@@ -1,9 +1,14 @@
 // @vitest-environment jsdom
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it } from "vite-plus/test";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 
 import type { GameCardData } from "../types.ts";
 import { PlayZone } from "./PlayZone.tsx";
+import {
+  dispatchGundamCardDrop,
+  encodeGundamBattleAreaTarget,
+  type GundamHandCardDragSource,
+} from "./gundam-drag-drop-context.tsx";
 
 const unit: GameCardData = {
   id: "unit-1",
@@ -56,5 +61,49 @@ describe("PlayZone · mobile stats", () => {
     });
 
     expect(screen.queryByTestId("play-zone-status-band")).toBeNull();
+  });
+
+  it("registers the shared battle-area drop target and dispatches its card action", () => {
+    const onCardDrop = vi.fn();
+    render(
+      <PlayZone
+        side="bottom"
+        play={[]}
+        selectedCardIds={[]}
+        highlightCardIds={[]}
+        onCardDrop={onCardDrop}
+      />,
+    );
+
+    const zone = screen.getByLabelText("Your battle area drop zone");
+    const source: GundamHandCardDragSource = {
+      type: "hand-card",
+      cardId: "unit-from-hand",
+      card: { name: "Unit from hand", cardType: "unit" },
+    };
+    const target = encodeGundamBattleAreaTarget({ type: "battle-area", playerId: "bottom" });
+
+    expect(zone.getAttribute("aria-label")).toBe("Your battle area drop zone");
+    expect(dispatchGundamCardDrop(source, target, onCardDrop)).toBe(true);
+    expect(onCardDrop).toHaveBeenCalledWith("unit-from-hand");
+  });
+
+  it("labels turn and priority independently on the mobile field", async () => {
+    render(
+      <PlayZone
+        side="bottom"
+        play={[]}
+        selectedCardIds={[]}
+        highlightCardIds={[]}
+        isTurn
+        isPriority={false}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("Turn")).not.toBeNull();
+    });
+    expect(screen.queryByText("Priority")).toBeNull();
+    expect(screen.getByText("Your field")).not.toBeNull();
   });
 });

@@ -84,6 +84,7 @@ export const op14eb04Gladius062: CharacterCard = {
             ],
           },
         ],
+        optional: true,
       },
     ],
   },

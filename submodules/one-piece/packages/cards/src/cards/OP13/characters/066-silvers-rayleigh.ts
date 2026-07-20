@@ -71,6 +71,20 @@ export const op13SilversRayleigh066: CharacterCard = {
               ],
             },
           },
+          {
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "addDon",
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                state: "active",
+              },
+            ],
+          },
         ],
       },
     ],

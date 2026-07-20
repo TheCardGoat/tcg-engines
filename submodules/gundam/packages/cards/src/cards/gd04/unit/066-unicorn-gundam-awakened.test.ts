@@ -64,16 +64,13 @@ describe("Unicorn Gundam (Awakened) (GD04-066)", () => {
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
       const attackerId = p1.getCardsInZone("battleArea")[0]!;
-      const [shieldAId, shieldBId] = p2.getCardsInZone("shieldArea");
 
       expectSuccess(p1.enterBattle(attackerId, "direct"));
       expectSuccess(p2.passBlock());
       expectSuccess(p2.passBattleAction());
       expectSuccess(p1.passBattleAction());
 
-      expect(p2.getCardZone(shieldAId!)).toBe(`trash:${PLAYER_TWO}`);
-      expect(p2.getCardZone(shieldBId!)).toBe(`trash:${PLAYER_TWO}`);
-      expect(p2.getCardsInZone("shieldArea")).toHaveLength(0);
+      expect(p2.getBoardView().players[PLAYER_TWO]?.shieldCount).toBe(0);
     });
   });
 });

@@ -17,4 +17,20 @@ describe("Life to deck rearrangement", () => {
       { action: "rearrangeLife", player: "self", moveOneToDeckTop: true },
     ]);
   });
+
+  test("models ordering every own Life card as a Life-area rearrangement", () => {
+    expect(
+      buildCardEffects(
+        "[On Play] Look at all of your Life cards and place them back in your Life area in any order.",
+      )?.effects?.[0]?.actions,
+    ).toEqual([{ action: "rearrangeLife", player: "self" }]);
+  });
+
+  test("preserves the opponent as owner while its controller chooses the Life order", () => {
+    expect(
+      buildCardEffects(
+        "[On Play] Look at all of your opponent's Life cards and place them back in their Life area in any order.",
+      )?.effects?.[0]?.actions,
+    ).toEqual([{ action: "rearrangeLife", player: "opponent" }]);
+  });
 });

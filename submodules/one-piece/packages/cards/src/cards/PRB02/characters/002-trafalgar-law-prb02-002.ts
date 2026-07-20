@@ -66,6 +66,10 @@ export const prb02TrafalgarLawPrb02002002: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "removeFromField",
+        source: "opponentEffect",
+        eventFilter: {
+          targetSelf: true,
+        },
         replacementAction: {
           action: "modifyPower",
           target: {

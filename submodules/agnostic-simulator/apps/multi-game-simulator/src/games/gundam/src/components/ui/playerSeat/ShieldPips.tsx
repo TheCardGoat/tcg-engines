@@ -1,5 +1,6 @@
 import { DamageCounterOverlay } from "../card/DamageCounterOverlay.tsx";
 import type { GameCardData } from "../types.ts";
+import { cn } from "../../../lib/utils.ts";
 
 interface ShieldPipsProps {
   readonly value?: number;
@@ -7,11 +8,19 @@ interface ShieldPipsProps {
   readonly low: boolean;
   readonly listLabel: string;
   readonly shields?: readonly GameCardData[];
+  readonly compact?: boolean;
 }
 
-export function ShieldPips({ value = 0, max = 6, low, listLabel, shields = [] }: ShieldPipsProps) {
+export function ShieldPips({
+  value = 0,
+  max = 6,
+  low,
+  listLabel,
+  shields = [],
+  compact = false,
+}: ShieldPipsProps) {
   return (
-    <div role="list" aria-label={listLabel} className="flex gap-0.5">
+    <div role="list" aria-label={listLabel} className={compact ? "flex gap-px" : "flex gap-0.5"}>
       {Array.from({ length: max }).map((_, i) => {
         const on = i < value;
         const color = on ? (low ? "#ff4d5e" : "#36ff8a") : "rgba(255,255,255,.08)";
@@ -21,7 +30,10 @@ export function ShieldPips({ value = 0, max = 6, low, listLabel, shields = [] }:
           <div
             key={i}
             {...(on ? { role: "listitem" } : { "aria-hidden": true })}
-            className="relative w-[14px] h-[14px] transition-all duration-200"
+            className={cn(
+              "relative transition-all duration-200",
+              compact ? "h-[9px] w-[9px]" : "h-[14px] w-[14px]",
+            )}
           >
             <div
               className="absolute inset-0 clip-hud-3"

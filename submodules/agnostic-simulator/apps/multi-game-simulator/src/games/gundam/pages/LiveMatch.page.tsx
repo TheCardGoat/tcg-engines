@@ -11,10 +11,14 @@ import { useParams, useSearchParams } from "react-router-dom";
 import type { MatchRuntime, MatchStaticResources } from "@tcg/gundam-engine";
 import type { ServerToClientEvents } from "@tcg/protocol";
 import {
-  stringifySimulatorConnectionDiagnostic,
+  buildSimulatorConnectionDiagnostic,
+  type SimulatorConnectionDiagnostic,
   type ConnectionDiagnosticEvent,
+  type SimulatorConnectionDiagnosticInput,
   type SimulatorConnectionStatus,
 } from "@tcg/game-page-contract";
+import { ConnectionPanel } from "@tcg/simulator-ui";
+import { projectConnectionPanelDiagnostic } from "../../../simulator/connection-panel-projection.ts";
 import {
   buildDiscordRichPresenceMatchUrl,
   clearDiscordPlayingGamePresence,
@@ -69,6 +73,7 @@ import { GameTable } from "../src/components/ui/GameTable.tsx";
 import { FloatingUndoButton } from "../src/components/ui/FloatingUndoButton.tsx";
 import { PriorityActionButton } from "../src/components/ui/PriorityActionButton.tsx";
 import { asViewerId } from "../src/game/types.ts";
+import { GundamSharedAnimationLayer } from "../src/animation/index.ts";
 
 type LoadState =
   | { status: "idle" }
@@ -151,7 +156,6 @@ export function LiveMatchPage() {
   const [lastHeartbeatAckAt, setLastHeartbeatAckAt] = useState<string | null>(null);
   const [reconnectAttempt, setReconnectAttempt] = useState(0);
   const [connectionEvents, setConnectionEvents] = useState<ConnectionDiagnosticEvent[]>([]);
-  const [copyFeedback, setCopyFeedback] = useState<"copied" | "failed" | null>(null);
   const handleRef = useRef<GatewayHandle | null>(null);
   const liveConnectionRef = useRef<SimulatorLiveConnectionContextValue | null>(null);
   const runtimeRef = useRef<MatchRuntime | null>(null);
@@ -162,40 +166,37 @@ export function LiveMatchPage() {
   const startedAtMsRef = useRef(Date.now());
   const discordClientId =
     import.meta.env.VITE_DISCORD_ACTIVITY_CLIENT_ID ?? import.meta.env.VITE_DISCORD_CLIENT_ID;
-  const connectionDiagnosticJson = useMemo(
-    () =>
-      stringifySimulatorConnectionDiagnostic({
-        gameSlug: "gundam",
-        route:
-          typeof window === "undefined"
-            ? ""
-            : `${window.location.pathname}${window.location.search}`,
-        matchId,
-        gameId,
-        playerId,
-        endpoint: gatewayEndpointDiagnostic(),
-        connection: {
-          status: connectionStatus,
-          connectionId: connectionId ?? undefined,
-          socketId: connectionId ?? undefined,
-          authenticated: connectionAuthenticated,
-          authStatus: connectionAuthStatus,
-          authFailureReason: connectionAuthFailureReason ?? undefined,
-          authModeLabel: initialTicket
-            ? "Authenticated (ticket)"
-            : initialAuthToken
-              ? "Authenticated (token)"
-              : "Session",
-          latencyMs: connectionLatencyMs ?? undefined,
-          lastPingAt: lastPingAt ?? undefined,
-          lastPongAt: lastPongAt ?? undefined,
-          lastHeartbeatSentAt: lastHeartbeatSentAt ?? undefined,
-          lastHeartbeatAckAt: lastHeartbeatAckAt ?? undefined,
-          reconnectAttempts: reconnectAttempt,
-          lastError: connectionError ?? undefined,
-        },
-        events: connectionEvents,
-      }),
+  const connectionDiagnostic = useMemo<SimulatorConnectionDiagnosticInput>(
+    () => ({
+      gameSlug: "gundam",
+      route:
+        typeof window === "undefined" ? "" : `${window.location.pathname}${window.location.search}`,
+      matchId,
+      gameId,
+      playerId,
+      endpoint: gatewayEndpointDiagnostic(),
+      connection: {
+        status: connectionStatus,
+        connectionId: connectionId ?? undefined,
+        socketId: connectionId ?? undefined,
+        authenticated: connectionAuthenticated,
+        authStatus: connectionAuthStatus,
+        authFailureReason: connectionAuthFailureReason ?? undefined,
+        authModeLabel: initialTicket
+          ? "Authenticated (ticket)"
+          : initialAuthToken
+            ? "Authenticated (token)"
+            : "Session",
+        latencyMs: connectionLatencyMs ?? undefined,
+        lastPingAt: lastPingAt ?? undefined,
+        lastPongAt: lastPongAt ?? undefined,
+        lastHeartbeatSentAt: lastHeartbeatSentAt ?? undefined,
+        lastHeartbeatAckAt: lastHeartbeatAckAt ?? undefined,
+        reconnectAttempts: reconnectAttempt,
+        lastError: connectionError ?? undefined,
+      },
+      events: connectionEvents,
+    }),
     [
       connectionError,
       connectionAuthenticated,
@@ -218,19 +219,6 @@ export function LiveMatchPage() {
     ],
   );
 
-  async function copyDiagnosticJson(): Promise<void> {
-    try {
-      if (typeof navigator === "undefined" || !navigator.clipboard) {
-        setCopyFeedback("failed");
-        return;
-      }
-      await navigator.clipboard.writeText(connectionDiagnosticJson);
-      setCopyFeedback("copied");
-    } catch {
-      setCopyFeedback("failed");
-    }
-  }
-
   // Stable callback for the remote adapter — the simulator UI calls
   // this for every move. Captures the latest handle from the ref so
   // reconnects don't need to re-wire the SimulatorApp tree.
@@ -250,6 +238,7 @@ export function LiveMatchPage() {
     [gameId],
   );
   const getInteractionView = useCallback(() => latestViewRef.current?.interactionView, []);
+  const getAnimationPackets = useCallback(() => latestViewRef.current?.animationPackets ?? [], []);
 
   const requestLiveStateSync = useCallback((version: number) => {
     liveConnectionRef.current?.requestStateSyncIfDue(version);
@@ -461,9 +450,9 @@ export function LiveMatchPage() {
         viewerId={asViewerId(playerId)}
         remoteSubmit={remoteSubmit}
         getInteractionView={getInteractionView}
+        getAnimationPackets={getAnimationPackets}
         ended={loadState.view.ended}
-        copyDiagnosticJson={copyDiagnosticJson}
-        copyFeedback={copyFeedback}
+        connectionDiagnostic={connectionDiagnostic}
       />
     ) : (
       <StatusShell
@@ -541,9 +530,11 @@ interface LiveSimulatorShellProps {
   readonly viewerId: ReturnType<typeof asViewerId>;
   readonly remoteSubmit: RemoteSubmitFn;
   readonly getInteractionView: () => LiveMatchView["interactionView"];
+  readonly getAnimationPackets: () => LiveMatchView["animationPackets"];
   readonly ended: { winnerId: string | null; reason: string | null } | null;
-  readonly copyDiagnosticJson: () => Promise<void>;
-  readonly copyFeedback: "copied" | "failed" | null;
+  readonly connectionDiagnostic?: SimulatorConnectionDiagnosticInput;
+  readonly copyDiagnosticJson?: () => Promise<void>;
+  readonly copyFeedback?: "copied" | "failed" | null;
 }
 
 export function LiveSimulatorShell({
@@ -552,15 +543,42 @@ export function LiveSimulatorShell({
   viewerId,
   remoteSubmit,
   getInteractionView,
+  getAnimationPackets,
   ended,
+  connectionDiagnostic,
   copyDiagnosticJson,
   copyFeedback,
 }: LiveSimulatorShellProps) {
   const layoutMode = useLayoutMode();
   const isMobile = layoutMode === "mobile";
+  const completeConnectionDiagnostic = useMemo<SimulatorConnectionDiagnostic | undefined>(
+    () =>
+      connectionDiagnostic ? buildSimulatorConnectionDiagnostic(connectionDiagnostic) : undefined,
+    [connectionDiagnostic],
+  );
 
   const matchTree = (
-    <GundamBoardLayout>
+    <GundamBoardLayout
+      connectionPanel={
+        connectionDiagnostic && completeConnectionDiagnostic ? (
+          <GundamConnectionPanel
+            diagnostic={connectionDiagnostic}
+            copyPayload={completeConnectionDiagnostic}
+            viewerId={viewerId}
+          />
+        ) : undefined
+      }
+      connectionIndicator={
+        connectionDiagnostic && completeConnectionDiagnostic ? (
+          <GundamConnectionPanel
+            diagnostic={connectionDiagnostic}
+            copyPayload={completeConnectionDiagnostic}
+            viewerId={viewerId}
+            indicatorOnly
+          />
+        ) : undefined
+      }
+    >
       <GameTable>
         <PlayerSeatContainer side="top" />
         {!isMobile && (
@@ -590,37 +608,87 @@ export function LiveSimulatorShell({
       viewerId={viewerId}
       remoteSubmit={remoteSubmit}
       getInteractionView={getInteractionView}
+      getAnimationPackets={getAnimationPackets}
     >
-      <SubmitErrorProvider>
-        <HintsProvider>
-          <GundamTargetingProvider>
-            <PendingEffectSelectionProvider>
-              <DualModeProvider>
-                <CardInspectProvider>
-                  {matchTree}
-                  <button
-                    type="button"
-                    className="fixed right-4 top-4 z-50 rounded-md border border-cyan-300/30 bg-slate-950/85 px-3 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-cyan-100 shadow-lg transition-colors hover:bg-cyan-950/90"
-                    onClick={copyDiagnosticJson}
-                    aria-label="Copy connection diagnostic JSON"
-                  >
-                    {copyFeedback === "copied"
-                      ? "Diagnostic copied"
-                      : copyFeedback === "failed"
-                        ? "Copy unavailable"
-                        : "Copy diagnostic JSON"}
-                  </button>
-                  <CardHoverPreview />
-                  <CardInspectDialog />
-                  {ended ? <EndedBanner ended={ended} /> : null}
-                </CardInspectProvider>
-              </DualModeProvider>
-            </PendingEffectSelectionProvider>
-          </GundamTargetingProvider>
-        </HintsProvider>
-      </SubmitErrorProvider>
+      <GundamSharedAnimationLayer runtime={runtime}>
+        <SubmitErrorProvider>
+          <HintsProvider>
+            <GundamTargetingProvider>
+              <PendingEffectSelectionProvider>
+                <DualModeProvider>
+                  <CardInspectProvider>
+                    {matchTree}
+                    {copyDiagnosticJson ? (
+                      <button
+                        type="button"
+                        className="fixed right-4 top-4 z-50 rounded-md border border-cyan-300/30 bg-slate-950/85 px-3 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-cyan-100 shadow-lg transition-colors hover:bg-cyan-950/90"
+                        onClick={copyDiagnosticJson}
+                        aria-label="Copy connection diagnostic JSON"
+                      >
+                        {copyFeedback === "copied"
+                          ? "Diagnostic copied"
+                          : copyFeedback === "failed"
+                            ? "Copy unavailable"
+                            : "Copy diagnostic JSON"}
+                      </button>
+                    ) : null}
+                    <CardHoverPreview />
+                    <CardInspectDialog />
+                    {ended ? <EndedBanner ended={ended} /> : null}
+                  </CardInspectProvider>
+                </DualModeProvider>
+              </PendingEffectSelectionProvider>
+            </GundamTargetingProvider>
+          </HintsProvider>
+        </SubmitErrorProvider>
+      </GundamSharedAnimationLayer>
     </LiveGundamGameProvider>
   );
+}
+
+function GundamConnectionPanel({
+  diagnostic,
+  copyPayload,
+  viewerId,
+  indicatorOnly = false,
+}: {
+  readonly diagnostic: SimulatorConnectionDiagnosticInput;
+  readonly copyPayload: SimulatorConnectionDiagnostic;
+  readonly viewerId: string;
+  readonly indicatorOnly?: boolean;
+}) {
+  return (
+    <ConnectionPanel
+      embedded
+      indicatorOnly={indicatorOnly}
+      popoverAlign={indicatorOnly ? "end" : "start"}
+      copyPayload={copyPayload}
+      sides={[
+        {
+          side: "player",
+          label: "You",
+          playerId: viewerId,
+          self: true,
+          connection: {
+            status: toPanelConnectionStatus(diagnostic.connection.status),
+            latencyMs: diagnostic.connection.latencyMs,
+            disconnectCount: diagnostic.connection.disconnectCount,
+          },
+        },
+      ]}
+      diagnostic={projectConnectionPanelDiagnostic(diagnostic)}
+    />
+  );
+}
+
+function toPanelConnectionStatus(
+  status: SimulatorConnectionStatus,
+): "connected" | "reconnecting" | "disconnected" {
+  if (status === "connected") return "connected";
+  if (status === "reconnecting" || status === "connecting" || status === "checking") {
+    return "reconnecting";
+  }
+  return "disconnected";
 }
 
 function EndedBanner({

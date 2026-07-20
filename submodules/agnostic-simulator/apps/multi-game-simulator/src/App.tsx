@@ -5,6 +5,7 @@ import { getGameDefaultIndexPath, isGameSlug } from "./simulator/games";
 import { normalizeRouterBasename } from "./routes/router-paths.ts";
 import GameIndex from "./components/GameIndex";
 import AnimationFixturesPage from "./components/AnimationFixturesPage";
+import SimulatorUiFixturesPage from "./components/SimulatorUiFixturesPage";
 
 function getPath(): string {
   if (typeof window === "undefined") {
@@ -48,6 +49,12 @@ function isAnimationFixturePath(pathValue: string): boolean {
 
   const basePath = normalizeRouterBasename(import.meta.env.BASE_URL);
   return basePath !== "/" && pathValue === `${basePath}/animation-fixtures`;
+}
+
+function isSimulatorUiFixturePath(pathValue: string): boolean {
+  if (pathValue === "/simulator-ui-fixtures") return true;
+  const basePath = normalizeRouterBasename(import.meta.env.BASE_URL);
+  return basePath !== "/" && pathValue === `${basePath}/simulator-ui-fixtures`;
 }
 
 interface NavigateOptions {
@@ -112,6 +119,10 @@ export default function App({ initialPath }: AppProps) {
 
   if (isAnimationFixturePath(path)) {
     return <AnimationFixturesPage onNavigate={navigate} />;
+  }
+
+  if (isSimulatorUiFixturePath(path)) {
+    return <SimulatorUiFixturesPage />;
   }
 
   if (gameSlug) {

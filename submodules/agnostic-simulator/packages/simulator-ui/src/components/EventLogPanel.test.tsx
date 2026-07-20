@@ -215,6 +215,49 @@ describe("EventLogPanel", () => {
     expect(document.body.querySelectorAll(`.${classes.phaseHeader}`)).toHaveLength(3);
   });
 
+  test("can keep only the latest turn expanded while preserving explicit turn overrides", async () => {
+    const firstTurn = entry("one", "p1", "First turn action.", { turn: 1 });
+    const secondTurn = entry("two", "p2", "Second turn action.", { turn: 2 });
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    act(() =>
+      activeRoot?.render(
+        <EventLogPanel entries={[firstTurn, secondTurn]} turnExpansion="latest" />,
+      ),
+    );
+
+    const turnOneButton = Array.from(document.body.querySelectorAll("button")).find((button) =>
+      button.textContent?.includes("Turn 1"),
+    );
+    const turnTwoButton = Array.from(document.body.querySelectorAll("button")).find((button) =>
+      button.textContent?.includes("Turn 2"),
+    );
+
+    expect(turnOneButton?.getAttribute("aria-expanded")).toBe("false");
+    expect(turnTwoButton?.getAttribute("aria-expanded")).toBe("true");
+    expect(document.body.textContent).not.toContain("First turn action.");
+    expect(document.body.textContent).toContain("Second turn action.");
+
+    await act(async () => {
+      turnOneButton?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
+
+    expect(turnOneButton?.getAttribute("aria-expanded")).toBe("true");
+    expect(document.body.textContent).toContain("First turn action.");
+
+    const thirdTurn = entry("three", "p1", "Third turn action.", { turn: 3 });
+    act(() =>
+      activeRoot?.render(
+        <EventLogPanel entries={[firstTurn, secondTurn, thirdTurn]} turnExpansion="latest" />,
+      ),
+    );
+
+    expect(turnOneButton?.getAttribute("aria-expanded")).toBe("true");
+    expect(document.body.textContent).not.toContain("Second turn action.");
+    expect(document.body.textContent).toContain("Third turn action.");
+  });
+
   test("renders phase dividers for unsectioned phase changes within one turn", () => {
     renderPanel([
       entry("one", "p1", "Readied all cards.", { phase: "start" }),
@@ -231,6 +274,22 @@ describe("EventLogPanel", () => {
 
     expect(phaseHeaders).toEqual(["start", "main"]);
     expect(document.body.textContent).toContain("start / main");
+  });
+
+  test("preserves projection order when multiple outcomes share one timestamp", () => {
+    const section = { id: "combat-1", label: "Combat", tone: "fight" };
+    renderPanel([
+      entry("z-pass", "p1", "Both players passed.", { tags: ["combat"], section }),
+      entry("a-damage", "p1", "A unit took 2 damage.", { tags: ["combat"], section }),
+      entry("m-resolved", "p1", "Combat resolved.", { tags: ["combat"], section }),
+    ]);
+
+    const combatGroup = document.body.querySelector('[role="group"][aria-label="Combat"]');
+    const messages = Array.from(combatGroup?.querySelectorAll("p") ?? []).map(
+      (message) => message.textContent,
+    );
+
+    expect(messages).toEqual(["Both players passed.", "A unit took 2 damage.", "Combat resolved."]);
   });
 
   test("renders chat messages inline with event log rows on the all filter", async () => {

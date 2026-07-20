@@ -106,7 +106,7 @@ export const st06GquuuuuuxOmegaPsycommu002: UnitCard = {
             comparison: "gte",
             count: 1,
             excludeSelf: true,
-            hasTrait: "Clan",
+            hasTrait: "clan",
           },
         ],
       },

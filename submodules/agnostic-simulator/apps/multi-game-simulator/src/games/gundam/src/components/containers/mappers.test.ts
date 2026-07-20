@@ -492,6 +492,34 @@ describe("toGameCardData", () => {
     expect(result.set).toBe("gd02");
   });
 
+  it("suppresses image fallback for cards that explicitly have no printed art", () => {
+    const view = makeView();
+    const def = makeCard({
+      type: "base",
+      cardNumber: "EXBP-001",
+      printings: [
+        {
+          id: "EXBP-001",
+          artId: "EXBP-001",
+          setCode: "T",
+          collectorNumber: "EXBP-001",
+          cardNumber: "EXBP-001",
+          set: { code: "T", name: "Token Cards" },
+          rarity: "common",
+          finish: "standard",
+          imageUrl: "",
+        },
+      ],
+    } as Card);
+    const card = makeFilteredCard({ definition: def });
+
+    const result = toGameCardData(view, card);
+
+    expect(result.img).toBeUndefined();
+    expect(result.set).toBeUndefined();
+    expect(result.cardNumber).toBe("EXBP-001");
+  });
+
   it("reads linkCondition as linkRequirement", () => {
     const view = makeView();
     const def = makeCard({ linkCondition: "Pilot" });

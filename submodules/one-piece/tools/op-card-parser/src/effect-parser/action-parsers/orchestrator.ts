@@ -116,6 +116,38 @@ export function parseActions(rawActionText: string): ParseActionsResult {
     .trim();
   if (!text) return { parsed: [], unparsed: "" };
 
+  const lookAtLifeThenAddThisMatch =
+    /^(look\s+at\s+up\s+to\s+1\s+card\s+from\s+the\s+top\s+of\s+your\s+or\s+your\s+opponent['’]s\s+Life\s+cards,?\s+and\s+place\s+it\s+at\s+the\s+top\s+or\s+bottom\s+of\s+the\s+Life\s+cards)\.\s*Then,\s+add\s+this\s+card\s+to\s+your\s+hand\.?$/i.exec(
+      text,
+    );
+  if (lookAtLifeThenAddThisMatch) {
+    const lookAtLife = parseLifeCardLookAction(lookAtLifeThenAddThisMatch[1]!);
+    if (lookAtLife) {
+      return {
+        parsed: [lookAtLife, { action: "addThisCardToHand" }],
+        unparsed: "",
+      };
+    }
+  }
+
+  const opponentNextMainMatch =
+    /^(.+?)\s+at\s+the\s+start\s+of\s+their\s+next\s+Main\s+Phase\.?$/is.exec(text);
+  if (opponentNextMainMatch) {
+    const nested = parseActions(opponentNextMainMatch[1]!);
+    if (nested.unparsed === "" && nested.parsed.length > 0) {
+      return {
+        parsed: [
+          {
+            action: "delayed",
+            timing: "startOfOpponentNextMainPhase",
+            actions: nested.parsed,
+          },
+        ],
+        unparsed: "",
+      };
+    }
+  }
+
   const playedCharacterDelayedDeckMatch =
     /^(.+?)\.\s*Then,\s*place\s+the\s+1\s+Character\s+played\s+by\s+this\s+effect\s+at\s+the\s+(bottom|top)\s+of\s+the\s+owner[''\u2019]s\s+deck\s+at\s+the\s+end\s+of\s+this\s+turn\.?$/is.exec(
       text,
@@ -419,7 +451,7 @@ export function parseActions(rawActionText: string): ParseActionsResult {
     );
   if (negateThenCannotAttackMatch) {
     const negate = parseNegateEffectsAction(negateThenCannotAttackMatch[1]!);
-    if (negate) {
+    if (negate && !Array.isArray(negate)) {
       return {
         parsed: [
           negate,
@@ -1454,7 +1486,13 @@ export function parseActions(rawActionText: string): ParseActionsResult {
           player: "self",
           count: 1,
           ifRevealedCardMatches: {
-            filters: [{ filter: "trait", value: conditionalRevealMatch[1]! }],
+            filters: [
+              {
+                filter: "trait",
+                value: conditionalRevealMatch[1]!,
+                match: "includes",
+              },
+            ],
             actions: followUp,
           },
         });
@@ -1503,6 +1541,21 @@ export function parseActions(rawActionText: string): ParseActionsResult {
     const rearrange = parseRearrangeDeckAction(leadingThenRearrangeMatch[2]!);
     if (leadingActions.parsed.length > 0 && !leadingActions.unparsed && rearrange) {
       preParsed.push(...leadingActions.parsed, rearrange);
+      textAfterSearch = "";
+    }
+  }
+
+  // Preserve an independent compound named-or-trait power continuation after
+  // a leading action. Generic clause splitting would otherwise split the
+  // compound subject at its printed `and`.
+  const leadingThenCompoundPowerMatch = /^(.+?)\.\s*Then,\s*(all\s+of\s+your\s+.+)$/i.exec(
+    textAfterSearch,
+  );
+  if (leadingThenCompoundPowerMatch) {
+    const leadingActions = parseActions(leadingThenCompoundPowerMatch[1]!);
+    const compoundPower = parseCompoundNamedTraitPower(leadingThenCompoundPowerMatch[2]!);
+    if (leadingActions.parsed.length > 0 && !leadingActions.unparsed && compoundPower) {
+      preParsed.push(...leadingActions.parsed, ...compoundPower);
       textAfterSearch = "";
     }
   }
@@ -1695,7 +1748,7 @@ export function parseActions(rawActionText: string): ParseActionsResult {
 
     const giveDon = parseGiveDonAction(clause);
     if (giveDon) {
-      parsed.push(giveDon);
+      parsed.push(...(Array.isArray(giveDon) ? giveDon : [giveDon]));
       continue;
     }
 
@@ -1804,9 +1857,16 @@ export function parseActions(rawActionText: string): ParseActionsResult {
       continue;
     }
 
-    const addDon = parseAddDonAction(clause);
+    const addDonAtEndOfTurn = /\s+at\s+the\s+end\s+of\s+this\s+turn\.?$/i.test(clause);
+    const addDon = parseAddDonAction(
+      addDonAtEndOfTurn ? clause.replace(/\s+at\s+the\s+end\s+of\s+this\s+turn\.?$/i, "") : clause,
+    );
     if (addDon) {
-      parsed.push(addDon);
+      parsed.push(
+        addDonAtEndOfTurn
+          ? { action: "delayed", timing: "endOfThisTurn", actions: [addDon] }
+          : addDon,
+      );
       continue;
     }
 
@@ -1940,7 +2000,7 @@ export function parseActions(rawActionText: string): ParseActionsResult {
 
     const negateEffects = parseNegateEffectsAction(clause);
     if (negateEffects) {
-      parsed.push(negateEffects);
+      parsed.push(...(Array.isArray(negateEffects) ? negateEffects : [negateEffects]));
       continue;
     }
 

@@ -27,7 +27,6 @@ describe("Main-phase · Command with no legal target · rule 10-1-8-1-1", () => 
     const hand = screen.getByRole("list", { name: /your hand/i });
     const hawkItem = within(hand).getByRole("listitem", { name: /Hawk of Endymion/i });
 
-    await user.click(screen.getByRole("button", { name: /open match panel/i }));
     expect(screen.queryByTestId("interaction-card:playCommand")).toBeNull();
 
     expect(screen.queryByRole("button", { name: /^confirm$/i, hidden: true })).toBeNull();
@@ -47,7 +46,6 @@ describe("Main-phase · Command with no legal target · rule 10-1-8-1-1", () => 
     const hand = screen.getByRole("list", { name: /your hand/i });
     const hawkItem = within(hand).getByRole("listitem", { name: /Hawk of Endymion/i });
 
-    await user.click(screen.getByRole("button", { name: /open match panel/i }));
     expect(screen.queryByTestId("interaction-card:playCommand")).toBeNull();
 
     expect(screen.queryByRole("button", { name: /^confirm$/i, hidden: true })).toBeNull();
@@ -72,7 +70,6 @@ describe("Main-phase · Command with no legal target · rule 10-1-8-1-1", () => 
     const hand = screen.getByRole("list", { name: /your hand/i });
     const hawkItem = within(hand).getByRole("listitem", { name: /Hawk of Endymion/i });
 
-    await user.click(screen.getByRole("button", { name: /open match panel/i }));
     expect(screen.queryByTestId("interaction-card:playCommand")).toBeNull();
 
     expect(screen.queryByRole("button", { name: /^confirm$/i, hidden: true })).toBeNull();

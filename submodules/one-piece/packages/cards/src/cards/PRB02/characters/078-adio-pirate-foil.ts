@@ -42,5 +42,46 @@ export const prb02AdioPirateFoil078: CharacterCard = {
   ],
   effect:
     'If you have 2 or more rested "ODYSSEY" type Characters, this Character gains +1000 power.',
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "character",
+            comparison: "gte",
+            value: 2,
+            filters: [
+              {
+                filter: "state",
+                value: "rested",
+              },
+              {
+                filter: "trait",
+                value: "ODYSSEY",
+                match: "includes",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 1000,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: prb02AdioPirateFoil078I18n,
 };

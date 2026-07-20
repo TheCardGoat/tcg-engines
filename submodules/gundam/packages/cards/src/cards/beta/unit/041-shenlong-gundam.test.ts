@@ -19,13 +19,12 @@ describe("Shenlong Gundam (GD01-041)", () => {
     const p2 = engine.asPlayer(PLAYER_TWO);
     const shenlongId = p1.getCardsInZone("battleArea")[0]!;
     const defenderId = p2.getCardsInZone("battleArea")[0]!;
-    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
 
     expectSuccess(p1.enterBattle(shenlongId, defenderId));
     expectSuccess(p2.passBlock());
     expectSuccess(p2.passBattleAction());
     expectSuccess(p1.passBattleAction());
 
-    expect(p2.getCardZone(shieldId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getBoardView().players[PLAYER_TWO]?.shieldCount).toBe(0);
   });
 });

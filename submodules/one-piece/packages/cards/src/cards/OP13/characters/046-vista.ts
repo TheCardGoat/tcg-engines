@@ -31,6 +31,9 @@ export const op13Vista046: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "ko",
+        eventFilter: {
+          targetSelf: true,
+        },
         replacementAction: {
           action: "trashFromHand",
           player: "self",
@@ -39,13 +42,19 @@ export const op13Vista046: CharacterCard = {
             {
               filter: "trait",
               value: "Whitebeard Pirates",
+              match: "includes",
             },
           ],
         },
         oncePerTurn: true,
+        oncePerTurnKey: "printed-replacement-0",
       },
       {
         replacedEvent: "removeFromField",
+        source: "opponentEffect",
+        eventFilter: {
+          targetSelf: true,
+        },
         replacementAction: {
           action: "trashFromHand",
           player: "self",
@@ -54,10 +63,12 @@ export const op13Vista046: CharacterCard = {
             {
               filter: "trait",
               value: "Whitebeard Pirates",
+              match: "includes",
             },
           ],
         },
         oncePerTurn: true,
+        oncePerTurnKey: "printed-replacement-0",
       },
     ],
   },

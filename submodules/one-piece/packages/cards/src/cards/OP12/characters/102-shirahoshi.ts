@@ -56,6 +56,9 @@ export const op12Shirahoshi102: CharacterCard = {
             zone: "field",
             filters: [
               {
+                filter: "excludeSelf",
+              },
+              {
                 filter: "name",
                 value: "Shirahoshi",
               },
@@ -80,6 +83,7 @@ export const op12Shirahoshi102: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Neptunian",
+                  match: "includes",
                 },
               ],
             },
@@ -87,6 +91,32 @@ export const op12Shirahoshi102: CharacterCard = {
             duration: "permanent",
           },
         ],
+      },
+    ],
+    replacementEffects: [
+      {
+        replacedEvent: "removeFromField",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "baseCost",
+              comparison: "lte",
+              value: 6,
+            },
+          ],
+        },
+        source: "opponentEffect",
+        replacementAction: {
+          action: "turnLifeFaceUp",
+          player: "self",
+          count: 1,
+          position: "top",
+        },
       },
     ],
   },

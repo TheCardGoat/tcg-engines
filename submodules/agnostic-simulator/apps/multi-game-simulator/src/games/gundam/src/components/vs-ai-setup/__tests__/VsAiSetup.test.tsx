@@ -13,10 +13,13 @@ afterEach(cleanup);
  * is the contract we want to pin, and staying off the router keeps
  * the tests cheap.
  */
-function renderSetup(props: Partial<Parameters<typeof VsAiSetup>[0]> = {}) {
+function renderSetup(
+  props: Partial<Parameters<typeof VsAiSetup>[0]> = {},
+  initialEntry = "/vs-ai",
+) {
   let startedUrl: string | undefined;
   const view = render(
-    <MemoryRouter initialEntries={["/vs-ai"]}>
+    <MemoryRouter initialEntries={[initialEntry]}>
       <VsAiSetup
         onStart={(url) => {
           startedUrl = url;
@@ -63,6 +66,13 @@ describe("VsAiSetup: initial state", () => {
     const { container } = renderSetup();
     expect(radio(container, "opponent-strategy", "pass-only").checked).toBe(true);
   });
+
+  it("owns a viewport-height scroll region so every setup control remains reachable", () => {
+    renderSetup();
+    const scrollRegion = screen.getByTestId("vs-ai-setup-scroll-region");
+    expect(scrollRegion.className).toContain("h-dvh");
+    expect(scrollRegion.className).toContain("overflow-y-auto");
+  });
 });
 
 describe("VsAiSetup: start-button URL assembly", () => {
@@ -89,6 +99,23 @@ describe("VsAiSetup: start-button URL assembly", () => {
     const parsed = new URL(getStartedUrl()!, "http://test.local");
     expect(parsed.searchParams.get("deck")).toBe("gd01-mixed");
     expect(parsed.searchParams.get("strategy")).toBe("greedy-legal");
+  });
+
+  it("launches the promoted combat-aware opponent", () => {
+    const { container, getStartedUrl } = renderSetup();
+
+    fireEvent.click(radio(container, "opponent-strategy", "combat-aware"));
+    fireEvent.click(screen.getByRole("button", { name: /start match/i }));
+
+    const parsed = new URL(getStartedUrl()!, "http://test.local");
+    expect(parsed.searchParams.get("strategy")).toBe("combat-aware");
+  });
+
+  it("preserves the mounted simulator path", () => {
+    const { getStartedUrl } = renderSetup({}, "/gundam/simulator/vs-ai");
+    fireEvent.click(screen.getByRole("button", { name: /start match/i }));
+    const parsed = new URL(getStartedUrl()!, "http://test.local");
+    expect(parsed.pathname).toBe("/gundam/simulator/vs-ai");
   });
 });
 

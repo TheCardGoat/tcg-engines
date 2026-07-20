@@ -131,9 +131,10 @@ export function restCharacterByEffect(
   state: MatchState,
   instanceId: string,
   effectController: MatchSeat,
+  sourceInstanceId: string,
 ): boolean {
   const instance = getInstance(state, instanceId);
-  if (!restCard(state, instanceId, effectController)) {
+  if (!restCard(state, instanceId, effectController, sourceInstanceId)) {
     return false;
   }
   if (instance.zone === "character") {
@@ -143,6 +144,7 @@ export function restCharacterByEffect(
       {
         instanceId,
         effectController,
+        sourceInstanceId,
         targetInstanceId: instanceId,
       },
       [effectController],
@@ -188,6 +190,7 @@ function promptForEffectRestReplacement(
       controller: replacement.controller,
       replacementSourceInstanceId: replacement.sourceInstanceId,
       replacementEffectIndex: replacement.replacementEffectIndex,
+      replacementEffectKey: replacement.effectKey,
       replacementAction: replacement.effect.replacementAction,
       restSourceInstanceId: sourceInstanceId,
       restController: controller,
@@ -362,9 +365,7 @@ export function promptForEffectRemovalReplacement(
         { next: true },
       );
     }
-    getInstance(state, replacement.sourceInstanceId).usedEffectKeys.push(
-      `replacement:${replacementEvent}:${replacement.replacementEffectIndex}`,
-    );
+    getInstance(state, replacement.sourceInstanceId).usedEffectKeys.push(replacement.effectKey);
     enqueueResolution(
       state,
       {
@@ -400,6 +401,7 @@ export function promptForEffectRemovalReplacement(
       replacementSourceInstanceId: replacement.sourceInstanceId,
       replacementEffectIndex: replacement.replacementEffectIndex,
       replacementEvent,
+      replacementEffectKey: replacement.effectKey,
       replacementAction: replacement.effect.replacementAction,
       removalSourceInstanceId: sourceInstanceId,
       removalController: controller,
@@ -1657,6 +1659,10 @@ export function processEffectAction(
           ...(action.timing === "endOfThisBattle" && {
             scheduledBattleId: state.battle!.id,
           }),
+          ...(action.timing === "startOfOpponentNextMainPhase" && {
+            scheduledPhase: "main" as const,
+            scheduledSeat: otherSeat(controller),
+          }),
         });
       }
       return true;
@@ -1775,8 +1781,8 @@ export function processEffectAction(
         if (maximum === 0) {
           return true;
         }
-        if (!resolvedAction.upTo && pool.length === 1 && maximum === 1) {
-          selectedTargetIds = [pool[0]!];
+        if (!resolvedAction.upTo && maximum === pool.length) {
+          selectedTargetIds = [...pool];
         } else {
           const concealFromChooser = choiceSeat !== seat;
           const orderedPool = concealFromChooser
@@ -1853,12 +1859,14 @@ export function processEffectAction(
         },
       );
       if (selected.length > 0) {
-        enqueueInPlayEffectsForTrigger(state, "whenCardsTrashedFromHandByEffect", {
+        const triggerEvent = {
           instanceId: selected[0]!,
           effectController: controller,
           amount: selected.length,
           sourceInstanceId,
-        });
+        };
+        enqueueInPlayEffectsForTrigger(state, "whenCardTrashedFromHandByEffect", triggerEvent);
+        enqueueInPlayEffectsForTrigger(state, "whenCardsTrashedFromHandByEffect", triggerEvent);
       }
       return true;
     }
@@ -2391,7 +2399,7 @@ export function processEffectAction(
           ];
           if (replacement.effect.mandatory) {
             getInstance(state, replacement.sourceInstanceId).usedEffectKeys.push(
-              `replacement:${replacement.effect.replacedEvent}:${replacement.replacementEffectIndex}`,
+              replacement.effectKey,
             );
             if (remainingTargetIds.length > 0) {
               enqueueResolution(
@@ -2451,6 +2459,7 @@ export function processEffectAction(
               replacementSourceInstanceId: replacement.sourceInstanceId,
               replacementEffectIndex: replacement.replacementEffectIndex,
               replacementEvent: replacement.effect.replacedEvent as "ko" | "removeFromField",
+              replacementEffectKey: replacement.effectKey,
               replacementAction: replacement.effect.replacementAction,
               koSourceInstanceId: sourceInstanceId,
               koController: controller,
@@ -2526,9 +2535,11 @@ export function processEffectAction(
             : action.target.count.amount;
         const maximum = Math.min(requestedAmount, getPlayer(state, targetSeat).activeDon);
         if (maximum > 0) {
+          const choiceSeat =
+            action.target.chosenBy === "opponent" ? otherSeat(controller) : controller;
           createChoicePrompt(state, {
             choiceKind: "chooseOption",
-            seat: controller,
+            seat: choiceSeat,
             label: `${effectSourceName(state, sourceInstanceId)} may rest DON!! cards`,
             details: `Choose how many of ${getPlayer(state, targetSeat).playerName}'s active DON!! cards to rest.`,
             sourceCardId: getInstance(state, sourceInstanceId).cardId,
@@ -2593,7 +2604,7 @@ export function processEffectAction(
             ) {
               return false;
             }
-            restCharacterByEffect(state, id, controller);
+            restCharacterByEffect(state, id, controller, sourceInstanceId);
           }
         }
         return true;
@@ -2621,7 +2632,7 @@ export function processEffectAction(
         ) {
           return false;
         }
-        restCharacterByEffect(state, targetId, controller);
+        restCharacterByEffect(state, targetId, controller, sourceInstanceId);
       }
       emitLog(
         state,
@@ -5428,6 +5439,7 @@ export function canPayCosts(
   trashHandIds: string[] | undefined,
   costPaymentIds?: string[],
   costPaymentIdsByType?: {
+    giveDon?: string[];
     restCards?: string[];
     returnCharacter?: string[];
   },
@@ -5443,6 +5455,22 @@ export function canPayCosts(
           return false;
         }
         break;
+      case "giveDon": {
+        const player = getPlayer(state, controller);
+        const candidates = [
+          player.leaderInstanceId,
+          ...player.characterArea.filter((instanceId): instanceId is string => instanceId !== null),
+        ];
+        const selected = costPaymentIdsByType?.giveDon ?? candidates.slice(0, 1);
+        if (
+          player.activeDon < cost.amount ||
+          selected.length !== 1 ||
+          !candidates.includes(selected[0]!)
+        ) {
+          return false;
+        }
+        break;
+      }
       case "returnDon":
         if (returnDonCostOptions(state, controller).length < (cost.minimumAmount ?? cost.amount)) {
           return false;
@@ -5738,6 +5766,7 @@ export function payCosts(
   trashHandIds: string[] | undefined,
   costPaymentIds?: string[],
   costPaymentIdsByType?: {
+    giveDon?: string[];
     restCards?: string[];
     returnCharacter?: string[];
   },
@@ -5766,6 +5795,24 @@ export function payCosts(
         getPlayer(state, controller).activeDon -= cost.amount;
         getPlayer(state, controller).restedDon += cost.amount;
         break;
+      case "giveDon": {
+        const player = getPlayer(state, controller);
+        const targetId = (costPaymentIdsByType?.giveDon ?? [player.leaderInstanceId])[0]!;
+        player.activeDon -= cost.amount;
+        getInstance(state, targetId).attachedDon += cost.amount;
+        emitLog(
+          state,
+          controller,
+          `${effectSourceName(state, sourceInstanceId)} gives ${cost.amount} active DON!! to ${cardName(getCardForInstance(state, targetId))} as an activation cost.`,
+          {
+            sourceCardId: getInstance(state, sourceInstanceId).cardId,
+            sourceInstanceId,
+            targetIds: [targetId],
+            visibility: "public",
+          },
+        );
+        break;
+      }
       case "returnDon": {
         const minimumAmount = cost.minimumAmount ?? cost.amount;
         const selectedIds =

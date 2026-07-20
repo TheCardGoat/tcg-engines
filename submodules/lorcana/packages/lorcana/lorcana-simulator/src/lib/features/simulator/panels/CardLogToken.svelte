@@ -16,10 +16,12 @@
   const sidebar = maybeUseLorcanaSidebarPresenter();
   const cardContext = maybeUseSimulatorCardContext();
 
-  const shouldUseFallback = $derived(Boolean(fallbackLabel));
-  const snapshot = $derived(
-    shouldUseFallback ? null : (sidebar?.resolveStaticCardSnapshot?.(cardId) ?? null),
-  );
+  // Event-log formatting always provides a fallback label so history remains
+  // readable outside a live match. That label must not replace the static
+  // snapshot here: the snapshot carries the set and collector number required
+  // by the global card preview image.
+  const snapshot = $derived(sidebar?.resolveStaticCardSnapshot?.(cardId) ?? null);
+  const shouldUseFallback = $derived(snapshot === null && Boolean(fallbackLabel));
   const staticName = $derived(
     shouldUseFallback ? null : (sidebar?.resolveCardName?.(cardId) ?? null),
   );

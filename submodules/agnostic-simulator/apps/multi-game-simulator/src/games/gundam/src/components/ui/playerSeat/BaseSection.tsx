@@ -59,6 +59,7 @@ export function BaseSection({ cards, label, isTop, zoneId, compact = false }: Ba
             entities={entities}
             entityCount={cards.length}
             label={label}
+            emptyLabel="BASE"
             density="mini"
             className="!min-h-0 !w-full !border-0 !bg-transparent !p-0"
           />

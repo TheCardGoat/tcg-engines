@@ -109,9 +109,9 @@ describe("BoardSharedPage sidebar", () => {
     expect(screen.getByLabelText("Open simulator settings")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "MrGMBH connection status: Connected" }));
     expect(screen.getByRole("dialog", { name: "MrGMBH connection details" })).toBeTruthy();
-    expect(screen.getByText("Presence is live")).toBeTruthy();
+    expect(screen.getByText("Rival presence is live")).toBeTruthy();
     expect(screen.getByText("Connected")).toBeTruthy();
-    fireEvent.click(screen.getByText("Details"));
+    fireEvent.click(screen.getByText("Technical details"));
     expect(screen.queryByText("dl_secret_opp")).toBeNull();
 
     fireEvent.click(screen.getByRole("menuitem", { name: "Report player" }));
@@ -251,7 +251,7 @@ describe("BoardSharedPage sidebar", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "MrGMBH connection status: Disconnected" }));
     expect(screen.getByRole("dialog", { name: "MrGMBH connection details" })).toBeTruthy();
-    expect(screen.getByText("Opponent offline")).toBeTruthy();
+    expect(screen.getByText("Rival disconnected")).toBeTruthy();
     fireEvent.click(screen.getByText("Drop opponent"));
 
     expect(onClaimRivalDrop).toHaveBeenCalledTimes(1);

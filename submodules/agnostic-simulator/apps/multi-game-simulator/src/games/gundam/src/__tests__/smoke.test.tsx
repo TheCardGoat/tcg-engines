@@ -25,6 +25,24 @@ describe("SimulatorApp smoke", () => {
     const { container } = renderSimulator(loadSetupDefault);
     expect(container.firstChild).not.toBeNull();
     expect(container.querySelector("[data-sim-board]")).not.toBeNull();
+    expect(container.querySelector("[data-testid='desktop-match-rail']")).not.toBeNull();
+    expect(container.querySelector("[data-seat-side='top']")?.getAttribute("aria-label")).toBe(
+      "Opponent board",
+    );
+    expect(container.querySelector("[data-seat-side='bottom']")?.getAttribute("aria-label")).toBe(
+      "Active player board",
+    );
+    expect(container.querySelector("[data-testid='primary-action']")?.className).not.toContain(
+      "absolute",
+    );
+    const selfBase = container.querySelector("[data-sim-zone-id='baseSection:player_one']");
+    expect(selfBase?.closest("[data-zone-group='base-and-shields']")).not.toBeNull();
+    expect(selfBase?.closest("[data-sim-zone-id='battleArea:player_one']")).toBeNull();
+    expect(
+      container
+        .querySelector("[data-sim-zone-id='resourceArea:player_one']")
+        ?.querySelector("[data-resource-capacity='6']"),
+    ).not.toBeNull();
 
     // `game/adapter.ts` defers store notifications via `queueMicrotask`,
     // so any React warnings/errors triggered by the first projection

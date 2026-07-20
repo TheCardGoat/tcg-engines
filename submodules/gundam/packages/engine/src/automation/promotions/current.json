@@ -1,16 +1,16 @@
 {
-  "schemaVersion": 1,
+  "blocks": 240,
+  "cardCatalogHash": "fnv1a32:d9b21800",
+  "confidenceInterval": { "level": 0.95, "lower": 0.025, "upper": 0.1 },
+  "engineRevision": "fnv1a32:7a8aea2f",
   "game": "gundam",
-  "promotedStrategyId": "value-ranked",
-  "previousStrategyId": "value-ranked",
   "informationPolicy": "oracle",
-  "manifestHash": "bootstrap:existing-production-default",
-  "scheduleHash": "bootstrap:unevaluated",
-  "engineRevision": "bootstrap",
-  "cardCatalogHash": "bootstrap",
-  "strategyConfig": {},
-  "blocks": 1,
-  "matches": 1,
-  "meanPairedImprovement": 0,
-  "confidenceInterval": { "level": 0.95, "lower": 0, "upper": 0 }
+  "manifestHash": "fnv1a32:df2fe816",
+  "matches": 640,
+  "meanPairedImprovement": 0.0625,
+  "previousStrategyId": "strategic",
+  "promotedStrategyId": "combat-aware",
+  "scheduleHash": "fnv1a32:a394417d",
+  "schemaVersion": 1,
+  "strategyConfig": { "strategyId": "combat-aware" }
 }

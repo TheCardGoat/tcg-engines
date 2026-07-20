@@ -893,12 +893,18 @@ importers:
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.15
+      '@types/react-dom':
+        specifier: 'catalog:'
+        version: 19.2.3(@types/react@19.2.15)
       '@typescript/native':
         specifier: 'catalog:'
         version: typescript@7.0.2
       react:
         specifier: 'catalog:'
         version: 19.2.6
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.2.6(react@19.2.6)
       vitest:
         specifier: npm:@voidzero-dev/vite-plus-test@0.1.24
         version: '@voidzero-dev/vite-plus-test@0.1.24(patch_hash=f54f4f3c30095637c7c946ca4e37e64c4f09dfee2c1c28ddbdab2bf6af337d39)(@opentelemetry/api@1.9.1)(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@2.2.0))(publint@0.3.21)(sugarss@5.0.1(postcss@8.5.15))(tsx@4.22.3)(typescript@6.0.3)(vite@8.0.14(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(sugarss@5.0.1(postcss@8.5.15))(tsx@4.22.3)(yaml@2.9.0))(yaml@2.9.0)'
@@ -933,6 +939,9 @@ importers:
 
   packages/simulator-ui:
     dependencies:
+      '@dnd-kit/core':
+        specifier: 'catalog:'
+        version: 6.3.1(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@floating-ui/dom':
         specifier: 'catalog:'
         version: 1.7.6

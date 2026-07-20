@@ -1,0 +1,13 @@
+{
+  "candidateId": "iter-15-selective-block",
+  "parentStrategyId": "strategic",
+  "hypothesis": "Selective blocking improves defensive exchanges.",
+  "seed": "gundam-combat-common-screen-v1",
+  "evaluation": {
+    "minimumBlocks": 30,
+    "maximumBlocks": 30,
+    "batchSize": 30,
+    "minimumMeanImprovement": 0,
+    "maximumCellRegression": 0.2
+  }
+}

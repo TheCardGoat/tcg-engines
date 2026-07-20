@@ -1,66 +1,60 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  asPlayerId,
-  expectSuccess,
   activeResources,
+  createMockPilot,
   createMockUnit,
-  findStatModifier,
-  giveShield,
-  markAsLinkUnit,
-  seedShieldsFromDeck,
+  expectSuccess,
 } from "@tcg/gundam-engine";
 import { betaAsticassiaSchoolOfTechnologyEarthHouse016 as betaAsticassia016 } from "./016-asticassia-school-of-technology-earth-house.ts";
+
 describe("Asticassia School of Technology, Earth House (ST01-016)", () => {
-  it("【Burst】Deploy this card — flips Asticassia into baseSection on shield destruction", () => {
-    const engine = GundamTestEngine.create({}, { deck: [betaAsticassia016] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed setup: no shield created");
+  describe("【Burst】Deploy this card.", () => {
+    it("deploys the revealed Shield into its owner's Base section", () => {
+      const engine = GundamTestEngine.create(
+        { play: [createMockUnit({ ap: 1, hp: 4 })] },
+        { shieldArea: [betaAsticassia016] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
 
-    engine
-      .getRuntime()
-      .registerCardInstance(shieldId, betaAsticassia016.cardNumber, asPlayerId(PLAYER_TWO));
+      expectSuccess(p1.enterBattle(p1.getCardsInZone("battleArea")[0]!, "direct"));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+      const burst = p2.getBoardView().pendingChoice;
+      if (burst?.kind !== "optional") throw new Error("Expected the visible Burst choice");
+      const baseId = burst.sourceCardId;
+      expectSuccess(p2.resolveEffect({ optionalAnswers: { [burst.directiveIndex]: true } }));
 
-    engine.fireShieldBurst(shieldId);
-
-    const finalZone = engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey;
-    expect(finalZone).toBe(`baseSection:${PLAYER_TWO}`);
+      expect(p2.getCardZone(baseId)).toBe(`baseSection:${PLAYER_TWO}`);
+      expect(p2.getBoardView().pendingChoice).toBeUndefined();
+    });
   });
 
-  it("【Deploy】 moves 1 Shield into the controller's hand", () => {
-    const engine = GundamTestEngine.create({
-      hand: [betaAsticassia016],
-      resourceArea: activeResources(2),
+  describe("【Activate･Main】Rest this Base：All friendly Link Units get AP+1 during this turn.", () => {
+    it("rests Earth House and raises only its controller's linked Unit", () => {
+      const host = createMockUnit({ ap: 2, hp: 3, linkCondition: "[Test Pilot]" });
+      const nonLink = createMockUnit({ ap: 2, hp: 3 });
+      const pilot = createMockPilot({ name: "Test Pilot", cost: 0, apBonus: 0, hpBonus: 0 });
+      const engine = GundamTestEngine.create({
+        hand: [pilot],
+        baseSection: [betaAsticassia016],
+        play: [host, nonLink],
+        resourceArea: activeResources(1),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const [hostId, nonLinkId] = p1.getCardsInZone("battleArea");
+      const baseId = p1.getCardsInZone("baseSection")[0]!;
+
+      expectSuccess(p1.assignPilot(pilot, hostId!));
+      expectSuccess(p1.activateBaseAbility(baseId));
+
+      expect(p1.isExhausted(baseId)).toBe(true);
+      expect(p1.getVisibleCard(hostId!)?.effectiveAp).toBe(3);
+      expect(p1.getVisibleCard(nonLinkId!)?.effectiveAp).toBe(2);
     });
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    for (let i = 0; i < 3; i++) giveShield(engine, p1.playerId);
-
-    const shieldsBefore = p1.getCardsInZone("shieldArea").length;
-
-    expectSuccess(p1.deployBase(betaAsticassia016));
-
-    expect(p1.getCardsInZone("baseSection").length).toBe(1);
-    expect(p1.getCardsInZone("shieldArea").length).toBe(shieldsBefore - 1);
-  });
-
-  it("【Activate·Main】Rest this Base：all friendly Link Units get AP+1 during this turn", () => {
-    const linkUnit = createMockUnit({ ap: 2, hp: 3 });
-    const nonLinkUnit = createMockUnit({ ap: 2, hp: 3 });
-    const engine = GundamTestEngine.create({
-      baseSection: [betaAsticassia016],
-      play: [linkUnit, nonLinkUnit],
-    });
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const [baseId] = p1.getCardsInZone("baseSection");
-    const [linkId, nonLinkId] = p1.getCardsInZone("battleArea");
-    markAsLinkUnit(engine, linkId!);
-
-    expectSuccess(p1.activateBaseAbility(betaAsticassia016));
-
-    expect(engine.getG().exhausted[baseId!]).toBe(true);
-    expect(findStatModifier(engine, linkId!, "ap")?.modifier).toBe(1);
-    expect(findStatModifier(engine, nonLinkId!, "ap")).toBeUndefined();
   });
 });

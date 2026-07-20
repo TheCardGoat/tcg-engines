@@ -56,7 +56,7 @@
     showRawLogRegistryJson = false,
     hotkeyMode = "confirm-only",
     cardPreviewMode = "delayed",
-    cardInfoMode = "detailed",
+    cardInfoMode = "quick",
     primaryClickAction = "challenge",
     animationSpeed = "off",
     soundVolume = 50,

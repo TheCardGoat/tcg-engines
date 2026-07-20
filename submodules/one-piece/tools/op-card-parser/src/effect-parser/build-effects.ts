@@ -74,6 +74,8 @@ function mapRawCost(raw: RawCost): Cost | null {
   switch (raw.type) {
     case "restDon":
       return { cost: "restDon", amount: raw.amount };
+    case "giveDon":
+      return { cost: "giveDon", amount: raw.amount };
     case "returnDon":
       return "minimumAmount" in raw && raw.minimumAmount !== undefined
         ? { cost: "returnDon", minimumAmount: raw.minimumAmount }
@@ -295,10 +297,10 @@ function mapRawCost(raw: RawCost): Cost | null {
           .map((trait) => trait.replace(/^[[{"\u201c]|[\]}"\u201d]$/g, "").trim());
         filters.push(
           traits.length === 1
-            ? { filter: "trait", value: traits[0]! }
+            ? { filter: "trait", value: traits[0]!, match: "includes" }
             : {
                 filter: "anyOf",
-                filters: traits.map((value) => ({ filter: "trait", value })),
+                filters: traits.map((value) => ({ filter: "trait", value, match: "includes" })),
               },
         );
       } else {
@@ -347,7 +349,7 @@ function mapRawCost(raw: RawCost): Cost | null {
         filters.push({ filter: "hasTrigger", value: true });
       }
       const categoryMatch =
-        /trash\s+\d+\s+(Character|Event|Stage)(?:s?| cards?)(?:\s+with\s+a\s+cost\s+of\s+\d+(?:\s+or\s+(?:less|more))?)?\s+from\s+your\s+hand/i.exec(
+        /trash\s+\d+\s+(Character|Event|Stage)(?:s?| cards?)(?:\s+with\s+(?:a\s+cost\s+of\s+\d+|\d+\s+power)(?:\s+or\s+(?:less|more))?)?\s+from\s+your\s+hand/i.exec(
           raw.raw,
         );
       if (categoryMatch) {
@@ -424,12 +426,33 @@ function mapRawCost(raw: RawCost): Cost | null {
           value: parseInt(costMatch[1]!, 10),
         });
       }
+      const powerMatch =
+        /trash\s+\d+\s+(?:Character|Event|Stage)\s+cards?\s+with\s+(\d+)\s+power(?:\s+or\s+(less|more))?\s+from\s+your\s+hand/i.exec(
+          raw.raw,
+        );
+      if (powerMatch) {
+        filters.push({
+          filter: "power",
+          comparison:
+            powerMatch[2]?.toLowerCase() === "less"
+              ? "lte"
+              : powerMatch[2]?.toLowerCase() === "more"
+                ? "gte"
+                : "eq",
+          value: parseInt(powerMatch[1]!, 10),
+        });
+      }
       const match =
         /trash\s+(\d+)\s+cards?\s+from\s+your\s+hand/i.exec(raw.raw) ??
         /trash\s+(\d+)\s+cards?\s+with\s+a\s+\[Trigger\]\s+from\s+your\s+hand/i.exec(raw.raw) ??
-        /trash\s+(\d+)\s+(?:Character|Event|Stage)s?\s+from\s+your\s+hand/i.exec(raw.raw) ??
+        /trash\s+(\d+)\s+(?:Character|Event|Stage)(?:s?|\s+cards?)\s+from\s+your\s+hand/i.exec(
+          raw.raw,
+        ) ??
         /trash\s+(\d+)\s+\[[^\]]+\]\s+from\s+your\s+hand/i.exec(raw.raw) ??
         /trash\s+(\d+)\s+Character\s+cards?\s+with\s+a\s+cost\s+of\s+\d+(?:\s+or\s+(?:less|more))?\s+from\s+your\s+hand/i.exec(
+          raw.raw,
+        ) ??
+        /trash\s+(\d+)\s+(?:Character|Event|Stage)\s+cards?\s+with\s+\d+\s+power(?:\s+or\s+(?:less|more))?\s+from\s+your\s+hand/i.exec(
           raw.raw,
         ) ??
         /trash\s+(\d+)\s+cards?\s+with\s+a\s+type\s+including\s+[""\u201c][^""\u201d]+[""\u201d]\s+from\s+your\s+hand/i.exec(
@@ -464,7 +487,7 @@ function mapRawCost(raw: RawCost): Cost | null {
         };
       }
       const traitMatch =
-        /^(and\s+)?(\d+)\s+of\s+your\s+Characters?\s+with\s+a\s+type\s+including\s+["\u201c]([^"\u201d]+)["\u201d]/i.exec(
+        /^(?:trash\s+)?(and\s+)?(\d+)\s+of\s+your\s+Characters?\s+with\s+a\s+type\s+including\s+["\u201c]([^"\u201d]+)["\u201d]/i.exec(
           raw.raw,
         );
       if (traitMatch) {
@@ -702,7 +725,7 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
     ...parsed.segments,
   ];
 
-  for (const seg of segments) {
+  for (const [segmentIndex, seg] of segments.entries()) {
     if (
       /^Once\s+per\s+turn,\s+this\s+Character\s+cannot\s+be\s+K\.O\.[’']?d\s+by\s+your\s+opponent['’]s\s+effects\.?$/i.test(
         seg.rawActionText.trim(),
@@ -813,10 +836,6 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
         actionText,
       );
     const leavingTraitMatch = leavingIncludedTraitMatch ?? leavingPrefixTraitMatch;
-    const selfRestedByOpponentEffect =
-      /^This\s+effect\s+can\s+be\s+activated\s+when\s+this\s+Character\s+is\s+rested\s+by\s+your\s+opponent[''\u2019]s\s+effect\./i.test(
-        actionText,
-      );
     const leavingEventFilter = leavingTraitMatch
       ? {
           player: "self" as const,
@@ -905,9 +924,39 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
     const conditionScopesOnlyLeadingDraw = /^draw\s+(?:\d+\s+cards?|a\s+card)\.\s*Then,/i.test(
       actionText,
     );
+    const potentialScopedThenMatch =
+      scopedThenConditions.length > 0 ? /^(.+?)\.\s*Then,\s*(.+)$/is.exec(actionText) : null;
+    const potentialTrailingThenActions = potentialScopedThenMatch
+      ? parseActions(potentialScopedThenMatch[2]!)
+      : null;
+    const potentialLeadingThenActions = potentialScopedThenMatch
+      ? parseActions(potentialScopedThenMatch[1]!)
+      : null;
+    const conditionScopesWholeDelayedSequence = Boolean(
+      potentialTrailingThenActions?.parsed.length &&
+      potentialTrailingThenActions.unparsed === "" &&
+      potentialTrailingThenActions.parsed.every((action) => action.action === "delayed"),
+    );
+    const conditionScopesWholeImmediateSequence = Boolean(
+      potentialLeadingThenActions?.parsed.length &&
+      potentialLeadingThenActions.unparsed === "" &&
+      potentialTrailingThenActions?.parsed.length &&
+      potentialTrailingThenActions.unparsed === "" &&
+      ((seg.triggers[0] === "activateMain" &&
+        scopedThenConditions.some((condition) => condition.condition === "lifeComparison") &&
+        potentialLeadingThenActions.parsed.every((action) => action.action === "draw") &&
+        potentialTrailingThenActions.parsed.every((action) => action.action === "rest")) ||
+        (seg.triggers[0] === "onPlay" &&
+          scopedThenConditions.some((condition) => condition.condition === "lifeCount") &&
+          potentialLeadingThenActions.parsed.every((action) => action.action === "draw") &&
+          potentialTrailingThenActions.parsed.every((action) => action.action === "giveDon"))),
+    );
     const scopedThenMatch =
-      (seg.costs.length > 0 || conditionScopesOnlyLeadingDraw) && scopedThenConditions.length > 0
-        ? /^(.+?)\.\s*Then,\s*(.+)$/is.exec(actionText)
+      seg.costs.length > 0 ||
+      conditionScopesOnlyLeadingDraw ||
+      conditionScopesWholeDelayedSequence ||
+      conditionScopesWholeImmediateSequence
+        ? potentialScopedThenMatch
         : null;
     const scopedThenCondition =
       scopedThenConditions.length === 1
@@ -917,33 +966,40 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
             operator: "and" as const,
             conditions: scopedThenConditions,
           };
-    const firstScopedActions = scopedThenMatch ? parseActions(scopedThenMatch[1]!) : null;
-    const trailingThenActions = scopedThenMatch ? parseActions(scopedThenMatch[2]!) : null;
+    const firstScopedActions = scopedThenMatch ? potentialLeadingThenActions : null;
+    const trailingThenActions = scopedThenMatch ? potentialTrailingThenActions : null;
     const gatesWholeDelayedSequence = Boolean(
       scopedThenMatch &&
       trailingThenActions?.parsed.length &&
       trailingThenActions.unparsed === "" &&
       trailingThenActions.parsed.every((action) => action.action === "delayed"),
     );
+    const gatesWholeThenSequence =
+      gatesWholeDelayedSequence || conditionScopesWholeImmediateSequence;
     const hasScopedThenActions = Boolean(
-      !gatesWholeDelayedSequence &&
+      !gatesWholeThenSequence &&
       firstScopedActions?.parsed.length &&
       firstScopedActions.unparsed === "" &&
       trailingThenActions?.parsed.length &&
       trailingThenActions.unparsed === "",
     );
-    const actionsResult = gatesWholeDelayedSequence
+    const blockGatesWholeThenSequence =
+      conditionScopesWholeImmediateSequence ||
+      (gatesWholeDelayedSequence && seg.costs.length === 0);
+    const actionsResult = gatesWholeThenSequence
       ? {
-          parsed: [...firstScopedActions!.parsed, ...trailingThenActions!.parsed].map((action) => ({
-            ...action,
-            condition: action.condition
-              ? {
-                  condition: "compound" as const,
-                  operator: "and" as const,
-                  conditions: [scopedThenCondition, action.condition],
-                }
-              : scopedThenCondition,
-          })),
+          parsed: blockGatesWholeThenSequence
+            ? [...firstScopedActions!.parsed, ...trailingThenActions!.parsed]
+            : [...firstScopedActions!.parsed, ...trailingThenActions!.parsed].map((action) => ({
+                ...action,
+                condition: action.condition
+                  ? {
+                      condition: "compound" as const,
+                      operator: "and" as const,
+                      conditions: [scopedThenCondition, action.condition],
+                    }
+                  : scopedThenCondition,
+              })),
           unparsed: "",
         }
       : hasScopedThenActions
@@ -1046,11 +1102,13 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
     const postCostConditions = inlineConditions.filter(
       (condition) =>
         condition.condition !== "triggerEvent" &&
-        (!gatesWholeDelayedSequence || !scopedThenConditions.includes(condition)) &&
+        (!gatesWholeThenSequence || !scopedThenConditions.includes(condition)) &&
         (!hasScopedThenActions || !scopedThenConditions.includes(condition)),
     );
     const blockInlineConditions = inlineConditions.filter(
-      (condition) => condition.condition === "triggerEvent",
+      (condition) =>
+        condition.condition === "triggerEvent" ||
+        (blockGatesWholeThenSequence && scopedThenConditions.includes(condition)),
     );
     // A condition parsed after a printed cost remains post-cost regardless of
     // whether that cost is optional. The player first pays the text before the
@@ -1157,6 +1215,18 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
       const simpleRepConds = replacementConds.filter((c) => c.condition === "replacement") as Array<
         Extract<Condition, { condition: "replacement" }>
       >;
+      const replacementBranchCount =
+        simpleRepConds.length +
+        compoundConds.reduce(
+          (count, compound) =>
+            count +
+            compound.conditions.filter((condition) => condition.condition === "replacement").length,
+          0,
+        );
+      const replacementOncePerTurnKey =
+        seg.oncePerTurn && replacementBranchCount > 1
+          ? `printed-replacement-${segmentIndex}`
+          : undefined;
 
       for (const rc of simpleRepConds) {
         replacementEffects.push({
@@ -1168,6 +1238,7 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
           ...(!optional && { mandatory: true as const }),
           ...(nonReplacementConds.length > 0 && { conditions: nonReplacementConds }),
           ...(seg.oncePerTurn && { oncePerTurn: true }),
+          ...(replacementOncePerTurnKey && { oncePerTurnKey: replacementOncePerTurnKey }),
         });
       }
       for (const cc of compoundConds) {
@@ -1189,6 +1260,7 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
             ...(!optional && { mandatory: true as const }),
             ...(otherConds.length > 0 && { conditions: otherConds }),
             ...(seg.oncePerTurn && { oncePerTurn: true }),
+            ...(replacementOncePerTurnKey && { oncePerTurnKey: replacementOncePerTurnKey }),
           });
         }
       }
@@ -1210,7 +1282,7 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
         ...(triggerEventCond.source && !leavingEventFilter && { source: triggerEventCond.source }),
         ...(leavingEventFilter
           ? { eventFilter: leavingEventFilter }
-          : selfRestedByOpponentEffect
+          : triggerEventCond.event === "whenBecomesRested"
             ? { eventFilter: { targetSelf: true } }
             : opponentLifeRemoved
               ? { eventFilter: { player: "opponent" as const } }
@@ -1276,6 +1348,7 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
       for (const trigger of seg.triggers) {
         effectBlocks.push({
           trigger,
+          ...(trigger === "whenBecomesRested" && { eventFilter: { targetSelf: true } }),
           ...(remainingConditions.length > 0 && { conditions: remainingConditions }),
           ...(costs.length > 0 && { costs }),
           actions: actionsResult.parsed,

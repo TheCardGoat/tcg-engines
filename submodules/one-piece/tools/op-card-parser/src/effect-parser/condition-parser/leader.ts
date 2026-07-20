@@ -1,4 +1,4 @@
-import type { Condition } from "@tcg/op-types";
+import type { Condition, OPAttribute } from "@tcg/op-types";
 
 function leaderTrait(trait: string): Condition {
   return { condition: "leaderTrait", trait, match: "includes" };
@@ -7,6 +7,22 @@ function leaderTrait(trait: string): Condition {
 export function parseLeaderCondition(text: string): Condition | null {
   const t = text.trim();
   let m: RegExpExecArray | null;
+
+  // Leader trait or attribute: your Leader has the "X" type or the "Y" attribute
+  m =
+    /^your\s+Leader\s+has\s+the\s+["“{[]([^"”}\]]+)["”}\]]\s+type\s+or\s+the\s+["“(]([^"”)]+)["”)]\s+attribute$/i.exec(
+      t,
+    );
+  if (m) {
+    return {
+      condition: "compound",
+      operator: "or",
+      conditions: [
+        leaderTrait(m[1]!),
+        { condition: "leaderAttribute", attribute: m[2]!.toLowerCase() as OPAttribute },
+      ],
+    };
+  }
 
   // Leader trait (multi): your Leader has the {X} or {Y} type
   m = /^your Leader has the [""[{]([^""\]}]+)[""\]}]\s+or\s+[""[{]([^""\]}]+)[""\]}]\s+type$/i.exec(

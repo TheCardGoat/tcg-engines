@@ -51,6 +51,7 @@ export const op13SSnake114: CharacterCard = {
           {
             cost: "turnLifeFaceUp",
             count: 1,
+            faceUp: true,
           },
         ],
         actions: [
@@ -76,6 +77,7 @@ export const op13SSnake114: CharacterCard = {
           {
             cost: "turnLifeFaceUp",
             count: 1,
+            faceUp: true,
           },
         ],
         actions: [
@@ -97,13 +99,15 @@ export const op13SSnake114: CharacterCard = {
       },
       {
         trigger: "trigger",
-        costs: [{ cost: "trashFromHand", amount: 1 }],
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+          },
+        ],
         actions: [
           {
-            action: "play",
-            source: { player: "self", zone: "hand" },
-            count: { amount: 1 },
-            self: true,
+            action: "playThisCard",
           },
         ],
         optional: true,

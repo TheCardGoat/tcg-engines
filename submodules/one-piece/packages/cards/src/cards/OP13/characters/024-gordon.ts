@@ -31,17 +31,46 @@ export const op13Gordon024: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "revealFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Music",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "FILM",
+                    match: "includes",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
         actions: [
           {
-            action: "setActive",
-            target: {
-              player: "self",
-              zones: ["costArea"],
-              count: {
-                amount: 2,
-                upTo: true,
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "setActive",
+                target: {
+                  player: "self",
+                  zones: ["costArea"],
+                  count: {
+                    amount: 2,
+                    upTo: true,
+                  },
+                },
               },
-            },
+            ],
           },
         ],
         optional: true,

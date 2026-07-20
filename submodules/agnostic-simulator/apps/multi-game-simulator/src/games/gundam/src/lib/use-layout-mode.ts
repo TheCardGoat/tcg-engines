@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 export type LayoutMode = "mobile" | "tablet" | "desktop";
 
 const MOBILE_MAX = 767;
+const MOBILE_SHORT_HEIGHT_MAX = 520;
 const TABLET_MAX = 1023;
 
-function resolve(width: number): LayoutMode {
-  if (width <= MOBILE_MAX) return "mobile";
+function resolve(width: number, height: number): LayoutMode {
+  if (width <= MOBILE_MAX || height <= MOBILE_SHORT_HEIGHT_MAX) return "mobile";
   if (width <= TABLET_MAX) return "tablet";
   return "desktop";
 }
@@ -25,8 +26,8 @@ export function useLayoutMode(): LayoutMode {
   const [mode, setMode] = useState<LayoutMode>("desktop");
 
   useEffect(() => {
-    setMode(resolve(window.innerWidth));
-    const onResize = () => setMode(resolve(window.innerWidth));
+    setMode(resolve(window.innerWidth, window.innerHeight));
+    const onResize = () => setMode(resolve(window.innerWidth, window.innerHeight));
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);

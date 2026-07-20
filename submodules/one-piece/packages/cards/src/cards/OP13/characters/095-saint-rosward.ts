@@ -27,5 +27,54 @@ export const op13SaintRosward095: CharacterCard = {
   attribute: "ranged",
   effect:
     '[On Play] You may trash 1 card from your hand: If you only have "Celestial Dragons" type Characters, K.O. up to 2 of your opponent\'s Characters with a base cost of 3 or less.',
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 2,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "baseCost",
+                  comparison: "lte",
+                  value: 3,
+                },
+              ],
+            },
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "character",
+              comparison: "eq",
+              value: 0,
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Celestial Dragons",
+                  match: "includes",
+                  negate: true,
+                },
+              ],
+            },
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
   i18n: op13SaintRosward095I18n,
 };

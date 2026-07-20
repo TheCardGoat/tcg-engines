@@ -32,6 +32,8 @@ function characterFiles(): string[] {
   const files: string[] = [];
   for (const setEntry of readdirSync(CARDS_DIR, { withFileTypes: true })) {
     if (!setEntry.isDirectory()) continue;
+    const legacyIndex = join(CARDS_DIR, setEntry.name, "index.ts");
+    if (existsSync(legacyIndex)) files.push(legacyIndex);
     const directory = join(CARDS_DIR, setEntry.name, "characters");
     if (!existsSync(directory)) continue;
     for (const entry of readdirSync(directory, { withFileTypes: true })) {
@@ -146,6 +148,14 @@ const printedText = [effectText, triggerText]
   .filter((text): text is string => Boolean(text))
   .join("\n");
 
+if (
+  options.cardId === "OP14-009" &&
+  stable(card.traits) !== stable(["Heart Pirates Supernovas The Seven Warlords of the Sea"])
+) {
+  throw new Error(
+    "OP14-009 official metadata requires Heart Pirates, Supernovas, and The Seven Warlords of the Sea traits.",
+  );
+}
 if (
   options.cardId === "OP14-016" &&
   (card.name !== "X.Drake" ||
@@ -1100,7 +1110,7 @@ if (options.cardId === "OP14-063") {
             count: { amount: 1, upTo: true },
             filters: [
               { filter: "cost", comparison: "lte", value: 5 },
-              { filter: "trait", value: "Donquixote Pirates" },
+              { filter: "trait", value: "Donquixote Pirates", match: "includes" },
               { filter: "cardCategory", value: "character" },
             ],
           },
@@ -1166,7 +1176,7 @@ if (options.cardId === "OP14-067") {
             lookCount: 5,
             source: { player: "self", zone: "deck" },
             revealCount: { amount: 1, upTo: true },
-            revealFilters: [{ filter: "trait", value: "Donquixote Pirates" }],
+            revealFilters: [{ filter: "trait", value: "Donquixote Pirates", match: "includes" }],
             revealDestination: "hand",
             remainderPosition: "bottom",
           },
@@ -1187,7 +1197,7 @@ if (options.cardId === "OP14-068") {
         trigger: "whenDonReturned",
         conditions: [
           { condition: "turn", value: "opponent" },
-          { condition: "leaderTrait", trait: "Donquixote Pirates" },
+          { condition: "leaderTrait", trait: "Donquixote Pirates", match: "includes" },
         ],
         actions: [{ action: "addDon", count: { amount: 1, upTo: true }, state: "rested" }],
         oncePerTurn: true,
@@ -1219,7 +1229,11 @@ if (options.cardId === "OP14-069") {
                     count: { amount: 1, upTo: true },
                     filters: [{ filter: "cost", comparison: "lte", value: 8 }],
                   },
-                  condition: { condition: "leaderTrait", trait: "Donquixote Pirates" },
+                  condition: {
+                    condition: "leaderTrait",
+                    trait: "Donquixote Pirates",
+                    match: "includes",
+                  },
                 },
               ],
               [
@@ -1237,6 +1251,7 @@ if (options.cardId === "OP14-069") {
             ],
           },
         ],
+        optional: true,
       },
     ],
   };
@@ -1253,6 +1268,7 @@ if (options.cardId === "OP14-070") {
       {
         trigger: "whenBecomesRested",
         source: "opponentCharacterEffect",
+        eventFilter: { targetSelf: true },
         actions: [
           {
             action: "returnDon",
@@ -1288,7 +1304,9 @@ if (
       effects: [
         {
           trigger: "endOfYourTurn",
-          conditions: [{ condition: "leaderTrait", trait: "Donquixote Pirates" }],
+          conditions: [
+            { condition: "leaderTrait", trait: "Donquixote Pirates", match: "includes" },
+          ],
           actions: [{ action: "addDon", count: { amount: 1, upTo: true }, state: "active" }],
         },
       ],
@@ -1319,6 +1337,7 @@ if (options.cardId === "OP14-072") {
             position: "top",
           },
         ],
+        optional: true,
       },
     ],
   };
@@ -1333,7 +1352,7 @@ if (options.cardId === "OP14-074") {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [{ condition: "leaderTrait", trait: "Donquixote Pirates" }],
+        conditions: [{ condition: "leaderTrait", trait: "Donquixote Pirates", match: "includes" }],
         actions: [{ action: "addDon", count: { amount: 1, upTo: true }, state: "active" }],
       },
       {
@@ -1420,7 +1439,7 @@ if (options.cardId === "OP14-082") {
               player: "self",
               zones: ["character"],
               count: { amount: "all" },
-              filters: [{ filter: "trait", value: "Thriller Bark Pirates" }],
+              filters: [{ filter: "trait", value: "Thriller Bark Pirates", match: "includes" }],
             },
             value: 4,
             duration: "untilEndOfOpponentNextEndPhase",
@@ -1436,7 +1455,7 @@ if (options.cardId === "OP14-082") {
             count: { amount: 1, upTo: true },
             filters: [
               { filter: "cost", comparison: "lte", value: 2 },
-              { filter: "trait", value: "Thriller Bark Pirates" },
+              { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
               { filter: "cardCategory", value: "character" },
             ],
             playState: "rested",
@@ -1485,7 +1504,7 @@ if (options.cardId === "OP14-084") {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [{ condition: "leaderTrait", trait: "Baroque Works" }],
+        conditions: [{ condition: "leaderTrait", trait: "Baroque Works", match: "includes" }],
         actions: [
           {
             action: "play",
@@ -1493,7 +1512,7 @@ if (options.cardId === "OP14-084") {
             count: { amount: 1, upTo: true },
             filters: [
               { filter: "cost", comparison: "lte", value: 4 },
-              { filter: "trait", value: "Baroque Works" },
+              { filter: "trait", value: "Baroque Works", match: "includes" },
               { filter: "cardCategory", value: "character" },
             ],
           },
@@ -1503,7 +1522,7 @@ if (options.cardId === "OP14-084") {
             count: { amount: 1, upTo: true },
             filters: [
               { filter: "cost", comparison: "eq", value: 1 },
-              { filter: "trait", value: "Baroque Works" },
+              { filter: "trait", value: "Baroque Works", match: "includes" },
               { filter: "cardCategory", value: "character" },
             ],
           },
@@ -1565,7 +1584,7 @@ if (options.cardId === "OP14-086") {
               player: "self",
               zones: ["character"],
               count: { amount: "all" },
-              filters: [{ filter: "trait", value: "Baroque Works" }],
+              filters: [{ filter: "trait", value: "Baroque Works", match: "includes" }],
             },
             value: 2,
           },
@@ -1584,7 +1603,7 @@ if (options.cardId === "OP14-087") {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [{ condition: "leaderTrait", trait: "Baroque Works" }],
+        conditions: [{ condition: "leaderTrait", trait: "Baroque Works", match: "includes" }],
         actions: [
           {
             action: "search",
@@ -1593,7 +1612,7 @@ if (options.cardId === "OP14-087") {
             revealCount: { amount: 1, upTo: true },
             revealFilters: [
               { filter: "excludeName", value: "Miss.Valentine(Mikita)" },
-              { filter: "trait", value: "Baroque Works" },
+              { filter: "trait", value: "Baroque Works", match: "includes" },
             ],
             revealDestination: "hand",
             remainderPosition: "trash",
@@ -1613,7 +1632,7 @@ if (options.cardId === "OP14-088") {
     effects: [
       {
         trigger: "onKo",
-        conditions: [{ condition: "leaderTrait", trait: "Baroque Works" }],
+        conditions: [{ condition: "leaderTrait", trait: "Baroque Works", match: "includes" }],
         actions: [
           { action: "draw", player: "self", amount: 1 },
           {
@@ -1654,7 +1673,7 @@ if (options.cardId === "OP14-089") {
             count: { amount: 1, upTo: true },
             filters: [
               { filter: "cost", comparison: "lte", value: 4 },
-              { filter: "trait", value: "Thriller Bark Pirates" },
+              { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
               { filter: "cardCategory", value: "character" },
             ],
             playState: "rested",
@@ -1741,7 +1760,7 @@ if (options.cardId === "OP14-091") {
             filters: [
               { filter: "excludeName", value: "Mr.2.Bon.Kurei(Bentham)" },
               { filter: "cost", comparison: "lte", value: 5 },
-              { filter: "trait", value: "Baroque Works" },
+              { filter: "trait", value: "Baroque Works", match: "includes" },
               { filter: "cardCategory", value: "character" },
             ],
           },
@@ -1760,6 +1779,7 @@ if (options.cardId === "OP14-092") {
     replacementEffects: [
       {
         replacedEvent: "ko",
+        eventFilter: { targetSelf: true },
         replacementAction: {
           action: "returnToDeck",
           target: {
@@ -1795,7 +1815,7 @@ if (options.cardId === "OP14-093") {
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cardCategory", value: "character" },
-                { filter: "trait", value: "Baroque Works" },
+                { filter: "trait", value: "Baroque Works", match: "includes" },
                 { filter: "cost", comparison: "lte", value: 8 },
               ],
             },
@@ -1857,7 +1877,7 @@ if (options.cardId === "OP14-100") {
             lookCount: 3,
             source: { player: "self", zone: "deck" },
             revealCount: { amount: 1, upTo: true },
-            revealFilters: [{ filter: "trait", value: "Thriller Bark Pirates" }],
+            revealFilters: [{ filter: "trait", value: "Thriller Bark Pirates", match: "includes" }],
             revealDestination: "hand",
             remainderPosition: "bottom",
           },
@@ -1872,7 +1892,7 @@ if (options.cardId === "OP14-100") {
             count: { amount: 1, upTo: true },
             filters: [
               { filter: "cost", comparison: "lte", value: 4 },
-              { filter: "trait", value: "Thriller Bark Pirates" },
+              { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
               { filter: "cardCategory", value: "character" },
             ],
             playState: "rested",
@@ -1901,7 +1921,7 @@ if (
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cost", comparison: "lte", value: 4 },
-                { filter: "trait", value: "Thriller Bark Pirates" },
+                { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
                 { filter: "cardCategory", value: "character" },
               ],
               playState: "rested",
@@ -1922,7 +1942,7 @@ if (
       effects: [
         {
           trigger: "onPlay",
-          costs: [{ cost: "addLifeToHand", amount: 1 }],
+          costs: [{ cost: "addLifeToHand", amount: 1, position: "choice" }],
           actions: [
             {
               action: "addToLife",
@@ -1938,14 +1958,7 @@ if (
         },
         {
           trigger: "trigger",
-          actions: [
-            {
-              action: "play",
-              source: { player: "self", zone: "hand" },
-              count: { amount: 1 },
-              self: true,
-            },
-          ],
+          actions: [{ action: "playThisCard" }],
         },
       ],
     })
@@ -1956,7 +1969,7 @@ if (
 }
 if (options.cardId === "OP14-104") {
   const eligibilityFilters = [
-    { filter: "trait", value: "Thriller Bark Pirates" },
+    { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
     { filter: "cost", comparison: "lte", value: 4 },
     { filter: "cardCategory", value: "character" },
   ];
@@ -2028,8 +2041,8 @@ if (options.cardId === "OP14-105") {
               {
                 filter: "anyOf",
                 filters: [
-                  { filter: "trait", value: "Amazon Lily" },
-                  { filter: "trait", value: "Kuja Pirates" },
+                  { filter: "trait", value: "Amazon Lily", match: "includes" },
+                  { filter: "trait", value: "Kuja Pirates", match: "includes" },
                 ],
               },
             ],
@@ -2045,6 +2058,7 @@ if (options.cardId === "OP14-105") {
             },
             count: { amount: 1, upTo: true },
             donState: "rested",
+            distribution: "each",
           },
         ],
         optional: true,
@@ -2052,15 +2066,8 @@ if (options.cardId === "OP14-105") {
       },
       {
         trigger: "trigger",
-        conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates" }],
-        actions: [
-          {
-            action: "play",
-            source: { player: "self", zone: "hand" },
-            count: { amount: 1 },
-            self: true,
-          },
-        ],
+        conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "includes" }],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   };
@@ -2078,14 +2085,7 @@ if (
       effects: [
         {
           trigger: "trigger",
-          actions: [
-            {
-              action: "play",
-              source: { player: "self", zone: "hand" },
-              count: { amount: 1 },
-              self: true,
-            },
-          ],
+          actions: [{ action: "playThisCard" }],
         },
       ],
     })
@@ -2105,15 +2105,8 @@ if (options.cardId === "OP14-107") {
       },
       {
         trigger: "trigger",
-        conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates" }],
-        actions: [
-          {
-            action: "play",
-            source: { player: "self", zone: "hand" },
-            count: { amount: 1 },
-            self: true,
-          },
-        ],
+        conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "includes" }],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   };
@@ -2175,7 +2168,7 @@ if (options.cardId === "OP14-109") {
             count: { amount: 1, upTo: true },
             filters: [
               { filter: "cost", comparison: "lte", value: 4 },
-              { filter: "trait", value: "Thriller Bark Pirates" },
+              { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
               { filter: "cardCategory", value: "character" },
             ],
             playState: "rested",
@@ -2216,7 +2209,7 @@ if (options.cardId === "OP14-110") {
             count: { amount: 1, upTo: true },
             filters: [
               { filter: "cost", comparison: "lte", value: 4 },
-              { filter: "trait", value: "Thriller Bark Pirates" },
+              { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
               { filter: "cardCategory", value: "character" },
             ],
             playState: "rested",
@@ -2255,7 +2248,7 @@ if (options.cardId === "OP14-111") {
             count: { amount: 1, upTo: true },
             filters: [
               { filter: "cost", comparison: "lte", value: 4 },
-              { filter: "trait", value: "Thriller Bark Pirates" },
+              { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
               { filter: "cardCategory", value: "character" },
             ],
             playState: "rested",
@@ -2275,7 +2268,13 @@ if (options.cardId === "OP14-112") {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [{ condition: "leaderTrait", trait: "The Seven Warlords of the Sea" }],
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "The Seven Warlords of the Sea",
+            match: "includes",
+          },
+        ],
         actions: [
           {
             action: "addToLife",
@@ -2328,8 +2327,8 @@ if (options.cardId === "OP14-113") {
               {
                 filter: "anyOf",
                 filters: [
-                  { filter: "trait", value: "Amazon Lily" },
-                  { filter: "trait", value: "Kuja Pirates" },
+                  { filter: "trait", value: "Amazon Lily", match: "includes" },
+                  { filter: "trait", value: "Kuja Pirates", match: "includes" },
                 ],
               },
             ],
@@ -2341,15 +2340,8 @@ if (options.cardId === "OP14-113") {
       },
       {
         trigger: "trigger",
-        conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates" }],
-        actions: [
-          {
-            action: "play",
-            source: { player: "self", zone: "hand" },
-            count: { amount: 1 },
-            self: true,
-          },
-        ],
+        conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "includes" }],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   };
@@ -2371,7 +2363,7 @@ if (options.cardId === "OP14-114") {
               player: "self",
               zones: ["leader", "character"],
               count: { amount: 1 },
-              filters: [{ filter: "trait", value: "Kuja Pirates" }],
+              filters: [{ filter: "trait", value: "Kuja Pirates", match: "includes" }],
             },
             count: { amount: 1, upTo: true },
             donState: "rested",
@@ -2381,15 +2373,8 @@ if (options.cardId === "OP14-114") {
       },
       {
         trigger: "trigger",
-        conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates" }],
-        actions: [
-          {
-            action: "play",
-            source: { player: "self", zone: "hand" },
-            count: { amount: 1 },
-            self: true,
-          },
-        ],
+        conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "includes" }],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   };
@@ -2416,15 +2401,8 @@ if (options.cardId === "OP14-115") {
       },
       {
         trigger: "trigger",
-        conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates" }],
-        actions: [
-          {
-            action: "play",
-            source: { player: "self", zone: "hand" },
-            count: { amount: 1 },
-            self: true,
-          },
-        ],
+        conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "includes" }],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   };
@@ -2439,6 +2417,7 @@ if (options.cardId === "OP14-119") {
     effects: [
       {
         trigger: "whenBecomesRested",
+        eventFilter: { targetSelf: true },
         conditions: [{ condition: "turn", value: "your" }],
         actions: [
           {

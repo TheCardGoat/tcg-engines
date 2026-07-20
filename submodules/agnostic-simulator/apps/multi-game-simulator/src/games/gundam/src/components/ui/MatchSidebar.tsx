@@ -4,11 +4,10 @@ import { EventLogPanel } from "@tcg/simulator-ui";
 
 import { m } from "../../lib/i18n/messages.ts";
 import { Button } from "../primitives/index.ts";
-import type { LogItem, LogTurn, MatchInfo, PlayerInfo } from "./types.ts";
 import { PlayerTimer } from "./PlayerTimer.tsx";
+import type { LogItem, LogTurn, MatchInfo, PlayerInfo } from "./types.ts";
 
 const CLIP_DIAMOND = "polygon(50% 0, 100% 50%, 50% 100%, 0 50%)";
-const CLIP_TRIANGLE_DOWN = "polygon(50% 0, 100% 100%, 0 100%)";
 
 type CurrentTurn = "opponent" | "self";
 
@@ -16,21 +15,15 @@ export interface MatchSidebarProps {
   readonly matchInfo: MatchInfo;
   readonly players: readonly [PlayerInfo, PlayerInfo];
   readonly currentTurn: CurrentTurn;
-  /** Which seat currently holds priority (fast signal, distinct from turn). */
   readonly priorityHolder?: CurrentTurn;
   readonly log: readonly LogTurn[];
   readonly eventLogEntries?: readonly SimulatorEventLogEntry[];
   readonly onConcede: () => void;
   readonly onCollapse?: () => void;
-  /**
-   * Optional panel rendered between the opponent header and event log.
-   * Used for the vs-AI control panel on fixtures that attach a bot;
-   * `null`/undefined for regular matches. Component-agnostic so the
-   * sidebar stays a dumb presentational shell.
-   */
   readonly aboveBattleData?: ReactNode;
 }
 
+/** Desktop command rail: match context and players bookend a persistent log. */
 export function MatchSidebar({
   matchInfo,
   players,
@@ -43,19 +36,7 @@ export function MatchSidebar({
   aboveBattleData,
 }: MatchSidebarProps) {
   return (
-    <aside
-      className="w-full md:w-[272px] flex-shrink-0 border-r border-hud-border flex flex-col overflow-hidden h-full relative"
-      style={{
-        background: "linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,250,254,.98))",
-      }}
-    >
-      <div
-        className="absolute left-0 top-0 bottom-0 w-[3px] pointer-events-none"
-        style={{
-          background:
-            "repeating-linear-gradient(180deg, rgba(45,107,255,.4) 0 8px, transparent 8px 14px)",
-        }}
-      />
+    <aside className="gd-dark-surface gd-command-surface relative flex h-full w-full flex-shrink-0 flex-col overflow-visible border-r border-hud-border md:w-[312px]">
       <HeaderBlock matchInfo={matchInfo} onCollapse={onCollapse} />
       <PlayerHeader
         player={players[0]}
@@ -64,14 +45,14 @@ export function MatchSidebar({
         who="HOSTILE"
       />
       {aboveBattleData}
-      <EventLog log={log} eventLogEntries={eventLogEntries} />
-      <FooterActions onConcede={onConcede} />
+      <MatchEventLog log={log} eventLogEntries={eventLogEntries} />
       <PlayerHeader
         player={players[1]}
         isTurn={currentTurn === "self"}
         hasPriority={priorityHolder === "self"}
         who="PILOT"
       />
+      <FooterActions onConcede={onConcede} />
     </aside>
   );
 }
@@ -84,43 +65,29 @@ function HeaderBlock({
   readonly onCollapse?: () => void;
 }) {
   return (
-    <div
-      className="flex items-center gap-2.5 py-3 pr-hud-sm pl-hud-md border-b border-hud-border"
-      style={{
-        background: "linear-gradient(90deg, rgba(30,73,199,.12), transparent)",
-      }}
-    >
+    <header className="flex items-center gap-3 border-b border-hud-border bg-white px-3 py-3">
       <div
-        className="font-display w-[34px] h-[34px] grid place-items-center text-hud-accent text-base font-black clip-hud-6"
-        style={{
-          background: "linear-gradient(135deg,#1e49c7 0%, #1c4cd1 100%)",
-          border: "1px solid rgba(45,107,255,.5)",
-          boxShadow: "inset 0 0 8px rgba(45,107,255,.2)",
-        }}
+        className="grid h-9 w-9 flex-shrink-0 place-items-center rounded-sm bg-hud-accent-deep text-sm font-black text-white"
+        style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,.18)" }}
       >
         G
       </div>
-      <div className="flex-1 min-w-0">
-        <div className="font-display text-sm text-hud-text font-extrabold tracking-hud-display">
+      <div className="min-w-0 flex-1">
+        <div className="text-sm font-extrabold tracking-[.06em] text-hud-text">
           {m["sim.sidebar.brand.name"]()}
         </div>
-        <div className="font-mono text-hud-xs text-hud-accent font-semibold mt-px tracking-hud-label">
+        <div className="mt-0.5 truncate text-[9px] font-semibold uppercase tracking-[.14em] text-hud-text-dim">
           {m["sim.sidebar.brand.sortie"]({ format: matchInfo.format.toUpperCase() })}
         </div>
-        <div className="font-mono mt-1 flex min-w-0 items-center gap-1.5 text-hud-2xs font-bold tracking-hud-label text-hud-text-dim">
-          <span className="text-hud-accent-deep">#{matchInfo.turn}</span>
-          <span className="text-[#94a3b8]">·</span>
-          <span className="truncate text-hud-text-muted">{matchInfo.phase}</span>
+      </div>
+      <div className="rounded-sm border border-hud-border/60 bg-hud-deep/45 px-2 py-1 text-right">
+        <div className="text-[9px] font-bold uppercase tracking-[.1em] text-hud-accent-deep">
+          Turn {matchInfo.turn}
+        </div>
+        <div className="max-w-[82px] truncate text-[9px] font-semibold text-hud-text-muted">
+          {matchInfo.phase}
         </div>
       </div>
-      <Button
-        title={m["sim.sidebar.system.title"]()}
-        variant="outline"
-        size="icon"
-        className="font-mono clip-hud-5 w-[26px] h-[26px] text-hud-info border-hud-info/30 bg-hud-info/25 text-hud-lg"
-      >
-        ⚙
-      </Button>
       {onCollapse ? (
         <Button
           title={m["sim.sidebar.rail.closeLabel"]()}
@@ -128,12 +95,12 @@ function HeaderBlock({
           variant="outline"
           size="icon"
           onClick={onCollapse}
-          className="font-mono clip-hud-5 w-[26px] h-[26px] text-hud-info border-hud-info/30 bg-hud-info/15 text-hud-md"
+          className="h-8 w-8 rounded-sm border-hud-border/60 bg-white text-hud-accent-deep"
         >
           ◁
         </Button>
       ) : null}
-    </div>
+    </header>
   );
 }
 
@@ -147,111 +114,91 @@ interface PlayerHeaderProps {
 function PlayerHeader({ player, isTurn, hasPriority, who }: PlayerHeaderProps) {
   const isYou = who === "PILOT";
   const turnColor = isYou ? "#2d6bff" : "#ff2d7a";
-  const turnGlow = isYou ? "rgba(45,107,255,.55)" : "rgba(255,45,122,.55)";
-  // PILOT chip lives at the foot of the sidebar — give it a top border so it
-  // reads as its own section above the player_one rail, matching the HOSTILE
-  // chip's visual weight at the top.
-  const edgeClass = isYou ? "border-t border-hud-border" : "border-b border-hud-border";
 
   return (
-    <div
-      className={`flex items-center gap-2.5 py-2.5 pr-hud-sm pl-hud-md ${edgeClass} relative`}
+    <section
+      aria-label={`${player.name} match status`}
+      className="border-b border-hud-border/55 px-3 py-2.5"
       style={{
         background: isTurn
           ? isYou
-            ? "linear-gradient(90deg, rgba(30,73,199,.22), transparent)"
-            : "linear-gradient(90deg, rgba(255,45,122,.18), transparent)"
-          : "rgba(248,250,254,.7)",
+            ? "rgba(45,107,255,.07)"
+            : "rgba(255,45,122,.06)"
+          : "oklch(0.225 0.03 262 / .82)",
       }}
     >
-      {isTurn && (
+      <div className="flex min-w-0 items-center gap-2">
         <div
-          className="absolute left-0 top-0 bottom-0 w-[3px]"
-          style={{
-            background: turnColor,
-            boxShadow: `0 0 12px ${turnGlow}`,
-          }}
-        />
-      )}
-      <div
-        className="font-display w-9 h-9 grid place-items-center text-hud-accent text-xs font-black flex-shrink-0 clip-hud-8 tracking-hud-body"
-        style={{
-          background: isYou
-            ? "linear-gradient(135deg,#1e49c7 0%, #1c4cd1 60%, #d7263d 100%)"
-            : "linear-gradient(135deg,#c8155a 0%, #2b0509 60%, #1a1a1a 100%)",
-          border: "1px solid rgba(45,107,255,.45)",
-          boxShadow: isYou
-            ? "inset 0 0 10px rgba(76,195,255,.3)"
-            : "inset 0 0 10px rgba(255,45,122,.3)",
-        }}
-      >
-        {isYou ? "PL" : "OP"}
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-1.5">
-          <span
-            className={`${hasPriority ? "gd-blink" : ""} w-[7px] h-[7px]`}
-            style={{
-              background: hasPriority ? turnColor : "#334155",
-              boxShadow: hasPriority ? `0 0 7px ${turnGlow}` : "none",
-              clipPath: CLIP_DIAMOND,
-            }}
-            title={hasPriority ? m["sim.seat.priority.holds"]() : m["sim.seat.priority.waiting"]()}
-          />
-          <span className="text-xs text-hud-text font-bold whitespace-nowrap overflow-hidden text-ellipsis tracking-hud-body">
-            {player.name}
-          </span>
-          {/* Active-turn pill: filled when this player is on the clock,
-           * outline-only "WAITING" when not. Replaces the previous
-           * PILOT/HOSTILE side label which duplicated the avatar. */}
-          {isTurn ? (
-            <span
-              className="font-mono ml-auto text-hud-2xs font-extrabold px-[7px] py-[2px] tracking-hud-label clip-hud-3"
-              style={{
-                color: "#ffffff",
-                background: `linear-gradient(180deg, ${turnColor}, ${isYou ? "#1c4cd1" : "#c8155a"})`,
-                boxShadow: `0 0 10px ${turnGlow}`,
-              }}
-            >
-              {m["sim.player.turn.active"]()}
-            </span>
-          ) : (
-            <span
-              className="font-mono ml-auto text-hud-2xs font-bold px-[7px] py-[2px] tracking-hud-label clip-hud-3"
-              style={{
-                color: "#94a3b8",
-                background: "transparent",
-                border: "1px solid rgba(120,140,180,.4)",
-              }}
-            >
-              {m["sim.player.turn.waiting"]()}
-            </span>
-          )}
+          className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-full text-[9px] font-black text-white"
+          style={{ background: isYou ? "#1c4cd1" : "#c8155a" }}
+        >
+          {isYou ? "YOU" : "OP"}
         </div>
-        <div className="font-mono flex items-center gap-2 mt-1 text-hud-2xs text-hud-text-dim tracking-hud-label">
-          <span style={{ color: isTurn ? "#2d6bff" : "#475569" }}>
-            T-
+        <div className="min-w-0 flex-1">
+          <div className="flex min-w-0 items-center gap-1.5">
+            <span
+              className={`${hasPriority ? "gd-blink" : ""} h-[7px] w-[7px] flex-shrink-0`}
+              style={{
+                background: hasPriority ? turnColor : "#94a3b8",
+                clipPath: CLIP_DIAMOND,
+              }}
+              title={
+                hasPriority ? m["sim.seat.priority.holds"]() : m["sim.seat.priority.waiting"]()
+              }
+            />
+            <span className="truncate text-xs font-bold text-hud-text">{player.name}</span>
+            <span
+              className="ml-auto flex-shrink-0 rounded-sm border px-2 py-0.5 text-[8px] font-extrabold uppercase tracking-[.1em]"
+              style={{
+                color: isTurn ? "white" : "#64748b",
+                background: isTurn ? turnColor : "transparent",
+                borderColor: isTurn ? turnColor : "rgba(120,140,180,.35)",
+              }}
+            >
+              {isTurn ? m["sim.player.turn.active"]() : m["sim.player.turn.waiting"]()}
+            </span>
+          </div>
+          <div className="mt-0.5 text-[10px] font-semibold tabular-nums text-hud-text-muted">
             {player.timer ? (
               <PlayerTimer snapshot={player.timer} isOwnClock={player.isOwnClock} compact />
             ) : (
               (player.clock ?? "--")
             )}
-          </span>
-          <span className="text-[#334155]">//</span>
-          <span>
-            {m["sim.seat.deck.label"]()} {player.deck ?? 0}
-          </span>
-          <span className="text-[#334155]">·</span>
-          <span>
-            {m["sim.seat.discard.label"]()} {player.discard ?? 0}
-          </span>
+          </div>
         </div>
       </div>
+
+      <div className="mt-2 grid grid-cols-4 gap-1" aria-label={`${player.name} resources`}>
+        <PlayerMetric label="Shield" value={player.shields ?? 0} />
+        <PlayerMetric
+          label="Resource"
+          value={`${player.resourcesAvailable ?? 0}/${player.resourcesTotal ?? 0}`}
+        />
+        <PlayerMetric label="Deck" value={player.deck ?? 0} />
+        <PlayerMetric label="Scrap" value={player.discard ?? 0} />
+      </div>
+    </section>
+  );
+}
+
+function PlayerMetric({
+  label,
+  value,
+}: {
+  readonly label: string;
+  readonly value: string | number;
+}) {
+  return (
+    <div className="rounded-sm border border-hud-border/45 bg-white/85 px-1 py-1 text-center">
+      <div className="truncate text-[7px] font-bold uppercase tracking-[.06em] text-hud-text-faint">
+        {label}
+      </div>
+      <div className="mt-0.5 text-[10px] font-extrabold tabular-nums text-hud-text">{value}</div>
     </div>
   );
 }
 
-function EventLog({
+export function MatchEventLog({
   log,
   eventLogEntries,
 }: {
@@ -260,12 +207,14 @@ function EventLog({
 }) {
   if (eventLogEntries && eventLogEntries.length > 0) {
     return (
-      <div
-        className="flex-1 overflow-hidden py-2.5 pr-hud-sm pl-hud-md min-h-0"
+      <section
+        className="flex min-h-0 flex-1 flex-col overflow-hidden border-y border-hud-border/45 bg-white/70 px-3 py-2.5"
         style={sharedEventLogStyle}
       >
-        <EventLogPanel embedded entries={eventLogEntries} />
-      </div>
+        <div className="min-h-0 flex-1 overflow-hidden">
+          <EventLogPanel embedded entries={eventLogEntries} turnExpansion="latest" />
+        </div>
+      </section>
     );
   }
 
@@ -274,38 +223,30 @@ function EventLog({
       role="log"
       aria-label={m["sim.sidebar.log.regionLabel"]()}
       aria-live="polite"
-      className="flex-1 overflow-y-auto py-2.5 pr-hud-sm pl-hud-md min-h-0"
+      className="min-h-0 flex-1 overflow-y-auto border-y border-hud-border/45 bg-white/70 px-3 py-2.5"
     >
-      <div className="flex items-center gap-1.5 mb-2">
-        <span className="font-mono text-hud-xs text-hud-accent font-bold flex items-center gap-1.5 tracking-hud-label">
-          <span className="w-1.5 h-1.5 bg-hud-accent" style={{ clipPath: CLIP_TRIANGLE_DOWN }} />
-          {m["sim.sidebar.log.heading"]()}
+      <div className="mb-2 flex items-center gap-2">
+        <span className="text-[10px] font-extrabold uppercase tracking-[.14em] text-hud-text">
+          Battle log
         </span>
-        <span
-          className="font-mono ml-auto text-hud-xs text-hud-info font-bold px-[7px] py-[2px] tracking-hud-display"
-          style={{
-            background: "rgba(30,73,199,.2)",
-            border: "1px solid rgba(76,195,255,.3)",
-          }}
-        >
+        <span className="h-px flex-1 bg-hud-line" />
+        <span className="rounded-sm bg-hud-deep/60 px-1.5 py-0.5 text-[8px] font-bold text-hud-text-muted">
           {m["sim.sidebar.log.cycleCount"]({ count: log.length })}
         </span>
       </div>
 
-      {log.map((t) => (
-        <div key={`turn-${t.turn}`}>
-          <div
-            className="font-display text-center py-[5px] my-2.5 mb-2 text-hud-sm text-hud-accent font-extrabold tracking-hud-wide clip-hud-tag-l"
-            style={{
-              border: "1px solid rgba(45,107,255,.35)",
-              background:
-                "linear-gradient(90deg, transparent, rgba(45,107,255,.08) 50%, transparent)",
-            }}
-          >
-            {m["sim.sidebar.log.cycleHeader"]({ turn: String(t.turn).padStart(2, "0") })}
+      {log.length === 0 ? (
+        <p className="py-6 text-center text-[10px] font-semibold text-hud-text-faint">
+          Match events will appear here.
+        </p>
+      ) : null}
+      {log.map((turn) => (
+        <div key={`turn-${turn.turn}`}>
+          <div className="my-2 border-y border-hud-border/35 bg-hud-accent/5 py-1 text-center text-[9px] font-bold uppercase tracking-[.12em] text-hud-accent-deep">
+            {m["sim.sidebar.log.cycleHeader"]({ turn: String(turn.turn).padStart(2, "0") })}
           </div>
-          {t.groups.map((g, gi) => (
-            <LogGroup key={`${t.turn}-${g.who}-${gi}`} who={g.who} items={g.items} />
+          {turn.groups.map((group, index) => (
+            <LogGroup key={`${turn.turn}-${group.who}-${index}`} {...group} />
           ))}
         </div>
       ))}
@@ -342,51 +283,31 @@ const sharedEventLogStyle = {
 
 function LogGroup({ who, items }: LogItem) {
   const isYou = who === "YOU";
-  const color = isYou ? "#4cc3ff" : "#d7263d";
-  const glow = isYou ? "rgba(76,195,255,.4)" : "rgba(255,45,122,.4)";
   return (
-    <div
-      className="mb-2 pl-2.5"
-      style={{
-        borderLeft: `2px solid ${color}`,
-        boxShadow: `-1px 0 6px ${glow}`,
-      }}
-    >
+    <div className="mb-2 rounded-sm border border-hud-border/30 bg-white/75 px-2 py-1.5">
       <div
-        className="font-mono text-hud-xs font-bold mb-[3px] tracking-hud-label"
-        style={{ color }}
+        className="mb-1 text-[8px] font-bold uppercase tracking-[.1em]"
+        style={{ color: isYou ? "var(--color-hud-accent-deep)" : "var(--color-hud-danger-deep)" }}
       >
         {isYou ? m["sim.sidebar.log.pilotTag"]() : m["sim.sidebar.log.hostileTag"]()}
       </div>
-      {items.map((it, i) => (
-        <div
-          key={i}
-          className="font-body text-xs text-hud-text-muted mb-[2px] font-medium leading-[1.45]"
-        >
-          {it}
+      {items.map((item, index) => (
+        <div key={index} className="mb-0.5 text-xs font-medium leading-[1.4] text-hud-text-muted">
+          {item}
         </div>
       ))}
     </div>
   );
 }
 
-interface FooterActionsProps {
-  readonly onConcede: () => void;
-}
-
-function FooterActions({ onConcede }: FooterActionsProps) {
+function FooterActions({ onConcede }: { readonly onConcede: () => void }) {
   return (
-    <div
-      className="py-2.5 pr-3 pl-4 border-t border-hud-border flex flex-col gap-2"
-      style={{
-        background: "linear-gradient(180deg, rgba(248,250,254,.2), rgba(248,250,254,.8))",
-      }}
-    >
+    <div className="border-t border-hud-border bg-white px-3 py-2">
       <Button
         onClick={onConcede}
         variant="danger"
-        size="md"
-        className="w-full clip-hud-6 tracking-hud-label"
+        size="sm"
+        className="w-full rounded-sm text-[9px] font-bold uppercase tracking-[.12em]"
       >
         {m["sim.sidebar.footer.concede"]()}
       </Button>

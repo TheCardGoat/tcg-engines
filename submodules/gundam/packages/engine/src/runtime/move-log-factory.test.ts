@@ -18,6 +18,10 @@ function command(move: string): CommandEnvelope {
   };
 }
 
+function commandWithArgs(move: string, args: Record<string, unknown>): CommandEnvelope {
+  return { ...command(move), args };
+}
+
 function entry(
   type: string,
   values: Record<string, unknown>,
@@ -144,5 +148,29 @@ describe("buildGundamMoveLog", () => {
     expect("cardIds" in opponentView.outcomes!.cardsDrawn!).toBe(false);
     expect(JSON.stringify(opponentView)).not.toContain("drawn_1");
     expect(ownerView.outcomes?.cardsDrawn?.cardIds).toEqual(["drawn_1", "drawn_2"]);
+  });
+
+  it("preserves manually selected effect targets for animation projection", () => {
+    const log = buildGundamMoveLog({
+      command: commandWithArgs("resolveEffect", {
+        pendingEffectId: "effect_1",
+        targets: ["receiver_1"],
+      }),
+      playerId: PLAYER_ONE,
+      timestamp: 100,
+      logEntries: [
+        entry(
+          "gundam.pending.resolved",
+          { effectId: "effect_1", sourceCardId: "supporter_1" },
+          "system",
+        ),
+      ],
+    });
+
+    expect(log).toMatchObject({
+      type: "resolveEffect",
+      sourceCardId: "supporter_1",
+      resolution: { kind: "targetSelection", targets: ["receiver_1"] },
+    });
   });
 });

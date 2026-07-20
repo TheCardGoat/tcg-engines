@@ -4,7 +4,6 @@ import { DiscardPileZone } from "@tcg/simulator-ui";
 import { useCallback, useEffect } from "react";
 import type { MouseEvent } from "react";
 
-import { resolveCardDimensions } from "../card/card-image-format.ts";
 import { useCardInspect } from "../card/card-inspect-context.tsx";
 import { toSimulatorEntity, toSimulatorZone } from "../card/to-simulator-entity.ts";
 import type { GameCardData } from "../types.ts";
@@ -16,9 +15,7 @@ interface DiscardSlotProps {
   readonly zoneId?: string;
 }
 
-export function DiscardSlot({ count = 0, topCard, isTop, zoneId }: DiscardSlotProps) {
-  const emptyAccent = isTop ? "rgba(255,45,122,.68)" : "rgba(76,195,255,.68)";
-  const emptyMarkColor = isTop ? "rgba(255,45,122,.78)" : "rgba(76,195,255,.78)";
+export function DiscardSlot({ count = 0, topCard, isTop: _isTop, zoneId }: DiscardSlotProps) {
   const label = m["sim.seat.discard.label"]();
   const entities = topCard ? [toSimulatorEntity(topCard, { zoneId })] : [];
   const topEntity = entities[0];
@@ -74,47 +71,21 @@ export function DiscardSlot({ count = 0, topCard, isTop, zoneId }: DiscardSlotPr
     if (inspect.hovered?.card.id === topCard.id) inspect.setHover(null);
   }, [hasHover, inspect, topCard?.id]);
 
-  if (topCard) {
-    return (
-      <div className="relative">
-        <DiscardPileZone
-          zone={zone}
-          entities={entities}
-          entityCount={count}
-          label={label}
-          density="mini"
-          className="gundam-zone-primitive [&_.tabletop-pile-count]:hidden [&_.tabletop-pile-label]:font-mono"
-          onHoverEnter={hasHover ? handleHoverEnter : undefined}
-          onHoverLeave={hasHover ? handleHoverLeave : undefined}
-          onContextMenu={handleContextMenu}
-        />
-        <DiscardCountBadge count={count} />
-      </div>
-    );
-  }
-
-  const { displayWidth, displayHeight } = resolveCardDimensions("micro");
   return (
-    <div
-      className="relative"
-      data-sim-zone-id={zoneId}
-      style={{ width: displayWidth, height: displayHeight }}
-    >
-      <div
-        className="w-full h-full grid place-items-center clip-hud-6"
-        style={{
-          border: `1px dashed ${emptyAccent}`,
-          background: "rgba(255,255,255,.78)",
-        }}
-      >
-        <span className="font-mono text-base" style={{ color: emptyMarkColor }}>
-          ✕
-        </span>
-      </div>
+    <div className="relative" data-zone-footprint="pile">
+      <DiscardPileZone
+        zone={zone}
+        entities={entities}
+        entityCount={count}
+        label={label}
+        emptyLabel={label}
+        density="mini"
+        className="gundam-zone-primitive [&_.empty-zone]:border-hud-danger/45 [&_.empty-zone]:bg-white/70 [&_.empty-zone]:text-hud-danger-deep [&_.tabletop-pile-count]:hidden [&_.tabletop-pile-label]:font-mono"
+        onHoverEnter={topCard && hasHover ? handleHoverEnter : undefined}
+        onHoverLeave={topCard && hasHover ? handleHoverLeave : undefined}
+        onContextMenu={topCard ? handleContextMenu : undefined}
+      />
       <DiscardCountBadge count={count} />
-      <div className="font-mono absolute -bottom-[14px] left-1/2 -translate-x-1/2 text-hud-2xs text-[#475569] font-bold tracking-hud-label">
-        {label}
-      </div>
     </div>
   );
 }

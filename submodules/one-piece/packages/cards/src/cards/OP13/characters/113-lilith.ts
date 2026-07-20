@@ -64,9 +64,22 @@ export const op13Lilith113: CharacterCard = {
                 filter: "excludeName",
                 value: "Lilith",
               },
+              {
+                filter: "hasTrigger",
+                value: true,
+              },
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "onPlay",
           },
         ],
       },

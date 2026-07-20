@@ -10,17 +10,17 @@ semantic review or command-driven behavior proof.
 - Character definitions: 1768
 - Characters with printed ability text: 1567
 - Vanilla Characters: 201
-- Exact parser transformations: 1337
-- Parser mismatches: 230
+- Exact parser transformations: 1473
+- Parser mismatches: 94
 - Exported definitions: 1768
-- Definitions with command-driven behavior tests: 929
+- Definitions with command-driven behavior tests: 1213
 
 ## Set Summary
 
 <!-- prettier-ignore -->
 | Stored set | Characters | Text | Vanilla | Pass | Mismatch | Exported | Behavior tests |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| EB01 | 43 | 37 | 6 | 25 | 12 | 43 | 37 |
+| EB01 | 43 | 37 | 6 | 26 | 11 | 43 | 37 |
 | EB02 | 44 | 38 | 6 | 24 | 14 | 44 | 38 |
 | EB03 | 59 | 56 | 3 | 33 | 23 | 59 | 51 |
 | OP01 | 93 | 77 | 16 | 68 | 9 | 93 | 77 |
@@ -31,14 +31,14 @@ semantic review or command-driven behavior proof.
 | OP06 | 99 | 92 | 7 | 90 | 2 | 99 | 85 |
 | OP07 | 99 | 93 | 6 | 92 | 1 | 99 | 87 |
 | OP08 | 96 | 86 | 10 | 83 | 3 | 96 | 82 |
-| OP09 | 99 | 89 | 10 | 88 | 1 | 99 | 32 |
-| OP10 | 100 | 89 | 11 | 88 | 1 | 100 | 21 |
-| OP11 | 102 | 81 | 21 | 81 | 0 | 102 | 10 |
-| OP12 | 99 | 76 | 23 | 55 | 21 | 99 | 10 |
-| OP13 | 101 | 85 | 16 | 41 | 44 | 101 | 8 |
-| OP14EB04 | 125 | 117 | 8 | 53 | 64 | 125 | 27 |
-| PRB01 | 87 | 87 | 0 | 83 | 4 | 87 | 8 |
-| PRB02 | 135 | 128 | 7 | 109 | 19 | 135 | 26 |
+| OP09 | 99 | 89 | 10 | 88 | 1 | 99 | 41 |
+| OP10 | 100 | 89 | 11 | 88 | 1 | 100 | 45 |
+| OP11 | 102 | 81 | 21 | 79 | 2 | 102 | 45 |
+| OP12 | 99 | 76 | 23 | 76 | 0 | 99 | 49 |
+| OP13 | 101 | 85 | 16 | 84 | 1 | 101 | 75 |
+| OP14EB04 | 125 | 117 | 8 | 108 | 9 | 125 | 109 |
+| PRB01 | 87 | 87 | 0 | 85 | 2 | 87 | 12 |
+| PRB02 | 135 | 128 | 7 | 125 | 3 | 135 | 50 |
 
 ## EB01
 
@@ -80,7 +80,7 @@ semantic review or command-driven behavior proof.
 | EB01-047 | EB01-047 | Laboon | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/characters/047-laboon.ts` |
 | EB01-048 | EB01-048 | Laboon | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/characters/048-laboon.ts` |
 | EB01-049 | EB01-049 | T-Bone | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/characters/049-t-bone.ts` |
-| EB01-052 | EB01-052 | Viola | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB01/characters/052-viola.ts` |
+| EB01-052 | EB01-052 | Viola | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/characters/052-viola.ts` |
 | EB01-053 | EB01-053 | Gastino | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/characters/053-gastino.ts` |
 | EB01-054 | EB01-054 | Gan.Fall | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/characters/054-gan-fall.ts` |
 | EB01-055 | EB01-055 | Charlotte Compote | no | no | vanilla | yes | no | `../../packages/cards/src/cards/EB01/characters/055-charlotte-compote.ts` |
@@ -1106,16 +1106,16 @@ semantic review or command-driven behavior proof.
 | OP09-087 | OP09-087 | Charlotte Pudding | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/087-charlotte-pudding.ts` |
 | OP09-088 | OP09-088 | Shiryu | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/088-shiryu.ts` |
 | OP09-089 | OP09-089 | Stronger | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/089-stronger.ts` |
-| OP09-090 | OP09-090 | Doc Q | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/090-doc-q.ts` |
-| OP09-091 | OP09-091 | Vasco Shot | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/091-vasco-shot.ts` |
-| OP09-092 | OP09-092 | Marshall.D.Teach | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/092-marshall-d-teach.ts` |
-| OP09-093 | OP09-093 | Marshall.D.Teach | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/093-marshall-d-teach.ts` |
+| OP09-090 | OP09-090 | Doc Q | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/characters/090-doc-q.ts` |
+| OP09-091 | OP09-091 | Vasco Shot | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/characters/091-vasco-shot.ts` |
+| OP09-092 | OP09-092 | Marshall.D.Teach | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/characters/092-marshall-d-teach.ts` |
+| OP09-093 | OP09-093 | Marshall.D.Teach | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/characters/093-marshall-d-teach.ts` |
 | OP09-094 | OP09-094 | Peachbeard | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP09/characters/094-peachbeard.ts` |
-| OP09-095 | OP09-095 | Laffitte | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/095-laffitte.ts` |
-| OP09-100 | OP09-100 | Karasu | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/100-karasu.ts` |
-| OP09-101 | OP09-101 | Kuzan | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/101-kuzan.ts` |
-| OP09-102 | OP09-102 | Professor Clover | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/102-professor-clover.ts` |
-| OP09-103 | OP09-103 | Koala | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/103-koala.ts` |
+| OP09-095 | OP09-095 | Laffitte | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/characters/095-laffitte.ts` |
+| OP09-100 | OP09-100 | Karasu | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/characters/100-karasu.ts` |
+| OP09-101 | OP09-101 | Kuzan | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/characters/101-kuzan.ts` |
+| OP09-102 | OP09-102 | Professor Clover | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/characters/102-professor-clover.ts` |
+| OP09-103 | OP09-103 | Koala | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/characters/103-koala.ts` |
 | OP09-104 | OP09-104 | Sabo | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP09/characters/104-sabo.ts` |
 | OP09-105 | OP09-105 | Sanji | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/105-sanji.ts` |
 | OP09-106 | OP09-106 | Nico Olvia | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP09/characters/106-nico-olvia.ts` |
@@ -1166,16 +1166,16 @@ semantic review or command-driven behavior proof.
 | OP10-033 | OP10-033 | Nami | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/033-nami.ts` |
 | OP10-034 | OP10-034 | Franky | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/034-franky.ts` |
 | OP10-035 | OP10-035 | Brook | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/035-brook.ts` |
-| OP10-036 | OP10-036 | Perona | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/036-perona.ts` |
-| OP10-037 | OP10-037 | Lim | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/037-lim.ts` |
-| OP10-038 | OP10-038 | Roronoa Zoro | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/038-roronoa-zoro.ts` |
-| OP10-043 | OP10-043 | Moocy | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/043-moocy.ts` |
-| OP10-044 | OP10-044 | Cub | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/044-cub.ts` |
-| OP10-045 | OP10-045 | Cavendish | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/045-cavendish.ts` |
-| OP10-046 | OP10-046 | Kyros | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/046-kyros.ts` |
-| OP10-047 | OP10-047 | Koala | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/047-koala.ts` |
-| OP10-048 | OP10-048 | Sai | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/048-sai.ts` |
-| OP10-049 | OP10-049 | Sabo | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/049-sabo.ts` |
+| OP10-036 | OP10-036 | Perona | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/036-perona.ts` |
+| OP10-037 | OP10-037 | Lim | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/037-lim.ts` |
+| OP10-038 | OP10-038 | Roronoa Zoro | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/038-roronoa-zoro.ts` |
+| OP10-043 | OP10-043 | Moocy | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/043-moocy.ts` |
+| OP10-044 | OP10-044 | Cub | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/044-cub.ts` |
+| OP10-045 | OP10-045 | Cavendish | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/045-cavendish.ts` |
+| OP10-046 | OP10-046 | Kyros | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/046-kyros.ts` |
+| OP10-047 | OP10-047 | Koala | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/047-koala.ts` |
+| OP10-048 | OP10-048 | Sai | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/048-sai.ts` |
+| OP10-049 | OP10-049 | Sabo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/049-sabo.ts` |
 | OP10-050 | OP10-050 | Hajrudin | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP10/characters/050-hajrudin.ts` |
 | OP10-051 | OP10-051 | Hack | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/051-hack.ts` |
 | OP10-052 | OP10-052 | Bartolomeo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/052-bartolomeo.ts` |
@@ -1216,22 +1216,22 @@ semantic review or command-driven behavior proof.
 | OP10-093 | OP10-093 | Saint Homing | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/093-saint-homing.ts` |
 | OP10-094 | OP10-094 | Ryuma | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/094-ryuma.ts` |
 | OP10-095 | OP10-095 | Roronoa Zoro | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/095-roronoa-zoro.ts` |
-| OP10-100 | OP10-100 | Inazuma | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/100-inazuma.ts` |
+| OP10-100 | OP10-100 | Inazuma | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/100-inazuma.ts` |
 | OP10-101 | OP10-101 | Urouge | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP10/characters/101-urouge.ts` |
-| OP10-102 | OP10-102 | Emporio.Ivankov | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/102-emporio-ivankov.ts` |
-| OP10-103 | OP10-103 | Capone"Gang"Bege | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/103-capone-gang-bege.ts` |
-| OP10-104 | OP10-104 | Caribou | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/104-caribou.ts` |
+| OP10-102 | OP10-102 | Emporio.Ivankov | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/102-emporio-ivankov.ts` |
+| OP10-103 | OP10-103 | Capone"Gang"Bege | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/103-capone-gang-bege.ts` |
+| OP10-104 | OP10-104 | Caribou | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/104-caribou.ts` |
 | OP10-105 | OP10-105 | Cavendish | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP10/characters/105-cavendish.ts` |
-| OP10-106 | OP10-106 | Killer | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/106-killer.ts` |
-| OP10-107 | OP10-107 | Jewelry Bonney | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/107-jewelry-bonney.ts` |
-| OP10-108 | OP10-108 | Scratchmen Apoo | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/108-scratchmen-apoo.ts` |
-| OP10-109 | OP10-109 | Basil Hawkins | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/109-basil-hawkins.ts` |
-| OP10-111 | OP10-111 | Monkey.D.Luffy | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/111-monkey-d-luffy.ts` |
-| OP10-112 | OP10-112 | Eustass"Captain"Kid | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/112-eustass-captain-kid.ts` |
-| OP10-113 | OP10-113 | Roronoa Zoro | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/113-roronoa-zoro.ts` |
-| OP10-114 | OP10-114 | X.Drake | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/114-x-drake.ts` |
-| OP10-118 | OP10-118 | Monkey.D.Luffy | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/118-monkey-d-luffy.ts` |
-| OP10-119 | OP10-119 | Trafalgar Law | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP10/characters/119-trafalgar-law.ts` |
+| OP10-106 | OP10-106 | Killer | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/106-killer.ts` |
+| OP10-107 | OP10-107 | Jewelry Bonney | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/107-jewelry-bonney.ts` |
+| OP10-108 | OP10-108 | Scratchmen Apoo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/108-scratchmen-apoo.ts` |
+| OP10-109 | OP10-109 | Basil Hawkins | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/109-basil-hawkins.ts` |
+| OP10-111 | OP10-111 | Monkey.D.Luffy | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/111-monkey-d-luffy.ts` |
+| OP10-112 | OP10-112 | Eustass"Captain"Kid | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/112-eustass-captain-kid.ts` |
+| OP10-113 | OP10-113 | Roronoa Zoro | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/113-roronoa-zoro.ts` |
+| OP10-114 | OP10-114 | X.Drake | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/114-x-drake.ts` |
+| OP10-118 | OP10-118 | Monkey.D.Luffy | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/118-monkey-d-luffy.ts` |
+| OP10-119 | OP10-119 | Trafalgar Law | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/119-trafalgar-law.ts` |
 | ST12-012 | ST12-012 | Charlotte Pudding (SP) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/012-charlotte-pudding-sp.ts` |
 | ST14-003 | ST14-003 | Sanji (SP) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/003-sanji-sp.ts` |
 | ST15-002 | ST15-002 | Edward.Newgate (SP) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/characters/002-edward-newgate-sp.ts` |
@@ -1248,10 +1248,10 @@ semantic review or command-driven behavior proof.
 | OP07-085_p2 | OP07-085 | Stussy (SP) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/085-stussy-sp.ts` |
 | OP09-005_p1 | OP09-005 | Silvers Rayleigh (SP) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/005-silvers-rayleigh-sp.ts` |
 | OP09-015_p1 | OP09-015 | Lucky.Roux (TR) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/015-lucky-roux-tr.ts` |
-| OP11-002 | OP11-002 | Ain | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/002-ain.ts` |
+| OP11-002 | OP11-002 | Ain | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/002-ain.ts` |
 | OP11-003 | OP11-003 | Usopp | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP11/characters/003-usopp.ts` |
-| OP11-004 | OP11-004 | Kujyaku | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/004-kujyaku.ts` |
-| OP11-005 | OP11-005 | Smoker | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/005-smoker.ts` |
+| OP11-004 | OP11-004 | Kujyaku | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/004-kujyaku.ts` |
+| OP11-005 | OP11-005 | Smoker | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/005-smoker.ts` |
 | OP11-006 | OP11-006 | Zephyr | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/006-zephyr.ts` |
 | OP11-007 | OP11-007 | Tashigi | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/007-tashigi.ts` |
 | OP11-008 | OP11-008 | Doll | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/008-doll.ts` |
@@ -1279,45 +1279,45 @@ semantic review or command-driven behavior proof.
 | OP11-035 | OP11-035 | Fisher Tiger | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/035-fisher-tiger.ts` |
 | OP11-036 | OP11-036 | Spotted Neptunian | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/036-spotted-neptunian.ts` |
 | OP11-042 | OP11-042 | Vito | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/042-vito.ts` |
-| OP11-043 | OP11-043 | Vinsmoke Ichiji | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/043-vinsmoke-ichiji.ts` |
+| OP11-043 | OP11-043 | Vinsmoke Ichiji | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP11/characters/043-vinsmoke-ichiji.ts` |
 | OP11-044 | OP11-044 | Vinsmoke Judge | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/044-vinsmoke-judge.ts` |
 | OP11-045 | OP11-045 | Vinsmoke Niji | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP11/characters/045-vinsmoke-niji.ts` |
-| OP11-046 | OP11-046 | Vinsmoke Yonji | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/046-vinsmoke-yonji.ts` |
-| OP11-047 | OP11-047 | Vinsmoke Reiju | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/047-vinsmoke-reiju.ts` |
-| OP11-048 | OP11-048 | Capone"Gang"Bege | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/048-capone-gang-bege.ts` |
-| OP11-049 | OP11-049 | Carrot | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/049-carrot.ts` |
-| OP11-050 | OP11-050 | Gotti | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/050-gotti.ts` |
-| OP11-051 | OP11-051 | Sanji | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/051-sanji.ts` |
+| OP11-046 | OP11-046 | Vinsmoke Yonji | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/046-vinsmoke-yonji.ts` |
+| OP11-047 | OP11-047 | Vinsmoke Reiju | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/047-vinsmoke-reiju.ts` |
+| OP11-048 | OP11-048 | Capone"Gang"Bege | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/048-capone-gang-bege.ts` |
+| OP11-049 | OP11-049 | Carrot | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/049-carrot.ts` |
+| OP11-050 | OP11-050 | Gotti | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/050-gotti.ts` |
+| OP11-051 | OP11-051 | Sanji | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/051-sanji.ts` |
 | OP11-052 | OP11-052 | Charlotte Lola | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP11/characters/052-charlotte-lola.ts` |
 | OP11-053 | OP11-053 | Tony Tony.Chopper | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP11/characters/053-tony-tony-chopper.ts` |
-| OP11-054 | OP11-054 | Nami | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/054-nami.ts` |
+| OP11-054 | OP11-054 | Nami | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/054-nami.ts` |
 | OP11-055 | OP11-055 | Bartolomeo | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP11/characters/055-bartolomeo.ts` |
-| OP11-056 | OP11-056 | Brook | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/056-brook.ts` |
-| OP11-057 | OP11-057 | Pedro | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/057-pedro.ts` |
-| OP11-058 | OP11-058 | Monkey.D.Luffy | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/058-monkey-d-luffy.ts` |
-| OP11-063 | OP11-063 | Little Sadi | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/063-little-sadi.ts` |
+| OP11-056 | OP11-056 | Brook | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/056-brook.ts` |
+| OP11-057 | OP11-057 | Pedro | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/057-pedro.ts` |
+| OP11-058 | OP11-058 | Monkey.D.Luffy | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/058-monkey-d-luffy.ts` |
+| OP11-063 | OP11-063 | Little Sadi | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/063-little-sadi.ts` |
 | OP11-064 | OP11-064 | Saldeath | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP11/characters/064-saldeath.ts` |
-| OP11-065 | OP11-065 | Charlotte Anana | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/065-charlotte-anana.ts` |
-| OP11-066 | OP11-066 | Charlotte Oven | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/066-charlotte-oven.ts` |
-| OP11-067 | OP11-067 | Charlotte Katakuri | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/067-charlotte-katakuri.ts` |
+| OP11-065 | OP11-065 | Charlotte Anana | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/065-charlotte-anana.ts` |
+| OP11-066 | OP11-066 | Charlotte Oven | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/066-charlotte-oven.ts` |
+| OP11-067 | OP11-067 | Charlotte Katakuri | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/067-charlotte-katakuri.ts` |
 | OP11-068 | OP11-068 | Charlotte Daifuku | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP11/characters/068-charlotte-daifuku.ts` |
-| OP11-069 | OP11-069 | Charlotte Brulee | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/069-charlotte-brulee.ts` |
-| OP11-070 | OP11-070 | Charlotte Pudding | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/070-charlotte-pudding.ts` |
-| OP11-071 | OP11-071 | Charlotte Perospero | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/071-charlotte-perospero.ts` |
-| OP11-072 | OP11-072 | Charlotte Mont-d'or | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/072-charlotte-mont-d-or.ts` |
-| OP11-073 | OP11-073 | Charlotte Linlin | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/073-charlotte-linlin.ts` |
-| OP11-074 | OP11-074 | Streusen | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/074-streusen.ts` |
-| OP11-075 | OP11-075 | Jaguar.D.Saul | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/075-jaguar-d-saul.ts` |
-| OP11-076 | OP11-076 | Hannyabal | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/076-hannyabal.ts` |
-| OP11-077 | OP11-077 | Randolph | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/077-randolph.ts` |
+| OP11-069 | OP11-069 | Charlotte Brulee | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/069-charlotte-brulee.ts` |
+| OP11-070 | OP11-070 | Charlotte Pudding | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/070-charlotte-pudding.ts` |
+| OP11-071 | OP11-071 | Charlotte Perospero | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/071-charlotte-perospero.ts` |
+| OP11-072 | OP11-072 | Charlotte Mont-d'or | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/072-charlotte-mont-d-or.ts` |
+| OP11-073 | OP11-073 | Charlotte Linlin | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/073-charlotte-linlin.ts` |
+| OP11-074 | OP11-074 | Streusen | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/074-streusen.ts` |
+| OP11-075 | OP11-075 | Jaguar.D.Saul | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/075-jaguar-d-saul.ts` |
+| OP11-076 | OP11-076 | Hannyabal | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/076-hannyabal.ts` |
+| OP11-077 | OP11-077 | Randolph | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/077-randolph.ts` |
 | OP11-078 | OP11-078 | Decuplets | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP11/characters/078-decuplets.ts` |
-| OP11-082 | OP11-082 | Aramaki | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/082-aramaki.ts` |
+| OP11-082 | OP11-082 | Aramaki | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/082-aramaki.ts` |
 | OP11-083 | OP11-083 | Caribou | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/083-caribou.ts` |
 | OP11-084 | OP11-084 | Kuzan | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/084-kuzan.ts` |
 | OP11-085 | OP11-085 | Kurozumi Orochi | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/085-kurozumi-orochi.ts` |
 | OP11-086 | OP11-086 | Coribou | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/086-coribou.ts` |
 | OP11-087 | OP11-087 | Miss Sarahebi | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP11/characters/087-miss-sarahebi.ts` |
-| OP11-088 | OP11-088 | Shu | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/088-shu.ts` |
+| OP11-088 | OP11-088 | Shu | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP11/characters/088-shu.ts` |
 | OP11-089 | OP11-089 | Black Maria | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP11/characters/089-black-maria.ts` |
 | OP11-090 | OP11-090 | Briscola | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/090-briscola.ts` |
 | OP11-091 | OP11-091 | Berry Good | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/091-berry-good.ts` |
@@ -1332,16 +1332,16 @@ semantic review or command-driven behavior proof.
 | OP11-103 | OP11-103 | Long-Jaw Neptunian | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/103-long-jaw-neptunian.ts` |
 | OP11-104 | OP11-104 | Shirley | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/104-shirley.ts` |
 | OP11-105 | OP11-105 | Charlotte Chiffon | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP11/characters/105-charlotte-chiffon.ts` |
-| OP11-106 | OP11-106 | Zeus | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/106-zeus.ts` |
-| OP11-107 | OP11-107 | Topknot Neptunian | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/107-topknot-neptunian.ts` |
-| OP11-108 | OP11-108 | Neptune | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/108-neptune.ts` |
-| OP11-109 | OP11-109 | Pappag | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/109-pappag.ts` |
-| OP11-110 | OP11-110 | Fukaboshi | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/110-fukaboshi.ts` |
+| OP11-106 | OP11-106 | Zeus | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/106-zeus.ts` |
+| OP11-107 | OP11-107 | Topknot Neptunian | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/107-topknot-neptunian.ts` |
+| OP11-108 | OP11-108 | Neptune | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/108-neptune.ts` |
+| OP11-109 | OP11-109 | Pappag | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/109-pappag.ts` |
+| OP11-110 | OP11-110 | Fukaboshi | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/110-fukaboshi.ts` |
 | OP11-111 | OP11-111 | Mamboshi | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP11/characters/111-mamboshi.ts` |
-| OP11-112 | OP11-112 | Megalo | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/112-megalo.ts` |
+| OP11-112 | OP11-112 | Megalo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/112-megalo.ts` |
 | OP11-113 | OP11-113 | Ryuboshi | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP11/characters/113-ryuboshi.ts` |
-| OP11-118 | OP11-118 | Monkey.D.Luffy | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/118-monkey-d-luffy.ts` |
-| OP11-119 | OP11-119 | Koby | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP11/characters/119-koby.ts` |
+| OP11-118 | OP11-118 | Monkey.D.Luffy | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/118-monkey-d-luffy.ts` |
+| OP11-119 | OP11-119 | Koby | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/119-koby.ts` |
 | ST16-004 | ST16-004 | Shanks (SP) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/004-shanks-sp.ts` |
 | ST18-005 | ST18-005 | Luffy-Tarou (SP) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/characters/005-luffy-tarou-sp.ts` |
 
@@ -1357,25 +1357,25 @@ semantic review or command-driven behavior proof.
 | OP10-063_p3 | OP10-063 | Vinsmoke Sanji (TR) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/063-vinsmoke-sanji-tr.ts` |
 | OP10-082_p2_0rQ9fvR | OP10-082 | Kuzan (SP) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/082-kuzan-sp.ts` |
 | OP12-002 | OP12-002 | Edward.Newgate | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/002-edward-newgate.ts` |
-| OP12-003 | OP12-003 | Crocus | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/003-crocus.ts` |
-| OP12-004 | OP12-004 | Kouzuki Oden | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/004-kouzuki-oden.ts` |
+| OP12-003 | OP12-003 | Crocus | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/003-crocus.ts` |
+| OP12-004 | OP12-004 | Kouzuki Oden | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/004-kouzuki-oden.ts` |
 | OP12-005 | OP12-005 | Shiki | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/005-shiki.ts` |
-| OP12-006 | OP12-006 | Shakuyaku | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/006-shakuyaku.ts` |
-| OP12-007 | OP12-007 | Shanks | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/007-shanks.ts` |
-| OP12-008 | OP12-008 | Shanks | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/008-shanks.ts` |
-| OP12-009 | OP12-009 | Jinbe | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/009-jinbe.ts` |
+| OP12-006 | OP12-006 | Shakuyaku | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/006-shakuyaku.ts` |
+| OP12-007 | OP12-007 | Shanks | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/007-shanks.ts` |
+| OP12-008 | OP12-008 | Shanks | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/008-shanks.ts` |
+| OP12-009 | OP12-009 | Jinbe | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/009-jinbe.ts` |
 | OP12-010 | OP12-010 | Douglas Bullet | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/010-douglas-bullet.ts` |
 | OP12-011 | OP12-011 | Duval | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/011-duval.ts` |
-| OP12-012 | OP12-012 | Buggy | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/012-buggy.ts` |
-| OP12-013 | OP12-013 | Hatchan | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/013-hatchan.ts` |
-| OP12-014 | OP12-014 | Boa Hancock | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/014-boa-hancock.ts` |
-| OP12-015 | OP12-015 | Monkey.D.Luffy | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/015-monkey-d-luffy.ts` |
-| OP12-021 | OP12-021 | Ipponmatsu | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/021-ipponmatsu.ts` |
-| OP12-022 | OP12-022 | Inuarashi | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/022-inuarashi.ts` |
+| OP12-012 | OP12-012 | Buggy | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/012-buggy.ts` |
+| OP12-013 | OP12-013 | Hatchan | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/013-hatchan.ts` |
+| OP12-014 | OP12-014 | Boa Hancock | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/014-boa-hancock.ts` |
+| OP12-015 | OP12-015 | Monkey.D.Luffy | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/015-monkey-d-luffy.ts` |
+| OP12-021 | OP12-021 | Ipponmatsu | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/021-ipponmatsu.ts` |
+| OP12-022 | OP12-022 | Inuarashi | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/022-inuarashi.ts` |
 | OP12-023 | OP12-023 | Kawamatsu | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/023-kawamatsu.ts` |
-| OP12-024 | OP12-024 | Gyukimaru | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/024-gyukimaru.ts` |
+| OP12-024 | OP12-024 | Gyukimaru | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/024-gyukimaru.ts` |
 | OP12-025 | OP12-025 | Kin'emon | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/025-kin-emon.ts` |
-| OP12-026 | OP12-026 | Kuina | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/026-kuina.ts` |
+| OP12-026 | OP12-026 | Kuina | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/026-kuina.ts` |
 | OP12-027 | OP12-027 | Koushirou | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/027-koushirou.ts` |
 | OP12-028 | OP12-028 | Kouzuki Hiyori | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/028-kouzuki-hiyori.ts` |
 | OP12-029 | OP12-029 | Shimotsuki Kouzaburou | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/029-shimotsuki-kouzaburou.ts` |
@@ -1398,55 +1398,55 @@ semantic review or command-driven behavior proof.
 | OP12-051 | OP12-051 | Hina | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/051-hina.ts` |
 | OP12-052 | OP12-052 | Fullbody | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/052-fullbody.ts` |
 | OP12-053 | OP12-053 | Borsalino | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/053-borsalino.ts` |
-| OP12-054 | OP12-054 | Marshall.D.Teach | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/054-marshall-d-teach.ts` |
-| OP12-056 | OP12-056 | Monkey.D.Garp | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/056-monkey-d-garp.ts` |
-| OP12-062 | OP12-062 | Vinsmoke Sora | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/062-vinsmoke-sora.ts` |
-| OP12-063 | OP12-063 | Vinsmoke Reiju | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/063-vinsmoke-reiju.ts` |
+| OP12-054 | OP12-054 | Marshall.D.Teach | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/054-marshall-d-teach.ts` |
+| OP12-056 | OP12-056 | Monkey.D.Garp | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/056-monkey-d-garp.ts` |
+| OP12-062 | OP12-062 | Vinsmoke Sora | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/062-vinsmoke-sora.ts` |
+| OP12-063 | OP12-063 | Vinsmoke Reiju | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/063-vinsmoke-reiju.ts` |
 | OP12-064 | OP12-064 | Vergo | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/064-vergo.ts` |
-| OP12-065 | OP12-065 | Emporio.Ivankov | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/065-emporio-ivankov.ts` |
-| OP12-066 | OP12-066 | Carne | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/066-carne.ts` |
+| OP12-065 | OP12-065 | Emporio.Ivankov | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/065-emporio-ivankov.ts` |
+| OP12-066 | OP12-066 | Carne | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/066-carne.ts` |
 | OP12-067 | OP12-067 | Carmen | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/067-carmen.ts` |
 | OP12-068 | OP12-068 | Gin | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/068-gin.ts` |
-| OP12-069 | OP12-069 | Crocodile | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/069-crocodile.ts` |
-| OP12-070 | OP12-070 | Sanji | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP12/characters/070-sanji.ts` |
-| OP12-071 | OP12-071 | Charlotte Pudding | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/071-charlotte-pudding.ts` |
-| OP12-072 | OP12-072 | Zeff | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/072-zeff.ts` |
-| OP12-073 | OP12-073 | Trafalgar Law | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/073-trafalgar-law.ts` |
-| OP12-074 | OP12-074 | Patty | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/074-patty.ts` |
-| OP12-075 | OP12-075 | Ms. All Sunday | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP12/characters/075-ms-all-sunday.ts` |
+| OP12-069 | OP12-069 | Crocodile | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/069-crocodile.ts` |
+| OP12-070 | OP12-070 | Sanji | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/070-sanji.ts` |
+| OP12-071 | OP12-071 | Charlotte Pudding | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/071-charlotte-pudding.ts` |
+| OP12-072 | OP12-072 | Zeff | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/072-zeff.ts` |
+| OP12-073 | OP12-073 | Trafalgar Law | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/073-trafalgar-law.ts` |
+| OP12-074 | OP12-074 | Patty | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/074-patty.ts` |
+| OP12-075 | OP12-075 | Ms. All Sunday | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/075-ms-all-sunday.ts` |
 | OP12-076 | OP12-076 | Monet | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/076-monet.ts` |
 | OP12-082 | OP12-082 | Issho | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/082-issho.ts` |
 | OP12-083 | OP12-083 | Inazuma | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/083-inazuma.ts` |
-| OP12-084 | OP12-084 | Emporio.Ivankov | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/084-emporio-ivankov.ts` |
-| OP12-085 | OP12-085 | Karasu | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/085-karasu.ts` |
-| OP12-086 | OP12-086 | Koala | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/086-koala.ts` |
-| OP12-087 | OP12-087 | Nico Robin | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/087-nico-robin.ts` |
+| OP12-084 | OP12-084 | Emporio.Ivankov | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/084-emporio-ivankov.ts` |
+| OP12-085 | OP12-085 | Karasu | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/085-karasu.ts` |
+| OP12-086 | OP12-086 | Koala | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/086-koala.ts` |
+| OP12-087 | OP12-087 | Nico Robin | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/087-nico-robin.ts` |
 | OP12-088 | OP12-088 | Bastille | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/088-bastille.ts` |
-| OP12-089 | OP12-089 | Hack | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/089-hack.ts` |
-| OP12-090 | OP12-090 | Belo Betty | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/090-belo-betty.ts` |
-| OP12-091 | OP12-091 | Poker | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/091-poker.ts` |
+| OP12-089 | OP12-089 | Hack | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/089-hack.ts` |
+| OP12-090 | OP12-090 | Belo Betty | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/090-belo-betty.ts` |
+| OP12-091 | OP12-091 | Poker | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/091-poker.ts` |
 | OP12-092 | OP12-092 | Mizerka | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/092-mizerka.ts` |
-| OP12-093 | OP12-093 | Morley | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/093-morley.ts` |
-| OP12-094 | OP12-094 | Monkey.D.Dragon | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/094-monkey-d-dragon.ts` |
-| OP12-095 | OP12-095 | Lindbergh | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/095-lindbergh.ts` |
+| OP12-093 | OP12-093 | Morley | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/093-morley.ts` |
+| OP12-094 | OP12-094 | Monkey.D.Dragon | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/094-monkey-d-dragon.ts` |
+| OP12-095 | OP12-095 | Lindbergh | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/095-lindbergh.ts` |
 | OP12-099 | OP12-099 | Kalgara | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/099-kalgara.ts` |
-| OP12-100 | OP12-100 | Sabo | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/100-sabo.ts` |
-| OP12-101 | OP12-101 | Jewelry Bonney | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/101-jewelry-bonney.ts` |
-| OP12-102 | OP12-102 | Shirahoshi | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/102-shirahoshi.ts` |
+| OP12-100 | OP12-100 | Sabo | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/100-sabo.ts` |
+| OP12-101 | OP12-101 | Jewelry Bonney | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/101-jewelry-bonney.ts` |
+| OP12-102 | OP12-102 | Shirahoshi | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/102-shirahoshi.ts` |
 | OP12-103 | OP12-103 | Seto | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/103-seto.ts` |
 | OP12-104 | OP12-104 | Sentomaru | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/104-sentomaru.ts` |
-| OP12-105 | OP12-105 | Trafalgar Lammy | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/105-trafalgar-lammy.ts` |
+| OP12-105 | OP12-105 | Trafalgar Lammy | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/105-trafalgar-lammy.ts` |
 | OP12-106 | OP12-106 | Trafalgar Law | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/106-trafalgar-law.ts` |
-| OP12-107 | OP12-107 | Donquixote Doflamingo | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/107-donquixote-doflamingo.ts` |
-| OP12-108 | OP12-108 | Donquixote Rosinante | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/108-donquixote-rosinante.ts` |
+| OP12-107 | OP12-107 | Donquixote Doflamingo | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/107-donquixote-doflamingo.ts` |
+| OP12-108 | OP12-108 | Donquixote Rosinante | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/108-donquixote-rosinante.ts` |
 | OP12-109 | OP12-109 | Pacifista | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/109-pacifista.ts` |
 | OP12-110 | OP12-110 | Buffalo | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/110-buffalo.ts` |
 | OP12-111 | OP12-111 | Baby 5 | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/111-baby-5.ts` |
-| OP12-112 | OP12-112 | Baby 5 | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/112-baby-5.ts` |
-| OP12-113 | OP12-113 | Roronoa Zoro | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/113-roronoa-zoro.ts` |
+| OP12-112 | OP12-112 | Baby 5 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/112-baby-5.ts` |
+| OP12-113 | OP12-113 | Roronoa Zoro | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/113-roronoa-zoro.ts` |
 | OP12-114 | OP12-114 | Wyper | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP12/characters/114-wyper.ts` |
-| OP12-118 | OP12-118 | Jewelry Bonney | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP12/characters/118-jewelry-bonney.ts` |
-| OP12-119 | OP12-119 | Bartholomew Kuma | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/119-bartholomew-kuma.ts` |
+| OP12-118 | OP12-118 | Jewelry Bonney | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/118-jewelry-bonney.ts` |
+| OP12-119 | OP12-119 | Bartholomew Kuma | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/119-bartholomew-kuma.ts` |
 | ST13-011 | ST13-011 | Portgas.D.Ace (SP) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/characters/011-portgas-d-ace-sp.ts` |
 | ST18-004_p2_Tt367h1 | ST18-004 | Zoro-Juurou (SP) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP12/characters/004-zoro-juurou-sp.ts` |
 
@@ -1465,97 +1465,97 @@ semantic review or command-driven behavior proof.
 | OP10-030_p2_60fEVos | OP10-030 | Smoker - OP10-030 (SP) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/030-smoker-op10-030-sp.ts` |
 | OP11-058_p1_pUjWFdt | OP11-058 | Monkey.D.Luffy - OP11-058 (TR) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/058-monkey-d-luffy-op11-058-tr.ts` |
 | OP13-005 | OP13-005 | Inazuma | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/005-inazuma.ts` |
-| OP13-006 | OP13-006 | Woop Slap | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/006-woop-slap.ts` |
-| OP13-007 | OP13-007 | Ace & Sabo & Luffy | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/007-ace-sabo-luffy.ts` |
-| OP13-008 | OP13-008 | Emporio.Ivankov | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/008-emporio-ivankov.ts` |
-| OP13-009 | OP13-009 | Curly.Dadan | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/009-curly-dadan.ts` |
+| OP13-006 | OP13-006 | Woop Slap | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/006-woop-slap.ts` |
+| OP13-007 | OP13-007 | Ace & Sabo & Luffy | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/007-ace-sabo-luffy.ts` |
+| OP13-008 | OP13-008 | Emporio.Ivankov | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/008-emporio-ivankov.ts` |
+| OP13-009 | OP13-009 | Curly.Dadan | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/009-curly-dadan.ts` |
 | OP13-010 | OP13-010 | Lord of the Coast | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/010-lord-of-the-coast.ts` |
 | OP13-011 | OP13-011 | Nefeltari Cobra | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/011-nefeltari-cobra.ts` |
-| OP13-012 | OP13-012 | Nefeltari Vivi | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/012-nefeltari-vivi.ts` |
-| OP13-013 | OP13-013 | Higuma | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/013-higuma.ts` |
-| OP13-014 | OP13-014 | Portgas.D.Rouge | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/014-portgas-d-rouge.ts` |
-| OP13-015 | OP13-015 | Makino | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/015-makino.ts` |
-| OP13-016 | OP13-016 | Monkey.D.Garp | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/016-monkey-d-garp.ts` |
-| OP13-017 | OP13-017 | Monkey.D.Dragon | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/017-monkey-d-dragon.ts` |
+| OP13-012 | OP13-012 | Nefeltari Vivi | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/012-nefeltari-vivi.ts` |
+| OP13-013 | OP13-013 | Higuma | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/013-higuma.ts` |
+| OP13-014 | OP13-014 | Portgas.D.Rouge | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/014-portgas-d-rouge.ts` |
+| OP13-015 | OP13-015 | Makino | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/015-makino.ts` |
+| OP13-016 | OP13-016 | Monkey.D.Garp | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/016-monkey-d-garp.ts` |
+| OP13-017 | OP13-017 | Monkey.D.Dragon | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/017-monkey-d-dragon.ts` |
 | OP13-018 | OP13-018 | Wapol | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/018-wapol.ts` |
-| OP13-023 | OP13-023 | Uta | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/023-uta.ts` |
-| OP13-024 | OP13-024 | Gordon | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/024-gordon.ts` |
-| OP13-025 | OP13-025 | Koby | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/025-koby.ts` |
-| OP13-026 | OP13-026 | Sunny-Kun | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/026-sunny-kun.ts` |
-| OP13-027 | OP13-027 | Sanji | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/027-sanji.ts` |
+| OP13-023 | OP13-023 | Uta | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/023-uta.ts` |
+| OP13-024 | OP13-024 | Gordon | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/024-gordon.ts` |
+| OP13-025 | OP13-025 | Koby | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/025-koby.ts` |
+| OP13-026 | OP13-026 | Sunny-Kun | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/026-sunny-kun.ts` |
+| OP13-027 | OP13-027 | Sanji | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/027-sanji.ts` |
 | OP13-028 | OP13-028 | Shanks | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/028-shanks.ts` |
 | OP13-029 | OP13-029 | Jinbe | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/029-jinbe.ts` |
-| OP13-030 | OP13-030 | Tony Tony.Chopper | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/030-tony-tony-chopper.ts` |
+| OP13-030 | OP13-030 | Tony Tony.Chopper | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/030-tony-tony-chopper.ts` |
 | OP13-031 | OP13-031 | Trafalgar Law | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/031-trafalgar-law.ts` |
-| OP13-032 | OP13-032 | Nico Robin | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/032-nico-robin.ts` |
-| OP13-033 | OP13-033 | Franky | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/033-franky.ts` |
-| OP13-034 | OP13-034 | Brook | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/034-brook.ts` |
-| OP13-035 | OP13-035 | Bepo | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/035-bepo.ts` |
+| OP13-032 | OP13-032 | Nico Robin | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/032-nico-robin.ts` |
+| OP13-033 | OP13-033 | Franky | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/033-franky.ts` |
+| OP13-034 | OP13-034 | Brook | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/034-brook.ts` |
+| OP13-035 | OP13-035 | Bepo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/035-bepo.ts` |
 | OP13-036 | OP13-036 | Helmeppo | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/036-helmeppo.ts` |
-| OP13-037 | OP13-037 | Roronoa Zoro | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/037-roronoa-zoro.ts` |
-| OP13-041 | OP13-041 | Izo | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/041-izo.ts` |
-| OP13-042 | OP13-042 | Edward.Newgate | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/042-edward-newgate.ts` |
-| OP13-043 | OP13-043 | Otama | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/043-otama.ts` |
-| OP13-044 | OP13-044 | Curiel | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/044-curiel.ts` |
-| OP13-045 | OP13-045 | Haruta | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/045-haruta.ts` |
-| OP13-046 | OP13-046 | Vista | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/046-vista.ts` |
-| OP13-047 | OP13-047 | Fossa | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/047-fossa.ts` |
+| OP13-037 | OP13-037 | Roronoa Zoro | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/037-roronoa-zoro.ts` |
+| OP13-041 | OP13-041 | Izo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/041-izo.ts` |
+| OP13-042 | OP13-042 | Edward.Newgate | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/042-edward-newgate.ts` |
+| OP13-043 | OP13-043 | Otama | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/043-otama.ts` |
+| OP13-044 | OP13-044 | Curiel | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/044-curiel.ts` |
+| OP13-045 | OP13-045 | Haruta | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/045-haruta.ts` |
+| OP13-046 | OP13-046 | Vista | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/046-vista.ts` |
+| OP13-047 | OP13-047 | Fossa | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/047-fossa.ts` |
 | OP13-048 | OP13-048 | Blamenco | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/048-blamenco.ts` |
 | OP13-049 | OP13-049 | Blenheim | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/049-blenheim.ts` |
-| OP13-050 | OP13-050 | Boa Sandersonia | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/050-boa-sandersonia.ts` |
-| OP13-051 | OP13-051 | Boa Hancock | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/051-boa-hancock.ts` |
-| OP13-052 | OP13-052 | Boa Marigold | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/052-boa-marigold.ts` |
-| OP13-053 | OP13-053 | Marshall.D.Teach | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/053-marshall-d-teach.ts` |
-| OP13-054 | OP13-054 | Yamato | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/054-yamato.ts` |
-| OP13-055 | OP13-055 | Rakuyo | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/055-rakuyo.ts` |
-| OP13-056 | OP13-056 | LittleOars Jr. | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/056-littleoars-jr.ts` |
-| OP13-060 | OP13-060 | Amatsuki Toki | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/060-amatsuki-toki.ts` |
-| OP13-061 | OP13-061 | Inuarashi | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/061-inuarashi.ts` |
-| OP13-062 | OP13-062 | Crocus | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/062-crocus.ts` |
-| OP13-063 | OP13-063 | Kouzuki Oden | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/063-kouzuki-oden.ts` |
-| OP13-064 | OP13-064 | Gol.D.Roger | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/064-gol-d-roger.ts` |
-| OP13-065 | OP13-065 | Shanks | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/065-shanks.ts` |
-| OP13-066 | OP13-066 | Silvers Rayleigh | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/066-silvers-rayleigh.ts` |
-| OP13-067 | OP13-067 | Scopper Gaban | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/067-scopper-gaban.ts` |
-| OP13-068 | OP13-068 | Douglas Bullet | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/068-douglas-bullet.ts` |
-| OP13-069 | OP13-069 | Tom | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/069-tom.ts` |
+| OP13-050 | OP13-050 | Boa Sandersonia | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/050-boa-sandersonia.ts` |
+| OP13-051 | OP13-051 | Boa Hancock | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/051-boa-hancock.ts` |
+| OP13-052 | OP13-052 | Boa Marigold | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/052-boa-marigold.ts` |
+| OP13-053 | OP13-053 | Marshall.D.Teach | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/053-marshall-d-teach.ts` |
+| OP13-054 | OP13-054 | Yamato | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/054-yamato.ts` |
+| OP13-055 | OP13-055 | Rakuyo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/055-rakuyo.ts` |
+| OP13-056 | OP13-056 | LittleOars Jr. | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/056-littleoars-jr.ts` |
+| OP13-060 | OP13-060 | Amatsuki Toki | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/060-amatsuki-toki.ts` |
+| OP13-061 | OP13-061 | Inuarashi | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/061-inuarashi.ts` |
+| OP13-062 | OP13-062 | Crocus | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/062-crocus.ts` |
+| OP13-063 | OP13-063 | Kouzuki Oden | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/063-kouzuki-oden.ts` |
+| OP13-064 | OP13-064 | Gol.D.Roger | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/064-gol-d-roger.ts` |
+| OP13-065 | OP13-065 | Shanks | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/065-shanks.ts` |
+| OP13-066 | OP13-066 | Silvers Rayleigh | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/066-silvers-rayleigh.ts` |
+| OP13-067 | OP13-067 | Scopper Gaban | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/067-scopper-gaban.ts` |
+| OP13-068 | OP13-068 | Douglas Bullet | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/068-douglas-bullet.ts` |
+| OP13-069 | OP13-069 | Tom | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/069-tom.ts` |
 | OP13-070 | OP13-070 | Napoleon | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/070-napoleon.ts` |
-| OP13-071 | OP13-071 | Nekomamushi | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/071-nekomamushi.ts` |
-| OP13-072 | OP13-072 | Buggy | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/072-buggy.ts` |
+| OP13-071 | OP13-071 | Nekomamushi | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/071-nekomamushi.ts` |
+| OP13-072 | OP13-072 | Buggy | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/072-buggy.ts` |
 | OP13-073 | OP13-073 | Prometheus | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/073-prometheus.ts` |
-| OP13-074 | OP13-074 | Hera | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/074-hera.ts` |
-| OP13-080 | OP13-080 | St. Ethanbaron V. Nusjuro | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/080-st-ethanbaron-v-nusjuro.ts` |
-| OP13-081 | OP13-081 | Koala | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP13/characters/081-koala.ts` |
-| OP13-083 | OP13-083 | St. Jaygarcia Saturn | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/083-st-jaygarcia-saturn.ts` |
-| OP13-084 | OP13-084 | St. Shepherd Ju Peter | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/084-st-shepherd-ju-peter.ts` |
+| OP13-074 | OP13-074 | Hera | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/074-hera.ts` |
+| OP13-080 | OP13-080 | St. Ethanbaron V. Nusjuro | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/080-st-ethanbaron-v-nusjuro.ts` |
+| OP13-081 | OP13-081 | Koala | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/081-koala.ts` |
+| OP13-083 | OP13-083 | St. Jaygarcia Saturn | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/083-st-jaygarcia-saturn.ts` |
+| OP13-084 | OP13-084 | St. Shepherd Ju Peter | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/084-st-shepherd-ju-peter.ts` |
 | OP13-085 | OP13-085 | Saint Jalmac | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/085-saint-jalmac.ts` |
-| OP13-086 | OP13-086 | Saint Shalria | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/086-saint-shalria.ts` |
-| OP13-087 | OP13-087 | Saint Charlos | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/087-saint-charlos.ts` |
+| OP13-086 | OP13-086 | Saint Shalria | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/086-saint-shalria.ts` |
+| OP13-087 | OP13-087 | Saint Charlos | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/087-saint-charlos.ts` |
 | OP13-088 | OP13-088 | Terry Gilteo | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/088-terry-gilteo.ts` |
-| OP13-089 | OP13-089 | St. Topman Warcury | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/089-st-topman-warcury.ts` |
+| OP13-089 | OP13-089 | St. Topman Warcury | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/089-st-topman-warcury.ts` |
 | OP13-090 | OP13-090 | Hack | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/090-hack.ts` |
-| OP13-091 | OP13-091 | St. Marcus Mars | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/091-st-marcus-mars.ts` |
-| OP13-092 | OP13-092 | Saint Mjosgard | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/092-saint-mjosgard.ts` |
-| OP13-093 | OP13-093 | Morgans | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/093-morgans.ts` |
-| OP13-094 | OP13-094 | York | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/094-york.ts` |
-| OP13-095 | OP13-095 | Saint Rosward | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/095-saint-rosward.ts` |
+| OP13-091 | OP13-091 | St. Marcus Mars | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/091-st-marcus-mars.ts` |
+| OP13-092 | OP13-092 | Saint Mjosgard | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/092-saint-mjosgard.ts` |
+| OP13-093 | OP13-093 | Morgans | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/093-morgans.ts` |
+| OP13-094 | OP13-094 | York | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/094-york.ts` |
+| OP13-095 | OP13-095 | Saint Rosward | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/095-saint-rosward.ts` |
 | OP13-101 | OP13-101 | Atlas | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/101-atlas.ts` |
-| OP13-102 | OP13-102 | Edison | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/102-edison.ts` |
+| OP13-102 | OP13-102 | Edison | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/102-edison.ts` |
 | OP13-103 | OP13-103 | Gyogyo | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/103-gyogyo.ts` |
-| OP13-104 | OP13-104 | Kouzuki Hiyori | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/104-kouzuki-hiyori.ts` |
-| OP13-105 | OP13-105 | Kouzuki Momonosuke | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/105-kouzuki-momonosuke.ts` |
-| OP13-106 | OP13-106 | Conney | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/106-conney.ts` |
+| OP13-104 | OP13-104 | Kouzuki Hiyori | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/104-kouzuki-hiyori.ts` |
+| OP13-105 | OP13-105 | Kouzuki Momonosuke | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/105-kouzuki-momonosuke.ts` |
+| OP13-106 | OP13-106 | Conney | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/106-conney.ts` |
 | OP13-107 | OP13-107 | Shaka | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/107-shaka.ts` |
-| OP13-108 | OP13-108 | Jewelry Bonney | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/108-jewelry-bonney.ts` |
-| OP13-109 | OP13-109 | Jewelry Bonney | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP13/characters/109-jewelry-bonney.ts` |
-| OP13-110 | OP13-110 | Stussy | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/110-stussy.ts` |
+| OP13-108 | OP13-108 | Jewelry Bonney | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/108-jewelry-bonney.ts` |
+| OP13-109 | OP13-109 | Jewelry Bonney | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/109-jewelry-bonney.ts` |
+| OP13-110 | OP13-110 | Stussy | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/110-stussy.ts` |
 | OP13-111 | OP13-111 | Pythagoras | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP13/characters/111-pythagoras.ts` |
 | OP13-112 | OP13-112 | Vegapunk | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/112-vegapunk.ts` |
-| OP13-113 | OP13-113 | Lilith | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP13/characters/113-lilith.ts` |
-| OP13-114 | OP13-114 | S-Snake | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP13/characters/114-s-snake.ts` |
-| OP13-118 | OP13-118 | Monkey.D.Luffy | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/118-monkey-d-luffy.ts` |
+| OP13-113 | OP13-113 | Lilith | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/113-lilith.ts` |
+| OP13-114 | OP13-114 | S-Snake | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/114-s-snake.ts` |
+| OP13-118 | OP13-118 | Monkey.D.Luffy | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/118-monkey-d-luffy.ts` |
 | OP13-119 | OP13-119 | Portgas.D.Ace | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/119-portgas-d-ace.ts` |
-| OP13-120 | OP13-120 | Sabo (SP) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP13/characters/120-sabo-sp.ts` |
+| OP13-120 | OP13-120 | Sabo (SP) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/characters/120-sabo-sp.ts` |
 
 ## OP14EB04
 
@@ -1593,100 +1593,100 @@ semantic review or command-driven behavior proof.
 | OP10-065_p1 | OP10-065 | Sugar - OP10-065 (SP) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/065-sugar-op10-065-sp.ts` |
 | OP12-030_p2 | OP12-030 | Dracule Mihawk - OP12-030 (SP) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/030-dracule-mihawk-op12-030-sp.ts` |
 | OP12-108_upbOn8S | OP12-108 | Donquixote Rosinante - OP12-108 | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/108-donquixote-rosinante-op12-108.ts` |
-| OP14-002 | OP14-002 | Urouge | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/002-urouge.ts` |
+| OP14-002 | OP14-002 | Urouge | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/002-urouge.ts` |
 | OP14-003 | OP14-003 | Capone"Gang"Bege | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/003-capone-gang-bege.ts` |
-| OP14-004 | OP14-004 | Cavendish | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/004-cavendish.ts` |
-| OP14-005 | OP14-005 | Killer | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/005-killer.ts` |
-| OP14-006 | OP14-006 | Shachi & Penguin | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/006-shachi-penguin.ts` |
+| OP14-004 | OP14-004 | Cavendish | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/004-cavendish.ts` |
+| OP14-005 | OP14-005 | Killer | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/005-killer.ts` |
+| OP14-006 | OP14-006 | Shachi & Penguin | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/006-shachi-penguin.ts` |
 | OP14-007 | OP14-007 | Jewelry Bonney | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/007-jewelry-bonney.ts` |
 | OP14-008 | OP14-008 | Scratchmen Apoo | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/008-scratchmen-apoo.ts` |
-| OP14-009 | OP14-009 | Trafalgar Law - OP14-009 | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/009-trafalgar-law-op14-009.ts` |
-| OP14-010 | OP14-010 | Basil Hawkins | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/010-basil-hawkins.ts` |
-| OP14-011 | OP14-011 | Bartolomeo | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/011-bartolomeo.ts` |
-| OP14-012 | OP14-012 | Bepo | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/012-bepo.ts` |
-| OP14-013 | OP14-013 | Monkey.D.Luffy - OP14-013 | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/013-monkey-d-luffy-op14-013.ts` |
-| OP14-014 | OP14-014 | Eustass"Captain"Kid - OP14-014 | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/014-eustass-captain-kid-op14-014.ts` |
-| OP14-015 | OP14-015 | Roronoa Zoro - OP14-015 | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/015-roronoa-zoro-op14-015.ts` |
-| OP14-016 | OP14-016 | X.Drake | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/016-x-drake.ts` |
-| OP14-021 | OP14-021 | Issho | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/021-issho-op14-021.ts` |
-| OP14-022 | OP14-022 | Usopp | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/022-usopp.ts` |
-| OP14-023 | OP14-023 | Kikunojo - OP14-023 | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/023-kikunojo-op14-023.ts` |
-| OP14-024 | OP14-024 | Kin'emon | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/024-kin-emon.ts` |
-| OP14-025 | OP14-025 | Kuro | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/025-kuro.ts` |
-| OP14-026 | OP14-026 | Kouzuki Oden | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/026-kouzuki-oden.ts` |
-| OP14-027 | OP14-027 | Shanks | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/027-shanks.ts` |
-| OP14-028 | OP14-028 | Johnny | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/028-johnny.ts` |
-| OP14-029 | OP14-029 | Tashigi | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/029-tashigi.ts` |
+| OP14-009 | OP14-009 | Trafalgar Law - OP14-009 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/009-trafalgar-law-op14-009.ts` |
+| OP14-010 | OP14-010 | Basil Hawkins | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/010-basil-hawkins.ts` |
+| OP14-011 | OP14-011 | Bartolomeo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/011-bartolomeo.ts` |
+| OP14-012 | OP14-012 | Bepo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/012-bepo.ts` |
+| OP14-013 | OP14-013 | Monkey.D.Luffy | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/013-monkey-d-luffy-op14-013.ts` |
+| OP14-014 | OP14-014 | Eustass"Captain"Kid - OP14-014 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/014-eustass-captain-kid-op14-014.ts` |
+| OP14-015 | OP14-015 | Roronoa Zoro - OP14-015 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/015-roronoa-zoro-op14-015.ts` |
+| OP14-016 | OP14-016 | X.Drake | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/016-x-drake.ts` |
+| OP14-021 | OP14-021 | Issho | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/021-issho-op14-021.ts` |
+| OP14-022 | OP14-022 | Usopp | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/022-usopp.ts` |
+| OP14-023 | OP14-023 | Kikunojo - OP14-023 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/023-kikunojo-op14-023.ts` |
+| OP14-024 | OP14-024 | Kin'emon | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/024-kin-emon.ts` |
+| OP14-025 | OP14-025 | Kuro | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/025-kuro.ts` |
+| OP14-026 | OP14-026 | Kouzuki Oden | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/026-kouzuki-oden.ts` |
+| OP14-027 | OP14-027 | Shanks | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/027-shanks.ts` |
+| OP14-028 | OP14-028 | Johnny | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/028-johnny.ts` |
+| OP14-029 | OP14-029 | Tashigi | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/029-tashigi.ts` |
 | OP14-030 | OP14-030 | Chaka & Pell - OP14-030 | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/030-chaka-pell-op14-030.ts` |
-| OP14-031 | OP14-031 | Nami | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/031-nami.ts` |
-| OP14-032 | OP14-032 | Humandrill | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/032-humandrill.ts` |
-| OP14-033 | OP14-033 | Perona - OP14-033 | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/033-perona-op14-033.ts` |
-| OP14-034 | OP14-034 | Monkey.D.Luffy - OP14-34 | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/034-monkey-d-luffy-op14-34.ts` |
-| OP14-035 | OP14-035 | Yosaku | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/035-yosaku.ts` |
-| OP14-042 | OP14-042 | Arlong | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/042-arlong.ts` |
-| OP14-043 | OP14-043 | Aladine | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/043-aladine.ts` |
-| OP14-044 | OP14-044 | Edward.Newgate | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/044-edward-newgate.ts` |
-| OP14-045 | OP14-045 | Kuroobi | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/045-kuroobi.ts` |
-| OP14-046 | OP14-046 | Koala | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/046-koala.ts` |
-| OP14-047 | OP14-047 | Shirahoshi | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/047-shirahoshi.ts` |
-| OP14-048 | OP14-048 | Shiryu | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/048-shiryu.ts` |
-| OP14-049 | OP14-049 | Jinbe | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/049-jinbe-op14-049.ts` |
-| OP14-050 | OP14-050 | Chew | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/050-chew.ts` |
+| OP14-031 | OP14-031 | Nami | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/031-nami.ts` |
+| OP14-032 | OP14-032 | Humandrill | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/032-humandrill.ts` |
+| OP14-033 | OP14-033 | Perona - OP14-033 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/033-perona-op14-033.ts` |
+| OP14-034 | OP14-034 | Monkey.D.Luffy - OP14-34 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/034-monkey-d-luffy-op14-34.ts` |
+| OP14-035 | OP14-035 | Yosaku | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/035-yosaku.ts` |
+| OP14-042 | OP14-042 | Arlong | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/042-arlong.ts` |
+| OP14-043 | OP14-043 | Aladine | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/043-aladine.ts` |
+| OP14-044 | OP14-044 | Edward.Newgate | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/044-edward-newgate.ts` |
+| OP14-045 | OP14-045 | Kuroobi | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/045-kuroobi.ts` |
+| OP14-046 | OP14-046 | Koala | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/046-koala.ts` |
+| OP14-047 | OP14-047 | Shirahoshi | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/047-shirahoshi.ts` |
+| OP14-048 | OP14-048 | Shiryu | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/048-shiryu.ts` |
+| OP14-049 | OP14-049 | Jinbe | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/049-jinbe-op14-049.ts` |
+| OP14-050 | OP14-050 | Chew | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/050-chew.ts` |
 | OP14-051 | OP14-051 | Hatchan | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/051-hatchan.ts` |
-| OP14-052 | OP14-052 | Hannyabal | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/052-hannyabal.ts` |
-| OP14-053 | OP14-053 | Vista | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/053-vista.ts` |
-| OP14-054 | OP14-054 | Fisher Tiger | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/054-fisher-tiger.ts` |
+| OP14-052 | OP14-052 | Hannyabal | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/052-hannyabal.ts` |
+| OP14-053 | OP14-053 | Vista | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/053-vista.ts` |
+| OP14-054 | OP14-054 | Fisher Tiger | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/054-fisher-tiger.ts` |
 | OP14-055 | OP14-055 | The Macro Gang | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/055-the-macro-gang.ts` |
-| OP14-056 | OP14-056 | Wadatsumi | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/056-wadatsumi.ts` |
-| OP14-061 | OP14-061 | Vergo | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/061-vergo.ts` |
-| OP14-062 | OP14-062 | Gladius | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/062-gladius.ts` |
-| OP14-063 | OP14-063 | Sugar | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/063-sugar.ts` |
-| OP14-064 | OP14-064 | Giolla | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/064-giolla.ts` |
-| OP14-065 | OP14-065 | Senor Pink | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/065-senor-pink.ts` |
+| OP14-056 | OP14-056 | Wadatsumi | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/056-wadatsumi.ts` |
+| OP14-061 | OP14-061 | Vergo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/061-vergo.ts` |
+| OP14-062 | OP14-062 | Gladius | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/062-gladius.ts` |
+| OP14-063 | OP14-063 | Sugar | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/063-sugar.ts` |
+| OP14-064 | OP14-064 | Giolla | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/064-giolla.ts` |
+| OP14-065 | OP14-065 | Senor Pink | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/065-senor-pink.ts` |
 | OP14-066 | OP14-066 | Diamante | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/066-diamante.ts` |
-| OP14-067 | OP14-067 | Dellinger | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/067-dellinger.ts` |
-| OP14-068 | OP14-068 | Trebol | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/068-trebol.ts` |
-| OP14-069 | OP14-069 | Donquixote Doflamingo | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/069-donquixote-doflamingo-op14-069.ts` |
-| OP14-070 | OP14-070 | Buffalo | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/070-buffalo.ts` |
-| OP14-071 | OP14-071 | Pica | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/071-pica.ts` |
-| OP14-072 | OP14-072 | Baby 5 | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/072-baby-5.ts` |
+| OP14-067 | OP14-067 | Dellinger | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/067-dellinger.ts` |
+| OP14-068 | OP14-068 | Trebol | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/068-trebol.ts` |
+| OP14-069 | OP14-069 | Donquixote Doflamingo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/069-donquixote-doflamingo-op14-069.ts` |
+| OP14-070 | OP14-070 | Buffalo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/070-buffalo.ts` |
+| OP14-071 | OP14-071 | Pica | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/071-pica.ts` |
+| OP14-072 | OP14-072 | Baby 5 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/072-baby-5.ts` |
 | OP14-073 | OP14-073 | Machvise | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/073-machvise.ts` |
-| OP14-074 | OP14-074 | Monet | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/074-monet.ts` |
-| OP14-075 | OP14-075 | Lao.G | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/075-lao-g.ts` |
-| OP14-081 | OP14-081 | Spider Mice | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/081-spider-mice.ts` |
-| OP14-082 | OP14-082 | Oinkchuck | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/082-oinkchuck.ts` |
-| OP14-083 | OP14-083 | Ms. Wednesday | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/083-ms-wednesday.ts` |
-| OP14-084 | OP14-084 | Ms. All Sunday | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/084-ms-all-sunday.ts` |
-| OP14-085 | OP14-085 | Miss.Goldenweek(Marianne) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/085-miss-goldenweek-marianne.ts` |
-| OP14-086 | OP14-086 | Miss Doublefinger(Zala) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/086-miss-doublefinger-zala.ts` |
-| OP14-087 | OP14-087 | Miss.Valentine(Mikita) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/087-miss-valentine-mikita-dash-pack.ts` |
-| OP14-088 | OP14-088 | Miss.MerryChristmas(Drophy) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/088-miss-merrychristmas-drophy.ts` |
-| OP14-089 | OP14-089 | Ryuma | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/089-ryuma.ts` |
-| OP14-090 | OP14-090 | Mr.1(Daz.Bonez) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/090-mr-1-daz-bonez.ts` |
-| OP14-091 | OP14-091 | Mr.2.Bon.Kurei(Bentham) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/091-mr-2-bon-kurei-bentham.ts` |
-| OP14-092 | OP14-092 | Mr.3(Galdino) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/092-mr-3-galdino.ts` |
-| OP14-093 | OP14-093 | Mr.4(Babe) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/093-mr-4-babe.ts` |
-| OP14-094 | OP14-094 | Mr.5(Gem) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/094-mr-5-gem.ts` |
+| OP14-074 | OP14-074 | Monet | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/074-monet.ts` |
+| OP14-075 | OP14-075 | Lao.G | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/075-lao-g.ts` |
+| OP14-081 | OP14-081 | Spider Mice | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/081-spider-mice.ts` |
+| OP14-082 | OP14-082 | Oinkchuck | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/082-oinkchuck.ts` |
+| OP14-083 | OP14-083 | Ms. Wednesday | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/083-ms-wednesday.ts` |
+| OP14-084 | OP14-084 | Ms. All Sunday | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/084-ms-all-sunday.ts` |
+| OP14-085 | OP14-085 | Miss.Goldenweek(Marianne) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/085-miss-goldenweek-marianne.ts` |
+| OP14-086 | OP14-086 | Miss Doublefinger(Zala) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/086-miss-doublefinger-zala.ts` |
+| OP14-087 | OP14-087 | Miss.Valentine(Mikita) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/087-miss-valentine-mikita-dash-pack.ts` |
+| OP14-088 | OP14-088 | Miss.MerryChristmas(Drophy) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/088-miss-merrychristmas-drophy.ts` |
+| OP14-089 | OP14-089 | Ryuma | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/089-ryuma.ts` |
+| OP14-090 | OP14-090 | Mr.1(Daz.Bonez) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/090-mr-1-daz-bonez.ts` |
+| OP14-091 | OP14-091 | Mr.2.Bon.Kurei(Bentham) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/091-mr-2-bon-kurei-bentham.ts` |
+| OP14-092 | OP14-092 | Mr.3(Galdino) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/092-mr-3-galdino.ts` |
+| OP14-093 | OP14-093 | Mr.4(Babe) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/093-mr-4-babe.ts` |
+| OP14-094 | OP14-094 | Mr.5(Gem) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/094-mr-5-gem.ts` |
 | OP14-095 | OP14-095 | Mr.9 | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/095-mr-9.ts` |
-| OP14-100 | OP14-100 | Absalom | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/100-absalom.ts` |
+| OP14-100 | OP14-100 | Absalom | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/100-absalom.ts` |
 | OP14-101 | OP14-101 | Oars | no | no | vanilla | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/101-oars.ts` |
-| OP14-102 | OP14-102 | Kumacy | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/102-kumacy.ts` |
-| OP14-103 | OP14-103 | Gloriosa (Grandma Nyon) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/103-gloriosa-grandma-nyon.ts` |
-| OP14-104 | OP14-104 | Gecko Moria | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/104-gecko-moria-op14-104.ts` |
-| OP14-105 | OP14-105 | Gorgon Sisters | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/105-gorgon-sisters.ts` |
-| OP14-106 | OP14-106 | Salome | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/106-salome.ts` |
-| OP14-107 | OP14-107 | Shakuyaku | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/107-shakuyaku.ts` |
-| OP14-108 | OP14-108 | Silvers Rayleigh | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/108-silvers-rayleigh.ts` |
-| OP14-109 | OP14-109 | Victoria Cindry | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/109-victoria-cindry.ts` |
-| OP14-110 | OP14-110 | Dr. Hogback | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/110-dr-hogback.ts` |
-| OP14-111 | OP14-111 | Perona | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/111-perona-op14-111.ts` |
-| OP14-112 | OP14-112 | Boa Hancock | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/112-boa-hancock-op14-112.ts` |
-| OP14-113 | OP14-113 | Marguerite | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/113-marguerite.ts` |
-| OP14-114 | OP14-114 | Ran | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/114-ran.ts` |
-| OP14-115 | OP14-115 | Rindo | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/115-rindo.ts` |
-| OP14-119 | OP14-119 | Dracule Mihawk | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/119-dracule-mihawk-manga.ts` |
-| OP14-120 | OP14-120 | Crocodile | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/120-crocodile-op14-120.ts` |
-| PRB02-006_p2 | PRB02-006 | Roronoa Zoro - PRB02-006 (SP) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/006-roronoa-zoro-prb02-006-sp.ts` |
+| OP14-102 | OP14-102 | Kumacy | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/102-kumacy.ts` |
+| OP14-103 | OP14-103 | Gloriosa (Grandma Nyon) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/103-gloriosa-grandma-nyon.ts` |
+| OP14-104 | OP14-104 | Gecko Moria | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/104-gecko-moria-op14-104.ts` |
+| OP14-105 | OP14-105 | Gorgon Sisters | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/105-gorgon-sisters.ts` |
+| OP14-106 | OP14-106 | Salome | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/106-salome.ts` |
+| OP14-107 | OP14-107 | Shakuyaku | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/107-shakuyaku.ts` |
+| OP14-108 | OP14-108 | Silvers Rayleigh | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/108-silvers-rayleigh.ts` |
+| OP14-109 | OP14-109 | Victoria Cindry | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/109-victoria-cindry.ts` |
+| OP14-110 | OP14-110 | Dr. Hogback | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/110-dr-hogback.ts` |
+| OP14-111 | OP14-111 | Perona | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/111-perona-op14-111.ts` |
+| OP14-112 | OP14-112 | Boa Hancock | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/112-boa-hancock-op14-112.ts` |
+| OP14-113 | OP14-113 | Marguerite | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/113-marguerite.ts` |
+| OP14-114 | OP14-114 | Ran | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/114-ran.ts` |
+| OP14-115 | OP14-115 | Rindo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/115-rindo.ts` |
+| OP14-119 | OP14-119 | Dracule Mihawk | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/119-dracule-mihawk-manga.ts` |
+| OP14-120 | OP14-120 | Crocodile | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/characters/120-crocodile-op14-120.ts` |
+| PRB02-006_p2 | PRB02-006 | Roronoa Zoro - PRB02-006 (SP) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/OP14EB04/characters/006-roronoa-zoro-prb02-006-sp.ts` |
 
 ## PRB01
 
@@ -1765,10 +1765,10 @@ semantic review or command-driven behavior proof.
 | OP06-110_p3 | OP06-110 | Nekomamushi (Jolly Roger Foil) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB01/characters/110-nekomamushi-jolly-roger-foil.ts` |
 | OP06-114_p2 | OP06-114 | Wyper (Jolly Roger Foil) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB01/characters/114-wyper-jolly-roger-foil.ts` |
 | OP06-118_r1 | OP06-118 | Roronoa Zoro (Manga) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB01/characters/118-roronoa-zoro-manga.ts` |
-| P-014 | P-014 | Koby (Jolly Roger Foil) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/PRB01/characters/014-koby-jolly-roger-foil.ts` |
-| P-029 | P-029 | Bartolomeo (P-029) (Jolly Roger Foil) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/PRB01/characters/029-bartolomeo-p-029-jolly-roger-foil.ts` |
-| P-053 | P-053 | Nami (P-053) (Full Art) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB01/characters/053-nami-p-053-full-art.ts` |
-| P-055 | P-055 | Monkey.D.Luffy (P-055) (Jolly Roger Foil) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB01/characters/055-monkey-d-luffy-p-055-jolly-roger-foil.ts` |
+| P-014 | P-014 | Koby (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/characters/014-koby-jolly-roger-foil.ts` |
+| P-029 | P-029 | Bartolomeo (P-029) (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/characters/029-bartolomeo-p-029-jolly-roger-foil.ts` |
+| P-053 | P-053 | Nami (P-053) (Full Art) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/characters/053-nami-p-053-full-art.ts` |
+| P-055 | P-055 | Monkey.D.Luffy (P-055) (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/characters/055-monkey-d-luffy-p-055-jolly-roger-foil.ts` |
 | ST01-006_p6 | ST01-006 | Tony Tony.Chopper (ST01-006) (Jolly Roger Foil) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB01/characters/006-tony-tony-chopper-st01-006-jolly-roger-foil.ts` |
 | ST02-004 | ST02-004 | Capone"Gang"Bege (ST02-004) (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/characters/004-capone-gang-bege-st02-004-jolly-roger-foil.ts` |
 | ST03-005 | ST03-005 | Dracule Mihawk (ST03-005) (Full Art) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/characters/005-dracule-mihawk-st03-005-full-art.ts` |
@@ -1862,26 +1862,26 @@ semantic review or command-driven behavior proof.
 | OP10-112_r1 | OP10-112 | Eustass"Captain"Kid (Reprint) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/112-eustass-captain-kid-reprint.ts` |
 | OP10-114_p1 | OP10-114 | X.Drake (Pirate Foil) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/114-x-drake-pirate-foil.ts` |
 | OP10-119_r1 | OP10-119 | Trafalgar Law - OP10-119 (Reprint) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/119-trafalgar-law-op10-119-reprint.ts` |
-| P-044 | P-044 | Sabo - P-044 (Pirate Foil) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/044-sabo-p-044-pirate-foil.ts` |
-| P-063 | P-063 | Jinbe - P-063 (Pirate Foil) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/063-jinbe-p-063-pirate-foil.ts` |
-| P-068 | P-068 | Sanji - P-068 (Pirate Foil) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/068-sanji-p-068-pirate-foil.ts` |
-| P-069 | P-069 | Koala (Pirate Foil) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/069-koala-pirate-foil.ts` |
-| P-070 | P-070 | Carrot - P-070 (Pirate Foil) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/070-carrot-p-070-pirate-foil.ts` |
-| P-073 | P-073 | Sabo - P-073 (Pirate Foil) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/073-sabo-p-073-pirate-foil.ts` |
-| P-074 | P-074 | Portgas.D.Ace - P-074 (Pirate Foil) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/074-portgas-d-ace-p-074-pirate-foil.ts` |
-| P-075 | P-075 | Monkey.D.Luffy - P-075 (Pirate Foil) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/075-monkey-d-luffy-p-075-pirate-foil.ts` |
-| P-078 | P-078 | Adio (Pirate Foil) | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/078-adio-pirate-foil.ts` |
-| P-079 | P-079 | Lim (Pirate Foil) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/079-lim-pirate-foil.ts` |
-| P-081 | P-081 | Dracule Mihawk - P-081 (Pirate Foil) | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/081-dracule-mihawk-p-081-pirate-foil.ts` |
-| P-082 | P-082 | Crocodile - P-082 (Pirate Foil) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/082-crocodile-p-082-pirate-foil.ts` |
-| P-083 | P-083 | Shanks - P-083 (Pirate Foil) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/083-shanks-p-083-pirate-foil.ts` |
-| P-085 | P-085 | Jewelry Bonney - P-085 (Pirate Foil) | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/085-jewelry-bonney-p-085-pirate-foil.ts` |
-| P-088 | P-088 | Trafalgar Law - P-088 (Pirate Foil) | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/088-trafalgar-law-p-088-pirate-foil.ts` |
-| PRB02-001 | PRB02-001 | Koby | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/001-koby.ts` |
-| PRB02-002 | PRB02-002 | Trafalgar Law - PRB02-002 | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/002-trafalgar-law-prb02-002.ts` |
-| PRB02-003 | PRB02-003 | Lucky.Roux | yes | yes | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/003-lucky-roux.ts` |
-| PRB02-004 | PRB02-004 | Jewelry Bonney -PRB02-004 | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/004-jewelry-bonney-prb02-004.ts` |
-| PRB02-005 | PRB02-005 | Monkey.D.Luffy - PRB02-005 | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/005-monkey-d-luffy-prb02-005.ts` |
+| P-044 | P-044 | Sabo - P-044 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/044-sabo-p-044-pirate-foil.ts` |
+| P-063 | P-063 | Jinbe - P-063 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/063-jinbe-p-063-pirate-foil.ts` |
+| P-068 | P-068 | Sanji - P-068 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/068-sanji-p-068-pirate-foil.ts` |
+| P-069 | P-069 | Koala (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/069-koala-pirate-foil.ts` |
+| P-070 | P-070 | Carrot - P-070 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/070-carrot-p-070-pirate-foil.ts` |
+| P-073 | P-073 | Sabo - P-073 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/073-sabo-p-073-pirate-foil.ts` |
+| P-074 | P-074 | Portgas.D.Ace - P-074 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/074-portgas-d-ace-p-074-pirate-foil.ts` |
+| P-075 | P-075 | Monkey.D.Luffy - P-075 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/075-monkey-d-luffy-p-075-pirate-foil.ts` |
+| P-078 | P-078 | Adio (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/078-adio-pirate-foil.ts` |
+| P-079 | P-079 | Lim (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/079-lim-pirate-foil.ts` |
+| P-081 | P-081 | Dracule Mihawk - P-081 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/081-dracule-mihawk-p-081-pirate-foil.ts` |
+| P-082 | P-082 | Crocodile - P-082 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/082-crocodile-p-082-pirate-foil.ts` |
+| P-083 | P-083 | Shanks - P-083 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/083-shanks-p-083-pirate-foil.ts` |
+| P-085 | P-085 | Jewelry Bonney - P-085 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/085-jewelry-bonney-p-085-pirate-foil.ts` |
+| P-088 | P-088 | Trafalgar Law - P-088 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/088-trafalgar-law-p-088-pirate-foil.ts` |
+| PRB02-001 | PRB02-001 | Koby | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/001-koby.ts` |
+| PRB02-002 | PRB02-002 | Trafalgar Law - PRB02-002 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/002-trafalgar-law-prb02-002.ts` |
+| PRB02-003 | PRB02-003 | Lucky.Roux | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/003-lucky-roux.ts` |
+| PRB02-004 | PRB02-004 | Jewelry Bonney -PRB02-004 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/004-jewelry-bonney-prb02-004.ts` |
+| PRB02-005 | PRB02-005 | Monkey.D.Luffy - PRB02-005 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/005-monkey-d-luffy-prb02-005.ts` |
 | PRB02-006 | PRB02-006 | Roronoa Zoro - PRB02-006 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/006-roronoa-zoro-prb02-006.ts` |
 | PRB02-007 | PRB02-007 | Jinbe - PRB02-007 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/007-jinbe-prb02-007.ts` |
 | PRB02-008 | PRB02-008 | Marco | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/008-marco.ts` |
@@ -1909,9 +1909,9 @@ semantic review or command-driven behavior proof.
 | ST14-010 | ST14-010 | Brook - ST14-010 (Pirate Foil) | no | no | vanilla | yes | no | `../../packages/cards/src/cards/PRB02/characters/010-brook-st14-010-pirate-foil.ts` |
 | ST14-013 | ST14-013 | Roronoa Zoro - ST14-013 (Pirate Foil) | no | no | vanilla | yes | no | `../../packages/cards/src/cards/PRB02/characters/013-roronoa-zoro-st14-013-pirate-foil.ts` |
 | ST15-002_r1 | ST15-002 | Edward.Newgate - ST15-002 (Reprint) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/002-edward-newgate-st15-002-reprint.ts` |
-| ST16-003 | ST16-003 | Charlotte Katakuri (Pirate Foil) | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/003-charlotte-katakuri-pirate-foil.ts` |
+| ST16-003 | ST16-003 | Charlotte Katakuri (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/003-charlotte-katakuri-pirate-foil.ts` |
 | ST16-004_r1 | ST16-004 | Shanks - ST16-004 (Reprint) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/004-shanks-st16-004-reprint.ts` |
-| ST16-005 | ST16-005 | Monkey.D.Luffy - ST16-005 (Pirate Foil) | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/005-monkey-d-luffy-st16-005-pirate-foil.ts` |
+| ST16-005 | ST16-005 | Monkey.D.Luffy - ST16-005 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/005-monkey-d-luffy-st16-005-pirate-foil.ts` |
 | ST17-002 | ST17-002 | Trafalgar Law - ST17-002 (Reprint) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/002-trafalgar-law-st17-002-reprint.ts` |
 | ST17-003 | ST17-003 | Buggy - ST17-003 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/003-buggy-st17-003-pirate-foil.ts` |
 | ST17-005 | ST17-005 | Marshall.D.Teach - ST17-005 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/005-marshall-d-teach-st17-005-pirate-foil.ts` |
@@ -1919,5 +1919,5 @@ semantic review or command-driven behavior proof.
 | ST18-002_p1 | ST18-002 | O-Nami (Pirate Foil) | yes | yes | pass | yes | no | `../../packages/cards/src/cards/PRB02/characters/002-o-nami-pirate-foil.ts` |
 | ST18-003 | ST18-003 | San-Gorou (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/003-san-gorou-pirate-foil.ts` |
 | ST19-002 | ST19-002 | Sengoku - ST19-002 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/002-sengoku-st19-002-pirate-foil.ts` |
-| ST20-003 | ST20-003 | Charlotte Brulee (Pirate Foil) | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/003-charlotte-brulee-pirate-foil.ts` |
-| ST21-003 | ST21-003 | Sanji - ST21-003 (Pirate Foil) | yes | no | mismatch | yes | no | `../../packages/cards/src/cards/PRB02/characters/003-sanji-st21-003-pirate-foil.ts` |
+| ST20-003 | ST20-003 | Charlotte Brulee (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/003-charlotte-brulee-pirate-foil.ts` |
+| ST21-003 | ST21-003 | Sanji - ST21-003 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/characters/003-sanji-st21-003-pirate-foil.ts` |

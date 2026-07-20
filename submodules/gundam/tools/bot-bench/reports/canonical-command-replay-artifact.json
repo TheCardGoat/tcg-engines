@@ -1,0 +1,3282 @@
+{
+  "version": 1,
+  "options": {
+    "p1Strategy": "combat-aware",
+    "p2Strategy": "iter-16-combat-aware",
+    "p1Deck": "gd01-mixed",
+    "p2Deck": "gd01-mixed",
+    "matches": 1,
+    "seedBase": "canonical-command-replay",
+    "maxActions": 1500,
+    "label": "canonical command replay"
+  },
+  "matches": [
+    {
+      "matchId": 0,
+      "seed": "canonical-command-replay-0",
+      "termination": "game-won",
+      "winner": "player_two",
+      "winReason": "player_one has no shields remaining",
+      "actionCount": 169,
+      "turnCount": 13,
+      "actions": [
+        {
+          "actionIndex": 0,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "chooseFirstPlayer",
+            "playerId": "player_one"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "chooseFirstPlayer",
+                "playerId": "player_one"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 0,
+          "stateIdAfter": 1
+        },
+        {
+          "actionIndex": 1,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "alterHand",
+            "wantsRedraw": false
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "alterHand",
+                "wantsRedraw": false
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 1,
+          "stateIdAfter": 2
+        },
+        {
+          "actionIndex": 2,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "alterHand",
+            "wantsRedraw": false
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "alterHand",
+                "wantsRedraw": false
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 2,
+          "stateIdAfter": 3
+        },
+        {
+          "actionIndex": 3,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passTurn"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passTurn"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 3,
+          "stateIdAfter": 4
+        },
+        {
+          "actionIndex": 4,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 4,
+          "stateIdAfter": 5
+        },
+        {
+          "actionIndex": 5,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 5,
+          "stateIdAfter": 6
+        },
+        {
+          "actionIndex": 6,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_two_GD01-011_76"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_two_GD01-011_76"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 6,
+          "stateIdAfter": 7
+        },
+        {
+          "actionIndex": 7,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passTurn"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passTurn"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 7,
+          "stateIdAfter": 8
+        },
+        {
+          "actionIndex": 8,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 8,
+          "stateIdAfter": 9
+        },
+        {
+          "actionIndex": 9,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 9,
+          "stateIdAfter": 10
+        },
+        {
+          "actionIndex": 10,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passTurn"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passTurn"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 10,
+          "stateIdAfter": 11
+        },
+        {
+          "actionIndex": 11,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 11,
+          "stateIdAfter": 12
+        },
+        {
+          "actionIndex": 12,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 12,
+          "stateIdAfter": 13
+        },
+        {
+          "actionIndex": 13,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_two_GD01-011_76",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_two_GD01-011_76",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 13,
+          "stateIdAfter": 14
+        },
+        {
+          "actionIndex": 14,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 14,
+          "stateIdAfter": 15
+        },
+        {
+          "actionIndex": 15,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 15,
+          "stateIdAfter": 16
+        },
+        {
+          "actionIndex": 16,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 16,
+          "stateIdAfter": 17
+        },
+        {
+          "actionIndex": 17,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passTurn"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passTurn"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 17,
+          "stateIdAfter": 18
+        },
+        {
+          "actionIndex": 18,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 18,
+          "stateIdAfter": 19
+        },
+        {
+          "actionIndex": 19,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 19,
+          "stateIdAfter": 20
+        },
+        {
+          "actionIndex": 20,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_one_GD01-009_11"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_one_GD01-009_11"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 20,
+          "stateIdAfter": 21
+        },
+        {
+          "actionIndex": 21,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "targets": ["player_one_GD01-009_11"]
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "targets": ["player_one_GD01-009_11"]
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 21,
+          "stateIdAfter": 22
+        },
+        {
+          "actionIndex": 22,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passTurn"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passTurn"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 22,
+          "stateIdAfter": 23
+        },
+        {
+          "actionIndex": 23,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 23,
+          "stateIdAfter": 24
+        },
+        {
+          "actionIndex": 24,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 24,
+          "stateIdAfter": 25
+        },
+        {
+          "actionIndex": 25,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_two_GD01-004_66"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_two_GD01-004_66"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 25,
+          "stateIdAfter": 26
+        },
+        {
+          "actionIndex": 26,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_two_GD01-011_76",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_two_GD01-011_76",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 26,
+          "stateIdAfter": 27
+        },
+        {
+          "actionIndex": 27,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 27,
+          "stateIdAfter": 28
+        },
+        {
+          "actionIndex": 28,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 28,
+          "stateIdAfter": 29
+        },
+        {
+          "actionIndex": 29,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 29,
+          "stateIdAfter": 30
+        },
+        {
+          "actionIndex": 30,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passTurn"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passTurn"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 30,
+          "stateIdAfter": 31
+        },
+        {
+          "actionIndex": 31,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 31,
+          "stateIdAfter": 32
+        },
+        {
+          "actionIndex": 32,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 32,
+          "stateIdAfter": 33
+        },
+        {
+          "actionIndex": 33,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "assignPilot",
+            "pilotId": "player_one_GD01-090_38",
+            "unitId": "player_one_GD01-009_11"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "assignPilot",
+                "pilotId": "player_one_GD01-090_38",
+                "unitId": "player_one_GD01-009_11"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 33,
+          "stateIdAfter": 34
+        },
+        {
+          "actionIndex": 34,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_one_GD01-006_23"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_one_GD01-006_23"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 34,
+          "stateIdAfter": 35
+        },
+        {
+          "actionIndex": 35,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_one_GD01-009_11",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_one_GD01-009_11",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 35,
+          "stateIdAfter": 36
+        },
+        {
+          "actionIndex": 36,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 36,
+          "stateIdAfter": 37
+        },
+        {
+          "actionIndex": 37,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 37,
+          "stateIdAfter": 38
+        },
+        {
+          "actionIndex": 38,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 38,
+          "stateIdAfter": 39
+        },
+        {
+          "actionIndex": 39,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passTurn"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passTurn"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 39,
+          "stateIdAfter": 40
+        },
+        {
+          "actionIndex": 40,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 40,
+          "stateIdAfter": 41
+        },
+        {
+          "actionIndex": 41,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 41,
+          "stateIdAfter": 42
+        },
+        {
+          "actionIndex": 42,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "playCommand",
+            "cardId": "player_two_GD01-099_104"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "playCommand",
+                "cardId": "player_two_GD01-099_104"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 42,
+          "stateIdAfter": 43
+        },
+        {
+          "actionIndex": 43,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "targets": ["player_one_GD01-006_23"]
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "targets": ["player_one_GD01-006_23"]
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 43,
+          "stateIdAfter": 44
+        },
+        {
+          "actionIndex": 44,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_two_GD01-009_70"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_two_GD01-009_70"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 44,
+          "stateIdAfter": 45
+        },
+        {
+          "actionIndex": 45,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "targets": ["player_two_GD01-004_66"]
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "targets": ["player_two_GD01-004_66"]
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 45,
+          "stateIdAfter": 46
+        },
+        {
+          "actionIndex": 46,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_two_GD01-011_76",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_two_GD01-011_76",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 46,
+          "stateIdAfter": 47
+        },
+        {
+          "actionIndex": 47,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 47,
+          "stateIdAfter": 48
+        },
+        {
+          "actionIndex": 48,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 48,
+          "stateIdAfter": 49
+        },
+        {
+          "actionIndex": 49,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 49,
+          "stateIdAfter": 50
+        },
+        {
+          "actionIndex": 50,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_two_GD01-004_66",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_two_GD01-004_66",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 50,
+          "stateIdAfter": 51
+        },
+        {
+          "actionIndex": 51,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 51,
+          "stateIdAfter": 52
+        },
+        {
+          "actionIndex": 52,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 52,
+          "stateIdAfter": 53
+        },
+        {
+          "actionIndex": 53,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 53,
+          "stateIdAfter": 54
+        },
+        {
+          "actionIndex": 54,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "optionalAnswers": {
+              "-1": true
+            }
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "optionalAnswers": {
+                  "-1": true
+                }
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 54,
+          "stateIdAfter": 55
+        },
+        {
+          "actionIndex": 55,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "targets": ["player_two_GD01-011_76"]
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "targets": ["player_two_GD01-011_76"]
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 55,
+          "stateIdAfter": 56
+        },
+        {
+          "actionIndex": 56,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passTurn"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passTurn"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 56,
+          "stateIdAfter": 57
+        },
+        {
+          "actionIndex": 57,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 57,
+          "stateIdAfter": 58
+        },
+        {
+          "actionIndex": 58,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 58,
+          "stateIdAfter": 59
+        },
+        {
+          "actionIndex": 59,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "playCommandAsPilot",
+            "cardId": "player_one_GD01-101_45",
+            "unitId": "player_one_GD01-006_23"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "playCommandAsPilot",
+                "cardId": "player_one_GD01-101_45",
+                "unitId": "player_one_GD01-006_23"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 59,
+          "stateIdAfter": 60
+        },
+        {
+          "actionIndex": 60,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_one_GD01-005_27"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_one_GD01-005_27"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 60,
+          "stateIdAfter": 61
+        },
+        {
+          "actionIndex": 61,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_one_GD01-009_11",
+            "target": "player_two_GD01-004_66"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_one_GD01-009_11",
+                "target": "player_two_GD01-004_66"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 61,
+          "stateIdAfter": 62
+        },
+        {
+          "actionIndex": 62,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 62,
+          "stateIdAfter": 63
+        },
+        {
+          "actionIndex": 63,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 63,
+          "stateIdAfter": 64
+        },
+        {
+          "actionIndex": 64,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 64,
+          "stateIdAfter": 65
+        },
+        {
+          "actionIndex": 65,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_one_GD01-006_23",
+            "target": "player_two_GD01-011_76"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_one_GD01-006_23",
+                "target": "player_two_GD01-011_76"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 65,
+          "stateIdAfter": 66
+        },
+        {
+          "actionIndex": 66,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 66,
+          "stateIdAfter": 67
+        },
+        {
+          "actionIndex": 67,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 67,
+          "stateIdAfter": 68
+        },
+        {
+          "actionIndex": 68,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 68,
+          "stateIdAfter": 69
+        },
+        {
+          "actionIndex": 69,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passTurn"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passTurn"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 69,
+          "stateIdAfter": 70
+        },
+        {
+          "actionIndex": 70,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 70,
+          "stateIdAfter": 71
+        },
+        {
+          "actionIndex": 71,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 71,
+          "stateIdAfter": 72
+        },
+        {
+          "actionIndex": 72,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "assignPilot",
+            "pilotId": "player_two_GD01-088_95",
+            "unitId": "player_two_GD01-009_70"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "assignPilot",
+                "pilotId": "player_two_GD01-088_95",
+                "unitId": "player_two_GD01-009_70"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 72,
+          "stateIdAfter": 73
+        },
+        {
+          "actionIndex": 73,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_two_GD01-006_81"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_two_GD01-006_81"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 73,
+          "stateIdAfter": 74
+        },
+        {
+          "actionIndex": 74,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_two_GD01-008_64"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_two_GD01-008_64"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 74,
+          "stateIdAfter": 75
+        },
+        {
+          "actionIndex": 75,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "targets": ["player_one_GD01-009_11"]
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "targets": ["player_one_GD01-009_11"]
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 75,
+          "stateIdAfter": 76
+        },
+        {
+          "actionIndex": 76,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_two_GD01-009_70",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_two_GD01-009_70",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 76,
+          "stateIdAfter": 77
+        },
+        {
+          "actionIndex": 77,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 77,
+          "stateIdAfter": 78
+        },
+        {
+          "actionIndex": 78,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 78,
+          "stateIdAfter": 79
+        },
+        {
+          "actionIndex": 79,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 79,
+          "stateIdAfter": 80
+        },
+        {
+          "actionIndex": 80,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passTurn"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passTurn"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 80,
+          "stateIdAfter": 81
+        },
+        {
+          "actionIndex": 81,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 81,
+          "stateIdAfter": 82
+        },
+        {
+          "actionIndex": 82,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 82,
+          "stateIdAfter": 83
+        },
+        {
+          "actionIndex": 83,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "assignPilot",
+            "pilotId": "player_one_GD01-087_29",
+            "unitId": "player_one_GD01-005_27"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "assignPilot",
+                "pilotId": "player_one_GD01-087_29",
+                "unitId": "player_one_GD01-005_27"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 83,
+          "stateIdAfter": 84
+        },
+        {
+          "actionIndex": 84,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_one_GD01-013_19"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_one_GD01-013_19"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 84,
+          "stateIdAfter": 85
+        },
+        {
+          "actionIndex": 85,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_one_GD01-006_24"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_one_GD01-006_24"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 85,
+          "stateIdAfter": 86
+        },
+        {
+          "actionIndex": 86,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_one_GD01-009_11",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_one_GD01-009_11",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 86,
+          "stateIdAfter": 87
+        },
+        {
+          "actionIndex": 87,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 87,
+          "stateIdAfter": 88
+        },
+        {
+          "actionIndex": 88,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 88,
+          "stateIdAfter": 89
+        },
+        {
+          "actionIndex": 89,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 89,
+          "stateIdAfter": 90
+        },
+        {
+          "actionIndex": 90,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "optionalAnswers": {
+              "-1": true
+            }
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "optionalAnswers": {
+                  "-1": true
+                }
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 90,
+          "stateIdAfter": 91
+        },
+        {
+          "actionIndex": 91,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_one_GD01-006_23",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_one_GD01-006_23",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 91,
+          "stateIdAfter": 92
+        },
+        {
+          "actionIndex": 92,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 92,
+          "stateIdAfter": 93
+        },
+        {
+          "actionIndex": 93,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 93,
+          "stateIdAfter": 94
+        },
+        {
+          "actionIndex": 94,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 94,
+          "stateIdAfter": 95
+        },
+        {
+          "actionIndex": 95,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_one_GD01-005_27",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_one_GD01-005_27",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 95,
+          "stateIdAfter": 96
+        },
+        {
+          "actionIndex": 96,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 96,
+          "stateIdAfter": 97
+        },
+        {
+          "actionIndex": 97,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 97,
+          "stateIdAfter": 98
+        },
+        {
+          "actionIndex": 98,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 98,
+          "stateIdAfter": 99
+        },
+        {
+          "actionIndex": 99,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "optionalAnswers": {
+              "-1": true
+            }
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "optionalAnswers": {
+                  "-1": true
+                }
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 99,
+          "stateIdAfter": 100
+        },
+        {
+          "actionIndex": 100,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passTurn"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passTurn"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 100,
+          "stateIdAfter": 101
+        },
+        {
+          "actionIndex": 101,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 101,
+          "stateIdAfter": 102
+        },
+        {
+          "actionIndex": 102,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 102,
+          "stateIdAfter": 103
+        },
+        {
+          "actionIndex": 103,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "assignPilot",
+            "pilotId": "player_two_GD01-087_89",
+            "unitId": "player_two_GD01-006_81"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "assignPilot",
+                "pilotId": "player_two_GD01-087_89",
+                "unitId": "player_two_GD01-006_81"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 103,
+          "stateIdAfter": 104
+        },
+        {
+          "actionIndex": 104,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "assignPilot",
+            "pilotId": "player_two_GD01-088_96",
+            "unitId": "player_two_GD01-008_64"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "assignPilot",
+                "pilotId": "player_two_GD01-088_96",
+                "unitId": "player_two_GD01-008_64"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 104,
+          "stateIdAfter": 105
+        },
+        {
+          "actionIndex": 105,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_two_GD01-005_87"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_two_GD01-005_87"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 105,
+          "stateIdAfter": 106
+        },
+        {
+          "actionIndex": 106,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_two_GD01-009_70",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_two_GD01-009_70",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 106,
+          "stateIdAfter": 107
+        },
+        {
+          "actionIndex": 107,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 107,
+          "stateIdAfter": 108
+        },
+        {
+          "actionIndex": 108,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 108,
+          "stateIdAfter": 109
+        },
+        {
+          "actionIndex": 109,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 109,
+          "stateIdAfter": 110
+        },
+        {
+          "actionIndex": 110,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "optionalAnswers": {
+              "-1": true
+            }
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "optionalAnswers": {
+                  "-1": true
+                }
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 110,
+          "stateIdAfter": 111
+        },
+        {
+          "actionIndex": 111,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_two_GD01-006_81",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_two_GD01-006_81",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 111,
+          "stateIdAfter": 112
+        },
+        {
+          "actionIndex": 112,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 112,
+          "stateIdAfter": 113
+        },
+        {
+          "actionIndex": 113,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 113,
+          "stateIdAfter": 114
+        },
+        {
+          "actionIndex": 114,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 114,
+          "stateIdAfter": 115
+        },
+        {
+          "actionIndex": 115,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_two_GD01-008_64",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_two_GD01-008_64",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 115,
+          "stateIdAfter": 116
+        },
+        {
+          "actionIndex": 116,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 116,
+          "stateIdAfter": 117
+        },
+        {
+          "actionIndex": 117,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 117,
+          "stateIdAfter": 118
+        },
+        {
+          "actionIndex": 118,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 118,
+          "stateIdAfter": 119
+        },
+        {
+          "actionIndex": 119,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "optionalAnswers": {
+              "-1": true
+            }
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "optionalAnswers": {
+                  "-1": true
+                }
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 119,
+          "stateIdAfter": 120
+        },
+        {
+          "actionIndex": 120,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "targets": ["player_two_GD01-005_87"]
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "targets": ["player_two_GD01-005_87"]
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 120,
+          "stateIdAfter": 121
+        },
+        {
+          "actionIndex": 121,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passTurn"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passTurn"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 121,
+          "stateIdAfter": 122
+        },
+        {
+          "actionIndex": 122,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 122,
+          "stateIdAfter": 123
+        },
+        {
+          "actionIndex": 123,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 123,
+          "stateIdAfter": 124
+        },
+        {
+          "actionIndex": 124,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "assignPilot",
+            "pilotId": "player_one_GD01-087_32",
+            "unitId": "player_one_GD01-013_19"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "assignPilot",
+                "pilotId": "player_one_GD01-087_32",
+                "unitId": "player_one_GD01-013_19"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 124,
+          "stateIdAfter": 125
+        },
+        {
+          "actionIndex": 125,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_one_GD01-004_8"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_one_GD01-004_8"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 125,
+          "stateIdAfter": 126
+        },
+        {
+          "actionIndex": 126,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_one_GD01-009_9"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_one_GD01-009_9"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 126,
+          "stateIdAfter": 127
+        },
+        {
+          "actionIndex": 127,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "targets": ["player_one_GD01-009_11"]
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "targets": ["player_one_GD01-009_11"]
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 127,
+          "stateIdAfter": 128
+        },
+        {
+          "actionIndex": 128,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_one_GD01-009_12"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_one_GD01-009_12"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 128,
+          "stateIdAfter": 129
+        },
+        {
+          "actionIndex": 129,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "targets": ["player_one_GD01-009_11"]
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "targets": ["player_one_GD01-009_11"]
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 129,
+          "stateIdAfter": 130
+        },
+        {
+          "actionIndex": 130,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_one_GD01-013_19",
+            "target": "player_two_GD01-005_87"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_one_GD01-013_19",
+                "target": "player_two_GD01-005_87"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 130,
+          "stateIdAfter": 131
+        },
+        {
+          "actionIndex": 131,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 131,
+          "stateIdAfter": 132
+        },
+        {
+          "actionIndex": 132,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 132,
+          "stateIdAfter": 133
+        },
+        {
+          "actionIndex": 133,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 133,
+          "stateIdAfter": 134
+        },
+        {
+          "actionIndex": 134,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_one_GD01-005_27",
+            "target": "player_two_GD01-008_64"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_one_GD01-005_27",
+                "target": "player_two_GD01-008_64"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 134,
+          "stateIdAfter": 135
+        },
+        {
+          "actionIndex": 135,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 135,
+          "stateIdAfter": 136
+        },
+        {
+          "actionIndex": 136,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 136,
+          "stateIdAfter": 137
+        },
+        {
+          "actionIndex": 137,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 137,
+          "stateIdAfter": 138
+        },
+        {
+          "actionIndex": 138,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_one_GD01-009_11",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_one_GD01-009_11",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 138,
+          "stateIdAfter": 139
+        },
+        {
+          "actionIndex": 139,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 139,
+          "stateIdAfter": 140
+        },
+        {
+          "actionIndex": 140,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 140,
+          "stateIdAfter": 141
+        },
+        {
+          "actionIndex": 141,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 141,
+          "stateIdAfter": 142
+        },
+        {
+          "actionIndex": 142,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "optionalAnswers": {
+              "-1": true
+            }
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "optionalAnswers": {
+                  "-1": true
+                }
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 142,
+          "stateIdAfter": 143
+        },
+        {
+          "actionIndex": 143,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "targets": ["player_one_GD01-009_11"]
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "targets": ["player_one_GD01-009_11"]
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 143,
+          "stateIdAfter": 144
+        },
+        {
+          "actionIndex": 144,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_one_GD01-006_23",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_one_GD01-006_23",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 144,
+          "stateIdAfter": 145
+        },
+        {
+          "actionIndex": 145,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 145,
+          "stateIdAfter": 146
+        },
+        {
+          "actionIndex": 146,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 146,
+          "stateIdAfter": 147
+        },
+        {
+          "actionIndex": 147,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 147,
+          "stateIdAfter": 148
+        },
+        {
+          "actionIndex": 148,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_one_GD01-006_24",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_one_GD01-006_24",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 148,
+          "stateIdAfter": 149
+        },
+        {
+          "actionIndex": 149,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 149,
+          "stateIdAfter": 150
+        },
+        {
+          "actionIndex": 150,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 150,
+          "stateIdAfter": 151
+        },
+        {
+          "actionIndex": 151,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 151,
+          "stateIdAfter": 152
+        },
+        {
+          "actionIndex": 152,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passTurn"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passTurn"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 152,
+          "stateIdAfter": 153
+        },
+        {
+          "actionIndex": 153,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 153,
+          "stateIdAfter": 154
+        },
+        {
+          "actionIndex": 154,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passActionStep"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passActionStep"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 154,
+          "stateIdAfter": 155
+        },
+        {
+          "actionIndex": 155,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_two_GD01-013_80"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_two_GD01-013_80"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 155,
+          "stateIdAfter": 156
+        },
+        {
+          "actionIndex": 156,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_two_GD01-011_74"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_two_GD01-011_74"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 156,
+          "stateIdAfter": 157
+        },
+        {
+          "actionIndex": 157,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployUnit",
+            "cardId": "player_two_GD01-008_62"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployUnit",
+                "cardId": "player_two_GD01-008_62"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 157,
+          "stateIdAfter": 158
+        },
+        {
+          "actionIndex": 158,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "targets": ["player_one_GD01-009_11"]
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "targets": ["player_one_GD01-009_11"]
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 158,
+          "stateIdAfter": 159
+        },
+        {
+          "actionIndex": 159,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "deployBase",
+            "cardId": "player_two_GD01-123_109"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "deployBase",
+                "cardId": "player_two_GD01-123_109"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 159,
+          "stateIdAfter": 160
+        },
+        {
+          "actionIndex": 160,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "resolveEffect",
+            "targets": ["player_one_GD01-006_23"]
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "resolveEffect",
+                "targets": ["player_one_GD01-006_23"]
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 160,
+          "stateIdAfter": 161
+        },
+        {
+          "actionIndex": 161,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_two_GD01-009_70",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_two_GD01-009_70",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 161,
+          "stateIdAfter": 162
+        },
+        {
+          "actionIndex": 162,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 162,
+          "stateIdAfter": 163
+        },
+        {
+          "actionIndex": 163,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 163,
+          "stateIdAfter": 164
+        },
+        {
+          "actionIndex": 164,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 164,
+          "stateIdAfter": 165
+        },
+        {
+          "actionIndex": 165,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "enterBattle",
+            "attackerId": "player_two_GD01-006_81",
+            "target": "direct"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "enterBattle",
+                "attackerId": "player_two_GD01-006_81",
+                "target": "direct"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 165,
+          "stateIdAfter": 166
+        },
+        {
+          "actionIndex": 166,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBlock"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBlock"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 166,
+          "stateIdAfter": 167
+        },
+        {
+          "actionIndex": 167,
+          "playerId": "player_one",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 167,
+          "stateIdAfter": 168
+        },
+        {
+          "actionIndex": 168,
+          "playerId": "player_two",
+          "outcome": "candidate-succeeded",
+          "selectedCandidate": {
+            "family": "passBattleAction"
+          },
+          "attemptDetails": [
+            {
+              "candidate": {
+                "family": "passBattleAction"
+              },
+              "success": true
+            }
+          ],
+          "stateIdBefore": 168,
+          "stateIdAfter": 169
+        }
+      ]
+    }
+  ]
+}

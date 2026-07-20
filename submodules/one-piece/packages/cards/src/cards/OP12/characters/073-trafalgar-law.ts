@@ -60,6 +60,47 @@ export const op12TrafalgarLaw073: CharacterCard = {
             },
             state: "active",
           },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "name",
+                  value: "Donquixote Rosinante",
+                },
+              ],
+            },
+            value: 1000,
+            duration: "untilEndOfOpponentNextEndPhase",
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Heart Pirates",
+                  match: "includes",
+                },
+                {
+                  filter: "excludeName",
+                  value: "Donquixote Rosinante",
+                },
+              ],
+            },
+            value: 1000,
+            duration: "untilEndOfOpponentNextEndPhase",
+          },
         ],
       },
     ],

@@ -31,15 +31,35 @@ export const op13Bepo035: CharacterCard = {
         trigger: "endOfYourTurn",
         actions: [
           {
-            action: "setActive",
-            target: {
-              player: "self",
-              zones: ["costArea"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-            },
+            action: "choice",
+            options: [
+              [
+                {
+                  action: "setActive",
+                  target: {
+                    player: "self",
+                    zones: ["character"],
+                    count: {
+                      amount: 1,
+                    },
+                    self: true,
+                  },
+                },
+              ],
+              [
+                {
+                  action: "setActive",
+                  target: {
+                    player: "self",
+                    zones: ["costArea"],
+                    count: {
+                      amount: 1,
+                      upTo: true,
+                    },
+                  },
+                },
+              ],
+            ],
           },
         ],
       },

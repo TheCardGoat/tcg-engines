@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { cn } from "../../lib/utils.ts";
 import { m } from "../../lib/i18n/messages.ts";
@@ -11,6 +11,7 @@ export interface UndoButtonProps {
   readonly onUndo: () => void;
   readonly className?: string;
   readonly compact?: boolean;
+  readonly style?: CSSProperties;
 }
 
 /**
@@ -29,7 +30,13 @@ export interface UndoButtonProps {
  * `title` tooltip ("Nothing to undo") still shows on hover — most
  * browsers swallow pointer events on truly-disabled buttons.
  */
-export function UndoButton({ canUndo, onUndo, className, compact = false }: UndoButtonProps) {
+export function UndoButton({
+  canUndo,
+  onUndo,
+  className,
+  compact = false,
+  style,
+}: UndoButtonProps) {
   const [pulsing, setPulsing] = useState(false);
   // Seed with the initial value so the first effect run is a no-op when
   // `canUndo` is already true at mount (mid-game reload, layout switch,
@@ -62,6 +69,7 @@ export function UndoButton({ canUndo, onUndo, className, compact = false }: Undo
       aria-label={title}
       data-testid="undo-button"
       data-state={canUndo ? (pulsing ? "fresh" : "ready") : "disabled"}
+      style={style}
       className={cn(
         "clip-hud-6 tracking-hud-label transition-[opacity,background,border-color,color] duration-150",
         compact ? "px-1 text-hud-xs" : "text-hud-md",

@@ -8,6 +8,14 @@ export { CardFace } from "./components/CardFace";
 export { CardFan } from "./components/CardFan";
 export { CardGrid } from "./components/CardGrid";
 export { CardImage, DEFAULT_CARD_ASPECT_RATIO } from "./components/CardImage";
+export {
+  ViewerSafeCardImage,
+  type ViewerSafeCardImageProps,
+} from "./components/ViewerSafeCardImage";
+export {
+  projectSimulatorEntityForFace,
+  type SimulatorEntityFace,
+} from "./components/entity-visibility";
 export { CardStack, type CardStackProps } from "./components/CardStack";
 export { CardZone } from "./components/CardZone";
 export { DeckStackZone, type DeckStackZoneProps } from "./components/DeckStackZone";
@@ -15,7 +23,12 @@ export { DeckRevealShelf, type DeckRevealShelfProps } from "./components/DeckRev
 export { DiscardPileZone, type DiscardPileZoneProps } from "./components/DiscardPileZone";
 export { ChatPanel, type ChatMessage, type ChatPanelProps } from "./components/ChatPanel";
 export { CompactHandZone } from "./components/CompactHandZone";
-export { ConnectionPanel, type ConnectionPanelProps } from "./components/ConnectionPanel";
+export {
+  ConnectionPanel,
+  type ConnectionPanelDiagnostic,
+  type ConnectionPanelConnectionStatus,
+  type ConnectionPanelProps,
+} from "./components/ConnectionPanel";
 export { CardRow } from "./components/CardRow";
 export { ChoiceChips } from "./components/ChoiceChips";
 export { ChoiceModal } from "./components/ChoiceModal";
@@ -55,6 +68,10 @@ export {
 export { InteractionPanel } from "./components/InteractionPanel";
 export { PostGameModal, type PostGameModalProps } from "./components/PostGameModal";
 export { RunbookPanel } from "./components/RunbookPanel";
+export {
+  ResolvingEntityStage,
+  type ResolvingEntityStageProps,
+} from "./components/ResolvingEntityStage";
 export { SeatSummary } from "./components/SeatSummary";
 export {
   Sidebar,
@@ -120,6 +137,11 @@ export { TokenRow } from "./components/TokenRow";
 export { TurnIndicator } from "./components/TurnIndicator";
 export { PriorityRing } from "./components/PriorityRing";
 export { ChessClock } from "./components/ChessClock";
+export { ClockReadout, type ClockReadoutProps } from "./components/ClockReadout";
+export {
+  PointerDragDropSurface,
+  type PointerDragDropSurfaceProps,
+} from "./components/PointerDragDropSurface";
 export { ZoneFrame } from "./components/ZoneFrame";
 export { isSimulatorAnimationDebugEnabled, simulatorAnimationDebug } from "./animation/debug";
 export {
@@ -131,6 +153,11 @@ export {
   cardMoveRecordsToAnimationPlans,
   type CardMoveAnimationRecord,
 } from "./animation/cardMoveEvents";
+export {
+  useAnimationPlanQueue,
+  type AnimationPlanQueue,
+  type AnimationPlanQueueOptions,
+} from "./animation/useAnimationPlanQueue";
 
 // Accessibility
 export { AccessibilityAnnouncer } from "./components/AccessibilityAnnouncer";

@@ -167,7 +167,7 @@
   > = {
     actionSelectionSession: null,
     cardPreviewMode: "immediate",
-    cardInfoMode: "detailed",
+    cardInfoMode: "quick",
     getActionSessionCardReason: () => null,
     getCardActionViews: () => [],
     handleCardActionClick: () => false,

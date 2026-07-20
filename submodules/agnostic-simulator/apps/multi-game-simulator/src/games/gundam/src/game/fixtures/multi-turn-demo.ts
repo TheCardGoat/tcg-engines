@@ -29,6 +29,19 @@ export function loadMultiTurnDemo(): DevRuntime {
     skipToMainPhase: true,
     p1: {
       hand: [createMockUnit({ cost: 1, level: 1, ap: 2, hp: 3, color: "blue", name: "RX-78-2" })],
+      battleArea: [
+        {
+          card: createMockUnit({
+            cost: 2,
+            level: 2,
+            ap: 2,
+            hp: 4,
+            color: "blue",
+            name: "Guncannon",
+          }),
+          exhausted: true,
+        },
+      ],
       resourceArea: [createMockResource(), createMockResource(), createMockResource()],
       deck: 30,
       resourceDeck: 10,

@@ -17,6 +17,13 @@ export interface KoReplacementCandidate {
   controller: MatchSeat;
   replacementEffectIndex: number;
   effect: ReplacementEffect;
+  effectKey: string;
+}
+
+export function replacementEffectKey(effect: ReplacementEffect, replacementEffectIndex: number) {
+  return effect.oncePerTurnKey
+    ? `replacement:${effect.oncePerTurnKey}`
+    : `replacement:${effect.replacedEvent}:${replacementEffectIndex}`;
 }
 
 export function restActionCandidateIds(
@@ -168,7 +175,7 @@ function findRemovalReplacement(
     const source = getInstance(state, sourceInstanceId);
     const effects = getCardForInstance(state, sourceInstanceId).effects?.replacementEffects ?? [];
     for (const [replacementEffectIndex, effect] of effects.entries()) {
-      const effectKey = `replacement:${effect.replacedEvent}:${replacementEffectIndex}`;
+      const effectKey = replacementEffectKey(effect, replacementEffectIndex);
       if (
         !replacedEvents.has(effect.replacedEvent) ||
         (effect.oncePerTurn && source.usedEffectKeys.includes(effectKey))
@@ -251,6 +258,7 @@ function findRemovalReplacement(
         controller: source.controller,
         replacementEffectIndex,
         effect,
+        effectKey,
       };
     }
   }

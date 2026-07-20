@@ -10,6 +10,7 @@ import {
   type MatchState,
   type MatchStaticResources,
   type PlayerId,
+  type PacketAnimation as GundamPacketAnimation,
 } from "@tcg/gundam-engine";
 import {
   validateInteractionSubmission,
@@ -327,16 +328,23 @@ export class GundamServerEngine implements ServerGameEngine {
       // Gundam's animation shape differs from the shared one
       // ({id, type, duration, data} vs. {id, kind, payload}); we translate
       // here so the gateway can pass them through uniformly.
-      animations: (result.animations ?? []).map((anim): PacketAnimation => {
-        const a = anim as { id: string; type: string; data: unknown };
-        return { id: a.id, kind: a.type, payload: a.data };
-      }),
+      animations: (result.animations ?? []).map(gundamPacketAnimation),
       acceptedMoveRecord,
       engineLogRecords,
       undoable: result.undoable,
       processedCommand: result.processedCommand,
     };
   }
+}
+
+/** Preserve native animation data; viewer safety is enforced by simulator rendering. */
+export function gundamPacketAnimation(animation: GundamPacketAnimation): PacketAnimation {
+  return {
+    id: animation.id,
+    kind: animation.type,
+    durationMs: animation.duration,
+    payload: animation.data,
+  };
 }
 
 function toCanonicalGundamMoveLog(log: GundamMoveLog) {

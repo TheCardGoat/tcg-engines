@@ -1,43 +1,92 @@
-import { describe, it, expect } from "vite-plus/test";
-import { GundamTestEngine, PLAYER_ONE } from "@tcg/gundam-engine";
+import { describe, expect, it } from "vite-plus/test";
+import {
+  GundamTestEngine,
+  PLAYER_ONE,
+  PLAYER_TWO,
+  activeResources,
+  createMockPilot,
+  createMockUnit,
+  expectSuccess,
+} from "@tcg/gundam-engine";
 import { betaCharSZaku026 } from "./026-char-s-zaku.ts";
+import {
+  passTurnThroughPublicMoves,
+  restUnitsByAttackingDirectly,
+} from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 
-describe("Char's Zaku Ⅱ (GD01-026)", () => {
-  it("【During Pair】【Destroyed】 deploys a rested token when Char's Zaku is paired", () => {
-    // Destroyed trigger with a `duringPair` condition and a `deployToken`
-    // directive. It enqueues on `unitDestroyed` when the gate holds.
-    const engine = GundamTestEngine.create({ play: [betaCharSZaku026] }, {});
-    const [charZakuId] = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea");
-    if (!charZakuId) throw new Error("fixture failed");
+function destroyPairedCharZaku(): { engine: GundamTestEngine; sourceId: string; pilotId: string } {
+  const char = createMockPilot({ name: "Char Aznable", level: 1, cost: 1 });
+  const attacker = createMockUnit({ ap: 4, hp: 10 });
+  const transitionDefender = createMockUnit({ ap: 0, hp: 10 });
+  const engine = GundamTestEngine.create(
+    {
+      hand: [betaCharSZaku026, char],
+      resourceArea: activeResources(3),
+      shieldArea: [createMockUnit()],
+      deck: 5,
+    },
+    { play: [attacker, transitionDefender], deck: 5 },
+    { initialActivePlayer: PLAYER_TWO },
+  );
+  const p1 = engine.asPlayer(PLAYER_ONE);
+  const p2 = engine.asPlayer(PLAYER_TWO);
+  const pilotId = p1.getHand()[1]!;
+  const [attackerId, transitionDefenderId] = p2.getCardsInZone("battleArea");
 
-    // Pair a pilot so the `duringPair` gate holds at destroy time.
-    // biome-ignore lint/suspicious/noExplicitAny: internal pair helper
-    (engine.getG() as any).pilotAssignments[charZakuId] = `pilot-for-${charZakuId}`;
+  restUnitsByAttackingDirectly(engine, PLAYER_TWO, [transitionDefenderId!]);
+  passTurnThroughPublicMoves(engine, PLAYER_TWO);
+  expectSuccess(p1.deployUnit(betaCharSZaku026));
+  const sourceId = p1.getCardsInZone("battleArea")[0]!;
+  expectSuccess(p1.assignPilot(char, sourceId));
+  expectSuccess(p1.enterBattle(sourceId, transitionDefenderId!));
+  expectSuccess(p2.passBlock());
+  expectSuccess(p2.passBattleAction());
+  expectSuccess(p1.passBattleAction());
+  expectSuccess(p1.passPhase());
+  expectSuccess(p2.passActionStep());
+  expectSuccess(p1.passActionStep());
+  expectSuccess(p2.enterBattle(attackerId!, sourceId));
+  expectSuccess(p1.passBlock());
+  expectSuccess(p1.passBattleAction());
+  expectSuccess(p2.passBattleAction());
 
-    const baBefore = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea").length;
+  return { engine, sourceId, pilotId };
+}
 
-    engine.destroyUnit(charZakuId);
+describe("Char's Zaku II (GD01-026, beta reprint)", () => {
+  it("deploys a rested AP3 HP1 Unit token after being destroyed while paired", () => {
+    const { engine, sourceId, pilotId } = destroyPairedCharZaku();
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const tokenId = p1.getCardsInZone("battleArea")[0]!;
 
-    // Char's Zaku left battleArea (→ trash) but a token landed → net zero.
-    const baAfter = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea").length;
-    expect(baAfter).toBe(baBefore);
-    // Trash holds the destroyed Zaku (+ any pilot cleanup side effects).
-    const trash = engine.asPlayer(PLAYER_ONE).getCardsInZone("trash");
-    expect(trash.length).toBeGreaterThanOrEqual(1);
+    expect(p1.getCardZone(sourceId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(pilotId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getVisibleCard(tokenId)).toMatchObject({
+      effectiveAp: 3,
+      effectiveHp: 1,
+      exhausted: true,
+    });
   });
 
-  it("【During Pair】【Destroyed】 does NOT deploy a token when Char's Zaku is not paired", () => {
-    // Unpaired → `duringPair` gate fails → effect is not enqueued →
-    // destruction sends the unit to trash without a replacement token.
-    const engine = GundamTestEngine.create({ play: [betaCharSZaku026] }, {});
-    const [charZakuId] = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea");
-    if (!charZakuId) throw new Error("fixture failed");
+  it("does not deploy a token when destroyed without a paired Pilot", () => {
+    const attacker = createMockUnit({ ap: 4, hp: 10 });
+    const engine = GundamTestEngine.create(
+      { play: [betaCharSZaku026], deck: 5 },
+      { play: [attacker], shieldArea: [createMockUnit()], deck: 5 },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const sourceId = p1.getCardsInZone("battleArea")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
-    const baBefore = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea").length;
+    restUnitsByAttackingDirectly(engine, PLAYER_ONE, [sourceId]);
+    passTurnThroughPublicMoves(engine, PLAYER_ONE);
+    expectSuccess(p2.enterBattle(attackerId, sourceId));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
 
-    engine.destroyUnit(charZakuId);
-
-    const baAfter = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea").length;
-    expect(baAfter).toBe(baBefore - 1);
+    expect(p1.getCardZone(sourceId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardsInZone("battleArea")).toHaveLength(0);
   });
 });

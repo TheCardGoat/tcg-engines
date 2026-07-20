@@ -46,6 +46,13 @@ export const prb02SaboP073PirateFoil073: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "addLifeToHand",
+            amount: 1,
+            position: "choice",
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

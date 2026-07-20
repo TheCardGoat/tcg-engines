@@ -2,7 +2,8 @@ import type { SimulatorEntity } from "@tcg/simulator-contract";
 import { forwardRef, memo, useCallback } from "react";
 
 import { cx } from "../class-names";
-import { CardImage } from "./CardImage";
+import { projectSimulatorEntityForFace } from "./entity-visibility";
+import { ViewerSafeCardImage } from "./ViewerSafeCardImage";
 
 const FULL_IMAGE_CARD_WIDTH: Record<NonNullable<CardFaceProps["density"]>, number> = {
   mini: 60,
@@ -59,18 +60,23 @@ export const CardFace = memo(
     },
     ref,
   ) {
-    const isHidden = entity.face === "hidden";
-    const title = isHidden ? "Hidden card" : entity.title;
-    const displayKind = isHidden ? "card" : entity.kind;
-    const subtitle = isHidden ? "Private information" : `${entity.subtitle} | ${displayKind}`;
-    const ariaLabel = isHidden ? "Hidden card" : `${title}, ${displayKind}, ${entity.ownerId}`;
-    const frameColor = isHidden ? undefined : entity.frameStyle?.color;
-    const cardImageUrl = isHidden ? entity.backImageUrl : entity.imageUrl;
+    const renderedEntity = projectSimulatorEntityForFace(entity);
+    const isHidden = renderedEntity.face === "hidden";
+    const title = renderedEntity.title;
+    const displayKind = renderedEntity.kind;
+    const subtitle = isHidden
+      ? renderedEntity.subtitle
+      : `${renderedEntity.subtitle} | ${displayKind}`;
+    const ariaLabel = isHidden
+      ? "Hidden card"
+      : `${title}, ${displayKind}, ${renderedEntity.ownerId}`;
+    const frameColor = renderedEntity.frameStyle?.color;
+    const cardImageUrl = isHidden ? renderedEntity.backImageUrl : renderedEntity.imageUrl;
     const usesFullCardImage = Boolean(cardImageUrl);
-    const visibleOverlayBadges = isHidden ? [] : (entity.overlayBadges ?? []);
-    const visibleStates = isHidden ? [] : entity.states;
-    const visibleStats = isHidden ? [] : entity.stats;
-    const visibleTraits = isHidden ? [] : entity.traits;
+    const visibleOverlayBadges = renderedEntity.overlayBadges ?? [];
+    const visibleStates = renderedEntity.states;
+    const visibleStats = renderedEntity.stats;
+    const visibleTraits = renderedEntity.traits;
 
     const cardClass = cx(
       "sim-card-face relative grid select-none rounded-md border bg-[var(--card-bg)] text-[var(--board-text)] transition-colors",
@@ -141,13 +147,15 @@ export const CardFace = memo(
         data-testid="card"
         data-card-density={density}
         data-card-kind={displayKind}
-        data-card-id={entity.id}
+        data-card-id={isHidden ? undefined : renderedEntity.id}
         data-face={isHidden ? "hidden" : "public"}
-        id={`entity-${entity.id}`}
-        data-entity-id={entity.id}
-        data-sim-entity-id={entity.id}
+        id={isHidden ? undefined : `entity-${renderedEntity.id}`}
+        data-entity-id={isHidden ? undefined : renderedEntity.id}
+        data-sim-entity-id={isHidden ? undefined : renderedEntity.id}
         {...Object.fromEntries(
-          Object.entries(entity.dataAttributes ?? {}).filter(([, value]) => value !== undefined),
+          Object.entries(renderedEntity.dataAttributes ?? {}).filter(
+            ([, value]) => value !== undefined,
+          ),
         )}
         aria-label={ariaLabel}
         tabIndex={tabIndex}
@@ -177,8 +185,8 @@ export const CardFace = memo(
       >
         {usesFullCardImage ? (
           <div className="absolute inset-0" aria-hidden="true">
-            <CardImage
-              src={cardImageUrl!}
+            <ViewerSafeCardImage
+              entity={renderedEntity}
               alt={title}
               fill
               fit={fullImageFit}

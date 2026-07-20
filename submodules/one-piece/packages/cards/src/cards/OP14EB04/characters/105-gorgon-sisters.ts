@@ -40,8 +40,8 @@ export const op14eb04GorgonSisters105: CharacterCard = {
               {
                 filter: "anyOf",
                 filters: [
-                  { filter: "trait", value: "Amazon Lily" },
-                  { filter: "trait", value: "Kuja Pirates" },
+                  { filter: "trait", value: "Amazon Lily", match: "includes" },
+                  { filter: "trait", value: "Kuja Pirates", match: "includes" },
                 ],
               },
             ],
@@ -57,6 +57,7 @@ export const op14eb04GorgonSisters105: CharacterCard = {
             },
             count: { amount: 1, upTo: true },
             donState: "rested",
+            distribution: "each",
           },
         ],
         optional: true,
@@ -64,15 +65,8 @@ export const op14eb04GorgonSisters105: CharacterCard = {
       },
       {
         trigger: "trigger",
-        conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates" }],
-        actions: [
-          {
-            action: "play",
-            source: { player: "self", zone: "hand" },
-            count: { amount: 1 },
-            self: true,
-          },
-        ],
+        conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "includes" }],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   },

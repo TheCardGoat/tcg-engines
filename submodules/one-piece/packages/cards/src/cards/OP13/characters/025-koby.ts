@@ -29,6 +29,41 @@ export const op13Koby025: CharacterCard = {
     '[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] If your Leader has the "FILM" type or the "Strike" attribute, set up to 1 of your DON!! cards as active.',
   effects: {
     keywords: ["blocker"],
+    effects: [
+      {
+        trigger: "onPlay",
+        conditions: [
+          {
+            condition: "compound",
+            operator: "or",
+            conditions: [
+              {
+                condition: "leaderTrait",
+                trait: "FILM",
+                match: "includes",
+              },
+              {
+                condition: "leaderAttribute",
+                attribute: "strike",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "setActive",
+            target: {
+              player: "self",
+              zones: ["costArea"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+          },
+        ],
+      },
+    ],
   },
   i18n: op13Koby025I18n,
 };

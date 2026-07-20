@@ -91,9 +91,35 @@ export const st01Usopp002: CharacterCard = {
   counter: 1000,
   traits: strawHat,
   attribute: "ranged",
-  trigger: "[Trigger] Play this card.",
+  trigger: "Play this card.",
   effect:
     "[DON!! x2] [When Attacking] Your opponent cannot activate a [Blocker] Character that has 5000 or more power during this battle.",
+  effects: {
+    effects: [
+      {
+        trigger: "whenAttacking",
+        conditions: [{ condition: "donAttached", amount: 2 }],
+        actions: [
+          {
+            action: "cannotActivate",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: "all" },
+              filters: [{ filter: "power", comparison: "gte", value: 5000 }],
+            },
+            keyword: "blocker",
+            requiresKeyword: true,
+            duration: "thisBattle",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [{ action: "playThisCard" }],
+      },
+    ],
+  },
   i18n: i18n(
     "Usopp",
     "[DON!! x2] [When Attacking] Your opponent cannot activate a [Blocker] Character that has 5000 or more power during this battle.",
@@ -134,6 +160,26 @@ export const st01Sanji004: CharacterCard = {
   traits: strawHat,
   attribute: "strike",
   effect: "[DON!! x2] This Character gains [Rush].",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [{ condition: "donAttached", amount: 2 }],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: i18n("Sanji", "[DON!! x2] This Character gains [Rush].", "ST01-004"),
 };
 
@@ -153,6 +199,27 @@ export const st01Jinbe005: CharacterCard = {
   attribute: "strike",
   effect:
     "[DON!! x1] [When Attacking] Up to 1 of your Leader or Character cards other than this card gains +1000 power during this turn.",
+  effects: {
+    effects: [
+      {
+        trigger: "whenAttacking",
+        conditions: [{ condition: "donAttached", amount: 1 }],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "excludeSelf" }],
+            },
+            value: 1000,
+            duration: "thisTurn",
+          },
+        ],
+      },
+    ],
+  },
   i18n: i18n(
     "Jinbe",
     "[DON!! x1] [When Attacking] Up to 1 of your Leader or Character cards other than this card gains +1000 power during this turn.",
@@ -385,6 +452,26 @@ export const st01RoronoaZoro013: CharacterCard = {
   traits: supernovasStrawHat,
   attribute: "slash",
   effect: "[DON!! x1] This Character gains +1000 power.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [{ condition: "donAttached", amount: 1 }],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            value: 1000,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: i18n("Roronoa Zoro", "[DON!! x1] This Character gains +1000 power.", "ST01-013"),
 };
 

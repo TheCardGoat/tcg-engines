@@ -47,6 +47,7 @@ export function CardNameToken({
 
     show({
       imageUrl: resolvedCard.imageUrl,
+      face: "public",
       alt: resolvedCard.name,
       color: resolvedCard.color,
       details: toPreviewDetails(resolvedCard),

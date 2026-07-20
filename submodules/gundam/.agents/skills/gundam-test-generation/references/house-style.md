@@ -22,9 +22,9 @@ The reference implementations (in priority order):
 2. [`packages/cards/src/cards/gd01/command/099-intercept-orders.test.ts`](../../../../packages/cards/src/cards/gd01/command/099-intercept-orders.test.ts) - Main+Action+Burst command with multi-target.
 3. [`packages/cards/src/cards/gd01/command/101-deep-devotion.test.ts`](../../../../packages/cards/src/cards/gd01/command/101-deep-devotion.test.ts) - command with target qualification.
 
-The **anti-reference** (do not copy):
-
-- [`packages/cards/src/cards/st09/command/009-giant-killing.test.ts`](../../../../packages/cards/src/cards/st09/command/009-giant-killing.test.ts) - leads with a data-shape test that pokes `card.effects?.[0]` internals. Never use a structural assertion as card proof; add the missing public engine behavior first.
+The ST09 audit removed the former structural-only anti-reference. Keep that
+lesson as a general rule: never use a `card.effects` or `keywordEffects`
+assertion as card proof; add the missing public engine behavior first.
 
 ---
 

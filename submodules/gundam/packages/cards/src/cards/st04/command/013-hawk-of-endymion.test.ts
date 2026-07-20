@@ -1,145 +1,204 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  expectSuccess,
-  expectFailure,
-  createMockUnit,
   activeResources,
-  expectCardInTrash,
-  expectCardInHand,
-  enumerateAvailableMovesDetailed,
-  asPlayerId,
+  createMockUnit,
+  expectFailure,
+  expectSuccess,
+  restedResources,
 } from "@tcg/gundam-engine";
 import { st04HawkOfEndymion013 } from "./013-hawk-of-endymion.ts";
 
 describe("Hawk of Endymion (ST04-013)", () => {
   describe("【Main】/【Action】Choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand.", () => {
-    it("bounces an enemy unit with HP ≤ 3 back to its owner's hand", () => {
-      const fragile = createMockUnit({ ap: 2, hp: 3 });
+    it("asks for exactly one eligible enemy Unit, returns only the choice, and moves to trash", () => {
+      const firstEnemy = createMockUnit({ name: "First Enemy", hp: 3 });
+      const secondEnemy = createMockUnit({ name: "Second Enemy", hp: 2 });
       const engine = GundamTestEngine.create(
-        { hand: [st04HawkOfEndymion013], resourceArea: activeResources(3) },
-        { play: [fragile] },
+        { hand: [st04HawkOfEndymion013], resourceArea: activeResources(2) },
+        { play: [firstEnemy, secondEnemy] },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
-      const [fragileId] = p2.getCardsInZone("battleArea");
-      const cmdId = p1.getHand()[0]!;
+      const commandId = p1.getHand()[0]!;
+      const [firstEnemyId, secondEnemyId] = p2.getCardsInZone("battleArea");
 
-      expectSuccess(p1.playCommand(st04HawkOfEndymion013, { targets: [fragileId!] }));
+      expectSuccess(p1.playCommand(commandId));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        sourceCardId: commandId,
+        legalTargetIds: expect.arrayContaining([firstEnemyId, secondEnemyId]),
+        minTargets: 1,
+        maxTargets: 1,
+      });
+      expectSuccess(p1.resolveEffect({ targets: [secondEnemyId!] }));
 
-      expectCardInHand(engine, fragileId!, p2.playerId);
-      expectCardInTrash(engine, cmdId, p1.playerId);
+      expect(p2.getCardZone(firstEnemyId!)).toBe(`battleArea:${PLAYER_TWO}`);
+      expect(p2.getCardZone(secondEnemyId!)).toBe(`hand:${PLAYER_TWO}`);
+      expect(p1.getCardZone(commandId)).toBe(`trash:${PLAYER_ONE}`);
     });
 
-    it("is also playable at action-phase timing", () => {
-      const fragile = createMockUnit({ ap: 2, hp: 3 });
+    it("includes an enemy Unit with exactly 3 HP", () => {
+      const enemy = createMockUnit({ name: "Boundary Enemy", hp: 3 });
       const engine = GundamTestEngine.create(
-        { hand: [st04HawkOfEndymion013], resourceArea: activeResources(3) },
-        { play: [fragile] },
-      );
-      engine.setPhase("end-phase");
-      engine.setStep("action-step");
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const p2 = engine.asPlayer(PLAYER_TWO);
-      const [fragileId] = p2.getCardsInZone("battleArea");
-
-      expectSuccess(p1.playCommand(st04HawkOfEndymion013, { targets: [fragileId!] }));
-      expectCardInHand(engine, fragileId!, p2.playerId);
-    });
-
-    // Regression for rule 10-1-8-1-1: a Command whose effect requires
-    // choosing a target cannot be played when no legal target exists.
-    // Guards against `enumerateCandidates` (which feeds the simulator's
-    // playable-card hint) approving cards with an empty candidate pool.
-    describe("rule 10-1-8-1-1 — playability when no legal target exists", () => {
-      it("is not playable when the opponent has no units on the field", () => {
-        const engine = GundamTestEngine.create(
-          { hand: [st04HawkOfEndymion013], resourceArea: activeResources(3) },
-          { play: [] },
-        );
-        const p1 = engine.asPlayer(PLAYER_ONE);
-        const cmdId = p1.getHand()[0]!;
-
-        expectFailure(p1.playCommand(st04HawkOfEndymion013), "NO_LEGAL_TARGETS");
-
-        const moves = enumerateAvailableMovesDetailed(
-          engine.runtime.getState(),
-          asPlayerId(PLAYER_ONE),
-          engine.runtime.getStaticResources(),
-        );
-        // The simulator highlights any card present in *any* move's
-        // selectableCardIds, so flatten across moves: the regression
-        // is "no current move surfaces this card as playable".
-        const allSelectableIds = moves.flatMap((m) => [...m.selectableCardIds]);
-        expect(allSelectableIds).not.toContain(cmdId);
-      });
-
-      it("is not playable when the only enemy unit has more than 3 HP", () => {
-        const tough = createMockUnit({ ap: 2, hp: 5 });
-        const engine = GundamTestEngine.create(
-          { hand: [st04HawkOfEndymion013], resourceArea: activeResources(3) },
-          { play: [tough] },
-        );
-        const p1 = engine.asPlayer(PLAYER_ONE);
-        const cmdId = p1.getHand()[0]!;
-
-        expectFailure(p1.playCommand(st04HawkOfEndymion013), "NO_LEGAL_TARGETS");
-
-        const moves = enumerateAvailableMovesDetailed(
-          engine.runtime.getState(),
-          asPlayerId(PLAYER_ONE),
-          engine.runtime.getStaticResources(),
-        );
-        // The simulator highlights any card present in *any* move's
-        // selectableCardIds, so flatten across moves: the regression
-        // is "no current move surfaces this card as playable".
-        const allSelectableIds = moves.flatMap((m) => [...m.selectableCardIds]);
-        expect(allSelectableIds).not.toContain(cmdId);
-      });
-
-      // Regression for the live-game bug: enemy Units sitting in the
-      // opponent's trash / shield area / hand were leaking through the
-      // target filter because `cardMatchesFilter` only enforced `zone`
-      // when the filter set it explicitly. "Choose 1 enemy Unit" implies
-      // a Unit on the field (rule 1-2 / 10-2), so off-board Units must
-      // not be candidates for `returnToHand`.
-      it("is not playable when the only HP≤3 enemy unit lives in the opponent's trash", () => {
-        const fragileInTrash = createMockUnit({ ap: 2, hp: 3, name: "Trashed Mock" });
-        const engine = GundamTestEngine.create(
-          { hand: [st04HawkOfEndymion013], resourceArea: activeResources(3) },
-          { play: [], trash: [fragileInTrash] },
-        );
-        const p1 = engine.asPlayer(PLAYER_ONE);
-        const cmdId = p1.getHand()[0]!;
-
-        expectFailure(p1.playCommand(st04HawkOfEndymion013), "NO_LEGAL_TARGETS");
-
-        const moves = enumerateAvailableMovesDetailed(
-          engine.runtime.getState(),
-          asPlayerId(PLAYER_ONE),
-          engine.runtime.getStaticResources(),
-        );
-        const allSelectableIds = moves.flatMap((m) => [...m.selectableCardIds]);
-        expect(allSelectableIds).not.toContain(cmdId);
-      });
-    });
-
-    it("cannot target an enemy unit with more than 3 HP", () => {
-      const tough = createMockUnit({ ap: 2, hp: 5 });
-      const engine = GundamTestEngine.create(
-        { hand: [st04HawkOfEndymion013], resourceArea: activeResources(3) },
-        { play: [tough] },
+        { hand: [st04HawkOfEndymion013], resourceArea: activeResources(2) },
+        { play: [enemy] },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
-      const [toughId] = p2.getCardsInZone("battleArea");
+      const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+      expectSuccess(p1.playCommand(st04HawkOfEndymion013, { targets: [enemyId] }));
+
+      expect(p2.getCardZone(enemyId)).toBe(`hand:${PLAYER_TWO}`);
+    });
+
+    it("can be played in a legally reached Action step", () => {
+      const enemy = createMockUnit({ name: "Enemy", hp: 3 });
+      const engine = GundamTestEngine.create(
+        { hand: [st04HawkOfEndymion013], resourceArea: activeResources(2) },
+        { play: [enemy] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+      expectSuccess(p1.passPhase());
+      expectSuccess(p2.passActionStep());
+      expectSuccess(p1.playCommand(st04HawkOfEndymion013, { targets: [enemyId] }));
+
+      expect(p2.getCardZone(enemyId)).toBe(`hand:${PLAYER_TWO}`);
+    });
+
+    it("rejects an enemy Unit with more than 3 HP", () => {
+      const eligible = createMockUnit({ name: "Eligible", hp: 3 });
+      const tooLarge = createMockUnit({ name: "Too Large", hp: 4 });
+      const engine = GundamTestEngine.create(
+        { hand: [st04HawkOfEndymion013], resourceArea: activeResources(2) },
+        { play: [eligible, tooLarge] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const [, tooLargeId] = p2.getCardsInZone("battleArea");
 
       expectFailure(
-        p1.playCommand(st04HawkOfEndymion013, { targets: [toughId!] }),
+        p1.playCommand(st04HawkOfEndymion013, { targets: [tooLargeId!] }),
         "INVALID_TARGET",
       );
+
+      expect(p2.getCardZone(tooLargeId!)).toBe(`battleArea:${PLAYER_TWO}`);
+      expect(p1.getCardZone(st04HawkOfEndymion013)).toBe(`hand:${PLAYER_ONE}`);
+    });
+
+    it("rejects a friendly Unit even when it has 3 or less HP", () => {
+      const friendly = createMockUnit({ name: "Friendly", hp: 3 });
+      const enemy = createMockUnit({ name: "Enemy", hp: 3 });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [st04HawkOfEndymion013],
+          play: [friendly],
+          resourceArea: activeResources(2),
+        },
+        { play: [enemy] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const friendlyId = p1.getCardsInZone("battleArea")[0]!;
+
+      expectFailure(
+        p1.playCommand(st04HawkOfEndymion013, { targets: [friendlyId] }),
+        "INVALID_TARGET",
+      );
+
+      expect(p1.getCardZone(friendlyId)).toBe(`battleArea:${PLAYER_ONE}`);
+    });
+
+    it("cannot be played when no eligible enemy Unit exists", () => {
+      const tooLarge = createMockUnit({ name: "Too Large", hp: 4 });
+      const engine = GundamTestEngine.create(
+        { hand: [st04HawkOfEndymion013], resourceArea: activeResources(2) },
+        { play: [tooLarge] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+
+      expectFailure(p1.playCommand(st04HawkOfEndymion013), "NO_LEGAL_TARGETS");
+      expect(p1.getCardZone(st04HawkOfEndymion013)).toBe(`hand:${PLAYER_ONE}`);
+    });
+
+    it("cannot be played during the Block Step before an Action step begins", () => {
+      const attacker = createMockUnit({ name: "Attacker", hp: 5 });
+      const eligible = createMockUnit({ name: "Eligible", hp: 3 });
+      const engine = GundamTestEngine.create(
+        { play: [attacker] },
+        {
+          hand: [st04HawkOfEndymion013],
+          play: [eligible],
+          resourceArea: activeResources(2),
+        },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const attackerId = p1.getCardsInZone("battleArea")[0]!;
+
+      expectSuccess(p1.enterBattle(attackerId, "direct"));
+      expectFailure(
+        p2.playCommand(st04HawkOfEndymion013, { targets: [attackerId] }),
+        "WRONG_PHASE",
+      );
+
+      expect(p2.getCardZone(st04HawkOfEndymion013)).toBe(`hand:${PLAYER_TWO}`);
+    });
+
+    it("cannot be played below its printed Lv.2 requirement", () => {
+      const enemy = createMockUnit({ name: "Enemy", hp: 3 });
+      const engine = GundamTestEngine.create(
+        { hand: [st04HawkOfEndymion013], resourceArea: activeResources(1) },
+        { play: [enemy] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+
+      expectFailure(p1.playCommand(st04HawkOfEndymion013), "INSUFFICIENT_RESOURCE_LEVEL");
+      expect(p1.getCardZone(st04HawkOfEndymion013)).toBe(`hand:${PLAYER_ONE}`);
+    });
+
+    it("cannot pay its printed cost without an active Resource", () => {
+      const enemy = createMockUnit({ name: "Enemy", hp: 3 });
+      const engine = GundamTestEngine.create(
+        { hand: [st04HawkOfEndymion013], resourceArea: restedResources(2) },
+        { play: [enemy] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+
+      expectFailure(p1.playCommand(st04HawkOfEndymion013), "INSUFFICIENT_RESOURCES");
+      expect(p1.getCardZone(st04HawkOfEndymion013)).toBe(`hand:${PLAYER_ONE}`);
+    });
+  });
+
+  describe("【Pilot】[Mu La Flaga]", () => {
+    it("can be paired as Mu La Flaga and grants AP+1/HP+0 instead of resolving the Command", () => {
+      const host = createMockUnit({ name: "Host", ap: 2, hp: 3 });
+      const enemy = createMockUnit({ name: "Enemy", hp: 3 });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [st04HawkOfEndymion013],
+          play: [host],
+          resourceArea: activeResources(2),
+        },
+        { play: [enemy] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const hostId = p1.getCardsInZone("battleArea")[0]!;
+      const enemyId = p2.getCardsInZone("battleArea")[0]!;
+      const commandId = p1.getHand()[0]!;
+
+      expectSuccess(p1.playCommandAsPilot(commandId, hostId));
+
+      expect(p1.getPilotId(hostId)).toBe(commandId);
+      expect(p1.getCardZone(commandId)).toBe(`battleArea:${PLAYER_ONE}`);
+      expect(p1.getVisibleCard(hostId)).toMatchObject({ effectiveAp: 3, effectiveHp: 3 });
+      expect(p2.getCardZone(enemyId)).toBe(`battleArea:${PLAYER_TWO}`);
     });
   });
 });

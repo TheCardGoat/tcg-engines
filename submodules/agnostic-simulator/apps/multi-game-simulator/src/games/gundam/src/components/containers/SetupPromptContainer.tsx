@@ -61,6 +61,10 @@ export function SetupPromptContainer() {
 
   // --- dispatch ---------------------------------------------------------------
 
+  // A perspective seat controls layout only. Spectators never own setup
+  // decisions, even when the board is oriented from one player's side.
+  if (adapter.viewerContext.role === "spectator") return null;
+
   if (phase === "choose-first-player") {
     return (
       <ChooseFirstPlayerPrompt onChooseSelf={onChooseSelf} onChooseOpponent={onChooseOpponent} />

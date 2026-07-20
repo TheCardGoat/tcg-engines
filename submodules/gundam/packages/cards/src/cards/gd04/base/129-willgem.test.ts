@@ -19,12 +19,11 @@ describe("Willgem (GD04-129)", () => {
       deck: 4,
     });
     const p1 = engine.asPlayer(PLAYER_ONE);
-    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
 
     expectSuccess(p1.deployBase(gd04Willgem129));
 
     const baseId = p1.getCardsInZone("baseSection")[0]!;
-    expect(p1.getHand()).toContain(shieldId);
+    expect(p1.getHand()).toHaveLength(1);
     expect(p1.getDamage(baseId)).toBe(3);
   });
 
@@ -34,7 +33,6 @@ describe("Willgem (GD04-129)", () => {
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
-    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
 
     expectSuccess(p1.enterBattle(attackerId, "direct"));
     expectSuccess(p2.passBlock());
@@ -43,13 +41,13 @@ describe("Willgem (GD04-129)", () => {
     expect(p2.getBoardView().pendingChoice).toMatchObject({
       kind: "optional",
       controllerId: PLAYER_TWO,
-      sourceCardId: shieldId,
+      sourceCardId: expect.any(String),
       directiveIndex: -1,
     });
     expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    expect(p2.getCardZone(shieldId)).toBe(`baseSection:${PLAYER_TWO}`);
-    expect(p2.getDamage(shieldId)).toBe(3);
+    expect(p2.getCardZone(gd04Willgem129)).toBe(`baseSection:${PLAYER_TWO}`);
+    expect(p2.getDamage(gd04Willgem129)).toBe(3);
   });
 
   it("【Burst】 leaves this card in trash when its owner declines", () => {
@@ -58,7 +56,6 @@ describe("Willgem (GD04-129)", () => {
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
-    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
 
     expectSuccess(p1.enterBattle(attackerId, "direct"));
     expectSuccess(p2.passBlock());
@@ -67,12 +64,12 @@ describe("Willgem (GD04-129)", () => {
     expect(p2.getBoardView().pendingChoice).toMatchObject({
       kind: "optional",
       controllerId: PLAYER_TWO,
-      sourceCardId: shieldId,
+      sourceCardId: expect.any(String),
       directiveIndex: -1,
     });
     expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: false } }));
 
-    expect(p2.getCardZone(shieldId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getCardZone(gd04Willgem129)).toBe(`trash:${PLAYER_TWO}`);
   });
 
   describe("【Once per Turn】During your turn, when you pay ① or more for a friendly Unit's effect, this Base recovers 2 HP.", () => {

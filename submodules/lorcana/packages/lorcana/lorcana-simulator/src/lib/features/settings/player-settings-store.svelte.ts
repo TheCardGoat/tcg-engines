@@ -32,7 +32,7 @@ export const DEFAULT_PLAYER_SETTINGS = {
   discordPresenceEnabled: true,
   selectedPlaymat: "default",
   selectedCardBack: "default",
-  cardInfoMode: "detailed" as CardInfoMode,
+  cardInfoMode: "quick" as CardInfoMode,
 } satisfies {
   hotkeyMode: HotkeyMode;
   cardPreviewMode: CardPreviewMode;

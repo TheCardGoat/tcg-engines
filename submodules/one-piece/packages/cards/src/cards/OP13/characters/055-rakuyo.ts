@@ -27,5 +27,41 @@ export const op13Rakuyo055: CharacterCard = {
   attribute: "strike",
   effect:
     '[When Attacking] If you have 4 or less cards in your hand, all of your Characters with a type including "Whitebeard Pirates" gain +1000 power during this turn.',
+  effects: {
+    effects: [
+      {
+        trigger: "whenAttacking",
+        conditions: [
+          {
+            condition: "handCount",
+            player: "self",
+            comparison: "lte",
+            value: 4,
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Whitebeard Pirates",
+                  match: "includes",
+                },
+              ],
+            },
+            value: 1000,
+            duration: "thisTurn",
+          },
+        ],
+      },
+    ],
+  },
   i18n: op13Rakuyo055I18n,
 };

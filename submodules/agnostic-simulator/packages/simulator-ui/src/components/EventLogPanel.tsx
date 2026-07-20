@@ -26,6 +26,7 @@ export interface EventLogPanelProps {
   copyText?: string;
   rawCopyText?: string;
   embedded?: boolean;
+  turnExpansion?: "all" | "latest";
 }
 
 type TagFilter = "all" | "move" | "combat" | "ability" | "system" | "chat";
@@ -56,6 +57,7 @@ type ActivityRow =
       key: string;
       turn: number;
       epochMs: number;
+      sequence: number;
       entry: SimulatorEventLogEntry;
     }
   | {
@@ -63,6 +65,7 @@ type ActivityRow =
       key: string;
       turn: number;
       epochMs: number;
+      sequence: number;
       message: ChatMessage;
     };
 
@@ -185,9 +188,12 @@ export function EventLogPanel({
   copyText,
   rawCopyText,
   embedded = false,
+  turnExpansion = "all",
 }: EventLogPanelProps) {
   const [activeFilter, setActiveFilter] = useState<TagFilter>("all");
-  const [expandedTurns, setExpandedTurns] = useState<Set<number>>(new Set());
+  const [turnExpansionOverrides, setTurnExpansionOverrides] = useState<Map<number, boolean>>(
+    new Map(),
+  );
   const [copyStatus, setCopyStatus] = useState<"readable" | "raw" | "failed" | null>(null);
   const [controlsOpen, setControlsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -203,11 +209,10 @@ export function EventLogPanel({
     };
   }, []);
 
-  const toggleTurn = useCallback((turn: number) => {
-    setExpandedTurns((prev) => {
-      const next = new Set(prev);
-      if (next.has(turn)) next.delete(turn);
-      else next.add(turn);
+  const toggleTurn = useCallback((turn: number, currentlyExpanded: boolean) => {
+    setTurnExpansionOverrides((prev) => {
+      const next = new Map(prev);
+      next.set(turn, !currentlyExpanded);
       return next;
     });
   }, []);
@@ -220,6 +225,7 @@ export function EventLogPanel({
         key: `entry:${entry.id}`,
         turn: entry.turn,
         epochMs: parseTimestamp(entry.timestamp, index),
+        sequence: index,
         entry,
       }),
     );
@@ -248,6 +254,7 @@ export function EventLogPanel({
           key: `chat:${message.id}`,
           turn,
           epochMs,
+          sequence: entries.length + index,
           message,
         });
         groups.set(turn, list);
@@ -403,6 +410,8 @@ export function EventLogPanel({
           key={chunk.key}
           className={classes.sectionGroup}
           data-section-tone={chunk.section.tone}
+          role="group"
+          aria-label={chunk.section.label}
         >
           <div className={classes.sectionHeader}>
             <span className={classes.sectionLabel}>{chunk.section.label}</span>
@@ -534,14 +543,16 @@ export function EventLogPanel({
         ) : (
           sortedTurns.map((turn) => {
             const turnRows = grouped.get(turn) ?? [];
-            const isExpanded = expandedTurns.has(turn) || expandedTurns.size === 0;
+            const latestTurn = sortedTurns[sortedTurns.length - 1];
+            const defaultExpanded = turnExpansion === "all" || turn === latestTurn;
+            const isExpanded = turnExpansionOverrides.get(turn) ?? defaultExpanded;
             const chunks = buildEventLogChunks(turnRows);
             return (
               <div key={turn} className={classes.turnGroup}>
                 <button
                   type="button"
                   className={classes.turnHeader}
-                  onClick={() => toggleTurn(turn)}
+                  onClick={() => toggleTurn(turn, isExpanded)}
                   aria-expanded={isExpanded}
                 >
                   <span className={classes.turnTitle}>
@@ -611,7 +622,7 @@ function parseTimestamp(value: string, fallback: number): number {
 
 function compareActivityRows(a: ActivityRow, b: ActivityRow): number {
   if (a.epochMs !== b.epochMs) return a.epochMs - b.epochMs;
-  if (a.type !== b.type) return a.type === "entry" ? -1 : 1;
+  if (a.sequence !== b.sequence) return a.sequence - b.sequence;
   return a.key.localeCompare(b.key);
 }
 

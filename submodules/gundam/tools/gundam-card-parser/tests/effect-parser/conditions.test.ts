@@ -12,6 +12,14 @@ function firstBranch(text: string) {
 }
 
 describe("self-state conditions", () => {
+  test("while this is damaged → selfIsDamaged", () => {
+    const [effect] = parseEffect("While this is damaged, it gets AP+1.");
+    expect(effect.activation.conditions).toEqual([{ type: "selfIsDamaged" }]);
+    expect(effect.directives[0]).toMatchObject({
+      action: { action: "statModifier", target: { owner: "self" } },
+    });
+  });
+
   test("if this Unit is damaged → selfIsDamaged", () => {
     const branch = firstBranch("【Deploy】 If this Unit is damaged, draw 1.");
     expect(branch).toMatchObject({ condition: { type: "selfIsDamaged" } });
@@ -73,6 +81,11 @@ describe("selfHasTrait conditions", () => {
     const [effect] = parseEffect("While this Unit is (Zeon), it gets AP+1 this turn.");
     expect(effect.activation.conditions).toMatchObject([{ type: "selfHasTrait", trait: "zeon" }]);
   });
+
+  test("paired-Pilot wording 'this is a (CB) Unit' → selfHasTrait", () => {
+    const [effect] = parseEffect("While this is a (CB) Unit, draw 1.");
+    expect(effect.activation.conditions).toEqual([{ type: "selfHasTrait", trait: "cb" }]);
+  });
 });
 
 describe("selfIsColor conditions", () => {
@@ -118,6 +131,29 @@ describe("playerLevel conditions", () => {
 });
 
 describe("unitCount conditions", () => {
+  test("no Earth Alliance Unit tokens in play → trait token count eq 0", () => {
+    const branch = firstBranch(
+      "【Burst】If you have no (Earth Alliance) Unit tokens in play, draw 1.",
+    );
+    expect(branch).toMatchObject({
+      condition: {
+        type: "unitCount",
+        owner: "friendly",
+        comparison: "eq",
+        count: 0,
+        hasTrait: "earth alliance",
+        isToken: true,
+      },
+    });
+  });
+
+  test("if you have no Units in play → unitCount eq 0", () => {
+    const branch = firstBranch("【Deploy】 If you have no Units in play, draw 1.");
+    expect(branch).toMatchObject({
+      condition: { type: "unitCount", owner: "friendly", comparison: "eq", count: 0 },
+    });
+  });
+
   test("if you have 2 or more Units in play → unitCount gte 2", () => {
     const branch = firstBranch("【Deploy】 If you have 2 or more Units in play, draw 1.");
     expect(branch).toMatchObject({

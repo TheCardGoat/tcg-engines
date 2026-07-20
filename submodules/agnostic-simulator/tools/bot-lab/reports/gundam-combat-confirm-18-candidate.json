@@ -1,0 +1,28 @@
+{
+  "adapterVersion": "2",
+  "candidateId": "iter-18-board-preserving-block",
+  "cardCatalogHash": "fnv1a32:d9b21800",
+  "changes": { "strategyId": "iter-18-board-preserving-block" },
+  "engineRevision": "fnv1a32:91faa561",
+  "evaluation": {
+    "batchSize": 120,
+    "confidenceLevel": 0.95,
+    "maximumBlocks": 120,
+    "maximumCellRegression": 0.05,
+    "minimumBlocks": 120,
+    "minimumMeanImprovement": 0.02,
+    "seedBase": "gundam-combat-common-confirm-v1",
+    "suiteId": "promotion"
+  },
+  "game": "gundam",
+  "hypothesis": "Effective attacks plus board-preserving blocks confirm across a larger fresh schedule.",
+  "informationPolicy": "oracle",
+  "parentStrategyId": "strategic",
+  "schemaVersion": 1,
+  "training": {
+    "corpusId": "gundam-registered-strategies-v1",
+    "generator": "registered-strategy-manifest",
+    "iterations": 0,
+    "seed": "gundam-combat-common-confirm-v1"
+  }
+}

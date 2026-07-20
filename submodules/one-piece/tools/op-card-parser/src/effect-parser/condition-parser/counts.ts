@@ -1,4 +1,4 @@
-import type { Condition } from "@tcg/op-types";
+import type { Condition, OPColor } from "@tcg/op-types";
 import { parseComparison } from "../helpers.ts";
 
 export function parseCountCondition(text: string): Condition | null {
@@ -207,9 +207,9 @@ export function parseCountCondition(text: string): Condition | null {
     };
   }
 
-  // Zone count (typed characters): you have N or more/less "X" type Characters
+  // Zone count (typed characters): you have N or more/less [color] "X" type Characters
   m =
-    /^you\s+have\s+(\d+)\s+or\s+(less|more)\s+[""[{]([^""\]}]+)[""\]}]\s+type\s+Characters$/i.exec(
+    /^you\s+have\s+(\d+)\s+or\s+(less|more)\s+(?:(red|green|blue|purple|black|yellow)\s+)?[""[{]([^""\]}]+)[""\]}]\s+type\s+Characters$/i.exec(
       t,
     );
   if (m) {
@@ -219,7 +219,10 @@ export function parseCountCondition(text: string): Condition | null {
       zone: "character",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
-      filters: [{ filter: "trait", value: m[3]!, match: "includes" }],
+      filters: [
+        ...(m[3] ? [{ filter: "color", value: m[3].toLowerCase() as OPColor } as const] : []),
+        { filter: "trait", value: m[4]!, match: "includes" },
+      ],
     };
   }
 
@@ -589,7 +592,7 @@ export function parseCountCondition(text: string): Condition | null {
       zone: "character",
       comparison: "eq",
       value: 0,
-      filters: [{ filter: "trait", value: m[1]!, negate: true }],
+      filters: [{ filter: "trait", value: m[1]!, match: "includes", negate: true }],
     };
   }
 

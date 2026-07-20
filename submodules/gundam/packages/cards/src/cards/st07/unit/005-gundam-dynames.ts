@@ -88,6 +88,9 @@ export const st07GundamDynames005: UnitCard = {
             type: "isTurn",
             whose: "friendly",
           },
+          {
+            type: "eventCardIsSelf",
+          },
         ],
       },
       directives: [

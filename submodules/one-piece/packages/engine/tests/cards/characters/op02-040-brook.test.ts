@@ -31,7 +31,6 @@ describe("OP02-040 Brook", () => {
     expect(candidateIds).not.toContain(unrelatedId);
     expect(candidateIds).not.toContain(wrongCostId);
     engine.resolveDecision("effectPlaySelection", { selectedIds: [filmId] }, "south");
-    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
 
     const view = engine.getView("south");
     expect(view.players.south.characters.some((card) => card?.instanceId === filmId)).toBe(true);

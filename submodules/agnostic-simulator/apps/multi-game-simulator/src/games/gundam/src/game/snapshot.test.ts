@@ -282,13 +282,21 @@ describe("Snapshot roundtrip · botConfig", () => {
     expect(match.botConfig).toBeUndefined();
   });
 
-  it("round-trips a botConfig.strategy value", () => {
+  it("round-trips strategies and pacing for automated fixtures", () => {
     const dev = loadMainPhaseDemo();
     const snapshot = snapshotFromDevRuntime("main-phase-demo", dev, {
-      botConfig: { strategy: "pass-only" },
+      botConfig: {
+        strategy: "greedy-legal",
+        opponentStrategy: "pass-only",
+        speed: "fast",
+      },
     });
-    expect(snapshot.botConfig).toEqual({ strategy: "pass-only" });
+    expect(snapshot.botConfig).toEqual({
+      strategy: "greedy-legal",
+      opponentStrategy: "pass-only",
+      speed: "fast",
+    });
     const match = reconstructFromSnapshot(snapshot);
-    expect(match.botConfig).toEqual({ strategy: "pass-only" });
+    expect(match.botConfig).toEqual(snapshot.botConfig);
   });
 });

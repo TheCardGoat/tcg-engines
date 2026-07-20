@@ -78,7 +78,9 @@ export function PlayerSeatContainer({ side }: PlayerSeatContainerProps) {
   };
 
   const isViewer = String(playerId) === String(viewerId);
-  const isTurn = String(view.status.activePlayer ?? "") === String(playerId);
+  const turnPlayerId = view.status.turnPlayer ?? view.status.activePlayer;
+  const isTurn = String(turnPlayerId ?? "") === String(playerId);
+  const isPriority = String(view.status.activePlayer ?? "") === String(playerId);
   const clockNow = useClockNow();
   const opponentClockSnapshot = isOpponent ? view.timerView.players?.[playerId] : undefined;
   const opponentClockView = opponentClockSnapshot
@@ -143,9 +145,11 @@ export function PlayerSeatContainer({ side }: PlayerSeatContainerProps) {
       availableResources={availableResources}
       isViewer={isViewer}
       isTurn={isTurn}
+      isPriority={isPriority}
       selectedCardIds={selectedCardIds}
       highlightCardIds={highlightCardIds}
       onPlayCardClick={onPlayCardClick}
+      onHandCardDrop={isViewer ? onPlayCardClick : undefined}
       timeoutOverlay={
         opponentClockView ? (
           <TimedOutPlayerOverlay

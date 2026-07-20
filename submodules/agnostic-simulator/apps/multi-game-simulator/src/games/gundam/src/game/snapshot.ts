@@ -93,6 +93,10 @@ export interface SnapshotBotConfig {
    * the snapshot layer to the simulator's strategy enum — the
    * bot-registry resolves it back to a concrete strategy. */
   readonly strategy: string;
+  /** Optional second-seat strategy for bot-vs-bot spectator matches. */
+  readonly opponentStrategy?: string;
+  /** Optional client-side pacing preset for automated fixtures. */
+  readonly speed?: "fast" | "balanced" | "slow";
 }
 
 export interface SnapshotOptions {

@@ -59,6 +59,7 @@ export const op13SaintMjosgard092: CharacterCard = {
               {
                 filter: "trait",
                 value: "Mary Geoise",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

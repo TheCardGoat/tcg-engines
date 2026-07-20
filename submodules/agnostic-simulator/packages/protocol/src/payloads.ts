@@ -14,6 +14,7 @@
 import type { ChatMessage } from "./chat.js";
 import type { PlayableGameSlug } from "./games.js";
 import type { EngineInteractionView } from "./interactions.js";
+import type { AnimationPacketV1 } from "./animations.js";
 
 export interface GatewayPongPayload {
   /** ISO-8601 server timestamp. */
@@ -96,7 +97,7 @@ export interface ClientUpdateBaseProperties {
   patches: unknown[];
   /** Engine logs stripped for the acting player (includes their own private data). */
   engineLogs: unknown[];
-  animations: unknown[];
+  animations: AnimationPacketV1[];
   /** Full state snapshot, included whenever the backend can avoid client-side patch application. */
   state: unknown;
   /** Server-side processing time in milliseconds (from message receipt to response send). */

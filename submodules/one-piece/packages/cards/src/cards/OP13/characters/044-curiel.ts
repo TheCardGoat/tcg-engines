@@ -43,10 +43,7 @@ export const op13Curiel044: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Whitebeard Pirates",
-                },
-                {
-                  filter: "trait",
-                  value: "Whitebeard Pirates",
+                  match: "includes",
                 },
               ],
             },

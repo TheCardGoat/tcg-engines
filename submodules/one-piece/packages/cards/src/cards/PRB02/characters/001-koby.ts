@@ -65,6 +65,17 @@ export const prb02Koby001: CharacterCard = {
               ],
             },
           },
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+            condition: {
+              condition: "handCount",
+              player: "self",
+              comparison: "lte",
+              value: 6,
+            },
+          },
         ],
       },
     ],
@@ -78,6 +89,7 @@ export const prb02Koby001: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Navy",
+            match: "includes",
           },
         ],
         actions: [

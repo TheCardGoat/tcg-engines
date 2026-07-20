@@ -105,11 +105,17 @@ export class MatchRuntime {
     playerId: PlayerId;
     moveLogCount: number;
     gameLogCount: number;
+    animationCount: number;
   }[] = [];
   public undoBarriers: string[] = [];
   public moveHistory: MoveHistoryEntry[] = [];
   public moveLogHistory: GundamMoveLog[] = [];
   public gameLogHistory: { readonly entry: GameLogEntry; readonly turnNumber: number }[] = [];
+  public packetAnimationHistory: {
+    readonly animation: PacketAnimation;
+    readonly stateID: number;
+    readonly turnNumber: number;
+  }[] = [];
 
   private eventCounter = 0;
   private logCounter = 0;
@@ -161,6 +167,7 @@ export class MatchRuntime {
     this.moveHistory = [];
     this.moveLogHistory = [];
     this.gameLogHistory = [];
+    this.packetAnimationHistory = [];
     this.eventCounter = 0;
     this.logCounter = 0;
   }
@@ -194,11 +201,17 @@ export class MatchRuntime {
         playerId: PlayerId;
         moveLogCount?: number;
         gameLogCount?: number;
+        animationCount?: number;
       }[];
       undoBarriers?: readonly string[];
       moveHistory?: readonly MoveHistoryEntry[];
       moveLogHistory?: readonly GundamMoveLog[];
       gameLogHistory?: readonly { readonly entry: GameLogEntry; readonly turnNumber: number }[];
+      packetAnimationHistory?: readonly {
+        readonly animation: PacketAnimation;
+        readonly stateID: number;
+        readonly turnNumber: number;
+      }[];
       eventCounter?: number;
       logCounter?: number;
       silent?: boolean;
@@ -211,12 +224,16 @@ export class MatchRuntime {
           ...e,
           moveLogCount: e.moveLogCount ?? 0,
           gameLogCount: e.gameLogCount ?? 0,
+          animationCount: e.animationCount ?? 0,
         }))
       : [];
     this.undoBarriers = options.undoBarriers ? [...options.undoBarriers] : [];
     this.moveHistory = options.moveHistory ? [...options.moveHistory] : [];
     this.moveLogHistory = options.moveLogHistory ? [...options.moveLogHistory] : [];
     this.gameLogHistory = options.gameLogHistory ? [...options.gameLogHistory] : [];
+    this.packetAnimationHistory = options.packetAnimationHistory
+      ? [...options.packetAnimationHistory]
+      : [];
     this.eventCounter = options.eventCounter ?? 0;
     this.logCounter = options.logCounter ?? 0;
     if (!options.silent) {
@@ -352,7 +369,12 @@ export class MatchRuntime {
         stateID: nextState.ctx._stateID,
         turnNumber: nextState.ctx.status.turn,
       }));
-      const animations: PacketAnimation[] = buildPacketAnimations({ moveLogs: taggedMoveLogs });
+      const animations: PacketAnimation[] = buildPacketAnimations({
+        moveLogs: taggedMoveLogs,
+        previousStatus: prevState.ctx.status,
+        nextStatus: nextState.ctx.status,
+        ownerIdForCard: (cardId) => this.staticResources.cardsMaps.instances.get(cardId)?.ownerID,
+      });
 
       // 8. Manage undo stack (per-player: different player's move clears stack)
       const isUndoable = moveDef.undoable !== false;
@@ -367,6 +389,7 @@ export class MatchRuntime {
           playerId,
           moveLogCount: taggedMoveLogs.length,
           gameLogCount: logEntries.length,
+          animationCount: animations.length,
         });
       } else {
         this.undoStack = [];
@@ -396,6 +419,13 @@ export class MatchRuntime {
       });
       this.moveLogHistory.push(...taggedMoveLogs);
       const turnNumber = nextState.ctx.status.turn;
+      for (const animation of animations) {
+        this.packetAnimationHistory.push({
+          animation,
+          stateID: nextState.ctx._stateID,
+          turnNumber,
+        });
+      }
       for (const entry of logEntries) {
         this.gameLogHistory.push({ entry, turnNumber });
       }
@@ -649,6 +679,9 @@ export class MatchRuntime {
     if (entry.gameLogCount > 0) {
       this.gameLogHistory.splice(-entry.gameLogCount, entry.gameLogCount);
     }
+    if (entry.animationCount > 0) {
+      this.packetAnimationHistory.splice(-entry.animationCount, entry.animationCount);
+    }
 
     this.notifyStateUpdate();
 
@@ -676,6 +709,7 @@ export class MatchRuntime {
     this.moveHistory = [];
     this.moveLogHistory = [];
     this.gameLogHistory = [];
+    this.packetAnimationHistory = [];
   }
 
   // ── Accessors ──────────────────────────────────────────────────────────
@@ -698,6 +732,14 @@ export class MatchRuntime {
 
   getGameLogHistory(): readonly { readonly entry: GameLogEntry; readonly turnNumber: number }[] {
     return this.gameLogHistory;
+  }
+
+  getPacketAnimationHistory(): readonly {
+    readonly animation: PacketAnimation;
+    readonly stateID: number;
+    readonly turnNumber: number;
+  }[] {
+    return this.packetAnimationHistory;
   }
 
   /**

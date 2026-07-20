@@ -3,6 +3,7 @@ import { index, route, type RouteConfig } from "@react-router/dev/routes";
 export default [
   index("routes/index.tsx"),
   route("animation-fixtures", "routes/animation-fixtures.tsx"),
+  route("simulator-ui-fixtures", "routes/simulator-ui-fixtures.tsx"),
   route(":gameSlug/simulator", "routes/simulator-game-index.tsx"),
   route(":gameSlug/simulator/play/practice", "routes/simulator-practice-vs-ai.tsx"),
   route(":gameSlug/simulator/tests", "routes/simulator-tests.tsx"),

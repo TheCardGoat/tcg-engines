@@ -53,10 +53,12 @@ export const op14eb04Koala046: CharacterCard = {
                     {
                       filter: "trait",
                       value: "Fish-Man",
+                      match: "includes",
                     },
                     {
                       filter: "trait",
                       value: "Merfolk",
+                      match: "includes",
                     },
                   ],
                 },

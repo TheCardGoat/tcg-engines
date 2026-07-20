@@ -19,7 +19,6 @@ describe("Pala Sys (GD04-094)", () => {
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
     const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p2.enterBattle(attackerId, "direct"));
@@ -28,12 +27,12 @@ describe("Pala Sys (GD04-094)", () => {
     expectSuccess(p2.passBattleAction());
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "optional",
-      sourceCardId: shieldId,
+      sourceCardId: expect.any(String),
       directiveIndex: -1,
     });
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    expect(p1.getHand()).toContain(shieldId);
+    expect(p1.getHand()).toHaveLength(1);
   });
 
   describe("【When Linked】Choose 1 purple Unit card with <Suppression> from your trash. Add it to your hand.", () => {

@@ -431,3 +431,108 @@ describe("candidate-enumerator: resolveEffect chooseOne fan-out", () => {
     expect(answers.sort((a, b) => Number(a) - Number(b))).toEqual([0, 1]);
   });
 });
+
+describe("candidate-enumerator: optional Burst activation", () => {
+  it("emits executable accept and decline candidates at the reserved answer index", () => {
+    const burstEffect: CardEffect = {
+      type: "triggered",
+      activation: {},
+      directives: [{ action: { action: "draw", count: 1 } }],
+      sourceText: "【Burst】Draw 1.",
+    };
+    const engine = GundamTestEngine.create({ deck: 2 }, {});
+    engine.getG().pendingEffects.push({
+      id: "pe_optional_burst",
+      controllerId: PLAYER_ONE,
+      sourceCardId: "unused",
+      effect: burstEffect,
+      effectIndex: 0,
+      kind: "burst",
+      optionalActivation: true,
+    });
+
+    const candidates = enumerateGundamBotCandidates(
+      engine.runtime.getState(),
+      PLAYER_ONE as PlayerId,
+      engine.runtime.getStaticResources(),
+      { moveNameFilter: ["resolveEffect"] },
+    );
+    const resolves = candidates.filter((candidate) => candidate.family === "resolveEffect");
+    expect(resolves).toHaveLength(2);
+    expect(
+      resolves.map((candidate) =>
+        candidate.family === "resolveEffect" ? candidate.optionalAnswers?.[-1] : undefined,
+      ),
+    ).toEqual([true, false]);
+
+    const accept = resolves.find(
+      (candidate) => candidate.family === "resolveEffect" && candidate.optionalAnswers?.[-1],
+    );
+    if (!accept || accept.family !== "resolveEffect") throw new Error("Expected Burst acceptance");
+    const command = candidateToCommand(accept);
+    expectSuccess(engine.doMove(command.move, asPlayerId(PLAYER_ONE), command.args));
+    expect(engine.getG().pendingEffects).toHaveLength(0);
+    expect(engine.asPlayer(PLAYER_ONE).getHand()).toHaveLength(1);
+  });
+});
+
+describe("candidate-enumerator: resolveEffect target selection", () => {
+  it("emits an executable target candidate instead of falling through to concession", () => {
+    const targetedEffect: CardEffect = {
+      type: "command",
+      activation: { timing: ["main"] },
+      directives: [
+        {
+          action: {
+            action: "statModifier",
+            stat: "ap",
+            amount: -3,
+            duration: "thisTurn",
+            target: { owner: "opponent", cardType: "unit", count: 1 },
+          },
+        },
+      ],
+      sourceText: "Choose 1 enemy Unit. It gets AP-3 during this turn.",
+    };
+    const source = createMockUnit({ name: "Command Source" });
+    const enemy = createMockUnit({ name: "Enemy Target", ap: 5, hp: 4 });
+    const engine = GundamTestEngine.create({ play: [source] }, { play: [enemy] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const sourceId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    engine.getG().pendingEffects.push({
+      id: "pe_targetSelection",
+      controllerId: PLAYER_ONE,
+      sourceCardId: sourceId,
+      effect: targetedEffect,
+      effectIndex: 0,
+      kind: "command",
+    });
+    // Attack-trigger choices halt in an otherwise automatic step. That step
+    // has no ordinary validMoves list, so pending-effect gating must prevent
+    // setup and gameplay candidates from leaking into automation.
+    engine.runtime.getState().ctx.status.phase = "battle-phase";
+    engine.runtime.getState().ctx.status.step = "attack-step";
+
+    const candidates = enumerateGundamBotCandidates(
+      engine.runtime.getState(),
+      PLAYER_ONE as PlayerId,
+      engine.runtime.getStaticResources(),
+      { moveNameFilter: ["resolveEffect"] },
+    );
+    const resolution = candidates.find((candidate) => candidate.family === "resolveEffect");
+
+    expect(resolution).toMatchObject({ family: "resolveEffect", targets: [enemyId] });
+    expect(candidates.some((candidate) => candidate.family === "chooseFirstPlayer")).toBe(false);
+    expect(candidates.some((candidate) => candidate.family === "enterBattle")).toBe(false);
+    if (resolution?.family !== "resolveEffect") {
+      throw new Error("Expected a target-selection resolution candidate");
+    }
+
+    const command = candidateToCommand(resolution);
+    expectSuccess(engine.doMove(command.move, asPlayerId(PLAYER_ONE), command.args));
+    expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(2);
+  });
+});

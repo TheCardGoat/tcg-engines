@@ -2,6 +2,7 @@ import type { SimulatorDeckReveal, SimulatorDeckRevealCard } from "@tcg/simulato
 
 import { cx } from "../class-names";
 import { CardInspector } from "./CardInspector";
+import { ViewerSafeCardImage } from "./ViewerSafeCardImage";
 
 export interface DeckRevealShelfProps {
   reveal: SimulatorDeckReveal | undefined;
@@ -60,10 +61,12 @@ export function DeckRevealShelf({ reveal, className, compact = false }: DeckReve
               style={card.frameColor ? { borderColor: card.frameColor } : undefined}
             >
               {identityVisible && card.imageUrl ? (
-                <img
-                  src={card.imageUrl}
+                <ViewerSafeCardImage
+                  entity={revealCardToEntity(card, reveal, index)}
                   alt={card.title ?? "Revealed card"}
-                  className="h-full w-full object-cover"
+                  fill
+                  className="h-full w-full"
+                  imageClassName="h-full w-full object-cover"
                   loading="eager"
                 />
               ) : identityVisible ? (

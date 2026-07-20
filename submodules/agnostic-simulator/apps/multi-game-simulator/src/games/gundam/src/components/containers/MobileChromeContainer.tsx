@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, type ReactNode } from "react";
 
 import {
   asMoveName,
@@ -14,10 +14,14 @@ import type { MatchInfo } from "../ui/types.ts";
 import { useSubmitError } from "./submit-error-context.tsx";
 
 export interface MobileChromeContainerProps {
-  readonly onOpenDrawer: () => void;
+  readonly onOpenLog: () => void;
+  readonly connectionIndicator?: ReactNode;
 }
 
-export function MobileTopHudContainer({ onOpenDrawer }: MobileChromeContainerProps) {
+export function MobileTopHudContainer({
+  onOpenLog,
+  connectionIndicator,
+}: MobileChromeContainerProps) {
   const view = useBoardProjection();
   const viewerId = useViewerId();
   const matchInfo: MatchInfo = {
@@ -26,8 +30,18 @@ export function MobileTopHudContainer({ onOpenDrawer }: MobileChromeContainerPro
     phase: view.status.phase ?? "—",
     mode: "hot-seat",
   };
-  const isSelfTurn = String(view.status.activePlayer) === String(viewerId);
-  return <MobileTopHud matchInfo={matchInfo} isSelfTurn={isSelfTurn} onOpenDrawer={onOpenDrawer} />;
+  const turnPlayerId = view.status.turnPlayer ?? view.status.activePlayer;
+  const isSelfTurn = String(turnPlayerId) === String(viewerId);
+  const isSelfPriority = String(view.status.activePlayer) === String(viewerId);
+  return (
+    <MobileTopHud
+      matchInfo={matchInfo}
+      isSelfTurn={isSelfTurn}
+      isSelfPriority={isSelfPriority}
+      onOpenLog={onOpenLog}
+      connectionIndicator={connectionIndicator}
+    />
+  );
 }
 
 // Labels for the step-level pass moves that can take over the mobile
@@ -47,7 +61,8 @@ export function MobileActionBarContainer() {
   const { adapter } = useGundamGame();
   const interactionView = useInteractionView();
   const { report } = useSubmitError();
-  const isSelfTurn = String(view.status.activePlayer) === String(viewerId);
+  const turnPlayerId = view.status.turnPlayer ?? view.status.activePlayer;
+  const isSelfTurn = String(turnPlayerId) === String(viewerId);
 
   // Contextual step-pass move (if any) — same picker as the desktop
   // `BattleControlsContainer`.

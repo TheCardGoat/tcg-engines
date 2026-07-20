@@ -140,6 +140,65 @@ describe("header – once per turn", () => {
     expect(effect.activation.timing).toEqual(["onDestroyByBattle"]);
     expect(effect.activation.restrictions).toEqual([{ type: "oncePerTurn" }]);
   });
+
+  test("During Pair and friendly-turn headers qualify an embedded self destroy trigger", () => {
+    const [effect] = parseEffect(
+      "【During Pair】During your turn, when this Unit destroys an enemy Unit with battle damage, deal 1 damage to all enemy Units that are Lv.3 or lower.",
+    );
+    expect(effect).toMatchObject({
+      type: "triggered",
+      activation: {
+        timing: ["onDestroyByBattle"],
+        conditions: [
+          { type: "duringPair" },
+          { type: "isTurn", whose: "friendly" },
+          { type: "eventCardIsSelf" },
+        ],
+      },
+      directives: [
+        {
+          action: {
+            action: "dealDamageAll",
+            amount: 1,
+            target: {
+              owner: "opponent",
+              cardType: "unit",
+              attributeFilters: [{ attribute: "level", comparison: "lte", value: 3 }],
+            },
+          },
+        },
+      ],
+    });
+  });
+});
+
+describe("triggered leading conditions", () => {
+  test("Attack self-stat gate qualifies the trigger and preserves the chosen enemy target", () => {
+    const [effect] = parseEffect(
+      "【Attack】If this Unit has 5 or more AP, choose 1 enemy Unit that is Lv.5 or higher. Deal 3 damage to it.",
+    );
+    expect(effect).toMatchObject({
+      type: "triggered",
+      activation: {
+        timing: ["attack"],
+        conditions: [{ type: "selfStat", stat: "ap", comparison: "gte", value: 5 }],
+      },
+      directives: [
+        {
+          action: {
+            action: "dealDamage",
+            amount: 3,
+            target: {
+              owner: "opponent",
+              cardType: "unit",
+              count: 1,
+              attributeFilters: [{ attribute: "level", comparison: "gte", value: 5 }],
+            },
+          },
+        },
+      ],
+    });
+  });
 });
 
 describe("header – pilot qualifiers", () => {

@@ -3,6 +3,9 @@ import { execSync } from "node:child_process";
 import { dirname, join, relative } from "node:path";
 import type { CardType } from "@tcg/gundam-types";
 import { CARDS_DIR, REPO_ROOT } from "./_helpers.ts";
+import { cleanHtml } from "./effect-parser/helpers.ts";
+import { parseHeader } from "./effect-parser/header.ts";
+import { extractPrintedKeyword, splitIntoSegments } from "./effect-parser/segments.ts";
 import { parseEffect } from "./parseEffect.ts";
 
 interface StructuredCardEffectRecord {
@@ -12,7 +15,7 @@ interface StructuredCardEffectRecord {
   filePath: string;
   rawEffect?: string;
   effects: ReturnType<typeof parseEffect>;
-  parseStatus: "no-effect" | "parsed" | "empty" | "partial";
+  parseStatus: "no-effect" | "keyword-only" | "parsed" | "empty" | "partial";
 }
 
 function walk(dir: string): string[] {
@@ -48,6 +51,18 @@ function parseStatus(
   effects: ReturnType<typeof parseEffect>,
 ): StructuredCardEffectRecord["parseStatus"] {
   if (!isMeaningfulEffect(rawEffect)) return "no-effect";
+  const normalized = cleanHtml(rawEffect ?? "");
+  const segments = splitIntoSegments(normalized);
+  if (
+    segments.length > 0 &&
+    segments.every((segment) => {
+      if (extractPrintedKeyword(segment)) return true;
+      if (!segment.startsWith("【")) return false;
+      return extractPrintedKeyword(parseHeader(segment).rest) !== null;
+    })
+  ) {
+    return "keyword-only";
+  }
   if (effects.length === 0) return "empty";
   if (effects.some((effect) => effect.directives.length === 0 && !effect.pilotKeyword))
     return "partial";
@@ -89,6 +104,7 @@ const summary = {
   generatedAt: new Date().toISOString(),
   cardsScanned: records.length,
   noEffect: records.filter((record) => record.parseStatus === "no-effect").length,
+  keywordOnly: records.filter((record) => record.parseStatus === "keyword-only").length,
   parsed: records.filter((record) => record.parseStatus === "parsed").length,
   partial: records.filter((record) => record.parseStatus === "partial").length,
   empty: records.filter((record) => record.parseStatus === "empty").length,

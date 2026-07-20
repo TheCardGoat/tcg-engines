@@ -77,6 +77,43 @@ export const op13GolDRoger064: CharacterCard = {
             duration: "untilEndOfOpponentNextEndPhase",
           },
         ],
+        optional: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "negateEffects",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: {
+                amount: "all",
+              },
+            },
+            duration: "permanent",
+          },
+          {
+            action: "negateEffects",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Roger Pirates",
+                  match: "includes",
+                  negate: true,
+                },
+              ],
+            },
+            duration: "permanent",
+          },
+        ],
       },
     ],
   },

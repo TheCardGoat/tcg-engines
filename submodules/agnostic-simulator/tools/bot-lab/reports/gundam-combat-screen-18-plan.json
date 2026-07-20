@@ -1,0 +1,13 @@
+{
+  "candidateId": "iter-18-board-preserving-block",
+  "parentStrategyId": "strategic",
+  "hypothesis": "Blocking only for board value or immediate defeat improves the combined combat policy.",
+  "seed": "gundam-combat-common-screen-v1",
+  "evaluation": {
+    "minimumBlocks": 30,
+    "maximumBlocks": 30,
+    "batchSize": 30,
+    "minimumMeanImprovement": 0,
+    "maximumCellRegression": 0.2
+  }
+}

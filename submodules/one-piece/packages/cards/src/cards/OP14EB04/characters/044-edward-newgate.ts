@@ -42,6 +42,7 @@ export const op14eb04EdwardNewgate044: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Whitebeard Pirates",
+                  match: "includes",
                 },
               ],
               actions: [

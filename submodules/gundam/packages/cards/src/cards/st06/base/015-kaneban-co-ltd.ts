@@ -94,11 +94,12 @@ export const st06KanebanCoLtd015: BaseCard = {
         timing: ["whenLinked"],
         conditions: [
           {
-            type: "unitCount",
-            owner: "friendly",
-            comparison: "gte",
-            count: 1,
-            hasTrait: "clan",
+            type: "eventCardMatches",
+            target: {
+              owner: "friendly",
+              cardType: "unit",
+              attributeFilters: [{ attribute: "trait", comparison: "includes", value: "clan" }],
+            },
           },
         ],
         restrictions: [{ type: "oncePerTurn" }],
@@ -106,14 +107,13 @@ export const st06KanebanCoLtd015: BaseCard = {
       directives: [
         {
           action: {
-            action: "grantKeyword",
+            action: "grantKeywordEventCard",
             keyword: "Breach",
             keywordValue: 3,
             duration: "thisTurn",
-            target: {
+            sourceFilter: {
               owner: "friendly",
               cardType: "unit",
-              isLinkUnit: true,
               attributeFilters: [{ attribute: "trait", comparison: "includes", value: "clan" }],
             },
           },

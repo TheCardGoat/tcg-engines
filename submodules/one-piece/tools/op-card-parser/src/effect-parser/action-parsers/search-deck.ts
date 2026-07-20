@@ -26,6 +26,31 @@ function parsePlayDescription(text: string): TargetFilter[] | null {
     .replace(/\s+rested$/i, "")
     .trim();
 
+  // A trailing named-card alternative is independent of an exclusion printed
+  // on the first trait branch: `Trait card other than [A] or up to 1 [B]`.
+  const branchSpecificExclusionMatch =
+    /^(.+?)\s+other than\s+\[([^\]]+)\]\s+or\s+(?:up\s+to\s+)?(?:1\s+)?\[([^\]]+)\]$/i.exec(rest);
+  if (branchSpecificExclusionMatch) {
+    const firstBranch = parsePlayDescription(branchSpecificExclusionMatch[1]!);
+    if (firstBranch && firstBranch.length > 0) {
+      const withExclusion: TargetFilter[] = [
+        { filter: "excludeName", value: branchSpecificExclusionMatch[2]! },
+        ...firstBranch,
+      ];
+      return [
+        {
+          filter: "anyOf",
+          filters: [
+            withExclusion.length === 1
+              ? withExclusion[0]!
+              : { filter: "allOf", filters: withExclusion },
+            { filter: "name", value: branchSpecificExclusionMatch[3]! },
+          ],
+        },
+      ];
+    }
+  }
+
   // Extract a shared exclusion before decomposing alternatives so it applies
   // outside the resulting anyOf rather than being lost inside one branch.
   const excludeMatch = /\s+other than\s+(?:\[([^\]]+)\]|["\u201c]([^"\u201d]+)["\u201d])/i.exec(
@@ -39,7 +64,7 @@ function parsePlayDescription(text: string): TargetFilter[] | null {
   }
 
   const mixedAlternativeMatch =
-    /^(.+?)\s+or\s+(?:1\s+)?((?:red|green|blue|purple|black|yellow)\s+(?:Character|Event|Stage)(?:\s+card)?|card\s+with\s+a\s+type\s+including\s+["“][^"”]+["”]|\[[^\]]+\])$/i.exec(
+    /^(.+?)\s+or\s+(?:1\s+)?((?:(?:red|green|blue|purple|black|yellow)\s+)?(?:Character|Event|Stage)(?:\s+card)?|card\s+with\s+a\s+type\s+including\s+["“][^"”]+["”]|\[[^\]]+\])$/i.exec(
       rest,
     );
   if (mixedAlternativeMatch) {

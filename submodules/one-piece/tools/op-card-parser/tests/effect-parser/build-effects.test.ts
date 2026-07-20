@@ -2,6 +2,83 @@ import { expect, test, describe } from "vite-plus/test";
 import { buildCardEffects } from "../../src/effect-parser/index.ts";
 
 describe("buildCardEffects — inline conditions", () => {
+  test("gates Rayleigh's immediate and delayed On Play actions behind given DON!!", () => {
+    expect(
+      buildCardEffects(
+        "[Rush]\n[On Play] If you have any DON!! cards given, rest up to 1 of your opponent's Characters with a cost of 5 or less. Then, add up to 1 DON!! card from your DON!! deck and set it as active at the end of this turn.",
+      ),
+    ).toEqual({
+      keywords: ["rush"],
+      effects: [
+        {
+          trigger: "onPlay",
+          conditions: [{ condition: "donGiven", player: "self" }],
+          actions: [
+            {
+              action: "rest",
+              target: {
+                player: "opponent",
+                zones: ["character"],
+                count: { amount: 1, upTo: true },
+                filters: [{ filter: "cost", comparison: "lte", value: 5 }],
+              },
+            },
+            {
+              action: "delayed",
+              timing: "endOfThisTurn",
+              actions: [
+                {
+                  action: "addDon",
+                  count: { amount: 1, upTo: true },
+                  state: "active",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  test("parses P-081 colored typed-field condition after a self-return activation cost", () => {
+    expect(
+      buildCardEffects(
+        '[Activate:Main] You may return this Character to the owner\'s hand: If you have 3 or more blue "Cross Guild" type Characters, play up to 1 "Cross Guild" type Character card with a cost of 5 from your hand.',
+      ),
+    ).toEqual({
+      effects: [
+        {
+          trigger: "activateMain",
+          costs: [{ cost: "returnThisToHand" }],
+          actions: [
+            {
+              action: "play",
+              condition: {
+                condition: "zoneCount",
+                player: "self",
+                zone: "character",
+                comparison: "gte",
+                value: 3,
+                filters: [
+                  { filter: "color", value: "blue" },
+                  { filter: "trait", value: "Cross Guild", match: "includes" },
+                ],
+              },
+              source: { player: "self", zone: "hand" },
+              count: { amount: 1, upTo: true },
+              filters: [
+                { filter: "cost", comparison: "eq", value: 5 },
+                { filter: "trait", value: "Cross Guild", match: "includes" },
+                { filter: "cardCategory", value: "character" },
+              ],
+            },
+          ],
+          optional: true,
+        },
+      ],
+    });
+  });
+
   test("builds Kin'emon's compound bottom-deck activation cost", () => {
     expect(
       buildCardEffects(
@@ -327,6 +404,56 @@ describe("buildCardEffects — inline conditions", () => {
     });
   });
 
+  test("treats quoted type alternatives in reveal costs as inclusive traits", () => {
+    expect(
+      buildCardEffects(
+        '[On Play] You may reveal 1 "Music" or "FILM" type card from your hand: Set up to 2 of your DON!! cards as active at the end of this turn.',
+      ),
+    ).toMatchObject({
+      effects: [
+        {
+          costs: [
+            {
+              cost: "revealFromHand",
+              amount: 1,
+              filters: [
+                {
+                  filter: "anyOf",
+                  filters: [
+                    { filter: "trait", value: "Music", match: "includes" },
+                    { filter: "trait", value: "FILM", match: "includes" },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  test("preserves an included-trait Character trash cost", () => {
+    expect(
+      buildCardEffects(
+        '[When Attacking] You may trash 1 of your Characters with a type including "Whitebeard Pirates": Draw 1 card and this Character gains [Banish] during this turn.',
+      ),
+    ).toMatchObject({
+      effects: [
+        {
+          trigger: "whenAttacking",
+          costs: [
+            {
+              cost: "trashCharacter",
+              amount: 1,
+              filters: [{ filter: "trait", value: "Whitebeard Pirates", match: "includes" }],
+            },
+          ],
+          optional: true,
+        },
+      ],
+    });
+  });
+
   test("preserves imperative DON!! and optional self-rest costs before a colon", () => {
     expect(
       buildCardEffects(
@@ -523,11 +650,59 @@ describe("buildCardEffects — inline conditions", () => {
                 zone: "character",
                 comparison: "eq",
                 value: 0,
-                filters: [{ filter: "trait", value: "Celestial Dragons", negate: true }],
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Celestial Dragons",
+                    match: "includes",
+                    negate: true,
+                  },
+                ],
               },
             },
           ],
           optional: true,
+        },
+      ],
+    });
+  });
+
+  test("gates Edison's draw and rest behind the post-cost Life comparison", () => {
+    expect(
+      buildCardEffects(
+        "[Activate: Main] You may trash this Character: If the number of your Life cards is equal to or less than the number of your opponent's Life cards, draw 1 card. Then, rest up to 1 of your opponent's Characters with a cost of 3 or less.",
+      ),
+    ).toMatchObject({
+      effects: [
+        {
+          trigger: "activateMain",
+          conditions: [{ condition: "lifeComparison", selfComparison: "lte" }],
+          costs: [{ cost: "trashThisCard" }],
+          actions: [{ action: "draw" }, { action: "rest" }],
+          optional: true,
+        },
+      ],
+    });
+  });
+
+  test("gates Yamato's draw and subsequent DON!! transfer behind its Life count", () => {
+    expect(
+      buildCardEffects(
+        "[On Play] If you have 3 or less Life cards, draw 2 cards. Then, give up to 1 rested DON!! card to your Leader.",
+      ),
+    ).toMatchObject({
+      effects: [
+        {
+          trigger: "onPlay",
+          conditions: [
+            {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 3,
+            },
+          ],
+          actions: [{ action: "draw" }, { action: "giveDon" }],
         },
       ],
     });
@@ -882,7 +1057,7 @@ describe("buildCardEffects — inline conditions", () => {
               player: "self",
               count: 1,
               ifRevealedCardMatches: {
-                filters: [{ filter: "trait", value: "Whitebeard Pirates" }],
+                filters: [{ filter: "trait", value: "Whitebeard Pirates", match: "includes" }],
                 actions: [
                   { action: "draw", player: "self", amount: 2 },
                   { action: "trashFromHand", player: "self", amount: 1 },
@@ -961,6 +1136,7 @@ describe("buildCardEffects — inline conditions", () => {
     expect(result?.effects).toEqual([
       {
         trigger: "whenBecomesRested",
+        eventFilter: { targetSelf: true },
         conditions: [{ condition: "turn", value: "your" }],
         actions: [
           {
@@ -1016,6 +1192,7 @@ describe("buildCardEffects — inline conditions", () => {
     expect(result?.effects).toEqual([
       {
         trigger: "whenBecomesRested",
+        eventFilter: { targetSelf: true },
         conditions: [{ condition: "turn", value: "your" }],
         actions: [
           {
@@ -1576,6 +1753,254 @@ describe("buildCardEffects — OP02 blue Event and Stage regressions", () => {
             },
           ],
           optional: true,
+        },
+      ],
+    });
+  });
+
+  test("keeps an on-field cost condition on ordered draw then trash actions", () => {
+    expect(
+      buildCardEffects(
+        "[When Attacking] If you have a Character with a cost of 8 or more on your field, draw 1 card and trash 1 card from your hand.",
+      ),
+    ).toEqual({
+      effects: [
+        {
+          trigger: "whenAttacking",
+          conditions: [
+            {
+              condition: "hasCard",
+              player: "self",
+              zone: "character",
+              filters: [{ filter: "cost", comparison: "gte", value: 8 }],
+            },
+          ],
+          actions: [
+            { action: "draw", player: "self", amount: 1 },
+            { action: "trashFromHand", player: "self", amount: 1 },
+          ],
+        },
+      ],
+    });
+  });
+
+  test("keeps a typed Character hand-trash cost before power reduction and draw", () => {
+    expect(
+      buildCardEffects(
+        "[DON!!x1] [When Attacking] You may trash 1 Character card from your hand: Give up to 1 of your opponent's Characters -1000 power during this turn. Then, draw 1 card.",
+      ),
+    ).toEqual({
+      effects: [
+        {
+          trigger: "whenAttacking",
+          conditions: [{ condition: "donAttached", amount: 1 }],
+          costs: [
+            {
+              cost: "trashFromHand",
+              amount: 1,
+              filters: [{ filter: "cardCategory", value: "character" }],
+            },
+          ],
+          actions: [
+            {
+              action: "modifyPower",
+              target: {
+                player: "opponent",
+                zones: ["character"],
+                count: { amount: 1, upTo: true },
+              },
+              value: -1000,
+              duration: "thisTurn",
+            },
+            { action: "draw", player: "self", amount: 1 },
+          ],
+          optional: true,
+        },
+      ],
+    });
+  });
+
+  test("keeps a Character hand-trash cost filtered by printed power", () => {
+    expect(
+      buildCardEffects(
+        "[Blocker][On Play] You may trash 1 Character card with 6000 power or more from your hand: Draw 2 cards.",
+      ),
+    ).toEqual({
+      keywords: ["blocker"],
+      effects: [
+        {
+          trigger: "onPlay",
+          costs: [
+            {
+              cost: "trashFromHand",
+              amount: 1,
+              filters: [
+                { filter: "cardCategory", value: "character" },
+                { filter: "power", comparison: "gte", value: 6000 },
+              ],
+            },
+          ],
+          actions: [{ action: "draw", player: "self", amount: 2 }],
+          optional: true,
+        },
+      ],
+    });
+  });
+
+  test("schedules an opponent DON!! rest at the start of their next Main Phase", () => {
+    expect(
+      buildCardEffects(
+        "[Your Turn] [On Play] If your Leader is multicolored and your opponent has 7 or less DON!! cards on their field, your opponent rests 1 of their active DON!! cards at the start of their next Main Phase.",
+      ),
+    ).toEqual({
+      effects: [
+        {
+          trigger: "onPlay",
+          conditions: [
+            { condition: "turn", value: "your" },
+            {
+              condition: "compound",
+              operator: "and",
+              conditions: [
+                { condition: "leaderMulticolored" },
+                {
+                  condition: "donFieldCount",
+                  player: "opponent",
+                  comparison: "lte",
+                  value: 7,
+                },
+              ],
+            },
+          ],
+          actions: [
+            {
+              action: "delayed",
+              timing: "startOfOpponentNextMainPhase",
+              actions: [
+                {
+                  action: "rest",
+                  target: {
+                    player: "opponent",
+                    zones: ["costArea"],
+                    count: { amount: 1 },
+                    filters: [{ filter: "state", value: "active" }],
+                    chosenBy: "opponent",
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  test("excludes the source from an owned Leader-or-Character power target", () => {
+    expect(
+      buildCardEffects(
+        "[DON!! x1] [When Attacking] Up to 1 of your Leader or Character cards other than this card gains +1000 power during this turn.",
+      ),
+    ).toEqual({
+      effects: [
+        {
+          trigger: "whenAttacking",
+          conditions: [{ condition: "donAttached", amount: 1 }],
+          actions: [
+            {
+              action: "modifyPower",
+              target: {
+                player: "self",
+                zones: ["leader", "character"],
+                count: { amount: 1, upTo: true },
+                filters: [{ filter: "excludeSelf" }],
+              },
+              value: 1000,
+              duration: "thisTurn",
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  test("keeps a rested named-Character condition on a permanent power modifier", () => {
+    expect(
+      buildCardEffects("If you have a rested [Uta], this Character gains +1000 power."),
+    ).toEqual({
+      permanentEffects: [
+        {
+          conditions: [
+            {
+              condition: "hasCard",
+              player: "self",
+              zone: "character",
+              filters: [
+                { filter: "state", value: "rested" },
+                { filter: "name", value: "Uta" },
+              ],
+            },
+          ],
+          actions: [
+            {
+              action: "modifyPower",
+              target: {
+                player: "self",
+                zones: ["character"],
+                count: { amount: 1 },
+                self: true,
+              },
+              value: 1000,
+              duration: "permanent",
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  test("preserves a Life look before returning the Trigger card to hand", () => {
+    expect(
+      buildCardEffects(
+        "[Trigger] Look at up to 1 card from the top of your or your opponent's Life cards, and place it at the top or bottom of the Life cards. Then, add this card to your hand.",
+      ),
+    ).toEqual({
+      effects: [
+        {
+          trigger: "trigger",
+          actions: [
+            { action: "lookAtLife", player: "either", position: "topOrBottom", upTo: true },
+            { action: "addThisCardToHand" },
+          ],
+        },
+      ],
+    });
+  });
+
+  test("grants turn unblockable only to the selected eligible attacker", () => {
+    expect(
+      buildCardEffects(
+        "[On Play] Select up to 1 of your {Straw Hat Crew} type Characters with 6000 power or more. If the selected Character attacks during this turn, your opponent cannot activate [Blocker].",
+      ),
+    ).toEqual({
+      effects: [
+        {
+          trigger: "onPlay",
+          actions: [
+            {
+              action: "grantKeyword",
+              target: {
+                player: "self",
+                zones: ["character"],
+                count: { amount: 1, upTo: true },
+                filters: [
+                  { filter: "trait", value: "Straw Hat Crew", match: "includes" },
+                  { filter: "power", comparison: "gte", value: 6000 },
+                ],
+              },
+              keyword: "unblockable",
+              duration: "thisTurn",
+            },
+          ],
         },
       ],
     });
@@ -2205,6 +2630,7 @@ describe("buildCardEffects — OP14-070 Buffalo", () => {
       effects: [
         {
           trigger: "whenBecomesRested",
+          eventFilter: { targetSelf: true },
           source: "opponentCharacterEffect",
           actions: [
             {
@@ -3326,8 +3752,8 @@ describe("buildCardEffects — OP14-105 Gorgon Sisters", () => {
                 {
                   filter: "anyOf",
                   filters: [
-                    { filter: "trait", value: "Amazon Lily" },
-                    { filter: "trait", value: "Kuja Pirates" },
+                    { filter: "trait", value: "Amazon Lily", match: "includes" },
+                    { filter: "trait", value: "Kuja Pirates", match: "includes" },
                   ],
                 },
               ],
@@ -3343,6 +3769,7 @@ describe("buildCardEffects — OP14-105 Gorgon Sisters", () => {
               },
               count: { amount: 1, upTo: true },
               donState: "rested",
+              distribution: "each",
             },
           ],
           optional: true,
@@ -3668,7 +4095,7 @@ describe("buildCardEffects — OP14-114 Ran", () => {
                 player: "self",
                 zones: ["leader", "character"],
                 count: { amount: 1 },
-                filters: [{ filter: "trait", value: "Kuja Pirates" }],
+                filters: [{ filter: "trait", value: "Kuja Pirates", match: "includes" }],
               },
               count: { amount: 1, upTo: true },
               donState: "rested",
@@ -3726,6 +4153,7 @@ describe("buildCardEffects — OP14-119 Dracule Mihawk", () => {
       effects: [
         {
           trigger: "whenBecomesRested",
+          eventFilter: { targetSelf: true },
           conditions: [{ condition: "turn", value: "your" }],
           actions: [
             {

@@ -33,6 +33,14 @@
     "./live-transition": {
       "types": "./src/live-transition.ts",
       "default": "./src/live-transition.ts"
+    },
+    "./animation-adapter": {
+      "types": "./src/animation-adapter.ts",
+      "default": "./src/animation-adapter.ts"
+    },
+    "./animation-playback": {
+      "types": "./src/animation-playback.ts",
+      "default": "./src/animation-playback.ts"
     }
   },
   "scripts": {
@@ -51,8 +59,10 @@
     "@tcg/typescript-config": "link:../typescript-config",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "@typescript/native": "catalog:",
     "react": "catalog:",
+    "react-dom": "catalog:",
     "vitest": "catalog:"
   },
   "peerDependencies": {

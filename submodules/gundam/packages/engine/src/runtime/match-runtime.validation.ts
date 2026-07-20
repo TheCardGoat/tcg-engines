@@ -160,7 +160,11 @@ export function validateCommand(
 
   // 4. Flow position check
   const flowValidMoves = getFlowValidMoves(state, gundamFlow);
-  if (flowValidMoves !== null && !flowValidMoves.has(move)) {
+  // Moves opting out of the active-player gate are explicitly out-of-band
+  // (for example concede, which either player may submit at any point).
+  // They must also bypass the phase/step allowlist or a visible concede
+  // control becomes unusable in every restricted flow position.
+  if (!moveDef.ignoreActivePlayer && flowValidMoves !== null && !flowValidMoves.has(move)) {
     return {
       valid: false,
       error: `Move "${move}" is not valid in the current phase/step`,

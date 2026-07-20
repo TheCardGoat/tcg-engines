@@ -1,0 +1,754 @@
+{
+  "version": 1,
+  "options": {
+    "p1Strategy": "iter-24-tempo-aware-command",
+    "p2Strategy": "combat-aware",
+    "p1Deck": "ef-starter",
+    "p2Deck": "ef-starter",
+    "matches": 48,
+    "seedBase": "cmd-confirm-ef-starter",
+    "maxActions": 1500,
+    "label": "command confirmation p1 ef-starter"
+  },
+  "summary": {
+    "matches": 48,
+    "p1WinRate": 0.7291666666666666,
+    "p2WinRate": 0.2708333333333333,
+    "drawRate": 0,
+    "avgTurns": 13.4375,
+    "avgActions": 164.47916666666666,
+    "avgElapsedMs": 130.1875,
+    "terminationDistribution": {
+      "game-won": 48,
+      "automation-concession": 0,
+      "repeated-state": 0,
+      "max-actions-exceeded": 0,
+      "concede-failed": 0
+    },
+    "winReasonDistribution": {
+      "player_two has no shields remaining": 35,
+      "player_one has no shields remaining": 13
+    }
+  },
+  "p1": {
+    "wins": 35,
+    "familyStats": {
+      "chooseFirstPlayer": {
+        "attempted": 48,
+        "succeeded": 48,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "alterHand": {
+        "attempted": 48,
+        "succeeded": 48,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "deployUnit": {
+        "attempted": 374,
+        "succeeded": 374,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "deployBase": {
+        "attempted": 21,
+        "succeeded": 21,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "playCommand": {
+        "attempted": 61,
+        "succeeded": 61,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "activateAbility": {
+        "attempted": 36,
+        "succeeded": 36,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "assignPilot": {
+        "attempted": 127,
+        "succeeded": 127,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "playCommandAsPilot": {
+        "attempted": 72,
+        "succeeded": 72,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "declareBlock": {
+        "attempted": 42,
+        "succeeded": 42,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "enterBattle": {
+        "attempted": 552,
+        "succeeded": 552,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passBlock": {
+        "attempted": 353,
+        "succeeded": 353,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passBattleAction": {
+        "attempted": 948,
+        "succeeded": 948,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "discardToHandLimit": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passTurn": {
+        "attempted": 329,
+        "succeeded": 329,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passActionStep": {
+        "attempted": 647,
+        "succeeded": 647,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "concede": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "skipOpponentTurn": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "dropOpponent": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "resolveEffect": {
+        "attempted": 329,
+        "succeeded": 329,
+        "failed": 0,
+        "errorCodes": {}
+      }
+    }
+  },
+  "p2": {
+    "wins": 13,
+    "familyStats": {
+      "chooseFirstPlayer": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "alterHand": {
+        "attempted": 48,
+        "succeeded": 48,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "deployUnit": {
+        "attempted": 314,
+        "succeeded": 314,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "deployBase": {
+        "attempted": 27,
+        "succeeded": 27,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "playCommand": {
+        "attempted": 96,
+        "succeeded": 96,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "activateAbility": {
+        "attempted": 28,
+        "succeeded": 28,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "assignPilot": {
+        "attempted": 119,
+        "succeeded": 119,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "playCommandAsPilot": {
+        "attempted": 59,
+        "succeeded": 59,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "declareBlock": {
+        "attempted": 56,
+        "succeeded": 56,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "enterBattle": {
+        "attempted": 395,
+        "succeeded": 395,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passBlock": {
+        "attempted": 496,
+        "succeeded": 496,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passBattleAction": {
+        "attempted": 951,
+        "succeeded": 951,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "discardToHandLimit": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passTurn": {
+        "attempted": 316,
+        "succeeded": 316,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passActionStep": {
+        "attempted": 645,
+        "succeeded": 645,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "concede": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "skipOpponentTurn": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "dropOpponent": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "resolveEffect": {
+        "attempted": 358,
+        "succeeded": 358,
+        "failed": 0,
+        "errorCodes": {}
+      }
+    }
+  },
+  "matches": [
+    {
+      "matchId": 0,
+      "seed": "cmd-confirm-ef-starter-0",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 16,
+      "actionCount": 199,
+      "elapsedMs": 223
+    },
+    {
+      "matchId": 1,
+      "seed": "cmd-confirm-ef-starter-1",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 16,
+      "actionCount": 208,
+      "elapsedMs": 141
+    },
+    {
+      "matchId": 2,
+      "seed": "cmd-confirm-ef-starter-2",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 199,
+      "elapsedMs": 153
+    },
+    {
+      "matchId": 3,
+      "seed": "cmd-confirm-ef-starter-3",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 10,
+      "actionCount": 111,
+      "elapsedMs": 48
+    },
+    {
+      "matchId": 4,
+      "seed": "cmd-confirm-ef-starter-4",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 196,
+      "elapsedMs": 218
+    },
+    {
+      "matchId": 5,
+      "seed": "cmd-confirm-ef-starter-5",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 152,
+      "elapsedMs": 129
+    },
+    {
+      "matchId": 6,
+      "seed": "cmd-confirm-ef-starter-6",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 141,
+      "elapsedMs": 146
+    },
+    {
+      "matchId": 7,
+      "seed": "cmd-confirm-ef-starter-7",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 10,
+      "actionCount": 112,
+      "elapsedMs": 70
+    },
+    {
+      "matchId": 8,
+      "seed": "cmd-confirm-ef-starter-8",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 132,
+      "elapsedMs": 103
+    },
+    {
+      "matchId": 9,
+      "seed": "cmd-confirm-ef-starter-9",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 200,
+      "elapsedMs": 190
+    },
+    {
+      "matchId": 10,
+      "seed": "cmd-confirm-ef-starter-10",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 184,
+      "elapsedMs": 153
+    },
+    {
+      "matchId": 11,
+      "seed": "cmd-confirm-ef-starter-11",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 138,
+      "elapsedMs": 78
+    },
+    {
+      "matchId": 12,
+      "seed": "cmd-confirm-ef-starter-12",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 181,
+      "elapsedMs": 170
+    },
+    {
+      "matchId": 13,
+      "seed": "cmd-confirm-ef-starter-13",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 170,
+      "elapsedMs": 147
+    },
+    {
+      "matchId": 14,
+      "seed": "cmd-confirm-ef-starter-14",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 18,
+      "actionCount": 212,
+      "elapsedMs": 198
+    },
+    {
+      "matchId": 15,
+      "seed": "cmd-confirm-ef-starter-15",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 145,
+      "elapsedMs": 126
+    },
+    {
+      "matchId": 16,
+      "seed": "cmd-confirm-ef-starter-16",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 10,
+      "actionCount": 123,
+      "elapsedMs": 96
+    },
+    {
+      "matchId": 17,
+      "seed": "cmd-confirm-ef-starter-17",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 128,
+      "elapsedMs": 103
+    },
+    {
+      "matchId": 18,
+      "seed": "cmd-confirm-ef-starter-18",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 15,
+      "actionCount": 181,
+      "elapsedMs": 146
+    },
+    {
+      "matchId": 19,
+      "seed": "cmd-confirm-ef-starter-19",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 170,
+      "elapsedMs": 137
+    },
+    {
+      "matchId": 20,
+      "seed": "cmd-confirm-ef-starter-20",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 137,
+      "elapsedMs": 116
+    },
+    {
+      "matchId": 21,
+      "seed": "cmd-confirm-ef-starter-21",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 17,
+      "actionCount": 214,
+      "elapsedMs": 177
+    },
+    {
+      "matchId": 22,
+      "seed": "cmd-confirm-ef-starter-22",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 169,
+      "elapsedMs": 138
+    },
+    {
+      "matchId": 23,
+      "seed": "cmd-confirm-ef-starter-23",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 182,
+      "elapsedMs": 124
+    },
+    {
+      "matchId": 24,
+      "seed": "cmd-confirm-ef-starter-24",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 17,
+      "actionCount": 183,
+      "elapsedMs": 143
+    },
+    {
+      "matchId": 25,
+      "seed": "cmd-confirm-ef-starter-25",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 162,
+      "elapsedMs": 117
+    },
+    {
+      "matchId": 26,
+      "seed": "cmd-confirm-ef-starter-26",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 168,
+      "elapsedMs": 134
+    },
+    {
+      "matchId": 27,
+      "seed": "cmd-confirm-ef-starter-27",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 152,
+      "elapsedMs": 203
+    },
+    {
+      "matchId": 28,
+      "seed": "cmd-confirm-ef-starter-28",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 17,
+      "actionCount": 211,
+      "elapsedMs": 187
+    },
+    {
+      "matchId": 29,
+      "seed": "cmd-confirm-ef-starter-29",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 134,
+      "elapsedMs": 80
+    },
+    {
+      "matchId": 30,
+      "seed": "cmd-confirm-ef-starter-30",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 134,
+      "elapsedMs": 89
+    },
+    {
+      "matchId": 31,
+      "seed": "cmd-confirm-ef-starter-31",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 17,
+      "actionCount": 192,
+      "elapsedMs": 156
+    },
+    {
+      "matchId": 32,
+      "seed": "cmd-confirm-ef-starter-32",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 143,
+      "elapsedMs": 102
+    },
+    {
+      "matchId": 33,
+      "seed": "cmd-confirm-ef-starter-33",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 18,
+      "actionCount": 211,
+      "elapsedMs": 146
+    },
+    {
+      "matchId": 34,
+      "seed": "cmd-confirm-ef-starter-34",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 9,
+      "actionCount": 99,
+      "elapsedMs": 55
+    },
+    {
+      "matchId": 35,
+      "seed": "cmd-confirm-ef-starter-35",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 168,
+      "elapsedMs": 170
+    },
+    {
+      "matchId": 36,
+      "seed": "cmd-confirm-ef-starter-36",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 160,
+      "elapsedMs": 123
+    },
+    {
+      "matchId": 37,
+      "seed": "cmd-confirm-ef-starter-37",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 200,
+      "elapsedMs": 146
+    },
+    {
+      "matchId": 38,
+      "seed": "cmd-confirm-ef-starter-38",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 142,
+      "elapsedMs": 100
+    },
+    {
+      "matchId": 39,
+      "seed": "cmd-confirm-ef-starter-39",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 18,
+      "actionCount": 207,
+      "elapsedMs": 146
+    },
+    {
+      "matchId": 40,
+      "seed": "cmd-confirm-ef-starter-40",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 127,
+      "elapsedMs": 100
+    },
+    {
+      "matchId": 41,
+      "seed": "cmd-confirm-ef-starter-41",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 126,
+      "elapsedMs": 84
+    },
+    {
+      "matchId": 42,
+      "seed": "cmd-confirm-ef-starter-42",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 151,
+      "elapsedMs": 82
+    },
+    {
+      "matchId": 43,
+      "seed": "cmd-confirm-ef-starter-43",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 159,
+      "elapsedMs": 100
+    },
+    {
+      "matchId": 44,
+      "seed": "cmd-confirm-ef-starter-44",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 148,
+      "elapsedMs": 79
+    },
+    {
+      "matchId": 45,
+      "seed": "cmd-confirm-ef-starter-45",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 136,
+      "elapsedMs": 75
+    },
+    {
+      "matchId": 46,
+      "seed": "cmd-confirm-ef-starter-46",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 16,
+      "actionCount": 207,
+      "elapsedMs": 179
+    },
+    {
+      "matchId": 47,
+      "seed": "cmd-confirm-ef-starter-47",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 17,
+      "actionCount": 191,
+      "elapsedMs": 123
+    }
+  ],
+  "createdAt": "2026-07-18T22:28:35.731Z"
+}

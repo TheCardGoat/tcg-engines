@@ -50,10 +50,12 @@ export const op14eb04Marguerite113: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Amazon Lily",
+                    match: "includes",
                   },
                   {
                     filter: "trait",
                     value: "Kuja Pirates",
+                    match: "includes",
                   },
                 ],
               },
@@ -74,19 +76,12 @@ export const op14eb04Marguerite113: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Kuja Pirates",
+            match: "includes",
           },
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-            self: true,
+            action: "playThisCard",
           },
         ],
       },

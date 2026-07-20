@@ -70,6 +70,7 @@ export const op14eb04Mr2BonKureiBentham091: CharacterCard = {
               {
                 filter: "trait",
                 value: "Baroque Works",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

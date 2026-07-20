@@ -7,6 +7,10 @@ import type {
 import { simulatorAnimationDebug } from "@tcg/simulator-ui";
 import type { SimulatorZone } from "@tcg/simulator-contract";
 import type { CardZone } from "@tcg/cyberpunk-types";
+import {
+  adaptAnimationPlans,
+  type AnimationPlanAdapter,
+} from "@tcg/simulator-runtime/animation-adapter";
 
 import { cyberpunkCardZoneToSimulatorZone } from "../engine/projectSimulator";
 import { PLAYER_SIDE_TO_ID, type Side } from "../engine";
@@ -42,7 +46,22 @@ const COMBAT_REDIRECT_READABLE_DURATION_MS = 900;
 const LEGEND_REVEAL_TRANSFER_DURATION_MS = 240;
 const CARD_REVEAL_TRANSFER_DURATION_MS = 320;
 
+export const cyberpunkAnimationPlanAdapter: AnimationPlanAdapter<
+  AnimationScript,
+  CyberpunkSharedAnimationContext
+> = {
+  id: "cyberpunk-animation-script-v1",
+  toAnimationPlans: buildCyberpunkAnimationPlans,
+};
+
 export function cyberpunkAnimationScriptToAnimationPlans(
+  script: AnimationScript,
+  context: CyberpunkSharedAnimationContext,
+): AnimationPlanV1[] {
+  return adaptAnimationPlans(cyberpunkAnimationPlanAdapter, script, context);
+}
+
+function buildCyberpunkAnimationPlans(
   script: AnimationScript,
   context: CyberpunkSharedAnimationContext,
 ): AnimationPlanV1[] {

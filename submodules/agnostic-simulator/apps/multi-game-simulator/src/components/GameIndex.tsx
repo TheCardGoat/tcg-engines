@@ -14,8 +14,8 @@ export default function GameIndex({ onNavigate }: GameIndexProps) {
   }, []);
 
   const games = listIndexGames();
-  const hubCount = games.length + 1;
-  const routeCount = games.length + 2;
+  const hubCount = games.length + 2;
+  const routeCount = games.length + 3;
 
   return (
     <main className={classes.page}>
@@ -53,6 +53,12 @@ export default function GameIndex({ onNavigate }: GameIndexProps) {
                 <a className={classes.railLink} href="/animation-fixtures">
                   <span>Animation</span>
                   <span>/animation-fixtures</span>
+                </a>
+              </li>
+              <li>
+                <a className={classes.railLink} href={buildMountedHref("/simulator-ui-fixtures")}>
+                  <span>Shared UI</span>
+                  <span>/simulator-ui-fixtures</span>
                 </a>
               </li>
               {games.map((game) => {
@@ -103,6 +109,33 @@ export default function GameIndex({ onNavigate }: GameIndexProps) {
                   </span>
                 </span>
                 <span className={classes.hubBadge}>2 animation fixtures</span>
+              </a>
+            </li>
+            <li className={classes.hubItem}>
+              <a
+                href={buildMountedHref("/simulator-ui-fixtures")}
+                className={classes.hubLink}
+                style={
+                  {
+                    "--row-accent": "oklch(0.68 0.12 225)",
+                    "--row-accent-soft": "oklch(0.94 0.028 225)",
+                  } as CSSProperties
+                }
+                onClick={(event) => {
+                  event.preventDefault();
+                  onNavigate(buildMountedHref("/simulator-ui-fixtures"));
+                }}
+              >
+                <span className={classes.hubIcon} aria-hidden="true">
+                  ◫
+                </span>
+                <span className={classes.hubText}>
+                  <span className={classes.hubName}>Shared UI fixtures</span>
+                  <span className={classes.hubDescription}>
+                    Connection and clock states across responsive simulator chrome.
+                  </span>
+                </span>
+                <span className={classes.hubBadge}>3 UI states</span>
               </a>
             </li>
             {games.map((game) => {

@@ -32,8 +32,8 @@ export const op14eb04Buffalo070: CharacterCard = {
     effects: [
       {
         trigger: "whenBecomesRested",
-        eventFilter: { targetSelf: true },
         source: "opponentCharacterEffect",
+        eventFilter: { targetSelf: true },
         actions: [
           {
             action: "returnDon",

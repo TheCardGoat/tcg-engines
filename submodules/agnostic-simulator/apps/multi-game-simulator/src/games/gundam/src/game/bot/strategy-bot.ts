@@ -11,6 +11,8 @@ import {
   type TakeAutomatedActionWithFallbackResult,
 } from "@tcg/gundam-engine";
 
+import { animationPlaybackGateFor } from "./animation-playback-gate.ts";
+
 /**
  * Bot play speed presets — the delay between an opportunity to act and
  * the actual submission. Values line up with Lorcana's speed buckets so
@@ -144,6 +146,7 @@ export function attachStrategyBot(
   }
 
   const player = asPlayerId(playerName) as PlayerId;
+  const animationGate = animationPlaybackGateFor(runtime);
   let strategy = options.strategy ?? getSafeGundamAutomatedActionStrategyOption().strategy;
   let speed: BotSpeed = options.speed ?? "balanced";
   let mode: BotPlayMode = options.playMode ?? "auto";
@@ -167,7 +170,8 @@ export function attachStrategyBot(
   const shouldAct = (): boolean => {
     const state = runtime.getState();
     if (state.ctx.status.gameEnded) return false;
-    return state.ctx.status.activePlayer === player;
+    if (state.ctx.status.activePlayer !== player) return false;
+    return speed === "fast" || !animationGate.isBlocked();
   };
 
   const submit = (): TakeAutomatedActionWithFallbackResult | undefined => {
@@ -208,6 +212,14 @@ export function attachStrategyBot(
   const unsubscribe = runtime.onStateUpdate(() => {
     if (mode === "auto") schedule();
   });
+  const unsubscribeAnimationGate = animationGate.subscribe(() => {
+    if (mode !== "auto" || speed === "fast") return;
+    if (animationGate.isBlocked()) {
+      clearTimer();
+      return;
+    }
+    schedule();
+  });
 
   // Prime once at attach time in case the initial state already has
   // the bot as activePlayer (e.g. skipToMainPhase fixtures where the
@@ -228,9 +240,9 @@ export function attachStrategyBot(
     },
     setSpeed(nextSpeed: BotSpeed): void {
       speed = nextSpeed;
-      // In auto mode, reschedule so the new speed takes effect at the
-      // next tick rather than waiting out the old one.
-      if (mode === "auto" && timer !== null) {
+      // Re-evaluate both the delay and animation gate. Fast mode intentionally
+      // runs through active animations; balanced and slow wait for completion.
+      if (mode === "auto") {
         clearTimer();
         schedule();
       }
@@ -248,6 +260,7 @@ export function attachStrategyBot(
     dispose(): void {
       clearTimer();
       unsubscribe();
+      unsubscribeAnimationGate();
       decisionListeners.clear();
     },
   };

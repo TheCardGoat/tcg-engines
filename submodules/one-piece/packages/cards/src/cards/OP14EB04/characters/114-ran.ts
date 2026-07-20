@@ -45,6 +45,7 @@ export const op14eb04Ran114: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Kuja Pirates",
+                  match: "includes",
                 },
               ],
             },
@@ -63,21 +64,10 @@ export const op14eb04Ran114: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Kuja Pirates",
+            match: "includes",
           },
         ],
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-            self: true,
-          },
-        ],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   },

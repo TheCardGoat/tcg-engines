@@ -620,3 +620,15 @@ describe("turnLifeFaceUp cost", () => {
     expect(seg.optional).toBe(true);
   });
 });
+
+describe("giveDon cost", () => {
+  test("keeps the active DON!! recipient payment before trashing this Character", () => {
+    const result = parseEffectText(
+      "[Activate: Main] You may give 1 of your active DON!! cards to 1 of your Leader or Character cards and trash this Character: Draw 1 card.",
+    );
+    expect(result.segments[0]!.costs).toEqual([
+      { type: "giveDon", amount: 1 },
+      { type: "trashThisCard" },
+    ]);
+  });
+});

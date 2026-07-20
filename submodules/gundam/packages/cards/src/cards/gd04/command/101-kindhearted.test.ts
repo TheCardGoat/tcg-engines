@@ -87,7 +87,6 @@ describe("Kindhearted (GD04-101)", () => {
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
     const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p2.enterBattle(attackerId, "direct"));
@@ -99,7 +98,7 @@ describe("Kindhearted (GD04-101)", () => {
 
     expect(p1.getHand()).toHaveLength(1);
     expect(p1.getCardsInZone("deck")).toHaveLength(1);
-    expect(p1.getCardZone(shieldId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(gd04Kindhearted101)).toBe(`trash:${PLAYER_ONE}`);
   });
 
   it("loses immediately after an effect draws the final deck card", () => {

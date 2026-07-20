@@ -30,7 +30,6 @@ describe("OP02-037 Nico Robin", () => {
     expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(unrelatedId);
     expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(wrongCostId);
     engine.resolveDecision("effectPlaySelection", { selectedIds: [filmId] }, "south");
-    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
 
     const view = engine.getView("south");
     expect(view.players.south.characters.some((card) => card?.instanceId === filmId)).toBe(true);

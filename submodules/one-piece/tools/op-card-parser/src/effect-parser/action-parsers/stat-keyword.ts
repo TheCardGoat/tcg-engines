@@ -567,10 +567,15 @@ export function parseGrantKeywordAction(text: string): GrantKeywordAction | null
  */
 export function parseCompoundNamedTraitPower(text: string): Action[] | null {
   const trimmed = text.trim().replace(/\.+$/, "");
-  const match =
+  const establishedMatch =
     /^your\s+\[([^\]]+)\]\s+and\s+all\s+(?:of\s+)?your\s+Characters\s+with\s+a\s+type\s+including\s+["\u201c]([^"\u201d]+)["\u201d]\s+gain\s+([+-]?\d+)\s+power(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
       trimmed,
     );
+  const allCharactersMatch =
+    /^all\s+of\s+your\s+\[([^\]]+)\]\s+and\s+["\u201c]([^"\u201d]+)["\u201d]\s+type\s+Characters\s+gain\s+([+-]?\d+)\s+power(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
+      trimmed,
+    );
+  const match = establishedMatch ?? allCharactersMatch;
   if (!match) return null;
 
   const name = match[1]!;
@@ -583,7 +588,7 @@ export function parseCompoundNamedTraitPower(text: string): Action[] | null {
       action: "modifyPower",
       target: {
         player: "self",
-        zones: ["leader", "character"],
+        zones: allCharactersMatch ? ["character"] : ["leader", "character"],
         count: { amount: "all" },
         filters: [{ filter: "name", value: name }],
       },

@@ -49,6 +49,7 @@ export const op14eb04MsAllSunday084: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Baroque Works",
+            match: "includes",
           },
         ],
         actions: [
@@ -71,6 +72,7 @@ export const op14eb04MsAllSunday084: CharacterCard = {
               {
                 filter: "trait",
                 value: "Baroque Works",
+                match: "includes",
               },
               {
                 filter: "cardCategory",
@@ -97,6 +99,7 @@ export const op14eb04MsAllSunday084: CharacterCard = {
               {
                 filter: "trait",
                 value: "Baroque Works",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

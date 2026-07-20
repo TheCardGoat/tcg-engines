@@ -41,10 +41,14 @@ const GROUP_BY_FIXTURE: Record<IndexedFixtureName, FixtureRoute["group"]> = {
   "discard-limit-demo": "Main phase",
   "newly-deployed-cannot-attack-demo": "Main phase",
   "action-only-command-demo": "Main phase",
+  "command-auto-resolve-demo": "Main phase",
   "command-rest-demo": "Main phase",
   "command-multi-target-demo": "Main phase",
   "activate-ability-demo": "Main phase",
   "pending-effect-click-guard-demo": "Main phase",
+  "striker-pack-choice-demo": "Effects",
+  "optional-prompt-demo": "Effects",
+  "deck-look-prompt-demo": "Effects",
   "battle-ready-demo": "Battle",
   "block-step-demo": "Battle",
   "first-strike-demo": "Battle",
@@ -61,6 +65,9 @@ const GROUP_BY_FIXTURE: Record<IndexedFixtureName, FixtureRoute["group"]> = {
   "when-linked-non-link-demo": "Effects",
   "link-unit-deploy-demo": "Effects",
   "support-ability-demo": "Effects",
+  "return-to-hand-demo": "Effects",
+  "return-to-deck-demo": "Effects",
+  "urgent-timer-demo": "Battle",
 };
 
 const LABEL_BY_FIXTURE: Partial<Record<FixtureName, string>> = {

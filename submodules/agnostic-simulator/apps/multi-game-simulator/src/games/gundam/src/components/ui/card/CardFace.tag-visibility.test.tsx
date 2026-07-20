@@ -74,4 +74,25 @@ describe("CardFace · tag strip visibility across scales", () => {
     );
     expect(queryByTestId("stat-current-badges")).toBeNull();
   });
+
+  it("fails closed when directly given a face-down card with private fields", () => {
+    const privateCard: GameCardData = {
+      ...card,
+      id: "player_one_deck_ST01-015_01",
+      name: "White Base",
+      traits: ["Earth Federation"],
+      img: "https://private.invalid/ST01-015.webp",
+      faceDown: true,
+    };
+    const { container } = render(
+      <CardFace card={privateCard} width={CANONICAL_WIDTH} height={1024} />,
+    );
+    const markup = container.innerHTML;
+
+    expect(markup).toContain('aria-label="Hidden card"');
+    expect(markup).not.toContain("White Base");
+    expect(markup).not.toContain("ST01-015");
+    expect(markup).not.toContain("private.invalid");
+    expect(markup).not.toContain("Earth Federation");
+  });
 });

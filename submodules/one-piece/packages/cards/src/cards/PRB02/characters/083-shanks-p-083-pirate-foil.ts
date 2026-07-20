@@ -52,6 +52,18 @@ export const prb02ShanksP083PirateFoil083: CharacterCard = {
             amount: 1,
           },
         ],
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

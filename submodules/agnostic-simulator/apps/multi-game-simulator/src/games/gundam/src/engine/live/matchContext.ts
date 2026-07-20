@@ -1,4 +1,4 @@
-import type { EngineInteractionView } from "@tcg/protocol";
+import type { AnimationPacketV1, EngineInteractionView } from "@tcg/protocol";
 import type { GameSlug } from "@tcg/simulator-contract";
 
 import { playUrl } from "../../../../../runtime/gameRuntimeApi.ts";
@@ -26,8 +26,16 @@ export interface LiveMatchView {
   state: Record<string, unknown> | null;
   /** Protocol interaction projection for the controlled seat. */
   interactionView?: EngineInteractionView;
+  /** Authoritative, viewer-safe packets delivered by the gateway. */
+  animationPackets: readonly LiveAnimationPacket[];
   /** Set when `game_ended` arrives. */
   ended: { winnerId: string | null; reason: string | null } | null;
+}
+
+export interface LiveAnimationPacket {
+  readonly packet: AnimationPacketV1;
+  readonly stateVersion: number;
+  readonly turnNumber: number;
 }
 
 export interface LiveMatchOverview {
@@ -57,6 +65,7 @@ export function createInitialLiveMatchView(input: {
     playerId: input.playerId,
     version: 0,
     state: null,
+    animationPackets: [],
     ended: null,
   };
 }
@@ -115,10 +124,8 @@ export function resolveMatchOverviewDestination(
   params.delete("gameId");
   const query = params.toString();
   const path = `/matches/${encodeURIComponent(overview.matchId)}/games/${encodeURIComponent(gameId)}`;
-  return new URL(
-    `${buildMountedHref(path, basename)}${query ? `?${query}` : ""}`,
-    window.location.origin,
-  );
+  const origin = typeof window === "undefined" ? "http://localhost" : window.location.origin;
+  return new URL(`${buildMountedHref(path, basename)}${query ? `?${query}` : ""}`, origin);
 }
 
 /**

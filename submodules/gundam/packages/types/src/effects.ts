@@ -83,6 +83,8 @@ export interface EffectCost {
   restTarget?: TargetFilter;
   /** Choose and exile matching cards from your trash as an activation cost. */
   exileFromTrash?: TargetFilter;
+  /** Return the card that owns this effect to its owner's deck as an activation cost. */
+  returnSelfToDeck?: "top" | "bottom";
   /**
    * Destroy the card that owns this effect as part of paying the cost
    * (printed "Destroy this Unit：" — e.g. GD02-011 Moebius Peacemaker Team).
@@ -973,6 +975,14 @@ export type EffectAction =
       keywordValue?: number;
       duration: EffectDuration;
       target: TargetFilter;
+    }
+  | {
+      /** Grant a keyword to the card carried by the triggering event. */
+      action: "grantKeywordEventCard";
+      keyword: KeywordEffect;
+      keywordValue?: number;
+      duration: EffectDuration;
+      sourceFilter?: TargetFilter;
     }
   | {
       /** Copy printed keyword effects from a chosen source card onto target. */

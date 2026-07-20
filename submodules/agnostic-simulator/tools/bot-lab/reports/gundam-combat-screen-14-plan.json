@@ -1,0 +1,13 @@
+{
+  "candidateId": "iter-14-effective-combat",
+  "parentStrategyId": "strategic",
+  "hypothesis": "Effective-stat attack ranking improves combat selection.",
+  "seed": "gundam-combat-common-screen-v1",
+  "evaluation": {
+    "minimumBlocks": 30,
+    "maximumBlocks": 30,
+    "batchSize": 30,
+    "minimumMeanImprovement": 0,
+    "maximumCellRegression": 0.2
+  }
+}

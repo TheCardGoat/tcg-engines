@@ -39,10 +39,12 @@ export const op14eb04Usopp022: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "FILM",
+                match: "includes",
               },
               {
                 condition: "leaderTrait",
                 trait: "Straw Hat Crew",
+                match: "includes",
               },
             ],
           },

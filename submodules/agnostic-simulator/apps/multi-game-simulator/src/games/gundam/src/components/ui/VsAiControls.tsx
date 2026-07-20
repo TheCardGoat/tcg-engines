@@ -40,7 +40,7 @@ export function VsAiControls() {
           "--simulator-neutral-rgb": "60 74 107",
           "--simulator-success-rgb": "46 166 90",
           "--simulator-error-rgb": "215 38 61",
-          "--simulator-surface-strong": "rgba(255,255,255,.88)",
+          "--simulator-surface-strong": "oklch(0.26 0.035 260 / .94)",
         } as CSSProperties
       }
     >

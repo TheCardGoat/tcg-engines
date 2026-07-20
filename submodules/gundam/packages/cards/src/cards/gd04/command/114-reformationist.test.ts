@@ -22,7 +22,6 @@ describe("Reformationist (GD04-114)", () => {
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
-      const shieldId = p1.getCardsInZone("shieldArea")[0]!;
       const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p2.enterBattle(attackerId, "direct"));
@@ -31,39 +30,39 @@ describe("Reformationist (GD04-114)", () => {
       expectSuccess(p2.passBattleAction());
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "optional",
-        sourceCardId: shieldId,
+        sourceCardId: expect.any(String),
         directiveIndex: -1,
       });
 
-      return { p1, shieldId };
+      return { p1 };
     }
 
     it('adds the chosen Unit card with "Trans-Am" in its name when accepted', () => {
       const transAm = createMockUnit({ name: "Gundam Exia Trans-Am" });
-      const { p1, shieldId } = revealBurst(transAm);
+      const { p1 } = revealBurst(transAm);
       const transAmId = p1.getCardsInZone("trash")[0]!;
 
       expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "targetSelection",
-        sourceCardId: shieldId,
+        sourceCardId: expect.any(String),
         directiveIndex: 0,
       });
       expectSuccess(p1.resolveEffect({ targets: [transAmId] }));
 
       expect(p1.getHand()).toContain(transAmId);
-      expect(p1.getCardZone(shieldId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardZone(gd04Reformationist114)).toBe(`trash:${PLAYER_ONE}`);
     });
 
     it("leaves the Trans-Am Unit in trash when the Burst is declined", () => {
       const transAm = createMockUnit({ name: "Gundam Exia Trans-Am" });
-      const { p1, shieldId } = revealBurst(transAm);
+      const { p1 } = revealBurst(transAm);
       const transAmId = p1.getCardsInZone("trash")[0]!;
 
       expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: false } }));
 
       expect(p1.getCardsInZone("trash")).toContain(transAmId);
-      expect(p1.getCardZone(shieldId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardZone(gd04Reformationist114)).toBe(`trash:${PLAYER_ONE}`);
     });
 
     it('rejects a trash Unit without "Trans-Am" in its name', () => {

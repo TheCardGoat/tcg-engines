@@ -69,20 +69,27 @@ export const prb02MonkeyDLuffyPrb02005005: CharacterCard = {
         ],
         actions: [
           {
-            action: "rest",
-            target: {
-              player: "opponent",
-              zones: ["costArea"],
-              count: {
-                amount: 1,
-              },
-              filters: [
-                {
-                  filter: "state",
-                  value: "active",
+            action: "delayed",
+            timing: "startOfOpponentNextMainPhase",
+            actions: [
+              {
+                action: "rest",
+                target: {
+                  player: "opponent",
+                  zones: ["costArea"],
+                  count: {
+                    amount: 1,
+                  },
+                  filters: [
+                    {
+                      filter: "state",
+                      value: "active",
+                    },
+                  ],
+                  chosenBy: "opponent",
                 },
-              ],
-            },
+              },
+            ],
           },
         ],
       },

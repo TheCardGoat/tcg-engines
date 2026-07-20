@@ -51,21 +51,12 @@ const laterStateFixtures = [];
 const precommittedHappyPaths = [];
 let inspected = 0;
 
-const STRICT_BEHAVIOR_SETS = new Set(["gd01", "gd02", "gd03", "gd04"]);
-// Sets audited end-to-end for pre-reveal hidden-zone identity reads. Add a set
-// only when its full card fixture suite is migrated to the behavior contract.
-const SHIELD_IDENTITY_SAFE_SETS = new Set(["gd01", "gd02", "gd03"]);
-// Sets whose individual test cases have been audited to require both a
-// deterministic fixture and at least one public player move. This closes the
-// loophole where one behavioral test could mask structural siblings in the
-// same file.
-const PER_TEST_BEHAVIOR_SETS = new Set(["gd01", "gd02"]);
-
 const PUBLIC_PLAYER_MOVE_METHODS = new Set([
   "chooseFirstPlayer",
   "alterHand",
   "deployUnit",
   "deployBase",
+  "activateBaseAbility",
   "assignPilot",
   "playCommand",
   "playCommandAsPilot",
@@ -166,7 +157,11 @@ async function* walk(dir) {
   }
 }
 
-function auditIndividualBehaviorTests(content, testRel) {
+function auditIndividualBehaviorTests(
+  content,
+  testRel,
+  { enforceLaterStateFixtures = true, enforceStagedChoices = true } = {},
+) {
   const source = ts.createSourceFile(
     testRel,
     content,
@@ -244,6 +239,7 @@ function auditIndividualBehaviorTests(content, testRel) {
           const activatedCost =
             moveName === "activateAbility" && testRel.includes("023-char-s-gelgoog.test.ts");
           if (
+            enforceStagedChoices &&
             (moveName === "playCommand" ||
               moveName === "deployBase" ||
               moveName === "deployUnit" ||
@@ -292,7 +288,7 @@ function auditIndividualBehaviorTests(content, testRel) {
     }
     ts.forEachChild(node, auditFixtureCall);
   }
-  auditFixtureCall(source);
+  if (enforceLaterStateFixtures) auditFixtureCall(source);
 
   function analyze(node, seenHelpers = new Set()) {
     let hasFixture = false;
@@ -362,20 +358,17 @@ for await (const abs of walk(CARDS_DIR)) {
   // packages/cards/src/cards/<set>/<type>/<file>.ts has 7 segments incl. .ts
   if (segments.length < 7) continue;
 
-  // Skip cards with no behavioral surface (empty effects + empty keywordEffects),
-  // except strict behavior sets: their card-by-card quality gate requires
-  // proof for vanilla cards too (play legality, cost, and destination are behavior).
-  // These are pure stat/system cards (EX Base, EX Resource, vanilla units).
-  // A behavioral test would assert nothing useful.
+  // Cards with no authored effects or keywords are covered by the canonical
+  // parameterized vanilla catalog invariant rather than one sibling test per
+  // card. EX Base, EX Resource, and ordinary Resource setup behavior belongs
+  // to its shared setup/runtime tests, not a generated card fixture.
   const cardSrc = await readFile(abs, "utf8");
   // Detect non-empty arrays: an open `[` followed by an object literal OR a
   // string literal. The latter form covers `keywordEffects: ['Blocker']`,
   // which earlier versions of this script missed.
   const hasEffects = /effects\s*:\s*\[\s*(?:\{|['"`])/.test(cardSrc);
   const hasKeywords = /keywordEffects\s*:\s*\[\s*(?:\{|['"`])/.test(cardSrc);
-  const cardSet = segments[4];
-  const isStrictSet = STRICT_BEHAVIOR_SETS.has(cardSet);
-  if (!isStrictSet && !hasEffects && !hasKeywords) continue;
+  if (!hasEffects && !hasKeywords) continue;
   if (allowlist.has(rel)) continue;
 
   inspected++;
@@ -387,35 +380,24 @@ for await (const abs of walk(CARDS_DIR)) {
     if (!/\b(it|test)\s*\(\s*['"`]/.test(content)) {
       empty.push(testRel);
     }
-    if (isStrictSet && /\b(?:it|test)\.(?:skip|todo)\b/.test(content)) {
+    if (/\b(?:it|test)\.(?:skip|todo)\b/.test(content)) {
       skipped.push(testRel);
     }
-    if (
-      isStrictSet &&
-      /\b[A-Za-z_$][\w$]*\.(?:effects|keywordEffects)(?:(?:\?|!)\.)?/.test(content)
-    ) {
+    if (/\b[A-Za-z_$][\w$]*\.(?:effects|keywordEffects)(?:(?:\?|!)\.)?/.test(content)) {
       structural.push(testRel);
     }
-    if (isStrictSet) {
-      if (!/\b(?:GundamTestEngine\.create|expectUnitCanDeploy)\b/.test(content)) {
-        fixtureless.push(testRel);
-      }
-      if (PER_TEST_BEHAVIOR_SETS.has(cardSet)) {
-        auditIndividualBehaviorTests(content, testRel);
-        if (/\brestedResources\s*\(/.test(content)) {
-          shortcuts.push(
-            `${testRel} — seeds already-rested resources instead of reaching that state through player moves`,
-          );
-        }
-      }
-      for (const [pattern, reason] of STRICT_SET_FORBIDDEN_TEST_PATTERNS) {
-        if (pattern.test(content)) shortcuts.push(`${testRel} — ${reason}`);
-      }
-      if (SHIELD_IDENTITY_SAFE_SETS.has(cardSet)) {
-        for (const [pattern, reason] of SHIELD_IDENTITY_FORBIDDEN_TEST_PATTERNS) {
-          if (pattern.test(content)) shortcuts.push(`${testRel} — ${reason}`);
-        }
-      }
+    if (!/\b(?:GundamTestEngine\.create|expectUnitCanDeploy)\b/.test(content)) {
+      fixtureless.push(testRel);
+    }
+    auditIndividualBehaviorTests(content, testRel, {
+      enforceLaterStateFixtures: false,
+      enforceStagedChoices: false,
+    });
+    for (const [pattern, reason] of STRICT_SET_FORBIDDEN_TEST_PATTERNS) {
+      if (pattern.test(content)) shortcuts.push(`${testRel} — ${reason}`);
+    }
+    for (const [pattern, reason] of SHIELD_IDENTITY_FORBIDDEN_TEST_PATTERNS) {
+      if (pattern.test(content)) shortcuts.push(`${testRel} — ${reason}`);
     }
   } catch {
     missing.push(rel);

@@ -1,0 +1,13 @@
+{
+  "candidateId": "iter-16-combat-aware",
+  "parentStrategyId": "strategic",
+  "hypothesis": "Effective attacks and conservative blocks improve paired outcomes together.",
+  "seed": "gundam-combat-common-screen-v1",
+  "evaluation": {
+    "minimumBlocks": 30,
+    "maximumBlocks": 30,
+    "batchSize": 30,
+    "minimumMeanImprovement": 0,
+    "maximumCellRegression": 0.2
+  }
+}

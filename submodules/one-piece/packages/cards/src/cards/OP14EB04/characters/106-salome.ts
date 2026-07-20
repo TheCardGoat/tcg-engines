@@ -33,19 +33,7 @@ export const op14eb04Salome106: CharacterCard = {
     effects: [
       {
         trigger: "trigger",
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-            self: true,
-          },
-        ],
+        actions: [{ action: "playThisCard" }],
       },
     ],
   },

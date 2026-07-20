@@ -572,10 +572,11 @@ export function Card({
     }
     inspect({
       imageUrl,
+      face: "public",
       name,
       zone,
       color,
-      attachments: gear.map((g) => ({ imageUrl: g.imageUrl, name: g.name })),
+      attachments: gear.map((g) => ({ imageUrl: g.imageUrl, name: g.name, face: "public" })),
     });
   };
 

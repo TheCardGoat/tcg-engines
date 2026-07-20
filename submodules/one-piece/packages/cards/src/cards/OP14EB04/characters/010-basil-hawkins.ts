@@ -56,6 +56,7 @@ export const op14eb04BasilHawkins010: CharacterCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

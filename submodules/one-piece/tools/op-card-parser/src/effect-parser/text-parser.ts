@@ -314,6 +314,17 @@ function parsePrefixChain(segment: string): PrefixParseResult {
 function parseTextCosts(text: string): RawCost[] {
   const costs: Array<{ index: number; cost: RawCost }> = [];
 
+  const giveDonMatch =
+    /give\s+(\d+)\s+of\s+your\s+active\s+DON!!\s+cards?\s+to\s+\d+\s+of\s+your\s+Leader\s+or\s+Character\s+cards?/i.exec(
+      text,
+    );
+  if (giveDonMatch) {
+    costs.push({
+      index: giveDonMatch.index,
+      cost: { type: "giveDon", amount: parseInt(giveDonMatch[1]!, 10) },
+    });
+  }
+
   const variableReturnDonMatch =
     /return\s+(\d+)\s+or\s+more\s+DON!!\s+cards?\s+from\s+your\s+field\s+to\s+your\s+DON!!\s+deck/i.exec(
       text,
@@ -373,7 +384,7 @@ function parseTextCosts(text: string): RawCost[] {
   }
   // "You may trash N card(s) from your hand", optionally filtered by a supported type or Trigger.
   const trashFromHandMatch =
-    /trash\s+\d+\s+(?:cards?|(?:Character|Event|Stage)s?|\[[^\]]+\]|Character\s+cards?\s+with\s+a\s+cost\s+of\s+\d+(?:\s+or\s+(?:less|more))?|.+?\s+type\s+(?:Character|Event|Stage)\s+cards?\s+with\s+\d+\s+power(?:\s+or\s+(?:less|more))?|.+?\s+type\s+cards?|cards?\s+with\s+a\s+type\s+including\s+[""\u201c][^""\u201d]+[""\u201d]|cards?\s+with\s+a\s+\[Trigger\])\s+from\s+your\s+hand/i.exec(
+    /trash\s+\d+\s+(?:cards?|(?:Character|Event|Stage)(?:s?|\s+cards?)|\[[^\]]+\]|Character\s+cards?\s+with\s+a\s+cost\s+of\s+\d+(?:\s+or\s+(?:less|more))?|(?:Character|Event|Stage)\s+cards?\s+with\s+\d+\s+power(?:\s+or\s+(?:less|more))?|.+?\s+type\s+(?:Character|Event|Stage)\s+cards?\s+with\s+\d+\s+power(?:\s+or\s+(?:less|more))?|.+?\s+type\s+cards?|cards?\s+with\s+a\s+type\s+including\s+[""\u201c][^""\u201d]+[""\u201d]|cards?\s+with\s+a\s+\[Trigger\])\s+from\s+your\s+hand/i.exec(
       text,
     );
   if (trashFromHandMatch && !alternativeTrashCardMatch) {
@@ -418,6 +429,9 @@ function parseTextCosts(text: string): RawCost[] {
       text,
     );
   const trashCharacterMatch =
+    /trash\s+\d+\s+of\s+your\s+Characters?\s+with\s+a\s+type\s+including\s+["\u201c][^"\u201d]+["\u201d]/i.exec(
+      text,
+    ) ??
     /trash\s+\d+\s+of\s+your\s+(?:.+?\s+)?Characters?(?:(?:\s+other\s+than\s+this\s+Character)(?:\s+with\s+\d+\s+power\s+or\s+more)?|(?:\s+with\s+\d+\s+power\s+or\s+more)(?:\s+other\s+than\s+this\s+Character)?|)/i.exec(
       text,
     ) ??

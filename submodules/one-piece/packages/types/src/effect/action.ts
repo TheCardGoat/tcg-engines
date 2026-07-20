@@ -94,7 +94,7 @@ export interface OptionalAction {
 
 export interface DelayedAction {
   action: "delayed";
-  timing: "endOfThisTurn" | "endOfThisBattle";
+  timing: "endOfThisTurn" | "endOfThisBattle" | "startOfOpponentNextMainPhase";
   actions: Action[];
   condition?: Condition;
 }

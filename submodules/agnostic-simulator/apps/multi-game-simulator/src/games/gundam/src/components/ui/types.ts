@@ -107,6 +107,8 @@ export interface PlayerInfo {
   readonly deck?: number;
   readonly discard?: number;
   readonly shields?: number;
+  readonly resourcesAvailable?: number;
+  readonly resourcesTotal?: number;
 }
 
 export interface MatchInfo {

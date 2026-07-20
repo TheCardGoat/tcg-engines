@@ -198,17 +198,25 @@ export function AttackTargetingOverlayContainer() {
         if (!r) return null;
         const pad = 6;
         const isHovered = hoveredTargetId === id;
+        const targetCard = id === "direct" ? null : findCardByInstanceId(view, id);
+        const targetDefinition = targetCard?.definition as { name?: string } | null | undefined;
+        const targetLabel =
+          id === "direct"
+            ? "Attack opponent directly"
+            : `Attack ${targetDefinition?.name ?? "target unit"}`;
         return (
-          <div
+          <button
+            type="button"
             key={id}
             data-testid={`attack-target-${id}`}
+            aria-label={targetLabel}
             onMouseEnter={() => setHoveredTargetId(id)}
             onMouseLeave={() => setHoveredTargetId(null)}
             onClick={(e) => {
               e.stopPropagation();
               pending.provide("target", id);
             }}
-            className="fixed z-[404] cursor-crosshair"
+            className="fixed z-[404] cursor-crosshair border-0 bg-transparent p-0"
             style={{
               left: r.left - pad,
               top: r.top - pad,

@@ -20,14 +20,14 @@ describe("Main-phase · Deploy Base", () => {
     const baseInHand = within(hand).getByRole("listitem", { name: /White Base/i });
 
     const baseSection = screen.getByRole("region", { name: /your base/i });
-    expect(within(baseSection).queryAllByRole("listitem")).toHaveLength(0);
+    expect(within(baseSection).queryByRole("button", { name: /White Base/i })).toBeNull();
 
     await user.click(baseInHand);
 
     await waitFor(() => {
       expect(within(hand).queryByRole("listitem", { name: /White Base/i })).toBeNull();
-      expect(within(baseSection).getAllByRole("listitem")).toHaveLength(1);
+      expect(within(baseSection).getByRole("button", { name: /White Base/i })).not.toBeNull();
     });
-    expect(within(baseSection).getByRole("listitem", { name: /White Base/i })).not.toBeNull();
+    expect(within(baseSection).getAllByRole("button", { name: /White Base/i })).toHaveLength(1);
   });
 });

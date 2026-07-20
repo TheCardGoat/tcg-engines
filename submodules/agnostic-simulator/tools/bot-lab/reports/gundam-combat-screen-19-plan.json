@@ -1,0 +1,13 @@
+{
+  "candidateId": "iter-19-aggressive-shield-block",
+  "parentStrategyId": "strategic",
+  "hypothesis": "Spending Blockers more aggressively to protect Shields improves the combined combat policy.",
+  "seed": "gundam-combat-common-screen-v1",
+  "evaluation": {
+    "minimumBlocks": 30,
+    "maximumBlocks": 30,
+    "batchSize": 30,
+    "minimumMeanImprovement": 0,
+    "maximumCellRegression": 0.2
+  }
+}

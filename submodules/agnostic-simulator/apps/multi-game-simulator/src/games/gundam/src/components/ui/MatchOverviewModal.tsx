@@ -83,22 +83,24 @@ const OUTCOME_THEMES: Record<Outcome, OutcomeTheme> = {
 export interface PlayerRecap {
   readonly name: string;
   readonly avatar?: string;
-  readonly lore: number;
+  readonly shields: number;
   readonly deck: number;
   readonly hand: number;
-  readonly discard: number;
-  readonly resourcesUsed: number;
+  readonly trash: number;
+  readonly resourcesActive: number;
   readonly resourcesTotal: number;
   readonly colors?: readonly CardColor[];
-  readonly boardCount: number;
-  readonly ready: number;
-  readonly exerted: number;
-  readonly played: number;
-  readonly resourcesPlaced: number;
-  readonly quests: number;
-  readonly challenges: number;
+  readonly unitsInPlay: number;
+  readonly activeUnits: number;
+  readonly restedUnits: number;
+  readonly unitsDeployed: number;
+  readonly basesDeployed: number;
+  readonly commandsPlayed: number;
+  readonly pilotsPaired: number;
+  readonly attacks: number;
+  readonly blocks: number;
   readonly moves: number;
-  readonly abilities: number;
+  readonly effectsResolved: number;
 }
 
 export interface TimelineEvent {
@@ -536,16 +538,16 @@ function OverviewTab({
 interface PairedRatios {
   readonly deck: readonly [number, number];
   readonly hand: readonly [number, number];
-  readonly discard: readonly [number, number];
+  readonly trash: readonly [number, number];
   readonly resources: readonly [number, number];
-  readonly board: readonly [number, number];
-  readonly readyExrt: readonly [number, number];
-  readonly played: readonly [number, number];
-  readonly placed: readonly [number, number];
-  readonly quests: readonly [number, number];
-  readonly challenges: readonly [number, number];
+  readonly units: readonly [number, number];
+  readonly activeRested: readonly [number, number];
+  readonly deployments: readonly [number, number];
+  readonly commands: readonly [number, number];
+  readonly paired: readonly [number, number];
+  readonly combat: readonly [number, number];
   readonly moves: readonly [number, number];
-  readonly abilities: readonly [number, number];
+  readonly effects: readonly [number, number];
 }
 
 interface PlayerRecapCardProps {
@@ -619,13 +621,13 @@ function PlayerRecapCard({
             textShadow: winner ? "0 0 14px rgba(46,166,90,.5)" : `0 0 14px ${theme.glow}`,
           }}
         >
-          {player.lore}
+          {player.shields}
         </div>
         <div
           className="gd-mono text-hud-sm font-bold tracking-hud-wide"
           style={{ color: MOM.textDim }}
         >
-          {m["sim.matchOverview.player.lore"]()}
+          {m["sim.matchOverview.player.shields"]()}
         </div>
         <div className="flex-1" />
         <ColorChips colors={player.colors} />
@@ -647,58 +649,58 @@ function PlayerRecapCard({
           barGlow={barGlow}
         />
         <StatBox
-          label={m["sim.matchOverview.stat.discard"]()}
-          value={player.discard}
-          ratio={ratios.discard[idx]}
+          label={m["sim.matchOverview.stat.trash"]()}
+          value={player.trash}
+          ratio={ratios.trash[idx]}
           barColor={barColor}
           barGlow={barGlow}
         />
         <StatBox
           label={m["sim.matchOverview.stat.resources"]()}
-          value={`${player.resourcesUsed}/${player.resourcesTotal}`}
+          value={`${player.resourcesActive}/${player.resourcesTotal}`}
           ratio={ratios.resources[idx]}
           barColor={barColor}
           barGlow={barGlow}
         />
         <StatBox
-          label={m["sim.matchOverview.stat.board"]()}
-          value={player.boardCount}
-          ratio={ratios.board[idx]}
+          label={m["sim.matchOverview.stat.units"]()}
+          value={player.unitsInPlay}
+          ratio={ratios.units[idx]}
           barColor={barColor}
           barGlow={barGlow}
         />
         <StatBox
-          label={m["sim.matchOverview.stat.readyExrt"]()}
-          value={`${player.ready}/${player.exerted}`}
-          ratio={ratios.readyExrt[idx]}
+          label={m["sim.matchOverview.stat.activeRested"]()}
+          value={`${player.activeUnits}/${player.restedUnits}`}
+          ratio={ratios.activeRested[idx]}
           barColor={barColor}
           barGlow={barGlow}
         />
         <StatBox
-          label={m["sim.matchOverview.stat.played"]()}
-          value={player.played}
-          ratio={ratios.played[idx]}
+          label={m["sim.matchOverview.stat.deployments"]()}
+          value={`${player.unitsDeployed}/${player.basesDeployed}`}
+          ratio={ratios.deployments[idx]}
           barColor={barColor}
           barGlow={barGlow}
         />
         <StatBox
-          label={m["sim.matchOverview.stat.placed"]()}
-          value={player.resourcesPlaced}
-          ratio={ratios.placed[idx]}
+          label={m["sim.matchOverview.stat.commands"]()}
+          value={player.commandsPlayed}
+          ratio={ratios.commands[idx]}
           barColor={barColor}
           barGlow={barGlow}
         />
         <StatBox
-          label={m["sim.matchOverview.stat.quests"]()}
-          value={player.quests}
-          ratio={ratios.quests[idx]}
+          label={m["sim.matchOverview.stat.paired"]()}
+          value={player.pilotsPaired}
+          ratio={ratios.paired[idx]}
           barColor={barColor}
           barGlow={barGlow}
         />
         <StatBox
-          label={m["sim.matchOverview.stat.challenges"]()}
-          value={player.challenges}
-          ratio={ratios.challenges[idx]}
+          label={m["sim.matchOverview.stat.combat"]()}
+          value={`${player.attacks}/${player.blocks}`}
+          ratio={ratios.combat[idx]}
           barColor={barColor}
           barGlow={barGlow}
         />
@@ -710,9 +712,9 @@ function PlayerRecapCard({
           barGlow={barGlow}
         />
         <StatBox
-          label={m["sim.matchOverview.stat.abilities"]()}
-          value={player.abilities}
-          ratio={ratios.abilities[idx]}
+          label={m["sim.matchOverview.stat.effects"]()}
+          value={player.effectsResolved}
+          ratio={ratios.effects[idx]}
           barColor={barColor}
           barGlow={barGlow}
         />
@@ -1107,22 +1109,25 @@ function pairRatio(a: number, b: number): readonly [number, number] {
 }
 
 function effectiveResourceTotal(player: PlayerRecap): number {
-  return player.resourcesTotal > 0 ? player.resourcesTotal : player.resourcesUsed;
+  return player.resourcesTotal > 0 ? player.resourcesTotal : player.resourcesActive;
 }
 
 function computeStatRatios(self: PlayerRecap, opp: PlayerRecap): PairedRatios {
   return {
     deck: pairRatio(self.deck, opp.deck),
     hand: pairRatio(self.hand, opp.hand),
-    discard: pairRatio(self.discard, opp.discard),
+    trash: pairRatio(self.trash, opp.trash),
     resources: pairRatio(effectiveResourceTotal(self), effectiveResourceTotal(opp)),
-    board: pairRatio(self.boardCount, opp.boardCount),
-    readyExrt: pairRatio(self.ready + self.exerted, opp.ready + opp.exerted),
-    played: pairRatio(self.played, opp.played),
-    placed: pairRatio(self.resourcesPlaced, opp.resourcesPlaced),
-    quests: pairRatio(self.quests, opp.quests),
-    challenges: pairRatio(self.challenges, opp.challenges),
+    units: pairRatio(self.unitsInPlay, opp.unitsInPlay),
+    activeRested: pairRatio(self.activeUnits + self.restedUnits, opp.activeUnits + opp.restedUnits),
+    deployments: pairRatio(
+      self.unitsDeployed + self.basesDeployed,
+      opp.unitsDeployed + opp.basesDeployed,
+    ),
+    commands: pairRatio(self.commandsPlayed, opp.commandsPlayed),
+    paired: pairRatio(self.pilotsPaired, opp.pilotsPaired),
+    combat: pairRatio(self.attacks + self.blocks, opp.attacks + opp.blocks),
     moves: pairRatio(self.moves, opp.moves),
-    abilities: pairRatio(self.abilities, opp.abilities),
+    effects: pairRatio(self.effectsResolved, opp.effectsResolved),
   };
 }

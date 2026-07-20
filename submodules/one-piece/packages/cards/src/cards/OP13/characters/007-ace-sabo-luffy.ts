@@ -41,12 +41,16 @@ export const op13AceSaboLuffy007: CharacterCard = {
     },
   ],
   effect:
-    "[Activate: Main] You may give 1 of your active DON!! cards to 1 of your Leader or Character cards and trash this Character: Give up to 1 of your opponent's Characters 3000 power during this turn.",
+    "[Activate: Main] You may give 1 of your active DON!! cards to 1 of your Leader or Character cards and trash this Character: Give up to 1 of your opponent's Characters −3000 power during this turn.",
   effects: {
     effects: [
       {
         trigger: "activateMain",
         costs: [
+          {
+            cost: "giveDon",
+            amount: 1,
+          },
           {
             cost: "trashThisCard",
           },
@@ -62,7 +66,7 @@ export const op13AceSaboLuffy007: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 3000,
+            value: -3000,
             duration: "thisTurn",
           },
         ],

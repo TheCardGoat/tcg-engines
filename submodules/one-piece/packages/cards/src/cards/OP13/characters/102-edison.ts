@@ -70,6 +70,34 @@ export const op13Edison102: CharacterCard = {
         ],
         optional: true,
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 3,
+                },
+              ],
+            },
+          },
+        ],
+      },
     ],
   },
   i18n: op13Edison102I18n,

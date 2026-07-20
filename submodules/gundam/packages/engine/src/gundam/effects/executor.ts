@@ -547,6 +547,8 @@ function preflightResolved(action: EffectAction, ctx: EffectExecutionContext): b
       return eventSourceMatches(action.sourceFilter, ctx, tgtCtx);
     case "recoverHPEventCard":
       return eventCardMatches(action.sourceFilter, ctx, tgtCtx);
+    case "grantKeywordEventCard":
+      return eventCardMatches(action.sourceFilter, ctx, tgtCtx);
     case "destroyEventCard":
       return Boolean(ctx.triggerContext?.cardId);
     case "returnPairedPilotToHand":
@@ -1444,6 +1446,22 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       break;
     }
 
+    case "grantKeywordEventCard": {
+      const eventCardId = ctx.triggerContext?.cardId;
+      if (eventCardId && eventCardMatches(action.sourceFilter, ctx, tgtCtx)) {
+        const targets = [eventCardId as CardInstanceId];
+        ctx.previousResolvedTargets = targets;
+        handleGrantKeywordAction(
+          targets,
+          action.keyword,
+          action.keywordValue ?? 1,
+          action.duration,
+          ctx,
+        );
+      }
+      break;
+    }
+
     case "copyKeywordEffects": {
       const sources = resolveActionTargets(action.source, ctx, tgtCtx);
       const targets = resolveActionTargets(action.target, ctx, tgtCtx);
@@ -1676,7 +1694,7 @@ function eventSourceMatches(
 }
 
 function eventCardMatches(
-  sourceFilter: Extract<EffectAction, { action: "recoverHPEventCard" }>["sourceFilter"],
+  sourceFilter: TargetFilter | undefined,
   ctx: EffectExecutionContext,
   tgtCtx: ReturnType<typeof buildTargetResolutionContext>,
 ): boolean {

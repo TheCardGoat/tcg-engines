@@ -340,7 +340,7 @@ function CombatCardToken({ card, fallback }: { card: ZoneCardView | null; fallba
   }
 
   const showPreview = () => {
-    show({ imageUrl: card.imageUrl, alt: card.name, color: card.color });
+    show({ imageUrl: card.imageUrl, face: "public", alt: card.name, color: card.color });
   };
 
   return (
@@ -450,7 +450,7 @@ function AttackTriggerRow({
     if (!card) {
       return;
     }
-    show({ imageUrl: card.imageUrl, alt: card.name, color: card.color });
+    show({ imageUrl: card.imageUrl, face: "public", alt: card.name, color: card.color });
   };
 
   return (

@@ -54,7 +54,7 @@ export const op13StEthanbaronVNusjuro080: CharacterCard = {
     },
   ],
   effect:
-    "If you have 7 or more cards in your trash, this Character cannot be removed from the field by your opponent's effects and gains [Rush].\n[When Attacking] If you have 10 or more cards in your trash, give up to 1 of your opponent's Characters 2000 power during this turn.",
+    "If you have 7 or more cards in your trash, this Character cannot be removed from the field by your opponent's effects and gains [Rush].\n[When Attacking] If you have 10 or more cards in your trash, give up to 1 of your opponent's Characters -2000 power during this turn.",
   effects: {
     effects: [
       {
@@ -79,8 +79,49 @@ export const op13StEthanbaronVNusjuro080: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "trash",
+            comparison: "gte",
+            value: 7,
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeRemoved",
+            target: {
+              player: "self",
+              zones: ["field"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            bySource: "opponentEffect",
+          },
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "permanent",
           },
         ],
       },

@@ -50,6 +50,7 @@ export interface EffectBlockContinuation {
   trashHandIds?: string[];
   costPaymentIds?: string[];
   costPaymentIdsByType?: {
+    giveDon?: string[];
     restCards?: string[];
     returnCharacter?: string[];
   };
@@ -178,6 +179,7 @@ export type PromptResolutionContext =
       sourceInstanceId?: string;
       replacementEffectIndex?: number;
       replacementEvent?: "ko" | "leaveField" | "loseGame" | "removeFromField" | "rested";
+      replacementEffectKey?: string;
       replacementAction?: Action;
     }
   | {
@@ -207,6 +209,7 @@ export type PromptResolutionContext =
       trigger: EffectTrigger;
       blockIndex: number;
       trashHandIds?: string[];
+      costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
       triggerEvent?: {
         instanceId: string;
         effectController: MatchSeat;
@@ -236,6 +239,7 @@ export type PromptResolutionContext =
       replacementSourceInstanceId: string;
       replacementEffectIndex: number;
       replacementEvent: "ko" | "removeFromField";
+      replacementEffectKey: string;
       replacementAction: Action;
       koSourceInstanceId: string;
       koController: MatchSeat;
@@ -248,6 +252,7 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       replacementSourceInstanceId: string;
       replacementEffectIndex: number;
+      replacementEffectKey: string;
       replacementAction: Action;
       restSourceInstanceId: string;
       restController: MatchSeat;
@@ -261,6 +266,7 @@ export type PromptResolutionContext =
       replacementSourceInstanceId: string;
       replacementEffectIndex: number;
       replacementEvent: "removeFromField" | "leaveField";
+      replacementEffectKey: string;
       replacementAction: Action;
       removalSourceInstanceId: string;
       removalController: MatchSeat;
@@ -304,6 +310,20 @@ export type PromptResolutionContext =
       maximum: number;
     }
   | {
+      intent: "effectCostGiveDon";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      trigger: EffectTrigger;
+      blockIndex: number;
+      amount: number;
+      candidateIds: string[];
+      costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+      };
+    }
+  | {
       intent: "effectCostTrashFromHand";
       sourceInstanceId: string;
       controller: MatchSeat;
@@ -313,6 +333,7 @@ export type PromptResolutionContext =
       cost: Extract<import("@tcg/op-types").Cost, { cost: "trashFromHand" }>;
       candidateIds: string[];
       costPaymentIds?: string[];
+      costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
       triggerEvent?: {
         instanceId: string;
         effectController: MatchSeat;
@@ -350,6 +371,7 @@ export type PromptResolutionContext =
       amount: number;
       candidateIds: string[];
       trashHandIds?: string[];
+      costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
       triggerEvent?: {
         instanceId: string;
         effectController: MatchSeat;
@@ -1056,6 +1078,8 @@ export interface DelayedEffectAction {
   action: Action;
   scheduledTurn: number;
   scheduledBattleId?: string;
+  scheduledPhase?: "main";
+  scheduledSeat?: MatchSeat;
   sourceZoneChangeCounter?: number;
   previousActionTargetIds?: string[];
 }

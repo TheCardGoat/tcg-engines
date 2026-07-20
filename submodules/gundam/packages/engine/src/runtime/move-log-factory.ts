@@ -131,6 +131,7 @@ function buildFromCommand(
   }
   if (command.move === "resolveEffect" && outcomes?.effectsResolved?.[0]) {
     const resolved = outcomes.effectsResolved[0];
+    const targets = commandTargetIds(command);
     return {
       type: "resolveEffect",
       playerId,
@@ -138,10 +139,22 @@ function buildFromCommand(
       commandID: command.commandID,
       sourceCardId: resolved.sourceCardId,
       effectId: resolved.effectId,
+      ...(targets.length > 0 ? { resolution: { kind: "targetSelection" as const, targets } } : {}),
       outcomes,
     };
   }
   return undefined;
+}
+
+function commandTargetIds(command: CommandEnvelope): CardInstanceId[] {
+  const args = command.args;
+  if (typeof args !== "object" || args === null || !("targets" in args)) return [];
+  const targets = (args as { readonly targets?: unknown }).targets;
+  if (!Array.isArray(targets)) return [];
+  return targets.flatMap((target) => {
+    const id = asCardId(target);
+    return id ? [id] : [];
+  });
 }
 
 function convertActionEntry(

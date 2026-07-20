@@ -1,5 +1,6 @@
 export { PlayerSeatContainer } from "./PlayerSeatContainer.tsx";
 export { MatchSidebarContainer } from "./MatchSidebarContainer.tsx";
+export { MatchLogContainer } from "./MatchLogContainer.tsx";
 export { SelfHandZoneContainer as MatchHandBarContainer } from "./SelfHandZoneContainer.tsx";
 export { OpponentHandZoneContainer } from "./OpponentHandZoneContainer.tsx";
 export { PromptContainer } from "./PromptContainer.tsx";
@@ -10,3 +11,4 @@ export { SubmitErrorProvider, useSubmitError } from "./submit-error-context.tsx"
 export { PendingEffectsContainer } from "./PendingEffectsContainer.tsx";
 export { MatchOverviewModalContainer } from "./MatchOverviewModalContainer.tsx";
 export { MobileActionBarContainer, MobileTopHudContainer } from "./MobileChromeContainer.tsx";
+export { MatchStatusBarContainer } from "./MatchStatusBarContainer.tsx";

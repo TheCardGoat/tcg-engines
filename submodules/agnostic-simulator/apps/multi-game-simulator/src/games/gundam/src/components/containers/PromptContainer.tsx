@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { selectModeInputBinding } from "@tcg/gundam-engine";
 
-import { usePending } from "../../game/index.ts";
+import { useGundamGame, usePending } from "../../game/index.ts";
 import { GamePrompt } from "../ui/GamePrompt.tsx";
 import type { PromptAction } from "../ui/types.ts";
 import { useSubmitError } from "./submit-error-context.tsx";
@@ -58,6 +58,7 @@ function stableInputKey(value: unknown): string {
 
 export function PromptContainer() {
   const pending = usePending();
+  const { adapter } = useGundamGame();
   const { state, confirm, cancel, provide } = pending;
   const { report } = useSubmitError();
   const autoSubmitKeyRef = useRef<string | null>(null);
@@ -198,7 +199,7 @@ export function PromptContainer() {
     return null;
   }, [state, onConfirm, onCancel, provide]);
 
-  if (!content) return null;
+  if (adapter.viewerContext.role === "spectator" || !content) return null;
 
   return <GamePrompt message={content.message} actions={content.actions} />;
 }

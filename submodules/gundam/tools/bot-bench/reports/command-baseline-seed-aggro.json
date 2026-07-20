@@ -1,0 +1,514 @@
+{
+  "version": 1,
+  "options": {
+    "p1Strategy": "combat-aware",
+    "p2Strategy": "combat-aware",
+    "p1Deck": "seed-aggro",
+    "p2Deck": "seed-aggro",
+    "matches": 24,
+    "seedBase": "cmd-screen-seed-aggro",
+    "maxActions": 1500,
+    "label": "command baseline seed-aggro"
+  },
+  "summary": {
+    "matches": 24,
+    "p1WinRate": 0.625,
+    "p2WinRate": 0.375,
+    "drawRate": 0,
+    "avgTurns": 12.458333333333334,
+    "avgActions": 150.25,
+    "avgElapsedMs": 112.58333333333333,
+    "terminationDistribution": {
+      "game-won": 24,
+      "automation-concession": 0,
+      "repeated-state": 0,
+      "max-actions-exceeded": 0,
+      "concede-failed": 0
+    },
+    "winReasonDistribution": {
+      "player_one has no shields remaining": 9,
+      "player_two has no shields remaining": 15
+    }
+  },
+  "p1": {
+    "wins": 15,
+    "familyStats": {
+      "chooseFirstPlayer": {
+        "attempted": 24,
+        "succeeded": 24,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "alterHand": {
+        "attempted": 24,
+        "succeeded": 24,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "deployUnit": {
+        "attempted": 164,
+        "succeeded": 164,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "deployBase": {
+        "attempted": 8,
+        "succeeded": 8,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "playCommand": {
+        "attempted": 46,
+        "succeeded": 46,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "activateAbility": {
+        "attempted": 6,
+        "succeeded": 6,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "assignPilot": {
+        "attempted": 58,
+        "succeeded": 58,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "playCommandAsPilot": {
+        "attempted": 38,
+        "succeeded": 38,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "declareBlock": {
+        "attempted": 28,
+        "succeeded": 28,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "enterBattle": {
+        "attempted": 237,
+        "succeeded": 237,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passBlock": {
+        "attempted": 168,
+        "succeeded": 168,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passBattleAction": {
+        "attempted": 433,
+        "succeeded": 433,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "discardToHandLimit": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passTurn": {
+        "attempted": 154,
+        "succeeded": 154,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passActionStep": {
+        "attempted": 299,
+        "succeeded": 299,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "concede": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "skipOpponentTurn": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "dropOpponent": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "resolveEffect": {
+        "attempted": 149,
+        "succeeded": 149,
+        "failed": 0,
+        "errorCodes": {}
+      }
+    }
+  },
+  "p2": {
+    "wins": 9,
+    "familyStats": {
+      "chooseFirstPlayer": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "alterHand": {
+        "attempted": 24,
+        "succeeded": 24,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "deployUnit": {
+        "attempted": 162,
+        "succeeded": 162,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "deployBase": {
+        "attempted": 9,
+        "succeeded": 9,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "playCommand": {
+        "attempted": 46,
+        "succeeded": 46,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "activateAbility": {
+        "attempted": 6,
+        "succeeded": 6,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "assignPilot": {
+        "attempted": 54,
+        "succeeded": 54,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "playCommandAsPilot": {
+        "attempted": 28,
+        "succeeded": 28,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "declareBlock": {
+        "attempted": 42,
+        "succeeded": 42,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "enterBattle": {
+        "attempted": 196,
+        "succeeded": 196,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passBlock": {
+        "attempted": 195,
+        "succeeded": 195,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passBattleAction": {
+        "attempted": 433,
+        "succeeded": 433,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "discardToHandLimit": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passTurn": {
+        "attempted": 145,
+        "succeeded": 145,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passActionStep": {
+        "attempted": 299,
+        "succeeded": 299,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "concede": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "skipOpponentTurn": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "dropOpponent": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "resolveEffect": {
+        "attempted": 131,
+        "succeeded": 131,
+        "failed": 0,
+        "errorCodes": {}
+      }
+    }
+  },
+  "matches": [
+    {
+      "matchId": 0,
+      "seed": "cmd-screen-seed-aggro-0",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 167,
+      "elapsedMs": 126
+    },
+    {
+      "matchId": 1,
+      "seed": "cmd-screen-seed-aggro-1",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 145,
+      "elapsedMs": 84
+    },
+    {
+      "matchId": 2,
+      "seed": "cmd-screen-seed-aggro-2",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 138,
+      "elapsedMs": 71
+    },
+    {
+      "matchId": 3,
+      "seed": "cmd-screen-seed-aggro-3",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 158,
+      "elapsedMs": 109
+    },
+    {
+      "matchId": 4,
+      "seed": "cmd-screen-seed-aggro-4",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 9,
+      "actionCount": 112,
+      "elapsedMs": 81
+    },
+    {
+      "matchId": 5,
+      "seed": "cmd-screen-seed-aggro-5",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 157,
+      "elapsedMs": 159
+    },
+    {
+      "matchId": 6,
+      "seed": "cmd-screen-seed-aggro-6",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 16,
+      "actionCount": 181,
+      "elapsedMs": 163
+    },
+    {
+      "matchId": 7,
+      "seed": "cmd-screen-seed-aggro-7",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 168,
+      "elapsedMs": 170
+    },
+    {
+      "matchId": 8,
+      "seed": "cmd-screen-seed-aggro-8",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 121,
+      "elapsedMs": 88
+    },
+    {
+      "matchId": 9,
+      "seed": "cmd-screen-seed-aggro-9",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 15,
+      "actionCount": 170,
+      "elapsedMs": 183
+    },
+    {
+      "matchId": 10,
+      "seed": "cmd-screen-seed-aggro-10",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 167,
+      "elapsedMs": 137
+    },
+    {
+      "matchId": 11,
+      "seed": "cmd-screen-seed-aggro-11",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 143,
+      "elapsedMs": 95
+    },
+    {
+      "matchId": 12,
+      "seed": "cmd-screen-seed-aggro-12",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 161,
+      "elapsedMs": 121
+    },
+    {
+      "matchId": 13,
+      "seed": "cmd-screen-seed-aggro-13",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 10,
+      "actionCount": 135,
+      "elapsedMs": 119
+    },
+    {
+      "matchId": 14,
+      "seed": "cmd-screen-seed-aggro-14",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 18,
+      "actionCount": 205,
+      "elapsedMs": 150
+    },
+    {
+      "matchId": 15,
+      "seed": "cmd-screen-seed-aggro-15",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 10,
+      "actionCount": 131,
+      "elapsedMs": 111
+    },
+    {
+      "matchId": 16,
+      "seed": "cmd-screen-seed-aggro-16",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 141,
+      "elapsedMs": 117
+    },
+    {
+      "matchId": 17,
+      "seed": "cmd-screen-seed-aggro-17",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 10,
+      "actionCount": 121,
+      "elapsedMs": 94
+    },
+    {
+      "matchId": 18,
+      "seed": "cmd-screen-seed-aggro-18",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 165,
+      "elapsedMs": 108
+    },
+    {
+      "matchId": 19,
+      "seed": "cmd-screen-seed-aggro-19",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 10,
+      "actionCount": 108,
+      "elapsedMs": 50
+    },
+    {
+      "matchId": 20,
+      "seed": "cmd-screen-seed-aggro-20",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 186,
+      "elapsedMs": 100
+    },
+    {
+      "matchId": 21,
+      "seed": "cmd-screen-seed-aggro-21",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 10,
+      "actionCount": 113,
+      "elapsedMs": 62
+    },
+    {
+      "matchId": 22,
+      "seed": "cmd-screen-seed-aggro-22",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 156,
+      "elapsedMs": 116
+    },
+    {
+      "matchId": 23,
+      "seed": "cmd-screen-seed-aggro-23",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 157,
+      "elapsedMs": 88
+    }
+  ],
+  "createdAt": "2026-07-18T22:16:11.282Z"
+}

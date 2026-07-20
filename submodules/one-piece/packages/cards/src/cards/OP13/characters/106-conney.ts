@@ -54,6 +54,14 @@ export const op13Conney106: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+      },
     ],
   },
   i18n: op13Conney106I18n,

@@ -67,10 +67,39 @@ export const op13StShepherdJuPeter084: CharacterCard = {
               {
                 filter: "trait",
                 value: "Five Elders",
+                match: "includes",
               },
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "trash",
+            comparison: "gte",
+            value: 7,
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeRemoved",
+            target: {
+              player: "self",
+              zones: ["field"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            bySource: "opponentEffect",
           },
         ],
       },

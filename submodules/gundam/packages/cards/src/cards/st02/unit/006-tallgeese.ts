@@ -81,7 +81,6 @@ export const st02Tallgeese006: UnitCard = {
             target: {
               owner: "self",
               cardType: "unit",
-              state: "rested",
             },
           },
         },

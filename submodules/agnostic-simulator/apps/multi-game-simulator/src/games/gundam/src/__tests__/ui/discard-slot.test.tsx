@@ -23,14 +23,16 @@ describe("DiscardSlot", () => {
     expect(screen.getByAltText("Discarded Unit")).not.toBeNull();
     // Count badge appears with the zero-padded count.
     expect(screen.getByText("01")).not.toBeNull();
-    // Empty-state placeholder must NOT be rendered alongside the card.
-    expect(screen.queryByText("✕")).toBeNull();
+    expect(screen.getByLabelText("SCRAP, 1 card").dataset.zoneLayout).toBe("discard-pile");
   });
 
-  it("renders the empty placeholder when topCard is null", () => {
+  it("keeps the shared pile footprint when topCard is null", () => {
     render(<DiscardSlot count={0} topCard={null} isTop={false} />);
 
-    expect(screen.getByText("✕")).not.toBeNull();
+    const emptyPile = screen.getByLabelText("SCRAP, 0 cards");
+    expect(emptyPile.dataset.zoneLayout).toBe("discard-pile");
+    expect(emptyPile.className).toContain("min-h-[118px]");
+    expect(emptyPile.className).toContain("w-[78px]");
     // No count badge when count is 0.
     expect(screen.queryByText("00")).toBeNull();
   });
@@ -40,7 +42,7 @@ describe("DiscardSlot", () => {
     // through, the slot should still surface the count so the UI isn't silent.
     render(<DiscardSlot count={3} topCard={null} isTop={true} />);
 
-    expect(screen.getByText("✕")).not.toBeNull();
+    expect(screen.getByLabelText("SCRAP, 3 cards").dataset.zoneLayout).toBe("discard-pile");
     expect(screen.getByText("03")).not.toBeNull();
   });
 });

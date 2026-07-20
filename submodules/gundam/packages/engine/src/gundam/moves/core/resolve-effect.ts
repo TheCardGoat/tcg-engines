@@ -345,6 +345,20 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
         return [{ kind: "confirm" as const }];
       }
 
+      // Once the UI or headless bot has supplied a complete target set,
+      // advance to confirmation. Without this terminal branch the procedure
+      // keeps returning the same selectTarget step, so the automation DFS
+      // exhausts its depth cap, emits no resolveEffect candidate, and
+      // eventually concedes an otherwise healthy match.
+      const suppliedTargets = (partialInput as DeepReadonly<Record<string, unknown>>).targets;
+      if (
+        Array.isArray(suppliedTargets) &&
+        suppliedTargets.length >= resolution.minTargets &&
+        suppliedTargets.length <= resolution.maxTargets
+      ) {
+        return [{ kind: "confirm" as const }];
+      }
+
       return [
         {
           kind: "selectTarget" as const,

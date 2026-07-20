@@ -46,6 +46,11 @@ export const prb02PortgasDAceP074PirateFoil074: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnThisToHand",
+          },
+        ],
         actions: [
           {
             action: "rearrangeDeck",

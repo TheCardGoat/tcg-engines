@@ -124,6 +124,44 @@ describe("CardMotionOverlay die rendering", () => {
 });
 
 describe("CardMotionOverlay geometry guards", () => {
+  test("does not expose a hidden card identity through the animation DOM", () => {
+    const overlay: CardOverlayState = {
+      id: "private-draw:step-0",
+      planId: "private-draw",
+      stepId: "step-0",
+      kind: "move",
+      entity: {
+        id: "player_one_deck_ST01-015_01",
+        title: "White Base",
+        subtitle: "Base",
+        kind: "leader",
+        ownerId: "player_one",
+        face: "public",
+        states: [],
+        stats: [{ label: "HP", value: "5" }],
+        traits: ["Earth Federation"],
+        imageUrl: "https://private.invalid/ST01-015.webp",
+      },
+      from: { left: 0, top: 0, width: 100, height: 140 },
+      to: { left: 100, top: 0, width: 100, height: 140 },
+      sourceFace: "hidden",
+      destinationFace: "hidden",
+      delayMs: 0,
+      durationMs: 360,
+    };
+
+    const markup = renderToStaticMarkup(
+      <CardMotionOverlay overlay={overlay} reduced visible onComplete={() => undefined} />,
+    );
+
+    expect(markup).toContain('data-source-face="hidden"');
+    expect(markup).toContain('data-destination-face="hidden"');
+    expect(markup).not.toContain("White Base");
+    expect(markup).not.toContain("ST01-015");
+    expect(markup).not.toContain("private.invalid");
+    expect(markup).not.toContain("Earth Federation");
+  });
+
   test("clamps oversized card overlay rectangles before rendering", () => {
     const overlay: CardOverlayState = {
       id: "bad-geometry:step-0",

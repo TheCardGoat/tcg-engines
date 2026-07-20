@@ -63,6 +63,11 @@ export const op13Shanks065: CharacterCard = {
                 filter: "excludeName",
                 value: "Shanks",
               },
+              {
+                filter: "trait",
+                value: "Roger Pirates",
+                match: "includes",
+              },
             ],
             revealDestination: "hand",
             remainderPosition: "bottom",

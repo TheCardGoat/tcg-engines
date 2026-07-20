@@ -1,18 +1,12 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
-import {
-  canonicalJson,
-} from "@tcg/bot-core";
-import {
-  botCandidateManifestV1Schema,
-  botEvaluationReportV1Schema,
-} from "@tcg/bot-core/schemas";
+import { canonicalJson } from "@tcg/bot-core";
+import { botCandidateManifestV1Schema, botEvaluationReportV1Schema } from "@tcg/bot-core/schemas";
 
 import { evaluateCandidate } from "./evaluate.ts";
 import { planPromotion } from "./promote.ts";
-import { getBotLabAdapter, listBotLabAdapters } from "./registry.ts";
-import "./adapters/index.ts";
+import { getBotLabAdapter, listBotLabGames } from "./registry.ts";
 
 type Flags = Record<string, string | boolean>;
 
@@ -54,17 +48,11 @@ async function main(): Promise<void> {
 
   if (command === "help") {
     console.log("bot-lab doctor|train|evaluate|replay|promote --game <id> [options]");
-    console.log(
-      `registered games: ${
-        listBotLabAdapters()
-          .map((adapter) => adapter.game)
-          .join(", ") || "none"
-      }`,
-    );
+    console.log(`registered games: ${listBotLabGames().join(", ") || "none"}`);
     return;
   }
 
-  const adapter = getBotLabAdapter(required(flags, "game"));
+  const adapter = await getBotLabAdapter(required(flags, "game"));
   if (command === "doctor") {
     const result = await adapter.doctor();
     console.log(JSON.stringify(result, null, 2));

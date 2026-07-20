@@ -50,6 +50,7 @@ export const op13Stussy110: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Egghead",
+            match: "includes",
           },
         ],
         actions: [

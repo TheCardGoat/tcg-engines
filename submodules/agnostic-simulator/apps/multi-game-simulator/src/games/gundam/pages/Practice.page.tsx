@@ -9,6 +9,10 @@ import {
 } from "../src/engine/practice/deckPayload.ts";
 import { getMatchmakingReturnUrl } from "../src/engine/live/matchContext.ts";
 import { gundamRuntimeRequestHeaders } from "../src/engine/live/runtimeHeaders.ts";
+import {
+  createGundamWebviewReadyMessage,
+  postGundamWebviewMessage,
+} from "../src/engine/practice/webviewBridge.ts";
 
 const GUNDAM_SIMULATOR_BASE_PATH = "/gundam/simulator";
 
@@ -52,10 +56,16 @@ export function PracticePage() {
     let cancelled = false;
     setError(null);
     setDetails([]);
+    postGundamWebviewMessage(createGundamWebviewReadyMessage());
     const resolved = resolveGundamPracticePayload(search);
     if (!resolved.ok) {
       setError(resolved.error.message);
       setDetails(resolved.error.details);
+      postGundamWebviewMessage({
+        type: "gundam.practice.error.v1",
+        message: resolved.error.message,
+        details: resolved.error.details,
+      });
       return () => {
         cancelled = true;
       };
@@ -63,6 +73,11 @@ export function PracticePage() {
     launchServerPractice(resolved.payload)
       .then((res) => {
         if (cancelled) return;
+        postGundamWebviewMessage({
+          type: "gundam.practice.started.v1",
+          matchId: res.matchId,
+          gameId: res.gameId,
+        });
         const params = new URLSearchParams({
           ticket: res.wsTicket ?? "",
           playerId: res.playerId,
@@ -77,7 +92,10 @@ export function PracticePage() {
         );
       })
       .catch((err) => {
-        if (!cancelled) setError(err instanceof Error ? err.message : "Failed to start practice.");
+        if (cancelled) return;
+        const message = err instanceof Error ? err.message : "Failed to start practice.";
+        setError(message);
+        postGundamWebviewMessage({ type: "gundam.practice.error.v1", message, details: [] });
       });
     return () => {
       cancelled = true;

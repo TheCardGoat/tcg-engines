@@ -1,0 +1,11 @@
+{
+  "candidateId": "tempo",
+  "parentStrategyId": "value-ranked",
+  "hypothesis": "Legality-aware tempo choices improve paired outcomes over value-ranked.",
+  "seed": "gundam-bot-lab-smoke",
+  "evaluation": {
+    "minimumBlocks": 2,
+    "maximumBlocks": 4,
+    "batchSize": 2
+  }
+}

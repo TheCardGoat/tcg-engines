@@ -35,6 +35,7 @@ export const op14eb04MissValentineMikitaDashPack087: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Baroque Works",
+            match: "includes",
           },
         ],
         actions: [
@@ -57,6 +58,7 @@ export const op14eb04MissValentineMikitaDashPack087: CharacterCard = {
               {
                 filter: "trait",
                 value: "Baroque Works",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

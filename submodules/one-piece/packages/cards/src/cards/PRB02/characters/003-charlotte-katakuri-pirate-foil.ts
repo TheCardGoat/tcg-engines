@@ -42,5 +42,45 @@ export const prb02CharlotteKatakuriPirateFoil003: CharacterCard = {
   ],
   effect:
     'If your Leader has the "FILM" type and you have 6 or more rested cards, this Character gains +2000 power.',
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "compound",
+            operator: "and",
+            conditions: [
+              {
+                condition: "leaderTrait",
+                trait: "FILM",
+                match: "includes",
+              },
+              {
+                condition: "restedCardCount",
+                player: "self",
+                comparison: "gte",
+                value: 6,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 2000,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: prb02CharlotteKatakuriPirateFoil003I18n,
 };

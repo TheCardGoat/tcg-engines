@@ -2,6 +2,7 @@ import { fileURLToPath } from "node:url";
 
 import {
   fingerprint,
+  GUNDAM_AUTOMATION_REVISION,
   getGundamAutomatedActionStrategyOption,
   getSafeGundamAutomatedActionStrategyOption,
   playMatch,
@@ -9,6 +10,7 @@ import {
   type PlayMatchTermination,
 } from "@tcg/gundam-engine";
 import {
+  BOT_CORE_SCHEMA_VERSION,
   stableBotHash,
   type BotEvaluationReportV1,
   type BotMatchRecordV1,
@@ -65,6 +67,16 @@ function descriptor(id: string) {
   });
 }
 
+/**
+ * Continuous-effect IDs are allocated from an engine-process counter. They
+ * identify an effect for runtime bookkeeping but do not describe its gameplay
+ * state, so including the numeric suffix makes otherwise identical seeded
+ * BotLab replays look divergent.
+ */
+function deterministicFinalStateHash(finalState: Parameters<typeof fingerprint>[0]): string {
+  return stableBotHash(fingerprint(finalState).replace(/eff_\d+/gu, "eff"));
+}
+
 function run(input: {
   readonly seed: string;
   readonly candidateSeat: "p1" | "p2";
@@ -101,14 +113,18 @@ function run(input: {
     termination: mapTermination(outcome.termination, outcome.winReason),
     turnCount: outcome.turnCount,
     actionCount: outcome.actionCount,
-    finalStateHash: stableBotHash(fingerprint(outcome.finalState)),
+    finalStateHash: deterministicFinalStateHash(outcome.finalState),
   };
 }
 
 export const gundamBotLabAdapter: BotLabAdapter = {
   game: "gundam",
-  adapterVersion: "1",
-  getEngineRevision: () => stableBotHash(Object.keys(REGISTERED_STRATEGIES).sort()),
+  adapterVersion: "2",
+  getEngineRevision: () =>
+    stableBotHash({
+      runtimeRevision: GUNDAM_AUTOMATION_REVISION,
+      strategies: Object.keys(REGISTERED_STRATEGIES).sort(),
+    }),
   getCardCatalogHash: () => stableBotHash(REGISTERED_DECKS),
   getCurrentDefaultStrategyId: () => getSafeGundamAutomatedActionStrategyOption().id,
   getStrategyDescriptor: (id) =>
@@ -152,15 +168,100 @@ export const gundamBotLabAdapter: BotLabAdapter = {
     }
     return promotionWrite(PROMOTION_PATH, record);
   },
-  doctor: () => ({
-    ok: Object.keys(REGISTERED_DECKS).length >= 3,
-    checks: [
-      {
-        name: "decks",
-        ok: Object.keys(REGISTERED_DECKS).length >= 3,
-        detail: `${Object.keys(REGISTERED_DECKS).length} registered`,
+  doctor: () => {
+    const decksOk = Object.keys(REGISTERED_DECKS).length >= 3;
+    const smokeInput = {
+      seed: "gundam-bot-lab-doctor",
+      candidateSeat: "p1",
+      candidateDeckId: "ef-starter",
+      baselineDeckId: "seed-aggro",
+      candidateStrategyId: getSafeGundamAutomatedActionStrategyOption().id,
+      baselineStrategyId: getSafeGundamAutomatedActionStrategyOption().id,
+      blockId: "doctor",
+      legId: "smoke",
+    } as const;
+    const smoke = run(smokeInput);
+    const replayed = run(smokeInput);
+    const smokeOk = smoke.termination === "rules-win";
+    const replayOk = stableBotHash(replayed) === stableBotHash(smoke);
+    return {
+      ok: decksOk && smokeOk && replayOk,
+      checks: [
+        {
+          name: "decks",
+          ok: decksOk,
+          detail: `${Object.keys(REGISTERED_DECKS).length} registered`,
+        },
+        { name: "default", ok: true, detail: getSafeGundamAutomatedActionStrategyOption().id },
+        {
+          name: "deterministic-match",
+          ok: smokeOk,
+          detail: `${smoke.termination}; ${smoke.actionCount} actions; ${smoke.finalStateHash}`,
+        },
+        {
+          name: "deterministic-replay",
+          ok: replayOk,
+          detail: replayOk
+            ? "exact match record reproduced"
+            : `match record diverged: ${smoke.finalStateHash} != ${replayed.finalStateHash}`,
+        },
+      ],
+    };
+  },
+  train: (raw) => {
+    const plan = (raw ?? {}) as {
+      candidateId?: string;
+      parentStrategyId?: string;
+      hypothesis?: string;
+      seed?: string;
+      evaluation?: Partial<{
+        minimumBlocks: number;
+        maximumBlocks: number;
+        batchSize: number;
+        minimumMeanImprovement: number;
+        maximumCellRegression: number;
+      }>;
+    };
+    const candidateId = plan.candidateId;
+    if (!candidateId || !gundamBotLabAdapter.getStrategyDescriptor(candidateId)) {
+      throw new Error(
+        `Unknown or missing Gundam candidate strategy: ${candidateId ?? "<missing>"}`,
+      );
+    }
+    const parentStrategyId =
+      plan.parentStrategyId ?? gundamBotLabAdapter.getCurrentDefaultStrategyId();
+    if (!gundamBotLabAdapter.getStrategyDescriptor(parentStrategyId)) {
+      throw new Error(`Unknown Gundam parent strategy: ${parentStrategyId}`);
+    }
+    const seed = plan.seed ?? `gundam-${candidateId}-holdout`;
+    return {
+      schemaVersion: BOT_CORE_SCHEMA_VERSION,
+      game: "gundam",
+      candidateId,
+      parentStrategyId,
+      informationPolicy: "oracle",
+      hypothesis:
+        plan.hypothesis ?? `${candidateId} improves paired outcomes over ${parentStrategyId}.`,
+      engineRevision: gundamBotLabAdapter.getEngineRevision(),
+      cardCatalogHash: gundamBotLabAdapter.getCardCatalogHash(),
+      adapterVersion: gundamBotLabAdapter.adapterVersion,
+      changes: { strategyId: candidateId },
+      training: {
+        generator: "registered-strategy-manifest",
+        seed,
+        iterations: 0,
+        corpusId: "gundam-registered-strategies-v1",
       },
-      { name: "default", ok: true, detail: getSafeGundamAutomatedActionStrategyOption().id },
-    ],
-  }),
+      evaluation: {
+        suiteId: "promotion",
+        seedBase: seed,
+        minimumBlocks: plan.evaluation?.minimumBlocks ?? 200,
+        maximumBlocks: plan.evaluation?.maximumBlocks ?? 2_000,
+        batchSize: plan.evaluation?.batchSize ?? 100,
+        confidenceLevel: 0.95,
+        minimumMeanImprovement: plan.evaluation?.minimumMeanImprovement ?? 0.02,
+        maximumCellRegression: plan.evaluation?.maximumCellRegression ?? 0.05,
+      },
+    };
+  },
 };

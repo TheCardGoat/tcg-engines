@@ -6,6 +6,7 @@ import { GundamGame } from "./components/GundamGame.tsx";
 import {
   AttackTargetingOverlayContainer,
   MatchOverviewModalContainer,
+  MatchStatusBarContainer,
   PendingEffectsContainer,
   PlayerSeatContainer,
   PromptContainer,
@@ -27,6 +28,7 @@ import { FloatingUndoButton } from "./components/ui/FloatingUndoButton.tsx";
 import { PriorityActionButton } from "./components/ui/PriorityActionButton.tsx";
 import type { DevRuntimeBotHandle } from "./game/dev-runtime.ts";
 import type { ViewerId } from "./game/types.ts";
+import { GundamDragDropProvider } from "./components/ui/playerSeat/gundam-drag-drop-context.tsx";
 
 export interface SimulatorAppProps {
   readonly runtime: MatchRuntime;
@@ -52,14 +54,16 @@ export function SimulatorApp({
       <GameTable>
         <PlayerSeatContainer side="top" />
         {!isMobile && (
-          <div className="relative h-0">
-            <div className="centerline -top-px" />
+          <div
+            className="gd-dark-surface relative z-20 mx-3 flex h-12 flex-none items-stretch gap-2 border-y border-hud-border/60 bg-hud-deep/95 p-1.5 shadow-[0_8px_22px_rgba(5,10,24,.28)]"
+            data-testid="desktop-match-rail"
+          >
+            <MatchStatusBarContainer embedded />
+            <PriorityActionButton embedded />
+            <FloatingUndoButton embedded />
           </div>
         )}
         <PlayerSeatContainer side="bottom" />
-
-        {!isMobile && <PriorityActionButton />}
-        {!isMobile && <FloatingUndoButton />}
 
         <PromptContainer />
         <SetupPromptContainer />
@@ -79,18 +83,20 @@ export function SimulatorApp({
             <PendingEffectSelectionProvider>
               <DualModeProvider>
                 <CardInspectProvider>
-                  <GundamSharedAnimationLayer>
-                    {bot ? (
-                      <VsAiProvider
-                        bot={bot}
-                        runtime={runtime}
-                        onRestartScenario={onRestartScenario}
-                      >
-                        {matchTree}
-                      </VsAiProvider>
-                    ) : (
-                      matchTree
-                    )}
+                  <GundamSharedAnimationLayer runtime={runtime}>
+                    <GundamDragDropProvider>
+                      {bot ? (
+                        <VsAiProvider
+                          bot={bot}
+                          runtime={runtime}
+                          onRestartScenario={onRestartScenario}
+                        >
+                          {matchTree}
+                        </VsAiProvider>
+                      ) : (
+                        matchTree
+                      )}
+                    </GundamDragDropProvider>
                   </GundamSharedAnimationLayer>
                   <CardHoverPreview />
                   <CardInspectDialog />

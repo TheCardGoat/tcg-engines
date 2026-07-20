@@ -11,9 +11,14 @@ For every card file `packages/cards/src/cards/<set>/<type>/<file>.ts` that has e
 
 there must be a sibling `<file>.test.ts` containing at least one `it(...)` / `test(...)` block that drives the card through a `GundamTestEngine` fixture.
 
-Sets under the strict behavior gate also require fixtures for vanilla cards.
-Deploying a vanilla card, paying its visible cost, and observing its public
-destination and stats are behaviors even when `effects` is empty.
+Vanilla Units are covered together by
+`packages/cards/src/cards/vanilla-unit-catalog.test.ts`. That parameterized
+invariant deploys every canonical non-token vanilla Unit through the public
+move, checks its visible printed stats and destination, and proves its
+active-resource cost gate. Its separate token catalog verifies every canonical
+vanilla Unit token's rules-defined Lv./cost and simulator-visible printed
+stats. Do not create one metadata-oriented sibling test per vanilla card or
+token.
 
 A fixture, in this context, is a tuple of:
 
@@ -51,6 +56,9 @@ The alternative — "write tests later, when we have time" — produces cards wh
 - **Engine shortcuts** — tests read/mutate raw runtime state or execute effects directly.
 - **Hidden-zone leaks** — audited sets cannot capture Deck or face-down Shield identities.
 - **Skipped debt** — strict-set behavior cannot be committed as `skip` or `todo`.
+- **Vanilla catalog drift** — every canonical non-token vanilla Unit must still
+  deploy with its printed stats and reject an underpaid cost, while every
+  canonical vanilla Unit token must retain its token values and visible stats.
 
 What it does **not** catch (and shouldn't pretend to):
 

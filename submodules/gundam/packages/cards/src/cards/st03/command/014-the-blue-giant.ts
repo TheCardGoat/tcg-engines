@@ -71,6 +71,8 @@ export const st03TheBlueGiant014: CommandCard = {
         {
           action: {
             action: "preventDamage",
+            damageType: "battle",
+            duration: "thisBattle",
             target: {
               owner: "friendly",
               cardType: "unit",

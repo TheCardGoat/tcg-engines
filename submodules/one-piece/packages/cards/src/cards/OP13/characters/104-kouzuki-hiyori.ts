@@ -32,11 +32,6 @@ export const op13KouzukiHiyori104: CharacterCard = {
     effects: [
       {
         trigger: "onKo",
-        conditions: [
-          {
-            condition: "leaderMulticolored",
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -55,6 +50,9 @@ export const op13KouzukiHiyori104: CharacterCard = {
               },
             },
             position: "top",
+            condition: {
+              condition: "leaderMulticolored",
+            },
           },
         ],
         optional: true,

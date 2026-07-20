@@ -25,7 +25,41 @@ function runtimeWithClock(): MatchRuntime {
   return runtime;
 }
 
+function runtimeWithoutClock(): MatchRuntime {
+  const staticResources = createStaticResources(players(), new Map());
+  const runtime = new MatchRuntime(staticResources);
+  runtime.initialize(players(), "clockless-test", p1);
+  return runtime;
+}
+
 describe("time-control", () => {
+  it("does not expose or execute timeout administration without a clock", () => {
+    const runtime = runtimeWithoutClock();
+
+    expect(runtime.getAvailableMoves(p1)).not.toContain("skipOpponentTurn");
+    expect(runtime.getAvailableMoves(p1)).not.toContain("dropOpponent");
+
+    for (const move of ["skipOpponentTurn", "dropOpponent"] as const) {
+      const result = runtime.executeCommand(
+        {
+          commandID: `clockless-${move}`,
+          move,
+          prevStateID: runtime.getState().ctx._stateID,
+          actorRole: "player",
+          args: {},
+        },
+        p1,
+      );
+
+      expect(result).toMatchObject({
+        success: false,
+        errorCode:
+          move === "skipOpponentTurn" ? "OPPONENT_NOT_TIMED_OUT" : "OPPONENT_NOT_DROPPABLE",
+      });
+    }
+    expect(runtime.getState().ctx.status.gameEnded).toBe(false);
+  });
+
   it("settles elapsed time only when asked", () => {
     const runtime = runtimeWithClock();
     const state = runtime.getState();

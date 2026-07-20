@@ -217,6 +217,117 @@
   border: 1px solid var(--color-hud-border-hot);
 }
 
+/* Hangar workbench theme -----------------------------------------------------
+ * Structural chrome is graphite rather than paper white. These tokens remain
+ * scoped so prompts and card details can stay light and read as raised layers. */
+.gd-dark-surface {
+  --color-hud-bg: oklch(0.17 0.025 263);
+  --color-hud-deep: oklch(0.205 0.03 262);
+  --color-hud-surface: oklch(0.255 0.032 260);
+  --color-hud-surface-raised: oklch(0.305 0.038 258);
+  --color-hud-accent: oklch(0.68 0.19 257);
+  --color-hud-accent-hot: oklch(0.76 0.15 253);
+  --color-hud-accent-deep: oklch(0.79 0.12 252);
+  --color-hud-danger: oklch(0.69 0.2 350);
+  --color-hud-danger-deep: oklch(0.78 0.15 350);
+  --color-hud-info: oklch(0.76 0.12 247);
+  --color-hud-info-deep: oklch(0.7 0.17 253);
+  --color-hud-text: oklch(0.94 0.012 255);
+  --color-hud-text-muted: oklch(0.78 0.025 255);
+  --color-hud-text-dim: oklch(0.67 0.035 255);
+  --color-hud-text-faint: oklch(0.56 0.035 255);
+  --color-hud-border: oklch(0.7 0.12 255 / 0.3);
+  --color-hud-border-hot: oklch(0.76 0.15 253 / 0.72);
+  --color-hud-line: oklch(0.69 0.055 255 / 0.2);
+}
+
+.gd-dark-surface .bg-white {
+  background-color: oklch(0.245 0.026 263);
+}
+
+.gd-dark-surface [class*="bg-white/"] {
+  background-color: oklch(0.265 0.03 261 / 0.86);
+}
+
+.gd-dark-surface header button,
+.gd-dark-surface footer button {
+  color: var(--color-hud-text);
+}
+
+.gd-dark-surface footer button[data-state="disabled"] {
+  color: var(--color-hud-text-dim);
+}
+
+.gd-dark-surface.surface-panel,
+.gd-dark-surface .surface-panel {
+  background: linear-gradient(180deg, oklch(0.29 0.035 260), oklch(0.23 0.03 262));
+}
+
+.gd-dark-surface.surface-panel-strong,
+.gd-dark-surface .surface-panel-strong {
+  background: linear-gradient(180deg, oklch(0.34 0.04 258), oklch(0.255 0.032 260));
+}
+
+.gd-command-surface {
+  background:
+    linear-gradient(180deg, oklch(0.225 0.03 262), oklch(0.175 0.025 263)), oklch(0.19 0.025 263);
+  box-shadow:
+    inset -1px 0 oklch(0.72 0.12 255 / 0.2),
+    8px 0 28px oklch(0.08 0.02 265 / 0.28);
+}
+
+.gd-command-surface header,
+.gd-command-surface footer {
+  background: oklch(0.205 0.03 262);
+}
+
+.gd-command-surface [role="log"],
+.gd-command-surface [aria-label="Game log panel"] {
+  background: oklch(0.185 0.025 263 / 0.96);
+}
+
+.gd-command-surface .gundam-ai-control-panel [class*="select"],
+.gd-command-surface .gundam-ai-control-panel [class*="btn"] {
+  color: var(--color-hud-text);
+  border-color: var(--color-hud-border);
+  background: oklch(0.27 0.035 260 / 0.92);
+}
+
+.gd-command-surface .gundam-ai-control-panel [class*="segmentBtn"] {
+  color: var(--color-hud-text-muted);
+  border-color: var(--color-hud-border);
+  background: oklch(0.245 0.032 261 / 0.94);
+}
+
+.gd-command-surface .gundam-ai-control-panel [class*="segmentActive"] {
+  color: var(--color-hud-text);
+  background: oklch(0.49 0.14 257 / 0.62);
+}
+
+.gd-command-surface .gundam-ai-control-panel [class*="statusRow"] {
+  border-color: var(--color-hud-border);
+  background: linear-gradient(110deg, oklch(0.29 0.045 260), oklch(0.225 0.03 263));
+}
+
+.gd-command-surface .gundam-ai-control-panel [class*="statusName"] {
+  color: var(--color-hud-text);
+}
+
+.gd-dark-surface *::-webkit-scrollbar-track {
+  background: oklch(0.18 0.025 263);
+}
+
+.gd-dark-surface .gundam-zone-primitive {
+  --board-surface-soft: oklch(0.93 0.012 255 / 0.94);
+  --board-text: oklch(0.25 0.035 260);
+  --board-muted: oklch(0.48 0.04 258);
+}
+
+.gd-dark-surface .gundam-zone-primitive .tabletop-pile-label,
+.gd-dark-surface .gundam-zone-primitive .sim-card-face[data-face="hidden"] .sim-card-art span {
+  color: oklch(0.38 0.04 260);
+}
+
 /* Scanline utility kept as a no-op for backwards compatibility — the official
  * Gundam digital UI is clean (no CRT artifacts), so any class:scanline call
  * sites render transparent. Remove the class outright once consumers migrate. */
@@ -232,17 +343,32 @@
 .gundam-simulator-root {
   /* Mobile chrome slot sizes — used by the portrait re-layout. Kept outside @theme
      (not @theme) so they read as plain CSS vars in calc()/env() expressions. */
-  --mobile-top-hud-height: 44px;
-  --mobile-opp-hand-height: 56px;
-  --mobile-opp-resources-height: 52px;
-  --mobile-self-resources-height: 56px;
-  --mobile-hand-height: 72px;
-  --mobile-menubar-height: 52px;
+  --mobile-top-hud-height: 52px;
+  --mobile-opp-hand-height: 104px;
+  --mobile-opp-resources-height: 94px;
+  --mobile-self-resources-height: 94px;
+  --mobile-hand-height: 104px;
+  --mobile-menubar-height: 56px;
 
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
+}
+
+/* The mobile battle log is a focused reading surface rather than a narrow
+ * navigation drawer. Keep a small glimpse of the board behind it while giving
+ * event messages enough width to wrap naturally. */
+.gundam-simulator-root [role="dialog"][aria-label="Game log"] {
+  width: min(390px, calc(100vw - 16px));
+  padding: 12px;
+}
+
+.gundam-simulator-root
+  [role="dialog"][aria-label="Game log"]
+  button:is([aria-label="Close game log"], [aria-label="Event log options"]) {
+  min-width: 44px;
+  min-height: 44px;
 }
 
 body.gundam-simulator-active {
@@ -431,14 +557,14 @@ body.gundam-simulator-active {
   background:
     linear-gradient(
       180deg,
-      rgba(255, 45, 122, 0.08) 0%,
-      rgba(255, 45, 122, 0.04) 35%,
-      rgba(255, 255, 255, 0.4) 48%,
-      rgba(255, 255, 255, 0.4) 52%,
-      rgba(45, 107, 255, 0.08) 65%,
-      rgba(45, 107, 255, 0.16) 100%
+      oklch(0.34 0.075 350 / 0.66) 0%,
+      oklch(0.24 0.045 335 / 0.54) 42%,
+      oklch(0.16 0.025 265 / 0.82) 49%,
+      oklch(0.16 0.025 265 / 0.82) 51%,
+      oklch(0.225 0.055 260 / 0.66) 60%,
+      oklch(0.315 0.09 255 / 0.72) 100%
     ),
-    linear-gradient(180deg, #f3eef0 0%, #ffffff 50%, #d8e3f5 100%);
+    oklch(0.175 0.026 263);
 }
 .board-bg::before {
   content: "";
@@ -446,8 +572,8 @@ body.gundam-simulator-active {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(95, 115, 160, 0.22) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(95, 115, 160, 0.22) 1px, transparent 1px);
+    linear-gradient(oklch(0.76 0.08 255 / 0.11) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.76 0.08 255 / 0.11) 1px, transparent 1px);
   background-size: 32px 32px;
   mask-image: radial-gradient(ellipse 95% 95% at 50% 50%, #000 40%, transparent 95%);
   -webkit-mask-image: radial-gradient(ellipse 95% 95% at 50% 50%, #000 40%, transparent 95%);
@@ -738,6 +864,28 @@ body.gundam-simulator-active {
   }
   .hand-wrap:hover {
     opacity: 1;
+  }
+}
+
+/* A phone in landscape has desktop-like width but only a narrow vertical play
+ * window. Preserve readable cards and complete seat rows in a swipeable board
+ * while MobileShell keeps status and actions fixed outside this scroller. */
+@media (min-width: 768px) and (max-height: 520px) {
+  .gundam-simulator-root [data-sim-board] {
+    overflow-y: auto !important;
+    overscroll-behavior-y: contain;
+    scroll-snap-type: y proximity;
+    scrollbar-width: none;
+  }
+
+  .gundam-simulator-root [data-sim-board]::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gundam-simulator-root [data-seat-side] {
+    min-height: 300px;
+    flex: 0 0 300px;
+    scroll-snap-align: start;
   }
 }
 

@@ -69,18 +69,9 @@ export const st09ImpulseGundam001: UnitCard = {
       },
       cost: {
         payResources: 2,
+        returnSelfToDeck: "bottom",
       },
       directives: [
-        {
-          action: {
-            action: "returnToDeck",
-            position: "bottom",
-            target: {
-              owner: "self",
-              cardType: "unit",
-            },
-          },
-        },
         {
           action: {
             action: "deploy",

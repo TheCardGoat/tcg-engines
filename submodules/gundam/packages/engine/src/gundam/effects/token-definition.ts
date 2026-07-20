@@ -33,7 +33,6 @@ export function buildTokenUnitDefinition(
         productName: printing?.productName,
       },
     ],
-    color: printed?.color,
     name: tokenSpec.name,
     type: "unit",
     cost: 0,

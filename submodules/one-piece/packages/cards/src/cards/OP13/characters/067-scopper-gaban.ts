@@ -35,6 +35,7 @@ export const op13ScopperGaban067: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Roger Pirates",
+            match: "includes",
           },
         ],
         actions: [

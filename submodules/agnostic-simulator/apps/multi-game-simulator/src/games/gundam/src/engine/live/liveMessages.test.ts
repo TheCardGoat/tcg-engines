@@ -53,6 +53,48 @@ describe("reduceLiveGatewayMessage", () => {
       },
     });
   });
+
+  it("retains authoritative animation packets for the remote adapter", () => {
+    const effect = reduceLiveGatewayMessage(
+      view(),
+      {
+        type: "state_update",
+        gameId: "g_1",
+        state: { ctx: { _stateID: 6, status: { turn: 3 } } },
+        stateVersion: 6,
+        patches: [],
+        engineLogs: [],
+        animations: [
+          {
+            id: "draw-1",
+            kind: "cardMove",
+            durationMs: 420,
+            payload: {
+              kind: "cardMove",
+              cardId: "p2-private-card-id",
+              ownerId: "p2",
+              fromZone: "deck",
+              toZone: "hand",
+            },
+          },
+        ],
+      },
+      { matchId: "m_1", gameId: "g_1", search: "" },
+    );
+
+    expect(effect).toMatchObject({
+      type: "state",
+      view: {
+        animationPackets: [
+          {
+            stateVersion: 6,
+            turnNumber: 3,
+            packet: { id: "draw-1", kind: "cardMove" },
+          },
+        ],
+      },
+    });
+  });
 });
 
 function view(): LiveMatchView {
@@ -62,6 +104,7 @@ function view(): LiveMatchView {
     playerId: "p1",
     version: 0,
     state: null,
+    animationPackets: [],
     ended: null,
   };
 }

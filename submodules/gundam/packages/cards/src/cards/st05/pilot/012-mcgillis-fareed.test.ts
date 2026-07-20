@@ -1,109 +1,200 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
   createMockUnit,
+  expectFailure,
   expectSuccess,
-  seedShieldsFromDeck,
+  restedResources,
 } from "@tcg/gundam-engine";
 import { st05McgillisFareed012 } from "./012-mcgillis-fareed.ts";
 
 describe("McGillis Fareed (ST05-012)", () => {
-  it("【Burst】 Add this card to your hand — moves shield into hand", () => {
-    const engine = GundamTestEngine.create({}, { deck: [st05McgillisFareed012] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
+  describe("【Burst】Add this card to your hand.", () => {
+    it("adds the revealed Shield to its controller's hand when accepted", () => {
+      const attacker = createMockUnit({ name: "Attacker", ap: 1, hp: 5 });
+      const engine = GundamTestEngine.create(
+        { play: [attacker] },
+        { shieldArea: [st05McgillisFareed012] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const attackerId = p1.getCardsInZone("battleArea")[0]!;
 
-    engine.fireShieldBurst(shieldId);
+      expectSuccess(p1.enterBattle(attackerId, "direct"));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+      const burst = p2.getBoardView().pendingChoice;
+      if (burst?.kind !== "optional") throw new Error("Expected the visible Burst choice");
+      expect(burst).toMatchObject({ controllerId: PLAYER_TWO, sourceCardId: burst.sourceCardId });
+      expectSuccess(p2.resolveEffect({ optionalAnswers: { [burst.directiveIndex]: true } }));
 
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `hand:${PLAYER_TWO}`,
+      expect(p2.getCardZone(burst.sourceCardId)).toBe(`hand:${PLAYER_TWO}`);
+    });
+
+    it("puts the revealed Shield in trash when declined", () => {
+      const attacker = createMockUnit({ name: "Attacker", ap: 1, hp: 5 });
+      const engine = GundamTestEngine.create(
+        { play: [attacker] },
+        { shieldArea: [st05McgillisFareed012] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+
+      expectSuccess(p1.enterBattle(p1.getCardsInZone("battleArea")[0]!, "direct"));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+      const burst = p2.getBoardView().pendingChoice;
+      if (burst?.kind !== "optional") throw new Error("Expected the visible Burst choice");
+      expectSuccess(p2.resolveEffect({ optionalAnswers: { [burst.directiveIndex]: false } }));
+
+      expect(p2.getCardZone(burst.sourceCardId)).toBe(`trash:${PLAYER_TWO}`);
+    });
+  });
+
+  describe("【When Paired】 conditional rest", () => {
+    it("counts two other Gjallarhorn/Tekkadan Units and rests exactly one enemy with HP3 or less", () => {
+      const host = createMockUnit({ name: "Host", traits: ["earth federation"] });
+      const gjallarhorn = createMockUnit({ name: "Gjallarhorn", traits: ["gjallarhorn"] });
+      const tekkadan = createMockUnit({ name: "Tekkadan", traits: ["tekkadan"] });
+      const enemyHp3 = createMockUnit({ name: "Enemy HP3", hp: 3 });
+      const otherEnemyHp3 = createMockUnit({ name: "Other Enemy HP3", hp: 3 });
+      const enemyHp4 = createMockUnit({ name: "Enemy HP4", hp: 4 });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [st05McgillisFareed012],
+          play: [host, gjallarhorn, tekkadan],
+          resourceArea: activeResources(4),
+        },
+        { play: [enemyHp3, otherEnemyHp3, enemyHp4] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const [hostId] = p1.getCardsInZone("battleArea");
+      const pilotId = p1.getHand()[0]!;
+      const [chosenId, otherLegalId, tooLargeId] = p2.getCardsInZone("battleArea");
+
+      expectSuccess(p1.assignPilot(st05McgillisFareed012, hostId!));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        controllerId: PLAYER_ONE,
+        sourceCardId: pilotId,
+        minTargets: 1,
+        maxTargets: 1,
+        legalTargetIds: [chosenId, otherLegalId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [chosenId!] }));
+
+      expect(p1.isExhausted(chosenId!)).toBe(true);
+      expect(p1.isExhausted(otherLegalId!)).toBe(false);
+      expect(p1.isExhausted(tooLargeId!)).toBe(false);
+    });
+
+    it("does not count the paired host among the two other Units", () => {
+      const host = createMockUnit({ traits: ["gjallarhorn"] });
+      const onlyOther = createMockUnit({ traits: ["tekkadan"] });
+      const enemy = createMockUnit({ hp: 3 });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [st05McgillisFareed012],
+          play: [host, onlyOther],
+          resourceArea: activeResources(4),
+        },
+        { play: [enemy] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+      expectSuccess(p1.assignPilot(st05McgillisFareed012, p1.getCardsInZone("battleArea")[0]!));
+
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+      expect(p1.isExhausted(enemyId)).toBe(false);
+    });
+
+    it("does not count Units with unrelated traits", () => {
+      const host = createMockUnit({ traits: ["earth federation"] });
+      const first = createMockUnit({ traits: ["titans"] });
+      const second = createMockUnit({ traits: ["zeon"] });
+      const enemy = createMockUnit({ hp: 3 });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [st05McgillisFareed012],
+          play: [host, first, second],
+          resourceArea: activeResources(4),
+        },
+        { play: [enemy] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+
+      expectSuccess(p1.assignPilot(st05McgillisFareed012, p1.getCardsInZone("battleArea")[0]!));
+
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    });
+
+    it("does not prompt when all enemy Units have HP4 or more", () => {
+      const host = createMockUnit();
+      const first = createMockUnit({ traits: ["gjallarhorn"] });
+      const second = createMockUnit({ traits: ["tekkadan"] });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [st05McgillisFareed012],
+          play: [host, first, second],
+          resourceArea: activeResources(4),
+        },
+        { play: [createMockUnit({ hp: 4 })] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+
+      expectSuccess(p1.assignPilot(st05McgillisFareed012, p1.getCardsInZone("battleArea")[0]!));
+
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    });
+  });
+
+  it("adds its printed +2 AP/+1 HP while paired", () => {
+    const engine = GundamTestEngine.create({
+      hand: [st05McgillisFareed012],
+      play: [createMockUnit({ ap: 2, hp: 3 })],
+      resourceArea: activeResources(4),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(st05McgillisFareed012, hostId));
+
+    expect(p1.getVisibleCard(hostId)).toMatchObject({ effectiveAp: 4, effectiveHp: 4 });
+  });
+
+  it("requires Lv.4 resources", () => {
+    const engine = GundamTestEngine.create({
+      hand: [st05McgillisFareed012],
+      play: [createMockUnit()],
+      resourceArea: activeResources(3),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+
+    expectFailure(
+      p1.assignPilot(st05McgillisFareed012, p1.getCardsInZone("battleArea")[0]!),
+      "INSUFFICIENT_RESOURCE_LEVEL",
     );
   });
 
-  describe("【When Paired】If you have 2 or more other (Gjallarhorn)/(Tekkadan) Units in play, choose 1 enemy Unit with 3 or less HP. Rest it.", () => {
-    it("rests a 3-or-less-HP enemy when 2+ other (Gjallarhorn)/(Tekkadan) Units are in play", () => {
-      // Pair host (carries the McGillis pilot) + 2 other matching units = 2 "other" matches.
-      const host = createMockUnit({ traits: ["gjallarhorn"] });
-      const otherGj = createMockUnit({ traits: ["gjallarhorn"] });
-      const otherTk = createMockUnit({ traits: ["tekkadan"] });
-      const enemy = createMockUnit({ ap: 2, hp: 3 });
-
-      const engine = GundamTestEngine.create(
-        {
-          hand: [st05McgillisFareed012],
-          play: [host, otherGj, otherTk],
-          resourceArea: activeResources(5),
-          deck: 5,
-        },
-        { play: [enemy], deck: 5 },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const p2 = engine.asPlayer(PLAYER_TWO);
-      const hostId = p1.getCardsInZone("battleArea")[0]!;
-      const enemyId = p2.getCardsInZone("battleArea")[0]!;
-
-      expectSuccess(p1.assignPilot(st05McgillisFareed012, hostId));
-
-      if (engine.getPendingChoice()) {
-        expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
-      }
-
-      expect(engine.getG().exhausted[enemyId]).toBe(true);
+  it("requires one active resource", () => {
+    const engine = GundamTestEngine.create({
+      hand: [st05McgillisFareed012],
+      play: [createMockUnit()],
+      resourceArea: restedResources(4),
     });
+    const p1 = engine.asPlayer(PLAYER_ONE);
 
-    it("does NOT fire when only 1 matching Unit is in play (below 2 threshold)", () => {
-      // Non-matching host + 1 matching Unit = only 1 match in play → count < 2.
-      const host = createMockUnit({ traits: ["earth federation"] });
-      const onlyMatch = createMockUnit({ traits: ["gjallarhorn"] });
-      const enemy = createMockUnit({ ap: 2, hp: 3 });
-
-      const engine = GundamTestEngine.create(
-        {
-          hand: [st05McgillisFareed012],
-          play: [host, onlyMatch],
-          resourceArea: activeResources(5),
-          deck: 5,
-        },
-        { play: [enemy], deck: 5 },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const p2 = engine.asPlayer(PLAYER_TWO);
-      const hostId = p1.getCardsInZone("battleArea")[0]!;
-      const enemyId = p2.getCardsInZone("battleArea")[0]!;
-
-      expectSuccess(p1.assignPilot(st05McgillisFareed012, hostId));
-
-      expect(engine.getPendingChoice()).toBeFalsy();
-      expect(engine.getG().exhausted[enemyId] ?? false).toBe(false);
-    });
-
-    it("does NOT fire when other units don't carry either trait (e.g. Titans/EF)", () => {
-      const host = createMockUnit({ traits: ["gjallarhorn"] });
-      const filler1 = createMockUnit({ traits: ["titans"] });
-      const filler2 = createMockUnit({ traits: ["earth federation"] });
-      const enemy = createMockUnit({ ap: 2, hp: 3 });
-
-      const engine = GundamTestEngine.create(
-        {
-          hand: [st05McgillisFareed012],
-          play: [host, filler1, filler2],
-          resourceArea: activeResources(5),
-          deck: 5,
-        },
-        { play: [enemy], deck: 5 },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-      const p2 = engine.asPlayer(PLAYER_TWO);
-      const hostId = p1.getCardsInZone("battleArea")[0]!;
-      const enemyId = p2.getCardsInZone("battleArea")[0]!;
-
-      expectSuccess(p1.assignPilot(st05McgillisFareed012, hostId));
-
-      expect(engine.getPendingChoice()).toBeFalsy();
-      expect(engine.getG().exhausted[enemyId] ?? false).toBe(false);
-    });
+    expectFailure(
+      p1.assignPilot(st05McgillisFareed012, p1.getCardsInZone("battleArea")[0]!),
+      "INSUFFICIENT_RESOURCES",
+    );
   });
 });

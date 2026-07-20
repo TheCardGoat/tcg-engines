@@ -13,12 +13,9 @@ import {
 import type { BotVsBotArgs } from "../src/game/fixtures/bot-vs-bot.ts";
 import { SAMPLE_DECKS, type SampleDeckId } from "../src/data/sample-decks/index.ts";
 import {
-  AttackTargetingOverlayContainer,
   MatchOverviewModalContainer,
-  PendingEffectsContainer,
+  MatchStatusBarContainer,
   PlayerSeatContainer,
-  PromptContainer,
-  SetupPromptContainer,
   SubmitErrorProvider,
   GundamTargetingProvider,
 } from "../src/components/containers/index.ts";
@@ -32,9 +29,18 @@ import { GundamBoardLayout } from "../src/components/ui/GundamBoardLayout.tsx";
 import { GameTable } from "../src/components/ui/GameTable.tsx";
 import { HintsProvider } from "../src/lib/use-hints-enabled.ts";
 import { SpectatorGundamGameProvider } from "../src/engine/spectator/SpectatorGundamGameProvider.tsx";
+import { GundamSharedAnimationLayer } from "../src/animation/index.ts";
 
 const VALID_DECKS = new Set(Object.keys(SAMPLE_DECKS));
-const VALID_STRATEGIES = new Set(["greedy-legal", "pass-only", "tempo", "value-ranked"]);
+const VALID_STRATEGIES = new Set([
+  "combat-aware",
+  "greedy-legal",
+  "pass-only",
+  "strategic",
+  "tempo",
+  "value-ranked",
+]);
+const VALID_SPEEDS = new Set(["fast", "balanced", "slow"]);
 
 function isSampleDeckId(v: string | null): v is SampleDeckId {
   return v !== null && VALID_DECKS.has(v);
@@ -53,6 +59,7 @@ function readArgs(url: URL): BotVsBotArgs {
     p2DeckId?: SampleDeckId;
     p1Strategy?: NonNullable<BotVsBotArgs["p1Strategy"]>;
     p2Strategy?: NonNullable<BotVsBotArgs["p2Strategy"]>;
+    botSpeed?: NonNullable<BotVsBotArgs["botSpeed"]>;
     seed?: string;
   } = {};
   const p1Deck = url.searchParams.get("p1Deck");
@@ -63,6 +70,10 @@ function readArgs(url: URL): BotVsBotArgs {
   if (isStrategyId(p1Strategy)) scratch.p1Strategy = p1Strategy;
   const p2Strategy = url.searchParams.get("p2Strategy");
   if (isStrategyId(p2Strategy)) scratch.p2Strategy = p2Strategy;
+  const speed = url.searchParams.get("speed");
+  if (speed && VALID_SPEEDS.has(speed)) {
+    scratch.botSpeed = speed as NonNullable<BotVsBotArgs["botSpeed"]>;
+  }
   const seed = url.searchParams.get("seed");
   if (seed) scratch.seed = seed;
   return scratch;
@@ -86,8 +97,9 @@ export type BotVsBotLoaderData = { readonly snapshot: MatchSnapshot };
  *     which sample deck each seat uses. Defaults to `ef-starter` on
  *     both sides.
  *   - `?p1Strategy=<id>` / `?p2Strategy=<id>` — pick strategies from
- *     greedy-legal / value-ranked / tempo / pass-only. Defaults to
+ *     greedy-legal / strategic / value-ranked / tempo / pass-only. Defaults to
  *     greedy-legal vs value-ranked.
+ *   - `?speed=fast|balanced|slow` — choose spectator pacing.
  *   - `?seed=...` — deterministic shuffle seed for reproducible
  *     matches.
  */
@@ -96,11 +108,11 @@ async function loadBotVsBotSnapshot(url: URL): Promise<BotVsBotLoaderData> {
   const factory = await resolveFixture("bot-vs-bot");
   const dev = factory(args);
   try {
-    // P1's strategy rides the snapshot so the client-side
-    // `attachBotVsBot` knows which strategy to wire P1 to. P2 is
-    // fixed at value-ranked in the registry; we keep it that way so
-    // the snapshot payload stays small (one strategy id).
-    const botConfig: SnapshotBotConfig = { strategy: args.p1Strategy ?? "greedy-legal" };
+    const botConfig: SnapshotBotConfig = {
+      strategy: args.p1Strategy ?? "greedy-legal",
+      opponentStrategy: args.p2Strategy ?? "value-ranked",
+      ...(args.botSpeed ? { speed: args.botSpeed } : {}),
+    };
     return { snapshot: snapshotFromDevRuntime("bot-vs-bot", dev, { botConfig }) };
   } finally {
     dev.bot?.dispose();
@@ -175,7 +187,7 @@ interface BotVsBotShellProps {
   readonly viewerId: ReturnType<typeof reconstructFromSnapshot>["p1Id"];
 }
 
-function BotVsBotShell({ runtime, staticResources, viewerId }: BotVsBotShellProps) {
+export function BotVsBotShell({ runtime, staticResources, viewerId }: BotVsBotShellProps) {
   const layoutMode = useLayoutMode();
   const isMobile = layoutMode === "mobile";
 
@@ -183,17 +195,9 @@ function BotVsBotShell({ runtime, staticResources, viewerId }: BotVsBotShellProp
     <GundamBoardLayout>
       <GameTable>
         <PlayerSeatContainer side="top" />
-        {!isMobile && (
-          <div className="relative h-0">
-            <div className="centerline -top-px" />
-          </div>
-        )}
+        {!isMobile && <MatchStatusBarContainer />}
         <PlayerSeatContainer side="bottom" />
 
-        <PromptContainer />
-        <SetupPromptContainer />
-        <AttackTargetingOverlayContainer />
-        <PendingEffectsContainer />
         <MatchOverviewModalContainer />
         <SubmitErrorToast />
       </GameTable>
@@ -212,7 +216,9 @@ function BotVsBotShell({ runtime, staticResources, viewerId }: BotVsBotShellProp
             <PendingEffectSelectionProvider>
               <DualModeProvider>
                 <CardInspectProvider>
-                  {matchTree}
+                  <GundamSharedAnimationLayer runtime={runtime}>
+                    {matchTree}
+                  </GundamSharedAnimationLayer>
                   <CardHoverPreview />
                   <CardInspectDialog />
                   <SpectatorBadge />
@@ -228,7 +234,7 @@ function BotVsBotShell({ runtime, staticResources, viewerId }: BotVsBotShellProp
 
 function SpectatorBadge() {
   return (
-    <div className="fixed top-4 right-4 z-50 rounded-md bg-black/80 px-3 py-1.5 font-mono text-hud-xs uppercase tracking-hud-label text-hud-text">
+    <div className="fixed top-4 right-4 z-50 rounded-md bg-black/80 px-3 py-1.5 font-mono text-hud-xs uppercase tracking-hud-label text-hud-text max-md:hidden">
       <span className="text-hud-text-faint">mode</span> · spectator
     </div>
   );

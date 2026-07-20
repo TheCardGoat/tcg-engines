@@ -31,6 +31,19 @@ export const op13MarshallDTeach053: CharacterCard = {
     effects: [
       {
         trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "trashCharacter",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Whitebeard Pirates",
+                match: "includes",
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "draw",

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import { getMergedCyberpunkCards } from "@tcg/cyberpunk-cards";
+import { cards, getMergedCyberpunkCards } from "@tcg/cyberpunk-cards";
 import { cyberpunkServerAdapter } from "./adapter.js";
 
 describe("cyberpunkServerAdapter.getCanonicalCardId", () => {
@@ -50,6 +50,24 @@ describe("cyberpunkServerAdapter.getCanonicalCardId", () => {
       expect.objectContaining({
         kind: "copy-limit",
         details: expect.objectContaining({ cardId: canonical!.canonicalId }),
+      }),
+    );
+  });
+
+  it.each(["alpha", "spoiler"] as const)("rejects cards from the %s set", (setCode) => {
+    const previewCard = cards.find((card) => card.set.code === setCode);
+    expect(previewCard).toBeDefined();
+
+    const result = cyberpunkServerAdapter.validateDeckForFormat("alpha", [
+      { cardId: previewCard!.id, quantity: 1 },
+    ]);
+
+    expect(result.valid).toBe(false);
+    expect(result.rules).toContainEqual(
+      expect.objectContaining({
+        kind: "card-pool",
+        passed: false,
+        details: { cardIds: [previewCard!.id] },
       }),
     );
   });

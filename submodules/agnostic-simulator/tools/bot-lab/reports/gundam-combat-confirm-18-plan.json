@@ -1,0 +1,13 @@
+{
+  "candidateId": "iter-18-board-preserving-block",
+  "parentStrategyId": "strategic",
+  "hypothesis": "Effective attacks plus board-preserving blocks confirm across a larger fresh schedule.",
+  "seed": "gundam-combat-common-confirm-v1",
+  "evaluation": {
+    "minimumBlocks": 120,
+    "maximumBlocks": 120,
+    "batchSize": 120,
+    "minimumMeanImprovement": 0.02,
+    "maximumCellRegression": 0.05
+  }
+}

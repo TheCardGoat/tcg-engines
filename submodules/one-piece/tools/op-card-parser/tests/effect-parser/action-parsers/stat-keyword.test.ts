@@ -38,6 +38,36 @@ describe("parseActions — ModifyPowerAction", () => {
     expect(result.unparsed).toBe("");
   });
 
+  test("keeps a named Character and trait Character power bonus through the next End Phase", () => {
+    const result = parseActions(
+      'all of your [Donquixote Rosinante] and "Heart Pirates" type Characters gain +1000 power until the end of your opponent\'s next End Phase',
+    );
+    expect(result.parsed).toMatchObject([
+      {
+        action: "modifyPower",
+        target: {
+          zones: ["character"],
+          filters: [{ filter: "name", value: "Donquixote Rosinante" }],
+        },
+        value: 1000,
+        duration: "untilEndOfOpponentNextEndPhase",
+      },
+      {
+        action: "modifyPower",
+        target: {
+          zones: ["character"],
+          filters: [
+            { filter: "trait", value: "Heart Pirates", match: "includes" },
+            { filter: "excludeName", value: "Donquixote Rosinante" },
+          ],
+        },
+        value: 1000,
+        duration: "untilEndOfOpponentNextEndPhase",
+      },
+    ]);
+    expect(result.unparsed).toBe("");
+  });
+
   describe("self-target patterns", () => {
     test("this Character gains +N power (permanent)", () => {
       const result = parseActions("this Character gains +2000 power");

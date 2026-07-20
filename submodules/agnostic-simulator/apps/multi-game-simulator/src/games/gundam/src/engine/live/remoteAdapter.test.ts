@@ -19,6 +19,7 @@ describe("createRemoteEngineAdapter", () => {
         submissions.push(submission);
       },
       () => viewWithActions(["passTurn"], runtime.getState().ctx._stateID),
+      () => [],
     );
 
     const result = adapter.submit(asMoveName("passTurn"), {});
@@ -47,12 +48,51 @@ describe("createRemoteEngineAdapter", () => {
         throw new Error("should not submit");
       },
       () => viewWithActions(["concede"], runtime.getState().ctx._stateID),
+      () => [],
     );
 
     expect(adapter.submit(asMoveName("passTurn"), {})).toEqual({
       ok: false,
       errorCode: "REMOTE_DISPATCH_FAILED",
       error: "Server did not publish a compatible interaction for this move.",
+    });
+  });
+
+  it("maps only validated authoritative packets into the animation trail", () => {
+    const { runtime, staticResources } = createDevRuntime({ skipToMainPhase: true });
+    const adapter = createRemoteEngineAdapter(
+      { runtime, staticResources, viewerId: asViewerId(DEV_PLAYER_ONE) },
+      () => undefined,
+      () => undefined,
+      () => [
+        {
+          stateVersion: 4,
+          turnNumber: 2,
+          packet: {
+            id: "draw-1",
+            kind: "cardMove",
+            payload: {
+              kind: "cardMove",
+              cardId: "p2-private-card-id",
+              ownerId: "p2",
+              fromZone: "deck",
+              toZone: "hand",
+            },
+          },
+        },
+        {
+          stateVersion: 4,
+          turnNumber: 2,
+          packet: { id: "invalid", kind: "cardMove", payload: { kind: "cardMove" } },
+        },
+      ],
+    );
+
+    expect(adapter.packetAnimations()).toHaveLength(1);
+    expect(adapter.packetAnimations()[0]).toMatchObject({
+      stateID: 4,
+      turnNumber: 2,
+      animation: { id: "draw-1", data: { kind: "cardMove" } },
     });
   });
 });

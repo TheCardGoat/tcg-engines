@@ -171,6 +171,19 @@ describe("parseInlineCondition", () => {
         filters: [{ filter: "cost", comparison: "gte", value: 8 }],
       });
     });
+
+    test("you have a Character with a cost of 8 or more on your field", () => {
+      const result = parseInlineCondition(
+        "If you have a Character with a cost of 8 or more on your field, draw 1 card.",
+      );
+      expect(result).not.toBeNull();
+      expect(result!.condition).toEqual({
+        condition: "hasCard",
+        player: "self",
+        zone: "character",
+        filters: [{ filter: "cost", comparison: "gte", value: 8 }],
+      });
+    });
   });
 });
 

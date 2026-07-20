@@ -49,7 +49,7 @@ Removed the parenthetical `(Units steal an extra gig for every 10 power.)` from 
 
 C1 from the original audit. Added `source: { selector: "self" }` to:
 
-- 5 keyword abilities (royce-psycho-on-the-edge, v-streetkid, alt-cunningham-soulkilller-architect, goro-takemura-hands-unclean's GO SOLO, v-corporate-exile)
+- 5 keyword abilities (royce-psycho-on-the-edge, v-streetkid, alt-cunningham-soulkiller-architect, goro-takemura-hands-unclean's GO SOLO, v-corporate-exile)
 - 5 triggered abilities (jackie-welles-pour-one-out-for-me, viktor-vektor, yorinobu-arasaka-embracing-destruction, evelyn-parker-scheming-siren, ruthless-lowlife)
 
 [authoring-conventions.test.ts](packages/cards/tests/authoring-conventions.test.ts) gained a new assertion: every `kind: "keyword"` and `kind: "triggered"` ability must declare a `source`. Drift now fails CI.
@@ -377,7 +377,7 @@ Add `function assertNever(x: never): never` once in [packages/engine/src/types/i
 **Current state.** 11 cards use `trigger: { trigger: "event" }`:
 
 - **Alpha (4):** jackie-welles-pour-one-out-for-me, yorinobu-arasaka-embracing-destruction, evelyn-parker-scheming-siren, ruthless-lowlife
-- **Spoiler (7):** gorilla-arms, panam-palmer-nomad-cavalry, river-ward-detective-on-the-hunt, alt-cunningham-soulkilller-architect, goro-takemura-vengeful-bodyguard, cyberpsychosis, meredith-stout-stone-cold-corpo
+- **Spoiler (7):** gorilla-arms, panam-palmer-nomad-cavalry, river-ward-detective-on-the-hunt, alt-cunningham-soulkiller-architect, goro-takemura-vengeful-bodyguard, cyberpsychosis, meredith-stout-stone-cold-corpo
 
 **Coverage sample (audit findings):**
 
@@ -477,7 +477,7 @@ export type RuleModifier =
 
 ### 12 🔵 `attachCard` distinct effect
 
-**Current state.** Exactly **one card** overloads `playCard` with `attachTo` to express "equip": [river-ward-detective-on-the-hunt.ts:93-106](packages/cards/src/spoiler/legends/river-ward-detective-on-the-hunt.ts). [alt-cunningham-soulkilller-architect.ts](packages/cards/src/spoiler/legends/alt-cunningham-soulkilller-architect.ts) uses `playCard` without `attachTo`, so no overload there.
+**Current state.** Exactly **one card** overloads `playCard` with `attachTo` to express "equip": [river-ward-detective-on-the-hunt.ts:93-106](packages/cards/src/spoiler/legends/river-ward-detective-on-the-hunt.ts). [alt-cunningham-soulkiller-architect.ts](packages/cards/src/spoiler/legends/alt-cunningham-soulkiller-architect.ts) uses `playCard` without `attachTo`, so no overload there.
 
 **When to do this.** When a second use case appears or when the overload trips someone up. With one card, the ROI is below the cost of the new effect type + handler + automation strategy + view-prompt updates. Park.
 
