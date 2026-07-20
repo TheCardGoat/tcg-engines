@@ -10,6 +10,7 @@ import type { EngineInteractionView, InteractionSubmission } from "@tcg/protocol
 export interface PacketAnimation<TKind extends string = string, TPayload = unknown> {
   id: string;
   kind: TKind;
+  durationMs?: number;
   payload: TPayload;
 }
 

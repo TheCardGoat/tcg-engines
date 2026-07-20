@@ -8,6 +8,7 @@ import {
   createMockUnit,
   expectFailure,
   expectSuccess,
+  restedResources,
 } from "@tcg/gundam-engine";
 import { st08LadyLuck013 } from "./013-lady-luck.ts";
 
@@ -26,6 +27,29 @@ describe("Lady Luck (ST08-013)", () => {
       expectSuccess(p1.playCommand(st08LadyLuck013, { targets: [enemyId!] }));
 
       expect(p2.getDamage(enemyId!)).toBe(1);
+    });
+
+    it("publishes an exact-one controller/source enemy choice", () => {
+      const engine = GundamTestEngine.create(
+        { hand: [st08LadyLuck013], play: [createMockUnit()], resourceArea: activeResources(5) },
+        { play: [createMockUnit({ hp: 5 }), createMockUnit({ hp: 5 })] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const commandId = p1.getHand()[0]!;
+      const enemies = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea");
+      expectSuccess(p1.playCommand(commandId));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        controllerId: PLAYER_ONE,
+        sourceCardId: commandId,
+        minTargets: 1,
+        maxTargets: 1,
+        legalTargetIds: enemies,
+      });
+      expectSuccess(p1.resolveEffect({ targets: [enemies[0]!] }));
+      expect(p1.getDamage(enemies[0]!)).toBe(1);
+      expect(p1.getDamage(enemies[1]!)).toBe(0);
+      expect(p1.getCardZone(commandId)).toBe(`trash:${PLAYER_ONE}`);
     });
 
     it("deals 2 damage while a friendly Mafty Link Unit is in play", () => {
@@ -54,6 +78,35 @@ describe("Lady Luck (ST08-013)", () => {
       expectSuccess(p1.playCommand(st08LadyLuck013, { targets: [enemyId!] }));
 
       expect(p2.getDamage(enemyId!)).toBe(2);
+    });
+
+    it("does not qualify an unlinked friendly Mafty Unit", () => {
+      const engine = GundamTestEngine.create(
+        {
+          hand: [st08LadyLuck013],
+          play: [createMockUnit({ traits: ["mafty"] })],
+          resourceArea: activeResources(5),
+        },
+        { play: [createMockUnit({ hp: 5 })] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+      expectSuccess(p1.playCommand(st08LadyLuck013, { targets: [enemyId] }));
+      expect(p1.getDamage(enemyId)).toBe(1);
+    });
+
+    it("does not qualify a linked friendly Unit without Mafty", () => {
+      const pilot = createMockPilot({ name: "Pilot" });
+      const host = createMockUnit({ traits: ["zeon"], linkCondition: "[Pilot]" });
+      const engine = GundamTestEngine.create(
+        { hand: [pilot, st08LadyLuck013], play: [host], resourceArea: activeResources(5) },
+        { play: [createMockUnit({ hp: 5 })] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+      expectSuccess(p1.assignPilot(pilot, p1.getCardsInZone("battleArea")[0]!));
+      expectSuccess(p1.playCommand(st08LadyLuck013, { targets: [enemyId] }));
+      expect(p1.getDamage(enemyId)).toBe(1);
     });
 
     it("also works at action timing", () => {
@@ -92,5 +145,49 @@ describe("Lady Luck (ST08-013)", () => {
 
       expectFailure(p1.playCommand(st08LadyLuck013, { targets: [friendlyId!] }), "INVALID_TARGET");
     });
+
+    it("cannot be played without an enemy Unit", () => {
+      const engine = GundamTestEngine.create({
+        hand: [st08LadyLuck013],
+        resourceArea: activeResources(5),
+      });
+      expectFailure(engine.asPlayer(PLAYER_ONE).playCommand(st08LadyLuck013), "NO_LEGAL_TARGETS");
+    });
+
+    it("destroys a two-HP enemy with the replacement damage, not three damage", () => {
+      const pilot = createMockPilot({ name: "Pilot" });
+      const host = createMockUnit({ traits: ["mafty"], linkCondition: "[Pilot]" });
+      const engine = GundamTestEngine.create(
+        { hand: [pilot, st08LadyLuck013], play: [host], resourceArea: activeResources(5) },
+        { play: [createMockUnit({ hp: 2 })] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+      expectSuccess(p1.assignPilot(pilot, p1.getCardsInZone("battleArea")[0]!));
+      expectSuccess(p1.playCommand(st08LadyLuck013, { targets: [enemyId] }));
+      expect(p1.getCardZone(enemyId)).toBe(`trash:${PLAYER_TWO}`);
+    });
+  });
+
+  it("requires Lv.5", () => {
+    const engine = GundamTestEngine.create(
+      { hand: [st08LadyLuck013], resourceArea: activeResources(4) },
+      { play: [createMockUnit()] },
+    );
+    expectFailure(
+      engine.asPlayer(PLAYER_ONE).playCommand(st08LadyLuck013),
+      "INSUFFICIENT_RESOURCE_LEVEL",
+    );
+  });
+
+  it("requires one active resource", () => {
+    const engine = GundamTestEngine.create(
+      { hand: [st08LadyLuck013], resourceArea: restedResources(5) },
+      { play: [createMockUnit()] },
+    );
+    expectFailure(
+      engine.asPlayer(PLAYER_ONE).playCommand(st08LadyLuck013),
+      "INSUFFICIENT_RESOURCES",
+    );
   });
 });

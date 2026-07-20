@@ -63,6 +63,10 @@ describe("Cyberpunk mobile portrait board", () => {
       ).toEqual(["2", "3"]);
       expect(ledger.textContent).toContain("SC");
 
+      expect(
+        requiredElement<HTMLElement>(board, '[data-drop-zone="opp-pinfo"]')?.dataset.dropSurface,
+      ).toBe("rival-gigs");
+
       const gigDice = ledger.querySelectorAll<HTMLElement>('[data-testid="gig-die"]');
       expect(gigDice.length).toBeGreaterThan(0);
       for (const die of gigDice) {
@@ -91,6 +95,34 @@ describe("Cyberpunk mobile portrait board", () => {
       expect(requiredElement<HTMLElement>(board, '[data-testid="trash-zone"]')).not.toBeNull();
       expect(requiredElement<HTMLElement>(board, '[data-testid="fixer-zone"]')).not.toBeNull();
       expect(requiredElement<HTMLElement>(board, '[data-testid="eddies-zone"]')).not.toBeNull();
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("uses the readable stacked ledger for two Legends", async () => {
+    ensureJsdomAnimationSupport();
+    installResizeObserverStub();
+
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "mobileLedgerTwoLegends",
+      layout: "mobile",
+    });
+
+    try {
+      const ledger = await waitFor(() =>
+        requiredElement<HTMLElement>(
+          view.container,
+          '[aria-label="Mobile Legends, Street Cred, and Gig dice"]',
+        ),
+      );
+      const sides = ledger.querySelectorAll<HTMLElement>('[data-side-layout="stacked"]');
+      expect(sides).toHaveLength(2);
+
+      for (const side of sides) {
+        expect(side.querySelector('[data-sim-anchor-id$="street-cred"]')).toBeTruthy();
+        expect(side.querySelector('[data-testid="gig-row"]')).toBeTruthy();
+      }
     } finally {
       view.unmount();
     }

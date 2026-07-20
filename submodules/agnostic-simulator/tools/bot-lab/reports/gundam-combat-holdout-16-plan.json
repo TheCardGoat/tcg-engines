@@ -1,0 +1,13 @@
+{
+  "candidateId": "iter-16-combat-aware",
+  "parentStrategyId": "strategic",
+  "hypothesis": "Effective-stat attacks plus selective conservative blocks deliver a stable multi-deck gain.",
+  "seed": "gundam-combat-untouched-holdout-v1",
+  "evaluation": {
+    "minimumBlocks": 240,
+    "maximumBlocks": 240,
+    "batchSize": 240,
+    "minimumMeanImprovement": 0.02,
+    "maximumCellRegression": 0.05
+  }
+}

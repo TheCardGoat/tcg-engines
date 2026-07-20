@@ -145,6 +145,23 @@ describe("parseInlineCondition", () => {
       });
     });
 
+    test("you have N or more colored included-type Characters", () => {
+      const result = parseInlineCondition(
+        'If you have 3 or more blue "Cross Guild" type Characters, draw 1 card.',
+      );
+      expect(result?.condition).toEqual({
+        condition: "zoneCount",
+        player: "self",
+        zone: "character",
+        comparison: "gte",
+        value: 3,
+        filters: [
+          { filter: "color", value: "blue" },
+          { filter: "trait", value: "Cross Guild", match: "includes" },
+        ],
+      });
+    });
+
     test("you have N or less cards in your deck", () => {
       const result = parseInlineCondition(
         "If you have 20 or less cards in your deck, draw 1 card.",

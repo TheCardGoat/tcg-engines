@@ -24,5 +24,6 @@ describe("Balient (GD03-045)", () => {
     const balientId = p1.getCardsInZone("battleArea")[0]!;
 
     expect(p1.getVisibleCard(balientId)?.effectiveAp).toBe(2);
+    expectSuccess(p1.passPhase());
   });
 });

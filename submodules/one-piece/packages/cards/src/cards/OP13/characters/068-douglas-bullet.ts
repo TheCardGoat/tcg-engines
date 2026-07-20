@@ -35,6 +35,7 @@ export const op13DouglasBullet068: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Roger Pirates",
+            match: "includes",
           },
         ],
         actions: [
@@ -45,6 +46,33 @@ export const op13DouglasBullet068: CharacterCard = {
               upTo: true,
             },
             state: "rested",
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "donFieldCount",
+            player: "self",
+            comparison: "gte",
+            value: 8,
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 2000,
+            duration: "permanent",
           },
         ],
       },

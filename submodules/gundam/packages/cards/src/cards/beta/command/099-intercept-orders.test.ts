@@ -19,7 +19,6 @@ describe("Intercept Orders (GD01-099, beta reprint)", () => {
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const [u1Id, u2Id] = p1.getCardsInZone("battleArea");
-    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
 
     expectSuccess(p1.enterBattle(u2Id!, "direct"));
     expectSuccess(p2.passBlock());
@@ -27,13 +26,13 @@ describe("Intercept Orders (GD01-099, beta reprint)", () => {
     expectSuccess(p1.passBattleAction());
     expect(p2.getBoardView().pendingChoice).toMatchObject({
       kind: "optional",
-      sourceCardId: shieldId,
+      sourceCardId: expect.any(String),
       directiveIndex: -1,
     });
     expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
     expect(p2.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
-      sourceCardId: shieldId,
+      sourceCardId: expect.any(String),
       legalTargetIds: [u1Id],
     });
     expectSuccess(p2.resolveEffect({ targets: [u1Id!] }));

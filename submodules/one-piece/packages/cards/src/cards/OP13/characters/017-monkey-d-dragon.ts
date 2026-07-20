@@ -31,6 +31,21 @@ export const op13MonkeyDDragon017: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "removeFromField",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "trait",
+              value: "Revolutionary Army",
+              match: "includes",
+            },
+          ],
+        },
+        source: "opponentEffect",
         replacementAction: {
           action: "modifyPower",
           target: {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import { Button } from "../primitives/index.ts";
 import {
@@ -39,6 +39,7 @@ export function VsAiSetup({
   initialStrategy = "pass-only",
 }: VsAiSetupProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [playerDeck, setPlayerDeck] = useState<SampleDeckId>(initialPlayerDeck);
   const [opponentDeck, setOpponentDeck] = useState<SampleDeckId>(
     // If the caller didn't specify, default the opponent to whichever
@@ -56,7 +57,7 @@ export function VsAiSetup({
       strategy,
       start: "1",
     });
-    const url = `/vs-ai?${params.toString()}`;
+    const url = `${location.pathname}?${params.toString()}`;
     if (onStart) {
       onStart(url);
       return;
@@ -65,9 +66,12 @@ export function VsAiSetup({
   };
 
   return (
-    <div className="min-h-dvh bg-hud-bg text-hud-text flex items-center justify-center p-4 sm:p-6">
+    <div
+      data-testid="vs-ai-setup-scroll-region"
+      className="h-dvh overflow-y-auto bg-hud-bg text-hud-text flex flex-col p-4 sm:p-6"
+    >
       <div
-        className="w-full max-w-3xl clip-hud-8 border border-hud-border bg-[linear-gradient(180deg,#ffffff,#eef2f9)] p-5 sm:p-7"
+        className="my-auto mx-auto w-full max-w-3xl shrink-0 clip-hud-8 border border-hud-border bg-[linear-gradient(180deg,#ffffff,#eef2f9)] p-5 sm:p-7"
         style={{
           boxShadow: "0 0 40px rgba(45,107,255,.14), 0 20px 50px rgba(26,37,66,.18)",
         }}

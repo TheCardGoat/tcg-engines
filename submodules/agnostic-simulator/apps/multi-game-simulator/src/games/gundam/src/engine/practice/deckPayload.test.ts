@@ -12,7 +12,7 @@ describe("resolveGundamPracticePayload", () => {
     if (!result.ok) return;
     expect(result.payload.playerDeck).toBe(SAMPLE_DECKS[DEFAULT_DECK_ID]);
     expect(result.payload.botDeck).toBe(SAMPLE_DECKS[DEFAULT_DECK_ID]);
-    expect(result.payload.botStrategyId).toBe("value-ranked");
+    expect(result.payload.botStrategyId).toBe("combat-aware");
   });
 
   it("decodes a base64url JSON DeckList and flattens it for quick-match", () => {

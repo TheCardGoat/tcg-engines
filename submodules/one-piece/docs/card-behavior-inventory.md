@@ -2306,7 +2306,7 @@ Character batch):
   mandatory prevention omitted by otherwise-equal parser output.
 - **Change:** retain rolling safe-subset handoffs and exclusive shared
   mechanic-family leases. Preflight exact-card continuations and `without
-  <attribute>` clauses, and represent mandatory no-op prevention as a real
+<attribute>` clauses, and represent mandatory no-op prevention as a real
   once-per-turn replacement.
 - **Proof:** all 50 audits pass; 42 focused files pass 72 tests; parser broad
   passes 94 files and 1,164 tests; engine broad passes 1,338 files and 2,567
@@ -2600,15 +2600,702 @@ The 1,544-card canonical queue is tracked in
 Ability cards remain in canonical order; vanilla cards are reserved for one
 parameterized invariant after the ability queue.
 
-- Character behavior tests: 1,084 / 1,544 canonical Characters.
-- Structured pending: 236.
-- Printed but unstructured gaps: 24.
+- Character behavior tests: 1,296 / 1,544 canonical Characters.
+- Structured pending: 37.
+- Printed but unstructured gaps: 11.
 - Canonical vanilla batch: 200.
-- Next canonical Character: OP12-003 Crocus (`pending`).
+- Next canonical Character: OP14-102 Kumacy (`pending`).
+
+Current checkpoint (OP12-070 through OP13-015 reconciliation, five repaired blockers):
+
+- **Signal:** OP12-071 and OP12-086 both lost heterogeneous search branches,
+  while the generated parser inventory ignored command-driven tests under the
+  current `src/cards` authored-test tree. Those two omissions repeatedly made
+  correct card work appear incomplete.
+- **Change:** preserve branch-local exclusions inside `anyOf` search filters,
+  and teach the generated parser inventory to count only authored
+  `OnePieceTestEngine` files while explicitly excluding
+  `validateCardAbility(...)` placeholders. OP13-007 also adds the smallest
+  reusable targeted active-DON!! activation cost required by its printed text.
+- **Proof:** the three focused parser files pass 149 tests; the five-card gate
+  passes 8 command-driven tests; regeneration reports 1,043 owned authored or
+  legacy behavior definitions and all 99 OP12 definitions now parse exactly.
+- **Next-two result:** measure OP09-035 and OP09-036 for whether canonical queue
+  discovery and first-pass inventory attribution now require no manual repair.
+
+Current checkpoint (OP09-035 through OP09-044, five reviewed ability cards):
+
+- **Signal:** all five definitions already passed current parser audits and all
+  five owned tests already used public commands; the remaining work was clause
+  review, two missing negative/result branches, and stale queue classification.
+- **Change:** no new abstraction. Reuse the corrected canonical inventory and
+  strengthen only materially unproved branches instead of rewriting existing
+  command-driven scenarios.
+- **Proof:** all five audits pass and the combined focused gate passes 9 tests,
+  including both OP09-036 mixed-rest outcomes and Alvida's negative Leader gate.
+- **Next-two result:** OP09-045 and OP09-046 both preflight with exact parser
+  output and complete command-driven tests, so the inventory repair removed a
+  setup/repair cycle and should be retained.
+
+Current checkpoint (OP09-045 through OP13-016, five reviewed ability cards):
+
+- **Signal:** four exact definitions already had complete command-driven proof;
+  only OP13-016 still used a generated validation placeholder.
+- **Change:** no new abstraction. Preserve sufficient authored scenarios and
+  replace only the placeholder with a parameterized printed-name gate plus one
+  full search/result path and a negative Leader boundary.
+- **Proof:** all five audits pass and the combined focused gate passes 8 tests;
+  OP09-047/048 required no diff after clause-by-clause review.
+- **Next-two result:** measure OP13-017 and OP13-023 for whether placeholder
+  detection continues to isolate the only required authoring work before freeze.
+
+Current checkpoint (OP13-017 through OP13-026, five verified ability cards):
+
+- **Signal:** three stale card definitions and five generated placeholders were
+  exposed quickly by audit-first preflight; Koby additionally revealed one
+  reusable parser gap for a Leader trait-or-attribute alternative.
+- **Change:** add the narrow compound Leader-condition grammar and regression;
+  otherwise regenerate only stale definitions and replace placeholders with
+  command-driven tests rather than adding another harness abstraction.
+- **Proof:** all five audits pass, the parser suite passes 1,190 tests, and the
+  combined five-card gate passes 11 command-driven tests.
+- **Next-two result:** measure OP13-027 and OP13-028 for whether audit-first
+  preflight again identifies definition and authoring work without a repair cycle.
+
+Current checkpoint (OP13-027 through OP13-032, five verified ability cards):
+
+- **Signal:** audit-first preflight isolated Sanji's trait-match metadata and
+  Nico Robin's End-Phase duration as definition-only drift; all five behavior
+  files were placeholders. The measured OP13-027/028 pair needed no shared repair.
+- **Change:** none. Keep the audit-first flow and author tests directly against
+  public commands; this batch did not justify another parser or harness abstraction.
+- **Proof:** all five audits pass and the combined gate passes 10 command-driven
+  tests spanning alternate Leader gates, nested On Play resolution, dynamic
+  Blocker, play-restriction cleanup, and End-Phase duration cleanup.
+- **Next-two result:** measure OP13-033 and OP13-034 for another no-repair-cycle
+  preflight and whether their existing definitions need only focused proof.
+
+Current checkpoint (OP13-033 through OP13-041, five verified ability cards):
+
+- **Signal:** OP13-033/034 met the prior no-shared-repair measurement, but
+  Bepo exposed a false parser PASS: the grammar recognized “this Character or
+  up to 1 DON!!” yet silently retained only the DON!! branch.
+- **Change:** preserve that printed `or` as an executable action choice between
+  self activation and the up-to-one DON!! selection, with a narrow regression.
+- **Proof:** the parser suite passes 1,191 tests and the combined five-card gate
+  passes 12 command-driven tests, including both Bepo branches and Franky's
+  opponent-only mixed-zone selection.
+- **Next-two result:** inspect OP13-042 and OP13-043 for any audit-pass text with
+  a dropped `or` branch; count a prevented behavior-authoring repair cycle.
+
+Current checkpoint (OP13-042 through OP13-046, five verified ability cards):
+
+- **Signal:** OP13-042/043 had no dropped `or` branch, but Edward.Newgate exposed
+  another false parser PASS where an `and` merged two required recipient groups.
+  Curiel and Vista independently showed that printed `type including` filters
+  had been encoded as exact trait matches, and Vista split one printed
+  once-per-turn replacement across two independently reusable engine branches.
+- **Change:** preserve conjunctive Leader-plus-Character DON!! recipients as
+  separate actions, consistently encode included-trait DON!! and hand-trash
+  filters, and give compound replacement branches one shared once-per-turn key.
+- **Proof:** all five audits pass; 12 focused command-driven behavior tests,
+  1,195 parser tests, and 2,631 engine tests pass (2 skipped), covering the
+  repaired recipient, filter, and replacement identity boundaries.
+- **Next-two result:** use OP13-047 and the next canonical card to measure whether
+  explicit conjunction and included-trait preflight prevents another repair cycle.
+
+Current checkpoint (OP13-047 through OP13-053, five verified ability cards):
+
+- **Signal:** OP13-047 and OP13-050 met the prior no-repair-cycle measurement:
+  Fossa's previously unstructured replacement generated exactly, and Sandersonia
+  needed only authored behavior proof. Teach later exposed a raw-cost truncation
+  that retained `trashCharacter` but discarded its printed included-trait filter.
+- **Change:** no workflow abstraction. The narrow parser repair now captures the
+  full `Characters with a type including` cost phrase before generic Character
+  trash parsing, with a regression for the preserved filter.
+- **Proof:** all five audits, 12 focused command-driven behavior tests, 1,196
+  parser tests, and 2,631 engine tests pass (2 skipped).
+- **Next-two result:** inspect OP13-054 and OP13-055 for qualified Character costs
+  whose suffix could be lost before authoring behavior tests.
+
+Current checkpoint (OP13-054 through OP13-061, five verified ability cards):
+
+- **Signal:** OP13-054/055 contained no qualified Character costs, so the prior
+  suffix-risk measurement needed no repair. Audit-first preflight instead found
+  Yamato's stale block-wide Life condition and LittleOars Jr.'s stale exact trait
+  match; both printed gaps generated complete replacement or modifier structures.
+- **Change:** none. Existing action-level condition, inclusive trait, and
+  replacement-origin paths were sufficient; this batch did not justify another
+  parser, engine, harness, or skill abstraction.
+- **Proof:** all five audits, 12 focused command-driven behavior tests, 1,196
+  parser tests, and 2,631 engine tests pass (2 skipped).
+- **Next-two result:** inspect OP13-062 and OP13-063 for sentence-scoped
+  conditions before treating an audit PASS as behavior proof.
+
+Current checkpoint (OP13-062 through OP13-066, five verified ability cards):
+
+- **Signal:** OP13-062/063 confirmed their given-DON!! gates without a repair
+  cycle. OP13-064 and OP13-066 independently exposed parser omissions for
+  permanent negation and delayed DON!!-deck addition, while Roger also exposed
+  missing generic permanent `negateEffects` evaluation in the engine.
+- **Change:** preserve end-of-turn timing around parsed `addDon` actions; parse
+  Roger's zone-specific permanent negation into separate Leader and filtered
+  Character targets; evaluate permanent `negateEffects` against its target pool.
+- **Proof:** all five audits, 15 focused command-driven behavior tests, 1,199
+  parser tests, and 2,631 engine tests pass (2 skipped); cards, types, parser,
+  and engine package checks pass.
+- **Next-two result:** inspect OP13-067 and OP13-068 for another permanent or
+  delayed action that can reuse these paths without a repair cycle.
+
+Current checkpoint (OP13-067 through OP13-072, five verified ability cards):
+
+- **Signal:** OP13-067 reused inclusive Leader traits plus the established
+  draw/trash/DON!! sequence, and OP13-068 reused dynamic permanent modifiers at
+  the exact eight-DON!! boundary. Neither next-two card needed a shared repair.
+- **Change:** none. The remaining cards composed existing optional DON!! costs,
+  filtered trash recovery, compound conditions, and base-power targeting.
+- **Proof:** all five audits, 12 focused command-driven behavior tests, and
+  2,631 engine tests pass (2 skipped); cards and engine package checks pass.
+- **Next-two result:** inspect OP13-074 and OP13-080 for whether the no-repair
+  streak continues across the next On Play and When Attacking effects.
+
+Current checkpoint (OP13-074 through OP13-084, five verified ability cards):
+
+- **Signal:** OP13-074 and OP13-080 ended the prior no-repair streak with stale
+  card definitions, but current parser output already preserved Hera's included
+  Homies filter and all of Nusjuro's thresholded permanent and attack clauses.
+  Saturn and Ju Peter repeated the same stale included-trait search and omitted
+  permanent protection shape. Publication review then exposed that Rayleigh's
+  leading condition was scoped differently by the action helper and full card
+  definition despite the same conditional-then grammar already ruled for Yamato.
+- **Change:** full parser generation now keeps a no-cost leading condition at
+  block scope when its `Then` continuation consists of delayed actions. The
+  established command-driven search, optional play, permanent-removal, Rush,
+  modifier, and trash-cost paths needed no engine or harness abstraction.
+- **Proof:** all five audits and 13 focused command-driven behavior tests pass;
+  Rayleigh's 3 focused tests, 1,200 parser tests, and 2,631 engine tests pass
+  (2 skipped), with cards, parser, and engine package checks green.
+- **Next-two result:** inspect OP13-086 and OP13-087 for whether audit-first
+  definition repair continues to avoid shared parser or engine work.
+
+Current checkpoint (OP13-086 through OP13-092, five verified ability cards):
+
+- **Signal:** audit-first preflight isolated OP13-086's stale exact trait match,
+  OP13-089/091's omitted thresholded permanents, and OP13-092's stale exact
+  Stage trait match before behavior authoring. OP13-087 and all generated
+  replacements composed existing search, trash, Blocker, removal-protection,
+  optional cost, base-cost targeting, and effect-play paths without repair.
+- **Change:** none. The prior next-two measurement succeeded: OP13-086/087
+  needed no shared parser, engine, projection, or harness cycle.
+- **Proof:** all five audits and 12 focused command-driven behavior tests pass;
+  2,631 engine tests pass (2 skipped), with cards and engine package checks green.
+- **Next-two result:** inspect OP13-093 and OP13-094 for another stale definition
+  that audit-first regeneration can resolve without shared work.
+
+Current checkpoint (OP13-093 through OP13-104, five verified ability cards):
+
+- **Signal:** OP13-093 passed immediately and OP13-094 needed only audit-first
+  included-trait regeneration, satisfying the prior next-two measurement.
+  OP13-095 exposed a second only-type condition that omitted included matching.
+  OP13-102 and official Q&A Q1062 exposed the same conditional-then scoping
+  error as OP13-054 Yamato, whose earlier action-only interpretation conflicted
+  with official Q&A Q1049.
+- **Change:** only-type Character conditions now reject only cards whose traits
+  do not include the printed type. Full parser generation keeps the known
+  Edison and Yamato conditional-then sequences under one block-level gate, and
+  Yamato's definition and negative behavior proof now match the official ruling.
+- **Proof:** all five current audits, Yamato's audit, 15 focused command-driven
+  tests, and 1,202 parser tests pass; cards, parser, and engine checks pass, and
+  the engine suite passes 2,631 tests with 2 skipped.
+- **Next-two result:** inspect OP13-105 and OP13-106 for conditional follow-ups
+  or included-trait gates that reuse these repairs without another cycle.
+
+Current checkpoint (OP13-105 through OP13-110, five verified ability cards):
+
+- **Signal:** OP13-106 and OP13-108 repeated the stale missing-Life-Trigger
+  definition pattern, while OP13-109 and OP13-110 needed only audit-first
+  regeneration. OP13-105 exposed a distinct parser ownership error: printed
+  all-Life ordering was emitted as deck rearrangement, so no public Life-order
+  decision could exist.
+- **Change:** all-Life ordering now generates the existing `rearrangeLife`
+  action for either owner, with narrow self/opponent parser regressions. The
+  other four definitions were regenerated from already-correct parser output;
+  no new harness abstraction was warranted.
+- **Proof:** all five parser audits and 14 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the engine suite passes 2,631 with 2
+  skipped; cards, parser, and engine checks pass. The generated inventory now
+  records 1,399 exact transformations, 168 mismatches, and 1,100 behavior files.
+- **Next-two result:** inspect OP13-112 and OP13-113 to measure whether
+  audit-first regeneration again closes stale permanent or Trigger structure
+  without shared repair.
+
+Current checkpoint (OP13-112 through OP13-119, five verified ability cards):
+
+- **Signal:** audit-first inspection immediately accepted OP13-112, OP13-118,
+  and OP13-119, while OP13-113 and OP13-114 repeated the stale generated
+  definition pattern. OP13-112's first Blocker scenario also exposed a fixture
+  prompt from the default Leader after DON!! attachment, which initially looked
+  like shared-engine failure.
+- **Change:** regenerated only the two stale definitions and corrected
+  S-Snake's localized minus sign. The Vegapunk scenario now names an inert
+  Leader explicitly so its aggregate given-DON!! proof reaches battle without
+  an unrelated pending effect. No shared abstraction or engine repair was
+  warranted.
+- **Proof:** all five parser audits and 15 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the engine suite passes 2,631 with 2
+  skipped; cards, parser, and engine checks pass. The generated inventory now
+  records 1,401 exact transformations, 166 mismatches, and 1,102 behavior files.
+- **Next-two result:** inspect OP13-120 and OP14-002 audit-first, and explicitly
+  name fixture Leaders whenever setup commands can trigger their abilities.
+
+Current checkpoint (OP13-120 through OP14-005, five verified ability cards):
+
+- **Signal:** all five definitions passed audit unchanged, so this batch was
+  entirely placeholder replacement. OP14-002 and OP14-004 shared a dynamic
+  current-power threshold, while OP14-003 required effect-source base power and
+  category provenance rather than the target's modified state.
+- **Change:** none. Existing public power projection, effect provenance, and
+  command rejection made each boundary directly testable without a new helper.
+  One test-only correction removed an expected hand-cost prompt because the
+  engine automatically pays a sole exact unordered candidate.
+- **Proof:** all five parser audits and 12 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped; parser and engine checks pass. The generated inventory
+  records 1,401 exact transformations, 166 mismatches, and 1,106 behavior files.
+- **Next-two result:** inspect OP14-006 and OP14-009 to measure whether the
+  existing threshold/provenance fixtures remain sufficient without setup churn.
+
+Current checkpoint (OP14-006 through OP14-012, five verified ability cards):
+
+- **Signal:** OP14-006 and OP14-012 reused the 5000-current-power attack
+  threshold without new setup, while OP14-010 repeated the stale missing
+  included-trait marker. OP14-009 required reconciling catalog data with the
+  official November 2025 errata before testing its battle-scoped swap.
+- **Change:** repaired OP14-010's Supernovas search filter and removed The Seven
+  Warlords of the Sea from OP14-009's traits per the official errata. Existing
+  public command and projection paths covered both dynamic threshold cards, so
+  no harness abstraction was added.
+- **Proof:** all five parser audits and 11 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped; cards, parser, and engine checks pass. The generated
+  inventory records 1,402 exact transformations, 165 mismatches, and 1,111
+  behavior files.
+- **Next-two result:** OP14-013 and OP14-014 are already known from read-only
+  scouting to need only included-trait regeneration; measure whether both reach
+  focused green without another definition cycle.
+
+Current checkpoint (OP14-013 through OP14-021, five verified ability cards):
+
+- **Signal:** OP14-013/014/016 repeated included-trait metadata drift, and
+  OP14-013 additionally exposed a display suffix leaking into rules identity.
+  OP14-021 showed the more serious boundary: its stored definition correctly
+  filtered self-rest events, but current generated output would erase that
+  provenance.
+- **Change:** corrected OP14-013's rules-facing name, regenerated the three
+  included-trait definitions, and taught generic `whenBecomesRested` parser
+  blocks to emit `eventFilter.targetSelf`. A narrow OP14-021 parser regression
+  proves the filter and its explicit top-Life position before regeneration.
+- **Proof:** all five parser audits and 14 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,412 exact transformations, 155 mismatches, and 1,116
+  behavior files.
+- **Next-two result:** inspect OP14-022 and OP14-023 for self-event provenance
+  and deferred-turn behavior to measure whether the parser repair prevents a
+  second definition cycle.
+
+Current checkpoint (OP14-022 through OP14-026, five verified ability cards):
+
+- **Signal:** OP14-022 and OP14-025 repeated stale exact-trait definitions even
+  though the current parser already emits included-trait matching. OP14-024's
+  mixed card/DON!! rest prompt projects as a payment-shaped decision, but that
+  friction appeared only once in this batch.
+- **Change:** regenerated the two stale card definitions at the owning layer;
+  no new helper or skill rule was added because the existing audit-first loop
+  already diagnosed both and the mixed-rest projection has only one example.
+- **Proof:** all five parser audits and 9 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,414 exact transformations, 153 mismatches, and 1,121
+  behavior files.
+- **Next-two result:** read-only audits for OP14-027 and OP14-028 already pass
+  with self-rest provenance, showing checkpoint 19's parser repair prevents a
+  regeneration cycle on the next two cards.
+
+Current checkpoint (OP14-027 through OP14-032, five verified ability cards;
+OP14-030 remains in the vanilla catalog batch):
+
+- **Signal:** OP14-027, OP14-028, and OP14-032 all rely on self-only rest-event
+  provenance, while OP14-029 relies on self-only removal provenance. All four
+  now regenerate correctly through the existing parser paths. OP14-027 also
+  showed that a partial command-driven test is useful evidence but not complete
+  semantic verification.
+- **Change:** regenerated OP14-029's stale replacement filter and added complete
+  authored public-behavior coverage; no new helper or skill rule was needed
+  because the inventory already excludes `validateCardAbility(...)`
+  placeholders and warns that behavior-file presence is not semantic proof.
+- **Proof:** all five parser audits and 12 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,415 exact transformations, 152 mismatches, and 1,125
+  behavior files.
+- **Next-two result:** inspect OP14-033 and OP14-034 for multi-timing and
+  replacement completeness while preserving the audit-first, authored-proof
+  distinction.
+
+Current checkpoint (OP14-033 through OP14-043, five verified ability cards):
+
+- **Signal:** OP14-034, OP14-042, and OP14-043 repeated stale exact-trait
+  definitions while current parser output already uses included matching.
+  OP14-033/034 also confirmed that multi-timing and replacement cards need
+  clause-specific success, decline, source, target, and duration boundaries.
+- **Change:** regenerated the three stale card definitions and strengthened the
+  OP14-034 integration test after an explicit lease transfer; no new helper or
+  skill rule was added because the existing audit and whole-diff review gates
+  caught both forms of friction.
+- **Proof:** all five parser audits and 14 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,418 exact transformations, 149 mismatches, and 1,130
+  behavior files.
+- **Next-two result:** read-only audits for OP14-044 and OP14-045 already pass;
+  measure whether both reach focused green without a definition cycle.
+
+Current checkpoint (OP14-044 through OP14-048, five verified ability cards):
+
+- **Signal:** OP14-048 and three existing draw-then-trash regressions all
+  reached a mandatory hand-trash action where every eligible card had to be
+  selected, but the engine still created a no-choice prompt. OP14-044 also
+  showed that the standalone conditional-reveal parser dropped printed
+  inclusive trait matching, while OP14-045 exposed the unhandled singular
+  hand-trash trigger already emitted by the parser.
+- **Change:** auto-resolve mandatory hand-trash selections when their maximum
+  equals the complete eligible pool; preserve `match: "includes"` in the
+  standalone conditional-reveal parser; and dispatch the singular and batch
+  effect-origin hand-trash trigger families from the same movement event.
+- **Proof:** all five parser audits and 12 focused command-driven tests pass;
+  the three directly affected hand-trash regressions pass; the parser suite
+  passes 1,204 tests and the configured engine suite passes 2,631 with 2
+  skipped. Cards, parser, and engine checks pass. The generated inventory
+  records 1,420 exact transformations, 147 mismatches, and 1,135 behavior
+  files.
+- **Next-two result:** use OP14-049 and OP14-050 to measure whether singular
+  hand-trash triggers and included-trait parser output now avoid another shared
+  repair or regeneration cycle.
+
+Current checkpoint (OP14-049 through OP14-053, five verified ability cards):
+
+- **Signal:** OP14-049 exercised the singular effect-origin hand-trash trigger
+  without another engine repair, validating checkpoint 23's shared change.
+  OP14-050 and OP14-052 instead repeated stale exact-trait definitions even
+  though current parser output already preserved included matching.
+- **Change:** reconciled those two card definitions to current parser output;
+  no new helper or skill rule was added because the per-card audit and generated
+  inventory already caught both definition drift and the authored-test filename
+  mismatch before publication.
+- **Proof:** all five parser audits and 14 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,422 exact transformations, 145 mismatches, and 1,139
+  behavior files.
+- **Next-two result:** read-only audits already localize OP14-054's stale
+  included Leader trait and show OP14-056 exact; measure whether both reach
+  focused green without shared parser or engine work.
+
+Current checkpoint (OP14-054 through OP14-063, five verified ability cards;
+OP14-055 remains in the vanilla catalog batch):
+
+- **Signal:** OP14-054, OP14-061, and OP14-062 all had current parser output
+  that preserved printed inclusive matching or optional costs while their
+  committed definitions remained stale. OP14-063 additionally had a stale
+  audit invariant that contradicted the parser's correct inclusive trait
+  filter.
+- **Change:** reconciled the three stale definitions and the narrow OP14-063
+  audit invariant; no new helper or skill rule was added because the existing
+  audit-first gate localized every mismatch before behavior implementation.
+- **Proof:** all five parser audits and 15 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,426 exact transformations, 141 mismatches, and 1,144
+  behavior files.
+- **Next-two result:** use OP14-064 and OP14-065 to measure whether the same
+  audit-first reconciliation avoids a shared repair cycle on the next two
+  cards.
+
+Current checkpoint (OP14-064 through OP14-069, five verified ability cards;
+OP14-066 remains in the vanilla catalog batch):
+
+- **Signal:** OP14-064 and OP14-065 reached focused green directly from their
+  audit-clean definitions. OP14-067, OP14-068, and OP14-069 repeated the
+  established pattern where current parser output preserved inclusive traits
+  or optional costs but both committed definitions and narrow audit sentinels
+  lagged behind it.
+- **Change:** reconciled those three definitions and their audit sentinels to
+  the current parser; no new helper or skill rule was needed because the
+  audit-first workflow separated definition drift from runtime behavior before
+  test authoring.
+- **Proof:** all five parser audits and 11 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,429 exact transformations, 138 mismatches, and 1,149
+  behavior files.
+- **Next-two result:** use OP14-070 and OP14-071 to measure whether audit-first
+  reconciliation continues to avoid shared parser or engine repair.
+
+Current checkpoint (OP14-070 through OP14-075, five verified ability cards;
+OP14-073 remains in the vanilla catalog batch):
+
+- **Signal:** OP14-071 repeated stale exact-trait definition drift, which the
+  audit-first gate localized before behavior work. OP14-070 exposed a distinct
+  shared provenance boundary: effect-driven rest events retained the acting
+  seat but not the physical Character that originated the effect.
+- **Change:** effect-driven Character rest now carries its source instance
+  through both rest trigger families, including replacement continuations.
+  The OP14-071 audit sentinel and definition now preserve inclusive Leader
+  trait matching. No skill change was warranted from these isolated findings.
+- **Proof:** all five parser audits and 13 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,432 exact transformations, 135 mismatches, and 1,154
+  behavior files.
+- **Next-two result:** use OP14-081 and OP14-082 to verify that source-aware
+  trigger preflight and audit-first reconciliation avoid another shared repair.
+
+Current checkpoint (OP14-081 through OP14-085, five verified ability cards):
+
+- **Signal:** OP14-082 and OP14-084 both repeated stale inclusive-trait
+  expectations in their definitions and narrow audit sentinels, while the
+  current parser output already preserved the printed inclusion semantics.
+- **Change:** reconciled both definitions and sentinels to current parser
+  output. No new helper or skill rule was added because the existing audit-first
+  gate localized both mismatches before runtime behavior work.
+- **Proof:** all five parser audits and 11 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,434 exact transformations, 133 mismatches, and 1,159
+  behavior files.
+- **Next-two result:** use OP14-086 and OP14-087 to measure whether audit-first
+  reconciliation continues to prevent parser or engine repair cycles.
+
+Current checkpoint (OP14-086 through OP14-090, five verified ability cards):
+
+- **Signal:** OP14-086 through OP14-089 repeated stale exact-trait definitions
+  or audit sentinels while current parser output already preserved the printed
+  inclusive matching. OP14-090's definition was exact and its only repair cycle
+  was a first-player attack-restriction fixture correction.
+- **Change:** reconciled the four stale definitions and their narrow sentinels;
+  no helper or skill change was needed because audit-first localization and the
+  existing attack-legality fixture checklist covered the repeated friction.
+- **Proof:** all five parser audits and 12 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,438 exact transformations, 129 mismatches, and 1,164
+  behavior files.
+- **Next-two result:** use OP14-091 and OP14-092 to measure continued audit-first
+  localization and reuse of existing replacement/trigger fixtures.
+
+Current checkpoint (OP14-091 through OP14-100, five verified ability cards;
+OP14-095 and OP14-101 remain in the vanilla catalog batch):
+
+- **Signal:** OP14-091, OP14-093, and OP14-100 repeated stale inclusive-trait
+  definitions, while OP14-092's definition and sentinel omitted the parser's
+  self-target event provenance for its K.O. replacement.
+- **Change:** reconciled those four definitions and sentinels to current parser
+  output. No new abstraction or skill rule was needed because the existing
+  audit-first gate and replacement fixtures localized every mismatch.
+- **Proof:** all five parser audits and 11 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,442 exact transformations, 125 mismatches, and 1,169
+  behavior files.
+- **Next-two result:** use OP14-102 and OP14-103 to measure whether current
+  Life Trigger and inclusive-trait fixtures avoid shared repair cycles.
+
+Current checkpoint (OP14-102 through OP14-106, five verified ability cards):
+
+- **Signal:** OP14-102 through OP14-105 repeated stale inclusive-trait,
+  Life-position, or self-play definitions. OP14-105 also exposed that the
+  parser recognized "Leader and all Characters" but omitted the per-recipient
+  DON!! distribution semantics required by `each`.
+- **Change:** reconciled all five definitions and audit sentinels, and taught
+  the shared leader-and-all DON!! parser branch to emit
+  `distribution: "each"`. No skill or harness change was needed.
+- **Proof:** all five parser audits and 12 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,447 exact transformations, 120 mismatches, and 1,174
+  behavior files.
+- **Next-two result:** use OP14-107 and OP14-108 to measure whether the current
+  inclusive-Leader and Life Trigger fixtures avoid another shared repair.
+
+Current checkpoint (OP14-107 through OP14-111, five verified ability cards):
+
+- **Signal:** OP14-107 and OP14-109 through OP14-111 repeated stale inclusive
+  trait definitions or audit sentinels; OP14-107 also retained the older
+  generic self-play Trigger shape. OP14-108 was exact on its first audit.
+- **Change:** reconciled the four stale definitions and their sentinels. No new
+  parser, engine, harness, or skill abstraction was warranted because the
+  existing audit-first gate localized every mismatch before behavior work.
+- **Proof:** all five parser audits and 14 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,451 exact transformations, 116 mismatches, and 1,179
+  behavior files.
+- **Next-two result:** use OP14-112 and OP14-113 to measure whether the existing
+  inclusive-trait and self-play fixtures continue to avoid shared repair.
+
+Current checkpoint (OP14-112 through OP14-119, five verified ability cards;
+OP14-116 through OP14-118 remain outside the Character ability queue):
+
+- **Signal:** OP14-112 through OP14-115 repeated stale inclusive-trait or
+  self-play definitions and sentinels. OP14-114 additionally showed that the
+  give-DON parser's explicit `{Trait} type Leader or Character` branch emitted
+  exact matching, unlike the other current inclusive-trait branches.
+- **Change:** reconciled the four stale definitions and sentinels, and made the
+  explicit give-DON type-target parser emit inclusive matching. OP14-119 was
+  exact on its first audit; no harness or skill change was needed.
+- **Proof:** all five parser audits and 14 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,455 exact transformations, 112 mismatches, and 1,184
+  behavior files.
+- **Next-two result:** use OP14-120 and P-014 to measure whether current
+  conditional follow-up and Life Trigger fixtures avoid shared repair.
+
+Current checkpoint (OP14-120, P-014, P-029, P-044, and P-053; five verified
+ability cards):
+
+- **Signal:** P-014 retained the older generic self-play Trigger shape and
+  P-029's stored FILM filter was exact instead of inclusive. OP14-120, P-044,
+  and P-053 were exact on their first audits; all runtime repair cycles were
+  fixture or visible-power expectation corrections.
+- **Change:** reconciled the two stale definitions. No parser, engine, harness,
+  or skill abstraction was warranted because current audit output and the
+  existing fixture checklist localized every mismatch.
+- **Proof:** all five parser audits and 12 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,457 exact transformations, 110 mismatches, and 1,189
+  behavior files.
+- **Next-two result:** use P-055 and P-063 to measure whether the current
+  low-hand and filtered On Play fixtures continue without shared repair.
+
+Current checkpoint (P-055, P-063, P-068, P-069, and P-070; five verified
+ability cards):
+
+- **Signal:** all five structured definitions were exact on their first audit,
+  while all five generated `validateCardAbility(...)` files still lacked real
+  command-driven behavior proof. The only repair cycle was one target-fixture
+  assumption for P-063.
+- **Change:** replaced the five placeholders with focused public-command tests.
+  No shared abstraction or skill change was needed because each printed
+  interaction reused an established fixture and prompt path.
+- **Proof:** all five parser audits and 10 focused command-driven tests pass;
+  the parser suite passes 1,204 tests and the configured engine suite passes
+  2,631 with 2 skipped. Cards, parser, and engine checks pass. The generated
+  inventory records 1,457 exact transformations, 110 mismatches, and 1,194
+  behavior files.
+- **Next-two result:** use P-073 and P-074 to measure whether established
+  Activate Main fixtures continue to eliminate shared repair cycles.
+
+Current checkpoint (P-073, P-074, P-075, P-079, and P-082; five verified
+ability cards):
+
+- **Signal:** P-073 and P-074 confirmed that the established Activate Main
+  fixtures localize omitted printed costs without shared repair. P-079 and
+  P-082 repeated stale exact-trait definitions, while P-075 exposed one parser
+  gap for a cost threshold ending in “on your field.”
+- **Change:** kept the audit-first preflight and added only the narrow parser
+  regression needed to preserve P-075's field condition and ordered draw then
+  trash actions. No new harness or workflow abstraction was warranted.
+- **Proof:** all five parser audits and 12 focused command-driven tests pass;
+  the full parser suite passes 1,206 tests and the configured engine suite
+  passes 2,631 with 2 skipped. Cards, parser, and engine checks pass. The
+  generated inventory records 1,461 exact transformations, 106 mismatches, and
+  1,199 behavior files.
+- **Next-two result:** use P-078 and P-081 to measure whether audit-first
+  preflight turns their unstructured gap rows into focused card-definition or
+  parser repairs without a shared-engine cycle.
+
+Current checkpoint (P-078, P-081, P-083, P-085, and P-088; five verified
+ability cards):
+
+- **Signal:** P-081 and P-083 independently exposed narrow grammar gaps before
+  behavior authoring: colored typed-character field counts and singular
+  category-card hand-trash costs. Audit-first preflight still localized both
+  failures before engine work, while P-078, P-085, and P-088 required only
+  stale-definition repair.
+- **Change:** broadened the two owning parser productions and added focused
+  regressions. No harness or workflow abstraction was added because the
+  existing public-command fixtures covered all five cards directly.
+- **Proof:** all five fresh audits and 14 focused command-driven tests pass.
+  The parser regressions cover the full P-081 activation and P-083 attack-cost
+  sequences. The generated inventory records 1,466 exact transformations, 101
+  mismatches, and 1,204 behavior files.
+- **Next-two result:** use PRB02-001 and PRB02-002 to measure whether the two
+  broadened grammar paths avoid another parser repair cycle while preserving
+  exact trait, color, cost, and post-cost condition semantics.
+
+Current checkpoint (PRB02-001 through PRB02-005; five verified ability cards):
+
+- **Signal:** PRB02-001 and PRB02-002 confirmed that audit-first preflight
+  isolated stale definitions before behavior authoring. PRB02-003 and
+  PRB02-005 independently exposed unsupported printed grammar: a
+  power-filtered Character hand cost and an opponent-next-Main-Phase action.
+- **Change:** added narrow parser regressions for both grammar forms and a
+  reusable delayed-action phase/seat schedule in the engine. Cost-area rest
+  prompts now honor printed choice ownership. No new harness abstraction was
+  warranted. A broad-gate-only OP09-105 failure was classified test-only and
+  updated for the established automatic payment of unordered exact costs.
+- **Proof:** all five parser audits and 17 focused command-driven tests pass;
+  the parser suite passes 1,212 tests and the engine suite passes 2,497 with 2
+  skipped. Cards, types, parser, and engine checks pass. The generated inventory
+  records 1,469 exact transformations, 98 mismatches, and 1,209 behavior files.
+- **Next-two result:** use ST01-002 and ST01-004 to measure whether audit-first
+  gap work remains confined to card definitions and narrow parser productions
+  without another shared-engine repair cycle.
+
+Current checkpoint (ST01-002, ST01-004, ST01-005, ST01-013, and ST16-003; five
+verified ability cards):
+
+- **Signal:** all four ST01 cards shared the legacy set-level catalog and could
+  not be reached by the standard Character audit command. ST01-005 also exposed
+  that the parser recognized “other than this Character” but not the equivalent
+  printed “other than this card” source exclusion.
+- **Change:** the Character audit now discovers legacy set-level indexes, and
+  target parsing accepts both source-exclusion wordings. No engine or harness
+  abstraction was needed.
+- **Proof:** all five parser audits and 11 focused command-driven tests pass;
+  the parser suite passes 1,213 tests and the engine suite passes 2,507 with 2
+  skipped. Cards, parser, and engine checks pass. The generated inventory
+  records 1,470 exact transformations, 97 mismatches, and 1,210 behavior files.
+- **Next-two result:** use ST16-005 and ST20-003 to measure whether legacy-aware
+  audit preflight localizes their remaining gaps without manual parser-parity
+  commands or a shared-engine repair cycle.
+
+Final checkpoint (ST16-005, ST20-003, ST21-003, and the 200-card vanilla
+Character catalog):
+
+- **Signal:** all three final ability gaps were parser-owned. Two cards reused
+  established runtime semantics once their printed clauses were preserved;
+  ST21-003 mapped naturally to a turn-scoped `unblockable` keyword on the
+  selected attacker. The vanilla inventory needed one executable catalog proof
+  instead of 200 empty per-card tests.
+- **Change:** added narrow parser support for rested named Characters, ordered
+  Life inspection before returning the Trigger card to hand, and selected
+  attacker Blocker prohibition. Added one parameterized invariant over the
+  canonical 200-card vanilla inventory.
+- **Proof:** all three final parser audits, 7 focused ability tests, and 201
+  vanilla catalog tests pass; the parser suite passes 1,216 tests and the
+  engine suite passes 2,712 with 2 skipped. Cards, parser, and engine checks
+  pass. The generated inventory records 1,473 exact transformations, 94
+  mismatches, and 1,213 behavior files.
+- **Next-two result:** none; the canonical queue now has no pending ability,
+  unstructured gap, or unverified vanilla Character entry.
 
 ## Progress
 
-- Executable card tests: 1,723 / 1,983 canonical cards.
+- Verified canonical cards: 1,983 / 1,983.
 - Stage behavior tests: 39 / 39 canonical Stages.
 - Interaction families covered by an authored card test: optional confirmation,
   filtered Character selection, selectable Character-to-deck cost, ordered

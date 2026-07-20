@@ -1,0 +1,232 @@
+{
+  "baseline": {
+    "options": {
+      "p1Strategy": "combat-aware",
+      "p2Strategy": "combat-aware",
+      "p1Deck": "gd01-mixed",
+      "p2Deck": "gd01-mixed",
+      "matches": 24,
+      "seedBase": "cmd-screen-gd01-mixed",
+      "maxActions": 1500,
+      "label": "command baseline gd01-mixed"
+    },
+    "summary": {
+      "matches": 24,
+      "p1WinRate": 0.625,
+      "p2WinRate": 0.375,
+      "drawRate": 0,
+      "avgTurns": 12.291666666666666,
+      "avgActions": 147.70833333333334,
+      "avgElapsedMs": 144.29166666666666,
+      "terminationDistribution": {
+        "game-won": 24,
+        "automation-concession": 0,
+        "repeated-state": 0,
+        "max-actions-exceeded": 0,
+        "concede-failed": 0
+      },
+      "winReasonDistribution": {
+        "player_two has no shields remaining": 15,
+        "player_one has no shields remaining": 9
+      }
+    }
+  },
+  "candidate": {
+    "options": {
+      "p1Strategy": "iter-21-develop-before-command",
+      "p2Strategy": "combat-aware",
+      "p1Deck": "gd01-mixed",
+      "p2Deck": "gd01-mixed",
+      "matches": 24,
+      "seedBase": "cmd-screen-gd01-mixed",
+      "maxActions": 1500,
+      "label": "develop before command gd01-mixed"
+    },
+    "summary": {
+      "matches": 24,
+      "p1WinRate": 0.75,
+      "p2WinRate": 0.25,
+      "drawRate": 0,
+      "avgTurns": 12.083333333333334,
+      "avgActions": 147.125,
+      "avgElapsedMs": 157.75,
+      "terminationDistribution": {
+        "game-won": 24,
+        "automation-concession": 0,
+        "repeated-state": 0,
+        "max-actions-exceeded": 0,
+        "concede-failed": 0
+      },
+      "winReasonDistribution": {
+        "player_two has no shields remaining": 18,
+        "player_one has no shields remaining": 6
+      }
+    }
+  },
+  "improvedFor": "p1",
+  "winRateDelta": 0.125,
+  "avgTurnsDelta": -0.20833333333333215,
+  "avgActionsDelta": -0.5833333333333428,
+  "drawRateDelta": 0,
+  "terminationDelta": {
+    "game-won": 0,
+    "automation-concession": 0,
+    "repeated-state": 0,
+    "max-actions-exceeded": 0,
+    "concede-failed": 0
+  },
+  "families": {
+    "chooseFirstPlayer": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "alterHand": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "deployUnit": {
+      "attemptedDelta": 2,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "deployBase": {
+      "attemptedDelta": 1,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "playCommand": {
+      "attemptedDelta": -13,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "activateAbility": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 0,
+      "successRateCandidate": 0,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "assignPilot": {
+      "attemptedDelta": -1,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "playCommandAsPilot": {
+      "attemptedDelta": 4,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "declareBlock": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 0,
+      "successRateCandidate": 0,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "enterBattle": {
+      "attemptedDelta": 20,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "passBlock": {
+      "attemptedDelta": -12,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "passBattleAction": {
+      "attemptedDelta": 7,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "discardToHandLimit": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 0,
+      "successRateCandidate": 0,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "passTurn": {
+      "attemptedDelta": -4,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "passActionStep": {
+      "attemptedDelta": -5,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "concede": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 0,
+      "successRateCandidate": 0,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "skipOpponentTurn": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 0,
+      "successRateCandidate": 0,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "dropOpponent": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 0,
+      "successRateCandidate": 0,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "resolveEffect": {
+      "attemptedDelta": -18,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    }
+  },
+  "regressions": [],
+  "improvements": [
+    {
+      "seed": "cmd-screen-gd01-mixed-9",
+      "from": "p2 (player_one has no shields remaining)",
+      "to": "p1 (player_two has no shields remaining)"
+    },
+    {
+      "seed": "cmd-screen-gd01-mixed-14",
+      "from": "p2 (player_one has no shields remaining)",
+      "to": "p1 (player_two has no shields remaining)"
+    },
+    {
+      "seed": "cmd-screen-gd01-mixed-20",
+      "from": "p2 (player_one has no shields remaining)",
+      "to": "p1 (player_two has no shields remaining)"
+    }
+  ],
+  "verdict": "win-rate +12.5pp, gained 3 flipped matches, lost 0"
+}

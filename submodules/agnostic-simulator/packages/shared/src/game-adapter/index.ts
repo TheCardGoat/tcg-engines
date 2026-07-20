@@ -3,6 +3,13 @@ export type {
   DeckEntry,
   DeckBuildInput,
   DeckCard,
+  DeckMetadataFacetKind,
+  DeckMetadataFacetDefinition,
+  DeckMetadataMember,
+  DeckMetadataFacet,
+  DeckMetadataProjection,
+  GameMetadataCapabilities,
+  GameMetadataAdapter,
   DeckFormatRule,
   DeckFormatResult,
   CardSummary,
@@ -12,6 +19,12 @@ export type {
 } from "./types.js";
 export type { PlayableGameSlug } from "@tcg/protocol/games";
 export { PLAYABLE_GAME_SLUGS, isPlayableGameSlug } from "@tcg/protocol/games";
+
+export {
+  buildColorMetadataFacets,
+  normalizeMetadataColors,
+  sortMetadataFacets,
+} from "./metadata.js";
 
 export {
   registerGameAdapter,

@@ -24,6 +24,12 @@ const OPTIONS: readonly StrategyOption[] = [
     description:
       "Plays the highest-priority legal action — deploys units, attacks rested targets, pressures shields.",
   },
+  {
+    id: "combat-aware",
+    title: "Ace",
+    description:
+      "Develops and pairs before combat, then chooses favorable attacks and blocks while preserving board value.",
+  },
 ];
 
 export interface OpponentPickerProps {
@@ -45,7 +51,7 @@ export function OpponentPicker({
       <div
         role="radiogroup"
         aria-label="Opponent AI"
-        className="grid gap-2 grid-cols-1 sm:grid-cols-2"
+        className="grid gap-2 grid-cols-1 sm:grid-cols-3"
       >
         {OPTIONS.map((option) => {
           const isSelected = option.id === selected;

@@ -25,8 +25,6 @@ import type { Card } from "@tcg/gundam-types";
 export const PLAYER_ONE: PlayerId = asPlayerId("player_one");
 export const PLAYER_TWO: PlayerId = asPlayerId("player_two");
 
-let instanceCounter = 0;
-
 /**
  * Build a `Record<cardNumber, Card>` from every card the cards package exports.
  */
@@ -56,9 +54,10 @@ function placeCard(
   playerId: PlayerId,
   card: Card,
   zone: "deck" | "resourceDeck",
+  instanceCounter: { value: number },
 ): void {
   const state = runtime.getState();
-  const instanceId = `${playerId}_${card.cardNumber}_${++instanceCounter}`;
+  const instanceId = `${playerId}_${card.cardNumber}_${++instanceCounter.value}`;
   runtime.registerCardInstance(instanceId, card.cardNumber, playerId);
 
   const zoneKey = `${zone}:${playerId}`;
@@ -97,10 +96,10 @@ export interface BenchRuntimeHandle {
  * drives both seats through the setup flow before main phase begins.
  */
 export function buildBenchRuntime(options: BenchRuntimeOptions): BenchRuntimeHandle {
-  // Keep headless bot-bench instance IDs stable across multiple same-process
-  // runs. The simulator dev runtime has its own counter/reset because this
-  // package deliberately avoids importing app internals.
-  instanceCounter = 0;
+  // Keep headless bot-bench instance IDs stable and isolated across concurrent
+  // same-process runs. The simulator dev runtime has its own counter because
+  // this package deliberately avoids importing app internals.
+  const instanceCounter = { value: 0 };
   const p1Expanded = expandDeck(options.p1Deck, { catalog: SHARED_CATALOG });
   const p2Expanded = expandDeck(options.p2Deck, { catalog: SHARED_CATALOG });
 
@@ -121,10 +120,12 @@ export function buildBenchRuntime(options: BenchRuntimeOptions): BenchRuntimeHan
   const runtime = new MatchRuntime(staticResources);
   runtime.initialize([p1, p2], options.seed, options.initialActivePlayer ?? PLAYER_ONE);
 
-  for (const card of p1Expanded.deck) placeCard(runtime, PLAYER_ONE, card, "deck");
-  for (const card of p1Expanded.resourceDeck) placeCard(runtime, PLAYER_ONE, card, "resourceDeck");
-  for (const card of p2Expanded.deck) placeCard(runtime, PLAYER_TWO, card, "deck");
-  for (const card of p2Expanded.resourceDeck) placeCard(runtime, PLAYER_TWO, card, "resourceDeck");
+  for (const card of p1Expanded.deck) placeCard(runtime, PLAYER_ONE, card, "deck", instanceCounter);
+  for (const card of p1Expanded.resourceDeck)
+    placeCard(runtime, PLAYER_ONE, card, "resourceDeck", instanceCounter);
+  for (const card of p2Expanded.deck) placeCard(runtime, PLAYER_TWO, card, "deck", instanceCounter);
+  for (const card of p2Expanded.resourceDeck)
+    placeCard(runtime, PLAYER_TWO, card, "resourceDeck", instanceCounter);
 
   return { runtime, staticResources };
 }

@@ -49,6 +49,7 @@ export const op14eb04Arlong042: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Fish-Man",
+            match: "includes",
           },
         ],
         actions: [

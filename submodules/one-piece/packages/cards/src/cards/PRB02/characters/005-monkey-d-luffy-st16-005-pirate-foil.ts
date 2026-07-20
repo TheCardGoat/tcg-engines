@@ -41,5 +41,43 @@ export const prb02MonkeyDLuffySt16005PirateFoil005: CharacterCard = {
     },
   ],
   effect: "If you have a rested [Uta], this Character gains +1000 power.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "hasCard",
+            player: "self",
+            zone: "character",
+            filters: [
+              {
+                filter: "state",
+                value: "rested",
+              },
+              {
+                filter: "name",
+                value: "Uta",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 1000,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
   i18n: prb02MonkeyDLuffySt16005PirateFoil005I18n,
 };

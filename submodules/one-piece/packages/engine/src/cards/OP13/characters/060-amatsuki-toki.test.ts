@@ -1,9 +1,66 @@
-import { describe, test } from "vite-plus/test";
+import { eb01Fourtricks025, op01Kaido094, op12UrsaShock096, op13Inuarashi061 } from "@tcg/op-cards";
+import { describe, expect, test } from "vite-plus/test";
 import { op13AmatsukiToki060 } from "../../../../../cards/src/cards/OP13/characters/060-amatsuki-toki.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
+
+import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP13-060 Amatsuki Toki", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op13AmatsukiToki060);
+  test("may trash itself instead of an opponent effect K.O.'ing an included Roger Pirates Character", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op13AmatsukiToki060, op13Inuarashi061] },
+      { hand: [op12UrsaShock096], activeDon: op12UrsaShock096.cost },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const tokiId = engine.findCardInZone("south", "character", op13AmatsukiToki060);
+    const protectedId = engine.findCardInZone("south", "character", op13Inuarashi061);
+
+    engine.playCard(op12UrsaShock096, "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [protectedId] }, "north");
+    const replacement = engine.pendingDecision("effectKoReplacement", "south");
+    expect(replacement.actorId).toBe("south");
+    engine.resolveDecision("effectKoReplacement", { optionId: "yes" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(protectedId);
+    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(tokiId);
+    expect(view.prompts).toHaveLength(0);
+  });
+
+  test("does not replace an opponent effect K.O. for a nonmatching Character", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op13AmatsukiToki060, eb01Fourtricks025] },
+      { hand: [op12UrsaShock096], activeDon: op12UrsaShock096.cost },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const tokiId = engine.findCardInZone("south", "character", op13AmatsukiToki060);
+    const targetId = engine.findCardInZone("south", "character", eb01Fourtricks025);
+
+    engine.playCard(op12UrsaShock096, "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "north");
+
+    const view = engine.getView("south");
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(tokiId);
+    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(targetId);
+    expect(view.prompts).toHaveLength(0);
+  });
+
+  test("does not replace a battle K.O. of a matching Character", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [op13AmatsukiToki060, { card: op13Inuarashi061, rested: true, playedOnTurn: 0 }],
+      },
+      { character: [{ card: op01Kaido094, playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const tokiId = engine.findCardInZone("south", "character", op13AmatsukiToki060);
+    const targetId = engine.findCardInZone("south", "character", op13Inuarashi061);
+    const attackerId = engine.findCardInZone("north", "character", op01Kaido094);
+
+    engine.declareAttack(attackerId, targetId, "north");
+
+    const view = engine.getView("south");
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(tokiId);
+    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(targetId);
+    expect(view.prompts).toHaveLength(0);
   });
 });

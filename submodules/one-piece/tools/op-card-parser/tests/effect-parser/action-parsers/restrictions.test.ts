@@ -115,6 +115,40 @@ describe("parseActions — cannotActivate", () => {
 });
 
 describe("parseActions — negateEffects", () => {
+  test("permanently negates own Leader and only non-included-trait Characters", () => {
+    const result = parseActions(
+      'Your Leader and all of your Characters that do not have a type including "Roger Pirates" have their effects negated.',
+    );
+
+    expect(result).toEqual({
+      parsed: [
+        {
+          action: "negateEffects",
+          target: { player: "self", zones: ["leader"], count: { amount: "all" } },
+          duration: "permanent",
+        },
+        {
+          action: "negateEffects",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: { amount: "all" },
+            filters: [
+              {
+                filter: "trait",
+                value: "Roger Pirates",
+                match: "includes",
+                negate: true,
+              },
+            ],
+          },
+          duration: "permanent",
+        },
+      ],
+      unparsed: "",
+    });
+  });
+
   test("negate effect of target during this turn", () => {
     const result = parseActions(
       "Negate the effect of up to 1 of your opponent's Leader or Character cards during this turn.",

@@ -54,6 +54,7 @@ export const prb02JewelryBonneyP085PirateFoil085: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Supernovas",
+                match: "includes",
               },
               {
                 condition: "lifeComparison",
@@ -80,7 +81,7 @@ export const prb02JewelryBonneyP085PirateFoil085: CharacterCard = {
                 },
               ],
             },
-            position: "top",
+            position: "choice",
             faceUp: true,
           },
         ],

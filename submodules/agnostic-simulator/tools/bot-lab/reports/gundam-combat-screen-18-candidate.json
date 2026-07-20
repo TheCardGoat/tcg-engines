@@ -1,0 +1,28 @@
+{
+  "adapterVersion": "2",
+  "candidateId": "iter-18-board-preserving-block",
+  "cardCatalogHash": "fnv1a32:d9b21800",
+  "changes": { "strategyId": "iter-18-board-preserving-block" },
+  "engineRevision": "fnv1a32:91faa561",
+  "evaluation": {
+    "batchSize": 30,
+    "confidenceLevel": 0.95,
+    "maximumBlocks": 30,
+    "maximumCellRegression": 0.2,
+    "minimumBlocks": 30,
+    "minimumMeanImprovement": 0,
+    "seedBase": "gundam-combat-common-screen-v1",
+    "suiteId": "promotion"
+  },
+  "game": "gundam",
+  "hypothesis": "Blocking only for board value or immediate defeat improves the combined combat policy.",
+  "informationPolicy": "oracle",
+  "parentStrategyId": "strategic",
+  "schemaVersion": 1,
+  "training": {
+    "corpusId": "gundam-registered-strategies-v1",
+    "generator": "registered-strategy-manifest",
+    "iterations": 0,
+    "seed": "gundam-combat-common-screen-v1"
+  }
+}

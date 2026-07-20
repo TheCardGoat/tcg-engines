@@ -20,14 +20,13 @@ describe("Gadeel (GD04-044)", () => {
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
-    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
     expectSuccess(p1.enterBattle(attackerId, enemyId));
     expectSuccess(p2.passBlock());
     expectSuccess(p2.passBattleAction());
     expectSuccess(p1.passBattleAction());
 
     expect(p2.getCardZone(enemyId)).toBe(`trash:${PLAYER_TWO}`);
-    expect(p2.getCardZone(shieldId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p2.getBoardView().players[PLAYER_TWO]?.shieldCount).toBe(0);
   });
 
   it("does not gain Breach when attacking an undamaged enemy Unit", () => {
@@ -41,7 +40,6 @@ describe("Gadeel (GD04-044)", () => {
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
-    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
 
     expectSuccess(p1.enterBattle(attackerId, enemyId));
     expectSuccess(p2.passBlock());
@@ -49,6 +47,6 @@ describe("Gadeel (GD04-044)", () => {
     expectSuccess(p1.passBattleAction());
 
     expect(p2.getCardZone(enemyId)).toBe(`trash:${PLAYER_TWO}`);
-    expect(p2.getCardZone(shieldId)).toBe(`shieldArea:${PLAYER_TWO}`);
+    expect(p2.getBoardView().players[PLAYER_TWO]?.shieldCount).toBe(1);
   });
 });

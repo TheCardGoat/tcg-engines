@@ -6,7 +6,7 @@ import type {
   MatchStaticResources,
   PendingChoicePrompt,
 } from "@tcg/gundam-engine";
-import { GundamServerEngine } from "./gundam-server-engine.js";
+import { GundamServerEngine, gundamPacketAnimation } from "./gundam-server-engine.js";
 
 describe("GundamServerEngine interaction submission", () => {
   it("rejects invalid protocol values before native command dispatch", () => {
@@ -62,5 +62,29 @@ describe("GundamServerEngine interaction submission", () => {
       "invalid_interaction_submission",
     );
     expect(calls).toEqual([]);
+  });
+});
+
+describe("gundamPacketAnimation", () => {
+  it("preserves native private identities for renderer-level privacy validation", () => {
+    const packet = gundamPacketAnimation({
+      id: "draw-1",
+      type: "cardMove",
+      duration: 420,
+      data: {
+        kind: "cardMove",
+        cardId: "private-card-id",
+        ownerId: "p2",
+        fromZone: "deck",
+        toZone: "hand",
+      },
+    });
+
+    expect(packet.payload).toMatchObject({
+      cardId: "private-card-id",
+      ownerId: "p2",
+      fromZone: "deck",
+      toZone: "hand",
+    });
   });
 });

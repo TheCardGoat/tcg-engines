@@ -1,4 +1,6 @@
+import { useDraggable } from "@dnd-kit/core";
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { KeyboardEvent, ReactElement } from "react";
 
 import { useHasHover } from "../../../lib/use-has-hover.ts";
 import { m } from "../../../lib/i18n/messages.ts";
@@ -10,6 +12,10 @@ import {
 } from "../card/card-image-format.ts";
 import { GameCard } from "../GameCard.tsx";
 import type { GameCardData } from "../types.ts";
+import {
+  encodeGundamHandCardSource,
+  type GundamHandCardDragSource,
+} from "./gundam-drag-drop-context.tsx";
 
 const BASE_W = CARD_IMAGE_DIMENSIONS.full.width;
 const BASE_H = CARD_IMAGE_DIMENSIONS.full.height;
@@ -20,7 +26,24 @@ const HOVER_SCALE = 1.08;
 const HOVER_LIFT_PX = 10;
 const HOVER_SIBLING_OPACITY = 0.85;
 const HOVER_SIBLING_BRIGHTNESS = 0.9;
-const MAX_VISIBLE_HIDDEN = 10;
+const MAX_VISIBLE_HIDDEN_DESKTOP = 8;
+const MAX_VISIBLE_HIDDEN_MOBILE = 6;
+
+interface HandCardDragProps {
+  readonly source: GundamHandCardDragSource;
+  readonly disabled: boolean;
+  readonly children: (props: {
+    readonly setNodeRef: (node: HTMLElement | null) => void;
+    readonly attributes: ReturnType<typeof useDraggable>["attributes"];
+    readonly listeners: ReturnType<typeof useDraggable>["listeners"];
+    readonly isDragging: boolean;
+  }) => ReactElement;
+}
+
+function HandCardDrag({ source, disabled, children }: HandCardDragProps) {
+  const drag = useDraggable({ id: encodeGundamHandCardSource(source), disabled });
+  return children(drag);
+}
 
 function getFanRotation(index: number, total: number, isOpponent: boolean): number {
   if (total <= 1) return 0;
@@ -39,16 +62,16 @@ function getDynamicOverlap(count: number, cardW: number): number {
 }
 
 function getDynamicCardSize(_count: number): CardSize {
-  // Hand sits as an explicit row below the play field (Commit 14),
-  // so it doesn't need to fit the play-field card scale anymore —
-  // small gives the field room and matches what the redesign expects.
-  return "tiny";
+  // Desktop hands are contextual edge rails, not a second battlefield.
+  // Micro keeps the active field dominant while hover/inspect still provides
+  // a full-size reading surface for cards the player wants to examine.
+  return "micro";
 }
 
 function getMobileCardWidthPx(viewportWidth: number, count: number, isOpponent: boolean): number {
-  if (count <= 0 || viewportWidth <= 0) return isOpponent ? 56 : 76;
-  const maxW = isOpponent ? 56 : 76;
-  const minW = isOpponent ? 36 : 52;
+  if (count <= 0 || viewportWidth <= 0) return isOpponent ? 52 : 64;
+  const maxW = isOpponent ? 52 : 64;
+  const minW = isOpponent ? 36 : 48;
   const minStep = isOpponent ? 10 : 16;
   return Math.min(maxW, Math.max(minW, viewportWidth - (count - 1) * minStep));
 }
@@ -99,6 +122,7 @@ export function HandZone({
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const [focusedIdx, setFocusedIdx] = useState<number | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
   // Gate the hand-card hover-lift / sibling-dim on hover-capable
   // pointers; otherwise tapping a card on mobile fires synthetic
@@ -193,8 +217,10 @@ export function HandZone({
     containerWidth > 0 &&
     mobileCardW + (total - 1) * (isOpponent ? 10 : 16) > containerWidth;
 
-  const hiddenPlaceholderCount = total === 0 ? Math.min(effectiveTotal, MAX_VISIBLE_HIDDEN) : 0;
-  const hiddenOverflowCount = Math.max(0, effectiveTotal - hiddenPlaceholderCount);
+  const hiddenPlaceholderLimit = isMobile ? MAX_VISIBLE_HIDDEN_MOBILE : MAX_VISIBLE_HIDDEN_DESKTOP;
+  const hiddenPlaceholderCount = total === 0 ? Math.min(effectiveTotal, hiddenPlaceholderLimit) : 0;
+  const hiddenOverflowCount =
+    total === 0 ? Math.max(0, effectiveTotal - hiddenPlaceholderCount) : 0;
 
   const handleCardTap = (i: number) => {
     if (isOpponent) return;
@@ -205,6 +231,12 @@ export function HandZone({
     onSelect?.(i);
   };
 
+  const handleCardKeyDown = (event: KeyboardEvent<HTMLDivElement>, i: number) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    handleCardTap(i);
+  };
+
   const showDesktopTuck = !isMobile && isOpponent && onToggleTucked;
   const showMobileControls = isMobile && !isOpponent && total > 0 && mobileNeedsScroll;
 
@@ -213,10 +245,10 @@ export function HandZone({
     : "transition-[transform,filter,opacity,margin] duration-200 ease-out";
 
   const desktopCardH = Math.round(BASE_H * (desktopCardW / BASE_W));
-  // Show only the top portion of cards on desktop — the rest extends below
-  // the row's allocated height, intentionally overlapping the row above.
-  const desktopVisibleFrac = 0.45;
-  const desktopVisibleH = Math.round(desktopCardH * desktopVisibleFrac);
+  // Desktop hands occupy a complete, clipped band. Reserving the full card
+  // footprint prevents the old fan from escaping into resources, controls,
+  // or the browser edge while preserving enough room for a subtle lift.
+  const desktopRowH = desktopCardH + 24;
 
   const cardVars = isMobile
     ? ({
@@ -230,7 +262,7 @@ export function HandZone({
     const rotation = getFanRotation(i, count, isOpponent);
     const isSel = !isOpponent && !multi && selected === i;
     const isMarked = !isOpponent && multi && markedSet!.has(i);
-    const isHovered = !isOpponent && hoveredIdx === i;
+    const isHovered = !isOpponent && (hoveredIdx === i || focusedIdx === i);
     const playable = !isOpponent && canPlay ? canPlay(card!) : false;
     const lifted = isSel || isMarked;
     const isSibDimmed = hoveredIdx !== null && !isHovered && !lifted;
@@ -241,10 +273,10 @@ export function HandZone({
     if (isMobile) {
       transform = lifted ? "translateY(-4px) scale(1.03)" : "";
     } else if (lifted) {
-      const liftDir = isOpponent ? 8 : -8;
+      const liftDir = isOpponent ? 6 : -6;
       transform = `translateY(${liftDir}px) rotate(0deg)`;
     } else if (isHovered) {
-      const liftDir = isOpponent ? -HOVER_LIFT_PX : HOVER_LIFT_PX;
+      const liftDir = isOpponent ? HOVER_LIFT_PX : -HOVER_LIFT_PX;
       transform = `translateY(${liftDir}px) rotate(0deg) scale(${HOVER_SCALE})`;
     } else {
       transform = `rotate(${rotation}deg)`;
@@ -274,69 +306,108 @@ export function HandZone({
           ? `brightness(${HOVER_SIBLING_BRIGHTNESS})`
           : "none";
 
+    const cardId = card?.id ?? `hidden-${i}`;
+    const dragSource: GundamHandCardDragSource = {
+      type: "hand-card",
+      cardId,
+      card: {
+        name: card?.name ?? "Hidden card",
+        img: card?.img,
+        cardType: card?.cardType,
+        cost: card?.cost,
+      },
+    };
+
     return (
-      <div
+      <HandCardDrag
         key={isPlaceholder ? `hidden-${i}` : (card!.id ?? i)}
-        role={isPlaceholder ? undefined : "listitem"}
-        aria-label={
-          isPlaceholder
-            ? undefined
-            : m["sim.hand.cardLabel"]({ name: card!.name, cost: card!.cost })
-        }
-        onClick={isPlaceholder ? undefined : () => handleCardTap(i)}
-        onMouseEnter={hasHover ? () => !isOpponent && setHoveredIdx(i) : undefined}
-        onMouseLeave={hasHover ? () => !isOpponent && setHoveredIdx(null) : undefined}
-        className={[
-          "hand-card relative flex-shrink-0",
-          isPlaceholder
-            ? "cursor-default pointer-events-none"
-            : "cursor-pointer pointer-events-auto",
-          isOpponent ? "" : "",
-          transitionCls,
-          isMobile && !isOpponent ? "snap-start" : "",
-        ].join(" ")}
-        style={{
-          width: isMobile ? `var(--zone-card-width, ${mobileCardW}px)` : undefined,
-          height: isMobile ? `var(--zone-card-height, ${mobileCardH}px)` : undefined,
-          marginLeft,
-          zIndex: lifted ? 100 : isHovered ? 90 : i,
-          transform: transform || undefined,
-          transformOrigin: isOpponent ? "top center" : "center bottom",
-          transitionTimingFunction: "cubic-bezier(.25,.46,.45,.94)",
-          filter: filterVal,
-          opacity: isSibDimmed ? HOVER_SIBLING_OPACITY : 1,
-        }}
+        source={dragSource}
+        disabled={isPlaceholder || !playable}
       >
-        {isPlaceholder ? (
-          <GameCard
-            faceDown
-            name="?"
-            size={isMobile ? "tiny" : "small"}
-            useContainerSize={isMobile}
-          />
-        ) : (
-          <GameCard
-            {...card!}
-            selected={isSel || isMarked}
-            highlight={!multi && playable && !isSel}
-            size={isMobile ? "tiny" : desktopSize}
-            useContainerSize={isMobile}
-          />
-        )}
-        {isMarked && (
+        {({ setNodeRef, attributes, listeners, isDragging }) => (
           <div
-            className="gd-display absolute left-1/2 -top-2.5 whitespace-nowrap pointer-events-none bg-[linear-gradient(180deg,#d7263d,#4a0612)] text-[#fff5d6] text-hud-xs font-black border border-hud-border-hot shadow-[0_0_10px_rgba(255,45,122,.6),0_2px_6px_rgba(0,0,0,.5)] tracking-hud-label"
+            ref={setNodeRef}
+            {...(!isPlaceholder && playable ? attributes : {})}
+            role={isPlaceholder ? undefined : "listitem"}
+            aria-label={
+              isPlaceholder
+                ? undefined
+                : m["sim.hand.cardLabel"]({ name: card!.name, cost: card!.cost })
+            }
+            onClick={isPlaceholder ? undefined : () => handleCardTap(i)}
+            tabIndex={isPlaceholder || isOpponent ? undefined : 0}
+            onFocus={isPlaceholder || isOpponent ? undefined : () => setFocusedIdx(i)}
+            onBlur={isPlaceholder || isOpponent ? undefined : () => setFocusedIdx(null)}
+            {...(!isPlaceholder && playable ? listeners : {})}
+            onKeyDown={
+              isPlaceholder || isOpponent
+                ? undefined
+                : (event) => {
+                    if (playable && event.key === " " && listeners?.onKeyDown) {
+                      listeners.onKeyDown(event);
+                      return;
+                    }
+                    handleCardKeyDown(event, i);
+                  }
+            }
+            data-draggable={!isPlaceholder ? String(playable) : undefined}
+            onMouseEnter={hasHover ? () => !isOpponent && setHoveredIdx(i) : undefined}
+            onMouseLeave={hasHover ? () => !isOpponent && setHoveredIdx(null) : undefined}
+            className={[
+              "hand-card relative flex-shrink-0",
+              isPlaceholder
+                ? "cursor-default pointer-events-none"
+                : "cursor-pointer pointer-events-auto",
+              isOpponent ? "" : "",
+              transitionCls,
+              isMobile && !isOpponent ? "snap-start" : "",
+            ].join(" ")}
             style={{
-              transform: "translateX(-50%) rotate(-6deg)",
-              padding: "2px 8px 2px 7px",
-              clipPath: "polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%)",
-              textShadow: "0 1px 1px rgba(0,0,0,.5)",
+              width: isMobile ? `var(--zone-card-width, ${mobileCardW}px)` : undefined,
+              height: isMobile ? `var(--zone-card-height, ${mobileCardH}px)` : undefined,
+              marginLeft,
+              zIndex: lifted ? 100 : isHovered ? 90 : i,
+              transform: transform || undefined,
+              transformOrigin: isOpponent ? "top center" : "center bottom",
+              transitionTimingFunction: "cubic-bezier(.25,.46,.45,.94)",
+              filter: filterVal,
+              opacity: isDragging ? 0.35 : isSibDimmed ? HOVER_SIBLING_OPACITY : 1,
+              touchAction: playable ? (isMobile ? "pan-x" : "none") : undefined,
             }}
           >
-            {m["sim.hand.alter"]()}
+            {isPlaceholder ? (
+              <GameCard
+                faceDown
+                name="?"
+                size={isMobile ? "tiny" : desktopSize}
+                useContainerSize={isMobile}
+                draggable={playable}
+              />
+            ) : (
+              <GameCard
+                {...card!}
+                selected={isSel || isMarked}
+                highlight={!multi && playable && !isSel}
+                size={isMobile ? "tiny" : desktopSize}
+                useContainerSize={isMobile}
+              />
+            )}
+            {isMarked && (
+              <div
+                className="gd-display absolute left-1/2 -top-2.5 whitespace-nowrap pointer-events-none bg-[linear-gradient(180deg,#d7263d,#4a0612)] text-[#fff5d6] text-hud-xs font-black border border-hud-border-hot shadow-[0_0_10px_rgba(255,45,122,.6),0_2px_6px_rgba(0,0,0,.5)] tracking-hud-label"
+                style={{
+                  transform: "translateX(-50%) rotate(-6deg)",
+                  padding: "2px 8px 2px 7px",
+                  clipPath: "polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%)",
+                  textShadow: "0 1px 1px rgba(0,0,0,.5)",
+                }}
+              >
+                {m["sim.hand.alter"]()}
+              </div>
+            )}
           </div>
         )}
-      </div>
+      </HandCardDrag>
     );
   };
 
@@ -351,32 +422,24 @@ export function HandZone({
         // actually overflow on mobile — without it the container takes its
         // content width and the parent flex chain inflates past the
         // viewport, pushing the action bar / top-hud pill off-screen.
-        isMobile ? "w-full min-w-0" : isOpponent ? "justify-start" : "justify-end",
+        "w-full min-w-0 overflow-hidden",
+        !isMobile && (isOpponent ? "justify-start" : "justify-end"),
       ]
         .filter(Boolean)
         .join(" ")}
       data-zone-id="hand"
       data-sim-zone-id={zoneId}
       data-testid={`hand-zone-${isOpponent ? "opponent" : "self"}`}
-      style={
-        !isMobile
-          ? {
-              height: `${desktopVisibleH}px`,
-              overflow: "visible",
-            }
-          : undefined
-      }
+      style={{ height: isMobile ? "104px" : `${desktopRowH}px` }}
     >
       {showDesktopTuck && (
         <button
           type="button"
           onClick={onToggleTucked!}
           aria-label={isTucked ? "Show hand" : "Hide hand"}
-          className="absolute left-1/2 z-[130] inline-flex items-center gap-1.5 px-3 py-1.5 border rounded-full pointer-events-auto bg-hud-deep/95 border-hud-border/40 text-hud-accent text-hud-2xs font-bold tracking-hud-label uppercase opacity-90 hover:opacity-100"
+          className="absolute right-2 top-1.5 z-[130] inline-flex items-center gap-1.5 rounded-sm border border-hud-border/45 bg-white/90 px-2 py-1 pointer-events-auto text-hud-accent-deep text-hud-2xs font-bold tracking-hud-label uppercase opacity-90 hover:opacity-100"
           style={{
-            top: isOpponent ? "-14px" : undefined,
-            bottom: isOpponent ? undefined : "-14px",
-            transform: "translateX(-50%)",
+            transform: "none",
           }}
         >
           <span>{isTucked ? "Show" : "Hide"}</span>
@@ -395,8 +458,8 @@ export function HandZone({
           // `justify-start` (not `-center`) so overflow lives on the right
           // and `scrollLeft` actually has room to move.
           isMobile
-            ? "w-full justify-start overflow-x-auto overflow-y-visible scroll-smooth px-2 py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden touch-pan-x"
-            : "justify-center px-hud-md pt-2.5",
+            ? "h-full w-full justify-start overflow-x-auto overflow-y-visible scroll-smooth px-2 py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden touch-pan-x"
+            : "h-full justify-center overflow-hidden px-hud-md py-3",
         ].join(" ")}
         style={cardVars}
         data-mobile-scrollable={isMobile && mobileNeedsScroll ? "true" : undefined}

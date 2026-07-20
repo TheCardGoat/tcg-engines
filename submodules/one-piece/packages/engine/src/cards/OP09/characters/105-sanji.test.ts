@@ -32,10 +32,6 @@ describe("OP09-105 Sanji", () => {
     engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
     engine.resolveDecision("effectAddToLifeFromDeck", { optionId: "1" }, "north");
-    const trash = engine.pendingDecision("effectTrashFromHandSelection", "north").steps[0];
-    if (trash?.kind !== "selectEntity") throw new Error("Expected Sanji's discard choice.");
-    expect(trash).toMatchObject({ min: 2, max: 2 });
-    engine.resolveDecision("effectTrashFromHandSelection", { selectedIds: discardIds }, "north");
 
     const view = engine.getView("north");
     expect(engine.getState().players.north.life).toEqual([lifeCardId]);

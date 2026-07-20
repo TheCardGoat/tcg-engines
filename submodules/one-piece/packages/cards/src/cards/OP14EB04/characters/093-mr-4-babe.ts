@@ -50,6 +50,7 @@ export const op14eb04Mr4Babe093: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Baroque Works",
+                  match: "includes",
                 },
                 {
                   filter: "cost",

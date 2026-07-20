@@ -67,9 +67,21 @@ export interface FamilyStats {
   readonly errorCodes: Readonly<Record<string, number>>;
 }
 
+/**
+ * Compact behavioral proof that a policy selected the class of move it was
+ * intended to influence. This complements attempt/success telemetry: a
+ * strategy can be legal yet never exercise its decision rule on a deck cell.
+ */
+export interface SelectionStats {
+  readonly selected: number;
+  readonly variants: Readonly<Record<string, number>>;
+}
+
 export interface PlayerStats {
   readonly wins: number;
   readonly familyStats: Readonly<Record<GundamBotCandidateFamily, FamilyStats>>;
+  /** Absent only from reports generated before behavioral telemetry existed. */
+  readonly selectionStats?: Readonly<Record<GundamBotCandidateFamily, SelectionStats>>;
 }
 
 export interface BenchSummary {
@@ -120,6 +132,35 @@ function emptyFamilyStats(): Record<GundamBotCandidateFamily, FamilyStats> {
   return out;
 }
 
+function emptySelectionStats(): Record<GundamBotCandidateFamily, SelectionStats> {
+  const out = {} as Record<GundamBotCandidateFamily, SelectionStats>;
+  for (const name of GUNDAM_MOVE_NAMES) {
+    out[name as GundamBotCandidateFamily] = { selected: 0, variants: {} };
+  }
+  return out;
+}
+
+function selectedVariant(record: BotDecisionRecord): string | null {
+  const candidate = record.selectedCandidate;
+  if (!candidate) return null;
+  if (candidate.family === "enterBattle") return candidate.target === "direct" ? "direct" : "unit";
+  if (candidate.family === "alterHand") return candidate.wantsRedraw ? "redraw" : "keep";
+  return "selected";
+}
+
+function bumpSelection(
+  stats: Record<GundamBotCandidateFamily, SelectionStats>,
+  record: BotDecisionRecord,
+): void {
+  const candidate = record.selectedCandidate;
+  const variant = selectedVariant(record);
+  if (!candidate || !variant) return;
+  const existing = stats[candidate.family] ?? { selected: 0, variants: {} };
+  const variants = { ...existing.variants } as Record<string, number>;
+  variants[variant] = (variants[variant] ?? 0) + 1;
+  stats[candidate.family] = { selected: existing.selected + 1, variants };
+}
+
 function bumpFamily(
   stats: Record<GundamBotCandidateFamily, FamilyStats>,
   record: BotDecisionRecord,
@@ -166,8 +207,16 @@ export function runBench(options: BenchOptions, onProgress?: (i: number) => void
   if (!p2DeckList) throw new Error(`Unknown p2Deck: ${options.p2Deck}`);
 
   const matches: MatchReport[] = [];
-  const p1Stats = { wins: 0, familyStats: emptyFamilyStats() };
-  const p2Stats = { wins: 0, familyStats: emptyFamilyStats() };
+  const p1Stats = {
+    wins: 0,
+    familyStats: emptyFamilyStats(),
+    selectionStats: emptySelectionStats(),
+  };
+  const p2Stats = {
+    wins: 0,
+    familyStats: emptyFamilyStats(),
+    selectionStats: emptySelectionStats(),
+  };
   const terminations: Record<PlayMatchTermination, number> = {
     "game-won": 0,
     "automation-concession": 0,
@@ -198,6 +247,8 @@ export function runBench(options: BenchOptions, onProgress?: (i: number) => void
         decisionSink: (record) => {
           if (record.playerId === PLAYER_ONE) bumpFamily(p1Stats.familyStats, record);
           else if (record.playerId === PLAYER_TWO) bumpFamily(p2Stats.familyStats, record);
+          if (record.playerId === PLAYER_ONE) bumpSelection(p1Stats.selectionStats, record);
+          else if (record.playerId === PLAYER_TWO) bumpSelection(p2Stats.selectionStats, record);
         },
       },
     });

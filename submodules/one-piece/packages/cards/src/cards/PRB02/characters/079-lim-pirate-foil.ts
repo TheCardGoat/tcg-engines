@@ -62,6 +62,7 @@ export const prb02LimPirateFoil079: CharacterCard = {
               {
                 filter: "trait",
                 value: "ODYSSEY",
+                match: "includes",
               },
             ],
           },

@@ -27,5 +27,30 @@ export const op13Fossa047: CharacterCard = {
   attribute: "slash",
   effect:
     "If your Character with a type including \"Whitebeard Pirates\" would be K.O.'d by your opponent's effect, you may trash this Character instead.",
+  effects: {
+    replacementEffects: [
+      {
+        replacedEvent: "ko",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "trait",
+              value: "Whitebeard Pirates",
+              match: "includes",
+            },
+          ],
+        },
+        source: "opponentEffect",
+        replacementAction: {
+          action: "trashThisCard",
+        },
+      },
+    ],
+  },
   i18n: op13Fossa047I18n,
 };

@@ -12,6 +12,7 @@ type TrashFromFieldAction = Extract<Action, { action: "trashFromField" }>;
 type GenericPlayAction = Extract<Action, { action: "play" }>;
 type PlayAction = Extract<Action, { action: "play" | "playThisCard" }>;
 type SetActiveAction = Extract<Action, { action: "setActive" }>;
+type ChoiceAction = Extract<Action, { action: "choice" }>;
 type FreezeAction = Extract<Action, { action: "freeze" }>;
 type TrashThisCardAction = Extract<Action, { action: "trashThisCard" }>;
 
@@ -568,7 +569,7 @@ export function parsePlayDescription(text: string): TargetFilter[] | null {
 /**
  * Parse a "set <target> as active" action clause.
  */
-export function parseSetActiveAction(text: string): SetActiveAction | null {
+export function parseSetActiveAction(text: string): SetActiveAction | ChoiceAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
   // The action orchestrator preserves this suffix in a delayed-action wrapper.
@@ -593,9 +594,24 @@ export function parseSetActiveAction(text: string): SetActiveAction | null {
   if (compoundOrMatch) {
     const secondTarget = parseTarget(compoundOrMatch[2]!);
     if (secondTarget) {
+      const selfZone = mapZoneNoun(compoundOrMatch[1]!);
+      if (!selfZone) return null;
       return {
-        action: "setActive",
-        target: secondTarget, // Use the DON!! target; self is implicit
+        action: "choice",
+        options: [
+          [
+            {
+              action: "setActive",
+              target: {
+                player: "self",
+                zones: [selfZone],
+                count: { amount: 1 },
+                self: true,
+              },
+            },
+          ],
+          [{ action: "setActive", target: secondTarget }],
+        ],
       };
     }
   }

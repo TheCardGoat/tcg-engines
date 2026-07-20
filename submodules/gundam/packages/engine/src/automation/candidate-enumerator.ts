@@ -24,10 +24,10 @@ import { buildReadAPI } from "../runtime/match-runtime.queries.ts";
 
 /**
  * Inspect the pending-effect priority head for the given player; if its
- * choice is an `optional` "you may" directive, return the directive's
- * index so the enumerator can fan out the accept and decline candidate
- * forms. Returns `null` for any other prompt kind (target-selection /
- * ordering / no choice / not this player's priority).
+ * choice is either an `optional` "you may" directive or an optional
+ * activation such as Burst, return its answer index so the enumerator can
+ * fan out the accept and decline candidate forms. Burst uses the protocol's
+ * reserved `-1` index. Returns `null` for any other prompt kind.
  */
 function findOptionalHeadDirectiveIndex(state: MatchState, playerId: PlayerId): number | null {
   const g = state.G as unknown as GundamG;
@@ -38,7 +38,7 @@ function findOptionalHeadDirectiveIndex(state: MatchState, playerId: PlayerId): 
   if (!head) return null;
   if (head.controllerId !== (playerId as unknown as string)) return null;
   const choice = findChoiceDirective(head);
-  if (!choice || choice.kind !== "optional") return null;
+  if (!choice || (choice.kind !== "optional" && choice.kind !== "activationOptional")) return null;
   return choice.directiveIndex;
 }
 

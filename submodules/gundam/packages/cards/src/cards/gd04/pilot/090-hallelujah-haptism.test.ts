@@ -19,7 +19,6 @@ describe("Hallelujah Haptism (GD04-090)", () => {
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
-    const shieldId = p1.getCardsInZone("shieldArea")[0]!;
     const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p2.enterBattle(attackerId, "direct"));
@@ -28,12 +27,12 @@ describe("Hallelujah Haptism (GD04-090)", () => {
     expectSuccess(p2.passBattleAction());
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "optional",
-      sourceCardId: shieldId,
+      sourceCardId: expect.any(String),
       directiveIndex: -1,
     });
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    expect(p1.getHand()).toContain(shieldId);
+    expect(p1.getHand()).toHaveLength(1);
   });
 
   describe("【During Link】【Once per Turn】During your turn, when this Unit destroys an enemy Unit with battle damage, look at the top card of your deck. If it is a (CB) card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.", () => {

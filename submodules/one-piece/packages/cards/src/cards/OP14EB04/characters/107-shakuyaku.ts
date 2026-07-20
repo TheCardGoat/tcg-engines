@@ -59,19 +59,12 @@ export const op14eb04Shakuyaku107: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Kuja Pirates",
+            match: "includes",
           },
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-            self: true,
+            action: "playThisCard",
           },
         ],
       },

@@ -36,6 +36,7 @@
     "test": "vp test run src"
   },
   "dependencies": {
+    "@dnd-kit/core": "catalog:",
     "@floating-ui/dom": "catalog:",
     "@mantine/core": "9.0.0",
     "@mantine/hooks": "9.0.0",

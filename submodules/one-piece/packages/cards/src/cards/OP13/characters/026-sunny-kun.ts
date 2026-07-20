@@ -31,6 +31,12 @@ export const op13SunnyKun026: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        costs: [
+          {
+            cost: "restDon",
+            amount: 1,
+          },
+        ],
         actions: [
           {
             action: "modifyPower",

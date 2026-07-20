@@ -189,6 +189,9 @@ export function classifyDirectiveIntent(action: EffectAction): DirectiveIntent {
       return "neutral";
     }
 
+    case "grantKeywordEventCard":
+      return "accept";
+
     // Lock-down actions: good vs opponent, bad vs self/friendly.
     case "cantAttack":
     case "restrictUnit": {

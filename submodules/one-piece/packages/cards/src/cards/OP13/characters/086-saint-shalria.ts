@@ -51,6 +51,7 @@ export const op13SaintShalria086: CharacterCard = {
               {
                 filter: "trait",
                 value: "Celestial Dragons",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

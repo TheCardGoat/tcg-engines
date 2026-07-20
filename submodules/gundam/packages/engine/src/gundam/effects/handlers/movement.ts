@@ -16,8 +16,6 @@ import { TOKEN_PRINTINGS } from "@tcg/gundam-token-data";
 import { buildTokenUnitDefinition } from "../token-definition.ts";
 import { enqueueBaseSectionExcessManagement } from "../../rules/base-section-excess.ts";
 
-let tokenCounter = 0;
-
 // =============================================================================
 // Return to Hand
 // =============================================================================
@@ -313,7 +311,9 @@ export function handleDeployTokenAction(
 ): void {
   const tokenSpec = cloneTokenSpec(token);
   for (let i = 0; i < count; i++) {
-    const tokenId = `token_${tokenSpec.name.toLowerCase().replace(/\s+/g, "_")}_${++tokenCounter}`;
+    const tokenIndex = (ctx.G.eventCounters.token ?? 0) + 1;
+    ctx.G.eventCounters.token = tokenIndex;
+    const tokenId = `token_${tokenSpec.name.toLowerCase().replace(/\s+/g, "_")}_${tokenIndex}`;
 
     // Build the registered definition from the inline TokenSpec so
     // gameplay-relevant fields (ap/hp/traits/keywordEffects) always come

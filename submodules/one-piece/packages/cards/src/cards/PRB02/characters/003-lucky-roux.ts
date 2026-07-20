@@ -47,6 +47,23 @@ export const prb02LuckyRoux003: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+              {
+                filter: "power",
+                comparison: "gte",
+                value: 6000,
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "draw",

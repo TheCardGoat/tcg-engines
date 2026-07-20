@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import { SimulatorApp } from "../src/SimulatorApp.tsx";
 import { useClientBot } from "../src/game/bot/use-client-bot.ts";
+import { attachAutoMulliganKeep } from "../src/game/fixtures/auto-mulligan.ts";
 import {
   FIXTURES,
   PARAMETERIZED_FIXTURES,
@@ -19,7 +20,11 @@ import { SAMPLE_DECKS, type SampleDeckId } from "../src/data/sample-decks/index.
 import type { OpponentStrategyId } from "../src/game/match-factory.ts";
 import { VsAiSetup } from "../src/components/vs-ai-setup/index.ts";
 
-const VALID_STRATEGIES: ReadonlySet<OpponentStrategyId> = new Set(["greedy-legal", "pass-only"]);
+const VALID_STRATEGIES: ReadonlySet<OpponentStrategyId> = new Set([
+  "combat-aware",
+  "greedy-legal",
+  "pass-only",
+]);
 
 function isSampleDeckId(v: string | null): v is SampleDeckId {
   return v !== null && Object.hasOwn(SAMPLE_DECKS, v);
@@ -206,6 +211,11 @@ function VsAiMatch({
     match.staticResources,
     match.botConfig,
   );
+
+  useEffect(() => {
+    if (match.fixtureName !== "setup-default-opponent-keeps") return;
+    return attachAutoMulliganKeep(match.runtime, String(match.p2Id));
+  }, [match]);
 
   return (
     <SimulatorApp

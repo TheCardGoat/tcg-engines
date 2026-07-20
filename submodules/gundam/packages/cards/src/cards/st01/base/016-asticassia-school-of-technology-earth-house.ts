@@ -99,7 +99,7 @@ export const st01AsticassiaSchoolOfTechnologyEarthHouse016: BaseCard = {
             stat: "ap",
             amount: 1,
             duration: "thisTurn",
-            target: { owner: "friendly", cardType: "unit", isLinkUnit: true },
+            target: { owner: "friendly", cardType: "unit", count: "all", isLinkUnit: true },
           },
         },
       ],

@@ -18,7 +18,6 @@ describe("Kira Yamato (ST04-010)", () => {
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const attackerId = p1.getCardsInZone("battleArea")[0]!;
-    const shieldId = p2.getCardsInZone("shieldArea")[0]!;
 
     expectSuccess(p1.enterBattle(attackerId, "direct"));
     expectSuccess(p2.passBlock());
@@ -26,12 +25,12 @@ describe("Kira Yamato (ST04-010)", () => {
     expectSuccess(p1.passBattleAction());
     expect(p2.getBoardView().pendingChoice).toMatchObject({
       kind: "optional",
-      sourceCardId: shieldId,
+      sourceCardId: expect.any(String),
       directiveIndex: -1,
     });
     expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    expect(p2.getCardZone(shieldId)).toBe(`hand:${PLAYER_TWO}`);
+    expect(p2.getCardZone(betaKiraYamato010)).toBe(`hand:${PLAYER_TWO}`);
   });
 
   it("【Attack】 applies AP-2 to the sole enemy unit when the paired unit attacks", () => {

@@ -376,13 +376,12 @@ export function parseRemoveFromLifeAction(
 
 // ── Life card look/place ──
 
-type RearrangeDeckAction = Extract<Action, { action: "rearrangeDeck" }>;
 type LookAtLifeAction = Extract<Action, { action: "lookAtLife" }>;
 type RearrangeLifeAction = Extract<Action, { action: "rearrangeLife" }>;
 
 export function parseLifeCardLookAction(
   text: string,
-): LookAtLifeAction | RearrangeDeckAction | RearrangeLifeAction | null {
+): LookAtLifeAction | RearrangeLifeAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
   const moveOneToDeckMatch =
@@ -427,10 +426,8 @@ export function parseLifeCardLookAction(
   if (allLifeMatch) {
     const player = /opponent/i.test(allLifeMatch[1]!) ? "opponent" : "self";
     return {
-      action: "rearrangeDeck",
+      action: "rearrangeLife",
       player,
-      count: 99, // "all" — rearrange entire life area
-      position: "topOrBottom",
     };
   }
 

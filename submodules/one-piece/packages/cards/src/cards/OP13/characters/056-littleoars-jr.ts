@@ -34,6 +34,7 @@ export const op13LittleoarsJr056: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Whitebeard Pirates",
+            match: "includes",
           },
         ],
         actions: [

@@ -102,7 +102,6 @@ export const st07GundamExia001: UnitCard = {
             target: {
               owner: "friendly",
               zone: "resourceArea",
-              state: "rested",
               count: 1,
             },
           },

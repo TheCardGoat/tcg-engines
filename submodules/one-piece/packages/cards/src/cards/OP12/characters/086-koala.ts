@@ -50,6 +50,7 @@ export const op12Koala086: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Revolutionary Army",
+            match: "includes",
           },
         ],
         actions: [
@@ -66,12 +67,27 @@ export const op12Koala086: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "excludeName",
-                value: "Koala",
-              },
-              {
-                filter: "trait",
-                value: "Revolutionary Army",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "allOf",
+                    filters: [
+                      {
+                        filter: "excludeName",
+                        value: "Koala",
+                      },
+                      {
+                        filter: "trait",
+                        value: "Revolutionary Army",
+                        match: "includes",
+                      },
+                    ],
+                  },
+                  {
+                    filter: "name",
+                    value: "Nico Robin",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

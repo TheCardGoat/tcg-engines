@@ -164,7 +164,7 @@ export function parseTrashFromHandAction(text: string): TrashFromHandAction | nu
       action: "trashFromHand",
       player: "self",
       amount: parseInt(trashWithTypeMatch[1]!, 10),
-      filters: [{ filter: "trait", value: trashWithTypeMatch[2]! }],
+      filters: [{ filter: "trait", value: trashWithTypeMatch[2]!, match: "includes" }],
     };
   }
 

@@ -25,7 +25,9 @@ export function parseCondition(text: string): EffectCondition | undefined {
     // Some parts unresolvable — fall through to simple matching below
   }
 
-  if (t.match(/\bthis unit is damaged\b/)) return { type: "selfIsDamaged" };
+  if (t.match(/\bthis(?: unit)? is damaged\b/)) return { type: "selfIsDamaged" };
+  if (/this Unit is attacking an enemy Unit/i.test(text)) return { type: "isAttackingUnit" };
+  if (/this Unit is attacking the enemy player/i.test(text)) return { type: "isAttackingPlayer" };
   if (t.match(/\bit is attacking\b/) || t.match(/\bthis unit is attacking\b/))
     return { type: "selfIsAttacking" };
 
@@ -74,6 +76,10 @@ export function parseCondition(text: string): EffectCondition | undefined {
   const selfTraitM = text.match(/this Unit is \(([^)]+)\)/i);
   if (selfTraitM) return { type: "selfHasTrait", trait: selfTraitM[1].toLowerCase() };
 
+  // Paired Pilot wording: "this is a (CB) Unit"
+  const pairedHostTraitM = text.match(/this is a \(([^)]+)\) Unit/i);
+  if (pairedHostTraitM) return { type: "selfHasTrait", trait: pairedHostTraitM[1].toLowerCase() };
+
   // isTurn: "if it is your turn" / "during your turn"
   if (t.match(/\bit is your turn\b/) || t.match(/\bduring your turn\b/))
     return { type: "isTurn", whose: "friendly" };
@@ -101,6 +107,39 @@ export function parseCondition(text: string): EffectCondition | undefined {
       isLinkUnit: true,
     };
 
+  const friendlyTraitLinkM = text.match(/a friendly \(([^)]+)\) Link Unit is in play/i);
+  if (friendlyTraitLinkM)
+    return {
+      type: "unitCount",
+      owner: "friendly",
+      comparison: "gte",
+      count: 1,
+      hasTrait: friendlyTraitLinkM[1].toLowerCase(),
+      isLinkUnit: true,
+    };
+
+  const hasTraitLinkM = text.match(/you have a \(([^)]+)\) Link Unit in play/i);
+  if (hasTraitLinkM)
+    return {
+      type: "unitCount",
+      owner: "friendly",
+      comparison: "gte",
+      count: 1,
+      hasTrait: hasTraitLinkM[1].toLowerCase(),
+      isLinkUnit: true,
+    };
+
+  const restedFriendlyTraitM = text.match(/a rested friendly \(([^)]+)\) Unit is in play/i);
+  if (restedFriendlyTraitM)
+    return {
+      type: "unitCount",
+      owner: "friendly",
+      comparison: "gte",
+      count: 1,
+      hasTrait: restedFriendlyTraitM[1].toLowerCase(),
+      state: "rested",
+    };
+
   // unitCount - "another (Trait) Unit" (excludes self)
   const anotherTraitM = text.match(/you have another (?:\(([^)]+)\) )?Unit in play/i);
   if (anotherTraitM)
@@ -111,6 +150,17 @@ export function parseCondition(text: string): EffectCondition | undefined {
       count: 1,
       excludeSelf: true,
       ...(anotherTraitM[1] ? { hasTrait: anotherTraitM[1].toLowerCase() } : {}),
+    };
+
+  const anotherFriendlyTraitM = text.match(/another friendly (?:\(([^)]+)\) )?Unit is in play/i);
+  if (anotherFriendlyTraitM)
+    return {
+      type: "unitCount",
+      owner: "friendly",
+      comparison: "gte",
+      count: 1,
+      excludeSelf: true,
+      ...(anotherFriendlyTraitM[1] ? { hasTrait: anotherFriendlyTraitM[1].toLowerCase() } : {}),
     };
 
   // unitCount - you have N or more (TraitA)/(TraitB)[/(TraitC)...] Units in play
@@ -145,7 +195,47 @@ export function parseCondition(text: string): EffectCondition | undefined {
       ...(unitCountM[2] ? { hasTrait: unitCountM[2].toLowerCase() } : {}),
     };
 
-  // unitCount - you have only N / you have 0 Units in play
+  // unitCount - no optional-trait Unit tokens in play
+  const noUnitTokensM = text.match(/you have no (?:\(([^)]+)\) )?Unit tokens? in play/i);
+  if (noUnitTokensM)
+    return {
+      type: "unitCount",
+      owner: "friendly",
+      comparison: "eq",
+      count: 0,
+      ...(noUnitTokensM[1] ? { hasTrait: noUnitTokensM[1].toLowerCase() } : {}),
+      isToken: true,
+    };
+
+  // unitCount - you have no Units / only N Units / N Units in play
+  if (/you have no Units? in play/i.test(text))
+    return {
+      type: "unitCount",
+      owner: "friendly",
+      comparison: "eq",
+      count: 0,
+    };
+
+  const noHighLevelUnitsM = text.match(
+    /you have no Units that are Lv\.?\s*(\d+) or higher in play/i,
+  );
+  if (noHighLevelUnitsM)
+    return {
+      type: "cardInZone",
+      owner: "friendly",
+      zone: "battleArea",
+      cardType: "unit",
+      comparison: "eq",
+      count: 0,
+      attributeFilters: [
+        {
+          attribute: "level",
+          comparison: "gte",
+          value: parseInt(noHighLevelUnitsM[1]),
+        },
+      ],
+    };
+
   const unitExactM = text.match(/you have (?:only )?(\d+) Units? in play/i);
   if (unitExactM)
     return {
@@ -194,10 +284,32 @@ export function parseCondition(text: string): EffectCondition | undefined {
     };
   }
 
+  // cardInZone - there are N or more (Trait) cards in your trash
+  const trashTraitM = text.match(
+    /there are (\d+) or more \(([^)]+)\)(?:\s+([\w ]+?))? cards? in your trash/i,
+  );
+  if (trashTraitM) {
+    const ct = trashTraitM[3] ? parseCardType(trashTraitM[3]) : undefined;
+    return {
+      type: "cardInZone",
+      owner: "friendly",
+      zone: "trash",
+      ...(ct ? { cardType: ct } : {}),
+      comparison: "gte",
+      count: parseInt(trashTraitM[1]),
+      hasTrait: trashTraitM[2].toLowerCase(),
+    };
+  }
+
   // cardInZone - there are N or more Command/... cards in your trash
   const trashM = text.match(/there are (\d+) or more ([\w ]+?) cards? in your trash/i);
   if (trashM) {
     const ct = parseCardType(trashM[2]);
+    const color = ["blue", "green", "red", "white", "purple"].includes(
+      trashM[2].trim().toLowerCase(),
+    )
+      ? (trashM[2].trim().toLowerCase() as CardColor)
+      : undefined;
     return {
       type: "cardInZone",
       owner: "friendly",
@@ -205,8 +317,18 @@ export function parseCondition(text: string): EffectCondition | undefined {
       ...(ct ? { cardType: ct } : {}),
       comparison: "gte",
       count: parseInt(trashM[1]),
+      ...(color ? { hasColor: color } : {}),
     };
   }
+
+  if (/a friendly Base (?:is )?in play/i.test(text)) return { type: "friendlyBaseInPlay" };
+
+  const deployedFromM = text.match(/you deploy this Unit from your (trash|hand)/i);
+  if (deployedFromM)
+    return {
+      type: "deployedFromZone",
+      zone: deployedFromM[1].toLowerCase() as "trash" | "hand",
+    };
 
   // cardInZone - a card with "Name" in its card name is in your trash
   const trashNameM = text.match(/a card with "([^"]+)" in its card name is in your trash/i);

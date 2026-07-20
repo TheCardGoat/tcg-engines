@@ -51,6 +51,7 @@ export const op13Hera074: CharacterCard = {
               {
                 filter: "trait",
                 value: "Homies",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

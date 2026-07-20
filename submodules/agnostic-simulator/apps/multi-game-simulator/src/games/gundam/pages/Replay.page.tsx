@@ -81,6 +81,7 @@ function ReplayBoard({ orchestrator }: { readonly orchestrator: GundamReplayOrch
           throw new Error("Replay playback is read-only.");
         }}
         getInteractionView={() => undefined}
+        getAnimationPackets={() => []}
         ended={readEnded(snapshot.state)}
         copyDiagnosticJson={async () => {
           await navigator.clipboard?.writeText(

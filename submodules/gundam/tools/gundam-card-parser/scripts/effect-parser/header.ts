@@ -60,6 +60,7 @@ export function parseHeader(segment: string): ParsedHeader {
   const cost: EffectCost = {};
   let hasCost = false;
   let pos = 0;
+  let restOverride: string | undefined;
 
   while (pos < segment.length) {
     const bracketStart = segment.indexOf("【", pos);
@@ -129,6 +130,33 @@ export function parseHeader(segment: string): ParsedHeader {
 
     // After the bracket check for cost symbols: ②, ①, etc., then ：
     const afterBracket = segment.slice(pos);
+    const compoundCostMatch = afterBracket.match(/^([①②③④⑤⑥]+),\s*(.+?)[：:]\s*/);
+    if (compoundCostMatch) {
+      const circleDigits: Record<string, number> = {
+        "①": 1,
+        "②": 2,
+        "③": 3,
+        "④": 4,
+        "⑤": 5,
+        "⑥": 6,
+      };
+      cost.payResources = Array.from(compoundCostMatch[1]).reduce(
+        (total, digit) => total + (circleDigits[digit] ?? 0),
+        0,
+      );
+      hasCost = true;
+      const returnSelfM = compoundCostMatch[2].match(
+        /return this (?:Unit|card) to the (top|bottom) of its owner['’]s deck/i,
+      );
+      if (returnSelfM) {
+        cost.returnSelfToDeck = returnSelfM[1].toLowerCase() as "top" | "bottom";
+        restOverride = afterBracket.slice(compoundCostMatch[0].length).trim();
+      } else {
+        restOverride = `${compoundCostMatch[2].trim()}. ${afterBracket.slice(compoundCostMatch[0].length).trim()}`;
+      }
+      pos = segment.length;
+      break;
+    }
     const costMatch = afterBracket.match(/^([①②③④⑤⑥]*)：/);
     if (costMatch) {
       const circleDigits: Record<string, number> = {
@@ -182,6 +210,6 @@ export function parseHeader(segment: string): ParsedHeader {
     cost: hasCost ? cost : undefined,
     pilotName,
     pilotQualifier,
-    rest: segment.slice(pos).trim(),
+    rest: restOverride ?? segment.slice(pos).trim(),
   };
 }

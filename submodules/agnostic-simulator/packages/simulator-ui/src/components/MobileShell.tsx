@@ -39,7 +39,7 @@ export interface MobileShellProps {
    * Optional top bar rendered in mobile drawer-rail mode. Receives controls
    * so Gundam can place its own drawer trigger inside the HUD.
    */
-  mobileTopBar?: (controls: { openDrawer: () => void }) => React.ReactNode;
+  mobileTopBar?: (controls: { openDrawer: () => void; openLog: () => void }) => React.ReactNode;
   /**
    * Optional bottom bar rendered in mobile drawer-rail mode.
    */
@@ -73,7 +73,7 @@ export function MobileShell({
   mobileNavigationBreakpoint,
 }: MobileShellProps) {
   const [activeTab, setActiveTab] = useState<"board" | "log" | "interactions">("board");
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [mobileSheet, setMobileSheet] = useState<"sidebar" | "log" | null>(null);
   const [railExpanded, setRailExpanded] = useState(defaultSidebarOpen);
   const activeLayout = useActiveLayout(layoutBreakpoint);
   const activeNavigationLayout = useActiveLayout(mobileNavigationBreakpoint);
@@ -178,28 +178,36 @@ export function MobileShell({
       >
         {mobileTopBar && (
           <div className={classes.mobileTopBar}>
-            {mobileTopBar({ openDrawer: () => setDrawerOpen(true) })}
+            {mobileTopBar({
+              openDrawer: () => setMobileSheet("sidebar"),
+              openLog: () => setMobileSheet("log"),
+            })}
           </div>
         )}
         <div className={classes.mobileBoard}>{board}</div>
         {mobileBottomBar && <div className={classes.mobileBottomBar}>{mobileBottomBar}</div>}
-        {drawerOpen && (
+        {mobileSheet && (
           <>
             <div
               className={classes.drawerOverlay}
-              onClick={() => setDrawerOpen(false)}
+              onClick={() => setMobileSheet(null)}
               aria-hidden="true"
             />
-            <div className={classes.drawerSheet} role="dialog" aria-modal="true">
+            <div
+              className={classes.drawerSheet}
+              role="dialog"
+              aria-modal="true"
+              aria-label={mobileSheet === "log" ? "Game log" : "Match panel"}
+            >
               <button
                 type="button"
                 className={classes.drawerClose}
-                onClick={() => setDrawerOpen(false)}
-                aria-label="Close sidebar"
+                onClick={() => setMobileSheet(null)}
+                aria-label={mobileSheet === "log" ? "Close game log" : "Close sidebar"}
               >
                 <ChevronIcon direction="left" />
               </button>
-              {sidebar}
+              {mobileSheet === "log" ? log : sidebar}
             </div>
           </>
         )}

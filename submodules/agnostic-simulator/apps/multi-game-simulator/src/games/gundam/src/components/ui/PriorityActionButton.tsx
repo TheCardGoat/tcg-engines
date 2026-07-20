@@ -76,7 +76,7 @@ function labelsFor(passMove: PassMoveName): PassLabel {
   }
 }
 
-export function PriorityActionButton() {
+export function PriorityActionButton({ embedded = false }: { readonly embedded?: boolean }) {
   const interactionView = useInteractionView();
   const priority = usePriorityHolder();
   const { adapter } = useGundamGame();
@@ -113,29 +113,36 @@ export function PriorityActionButton() {
       onClick={onFire}
       disabled={!canFire}
       variant={canFire ? "cockpit" : "outline"}
-      size="xl"
-      className={`hud-corner clip-hud-12 absolute z-30 min-w-[140px] right-[22px] top-1/2 -translate-y-1/2 ${
-        canFire ? "gd-blink" : ""
-      }`}
+      size={embedded ? "md" : "xl"}
+      className={`hud-corner ${
+        embedded
+          ? "h-full min-w-[156px] flex-none clip-hud-6"
+          : "absolute z-30 min-w-[140px] right-[22px] top-1/2 -translate-y-1/2 clip-hud-12"
+      } ${canFire ? "gd-blink" : ""}`}
       style={{
         textShadow: canFire ? "0 0 8px rgba(255,255,255,.5)" : "none",
+        color: canFire ? "oklch(0.98 0.006 255)" : "var(--color-hud-text-dim)",
       }}
       aria-label={labels.label}
       data-testid="primary-action"
     >
-      <span
-        className="gd-mono text-hud-xs font-semibold tracking-hud-label"
-        style={{ color: canFire ? "#5a8dff" : "#6b7a94" }}
-      >
-        {labels.tag}
-      </span>
+      {!embedded && (
+        <span
+          className="gd-mono text-hud-xs font-semibold tracking-hud-label"
+          style={{ color: canFire ? "#5a8dff" : "#6b7a94" }}
+        >
+          {labels.tag}
+        </span>
+      )}
       <span className="text-hud-xl tracking-hud-body">{labels.label}</span>
-      <span
-        className="gd-mono text-hud-2xs opacity-70 tracking-hud-wide"
-        style={{ color: canFire ? "#5a8dff" : "#455272" }}
-      >
-        {canFire ? m["sim.app.passTurn.fireHint"]() : m["sim.app.action.waitingHint"]()}
-      </span>
+      {!embedded && (
+        <span
+          className="gd-mono text-hud-2xs opacity-70 tracking-hud-wide"
+          style={{ color: canFire ? "#5a8dff" : "#455272" }}
+        >
+          {canFire ? m["sim.app.passTurn.fireHint"]() : m["sim.app.action.waitingHint"]()}
+        </span>
+      )}
     </Button>
   );
 }

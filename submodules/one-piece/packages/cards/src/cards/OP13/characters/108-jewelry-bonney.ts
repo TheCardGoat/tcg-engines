@@ -51,6 +51,7 @@ export const op13JewelryBonney108: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Egghead",
+            match: "includes",
           },
         ],
         actions: [
@@ -74,6 +75,37 @@ export const op13JewelryBonney108: CharacterCard = {
               amount: 1,
             },
             destination: "hand",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "lifeCount",
+            player: "self",
+            comparison: "lte",
+            value: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 7,
+                },
+              ],
+            },
           },
         ],
       },

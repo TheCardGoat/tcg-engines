@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, type ReactNode } from "react";
 
 import { asMoveName, useGundamGame } from "../../game/index.ts";
 import { MatchSidebarRail } from "../ui/MatchSidebarRail.tsx";
@@ -6,9 +6,13 @@ import { useSubmitError } from "./submit-error-context.tsx";
 
 export interface MatchSidebarRailContainerProps {
   readonly onOpenDrawer: () => void;
+  readonly connectionIndicator?: ReactNode;
 }
 
-export function MatchSidebarRailContainer({ onOpenDrawer }: MatchSidebarRailContainerProps) {
+export function MatchSidebarRailContainer({
+  onOpenDrawer,
+  connectionIndicator,
+}: MatchSidebarRailContainerProps) {
   const { adapter } = useGundamGame();
   const { report } = useSubmitError();
 
@@ -16,5 +20,11 @@ export function MatchSidebarRailContainer({ onOpenDrawer }: MatchSidebarRailCont
     report(adapter.submit(asMoveName("concede"), {}));
   }, [adapter, report]);
 
-  return <MatchSidebarRail onOpenDrawer={onOpenDrawer} onConcede={onConcede} />;
+  return (
+    <MatchSidebarRail
+      onOpenDrawer={onOpenDrawer}
+      onConcede={onConcede}
+      connectionIndicator={connectionIndicator}
+    />
+  );
 }

@@ -2,6 +2,48 @@ import { expect, test, describe } from "vite-plus/test";
 import { buildCardEffects, parseActions } from "../../../src/effect-parser/index.ts";
 
 describe("parseActions — SearchAction", () => {
+  test("preserves a named-card or bare Event alternative", () => {
+    const result = parseActions(
+      "Look at 4 cards from the top of your deck; reveal up to 1 [Sanji] or Event card and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
+    );
+    expect(result.parsed[0]).toMatchObject({
+      action: "search",
+      revealFilters: [
+        {
+          filter: "anyOf",
+          filters: [
+            { filter: "name", value: "Sanji" },
+            { filter: "cardCategory", value: "event" },
+          ],
+        },
+      ],
+    });
+  });
+
+  test("scopes an excluded name to its trait branch before a named alternative", () => {
+    const result = parseActions(
+      'Look at 3 cards from the top of your deck; reveal up to 1 "Revolutionary Army" type card other than [Koala] or up to 1 [Nico Robin] and add it to your hand. Then, trash the rest.',
+    );
+    expect(result.parsed[0]).toMatchObject({
+      action: "search",
+      revealFilters: [
+        {
+          filter: "anyOf",
+          filters: [
+            {
+              filter: "allOf",
+              filters: [
+                { filter: "excludeName", value: "Koala" },
+                { filter: "trait", value: "Revolutionary Army", match: "includes" },
+              ],
+            },
+            { filter: "name", value: "Nico Robin" },
+          ],
+        },
+      ],
+    });
+  });
+
   test("preserves a named-card or color-and-category search alternative", () => {
     const result = parseActions(
       "Look at 5 cards from the top of your deck; reveal up to 1 [Monkey.D.Luffy] or 1 red Event and add it to your hand. Then, place the rest at the bottom of your deck in any order.",

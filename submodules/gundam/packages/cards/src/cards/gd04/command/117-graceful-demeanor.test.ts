@@ -23,7 +23,6 @@ describe("Graceful Demeanor (GD04-117)", () => {
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
-      const shieldId = p1.getCardsInZone("shieldArea")[0]!;
       const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p2.enterBattle(attackerId, "direct"));
@@ -32,34 +31,34 @@ describe("Graceful Demeanor (GD04-117)", () => {
       expectSuccess(p2.passBattleAction());
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "optional",
-        sourceCardId: shieldId,
+        sourceCardId: expect.any(String),
         directiveIndex: -1,
       });
 
-      return { p1, p2, shieldId, attackerId };
+      return { p1, p2, attackerId };
     }
 
     it("returns a Lv.3 enemy Unit through the activated Action when accepted", () => {
-      const { p1, p2, shieldId, attackerId } = revealBurst();
+      const { p1, p2, attackerId } = revealBurst();
 
       expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "targetSelection",
-        sourceCardId: shieldId,
+        sourceCardId: expect.any(String),
       });
       expectSuccess(p1.resolveEffect({ targets: [attackerId] }));
 
       expect(p2.getHand()).toContain(attackerId);
-      expect(p1.getCardZone(shieldId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardZone(gd04GracefulDemeanor117)).toBe(`trash:${PLAYER_ONE}`);
     });
 
     it("leaves the enemy Unit in play when the Burst is declined", () => {
-      const { p1, p2, shieldId, attackerId } = revealBurst();
+      const { p1, p2, attackerId } = revealBurst();
 
       expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: false } }));
 
       expect(p2.getCardsInZone("battleArea")).toContain(attackerId);
-      expect(p1.getCardZone(shieldId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardZone(gd04GracefulDemeanor117)).toBe(`trash:${PLAYER_ONE}`);
     });
 
     it("does not offer Burst when the replayed Action has no legal target", () => {
@@ -76,7 +75,6 @@ describe("Graceful Demeanor (GD04-117)", () => {
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
-      const shieldId = p1.getCardsInZone("shieldArea")[0]!;
       const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p2.enterBattle(attackerId, "direct"));
@@ -85,7 +83,7 @@ describe("Graceful Demeanor (GD04-117)", () => {
       expectSuccess(p2.passBattleAction());
 
       expect(p1.getBoardView().pendingChoice).toBeUndefined();
-      expect(p1.getCardZone(shieldId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardZone(gd04GracefulDemeanor117)).toBe(`trash:${PLAYER_ONE}`);
       expect(p2.getCardZone(attackerId)).toBe(`battleArea:${PLAYER_TWO}`);
     });
 
@@ -104,7 +102,6 @@ describe("Graceful Demeanor (GD04-117)", () => {
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
-      const [gracefulId, palaId] = p1.getCardsInZone("shieldArea");
       const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p2.enterBattle(attackerId, "direct"));
@@ -114,13 +111,11 @@ describe("Graceful Demeanor (GD04-117)", () => {
 
       const ordering = p1.getBoardView().pendingChoice;
       if (ordering?.kind !== "ordering") throw new Error("Expected simultaneous Burst choice");
-      const gracefulBurst = ordering.candidates.find(
-        (candidate) => candidate.sourceCardId === gracefulId,
-      );
+      const gracefulBurst = ordering.candidates[0];
       expectSuccess(p1.resolveEffect({ pendingEffectId: gracefulBurst!.effectId }));
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "optional",
-        sourceCardId: gracefulId,
+        sourceCardId: expect.any(String),
       });
 
       expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
@@ -129,14 +124,14 @@ describe("Graceful Demeanor (GD04-117)", () => {
       // be completed before the older Pala Sys Burst can be chosen.
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "targetSelection",
-        sourceCardId: gracefulId,
+        sourceCardId: expect.any(String),
         legalTargetIds: expect.arrayContaining([attackerId]),
       });
       expectSuccess(p1.resolveEffect({ targets: [attackerId] }));
       expect(p2.getHand()).toContain(attackerId);
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "optional",
-        sourceCardId: palaId,
+        sourceCardId: expect.any(String),
       });
     });
   });

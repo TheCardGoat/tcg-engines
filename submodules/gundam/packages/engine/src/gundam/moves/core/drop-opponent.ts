@@ -10,6 +10,7 @@ export const dropOpponent: GundamMoveDefinition<"dropOpponent"> = {
   undoable: false,
 
   available({ playerId, framework }) {
+    if (framework.time.getMode() === "none") return false;
     const opponent = getOpponent(framework.state.playerIds, playerId);
     if (!opponent) return false;
     const timeout = framework.time.getTimeoutStatus(opponent);
@@ -23,6 +24,13 @@ export const dropOpponent: GundamMoveDefinition<"dropOpponent"> = {
 
   validate({ playerId, framework, validationMode }) {
     if (validationMode === "preflight") return { valid: true };
+    if (framework.time.getMode() === "none") {
+      return {
+        valid: false,
+        error: "Opponent cannot time out when time control is disabled",
+        errorCode: "OPPONENT_NOT_DROPPABLE",
+      };
+    }
 
     const opponent = getOpponent(framework.state.playerIds, playerId);
     if (!opponent) {

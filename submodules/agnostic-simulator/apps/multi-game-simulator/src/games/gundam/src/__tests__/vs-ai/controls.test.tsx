@@ -15,13 +15,11 @@ import { loadMainPhaseDemo } from "../../game/fixtures/main-phase-demo.ts";
  *
  * The control panel mounts only when `DevRuntime.bot` is set — see
  * the `VsAiProvider` gate in `SimulatorApp.tsx`. It lives inside the
- * expandable match panel, so tests open the panel first.
+ * desktop match panel, which is visible by default.
  */
 describe("vs-AI · control panel", () => {
   it("is absent on fixtures without a bot", async () => {
-    const user = userEvent.setup();
     renderSimulator(loadMainPhaseDemo);
-    await user.click(screen.getByRole("button", { name: /open match panel/i }));
     // `{ hidden: true }` catches a "present but hidden" regression
     // too — `queryByRole` with the default accessibility filter would
     // miss a panel that's rendered but, say, `aria-hidden`.
@@ -34,9 +32,7 @@ describe("vs-AI · control panel", () => {
   });
 
   it("renders on vs-ai-demo", async () => {
-    const user = userEvent.setup();
     renderSimulator(loadVsAiDemo);
-    await user.click(screen.getByRole("button", { name: /open match panel/i }));
     // `getByRole` already throws if the region isn't found — no extra
     // null assertion needed.
     screen.getByRole("region", { name: /ai opponent controls/i });
@@ -46,7 +42,6 @@ describe("vs-AI · control panel", () => {
     const user = userEvent.setup();
     const onRestartScenario = vi.fn();
     renderSimulator(loadVsAiDemo, { onRestartScenario });
-    await user.click(screen.getByRole("button", { name: /open match panel/i }));
     await user.click(screen.getByText("Tools"));
 
     expect(screen.getByTestId("ai-log-snapshot")).toBeTruthy();

@@ -1,0 +1,28 @@
+{
+  "adapterVersion": "2",
+  "candidateId": "iter-16-combat-aware",
+  "cardCatalogHash": "fnv1a32:d9b21800",
+  "changes": { "strategyId": "iter-16-combat-aware" },
+  "engineRevision": "fnv1a32:91faa561",
+  "evaluation": {
+    "batchSize": 120,
+    "confidenceLevel": 0.95,
+    "maximumBlocks": 120,
+    "maximumCellRegression": 0.05,
+    "minimumBlocks": 120,
+    "minimumMeanImprovement": 0.02,
+    "seedBase": "gundam-combat-common-confirm-v1",
+    "suiteId": "promotion"
+  },
+  "game": "gundam",
+  "hypothesis": "The untuned combined combat policy confirms across a larger fresh schedule.",
+  "informationPolicy": "oracle",
+  "parentStrategyId": "strategic",
+  "schemaVersion": 1,
+  "training": {
+    "corpusId": "gundam-registered-strategies-v1",
+    "generator": "registered-strategy-manifest",
+    "iterations": 0,
+    "seed": "gundam-combat-common-confirm-v1"
+  }
+}

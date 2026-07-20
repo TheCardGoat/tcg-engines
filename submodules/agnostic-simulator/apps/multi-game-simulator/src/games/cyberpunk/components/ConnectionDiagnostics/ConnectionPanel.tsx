@@ -1,10 +1,14 @@
 import type { ReactNode } from "react";
-import type { SimulatorConnectionDiagnosticInput } from "@tcg/game-page-contract/connection-diagnostic";
+import {
+  buildSimulatorConnectionDiagnostic,
+  type SimulatorConnectionDiagnosticInput,
+} from "@tcg/game-page-contract/connection-diagnostic";
 
 import {
   ConnectionPanel as SharedConnectionPanel,
   type ConnectionPanelProps as SharedConnectionPanelProps,
 } from "@tcg/simulator-ui";
+import { projectConnectionPanelDiagnostic } from "../../../../simulator/connection-panel-projection";
 import { useEngineOptional } from "../../engine/engineContext";
 import {
   isConnectionDisconnected,
@@ -53,46 +57,18 @@ export function ConnectionPanel({
     }),
   ];
 
-  const diagnosticConnection = connectionDiagnostic?.connection;
-  const diagnostic: SharedConnectionPanelProps["diagnostic"] = connectionDiagnostic
-    ? {
-        connection: diagnosticConnection
-          ? {
-              connectionId: diagnosticConnection.connectionId,
-              socketId: diagnosticConnection.socketId,
-              authModeLabel: diagnosticConnection.authModeLabel,
-              authenticated: diagnosticConnection.authenticated,
-              authStatus: diagnosticConnection.authStatus,
-              authFailureReason: diagnosticConnection.authFailureReason,
-              reconnectAttempts: diagnosticConnection.reconnectAttempts,
-              disconnectCount: diagnosticConnection.disconnectCount,
-              latencyMs: diagnosticConnection.latencyMs,
-              lastPingAt: diagnosticConnection.lastPingAt,
-              lastPongAt: diagnosticConnection.lastPongAt,
-              lastHeartbeatSentAt: diagnosticConnection.lastHeartbeatSentAt,
-              lastHeartbeatAckAt: diagnosticConnection.lastHeartbeatAckAt,
-            }
-          : undefined,
-        presence: connectionDiagnostic.presence
-          ?.filter(
-            (p): p is typeof p & { side: "player" | "opponent" } =>
-              p.side === "player" || p.side === "opponent",
-          )
-          .map((p) => ({
-            side: p.side,
-            status: p.status,
-            latencyMs: p.latencyMs,
-          })),
-        events: connectionDiagnostic.events
-          ?.filter((e): e is typeof e & { message: string } => typeof e.message === "string")
-          .map((e) => ({
-            at: e.at,
-            message: e.message,
-          })),
-      }
-    : undefined;
+  const diagnostic = projectConnectionPanelDiagnostic(connectionDiagnostic);
 
-  return <SharedConnectionPanel sides={sides} diagnostic={diagnostic} embedded={embedded} />;
+  return (
+    <SharedConnectionPanel
+      sides={sides}
+      diagnostic={diagnostic}
+      copyPayload={
+        connectionDiagnostic ? buildSimulatorConnectionDiagnostic(connectionDiagnostic) : undefined
+      }
+      embedded={embedded}
+    />
+  );
 }
 
 function buildSide({
@@ -113,15 +89,13 @@ function buildSide({
   onClaimDrop?: () => void;
 }): SharedConnectionPanelProps["sides"][number] {
   const uiStatus = connectionUiStatus(connection);
-  const status: "connected" | "reconnecting" | "disconnected" =
-    uiStatus === "connected" || uiStatus === "reconnecting" ? uiStatus : "disconnected";
 
   return {
     side,
     label,
     playerId,
     connection: {
-      status,
+      status: uiStatus === "checking" ? "unknown" : uiStatus,
       latencyMs: connection?.latencyMs,
       disconnectCount: connection?.disconnectCount,
     },

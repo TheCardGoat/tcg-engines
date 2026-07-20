@@ -1,0 +1,13 @@
+{
+  "candidateId": "combat-aware",
+  "parentStrategyId": "strategic",
+  "hypothesis": "The canonical combat-aware strategy reproduces the proven effective-attack and selective-block gain.",
+  "seed": "gundam-combat-canonical-untouched-v1",
+  "evaluation": {
+    "minimumBlocks": 240,
+    "maximumBlocks": 240,
+    "batchSize": 240,
+    "minimumMeanImprovement": 0.02,
+    "maximumCellRegression": 0.05
+  }
+}

@@ -96,14 +96,15 @@ export const st07LockonStratosNeil011: PilotCard = {
       type: "triggered",
       activation: {
         timing: ["whenPaired"],
+        conditions: [{ type: "duringPair" }, { type: "selfHasTrait", trait: "cb" }],
       },
       directives: [
         {
           action: {
             action: "chooseAttackTarget",
             unit: {
-              owner: "friendly",
-              count: 1,
+              owner: "self",
+              cardType: "unit",
             },
             attackTarget: {
               owner: "opponent",
@@ -120,6 +121,7 @@ export const st07LockonStratosNeil011: PilotCard = {
                 },
               ],
             },
+            duration: "thisTurn",
           },
         },
       ],

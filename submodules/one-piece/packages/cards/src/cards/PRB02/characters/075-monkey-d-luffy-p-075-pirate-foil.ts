@@ -65,7 +65,26 @@ export const prb02MonkeyDLuffyP075PirateFoil075: CharacterCard = {
       },
       {
         trigger: "whenAttacking",
+        conditions: [
+          {
+            condition: "hasCard",
+            player: "self",
+            zone: "character",
+            filters: [
+              {
+                filter: "cost",
+                comparison: "gte",
+                value: 8,
+              },
+            ],
+          },
+        ],
         actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
           {
             action: "trashFromHand",
             player: "self",

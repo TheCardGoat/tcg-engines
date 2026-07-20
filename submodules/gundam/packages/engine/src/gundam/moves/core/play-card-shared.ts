@@ -25,6 +25,7 @@ import type {
   FrameworkWriteAPI,
 } from "../../../types/move-types.ts";
 import type { PlayerId } from "../../../types/branded.ts";
+import type { CardInstanceId } from "../../../types/branded.ts";
 import type { GundamCardMeta, GundamG, ReadonlyGundamG } from "../../types.ts";
 import {
   buildTargetResolutionContext,
@@ -41,6 +42,7 @@ import {
 import { evaluateCondition, evaluateTargetFilter } from "../../../runtime/target-dsl.ts";
 import { emitGundamLog } from "../../logging.ts";
 import { handleUnitDefeated } from "../../effects/handlers/combat.ts";
+import { handleReturnToDeckAction } from "../../effects/handlers/movement.ts";
 import { rejectWithKey } from "./validation-error.ts";
 
 /** Maximum total resource cards allowed in resource area (Rule 4-4-2) */
@@ -308,6 +310,15 @@ export function payCost(
         category: "action",
       });
     }
+  }
+
+  if (cost.returnSelfToDeck) {
+    handleReturnToDeckAction([sourceCardId as CardInstanceId], cost.returnSelfToDeck, {
+      G,
+      sourcePlayerId: playerId,
+      sourceCardId,
+      framework,
+    });
   }
 
   // `destroySelf` MUST run last. Printed costs like "Destroy this Unit：

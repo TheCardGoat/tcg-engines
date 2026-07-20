@@ -3,6 +3,7 @@ import type { TargetFilter } from "./target.ts";
 
 export type Cost =
   | RestDonCost
+  | GiveDonCost
   | ReturnDonCost
   | TrashFromHandCost
   | TrashLifeCost
@@ -43,6 +44,11 @@ export interface TrashCardCost {
 
 export interface RestDonCost {
   cost: "restDon";
+  amount: number;
+}
+
+export interface GiveDonCost {
+  cost: "giveDon";
   amount: number;
 }
 

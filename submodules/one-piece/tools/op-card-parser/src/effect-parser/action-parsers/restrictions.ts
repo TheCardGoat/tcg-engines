@@ -606,8 +606,41 @@ type NegateEffectsAction = Extract<Action, { action: "negateEffects" }>;
 /**
  * Parse "negate the effect of <target> (during this turn)"
  */
-export function parseNegateEffectsAction(text: string): NegateEffectsAction | null {
+export function parseNegateEffectsAction(
+  text: string,
+): NegateEffectsAction | NegateEffectsAction[] | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+
+  const ownLeaderAndNonTraitCharacters =
+    /^Your\s+Leader\s+and\s+all\s+of\s+your\s+Characters\s+that\s+do\s+not\s+have\s+a\s+type\s+including\s+["\u201c]([^"\u201d]+)["\u201d]\s+have\s+their\s+effects\s+negated$/i.exec(
+      trimmed,
+    );
+  if (ownLeaderAndNonTraitCharacters) {
+    return [
+      {
+        action: "negateEffects",
+        target: { player: "self", zones: ["leader"], count: { amount: "all" } },
+        duration: "permanent",
+      },
+      {
+        action: "negateEffects",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: { amount: "all" },
+          filters: [
+            {
+              filter: "trait",
+              value: ownLeaderAndNonTraitCharacters[1]!,
+              match: "includes",
+              negate: true,
+            },
+          ],
+        },
+        duration: "permanent",
+      },
+    ];
+  }
 
   // "This Character's effect is negated during this turn"
   const selfNegateMatch =

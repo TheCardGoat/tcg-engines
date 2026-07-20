@@ -21,6 +21,8 @@ export type AnimationData =
 export interface CardMoveAnimation {
   kind: "cardMove";
   cardId: string;
+  /** Owning player, used to resolve viewer-safe zone anchors without inspecting logs. */
+  ownerId?: string;
   fromZone: string;
   toZone: string;
   fromIndex?: number;
@@ -35,6 +37,7 @@ export interface CardFlipAnimation {
 
 export interface DamageAnimation {
   kind: "damage";
+  sourceId?: string;
   targetId: string;
   amount: number;
   damageType: string;

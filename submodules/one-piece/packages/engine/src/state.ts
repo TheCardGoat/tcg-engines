@@ -800,4 +800,20 @@ export function finalizeBeginTurnRefresh(state: MatchState, seat: MatchSeat, ski
   emitLog(state, "system", `${getPlayer(state, seat).playerName} enters Main.`, {
     visibility: "public",
   });
+
+  const mainPhaseActions = state.delayedEffectActions.filter(
+    (item) => item.scheduledPhase === "main" && item.scheduledSeat === seat,
+  );
+  state.delayedEffectActions = state.delayedEffectActions.filter(
+    (item) => item.scheduledPhase !== "main" || item.scheduledSeat !== seat,
+  );
+  for (const item of mainPhaseActions) {
+    enqueueResolution(state, {
+      kind: "effectAction",
+      sourceInstanceId: item.sourceInstanceId,
+      controller: item.controller,
+      action: item.action,
+      previousActionTargetIds: item.previousActionTargetIds,
+    });
+  }
 }

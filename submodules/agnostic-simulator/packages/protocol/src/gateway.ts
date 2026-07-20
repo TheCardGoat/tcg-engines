@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { EngineInteractionView, InteractionSubmission } from "./interactions.js";
+import { AnimationPacketV1Schema } from "./animations.js";
 
 const opaqueId = z.string().min(1);
 const looseObject = z.record(z.string(), z.unknown());
@@ -235,7 +236,7 @@ const rawGatewayUpdateBase = {
   stateVersion: z.number().int().nonnegative(),
   patches: z.array(z.unknown()),
   engineLogs: z.array(z.unknown()),
-  animations: z.array(z.unknown()),
+  animations: z.array(AnimationPacketV1Schema),
   state: z.unknown(),
   serverProcessingMs: z.number().optional(),
   matchInfo: RawGatewayMatchInfoSchema.optional(),
@@ -288,7 +289,7 @@ export const RawGatewayStateSyncMessageSchema = z
     gameId: opaqueId,
     stateVersion: z.number().int().nonnegative(),
     engineLogs: z.array(z.unknown()),
-    animations: z.array(z.unknown()),
+    animations: z.array(AnimationPacketV1Schema),
     state: z.unknown(),
     serverProcessingMs: z.number().optional(),
     matchInfo: RawGatewayMatchInfoSchema.optional(),

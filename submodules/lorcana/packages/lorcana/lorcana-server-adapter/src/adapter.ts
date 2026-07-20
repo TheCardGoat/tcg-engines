@@ -15,6 +15,11 @@ import type {
   DeckFormatResult,
   GameAdapter,
 } from "@tcg/shared/game-adapter";
+import {
+  buildColorMetadataFacets,
+  normalizeMetadataColors,
+  sortMetadataFacets,
+} from "@tcg/shared/game-adapter";
 import { validateDeckForLorcanaFormat } from "./deck-format-legality";
 import {
   lorcanaCreateServerEngine,
@@ -27,6 +32,13 @@ const LORCANA_FORMAT_IDS = new Set<string>(Object.keys(LORCANA_FORMATS));
 
 function isLorcanaFormatId(formatId: string): formatId is LorcanaFormatId {
   return LORCANA_FORMAT_IDS.has(formatId);
+}
+
+function getLorcanaCard(publicId: string) {
+  const cardsById = getAllCardsByIdSync();
+  return (
+    cardsById[publicId] ?? Object.values(cardsById).find((card) => card.canonicalId === publicId)
+  );
 }
 
 export const lorcanaServerAdapter: GameAdapter = {
@@ -50,12 +62,13 @@ export const lorcanaServerAdapter: GameAdapter = {
   },
 
   getCardById(publicId: string): CardSummary | null {
-    const cardsById = getAllCardsByIdSync();
-    const card = cardsById[publicId];
+    const card = getLorcanaCard(publicId);
     if (!card) return null;
     return {
       publicId,
       colors: card.inkType ?? [],
+      label: card.fullName ?? card.name,
+      imageUrl: card.printings[0]?.imageUrl,
     };
   },
 
@@ -75,8 +88,7 @@ export const lorcanaServerAdapter: GameAdapter = {
    * (GameAdapter contract; RFC §5 gap 8, ADR-2).
    */
   getCanonicalCardId(publicId: string): string | null {
-    const cardsById = getAllCardsByIdSync();
-    const card = cardsById[publicId];
+    const card = getLorcanaCard(publicId);
     return card?.canonicalId ?? null;
   },
 
@@ -96,6 +108,49 @@ export const lorcanaServerAdapter: GameAdapter = {
         details: r.details,
       })),
     };
+  },
+
+  metadata: {
+    projectionVersion: 1,
+    capabilities: { colors: true, deckLists: true, archetypes: true },
+    facets: [
+      { type: "color", label: "Ink", pluralLabel: "Inks", kind: "individual", order: 10 },
+      {
+        type: "color-combination",
+        label: "Ink combination",
+        pluralLabel: "Ink combinations",
+        kind: "combination",
+        order: 20,
+      },
+    ],
+    projectDeck(deck) {
+      const colors = normalizeMetadataColors(
+        deck.flatMap((entry) => getLorcanaCard(entry.cardId)?.inkType ?? []),
+      );
+      return {
+        schemaVersion: 1,
+        projectionVersion: 1,
+        game: "lorcana",
+        cardCount: deck.reduce((sum, entry) => sum + Math.max(0, Math.floor(entry.quantity)), 0),
+        colors,
+        facets: sortMetadataFacets(buildColorMetadataFacets(colors)),
+      };
+    },
+    normalizeTemplate(deck) {
+      return deck
+        .flatMap((entry) => {
+          if (entry.quantity >= 4) return [{ ...entry, quantity: 4 }];
+          if (entry.quantity >= 2) return [{ ...entry, quantity: 2 }];
+          return [];
+        })
+        .sort((left, right) => left.cardId.localeCompare(right.cardId));
+    },
+    normalizeSynergy(deck) {
+      return deck
+        .filter((entry) => entry.quantity > 1)
+        .map((entry) => ({ ...entry, quantity: 1 }))
+        .sort((left, right) => left.cardId.localeCompare(right.cardId));
+    },
   },
 
   createServerEngine: lorcanaCreateServerEngine,

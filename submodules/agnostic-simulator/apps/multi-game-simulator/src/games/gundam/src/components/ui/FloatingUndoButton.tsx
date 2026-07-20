@@ -11,7 +11,7 @@ import { UndoButton } from "./UndoButton.tsx";
  * reachable undo control. The shared `UndoButton` handles the
  * disabled/ready/fresh visual states.
  */
-export function FloatingUndoButton() {
+export function FloatingUndoButton({ embedded = false }: { readonly embedded?: boolean }) {
   const { adapter } = useGundamGame();
   // Subscribe to board updates so `canUndo()` is re-read every state change.
   useBoardProjection();
@@ -25,7 +25,13 @@ export function FloatingUndoButton() {
     <UndoButton
       canUndo={canUndo}
       onUndo={onUndo}
-      className="absolute z-30 right-[22px] top-1/2 mt-[68px] -translate-y-1/2 min-w-[140px]"
+      compact={embedded}
+      style={{ color: canUndo ? "var(--color-hud-text)" : "var(--color-hud-text-dim)" }}
+      className={
+        embedded
+          ? "h-full min-w-[112px] flex-none"
+          : "absolute z-30 right-[22px] top-1/2 mt-[68px] -translate-y-1/2 min-w-[140px]"
+      }
     />
   );
 }

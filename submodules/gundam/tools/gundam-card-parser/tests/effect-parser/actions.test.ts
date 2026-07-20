@@ -22,6 +22,13 @@ describe("draw", () => {
     const [effect] = parseEffect("【Attack】 Draw 3.");
     expect(effect.directives[0]).toMatchObject({ action: { action: "draw", count: 3 } });
   });
+
+  test("Draw 1 then discard 1 is a single staged drawThenDiscard action", () => {
+    const [effect] = parseEffect("【Deploy】Draw 1. Then, discard 1.");
+    expect(effect.directives).toEqual([
+      { action: { action: "drawThenDiscard", drawCount: 1, discardCount: 1 } },
+    ]);
+  });
 });
 
 describe("discard", () => {
@@ -331,7 +338,9 @@ describe("setActive", () => {
 
   test("Set this Unit as active produces setActive action", () => {
     const [effect] = parseEffect("【Deploy】 Set this Unit as active.");
-    expect(effect.directives[0]).toMatchObject({ action: { action: "setActive" } });
+    expect(effect.directives[0]).toEqual({
+      action: { action: "setActive", target: { owner: "self", cardType: "unit" } },
+    });
   });
 });
 
@@ -339,6 +348,13 @@ describe("returnToHand", () => {
   test("Return it to its owner's hand produces returnToHand", () => {
     const [effect] = parseEffect("【Main】②：Return it to its owner's hand.");
     expect(effect.directives[0]).toMatchObject({ action: { action: "returnToHand" } });
+  });
+
+  test("curly owner apostrophe also produces returnToHand", () => {
+    const [effect] = parseEffect("【Main】Choose 1 enemy Unit. Return it to its owner’s hand.");
+    expect(effect.directives[0]).toMatchObject({
+      action: { action: "returnToHand", target: { owner: "opponent", cardType: "unit" } },
+    });
   });
 });
 
@@ -468,6 +484,27 @@ describe("preventDamage", () => {
       },
     });
   });
+
+  test("chosen friendly Unit is protected from low-AP enemy battle damage for this battle", () => {
+    const [effect] = parseEffect(
+      "【Action】Choose 1 friendly Unit. It can't receive battle damage from enemy Units with 2 or less AP during this battle.\n【Pilot】[Ramba Ral]",
+    );
+    expect(effect.directives).toEqual([
+      {
+        action: {
+          action: "preventDamage",
+          damageType: "battle",
+          duration: "thisBattle",
+          target: { owner: "friendly", cardType: "unit", count: 1 },
+          unitFilter: {
+            owner: "opponent",
+            cardType: "unit",
+            attributeFilters: [{ attribute: "ap", comparison: "lte", value: 2 }],
+          },
+        },
+      },
+    ]);
+  });
 });
 
 describe("preventDamageToZone", () => {
@@ -561,7 +598,7 @@ describe("during turn when-clause parsing", () => {
       type: "triggered",
       activation: {
         timing: ["onDestroyByBattle"],
-        conditions: [{ type: "isTurn", whose: "friendly" }],
+        conditions: [{ type: "isTurn", whose: "friendly" }, { type: "eventCardIsSelf" }],
       },
     });
   });
@@ -643,16 +680,20 @@ describe("chooseAttackTarget", () => {
     });
   });
 
-  test("It may choose an active enemy Unit that is Lv.2 or lower as its attack target", () => {
+  test("This Unit may choose an active enemy Unit that is Lv.2 or lower as its attack target", () => {
     const [effect] = parseEffect(
       "This Unit may choose an active enemy Unit that is Lv.2 or lower as its attack target.",
     );
     expect(effect.directives[0]).toMatchObject({
       action: {
         action: "chooseAttackTarget",
+        unit: { owner: "self", cardType: "unit" },
         attackTarget: {
+          owner: "opponent",
+          state: "active",
           attributeFilters: [{ attribute: "level", comparison: "lte", value: 2 }],
         },
+        duration: "permanent",
       },
     });
   });
@@ -674,9 +715,7 @@ describe("lookAtTopDeck", () => {
     });
   });
 
-  test("Look at top 3 cards defaults to chooseTop return", () => {
-    // A reveal clause in a separate sentence is split off and not captured by the look step.
-    // tutorFilter is therefore not produced by the current parser for split-sentence text.
+  test("split-sentence top-deck tutor includes its Unit filter", () => {
     const [effect] = parseEffect(
       "【When Paired】 Look at the top 3 cards of your deck. You may reveal 1 Unit card among them and add it to your hand.",
     );
@@ -684,7 +723,54 @@ describe("lookAtTopDeck", () => {
       (s) => "action" in s && (s as any).action.action === "lookAtTopDeck",
     );
     expect(lookStep).toMatchObject({
-      action: { action: "lookAtTopDeck", count: 3, return: "chooseTop" },
+      action: {
+        action: "lookAtTopDeck",
+        count: 3,
+        return: "chooseTop",
+        tutorFilter: { owner: "friendly", cardType: "unit", count: 1 },
+      },
+    });
+  });
+
+  test("split-sentence Zeon OR Neo Zeon tutor preserves random-bottom routing", () => {
+    const [effect] = parseEffect(
+      "【Destroyed】Look at the top 3 cards of your deck. You may reveal 1 (Zeon)/(Neo Zeon) Unit card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    );
+    expect(effect.directives).toEqual([
+      {
+        action: {
+          action: "lookAtTopDeck",
+          count: 3,
+          return: "chooseTop",
+          randomizeRemainingToBottom: true,
+          tutorFilter: {
+            owner: "friendly",
+            count: 1,
+            cardType: "unit",
+            attributeFilters: [
+              {
+                attribute: "or",
+                filters: [
+                  { attribute: "trait", comparison: "includes", value: "zeon" },
+                  { attribute: "trait", comparison: "includes", value: "neo zeon" },
+                ],
+              },
+            ],
+          },
+        },
+      },
+    ]);
+  });
+});
+
+describe("optional actions", () => {
+  test("You may deploy marks the deploy directive optional", () => {
+    const [effect] = parseEffect(
+      "【When Paired】You may deploy 1 (Neo Zeon)/(Zeon) Unit card that is Lv.4 or lower from your hand.",
+    );
+    expect(effect.directives[0]).toMatchObject({
+      action: { action: "deploy" },
+      optional: true,
     });
   });
 });
@@ -721,6 +807,167 @@ describe("addFromTrash", () => {
   test("Add 1 Unit card from your trash to your hand", () => {
     const [effect] = parseEffect("【Main】②：Add 1 Unit card from your trash to your hand.");
     expect(effect.directives[0]).toMatchObject({ action: { action: "addFromTrash" } });
+  });
+
+  test("propagates a chosen trash target into a following add-it sentence", () => {
+    const [effect] = parseEffect(
+      "【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, choose 1 (Tekkadan) Unit card that is Lv.2 or lower from your trash. Add it to your hand.",
+    );
+    expect(effect.directives[0]).toMatchObject({
+      action: {
+        action: "addFromTrash",
+        target: {
+          owner: "friendly",
+          cardType: "unit",
+          zone: "trash",
+          count: 1,
+          attributeFilters: [
+            { attribute: "level", comparison: "lte", value: 2 },
+            { attribute: "trait", comparison: "includes", value: "tekkadan" },
+          ],
+        },
+      },
+    });
+  });
+});
+
+describe("attack redirection and prevent-active continuations", () => {
+  test("changes an attack target to the chosen rested friendly trait Unit", () => {
+    const [effect] = parseEffect(
+      "【Action】Choose 1 rested friendly (CB) Unit. Change the attack target of the battling enemy Unit to it.",
+    );
+    expect(effect.directives[0]).toMatchObject({
+      action: {
+        action: "changeAttackTarget",
+        target: {
+          owner: "friendly",
+          cardType: "unit",
+          state: "rested",
+          count: 1,
+          attributeFilters: [{ attribute: "trait", comparison: "includes", value: "cb" }],
+        },
+      },
+    });
+  });
+
+  test("prevents the chosen rested enemy from becoming active", () => {
+    const [effect] = parseEffect(
+      "【Deploy】Choose 1 rested enemy Unit that is Lv.2 or lower. It won' t be set as active during the start phase of your opponent' s next turn.",
+    );
+    expect(effect.directives[0]).toMatchObject({
+      action: {
+        action: "preventActive",
+        target: {
+          owner: "opponent",
+          cardType: "unit",
+          state: "rested",
+          count: 1,
+          attributeFilters: [{ attribute: "level", comparison: "lte", value: 2 }],
+        },
+      },
+    });
+  });
+});
+
+describe("chosen-target continuation", () => {
+  test("reuses one chosen friendly Unit for damage and a later stat modifier", () => {
+    const [effect] = parseEffect(
+      "【Main】/【Action】Choose 1 of your Units. Deal 1 damage to it. It gets AP+3 during this turn.",
+    );
+    expect(effect.directives).toHaveLength(2);
+    expect(effect.directives[0]).toMatchObject({
+      action: {
+        action: "dealDamage",
+        target: { owner: "friendly", cardType: "unit", count: 1 },
+      },
+    });
+    expect(effect.directives[1]).toMatchObject({
+      action: {
+        action: "statModifier",
+        target: { owner: "friendly", cardType: "unit", count: 1 },
+      },
+    });
+  });
+
+  test("keeps the other-Unit exclusion on every chosen-target continuation", () => {
+    const [effect] = parseEffect(
+      "【Deploy】Choose 1 of your other Units. Deal 1 damage to it. It gets AP+1 during this turn.",
+    );
+    expect(effect.directives).toHaveLength(2);
+    for (const directive of effect.directives) {
+      expect(directive).toMatchObject({
+        action: {
+          target: {
+            owner: "friendly",
+            cardType: "unit",
+            count: 1,
+            excludeSource: true,
+          },
+        },
+      });
+    }
+  });
+
+  test("promotes a leading unit-count gate and applies its chosen enemy target", () => {
+    const [effect] = parseEffect(
+      "【When Paired】If you have 2 or more other (Gjallarhorn)/(Tekkadan) Units in play, choose 1 enemy Unit with 3 or less HP. Rest it.",
+    );
+    expect(effect.activation.conditions).toEqual([
+      {
+        type: "unitCount",
+        owner: "friendly",
+        comparison: "gte",
+        count: 2,
+        hasTrait: ["gjallarhorn", "tekkadan"],
+        excludeSelf: true,
+      },
+    ]);
+    expect(effect.directives[0]).toMatchObject({
+      action: {
+        action: "rest",
+        target: {
+          owner: "opponent",
+          cardType: "unit",
+          count: 1,
+          attributeFilters: [{ attribute: "hp", comparison: "lte", value: 3 }],
+        },
+      },
+    });
+  });
+
+  test("parses another-friendly trait gates for self keyword and enemy damage effects", () => {
+    const [keywordEffect] = parseEffect(
+      "【When Linked】If another friendly (Clan) Unit is in play, this gains <First Strike> during this turn.",
+    );
+    expect(keywordEffect.activation.conditions).toEqual([
+      {
+        type: "unitCount",
+        owner: "friendly",
+        comparison: "gte",
+        count: 1,
+        hasTrait: "clan",
+        excludeSelf: true,
+      },
+    ]);
+    expect(keywordEffect.directives[0]).toMatchObject({
+      action: {
+        action: "grantKeyword",
+        keyword: "FirstStrike",
+        target: { owner: "self", cardType: "unit" },
+      },
+    });
+
+    const [damageEffect] = parseEffect(
+      "【Deploy】If another friendly (Clan) Unit is in play, choose 1 enemy Unit. Deal 1 damage to it.",
+    );
+    expect(damageEffect.activation.conditions).toEqual(keywordEffect.activation.conditions);
+    expect(damageEffect.directives[0]).toMatchObject({
+      action: {
+        action: "dealDamage",
+        amount: 1,
+        target: { owner: "opponent", cardType: "unit", count: 1 },
+      },
+    });
   });
 });
 

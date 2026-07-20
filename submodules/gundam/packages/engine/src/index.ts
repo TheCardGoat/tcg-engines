@@ -105,7 +105,18 @@ export {
   rankByStatTotal,
 } from "./automation/value-ranked-strategy.ts";
 export { tempoStrategy } from "./automation/tempo-strategy.ts";
+export { strategicStrategy } from "./automation/strategic-strategy.ts";
 export {
+  combatAwareStrategy,
+  combatOutcome,
+  combatUnitValue,
+  rankEffectiveCombat,
+  selectConservativeBlock,
+  type CombatOutcome,
+  type CombatUnitValue,
+} from "./automation/combat-aware-strategy.ts";
+export {
+  GUNDAM_AUTOMATION_REVISION,
   DEFAULT_GUNDAM_AUTOMATED_ACTION_STRATEGY_ID,
   GUNDAM_AUTOMATED_ACTION_STRATEGIES,
   getGundamAutomatedActionStrategyOption,

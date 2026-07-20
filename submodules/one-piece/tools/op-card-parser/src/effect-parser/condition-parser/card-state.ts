@@ -62,7 +62,7 @@ export function parseCardStateCondition(text: string): Condition | null {
 
   // Has card (cost): you/your opponent have/has a Character with a cost of N (or more/less)
   m =
-    /^(you|your\s+opponent)\s+ha(?:ve|s)\s+a\s+Character\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?$/i.exec(
+    /^(you|your\s+opponent)\s+ha(?:ve|s)\s+a\s+Character\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?(?:\s+on\s+your\s+field)?$/i.exec(
       t,
     );
   if (m) {
@@ -74,6 +74,20 @@ export function parseCardStateCondition(text: string): Condition | null {
       player,
       zone: "character",
       filters: [{ filter: "cost", comparison, value }],
+    };
+  }
+
+  // Has card with name: you have a [X] Character
+  m = /^you\s+have\s+an?\s+(active|rested)\s+\[([^\]]+)\](?:\s+Character)?$/i.exec(t);
+  if (m) {
+    return {
+      condition: "hasCard",
+      player: "self",
+      zone: "character",
+      filters: [
+        { filter: "state", value: m[1]!.toLowerCase() as "active" | "rested" },
+        { filter: "name", value: m[2]! },
+      ],
     };
   }
 

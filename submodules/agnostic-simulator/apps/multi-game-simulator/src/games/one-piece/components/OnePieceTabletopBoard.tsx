@@ -8,6 +8,7 @@ import {
   SingleCardZone,
   TabletopActionButton,
   TurnIndicator,
+  ViewerSafeCardImage,
 } from "@tcg/simulator-ui";
 import type { OnePieceSeatId, OnePieceStaticBoard } from "../data/staticBoard.ts";
 import classes from "./OnePieceTabletopBoard.module.css";
@@ -376,7 +377,12 @@ function HoveredCardPreview({ entity }: { entity: SimulatorEntity | undefined })
 
   return (
     <aside className={classes.hoverCardPreview} data-testid="one-piece-hover-preview">
-      <img src={entity.imageUrl} alt={entity.title} className={classes.hoverCardPreviewImage} />
+      <ViewerSafeCardImage
+        entity={entity}
+        alt={entity.title}
+        fill
+        className={classes.hoverCardPreviewImage}
+      />
     </aside>
   );
 }

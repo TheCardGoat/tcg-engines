@@ -21,8 +21,8 @@ describe("Setup · EX tokens", () => {
 
     const yourBase = await screen.findByRole("region", { name: /your base section/i });
     const opponentBase = await screen.findByRole("region", { name: /opponent base section/i });
-    expect(within(yourBase).getAllByRole("listitem")).toHaveLength(1);
-    expect(within(opponentBase).getAllByRole("listitem")).toHaveLength(1);
+    expect(within(yourBase).getAllByRole("button", { name: /EX Base/i })).toHaveLength(1);
+    expect(within(opponentBase).getAllByRole("button", { name: /EX Base/i })).toHaveLength(1);
 
     const opponentResources = await screen.findByRole("region", {
       name: /opponent resource area/i,

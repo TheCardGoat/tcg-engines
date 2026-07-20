@@ -11,7 +11,8 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { IconKeyboard } from "@tabler/icons-react";
-import { MobileMirrorLedger } from "@tcg/simulator-ui";
+import type { SimulatorEntity } from "@tcg/simulator-contract";
+import { ClockReadout, MobileMirrorLedger, ResolvingEntityStage } from "@tcg/simulator-ui";
 import {
   defOf,
   getProjectedDirectAttackGigStealCount,
@@ -547,20 +548,20 @@ function ClockFace({
   critical: boolean;
 }) {
   return (
-    <div
+    <ClockReadout
+      label={label}
+      value={time}
+      active={active}
+      urgency={critical ? "critical" : urgent ? "warning" : "normal"}
+      tone={tone}
       className={classes.clockFace}
-      data-active={active ? "true" : "false"}
-      data-tone={tone}
       data-urgent={urgent ? "true" : "false"}
       data-critical={critical ? "true" : "false"}
       data-sim-value={time}
       aria-hidden="true"
-    >
-      <span>{label}</span>
-      <strong className={classes.clockTime} data-testid={active ? "phase-clock-time" : undefined}>
-        {time}
-      </strong>
-    </div>
+      valueClassName={classes.clockTime}
+      valueTestId={active ? "phase-clock-time" : undefined}
+    />
   );
 }
 
@@ -1092,6 +1093,7 @@ export function MobileDirectAttackDropTarget() {
       data-active={active ? "true" : "false"}
       data-over={drop.isOver ? "true" : "false"}
       data-drop-zone="opp-pinfo"
+      data-drop-surface="rival-gigs"
       aria-hidden="true"
     >
       <div className={classes.directAttackDropCue}>
@@ -1399,12 +1401,12 @@ interface CenterRowProps {
   mobileLedger?: {
     rivalLegends: ReactNode;
     rivalLegendCount?: number;
-    rivalLayout?: "scoreOnly" | "singleRow" | "twoLegend" | "stacked";
+    rivalLayout?: "scoreOnly" | "singleRow" | "stacked";
     center?: ReactNode;
     friendlyLegends: ReactNode;
     friendlyLegendCount?: number;
-    friendlyLayout?: "scoreOnly" | "singleRow" | "twoLegend" | "stacked";
-    density?: "scoreOnly" | "singleRow" | "twoLegend" | "stacked";
+    friendlyLayout?: "scoreOnly" | "singleRow" | "stacked";
+    density?: "scoreOnly" | "singleRow" | "stacked";
   };
 }
 
@@ -1720,10 +1722,8 @@ export function CenterRow({
     });
 
   if (mobileLedger) {
-    const friendlyThreeLegendLayout =
-      mobileLedger.friendlyLayout === "stacked" && mobileLedger.friendlyLegendCount === 3;
-    const rivalThreeLegendLayout =
-      mobileLedger.rivalLayout === "stacked" && mobileLedger.rivalLegendCount === 3;
+    const friendlyStackedLegendLayout = mobileLedger.friendlyLayout === "stacked";
+    const rivalStackedLegendLayout = mobileLedger.rivalLayout === "stacked";
     const mobileLedgerCenter = mobileLedger.center ? (
       <div className={classes.mobileLedgerPriority}>{mobileLedger.center}</div>
     ) : null;
@@ -1745,7 +1745,7 @@ export function CenterRow({
               {friendlyTemporaryEffects.length > 0 ? (
                 <MobileActiveEffectsStack effects={friendlyTemporaryEffects} tone="friendly" />
               ) : null}
-              {friendlyThreeLegendLayout ? (
+              {friendlyStackedLegendLayout ? (
                 <div className={classes.mobileLedgerLegendCred}>
                   <div
                     className={classes.mobileLedgerLegends}
@@ -1773,7 +1773,7 @@ export function CenterRow({
                 dice={friendly.gigArea}
                 streetCred={friendly.streetCred}
                 scoreVariant="compact"
-                showScore={!friendlyThreeLegendLayout}
+                showScore={!friendlyStackedLegendLayout}
                 interactive={
                   (stealChoice !== null &&
                     friendly.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
@@ -1844,7 +1844,7 @@ export function CenterRow({
                 dice={rival.gigArea}
                 streetCred={rival.streetCred}
                 scoreVariant="compact"
-                showScore={!rivalThreeLegendLayout}
+                showScore={!rivalStackedLegendLayout}
                 interactive={
                   (stealChoice !== null &&
                     rival.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
@@ -1891,7 +1891,7 @@ export function CenterRow({
                 }
                 onAdjustGig={handleAdjustGigValue}
               />
-              {rivalThreeLegendLayout ? (
+              {rivalStackedLegendLayout ? (
                 <div className={classes.mobileLedgerLegendCred}>
                   <div
                     className={classes.mobileLedgerLegends}
@@ -2197,41 +2197,35 @@ type ResolvingCard = {
 };
 
 function ResolvingCardAnchor({ card }: { card: ResolvingCard }) {
-  const renderedName = card.faceDown ? "Face-down card" : card.name;
+  const entity: SimulatorEntity = {
+    id: card.cardId,
+    title: card.name,
+    subtitle: card.cardType,
+    kind: "card",
+    ownerId: "resolution",
+    face: card.faceDown ? "hidden" : "public",
+    states: card.faceDown ? ["hidden"] : [],
+    stats: [],
+    traits: [],
+    imageUrl: card.imageUrl,
+    frameStyle: { color: card.color },
+    dataAttributes: {
+      "data-card-id": card.cardId,
+      "data-card-type": card.cardType,
+    },
+  };
+
   return (
-    <div
+    <ResolvingEntityStage
+      entity={entity}
+      active
+      anchorId={`resolving-program:${card.cardId}`}
+      label={card.label}
       className={classes.resolvingProgram}
-      data-testid="resolving-program"
-      data-card-id={card.cardId}
-      data-sim-entity-id={card.cardId}
-      data-card-type={card.cardType}
-      aria-label={`${card.label}: ${renderedName}`}
-    >
-      <span className={classes.resolvingProgramLabel}>{card.label}</span>
-      <div
-        className={classes.resolvingProgramCard}
-        data-testid="resolving-program-card"
-        data-sim-entity-id={card.cardId}
-        data-sim-anchor-id={`resolving-program:${card.cardId}`}
-      >
-        <CardImage
-          imageUrl={card.imageUrl}
-          faceDown={card.faceDown}
-          alt={renderedName}
-          cardType={card.cardType}
-          disablePreview={card.faceDown}
-          color={card.color}
-          previewDetails={
-            card.faceDown
-              ? undefined
-              : {
-                  name: card.name,
-                  rules: card.rulesText ? [card.rulesText] : undefined,
-                }
-          }
-        />
-      </div>
-    </div>
+      labelClassName={classes.resolvingProgramLabel}
+      entityClassName={classes.resolvingProgramCard}
+      testId="resolving-program"
+    />
   );
 }
 

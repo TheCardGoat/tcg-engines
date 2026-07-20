@@ -17,6 +17,11 @@ import type {
   GameAdapter,
 } from "@tcg/shared/game-adapter";
 import {
+  buildColorMetadataFacets,
+  normalizeMetadataColors,
+  sortMetadataFacets,
+} from "@tcg/shared/game-adapter";
+import {
   gundamCreateServerEngine,
   gundamExtractCardsMapsFromSnapshot,
   gundamRestoreEngine,
@@ -78,6 +83,9 @@ export const gundamServerAdapter: GameAdapter = {
           return {
             publicId,
             colors: Array.isArray(c.color) ? c.color : c.color ? [c.color] : [],
+            label:
+              "displayName" in c && typeof c.displayName === "string" ? c.displayName : undefined,
+            imageUrl: "imageUrl" in c && typeof c.imageUrl === "string" ? c.imageUrl : undefined,
           };
         }
       }
@@ -86,6 +94,11 @@ export const gundamServerAdapter: GameAdapter = {
     return {
       publicId,
       colors: Array.isArray(card.color) ? card.color : card.color ? [card.color] : [],
+      label:
+        "displayName" in card && typeof card.displayName === "string"
+          ? card.displayName
+          : undefined,
+      imageUrl: "imageUrl" in card && typeof card.imageUrl === "string" ? card.imageUrl : undefined,
     };
   },
 
@@ -117,6 +130,63 @@ export const gundamServerAdapter: GameAdapter = {
       valid: rules.every((rule) => rule.passed),
       rules,
     };
+  },
+
+  metadata: {
+    projectionVersion: 1,
+    capabilities: { colors: true, deckLists: true, archetypes: true },
+    facets: [
+      {
+        type: "color",
+        label: "Deck color",
+        pluralLabel: "Deck colors",
+        kind: "individual",
+        order: 10,
+      },
+      {
+        type: "color-combination",
+        label: "Deck color combination",
+        pluralLabel: "Deck color combinations",
+        kind: "combination",
+        order: 20,
+      },
+    ],
+    projectDeck(deck) {
+      const colors = normalizeMetadataColors(
+        deck.flatMap((entry) => {
+          const card = getGundamCardDefinition(entry.cardId);
+          return card?.type === "resource" || !card?.color ? [] : [card.color];
+        }),
+      );
+      return {
+        schemaVersion: 1,
+        projectionVersion: 1,
+        game: "gundam",
+        cardCount: deck.reduce((sum, entry) => sum + Math.max(0, Math.floor(entry.quantity)), 0),
+        colors,
+        facets: sortMetadataFacets(buildColorMetadataFacets(colors)),
+      };
+    },
+    normalizeTemplate(deck) {
+      return deck
+        .flatMap((entry) => {
+          const card = getGundamCardDefinition(entry.cardId);
+          if (!card || card.type === "resource") return [];
+          if (entry.quantity >= 4) return [{ ...entry, quantity: 4 }];
+          if (entry.quantity >= 2) return [{ ...entry, quantity: 2 }];
+          return [];
+        })
+        .sort((left, right) => left.cardId.localeCompare(right.cardId));
+    },
+    normalizeSynergy(deck) {
+      return deck
+        .filter((entry) => {
+          const card = getGundamCardDefinition(entry.cardId);
+          return card?.type !== "resource" && entry.quantity > 1;
+        })
+        .map((entry) => ({ ...entry, quantity: 1 }))
+        .sort((left, right) => left.cardId.localeCompare(right.cardId));
+    },
   },
 
   createServerEngine: gundamCreateServerEngine,
@@ -244,7 +314,7 @@ function getGundamCardDefinition(publicId: string): Card | null {
 
   for (const value of Object.values(gundamCards)) {
     if (!isGundamCard(value)) continue;
-    if (value.id === publicId || value.cardNumber === publicId) {
+    if (value.id === publicId || value.cardNumber === publicId || value.canonicalId === publicId) {
       return value;
     }
   }

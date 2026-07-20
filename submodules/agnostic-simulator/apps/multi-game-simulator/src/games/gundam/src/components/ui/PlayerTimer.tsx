@@ -1,4 +1,5 @@
 import { deriveClockView, type ClockSnapshot } from "@tcg/gundam-engine";
+import { ClockReadout } from "@tcg/simulator-ui";
 
 import { cn } from "../../lib/utils.ts";
 import { useClockNow } from "../../game/use-clock-now.ts";
@@ -14,9 +15,20 @@ export function PlayerTimer({ snapshot, isOwnClock = false, compact = false }: P
   const view = deriveClockView(snapshot, now, { isOwnClock });
 
   return (
-    <span
-      role="timer"
-      aria-label={`Player time remaining: ${view.formattedTime}`}
+    <ClockReadout
+      label="Player time remaining"
+      labelMode="aria"
+      value={view.formattedTime}
+      active={view.isRunning}
+      urgency={
+        view.urgencyClass === "timer--critical"
+          ? "critical"
+          : view.urgencyClass === "timer--danger"
+            ? "danger"
+            : view.urgencyClass === "timer--warning"
+              ? "warning"
+              : "normal"
+      }
       className={cn(
         "inline-flex items-center justify-center font-mono tabular-nums font-extrabold tracking-hud-body",
         "rounded-[3px] border px-1.5 py-[1px]",
@@ -25,13 +37,12 @@ export function PlayerTimer({ snapshot, isOwnClock = false, compact = false }: P
           : "border-hud-border bg-white/55 text-hud-text-dim",
         view.urgencyClass === "timer--warning" &&
           "border-amber-400/60 text-amber-500 bg-amber-400/10",
-        view.urgencyClass === "timer--danger" && "border-red-500/60 text-red-500 bg-red-500/10",
+        view.urgencyClass === "timer--danger" &&
+          "border-red-500/60 text-red-500 bg-red-500/10 motion-safe:animate-pulse",
         view.urgencyClass === "timer--critical" &&
           "border-red-500/80 text-red-600 bg-red-500/15 animate-pulse",
         compact ? "text-hud-2xs" : "text-hud-xs",
       )}
-    >
-      {view.formattedTime}
-    </span>
+    />
   );
 }

@@ -55,6 +55,8 @@ export const FIXTURES = {
   "battle-ready-demo": () => import("./battle-ready-demo.ts").then((m) => m.loadBattleReadyDemo),
   "pilot-pair-demo": () => import("./pilot-pair-demo.ts").then((m) => m.loadPilotPairDemo),
   "command-rest-demo": () => import("./command-rest-demo.ts").then((m) => m.loadCommandRestDemo),
+  "command-auto-resolve-demo": () =>
+    import("./command-auto-resolve-demo.ts").then((m) => m.loadCommandAutoResolveDemo),
   "activate-ability-demo": () =>
     import("./activate-ability-demo.ts").then((m) => m.loadActivateAbilityDemo),
   "block-step-demo": () => import("./block-step-demo.ts").then((m) => m.loadBlockStepDemo),
@@ -78,6 +80,11 @@ export const FIXTURES = {
   "insufficient-resources-demo": () =>
     import("./insufficient-resources-demo.ts").then((m) => m.loadInsufficientResourcesDemo),
   "discard-limit-demo": () => import("./discard-limit-demo.ts").then((m) => m.loadDiscardLimitDemo),
+  "return-to-hand-demo": () =>
+    import("./return-to-hand-demo.ts").then((m) => m.loadReturnToHandDemo),
+  "return-to-deck-demo": () =>
+    import("./return-to-deck-demo.ts").then((m) => m.loadReturnToDeckDemo),
+  "urgent-timer-demo": () => import("./urgent-timer-demo.ts").then((m) => m.loadUrgentTimerDemo),
   "newly-deployed-cannot-attack-demo": () =>
     import("./newly-deployed-cannot-attack-demo.ts").then(
       (m) => m.loadNewlyDeployedCannotAttackDemo,
@@ -94,6 +101,12 @@ export const FIXTURES = {
   "multi-turn-demo": () => import("./multi-turn-demo.ts").then((m) => m.loadMultiTurnDemo),
   "pending-effect-click-guard-demo": () =>
     import("./pending-effect-click-guard-demo.ts").then((m) => m.loadPendingEffectClickGuardDemo),
+  "striker-pack-choice-demo": () =>
+    import("./pending-effect-click-guard-demo.ts").then((m) => m.loadStrikerPackChoiceDemo),
+  "optional-prompt-demo": () =>
+    import("./prompt-interaction-demo.ts").then((m) => m.loadOptionalPromptDemo),
+  "deck-look-prompt-demo": () =>
+    import("./prompt-interaction-demo.ts").then((m) => m.loadDeckLookPromptDemo),
 } as const satisfies Record<string, LazyFixture>;
 
 export type FixtureName = keyof typeof FIXTURES;

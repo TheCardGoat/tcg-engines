@@ -65,6 +65,7 @@ export const op14eb04MissDoublefingerZala086: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Baroque Works",
+                  match: "includes",
                 },
               ],
             },

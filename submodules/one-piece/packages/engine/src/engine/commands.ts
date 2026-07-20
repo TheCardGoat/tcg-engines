@@ -396,12 +396,14 @@ export function applyQueuedCommandMutation(
       const delayedActions = state.delayedEffectActions.filter(
         (item) =>
           item.scheduledBattleId === undefined &&
+          item.scheduledPhase === undefined &&
           item.controller === command.seat &&
           item.scheduledTurn === state.turnNumber,
       );
       state.delayedEffectActions = state.delayedEffectActions.filter(
         (item) =>
           item.scheduledBattleId !== undefined ||
+          item.scheduledPhase !== undefined ||
           item.controller !== command.seat ||
           item.scheduledTurn !== state.turnNumber,
       );

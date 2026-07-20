@@ -56,6 +56,7 @@ export const op14eb04Kuro025: CharacterCard = {
               {
                 filter: "trait",
                 value: "East Blue",
+                match: "includes",
               },
               {
                 filter: "cardCategory",

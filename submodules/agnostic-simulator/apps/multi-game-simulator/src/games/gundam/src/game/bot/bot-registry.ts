@@ -84,12 +84,16 @@ const attachBotVsBot: BotAttacher = async (runtime, staticResources, args) => {
   const p1Strategy = engine.getSafeGundamAutomatedActionStrategyOption(
     args?.botConfig?.strategy,
   ).strategy;
-  const p2Strategy = engine.getSafeGundamAutomatedActionStrategyOption().strategy;
+  const configuredP2Strategy = engine.getSafeGundamAutomatedActionStrategyOption(
+    args?.botConfig?.opponentStrategy,
+  ).strategy;
   const p1Handle = attachStrategyBot(runtime, staticResources, DEV_PLAYER_ONE, {
     strategy: p1Strategy,
+    ...(args?.botConfig?.speed ? { speed: args.botConfig.speed } : {}),
   });
   const p2Handle = attachStrategyBot(runtime, staticResources, DEV_PLAYER_TWO, {
-    strategy: p2Strategy,
+    strategy: configuredP2Strategy,
+    ...(args?.botConfig?.speed ? { speed: args.botConfig.speed } : {}),
   });
   return {
     handle: p2Handle,
@@ -135,5 +139,10 @@ export const BOT_ATTACHERS: Readonly<Record<string, BotAttacher>> = {
   "battle-ready-demo": attachAuto,
   "block-step-demo": attachAuto,
   "burst-shield-demo": attachAuto,
+  "first-strike-demo": attachAuto,
   "high-maneuver-demo": attachAuto,
+  "link-unit-deploy-demo": attachAuto,
+  "mutual-destruction-demo": attachAuto,
+  "step-interrupt-demo": attachAuto,
+  "suppression-demo": attachAuto,
 };

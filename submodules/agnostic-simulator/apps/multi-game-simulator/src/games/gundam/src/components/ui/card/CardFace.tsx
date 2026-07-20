@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 
 import { useCardLegality } from "../../../game/index.ts";
-import { useTargeting } from "@tcg/simulator-ui";
+import {
+  CardFace as SimulatorCardFace,
+  ViewerSafeCardImage,
+  useTargeting,
+} from "@tcg/simulator-ui";
 import { useHasHover } from "../../../lib/use-has-hover.ts";
 import { useHintsEnabled } from "../../../lib/use-hints-enabled.ts";
 import type { CardColor, GameCardData, TargetingState } from "../types.ts";
-import { CardImage } from "./CardImage.tsx";
 import { CardTagStrip } from "./CardTagStrip.tsx";
 import { getCardTags } from "./card-tags.ts";
 import { StatCurrentBadges } from "./StatCurrentBadges.tsx";
@@ -37,6 +40,9 @@ export interface CardFaceProps {
   readonly useContainerSize?: boolean;
   readonly style?: CSSProperties;
   readonly onClick?: (event: MouseEvent<HTMLDivElement>) => void;
+  /** The owning zone handles the native drag lifecycle. This flag keeps
+   * the card face's cursor and visual affordance aligned with that wrapper. */
+  readonly draggable?: boolean;
   /** When true, suppress the top-right stat stack. Used by play-zone
    * bands that render the stat pills externally. */
   readonly hideStatBadges?: boolean;
@@ -52,6 +58,7 @@ export function CardFace({
   useContainerSize = false,
   style,
   onClick,
+  draggable = false,
   hideStatBadges = false,
   hideSupplementalBadges = false,
 }: CardFaceProps) {
@@ -71,16 +78,16 @@ export function CardFace({
   const tint = (card.color && CARD_COLORS[card.color]) || "#7b4182";
   const scale = Math.max(width / CANONICAL_WIDTH, 0.35);
   const chamfer = Math.max(3, Math.round(6 * scale));
-  const imageSrc = card.img;
-  const hasImage = Boolean(imageSrc || (card.set && card.cardNumber)) && !imageError;
+  const simulatorEntity = toSimulatorEntity(card);
+  const resolvedImageSrc = simulatorEntity.imageUrl;
+  const hasImage = Boolean(resolvedImageSrc) && !imageError;
   const tags = getCardTags(card);
   const damage = card.damage ?? 0;
-  const simulatorEntity = toSimulatorEntity(card);
 
   useEffect(() => {
     setImageLoaded(false);
     setImageError(false);
-  }, [imageSrc, card.set, card.cardNumber]);
+  }, [resolvedImageSrc]);
 
   // Per-card targeting feedback. During an `enterBattle` target-selection
   // step, a card that isn't in the candidate set is an "invalid" target —
@@ -115,7 +122,10 @@ export function CardFace({
   const showPlayablePulse =
     hintsEnabled && isPlayable && !card.selected && !isInvalidTarget && !isCandidate;
 
-  const isDraggable = isPlayable && Boolean(onClick);
+  // A zone-provided `draggable` flag is already derived from the same
+  // interaction view as `isPlayable`; trust it directly so the cursor
+  // cannot lag behind the native wrapper during a projection update.
+  const isDraggable = draggable || (isPlayable && Boolean(onClick));
 
   // Dual-mode lifted state (rule 3-4-6): when this card has been
   // tapped and BOTH command-effect and pair-as-pilot moves are legal,
@@ -131,10 +141,35 @@ export function CardFace({
       }
     : { width, height };
 
+  if (simulatorEntity.face === "hidden") {
+    return (
+      <div style={{ ...sizingStyle, ...style }}>
+        <SimulatorCardFace
+          entity={simulatorEntity}
+          density="normal"
+          fill
+          fullImageChrome="edge-to-edge"
+          fullImageFit="cover"
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       aria-label={cardAriaLabel(card, simulatorEntity.states)}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
       onClick={onClick}
+      onKeyDown={
+        onClick
+          ? (event) => {
+              if (event.key !== "Enter" && event.key !== " ") return;
+              event.preventDefault();
+              event.currentTarget.click();
+            }
+          : undefined
+      }
       onMouseEnter={hasHover ? () => setHovered(true) : undefined}
       onMouseLeave={hasHover ? () => setHovered(false) : undefined}
       data-card-id={card.id}
@@ -211,14 +246,16 @@ export function CardFace({
           className="absolute inset-0 transition-opacity duration-300 ease-out"
           style={{ opacity: imageLoaded ? 1 : 0 }}
         >
-          <CardImage
-            set={card.set!}
-            cardNumber={card.cardNumber!}
-            src={imageSrc}
+          <ViewerSafeCardImage
+            entity={simulatorEntity}
             alt={card.name}
-            className="absolute inset-0 w-full h-full object-cover"
-            onLoad={() => setImageLoaded(true)}
-            onError={() => setImageError(true)}
+            fill
+            fit="cover"
+            loading="lazy"
+            className="absolute inset-0"
+            imageClassName="h-full w-full object-cover"
+            onImageLoad={() => setImageLoaded(true)}
+            onImageError={() => setImageError(true)}
           />
         </div>
       )}
@@ -318,18 +355,17 @@ function ArtFallback({
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_30%,rgba(255,255,255,.28),transparent_55%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(0,0,0,.35),transparent_60%)]" />
-      {scale >= 0.75 && (
-        <div
-          className="absolute inset-x-2 top-1/2 -translate-y-1/2 text-center font-display font-extrabold text-white/85 uppercase leading-tight"
-          style={{
-            fontSize: 9 * fs,
-            textShadow: "0 1px 2px rgba(0,0,0,.8)",
-            letterSpacing: ".05em",
-          }}
-        >
-          {name}
-        </div>
-      )}
+      <div
+        className="absolute inset-x-1 top-1/2 -translate-y-1/2 text-center font-display font-extrabold text-white/85 uppercase leading-tight"
+        style={{
+          fontSize: Math.max(7, 9 * fs),
+          textShadow: "0 1px 2px rgba(0,0,0,.8)",
+          letterSpacing: ".04em",
+          overflowWrap: "anywhere",
+        }}
+      >
+        {name}
+      </div>
     </div>
   );
 }

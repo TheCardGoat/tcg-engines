@@ -49,7 +49,7 @@ export const op13NicoRobin032: CharacterCard = {
                 },
               ],
             },
-            duration: "untilEndOfOpponentNextTurn",
+            duration: "untilEndOfOpponentNextEndPhase",
           },
         ],
       },

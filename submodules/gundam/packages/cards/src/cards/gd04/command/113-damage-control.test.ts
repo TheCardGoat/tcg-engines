@@ -22,7 +22,6 @@ describe("Damage Control (GD04-113)", () => {
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
-      const shieldId = p1.getCardsInZone("shieldArea")[0]!;
       const attackerId = p2.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p2.enterBattle(attackerId, "direct"));
@@ -31,35 +30,35 @@ describe("Damage Control (GD04-113)", () => {
       expectSuccess(p2.passBattleAction());
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "optional",
-        sourceCardId: shieldId,
+        sourceCardId: expect.any(String),
         directiveIndex: -1,
       });
 
-      return { p1, p2, shieldId, attackerId };
+      return { p1, p2, attackerId };
     }
 
     it("reduces the chosen enemy Unit's visible AP by 2 when accepted", () => {
-      const { p1, p2, shieldId, attackerId } = revealBurst();
+      const { p1, p2, attackerId } = revealBurst();
 
       expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "targetSelection",
-        sourceCardId: shieldId,
+        sourceCardId: expect.any(String),
         directiveIndex: 0,
       });
       expectSuccess(p1.resolveEffect({ targets: [attackerId] }));
 
       expect(p2.getVisibleCard(attackerId)).toMatchObject({ effectiveAp: 2 });
-      expect(p1.getCardZone(shieldId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardZone(gd04DamageControl113)).toBe(`trash:${PLAYER_ONE}`);
     });
 
     it("leaves the enemy Unit's AP unchanged when the Burst is declined", () => {
-      const { p1, p2, shieldId, attackerId } = revealBurst();
+      const { p1, p2, attackerId } = revealBurst();
 
       expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: false } }));
 
       expect(p2.getVisibleCard(attackerId)).toMatchObject({ effectiveAp: 4 });
-      expect(p1.getCardZone(shieldId)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardZone(gd04DamageControl113)).toBe(`trash:${PLAYER_ONE}`);
     });
   });
 

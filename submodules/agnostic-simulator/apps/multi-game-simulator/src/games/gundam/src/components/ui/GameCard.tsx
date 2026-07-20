@@ -22,6 +22,12 @@ export interface GameCardProps extends GameCardData {
   readonly style?: CSSProperties;
   readonly hideStatBadges?: boolean;
   readonly hideSupplementalBadges?: boolean;
+  /**
+   * Optional direct card action. Play-zone cards use this instead of
+   * depending on a click to bubble through layout-only wrappers, which keeps
+   * target selection reachable to both pointer and keyboard players.
+   */
+  readonly onClick?: (event: MouseEvent<HTMLDivElement>) => void;
 }
 
 export function GameCard({
@@ -32,6 +38,8 @@ export function GameCard({
   style,
   hideStatBadges,
   hideSupplementalBadges,
+  draggable,
+  onClick,
   ...card
 }: GameCardProps) {
   const resolvedFormat: ImageFormat =
@@ -128,8 +136,10 @@ export function GameCard({
           height={displayHeight}
           useContainerSize={useContainerSize}
           style={style}
+          onClick={onClick}
           hideStatBadges={hideStatBadges}
           hideSupplementalBadges={hideSupplementalBadges}
+          draggable={draggable}
         />
       )}
     </div>

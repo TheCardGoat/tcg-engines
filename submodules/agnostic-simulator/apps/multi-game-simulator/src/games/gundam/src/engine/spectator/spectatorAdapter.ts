@@ -1,5 +1,5 @@
-import { asPlayerId, type GameLogEntry } from "@tcg/gundam-engine";
-import { buildGundamInteractionView } from "@tcg/gundam-server-adapter";
+import { asPlayerId, stripPrivateFields, type GameLogEntry } from "@tcg/gundam-engine";
+import type { EngineInteractionView } from "@tcg/protocol";
 
 import type { EngineAdapter, EngineAdapterConfig } from "../../game/adapter.ts";
 import { type MoveName, type PartialInput, type SubmitOutcome } from "../../game/types.ts";
@@ -8,8 +8,8 @@ import { type MoveName, type PartialInput, type SubmitOutcome } from "../../game
  * Build an {@link EngineAdapter} for a spectator viewer.
  *
  * Spectator semantics:
- *   - `view`  reads through the engine's `role: "spectator"` filter
- *             so both players' hands and decks are fully revealed.
+ *   - `view`  reads through the engine's `role: "spectator"` filter so
+ *             neither player's private zones are revealed.
  *   - `submit` always returns a soft error — spectators can't act.
  *             The bot-vs-bot route relies on bots driving the runtime
  *             directly via `runtime.executeCommand`; the adapter's
@@ -44,22 +44,22 @@ export function createSpectatorEngineAdapter(config: EngineAdapterConfig): Engin
 
   return {
     viewerId,
+    viewerContext: {
+      role: "spectator",
+      playerId: null,
+      perspectivePlayerId: viewerId,
+    },
 
     view: () => runtime.getFilteredView({ role: "spectator" }),
 
-    interactionView: () => {
-      const state = runtime.getState();
-      const active = state.ctx.status.activePlayer;
-      const actorId =
-        typeof active === "string" && active.length > 0 ? active : perspectivePlayerId;
-      return buildGundamInteractionView({
-        actorId,
-        stateVersion: state.ctx._stateID,
-        state,
-        staticResources,
-        pendingChoice: runtime.getPendingChoice({ role: "spectator" }),
-      });
-    },
+    interactionView: (): EngineInteractionView => ({
+      protocolVersion: 1,
+      gameSlug: "gundam",
+      actorId: "spectator",
+      stateVersion: runtime.getState().ctx._stateID,
+      status: "idle",
+      actions: [],
+    }),
 
     describeMove: () => [{ kind: "confirm" }],
 
@@ -79,14 +79,13 @@ export function createSpectatorEngineAdapter(config: EngineAdapterConfig): Engin
     pendingChoice: () => runtime.getPendingChoice({ role: "spectator" }),
 
     moveHistory: () => runtime.getMoveHistory(),
-    revealsPrivateMoveLogFields: true,
 
     logEntries: () =>
       runtime.getGameLogHistory().filter((tagged) => isVisibleToViewer(tagged.entry)),
-    packetAnimations: () => [],
+    packetAnimations: () => runtime.getPacketAnimationHistory(),
     moveLogs: () =>
       runtime.getMoveLogHistory().map((log) => ({
-        log,
+        log: stripPrivateFields(log, null) ?? log,
         turnNumber:
           log.turnNumber ??
           runtime.getFilteredView({ role: "player", playerId: perspectivePlayerId }).status.turn,

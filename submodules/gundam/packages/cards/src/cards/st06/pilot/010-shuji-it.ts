@@ -129,7 +129,7 @@ export const st06ShujiIt010: PilotCard = {
               action: {
                 action: "lookAtTopDeck",
                 count: 1,
-                return: "chooseTop",
+                return: "topAndBottom",
               },
             },
           ],

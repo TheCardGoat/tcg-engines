@@ -6,11 +6,36 @@ import {
   activeResources,
   createMockPilot,
   createMockUnit,
+  expectFailure,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { st08Penelope006 } from "./006-penelope.ts";
 
 describe("Penelope (ST08-006)", () => {
+  describe("Printed Lv.7 and cost 6", () => {
+    it("cannot deploy below Lv.7", () => {
+      const engine = GundamTestEngine.create({
+        hand: [st08Penelope006],
+        resourceArea: activeResources(6),
+      });
+      expectFailure(
+        engine.asPlayer(PLAYER_ONE).deployUnit(st08Penelope006),
+        "INSUFFICIENT_RESOURCE_LEVEL",
+      );
+    });
+
+    it("deploys for six active Resources at Lv.7", () => {
+      const engine = GundamTestEngine.create({
+        hand: [st08Penelope006],
+        resourceArea: activeResources(7),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      expectSuccess(p1.deployUnit(st08Penelope006));
+      expect(p1.getCardsInZone("battleArea")).toHaveLength(1);
+      expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(6);
+    });
+  });
+
   describe("【During Pair】【Attack】【Once per Turn】If this Unit is attacking the enemy player, reveal 1 (Earth Federation) Unit card from your hand. Return it to the bottom of your deck. If you do, draw 2.", () => {
     it("returns an Earth Federation Unit from hand to the bottom of deck and draws 2 on direct attack", () => {
       const pilot = createMockPilot({ cost: 1, level: 1 });
@@ -93,6 +118,48 @@ describe("Penelope (ST08-006)", () => {
       expect(p1.getBoardView().pendingChoice).toBeUndefined();
       expect(p1.getHand()).toEqual(handBefore);
       expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore);
+    });
+
+    it("does not trigger on a direct attack while Penelope is unpaired", () => {
+      const revealUnit = createMockUnit({ traits: ["earth federation"] });
+      const engine = GundamTestEngine.create({
+        hand: [revealUnit],
+        play: [st08Penelope006],
+        deck: 3,
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const handBefore = p1.getHand();
+      expectSuccess(p1.enterBattle(p1.getCardsInZone("battleArea")[0]!, "direct"));
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+      expect(p1.getHand()).toEqual(handBefore);
+    });
+  });
+
+  describe("Link [Lane Aim]", () => {
+    it("can attack on its deploy turn after pairing with Lane Aim", () => {
+      const lane = createMockPilot({ name: "Lane Aim", cost: 0, level: 1 });
+      const engine = GundamTestEngine.create(
+        { hand: [st08Penelope006, lane], resourceArea: activeResources(7), deck: 5 },
+        { deck: 5 },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      expectSuccess(p1.deployUnit(st08Penelope006));
+      const unitId = p1.getCardsInZone("battleArea")[0]!;
+      expectSuccess(p1.assignPilot(lane, unitId));
+      expectSuccess(p1.enterBattle(unitId, "direct"));
+    });
+
+    it("cannot attack on its deploy turn after pairing with another Pilot", () => {
+      const pilot = createMockPilot({ name: "Wrong Pilot", cost: 0, level: 1 });
+      const engine = GundamTestEngine.create(
+        { hand: [st08Penelope006, pilot], resourceArea: activeResources(7), deck: 5 },
+        { deck: 5 },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      expectSuccess(p1.deployUnit(st08Penelope006));
+      const unitId = p1.getCardsInZone("battleArea")[0]!;
+      expectSuccess(p1.assignPilot(pilot, unitId));
+      expectFailure(p1.enterBattle(unitId, "direct"), "CANNOT_ATTACK");
     });
   });
 });

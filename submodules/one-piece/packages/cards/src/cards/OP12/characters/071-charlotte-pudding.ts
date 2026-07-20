@@ -45,8 +45,17 @@ export const op12CharlottePudding071: CharacterCard = {
             },
             revealFilters: [
               {
-                filter: "name",
-                value: "Sanji",
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "name",
+                    value: "Sanji",
+                  },
+                  {
+                    filter: "cardCategory",
+                    value: "event",
+                  },
+                ],
               },
             ],
             revealDestination: "hand",

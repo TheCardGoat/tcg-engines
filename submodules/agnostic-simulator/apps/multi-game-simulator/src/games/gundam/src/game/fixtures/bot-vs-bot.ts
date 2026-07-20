@@ -10,7 +10,7 @@ import {
   SAMPLE_DECKS,
   type SampleDeckId,
 } from "../../data/sample-decks/index.ts";
-import { attachStrategyBot } from "../bot/strategy-bot.ts";
+import { attachStrategyBot, type BotSpeed } from "../bot/strategy-bot.ts";
 import {
   createDevRuntime,
   DEV_PLAYER_ONE,
@@ -21,8 +21,10 @@ import {
 export type BotStrategyId = GundamAutomatedActionStrategyId;
 
 export const BOT_VS_BOT_STRATEGIES: Readonly<Record<BotStrategyId, CandidateStrategy>> = {
+  "combat-aware": getSafeGundamAutomatedActionStrategyOption("combat-aware").strategy,
   "greedy-legal": getSafeGundamAutomatedActionStrategyOption("greedy-legal").strategy,
   "pass-only": getSafeGundamAutomatedActionStrategyOption("pass-only").strategy,
+  strategic: getSafeGundamAutomatedActionStrategyOption("strategic").strategy,
   tempo: getSafeGundamAutomatedActionStrategyOption("tempo").strategy,
   "value-ranked": getSafeGundamAutomatedActionStrategyOption("value-ranked").strategy,
 };
@@ -32,6 +34,7 @@ export interface BotVsBotArgs {
   readonly p2DeckId?: SampleDeckId;
   readonly p1Strategy?: BotStrategyId;
   readonly p2Strategy?: BotStrategyId;
+  readonly botSpeed?: BotSpeed;
   readonly seed?: string;
 }
 
@@ -85,9 +88,11 @@ export function loadBotVsBot(args: BotVsBotArgs = {}): DevRuntime {
   // (not SSR) see both bots wired up.
   attachStrategyBot(dev.runtime, dev.staticResources, DEV_PLAYER_ONE, {
     strategy: BOT_VS_BOT_STRATEGIES[p1Strategy],
+    ...(args.botSpeed ? { speed: args.botSpeed } : {}),
   });
   const p2Bot = attachStrategyBot(dev.runtime, dev.staticResources, DEV_PLAYER_TWO, {
     strategy: BOT_VS_BOT_STRATEGIES[p2Strategy],
+    ...(args.botSpeed ? { speed: args.botSpeed } : {}),
   });
 
   // Surface the P2 handle on `dev.bot` for any UI control panel

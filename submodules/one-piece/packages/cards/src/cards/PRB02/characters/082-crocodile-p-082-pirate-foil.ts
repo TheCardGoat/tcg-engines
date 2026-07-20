@@ -57,10 +57,12 @@ export const prb02CrocodileP082PirateFoil082: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Cross Guild",
+                match: "includes",
               },
               {
                 condition: "leaderTrait",
                 trait: "Baroque Works",
+                match: "includes",
               },
             ],
           },

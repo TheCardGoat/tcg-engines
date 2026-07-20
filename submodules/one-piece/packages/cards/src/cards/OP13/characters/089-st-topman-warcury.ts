@@ -68,6 +68,47 @@ export const op13StTopmanWarcury089: CharacterCard = {
         ],
       },
     ],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "trash",
+            comparison: "gte",
+            value: 7,
+          },
+        ],
+        actions: [
+          {
+            action: "cannotBeRemoved",
+            target: {
+              player: "self",
+              zones: ["field"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            bySource: "opponentEffect",
+          },
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            keyword: "blocker",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
   },
   i18n: op13StTopmanWarcury089I18n,
 };

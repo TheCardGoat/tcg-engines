@@ -30,6 +30,66 @@ export interface DeckCard {
   quantity: number;
 }
 
+export type DeckMetadataFacetKind = "identity" | "individual" | "combination";
+
+export interface DeckMetadataFacetDefinition {
+  /** Stable, game-owned identifier such as `legend`, `leader`, or `color`. */
+  type: string;
+  /** Default vocabulary for API clients that do not provide localized copy. */
+  label: string;
+  pluralLabel: string;
+  kind: DeckMetadataFacetKind;
+  /** Lower values appear first in capability-driven clients. */
+  order: number;
+}
+
+export interface DeckMetadataMember {
+  cardId: string;
+  label: string;
+  colors: string[];
+  imageUrl?: string | null;
+  /** Small game-owned display facts; never interpreted by shared analytics. */
+  attributes?: Record<string, string | number | boolean>;
+}
+
+export interface DeckMetadataFacet {
+  type: string;
+  /** Deterministic within a game and projection version. */
+  key: string;
+  label: string;
+  colors: string[];
+  members?: DeckMetadataMember[];
+}
+
+/**
+ * Immutable, game-neutral deck facts captured when a match participant is
+ * seated. Daily analytics are disposable projections of this snapshot.
+ */
+export interface DeckMetadataProjection {
+  schemaVersion: 1;
+  projectionVersion: number;
+  game: PlayableGameSlug;
+  cardCount: number;
+  colors: string[];
+  facets: DeckMetadataFacet[];
+}
+
+export interface GameMetadataCapabilities {
+  colors: boolean;
+  deckLists: boolean;
+  archetypes: boolean;
+}
+
+export interface GameMetadataAdapter {
+  /** Bump whenever facet keys or their meaning changes. */
+  projectionVersion: number;
+  capabilities: GameMetadataCapabilities;
+  facets: readonly DeckMetadataFacetDefinition[];
+  projectDeck(deck: ReadonlyArray<DeckCard>): DeckMetadataProjection;
+  normalizeTemplate(deck: ReadonlyArray<DeckCard>): DeckCard[];
+  normalizeSynergy(deck: ReadonlyArray<DeckCard>): DeckCard[];
+}
+
 export interface DeckFormatRule {
   kind: string;
   passed: boolean;
@@ -54,6 +114,8 @@ export interface DeckFormatResult {
 export interface CardSummary {
   publicId: string;
   colors: readonly string[];
+  label?: string;
+  imageUrl?: string | null;
 }
 
 /**
@@ -119,6 +181,8 @@ export interface GameAdapter {
    * when the format id is unknown for this game.
    */
   validateDeckForFormat(formatId: string, deck: ReadonlyArray<DeckCard>): DeckFormatResult;
+  /** Game-owned projection into the shared metadata analytics contract. */
+  readonly metadata?: GameMetadataAdapter;
 
   // ── Server engine lifecycle (game-server only) ─────────────────────
   //

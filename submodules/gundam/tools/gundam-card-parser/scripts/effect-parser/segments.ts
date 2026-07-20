@@ -1,14 +1,17 @@
 import type {
   CardEffect,
   EffectActivation,
+  EffectCondition,
   EffectTiming,
   EffectType,
   KeywordEffectEntry,
+  CardType,
 } from "@tcg/gundam-types";
 import { TIMING_LABEL_MAP, parseHeader } from "./header.ts";
 import { parseSteps } from "./steps.ts";
 import { parseCondition } from "./conditions.ts";
 import { parseKeywordEffectName } from "./helpers.ts";
+import { parseTargetFilter } from "./target-filter.ts";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Printed-keyword detection
@@ -30,7 +33,7 @@ import { parseKeywordEffectName } from "./helpers.ts";
  * shared recognizer ensures the two stay in sync.
  */
 export function extractPrintedKeyword(segment: string): KeywordEffectEntry | null {
-  const m = segment.match(/^<([A-Za-z][\w\s-]*?)(?:\s+(\d+))?>\s*(?:\([^)]*\))?\s*$/);
+  const m = segment.match(/^<([A-Za-z][\w\s-]*?)(?:\s+(\d+))?>\s*(\((?:[^()]|\([^()]*\))*\))?\s*$/);
   if (!m) return null;
   const kw = parseKeywordEffectName(m[1]);
   if (!kw) return null;
@@ -55,6 +58,16 @@ export function splitIntoSegments(text: string): string[] {
 
   let current = "";
   for (const line of lines) {
+    // Command alternate-Pilot metadata is normalized separately. When it
+    // follows a real command effect, terminate that effect and omit the
+    // metadata line from CardEffect parsing. Standalone Pilot text remains
+    // parseable for the dedicated parser API case.
+    if (/^【Pilot】/i.test(line) && current.trim()) {
+      segments.push(current.trim());
+      current = "";
+      continue;
+    }
+
     // Skip pure-explanation lines: "(rest this unit to...)"
     if (
       /^\([^)]*(?:rest this|when this unit|at the end of your turn|this unit can't be blocked)[^)]*\)$/i.test(
@@ -94,15 +107,18 @@ function lineStartsNewSegment(line: string, currentSeg: string): boolean {
     const mapped = TIMING_LABEL_MAP[label];
     // Modifiers like OncePerTurn don't start a new segment
     if (mapped && mapped !== "OncePerTurn" && mapped !== "Pilot") return true;
+    if (mapped === "OncePerTurn" && /】\s*When\b/i.test(line)) return true;
     // Activate:Main/Action always starts new
     if (label.startsWith("activate")) return true;
   }
 
   // Starts with "While ..." or "<Keyword>" at line start → new constant segment
   if (/^while\b/i.test(line)) return true;
+  if (/^when\b/i.test(line)) return true;
   if (/^<[\w\s-]+?>/.test(line)) return true;
 
   // Starts with "During your opponent's turn, ..." → new constant segment
+  if (/^[Dd]uring your turn\b/.test(line)) return true;
   if (/^[Dd]uring your opponent'?s? turn\b/.test(line)) return true;
 
   return false;
@@ -128,7 +144,10 @@ function parseConstantEffect(segment: string, sourceText: string): CardEffect | 
     const condBodyM = segment.match(/^[Ww]hile ([^,]+),\s*(.*)/s);
     if (condBodyM) {
       const condText = condBodyM[1];
-      const effectBody = condBodyM[2].trim().replace(/\.$/, "");
+      const effectBody = condBodyM[2]
+        .trim()
+        .replace(/\s+\([^)]*\)\s*$/, "")
+        .replace(/\.$/, "");
 
       const cond = parseCondition(condText);
       const steps = parseSteps(effectBody);
@@ -196,6 +215,29 @@ function parseConstantEffect(segment: string, sourceText: string): CardEffect | 
   return null;
 }
 
+function extractLeadingTurnCondition(text: string): {
+  body: string;
+  condition?: EffectCondition;
+} {
+  const friendly = text.match(/^[Dd]uring your turn[,.]?\s*(.*)/s);
+  if (friendly) {
+    return {
+      body: friendly[1].trim(),
+      condition: { type: "isTurn", whose: "friendly" },
+    };
+  }
+
+  const opponent = text.match(/^[Dd]uring your opponent'?s? turn[,.]?\s*(.*)/s);
+  if (opponent) {
+    return {
+      body: opponent[1].trim(),
+      condition: { type: "isTurn", whose: "opponent" },
+    };
+  }
+
+  return { body: text };
+}
+
 function parseFreeStandingWhenEffect(segment: string): CardEffect | null {
   const whenM = segment.match(/^When\s+(.+?),\s*(.*)$/i);
   if (!whenM) return null;
@@ -217,28 +259,79 @@ function parseFreeStandingWhenEffect(segment: string): CardEffect | null {
   if (/this Unit deals battle damage to an enemy Unit/i.test(triggerText)) {
     timing = "onBattleDamageDealtToUnit";
   } else if (
+    /this Unit destroys? an enemy shield area card with battle damage/i.test(triggerText)
+  ) {
+    timing = "onShieldAreaCardDestroyByBattle";
+  } else if (
     /(?:this|one of your) Units? destroys? an enemy Unit with battle damage/i.test(triggerText)
   ) {
     timing = "onDestroyByBattle";
   } else if (/this Unit is rested by an effect/i.test(triggerText)) {
     timing = "onRestedByEffect";
+  } else if (/a friendly .*Unit links\b/i.test(triggerText)) {
+    timing = "whenLinked";
   } else if (/this Unit is blocked by an enemy/i.test(triggerText)) {
     timing = "onBlocked";
   } else if (/you pay .*for .*Unit'?s? effects?/i.test(triggerText)) {
     timing = "onUnitEffectCostPaid";
+  } else if (/you draw with an effect/i.test(triggerText)) {
+    timing = "onDrawByEffect";
   }
 
   if (!timing) return null;
+
+  const conditions: EffectCondition[] = [];
+  if (/^this Unit\b/i.test(triggerText)) conditions.push({ type: "eventCardIsSelf" });
+  if (timing === "onDrawByEffect" && /^you\b/i.test(triggerText)) {
+    conditions.push({ type: "eventPlayerIsSelf" });
+  }
+  if (timing === "whenLinked" && /a friendly .*Unit links\b/i.test(triggerText)) {
+    conditions.push({ type: "eventCardMatches", target: parseTargetFilter(triggerText) });
+  }
+
+  let directiveBody = body;
+  if (timing === "onDrawByEffect") {
+    const linkedColorM = directiveBody.match(
+      /^if this is a (blue|green|red|white|purple) Unit,\s*(.*)$/is,
+    );
+    if (linkedColorM) {
+      conditions.push({
+        type: "linkedUnitHasColor",
+        color: linkedColorM[1].toLowerCase() as "blue" | "green" | "red" | "white" | "purple",
+      });
+      directiveBody = linkedColorM[2].trim();
+    }
+  }
+  let directives = parseSteps(directiveBody);
+  if (timing === "whenLinked" && /a friendly .*Unit links\b/i.test(triggerText)) {
+    const sourceFilter = parseTargetFilter(triggerText);
+    directives = directives.map((directive) => {
+      if (!("action" in directive) || directive.action.action !== "grantKeyword") return directive;
+      return {
+        ...directive,
+        action: {
+          action: "grantKeywordEventCard" as const,
+          keyword: directive.action.keyword,
+          ...(directive.action.keywordValue !== undefined
+            ? { keywordValue: directive.action.keywordValue }
+            : {}),
+          duration: directive.action.duration,
+          sourceFilter,
+        },
+      };
+    });
+  }
 
   return {
     type: "triggered",
     activation: {
       timing: [timing],
+      ...(conditions.length > 0 ? { conditions } : {}),
       ...(triggerLower.includes("once per turn")
         ? { restrictions: [{ type: "oncePerTurn" as const }] }
         : {}),
     },
-    directives: parseSteps(body),
+    directives,
     sourceText: segment,
   };
 }
@@ -247,7 +340,11 @@ function parseFreeStandingWhenEffect(segment: string): CardEffect | null {
 // Main segment parser
 // ─────────────────────────────────────────────────────────────────────────────
 
-export function parseSegment(segment: string, _originalText: string): CardEffect | null {
+export function parseSegment(
+  segment: string,
+  _originalText: string,
+  cardType?: CardType,
+): CardEffect | null {
   const trimmed = segment.trim();
 
   // Ignore empty or dash
@@ -266,6 +363,16 @@ export function parseSegment(segment: string, _originalText: string): CardEffect
   // Keyword-block effect
   if (trimmed.startsWith("【")) {
     const header = parseHeader(trimmed);
+
+    // Printed activated-keyword reminder text is represented by
+    // card.keywordEffects; it must not also become an unparsed ability.
+    if (extractPrintedKeyword(header.rest)) return null;
+
+    const leadingTurn = extractLeadingTurnCondition(header.rest);
+    const activationConditions = [
+      ...header.conditions,
+      ...(leadingTurn.condition ? [leadingTurn.condition] : []),
+    ];
 
     // Pilot keyword only
     if (header.pilotName && header.timings.length === 0 && header.conditions.length === 0) {
@@ -291,12 +398,66 @@ export function parseSegment(segment: string, _originalText: string): CardEffect
     let effectType: EffectType = "triggered";
     if (isActivated) effectType = "activated";
     else if (isCommand) effectType = "command";
-    else if (header.conditions.length > 0 && header.timings.length === 0) effectType = "constant";
+    else if (activationConditions.length > 0 && header.timings.length === 0)
+      effectType = "constant";
+
+    let effectBody = leadingTurn.body;
+    if (effectType === "triggered") {
+      const leadingIf = effectBody.match(/^if\s+(.+?),\s*(.*)$/is);
+      if (leadingIf && !/^when\b/i.test(leadingIf[2])) {
+        const condition = parseCondition(leadingIf[1]);
+        if (cardType === "pilot" && condition?.type === "selfHasTrait") {
+          activationConditions.push({ type: "duringPair" }, condition);
+          effectBody = leadingIf[2].trim();
+        } else if (cardType === "pilot" && condition?.type === "and") {
+          const selfTrait = condition.conditions.find((entry) => entry.type === "selfHasTrait");
+          const turnGate = condition.conditions.find((entry) => entry.type === "isTurn");
+          if (selfTrait && turnGate?.type === "isTurn") {
+            activationConditions.push({ type: "duringPair" }, selfTrait);
+            effectBody = `If it is ${turnGate.whose === "friendly" ? "your" : "your opponent's"} turn, ${leadingIf[2].trim()}`;
+          }
+        } else if (
+          condition?.type === "isAttackingUnit" &&
+          header.timings.includes("attack") &&
+          /^choose\b/i.test(leadingIf[2])
+        ) {
+          activationConditions.push(condition);
+          effectBody = leadingIf[2].trim();
+        } else if (
+          condition?.type === "deployedFromZone" &&
+          header.timings.includes("deploy") &&
+          /^choose\b/i.test(leadingIf[2])
+        ) {
+          activationConditions.push(condition);
+          effectBody = leadingIf[2].trim();
+        } else if (
+          condition?.type === "selfStat" &&
+          header.timings.includes("attack") &&
+          /^choose\b/i.test(leadingIf[2])
+        ) {
+          activationConditions.push(condition);
+          effectBody = leadingIf[2].trim();
+        } else if (
+          condition?.type === "unitCount" &&
+          /^(?:choose\b|this gains?\b)/i.test(leadingIf[2])
+        ) {
+          activationConditions.push(condition);
+          effectBody = leadingIf[2].trim();
+        } else if (
+          condition?.type === "cardInZone" &&
+          header.timings.includes("whenLinked") &&
+          /^deal\b/i.test(leadingIf[2])
+        ) {
+          activationConditions.push(condition);
+          effectBody = leadingIf[2].trim();
+        }
+      }
+    }
 
     function buildActivation() {
       const activation: EffectActivation = {
         ...(header.timings.length > 0 ? { timing: header.timings } : {}),
-        ...(header.conditions.length > 0 ? { conditions: header.conditions } : {}),
+        ...(activationConditions.length > 0 ? { conditions: activationConditions } : {}),
         ...(header.oncePerTurn ? { restrictions: [{ type: "oncePerTurn" as const }] } : {}),
         ...(header.pilotQualifier
           ? {
@@ -331,6 +492,37 @@ export function parseSegment(segment: string, _originalText: string): CardEffect
       return activation;
     }
 
+    // A condition-only header can qualify an embedded trigger, for example:
+    // “【During Pair】During your turn, when this Unit destroys ...”. Preserve
+    // the header and leading-turn gates while letting the when-clause own the
+    // event timing and body.
+    if (header.timings.length === 0 && /^when\b/i.test(effectBody)) {
+      const triggered = parseFreeStandingWhenEffect(effectBody);
+      if (triggered) {
+        const headerActivation = buildActivation();
+        return {
+          ...triggered,
+          activation: {
+            ...triggered.activation,
+            conditions: [...activationConditions, ...(triggered.activation.conditions ?? [])],
+            ...(header.oncePerTurn
+              ? {
+                  restrictions: [
+                    ...(triggered.activation.restrictions ?? []),
+                    { type: "oncePerTurn" as const },
+                  ],
+                }
+              : {}),
+            ...(headerActivation.qualification
+              ? { qualification: headerActivation.qualification }
+              : {}),
+          },
+          ...(header.cost ? { cost: header.cost } : {}),
+          sourceText: trimmed,
+        };
+      }
+    }
+
     // "Burst: Activate this card's 【Main】." → short-circuit
     if (isBurst && /activate this card'?s?\s*【main】/i.test(header.rest)) {
       return {
@@ -342,12 +534,12 @@ export function parseSegment(segment: string, _originalText: string): CardEffect
       };
     }
 
-    const steps = parseSteps(header.rest);
+    const steps = parseSteps(effectBody);
 
     // "Once per Turn" triggered (no timing keyword, just OPT + trigger description)
     if (header.timings.length === 0 && header.oncePerTurn) {
-      const triggered = /^when\b/i.test(header.rest)
-        ? parseFreeStandingWhenEffect(header.rest)
+      const triggered = /^when\b/i.test(effectBody)
+        ? parseFreeStandingWhenEffect(effectBody)
         : null;
       if (triggered) {
         const headerActivation = buildActivation();
@@ -355,7 +547,7 @@ export function parseSegment(segment: string, _originalText: string): CardEffect
           ...triggered,
           activation: {
             ...triggered.activation,
-            conditions: [...header.conditions, ...(triggered.activation.conditions ?? [])],
+            conditions: [...activationConditions, ...(triggered.activation.conditions ?? [])],
             restrictions: [
               ...(triggered.activation.restrictions ?? []),
               { type: "oncePerTurn" as const },

@@ -40,6 +40,12 @@ export function reduceLiveGatewayMessage(
           ...view,
           state,
           version: message.stateVersion ?? view.version,
+          animationPackets: appendAnimationPackets(
+            view.animationPackets,
+            "animations" in message ? message.animations : [],
+            message.stateVersion ?? view.version,
+            turnNumberOf(state),
+          ),
           ...(message.interactionView ? { interactionView: message.interactionView } : {}),
         },
       };
@@ -68,6 +74,34 @@ export function reduceLiveGatewayMessage(
     default:
       return { type: "ignore" };
   }
+}
+
+function appendAnimationPackets(
+  existing: LiveMatchView["animationPackets"],
+  packets: readonly {
+    readonly id: string;
+    readonly kind: string;
+    readonly durationMs?: number;
+    readonly payload: unknown;
+  }[],
+  stateVersion: number,
+  turnNumber: number,
+): LiveMatchView["animationPackets"] {
+  if (packets.length === 0) return existing;
+  const ids = new Set(existing.map(({ packet }) => packet.id));
+  const additions = packets
+    .filter((packet) => !ids.has(packet.id))
+    .map((packet) => ({ packet, stateVersion, turnNumber }));
+  return [...existing, ...additions].slice(-256);
+}
+
+function turnNumberOf(state: Record<string, unknown>): number {
+  const ctx = state.ctx;
+  if (!ctx || typeof ctx !== "object") return 0;
+  const status = (ctx as { status?: unknown }).status;
+  if (!status || typeof status !== "object") return 0;
+  const turn = (status as { turn?: unknown }).turn;
+  return typeof turn === "number" ? turn : 0;
 }
 
 /**

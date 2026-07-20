@@ -1,6 +1,5 @@
 import {
   asPlayerId,
-  makeZoneKey,
   stripPrivateFields,
   type GameLogEntry,
   type GundamMoveLog,
@@ -50,8 +49,17 @@ export interface TurnTaggedPacketAnimation {
   readonly turnNumber: number;
 }
 
+export interface SimulatorViewerContext {
+  readonly role: "player" | "spectator";
+  /** Player identity authorized to receive private information. */
+  readonly playerId: ViewerId | null;
+  /** Seat used only to orient the board and name its two sides. */
+  readonly perspectivePlayerId: ViewerId;
+}
+
 export interface EngineAdapter {
   readonly viewerId: ViewerId;
+  readonly viewerContext: SimulatorViewerContext;
   readonly view: () => BoardProjection;
   readonly interactionView: () => EngineInteractionView;
   readonly describeMove: (
@@ -68,11 +76,6 @@ export interface EngineAdapter {
   readonly undo: () => SubmitOutcome | null;
   readonly pendingChoice: () => GundamPendingChoice | undefined;
   readonly moveHistory: () => readonly MoveHistoryEntry[];
-  /**
-   * True for views that intentionally receive unstripped structured move logs
-   * and may reveal private-field payloads, such as bot-vs-bot spectators.
-   */
-  readonly revealsPrivateMoveLogFields?: boolean;
   /**
    * Running list of game-log entries accumulated from every successful
    * `executeCommand` / `undo`, filtered by viewer visibility. Each entry
@@ -119,7 +122,6 @@ export function createEngineAdapter({
   // / undo is enough — the engine itself holds no long-lived logger we can
   // subscribe to.
   const logTrail: TurnTaggedLogEntry[] = [];
-  const packetAnimationTrail: TurnTaggedPacketAnimation[] = [];
 
   const captureLog = (entries: readonly GameLogEntry[]) => {
     if (entries.length === 0) return;
@@ -129,59 +131,19 @@ export function createEngineAdapter({
     }
   };
 
-  const capturePacketAnimations = (animations: readonly PacketAnimation[], stateID: number) => {
-    if (animations.length === 0) return;
-    const turnNumber = runtime.getFilteredView({ role: "player", playerId }).status.turn;
-    for (const animation of animations) {
-      packetAnimationTrail.push({ animation, stateID, turnNumber });
-    }
-  };
-
   const isVisibleToViewer = (entry: GameLogEntry): boolean => {
     const { visibleTo } = entry;
     if (visibleTo === undefined || visibleTo === "all") return true;
     return visibleTo.includes(playerId);
   };
 
-  const filterPacketAnimationForViewer = (
-    entry: TurnTaggedPacketAnimation,
-  ): TurnTaggedPacketAnimation | null => {
-    const { animation } = entry;
-    if (animation.data.kind !== "cardMove") {
-      return entry;
-    }
-    const { cardId, fromZone, toZone } = animation.data;
-    const view = runtime.getFilteredView({ role: "player", playerId });
-    const hiddenCardId = `__gundam_hidden_${entry.stateID}_${animation.id}`;
-    const ownerId = staticResources.cardsMaps.instances.get(cardId)?.ownerID;
-    const zoneKeysFor = (zone: string): readonly string[] =>
-      ownerId && zone ? [makeZoneKey({ zone, playerId: asPlayerId(ownerId) }), zone] : [zone];
-    const sourceZones = zoneKeysFor(fromZone).map((zoneKey) => view.zones.zones[zoneKey]);
-    const destinationZones = zoneKeysFor(toZone).map((zoneKey) => view.zones.zones[zoneKey]);
-    const zoneContainsVisibleCard = (zone: (typeof sourceZones)[number]): boolean =>
-      zone?.cards.some((card) => card.instanceId === cardId && card.definition !== null) ?? false;
-    const canSeeSource =
-      fromZone === "" ? false : sourceZones.some((zone) => zoneContainsVisibleCard(zone));
-    const canSeeDestination = destinationZones.some((zone) => zoneContainsVisibleCard(zone));
-
-    if (canSeeSource || canSeeDestination) {
-      return entry;
-    }
-
-    return {
-      ...entry,
-      animation: {
-        ...animation,
-        data: {
-          ...animation.data,
-          cardId: hiddenCardId,
-        },
-      },
-    };
-  };
-
   return {
     viewerId,
+    viewerContext: {
+      role: "player",
+      playerId: viewerId,
+      perspectivePlayerId: viewerId,
+    },
 
     view: () => runtime.getFilteredView({ role: "player", playerId }),
 
@@ -231,7 +193,6 @@ export function createEngineAdapter({
         // current ID. Writing `result.stateID` back would clobber that
         // and the very next submit would fail STALE_STATE.
         captureLog(result.logEntries);
-        capturePacketAnimations(result.animations, result.stateID);
         // Return the LIVE stateID, not `result.stateID`. If a re-entrant
         // listener advanced the runtime during the submit, the caller
         // would otherwise get a value that's already stale the moment
@@ -250,7 +211,6 @@ export function createEngineAdapter({
         // Same rationale as in `submit`: let `subscribe` refresh
         // `lastStateId` from the runtime's live stateID.
         captureLog(result.logEntries);
-        capturePacketAnimations(result.animations, result.stateID);
         return { ok: true, stateId: lastStateId };
       }
       return { ok: false, errorCode: result.errorCode, error: result.error };
@@ -261,8 +221,7 @@ export function createEngineAdapter({
     moveHistory: () => runtime.getMoveHistory(),
 
     logEntries: () => logTrail.filter((t) => isVisibleToViewer(t.entry)),
-    packetAnimations: () =>
-      packetAnimationTrail.flatMap((entry) => filterPacketAnimationForViewer(entry) ?? []),
+    packetAnimations: () => runtime.getPacketAnimationHistory(),
     moveLogs: () =>
       runtime.getMoveLogHistory().map((log) => ({
         log: stripPrivateFields(log, String(viewerId)) ?? log,

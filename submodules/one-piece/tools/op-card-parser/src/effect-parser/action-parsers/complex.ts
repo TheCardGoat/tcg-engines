@@ -193,16 +193,20 @@ export function parseSelectAction(text: string): Action[] | null {
     );
   if (selectGainPowerOnlyMatch) {
     const keyword = KEYWORD_BRACKET_TO_TYPE[selectGainPowerOnlyMatch[4]!.toLowerCase()];
-    const actions: Action[] = [];
-    if (keyword) {
-      actions.push({
-        action: "cannotActivate",
-        target: { player: "opponent", zones: ["character"], count: { amount: "all" } },
-        keyword,
+    const amount = parseInt(selectGainPowerOnlyMatch[1]!, 10);
+    const upTo = /^select\s+up\s+to/i.test(trimmed);
+    const selectionTarget = parseTarget(
+      `${upTo ? "up to " : ""}${amount} of ${selectGainPowerOnlyMatch[2]!} ${selectGainPowerOnlyMatch[3]!}`,
+    );
+    if (keyword !== "blocker" || !selectionTarget) return null;
+    return [
+      {
+        action: "grantKeyword",
+        target: selectionTarget,
+        keyword: "unblockable",
         duration: "thisTurn",
-      });
-    }
-    return actions.length > 0 ? actions : null;
+      },
+    ];
   }
 
   // "Select up to N of your opponent's Characters. This Character's base power becomes the same as the selected Character's power during this turn."
@@ -539,6 +543,7 @@ export function parseOpponentAction(text: string): Action | null {
         zones: ["costArea" as Zone],
         count: { amount: parseInt(oppRestDonMatch[1]!, 10) },
         filters: [{ filter: "state", value: "active" as const }],
+        chosenBy: "opponent",
       },
     } as RestAction;
   }

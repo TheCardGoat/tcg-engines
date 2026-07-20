@@ -628,13 +628,20 @@ describe("real card integration — batch 8", () => {
 
   test("give DON!! cards: leader and character each", () => {
     const result = parseActions("Give your Leader and 1 Character up to 1 rested DON!! card each.");
-    expect(result.parsed).toHaveLength(1);
-    expect(result.parsed[0]).toMatchObject({
-      action: "giveDon",
-      target: { player: "self", zones: ["leader", "character"], count: { amount: 1 } },
-      count: { amount: 1, upTo: true },
-      donState: "rested",
-    });
+    expect(result.parsed).toEqual([
+      {
+        action: "giveDon",
+        target: { player: "self", zones: ["leader"], count: { amount: 1 } },
+        count: { amount: 1, upTo: true },
+        donState: "rested",
+      },
+      {
+        action: "giveDon",
+        target: { player: "self", zones: ["character"], count: { amount: 1 } },
+        count: { amount: 1, upTo: true },
+        donState: "rested",
+      },
+    ]);
   });
 
   test("redistribute DON!! cards", () => {

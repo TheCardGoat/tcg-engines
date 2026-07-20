@@ -16,6 +16,11 @@ import type {
   GameAdapter,
 } from "@tcg/shared/game-adapter";
 import {
+  buildColorMetadataFacets,
+  normalizeMetadataColors,
+  sortMetadataFacets,
+} from "@tcg/shared/game-adapter";
+import {
   cyberpunkCreateServerEngine,
   cyberpunkExtractCardsMapsFromSnapshot,
   cyberpunkRestoreEngine,
@@ -78,6 +83,8 @@ export const cyberpunkServerAdapter: GameAdapter = {
       // Cyberpunk's "color" is a single string; expose as a one-element array
       // to match the cross-game CardSummary contract.
       colors: card.color ? [card.color] : [],
+      label: card.displayName,
+      imageUrl: card.imageUrl,
     };
   },
 
@@ -169,6 +176,100 @@ export const cyberpunkServerAdapter: GameAdapter = {
       valid: unknownEntries.length === 0 && totalCount > 0 && deckValidation.isValid,
       rules,
     };
+  },
+
+  metadata: {
+    projectionVersion: 1,
+    capabilities: { colors: true, deckLists: true, archetypes: true },
+    facets: [
+      {
+        type: "legend-lineup",
+        label: "Legend lineup",
+        pluralLabel: "Legend lineups",
+        kind: "combination",
+        order: 10,
+      },
+      { type: "legend", label: "Legend", pluralLabel: "Legends", kind: "individual", order: 20 },
+      { type: "color", label: "Color", pluralLabel: "Colors", kind: "individual", order: 30 },
+      {
+        type: "color-combination",
+        label: "Color combination",
+        pluralLabel: "Color combinations",
+        kind: "combination",
+        order: 40,
+      },
+    ],
+    projectDeck(deck) {
+      const members = deck
+        .flatMap((entry) => {
+          const card = cyberpunkCardsByPublicId.get(entry.cardId);
+          if (!card || card.type !== "legend") return [];
+          const cardId = getCyberpunkCanonicalForCardId(entry.cardId) ?? entry.cardId;
+          return Array.from({ length: Math.max(0, Math.floor(entry.quantity)) }, () => ({
+            cardId,
+            label: card.displayName,
+            colors: card.color ? [card.color] : [],
+            imageUrl: card.imageUrl,
+            attributes: { ram: card.ram ?? 0 },
+          }));
+        })
+        .sort((left, right) => left.cardId.localeCompare(right.cardId));
+      const colors = normalizeMetadataColors(members.flatMap((member) => member.colors));
+      const individualLegends = [
+        ...new Map(members.map((member) => [member.cardId, member])).values(),
+      ];
+      const lineup =
+        members.length === 0
+          ? []
+          : [
+              {
+                type: "legend-lineup",
+                key: members.map((member) => member.cardId).join("+"),
+                label: members.map((member) => member.label).join(" / "),
+                colors,
+                members,
+              },
+            ];
+      return {
+        schemaVersion: 1,
+        projectionVersion: 1,
+        game: "cyberpunk",
+        cardCount: deck.reduce((sum, entry) => sum + Math.max(0, Math.floor(entry.quantity)), 0),
+        colors,
+        facets: sortMetadataFacets([
+          ...lineup,
+          ...individualLegends.map((member) => ({
+            type: "legend",
+            key: member.cardId,
+            label: member.label,
+            colors: member.colors,
+            members: [member],
+          })),
+          ...buildColorMetadataFacets(colors),
+        ]),
+      };
+    },
+    normalizeTemplate(deck) {
+      return deck
+        .flatMap((entry) => {
+          const card = cyberpunkCardsByPublicId.get(entry.cardId);
+          if (!card) return [];
+          if (card.type === "legend") return [{ ...entry, quantity: 1 }];
+          if (entry.quantity >= 4) return [{ ...entry, quantity: 4 }];
+          if (entry.quantity >= 2) return [{ ...entry, quantity: 2 }];
+          return [];
+        })
+        .sort((left, right) => left.cardId.localeCompare(right.cardId));
+    },
+    normalizeSynergy(deck) {
+      return deck
+        .filter((entry) => {
+          const card = cyberpunkCardsByPublicId.get(entry.cardId);
+          return card?.type !== "legend" && entry.quantity > 1;
+        })
+        .map((entry) => ({ ...entry, quantity: 1 }))
+        .sort((left, right) => left.cardId.localeCompare(right.cardId));
+    },
   },
 
   createServerEngine: cyberpunkCreateServerEngine,

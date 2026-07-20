@@ -45,6 +45,7 @@ export const op13York094: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Celestial Dragons",
+                  match: "includes",
                 },
               ],
             },

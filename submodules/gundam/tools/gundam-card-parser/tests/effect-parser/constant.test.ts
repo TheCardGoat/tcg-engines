@@ -118,4 +118,26 @@ describe("During your turn / opponent's turn", () => {
     expect(effect.type).toBe("constant");
     expect(effect.activation.conditions).toMatchObject([{ type: "isTurn", whose: "opponent" }]);
   });
+
+  test("During Pair followed by During your turn preserves both conditions", () => {
+    const [effect] = parseEffect("【During Pair】During your turn, all your Units get AP+1.");
+
+    expect(effect.type).toBe("constant");
+    expect(effect.activation.conditions).toEqual([
+      { type: "duringPair" },
+      { type: "isTurn", whose: "friendly" },
+    ]);
+    expect(effect.directives[0]).toMatchObject({
+      action: { action: "statModifier", stat: "ap", amount: 1 },
+    });
+  });
+
+  test("a bracketed timing followed by During your opponent's turn preserves the turn gate", () => {
+    const [effect] = parseEffect("【Attack】During your opponent's turn, draw 1.");
+
+    expect(effect.activation).toMatchObject({
+      timing: ["attack"],
+      conditions: [{ type: "isTurn", whose: "opponent" }],
+    });
+  });
 });

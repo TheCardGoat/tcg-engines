@@ -42,5 +42,65 @@ export const prb02DraculeMihawkP081PirateFoil081: CharacterCard = {
   ],
   effect:
     '[Activate:Main] You may return this Character to the owner\'s hand: If you have 3 or more blue "Cross Guild" type Characters, play up to 1 "Cross Guild" type Character card with a cost of 5 from your hand.',
+  effects: {
+    effects: [
+      {
+        trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnThisToHand",
+          },
+        ],
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "eq",
+                value: 5,
+              },
+              {
+                filter: "trait",
+                value: "Cross Guild",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "character",
+              comparison: "gte",
+              value: 3,
+              filters: [
+                {
+                  filter: "color",
+                  value: "blue",
+                },
+                {
+                  filter: "trait",
+                  value: "Cross Guild",
+                  match: "includes",
+                },
+              ],
+            },
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
   i18n: prb02DraculeMihawkP081PirateFoil081I18n,
 };

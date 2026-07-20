@@ -61,6 +61,7 @@ export const op13Tom069: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

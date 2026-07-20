@@ -173,6 +173,7 @@ export function useHandCommand({
     }
     inspect({
       imageUrl: selectedCard.imageUrl,
+      face: "public",
       name: selectedCard.name,
       zone: "p-hand",
     });

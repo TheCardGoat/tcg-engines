@@ -1,4 +1,4 @@
-import type { Condition, EffectTrigger, Zone } from "@tcg/op-types";
+import type { Condition, EffectTrigger, OPColor, Zone } from "@tcg/op-types";
 import type { InlineConditionResult } from "./types.ts";
 import { parseComparison } from "./helpers.ts";
 import { parseTarget } from "./target-parser.ts";
@@ -464,9 +464,9 @@ function parseSingleCondition(text: string): Condition | null {
     };
   }
 
-  // Zone count (typed characters): you have N or more/less "X" type Characters
+  // Zone count (typed characters): you have N or more/less [color] "X" type Characters
   m =
-    /^you\s+have\s+(\d+)\s+or\s+(less|more)\s+[""[{]([^""\]}]+)[""\]}]\s+type\s+Characters$/i.exec(
+    /^you\s+have\s+(\d+)\s+or\s+(less|more)\s+(?:(red|green|blue|purple|black|yellow)\s+)?[""[{]([^""\]}]+)[""\]}]\s+type\s+Characters$/i.exec(
       t,
     );
   if (m) {
@@ -476,7 +476,10 @@ function parseSingleCondition(text: string): Condition | null {
       zone: "character",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
-      filters: [{ filter: "trait", value: m[3]! }],
+      filters: [
+        ...(m[3] ? [{ filter: "color", value: m[3].toLowerCase() as OPColor } as const] : []),
+        { filter: "trait", value: m[4]!, match: "includes" },
+      ],
     };
   }
 
@@ -738,7 +741,7 @@ function parseSingleCondition(text: string): Condition | null {
 
   // Has card: you/your opponent have/has a Character with a cost of N (or more/less)
   m =
-    /^(you|your\s+opponent)\s+ha(?:ve|s)\s+a\s+Character\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?$/i.exec(
+    /^(you|your\s+opponent)\s+ha(?:ve|s)\s+a\s+Character\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?(?:\s+on\s+your\s+field)?$/i.exec(
       t,
     );
   if (m) {

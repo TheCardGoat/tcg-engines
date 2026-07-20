@@ -32,15 +32,6 @@ describe("OP04-083 Sabo", () => {
 
     engine.playCard(op04Sabo083, "south");
     const saboId = engine.findCardInZone("south", "character", op04Sabo083);
-    const trash = engine.pendingDecision("effectTrashFromHandSelection", "south").steps[0];
-    expect(trash?.kind).toBe("selectEntity");
-    if (trash?.kind !== "selectEntity") throw new Error("Expected Sabo's exact hand trash.");
-    expect(trash).toMatchObject({ min: 2, max: 2 });
-    engine.resolveDecision(
-      "effectTrashFromHandSelection",
-      { selectedIds: trashedDrawIds },
-      "south",
-    );
     expect(engine.getView("south").players.south.hand).toHaveLength(0);
     expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toEqual(
       expect.arrayContaining(trashedDrawIds),

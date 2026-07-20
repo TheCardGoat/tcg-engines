@@ -375,6 +375,41 @@ describe("parseActions", () => {
       expect(actions.parsed[1]).toMatchObject({ action: "giveDon" });
       expect(actions.unparsed).toBe("");
     });
+
+    test("OP13-066 Silvers Rayleigh: preserves the conditional and delayed clauses", () => {
+      const parsed = parseEffectText(
+        "[On Play] If you have any DON!! cards given, rest up to 1 of your opponent's Characters with a cost of 5 or less. Then, add up to 1 DON!! card from your DON!! deck and set it as active at the end of this turn.",
+      );
+      expect(parsed.segments).toHaveLength(1);
+      const actions = parseActions(parsed.segments[0]!.rawActionText);
+
+      expect(actions).toEqual({
+        parsed: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 5 }],
+            },
+            condition: { condition: "donGiven", player: "self" },
+          },
+          {
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "addDon",
+                count: { amount: 1, upTo: true },
+                state: "active",
+              },
+            ],
+          },
+        ],
+        unparsed: "",
+      });
+    });
   });
 
   describe("clause splitting", () => {

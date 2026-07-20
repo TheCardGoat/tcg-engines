@@ -103,17 +103,25 @@ export const st03Falmel016: BaseCard = {
           },
         },
         {
-          action: {
-            action: "deployToken",
-            token: {
-              name: "Char's Zaku Ⅱ",
-              traits: ["zeon"],
-              ap: 3,
-              hp: 1,
-              deployState: "rested",
-              printedCardNumber: "T-006",
-            },
+          condition: {
+            type: "isTurn",
+            whose: "friendly",
           },
+          thenDirectives: [
+            {
+              action: {
+                action: "deployToken",
+                token: {
+                  name: "Char's Zaku Ⅱ",
+                  traits: ["zeon"],
+                  ap: 3,
+                  hp: 1,
+                  deployState: "rested",
+                  printedCardNumber: "T-006",
+                },
+              },
+            },
+          ],
         },
       ],
       sourceText:

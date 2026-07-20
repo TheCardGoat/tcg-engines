@@ -64,6 +64,7 @@ export const op14eb04Baby5072: CharacterCard = {
             position: "top",
           },
         ],
+        optional: true,
       },
     ],
   },

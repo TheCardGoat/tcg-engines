@@ -39,6 +39,7 @@ describe("ResourceAreaRow · mobile zone strip", () => {
         resourceArea={[]}
         discard={opts.discard ?? []}
         availableResources={2}
+        utilityColumn={<div data-testid="utility-column">EX base</div>}
       />,
     );
   }
@@ -55,6 +56,13 @@ describe("ResourceAreaRow · mobile zone strip", () => {
     expect(screen.getByText("DEPLOY")).not.toBeNull();
     expect(screen.getByText("SCRAP")).not.toBeNull();
     expect(screen.getByText("RES")).not.toBeNull();
+    const strip = screen.getByText("DEPLOY").closest("div.grid-cols-3");
+    expect(strip).not.toBeNull();
+    expect(strip?.querySelectorAll(":scope > button")).toHaveLength(3);
+    for (const chip of strip?.querySelectorAll(":scope > button") ?? []) {
+      expect(chip.className).toContain("min-h-[44px]");
+    }
+    expect(screen.getByTestId("utility-column").closest("[data-zone-group]")).not.toBeNull();
     // The trash sheet shouldn't be in the DOM until the chip is clicked.
     expect(screen.queryByText(/SCRAP\s+·\s+\d+/)).toBeNull();
   });

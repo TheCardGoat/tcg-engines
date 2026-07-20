@@ -70,11 +70,13 @@ describe("compound actions with draw", () => {
       { action: "draw", player: "self", amount: 2 },
       {
         action: "giveDon",
-        target: {
-          player: "self",
-          zones: ["leader", "character"],
-          count: { amount: 1 },
-        },
+        target: { player: "self", zones: ["leader"], count: { amount: 1 } },
+        count: { amount: 2, upTo: true },
+        donState: "rested",
+      },
+      {
+        action: "giveDon",
+        target: { player: "self", zones: ["character"], count: { amount: 1 } },
         count: { amount: 2, upTo: true },
         donState: "rested",
       },
@@ -892,5 +894,33 @@ describe("parseActions — draw with trailing condition", () => {
         },
       ],
     });
+  });
+
+  test("OP13-046 Vista payment accepts a trait that includes Whitebeard Pirates", () => {
+    const result = parseActions(
+      'trash 1 card with a type including "Whitebeard Pirates" from your hand',
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "trashFromHand",
+        player: "self",
+        amount: 1,
+        filters: [{ filter: "trait", value: "Whitebeard Pirates", match: "includes" }],
+      },
+    ]);
+  });
+
+  test("OP13-046 Vista shares once-per-turn identity across replacement branches", () => {
+    const effects = buildCardEffects(
+      "[Double Attack]\n[Once Per Turn] If this Character would be K.O.'d or would be removed from the field by your opponent's effect, you may trash 1 card with a type including \"Whitebeard Pirates\" from your hand instead.",
+    );
+
+    expect(effects?.replacementEffects).toHaveLength(2);
+    expect(effects?.replacementEffects?.map((effect) => effect.oncePerTurnKey)).toEqual([
+      "printed-replacement-0",
+      "printed-replacement-0",
+    ]);
   });
 });

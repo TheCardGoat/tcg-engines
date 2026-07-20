@@ -25,10 +25,10 @@ export function splitClauses(body: string): string[] {
   // inter-directive dependency), and plain ". " sentence boundaries
   // (followed by an uppercase word).
   //
-  // Lookahead-based split: the "If you do" prefix stays attached to the
-  // start of its clause; "Then," is swallowed by a matched-group split.
+  // Lookahead-based split: connective prefixes stay attached to the start of
+  // their clauses so parseSteps can distinguish an atomic “Then, discard”.
   const parts = protected_
-    .split(/\.\s*Then,?\s+|\.\s+(?=If you do,?\s+)|\.\s+(?=[A-Z])/g)
+    .split(/\.\s+(?=Then,?\s+)|\.\s+(?=If you do,?\s+)|\.\s+(?=[A-Z])/g)
     .map((s) => s.trim())
     .filter(Boolean);
 
@@ -178,6 +178,7 @@ export function parseSingleAction(clause: string): EffectAction | undefined {
     if (deployHandFilters.length > 0) tf.attributeFilters = deployHandFilters;
     return { action: "deploy", target: tf };
   }
+  if (/^Deploy it\.?$/i.test(t)) return { action: "deploy", target: { owner: "any" } };
 
   // ── Pair pilot from hand ──
   const pairM = t.match(/pair (\d+) (?:\(([^)]+)\) )?Pilot card from your hand with this Unit/i);
@@ -220,17 +221,92 @@ export function parseSingleAction(clause: string): EffectAction | undefined {
     tf.attributeFilters = addTrashFilters;
     return { action: "addFromTrash", target: tf };
   }
+  if (/^add it to your hand\.?$/i.test(t)) {
+    return {
+      action: "addFromTrash",
+      target: { owner: "friendly", zone: "trash" },
+    };
+  }
+
+  const returnSelfDeckM = t.match(
+    /return this (?:Unit|card) to the (top|bottom) of its owner['’]s deck/i,
+  );
+  if (returnSelfDeckM)
+    return {
+      action: "returnToDeck",
+      position: returnSelfDeckM[1].toLowerCase() as "top" | "bottom",
+      target: { owner: "self", cardType: "unit" },
+    };
+
+  // Reveal a hand card, then route that exact card to the bottom of deck.
+  const revealReturnBottomM = t.match(
+    /reveal (\d+) \(([^)]+)\) ([\w ]+?) card from your hand\.\s*return it to the bottom of your deck/i,
+  );
+  if (revealReturnBottomM) {
+    const cardType = parseCardType(revealReturnBottomM[3]);
+    return {
+      action: "returnToDeck",
+      position: "bottom",
+      target: {
+        owner: "friendly",
+        zone: "hand",
+        count: parseInt(revealReturnBottomM[1]),
+        ...(cardType ? { cardType } : {}),
+        attributeFilters: [
+          {
+            attribute: "trait",
+            comparison: "includes",
+            value: revealReturnBottomM[2].toLowerCase(),
+          },
+        ],
+      },
+    };
+  }
 
   // ── Look at top deck ──
-  const lookM = t.match(/[Ll]ook at the top (\d+) cards? of your deck/);
+  const lookM = t.match(/[Ll]ook at the top (?:(\d+) cards?|card) of your deck/);
   if (lookM) {
-    const count = parseInt(lookM[1]);
+    const count = lookM[1] ? parseInt(lookM[1]) : 1;
     // Check for tutor clause: "You may reveal 1 (Trait) Unit/Pilot card among them and add it to your hand"
     const tutorM = t.match(
       /reveal (\d+) (?:\(([^)]+)\)\/?\(([^)]+)\) )?([\w ]+?) card.*?add it to your hand/i,
     );
     let tutorFilter: TargetFilter | undefined;
-    if (tutorM) {
+    const singleTraitTutorM = t.match(
+      /reveal (\d+) \(([^)]+)\) (Unit card\/Pilot card|[\w ]+? card).*?add it to your hand/i,
+    );
+    const conditionalTopCardM = t.match(
+      /if it is a \(([^)]+)\) card, you may reveal it and add it to your hand/i,
+    );
+    if (singleTraitTutorM) {
+      tutorFilter = {
+        owner: "friendly",
+        count: parseInt(singleTraitTutorM[1]),
+        cardType: /unit card\/pilot card/i.test(singleTraitTutorM[3])
+          ? ["unit", "pilot"]
+          : (parseCardType(singleTraitTutorM[3]) ?? undefined),
+        attributeFilters: [
+          {
+            attribute: "trait",
+            comparison: "includes",
+            value: singleTraitTutorM[2].toLowerCase(),
+          },
+        ],
+      };
+    } else if (conditionalTopCardM) {
+      tutorFilter = {
+        owner: "friendly",
+        count: 1,
+        attributeFilters: [
+          {
+            attribute: "trait",
+            comparison: "includes",
+            value: conditionalTopCardM[1].toLowerCase(),
+          },
+        ],
+      };
+    }
+    if (!tutorFilter && tutorM) {
       tutorFilter = { owner: "friendly", count: parseInt(tutorM[1]) };
       // traits from the reveal clause
       const traits = [tutorM[2], tutorM[3]].filter(Boolean);
@@ -238,17 +314,32 @@ export function parseSingleAction(clause: string): EffectAction | undefined {
         tutorFilter.attributeFilters = [
           { attribute: "trait", comparison: "includes", value: traits[0].toLowerCase() },
         ];
+      else if (traits.length >= 2)
+        tutorFilter.attributeFilters = [
+          {
+            attribute: "or",
+            filters: traits.map((trait) => ({
+              attribute: "trait" as const,
+              comparison: "includes" as const,
+              value: trait.toLowerCase(),
+            })),
+          },
+        ];
       const ct = parseCardType(tutorM[4]);
       if (ct) tutorFilter.cardType = ct;
     }
 
-    const returnStr = /return 1 to the top and 1 to the bottom/i.test(t)
+    const returnStr = /return (?:1 to the top and 1 to the bottom|it to the top or bottom)/i.test(t)
       ? "topAndBottom"
       : "chooseTop";
     return {
       action: "lookAtTopDeck",
       count,
       return: returnStr,
+      ...(/randomly to the bottom/i.test(t) ? { randomizeRemainingToBottom: true } : {}),
+      ...(/place the remaining cards? into your trash/i.test(t)
+        ? { remainingDestination: "trash" as const }
+        : {}),
       ...(tutorFilter ? { tutorFilter } : {}),
     };
   }
@@ -268,7 +359,7 @@ export function parseSingleAction(clause: string): EffectAction | undefined {
   }
 
   // ── Return to hand ──
-  if (/[Rr]eturn (?:it|them) to its? owner'?s? hand/.test(t)) {
+  if (/[Rr]eturn (?:it|them) to its? owner[’']?s hand/.test(t)) {
     const tf = parseTargetFilter(t);
     return { action: "returnToHand", target: tf };
   }
@@ -290,15 +381,17 @@ export function parseSingleAction(clause: string): EffectAction | undefined {
 
   // ── Set as active ──
   if (/[Ss]et (?:it|this Unit) as active/.test(t)) {
-    const tf = /\b[Ss]et it as active\b/.test(t)
-      ? { owner: "self" as TargetOwner }
-      : parseTargetFilter(t);
+    const tf = /\b[Ss]et this Unit as active\b/.test(t)
+      ? { owner: "self" as TargetOwner, cardType: "unit" as const }
+      : /\b[Ss]et it as active\b/.test(t)
+        ? { owner: "self" as TargetOwner }
+        : parseTargetFilter(t);
     return { action: "setActive", target: tf };
   }
 
   // ── Deal damage ──
   // "Deal N damage to all Units with <Blocker>"
-  const dmgAllM = t.match(/[Dd]eal (\d+) damage to all ([\w\s<>]+)/);
+  const dmgAllM = t.match(/[Dd]eal (\d+) damage to all (.+)$/);
   if (dmgAllM) {
     const tf = parseTargetFilter(dmgAllM[2]);
     return { action: "dealDamageAll", amount: parseInt(dmgAllM[1]), target: tf };
@@ -338,7 +431,9 @@ export function parseSingleAction(clause: string): EffectAction | undefined {
   if (grantKwM) {
     const kw = parseKeywordEffectName(grantKwM[1]);
     if (kw) {
-      const target = parseTargetFilter(t);
+      const target = /^(?:this Unit|this|it) gains?/i.test(t)
+        ? { owner: "self" as TargetOwner, cardType: "unit" as const }
+        : parseTargetFilter(t);
       return {
         action: "grantKeyword",
         keyword: kw,
@@ -421,15 +516,30 @@ export function parseSingleAction(clause: string): EffectAction | undefined {
   }
 
   // "this Unit can't receive battle damage from enemy Units with 3 or less AP"
-  const preventDmgM = t.match(
-    /can'?t receive battle damage from (?:enemy Units? (?:that are |with )?)?(.+)/i,
-  );
+  const preventDmgM = t.match(/can'?t receive battle damage from (.+)/i);
   if (preventDmgM) {
     const unitFilter = parseTargetFilter(preventDmgM[1]);
+    if (unitFilter.owner === "any") unitFilter.owner = "opponent";
+    if (!unitFilter.cardType) unitFilter.cardType = "unit";
     return {
       action: "preventDamage",
       target: { owner: "self" },
       unitFilter,
+      damageType: "battle",
+      duration: parseDuration(t),
+    };
+  }
+
+  const preventAnyDmgM = t.match(/this (?:Base|Unit) can'?t receive damage from (.+)/i);
+  if (preventAnyDmgM) {
+    const unitFilter = parseTargetFilter(preventAnyDmgM[1]);
+    if (unitFilter.owner === "any") unitFilter.owner = "opponent";
+    if (!unitFilter.cardType) unitFilter.cardType = "unit";
+    return {
+      action: "preventDamage",
+      target: { owner: "self" },
+      unitFilter,
+      duration: parseDuration(t),
     };
   }
 
@@ -459,6 +569,22 @@ export function parseSingleAction(clause: string): EffectAction | undefined {
     return { action: "cantTargetPlayer", whose: "opponent" };
   }
 
+  // ── Redirect an ongoing attack ──
+  if (/change the attack target of the battling enemy Unit to it/i.test(t)) {
+    return {
+      action: "changeAttackTarget",
+      target: { owner: "friendly", cardType: "unit", count: 1 },
+    };
+  }
+
+  // ── Prevent readying at the opponent's next Start Phase ──
+  if (/it won(?:['’]\s*|\s*)t be set as active during the start phase/i.test(t)) {
+    return {
+      action: "preventActive",
+      target: { owner: "opponent", cardType: "unit", count: 1 },
+    };
+  }
+
   // ── Prevent destruction ──
   if (/can'?t be destroyed by enemy effects/i.test(t)) {
     const target = lower.includes("friendly units")
@@ -475,14 +601,15 @@ export function parseSingleAction(clause: string): EffectAction | undefined {
 
   // ── Choose attack target ──
   const attackTargetM = t.match(
-    /(?:it|this unit) may choose (an? (?:active )?enemy Unit.+?) as its attack target/i,
+    /(it|this unit) may choose (an? .*?enemy Unit.*?) as its attack target/i,
   );
   if (attackTargetM) {
-    const attackTarget = parseTargetFilter(attackTargetM[1]);
+    const attackTarget = parseTargetFilter(attackTargetM[2]);
     return {
       action: "chooseAttackTarget",
-      unit: { owner: "friendly", count: 1 },
+      unit: { owner: "self", cardType: "unit" },
       attackTarget,
+      duration: parseDuration(t),
     };
   }
 
@@ -514,7 +641,13 @@ export function patchActionTarget(action: EffectAction, target: TargetFilter): E
     case "cantAttack":
     case "restrictUnit":
     case "preventDestruction":
+    case "preventDamage":
+    case "addFromTrash":
+    case "changeAttackTarget":
+    case "preventActive":
       return { ...action, target };
+    case "chooseAttackTarget":
+      return { ...action, unit: target };
     default:
       return action;
   }

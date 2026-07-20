@@ -9,8 +9,9 @@ import {
   type ReactNode,
 } from "react";
 import { IconX } from "@tabler/icons-react";
+import type { SimulatorEntity } from "@tcg/simulator-contract";
 import { useHasHover } from "../../../../lib/media-query";
-import { CardImage } from "@tcg/simulator-ui";
+import { ViewerSafeCardImage } from "@tcg/simulator-ui";
 import { useCardInspect } from "../GameBoard/CardInspectContext";
 import classes from "./CardPreview.module.css";
 
@@ -20,6 +21,8 @@ type CardAccent = "blue" | "green" | "red" | "yellow";
 
 interface CardPreviewState {
   imageUrl: string;
+  /** Explicit authorization; hidden input is rejected even if it carries an image URL. */
+  face: "public" | "hidden";
   alt?: string;
   color?: CardAccent;
   details?: CardPreviewDetails;
@@ -73,10 +76,15 @@ export function CardPreviewProvider({ children }: { children: ReactNode }) {
   const value = useMemo<CardPreviewContextValue>(
     () => ({
       show: (next) => {
+        if (next.face !== "public") {
+          setState(null);
+          return;
+        }
         if (!hasHover) {
           setState(null);
           inspect({
             imageUrl: next.imageUrl,
+            face: "public",
             name: next.details?.name ?? next.alt,
             color: next.color,
           });
@@ -107,7 +115,7 @@ export function CardPreviewProvider({ children }: { children: ReactNode }) {
                 boxShadow: `0 0 0 1px rgb(0 0 0 / 80%), 0 0 24px ${
                   state.color ? ACCENT_HEX[state.color] : "#f5e642"
                 }55, 0 20px 50px rgb(0 0 0 / 90%)`,
-                backgroundImage: `url("${state.imageUrl}"), url("${CARD_BACK}")`,
+                backgroundColor: "#08070c",
                 ["--accent" as string]: state.color ? ACCENT_HEX[state.color] : "#f5e642",
               } as CSSProperties)
             : undefined
@@ -115,9 +123,9 @@ export function CardPreviewProvider({ children }: { children: ReactNode }) {
       >
         {state ? (
           <>
-            <CardImage
+            <ViewerSafeCardImage
+              entity={previewEntity(state)}
               className={classes.image}
-              src={state.imageUrl ?? CARD_BACK}
               alt={state.alt ?? ""}
               fill
               loading="eager"
@@ -140,6 +148,22 @@ export function CardPreviewProvider({ children }: { children: ReactNode }) {
       </div>
     </CardPreviewContext.Provider>
   );
+}
+
+function previewEntity(state: CardPreviewState): SimulatorEntity {
+  return {
+    id: state.face === "public" ? state.alt || "preview-card" : "hidden-card",
+    title: state.face === "public" ? state.alt || "Card" : "Hidden card",
+    subtitle: "Card preview",
+    kind: "card",
+    ownerId: "viewer",
+    face: state.face,
+    states: [],
+    stats: [],
+    traits: [],
+    imageUrl: state.imageUrl,
+    backImageUrl: CARD_BACK,
+  };
 }
 
 function CardPreviewFallback({

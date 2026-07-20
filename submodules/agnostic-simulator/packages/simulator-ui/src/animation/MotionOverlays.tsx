@@ -3,9 +3,9 @@ import type { SimulatorEntity } from "@tcg/simulator-contract";
 import { motion } from "motion/react";
 
 import { CardFace } from "../components/CardFace";
+import { projectSimulatorEntityForFace } from "../components/entity-visibility";
 import type {
   BeamOverlayState,
-  CardFaceKind,
   CardOverlayState,
   LayoutShiftState,
   PhaseOverlayState,
@@ -37,12 +37,8 @@ export function CardMotionOverlay({
 }) {
   const duration = reduced ? 0.03 : overlay.durationMs / 1000;
   const delay = reduced ? 0 : overlay.delayMs / 1000;
-  const sourceEntity = projectEntityForFace(overlay.entity, overlay.sourceFace, "motion-source");
-  const destinationEntity = projectEntityForFace(
-    overlay.entity,
-    overlay.destinationFace,
-    "motion-destination",
-  );
+  const sourceEntity = projectSimulatorEntityForFace(overlay.entity, overlay.sourceFace);
+  const destinationEntity = projectSimulatorEntityForFace(overlay.entity, overlay.destinationFace);
   const from = safeCardMotionRect(overlay.from);
   const to = safeCardMotionRect(overlay.to);
   const faceChanges = overlay.sourceFace !== overlay.destinationFace;
@@ -56,7 +52,11 @@ export function CardMotionOverlay({
       data-testid="motion-card-overlay"
       data-motion-kind={overlay.kind}
       data-motion-id={overlay.id}
-      data-sim-entity-id={overlay.entity.id}
+      data-sim-entity-id={
+        overlay.sourceFace === "public" || overlay.destinationFace === "public"
+          ? overlay.entity.id
+          : undefined
+      }
       data-from-ref={overlay.fromRef ? refKey(overlay.fromRef) : undefined}
       data-to-ref={overlay.toRef ? refKey(overlay.toRef) : undefined}
       data-source-face={overlay.sourceFace}
@@ -722,32 +722,6 @@ export function LayoutShiftSentinel({
       onAnimationComplete={() => onComplete(overlay)}
     />
   );
-}
-
-function projectEntityForFace(
-  entity: SimulatorEntity,
-  face: CardFaceKind,
-  suffix: string,
-): SimulatorEntity {
-  if (face === "public") {
-    return { ...entity, face: "public" };
-  }
-  return {
-    ...entity,
-    id: `${entity.id}:${suffix}`,
-    title: "Hidden card",
-    subtitle: "Private information",
-    kind: "card",
-    face: "hidden",
-    states: [],
-    imageUrl: undefined,
-    backImageUrl: entity.backImageUrl,
-    stats: [],
-    traits: [],
-    frameStyle: undefined,
-    overlayBadges: undefined,
-    spawnAnimation: undefined,
-  };
 }
 
 function combatResultBadgePosition(

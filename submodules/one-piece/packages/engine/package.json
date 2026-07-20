@@ -16,7 +16,6 @@
     "dist"
   ],
   "type": "module",
-  "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
     ".": {
@@ -25,7 +24,7 @@
     },
     "./practice-st01": {
       "types": "./src/practice-st01.ts",
-      "default": "./dist/practice-st01.mjs"
+      "default": "./src/practice-st01.ts"
     },
     "./package.json": "./package.json"
   },

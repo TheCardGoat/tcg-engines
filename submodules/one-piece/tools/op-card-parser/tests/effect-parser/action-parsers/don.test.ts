@@ -64,6 +64,29 @@ describe("parseActions — AddDonAction", () => {
     });
   });
 
+  test("preserves end-of-turn timing when adding an active DON!!", () => {
+    const result = parseActions(
+      "Add up to 1 DON!! card from your DON!! deck and set it as active at the end of this turn",
+    );
+
+    expect(result).toEqual({
+      parsed: [
+        {
+          action: "delayed",
+          timing: "endOfThisTurn",
+          actions: [
+            {
+              action: "addDon",
+              count: { amount: 1, upTo: true },
+              state: "active",
+            },
+          ],
+        },
+      ],
+      unparsed: "",
+    });
+  });
+
   test("Add an additional DON!! card using the preceding DON!! deck source", () => {
     const result = parseActions(
       "Add up to 1 DON!! card from your DON!! deck and set it as active, and add up to 1 additional DON!! card and rest it",
@@ -152,6 +175,27 @@ describe("parseActions — GiveDonAction", () => {
       donState: "rested",
     });
     expect(result.unparsed).toBe("");
+  });
+
+  test("Give DON!! to a Leader or Character with an included trait", () => {
+    const result = parseActions(
+      'Give up to 1 rested DON!! card to your Leader with a type including "Whitebeard Pirates" or 1 Character with a type including "Whitebeard Pirates"',
+    );
+
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toEqual([
+      {
+        action: "giveDon",
+        target: {
+          player: "self",
+          zones: ["leader", "character"],
+          count: { amount: 1 },
+          filters: [{ filter: "trait", value: "Whitebeard Pirates", match: "includes" }],
+        },
+        count: { amount: 1, upTo: true },
+        donState: "rested",
+      },
+    ]);
   });
 
   test("Give 2 rested DON!! cards to 1 of your Characters", () => {

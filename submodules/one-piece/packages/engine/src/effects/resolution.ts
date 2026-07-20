@@ -298,10 +298,52 @@ export function processEffectBlock(
         trigger: item.trigger,
         blockIndex: item.blockIndex,
         trashHandIds: item.trashHandIds,
+        costPaymentIdsByType: item.costPaymentIdsByType,
         triggerEvent: item.triggerEvent,
       },
     });
     return;
+  }
+
+  const giveDonCost = block.costs?.find((cost) => cost.cost === "giveDon");
+  if (giveDonCost && !item.costPaymentIdsByType?.giveDon) {
+    const player = getPlayer(state, item.controller);
+    const candidateIds = [
+      player.leaderInstanceId,
+      ...player.characterArea.filter((instanceId): instanceId is string => instanceId !== null),
+    ];
+    if (candidateIds.length > 1) {
+      createChoicePrompt(state, {
+        choiceKind: "costPayment",
+        seat: item.controller,
+        label: `${cardName(card)} DON!! recipient`,
+        details: `Choose 1 of your Leader or Character cards to receive ${giveDonCost.amount} active DON!! as the activation cost.`,
+        sourceCardId: source.cardId,
+        sourceInstanceId: item.sourceInstanceId,
+        eventId: null,
+        options: candidateIds.map((instanceId) => ({
+          id: instanceId,
+          label: cardName(getCardForInstance(state, instanceId)),
+          value: instanceId,
+          targetId: instanceId,
+        })),
+        minSelections: 1,
+        maxSelections: 1,
+        context: { cost: "giveDon" },
+        resolutionContext: {
+          intent: "effectCostGiveDon",
+          sourceInstanceId: item.sourceInstanceId,
+          controller: item.controller,
+          trigger: item.trigger,
+          blockIndex: item.blockIndex,
+          amount: giveDonCost.amount,
+          candidateIds,
+          costPaymentIdsByType: item.costPaymentIdsByType,
+          triggerEvent: item.triggerEvent,
+        },
+      });
+      return;
+    }
   }
 
   const pendingOrderedCost = block.costs?.find((cost) =>
@@ -349,6 +391,7 @@ export function processEffectBlock(
           cost: trashFromHandCost,
           candidateIds,
           costPaymentIds: item.costPaymentIds,
+          costPaymentIdsByType: item.costPaymentIdsByType,
           triggerEvent: item.triggerEvent,
         },
       });
@@ -486,6 +529,7 @@ export function processEffectBlock(
           amount: minimumAmount,
           candidateIds: options.map((option) => option.id),
           trashHandIds: item.trashHandIds,
+          costPaymentIdsByType: item.costPaymentIdsByType,
           triggerEvent: item.triggerEvent,
         },
       });
@@ -1460,7 +1504,7 @@ export function resolveEffectChoicePrompt(
       }
       if (command.optionId === "yes") {
         getInstance(state, context.replacementSourceInstanceId).usedEffectKeys.push(
-          `replacement:${context.replacementEvent}:${context.replacementEffectIndex}`,
+          context.replacementEffectKey,
         );
         const remainingTargetIds = context.remainingTargetIds.filter(
           (targetId) => !context.replacementTargetIds.includes(targetId),
@@ -1548,7 +1592,7 @@ export function resolveEffectChoicePrompt(
       }
       if (command.optionId === "yes") {
         getInstance(state, context.replacementSourceInstanceId).usedEffectKeys.push(
-          `replacement:rested:${context.replacementEffectIndex}`,
+          context.replacementEffectKey,
         );
         enqueueResolution(
           state,
@@ -1562,7 +1606,12 @@ export function resolveEffectChoicePrompt(
           { next: true },
         );
       } else {
-        restCharacterByEffect(state, context.targetId, context.restController);
+        restCharacterByEffect(
+          state,
+          context.targetId,
+          context.restController,
+          context.restSourceInstanceId,
+        );
       }
       return true;
     }
@@ -1610,7 +1659,7 @@ export function resolveEffectChoicePrompt(
       }
       if (command.optionId === "yes") {
         getInstance(state, context.replacementSourceInstanceId).usedEffectKeys.push(
-          `replacement:${context.replacementEvent}:${context.replacementEffectIndex}`,
+          context.replacementEffectKey,
         );
         enqueueResolution(
           state,
@@ -1857,6 +1906,7 @@ export function resolveEffectChoicePrompt(
             trigger: prompt.resolutionContext.trigger,
             blockIndex: prompt.resolutionContext.blockIndex,
             trashHandIds: prompt.resolutionContext.trashHandIds,
+            costPaymentIdsByType: prompt.resolutionContext.costPaymentIdsByType,
             confirmed: true,
             triggerEvent: prompt.resolutionContext.triggerEvent,
           },
@@ -1875,6 +1925,41 @@ export function resolveEffectChoicePrompt(
         );
       }
       return true;
+    case "effectCostGiveDon": {
+      const context = prompt.resolutionContext;
+      const selectedIds = command.selectedIds ?? [];
+      const player = getPlayer(state, context.controller);
+      const liveCandidateIds = [
+        player.leaderInstanceId,
+        ...player.characterArea.filter((instanceId): instanceId is string => instanceId !== null),
+      ];
+      if (
+        selectedIds.length !== 1 ||
+        !context.candidateIds.includes(selectedIds[0]!) ||
+        !liveCandidateIds.includes(selectedIds[0]!) ||
+        player.activeDon < context.amount
+      ) {
+        return false;
+      }
+      enqueueResolution(
+        state,
+        {
+          kind: "effectBlock",
+          sourceInstanceId: context.sourceInstanceId,
+          controller: context.controller,
+          trigger: context.trigger,
+          blockIndex: context.blockIndex,
+          costPaymentIdsByType: {
+            ...context.costPaymentIdsByType,
+            giveDon: selectedIds,
+          },
+          confirmed: true,
+          triggerEvent: context.triggerEvent,
+        },
+        { next: true },
+      );
+      return true;
+    }
     case "effectCostTrashFromHand": {
       const context = prompt.resolutionContext;
       const selectedIds = command.selectedIds ?? [];
@@ -1904,6 +1989,7 @@ export function resolveEffectChoicePrompt(
           blockIndex: context.blockIndex,
           trashHandIds: selectedIds,
           costPaymentIds: context.costPaymentIds,
+          costPaymentIdsByType: context.costPaymentIdsByType,
           confirmed: true,
           triggerEvent: context.triggerEvent,
         },
@@ -1971,6 +2057,7 @@ export function resolveEffectChoicePrompt(
           blockIndex: context.blockIndex,
           trashHandIds: context.trashHandIds,
           costPaymentIds: selectedIds,
+          costPaymentIdsByType: context.costPaymentIdsByType,
           confirmed: true,
           triggerEvent: context.triggerEvent,
         },

@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
 
 import { CardStack } from "./CardStack";
+import { CardFace } from "./CardFace";
 import { CardZone } from "./CardZone";
 import { DeckStackZone } from "./DeckStackZone";
 import { DiscardPileZone } from "./DiscardPileZone";
@@ -68,6 +69,34 @@ describe("CardZone layout dispatch", () => {
     expect(rowMarkup).toContain('data-card-density="mini"');
     expect(stackMarkup).toContain('data-zone-layout="stack"');
     expect(gridMarkup).toContain("card-grid");
+  });
+});
+
+describe("CardFace privacy boundary", () => {
+  test("does not render identity-bearing fields from a hidden entity", () => {
+    const privateEntity: SimulatorEntity = {
+      id: "player_one_deck_ST01-015_01",
+      title: "White Base",
+      subtitle: "Base",
+      kind: "leader",
+      ownerId: "player_one",
+      face: "hidden",
+      states: ["ready"],
+      stats: [{ label: "HP", value: "5" }],
+      traits: ["Earth Federation"],
+      imageUrl: "https://private.invalid/ST01-015.webp",
+      dataAttributes: { "data-secret-name": "White Base" },
+    };
+
+    const markup = renderToStaticMarkup(<CardFace entity={privateEntity} />);
+
+    expect(markup).toContain('aria-label="Hidden card"');
+    expect(markup).not.toContain("White Base");
+    expect(markup).not.toContain("ST01-015");
+    expect(markup).not.toContain("private.invalid");
+    expect(markup).not.toContain("Earth Federation");
+    expect(markup).not.toContain("data-secret-name");
+    expect(markup).not.toContain("data-sim-entity-id");
   });
 });
 

@@ -35,17 +35,27 @@
 
 .dot {
   appearance: none;
-  display: inline-block;
-  width: 14px;
-  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
   border: 0;
   border-radius: 999px;
   padding: 0;
   cursor: pointer;
+  background: transparent;
+}
+
+.dotVisual {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
   background: var(--simulator-muted, #9ca3af);
 }
 
-.panelEmbedded .dot {
+.panelEmbedded .dotVisual {
   width: 11px;
   height: 11px;
 }
@@ -55,18 +65,22 @@
   outline-offset: 3px;
 }
 
-.dot.connected {
+.dotVisual.connected {
   background: rgb(var(--simulator-success-rgb, 52 245 138));
   box-shadow: 0 0 0 2px rgb(var(--simulator-success-rgb, 52 245 138) / 30%);
 }
 
-.dot.reconnecting {
+.dotVisual.reconnecting {
   background: rgb(var(--simulator-accent-rgb, 245 230 66));
   animation: pulse 1.2s ease-in-out infinite;
 }
 
-.dot.disconnected {
+.dotVisual.disconnected {
   background: rgb(var(--simulator-error-rgb, 255 61 94));
+}
+
+.dotVisual.unknown {
+  background: var(--simulator-muted, #9ca3af);
 }
 
 @keyframes pulse {
@@ -112,6 +126,11 @@
   padding: 14px;
   display: grid;
   gap: 12px;
+}
+
+.popoverEnd .popover {
+  right: 0;
+  left: auto;
 }
 
 .popoverHeader {
@@ -169,6 +188,10 @@
   border-color: rgb(var(--simulator-error-rgb, 255 61 94) / 42%);
   background: rgb(var(--simulator-error-rgb, 255 61 94) / 14%);
   color: rgb(255 140 160 / 96%);
+}
+
+.statusBadge.unknown {
+  color: var(--simulator-muted, rgb(210 232 238 / 66%));
 }
 
 .message {
@@ -293,7 +316,7 @@
 
 .action {
   min-width: 0;
-  min-height: 40px;
+  min-height: 44px;
   flex: 1;
   border: 1px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 38%);
   border-radius: 6px;

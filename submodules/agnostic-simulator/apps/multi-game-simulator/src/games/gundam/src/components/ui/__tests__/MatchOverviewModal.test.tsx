@@ -16,21 +16,23 @@ afterEach(cleanup);
 function stubRecap(name: string): PlayerRecap {
   return {
     name,
-    lore: 0,
+    shields: 6,
     deck: 30,
     hand: 5,
-    discard: 0,
-    resourcesUsed: 0,
+    trash: 0,
+    resourcesActive: 2,
     resourcesTotal: 3,
-    boardCount: 0,
-    ready: 0,
-    exerted: 0,
-    played: 0,
-    resourcesPlaced: 0,
-    quests: 0,
-    challenges: 0,
+    unitsInPlay: 2,
+    activeUnits: 1,
+    restedUnits: 1,
+    unitsDeployed: 3,
+    basesDeployed: 1,
+    commandsPlayed: 2,
+    pilotsPaired: 1,
+    attacks: 4,
+    blocks: 1,
     moves: 0,
-    abilities: 0,
+    effectsResolved: 3,
   };
 }
 
@@ -46,6 +48,27 @@ function stubResult(): MatchResult {
 }
 
 describe("MatchOverviewModal: footer wiring", () => {
+  it("uses Gundam match terminology and statistics", () => {
+    render(
+      <MatchOverviewModal
+        result={stubResult()}
+        onClose={() => {}}
+        onBackToMatchmaking={() => {}}
+        onDownloadReplay={() => {}}
+        onSaveReplay={() => {}}
+        onReportBug={() => {}}
+        onShareFeedback={() => {}}
+      />,
+    );
+
+    expect(screen.getAllByText("SHIELDS")).toHaveLength(2);
+    expect(screen.getAllByText("UNIT / BASE DEPLOY")).toHaveLength(2);
+    expect(screen.getAllByText("ATTACK / BLOCK")).toHaveLength(2);
+    expect(screen.queryByText("LORE")).toBeNull();
+    expect(screen.queryByText("QUESTS")).toBeNull();
+    expect(screen.queryByText("CHALLENGES")).toBeNull();
+  });
+
   it("invokes onBackToMatchmaking when the back button is clicked", () => {
     const onBack = vi.fn();
     render(

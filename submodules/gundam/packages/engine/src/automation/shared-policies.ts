@@ -320,7 +320,10 @@ const DEFAULT_POLICIES: SharedPolicies = {
   passBattleAction: passthrough,
   passActionStep: passthrough,
   passTurn: passthrough,
-  concede: passthrough,
+  // Concession is the planner's terminal recovery path, not a strategic
+  // action. Keeping it out of composed strategies prevents a failed
+  // candidate from turning an automation defect into an apparent game win.
+  concede: () => [],
   skipOpponentTurn: passthrough,
   dropOpponent: passthrough,
 };

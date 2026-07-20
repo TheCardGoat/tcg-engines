@@ -8,6 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const PACKAGE_DIR = join(__dirname, "..");
 const CARDS_DIR = join(PACKAGE_DIR, "../../packages/cards/src/cards");
 const ENGINE_BEHAVIOR_TESTS_DIR = join(PACKAGE_DIR, "../../packages/engine/tests/cards");
+const ENGINE_AUTHORED_CARD_TESTS_DIR = join(PACKAGE_DIR, "../../packages/engine/src/cards");
 const MARKDOWN_OUTPUT = join(PACKAGE_DIR, "CHARACTER_INVENTORY.md");
 
 type AuditStatus = "mismatch" | "pass" | "vanilla";
@@ -197,7 +198,19 @@ function hasOwnedBehaviorTest(
       (testStem.toLowerCase() === `${storedSet}-${definitionStem}`.toLowerCase() ||
         testStem.toLowerCase().startsWith(`${canonicalId.toLowerCase()}-`)) &&
       test.source.includes(cardId);
-    return legacyOwnedTest || authoredCharacterTest;
+    const relativeAuthoredTest = relative(ENGINE_AUTHORED_CARD_TESTS_DIR, test.file).replaceAll(
+      "\\",
+      "/",
+    );
+    const authoredParts = relativeAuthoredTest.split("/");
+    const authoredOwnedTest =
+      authoredParts[0] === storedSet &&
+      authoredParts[1] === "characters" &&
+      authoredParts.at(-1)?.replace(/\.test\.ts$/, "") === definitionStem &&
+      test.source.includes(importFragment) &&
+      test.source.includes("OnePieceTestEngine") &&
+      !test.source.includes("validateCardAbility");
+    return legacyOwnedTest || authoredCharacterTest || authoredOwnedTest;
   });
 }
 
@@ -280,7 +293,10 @@ if (selectedSets.length === 0) {
   throw new Error(`Unknown stored set ${options.set}. Available sets: ${availableSets.join(", ")}`);
 }
 
-const behaviorTestSources = allTestSources(ENGINE_BEHAVIOR_TESTS_DIR);
+const behaviorTestSources = [
+  ...allTestSources(ENGINE_BEHAVIOR_TESTS_DIR),
+  ...allTestSources(ENGINE_AUTHORED_CARD_TESTS_DIR),
+];
 const sets: SetInventory[] = [];
 
 for (const storedSet of selectedSets) {

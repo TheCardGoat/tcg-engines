@@ -10,11 +10,14 @@ import {
 } from "react";
 import { Modal } from "@mantine/core";
 import { IconX } from "@tabler/icons-react";
+import type { SimulatorEntity } from "@tcg/simulator-contract";
+import { ViewerSafeCardImage } from "@tcg/simulator-ui";
 import classes from "./CardInspect.module.css";
 
 interface InspectCard {
   imageUrl: string;
   name?: string;
+  face: "public" | "hidden";
 }
 
 type CardColor = "blue" | "green" | "red" | "yellow";
@@ -30,6 +33,7 @@ const INSPECT_TIMEOUT_SECONDS = INSPECT_TIMEOUT_MS / 1000;
 
 interface InspectState {
   imageUrl: string;
+  face: "public" | "hidden";
   name?: string;
   zone?: string;
   color?: CardColor;
@@ -60,13 +64,16 @@ export function CardInspectProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<CardInspectContextValue>(
     () => ({
-      inspect: (next) => setState(next),
+      inspect: (next) => setState(next.face === "public" ? next : null),
       close: closeInspect,
     }),
     [closeInspect],
   );
   const cards = state
-    ? [{ imageUrl: state.imageUrl, name: state.name }, ...(state.attachments ?? [])]
+    ? [
+        { imageUrl: state.imageUrl, name: state.name, face: state.face },
+        ...(state.attachments ?? []),
+      ]
     : [];
   const selectedCard = cards[selectedIndex] ?? cards[0];
   const inspectSessionKey = state
@@ -131,12 +138,13 @@ export function CardInspectProvider({ children }: { children: ReactNode }) {
                 } as CSSProperties
               }
             >
-              <img
-                className={classes.image}
-                data-testid="card-inspect-image"
-                src={selectedCard.imageUrl}
-                alt={selectedCard.name ?? ""}
-              />
+              <div className={classes.image} data-testid="card-inspect-image">
+                <ViewerSafeCardImage
+                  entity={inspectEntity(selectedCard)}
+                  alt={selectedCard.name ?? ""}
+                  fill
+                />
+              </div>
               {(state.name ?? state.zone) && (
                 <div className={classes.meta}>
                   {selectedCard.name ? (
@@ -156,7 +164,11 @@ export function CardInspectProvider({ children }: { children: ReactNode }) {
                       onClick={() => setSelectedIndex(index)}
                       aria-label={index === 0 ? "View main card" : `View attached gear ${index}`}
                     >
-                      <img src={card.imageUrl} alt={card.name ?? ""} />
+                      <ViewerSafeCardImage
+                        entity={inspectEntity(card)}
+                        alt={card.name ?? ""}
+                        fill
+                      />
                       <span>{index === 0 ? "Unit" : `Gear ${index}`}</span>
                     </button>
                   ))}
@@ -180,6 +192,21 @@ export function CardInspectProvider({ children }: { children: ReactNode }) {
       </Modal>
     </CardInspectContext.Provider>
   );
+}
+
+function inspectEntity(card: InspectCard): SimulatorEntity {
+  return {
+    id: card.face === "public" ? card.name || "inspect-card" : "hidden-card",
+    title: card.face === "public" ? card.name || "Card" : "Hidden card",
+    subtitle: "Card inspection",
+    kind: "card",
+    ownerId: "viewer",
+    face: card.face,
+    states: [],
+    stats: [],
+    traits: [],
+    imageUrl: card.imageUrl,
+  };
 }
 
 export function useCardInspect(): CardInspectContextValue {

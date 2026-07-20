@@ -66,6 +66,7 @@ export const op14eb04XDrake016: CharacterCard = {
             {
               filter: "trait",
               value: "Supernovas",
+              match: "includes",
             },
           ],
         },

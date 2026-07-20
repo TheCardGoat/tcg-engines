@@ -112,6 +112,7 @@ export function toGameCardData(view: BoardProjection, card: FilteredCardView): G
   // set/card-number CDN fallback so the simulator renders its usable card
   // fallback instead of requesting a guaranteed-nonexistent token URL.
   const tokenWithoutPrintedArt = isUnprintedTokenMeta(meta);
+  const cardWithoutPrintedArt = tokenWithoutPrintedArt || explicitlyDeclaresNoCardImage(def);
 
   const restrictions = collectRestrictions(g, card.instanceId);
   const linkCondition = (def as { linkCondition?: string }).linkCondition;
@@ -149,9 +150,9 @@ export function toGameCardData(view: BoardProjection, card: FilteredCardView): G
     grantedKeywords,
     traits: def.traits ?? [],
     battlefieldZones: def.type === "unit" || def.type === "base" ? def.battlefieldZones : undefined,
-    set: tokenWithoutPrintedArt ? undefined : setOf(def),
+    set: cardWithoutPrintedArt ? undefined : setOf(def),
     cardNumber: def.cardNumber,
-    img: tokenWithoutPrintedArt ? undefined : imageUrl,
+    img: cardWithoutPrintedArt ? undefined : imageUrl,
     linkRequirement: linkCondition,
     rarity: def.rarity,
     exerted: exhausted,
@@ -347,6 +348,22 @@ export function cardImageUrlOf(def: Card): string | undefined {
   );
 }
 
+function explicitlyDeclaresNoCardImage(def: Card): boolean {
+  // Printed T-series Unit tokens deliberately omit imageUrl in token-data,
+  // but their art is published at the canonical /cards/t/T-### path.
+  // Preserve the set/card-number fallback for those printed tokens.
+  if (/^T-\d+$/iu.test(def.cardNumber)) return false;
+
+  const selectedPrinting = selectedPrintingOf(def);
+  const selectedImage = rawPrintingImageUrlOf(selectedPrinting);
+  const definitionImage = typeof def.imageUrl === "string" ? def.imageUrl.trim() : undefined;
+  const hasAlternativeArt = def.printings?.some((printing) =>
+    Boolean(printingImageUrlOf(printing)),
+  );
+
+  return !hasAlternativeArt && (selectedImage === "" || definitionImage === "");
+}
+
 function selectedPrintingOf(def: Card) {
   const selectedId = def.selectedPrintingId;
   if (selectedId) {
@@ -365,9 +382,14 @@ function printingIdOf(printing: unknown): string | undefined {
 }
 
 function printingImageUrlOf(printing: unknown): string | undefined {
+  const imageUrl = rawPrintingImageUrlOf(printing);
+  return imageUrl ? imageUrl : undefined;
+}
+
+function rawPrintingImageUrlOf(printing: unknown): string | undefined {
   return typeof printing === "object" && printing !== null && "imageUrl" in printing
     ? typeof printing.imageUrl === "string"
-      ? printing.imageUrl
+      ? printing.imageUrl.trim()
       : undefined
     : undefined;
 }

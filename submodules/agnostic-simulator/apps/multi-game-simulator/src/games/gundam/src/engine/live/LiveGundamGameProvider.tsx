@@ -7,6 +7,7 @@ import { createPendingController } from "../../game/pending.ts";
 import { GundamGameContext } from "../../game/context-internals.ts";
 import { createRemoteEngineAdapter, type RemoteSubmitFn } from "./remoteAdapter.ts";
 import type { ViewerId } from "../../game/types.ts";
+import type { LiveAnimationPacket } from "./matchContext.ts";
 
 interface LiveGundamGameProviderProps {
   readonly runtime: MatchRuntime;
@@ -14,6 +15,7 @@ interface LiveGundamGameProviderProps {
   readonly viewerId: ViewerId;
   readonly remoteSubmit: RemoteSubmitFn;
   readonly getInteractionView: () => EngineInteractionView | undefined;
+  readonly getAnimationPackets: () => readonly LiveAnimationPacket[];
   readonly children: ReactNode;
 }
 
@@ -33,6 +35,7 @@ export function LiveGundamGameProvider({
   viewerId,
   remoteSubmit,
   getInteractionView,
+  getAnimationPackets,
   children,
 }: LiveGundamGameProviderProps) {
   const value = useMemo(() => {
@@ -40,11 +43,12 @@ export function LiveGundamGameProvider({
       { runtime, staticResources, viewerId },
       remoteSubmit,
       getInteractionView,
+      getAnimationPackets,
     );
     const store = createGameStore(adapter);
     const pending = createPendingController(adapter);
     return { adapter, store, pending, viewerId };
-  }, [runtime, staticResources, viewerId, remoteSubmit, getInteractionView]);
+  }, [runtime, staticResources, viewerId, remoteSubmit, getInteractionView, getAnimationPackets]);
 
   return <GundamGameContext.Provider value={value}>{children}</GundamGameContext.Provider>;
 }

@@ -1,29 +1,11 @@
 import {
-  DndContext,
-  DragOverlay,
-  KeyboardSensor,
-  PointerSensor,
-  defaultDropAnimationSideEffects,
   rectIntersection,
-  useDndMonitor,
-  useSensor,
-  useSensors,
   type Collision,
   type CollisionDetection,
-  type DragEndEvent,
-  type DragMoveEvent,
-  type DragStartEvent,
   type UniqueIdentifier,
 } from "@dnd-kit/core";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { PointerDragDropSurface } from "@tcg/simulator-ui";
+import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 import { Card } from "./Card";
 import type { CardDragSource, CardDropEvent, DropTarget } from "../../engine";
 import { useCardPreview } from "../CardPreview/CardPreviewContext";
@@ -166,84 +148,10 @@ const collisionDetection: CollisionDetection = (args) => {
   });
 };
 
-/**
- * Drop animation: when the user releases over an invalid spot, the card
- * settles back into the source slot with a snap; over a valid target,
- * the overlay fades out as the underlying state catches up.
- */
-const DROP_ANIMATION = {
-  duration: 220,
-  easing: "cubic-bezier(0.18, 0.67, 0.32, 1.32)",
-  sideEffects: defaultDropAnimationSideEffects({
-    styles: {
-      active: { opacity: "0" },
-    },
-  }),
-};
-
-/**
- * Renders the drag overlay and applies a velocity-based tilt to it so the
- * card "leans" the way it's moving. Lives inside DndContext so it can use
- * useDndMonitor.
- */
-function DragOverlayHost({ source }: { source: CardDragSource | null }) {
-  // Tilt is held in a ref + applied imperatively to avoid a setState on every
-  // mouse-move frame. We update via rAF to keep things smooth.
-  const overlayRef = useRef<HTMLDivElement | null>(null);
-  const last = useRef({ x: 0, t: 0 });
-  const tilt = useRef(0);
-
-  const apply = (deg: number) => {
-    if (overlayRef.current) {
-      overlayRef.current.style.setProperty("--drag-tilt", `${deg.toFixed(2)}deg`);
-    }
-  };
-
-  useDndMonitor({
-    onDragStart: () => {
-      last.current = { x: 0, t: performance.now() };
-      tilt.current = 0;
-      apply(0);
-    },
-    onDragMove: (event: DragMoveEvent) => {
-      const now = performance.now();
-      const dx = event.delta.x - last.current.x;
-      const dt = Math.max(1, now - last.current.t);
-      // Instantaneous horizontal velocity (px/ms) → tilt degrees.
-      const instant = (dx / dt) * 35;
-      const next = Math.max(-14, Math.min(14, tilt.current * 0.5 + instant * 0.5));
-      tilt.current = next;
-      last.current = { x: event.delta.x, t: now };
-      apply(next);
-    },
-    onDragEnd: () => {
-      tilt.current = 0;
-      apply(0);
-    },
-  });
-
-  return (
-    <DragOverlay dropAnimation={DROP_ANIMATION}>
-      {source ? (
-        <div ref={overlayRef} className={classes.overlay}>
-          <Card imageUrl={source.imageUrl} name={source.name} />
-        </div>
-      ) : null}
-    </DragOverlay>
-  );
-}
-
 export function DragDropProvider({ children }: { children: ReactNode }) {
   const [handler, setHandler] = useState<((event: CardDropEvent) => void) | null>(null);
   const [activeSource, setActiveSource] = useState<CardDragSource | null>(null);
   const { hide: hideCardPreview } = useCardPreview();
-
-  // PointerSensor with a small distance threshold so plain clicks (e.g. on
-  // dice or buttons) aren't interpreted as drags.
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
-    useSensor(KeyboardSensor),
-  );
 
   const registerCardDropHandler = useCallback((next: ((event: CardDropEvent) => void) | null) => {
     setHandler(() => next);
@@ -254,24 +162,20 @@ export function DragDropProvider({ children }: { children: ReactNode }) {
     [registerCardDropHandler, activeSource],
   );
 
-  const onDragStart = (event: DragStartEvent) => {
-    const id = String(event.active.id);
+  const onDragStart = (source: CardDragSource | null) => {
     hideCardPreview();
-    setActiveSource(decodeSource(id));
+    setActiveSource(source);
   };
 
   const onDragCancel = () => {
     setActiveSource(null);
   };
 
-  const onDragEnd = (event: DragEndEvent) => {
+  const onDragEnd = (source: CardDragSource | null, overId: string | null) => {
     setActiveSource(null);
-    const sourceId = String(event.active.id);
-    const overId = event.over ? String(event.over.id) : null;
     if (!overId) {
       return;
     }
-    const source = decodeSource(sourceId);
     const target = decodeTarget(overId);
     if (!source || !target || !handler) {
       return;
@@ -288,17 +192,18 @@ export function DragDropProvider({ children }: { children: ReactNode }) {
 
   return (
     <Ctx.Provider value={value}>
-      <DndContext
+      <PointerDragDropSurface
         id="cyberpunk-board-dnd"
+        decodeSource={decodeSource}
+        renderOverlay={(source) => <Card imageUrl={source.imageUrl} name={source.name} />}
+        overlayClassName={classes.overlay}
         collisionDetection={collisionDetection}
-        sensors={sensors}
         onDragStart={onDragStart}
         onDragCancel={onDragCancel}
         onDragEnd={onDragEnd}
       >
         {children}
-        <DragOverlayHost source={activeSource} />
-      </DndContext>
+      </PointerDragDropSurface>
     </Ctx.Provider>
   );
 }

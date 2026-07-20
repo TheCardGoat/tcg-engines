@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, type MouseEvent } from "react";
 import { AspectRatio } from "@mantine/core";
+import type { SimulatorEntity } from "@tcg/simulator-contract";
+import { ViewerSafeCardImage } from "@tcg/simulator-ui";
 import { useHasHover } from "../../../../lib/media-query";
 import { useCardPreview, type CardPreviewDetails } from "../CardPreview/CardPreviewContext";
 import { useCardInspect } from "./CardInspectContext";
@@ -44,6 +46,19 @@ export function CardImage({
 }: CardImageProps) {
   const src =
     faceDown || !imageUrl ? (cardType === "legend" ? LEGEND_CARD_BACK : CARD_BACK) : imageUrl;
+  const entity: SimulatorEntity = {
+    id: faceDown ? "hidden-card" : alt || "card",
+    title: faceDown ? "Hidden card" : alt || "Card",
+    subtitle: cardType ?? "Card",
+    kind: "card",
+    ownerId: "viewer",
+    face: faceDown ? "hidden" : "public",
+    states: [],
+    stats: [],
+    traits: [],
+    imageUrl,
+    backImageUrl: cardType === "legend" ? LEGEND_CARD_BACK : CARD_BACK,
+  };
   const imageRef = useRef<HTMLImageElement | null>(null);
   const { show, hide } = useCardPreview();
   const { inspect } = useCardInspect();
@@ -58,6 +73,7 @@ export function CardImage({
 
     show({
       imageUrl: src,
+      face: "public",
       alt,
       color,
       details: previewDetails ?? { name: alt },
@@ -72,6 +88,7 @@ export function CardImage({
       hide();
       inspect({
         imageUrl: src,
+        face: "public",
         name: previewDetails?.name ?? alt,
         color,
       });
@@ -102,13 +119,15 @@ export function CardImage({
       onBlur={hoverPreviewable ? () => hide() : undefined}
       onClick={tapInspectable ? openInspect : undefined}
     >
-      <img
-        ref={imageRef}
-        src={src}
-        alt={alt}
-        className={classes.img}
-        onLoad={onImageLoad}
-        onError={onImageError}
+      <ViewerSafeCardImage
+        entity={entity}
+        alt={faceDown ? "Hidden card" : alt}
+        fill
+        className="h-full w-full"
+        imageClassName={classes.img}
+        imageRef={imageRef}
+        onImageLoad={onImageLoad}
+        onImageError={onImageError}
       />
     </AspectRatio>
   );

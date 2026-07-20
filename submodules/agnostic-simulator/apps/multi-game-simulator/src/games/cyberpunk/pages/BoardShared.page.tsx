@@ -4,7 +4,13 @@ import type {
   InteractionSubmission,
   InteractionSubmissionValue,
 } from "@tcg/protocol";
-import { Board, EventLogPanel, InteractionPanel, MobileShell } from "@tcg/simulator-ui";
+import {
+  Board,
+  ConnectionPanel as SharedConnectionPanel,
+  EventLogPanel,
+  InteractionPanel,
+  MobileShell,
+} from "@tcg/simulator-ui";
 import { safeStringify } from "@tcg/simulator-runtime/debug";
 import {
   useEffect,
@@ -56,12 +62,16 @@ import {
   type ScenarioId,
   type Side,
 } from "../engine";
-import type { SimulatorConnectionDiagnosticInput } from "@tcg/game-page-contract/connection-diagnostic";
+import {
+  buildSimulatorConnectionDiagnostic,
+  type SimulatorConnectionDiagnosticInput,
+} from "@tcg/game-page-contract/connection-diagnostic";
 import { projectMoveLogEntries } from "../engine/moveLogProjection";
 import { connectionUiStatus, isConnectionDisconnected } from "../engine/live/playerConnectionState";
 import { useOpponentPresence } from "../engine/live/useOpponentPresence";
 import { useSimulatorProjection } from "../engine/useSimulatorProjection";
 import { apiUrl } from "../../../runtime/gameRuntimeApi";
+import { projectConnectionPanelDiagnostic } from "../../../simulator/connection-panel-projection";
 import classes from "./BoardShared.module.css";
 import sidebarClasses from "./Sidebar.module.css";
 
@@ -698,7 +708,6 @@ function HumanMatchSidebar({
     >
       <div className={sidebarClasses.humanTop}>
         <PlayerSummaryCard
-          config={config}
           role="opponent"
           participant={model.opponent}
           side={model.opponentSide}
@@ -800,7 +809,6 @@ function HumanMatchSidebar({
           </section>
         ) : null}
         <PlayerSummaryCard
-          config={config}
           role="self"
           participant={model.self}
           side={model.selfSide}
@@ -919,7 +927,6 @@ function HumanMatchSidebar({
 }
 
 function PlayerSummaryCard({
-  config,
   role,
   participant,
   side,
@@ -927,7 +934,6 @@ function PlayerSummaryCard({
   connectionDiagnostic,
   score,
 }: {
-  config: LiveMatchSidebarConfig;
   role: "self" | "opponent";
   participant: LiveMatchSidebarParticipant;
   side: Side;
@@ -935,15 +941,13 @@ function PlayerSummaryCard({
   connectionDiagnostic?: SimulatorConnectionDiagnosticInput;
   score: number | undefined;
 }) {
-  const [connectionOpen, setConnectionOpen] = useState(false);
   const connectionStatus = connectionLabel(connection);
   const meta = formatPlayerIdentityMeta(participant);
-  const technicalRows = connectionTechnicalRows({
-    config,
-    participant,
-    connection,
-    connectionDiagnostic,
-  });
+  const copyPayload = useMemo(
+    () =>
+      connectionDiagnostic ? buildSimulatorConnectionDiagnostic(connectionDiagnostic) : undefined,
+    [connectionDiagnostic],
+  );
   return (
     <section
       className={sidebarClasses.playerCard}
@@ -962,65 +966,26 @@ function PlayerSummaryCard({
           <span className={sidebarClasses.playerName}>{participant.displayName}</span>
         </div>
         <div className={sidebarClasses.connectionStatusControl}>
-          <button
-            type="button"
-            className={sidebarClasses.connectionDotButton}
-            data-status={connectionStatus.status}
-            aria-expanded={connectionOpen}
-            aria-label={`${participant.displayName} connection status: ${connectionStatus.label}`}
-            onClick={() => setConnectionOpen((open) => !open)}
-          >
-            <span className={sidebarClasses.connectionDot} data-status={connectionStatus.status} />
-          </button>
-          {connectionOpen ? (
-            <div
-              className={sidebarClasses.connectionPopover}
-              role="dialog"
-              aria-label={`${participant.displayName} connection details`}
-            >
-              <div className={sidebarClasses.connectionPopoverHeader}>
-                <div>
-                  <span className={sidebarClasses.connectionPopoverKicker}>
-                    {role === "self" ? "Your connection" : "Opponent presence"}
-                  </span>
-                  <strong>{connectionHeadline(connectionStatus.status, role)}</strong>
-                </div>
-                <span
-                  className={sidebarClasses.connectionStatusBadge}
-                  data-status={connectionStatus.status}
-                >
-                  {connectionStatus.label}
-                </span>
-              </div>
-              <p className={sidebarClasses.connectionStatusMessage}>
-                {connectionStatusMessage(connectionStatus.status, participant.displayName, role)}
-              </p>
-              <dl className={sidebarClasses.connectionMetricGrid}>
-                <div>
-                  <dt>Latency</dt>
-                  <dd>{formatLatency(connection?.latencyMs)}</dd>
-                </div>
-                <div>
-                  <dt>Disconnects</dt>
-                  <dd>{connection?.disconnectCount ?? 0}</dd>
-                </div>
-              </dl>
-              <details className={sidebarClasses.connectionDetails}>
-                <summary>
-                  Technical details
-                  <span>Show</span>
-                </summary>
-                <dl className={sidebarClasses.connectionDetailGrid}>
-                  {technicalRows.map((row) => (
-                    <div key={row.label}>
-                      <dt>{row.label}</dt>
-                      <dd title={row.value}>{row.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </details>
-            </div>
-          ) : null}
+          <SharedConnectionPanel
+            embedded
+            indicatorOnly
+            popoverAlign="end"
+            copyPayload={copyPayload}
+            sides={[
+              {
+                side,
+                label: participant.displayName,
+                playerId: participant.id,
+                self: role === "self",
+                connection: {
+                  status: connectionStatus.status,
+                  latencyMs: connection?.latencyMs,
+                  disconnectCount: connection?.disconnectCount,
+                },
+              },
+            ]}
+            diagnostic={projectConnectionPanelDiagnostic(connectionDiagnostic)}
+          />
         </div>
       </div>
       <div className={sidebarClasses.playerMeta}>
@@ -1030,76 +995,6 @@ function PlayerSummaryCard({
       </div>
     </section>
   );
-}
-
-function connectionTechnicalRows({
-  config,
-  participant,
-  connection,
-  connectionDiagnostic,
-}: {
-  config: LiveMatchSidebarConfig;
-  participant: LiveMatchSidebarParticipant;
-  connection?: PlayerConnectionBySide[Side];
-  connectionDiagnostic?: SimulatorConnectionDiagnosticInput;
-}): Array<{ label: string; value: string }> {
-  const gateway = connectionDiagnostic?.connection;
-  return [
-    { label: "Profile", value: participant.id },
-    { label: "User", value: participant.userId ?? "None" },
-    { label: "Game", value: config.gameId },
-    { label: "Match", value: config.matchId },
-    { label: "Last ping", value: formatTimestamp(connection?.lastPingAt) },
-    { label: "Disconnected", value: connection?.disconnectedAt ?? "None" },
-    { label: "Gateway", value: gateway?.status ?? "Unknown" },
-    { label: "Connection", value: gateway?.connectionId ?? "None" },
-    { label: "Auth", value: gateway?.authModeLabel ?? "Unknown" },
-    { label: "Reconnects", value: String(gateway?.reconnectAttempts ?? 0) },
-  ];
-}
-
-function connectionHeadline(
-  status: "connected" | "reconnecting" | "disconnected" | "unknown",
-  role: "self" | "opponent",
-): string {
-  if (status === "connected") return role === "self" ? "Match server is live" : "Presence is live";
-  if (status === "reconnecting") return role === "self" ? "Rejoining match" : "Reconnecting";
-  if (status === "disconnected") return role === "self" ? "Disconnected" : "Opponent offline";
-  return "Checking status";
-}
-
-function connectionStatusMessage(
-  status: "connected" | "reconnecting" | "disconnected" | "unknown",
-  name: string,
-  role: "self" | "opponent",
-): string {
-  if (status === "connected") {
-    return role === "self"
-      ? "Your match connection is currently stable."
-      : `${name} is connected to this match.`;
-  }
-  if (status === "reconnecting") {
-    return role === "self"
-      ? "Trying to restore your match connection."
-      : `${name} is reconnecting to this match.`;
-  }
-  if (status === "disconnected") {
-    return role === "self"
-      ? "Your browser is disconnected from the match server."
-      : `${name} is disconnected from this match.`;
-  }
-  return "Waiting for live presence data.";
-}
-
-function formatLatency(latencyMs: number | undefined): string {
-  return typeof latencyMs === "number" ? `${latencyMs}ms` : "Measuring";
-}
-
-function formatTimestamp(value: number | undefined): string {
-  if (typeof value !== "number" || !Number.isFinite(value)) {
-    return "None";
-  }
-  return new Date(value).toISOString();
 }
 
 function PlayerDetails({ participant }: { participant: LiveMatchSidebarParticipant }) {

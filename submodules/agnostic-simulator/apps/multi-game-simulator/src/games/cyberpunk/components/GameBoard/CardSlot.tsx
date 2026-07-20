@@ -1,3 +1,5 @@
+import { ViewerSafeCardImage } from "@tcg/simulator-ui";
+
 import classes from "./CardSlot.module.css";
 
 interface CardSlotProps {
@@ -29,7 +31,23 @@ export function CardSlot({
       {faceDown ? (
         <div className={classes.faceDown} />
       ) : imageUrl ? (
-        <img src={imageUrl} className={classes.image} alt={label ?? "card"} />
+        <ViewerSafeCardImage
+          entity={{
+            id: `slot:${imageUrl}`,
+            title: label ?? "card",
+            subtitle: "Card",
+            kind: "card",
+            ownerId: "viewer",
+            face: "public",
+            states: [],
+            stats: [],
+            traits: [],
+            imageUrl,
+          }}
+          imageClassName={classes.image}
+          alt={label ?? "card"}
+          fill
+        />
       ) : (
         label && <span className={classes.label}>{label}</span>
       )}

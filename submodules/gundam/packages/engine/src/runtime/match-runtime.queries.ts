@@ -104,6 +104,13 @@ export interface AvailableMove {
   readonly requiresCardSelection: boolean;
 }
 
+const PENDING_EFFECT_MOVES = new Set<GundamMoveName>([
+  "resolveEffect",
+  "concede",
+  "dropOpponent",
+  "skipOpponentTurn",
+]);
+
 /**
  * Detailed variant of `enumerateAvailableMoves` that also returns, for each
  * available move, the instance IDs the move can be started with. Used by UI
@@ -131,11 +138,23 @@ export function enumerateAvailableMovesDetailed(
   // a structural cast so the framework layer stays generic.
   const hasPendingEffects =
     ((state.G as { pendingEffects?: readonly unknown[] }).pendingEffects?.length ?? 0) > 0;
-
   const out: AvailableMove[] = [];
 
   for (const [moveName, moveDef] of Object.entries(gundamMoves)) {
-    if (flowValidMoves !== null && !flowValidMoves.includes(moveName)) continue;
+    // A pending-effect choice is a blocking rules window. Automatic phases
+    // such as battle/attack-step intentionally have no normal `validMoves`,
+    // which otherwise means "all moves" to the generic flow helper. Do not
+    // leak setup, deploy, attack, or pass candidates into that window: the
+    // controller must resolve the queue (or an admin move must remove a
+    // disconnected player) before ordinary play can continue.
+    if (hasPendingEffects && !PENDING_EFFECT_MOVES.has(moveName as GundamMoveName)) continue;
+    if (
+      !moveDef.ignoreActivePlayer &&
+      flowValidMoves !== null &&
+      !flowValidMoves.includes(moveName)
+    ) {
+      continue;
+    }
     if (!moveDef.ignoreActivePlayer && state.ctx.status.activePlayer !== playerId) continue;
     if (moveDef.gatedByPendingEffects && hasPendingEffects) continue;
 
@@ -215,8 +234,14 @@ export function enumerateAvailableMoves(
   const available: string[] = [];
 
   for (const [moveName, moveDef] of Object.entries(gundamMoves)) {
+    if (hasPendingEffects && !PENDING_EFFECT_MOVES.has(moveName as GundamMoveName)) continue;
+
     // Skip if flow restricts and this move is not in the valid set
-    if (flowValidMoves !== null && !flowValidMoves.includes(moveName)) {
+    if (
+      !moveDef.ignoreActivePlayer &&
+      flowValidMoves !== null &&
+      !flowValidMoves.includes(moveName)
+    ) {
       continue;
     }
 

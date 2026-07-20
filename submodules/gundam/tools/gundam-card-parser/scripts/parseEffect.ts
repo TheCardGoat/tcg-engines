@@ -20,5 +20,7 @@ export function parseEffect(rawEffect: string | undefined, _cardType?: CardType)
   const cleaned = cleanHtml(trimmed);
   const segments = splitIntoSegments(cleaned);
 
-  return segments.map((seg) => parseSegment(seg, seg)).filter((e): e is CardEffect => e !== null);
+  return segments
+    .map((seg) => parseSegment(seg, seg, _cardType))
+    .filter((e): e is CardEffect => e !== null);
 }

@@ -413,7 +413,7 @@ export const coreScenarios: Scenario[] = [
     group: "core",
     label: "Mobile ledger · two Legends",
     description:
-      "Visual fixture for the mobile center ledger with two Legends on each side. The slots should split evenly while preserving the compact Gig lane.",
+      "Visual fixture for the mobile center ledger with two Legends on each side. It uses the stacked ledger so Street Cred and both Gig lanes remain readable.",
     build: () => mobileLedgerScenario(2),
   },
   {

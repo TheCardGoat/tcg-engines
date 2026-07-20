@@ -693,8 +693,8 @@ function CyberpunkMobileLedgerContent({
   );
 }
 
-type MobileLedgerDensity = "scoreOnly" | "singleRow" | "twoLegend" | "stacked";
-type MobileLedgerSideLayout = "scoreOnly" | "singleRow" | "twoLegend" | "stacked";
+type MobileLedgerDensity = "scoreOnly" | "singleRow" | "stacked";
+type MobileLedgerSideLayout = "scoreOnly" | "singleRow" | "stacked";
 
 function mobileLedgerDensity(maxLegendCount: number): MobileLedgerDensity {
   if (maxLegendCount <= 0) {
@@ -702,9 +702,6 @@ function mobileLedgerDensity(maxLegendCount: number): MobileLedgerDensity {
   }
   if (maxLegendCount === 1) {
     return "singleRow";
-  }
-  if (maxLegendCount === 2) {
-    return "twoLegend";
   }
   return "stacked";
 }
@@ -715,9 +712,6 @@ function mobileLedgerSideLayout(legendCount: number): MobileLedgerSideLayout {
   }
   if (legendCount === 1) {
     return "singleRow";
-  }
-  if (legendCount === 2) {
-    return "twoLegend";
   }
   return "stacked";
 }
@@ -934,6 +928,7 @@ function MobileDirectAttackDropTarget() {
       data-active={active ? "true" : "false"}
       data-over={drop.isOver ? "true" : "false"}
       data-drop-zone="opp-pinfo"
+      data-drop-surface="rival-gigs"
       aria-hidden="true"
     >
       <div className={classes.directAttackDropCue}>

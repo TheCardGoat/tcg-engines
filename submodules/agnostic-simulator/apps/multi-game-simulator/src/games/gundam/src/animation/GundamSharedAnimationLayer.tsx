@@ -1,81 +1,134 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type MutableRefObject, type ReactNode } from "react";
 import type {
+  AnimationAnchorRef,
   AnimationPlanStepV1,
   AnimationPlanV1,
-  AnimationRef,
+  AnimationEntityRef,
   AnimationZoneRef,
 } from "@tcg/protocol";
 import type { Card } from "@tcg/gundam-types";
-import type { GundamMoveLog } from "@tcg/gundam-engine";
+import type { MatchRuntime } from "@tcg/gundam-engine";
 import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
 import {
   cardMoveRecordsToAnimationPlans,
   MotionAnimationSurface,
   type CardMoveAnimationRecord,
+  type ScheduledAnimationStep,
+  useAnimationPlanQueue,
 } from "@tcg/simulator-ui";
 import { useSimulatorAudio } from "../../../../simulator/audio";
-import {
-  useBoardProjection,
-  useGundamGame,
-  useMoveLogs,
-  usePacketAnimations,
-  useStatus,
-  useViewerId,
-} from "../game/index.ts";
+import { useBoardProjection, useGundamGame, usePacketAnimations } from "../game/index.ts";
 import type { TurnTaggedPacketAnimation } from "../game/adapter.ts";
 import type { BoardProjection } from "../game/index.ts";
 import { cardImageUrlOf, findCardByInstanceId } from "../components/containers/mappers.ts";
+import { animationPlaybackGateFor } from "../game/bot/animation-playback-gate.ts";
+import { CommandFocusArea, GUNDAM_COMMAND_FOCUS_ANCHOR_ID } from "./CommandFocusArea.tsx";
 
-const MAX_PHASE_EVENTS = 10;
-const HIDDEN_DRAW_CARD_ID_PREFIX = "__gundam_hidden_draw__";
-
-export function GundamSharedAnimationLayer({ children }: { readonly children: ReactNode }) {
+export function GundamSharedAnimationLayer({
+  children,
+  runtime,
+}: {
+  readonly children: ReactNode;
+  readonly runtime: MatchRuntime;
+}) {
   const view = useBoardProjection();
-  const status = useStatus();
-  const viewerSeatId = String(useViewerId());
-  const moveLogs = useMoveLogs();
   const packetAnimations = usePacketAnimations();
-  const moveLogSnapshot = useItemsAfterPreviousSnapshot(moveLogs);
-  const packetAnimationSnapshot = useItemsAfterPreviousSnapshot(packetAnimations);
-  const newMoveLogs = moveLogSnapshot.newItems;
+  const packetAnimationSnapshot = useItemsAfterPreviousSnapshot(
+    packetAnimations,
+    (entry) => entry.animation.id,
+  );
   const newPacketAnimations = packetAnimationSnapshot.newItems;
   const { adapter } = useGundamGame();
-  const phasePlans = usePhaseChangePlans(status);
+  const viewerSeatId = adapter.viewerContext.playerId
+    ? String(adapter.viewerContext.playerId)
+    : null;
   const { cancelScheduledCues, scheduleAnimationSteps } = useSimulatorAudio();
-
-  const cardPlans = useMemo(() => {
-    const records = newPacketAnimations.flatMap((entry) =>
-      gundamPacketAnimationToCardMoveRecords(entry, view, viewerSeatId),
-    );
-    return cardMoveRecordsToAnimationPlans(records.map(gundamCanonicalCardMoveRecord));
-  }, [newPacketAnimations, view, viewerSeatId]);
-
-  const visualPlans = useMemo(
-    () => [
-      ...newMoveLogs.flatMap(({ log }) => gundamMoveLogToAnimationPlans(log, view)),
-      ...phasePlans,
-    ],
-    [newMoveLogs, phasePlans, view],
-  );
-  const animationPlans = useMemo(() => [...cardPlans, ...visualPlans], [cardPlans, visualPlans]);
+  const animationGate = useMemo(() => animationPlaybackGateFor(runtime), [runtime]);
+  const historicalEntitiesRef = useHistoricalSimulatorEntities(view);
+  const incomingCommandId = latestPlayedCommandPacketId(newPacketAnimations);
+  const [focusedCommand, setFocusedCommand] = useState<{
+    readonly id: string;
+    readonly visible: boolean;
+  } | null>(null);
 
   useEffect(() => {
-    if (moveLogSnapshot.didReset || packetAnimationSnapshot.didReset) {
-      cancelScheduledCues();
+    if (incomingCommandId && incomingCommandId !== focusedCommand?.id) {
+      setFocusedCommand({ id: incomingCommandId, visible: false });
     }
-  }, [cancelScheduledCues, moveLogSnapshot.didReset, packetAnimationSnapshot.didReset]);
+  }, [focusedCommand?.id, incomingCommandId]);
 
-  useEffect(() => () => cancelScheduledCues(), [cancelScheduledCues]);
+  const incomingPlans = useMemo(
+    () =>
+      newPacketAnimations.flatMap((entry) =>
+        gundamPacketAnimationToAnimationPlans(entry, view, viewerSeatId),
+      ),
+    [newPacketAnimations, view, viewerSeatId],
+  );
+  const animationsReset = packetAnimationSnapshot.didReset;
+  const {
+    plans: retainedPlans,
+    completePlan,
+    clearPlans,
+  } = useAnimationPlanQueue({
+    incomingPlans,
+    reset: animationsReset,
+    gate: animationGate,
+  });
+
+  useEffect(() => {
+    if (packetAnimationSnapshot.didReset) {
+      cancelScheduledCues();
+      animationGate.clear();
+      clearPlans();
+      setFocusedCommand(null);
+    }
+  }, [animationGate, cancelScheduledCues, packetAnimationSnapshot.didReset, clearPlans]);
+
+  useEffect(
+    () => () => {
+      cancelScheduledCues();
+      animationGate.clear();
+    },
+    [animationGate, cancelScheduledCues],
+  );
+
+  const onAnimationStepsScheduled = (steps: readonly ScheduledAnimationStep[]) => {
+    scheduleAnimationSteps(steps);
+  };
+  const onPlanComplete = (planId: string) => {
+    if (isCommandEntryPlanId(planId)) {
+      setFocusedCommand((current) => (current ? { ...current, visible: true } : current));
+    }
+    const completedPlan = retainedPlans.find((plan) => plan.id === planId);
+    if (completedPlan && planCleansUpCommand(completedPlan)) {
+      setFocusedCommand(null);
+    }
+    completePlan(planId);
+  };
+
+  const focusedCommandId = incomingCommandId ?? focusedCommand?.id ?? null;
+  const focusedCommandEntity =
+    focusedCommandId && focusedCommand?.id === focusedCommandId && focusedCommand?.visible === true
+      ? simulatorEntityForCard(focusedCommandId, view)
+      : null;
 
   return (
     <MotionAnimationSurface
-      animationPlans={animationPlans}
+      animationPlans={retainedPlans}
       viewerSeatId={viewerSeatId}
-      resolveEntity={(cardId) => simulatorEntityForCard(cardId, view, adapter.cardDefinitionOf)}
+      resolveEntity={(cardId) =>
+        resolveAnimatedEntity(
+          simulatorEntityForCard(cardId, view),
+          historicalEntitiesRef.current.get(cardId) ?? null,
+          viewerSeatId,
+        )
+      }
       resolveZone={gundamAnimationZoneResolver}
-      onAnimationStepsScheduled={scheduleAnimationSteps}
+      onAnimationStepsScheduled={onAnimationStepsScheduled}
+      onPlanComplete={onPlanComplete}
     >
       {children}
+      <CommandFocusArea entity={focusedCommandEntity} active={focusedCommandId !== null} />
     </MotionAnimationSurface>
   );
 }
@@ -85,7 +138,10 @@ interface SnapshotDelta<T> {
   readonly didReset: boolean;
 }
 
-function useItemsAfterPreviousSnapshot<T>(items: readonly T[]): SnapshotDelta<T> {
+function useItemsAfterPreviousSnapshot<T>(
+  items: readonly T[],
+  itemKey: (item: T) => string,
+): SnapshotDelta<T> {
   const previousItemsRef = useRef<readonly T[] | null>(null);
   const previousItems = previousItemsRef.current;
 
@@ -93,294 +149,302 @@ function useItemsAfterPreviousSnapshot<T>(items: readonly T[]): SnapshotDelta<T>
     previousItemsRef.current = items;
   }, [items]);
 
-  const didReset = Boolean(previousItems && items.length < previousItems.length);
-  const newItems =
-    !previousItems || items.length <= previousItems.length ? [] : items.slice(previousItems.length);
-
-  return { newItems, didReset };
+  return itemsAfterPreviousSnapshot(items, previousItems, itemKey);
 }
 
-function gundamPacketAnimationToCardMoveRecords(
+export function itemsAfterPreviousSnapshot<T>(
+  items: readonly T[],
+  previousItems: readonly T[] | null,
+  itemKey: (item: T) => string,
+): SnapshotDelta<T> {
+  if (!previousItems) return { newItems: [], didReset: false };
+  if (items.length < previousItems.length) return { newItems: [], didReset: true };
+
+  const previousLast = previousItems.at(-1);
+  if (!previousLast) return { newItems: items, didReset: false };
+  const previousLastKey = itemKey(previousLast);
+  const previousLastIndex = items.findIndex((item) => itemKey(item) === previousLastKey);
+  if (previousLastIndex >= 0) {
+    return { newItems: items.slice(previousLastIndex + 1), didReset: false };
+  }
+
+  return {
+    newItems: items.length > previousItems.length ? items.slice(previousItems.length) : items,
+    didReset: false,
+  };
+}
+
+export function gundamPacketAnimationToAnimationPlans(
   entry: TurnTaggedPacketAnimation,
   view: BoardProjection,
-  viewerSeatId: string,
-): CardMoveAnimationRecord[] {
+  viewerSeatId: string | null,
+): AnimationPlanV1[] {
   const { animation } = entry;
-  if (animation.data.kind !== "cardMove") {
-    return [];
-  }
-  const { cardId, fromZone, toZone } = animation.data;
-  return [
-    {
+  const { data } = animation;
+
+  if (data.kind === "cardMove") {
+    const { cardId, fromZone, toZone } = data;
+    if (
+      baseZoneId(fromZone) === "removalArea" &&
+      baseZoneId(toZone) === "trash" &&
+      isCommandCard(view, cardId)
+    ) {
+      return [];
+    }
+    const ownerId = data.ownerId ?? ownerIdForCard(cardId, view, viewerSeatId ?? "");
+    const record: CardMoveAnimationRecord = {
       id: animation.id,
       cardId,
-      ownerId: ownerIdForCard(cardId, view, viewerSeatId),
+      ownerId,
       ...(fromZone ? { fromZoneId: fromZone } : {}),
       toZoneId: toZone,
       ...(baseZoneId(fromZone) === "deck" && baseZoneId(toZone) === "hand"
         ? { reason: "draw" as const }
         : {}),
       audioCue: gundamCardMoveAudioCue(fromZone, toZone),
-    },
-  ];
-}
-
-export function gundamMoveLogToCardMoveRecords(
-  log: GundamMoveLog,
-  view: BoardProjection,
-  viewerSeatId: string,
-  revealPrivateFields = false,
-): CardMoveAnimationRecord[] {
-  const records: CardMoveAnimationRecord[] = [];
-  const prefix = log.commandID ?? `${log.timestamp}:${log.type}`;
-
-  if (log.type === "deployUnit") {
-    records.push(playedCardRecord(prefix, log.cardId, log.playerId, "battleArea"));
-  } else if (log.type === "deployBase") {
-    records.push(playedCardRecord(prefix, log.cardId, log.playerId, "baseSection"));
-  } else if (log.type === "playCommand") {
-    records.push(playedCardRecord(prefix, log.cardId, log.playerId, "removalArea"));
-  } else if (log.type === "assignPilot") {
-    records.push(playedCardRecord(prefix, log.pilotId, log.playerId, "battleArea"));
-  }
-
-  for (const moved of log.outcomes?.cardsMoved ?? []) {
-    const cardId = String(moved.cardId);
-    if (isDeckToHandMove(moved.from, moved.to)) {
-      continue;
+    };
+    const plans = cardMoveRecordsToAnimationPlans([gundamCanonicalCardMoveRecord(record)]);
+    if (baseZoneId(toZone) === "resourceArea") {
+      plans.push(
+        animationPlan(`${animation.id}:resource-gain`, {
+          id: `${animation.id}:resource-gain:step`,
+          type: "resourceDelta",
+          player: { kind: "player", id: ownerId },
+          anchor: { kind: "anchor", id: `resourceArea:${ownerId}` },
+          delta: 1,
+          label: "RES",
+          delayMs: 120,
+          audioCue: "resource.gain",
+        }),
+      );
     }
-    records.push({
-      id: `${prefix}:move:${cardId}:${records.length}`,
-      cardId,
-      ownerId: ownerIdForCard(cardId, view, String(log.playerId)),
-      fromZoneId: moved.from,
-      toZoneId: moved.to,
-      audioCue: gundamCardMoveAudioCue(moved.from, moved.to),
-    });
+    return plans;
   }
 
-  for (const cardId of log.outcomes?.cardsReturnedToHand ?? []) {
-    const resolvedCardId = String(cardId);
-    records.push({
-      id: `${prefix}:return:${resolvedCardId}:${records.length}`,
-      cardId: resolvedCardId,
-      ownerId: ownerIdForCard(resolvedCardId, view, String(log.playerId)),
-      toZoneId: "hand",
-      audioCue: "card.move",
-    });
+  if (data.kind === "damage") {
+    if (!data.sourceId) return [];
+    return [
+      animationPlan(`${animation.id}:resolved`, {
+        id: `${animation.id}:resolved:step`,
+        type: "combat",
+        source: entityRef(data.sourceId),
+        target: entityRef(data.targetId),
+        reason: "resolved",
+        detailLabel: `${data.amount} DMG`,
+        audioCue: "combat.hit",
+      }),
+    ];
   }
 
-  for (const cardId of log.outcomes?.cardsDiscarded ?? []) {
-    const resolvedCardId = String(cardId);
-    records.push({
-      id: `${prefix}:discard:${resolvedCardId}:${records.length}`,
-      cardId: resolvedCardId,
-      ownerId: ownerIdForCard(resolvedCardId, view, String(log.playerId)),
-      toZoneId: "trash",
-      audioCue: "card.discard",
-    });
+  if (data.kind !== "generic") return [];
+  const { name, params } = data;
+
+  if (name === "attackDeclared") {
+    const attackerId = stringParam(params, "attackerId");
+    const targetId = stringParam(params, "targetId");
+    const playerId = stringParam(params, "playerId");
+    if (!attackerId || !targetId || !playerId) return [];
+    const target =
+      targetId === "direct"
+        ? gundamZoneRef("baseSection", opponentOf(view, playerId) ?? playerId)
+        : entityRef(targetId);
+    return [
+      animationPlan(`${animation.id}:declared`, {
+        id: `${animation.id}:declared:step`,
+        type: "combat",
+        source: entityRef(attackerId),
+        target,
+        reason: "declared",
+        audioCue: "combat.start",
+      }),
+    ];
   }
 
-  for (const defeated of log.outcomes?.unitsDefeated ?? []) {
-    records.push({
-      id: `${prefix}:defeated:${defeated.cardId}:${records.length}`,
-      cardId: String(defeated.cardId),
-      ownerId: String(defeated.ownerId),
-      toZoneId: "trash",
-      audioCue: "card.discard",
-    });
+  if (name === "blockDeclared") {
+    const blockerId = stringParam(params, "blockerId");
+    const attackerId = stringParam(params, "attackerId");
+    if (!blockerId || !attackerId) return [];
+    return [
+      animationPlan(`${animation.id}:declared`, {
+        id: `${animation.id}:declared:step`,
+        type: "combat",
+        source: entityRef(blockerId),
+        target: entityRef(attackerId),
+        reason: "declared",
+        audioCue: "combat.start",
+      }),
+    ];
   }
 
-  for (const shield of log.outcomes?.shieldsRemoved ?? []) {
-    records.push({
-      id: `${prefix}:shield:${shield.cardId}:${records.length}`,
-      cardId: String(shield.cardId),
-      ownerId: String(shield.playerId),
-      fromZoneId: "shieldArea",
-      toZoneId: "hand",
-      audioCue: "card.draw",
+  if (name === "commandPlayed") {
+    const cardId = stringParam(params, "cardId");
+    const ownerId = stringParam(params, "ownerId");
+    if (!cardId || !ownerId) return [];
+    const entryPlan = animationPlan(`${animation.id}:command:entry:${cardId}`, {
+      id: `${animation.id}:command:entry:step`,
+      type: "moveEntity",
+      entity: entityRef(cardId),
+      from: gundamZoneRef("hand", ownerId),
+      to: commandFocusRef(),
+      label: "COMMAND",
+      durationMs: 460,
+      audioCue: "card.play",
     });
+    return params.awaitsResolution === true
+      ? [entryPlan]
+      : [entryPlan, commandResolutionPlan(`${animation.id}:command:auto`, cardId, ownerId, 500)];
   }
 
-  for (const placed of log.outcomes?.resourcesPlaced ?? []) {
-    records.push({
-      id: `${prefix}:resource:${placed.cardId}:${records.length}`,
-      cardId: String(placed.cardId),
-      ownerId: String(placed.playerId),
-      toZoneId: "resourceArea",
-      audioCue: "resource.gain",
-    });
+  if (name === "effectResolved") {
+    const sourceCardId = stringParam(params, "sourceCardId");
+    const playerId = stringParam(params, "playerId");
+    if (!sourceCardId || !playerId) return [];
+    const targets = stringArrayParam(params, "targets").map(entityRef);
+    if (isCommandCard(view, sourceCardId)) {
+      return [
+        commandResolutionPlan(
+          `${animation.id}:command:resolved`,
+          sourceCardId,
+          ownerIdForCard(sourceCardId, view, playerId),
+          0,
+          targets,
+          findCardByInstanceId(view, sourceCardId)?.zoneId !== "removalArea",
+        ),
+      ];
+    }
+    const source = entityRef(sourceCardId);
+    return [
+      animationPlan(`${animation.id}:effect`, {
+        id: `${animation.id}:effect:step`,
+        ...(targets.length > 0
+          ? { type: "effect" as const, source, targets, label: "EFFECT" }
+          : {
+              type: "spotlightEntity" as const,
+              entity: source,
+              at: source,
+              label: "EFFECT",
+            }),
+        audioCue: "effect.trigger",
+      }),
+    ];
   }
 
-  const drawOutcome = log.outcomes?.cardsDrawn;
-  const visibleDrawnCardIds = visiblePrivateValues(
-    drawOutcome?.cardIds,
-    viewerSeatId,
-    revealPrivateFields,
-  );
-  const drawOwnerId = String(drawOutcome?.playerId ?? log.playerId);
-  drawRecordCardIds({
-    prefix,
-    ownerId: drawOwnerId,
-    visibleCardIds: visibleDrawnCardIds,
-    publicCount: drawOutcome?.count ?? visibleDrawnCardIds.length,
-  }).forEach((cardId, index) => {
-    records.push({
-      id: `${prefix}:draw-outcome:${cardId}:${index}`,
-      cardId,
-      ownerId: ownerIdForCard(cardId, view, drawOwnerId),
-      fromZoneId: "deck",
-      toZoneId: "hand",
-      reason: "draw",
-      delayMs: index * 70,
-      audioCue: "card.draw",
-    });
-  });
+  if (name === "resourcesSpent") {
+    const playerId = stringParam(params, "playerId");
+    const amount = numberParam(params, "amount");
+    if (!playerId || !amount) return [];
+    return [
+      animationPlan(`${animation.id}:resource-spent`, {
+        id: `${animation.id}:resource-spent:step`,
+        type: "resourceDelta",
+        player: { kind: "player", id: playerId },
+        anchor: { kind: "anchor", id: `resourceArea:${playerId}` },
+        delta: -amount,
+        label: "RES",
+        audioCue: "resource.spend",
+      }),
+    ];
+  }
 
-  return dedupeRecords(records);
-}
+  if (name === "cardStateChanged") {
+    const cardId = stringParam(params, "cardId");
+    const state = stringParam(params, "state");
+    if (!cardId || (state !== "ready" && state !== "rested")) return [];
+    return [
+      animationPlan(`${animation.id}:state`, {
+        id: `${animation.id}:state:step`,
+        type: "spotlightEntity",
+        entity: entityRef(cardId),
+        at: entityRef(cardId),
+        label: state === "ready" ? "READY" : "REST",
+        durationMs: 360,
+      }),
+    ];
+  }
 
-function isDeckToHandMove(fromZoneId: string | undefined, toZoneId: string): boolean {
-  return baseZoneId(fromZoneId) === "deck" && baseZoneId(toZoneId) === "hand";
+  if (name === "turnChanged") {
+    const previousTurn = numberParam(params, "previousTurn");
+    const turn = numberParam(params, "turn");
+    const playerId = stringParam(params, "playerId");
+    if (previousTurn === null || turn === null || !playerId) return [];
+    return [projectedTurnAnimationPlan(previousTurn, { number: turn, playerId })];
+  }
+
+  if (name === "phaseChanged") {
+    const from = stringParam(params, "from");
+    const to = stringParam(params, "to");
+    if (!from || !to) return [];
+    return [
+      animationPlan(`${animation.id}:phase`, {
+        id: `${animation.id}:phase:step`,
+        type: "phaseChange",
+        from,
+        to,
+        audioCue: "phase.change",
+      }),
+    ];
+  }
+
+  return [];
 }
 
 function baseZoneId(zoneId: string | undefined): string | undefined {
   return zoneId?.split(":")[0];
 }
 
-function gundamMoveLogToAnimationPlans(
-  log: GundamMoveLog,
-  view: BoardProjection,
-): AnimationPlanV1[] {
-  const plans: AnimationPlanV1[] = [];
-  const prefix = log.commandID ?? `${log.timestamp}:${log.type}`;
-
-  if (log.type === "attack") {
-    const targetPlayerId = opponentOf(view, String(log.playerId)) ?? String(log.playerId);
-    plans.push(
-      animationPlan(`${prefix}:combat:declared:${log.attackerId}:${log.targetId}`, {
-        id: `${prefix}:combat:declared`,
-        type: "combat",
-        source: entityRef(String(log.attackerId)),
-        target:
-          log.targetId === "direct"
-            ? gundamZoneRef("baseSection", targetPlayerId)
-            : entityRef(String(log.targetId)),
-        reason: "declared",
-        audioCue: "combat.start",
-      }),
-    );
-  } else if (log.type === "block") {
-    plans.push(
-      animationPlan(`${prefix}:combat:block:${log.blockerId}:${log.attackerId}`, {
-        id: `${prefix}:combat:block`,
-        type: "combat",
-        source: entityRef(String(log.blockerId)),
-        target: entityRef(String(log.attackerId)),
-        reason: "declared",
-        audioCue: "combat.start",
-      }),
-    );
-  }
-
-  for (const damage of log.outcomes?.damageDealt ?? []) {
-    const sourceEntityId =
-      damage.sourceCardId ??
-      (log.type === "attack" ? log.attackerId : log.type === "block" ? log.blockerId : undefined);
-    if (!sourceEntityId) {
-      continue;
-    }
-    plans.push(
-      animationPlan(
-        `${prefix}:combat:resolved:${sourceEntityId}:${damage.targetId}:${plans.length}`,
-        {
-          id: `${prefix}:combat:resolved:${plans.length}`,
-          type: "combat",
-          source: entityRef(String(sourceEntityId)),
-          target: entityRef(String(damage.targetId)),
-          reason: "resolved",
-          delayMs: 120,
-          audioCue: "combat.hit",
-        },
-      ),
-    );
-  }
-
-  const spent = log.outcomes?.resourcesSpent;
-  if (spent && (spent.regularCount > 0 || spent.exRemovedCount > 0)) {
-    const total = spent.regularCount + spent.exRemovedCount;
-    const playerId = String(log.playerId);
-    plans.push(
-      animationPlan(`${prefix}:resource:spent`, {
-        id: `${prefix}:resource:spent`,
-        type: "resourceDelta",
-        player: { kind: "player", id: playerId },
-        anchor: { kind: "anchor", id: `resourceArea:${playerId}` },
-        delta: -total,
-        label: "RES",
-        audioCue: "resource.spend",
-      }),
-    );
-  }
-
-  for (const placed of log.outcomes?.resourcesPlaced ?? []) {
-    const playerId = String(placed.playerId);
-    plans.push(
-      animationPlan(`${prefix}:resource:placed:${placed.cardId}`, {
-        id: `${prefix}:resource:placed:${placed.cardId}`,
-        type: "resourceDelta",
-        player: { kind: "player", id: playerId },
-        anchor: { kind: "anchor", id: `resourceArea:${playerId}` },
-        delta: 1,
-        label: "RES",
-        delayMs: 120,
-        audioCue: "resource.gain",
-      }),
-    );
-  }
-
-  return plans;
+export function projectedTurnAnimationPlan(
+  previousTurn: number,
+  currentTurn: { readonly number: number; readonly playerId: string },
+): AnimationPlanV1 {
+  const id = `turn:${currentTurn.number}:${currentTurn.playerId}`;
+  return animationPlan(id, {
+    id: `${id}:change`,
+    type: "phaseChange",
+    from: `Turn ${previousTurn}`,
+    to: `Turn ${currentTurn.number}`,
+    variant: "turn",
+    player: { kind: "player", id: currentTurn.playerId },
+    turnNumber: Math.max(1, currentTurn.number),
+    audioCue: "turn.change",
+  });
 }
 
-function usePhaseChangePlans(status: BoardProjection["status"]): readonly AnimationPlanV1[] {
-  const [plans, setPlans] = useState<AnimationPlanV1[]>([]);
-  const previousRef = useRef<string | null>(null);
-  const current = statusLabel(status);
+function useHistoricalSimulatorEntities(
+  view: BoardProjection,
+): MutableRefObject<Map<string, SimulatorEntity>> {
+  const entitiesRef = useRef(new Map<string, SimulatorEntity>());
 
   useEffect(() => {
-    const previous = previousRef.current;
-    previousRef.current = current;
-    if (!previous || previous === current) {
-      return;
+    for (const zone of Object.values(view.zones.zones)) {
+      for (const card of zone.cards) {
+        const entity = simulatorEntityForCard(String(card.instanceId), view);
+        if (entity) {
+          entitiesRef.current.set(String(card.instanceId), entity);
+        }
+      }
     }
-    const id = `phase:${status.turn}:${status.gameSegment ?? ""}:${status.phase ?? ""}:${status.step ?? ""}`;
-    const plan = animationPlan(id, {
-      id: `${id}:phase`,
-      type: "phaseChange",
-      from: previous,
-      to: current,
-      audioCue: "phase.change",
-    });
-    setPlans((existing) => [...existing, plan].slice(-MAX_PHASE_EVENTS));
-  }, [current, status.gameSegment, status.phase, status.step, status.turn]);
+  }, [view]);
 
-  return plans;
+  return entitiesRef;
 }
 
-function playedCardRecord(
-  prefix: string,
-  cardId: string,
-  playerId: string,
-  toZoneId: string,
-): CardMoveAnimationRecord {
-  return {
-    id: `${prefix}:play:${cardId}`,
-    cardId: String(cardId),
-    ownerId: String(playerId),
-    fromZoneId: "hand",
-    toZoneId,
-    audioCue: "card.play",
-  };
+export function resolveAnimatedEntity(
+  current: SimulatorEntity | null,
+  historical: SimulatorEntity | null,
+  viewerSeatId: string | null,
+): SimulatorEntity | null {
+  // A card that just left the viewer's private hand may already be projected as
+  // hidden in its destination zone. Preserve the last viewer-authorized public
+  // projection for the outgoing motion. Opponent and spectator entities never
+  // satisfy this branch, so a stale cache cannot reveal private information.
+  if (
+    current?.face === "hidden" &&
+    historical?.face === "public" &&
+    historical.ownerId === viewerSeatId
+  ) {
+    return historical;
+  }
+  return current ?? historical;
 }
 
 function gundamCardMoveAudioCue(
@@ -399,60 +463,12 @@ function gundamCardMoveAudioCue(
   return "card.move";
 }
 
-function visiblePrivateValues(
-  value: unknown,
-  viewerSeatId: string,
-  revealPrivateFields: boolean,
-): string[] {
-  if (Array.isArray(value)) {
-    return value.filter((id): id is string => typeof id === "string");
-  }
-  if (
-    typeof value === "object" &&
-    value !== null &&
-    "__private" in value &&
-    (value as { __private?: unknown }).__private === true &&
-    "value" in value &&
-    "visibleTo" in value &&
-    Array.isArray((value as { value?: unknown }).value)
-  ) {
-    const visibleTo = (value as { visibleTo?: unknown }).visibleTo;
-    const canReveal =
-      revealPrivateFields ||
-      (Array.isArray(visibleTo) &&
-        visibleTo.some((id) => typeof id === "string" && id === viewerSeatId));
-    if (!canReveal) return [];
-    return (value as { value: unknown[] }).value.filter(
-      (id): id is string => typeof id === "string",
-    );
-  }
-  return [];
-}
-
-function dedupeRecords(records: readonly CardMoveAnimationRecord[]): CardMoveAnimationRecord[] {
-  const seen = new Set<string>();
-  return records.filter((record) => {
-    const key = `${record.cardId}:${record.fromZoneId ?? ""}:${record.toZoneId}:${record.reason ?? ""}`;
-    if (seen.has(key)) {
-      return false;
-    }
-    seen.add(key);
-    return true;
-  });
-}
-
-function simulatorEntityForCard(
-  cardId: string,
-  view: BoardProjection,
-  resolveDefinition: (instanceId: string) => Card | null,
-): SimulatorEntity | null {
-  const hiddenDrawOwnerId = hiddenDrawOwnerIdFromCardId(cardId);
-  if (hiddenDrawOwnerId) {
-    return hiddenDrawEntity(cardId, hiddenDrawOwnerId);
-  }
-
+function simulatorEntityForCard(cardId: string, view: BoardProjection): SimulatorEntity | null {
   const visibleCard = findCardByInstanceId(view, cardId);
-  const definition = visibleCard?.definition ?? resolveDefinition(cardId);
+  const definition = visibleCard?.definition;
+  if (visibleCard && (!definition || visibleCard.faceDown)) {
+    return hiddenCardEntity(cardId, String(visibleCard.ownerId));
+  }
   if (!definition) {
     return null;
   }
@@ -484,41 +500,7 @@ function simulatorStats(definition: Card): SimulatorEntity["stats"] {
   return [];
 }
 
-function drawRecordCardIds({
-  prefix,
-  ownerId,
-  visibleCardIds,
-  publicCount,
-}: {
-  readonly prefix: string;
-  readonly ownerId: string;
-  readonly visibleCardIds: readonly string[];
-  readonly publicCount: number;
-}): string[] {
-  const count = Math.max(0, publicCount);
-  const hiddenCount = Math.max(0, count - visibleCardIds.length);
-  return [
-    ...visibleCardIds,
-    ...Array.from({ length: hiddenCount }, (_, index) =>
-      hiddenDrawCardId(prefix, ownerId, visibleCardIds.length + index),
-    ),
-  ];
-}
-
-function hiddenDrawCardId(prefix: string, ownerId: string, index: number): string {
-  return `${HIDDEN_DRAW_CARD_ID_PREFIX}${ownerId}:${prefix}:${index}`;
-}
-
-function hiddenDrawOwnerIdFromCardId(cardId: string): string | null {
-  if (!cardId.startsWith(HIDDEN_DRAW_CARD_ID_PREFIX)) {
-    return null;
-  }
-  const withoutPrefix = cardId.slice(HIDDEN_DRAW_CARD_ID_PREFIX.length);
-  const separatorIndex = withoutPrefix.indexOf(":");
-  return separatorIndex > 0 ? withoutPrefix.slice(0, separatorIndex) : null;
-}
-
-function hiddenDrawEntity(cardId: string, ownerId: string): SimulatorEntity {
+function hiddenCardEntity(cardId: string, ownerId: string): SimulatorEntity {
   return {
     id: cardId,
     title: "Hidden Card",
@@ -566,10 +548,6 @@ function opponentOf(view: BoardProjection, playerId: string): string | null {
   return null;
 }
 
-function statusLabel(status: BoardProjection["status"]): string {
-  return [status.gameSegment, status.phase, status.step].filter(Boolean).join(" / ");
-}
-
 function gundamCanonicalCardMoveRecord(record: CardMoveAnimationRecord): CardMoveAnimationRecord {
   return {
     ...record,
@@ -584,7 +562,111 @@ function animationPlan(id: string, step: AnimationPlanStepV1): AnimationPlanV1 {
   return { id, version: 1, anchors: [], steps: [step] };
 }
 
-function entityRef(id: string): AnimationRef {
+function commandResolutionPlan(
+  id: string,
+  cardId: string,
+  ownerId: string,
+  initialDelayMs: number,
+  targets: readonly AnimationEntityRef[] = [],
+  cleanup = true,
+): AnimationPlanV1 {
+  const entity = entityRef(cardId);
+  const source = commandFocusRef();
+  const effectDurationMs = 620;
+  return {
+    id,
+    version: 1,
+    anchors: [],
+    steps: [
+      targets.length > 0
+        ? {
+            id: `${id}:effect`,
+            type: "effect",
+            source,
+            targets: [...targets],
+            label: "COMMAND EFFECT",
+            delayMs: initialDelayMs,
+            durationMs: effectDurationMs,
+            audioCue: "effect.trigger",
+          }
+        : {
+            id: `${id}:spotlight`,
+            type: "spotlightEntity",
+            entity,
+            at: source,
+            label: "COMMAND EFFECT",
+            delayMs: initialDelayMs,
+            durationMs: effectDurationMs,
+            audioCue: "effect.trigger",
+          },
+      ...(cleanup
+        ? [
+            {
+              id: `${id}:cleanup`,
+              type: "moveEntity" as const,
+              entity,
+              from: source,
+              to: gundamZoneRef("trash", ownerId),
+              delayMs: initialDelayMs + effectDurationMs,
+              durationMs: 420,
+              audioCue: "card.discard" as const,
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
+function commandFocusRef(): AnimationAnchorRef {
+  return { kind: "anchor", id: GUNDAM_COMMAND_FOCUS_ANCHOR_ID };
+}
+
+function latestPlayedCommandPacketId(entries: readonly TurnTaggedPacketAnimation[]): string | null {
+  for (let index = entries.length - 1; index >= 0; index -= 1) {
+    const data = entries[index]?.animation.data;
+    if (data?.kind === "generic" && data.name === "commandPlayed") {
+      return stringParam(data.params, "cardId");
+    }
+  }
+  return null;
+}
+
+function stringParam(params: Record<string, unknown>, key: string): string | null {
+  return typeof params[key] === "string" ? params[key] : null;
+}
+
+function numberParam(params: Record<string, unknown>, key: string): number | null {
+  const value = params[key];
+  return typeof value === "number" && Number.isFinite(value) ? value : null;
+}
+
+function stringArrayParam(params: Record<string, unknown>, key: string): string[] {
+  const value = params[key];
+  return Array.isArray(value)
+    ? value.filter((entry): entry is string => typeof entry === "string")
+    : [];
+}
+
+function isCommandCard(view: BoardProjection, cardId: string): boolean {
+  return findCardByInstanceId(view, cardId)?.definition?.type === "command";
+}
+
+function isCommandEntryPlanId(planId: string): boolean {
+  return planId.includes(":command:entry:");
+}
+
+function planCleansUpCommand(plan: AnimationPlanV1): boolean {
+  return plan.steps.some(
+    (step) =>
+      step.type === "moveEntity" &&
+      step.from?.kind === "anchor" &&
+      step.from.id === GUNDAM_COMMAND_FOCUS_ANCHOR_ID &&
+      step.to.kind === "zone" &&
+      baseZoneId(step.to.id) === "trash",
+  );
+}
+
+function entityRef(id: string): AnimationEntityRef {
   return { kind: "entity", id };
 }
 

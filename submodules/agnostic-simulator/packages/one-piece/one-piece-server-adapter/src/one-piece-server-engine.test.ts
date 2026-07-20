@@ -1,13 +1,37 @@
 import { describe, expect, it, vi } from "vite-plus/test";
 import { createMatch, createSt01MirrorPracticeConfig } from "@tcg/op-engine";
-import type { MatchState, PromptState } from "@tcg/op-engine";
+import type { EngineAnimation, MatchState, PromptState } from "@tcg/op-engine";
 import type { DispatchContext, DispatchResult } from "@tcg/shared/game-engine";
-import { OnePieceServerEngine } from "./one-piece-server-engine.js";
+import { OnePieceServerEngine, onePiecePacketAnimation } from "./one-piece-server-engine.js";
 
 const context: DispatchContext = {
   gameId: "one-piece-test-game",
   sourceAuthority: "server",
 };
+
+describe("onePiecePacketAnimation", () => {
+  it("preserves native private identities for renderer-level privacy validation", () => {
+    const packet = onePiecePacketAnimation({
+      id: "draw-1",
+      type: "cardMove",
+      duration: 320,
+      data: {
+        kind: "cardMove",
+        cardId: "private-card-id",
+        fromZone: "deck",
+        toZone: "hand",
+        fromOwner: "south",
+        toOwner: "south",
+      },
+    } as EngineAnimation);
+
+    expect(packet.payload).toMatchObject({
+      cardId: "private-card-id",
+      fromZone: "deck",
+      toZone: "hand",
+    });
+  });
+});
 
 describe("OnePieceServerEngine", () => {
   it("drives setup through the production automated-action surface", () => {

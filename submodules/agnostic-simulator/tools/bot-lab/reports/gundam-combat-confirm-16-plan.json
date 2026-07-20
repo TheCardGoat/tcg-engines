@@ -1,0 +1,13 @@
+{
+  "candidateId": "iter-16-combat-aware",
+  "parentStrategyId": "strategic",
+  "hypothesis": "The untuned combined combat policy confirms across a larger fresh schedule.",
+  "seed": "gundam-combat-common-confirm-v1",
+  "evaluation": {
+    "minimumBlocks": 120,
+    "maximumBlocks": 120,
+    "batchSize": 120,
+    "minimumMeanImprovement": 0.02,
+    "maximumCellRegression": 0.05
+  }
+}

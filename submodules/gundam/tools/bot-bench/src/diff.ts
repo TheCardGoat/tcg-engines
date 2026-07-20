@@ -8,7 +8,14 @@
  * means the candidate strategy improved.
  */
 
-import type { BenchReport, FamilyStats, PlayerStats, BenchSummary, MatchReport } from "./run.ts";
+import type {
+  BenchReport,
+  FamilyStats,
+  PlayerStats,
+  BenchSummary,
+  MatchReport,
+  SelectionStats,
+} from "./run.ts";
 import type { GundamBotCandidateFamily, PlayMatchTermination } from "@tcg/gundam-engine";
 
 export interface FamilyDelta {
@@ -17,6 +24,13 @@ export interface FamilyDelta {
   readonly successRateCandidate: number;
   readonly successRateDelta: number;
   readonly newErrorCodes: readonly string[];
+}
+
+export interface SelectionDelta {
+  readonly selectedDelta: number;
+  readonly variantsBaseline: Readonly<Record<string, number>>;
+  readonly variantsCandidate: Readonly<Record<string, number>>;
+  readonly variantsDelta: Readonly<Record<string, number>>;
 }
 
 export interface BenchDiff {
@@ -29,6 +43,7 @@ export interface BenchDiff {
   readonly drawRateDelta: number;
   readonly terminationDelta: Readonly<Record<PlayMatchTermination, number>>;
   readonly families: Readonly<Record<GundamBotCandidateFamily, FamilyDelta>>;
+  readonly selections: Readonly<Record<GundamBotCandidateFamily, SelectionDelta>>;
   /** Matches where the winner flipped vs baseline (same seed → different outcome). */
   readonly regressions: readonly {
     readonly seed: string;
@@ -43,6 +58,22 @@ export interface BenchDiff {
   /** Brief, human-readable verdict line. Useful for log output. */
   readonly verdict: string;
 }
+
+function selectionDelta(baseline: SelectionStats, candidate: SelectionStats): SelectionDelta {
+  const variants = new Set([...Object.keys(baseline.variants), ...Object.keys(candidate.variants)]);
+  const variantsDelta: Record<string, number> = {};
+  for (const variant of variants) {
+    variantsDelta[variant] = (candidate.variants[variant] ?? 0) - (baseline.variants[variant] ?? 0);
+  }
+  return {
+    selectedDelta: candidate.selected - baseline.selected,
+    variantsBaseline: baseline.variants,
+    variantsCandidate: candidate.variants,
+    variantsDelta,
+  };
+}
+
+const EMPTY_SELECTION_STATS: SelectionStats = { selected: 0, variants: {} };
 
 function familyDelta(baseline: FamilyStats, candidate: FamilyStats): FamilyDelta {
   const baselineRate = baseline.attempted === 0 ? 0 : baseline.succeeded / baseline.attempted;
@@ -75,10 +106,15 @@ export function diffReports(
     improvedFor === "p1" ? candidate.summary.p1WinRate : candidate.summary.p2WinRate;
 
   const families = {} as Record<GundamBotCandidateFamily, FamilyDelta>;
+  const selections = {} as Record<GundamBotCandidateFamily, SelectionDelta>;
   for (const family of Object.keys(baselinePlayer.familyStats) as GundamBotCandidateFamily[]) {
     families[family] = familyDelta(
       baselinePlayer.familyStats[family],
       candidatePlayer.familyStats[family],
+    );
+    selections[family] = selectionDelta(
+      baselinePlayer.selectionStats?.[family] ?? EMPTY_SELECTION_STATS,
+      candidatePlayer.selectionStats?.[family] ?? EMPTY_SELECTION_STATS,
     );
   }
 
@@ -119,6 +155,7 @@ export function diffReports(
     drawRateDelta: candidate.summary.drawRate - baseline.summary.drawRate,
     terminationDelta,
     families,
+    selections,
     regressions,
     improvements,
     verdict,

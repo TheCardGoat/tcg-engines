@@ -1,15 +1,18 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { copyTextToClipboard, safeStringify } from "@tcg/simulator-runtime/debug";
 import classes from "./ConnectionPanel.module.css";
 
 export interface ConnectionPanelProps {
   embedded?: boolean;
+  indicatorOnly?: boolean;
+  popoverAlign?: "start" | "end";
+  copyPayload?: unknown;
   sides: ReadonlyArray<{
     side: "player" | "opponent";
     label: string;
     playerId?: string;
     connection?: {
-      status?: "connected" | "reconnecting" | "disconnected";
+      status?: ConnectionPanelConnectionStatus;
       latencyMs?: number;
       disconnectCount?: number;
     };
@@ -42,14 +45,36 @@ export interface ConnectionPanelProps {
   };
 }
 
-export function ConnectionPanel({ sides, diagnostic, embedded = false }: ConnectionPanelProps) {
+export type ConnectionPanelDiagnostic = NonNullable<ConnectionPanelProps["diagnostic"]>;
+export type ConnectionPanelConnectionStatus =
+  | "connected"
+  | "reconnecting"
+  | "disconnected"
+  | "unknown";
+
+export function ConnectionPanel({
+  sides,
+  diagnostic,
+  embedded = false,
+  indicatorOnly = false,
+  popoverAlign = "start",
+  copyPayload,
+}: ConnectionPanelProps) {
   return (
     <section
-      className={`${classes.panel} ${embedded ? classes.panelEmbedded : ""}`}
+      className={`${classes.panel} ${embedded ? classes.panelEmbedded : ""} ${
+        popoverAlign === "end" ? classes.popoverEnd : ""
+      }`}
       aria-label="Connection diagnostics"
     >
       {sides.map((side) => (
-        <SideConnection key={side.side} side={side} diagnostic={diagnostic} />
+        <SideConnection
+          key={side.side}
+          side={side}
+          diagnostic={diagnostic}
+          indicatorOnly={indicatorOnly}
+          copyPayload={copyPayload}
+        />
       ))}
     </section>
   );
@@ -58,15 +83,19 @@ export function ConnectionPanel({ sides, diagnostic, embedded = false }: Connect
 function SideConnection({
   side,
   diagnostic,
+  indicatorOnly,
+  copyPayload,
 }: {
   side: ConnectionPanelProps["sides"][number];
   diagnostic?: ConnectionPanelProps["diagnostic"];
+  indicatorOnly: boolean;
+  copyPayload?: unknown;
 }) {
-  const status = side.connection?.status ?? "disconnected";
+  const status = side.connection?.status ?? "unknown";
   return (
     <div className={classes.row} data-side={side.side} data-connection-status={status}>
-      <ConnectionPopover side={side} diagnostic={diagnostic} />
-      <span className={classes.label}>{side.label}</span>
+      <ConnectionPopover side={side} diagnostic={diagnostic} copyPayload={copyPayload} />
+      {indicatorOnly ? null : <span className={classes.label}>{side.label}</span>}
     </div>
   );
 }
@@ -74,46 +103,52 @@ function SideConnection({
 function ConnectionPopover({
   side,
   diagnostic,
+  copyPayload,
 }: {
   side: ConnectionPanelProps["sides"][number];
   diagnostic?: ConnectionPanelProps["diagnostic"];
+  copyPayload?: unknown;
 }) {
   const [open, setOpen] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState<"copied" | "failed" | null>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
-  const status = side.connection?.status ?? "disconnected";
+  const popoverId = useId();
+  const status = side.connection?.status ?? "unknown";
   const latencyMs = side.connection?.latencyMs ?? diagnostic?.connection?.latencyMs;
+  const reconnectAttempts = diagnostic?.connection?.reconnectAttempts ?? 0;
+  const disconnectCount =
+    diagnostic?.connection?.disconnectCount ?? side.connection?.disconnectCount ?? 0;
   const lastHeartbeatAt =
     diagnostic?.connection?.lastHeartbeatAckAt ?? diagnostic?.connection?.lastHeartbeatSentAt;
 
   const payload = useMemo(
-    () => ({
-      connection: {
-        connectionId: diagnostic?.connection?.connectionId,
-        socketId: diagnostic?.connection?.socketId,
-        authModeLabel: diagnostic?.connection?.authModeLabel,
-        authenticated: diagnostic?.connection?.authenticated,
-        authStatus: diagnostic?.connection?.authStatus,
-        authFailureReason: diagnostic?.connection?.authFailureReason,
-        reconnectAttempts:
-          diagnostic?.connection?.reconnectAttempts ?? side.connection?.disconnectCount ?? 0,
-        disconnectCount:
-          diagnostic?.connection?.disconnectCount ?? side.connection?.disconnectCount ?? 0,
-        latencyMs,
-        lastPingAt: diagnostic?.connection?.lastPingAt,
-        lastPongAt: diagnostic?.connection?.lastPongAt,
-        lastHeartbeatSentAt: diagnostic?.connection?.lastHeartbeatSentAt,
-        lastHeartbeatAckAt: diagnostic?.connection?.lastHeartbeatAckAt,
+    () =>
+      copyPayload ?? {
+        connection: {
+          connectionId: diagnostic?.connection?.connectionId,
+          socketId: diagnostic?.connection?.socketId,
+          authModeLabel: diagnostic?.connection?.authModeLabel,
+          authenticated: diagnostic?.connection?.authenticated,
+          authStatus: diagnostic?.connection?.authStatus,
+          authFailureReason: diagnostic?.connection?.authFailureReason,
+          reconnectAttempts,
+          disconnectCount,
+          latencyMs,
+          lastPingAt: diagnostic?.connection?.lastPingAt,
+          lastPongAt: diagnostic?.connection?.lastPongAt,
+          lastHeartbeatSentAt: diagnostic?.connection?.lastHeartbeatSentAt,
+          lastHeartbeatAckAt: diagnostic?.connection?.lastHeartbeatAckAt,
+        },
+        presence: diagnostic?.presence ?? [],
+        events: diagnostic?.events ?? [],
       },
-      presence: diagnostic?.presence ?? [],
-      events: diagnostic?.events ?? [],
-    }),
-    [diagnostic, side.connection, latencyMs],
+    [copyPayload, diagnostic, disconnectCount, latencyMs, reconnectAttempts],
   );
 
   useEffect(() => {
     if (!open) return;
+    popoverRef.current?.focus();
     const handleClick = (event: MouseEvent) => {
       const target = event.target as Node;
       if (popoverRef.current?.contains(target) || triggerRef.current?.contains(target)) {
@@ -121,8 +156,17 @@ function ConnectionPopover({
       }
       setOpen(false);
     };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      triggerRef.current?.focus();
+    };
     document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, [open]);
 
   const handleCopy = async () => {
@@ -135,13 +179,25 @@ function ConnectionPopover({
       <button
         ref={triggerRef}
         type="button"
-        className={`${classes.dot} ${classes[status]}`}
+        className={classes.dot}
         data-status={status}
         aria-label={`${side.label} connection status: ${statusLabel(status)}`}
+        aria-expanded={open}
+        aria-controls={popoverId}
         onClick={() => setOpen((prev) => !prev)}
-      />
+      >
+        <span className={`${classes.dotVisual} ${classes[status]}`} aria-hidden="true" />
+      </button>
       {open ? (
-        <div ref={popoverRef} className={classes.popover} data-status={status}>
+        <div
+          ref={popoverRef}
+          id={popoverId}
+          className={classes.popover}
+          data-status={status}
+          role="dialog"
+          aria-label={`${side.label} connection details`}
+          tabIndex={-1}
+        >
           <div className={classes.popoverHeader}>
             <div>
               <p className={classes.eyebrow}>Connection health</p>
@@ -182,11 +238,11 @@ function ConnectionPopover({
             </div>
             <div className={classes.metric}>
               <dt>Reconnects</dt>
-              <dd>{payload.connection.reconnectAttempts}</dd>
+              <dd>{reconnectAttempts}</dd>
             </div>
             <div className={classes.metric}>
               <dt>Disconnects</dt>
-              <dd>{payload.connection.disconnectCount}</dd>
+              <dd>{disconnectCount}</dd>
             </div>
           </dl>
 
@@ -270,16 +326,14 @@ function ConnectionPopover({
   );
 }
 
-function statusLabel(status: "connected" | "reconnecting" | "disconnected"): string {
+function statusLabel(status: ConnectionPanelConnectionStatus): string {
   if (status === "connected") return "Connected";
   if (status === "reconnecting") return "Reconnecting";
-  return "Disconnected";
+  if (status === "disconnected") return "Disconnected";
+  return "Status unknown";
 }
 
-function headlineForStatus(
-  status: "connected" | "reconnecting" | "disconnected",
-  self?: boolean,
-): string {
+function headlineForStatus(status: ConnectionPanelConnectionStatus, self?: boolean): string {
   if (status === "connected") return self ? "Match server is live" : "Rival presence is live";
   if (status === "reconnecting") return self ? "Rejoining match server" : "Rival is reconnecting";
   if (status === "disconnected") return self ? "Match server disconnected" : "Rival disconnected";
@@ -287,7 +341,7 @@ function headlineForStatus(
 }
 
 function statusMessage(
-  status: "connected" | "reconnecting" | "disconnected",
+  status: ConnectionPanelConnectionStatus,
   label: string,
   self?: boolean,
 ): string {
@@ -301,9 +355,12 @@ function statusMessage(
       ? "Trying to reconnect to the match server."
       : `${label} is reconnecting to the match.`;
   }
-  return self
-    ? "You are disconnected from the match server."
-    : `${label} is disconnected from the match.`;
+  if (status === "disconnected") {
+    return self
+      ? "You are disconnected from the match server."
+      : `${label} is disconnected from the match.`;
+  }
+  return "Waiting for live presence data.";
 }
 
 function latencyQuality(latencyMs: number | undefined): string {

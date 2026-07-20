@@ -44,6 +44,8 @@ export interface ReplacementEffect {
   eventFilter?: EffectEventFilter;
   conditions?: Condition[];
   oncePerTurn?: boolean;
+  /** Shared identity for branches originating from one printed once-per-turn replacement ability. */
+  oncePerTurnKey?: string;
   /** Mandatory printed replacement. Omitted replacement effects remain optional for compatibility. */
   mandatory?: true;
 }

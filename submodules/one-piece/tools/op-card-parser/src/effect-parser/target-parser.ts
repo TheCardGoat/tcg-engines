@@ -367,7 +367,7 @@ export function parseTarget(text: string): Target | null {
       rest.slice(otherThanInRest.index + otherThanInRest[0].length);
     rest = rest.trim();
   }
-  const otherThanSelfInRest = /\s+other\s+than\s+this\s+Character/i.exec(rest);
+  const otherThanSelfInRest = /\s+other\s+than\s+this\s+(?:Character|card)/i.exec(rest);
   if (otherThanSelfInRest) {
     excludesSelf = true;
     rest =
@@ -408,9 +408,9 @@ export function parseTargetWithoutPlayer(text: string): Target | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
   let rest = trimmed;
-  const excludeSelf = /\s+other\s+than\s+this\s+Character$/i.test(rest);
+  const excludeSelf = /\s+other\s+than\s+this\s+(?:Character|card)$/i.test(rest);
   if (excludeSelf) {
-    rest = rest.replace(/\s+other\s+than\s+this\s+Character$/i, "");
+    rest = rest.replace(/\s+other\s+than\s+this\s+(?:Character|card)$/i, "");
   }
 
   // Handle "all" prefix: "all rested Characters with a cost of 5 or less"
@@ -602,7 +602,7 @@ export function parseModifyPowerTarget(text: string): Target | null {
   }
 
   // Try parseTarget with "other than this Character" handling
-  const otherThanMatch = /^(.+?)\s+other\s+than\s+this\s+Character$/i.exec(trimmed);
+  const otherThanMatch = /^(.+?)\s+other\s+than\s+this\s+(?:Character|card)$/i.exec(trimmed);
   if (otherThanMatch) {
     const target = parseTarget(otherThanMatch[1]!);
     if (target) {

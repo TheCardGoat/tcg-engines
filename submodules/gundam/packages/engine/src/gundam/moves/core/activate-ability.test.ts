@@ -104,6 +104,43 @@ describe("activate-ability — queue migration (PR C)", () => {
     expect(engine.getG().exhausted[enemyId]).toBe(true);
   });
 
+  it("pays a return-self-to-deck cost before target selection", () => {
+    const returnToChoose: CardEffect = {
+      type: "activated",
+      activation: { timing: ["activate:main"] },
+      cost: { returnSelfToDeck: "bottom" },
+      directives: [
+        {
+          action: {
+            action: "rest",
+            target: { owner: "opponent", cardType: "unit", count: 1 },
+          },
+        },
+      ],
+      sourceText: "Return this Unit to the bottom of its owner's deck: Rest 1 enemy Unit.",
+    };
+    const source = createMockUnit({ effects: [returnToChoose] });
+    const enemy = createMockUnit();
+    const engine = GundamTestEngine.create({ play: [source], deck: 2 }, { play: [enemy] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const sourceId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.activateAbility(sourceId, 0, {}));
+
+    expect(p1.getCardZone(sourceId)).toBe(`deck:${PLAYER_ONE}`);
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      sourceCardId: sourceId,
+      controllerId: PLAYER_ONE,
+    });
+    expect(p2.isExhausted(enemyId)).toBe(false);
+
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+    expect(p2.isExhausted(enemyId)).toBe(true);
+  });
+
   it("forwards chosenTargets into statModifier directive (only picked target is buffed)", () => {
     // "Choose 1 friendly Unit. It gets AP+2 during this turn." — with two
     // legal friendlies in play the activate caller's `targets` must

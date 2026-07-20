@@ -462,7 +462,7 @@ export function finalizeBattle(state: MatchState) {
         replacementAction !== undefined && replacementAction.action !== "trashFromHand";
       if (canOfferActionReplacement && replacementSource?.effect.mandatory) {
         getInstance(state, replacementSource!.sourceInstanceId).usedEffectKeys.push(
-          `replacement:${replacementSource!.effect.replacedEvent}:${replacementSource!.replacementEffectIndex}`,
+          replacementSource!.effectKey,
         );
         enqueueResolution(
           state,
@@ -517,6 +517,7 @@ export function finalizeBattle(state: MatchState) {
             sourceInstanceId: replacementSource?.sourceInstanceId,
             replacementEffectIndex: replacementSource?.replacementEffectIndex,
             replacementEvent: replacementSource?.effect.replacedEvent,
+            replacementEffectKey: replacementSource?.effectKey,
             replacementAction: isActionReplacement ? replacementAction : undefined,
           },
         });
@@ -1012,7 +1013,8 @@ export function resolvePrompt(
             context.replacementEffectIndex !== undefined
           ) {
             getInstance(state, context.sourceInstanceId).usedEffectKeys.push(
-              `replacement:${context.replacementEvent ?? "ko"}:${context.replacementEffectIndex}`,
+              context.replacementEffectKey ??
+                `replacement:${context.replacementEvent ?? "ko"}:${context.replacementEffectIndex}`,
             );
           }
           enqueueResolution(
@@ -1052,7 +1054,8 @@ export function resolvePrompt(
           context.replacementEffectIndex !== undefined
         ) {
           getInstance(state, context.sourceInstanceId).usedEffectKeys.push(
-            `replacement:${context.replacementEvent ?? "ko"}:${context.replacementEffectIndex}`,
+            context.replacementEffectKey ??
+              `replacement:${context.replacementEvent ?? "ko"}:${context.replacementEffectIndex}`,
           );
         }
         moveCard(state, replacementId, getInstance(state, replacementId).owner, "trash", {

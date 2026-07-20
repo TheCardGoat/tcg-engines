@@ -89,7 +89,6 @@ export const st09ShinnAsuka008: PilotCard = {
               owner: "friendly",
               cardType: "resource",
               zone: "resourceArea",
-              state: "rested",
               count: 1,
             },
           },

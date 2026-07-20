@@ -1,55 +1,156 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   activeResources,
   createMockPilot,
+  createMockUnit,
+  expectFailure,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { st01GundamMaForm002 } from "./002-gundam-ma-form.ts";
 
+function pilotWithTraits(traits: string[]) {
+  return createMockPilot({ traits, level: 1, cost: 1, apBonus: 0, hpBonus: 0 });
+}
+
 describe("Gundam (MA Form) (ST01-002)", () => {
-  it("【When Paired･(White Base Team) Pilot】 draws 1 when a White Base Team pilot is paired", () => {
-    const wbPilot = createMockPilot({ traits: ["white base team"], level: 1, cost: 1 });
-    const engine = GundamTestEngine.create({
-      hand: [wbPilot],
-      play: [st01GundamMaForm002],
-      resourceArea: activeResources(3),
-      deck: 5,
+  describe("Printed Lv.5 and cost 3", () => {
+    it("cannot deploy with only 4 total Resources", () => {
+      const engine = GundamTestEngine.create({
+        hand: [st01GundamMaForm002],
+        resourceArea: activeResources(4),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const cardId = p1.getHand()[0]!;
+
+      expectFailure(p1.deployUnit(cardId), "INSUFFICIENT_RESOURCE_LEVEL");
+      expect(p1.getHand()).toContain(cardId);
+      expect(p1.getCardsInZone("battleArea")).toHaveLength(0);
     });
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const handBefore = p1.getHand().length;
 
-    expectSuccess(p1.assignPilot(wbPilot, st01GundamMaForm002));
+    it("cannot deploy with fewer than 3 active Resources", () => {
+      const spender = createMockUnit({ level: 1, cost: 3 });
+      const engine = GundamTestEngine.create({
+        hand: [spender, st01GundamMaForm002],
+        resourceArea: activeResources(5),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
 
-    // Pilot leaves hand (-1), whenPaired trigger draws 1 (+1) → net zero.
-    expect(p1.getHand().length).toBe(handBefore);
-    // But deck should have lost one card (5 → 4) proving the draw fired.
-    const deckKey = `deck:${PLAYER_ONE}`;
-    expect(engine.getState().ctx.zones.private.zoneCards[deckKey]!.length).toBe(4);
+      expectSuccess(p1.deployUnit(spender));
+      const cardId = p1.getHand()[0]!;
+      expectFailure(p1.deployUnit(cardId), "INSUFFICIENT_RESOURCES");
+      expect(p1.getHand()).toContain(cardId);
+    });
+
+    it("deploys from hand to the battle area for 3 active Resources", () => {
+      const engine = GundamTestEngine.create({
+        hand: [st01GundamMaForm002],
+        resourceArea: activeResources(5),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const cardId = p1.getHand()[0]!;
+
+      expectSuccess(p1.deployUnit(cardId));
+
+      expect(p1.getHand()).not.toContain(cardId);
+      expect(p1.getCardsInZone("battleArea")).toContain(cardId);
+      expect(p1.getCardZone(cardId)).toBe(`battleArea:${PLAYER_ONE}`);
+    });
   });
 
-  it("does not draw when the paired pilot lacks the White Base Team trait", () => {
-    // Pilot lacks the "white base team" trait — the whenPaired
-    // qualification filter rejects the trigger, so the draw must be
-    // skipped. Rules 3-2-5 / 10-2-1.
-    const nonWbPilot = createMockPilot({ traits: ["zeon"], level: 1, cost: 1 });
-    const engine = GundamTestEngine.create({
-      hand: [nonWbPilot],
-      play: [st01GundamMaForm002],
-      resourceArea: activeResources(3),
-      deck: 5,
+  describe("【When Paired･(White Base Team) Pilot】Draw 1.", () => {
+    it("draws 1 when a White Base Team Pilot is paired with this Unit", () => {
+      const pilot = pilotWithTraits(["white base team"]);
+      const engine = GundamTestEngine.create({
+        hand: [pilot],
+        play: [st01GundamMaForm002],
+        resourceArea: activeResources(5),
+        deck: 5,
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const unitId = p1.getCardsInZone("battleArea")[0]!;
+      const pilotId = p1.getHand()[0]!;
+      const deckBefore = p1.getCardsInZone("deck").length;
+
+      expectSuccess(p1.assignPilot(pilotId, unitId));
+
+      expect(p1.getPilotId(unitId)).toBe(pilotId);
+      expect(p1.getHand()).toHaveLength(1);
+      expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore - 1);
     });
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const handBefore = p1.getHand().length;
-    const deckKey = `deck:${PLAYER_ONE}`;
-    const deckBefore = engine.getState().ctx.zones.private.zoneCards[deckKey]!.length;
 
-    expectSuccess(p1.assignPilot(nonWbPilot, st01GundamMaForm002));
+    it("draws when the Pilot has White Base Team among multiple traits", () => {
+      const pilot = pilotWithTraits(["earth federation", "white base team"]);
+      const engine = GundamTestEngine.create({
+        hand: [pilot],
+        play: [st01GundamMaForm002],
+        resourceArea: activeResources(5),
+        deck: 3,
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const unitId = p1.getCardsInZone("battleArea")[0]!;
 
-    // Pilot leaves hand (-1). No draw → hand is handBefore - 1.
-    expect(p1.getHand().length).toBe(handBefore - 1);
-    // Deck is unchanged — the qualification blocked the trigger.
-    expect(engine.getState().ctx.zones.private.zoneCards[deckKey]!.length).toBe(deckBefore);
+      expectSuccess(p1.assignPilot(pilot, unitId));
+
+      expect(p1.getHand()).toHaveLength(1);
+      expect(p1.getCardsInZone("deck")).toHaveLength(2);
+    });
+
+    it("does not draw when the paired Pilot lacks White Base Team", () => {
+      const pilot = pilotWithTraits(["zeon"]);
+      const engine = GundamTestEngine.create({
+        hand: [pilot],
+        play: [st01GundamMaForm002],
+        resourceArea: activeResources(5),
+        deck: 5,
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const unitId = p1.getCardsInZone("battleArea")[0]!;
+      const deckBefore = p1.getCardsInZone("deck").length;
+
+      expectSuccess(p1.assignPilot(pilot, unitId));
+
+      expect(p1.getHand()).toHaveLength(0);
+      expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore);
+    });
+
+    it("does not trigger when a qualifying Pilot is paired with another friendly Unit", () => {
+      const otherUnit = createMockUnit({ name: "Other Unit" });
+      const pilot = pilotWithTraits(["white base team"]);
+      const engine = GundamTestEngine.create({
+        hand: [pilot],
+        play: [st01GundamMaForm002, otherUnit],
+        resourceArea: activeResources(5),
+        deck: 5,
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const [, otherUnitId] = p1.getCardsInZone("battleArea");
+      const deckBefore = p1.getCardsInZone("deck").length;
+
+      expectSuccess(p1.assignPilot(pilot, otherUnitId!));
+
+      expect(p1.getHand()).toHaveLength(0);
+      expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore);
+    });
+
+    it("cannot pair the Pilot without enough active Resources", () => {
+      const pilot = pilotWithTraits(["white base team"]);
+      const engine = GundamTestEngine.create({
+        hand: [pilot],
+        play: [st01GundamMaForm002],
+        resourceArea: [],
+        deck: 5,
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const unitId = p1.getCardsInZone("battleArea")[0]!;
+      const pilotId = p1.getHand()[0]!;
+
+      expectFailure(p1.assignPilot(pilotId, unitId), "INSUFFICIENT_RESOURCE_LEVEL");
+
+      expect(p1.getHand()).toContain(pilotId);
+      expect(p1.getPilotId(unitId)).toBeUndefined();
+      expect(p1.getCardsInZone("deck")).toHaveLength(5);
+    });
   });
 });

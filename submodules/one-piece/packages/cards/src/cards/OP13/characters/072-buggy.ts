@@ -39,6 +39,7 @@ export const op13Buggy072: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Roger Pirates",
+                match: "includes",
               },
               {
                 condition: "donGiven",

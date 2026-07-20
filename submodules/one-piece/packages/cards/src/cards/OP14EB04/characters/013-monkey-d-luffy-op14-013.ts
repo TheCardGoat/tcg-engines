@@ -5,7 +5,7 @@ export const op14eb04MonkeyDLuffyOp14013013: CharacterCard = {
   id: "OP14-013",
   canonicalId: "OP14-013",
   slug: "monkey-d-luffy-op14-013",
-  name: "Monkey.D.Luffy - OP14-013",
+  name: "Monkey.D.Luffy",
   printings: [
     {
       id: "OP14-013",
@@ -66,6 +66,7 @@ export const op14eb04MonkeyDLuffyOp14013013: CharacterCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
+                match: "includes",
               },
             ],
             revealDestination: "hand",

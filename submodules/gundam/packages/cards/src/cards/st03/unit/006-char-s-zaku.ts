@@ -90,6 +90,7 @@ export const st03CharSZaku006: UnitCard = {
             action: "lookAtTopDeck",
             count: 3,
             return: "chooseTop",
+            randomizeRemainingToBottom: true,
             tutorFilter: {
               owner: "friendly",
               cardType: "unit",

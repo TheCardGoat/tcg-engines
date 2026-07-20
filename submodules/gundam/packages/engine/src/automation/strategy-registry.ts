@@ -1,15 +1,19 @@
 import type { BotInformationPolicy } from "@tcg/bot-core";
 
 import currentPromotion from "./promotions/current.json" with { type: "json" };
+import { combatAwareStrategy } from "./combat-aware-strategy.ts";
 import { greedyLegalStrategy } from "./greedy-legal-strategy.ts";
 import { passOnlyStrategy } from "./pass-only-strategy.ts";
+import { strategicStrategy } from "./strategic-strategy.ts";
 import { tempoStrategy } from "./tempo-strategy.ts";
 import type { CandidateStrategy } from "./types.ts";
 import { valueRankedStrategy } from "./value-ranked-strategy.ts";
 
 export type GundamAutomatedActionStrategyId =
+  | "combat-aware"
   | "greedy-legal"
   | "pass-only"
+  | "strategic"
   | "tempo"
   | "value-ranked";
 
@@ -23,6 +27,21 @@ export interface GundamAutomatedActionStrategyOption {
 }
 
 export const GUNDAM_AUTOMATED_ACTION_STRATEGIES: readonly GundamAutomatedActionStrategyOption[] = [
+  {
+    id: "combat-aware",
+    label: "Combat aware (Oracle information)",
+    description:
+      "Effective-stat attacks and selective Blocker decisions proven by paired evaluation.",
+    informationPolicy: "oracle",
+    strategy: combatAwareStrategy,
+  },
+  {
+    id: "strategic",
+    label: "Strategic (Oracle information)",
+    description: "Board-development and closing-pressure strategy proven by paired evaluation.",
+    informationPolicy: "oracle",
+    strategy: strategicStrategy,
+  },
   {
     id: "value-ranked",
     label: "Value ranked (Oracle information)",
@@ -53,6 +72,9 @@ export const GUNDAM_AUTOMATED_ACTION_STRATEGIES: readonly GundamAutomatedActionS
     testOnly: true,
   },
 ];
+
+/** Semantic fingerprint for automation and strategy implementation changes. */
+export const GUNDAM_AUTOMATION_REVISION = "6";
 
 function isStrategyId(value: string): value is GundamAutomatedActionStrategyId {
   return GUNDAM_AUTOMATED_ACTION_STRATEGIES.some((option) => option.id === value);

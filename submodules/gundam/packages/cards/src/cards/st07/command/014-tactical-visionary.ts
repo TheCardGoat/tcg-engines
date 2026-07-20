@@ -104,6 +104,7 @@ export const st07TacticalVisionary014: CommandCard = {
             action: "lookAtTopDeck",
             count: 3,
             return: "chooseTop",
+            randomizeRemainingToBottom: true,
             tutorFilter: {
               owner: "friendly",
               cardType: ["unit", "pilot"],

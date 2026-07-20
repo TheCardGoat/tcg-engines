@@ -46,11 +46,10 @@ export function MobileActionBar({
 
   return (
     <footer
-      className="grid grid-cols-[1.5fr_1fr_1fr] items-stretch gap-1.5 px-2 border-t border-hud-border flex-shrink-0 min-w-0 overflow-hidden"
+      className="gd-dark-surface grid grid-cols-[1.55fr_1fr_.8fr] items-stretch gap-1.5 border-t border-hud-border bg-hud-deep px-2 py-1 flex-shrink-0 min-w-0 overflow-hidden"
       style={{
         height: `calc(var(--mobile-menubar-height) + var(--safe-bottom))`,
         paddingBottom: "var(--safe-bottom)",
-        background: "linear-gradient(180deg, rgba(248,250,254,.2), rgba(248,250,254,.92))",
       }}
     >
       <Button
@@ -58,19 +57,27 @@ export function MobileActionBar({
         disabled={!primaryEnabled}
         variant={primaryEnabled ? "cockpit" : "outline"}
         size="md"
-        className="hud-corner clip-hud-8 font-display font-extrabold tracking-hud-display px-2"
+        className="h-full min-h-11 rounded-sm px-2 text-[10px] font-extrabold tracking-[.1em]"
         aria-label={primaryLabel}
+        style={{ color: primaryEnabled ? "oklch(0.98 0.006 255)" : "var(--color-hud-text-dim)" }}
       >
         {primaryLabel}
       </Button>
 
-      <UndoButton onUndo={onUndo} canUndo={canUndo} compact />
+      <UndoButton
+        onUndo={onUndo}
+        canUndo={canUndo}
+        compact
+        className="h-full min-h-11"
+        style={{ color: canUndo ? "var(--color-hud-text)" : "var(--color-hud-text-dim)" }}
+      />
 
       <Button
         onClick={onConcede}
         variant="danger"
         size="md"
-        className="clip-hud-6 tracking-hud-label px-1 text-hud-xs"
+        className="h-full min-h-11 rounded-sm px-1 text-[9px] font-bold tracking-[.08em]"
+        style={{ color: "oklch(0.98 0.006 255)" }}
       >
         {m["sim.sidebar.footer.concede"]()}
       </Button>

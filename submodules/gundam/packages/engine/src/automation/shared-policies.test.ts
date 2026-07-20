@@ -57,6 +57,30 @@ describe("composeStrategy: defaults", () => {
     expect(DEFAULT_FAMILY_PRIORITY.passTurn).toBe(11);
     expect(DEFAULT_FAMILY_PRIORITY.concede).toBe(99);
   });
+
+  it("never selects concession as an ordinary strategic candidate", () => {
+    const engine = GundamTestEngine.create({}, {});
+    const concede = enumerateGundamBotCandidates(
+      engine.runtime.getState(),
+      PLAYER_ONE as PlayerId,
+      engine.runtime.getStaticResources(),
+      { moveNameFilter: ["concede"] },
+    );
+    expect(concede.some((candidate) => candidate.family === "concede")).toBe(true);
+
+    const strategy = composeStrategy("no-strategic-concession", {});
+    const selected = strategy.selectCandidates({
+      playerId: PLAYER_ONE as PlayerId,
+      state: engine.runtime.getState(),
+      view: engine.runtime.getFilteredView({ role: "player", playerId: PLAYER_ONE as PlayerId }),
+      candidates: concede,
+      turnNumber: 0,
+      pendingChoice: null,
+      cards: engine.runtime.getCardReadAPI(),
+    });
+
+    expect(selected).toEqual([]);
+  });
 });
 
 describe("composeStrategy: family-policy overrides", () => {

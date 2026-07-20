@@ -529,6 +529,12 @@
   --log-section-border: var(--log-section-steal-border, oklch(0.76 0.1 205 / 0.34));
 }
 
+.sectionGroup[data-section-tone="effect"] {
+  --log-section-accent: var(--log-section-effect, oklch(0.8 0.13 292));
+  --log-section-bg: var(--log-section-effect-bg, oklch(0.3 0.08 292 / 0.2));
+  --log-section-border: var(--log-section-effect-border, oklch(0.73 0.11 292 / 0.34));
+}
+
 .sectionHeader {
   display: grid;
   grid-template-columns: minmax(0, 1fr) max-content;

@@ -27,6 +27,56 @@ export interface DeckCard {
   quantity: number;
 }
 
+export type DeckMetadataFacetKind = "identity" | "individual" | "combination";
+
+export interface DeckMetadataFacetDefinition {
+  type: string;
+  label: string;
+  pluralLabel: string;
+  kind: DeckMetadataFacetKind;
+  order: number;
+}
+
+export interface DeckMetadataMember {
+  cardId: string;
+  label: string;
+  colors: string[];
+  imageUrl?: string | null;
+  attributes?: Record<string, string | number | boolean>;
+}
+
+export interface DeckMetadataFacet {
+  type: string;
+  key: string;
+  label: string;
+  colors: string[];
+  members?: DeckMetadataMember[];
+}
+
+export interface DeckMetadataProjection {
+  schemaVersion: 1;
+  projectionVersion: number;
+  game: PlayableGameSlug;
+  cardCount: number;
+  colors: string[];
+  facets: DeckMetadataFacet[];
+}
+
+export interface GameMetadataCapabilities {
+  colors: boolean;
+  deckLists: boolean;
+  archetypes: boolean;
+}
+
+export interface GameMetadataAdapter {
+  projectionVersion: number;
+  capabilities: GameMetadataCapabilities;
+  facets: readonly DeckMetadataFacetDefinition[];
+  projectDeck(deck: ReadonlyArray<DeckCard>): DeckMetadataProjection;
+  normalizeTemplate(deck: ReadonlyArray<DeckCard>): DeckCard[];
+  normalizeSynergy(deck: ReadonlyArray<DeckCard>): DeckCard[];
+}
+
 export interface DeckFormatRule {
   kind: string;
   passed: boolean;
@@ -51,6 +101,8 @@ export interface DeckFormatResult {
 export interface CardSummary {
   publicId: string;
   colors: readonly string[];
+  label?: string;
+  imageUrl?: string | null;
 }
 
 /**
@@ -122,6 +174,7 @@ export interface GameAdapter {
    * when the format id is unknown for this game.
    */
   validateDeckForFormat(formatId: string, deck: ReadonlyArray<DeckCard>): DeckFormatResult;
+  readonly metadata?: GameMetadataAdapter;
 
   // ── Server engine lifecycle (game-server only) ─────────────────────
   //

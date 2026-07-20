@@ -4,9 +4,9 @@ import { act, cleanup, fireEvent, render, waitFor } from "@testing-library/react
 import { afterEach, describe, expect, test, vi } from "vite-plus/test";
 import type { ReactNode } from "react";
 
-import { CardPreviewProvider } from "../CardPreview/CardPreviewContext";
+import { CardPreviewProvider, useCardPreview } from "../CardPreview/CardPreviewContext";
 import { theme } from "../../theme";
-import { CardInspectProvider } from "./CardInspectContext";
+import { CardInspectProvider, useCardInspect } from "./CardInspectContext";
 import { CardImage } from "./CardImage";
 
 const TEST_IMAGE_URL =
@@ -32,6 +32,42 @@ function Providers({ children }: { children: ReactNode }) {
         <CardPreviewProvider>{children}</CardPreviewProvider>
       </CardInspectProvider>
     </MantineProvider>
+  );
+}
+
+function LeakedHiddenPreviewRequest() {
+  const { show } = useCardPreview();
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        show({
+          imageUrl: "https://private.invalid/leaked-preview.webp",
+          face: "hidden",
+          alt: "Leaked Preview",
+        })
+      }
+    >
+      Request hidden preview
+    </button>
+  );
+}
+
+function LeakedHiddenInspectRequest() {
+  const { inspect } = useCardInspect();
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        inspect({
+          imageUrl: "https://private.invalid/leaked-inspect.webp",
+          face: "hidden",
+          name: "Leaked Inspect",
+        })
+      }
+    >
+      Request hidden inspect
+    </button>
   );
 }
 
@@ -70,6 +106,49 @@ describe("Cyberpunk CardImage preview and inspect", () => {
     cleanup();
     window.matchMedia = originalMatchMedia;
     vi.useRealTimers();
+  });
+
+  test("never mounts leaked private art or opens previews for a face-down card", () => {
+    setHoverCapability(true);
+    const { container, getByAltText } = render(
+      <CardImage
+        imageUrl="https://private.invalid/opponent-hand-secret.webp"
+        faceDown
+        alt="Opponent Secret"
+        inspectOnTap
+      />,
+      { wrapper: Providers },
+    );
+
+    const cardBack = getByAltText("Hidden card");
+    fireEvent.mouseEnter(cardBack.parentElement!);
+    fireEvent.click(cardBack.parentElement!);
+
+    expect(container.innerHTML).not.toContain("private.invalid");
+    expect(container.innerHTML).not.toContain("Opponent Secret");
+    expect(document.body.querySelector('[class*="_preview_"][class*="_visible_"]')).toBeNull();
+    expect(document.body.querySelector('[data-testid="card-inspect-modal"]')).toBeNull();
+  });
+
+  test("rejects a hidden preview request that carries a private URL", () => {
+    setHoverCapability(true);
+    const { getByRole } = render(<LeakedHiddenPreviewRequest />, { wrapper: Providers });
+
+    fireEvent.click(getByRole("button", { name: "Request hidden preview" }));
+
+    expect(document.body.innerHTML).not.toContain("private.invalid");
+    expect(document.body.innerHTML).not.toContain("Leaked Preview");
+  });
+
+  test("rejects a hidden inspect request that carries a private URL", () => {
+    setHoverCapability(false);
+    const { getByRole } = render(<LeakedHiddenInspectRequest />, { wrapper: Providers });
+
+    fireEvent.click(getByRole("button", { name: "Request hidden inspect" }));
+
+    expect(document.body.innerHTML).not.toContain("private.invalid");
+    expect(document.body.innerHTML).not.toContain("Leaked Inspect");
+    expect(document.body.querySelector('[data-testid="card-inspect-modal"]')).toBeNull();
   });
 
   test("shows the global preview while hovering on hover-capable devices", async () => {

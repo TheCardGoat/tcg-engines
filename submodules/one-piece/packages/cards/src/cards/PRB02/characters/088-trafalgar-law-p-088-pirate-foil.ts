@@ -44,5 +44,35 @@ export const prb02TrafalgarLawP088PirateFoil088: CharacterCard = {
   ],
   effect:
     '[Trigger] If your Leader has the "Supernovas" type and you and your opponent have a total of 5 or less Life cards, play this card.Disclaimer: This card was reprinted from the original set with a different border (Note: the original print had a full art border).',
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "compound",
+            operator: "and",
+            conditions: [
+              {
+                condition: "leaderTrait",
+                trait: "Supernovas",
+                match: "includes",
+              },
+              {
+                condition: "totalLifeCount",
+                comparison: "lte",
+                value: 5,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+      },
+    ],
+  },
   i18n: prb02TrafalgarLawP088PirateFoil088I18n,
 };

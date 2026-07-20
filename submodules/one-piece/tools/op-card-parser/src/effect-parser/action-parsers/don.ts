@@ -63,7 +63,7 @@ type GiveDonAction = Extract<Action, { action: "giveDon" }>;
  * - "Give up to 1 rested DON!! card to your Leader"
  * - "give up to 3 rested DON!! cards to your {Land of Wano} type Leader"
  */
-export function parseGiveDonAction(text: string): GiveDonAction | null {
+export function parseGiveDonAction(text: string): GiveDonAction | GiveDonAction[] | null {
   const cleaned = text.trim().replace(/\.+$/, "");
 
   // Pattern 4 (first to avoid greedy match in Pattern 1): "Give up to N rested DON!! card(s) to each of your [Trait] type Characters"
@@ -119,7 +119,31 @@ export function parseGiveDonAction(text: string): GiveDonAction | null {
     };
   }
 
-  // Pattern 3: "Give your Leader and N Character up to M rested DON!! card each"
+  // Pattern 3a: "Give your Leader and 1 Character up to M rested DON!! cards each"
+  // Keep the recipients separate so the Character choice cannot replace the mandatory Leader.
+  const leaderAndOneMatch =
+    /^give\s+your\s+Leader\s+and\s+1\s+Character\s+up\s+to\s+(\d+)\s+rested\s+DON!!\s+cards?\s+each$/i.exec(
+      cleaned,
+    );
+  if (leaderAndOneMatch) {
+    const count = { amount: parseInt(leaderAndOneMatch[1]!, 10), upTo: true } as const;
+    return [
+      {
+        action: "giveDon",
+        target: { player: "self", zones: ["leader"], count: { amount: 1 } },
+        count,
+        donState: "rested",
+      },
+      {
+        action: "giveDon",
+        target: { player: "self", zones: ["character"], count: { amount: 1 } },
+        count,
+        donState: "rested",
+      },
+    ];
+  }
+
+  // Pattern 3b: "Give your Leader and N Characters up to M rested DON!! cards each"
   const eachMatch =
     /^give\s+your\s+Leader\s+and\s+(\d+)\s+Characters?\s+up\s+to\s+(\d+)\s+rested\s+DON!!\s+cards?\s+each$/i.exec(
       cleaned,
@@ -151,6 +175,7 @@ export function parseGiveDonAction(text: string): GiveDonAction | null {
       },
       count: { amount: parseInt(leaderAndAllMatch[1]!, 10), upTo: true },
       donState: "rested",
+      distribution: "each",
     };
   }
 
@@ -233,11 +258,16 @@ export function parseGiveDonTarget(text: string): Target | null {
       text,
     );
   if (leaderOrCharWithTraitMatch) {
-    const filters: TargetFilter[] = [];
-    if (leaderOrCharWithTraitMatch[1])
-      filters.push({ filter: "trait", value: leaderOrCharWithTraitMatch[1] });
-    if (leaderOrCharWithTraitMatch[3])
-      filters.push({ filter: "trait", value: leaderOrCharWithTraitMatch[3] });
+    const traits = new Set(
+      [leaderOrCharWithTraitMatch[1], leaderOrCharWithTraitMatch[3]].filter(
+        (trait): trait is string => Boolean(trait),
+      ),
+    );
+    const filters: TargetFilter[] = Array.from(traits, (trait) => ({
+      filter: "trait",
+      value: trait,
+      match: "includes",
+    }));
     return {
       player: "self",
       zones: ["leader", "character"],
@@ -257,6 +287,7 @@ export function parseGiveDonTarget(text: string): Target | null {
     const traitParts = traitZoneMatch[2]!.split(/\s+or\s+/i);
     const traitFilter = traitAlternativesFilter(
       traitParts.map((part) => part.replace(/^[[{]|[\]}]$/g, "").trim()),
+      "includes",
     );
     const filters: TargetFilter[] = traitFilter ? [traitFilter] : [];
     const zonesText = traitZoneMatch[3]!;

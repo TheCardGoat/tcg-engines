@@ -1,0 +1,216 @@
+{
+  "baseline": {
+    "options": {
+      "p1Strategy": "combat-aware",
+      "p2Strategy": "combat-aware",
+      "p1Deck": "ef-starter",
+      "p2Deck": "ef-starter",
+      "matches": 24,
+      "seedBase": "cmd-screen-ef-starter",
+      "maxActions": 1500,
+      "label": "command baseline ef-starter"
+    },
+    "summary": {
+      "matches": 24,
+      "p1WinRate": 0.6666666666666666,
+      "p2WinRate": 0.3333333333333333,
+      "drawRate": 0,
+      "avgTurns": 13.666666666666666,
+      "avgActions": 167.45833333333334,
+      "avgElapsedMs": 93.25,
+      "terminationDistribution": {
+        "game-won": 24,
+        "automation-concession": 0,
+        "repeated-state": 0,
+        "max-actions-exceeded": 0,
+        "concede-failed": 0
+      },
+      "winReasonDistribution": {
+        "player_two has no shields remaining": 16,
+        "player_one has no shields remaining": 8
+      }
+    }
+  },
+  "candidate": {
+    "options": {
+      "p1Strategy": "iter-20-command-impact",
+      "p2Strategy": "combat-aware",
+      "p1Deck": "ef-starter",
+      "p2Deck": "ef-starter",
+      "matches": 24,
+      "seedBase": "cmd-screen-ef-starter",
+      "maxActions": 1500,
+      "label": "command impact ef-starter"
+    },
+    "summary": {
+      "matches": 24,
+      "p1WinRate": 0.6666666666666666,
+      "p2WinRate": 0.3333333333333333,
+      "drawRate": 0,
+      "avgTurns": 13.666666666666666,
+      "avgActions": 167.45833333333334,
+      "avgElapsedMs": 134.875,
+      "terminationDistribution": {
+        "game-won": 24,
+        "automation-concession": 0,
+        "repeated-state": 0,
+        "max-actions-exceeded": 0,
+        "concede-failed": 0
+      },
+      "winReasonDistribution": {
+        "player_two has no shields remaining": 16,
+        "player_one has no shields remaining": 8
+      }
+    }
+  },
+  "improvedFor": "p1",
+  "winRateDelta": 0,
+  "avgTurnsDelta": 0,
+  "avgActionsDelta": 0,
+  "drawRateDelta": 0,
+  "terminationDelta": {
+    "game-won": 0,
+    "automation-concession": 0,
+    "repeated-state": 0,
+    "max-actions-exceeded": 0,
+    "concede-failed": 0
+  },
+  "families": {
+    "chooseFirstPlayer": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "alterHand": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "deployUnit": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "deployBase": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "playCommand": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "activateAbility": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "assignPilot": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "playCommandAsPilot": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "declareBlock": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "enterBattle": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "passBlock": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "passBattleAction": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "discardToHandLimit": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 0,
+      "successRateCandidate": 0,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "passTurn": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "passActionStep": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "concede": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 0,
+      "successRateCandidate": 0,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "skipOpponentTurn": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 0,
+      "successRateCandidate": 0,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "dropOpponent": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 0,
+      "successRateCandidate": 0,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    },
+    "resolveEffect": {
+      "attemptedDelta": 0,
+      "successRateBaseline": 1,
+      "successRateCandidate": 1,
+      "successRateDelta": 0,
+      "newErrorCodes": []
+    }
+  },
+  "regressions": [],
+  "improvements": [],
+  "verdict": "win-rate 0.0pp, gained 0 flipped matches, lost 0"
+}

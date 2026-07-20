@@ -31,7 +31,9 @@ export const op14eb04IsshoOp14021021: CharacterCard = {
     effects: [
       {
         trigger: "whenBecomesRested",
-        eventFilter: { targetSelf: true },
+        eventFilter: {
+          targetSelf: true,
+        },
         conditions: [
           {
             condition: "turn",
@@ -46,6 +48,7 @@ export const op14eb04IsshoOp14021021: CharacterCard = {
               amount: 1,
             },
             destination: "hand",
+            position: "top",
             thenActions: [
               {
                 action: "freeze",

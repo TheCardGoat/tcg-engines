@@ -152,4 +152,31 @@ describe("enumerateAvailableMovesDetailed", () => {
     const moves = getDetailed(engine, PLAYER_TWO);
     expect(moves.find((m) => m.moveName === "deployUnit")).toBeUndefined();
   });
+
+  it("keeps concede available and executable for the non-active player", () => {
+    const engine = GundamTestEngine.create({ hand: [] });
+    const moves = getDetailed(engine, PLAYER_TWO);
+
+    expect(moves.find((m) => m.moveName === "concede")).toMatchObject({
+      requiresCardSelection: false,
+      selectableCardIds: [],
+    });
+
+    const result = engine.getRuntime().executeCommand(
+      {
+        commandID: "non-active-player-concede",
+        move: "concede",
+        prevStateID: engine.getRuntime().getState().ctx._stateID,
+        actorRole: "player",
+        args: {},
+      },
+      PLAYER_TWO as PlayerId,
+    );
+
+    expect(result.success).toBe(true);
+    expect(engine.getRuntime().getState().ctx.status).toMatchObject({
+      gameEnded: true,
+      winner: PLAYER_ONE,
+    });
+  });
 });

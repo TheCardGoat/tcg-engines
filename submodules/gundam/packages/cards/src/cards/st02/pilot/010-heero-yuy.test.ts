@@ -1,88 +1,164 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
+  activeResources,
+  createMockUnit,
+  expectFailure,
+  expectSuccess,
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  activeResources,
-  createMockUnit,
-  expectSuccess,
-  getEffectiveStats,
-  seedShieldsFromDeck,
+  restedResources,
 } from "@tcg/gundam-engine";
-import type { PlayerId } from "@tcg/gundam-engine";
 import { st02HeeroYuy010 } from "./010-heero-yuy.ts";
 
 describe("Heero Yuy (ST02-010)", () => {
-  it("【Burst】 Add this card to your hand — moves shield into hand", () => {
-    const engine = GundamTestEngine.create({}, { deck: [st02HeeroYuy010] });
-    const [shieldId] = seedShieldsFromDeck(engine, PLAYER_TWO, 1);
-    if (!shieldId) throw new Error("seed failed");
+  describe("【Burst】Add this card to your hand.", () => {
+    it("adds Heero Yuy to hand when its controller accepts the revealed Shield prompt", () => {
+      const attacker = createMockUnit({ name: "Attacker", ap: 1, hp: 5 });
+      const engine = GundamTestEngine.create(
+        { play: [attacker] },
+        { shieldArea: [st02HeeroYuy010] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const attackerId = p1.getCardsInZone("battleArea")[0]!;
+      expectSuccess(p1.enterBattle(attackerId, "direct"));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+      const burst = p2.getBoardView().pendingChoice;
+      if (burst?.kind !== "optional") throw new Error("Expected Heero Yuy's Burst choice");
+      const shieldId = burst.sourceCardId;
+      expect(burst.directiveIndex).toBe(-1);
+      expectSuccess(p2.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
-    engine.fireShieldBurst(shieldId);
+      expect(p2.getHand()).toContain(shieldId);
+      expect(p2.getCardZone(shieldId)).toBe(`hand:${PLAYER_TWO}`);
+      expect(p2.getBoardView().pendingChoice).toBeUndefined();
+    });
 
-    expect(engine.getState().ctx.zones.private.cardIndex[shieldId]?.zoneKey).toBe(
-      `hand:${PLAYER_TWO}`,
-    );
+    it("puts Heero Yuy into trash when its controller declines Burst", () => {
+      const attacker = createMockUnit({ name: "Attacker", ap: 1, hp: 5 });
+      const engine = GundamTestEngine.create(
+        { play: [attacker] },
+        { shieldArea: [st02HeeroYuy010] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const attackerId = p1.getCardsInZone("battleArea")[0]!;
+      expectSuccess(p1.enterBattle(attackerId, "direct"));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+      const burst = p2.getBoardView().pendingChoice;
+      if (burst?.kind !== "optional") throw new Error("Expected Heero Yuy's Burst choice");
+      const shieldId = burst.sourceCardId;
+      expectSuccess(p2.resolveEffect({ optionalAnswers: { [burst.directiveIndex]: false } }));
+
+      expect(p2.getHand()).not.toContain(shieldId);
+      expect(p2.getCardZone(shieldId)).toBe(`trash:${PLAYER_TWO}`);
+      expect(p2.getBoardView().pendingChoice).toBeUndefined();
+    });
   });
 
-  it("【During Link】 grants AP+1 and HP+1 while the unit is linked", () => {
-    // Pilot-resident constant effect with a `duringLink` condition
-    // applies AP+1 / HP+1 to the paired unit (rule 3-3-9-1 — "this Unit"
-    // on a pilot card is the paired unit). The derived-state continuous
-    // scan now iterates pilot cards in battleArea, and `owner: "self"`
-    // rebinds onto the paired unit's identity so the modifier lands.
-    const baseAp = 2;
-    const baseHp = 4;
-    const unit = createMockUnit({
-      ap: baseAp,
-      hp: baseHp,
-      level: 4,
-      cost: 1,
-      linkCondition: "[Heero Yuy]",
-    } as unknown as Parameters<typeof createMockUnit>[0]);
+  describe("【During Link】This Unit gets AP+1 and HP+1.", () => {
+    it("adds AP+1 and HP+1 to the linked host in addition to Heero's Pilot bonuses", () => {
+      const host = createMockUnit({
+        name: "Linked Host",
+        ap: 2,
+        hp: 4,
+        linkCondition: "[Heero Yuy]",
+      });
+      const ally = createMockUnit({ name: "Ally", ap: 2, hp: 4 });
+      const engine = GundamTestEngine.create({
+        hand: [st02HeeroYuy010],
+        play: [host, ally],
+        resourceArea: activeResources(4),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const [hostId, allyId] = p1.getCardsInZone("battleArea");
+      const heeroId = p1.getHand()[0]!;
 
-    const engine = GundamTestEngine.create(
-      { hand: [unit, st02HeeroYuy010], resourceArea: activeResources(5) },
-      {},
-    );
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    expectSuccess(p1.deployUnit(unit));
-    expectSuccess(p1.assignPilot(st02HeeroYuy010, unit));
+      expectSuccess(p1.assignPilot(heeroId, hostId!));
 
-    const runtime = engine.getRuntime();
-    const framework = runtime.getFrameworkReadAPI();
-    const unitId = runtime.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, unit.cardNumber)!;
+      expect(p1.getPilotId(hostId!)).toBe(heeroId);
+      expect(p1.getCardZone(heeroId)).toBe(`battleArea:${PLAYER_ONE}`);
+      expect(p1.getVisibleCard(hostId!)).toMatchObject({ effectiveAp: 5, effectiveHp: 6 });
+      expect(p1.getVisibleCard(allyId!)).toMatchObject({ effectiveAp: 2, effectiveHp: 4 });
+      expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(1);
+    });
 
-    const stats = getEffectiveStats(unitId, engine.getG(), framework.cards, framework);
-    // Pilot's apBonus (2) + duringLink AP+1 → +3 above base.
-    // Pilot's hpBonus (1) + duringLink HP+1 → +2 above base.
-    expect(stats.ap).toBe(baseAp + 2 + 1);
-    expect(stats.hp).toBe(baseHp + 1 + 1);
+    it("does not add the During Link modifier when Heero does not satisfy the host's Link Condition", () => {
+      const host = createMockUnit({
+        name: "Non-Link Host",
+        ap: 2,
+        hp: 4,
+        linkCondition: "[Zechs Merquise]",
+      });
+      const engine = GundamTestEngine.create({
+        hand: [st02HeeroYuy010],
+        play: [host],
+        resourceArea: activeResources(4),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const hostId = p1.getCardsInZone("battleArea")[0]!;
+
+      expectSuccess(p1.assignPilot(st02HeeroYuy010, hostId));
+
+      expect(p1.getVisibleCard(hostId)).toMatchObject({ effectiveAp: 4, effectiveHp: 5 });
+    });
   });
 
-  it("【During Link】 does NOT apply when the pairing isn't a link", () => {
-    // Same pilot paired onto a unit whose linkCondition the pilot does not
-    // satisfy (or that has no linkCondition at all) → not a link unit, so
-    // the duringLink gate must keep the modifier off.
-    const baseAp = 2;
-    const baseHp = 4;
-    const unit = createMockUnit({ ap: baseAp, hp: baseHp, level: 4, cost: 1 });
+  describe("pairing Heero Yuy", () => {
+    it("cannot pair below Heero's printed Lv.4 requirement", () => {
+      const host = createMockUnit({ name: "Host" });
+      const engine = GundamTestEngine.create({
+        hand: [st02HeeroYuy010],
+        play: [host],
+        resourceArea: activeResources(3),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const hostId = p1.getCardsInZone("battleArea")[0]!;
 
-    const engine = GundamTestEngine.create(
-      { hand: [unit, st02HeeroYuy010], resourceArea: activeResources(5) },
-      {},
-    );
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    expectSuccess(p1.deployUnit(unit));
-    expectSuccess(p1.assignPilot(st02HeeroYuy010, unit));
+      expectFailure(p1.assignPilot(st02HeeroYuy010, hostId), "INSUFFICIENT_RESOURCE_LEVEL");
 
-    const runtime = engine.getRuntime();
-    const framework = runtime.getFrameworkReadAPI();
-    const unitId = runtime.getInstanceIdByDefinition(PLAYER_ONE as PlayerId, unit.cardNumber)!;
+      expect(p1.getCardZone(st02HeeroYuy010)).toBe(`hand:${PLAYER_ONE}`);
+      expect(p1.getPilotId(hostId)).toBeUndefined();
+    });
 
-    const stats = getEffectiveStats(unitId, engine.getG(), framework.cards, framework);
-    // Just the pilot apBonus / hpBonus, no duringLink delta.
-    expect(stats.ap).toBe(baseAp + 2);
-    expect(stats.hp).toBe(baseHp + 1);
+    it("cannot pay Heero's printed cost without an active Resource", () => {
+      const host = createMockUnit({ name: "Host" });
+      const engine = GundamTestEngine.create({
+        hand: [st02HeeroYuy010],
+        play: [host],
+        resourceArea: restedResources(4),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const hostId = p1.getCardsInZone("battleArea")[0]!;
+
+      expectFailure(p1.assignPilot(st02HeeroYuy010, hostId), "INSUFFICIENT_RESOURCES");
+
+      expect(p1.getCardZone(st02HeeroYuy010)).toBe(`hand:${PLAYER_ONE}`);
+      expect(p1.getPilotId(hostId)).toBeUndefined();
+    });
+
+    it("cannot pair during a legally reached Action Step", () => {
+      const host = createMockUnit({ name: "Host" });
+      const engine = GundamTestEngine.create({
+        hand: [st02HeeroYuy010],
+        play: [host],
+        resourceArea: activeResources(4),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const hostId = p1.getCardsInZone("battleArea")[0]!;
+
+      expectSuccess(p1.passPhase());
+      expectSuccess(p2.passActionStep());
+      expectFailure(p1.assignPilot(st02HeeroYuy010, hostId), "WRONG_PHASE");
+
+      expect(p1.getCardZone(st02HeeroYuy010)).toBe(`hand:${PLAYER_ONE}`);
+      expect(p1.getPilotId(hostId)).toBeUndefined();
+    });
   });
 });

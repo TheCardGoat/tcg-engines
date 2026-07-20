@@ -35,13 +35,32 @@ function sourceIsInPlay(state: MatchState, sourceInstanceId: string): boolean {
   }
 }
 
-function sourceEffectsAreNegated(state: MatchState, sourceInstanceId: string): boolean {
+function inPlaySources(state: MatchState): CardInstance[] {
+  const sourceIds = Object.values(state.players).flatMap((player) => [
+    player.leaderInstanceId,
+    ...player.characterArea,
+    player.stageArea,
+  ]);
+  return sourceIds.flatMap((sourceId) => {
+    const source = sourceId ? state.cards[sourceId] : undefined;
+    return source ? [source] : [];
+  });
+}
+
+function sourceEffectsAreNegatedByModifier(state: MatchState, sourceInstanceId: string): boolean {
   return Object.values(state.modifiers).some(
     (modifier) =>
       modifier.targetId === sourceInstanceId &&
       modifier.type === "flag" &&
       modifier.flag === "effectsNegated" &&
       !modifier.negatedEffectTypes?.length,
+  );
+}
+
+function sourceEffectsAreNegated(state: MatchState, sourceInstanceId: string): boolean {
+  return (
+    sourceEffectsAreNegatedByModifier(state, sourceInstanceId) ||
+    effectsNegatedByPermanentEffect(state, sourceInstanceId, undefined)
   );
 }
 
@@ -310,45 +329,81 @@ export function isRestPreventedByPermanentEffect(
   }
 }
 
-export function arePlayerEffectsNegatedByPermanentEffect(
+function effectsNegatedByPermanentEffect(
   state: MatchState,
   targetInstanceId: string,
   trigger: EffectTrigger | undefined,
 ): boolean {
   const targetController = state.cards[targetInstanceId]?.controller;
   if (!targetController) return false;
-  for (const source of Object.values(state.cards)) {
-    if (
-      !sourceIsInPlay(state, source.instanceId) ||
-      sourceEffectsAreNegated(state, source.instanceId)
-    ) {
-      continue;
-    }
-    const card = getCard(source.cardId);
-    for (const effect of card.effects?.permanentEffects ?? []) {
-      const conditions = evaluateConditions(
-        state,
-        source.controller,
-        source.instanceId,
-        effect.conditions,
+  const evaluationKey = `effectsNegated:${targetInstanceId}:${trigger ?? "all"}`;
+  const active = activeEvaluations.get(state) ?? new Set<string>();
+  if (active.has(evaluationKey)) return false;
+  activeEvaluations.set(state, active);
+  active.add(evaluationKey);
+
+  try {
+    for (const source of inPlaySources(state)) {
+      if (sourceEffectsAreNegatedByModifier(state, source.instanceId)) {
+        continue;
+      }
+      const card = getCard(source.cardId);
+      const negatingEffects = (card.effects?.permanentEffects ?? []).filter((effect) =>
+        effect.actions.some(
+          (action) => action.action === "negatePlayerEffects" || action.action === "negateEffects",
+        ),
       );
-      if (!conditions.supported || !conditions.matches) continue;
-      for (const action of effect.actions) {
-        if (action.action !== "negatePlayerEffects") continue;
-        const affectedController =
-          action.player === "self"
-            ? source.controller
-            : source.controller === "north"
-              ? "south"
-              : "north";
-        if (affectedController !== targetController) continue;
-        if (!action.effectTypes?.length || (trigger && action.effectTypes.includes(trigger))) {
-          return true;
+      if (negatingEffects.length === 0) continue;
+      if (effectsNegatedByPermanentEffect(state, source.instanceId, undefined)) continue;
+      for (const effect of negatingEffects) {
+        const conditions = evaluateConditions(
+          state,
+          source.controller,
+          source.instanceId,
+          effect.conditions,
+        );
+        if (!conditions.supported || !conditions.matches) continue;
+        for (const action of effect.actions) {
+          if (action.action === "negatePlayerEffects") {
+            const affectedController =
+              action.player === "self"
+                ? source.controller
+                : source.controller === "north"
+                  ? "south"
+                  : "north";
+            if (affectedController !== targetController) continue;
+            if (!action.effectTypes?.length || (trigger && action.effectTypes.includes(trigger))) {
+              return true;
+            }
+          }
+          if (action.action === "negateEffects") {
+            const pool = candidatePoolForTarget(
+              state,
+              source.controller,
+              source.instanceId,
+              action.target,
+            );
+            if (!pool.supported || !pool.candidateIds.includes(targetInstanceId)) continue;
+            if (!action.effectTypes?.length || (trigger && action.effectTypes.includes(trigger))) {
+              return true;
+            }
+          }
         }
       }
     }
+    return false;
+  } finally {
+    active.delete(evaluationKey);
+    if (active.size === 0) activeEvaluations.delete(state);
   }
-  return false;
+}
+
+export function arePlayerEffectsNegatedByPermanentEffect(
+  state: MatchState,
+  targetInstanceId: string,
+  trigger: EffectTrigger | undefined,
+): boolean {
+  return effectsNegatedByPermanentEffect(state, targetInstanceId, trigger);
 }
 
 export function isCharacterRemovalPreventedByPermanentEffect(

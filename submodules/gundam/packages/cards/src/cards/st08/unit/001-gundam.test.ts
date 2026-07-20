@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
@@ -12,114 +12,194 @@ import {
 import { st08Gundam001 } from "./001-gundam.ts";
 
 describe("Ξ Gundam (ST08-001)", () => {
-  describe("While you have no Units that are Lv.6 or higher in play, this card in your hand gets Lv. -1 and cost -1 for each enemy Unit in play.", () => {
-    it("reduces its hand level and cost by the number of enemy Units in play", () => {
-      const enemyA = createMockUnit({ cardNumber: "TEST-XI-ENEMY-A" });
-      const enemyB = createMockUnit({ cardNumber: "TEST-XI-ENEMY-B" });
-      const engine = GundamTestEngine.create(
-        { hand: [st08Gundam001], resourceArea: activeResources(7) },
-        { play: [enemyA, enemyB] },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-
-      expectSuccess(p1.deployUnit(st08Gundam001));
-
-      expect(p1.getCardsInZone("battleArea")).toHaveLength(1);
-      expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(6);
-    });
-
-    it("does not reduce while you have a friendly Lv.6 or higher Unit in play", () => {
-      const highLevelFriendly = createMockUnit({
-        cardNumber: "TEST-XI-FRIEND-L6",
-        level: 6,
-      });
-      const enemyA = createMockUnit({ cardNumber: "TEST-XI-ENEMY-C" });
-      const enemyB = createMockUnit({ cardNumber: "TEST-XI-ENEMY-D" });
-      const engine = GundamTestEngine.create(
-        {
-          hand: [st08Gundam001],
-          play: [highLevelFriendly],
-          resourceArea: activeResources(7),
-        },
-        { play: [enemyA, enemyB] },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-
-      expectFailure(p1.deployUnit(st08Gundam001), "INSUFFICIENT_RESOURCE_LEVEL");
-    });
-
-    it("does not reduce when there are no enemy Units in play", () => {
+  describe("Lv.9 cost 8 AP5 HP5 Link Unit", () => {
+    it("deploys at its printed values and pays eight when no reduction applies", () => {
       const engine = GundamTestEngine.create({
         hand: [st08Gundam001],
-        resourceArea: activeResources(8),
+        resourceArea: activeResources(9),
       });
       const p1 = engine.asPlayer(PLAYER_ONE);
-
-      expectFailure(p1.deployUnit(st08Gundam001), "INSUFFICIENT_RESOURCE_LEVEL");
+      expectSuccess(p1.deployUnit(st08Gundam001));
+      const xiId = p1.getCardsInZone("battleArea")[0]!;
+      expect(p1.getVisibleCard(xiId)).toMatchObject({ effectiveAp: 5, effectiveHp: 5 });
+      expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(8);
     });
 
-    it("does not count enemy Units outside the battle area for hand reductions", () => {
-      const enemyHandUnit = createMockUnit({ cardNumber: "TEST-XI-ENEMY-HAND" });
-      const enemyTrashUnit = createMockUnit({ cardNumber: "TEST-XI-ENEMY-TRASH" });
-      const engine = GundamTestEngine.create(
-        { hand: [st08Gundam001], resourceArea: activeResources(8) },
-        { hand: [enemyHandUnit], trash: [enemyTrashUnit] },
-      );
-      const p1 = engine.asPlayer(PLAYER_ONE);
-
+    it("requires printed Lv.9 when there are no enemy Units", () => {
+      const p1 = GundamTestEngine.create({
+        hand: [st08Gundam001],
+        resourceArea: activeResources(8),
+      }).asPlayer(PLAYER_ONE);
       expectFailure(p1.deployUnit(st08Gundam001), "INSUFFICIENT_RESOURCE_LEVEL");
+      expect(p1.getCardZone(st08Gundam001)).toBe(`hand:${PLAYER_ONE}`);
     });
   });
 
-  describe("【When Paired】Choose 1 enemy Unit with the highest Lv. Deal 3 damage to it.", () => {
-    it("deals 3 damage to the highest-level enemy Unit when paired", () => {
-      const hathaway = createMockPilot({ name: "Hathaway Noa", level: 1, cost: 1 });
-      const lowLevelEnemy = createMockUnit({
-        cardNumber: "TEST-XI-LOW",
-        level: 3,
-        hp: 6,
-      });
-      const highLevelEnemy = createMockUnit({
-        cardNumber: "TEST-XI-HIGH",
-        level: 7,
-        hp: 6,
-      });
+  describe("hand Lv./cost reduction per enemy Unit in play", () => {
+    it("with one enemy Unit, deploys at Lv.8 and cost 7", () => {
+      const engine = GundamTestEngine.create(
+        { hand: [st08Gundam001], resourceArea: activeResources(8) },
+        { play: [createMockUnit()] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      expectSuccess(p1.deployUnit(st08Gundam001));
+      expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(7);
+    });
+
+    it("with two enemy Units, deploys at Lv.7 and cost 6", () => {
+      const engine = GundamTestEngine.create(
+        { hand: [st08Gundam001], resourceArea: activeResources(7) },
+        { play: [createMockUnit(), createMockUnit()] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      expectSuccess(p1.deployUnit(st08Gundam001));
+      expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(6);
+    });
+
+    it("counts an enemy Unit token in play", () => {
+      const engine = GundamTestEngine.create(
+        { hand: [st08Gundam001], resourceArea: activeResources(8) },
+        { play: [{ card: createMockUnit(), isToken: true }] },
+      );
+      expectSuccess(engine.asPlayer(PLAYER_ONE).deployUnit(st08Gundam001));
+    });
+
+    it("still applies with a friendly Lv.5 Unit, below the printed cutoff", () => {
       const engine = GundamTestEngine.create(
         {
-          hand: [hathaway],
+          hand: [st08Gundam001],
+          play: [createMockUnit({ level: 5 })],
+          resourceArea: activeResources(8),
+        },
+        { play: [createMockUnit()] },
+      );
+      expectSuccess(engine.asPlayer(PLAYER_ONE).deployUnit(st08Gundam001));
+    });
+
+    it("is entirely disabled by a friendly Unit at exactly Lv.6", () => {
+      const engine = GundamTestEngine.create(
+        {
+          hand: [st08Gundam001],
+          play: [createMockUnit({ level: 6 })],
+          resourceArea: activeResources(8),
+        },
+        { play: [createMockUnit(), createMockUnit()] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      expectFailure(p1.deployUnit(st08Gundam001), "INSUFFICIENT_RESOURCE_LEVEL");
+      expect(p1.getCardZone(st08Gundam001)).toBe(`hand:${PLAYER_ONE}`);
+    });
+
+    it("does not count enemy Units in hand or trash", () => {
+      const engine = GundamTestEngine.create(
+        { hand: [st08Gundam001], resourceArea: activeResources(8) },
+        { hand: [createMockUnit()], trash: [createMockUnit()] },
+      );
+      expectFailure(
+        engine.asPlayer(PLAYER_ONE).deployUnit(st08Gundam001),
+        "INSUFFICIENT_RESOURCE_LEVEL",
+      );
+    });
+  });
+
+  describe("【When Paired】3 damage to one highest-Lv enemy Unit", () => {
+    it("offers only the unique highest-Lv enemy and deals exactly 3 damage", () => {
+      const engine = GundamTestEngine.create(
+        {
+          hand: [createMockPilot({ name: "Any Pilot", level: 1, cost: 1 })],
           play: [st08Gundam001],
           resourceArea: activeResources(1),
         },
-        { play: [lowLevelEnemy, highLevelEnemy] },
+        {
+          play: [createMockUnit({ level: 3, hp: 6 }), createMockUnit({ level: 7, hp: 6 })],
+        },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
-      const [lowLevelId, highLevelId] = p2.getCardsInZone("battleArea");
-
-      expectSuccess(p1.assignPilot(hathaway, st08Gundam001));
+      const xiId = p1.getCardsInZone("battleArea")[0]!;
+      const [lowId, highId] = p2.getCardsInZone("battleArea");
+      const pilotId = p1.getHand()[0]!;
+      expectSuccess(p1.assignPilot(pilotId, xiId));
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "targetSelection",
-        legalTargetIds: [highLevelId],
+        sourceCardId: xiId,
+        legalTargetIds: [highId],
+        minTargets: 1,
+        maxTargets: 1,
       });
-      expectSuccess(p1.resolveEffect({ targets: [highLevelId!] }));
-
-      expect(p2.getDamage(highLevelId!)).toBe(3);
-      expect(p2.getDamage(lowLevelId!)).toBe(0);
+      expectFailure(p1.resolveEffect({ targets: [lowId!] }), "ILLEGAL_TARGET");
+      expectSuccess(p1.resolveEffect({ targets: [highId!] }));
+      expect(p2.getDamage(highId!)).toBe(3);
+      expect(p2.getDamage(lowId!)).toBe(0);
+      expect(p1.getPilotId(xiId)).toBe(pilotId);
     });
 
-    it("does not deal damage when the opponent controls no Units", () => {
-      const hathaway = createMockPilot({ name: "Hathaway Noa", level: 1, cost: 1 });
+    it("offers every enemy tied for highest Lv but damages only the chosen one", () => {
+      const engine = GundamTestEngine.create(
+        {
+          hand: [createMockPilot({ level: 1, cost: 1 })],
+          play: [st08Gundam001],
+          resourceArea: activeResources(1),
+        },
+        { play: [createMockUnit({ level: 5, hp: 6 }), createMockUnit({ level: 5, hp: 6 })] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const [firstId, secondId] = p2.getCardsInZone("battleArea");
+      expectSuccess(p1.assignPilot(p1.getHand()[0]!, p1.getCardsInZone("battleArea")[0]!));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: expect.arrayContaining([firstId, secondId]),
+      });
+      expectSuccess(p1.resolveEffect({ targets: [secondId!] }));
+      expect(p2.getDamage(firstId!)).toBe(0);
+      expect(p2.getDamage(secondId!)).toBe(3);
+    });
+
+    it("destroys a highest-Lv enemy Unit with exactly 3 HP", () => {
+      const engine = GundamTestEngine.create(
+        {
+          hand: [createMockPilot({ level: 1, cost: 1 })],
+          play: [st08Gundam001],
+          resourceArea: activeResources(1),
+        },
+        { play: [createMockUnit({ level: 4, hp: 3 })] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const enemyId = p2.getCardsInZone("battleArea")[0]!;
+      expectSuccess(p1.assignPilot(p1.getHand()[0]!, p1.getCardsInZone("battleArea")[0]!));
+      expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+      expect(p2.getCardZone(enemyId)).toBe(`trash:${PLAYER_TWO}`);
+    });
+
+    it("rejects a friendly Unit even if its Lv. is as high as the enemy maximum", () => {
+      const engine = GundamTestEngine.create(
+        {
+          hand: [createMockPilot({ level: 1, cost: 1 })],
+          play: [st08Gundam001, createMockUnit({ level: 7 })],
+          resourceArea: activeResources(1),
+        },
+        { play: [createMockUnit({ level: 7, hp: 6 })] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const xiId = p1.getCardsInZone("battleArea")[0]!;
+      const friendlyId = p1.getCardsInZone("battleArea")[1]!;
+      expectSuccess(p1.assignPilot(p1.getHand()[0]!, xiId));
+      expectFailure(p1.resolveEffect({ targets: [friendlyId] }), "ILLEGAL_TARGET");
+    });
+
+    it("pairs successfully and skips the trigger when the opponent has no Unit", () => {
       const engine = GundamTestEngine.create({
-        hand: [hathaway],
+        hand: [createMockPilot({ level: 1, cost: 1 })],
         play: [st08Gundam001],
         resourceArea: activeResources(1),
       });
       const p1 = engine.asPlayer(PLAYER_ONE);
-
-      expectSuccess(p1.assignPilot(hathaway, st08Gundam001));
-
+      const xiId = p1.getCardsInZone("battleArea")[0]!;
+      expectSuccess(p1.assignPilot(p1.getHand()[0]!, xiId));
       expect(p1.getBoardView().pendingChoice).toBeUndefined();
-      expect(p1.getPilotId(p1.getCardsInZone("battleArea")[0]!)).toBeDefined();
+      expect(p1.getPilotId(xiId)).toBeDefined();
     });
   });
 });

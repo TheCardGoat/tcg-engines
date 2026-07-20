@@ -30,6 +30,9 @@ export const op14eb04Mr3Galdino092: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "ko",
+        eventFilter: {
+          targetSelf: true,
+        },
         replacementAction: {
           action: "returnToDeck",
           target: {

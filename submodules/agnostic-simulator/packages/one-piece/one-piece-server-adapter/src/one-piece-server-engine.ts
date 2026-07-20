@@ -9,6 +9,7 @@ import type {
   CardZone,
   EngineCommand,
   GameLogEntry,
+  EngineAnimation,
   JudgeCommand,
   MatchSeat,
   MatchState,
@@ -22,6 +23,7 @@ import type {
   DispatchContext,
   DispatchResult,
   EngineLogRecord,
+  PacketAnimation,
   ServerGameEngine,
 } from "@tcg/shared/game-engine";
 import { createRandomAPI } from "@tcg/engine-core";
@@ -116,7 +118,7 @@ export class OnePieceServerEngine implements ServerGameEngine {
       stateID: stateVersion,
       state: redactHiddenSetupState(result.state),
       patches: redactHiddenSetupPatches(result.patches),
-      animations: [],
+      animations: result.animations.map(onePiecePacketAnimation),
       acceptedMoveRecord,
       engineLogRecords,
     };
@@ -266,6 +268,16 @@ export class OnePieceServerEngine implements ServerGameEngine {
       };
     }
   }
+}
+
+/** Preserve native animation data; viewer safety is enforced by simulator rendering. */
+export function onePiecePacketAnimation(animation: EngineAnimation): PacketAnimation {
+  return {
+    id: animation.id,
+    kind: animation.type,
+    durationMs: animation.duration,
+    payload: animation.data,
+  };
 }
 
 function redactHiddenSetupPayload(

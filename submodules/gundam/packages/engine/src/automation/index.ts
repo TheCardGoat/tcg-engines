@@ -34,7 +34,9 @@ export { greedyLegalStrategy } from "./greedy-legal-strategy.ts";
 export { passOnlyStrategy } from "./pass-only-strategy.ts";
 export { valueRankedStrategy, rankByDamage, rankByStatTotal } from "./value-ranked-strategy.ts";
 export { tempoStrategy } from "./tempo-strategy.ts";
+export { strategicStrategy } from "./strategic-strategy.ts";
 export {
+  GUNDAM_AUTOMATION_REVISION,
   DEFAULT_GUNDAM_AUTOMATED_ACTION_STRATEGY_ID,
   GUNDAM_AUTOMATED_ACTION_STRATEGIES,
   getGundamAutomatedActionStrategyOption,

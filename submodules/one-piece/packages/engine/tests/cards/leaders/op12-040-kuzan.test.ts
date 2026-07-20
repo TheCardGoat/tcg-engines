@@ -19,7 +19,6 @@ describe("OP12-040 Kuzan", () => {
       .filter((id): id is string => Boolean(id));
 
     engine.playCard(op12ZephyrNavy046, "south");
-    engine.resolveDecision("effectTrashFromHandSelection", { selectedIds: paymentIds }, "south");
 
     const view = engine.getView("south");
     expect(view.players.south.hand).toHaveLength(2);

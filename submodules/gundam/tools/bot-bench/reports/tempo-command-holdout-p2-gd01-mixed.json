@@ -1,0 +1,754 @@
+{
+  "version": 1,
+  "options": {
+    "p1Strategy": "combat-aware",
+    "p2Strategy": "iter-24-tempo-aware-command",
+    "p1Deck": "gd01-mixed",
+    "p2Deck": "gd01-mixed",
+    "matches": 48,
+    "seedBase": "cmd-holdout-gd01-mixed",
+    "maxActions": 1500,
+    "label": "tempo command holdout p2 gd01-mixed"
+  },
+  "summary": {
+    "matches": 48,
+    "p1WinRate": 0.4166666666666667,
+    "p2WinRate": 0.5833333333333334,
+    "drawRate": 0,
+    "avgTurns": 12.5,
+    "avgActions": 148.64583333333334,
+    "avgElapsedMs": 152.35416666666666,
+    "terminationDistribution": {
+      "game-won": 48,
+      "automation-concession": 0,
+      "repeated-state": 0,
+      "max-actions-exceeded": 0,
+      "concede-failed": 0
+    },
+    "winReasonDistribution": {
+      "player_one has no shields remaining": 28,
+      "player_two has no shields remaining": 20
+    }
+  },
+  "p1": {
+    "wins": 20,
+    "familyStats": {
+      "chooseFirstPlayer": {
+        "attempted": 48,
+        "succeeded": 48,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "alterHand": {
+        "attempted": 48,
+        "succeeded": 48,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "deployUnit": {
+        "attempted": 310,
+        "succeeded": 310,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "deployBase": {
+        "attempted": 23,
+        "succeeded": 23,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "playCommand": {
+        "attempted": 74,
+        "succeeded": 74,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "activateAbility": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "assignPilot": {
+        "attempted": 179,
+        "succeeded": 179,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "playCommandAsPilot": {
+        "attempted": 27,
+        "succeeded": 27,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "declareBlock": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "enterBattle": {
+        "attempted": 408,
+        "succeeded": 408,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passBlock": {
+        "attempted": 471,
+        "succeeded": 471,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passBattleAction": {
+        "attempted": 879,
+        "succeeded": 879,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "discardToHandLimit": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passTurn": {
+        "attempted": 314,
+        "succeeded": 314,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passActionStep": {
+        "attempted": 600,
+        "succeeded": 600,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "concede": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "skipOpponentTurn": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "dropOpponent": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "resolveEffect": {
+        "attempted": 290,
+        "succeeded": 290,
+        "failed": 0,
+        "errorCodes": {}
+      }
+    }
+  },
+  "p2": {
+    "wins": 28,
+    "familyStats": {
+      "chooseFirstPlayer": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "alterHand": {
+        "attempted": 48,
+        "succeeded": 48,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "deployUnit": {
+        "attempted": 326,
+        "succeeded": 326,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "deployBase": {
+        "attempted": 20,
+        "succeeded": 20,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "playCommand": {
+        "attempted": 23,
+        "succeeded": 23,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "activateAbility": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "assignPilot": {
+        "attempted": 151,
+        "succeeded": 151,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "playCommandAsPilot": {
+        "attempted": 37,
+        "succeeded": 37,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "declareBlock": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "enterBattle": {
+        "attempted": 471,
+        "succeeded": 471,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passBlock": {
+        "attempted": 408,
+        "succeeded": 408,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passBattleAction": {
+        "attempted": 879,
+        "succeeded": 879,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "discardToHandLimit": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passTurn": {
+        "attempted": 286,
+        "succeeded": 286,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "passActionStep": {
+        "attempted": 600,
+        "succeeded": 600,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "concede": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "skipOpponentTurn": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "dropOpponent": {
+        "attempted": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "errorCodes": {}
+      },
+      "resolveEffect": {
+        "attempted": 215,
+        "succeeded": 215,
+        "failed": 0,
+        "errorCodes": {}
+      }
+    }
+  },
+  "matches": [
+    {
+      "matchId": 0,
+      "seed": "cmd-holdout-gd01-mixed-0",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 132,
+      "elapsedMs": 177
+    },
+    {
+      "matchId": 1,
+      "seed": "cmd-holdout-gd01-mixed-1",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 16,
+      "actionCount": 185,
+      "elapsedMs": 204
+    },
+    {
+      "matchId": 2,
+      "seed": "cmd-holdout-gd01-mixed-2",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 142,
+      "elapsedMs": 205
+    },
+    {
+      "matchId": 3,
+      "seed": "cmd-holdout-gd01-mixed-3",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 143,
+      "elapsedMs": 157
+    },
+    {
+      "matchId": 4,
+      "seed": "cmd-holdout-gd01-mixed-4",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 173,
+      "elapsedMs": 197
+    },
+    {
+      "matchId": 5,
+      "seed": "cmd-holdout-gd01-mixed-5",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 170,
+      "elapsedMs": 226
+    },
+    {
+      "matchId": 6,
+      "seed": "cmd-holdout-gd01-mixed-6",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 150,
+      "elapsedMs": 225
+    },
+    {
+      "matchId": 7,
+      "seed": "cmd-holdout-gd01-mixed-7",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 160,
+      "elapsedMs": 175
+    },
+    {
+      "matchId": 8,
+      "seed": "cmd-holdout-gd01-mixed-8",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 10,
+      "actionCount": 116,
+      "elapsedMs": 100
+    },
+    {
+      "matchId": 9,
+      "seed": "cmd-holdout-gd01-mixed-9",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 124,
+      "elapsedMs": 153
+    },
+    {
+      "matchId": 10,
+      "seed": "cmd-holdout-gd01-mixed-10",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 167,
+      "elapsedMs": 192
+    },
+    {
+      "matchId": 11,
+      "seed": "cmd-holdout-gd01-mixed-11",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 145,
+      "elapsedMs": 170
+    },
+    {
+      "matchId": 12,
+      "seed": "cmd-holdout-gd01-mixed-12",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 128,
+      "elapsedMs": 160
+    },
+    {
+      "matchId": 13,
+      "seed": "cmd-holdout-gd01-mixed-13",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 145,
+      "elapsedMs": 171
+    },
+    {
+      "matchId": 14,
+      "seed": "cmd-holdout-gd01-mixed-14",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 9,
+      "actionCount": 96,
+      "elapsedMs": 67
+    },
+    {
+      "matchId": 15,
+      "seed": "cmd-holdout-gd01-mixed-15",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 139,
+      "elapsedMs": 292
+    },
+    {
+      "matchId": 16,
+      "seed": "cmd-holdout-gd01-mixed-16",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 141,
+      "elapsedMs": 164
+    },
+    {
+      "matchId": 17,
+      "seed": "cmd-holdout-gd01-mixed-17",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 130,
+      "elapsedMs": 155
+    },
+    {
+      "matchId": 18,
+      "seed": "cmd-holdout-gd01-mixed-18",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 175,
+      "elapsedMs": 238
+    },
+    {
+      "matchId": 19,
+      "seed": "cmd-holdout-gd01-mixed-19",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 160,
+      "elapsedMs": 220
+    },
+    {
+      "matchId": 20,
+      "seed": "cmd-holdout-gd01-mixed-20",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 10,
+      "actionCount": 130,
+      "elapsedMs": 135
+    },
+    {
+      "matchId": 21,
+      "seed": "cmd-holdout-gd01-mixed-21",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 163,
+      "elapsedMs": 152
+    },
+    {
+      "matchId": 22,
+      "seed": "cmd-holdout-gd01-mixed-22",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 150,
+      "elapsedMs": 174
+    },
+    {
+      "matchId": 23,
+      "seed": "cmd-holdout-gd01-mixed-23",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 144,
+      "elapsedMs": 130
+    },
+    {
+      "matchId": 24,
+      "seed": "cmd-holdout-gd01-mixed-24",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 142,
+      "elapsedMs": 138
+    },
+    {
+      "matchId": 25,
+      "seed": "cmd-holdout-gd01-mixed-25",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 148,
+      "elapsedMs": 154
+    },
+    {
+      "matchId": 26,
+      "seed": "cmd-holdout-gd01-mixed-26",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 15,
+      "actionCount": 202,
+      "elapsedMs": 195
+    },
+    {
+      "matchId": 27,
+      "seed": "cmd-holdout-gd01-mixed-27",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 168,
+      "elapsedMs": 167
+    },
+    {
+      "matchId": 28,
+      "seed": "cmd-holdout-gd01-mixed-28",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 163,
+      "elapsedMs": 134
+    },
+    {
+      "matchId": 29,
+      "seed": "cmd-holdout-gd01-mixed-29",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 15,
+      "actionCount": 162,
+      "elapsedMs": 115
+    },
+    {
+      "matchId": 30,
+      "seed": "cmd-holdout-gd01-mixed-30",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 15,
+      "actionCount": 174,
+      "elapsedMs": 139
+    },
+    {
+      "matchId": 31,
+      "seed": "cmd-holdout-gd01-mixed-31",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 161,
+      "elapsedMs": 126
+    },
+    {
+      "matchId": 32,
+      "seed": "cmd-holdout-gd01-mixed-32",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 152,
+      "elapsedMs": 151
+    },
+    {
+      "matchId": 33,
+      "seed": "cmd-holdout-gd01-mixed-33",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 159,
+      "elapsedMs": 118
+    },
+    {
+      "matchId": 34,
+      "seed": "cmd-holdout-gd01-mixed-34",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 142,
+      "elapsedMs": 123
+    },
+    {
+      "matchId": 35,
+      "seed": "cmd-holdout-gd01-mixed-35",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 123,
+      "elapsedMs": 83
+    },
+    {
+      "matchId": 36,
+      "seed": "cmd-holdout-gd01-mixed-36",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 16,
+      "actionCount": 187,
+      "elapsedMs": 168
+    },
+    {
+      "matchId": 37,
+      "seed": "cmd-holdout-gd01-mixed-37",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 140,
+      "elapsedMs": 95
+    },
+    {
+      "matchId": 38,
+      "seed": "cmd-holdout-gd01-mixed-38",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 10,
+      "actionCount": 120,
+      "elapsedMs": 87
+    },
+    {
+      "matchId": 39,
+      "seed": "cmd-holdout-gd01-mixed-39",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 13,
+      "actionCount": 158,
+      "elapsedMs": 106
+    },
+    {
+      "matchId": 40,
+      "seed": "cmd-holdout-gd01-mixed-40",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 166,
+      "elapsedMs": 158
+    },
+    {
+      "matchId": 41,
+      "seed": "cmd-holdout-gd01-mixed-41",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 14,
+      "actionCount": 172,
+      "elapsedMs": 103
+    },
+    {
+      "matchId": 42,
+      "seed": "cmd-holdout-gd01-mixed-42",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 118,
+      "elapsedMs": 71
+    },
+    {
+      "matchId": 43,
+      "seed": "cmd-holdout-gd01-mixed-43",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 125,
+      "elapsedMs": 124
+    },
+    {
+      "matchId": 44,
+      "seed": "cmd-holdout-gd01-mixed-44",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 121,
+      "elapsedMs": 70
+    },
+    {
+      "matchId": 45,
+      "seed": "cmd-holdout-gd01-mixed-45",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 129,
+      "elapsedMs": 117
+    },
+    {
+      "matchId": 46,
+      "seed": "cmd-holdout-gd01-mixed-46",
+      "termination": "game-won",
+      "winner": "p1",
+      "winReason": "player_two has no shields remaining",
+      "turnCount": 12,
+      "actionCount": 162,
+      "elapsedMs": 217
+    },
+    {
+      "matchId": 47,
+      "seed": "cmd-holdout-gd01-mixed-47",
+      "termination": "game-won",
+      "winner": "p2",
+      "winReason": "player_one has no shields remaining",
+      "turnCount": 11,
+      "actionCount": 133,
+      "elapsedMs": 115
+    }
+  ],
+  "createdAt": "2026-07-18T22:27:04.618Z"
+}

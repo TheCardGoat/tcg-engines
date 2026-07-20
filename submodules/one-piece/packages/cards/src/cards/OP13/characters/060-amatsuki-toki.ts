@@ -27,5 +27,30 @@ export const op13AmatsukiToki060: CharacterCard = {
   attribute: "wisdom",
   effect:
     "If your Character with a type including \"Roger Pirates\" would be K.O.'d by your opponent's effect, you may trash this Character instead.",
+  effects: {
+    replacementEffects: [
+      {
+        replacedEvent: "ko",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "trait",
+              value: "Roger Pirates",
+              match: "includes",
+            },
+          ],
+        },
+        source: "opponentEffect",
+        replacementAction: {
+          action: "trashThisCard",
+        },
+      },
+    ],
+  },
   i18n: op13AmatsukiToki060I18n,
 };

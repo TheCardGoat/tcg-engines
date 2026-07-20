@@ -330,6 +330,7 @@ export function restCard(
   state: MatchState,
   instanceId: string,
   effectController: MatchSeat,
+  sourceInstanceId?: string,
 ): boolean {
   const instance = getInstance(state, instanceId);
   if (instance.rested) {
@@ -340,6 +341,7 @@ export function restCard(
   enqueueInPlayEffectsForTrigger(state, "whenBecomesRested", {
     instanceId,
     effectController,
+    sourceInstanceId,
     targetInstanceId: instanceId,
   });
   return true;

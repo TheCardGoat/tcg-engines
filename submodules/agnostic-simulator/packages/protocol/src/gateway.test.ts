@@ -56,6 +56,29 @@ const standaloneClientMessages: RawGatewayClientMessage[] = [
   { type: "leave_game", gameId: "g_1" },
 ];
 
+test("gateway state packets validate authoritative animation envelopes", () => {
+  const base = {
+    type: "state_update",
+    gameId: "g_1",
+    stateVersion: 8,
+    patches: [],
+    engineLogs: [],
+    state: { ctx: {} },
+  };
+  expect(
+    RawGatewayServerMessageSchema.safeParse({
+      ...base,
+      animations: [{ id: "draw-1", kind: "cardMove", payload: { kind: "cardMove" } }],
+    }).success,
+  ).toBe(true);
+  expect(
+    RawGatewayServerMessageSchema.safeParse({
+      ...base,
+      animations: [{ id: "", kind: "cardMove", payload: {} }],
+    }).success,
+  ).toBe(false);
+});
+
 describe("raw gateway websocket contract", () => {
   test("parses standalone simulator client messages", () => {
     for (const message of standaloneClientMessages) {

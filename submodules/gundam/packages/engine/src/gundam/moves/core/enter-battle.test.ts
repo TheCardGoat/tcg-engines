@@ -22,7 +22,11 @@ import {
   createMockResource,
   expectFailure,
 } from "../../index.ts";
-import { enumerateAvailableMovesDetailed, getMoveProcedure } from "../../../index.ts";
+import {
+  enumerateAvailableMoves,
+  enumerateAvailableMovesDetailed,
+  getMoveProcedure,
+} from "../../../index.ts";
 import type { GundamG, PendingEffect } from "../../types.ts";
 
 function resources(n: number) {
@@ -354,6 +358,25 @@ describe("enterBattle — pending-effect gate (rule 5-2)", () => {
     seedPending(engine, PLAYER_ONE, attackerId);
 
     expect(getEnterBattleMove(engine, PLAYER_ONE)).toBeUndefined();
+  });
+
+  it("also drops enterBattle from the non-detailed move enumeration", () => {
+    const attacker = createMockUnit({ ap: 2, hp: 3 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { play: [rested(createMockUnit({ ap: 1, hp: 2 }))] },
+    );
+    const attackerId = engine.asPlayer(PLAYER_ONE).getCardsInZone("battleArea")[0]!;
+    const runtime = engine.getRuntime() as unknown as {
+      state: Parameters<typeof enumerateAvailableMoves>[0];
+      staticResources: Parameters<typeof enumerateAvailableMoves>[2];
+    };
+
+    seedPending(engine, PLAYER_ONE, attackerId);
+
+    expect(
+      enumerateAvailableMoves(runtime.state, PLAYER_ONE as PlayerId, runtime.staticResources),
+    ).not.toContain("enterBattle");
   });
 
   it("rejects a direct enterBattle submission with EFFECT_PENDING", () => {

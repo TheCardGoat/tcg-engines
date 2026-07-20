@@ -45,8 +45,19 @@ export function PlayerSeatPlate({
         // reads as the opponent's "shields + base" zone for arrow targeting.
         data-direct-target={isViewer ? undefined : "opp"}
         data-sim-player-target-id={playerId}
-        className={cn("flex-shrink-0 flex flex-col items-start gap-1 px-2 py-1", className)}
+        className={cn(
+          "flex h-full w-full flex-shrink-0 items-center justify-between gap-1 px-1 py-1",
+          className,
+        )}
       >
+        <BaseBlock
+          base={base}
+          side={side}
+          isViewer={isViewer}
+          zoneId={`baseSection:${playerId}`}
+          compact
+          overlayArmor
+        />
         <ShieldsBlock
           shields={shields}
           shieldCards={shieldCards}
@@ -54,13 +65,7 @@ export function PlayerSeatPlate({
           isViewer={isViewer}
           zoneId={`shieldArea:${playerId}`}
           compact
-        />
-        <BaseBlock
-          base={base}
-          side={side}
-          isViewer={isViewer}
-          zoneId={`baseSection:${playerId}`}
-          compact
+          condensed
         />
       </div>
     );
@@ -74,7 +79,10 @@ export function PlayerSeatPlate({
       // anchor its direct-target arrow and click region.
       data-direct-target={isViewer ? undefined : "opp"}
       data-sim-player-target-id={playerId}
-      className={cn("w-[180px] flex-shrink-0 flex flex-col gap-3 px-hud-md py-hud-sm", className)}
+      className={cn(
+        "flex h-full w-[156px] flex-shrink-0 flex-col items-start justify-center gap-2 overflow-hidden px-3 py-2",
+        className,
+      )}
     >
       <ShieldsBlock
         shields={shields}
@@ -82,8 +90,15 @@ export function PlayerSeatPlate({
         lowShields={lowShields}
         isViewer={isViewer}
         zoneId={`shieldArea:${playerId}`}
+        compact
       />
-      <BaseBlock base={base} side={side} isViewer={isViewer} zoneId={`baseSection:${playerId}`} />
+      <BaseBlock
+        base={base}
+        side={side}
+        isViewer={isViewer}
+        zoneId={`baseSection:${playerId}`}
+        compact
+      />
     </div>
   );
 }
@@ -95,6 +110,7 @@ interface ShieldsBlockProps {
   readonly isViewer: boolean;
   readonly zoneId?: string;
   readonly compact?: boolean;
+  readonly condensed?: boolean;
 }
 
 function ShieldsBlock({
@@ -104,6 +120,7 @@ function ShieldsBlock({
   isViewer,
   zoneId,
   compact = false,
+  condensed = false,
 }: ShieldsBlockProps) {
   const listLabel = isViewer
     ? m["sim.seat.shields.listLabelSelf"]()
@@ -112,13 +129,26 @@ function ShieldsBlock({
 
   if (compact) {
     return (
-      <div className="flex items-center gap-1.5 min-w-0" data-sim-zone-id={zoneId}>
+      <div
+        className={cn(
+          "flex min-w-0 items-center gap-1.5",
+          condensed &&
+            "w-[62px] flex-col gap-1 rounded-sm border border-hud-border/30 bg-white/70 px-1 py-1.5",
+        )}
+        data-sim-zone-id={zoneId}
+      >
+        {condensed ? (
+          <span className="font-mono text-[7px] font-bold uppercase tracking-hud-label text-hud-text-faint">
+            {m["sim.seat.shields.label"]()}
+          </span>
+        ) : null}
         <ShieldPips
           value={shields}
           max={6}
           low={lowShields}
           listLabel={listLabel}
           shields={shieldCards}
+          compact={condensed}
         />
         <span
           className="font-display text-hud-md font-extrabold tracking-hud-body whitespace-nowrap"
@@ -168,9 +198,17 @@ interface BaseBlockProps {
   readonly isViewer: boolean;
   readonly zoneId?: string;
   readonly compact?: boolean;
+  readonly overlayArmor?: boolean;
 }
 
-function BaseBlock({ base, side, isViewer, zoneId, compact = false }: BaseBlockProps) {
+function BaseBlock({
+  base,
+  side,
+  isViewer,
+  zoneId,
+  compact = false,
+  overlayArmor = false,
+}: BaseBlockProps) {
   const armor = base[0]?.hp ?? null;
   const label = isViewer
     ? m["sim.seat.base.listLabelSelf"]()
@@ -178,11 +216,15 @@ function BaseBlock({ base, side, isViewer, zoneId, compact = false }: BaseBlockP
 
   if (compact) {
     return (
-      <div className="flex items-center gap-1.5 flex-shrink-0">
+      <div className="relative flex flex-shrink-0 items-center gap-1.5">
         <BaseSection cards={base} label={label} isTop={side === "top"} zoneId={zoneId} compact />
         {armor !== null && (
           <span
-            className="font-mono text-hud-2xs text-hud-text-dim tracking-hud-label whitespace-nowrap"
+            className={cn(
+              "font-mono text-hud-2xs text-hud-text-dim tracking-hud-label whitespace-nowrap",
+              overlayArmor &&
+                "absolute bottom-1 right-1 rounded-sm border border-hud-border/40 bg-white/90 px-1 py-0.5 font-bold text-hud-text",
+            )}
             aria-label={m["sim.seat.base.armor"]({ value: armor })}
           >
             ◇{armor}

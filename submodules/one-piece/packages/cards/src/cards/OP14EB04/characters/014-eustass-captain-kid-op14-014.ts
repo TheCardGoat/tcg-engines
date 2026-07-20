@@ -36,6 +36,7 @@ export const op14eb04EustassCaptainKidOp14014014: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Supernovas",
+            match: "includes",
           },
         ],
         actions: [

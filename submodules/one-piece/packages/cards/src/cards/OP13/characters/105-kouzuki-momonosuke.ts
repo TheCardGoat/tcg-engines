@@ -33,10 +33,8 @@ export const op13KouzukiMomonosuke105: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
-            action: "rearrangeDeck",
+            action: "rearrangeLife",
             player: "self",
-            count: 99,
-            position: "topOrBottom",
           },
         ],
       },

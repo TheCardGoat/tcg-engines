@@ -92,6 +92,16 @@ export const st06ClanBattle014: BaseCard = {
       type: "activated",
       activation: {
         timing: ["activate:main"],
+        conditions: [
+          {
+            type: "unitCount",
+            owner: "friendly",
+            comparison: "gte",
+            count: 1,
+            hasTrait: "clan",
+            isLinkUnit: true,
+          },
+        ],
       },
       cost: {
         restSelf: true,

@@ -4,7 +4,6 @@ export const tAileStrikeGundam008: UnitCard = {
   cardNumber: "T-008",
   name: "Aile Strike Gundam",
   type: "unit",
-  color: "white",
   traits: ["earth alliance"],
   canonicalId: "T-008",
   slug: "aile-strike-gundam/t-008",

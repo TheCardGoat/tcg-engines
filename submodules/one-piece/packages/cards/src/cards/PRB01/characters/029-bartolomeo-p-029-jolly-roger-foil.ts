@@ -78,6 +78,7 @@ export const prb01BartolomeoP029JollyRogerFoil029: CharacterCard = {
                 {
                   filter: "trait",
                   value: "FILM",
+                  match: "includes",
                 },
                 {
                   filter: "excludeName",

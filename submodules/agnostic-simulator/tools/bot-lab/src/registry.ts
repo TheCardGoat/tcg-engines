@@ -1,18 +1,20 @@
 import type { BotLabAdapter } from "./adapter.ts";
 
-const ADAPTERS = new Map<string, BotLabAdapter>();
+const ADAPTER_LOADERS = {
+  cyberpunk: async () => (await import("./adapters/cyberpunk.ts")).cyberpunkBotLabAdapter,
+  gundam: async () => (await import("./adapters/gundam.ts")).gundamBotLabAdapter,
+  lorcana: async () => (await import("./adapters/lorcana.ts")).lorcanaBotLabAdapter,
+  "one-piece": async () => (await import("./adapters/one-piece.ts")).onePieceBotLabAdapter,
+} as const satisfies Readonly<Record<string, () => Promise<BotLabAdapter>>>;
 
-export function registerBotLabAdapter(adapter: BotLabAdapter): void {
-  if (ADAPTERS.has(adapter.game)) throw new Error(`Duplicate bot-lab adapter: ${adapter.game}`);
-  ADAPTERS.set(adapter.game, adapter);
+export type BotLabGame = keyof typeof ADAPTER_LOADERS;
+
+export async function getBotLabAdapter(game: string): Promise<BotLabAdapter> {
+  const loader = ADAPTER_LOADERS[game as BotLabGame];
+  if (!loader) throw new Error(`No bot-lab adapter registered for ${game}`);
+  return loader();
 }
 
-export function getBotLabAdapter(game: string): BotLabAdapter {
-  const adapter = ADAPTERS.get(game);
-  if (!adapter) throw new Error(`No bot-lab adapter registered for ${game}`);
-  return adapter;
-}
-
-export function listBotLabAdapters(): readonly BotLabAdapter[] {
-  return [...ADAPTERS.values()].sort((left, right) => left.game.localeCompare(right.game));
+export function listBotLabGames(): readonly BotLabGame[] {
+  return Object.keys(ADAPTER_LOADERS).sort() as BotLabGame[];
 }

@@ -34,4 +34,36 @@ describe("OP09-036 Monkey.D.Luffy", () => {
     expect(view.players.north.activeDon).toBe(1);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may choose the opposing active DON!! branch without resting a Character", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op09MonkeyDLuffy036],
+        activeDon: op09MonkeyDLuffy036.cost,
+        character: [
+          { card: eb01Doma005, rested: true },
+          { card: eb01Doma005, rested: true },
+        ],
+      },
+      { activeDon: 1, character: [eb01Doma005] },
+    );
+    const characterId = engine.findCardInZone("north", "character", eb01Doma005);
+
+    engine.playCard(op09MonkeyDLuffy036, "south");
+    const target = engine.pendingDecision("effectMixedRestSelection", "south").steps[0];
+    if (target?.kind !== "payCost") throw new Error("Expected Luffy's mixed rest selection.");
+    const donId = target.candidates.find((candidate) =>
+      candidate.ref.id.startsWith("active-don:north:"),
+    )?.ref.id;
+    if (!donId) throw new Error("Expected an opposing active DON!! candidate.");
+    engine.resolveDecision("effectMixedRestSelection", { selectedIds: [donId] }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.north.activeDon).toBe(0);
+    expect(view.players.north.restedDon).toBe(1);
+    expect(
+      view.players.north.characters.find((card) => card?.instanceId === characterId)?.rested,
+    ).toBe(false);
+    expect(view.prompts).toHaveLength(0);
+  });
 });
