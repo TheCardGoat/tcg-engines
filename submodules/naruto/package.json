@@ -1,0 +1,17 @@
+{
+  "name": "@tcg-engines/naruto-workspace",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=10"
+  },
+  "scripts": {
+    "ci-check": "pnpm -r run typecheck && pnpm -r run test",
+    "ci-check-full": "pnpm -r run typecheck && pnpm -r run test && pnpm -r run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}
