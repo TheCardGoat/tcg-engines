@@ -10,7 +10,7 @@ specific `submodules/{name}/AGENTS.md` before editing inside that subtree.
 ## Public Workspaces
 
 - `submodules/agnostic-simulator` - game-agnostic contracts, shared protocol,
-  simulator UI primitives, adapters, and agent tooling.
+  simulator UI primitives, adapters, and agent core.
 - `submodules/lorcana` - Lorcana cards, engine, simulator, replay tooling, and
   Lorcana-specific rules/test skills.
 - `submodules/cyberpunk` - Cyberpunk cards, engine, parser/scraper tools,
@@ -18,6 +18,9 @@ specific `submodules/{name}/AGENTS.md` before editing inside that subtree.
 - `submodules/gundam` - Gundam cards, engine, server adapter, bot tooling,
   rules references, and architecture docs. Its browser surface lives in
   `submodules/agnostic-simulator`.
+- `submodules/naruto` - Naruto Card Game cards and engine (pure logic, no UI or
+  networking) plus rules tests. Rules are provisional until the official
+  rulebook is published.
 - `submodules/one-piece` - One Piece engine, cards, types, utils, parser, and
   rules. Its browser surface lives in `submodules/agnostic-simulator`.
 - `submodules/star-wars-unlimited` - Star Wars Unlimited engine, cards, types,
@@ -48,6 +51,7 @@ Use the smallest relevant check first:
 - `pnpm run ci:cyberpunk:check`
 - `pnpm run ci:gundam:check`
 - `pnpm run ci:lorcana:check`
+- `pnpm run ci:naruto:check`
 - `pnpm run ci:one-piece:check`
 - `pnpm run ci:star-wars-unlimited:check`
 - `pnpm run ci:agnostic:check`

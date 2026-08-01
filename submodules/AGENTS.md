@@ -9,7 +9,7 @@ submodule gitlinks, even though the directory is named `submodules`.
   shapes, playable game slugs, runtime adapter interfaces, shared simulator/page
   contracts, reusable simulator UI primitives, shared agent-core behavior, and
   per-game server adapters.
-- Use a game submodule (`lorcana`, `cyberpunk`, `gundam`, `one-piece`,
+- Use a game submodule (`lorcana`, `cyberpunk`, `gundam`, `naruto`, `one-piece`,
   `star-wars-unlimited`) for that game's rules, cards, engine state,
   parser/scraper tooling, game-native wording, and any simulator it owns.
 
@@ -34,6 +34,7 @@ Install order matters for cross-game simulator work: game submodules first, then
 | `lorcana`             | Lorcana engine, cards, simulator, replay tools, and rules skills.                                                      | `packages/lorcana/lorcana-engine/src`, `packages/lorcana/lorcana-cards/src`, `packages/lorcana/lorcana-simulator/src`, `packages/tools/replay-cli/src`                                            |
 | `cyberpunk`           | Cyberpunk cards, engine, parser/scraper tools, and game-native rules source.                                           | `packages/engine/src`, `packages/cards/src`, `packages/server-adapter/src`, `.agents/skills/cyberpunk-tcg-rules`                                                                                 |
 | `gundam`              | Gundam cards, engine, server adapter, bot bench, and rule docs.                                                        | `packages/engine/src`, `packages/cards/src`, `packages/server-adapter/src`, `tools/bot-bench`, `docs/architecture.md`                                                                              |
+| `naruto`              | Naruto Card Game cards and engine (provisional rules until the official rulebook ships).                               | `packages/engine/src`, `packages/cards/src`                                                                                                                                                        |
 | `one-piece`           | One Piece engine, cards, types, utils, parser, and rules.                                                              | `packages/engine/src`, `packages/cards/src`, `packages/types/src`, `tools/op-card-parser`, `.agents/skills/op-rules`                                                                               |
 | `star-wars-unlimited` | Star Wars Unlimited engine, cards, types, import tooling, and rules.                                                   | `packages/engine/src`, `packages/cards/src`, `packages/types/src`, `tools/import-card-data`, `.agents/skills/swu-rules`                                                                           |
 
@@ -44,6 +45,7 @@ Use focused validation from the owning submodule first:
 - `pnpm run ci:cyberpunk:check`
 - `pnpm run ci:gundam:check`
 - `pnpm run ci:lorcana:check`
+- `pnpm run ci:naruto:check`
 - `pnpm run ci:one-piece:check`
 - `pnpm run ci:star-wars-unlimited:check`
 - `pnpm run ci:agnostic:check`

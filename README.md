@@ -18,6 +18,8 @@ included here.
   server adapter.
 - `submodules/gundam` - Gundam engine, cards, simulator, tooling, and server
   adapter.
+- `submodules/naruto` - Naruto Card Game engine, cards, and rules tests. Rules
+  are provisional until Bandai publishes the official rulebook.
 - `submodules/one-piece` - One Piece simulator, engine, cards, types,
   and utilities.
 
@@ -49,6 +51,7 @@ The root package provides convenience wrappers:
 pnpm run ci:cyberpunk:check
 pnpm run ci:gundam:check
 pnpm run ci:lorcana:check
+pnpm run ci:naruto:check
 pnpm run ci:one-piece:check
 pnpm run ci:agnostic:check
 pnpm run ci:public
