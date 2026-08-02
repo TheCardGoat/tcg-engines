@@ -1,0 +1,201 @@
+/* Page chrome for naruto practice setup / fixture index / test-state pages. */
+
+.page {
+  min-height: 100svh;
+  padding: clamp(20px, 4vw, 48px);
+  color: #f8fbff;
+  background:
+    radial-gradient(ellipse at 8% 6%, rgba(235, 97, 1, 0.14), transparent 36%),
+    radial-gradient(ellipse at 92% 94%, rgba(19, 42, 77, 0.5), transparent 40%), #07111f;
+}
+
+.header {
+  display: grid;
+  gap: 8px;
+  max-width: 760px;
+  margin-bottom: 28px;
+}
+
+.header p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(235, 97, 1, 0.85);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: clamp(34px, 5vw, 58px);
+  line-height: 1;
+}
+
+.header a {
+  width: fit-content;
+  margin-top: 12px;
+  color: #eb6101;
+  font-weight: 850;
+}
+
+.setupGrid {
+  display: grid;
+  gap: 16px;
+  max-width: 640px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field span {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(216, 229, 247, 0.72);
+}
+
+.field select,
+.field input,
+.field textarea {
+  padding: 9px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(111, 154, 211, 0.32);
+  background: rgba(13, 27, 46, 0.9);
+  color: #f8fbff;
+  font: inherit;
+}
+
+.field textarea {
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+}
+
+.deckStatus {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(111, 154, 211, 0.32);
+  background: rgba(13, 27, 46, 0.7);
+  font-size: 13px;
+}
+
+.deckStatus p {
+  margin: 2px 0;
+}
+
+.problem {
+  margin: 0;
+  color: #ff9c9c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.startButton {
+  width: fit-content;
+  padding: 12px 28px;
+  border-radius: 6px;
+  border: none;
+  background: #eb6101;
+  color: #1c0b00;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.startButton:hover {
+  filter: brightness(1.12);
+}
+
+.group {
+  display: grid;
+  gap: 12px;
+  max-width: 960px;
+  margin-top: 22px;
+}
+
+.group h2 {
+  margin: 0;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: rgba(216, 229, 247, 0.72);
+}
+
+.group ul {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.group a {
+  display: grid;
+  gap: 6px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(111, 154, 211, 0.28);
+  background: rgba(13, 27, 46, 0.7);
+  color: #f8fbff;
+  text-decoration: none;
+}
+
+.group a:hover {
+  border-color: #eb6101;
+}
+
+.group a span {
+  font-weight: 800;
+}
+
+.group a code {
+  font-size: 12px;
+  color: rgba(216, 229, 247, 0.6);
+}
+
+.group a p {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(216, 229, 247, 0.72);
+}
+
+.gameBar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 12px;
+  background: #050d18;
+  border-bottom: 1px solid rgba(111, 154, 211, 0.24);
+  color: #f8fbff;
+  font-size: 12px;
+}
+
+.gameBarInfo {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(216, 229, 247, 0.72);
+}
+
+.barButton {
+  padding: 5px 14px;
+  border-radius: 5px;
+  border: 1px solid rgba(111, 154, 211, 0.4);
+  background: transparent;
+  color: #f8fbff;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.barButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.barButton:hover:not(:disabled) {
+  border-color: #eb6101;
+  color: #eb6101;
+}
