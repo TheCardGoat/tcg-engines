@@ -6,6 +6,7 @@ export const SettingsGameSlugSchema = z.enum([
   "gundam",
   "one-piece",
   "riftbound",
+  "naruto",
 ]);
 
 export type SettingsGameSlug = z.infer<typeof SettingsGameSlugSchema>;
@@ -86,6 +87,7 @@ export const GameSettingsMapSchema = z
     gundam: VisualOnlyGameSettingsSchema.optional(),
     "one-piece": VisualOnlyGameSettingsSchema.optional(),
     riftbound: VisualOnlyGameSettingsSchema.optional(),
+    naruto: VisualOnlyGameSettingsSchema.optional(),
   })
   .strict();
 

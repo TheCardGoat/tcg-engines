@@ -52,6 +52,16 @@ export const GAMES: readonly GameMeta[] = [
     badgeLabel: "External fixtures",
     includeInIndex: false,
   },
+  {
+    slug: "naruto",
+    name: "Naruto",
+    description:
+      "Leader, chakra, characters, supports, and the counter-step chain through the shared contract.",
+    accentColor: "#eb6101",
+    accentSoft: "#fdeede",
+    badgeLabel: "Visual fixtures",
+    defaultIndexPath: "/naruto/simulator/tests",
+  },
 ];
 
 const GAME_SLUGS = new Set(GAMES.map((g) => g.slug));

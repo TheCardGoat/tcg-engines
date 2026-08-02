@@ -48,6 +48,11 @@ const PLAY_GAME_CONFIGS = {
     isActive: false,
     capabilities: NO_PLAY_CAPABILITIES,
   },
+  naruto: {
+    slug: "naruto" as const,
+    isActive: false,
+    capabilities: NO_PLAY_CAPABILITIES,
+  },
   platform: {
     slug: "platform" as const,
     isActive: false,

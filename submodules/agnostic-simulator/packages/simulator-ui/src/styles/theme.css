@@ -198,17 +198,17 @@
   --log-scrollbar: rgba(74, 217, 255, 0.28);
   --log-turn-line: rgba(74, 217, 255, 0.22);
   --log-turn-text: rgba(74, 217, 255, 0.55);
-  --log-turn-text-hover: rgba(74, 217, 255, 0.8);
+  --log-turn-text: rgba(74, 217, 255, 0.8);
   --log-entry-hover-bg: rgba(74, 217, 255, 0.06);
   --log-entry-highlight-bg: rgba(245, 230, 66, 0.1);
-  --log-focus: rgba(245, 230, 66, 0.5);
+  --log-focus: rgba(74, 217, 255, 0.5);
   --log-speaker-player: rgba(74, 217, 255, 0.9);
   --log-speaker-opponent: rgba(255, 61, 138, 0.9);
   --log-speaker-system: rgba(245, 230, 66, 0.9);
-  --log-tag-border: rgba(245, 230, 66, 0.22);
-  --log-tag-hover-bg: rgba(245, 230, 66, 0.06);
-  --log-tag-active-border: rgba(245, 230, 66, 0.78);
-  --log-tag-active-bg: rgba(245, 230, 66, 0.14);
+  --log-tag-border: rgba(74, 217, 255, 0.22);
+  --log-tag-hover-bg: rgba(74, 217, 255, 0.06);
+  --log-tag-active-border: rgba(74, 217, 255, 0.78);
+  --log-tag-active-bg: rgba(74, 217, 255, 0.14);
   --log-tag-active-text: #f5e642;
   --log-tag-system: rgba(247, 251, 255, 0.65);
   --log-tag-move: rgba(74, 217, 255, 0.85);
@@ -239,6 +239,22 @@
   --pill-bg: rgba(216, 229, 247, 0.12);
   --pill-text: #f8fbff;
   --pill-border: rgba(216, 229, 247, 0.28);
+}
+
+[data-game="naruto"] {
+  --game-accent: #eb6101;
+  --game-accent-soft: #fdeede;
+  --board-border: rgba(235, 97, 1, 0.28);
+  --board-border-strong: rgba(235, 97, 1, 0.4);
+  --board-player-label-bg: #eb6101;
+  --board-opponent-label-bg: #1e4367;
+  --board-shared-label-bg: #8a3b00;
+  --card-art-a: #eb6101;
+  --card-art-b: #f3c260;
+  --card-art-c: #0f2147;
+  --pill-bg: rgba(235, 97, 1, 0.1);
+  --pill-text: #eb6101;
+  --pill-border: rgba(235, 97, 1, 0.24);
 }
 
 @keyframes targeting-dash-flow {

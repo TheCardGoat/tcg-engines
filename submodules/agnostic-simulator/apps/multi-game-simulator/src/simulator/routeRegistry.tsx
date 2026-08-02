@@ -25,6 +25,7 @@ import { ReplayPage as GundamReplayPage } from "../games/gundam/pages/Replay.pag
 import { ReplayForkPage as GundamReplayForkPage } from "../games/gundam/pages/ReplayFork.page";
 import { GundamTestStatePage } from "../games/gundam/pages/TestState.page";
 import { VsAiPage } from "../games/gundam/pages/VsAi.page";
+import { NarutoSimulatorProviders } from "../games/naruto/App";
 import { OnePieceSimulatorProviders } from "../games/one-piece/App";
 import type { SimulatorRouteKind } from "./routeData";
 
@@ -43,6 +44,22 @@ const OnePieceFixturePage = lazy(async () => {
 const OnePieceTestStatePage = lazy(async () => {
   const module = await import("../games/one-piece/pages/TestState.page");
   return { default: module.OnePieceTestStatePage };
+});
+const NarutoPracticePage = lazy(async () => {
+  const module = await import("../games/naruto/pages/Practice.page");
+  return { default: module.NarutoPracticePage };
+});
+const NarutoFixtureIndexPage = lazy(async () => {
+  const module = await import("../games/naruto/pages/FixtureRoutes.page");
+  return { default: module.NarutoFixtureIndexPage };
+});
+const NarutoFixturePage = lazy(async () => {
+  const module = await import("../games/naruto/pages/FixtureRoutes.page");
+  return { default: module.NarutoFixturePage };
+});
+const NarutoTestStatePage = lazy(async () => {
+  const module = await import("../games/naruto/pages/TestState.page");
+  return { default: module.NarutoTestStatePage };
 });
 
 type PageComponent = ComponentType;
@@ -67,8 +84,12 @@ const onePiecePractice = withSuspense(OnePiecePracticePage);
 const onePieceFixtures = withSuspense(OnePieceFixtureIndexPage);
 const onePieceFixture = withSuspense(OnePieceFixturePage);
 const onePieceTestState = withSuspense(OnePieceTestStatePage);
+const narutoPractice = withSuspense(NarutoPracticePage);
+const narutoFixtures = withSuspense(NarutoFixtureIndexPage);
+const narutoFixture = withSuspense(NarutoFixturePage);
+const narutoTestState = withSuspense(NarutoTestStatePage);
 
-type RegisteredRouteGame = "one-piece" | "gundam" | "cyberpunk";
+type RegisteredRouteGame = "one-piece" | "gundam" | "cyberpunk" | "naruto";
 
 const ROUTE_REGISTRY: Record<RegisteredRouteGame, SimulatorRouteRegistration> = {
   "one-piece": {
@@ -117,6 +138,17 @@ const ROUTE_REGISTRY: Record<RegisteredRouteGame, SimulatorRouteRegistration> = 
       "deck-detail": DeckDetailPage,
       "practice-match": PracticeMatchPage,
       "vs-ai": CyberpunkPracticePage,
+    },
+  },
+  naruto: {
+    Providers: NarutoSimulatorProviders,
+    pages: {
+      "game-index": narutoPractice,
+      "play-practice": narutoPractice,
+      "practice-vs-ai": narutoPractice,
+      tests: narutoFixtures,
+      "test-engine-state": narutoTestState,
+      "test-fixture": narutoFixture,
     },
   },
 };

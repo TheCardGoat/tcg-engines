@@ -53,6 +53,7 @@ describe("@tcg/protocol", () => {
         "cyberpunk",
         "riftbound",
         "one-piece",
+        "naruto",
         "platform",
       ]);
     });

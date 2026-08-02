@@ -1,4 +1,4 @@
-export type GameSlug = "one-piece" | "gundam" | "cyberpunk" | "lorcana" | "platform";
+export type GameSlug = "one-piece" | "gundam" | "cyberpunk" | "lorcana" | "naruto" | "platform";
 
 export type ZoneRole =
   | "leader"
