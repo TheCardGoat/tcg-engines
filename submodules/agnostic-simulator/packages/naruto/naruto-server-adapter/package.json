@@ -1,0 +1,37 @@
+{
+  "name": "@tcg/naruto-server-adapter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Server-side GameAdapter implementation for Naruto — wires the Naruto rules engine into the @tcg/shared/game-adapter contract.",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./interaction": "./src/interaction.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "bun x oxlint --fix ./src",
+    "check-types": "tsc --noEmit",
+    "test": "vp test run --configLoader runner --passWithNoTests"
+  },
+  "dependencies": {
+    "@tcg-engines/naruto-cards": "link:../../../../naruto/packages/cards",
+    "@tcg-engines/naruto-engine": "link:../../../../naruto/packages/engine",
+    "@tcg/protocol": "link:../../protocol",
+    "@tcg/shared": "link:../../shared"
+  },
+  "devDependencies": {
+    "@tcg/typescript-config": "link:../../typescript-config",
+    "@types/node": "^22.13.4",
+    "@typescript/native": "catalog:"
+  }
+}
