@@ -22,6 +22,7 @@ export interface GameCardProps extends GameCardData {
   readonly style?: CSSProperties;
   readonly hideStatBadges?: boolean;
   readonly hideSupplementalBadges?: boolean;
+  readonly draggable?: boolean;
   /**
    * Optional direct card action. Play-zone cards use this instead of
    * depending on a click to bubble through layout-only wrappers, which keeps

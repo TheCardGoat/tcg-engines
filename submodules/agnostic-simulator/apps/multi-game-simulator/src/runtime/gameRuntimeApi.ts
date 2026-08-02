@@ -9,6 +9,7 @@ const PRODUCTION_GAME_RUNTIME_API_ORIGINS: Record<GameSlug, string> = {
   gundam: "https://gundam-api.tcg.online",
   lorcana: "https://lorcana-api.tcg.online",
   "one-piece": "https://one-piece-api.tcg.online",
+  naruto: "https://naruto-api.tcg.online",
 };
 
 export function gameApiBaseUrl(gameSlug: GameSlug, env: RuntimeApiEnv = runtimeApiEnv()): string {
