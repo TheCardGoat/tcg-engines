@@ -1,0 +1,662 @@
+/**
+ * Board layout: desktop (>=900px) grid + right rail, mobile portrait column,
+ * seam prompt, chain strip, log panel, inspector, overlays.
+ * Card sizing derives from --naruto-card-h (baseline viewport-fit approach).
+ */
+
+.shell {
+  --naruto-card-h: clamp(
+    56px,
+    min(calc((100dvh - 260px) / 6.4), calc((100vw - 340px) / 7.4 / 0.716)),
+    118px
+  );
+  --card-h: var(--naruto-card-h);
+  --card-w: calc(var(--card-h) * 0.716);
+  --cut: clamp(6px, 1vw, 11px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--board-layout-bg, #07111f);
+  color: var(--board-text, #f8fbff);
+  overflow: hidden;
+}
+
+.shell[data-layout="mobile"] {
+  --naruto-card-h: clamp(44px, 13.5vw, 72px);
+}
+
+.boardArea {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.boardColumn {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------------- halves */
+
+.half {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  margin: 4px 8px;
+  background: var(--board-surface, rgba(13, 27, 46, 0.82));
+  border: 1px solid transparent;
+}
+
+.halfTop {
+  flex-direction: row-reverse;
+}
+
+.halfActive {
+  border-color: var(--game-accent, #eb6101);
+  box-shadow: inset 0 0 0 1px var(--game-accent, #eb6101);
+}
+
+.halfFlank {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.halfCentre {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.slotRow {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  min-height: var(--card-h);
+}
+
+.slotRow > * {
+  flex: 0 0 auto;
+}
+
+.leaderBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.leaderName {
+  max-width: calc(var(--card-w) * 1.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+.zoneLabel {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--board-muted, rgba(216, 229, 247, 0.55));
+}
+
+.chakraRow {
+  display: flex;
+  gap: 4px;
+}
+
+/* ------------------------------------------------------------------ seam */
+
+.seam {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2px 8px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(235, 97, 1, 0.12),
+    rgba(13, 27, 46, 0.9) 30%,
+    rgba(13, 27, 46, 0.9) 70%,
+    rgba(235, 97, 1, 0.12)
+  );
+  border-top: 1px solid var(--board-border, rgba(111, 154, 211, 0.28));
+  border-bottom: 1px solid var(--board-border, rgba(111, 154, 211, 0.28));
+}
+
+.seamSticky {
+  position: sticky;
+  top: 0;
+  z-index: 25;
+}
+
+.seamTurn {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--game-accent, #eb6101);
+  white-space: nowrap;
+}
+
+.seamPrompt {
+  flex: 1;
+  min-width: 0;
+}
+
+.seamPromptText {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.seamPromptHint {
+  margin: 0;
+  font-size: 11px;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+.chainStrip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+}
+
+.chainLink {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px 2px 3px;
+  border-radius: 4px;
+  background: rgba(240, 230, 210, 0.1);
+  border: 1px solid rgba(235, 97, 1, 0.45);
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.chainLink img {
+  width: 18px;
+  height: 25px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.chainNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--game-accent, #eb6101);
+  color: #1c0b00;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.seamActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.passButton,
+.endTurnButton {
+  padding: 7px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--game-accent, #eb6101);
+  background: var(--game-accent, #eb6101);
+  color: #1c0b00;
+  font-weight: 900;
+  font-size: 13px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.passButton:hover:not(:disabled),
+.endTurnButton:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+
+.passButton:disabled,
+.endTurnButton:disabled {
+  background: transparent;
+  color: var(--board-muted, rgba(216, 229, 247, 0.55));
+  border-color: var(--board-border, rgba(111, 154, 211, 0.4));
+  cursor: not-allowed;
+}
+
+.cancelChip {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px dashed var(--board-muted, rgba(216, 229, 247, 0.55));
+  background: transparent;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancelChip:hover {
+  color: var(--board-text, #f8fbff);
+  border-color: var(--board-text, #f8fbff);
+}
+
+/* ------------------------------------------------------------------ hand */
+
+.handZone {
+  padding: 4px 8px 10px;
+  overflow-x: auto;
+}
+
+/* ------------------------------------------------------------ right rail */
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 300px;
+  padding: 8px 10px;
+  border-left: 1px solid var(--board-border, rgba(111, 154, 211, 0.28));
+  background: var(--board-surface, rgba(13, 27, 46, 0.82));
+  overflow-y: auto;
+}
+
+.railSection {
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.28));
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.railTitle {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+/* ------------------------------------------------------------- inspector */
+
+.inspector {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 8px;
+}
+
+.inspectorArt {
+  width: 84px;
+  height: 117px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.32));
+  background: var(--board-mat-bg, #0d1d34);
+}
+
+.inspectorName {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.inspectorType {
+  margin: 0 0 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--game-accent, #eb6101);
+}
+
+.inspectorStats {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--board-muted, rgba(216, 229, 247, 0.85));
+}
+
+.inspectorSkill {
+  margin: 2px 0 0;
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+.inspectorEmpty {
+  margin: 0;
+  font-size: 11px;
+  color: var(--board-muted, rgba(216, 229, 247, 0.55));
+}
+
+/* ------------------------------------------------------------------ log */
+
+.logPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 320px;
+  overflow-y: auto;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.logLine {
+  margin: 0;
+  color: var(--board-text, #f8fbff);
+}
+
+.logNested {
+  padding-left: 14px;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+.logNested::before {
+  content: "\21B3";
+  margin-right: 5px;
+  color: var(--game-accent, #eb6101);
+}
+
+.logTurn {
+  margin: 4px 0 0;
+  font-weight: 900;
+  color: var(--game-accent, #eb6101);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------- overlays */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(3, 8, 16, 0.72);
+}
+
+.dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: min(80dvh, 640px);
+  overflow-y: auto;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid var(--game-accent, #eb6101);
+  background: var(--board-mat-bg, #0d1d34);
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%,
+    0 14px
+  );
+}
+
+.dialogTitle {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.dialogPrompt {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+.choiceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 10px;
+}
+
+.choiceOption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.32));
+  background: var(--board-surface, rgba(13, 27, 46, 0.9));
+  color: var(--board-text, #f8fbff);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.choiceOption:hover {
+  border-color: var(--game-accent, #eb6101);
+}
+
+.choiceOption img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.dialogActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.endCard {
+  padding: 28px 36px;
+  text-align: center;
+}
+
+.endTitle {
+  margin: 0 0 6px;
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--game-accent, #eb6101);
+}
+
+.endSubtitle {
+  margin: 0 0 18px;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+.mulliganBanner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--game-accent, #eb6101);
+  background: var(--board-mat-bg, #0d1d34);
+}
+
+.mulliganText {
+  flex: 1;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.mulliganHand {
+  display: flex;
+  gap: 6px;
+}
+
+.mulliganHand img {
+  width: 44px;
+  height: 62px;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.32));
+}
+
+/* ---------------------------------------------------------- attack arrow */
+
+.attackArrow {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.attackPowerBadge {
+  font-size: 15px;
+  font-weight: 900;
+  fill: #fff;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+/* ---------------------------------------------------------------- mobile */
+
+.mobileColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 6px 76px;
+  overflow-y: auto;
+}
+
+.mobileStrip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--board-surface, rgba(13, 27, 46, 0.82));
+}
+
+.mobileStripActive {
+  border: 1px solid var(--game-accent, #eb6101);
+}
+
+.mobileStripInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobileStripName {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mobileCounts {
+  display: flex;
+  gap: 8px;
+  font-size: 10px;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+.mobileZoneLabel {
+  margin: 2px 4px 0;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--board-muted, rgba(216, 229, 247, 0.55));
+}
+
+.mobileHand {
+  position: sticky;
+  bottom: 52px;
+  z-index: 24;
+  padding: 4px 4px 2px;
+  background: linear-gradient(transparent, rgba(7, 17, 31, 0.96) 22%);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.mobileHandInner {
+  display: inline-flex;
+  gap: 6px;
+  padding: 6px 6px 4px;
+}
+
+.bottomBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  background: rgba(7, 17, 31, 0.97);
+  border-top: 1px solid var(--board-border, rgba(111, 154, 211, 0.28));
+}
+
+.bottomBarSpacer {
+  flex: 1;
+}
+
+.bottomLogToggle {
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.4));
+  background: transparent;
+  color: var(--board-text, #f8fbff);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.drawer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 55;
+  max-height: 60dvh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px 12px 0 0;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.28));
+  background: var(--board-mat-bg, #0d1d34);
+  padding: 10px 14px calc(12px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+}
+
+.drawerBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 54;
+  background: rgba(3, 8, 16, 0.6);
+}
+
+/* turn banner */
+.turnBanner {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  z-index: 50;
+  pointer-events: none;
+  font-size: clamp(26px, 5vw, 46px);
+  font-weight: 900;
+  color: var(--game-accent, #eb6101);
+  text-transform: uppercase;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.8);
+}

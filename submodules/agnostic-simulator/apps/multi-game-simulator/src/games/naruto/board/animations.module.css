@@ -1,0 +1,371 @@
+/**
+ * Naruto game-feel keyframes, ported from the baseline reference UI
+ * (ncg-extract/ui/keyframes.css). Easing is easeOutQuint
+ * (cubic-bezier(.22,1,.36,1)) throughout; entry animations use backwards/both
+ * fill so cards start hidden. Replays are driven by React `key` changes on
+ * value-bearing badges (damage/life/deck count).
+ */
+
+.cardEnter {
+  animation: naruto-card-enter 0.36s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.cardLand {
+  animation: naruto-card-land 0.46s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.handDeal {
+  animation: naruto-hand-deal 0.52s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* Deal stagger: 45ms per card (baseline nth-child cadence). */
+.handDeal:nth-child(1) {
+  animation-delay: 0ms;
+}
+.handDeal:nth-child(2) {
+  animation-delay: 45ms;
+}
+.handDeal:nth-child(3) {
+  animation-delay: 90ms;
+}
+.handDeal:nth-child(4) {
+  animation-delay: 135ms;
+}
+.handDeal:nth-child(5) {
+  animation-delay: 180ms;
+}
+.handDeal:nth-child(6) {
+  animation-delay: 225ms;
+}
+.handDeal:nth-child(7) {
+  animation-delay: 270ms;
+}
+.handDeal:nth-child(8) {
+  animation-delay: 315ms;
+}
+.handDeal:nth-child(9) {
+  animation-delay: 360ms;
+}
+.handDeal:nth-child(10) {
+  animation-delay: 405ms;
+}
+.handDeal:nth-child(n + 11) {
+  animation-delay: 450ms;
+}
+
+.lungeUp {
+  animation: naruto-lunge-up 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lungeDown {
+  animation: naruto-lunge-down 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.damagePop {
+  animation: naruto-damage-pop 0.44s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.lifePop {
+  animation: naruto-life-pop 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.deckTick {
+  animation: naruto-deck-tick 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.targetPulse {
+  animation: naruto-target-pulse 1.1s ease-in-out infinite;
+}
+
+.slotBreathe {
+  animation: naruto-slot-breathe 1.3s ease-in-out infinite;
+}
+
+.breatheOpacity {
+  animation: naruto-breathe-opacity 2.6s ease-in-out infinite;
+}
+
+.promptIn {
+  animation: naruto-prompt-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.logIn {
+  animation: naruto-log-in 0.26s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.inspectorIn {
+  animation: naruto-inspector-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.bannerSweep {
+  animation: naruto-banner-sweep 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.arrowIn {
+  animation: naruto-attack-arrow-in 0.24s ease-out backwards;
+}
+
+.arrowFlow {
+  animation: naruto-attack-arrow-flow 0.6s linear infinite;
+}
+
+.arrowRing {
+  animation: naruto-attack-arrow-ring 0.9s linear infinite;
+}
+
+.fadeIn {
+  animation: naruto-fade-in 0.25s ease-out both;
+}
+
+@keyframes naruto-card-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.78) rotate(-5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0);
+  }
+}
+
+@keyframes naruto-hand-deal {
+  0% {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(38%, 62%) scale(0.7) rotate(9deg);
+  }
+  55% {
+    opacity: 1;
+    pointer-events: none;
+  }
+  78% {
+    transform: translateY(-6%) scale(1.04) rotate(-1.5deg);
+  }
+  to {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(0) scale(1) rotate(0);
+  }
+}
+
+@keyframes naruto-card-land {
+  0% {
+    opacity: 0;
+    transform: translateY(-14%) scale(0.82);
+  }
+  62% {
+    opacity: 1;
+    transform: translateY(0) scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes naruto-deck-tick {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  35% {
+    transform: translateY(-8%) scale(1.05);
+  }
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes naruto-damage-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.5);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-7px) scale(1.4);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes naruto-life-pop {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    color: #a33636;
+    transform: scale(1.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes naruto-lunge-up {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-32%) scale(1.1);
+  }
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes naruto-lunge-down {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(32%) scale(1.1);
+  }
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes naruto-target-pulse {
+  0%,
+  to {
+    box-shadow:
+      0 0 0 2px rgb(163 54 54 / 75%),
+      0 0 12px rgb(163 54 54 / 30%);
+  }
+  50% {
+    box-shadow:
+      0 0 0 3px #a33636,
+      0 0 26px rgb(163 54 54 / 55%);
+  }
+}
+
+@keyframes naruto-slot-breathe {
+  0%,
+  to {
+    background-color: rgb(235 97 1 / 12%);
+    box-shadow: inset 0 0 0 1px rgb(235 97 1 / 35%);
+  }
+  50% {
+    background-color: rgb(235 97 1 / 28%);
+    box-shadow: inset 0 0 0 2px rgb(235 97 1 / 65%);
+  }
+}
+
+@keyframes naruto-breathe-opacity {
+  0%,
+  to {
+    opacity: 0.44;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes naruto-prompt-in {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes naruto-log-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes naruto-inspector-in {
+  0% {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes naruto-banner-sweep {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.7em;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  22% {
+    opacity: 1;
+    letter-spacing: 0.24em;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  70% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+@keyframes naruto-attack-arrow-in {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes naruto-attack-arrow-flow {
+  to {
+    stroke-dashoffset: -21px;
+  }
+}
+
+@keyframes naruto-attack-arrow-ring {
+  to {
+    stroke-dashoffset: -14px;
+  }
+}
+
+@keyframes naruto-fade-in {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardEnter,
+  .cardLand,
+  .handDeal,
+  .lungeUp,
+  .lungeDown,
+  .damagePop,
+  .lifePop,
+  .deckTick,
+  .targetPulse,
+  .slotBreathe,
+  .breatheOpacity,
+  .promptIn,
+  .logIn,
+  .inspectorIn,
+  .bannerSweep,
+  .arrowIn,
+  .arrowFlow,
+  .arrowRing,
+  .fadeIn {
+    animation: none !important;
+  }
+}
