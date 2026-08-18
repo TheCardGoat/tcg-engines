@@ -2780,9 +2780,13 @@ export function resolveEffectChoicePrompt(
         selectedIds.length > maximum ||
         new Set(selectedIds).size !== selectedIds.length ||
         selectedIds.some((instanceId) => !playableEligibleIds.includes(instanceId)) ||
-        selectedIds.filter(
-          (instanceId) => getCardForInstance(state, instanceId).cardType === "character",
-        ).length > openCharacterSlots ||
+        // A search only needs open character slots when it PLAYS what it reveals. Revealing to
+        // hand does not consume board space, and gating it here rejected selections that the
+        // prompt in effects/actions.ts had already marked eligible whenever the board was full.
+        (context.action.revealDestination === "character" &&
+          selectedIds.filter(
+            (instanceId) => getCardForInstance(state, instanceId).cardType === "character",
+          ).length > openCharacterSlots) ||
         player.deck
           .slice(0, context.lookedIds.length)
           .some((instanceId, index) => instanceId !== context.lookedIds[index])
