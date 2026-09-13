@@ -143,6 +143,7 @@ export function FleshAndBloodSidebar({
       className={[
         "fab-match-sidebar",
         activityOwnsStatus ? "fab-practice-match-sidebar" : undefined,
+        spectatorReturnHref ? "fab-spectator-match-sidebar" : undefined,
         className,
       ]
         .filter(Boolean)

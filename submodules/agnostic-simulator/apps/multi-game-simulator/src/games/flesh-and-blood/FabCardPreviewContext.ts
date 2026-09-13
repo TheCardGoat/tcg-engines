@@ -2,7 +2,7 @@ import type { SimulatorEntity } from "@tcg/simulator-contract";
 import { createContext } from "react";
 
 export interface FabCardPreviewContextValue {
-  readonly setHover: (entity: SimulatorEntity) => void;
+  readonly setHover: (entity: SimulatorEntity, trigger?: HTMLElement) => void;
   readonly clearHover: (entityId: string) => void;
   readonly pin: (entity: SimulatorEntity) => void;
   readonly hide: () => void;

@@ -51,17 +51,11 @@
   text-decoration: none;
 }
 
-.fab-summary-brand > span {
-  display: grid;
+.fab-summary-brand > img {
+  display: block;
   width: 2rem;
   height: 2rem;
-  place-items: center;
-  border: 1px solid var(--summary-border-strong);
-  border-radius: 0.45rem;
-  color: var(--summary-gold);
-  font-size: 0.66rem;
-  font-weight: 900;
-  letter-spacing: 0.05em;
+  object-fit: contain;
 }
 
 .fab-summary-brand > strong {

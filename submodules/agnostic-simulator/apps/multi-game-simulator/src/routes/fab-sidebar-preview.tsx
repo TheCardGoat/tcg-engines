@@ -61,7 +61,7 @@ function SidebarPreview() {
             displayName: "Preview Supporter",
             subscriptionTier: "tier3",
             rankedMmr: 1520,
-            actions: (
+            actions: spectator ? undefined : (
               <SimulatorSidebarTip id="support">
                 <SimulatorSelfParticipantActions
                   support={{ source: "sidebar-preview", gameSlug: "flesh-and-blood" }}
@@ -80,7 +80,7 @@ function SidebarPreview() {
                 status="connected"
               />
             ),
-            actions: (
+            actions: spectator ? undefined : (
               <SimulatorSidebarTip id="opponent">
                 <SimulatorOpponentParticipantActions
                   participant={{

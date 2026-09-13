@@ -1915,6 +1915,14 @@
     aspect-ratio: 1;
   }
 
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-block-stack
+    > div
+    > .fab-chain-card-shell {
+    width: 100%;
+    height: 100%;
+  }
+
   .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-block-stack .fab-chain-card {
     width: 100%;
     max-width: 8.4rem;

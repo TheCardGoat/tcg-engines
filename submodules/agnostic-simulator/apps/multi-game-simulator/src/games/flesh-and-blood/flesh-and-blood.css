@@ -646,14 +646,14 @@ body:has(.fab-tabletop),
 }
 
 /* Full card face on desktop hover. The board deliberately uses square art
-   crops for tactical scanning; this fixed, non-interactive preview preserves
+   crops for tactical scanning; this fixed preview preserves
    the complete printed card without shifting the table layout. */
 .fab-card-preview {
   position: fixed;
   z-index: 4300;
   top: 1rem;
-  left: 0;
-  width: min(calc(var(--sidebar-width, 336px) - 1rem), 100vw);
+  left: var(--fab-preview-left, 0);
+  width: min(240px, calc(100vw - 2rem));
   aspect-ratio: 5 / 7;
   opacity: 0;
   transform: translateY(-0.4rem);
@@ -664,6 +664,7 @@ body:has(.fab-tabletop),
 }
 
 .fab-card-preview[data-visible="true"] {
+  pointer-events: auto;
   opacity: 1;
   transform: translateY(0);
 }
@@ -818,10 +819,6 @@ body:has(.fab-tabletop),
   box-shadow: 0 0.25rem 0.7rem rgb(0 0 0 / 58%);
   color: #fff8eb;
   cursor: pointer;
-  pointer-events: none;
-}
-
-.fab-card-preview[data-mode="pinned"] .fab-card-preview-close {
   pointer-events: auto;
 }
 
@@ -3521,6 +3518,21 @@ button.fab-chain-mobile-gallery-card[data-provisional-defender="true"]:active,
   padding: 0 0.35rem 0.55rem;
 }
 
+.fab-spectator-match-sidebar .fab-sidebar-page-actions {
+  flex: 0 0 auto;
+  overflow: visible;
+  padding-bottom: 0;
+}
+
+.fab-spectator-match-sidebar .fab-sidebar-event-log {
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+.fab-spectator-match-sidebar .fab-sidebar-event-log > * {
+  height: auto;
+}
+
 .fab-spectator-notice {
   display: grid;
   gap: 0.85rem;
@@ -3550,12 +3562,10 @@ button.fab-chain-mobile-gallery-card[data-provisional-defender="true"]:active,
 }
 
 .fab-spectator-notice-heading span:not(.fab-spectator-notice-icon) {
-  overflow: hidden;
   color: color-mix(in srgb, var(--board-text) 72%, transparent);
   font-size: 0.7rem;
   line-height: 1.35;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .fab-spectator-notice-icon {
@@ -13701,6 +13711,10 @@ body:has(.fab-tabletop[data-layout="desktop"])
     --match-sidebar-actions-height: 7.5rem;
   }
 
+  .fab-match-sidebar.fab-spectator-match-sidebar {
+    --match-sidebar-actions-height: 3.5rem;
+  }
+
   .fab-match-sidebar .fab-match-action-dock {
     grid-template-columns: minmax(0, 1fr);
     height: auto;
@@ -13728,7 +13742,13 @@ body:has(.fab-tabletop[data-layout="desktop"])
   .fab-match-sidebar.fab-match-sidebar {
     --match-sidebar-actions-height: 10rem;
   }
-  .fab-match-sidebar .fab-match-action-dock button {
+
+  .fab-match-sidebar.fab-spectator-match-sidebar {
+    --match-sidebar-actions-height: 3.75rem;
+  }
+
+  .fab-match-sidebar .fab-match-action-dock button,
+  .fab-match-sidebar .fab-match-action-dock .fab-spectator-return-button {
     min-height: 44px;
   }
 }

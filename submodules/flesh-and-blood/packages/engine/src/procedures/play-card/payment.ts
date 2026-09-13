@@ -501,7 +501,7 @@ export function advancePlayEffectPayment(
             source: procedure.object,
             affected: [target],
             bindings: { usurped: target, attack: procedure.object },
-            data: { actorId: procedure.actorId, object: target },
+            data: { actorId: procedure.actorId, object: target, attack: procedure.object },
           })),
         );
       }
@@ -519,7 +519,10 @@ export function advancePlayEffectPayment(
             controllerId: procedure.actorId,
             source: procedure.object,
             affected: [target],
-            bindings: procedure.costBindings,
+            bindings: {
+              ...procedure.costBindings,
+              ...(spec.abilityId === USURP_COST_ID ? { usurpCost: true } : {}),
+            },
             data: {
               object: target,
               destinationRef:

@@ -10,9 +10,9 @@ import {
   useRef,
   useState,
   type CSSProperties,
-  type FocusEvent,
   type KeyboardEvent,
   type MouseEvent,
+  type FocusEvent,
   type ReactNode,
 } from "react";
 
@@ -26,29 +26,11 @@ import { isFabFixtureArtPlaceholder } from "./fixture-art-placeholders";
 
 type PreviewImageStatus = "loading" | "loaded" | "error";
 
+const DESKTOP_PREVIEW_WIDTH_PX = 240;
+const DESKTOP_PREVIEW_GAP_PX = 12;
+const DESKTOP_PREVIEW_EDGE_PX = 16;
+
 export const FAB_PREVIEW_TARGET_ATTR = "data-fab-preview-id";
-
-type OccupancyEvent = {
-  readonly clientX?: number;
-  readonly clientY?: number;
-  readonly relatedTarget: EventTarget | null;
-};
-
-function occupancyIdFromNode(node: EventTarget | null): string | null {
-  if (!(node instanceof Element)) return null;
-  return (
-    node.closest(`[${FAB_PREVIEW_TARGET_ATTR}]`)?.getAttribute(FAB_PREVIEW_TARGET_ATTR) ?? null
-  );
-}
-
-/** The preview target currently under the pointer, if any. */
-export function fabPreviewOccupancyId(event: OccupancyEvent): string | null {
-  const fromRelated = occupancyIdFromNode(event.relatedTarget);
-  if (fromRelated) return fromRelated;
-  if (typeof event.clientX !== "number" || typeof event.clientY !== "number") return null;
-  if (typeof document.elementFromPoint !== "function") return null;
-  return occupancyIdFromNode(document.elementFromPoint(event.clientX, event.clientY));
-}
 
 function samePreview(current: SimulatorEntity | null, next: SimulatorEntity): boolean {
   return current?.id === next.id && current.imageUrl === next.imageUrl;
@@ -200,6 +182,7 @@ export function FabCardPreviewProvider({
   disabled?: boolean;
 }) {
   const [hover, setHoverState] = useState<SimulatorEntity | null>(null);
+  const [hoverLeft, setHoverLeft] = useState(0);
   const [pinned, setPinnedState] = useState<SimulatorEntity | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   const pinnedRef = useRef(false);
@@ -234,8 +217,12 @@ export function FabCardPreviewProvider({
     };
     const containPreviewPointer = (event: PointerEvent) => {
       if (event.target instanceof Node && previewRef.current?.contains(event.target)) {
-        // A tap inside this upper layer is not an outside tap on its opener.
+        // Keep the opener focused: focus-out would dismiss its popover and
+        // restore focus to the card, immediately reopening a hover preview.
+        event.preventDefault();
         event.stopPropagation();
+      } else {
+        hide();
       }
     };
     window.addEventListener("keydown", dismissPreview, true);
@@ -247,11 +234,27 @@ export function FabCardPreviewProvider({
   }, [hide, preview]);
 
   const setHover = useCallback(
-    (entity: SimulatorEntity) => {
+    (entity: SimulatorEntity, trigger?: HTMLElement) => {
       // Hidden faces never become readable previews. Hover also cannot replace
       // an explicit inspect pin.
       if (disabledRef.current || pinnedRef.current || entity.face !== "public") return;
       const fullCardEntity = fullPreviewEntity(entity, locale, resolver);
+      const triggerRect = trigger?.getBoundingClientRect();
+      const overlapsDefaultPreview =
+        triggerRect !== undefined &&
+        triggerRect.left < DESKTOP_PREVIEW_WIDTH_PX &&
+        triggerRect.right > 0;
+      setHoverLeft(
+        overlapsDefaultPreview
+          ? Math.min(
+              triggerRect.right + DESKTOP_PREVIEW_GAP_PX,
+              Math.max(
+                DESKTOP_PREVIEW_EDGE_PX,
+                window.innerWidth - DESKTOP_PREVIEW_WIDTH_PX - DESKTOP_PREVIEW_EDGE_PX,
+              ),
+            )
+          : 0,
+      );
       setHoverState((current) => (samePreview(current, fullCardEntity) ? current : fullCardEntity));
     },
     [locale, resolver],
@@ -289,11 +292,16 @@ export function FabCardPreviewProvider({
         data-visible={preview ? "true" : undefined}
         data-mode={preview ? (pinned ? "pinned" : "hover") : undefined}
         aria-hidden={!preview}
-        style={preview ? { aspectRatio: preview.imageAspectRatio } : undefined}
+        style={
+          preview
+            ? ({
+                aspectRatio: preview.imageAspectRatio,
+                "--fab-preview-left": `${hoverLeft}px`,
+              } as CSSProperties)
+            : undefined
+        }
       >
-        {preview ? (
-          <FabCardPreviewSurface entity={preview} onClose={pinned ? hide : undefined} />
-        ) : null}
+        {preview ? <FabCardPreviewSurface entity={preview} onClose={hide} /> : null}
       </div>
     </FabCardPreviewContext.Provider>
   );
@@ -301,39 +309,27 @@ export function FabCardPreviewProvider({
 
 export function useFabPreviewTarget(
   entity: SimulatorEntity,
-  options?: { enabled?: boolean; pinOnClick?: boolean; clearOnLeave?: boolean },
+  options?: { enabled?: boolean; pinOnClick?: boolean },
 ) {
   const { setHover, clearHover, pin } = useFabCardPreview();
   const enabled = (options?.enabled ?? true) && entity.face === "public";
   const pinOnClick = options?.pinOnClick === true;
-  const clearOnLeave = options?.clearOnLeave !== false;
   const entityRef = useRef(entity);
   entityRef.current = entity;
-  const lastPointer = useRef<{ clientX: number; clientY: number } | null>(null);
 
-  const occupy = useCallback(() => {
-    if (!enabled) return;
-    setHover(entityRef.current);
-  }, [enabled, setHover]);
+  const occupy = useCallback(
+    (event: MouseEvent<HTMLElement> | FocusEvent<HTMLElement>) => {
+      if (!enabled) return;
+      setHover(entityRef.current, event.currentTarget);
+    },
+    [enabled, setHover],
+  );
 
   const leave = useCallback(
-    (event?: OccupancyEvent) => {
-      if (!enabled) return;
-      const entityId = entityRef.current.id;
-      // Leave is not occupancy. Overlays, remounts, and hover-lift all fire it
-      // while the pointer is still on this card or another preview target.
-      if (
-        fabPreviewOccupancyId(
-          event ?? {
-            relatedTarget: null,
-            clientX: lastPointer.current?.clientX,
-            clientY: lastPointer.current?.clientY,
-          },
-        )
-      ) {
+    (event: MouseEvent<HTMLElement> | FocusEvent<HTMLElement>) => {
+      if (event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget))
         return;
-      }
-      clearHover(entityId);
+      if (enabled) clearHover(entityRef.current.id);
     },
     [clearHover, enabled],
   );
@@ -343,20 +339,14 @@ export function useFabPreviewTarget(
     pin(entityRef.current);
   }, [enabled, pin]);
 
-  const vacate = useCallback(() => leave(), [leave]);
-
   return {
     occupy,
-    vacate,
     previewProps: {
       ...(enabled ? { [FAB_PREVIEW_TARGET_ATTR]: entity.id } : {}),
       onMouseEnter: occupy,
-      onMouseMove: (event: MouseEvent<HTMLElement>) => {
-        lastPointer.current = { clientX: event.clientX, clientY: event.clientY };
-      },
-      ...(clearOnLeave ? { onMouseLeave: (event: MouseEvent<HTMLElement>) => leave(event) } : {}),
+      onMouseLeave: leave,
       onFocus: occupy,
-      onBlur: (event: FocusEvent<HTMLElement>) => leave({ relatedTarget: event.relatedTarget }),
+      onBlur: leave,
       ...(enabled && pinOnClick
         ? {
             onClick: inspect,

@@ -154,6 +154,8 @@ describe("FAB public live spectating", () => {
       expect(screen.queryByRole("button", { name: /Concede match/ })).toBeNull();
       expect(screen.queryByTestId("fab-action-undo")).toBeNull();
       expect(screen.queryByTestId("fab-action-pass-priority")).toBeNull();
+      expect(screen.queryByTestId("fab-quick-undo")).toBeNull();
+      expect(screen.queryByTestId("fab-quick-pass")).toBeNull();
       expect(screen.queryByRole("button", { name: /Open your player actions/ })).toBeNull();
       expect(mocks.emit).not.toHaveBeenCalledWith("submit_interaction", expect.anything());
       expect(mocks.join).toHaveBeenCalledWith({ gameId: "spectator-game", stateVersion: 1 });

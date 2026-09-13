@@ -115,7 +115,7 @@ export const FAB_LOG_TRANSLATION_VALUE_KEYS = {
   "flesh-and-blood.charge": ["actorId", "cardName", "chargedName"],
   "flesh-and-blood.fuse": ["actorId", "cardName", "revealedNames"],
   "flesh-and-blood.fragment": ["actorId", "cardName"],
-  "flesh-and-blood.usurp": ["actorId", "cardName"],
+  "flesh-and-blood.usurp": ["actorId", "cardName", "usurpedName"],
   "flesh-and-blood.crank": ["actorId", "cardName"],
   "flesh-and-blood.transcend": ["actorId", "cardName"],
   "flesh-and-blood.complete-contract": ["actorId", "cardName"],

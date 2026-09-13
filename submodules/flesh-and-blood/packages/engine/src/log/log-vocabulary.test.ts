@@ -201,7 +201,11 @@ const SAMPLE_VALUES = {
     revealedNames: "Thrust, Unmovable",
   },
   "flesh-and-blood.fragment": { actorId: "alpha", cardName: "Fractal Replication" },
-  "flesh-and-blood.usurp": { actorId: "alpha", cardName: "Usurp The Throne" },
+  "flesh-and-blood.usurp": {
+    actorId: "alpha",
+    cardName: "Demonbound Gloomblade",
+    usurpedName: "Runechant",
+  },
   "flesh-and-blood.crank": { actorId: "alpha", cardName: "Teklo Core" },
   "flesh-and-blood.transcend": { actorId: "alpha", cardName: "Enigma Engine" },
   "flesh-and-blood.complete-contract": { actorId: "alpha", cardName: "Contract Death" },
